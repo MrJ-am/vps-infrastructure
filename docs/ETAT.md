@@ -13,9 +13,12 @@
 - Le message de reprise pour Mémoire est dans `docs/MESSAGE-MEMOIRE.md`.
 - Les 18 tests Python locaux passent. Nix n'est pas disponible dans cet
   environnement ; le contrôle local signale explicitement cette limite.
-  La CI étendue vérifie la syntaxe, l'évaluation NixOS, l'isolation effective
-  dans PostgreSQL 17 et les restaurations. Son résultat doit être consulté
-  sur le commit publié avant activation.
+  La [CI du commit `7227604`](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35277121343)
+  a réussi : syntaxe, évaluation complète des configurations NixOS avec une
+  puis deux bases, isolation effective dans PostgreSQL 17, conservation de
+  données préexistantes, réapplication des ACL et restauration de chaque dump.
+  Les tests utilisent exclusivement un conteneur jetable sans réseau.
+  Cela ne remplace pas la construction et les contrôles sur le VPS réel.
 - Aucun accès ni changement serveur n'a été effectué pendant cette extension.
   La migration demeure non activée ; les vérifications serveur et le retour
   ciblé des ACL sont décrits dans `docs/MIGRATION.md`.
