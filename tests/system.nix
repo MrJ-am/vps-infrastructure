@@ -27,7 +27,9 @@ assert builtins.elem "postgresql-setup.service" current.systemd.services.matheva
 assert current.systemd.services.matheval.serviceConfig.User == "matheval";
 assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/lib/matheval/secrets.env";
 assert current.systemd.services.postgresql-setup.postStart != "";
-assert current.services.nginx.virtualHosts == extended.services.nginx.virtualHosts;
+# Comparer la configuration rendue via la commande Nginx : certains paramètres
+# optionnels des vhosts (certificats manuels avec ACME) n'ont aucune valeur.
+assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.systemd.services.nginx.serviceConfig.ExecStart;
 {
   # Force l'évaluation du système entier, sans le construire ni l'activer.
   currentDerivation = current.system.build.toplevel.drvPath;
