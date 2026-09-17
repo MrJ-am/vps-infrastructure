@@ -68,7 +68,9 @@ avant la migration. Les réussites Actions précédentes ne remplacent pas cet a
   contrôle s'arrête explicitement avec le code 2 après les tests Python ; elle
   ne présente pas cette validation comme complète. La [CI de la PR](https://github.com/MrJ-am/M-moire/actions/runs/35271624287)
   a réussi : syntaxe des modules du mémoire, données, API PostgreSQL, compilation
-  et parcours navigateur. La CI du futur dépôt devra vérifier son propre routage.
+  et parcours navigateur. La [CI de ce dépôt](https://github.com/MrJ-am/vps-infrastructure/actions/workflows/check.yml)
+  prend en charge la syntaxe et les tests de génération du routage. Sa réussite
+  ne dispense pas d'une construction NixOS complète sur le VPS.
 - La construction complète, les contrôles HTTP réels et la répétition du retour
   arrière sur le serveur restent à effectuer.
 

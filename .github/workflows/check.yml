@@ -15,4 +15,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y nix-bin
       - name: Vérifier le registre et le routage
-        run: sh scripts/check.sh
+        # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
+        # au compte runner. Ces contrôles n'ont besoin d'aucun démon.
+        run: sudo env NIX_REMOTE=local sh scripts/check.sh
