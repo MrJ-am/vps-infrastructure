@@ -1,9 +1,15 @@
-# Transférer la configuration sans modifier le service rendu
+# Transférer la configuration et partager PostgreSQL
 
 **Procédure préparatoire, non exécutée.** Elle doit être concrétisée après
 lecture du VPS réel par l'agent du projet VPS. Les commandes de construction
 et de contrôle ci-dessous ne remplacent pas cet audit. Aucun script de ce
 dossier ne lance automatiquement une activation.
+
+La première préparation ne déplaçait que Nginx. Le candidat comprend désormais
+le transfert de PostgreSQL et des restrictions HBA/SQL explicites. Les versions,
+les chemins et les données sont conservés, mais une interruption brève des
+services peut être nécessaire. Ne pas décrire cette activation comme un simple
+reclassement de fichiers sans effet. Lire aussi [POSTGRESQL.md](POSTGRESQL.md).
 
 ## 1. Auditer et figer les sources
 
@@ -15,6 +21,12 @@ dossier ne lance automatiquement une activation.
   depuis le relevé du 17 septembre.
 - Exécuter `sh scripts/audit.sh` sur le VPS. Relever les services, les ports,
   les certificats, les sauvegardes et la version active de Matheval.
+- Exécuter `sh scripts/audit-postgresql.sh`. Comparer la version majeure, le
+  répertoire des données, le socket, les bases, propriétaires, attributs de
+  rôles, appartenances et ACL. Confirmer que `matheval` possède déjà sa base,
+  que les clients attendus utilisent son compte Unix et qu'aucun autre client
+  légitime ne dépend des anciennes règles HBA. Si l'inventaire comporte d'autres
+  projets, les intégrer au registre avant d'appliquer les règles de refus.
 - Relever le chemin exact de `/run/current-system`, celui du profil système
   par défaut, et le résultat de `nix-instantiate --find-file nixpkgs`.
   Si les générations active et par défaut diffèrent, expliquer cette situation
@@ -23,7 +35,7 @@ dossier ne lance automatiquement une activation.
   `--upgrade`, `nix-channel --update` ni mise à jour du noyau pendant ce transfert.
 
 Le nouvel agencement importe seulement `hosts/hostinger/configuration.nix`,
-qui assemble le matériel, l'application et la passerelle. Le nom historique
+qui assemble le matériel, l'application, la passerelle et PostgreSQL. Le nom historique
 du réseau `05-matheval-eth0` est conservé volontairement pour éviter de changer
 l'identité d'un fichier réseau pendant la séparation.
 
@@ -39,6 +51,12 @@ daté sous `/root/vps-migrations/`. Y conserver :
 - le commit de l'application active et un relevé des contrôles publics ;
 - la référence à une sauvegarde de données récente et vérifiée, sans restaurer
   de base en production pour les besoins de cette migration.
+- le relevé PostgreSQL précédent et un script SQL de retour **ciblé**, construit
+  à partir des ACL, attributs et propriétaires réellement relevés. Le candidat
+  retire les droits PUBLIC, accorde les droits du propriétaire et restreint
+  les attributs des rôles. Leur état initial doit pouvoir être rétabli sans
+  remplacer les données ni rejouer un dump entier. Conserver aussi les règles
+  HBA initiales dans l'archive NixOS.
 
 Installer le dépôt candidat sous un chemin distinct, possédé par root, par
 exemple `/etc/nixos/vps-infrastructure`. Ne pas encore modifier le fichier
@@ -71,9 +89,12 @@ Comparer l'ancienne configuration et la candidate :
 - paramètres, certificats, hôtes, redirections et emplacements Nginx ;
 - chemins des données, fichiers de secrets et lien de publication active.
 
-Le transfert initial conserve ces comportements. Seuls l'assemblage des
-sources et leur responsabilité changent. Un redémarrage prévu de PostgreSQL,
-de Matheval ou du réseau est un motif d'arrêt et d'explication.
+Le candidat conserve le routage, les versions et les chemins. Il change
+intentionnellement l'authentification PostgreSQL, les ACL et les dépendances
+de démarrage de Matheval. Prévoir la fenêtre correspondante si le dry-run
+annonce un redémarrage de PostgreSQL ou de Matheval. Tout redémarrage du réseau,
+toute nouvelle initialisation de cluster ou tout déplacement des données est
+un motif d'arrêt et d'explication. Ne pas changer la version majeure en même temps.
 
 Exécuter la commande `bin/switch-to-configuration dry-activate` **du candidat**
 pour voir les unités affectées. Relever dans les unités générées le chemin du
@@ -101,6 +122,12 @@ rétablir le profil via `nix-env --profile /nix/var/nix/profiles/system --set ..
 et d'activer directement son `bin/switch-to-configuration switch`.
 Ce retour n'a besoin ni de GitHub, ni de reconstruire NixOS, ni d'un accès SSH.
 Les bases et les fichiers applicatifs ne sont pas restaurés par ce script.
+
+Compléter le retour par le script SQL ciblé préparé à l'étape 2, après remise
+en service de l'ancienne instance PostgreSQL. Un retour NixOS **ne défait pas**
+les changements SQL de `postgresql-setup`. Tester la syntaxe de ce script et
+sa réapplication sur une restauration isolée avant la fenêtre de migration.
+Ne pas armer la bascule tant que ce retour des droits n'est pas préparé.
 
 Programmer ce script avec un timer systemd, par exemple à dix minutes, avec
 un nom propre à cette migration. Confirmer que le timer est armé **avant** le
@@ -132,11 +159,21 @@ Vérifier ensuite :
 
 - une **nouvelle** connexion SSH avec vérification de la clé d'hôte ;
 - `systemctl is-active sshd nginx postgresql matheval`, puis les autres services ;
+- la réussite de `postgresql-setup.service`, sans erreur SQL ;
+- une nouvelle connexion locale `matheval` vers sa base, et le refus d'une
+  connexion de ce même compte vers `postgres` ou toute autre base enregistrée ;
+- l'absence d'écoute TCP PostgreSQL, les propriétaires et attributs de rôles,
+  la conservation des données et les droits du schéma applicatif ;
 - la santé locale de l'API et le même commit dans `/srv/matheval/current/RELEASE` ;
 - `python3 scripts/probe.py --baseline /chemin/prive/avant.json` depuis un accès
   public fonctionnel, avec le registre candidat ;
 - les temporisations ACME, les certificats, les sauvegardes et les journaux
   d'erreurs nécessaires, sans afficher les secrets ni les réponses collectées.
+
+Déclencher et vérifier le dump local de chaque base, puis l'export Matheval
+chiffré hors VPS et une restauration dans une instance isolée. Un dump de
+production reste hors Git et hors journaux. Ne pas modifier les rôles ou bases
+de production pour simuler Vision : les tests à deux projets se font en CI.
 
 Ce contrôle inclut HTTPS, HTTP→HTTPS, www, les deux redirections 308, le
 questionnaire, l'administration, le JavaScript principal, la santé JSON, et
@@ -176,7 +213,10 @@ du propriétaire. Vérifier sa publication applicative et ses sauvegardes.
 Le projet mémoire doit alors continuer à publier uniquement l'application.
 Toute évolution du module applicatif se transmet à ce dépôt par une mise à
 jour explicite de la copie revue ; la publication courante ne contrôle jamais
-Nginx, les domaines ou le système.
+Nginx, PostgreSQL, les domaines ou le système. Le projet Mémoire reprend aussi
+le patch PostgreSQL et la compatibilité historique décrits dans
+[MESSAGE-MEMOIRE.md](MESSAGE-MEMOIRE.md). Remplacer ensuite l'adaptation locale
+par sa copie amont revue, avec commit et empreinte actualisés.
 
 Références : [NixOS — changements de configuration](https://nixos.org/manual/nixos/stable/#sec-changing-config)
 et [Nginx — rechargement et validation](https://nginx.org/en/docs/control.html).

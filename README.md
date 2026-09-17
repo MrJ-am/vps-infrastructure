@@ -1,7 +1,8 @@
 # Infrastructure VPS
 
 Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
-plusieurs applications derrière une seule instance Nginx.
+plusieurs applications derrière une seule instance Nginx et partager une
+instance PostgreSQL 17 entre les projets qui en ont besoin.
 
 **État : préparé, pas encore installé sur le VPS.** Le dépôt GitHub privé
 est [MrJ-am/vps-infrastructure](https://github.com/MrJ-am/vps-infrastructure). Le relais côté mémoire est
@@ -13,13 +14,28 @@ préparé dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8), en broui
 | Nginx sur 80/443, certificats HTTPS | Service HTTP sur une adresse locale |
 | Attribution des domaines, alias et ports | Publications avec son compte dédié |
 | Intégration des modules applicatifs revus | Proposition d'évolution de son module |
-| Contrôles de tous les sites lors d'une activation | Migrations et sauvegardes de ses données |
+| PostgreSQL, création des bases et rôles, contrôle des accès | Schéma, données et migrations applicatives |
+| Sauvegardes locales PostgreSQL et contrôles collectifs | Exports chiffrés hors VPS existants et validation des restaurations |
 
 `projects.json` attribue chaque domaine et chaque port à un seul projet.
 `modules/gateway.nix` et `lib/virtual-hosts.nix` construisent le routage.
 `apps/` active les services avec leurs paramètres d'instance. `vendor/`
 contient les modules applicatifs revus et leur provenance exacte.
 `hosts/hostinger/` conserve les réglages du VPS relevés dans Matheval.
+
+`databases.json` réserve les bases indépendamment du routage HTTP.
+`modules/postgresql.nix` possède l'instance, les accès par socket Unix et les
+sauvegardes quotidiennes. Une application ne peut se connecter qu'à sa base
+avec son compte système dédié. Le port PostgreSQL n'écoute pas en TCP.
+Lire [le contrat PostgreSQL](docs/POSTGRESQL.md) et
+[le message de reprise pour Mémoire](docs/MESSAGE-MEMOIRE.md).
+
+La copie Matheval comporte une adaptation locale tracée dans
+`patches/matheval-postgresql.patch` : elle ne déclare plus le serveur PostgreSQL
+ni ses sauvegardes locales, attend leur initialisation et utilise le client
+de la version commune pour son export chiffré. Son projet doit reprendre ce
+patch avant la prochaine intégration de module. Vision dispose seulement
+d'un exemple de réservation ; aucune base Vision n'est activée à ce stade.
 
 Le raccordement initial reste `https://principiipetit.io/matheval/` vers
 `http://127.0.0.1:3000`, sans retirer le préfixe. `www` et les redirections
@@ -43,8 +59,10 @@ Elles effectuent exclusivement des GET publics : aucune participation ou
 connexion administrateur n'est créée. Le relevé contient des codes HTTP,
 redirections et empreintes de fichiers publics, jamais les réponses privées.
 
-La CI du dépôt vérifie le registre, les scripts et la génération du
-routage. Elle ne détient aucune clé root et ne déploie pas automatiquement.
+La CI vérifie les registres, le routage, l'évaluation NixOS complète avec et
+sans une seconde base, puis les accès et les restaurations dans un PostgreSQL
+17 jetable. Son Nixpkgs de validation est identifié dans `tests/nixpkgs.json` ;
+il ne remplace pas celui du VPS. Elle ne détient aucune clé root et ne déploie pas automatiquement.
 Une construction NixOS complète et un audit restent requis sur le VPS.
 
 Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).

@@ -1,7 +1,12 @@
 # Source extraite de Matheval ; à comparer au VPS avant toute activation.
 { config, lib, pkgs, ... }:
 {
-  imports = [ ./hardware-configuration.nix ../../apps/matheval.nix ../../modules/gateway.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../apps/matheval.nix
+    ../../modules/gateway.nix
+    ../../modules/postgresql.nix
+  ];
 
   # Configuration reconstituée sur le VPS 1982677 le 17 septembre 2026.
   # Le canal installé (26.05) et le noyau 6.18 sont conservés.

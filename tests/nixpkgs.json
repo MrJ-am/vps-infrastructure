@@ -1,0 +1,5 @@
+{
+  "revision": "4c7870105e7f1fdf9c48688c8d7efc21abf0688a",
+  "branch": "nixos-26.05",
+  "purpose": "Source de validation CI uniquement ; conserver le Nixpkgs déjà installé lors de la migration VPS."
+}

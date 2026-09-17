@@ -43,10 +43,21 @@ Les déploiements applicatifs restent indépendants après ce raccordement :
 publier le projet A ne reconstruit pas Nginx et ne redémarre pas le projet B.
 Les demandes de changement de routage passent par une modification de ce dépôt.
 
-Le module Matheval active actuellement PostgreSQL 17, impose le socket Unix
-et déclare les sauvegardes locales. Avant de partager PostgreSQL avec un second
-projet, l'infrastructure devra arbitrer les paramètres globaux, conserver
-des bases et rôles distincts, et vérifier les sauvegardes de chaque base.
+L'infrastructure possède PostgreSQL 17, son socket Unix et ses sauvegardes
+locales. Pour un projet qui en a besoin, suivre [POSTGRESQL.md](POSTGRESQL.md) :
+réserver son nom dans `databases.json`, déclarer son compte système dans le
+module applicatif, configurer sa connexion et attendre `postgresql-setup.service`.
+Le module applicatif ne doit déclarer ni `services.postgresql`, ni
+`services.postgresqlBackup`. Un projet sans base n'entre pas dans ce registre.
+Le raccordement PostgreSQL peut être préparé indépendamment du domaine HTTP.
+
+Vision, examiné au commit `930d555aac2f49d55ea7afa631dce3ef2936998c`, est encore
+un serveur Lisp minimal destiné à alwaysdata, sans client PostgreSQL ni module
+NixOS. `examples/vision-database.json` est une réservation d'exemple à reprendre
+lors de son intégration ; elle ne crée rien. Son écoute est actuellement IPv6 :
+prévoir une écoute locale compatible avec le proxy et une route GET de santé
+avant tout raccordement HTTP. Ne pas déclarer Vision comme déjà hébergé ici.
+
 Ne pas confondre des comptes applicatifs séparés avec une isolation complète
 du processeur, de la mémoire ou du disque sur un VPS unique.
 

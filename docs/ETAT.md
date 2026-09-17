@@ -1,5 +1,27 @@
 # État attesté au 17 septembre 2026
 
+## Extension de la préparation à PostgreSQL
+
+- Sources VPS relues au commit `36cac12fdf29c3147e407b82aadff7eef27083f2` de `main`.
+- `modules/postgresql.nix` et `databases.json` prennent en charge l'instance
+  PostgreSQL 17, les bases/rôles, l'authentification locale et les dumps quotidiens.
+- La copie Matheval est adaptée avec un patch réversible et deux empreintes
+  (amont et résultat). Elle conserve l'export chiffré et sa publication ; elle
+  attend désormais la fin de `postgresql-setup.service`.
+- Vision a été lu au commit `930d555aac2f49d55ea7afa631dce3ef2936998c` : aucun
+  stockage PostgreSQL ni module NixOS. Son exemple reste hors du registre actif.
+- Le message de reprise pour Mémoire est dans `docs/MESSAGE-MEMOIRE.md`.
+- Les 18 tests Python locaux passent. Nix n'est pas disponible dans cet
+  environnement ; le contrôle local signale explicitement cette limite.
+  La CI étendue vérifie la syntaxe, l'évaluation NixOS, l'isolation effective
+  dans PostgreSQL 17 et les restaurations. Son résultat doit être consulté
+  sur le commit publié avant activation.
+- Aucun accès ni changement serveur n'a été effectué pendant cette extension.
+  La migration demeure non activée ; les vérifications serveur et le retour
+  ciblé des ACL sont décrits dans `docs/MIGRATION.md`.
+
+Les sections suivantes conservent les constats de la préparation initiale.
+
 ## Sources examinées
 
 - Dépôt canonique : [MrJ-am/M-moire](https://github.com/MrJ-am/M-moire).
