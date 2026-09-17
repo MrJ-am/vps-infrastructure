@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+result
+result-*
+state/
+*.key
+*.pem
+*.age
+*.dump
+*.env
+*.zip

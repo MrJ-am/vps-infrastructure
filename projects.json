@@ -1,0 +1,18 @@
+{
+  "matheval": {
+    "domain": "principiipetit.io",
+    "aliases": ["www.principiipetit.io"],
+    "port": 3000,
+    "prefix": "/matheval",
+    "maxBodySize": "5m",
+    "service": "matheval",
+    "probes": [
+      {"path": "/matheval/", "status": 200, "contentType": "text/html", "unchanged": true},
+      {"path": "/matheval/admin/", "status": 200, "contentType": "text/html", "unchanged": true},
+      {"path": "/matheval/main.js", "status": 200, "unchanged": true},
+      {"path": "/matheval/api/health", "status": 200, "contentType": "application/json", "json": {"status": "ok"}},
+      {"path": "/matheval/api/admin/me", "status": 401, "contentType": "application/json"},
+      {"path": "/matheval/api/admin/statistics", "status": 401, "contentType": "application/json"}
+    ]
+  }
+}
