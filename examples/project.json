@@ -1,0 +1,14 @@
+{
+  "nouveau-projet": {
+    "domain": "demo.example.com",
+    "aliases": [],
+    "port": 3001,
+    "prefix": "",
+    "maxBodySize": "1m",
+    "service": "nouveau-projet",
+    "probes": [
+      {"path": "/", "status": 200, "contentType": "text/html"},
+      {"path": "/health", "status": 200, "contentType": "application/json", "json": {"status": "ok"}}
+    ]
+  }
+}
