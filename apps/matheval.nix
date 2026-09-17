@@ -1,11 +1,12 @@
-{ ... }:
+{ config, ... }:
 let
   site = (builtins.fromJSON (builtins.readFile ../projects.json)).matheval;
 in {
   imports = [ ../vendor/matheval/matheval.nix ];
   assertions = [{
     assertion = site.port == 3000 && site.prefix == "/matheval" &&
-      site.domain == "principiipetit.io" && site.service == "matheval";
+      site.domain == "principiipetit.io" && site.service == "matheval" &&
+      config.infrastructure.postgresql.projects.matheval.name == "matheval";
     message = "Changement du contrat Matheval : coordonner le module applicatif avant activation.";
   }];
   services.matheval = {

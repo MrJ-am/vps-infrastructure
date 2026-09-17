@@ -14,7 +14,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y nix-bin
-      - name: Vérifier le registre et le routage
+      - name: Vérifier les registres, le routage et la syntaxe Nix
         # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
         # au compte runner. Ces contrôles n'ont besoin d'aucun démon.
         run: sudo env NIX_REMOTE=local sh scripts/check.sh
+      - name: Évaluer les configurations NixOS complètes
+        run: |
+          NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
+          curl --fail --location --retry 2 "https://github.com/NixOS/nixpkgs/archive/$NIXPKGS_REVISION.tar.gz" -o "$RUNNER_TEMP/nixpkgs.tar.gz"
+          tar -xzf "$RUNNER_TEMP/nixpkgs.tar.gz" -C "$RUNNER_TEMP"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/system.nix
+      - name: Vérifier PostgreSQL 17 et les restaurations dans un conteneur jetable
+        run: |
+          sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
+          python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
