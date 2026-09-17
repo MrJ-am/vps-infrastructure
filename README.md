@@ -1,5 +1,58 @@
 # Infrastructure VPS
 
-Infrastructure commune du VPS NixOS et passerelle Nginx.
+Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
+plusieurs applications derrière une seule instance Nginx.
 
-Initialisation des sources préparées dans le projet VPS. Aucune activation serveur n'est réalisée par ce dépôt automatiquement.
+**État : préparé, pas encore installé sur le VPS.** Le dépôt GitHub privé
+est [MrJ-am/vps-infrastructure](https://github.com/MrJ-am/vps-infrastructure). Le relais côté mémoire est
+préparé dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8), en brouillon.
+
+| Ce dépôt | Chaque projet applicatif |
+|---|---|
+| NixOS, démarrage, réseau, SSH, pare-feu | Code, tests et contenu |
+| Nginx sur 80/443, certificats HTTPS | Service HTTP sur une adresse locale |
+| Attribution des domaines, alias et ports | Publications avec son compte dédié |
+| Intégration des modules applicatifs revus | Proposition d'évolution de son module |
+| Contrôles de tous les sites lors d'une activation | Migrations et sauvegardes de ses données |
+
+`projects.json` attribue chaque domaine et chaque port à un seul projet.
+`modules/gateway.nix` et `lib/virtual-hosts.nix` construisent le routage.
+`apps/` active les services avec leurs paramètres d'instance. `vendor/`
+contient les modules applicatifs revus et leur provenance exacte.
+`hosts/hostinger/` conserve les réglages du VPS relevés dans Matheval.
+
+Le raccordement initial reste `https://principiipetit.io/matheval/` vers
+`http://127.0.0.1:3000`, sans retirer le préfixe. `www` et les redirections
+existantes sont conservés. Les deux certificats et leurs emplacements restent
+gérés par les mêmes options NixOS. Aucun changement de DNS n'est nécessaire
+pour cette séparation.
+
+La configuration provient du dépôt du mémoire, pas d'un nouvel audit du VPS.
+Lire [l'état attesté](docs/ETAT.md), puis [la procédure de migration](docs/MIGRATION.md).
+Les scripts fournis contrôlent la configuration ; aucun n'active NixOS.
+
+```sh
+sh scripts/check.sh
+python3 scripts/probe.py --output /chemin/prive/avant.json
+python3 scripts/probe.py --baseline /chemin/prive/avant.json
+```
+
+La première commande exige Python 3 et Nix. Les deux suivantes utilisent
+seulement la bibliothèque standard Python et vérifient les certificats TLS.
+Elles effectuent exclusivement des GET publics : aucune participation ou
+connexion administrateur n'est créée. Le relevé contient des codes HTTP,
+redirections et empreintes de fichiers publics, jamais les réponses privées.
+
+La CI du dépôt vérifie le registre, les scripts et la génération du
+routage. Elle ne détient aucune clé root et ne déploie pas automatiquement.
+Une construction NixOS complète et un audit restent requis sur le VPS.
+
+Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).
+Pour les accès, lire [ACCES.md](docs/ACCES.md).
+
+Une passerelle unique reste un point commun à tous les sites. Les validations,
+les comptes distincts et le retour arrière réduisent les risques ; ils ne
+garantissent pas une absence absolue d'interruption ou de saturation du VPS.
+
+Références techniques : [activation de NixOS](https://nixos.org/manual/nixos/stable/#sec-changing-config),
+[contrôle et rechargement de Nginx](https://nginx.org/en/docs/control.html).
