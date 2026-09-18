@@ -1,0 +1,39 @@
+name: Auditer le VPS
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-audit-ssh/admin"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          if [ -z "$SSH_KEY" ]; then
+            echo '::error::Secret VPS_ADMIN_SSH_KEY absent ; voir docs/ACCES.md.'
+            exit 1
+          fi
+          umask 077
+          install -d -m 700 "$(dirname -- "$VPS_SSH_KEY")"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Lire l'état du système et des services
+        run: sh scripts/connect.sh sh -s < scripts/audit.sh
+      - name: Lire les bases et les droits PostgreSQL
+        run: sh scripts/connect.sh sh -s < scripts/audit-postgresql.sh
+      - name: Effacer la clé temporaire du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-audit-ssh/admin"

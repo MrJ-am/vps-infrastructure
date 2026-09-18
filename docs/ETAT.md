@@ -1,4 +1,25 @@
-# État attesté au 17 septembre 2026
+# État attesté au 18 septembre 2026
+
+## Mode d'accès retenu : GitHub Actions
+
+- Le propriétaire confirme l'absence d'accès SSH direct depuis ChatGPT Work.
+  Les connexions réussies observées depuis Work ont été effectuées par GitHub
+  Actions. Les futures opérations distantes doivent utiliser ce canal.
+- Les workflows de Mémoire relus sur `master` publient via `matheval-deploy`
+  et exportent les sauvegardes chiffrées. Ils n'administrent pas NixOS.
+- Le workflow manuel `audit.yml` est préparé dans ce dépôt pour exécuter les
+  deux scripts d'inventaire depuis un runner, avec vérification de l'hôte.
+  Il exige le secret administratif `VPS_ADMIN_SSH_KEY` de l'environnement
+  `vps-production`. La présence de ce secret n'a pas été vérifiée et le
+  diagnostic n'a pas été exécuté pendant cette adaptation.
+- Validation locale : les 18 tests Python réussissent ; le YAML du workflow
+  et la syntaxe shell de ses étapes sont vérifiés. L'absence de secret produit
+  l'erreur attendue avant toute connexion, et le nettoyage reste exécutable.
+- Les consignes et la procédure d'accès sont actualisées. La migration reste
+  non activée ; aucun changement de configuration serveur n'est réalisé ici.
+
+Les sections datées du 17 septembre ci-dessous conservent l'historique de la
+préparation ; leurs exécutions Actions ne constituent pas un relevé actuel.
 
 ## Extension de la préparation à PostgreSQL
 

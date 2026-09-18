@@ -1,4 +1,10 @@
-# GitHub, SSH et hPanel
+# Accéder au VPS par GitHub Actions
+
+**Décision du propriétaire, 18 septembre 2026 : ChatGPT Work ne dispose pas
+d'accès SSH direct au VPS. Les opérations distantes passent par GitHub
+Actions.** Les succès SSH observés depuis Work sont ceux des runners GitHub.
+Ne pas répéter les essais réseau depuis Work ni demander à nouveau l'archive
+privée pour débloquer cette connexion.
 
 ## Dépôt GitHub
 
@@ -23,16 +29,52 @@ historique `matheval_admin` ne signifie pas que l'application Matheval doit
 conserver les droits d'administration. Aucun changement de clé n'est nécessaire
 pour déplacer la configuration. La clé CI `matheval_deploy` reste séparée.
 
-Le terminal de cette session ne peut pas joindre le réseau SSH du VPS. Lui
-fournir une clé privée ne suffirait donc pas. Il faut reprendre l'activation
-depuis un environnement dont la connexion SSH fonctionne, ou utiliser le
-terminal du VPS dans hPanel avec les sources vérifiées.
+Le terminal Work ne peut pas joindre le réseau SSH du VPS. Lui fournir une
+clé privée ne suffirait donc pas. `scripts/connect.sh` doit être exécuté par
+le runner GitHub pour les opérations préparées depuis Work.
 
 L'archive privée du projet Mémoire a depuis été retrouvée et la clé
 administrative extraite hors Git. Son empreinte a été comparée avec succès
 au relevé initial. La tentative SSH munie de cette clé échoue toujours au
 niveau réseau : il n'est pas nécessaire de renvoyer l'archive ou de régénérer
 une clé pour résoudre ce blocage.
+
+## Diagnostic manuel depuis GitHub
+
+Le workflow `.github/workflows/audit.yml`, **Auditer le VPS**, se lance
+manuellement sur `main`. Il ouvre deux connexions avec `scripts/connect.sh`
+pour exécuter `scripts/audit.sh` et `scripts/audit-postgresql.sh` via l'entrée
+standard, sans installer de fichiers ni reconstruire NixOS. Il n'accepte pas
+de commande libre. Ses journaux contiennent l'inventaire technique, sans
+lecture des réponses collectées, mots de passe ou clés privées.
+
+Préparer dans ce dépôt l'environnement GitHub **`vps-production`**, limité
+à la branche `main`, et son secret **`VPS_ADMIN_SSH_KEY`** contenant la clé
+administrative existante. Ne jamais placer sa valeur dans Git, une variable
+publique, un journal ou un message. La clé d'hôte publique est déjà figée dans
+`scripts/ssh-known-hosts` ; la vérification stricte reste obligatoire.
+Sans ce secret, le workflow échoue explicitement avant toute connexion.
+
+Les secrets de Mémoire ne sont pas automatiquement disponibles dans ce dépôt.
+`MATHEVAL_SSH_KEY` appartient au compte applicatif `matheval-deploy` : ce n'est
+pas la clé administrative et ce compte ne doit pas recevoir de droits root.
+Les publications et les exports chiffrés existants restent dans Mémoire.
+
+Pour lancer le diagnostic : onglet **Actions**, workflow **Auditer le VPS**,
+**Run workflow**, branche `main`. Si l'outil GitHub de la session permet ce
+déclenchement, l'utiliser ; sinon fournir ce lien de lancement au propriétaire.
+L'absence de déclenchement dans un outil ne justifie pas une tentative SSH
+depuis Work, ni un déploiement indirect par modification d'un workflow applicatif.
+
+Après exécution, relever son URL, son commit, sa conclusion et les étapes
+effectivement réussies dans `docs/ETAT.md`. Distinguer workflow préparé,
+workflow exécuté et changement appliqué au serveur. La présence du fichier
+YAML ou la réussite de `check.yml` ne valide pas l'accès administratif.
+
+La future activation de l'infrastructure doit suivre `MIGRATION.md` dans un
+workflow dédié, avec commit identifié, contrôles et retour arrière sur le
+VPS. Le diagnostic actuel ne lance aucune activation. Le terminal hPanel
+reste la voie de récupération indépendante si GitHub ou SSH devient indisponible.
 
 Si la clé administrative a été perdue, une session root déjà ouverte ou le
 terminal hPanel peut ajouter une **nouvelle clé publique**. Il faut préserver
