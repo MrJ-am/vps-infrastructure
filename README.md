@@ -37,11 +37,11 @@ avec son compte système dédié. Le port PostgreSQL n'écoute pas en TCP.
 Lire [le contrat PostgreSQL](docs/POSTGRESQL.md) et
 [le message de reprise pour Mémoire](docs/MESSAGE-MEMOIRE.md).
 
-La copie Matheval comporte une adaptation locale tracée dans
-`patches/matheval-postgresql.patch` : elle ne déclare plus le serveur PostgreSQL
-ni ses sauvegardes locales, attend leur initialisation et utilise le client
-de la version commune pour son export chiffré. Son projet doit reprendre ce
-patch avant la prochaine intégration de module. Vision dispose seulement
+La copie Matheval correspond exactement au module amont du commit
+`0bcdaf101cbdacb85694ca217fd21ab3f2eac828` de Mémoire. L'adaptation PostgreSQL
+a été reprise dans ce module : ne plus lui appliquer
+`patches/matheval-postgresql.patch`. Ce patch et ses empreintes antérieures
+restent conservés comme historique réversible. Vision dispose seulement
 d'un exemple de réservation ; aucune base Vision n'est activée à ce stade.
 
 Le raccordement initial reste `https://principiipetit.io/matheval/` vers

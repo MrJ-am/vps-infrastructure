@@ -1,10 +1,15 @@
 {
   "repository": "https://github.com/MrJ-am/M-moire",
-  "commit": "c83308ddfeefa03dfbb6692773c3d1274c867936",
+  "commit": "0bcdaf101cbdacb85694ca217fd21ab3f2eac828",
   "path": "deploy/matheval.nix",
   "sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
   "pull_request": "https://github.com/MrJ-am/M-moire/pull/8",
-  "status": "copie du commit amont avec adaptation locale PostgreSQL explicite ; à reprendre côté Mémoire avant nouvelle intégration",
-  "upstream_sha256": "ea60064e8bfce68de3e0fdcae6c41368ef00a2210c91ac57a49637c7802ad03b",
-  "patch": "patches/matheval-postgresql.patch"
+  "status": "copie amont exacte revue ; migration serveur à effectuer",
+  "upstream_sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
+  "historical_adaptation": {
+    "commit": "c83308ddfeefa03dfbb6692773c3d1274c867936",
+    "upstream_sha256": "ea60064e8bfce68de3e0fdcae6c41368ef00a2210c91ac57a49637c7802ad03b",
+    "sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
+    "patch": "patches/matheval-postgresql.patch"
+  }
 }

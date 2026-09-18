@@ -42,7 +42,9 @@ une clé pour résoudre ce blocage.
 ## Diagnostic manuel depuis GitHub
 
 Le workflow `.github/workflows/audit.yml`, **Auditer le VPS**, se lance
-manuellement sur `main`. Il ouvre deux connexions avec `scripts/connect.sh`
+manuellement sur `main` ou lors d'un commit sur `main` modifiant uniquement
+la demande `operations/audit-request.json` (avec, si nécessaire, les sources
+revues du diagnostic). Il ouvre deux connexions avec `scripts/connect.sh`
 pour exécuter `scripts/audit.sh` et `scripts/audit-postgresql.sh` via l'entrée
 standard, sans installer de fichiers ni reconstruire NixOS. Il n'accepte pas
 de commande libre. Ses journaux contiennent l'inventaire technique, sans
@@ -63,8 +65,12 @@ Les publications et les exports chiffrés existants restent dans Mémoire.
 Pour lancer le diagnostic : onglet **Actions**, workflow **Auditer le VPS**,
 **Run workflow**, branche `main`. Si l'outil GitHub de la session permet ce
 déclenchement, l'utiliser ; sinon fournir ce lien de lancement au propriétaire.
-L'absence de déclenchement dans un outil ne justifie pas une tentative SSH
-depuis Work, ni un déploiement indirect par modification d'un workflow applicatif.
+Depuis Work, donner un nouvel identifiant à `operations/audit-request.json`,
+conserver `operation: "audit"`, puis publier ce changement sur `main` avec
+les outils GitHub. Ce déclencheur explicite n'emploie aucune commande fournie
+par la demande et ne permet aucune activation. Lire ensuite l'exécution
+associée au commit. Ne pas tenter SSH depuis Work ni modifier les workflows
+applicatifs pour administrer le VPS.
 
 Après exécution, relever son URL, son commit, sa conclusion et les étapes
 effectivement réussies dans `docs/ETAT.md`. Distinguer workflow préparé,

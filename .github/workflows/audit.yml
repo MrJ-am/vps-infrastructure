@@ -1,6 +1,9 @@
 name: Auditer le VPS
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [operations/audit-request.json]
 permissions:
   contents: read
 concurrency:
@@ -16,6 +19,17 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+      - name: Vérifier la demande de diagnostic
+        run: |
+          python3 - <<'PY'
+          import json, re
+          from pathlib import Path
+          request = json.loads(Path('operations/audit-request.json').read_text())
+          assert set(request) == {'id', 'operation'}, 'Champs de demande inattendus'
+          assert request['operation'] == 'audit', 'Seul le diagnostic est autorisé ici'
+          assert isinstance(request['id'], str) and re.fullmatch(r'[a-z0-9-]{1,80}', request['id']), 'Identifiant invalide'
+          print('Demande de diagnostic :', request['id'])
+          PY
       - name: Préparer la clé administrative
         env:
           SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
@@ -34,6 +48,8 @@ jobs:
         run: sh scripts/connect.sh sh -s < scripts/audit.sh
       - name: Lire les bases et les droits PostgreSQL
         run: sh scripts/connect.sh sh -s < scripts/audit-postgresql.sh
+      - name: Vérifier les points d'accès publics
+        run: python3 scripts/probe.py
       - name: Effacer la clé temporaire du runner
         if: always()
         run: rm -f -- "$RUNNER_TEMP/vps-audit-ssh/admin"
