@@ -56,7 +56,7 @@ jobs:
         run: |
           sh scripts/connect.sh "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15/bin/python3.13 /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA/scripts/migration-activate.py plan $PREPARED_COMMIT $GITHUB_SHA"
           sleep 8
-          sh scripts/connect.sh "test -f /root/vps-migrations/$PREPARED_COMMIT/rehearsal-fired"
+          sh scripts/connect.sh "if ! test -f /root/vps-migrations/$PREPARED_COMMIT/rehearsal-fired; then journalctl --no-pager -n 25 -u vps-rehearsal-${GITHUB_SHA:0:12}.service; exit 1; fi"
           python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
       - name: Armer le retour puis lancer l’essai sous verrou de publication
         if: env.OPERATION == 'activate'
