@@ -4,6 +4,8 @@ import json
 import subprocess
 import sys
 import time
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
 
 
 def run(*args, data=None, check=True):
@@ -52,6 +54,11 @@ def main(fixture_path):
 
         # Base existante avant le transfert : ses données doivent survivre.
         sql('CREATE ROLE matheval LOGIN; CREATE DATABASE matheval OWNER matheval;')
+        spec = spec_from_file_location('migration_prepare', Path(__file__).resolve().parents[1] / 'scripts/migration-prepare.py')
+        migration = module_from_spec(spec)
+        spec.loader.exec_module(migration)
+        original_acl = json.loads(value(migration.ACL_SQL, database='matheval'))
+        assert original_acl == migration.expected_acl()
         sql("CREATE TABLE original_data (value text); INSERT INTO original_data VALUES ('preserved');",
             "matheval", "matheval")
 
@@ -102,6 +109,14 @@ def main(fixture_path):
                 "pg_restore", "--exit-on-error", "--no-owner", "--host=/var/run/postgresql",
                 "--dbname=restored_" + name, data=dump)
             assert value("SELECT value FROM owner_probe;", database="restored_" + name) == name
+        # Le rollback SQL doit retrouver les droits antérieurs, être réapplicable
+        # et conserver les lignes ajoutées après la sauvegarde initiale.
+        sql(migration.ROLLBACK_SQL)
+        assert json.loads(value(migration.ACL_SQL, database='matheval')) == original_acl
+        sql(migration.ROLLBACK_SQL)
+        assert json.loads(value(migration.ACL_SQL, database='matheval')) == original_acl
+        assert value("SELECT value FROM original_data;", database='matheval', user='matheval') == 'preserved'
+        assert value("SELECT value FROM owner_probe;", database='matheval', user='matheval') == 'matheval'
         print("PostgreSQL 17 : accès séparés, droits limités, données conservées, ACL réapplicables et restaurations vérifiés.")
     finally:
         run("docker", "rm", "--force", "--volumes", container)

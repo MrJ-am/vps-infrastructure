@@ -1,5 +1,14 @@
 # Transférer la configuration et partager PostgreSQL
 
+La préparation après audit est désormais concrétisée par
+`.github/workflows/migration.yml` et `scripts/migration-prepare.py`, sur
+demande `operations/migration-request.json` avec `operation: "prepare"`.
+Elle n'active aucun service et n'écrit pas en SQL dans la base de production.
+Elle conserve ses sauvegardes privées sous `/root/vps-migrations/<commit>/`
+et installe les sources candidates sous `/etc/nixos/vps-infrastructure/<commit>/`.
+Les étapes d'activation et d'enregistrement ci-dessous restent à exécuter
+séparément, après revue des résultats de cette préparation.
+
 **Procédure préparatoire, non exécutée.** Elle doit être concrétisée après
 lecture du VPS réel par l'agent du projet VPS. Les commandes de construction
 et de contrôle ci-dessous ne remplacent pas cet audit. Aucun script de ce

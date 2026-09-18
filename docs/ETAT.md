@@ -1,5 +1,29 @@
 # État attesté au 18 septembre 2026
 
+## Accès administratif rétabli et audit réussi
+
+- Connexion GitHub du navigateur confirmée ; le propriétaire a autorisé
+  l'enregistrement de la clé existante dans `VPS_ADMIN_SSH_KEY`.
+  L'environnement `vps-production` contient ce secret et autorise uniquement
+  la branche `main` (aucun tag).
+- La deuxième tentative de l'audit initial a confirmé l'accès root depuis
+  GitHub Actions. Son contrôle Nginx devait employer le binaire du service,
+  absent du PATH : correction publiée au commit `7abfb144407c95ab6f325a23d3f8fd0db58da879`.
+- [Audit complet nº 35349054287](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35349054287)
+  réussi à 13:14 UTC : SSH vérifié, quatre services actifs, Nginx valide,
+  PostgreSQL 17.11 sur `/var/lib/postgresql/17` sans écoute TCP, onze contrôles
+  HTTP/TLS réussis. Publication Matheval active : `d8d0f17f37f030d58c152d5e57ca2e2c5b5814ea`.
+- Les quatre sources NixOS correspondent exactement à la configuration
+  historique de Mémoire. Génération active et de démarrage identiques :
+  `/nix/store/5840x51nc7d2s7gw0zfyy6my47j6nh1i-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+  Nixpkgs installé : `/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos`.
+- La préparation automatisée est ajoutée dans `migration.yml` : elle sauvegarde
+  les sources et la base, construit sans activer, compare les invariants, puis
+  vérifie une restauration et le retour ciblé des ACL dans un cluster isolé.
+  Aucun dump en clair n'est envoyé à GitHub. L'activation reste une étape distincte.
+
+Les blocages de connexion mentionnés ci-dessous sont historiques et résolus.
+
 ## Reprise de la migration complète
 
 - Le propriétaire autorise la migration du VPS et de Mémoire, via GitHub

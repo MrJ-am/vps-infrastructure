@@ -1,0 +1,69 @@
+name: Migrer l’infrastructure du VPS
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [operations/migration-request.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  migration:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la demande de préparation
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          request = json.loads(Path('operations/migration-request.json').read_text())
+          assert set(request) == {'id', 'operation'}
+          assert request['operation'] == 'prepare', 'Aucune activation dans ce workflow préparatoire'
+          assert re.fullmatch(r'[a-z0-9-]{1,80}', request['id'])
+          assert re.fullmatch(r'[0-9a-f]{40}', os.environ['GITHUB_SHA'])
+          print('Préparation :', request['id'], os.environ['GITHUB_SHA'])
+          PY
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-migration-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Conserver le relevé public avant migration
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Transférer le commit et préparer le candidat sans activation
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vps-migrations/$GITHUB_SHA/source; tar -xf - -C /root/vps-migrations/$GITHUB_SHA/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vps-migrations/$GITHUB_SHA/source/scripts/migration-prepare.py $GITHUB_SHA'"
+      - name: Vérifier une nouvelle connexion et les réponses publiques
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql matheval
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Récupérer seulement l’export chiffré et le rapport technique
+        run: |
+          umask 077
+          mkdir "$RUNNER_TEMP/migration-artifacts"
+          sh scripts/connect.sh "cat /root/vps-migrations/$GITHUB_SHA/matheval-before.dump.age" > "$RUNNER_TEMP/migration-artifacts/matheval-before.dump.age"
+          sh scripts/connect.sh "cat /root/vps-migrations/$GITHUB_SHA/prepared.json" > "$RUNNER_TEMP/migration-artifacts/prepared.json"
+          cp "$RUNNER_TEMP/http-before.json" "$RUNNER_TEMP/migration-artifacts/http-before.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: migration-${{ github.sha }}
+          path: ${{ runner.temp }}/migration-artifacts/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-migration-admin"
