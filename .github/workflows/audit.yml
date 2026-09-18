@@ -45,7 +45,10 @@ jobs:
           install -d -m 700 "$(dirname -- "$VPS_SSH_KEY")"
           printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
           ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Diagnostiquer la tentative de migration interrompue
+        run: sh scripts/connect.sh sh -s < scripts/diagnose-migration.sh
       - name: Lire l'état du système et des services
+        if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: sh scripts/connect.sh sh -s < scripts/audit.sh
       - name: Lire les bases et les droits PostgreSQL
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
