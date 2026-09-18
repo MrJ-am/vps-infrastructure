@@ -53,6 +53,8 @@ class Migration:
         self.config = json.loads((self.state/'config-candidate.json').read_text())
         self.pg_bin = Path(self.config['invariant']['postgresqlPackage'])/'bin'
         self.runtime_path = self.prepared['old_system']+'/sw/bin:/run/wrappers/bin'
+        self.service_environment = ['--setenv=PATH='+self.runtime_path,
+                                    '--setenv=NIX_PATH=nixpkgs='+self.prepared['nixpkgs']]
 
     def rollback_script(self):
         # Script autonome, outils de l’ancienne génération, aucune dépendance au
@@ -77,7 +79,7 @@ test ! -e {q(state+'/committed')} || exit 0
 {q(binaries['nix-env'])} --profile /nix/var/nix/profiles/system --set {q(boot)}
 {q(boot+'/bin/switch-to-configuration')} boot
 {q(old+'/bin/switch-to-configuration')} test
-{q(binaries['runuser'])} -u postgres -- {q(binaries['psql'])} -Xq --set=ON_ERROR_STOP=1 --host=/run/postgresql --dbname=postgres --file={q(state+'/rollback-acl.sql')}
+{q(binaries['runuser'])} -u postgres -- {q(binaries['psql'])} -Xq --set=ON_ERROR_STOP=1 --host=/run/postgresql --dbname=postgres --file=- < {q(state+'/rollback-acl.sql')}
 {q(binaries['systemctl'])} is-active sshd nginx postgresql matheval
 test "$({q(binaries['readlink'])} -f /run/current-system)" = {q(old)}
 test "$({q(binaries['readlink'])} -f /nix/var/nix/profiles/system)" = {q(boot)}
@@ -104,6 +106,12 @@ echo 'Ancienne génération, entrée NixOS et droits SQL rétablis ; données co
         require(not re.search(r'(?:stop|restart)[^\n]*(?:sshd|nginx|networkd|resolved)', dry, re.I),
                 'Le dry-run annonce une interruption du réseau/SSH/Nginx')
         self.rollback_script()
+        # Exécuter les vrais contrôles en lecture seule dans le même contexte
+        # systemd que l’essai : ce service n’hérite pas du profil de connexion SSH.
+        self.run('systemd-run', '--unit=vps-preflight-'+self.operation[:12], '--wait', '--pipe', '--collect',
+                 '--property=Type=oneshot', *self.service_environment,
+                 self.prepared['python'], str(Path(__file__)), 'preflight',
+                 self.prepared['commit'], self.operation, visible=True)
         rehearsal = self.state/'rehearsal-fired'
         if rehearsal.exists():
             rehearsal.unlink()
@@ -139,6 +147,7 @@ echo 'Ancienne génération, entrée NixOS et droits SQL rétablis ; données co
         self.run('systemctl', 'is-active', self.rollback_unit+'.timer')
         self.run('systemd-run', '--unit='+self.worker_unit, '--property=Type=exec',
                  '--property=TimeoutStopSec=30s', '--setenv=PATH='+self.runtime_path,
+                 '--setenv=NIX_PATH=nixpkgs='+self.prepared['nixpkgs'],
                  str(control), 'worker')
         print('Retour automatique armé pour 15 minutes ; essai lancé.', flush=True)
 
@@ -286,9 +295,35 @@ echo 'Ancienne génération, entrée NixOS et droits SQL rétablis ; données co
             self.run('systemctl', 'start', self.rollback_unit+'.service', visible=True)
             require((self.state/'rolled-back').exists(), 'Retour arrière non confirmé')
 
+    def preflight(self):
+        self.helper.check_original()
+        print('Précontrôle systemd : génération, Nixpkgs, sources, application et droits conformes.', flush=True)
+
+    def recover(self):
+        # Reprise ciblée de la première tentative, dont le journal prouve
+        # l’échec du précontrôle avant toute activation du candidat.
+        require(self.prepared['commit'] == '088d36c15f2fff9cecc4f25ff1b303fc29955042', 'Tentative non concernée')
+        require((self.state/'worker-failed').read_text().strip() == 'RuntimeError: nix-instantiate : code 1', 'Échec différent')
+        require(not any((self.state/name).exists() for name in
+                        ['rows-at-switch.json', 'database-identity.json', 'tested', 'committed']),
+                'L’essai a dépassé son précontrôle : réexaminer le retour')
+        self.helper.check_original()
+        require(self.run('systemctl', 'show', self.rollback_unit+'.timer', '--property=ActiveState', '--value').strip() == 'inactive', 'Ancien timer encore actif')
+        original = self.state/'rollback.first-attempt.sh'
+        require(not original.exists(), 'Récupération déjà engagée')
+        shutil.copy2(self.state/'rollback.sh', original)
+        self.rollback_script()
+        self.run('systemctl', 'reset-failed', self.rollback_unit+'.service')
+        self.run('systemctl', 'start', self.rollback_unit+'.service', visible=True)
+        require((self.state/'rolled-back').exists(), 'Retour complet non confirmé')
+        self.helper.check_original()
+        self.helper.save(self.state/'recovery.json', dict(operation=self.operation, time=time.time(),
+                                                       original_state_verified=True, complete_rollback_verified=True))
+        print('Retour complet vérifié, y compris les droits SQL ; ancienne tentative conservée.', flush=True)
+
 
 if __name__ == '__main__':
     mode, prepared, operation = sys.argv[1:]
-    require(mode in {'plan', 'start', 'worker', 'status', 'commit', 'abort'}, 'Opération inconnue')
+    require(mode in {'plan', 'start', 'worker', 'status', 'commit', 'abort', 'preflight', 'recover'}, 'Opération inconnue')
     migration = Migration(prepared, operation)
     getattr(migration, mode)()
