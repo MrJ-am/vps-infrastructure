@@ -7,6 +7,8 @@ La configuration a été activée et enregistrée le 18 septembre 2026 à 21:10 
 avec contrôles des services, SSH, HTTPS, droits SQL, conservation des données
 et restauration d'une sauvegarde dans une instance isolée.
 [Preuve de la bascule](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446).
+L'[audit final après publication](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35396774874)
+a également réussi à 21:26 UTC.
 
 La [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8) est fusionnée dans
 `master`, commit `841317fb87c8f81867ad884ca19ef93e8308838b`. Les consignes

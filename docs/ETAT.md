@@ -28,6 +28,12 @@ n'est plus à appliquer. Vision reste un exemple, sans service ni base activés.
 
 ## Contrôles et sauvegardes
 
+- [Audit final nº 35396774874](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35396774874),
+  commit `30decc1ab1deb39cd147dd289bd6a836e7a6c925`, réussi à 21:26 UTC après
+  la publication de Mémoire : génération active et par défaut attendue,
+  entrée NixOS persistante, retour désarmé, anciennes générations protégées,
+  quatre services actifs, PostgreSQL et ses droits conformes, version applicative
+  `841317fb87c8f81867ad884ca19ef93e8308838b` et onze contrôles HTTP/TLS réussis.
 - [Préparation nº 35395032430](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395032430) :
   sauvegarde des sources et de la base, construction avec le Nixpkgs installé,
   comparaison des invariants, restauration isolée et retour ciblé des ACL testé
