@@ -1,25 +1,39 @@
 # Transférer la configuration et partager PostgreSQL
 
-La préparation après audit est désormais concrétisée par
-`.github/workflows/migration.yml` et `scripts/migration-prepare.py`, sur
-demande `operations/migration-request.json` avec `operation: "prepare"`.
-Elle n'active aucun service et n'écrit pas en SQL dans la base de production.
-Elle conserve ses sauvegardes privées sous `/root/vps-migrations/<commit>/`
-et installe les sources candidates sous `/etc/nixos/vps-infrastructure/<commit>/`.
-Les étapes d'activation et d'enregistrement ci-dessous restent à exécuter
-séparément, après revue des résultats de cette préparation.
+**La migration initiale a été exécutée et vérifiée le 18 septembre 2026.**
+Les générations, sauvegardes et exécutions figurent dans [ETAT.md](ETAT.md).
+Les étapes ci-dessous décrivent la méthode de cette opération et les exigences
+à conserver pour une future évolution ; elles ne sont pas une demande de rejouer
+la bascule initiale.
 
-**Procédure préparatoire, non exécutée.** Elle doit être concrétisée après
-lecture du VPS réel par l'agent du projet VPS. Les commandes de construction
-et de contrôle ci-dessous ne remplacent pas cet audit. Aucun script de ce
-dossier ne lance automatiquement une activation.
+`migration.yml` exécute `scripts/migration-prepare.py` sur demande
+`operations/migration-request.json` (`operation: "prepare"`). Il sauvegarde,
+construit et restaure dans une instance isolée, sans activation ni écriture SQL
+de production. `activate-migration.yml` exécute ensuite le plan (`plan`), puis
+l'essai et l'enregistrement (`activate`) depuis `operations/activation-request.json`.
+Les sources et sauvegardes restent sous `/etc/nixos/vps-infrastructure/<commit>/`
+et `/root/vps-migrations/<commit>/`.
+
+Le plan vérifie les préconditions dans le même contexte systemd que l'essai,
+avec Nixpkgs et les outils explicitement fixés, et vérifie le timer indépendant.
+L'essai arme un retour à quinze minutes, conserve le verrou de publication,
+teste la génération et les sauvegardes, puis attend les contrôles SSH/HTTP du
+runner. L'enregistrement est interdit après un échec ou le début du retour.
+Les droits SQL sont rétablis par un fichier privé ouvert par root et transmis
+à `psql` par l'entrée standard ; aucun dump n'est restauré en production.
+
+Ces scripts contiennent les préconditions de l'audit initial et refusent de
+rejouer une tentative déjà engagée. Pour une nouvelle migration, relever l'état
+courant et préparer de nouvelles préconditions, sauvegardes et règles de retour.
+Après enregistrement, le script de retour de l'essai devient volontairement
+inopérant ; tout retour ultérieur est une opération distincte à préparer.
 
 Depuis ChatGPT Work, les commandes distantes de cette procédure doivent être
 exécutées par un runner GitHub Actions ; voir [ACCES.md](ACCES.md). Work ne
 dispose pas d'accès SSH direct. Le workflow manuel `audit.yml` prend en charge
 les inventaires en lecture seule. Les étapes de construction, de bascule et
-de retour arrière doivent être concrétisées dans un workflow de migration
-distinct avant leur exécution ; elles ne sont pas automatisées par cet audit.
+de retour arrière utilisent les workflows distincts décrits ci-dessus ;
+elles ne sont pas automatisées par cet audit.
 
 La première préparation ne déplaçait que Nginx. Le candidat comprend désormais
 le transfert de PostgreSQL et des restrictions HBA/SQL explicites. Les versions,
@@ -227,13 +241,13 @@ dépôt d'infrastructure, commits, génération, date des contrôles et sauvegar
 de retour. Faire passer la PR nº 8 en revue puis l'intégrer selon le workflow
 du propriétaire. Vérifier sa publication applicative et ses sauvegardes.
 
-Le projet mémoire doit alors continuer à publier uniquement l'application.
+Le projet mémoire continue alors à publier uniquement l'application.
 Toute évolution du module applicatif se transmet à ce dépôt par une mise à
 jour explicite de la copie revue ; la publication courante ne contrôle jamais
-Nginx, PostgreSQL, les domaines ou le système. Le projet Mémoire reprend aussi
-le patch PostgreSQL et la compatibilité historique décrits dans
-[MESSAGE-MEMOIRE.md](MESSAGE-MEMOIRE.md). Remplacer ensuite l'adaptation locale
-par sa copie amont revue, avec commit et empreinte actualisés.
+Nginx, PostgreSQL, les domaines ou le système. Pour la migration initiale,
+Mémoire a déjà repris le patch PostgreSQL au commit `0bcdaf101cbdacb85694ca217fd21ab3f2eac828`.
+Sa copie amont exacte et sa provenance sont intégrées dans ce dépôt ; le patch
+réversible est conservé uniquement comme historique. Ne pas le réappliquer.
 
 Références : [NixOS — changements de configuration](https://nixos.org/manual/nixos/stable/#sec-changing-config)
 et [Nginx — rechargement et validation](https://nginx.org/en/docs/control.html).

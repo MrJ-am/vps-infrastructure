@@ -4,9 +4,12 @@ Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
 plusieurs applications derrière une seule instance Nginx et partager une
 instance PostgreSQL 17 entre les projets qui en ont besoin.
 
-**État : préparé, pas encore installé sur le VPS.** Le dépôt GitHub privé
-est [MrJ-am/vps-infrastructure](https://github.com/MrJ-am/vps-infrastructure). Le relais côté mémoire est
-préparé dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8), en brouillon.
+**État : migration activée et enregistrée le 18 septembre 2026 à 21:10 UTC.**
+La [bascule vérifiée](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446)
+confirme les services, les données, les accès et les sauvegardes. Les sources
+installées correspondent à `fa059d61acfc8cf5c5bd7f3f9c83600787f2c6eb`.
+Le relais côté Mémoire est fusionné dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8).
+Lire [l'état attesté](docs/ETAT.md) pour les générations et les preuves.
 
 **Accès depuis ChatGPT Work : GitHub Actions.** Work prépare les changements
 et consulte les résultats ; les runners GitHub ouvrent les connexions SSH au
@@ -50,9 +53,11 @@ existantes sont conservés. Les deux certificats et leurs emplacements restent
 gérés par les mêmes options NixOS. Aucun changement de DNS n'est nécessaire
 pour cette séparation.
 
-La configuration provient du dépôt du mémoire, pas d'un nouvel audit du VPS.
-Lire [l'état attesté](docs/ETAT.md), puis [la procédure de migration](docs/MIGRATION.md).
-Les scripts fournis contrôlent la configuration ; aucun n'active NixOS.
+La configuration issue de Mémoire a été comparée au VPS réel et construite avec
+son Nixpkgs installé, sans mise à jour. Lire [la procédure de migration](docs/MIGRATION.md).
+`check.yml` et `audit.yml` contrôlent ; `migration.yml` prépare sans activer ;
+`activate-migration.yml` effectue le plan, l'essai protégé et l'enregistrement
+sur demande explicite. Ces scripts de migration sont dédiés à la bascule initiale.
 
 ```sh
 sh scripts/check.sh
@@ -72,7 +77,8 @@ sans une seconde base, puis les accès et les restaurations dans un PostgreSQL
 il ne remplace pas celui du VPS. Le workflow `check.yml` ne reçoit aucune clé
 root et ne déploie pas automatiquement. L'accès administratif du workflow
 manuel `audit.yml` est distinct, dans l'environnement `vps-production`.
-Une construction NixOS complète et un audit restent requis sur le VPS.
+La migration initiale a également été construite et vérifiée sur le VPS réel.
+Toute nouvelle évolution du système exige un nouvel audit et son propre plan.
 
 Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).
 Pour les accès, lire [ACCES.md](docs/ACCES.md).
