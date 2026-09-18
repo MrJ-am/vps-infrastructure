@@ -31,6 +31,7 @@ jobs:
           print('Demande de diagnostic :', request['id'])
           PY
       - name: Préparer la clé administrative
+        id: ssh
         env:
           SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
         run: |
@@ -47,8 +48,10 @@ jobs:
       - name: Lire l'état du système et des services
         run: sh scripts/connect.sh sh -s < scripts/audit.sh
       - name: Lire les bases et les droits PostgreSQL
+        if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: sh scripts/connect.sh sh -s < scripts/audit-postgresql.sh
       - name: Vérifier les points d'accès publics
+        if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: python3 scripts/probe.py
       - name: Effacer la clé temporaire du runner
         if: always()
