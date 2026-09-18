@@ -1,5 +1,37 @@
 # État attesté au 18 septembre 2026
 
+## Reprise de la migration complète
+
+- Le propriétaire autorise la migration du VPS et de Mémoire, via GitHub
+  Actions. La reprise amont du module Matheval au commit
+  `0bcdaf101cbdacb85694ca217fd21ab3f2eac828` est intégrée sans changement
+  d'octets dans `vendor/matheval/`. Sa provenance et le patch historique sont
+  conservés ; ce patch ne doit plus être appliqué au module courant.
+- Commit VPS de cette intégration :
+  `e0f0c33a312708a54babdbfca00bd958682845b0`.
+  Sa [CI complète](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35324107270)
+  a réussi (registres, NixOS et PostgreSQL isolé).
+- Les consignes de Mémoire sont actualisées sur la branche de la PR nº 8,
+  commit `fdd71f8ea63da9e65f40cd59f4e6d5ea3ba942ad`. Elle reste non fusionnée,
+  pour finaliser le relais après la bascule serveur vérifiée.
+- La demande `operations/audit-request.json` permet désormais de lancer
+  l'audit depuis Work avec les outils GitHub, sans connexion SSH directe ni
+  déclenchement manuel dans le navigateur.
+- Première exécution : [audit nº 35324107274](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35324107274).
+  Échec à la préparation de la clé : `VPS_ADMIN_SSH_KEY` est vide ou inaccessible
+  au job de l'environnement `vps-production`. Les trois étapes serveur/HTTP
+  ont été ignorées. Le nettoyage du runner a réussi ; aucun accès au VPS n'a
+  eu lieu dans cette exécution.
+- La clé administrative existante se trouve dans l'archive privée déjà
+  fournie. Sa valeur n'est pas publiée. La configuration du secret GitHub
+  reste à effectuer ; le connecteur ne fournit pas cette opération et la
+  connexion du navigateur a échoué à la validation à deux facteurs (demande
+  mobile expirée, puis message GitHub « Two-factor authentication failed »).
+  La connexion doit être terminée par le propriétaire avant cette configuration.
+- La migration serveur et l'intégration finale de la PR nº 8 restent en
+  attente d'un audit administratif réussi. Aucune activation, modification
+  SQL ou restauration n'a été exécutée à ce stade.
+
 ## Mode d'accès retenu : GitHub Actions
 
 - Le propriétaire confirme l'absence d'accès SSH direct depuis ChatGPT Work.
