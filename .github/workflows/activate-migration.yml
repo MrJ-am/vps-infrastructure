@@ -26,7 +26,7 @@ jobs:
           from pathlib import Path
           request = json.loads(Path('operations/activation-request.json').read_text())
           assert set(request) == {'id', 'operation', 'prepared_commit'}
-          assert request['operation'] in {'plan', 'activate'}
+          assert request['operation'] in {'plan', 'activate', 'recover'}
           assert re.fullmatch(r'[a-z0-9-]{1,80}', request['id'])
           assert re.fullmatch(r'[0-9a-f]{40}', request['prepared_commit'])
           assert re.fullmatch(r'[0-9a-f]{40}', os.environ['GITHUB_SHA'])
@@ -52,6 +52,11 @@ jobs:
         run: |
           sh scripts/connect.sh 'for tool in bash flock cp mv systemctl nix-env runuser psql touch readlink; do test -x "/nix/store/5840x51nc7d2s7gw0zfyy6my47j6nh1i-nixos-system-nixos-26.05.8639.c5c4a43b0e80/sw/bin/$tool" || exit 1; done'
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA; tar -xf - -C /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA"
+      - name: Terminer le retour de la tentative interrompue
+        if: env.OPERATION == 'recover'
+        run: |
+          sh scripts/connect.sh "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15/bin/python3.13 /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA/scripts/migration-activate.py recover $PREPARED_COMMIT $GITHUB_SHA"
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
       - name: Préparer le plan et répéter le déclenchement indépendant
         if: env.OPERATION == 'plan'
         run: |
