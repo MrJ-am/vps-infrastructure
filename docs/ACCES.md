@@ -19,12 +19,12 @@ dans les modules et `ssh-known-hosts` sont exclusivement publiques.
 
 ## Accès administratif
 
-L'hôte vérifié historiquement est `root@187.77.95.158`, port 22 ; empreinte
+L'hôte vérifié pendant la migration est `root@187.77.95.158`, port 22 ; empreinte
 ED25519 du serveur : `SHA256:0FOvxV7dd/mibk8/zo9TPaVJfZLPAo2qEjN0rLcN8Xk`.
 `scripts/connect.sh` utilise sa clé publique connue, refuse un autre hôte et
 ne demande pas de mot de passe.
 
-La clé root existante peut être réutilisée pour la migration. Son nom local
+La clé root existante a été réutilisée pour la migration. Son nom local
 historique `matheval_admin` ne signifie pas que l'application Matheval doit
 conserver les droits d'administration. Aucun changement de clé n'est nécessaire
 pour déplacer la configuration. La clé CI `matheval_deploy` reste séparée.
@@ -44,15 +44,17 @@ une clé pour résoudre ce blocage.
 Le workflow `.github/workflows/audit.yml`, **Auditer le VPS**, se lance
 manuellement sur `main` ou lors d'un commit sur `main` modifiant uniquement
 la demande `operations/audit-request.json` (avec, si nécessaire, les sources
-revues du diagnostic). Il ouvre deux connexions avec `scripts/connect.sh`
-pour exécuter `scripts/audit.sh` et `scripts/audit-postgresql.sh` via l'entrée
+revues du diagnostic). Il ouvre des connexions avec `scripts/connect.sh`
+pour exécuter `scripts/diagnose-migration.sh`, `scripts/audit.sh` et
+`scripts/audit-postgresql.sh` via l'entrée
 standard, sans installer de fichiers ni reconstruire NixOS. Il n'accepte pas
 de commande libre. Ses journaux contiennent l'inventaire technique, sans
 lecture des réponses collectées, mots de passe ou clés privées.
 
-Préparer dans ce dépôt l'environnement GitHub **`vps-production`**, limité
-à la branche `main`, et son secret **`VPS_ADMIN_SSH_KEY`** contenant la clé
-administrative existante. Ne jamais placer sa valeur dans Git, une variable
+L'environnement GitHub **`vps-production`** est configuré dans ce dépôt,
+limité à la branche `main` (aucun tag). Son secret **`VPS_ADMIN_SSH_KEY`**
+contient la clé administrative existante, enregistrée avec l'autorisation du
+propriétaire. Ne jamais placer sa valeur dans Git, une variable
 publique, un journal ou un message. La clé d'hôte publique est déjà figée dans
 `scripts/ssh-known-hosts` ; la vérification stricte reste obligatoire.
 Sans ce secret, le workflow échoue explicitement avant toute connexion.
@@ -77,9 +79,9 @@ effectivement réussies dans `docs/ETAT.md`. Distinguer workflow préparé,
 workflow exécuté et changement appliqué au serveur. La présence du fichier
 YAML ou la réussite de `check.yml` ne valide pas l'accès administratif.
 
-La future activation de l'infrastructure doit suivre `MIGRATION.md` dans un
-workflow dédié, avec commit identifié, contrôles et retour arrière sur le
-VPS. Le diagnostic actuel ne lance aucune activation. Le terminal hPanel
+L'activation initiale a réussi dans le workflow dédié, avec commit identifié,
+contrôles et retour indépendant. Toute évolution suit `MIGRATION.md` avec un
+nouvel audit et un retour adapté. Le diagnostic ne lance aucune activation. Le terminal hPanel
 reste la voie de récupération indépendante si GitHub ou SSH devient indisponible.
 
 Si la clé administrative a été perdue, une session root déjà ouverte ou le

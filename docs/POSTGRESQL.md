@@ -1,8 +1,10 @@
 # PostgreSQL partagé : contrat d'infrastructure
 
-**Préparé dans les sources, non activé sur le VPS.** Cette étape transfère
-la gestion de PostgreSQL depuis Matheval vers l'infrastructure. Elle conserve
-PostgreSQL 17 et les données existantes ; elle renforce les règles d'accès.
+**Activé et vérifié le 18 septembre 2026**, dans
+[l'exécution de migration](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446).
+La gestion de PostgreSQL appartient désormais à l'infrastructure. PostgreSQL
+17.11, son répertoire de données et les lignes existantes sont conservés ;
+les restrictions d'accès et la restauration d'une sauvegarde ont été vérifiées.
 
 ## Responsabilités et raccordement
 

@@ -9,7 +9,7 @@
 - Pour constater un état serveur, lire les journaux d'une exécution Actions
   identifiée par son URL et son commit. Un test local ou une CI sans connexion
   au VPS ne prouve pas cet état. Le diagnostic manuel est décrit dans
-  `docs/ACCES.md` ; la migration reste une opération distincte à préparer.
+  `docs/ACCES.md` ; chaque migration constitue une opération distincte à préparer.
 - Ce dépôt possède la configuration NixOS de la machine, Nginx, ACME, SSH,
   le pare-feu, PostgreSQL, ses bases/rôles/accès et sauvegardes locales,
   ainsi que l'attribution des domaines/ports. Les projets applicatifs ne
@@ -40,6 +40,11 @@
 - Le retour de génération NixOS ne restaure pas les ACL et attributs de rôles
   modifiés en SQL. Préparer leur retour ciblé avant activation, sans écraser
   les données collectées. Vision n'est pas activé par son exemple d'intégration.
-- Les scripts fournis effectuent des contrôles ; ils n'activent pas le système.
+- La migration initiale a été activée et enregistrée le 18 septembre 2026,
+  exécution Actions `35395320446`. Lire les générations dans `docs/ETAT.md`.
+  Les workflows `check.yml` et `audit.yml` ne déploient pas. `migration.yml`
+  prépare ; `activate-migration.yml` active uniquement sur demande distincte.
+  Leurs garde-fous sont liés à l'audit initial : ne pas les contourner pour une
+  nouvelle opération, mais préparer un nouvel audit et un retour adapté.
 - Après les contrôles pertinents, commit en français et push sur une branche
   dédiée. La publication d'applications et celle de l'infrastructure sont séparées.

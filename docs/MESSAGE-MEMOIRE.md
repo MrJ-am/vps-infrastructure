@@ -1,33 +1,39 @@
-# État de la migration à transmettre au projet Mémoire
+# Message à transmettre au projet Mémoire
 
-La migration complète VPS / Mémoire est autorisée et en cours de préparation,
-mais **la bascule serveur n'a pas été exécutée**.
+La migration du VPS est terminée : Nginx, HTTPS, NixOS et PostgreSQL sont
+maintenant gérés par le dépôt privé
+[MrJ-am/vps-infrastructure](https://github.com/MrJ-am/vps-infrastructure).
+La configuration a été activée et enregistrée le 18 septembre 2026 à 21:10 UTC,
+avec contrôles des services, SSH, HTTPS, droits SQL, conservation des données
+et restauration d'une sauvegarde dans une instance isolée.
+[Preuve de la bascule](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446).
 
-VPS a intégré la provenance exacte de `deploy/matheval.nix` au commit amont
-`0bcdaf101cbdacb85694ca217fd21ab3f2eac828`, sans modifier ses octets. Le commit
-VPS est `e0f0c33a312708a54babdbfca00bd958682845b0` ; sa CI NixOS et PostgreSQL
-a réussi. Ne plus appliquer le patch PostgreSQL au module : il est déjà repris.
+La [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8) est fusionnée dans
+`master`, commit `841317fb87c8f81867ad884ca19ef93e8308838b`. Les consignes
+`AGENTS.md`, `deploy/INFRASTRUCTURE.org`, `deploy/REPRISE.org` et
+`deploy/README.org` sont actualisées. Repars de `master` et lis ces fichiers.
+Les tests et la [publication de ce commit](https://github.com/MrJ-am/M-moire/actions/runs/35396161100)
+ont réussi, avec vérification des fichiers servis après déploiement.
+Le module Matheval adapté est déjà intégré côté VPS : ne réapplique pas le patch
+PostgreSQL. Les modules `legacy-*` restent uniquement des archives reconstructibles.
 
-La PR nº 8 de Mémoire a été actualisée au commit
-`fdd71f8ea63da9e65f40cd59f4e6d5ea3ba942ad` avec les consignes d'accès via GitHub
-Actions. Elle reste en brouillon et non fusionnée jusqu'à la bascule vérifiée.
+Mémoire conserve l'application, les données, le schéma et ses migrations, les
+publications et les exports chiffrés. VPS gère l'instance PostgreSQL, les bases,
+les rôles, les règles d'accès et les sauvegardes locales. Le raccordement reste
+`https://principiipetit.io/matheval/` vers `127.0.0.1:3000`, avec le socket
+`/run/postgresql` et la base/rôle/compte Unix `matheval`. Toute évolution de ce
+contrat ou du module NixOS doit être intégrée explicitement par VPS.
 
-Le premier [diagnostic administratif GitHub Actions](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35324107274)
-s'est arrêté avant toute connexion : le secret `VPS_ADMIN_SSH_KEY` n'est pas
-disponible au workflow du dépôt VPS. La clé administrative existante est dans
-l'archive privée ; la configuration du secret attend la connexion GitHub à
-deux facteurs. Aucun changement système, SQL, de données ou de sauvegarde
-n'a été exécuté lors de cette reprise.
+Depuis ChatGPT Work, tout accès distant passe par GitHub Actions ; aucun SSH
+direct n'est disponible. Les publications et sauvegardes utilisent toujours
+`matheval-deploy`, sans clé root dans Mémoire. La
+[sauvegarde après migration](https://github.com/MrJ-am/M-moire/actions/runs/35396161367)
+a réussi. Une modification de `deploy/backup-request.json` sur `master` permet
+désormais de déclencher cet export depuis Work ; son horaire quotidien reste inchangé.
 
-Depuis Work, les opérations distantes passent par GitHub Actions. Ne pas
-retenter SSH directement. VPS peut désormais déclencher son audit en publiant
-une demande `operations/audit-request.json`, puis lire les résultats du commit.
-
-Mémoire conserve les données, le schéma, les migrations, les publications et
-l'export chiffré. VPS prend en charge Nginx, HTTPS, NixOS, PostgreSQL, les bases,
-les rôles, les accès et les sauvegardes locales. La configuration historique
-reste reconstructible. Ne pas copier isolément le module adapté sur le VPS,
-importer les modules `legacy-*` dans la nouvelle infrastructure ni reconstruire
-NixOS depuis Mémoire. Les prochaines étapes côté VPS sont l'audit, la
-construction avec le Nixpkgs installé, les sauvegardes et le retour arrière,
-puis l'activation et ses contrôles avant la finalisation de la PR nº 8.
+Les générations, sauvegardes de retour et preuves sont consignées dans
+[ETAT.md](https://github.com/MrJ-am/vps-infrastructure/blob/main/docs/ETAT.md)
+et `deploy/INFRASTRUCTURE.org`. Le VPS n'a pas été redémarré ; le démarrage de
+la configuration est enregistré mais n'a pas été testé par un redémarrage réel.
+Ne reconstruis pas NixOS depuis Mémoire et garde les tests de collecte dans des
+bases isolées. Tu peux poursuivre le développement applicatif sur cette base.
