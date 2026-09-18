@@ -1,0 +1,107 @@
+name: Activer le candidat VPS vérifié
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [operations/activation-request.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  activate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la demande de bascule
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          request = json.loads(Path('operations/activation-request.json').read_text())
+          assert set(request) == {'id', 'operation', 'prepared_commit'}
+          assert request['operation'] in {'plan', 'activate'}
+          assert re.fullmatch(r'[a-z0-9-]{1,80}', request['id'])
+          assert re.fullmatch(r'[0-9a-f]{40}', request['prepared_commit'])
+          assert re.fullmatch(r'[0-9a-f]{40}', os.environ['GITHUB_SHA'])
+          with open(os.environ['GITHUB_ENV'], 'a') as output:
+              output.write('PREPARED_COMMIT='+request['prepared_commit']+'\n')
+              output.write('OPERATION='+request['operation']+'\n')
+          print(request['id'], request['operation'], request['prepared_commit'])
+          PY
+      - name: Préparer la clé administrative
+        id: ssh
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-activation-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Relever les réponses publiques avant opération
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Transférer le programme opérateur identifié
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA; tar -xf - -C /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA"
+      - name: Préparer le plan et répéter le déclenchement indépendant
+        if: env.OPERATION == 'plan'
+        run: |
+          sh scripts/connect.sh "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15/bin/python3.13 /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA/scripts/migration-activate.py plan $PREPARED_COMMIT $GITHUB_SHA"
+          sleep 8
+          sh scripts/connect.sh "test -f /root/vps-migrations/$PREPARED_COMMIT/rehearsal-fired"
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Armer le retour puis lancer l’essai sous verrou de publication
+        if: env.OPERATION == 'activate'
+        id: start
+        run: |
+          sh scripts/connect.sh "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15/bin/python3.13 /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA/scripts/migration-activate.py start $PREPARED_COMMIT $GITHUB_SHA"
+      - name: Attendre les contrôles locaux avec une nouvelle connexion SSH
+        if: env.OPERATION == 'activate'
+        run: |
+          for attempt in $(seq 1 90); do
+            status=$(sh scripts/connect.sh "/root/vps-migrations/$PREPARED_COMMIT/control status")
+            case "$status" in
+              tested) break ;;
+              failed|rollback-started|rolled-back) echo "Échec de l’essai : $status"; exit 1 ;;
+            esac
+            sleep 5
+          done
+          test "$status" = tested
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql matheval
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Récupérer l’export chiffré après essai
+        if: env.OPERATION == 'activate'
+        run: |
+          umask 077
+          mkdir "$RUNNER_TEMP/migration-after"
+          sh scripts/connect.sh "cat /root/vps-migrations/$PREPARED_COMMIT/matheval-after.dump.age" > "$RUNNER_TEMP/migration-after/matheval-after.dump.age"
+          test -s "$RUNNER_TEMP/migration-after/matheval-after.dump.age"
+          cp "$RUNNER_TEMP/http-before.json" "$RUNNER_TEMP/migration-after/http-before.json"
+      - uses: actions/upload-artifact@v4
+        if: env.OPERATION == 'activate'
+        with:
+          name: migration-after-${{ github.sha }}
+          path: ${{ runner.temp }}/migration-after/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Enregistrer exactement le candidat testé et désarmer le retour
+        if: env.OPERATION == 'activate'
+        run: sh scripts/connect.sh "/root/vps-migrations/$PREPARED_COMMIT/control commit"
+      - name: Vérifier les points d’accès après enregistrement
+        if: env.OPERATION == 'activate'
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Déclencher le retour indépendant en cas d’échec avant enregistrement
+        if: ${{ failure() && env.OPERATION == 'activate' && steps.ssh.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh "if test -x /root/vps-migrations/$PREPARED_COMMIT/control; then /root/vps-migrations/$PREPARED_COMMIT/control abort; fi"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-activation-admin"
