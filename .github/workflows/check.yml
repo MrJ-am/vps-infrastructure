@@ -25,6 +25,9 @@ jobs:
           tar -xzf "$RUNNER_TEMP/nixpkgs.tar.gz" -C "$RUNNER_TEMP"
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/system.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/migration-config.nix \
+            --argstr configuration "$PWD/hosts/hostinger/configuration.nix" >/dev/null
       - name: Vérifier PostgreSQL 17 et les restaurations dans un conteneur jetable
         run: |
           sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
