@@ -310,11 +310,14 @@ echo 'Ancienne génération, entrée NixOS et droits SQL rétablis ; données co
         self.helper.check_original()
         require(self.run('systemctl', 'show', self.rollback_unit+'.timer', '--property=ActiveState', '--value').strip() == 'inactive', 'Ancien timer encore actif')
         original = self.state/'rollback.first-attempt.sh'
-        require(not original.exists(), 'Récupération déjà engagée')
-        shutil.copy2(self.state/'rollback.sh', original)
+        if not original.exists():
+            shutil.copy2(self.state/'rollback.sh', original)
         self.rollback_script()
-        self.run('systemctl', 'reset-failed', self.rollback_unit+'.service')
-        self.run('systemctl', 'start', self.rollback_unit+'.service', visible=True)
+        # Après expiration, systemd peut collecter l’ancienne unité transitoire.
+        # Employer une nouvelle unité autonome identifiée par cette correction.
+        self.run('systemd-run', '--unit=vps-recover-'+self.operation[:12], '--wait', '--pipe', '--collect',
+                 '--property=Type=oneshot', '--property=TimeoutStartSec=5min',
+                 str(self.state/'rollback.sh'), visible=True)
         require((self.state/'rolled-back').exists(), 'Retour complet non confirmé')
         self.helper.check_original()
         self.helper.save(self.state/'recovery.json', dict(operation=self.operation, time=time.time(),
