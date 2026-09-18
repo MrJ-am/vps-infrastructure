@@ -58,7 +58,10 @@ class Migration:
         # Script autonome, outils de l’ancienne génération, aucune dépendance au
         # code applicatif/candidat, aucune reconstruction ni restauration de données.
         q = shlex.quote
-        binaries = {name: str(Path(shutil.which(name)).resolve()) for name in
+        # Conserver argv[0] : certains outils NixOS sont des liens vers un
+        # exécutable multicall (coreutils). Résoudre le dernier lien change
+        # leur commande. Le profil de l’ancienne génération est déjà figé.
+        binaries = {name: self.prepared['old_system']+'/sw/bin/'+name for name in
                     ['bash', 'flock', 'cp', 'mv', 'systemctl', 'nix-env', 'runuser', 'psql', 'touch', 'readlink']}
         state, old, boot = str(self.state), self.prepared['old_system'], self.prepared['old_boot']
         script = f'''#!{binaries['bash']}
@@ -106,7 +109,7 @@ echo 'Ancienne génération, entrée NixOS et droits SQL rétablis ; données co
             rehearsal.unlink()
         self.run('systemd-run', '--unit=vps-rehearsal-'+self.operation[:12], '--on-active=5s',
                  '--timer-property=AccuracySec=1s', '--collect',
-                 str(Path(shutil.which('touch')).resolve()), rehearsal)
+                 self.prepared['old_system']+'/sw/bin/touch', rehearsal)
         self.helper.save(self.state/'plan.json', dict(operation=self.operation, candidate=self.prepared['candidate'],
                                                     program_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                                                     rollback_script_checked=True, time=time.time()))
