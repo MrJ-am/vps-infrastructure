@@ -5,6 +5,7 @@ Aucune activation NixOS et aucune écriture SQL de production. Sources auditées
 dans Actions 35349054287 ; une dérive exige une nouvelle revue.
 """
 import hashlib
+import difflib
 import json
 import os
 from pathlib import Path
@@ -191,7 +192,18 @@ def prepare(commit):
     # Toute autre différence est examinée avant de permettre l’activation.
     allowed = {'systemd/system/matheval.service', 'systemd/system/postgresql.service',
                'systemd/system/postgresql-setup.service'}
+    wanted = 'systemd/system/multi-user.target.wants/matheval.service'
+    for system in [OLD_SYSTEM, candidate]:
+        require((Path(system)/'etc'/wanted).resolve() ==
+                (Path(system)/'etc/systemd/system/matheval.service').resolve(),
+                'Lien de démarrage Matheval inattendu')
+    allowed.add(wanted)
     require(set(changes) <= allowed, 'Différences supplémentaires à revoir avant activation')
+    for name in sorted(allowed - {wanted}):
+        old_text = (Path(OLD_SYSTEM)/'etc'/name).read_text().splitlines(keepends=True)
+        new_text = (Path(candidate)/'etc'/name).read_text().splitlines(keepends=True)
+        print(''.join(difflib.unified_diff(old_text, new_text, fromfile='actif/'+name,
+                                         tofile='candidat/'+name)), flush=True)
     for name in ['kernel', 'initrd', 'kernel-modules']:
         require((Path(OLD_SYSTEM)/name).resolve() == (Path(candidate)/name).resolve(), 'Élément de démarrage modifié : '+name)
     require(before['nginx'] == after['nginx'], 'Configuration ou binaire Nginx modifié')
