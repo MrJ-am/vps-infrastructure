@@ -108,6 +108,10 @@ jobs:
         if: ${{ failure() && env.OPERATION == 'activate' && steps.ssh.outcome == 'success' }}
         run: |
           sh scripts/connect.sh "if test -x /root/vps-migrations/$PREPARED_COMMIT/control; then /root/vps-migrations/$PREPARED_COMMIT/control abort; fi"
+      - name: Lire les journaux opérateur en cas d’échec
+        if: ${{ failure() && steps.ssh.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh "journalctl --no-pager -n 100 -u vps-test-${PREPARED_COMMIT:0:12}.service -u vps-rollback-${PREPARED_COMMIT:0:12}.service -u vps-recover-${GITHUB_SHA:0:12}.service"
       - name: Effacer la clé du runner
         if: always()
         run: rm -f -- "$RUNNER_TEMP/vps-activation-admin"
