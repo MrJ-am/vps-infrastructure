@@ -1,6 +1,15 @@
 # Infrastructure VPS
 
 - Lire README.md, docs/MIGRATION.md, docs/POSTGRESQL.md et docs/ETAT.md avant toute intervention.
+- Depuis ChatGPT Work, aucun accès SSH direct au VPS n'est disponible. C'est
+  le fonctionnement retenu par le propriétaire : ne pas retenter SSH depuis
+  Work, ni lui redemander une clé pour résoudre cette limitation réseau.
+  Préparer les commandes dans ce dépôt et utiliser GitHub Actions pour les
+  exécuter sur le VPS. Les connexions SSH sont celles des runners GitHub.
+- Pour constater un état serveur, lire les journaux d'une exécution Actions
+  identifiée par son URL et son commit. Un test local ou une CI sans connexion
+  au VPS ne prouve pas cet état. Le diagnostic manuel est décrit dans
+  `docs/ACCES.md` ; la migration reste une opération distincte à préparer.
 - Ce dépôt possède la configuration NixOS de la machine, Nginx, ACME, SSH,
   le pare-feu, PostgreSQL, ses bases/rôles/accès et sauvegardes locales,
   ainsi que l'attribution des domaines/ports. Les projets applicatifs ne

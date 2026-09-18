@@ -8,6 +8,13 @@ instance PostgreSQL 17 entre les projets qui en ont besoin.
 est [MrJ-am/vps-infrastructure](https://github.com/MrJ-am/vps-infrastructure). Le relais côté mémoire est
 préparé dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8), en brouillon.
 
+**Accès depuis ChatGPT Work : GitHub Actions.** Work prépare les changements
+et consulte les résultats ; les runners GitHub ouvrent les connexions SSH au
+VPS. Ne pas chercher à rétablir un accès SSH direct depuis Work. Le workflow
+manuel [Auditer le VPS](.github/workflows/audit.yml) utilise les scripts de
+lecture seule ; sa configuration initiale est détaillée dans
+[ACCES.md](docs/ACCES.md). Il n'active pas la migration.
+
 | Ce dépôt | Chaque projet applicatif |
 |---|---|
 | NixOS, démarrage, réseau, SSH, pare-feu | Code, tests et contenu |
@@ -62,7 +69,9 @@ redirections et empreintes de fichiers publics, jamais les réponses privées.
 La CI vérifie les registres, le routage, l'évaluation NixOS complète avec et
 sans une seconde base, puis les accès et les restaurations dans un PostgreSQL
 17 jetable. Son Nixpkgs de validation est identifié dans `tests/nixpkgs.json` ;
-il ne remplace pas celui du VPS. Elle ne détient aucune clé root et ne déploie pas automatiquement.
+il ne remplace pas celui du VPS. Le workflow `check.yml` ne reçoit aucune clé
+root et ne déploie pas automatiquement. L'accès administratif du workflow
+manuel `audit.yml` est distinct, dans l'environnement `vps-production`.
 Une construction NixOS complète et un audit restent requis sur le VPS.
 
 Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).

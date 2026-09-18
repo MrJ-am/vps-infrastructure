@@ -5,6 +5,13 @@ lecture du VPS réel par l'agent du projet VPS. Les commandes de construction
 et de contrôle ci-dessous ne remplacent pas cet audit. Aucun script de ce
 dossier ne lance automatiquement une activation.
 
+Depuis ChatGPT Work, les commandes distantes de cette procédure doivent être
+exécutées par un runner GitHub Actions ; voir [ACCES.md](ACCES.md). Work ne
+dispose pas d'accès SSH direct. Le workflow manuel `audit.yml` prend en charge
+les inventaires en lecture seule. Les étapes de construction, de bascule et
+de retour arrière doivent être concrétisées dans un workflow de migration
+distinct avant leur exécution ; elles ne sont pas automatisées par cet audit.
+
 La première préparation ne déplaçait que Nginx. Le candidat comprend désormais
 le transfert de PostgreSQL et des restrictions HBA/SQL explicites. Les versions,
 les chemins et les données sont conservés, mais une interruption brève des
@@ -13,8 +20,9 @@ reclassement de fichiers sans effet. Lire aussi [POSTGRESQL.md](POSTGRESQL.md).
 
 ## 1. Auditer et figer les sources
 
-- Vérifier l'identité SSH avec `scripts/connect.sh` et ouvrir une seconde
-  session. Confirmer que le terminal hPanel permet une récupération.
+- Vérifier l'identité SSH depuis le runner avec `scripts/connect.sh` et ouvrir
+  une seconde connexion indépendante. Confirmer que le terminal hPanel permet
+  une récupération.
 - Lire les consignes et les fichiers NixOS effectivement importés. Comparer
   leur contenu aux sources d'origine `d8d0f17` du mémoire : intégrer dans le
   candidat toute différence légitime. Ne pas écraser des réglages apparus
