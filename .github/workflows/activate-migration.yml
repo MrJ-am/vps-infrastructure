@@ -50,6 +50,7 @@ jobs:
         run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
       - name: Transférer le programme opérateur identifié
         run: |
+          sh scripts/connect.sh 'for tool in bash flock cp mv systemctl nix-env runuser psql touch readlink; do test -x "/nix/store/5840x51nc7d2s7gw0zfyy6my47j6nh1i-nixos-system-nixos-26.05.8639.c5c4a43b0e80/sw/bin/$tool" || exit 1; done'
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA; tar -xf - -C /root/vps-migrations/$PREPARED_COMMIT/operator/$GITHUB_SHA"
       - name: Préparer le plan et répéter le déclenchement indépendant
         if: env.OPERATION == 'plan'
