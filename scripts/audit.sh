@@ -5,6 +5,8 @@ printf '%s\n' 'Version NixOS et générations'
 nixos-version
 readlink -f /run/current-system
 readlink -f /nix/var/nix/profiles/system
+printf '%s\n' 'Source Nixpkgs installée, sans mise à jour'
+nix-instantiate --find-file nixpkgs
 printf '%s\n' 'Services existants'
 systemctl is-active sshd nginx postgresql matheval
 printf '%s\n' 'Ports en écoute'
@@ -19,3 +21,9 @@ printf '\n%s\n' 'Planification des certificats et sauvegardes'
 systemctl list-timers --all --no-pager 'acme*' 'postgresqlBackup*'
 printf '%s\n' 'Sources NixOS à comparer avec le candidat'
 rg --files /etc/nixos -g '*.nix'
+printf '%s\n' 'Empreintes des sources NixOS, sans afficher leur contenu'
+while IFS= read -r source; do
+    sha256sum -- "$source"
+done <<EOF
+$(rg --files /etc/nixos -g '*.nix')
+EOF

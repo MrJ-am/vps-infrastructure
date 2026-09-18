@@ -39,11 +39,15 @@ class DatabaseChecks(unittest.TestCase):
 
     def test_local_patch_recovers_exact_upstream_module(self):
         source = json.loads((ROOT / "vendor/matheval/source.json").read_text())
+        # La reprise amont a intégré notre adaptation sans changer ses octets.
+        # Garder la preuve de réversibilité du patch historique.
+        adaptation = source.get("historical_adaptation", source)
+        self.assertEqual(source["sha256"], adaptation["sha256"])
         with tempfile.TemporaryDirectory() as directory:
             recovered = Path(directory) / "upstream.nix"
             subprocess.run(["patch", "--batch", "--silent", "--reverse", "--output", str(recovered),
-                            str(ROOT / "vendor/matheval/matheval.nix"), str(ROOT / source["patch"])], check=True)
-            self.assertEqual(hashlib.sha256(recovered.read_bytes()).hexdigest(), source["upstream_sha256"])
+                            str(ROOT / "vendor/matheval/matheval.nix"), str(ROOT / adaptation["patch"])], check=True)
+            self.assertEqual(hashlib.sha256(recovered.read_bytes()).hexdigest(), adaptation["upstream_sha256"])
 
 
 if __name__ == "__main__":
