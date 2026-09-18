@@ -1,41 +1,33 @@
-# Message de reprise à transmettre au projet Mémoire
+# État de la migration à transmettre au projet Mémoire
 
-Le dépôt privé `MrJ-am/vps-infrastructure` reprend également PostgreSQL, en
-complément de Nginx, HTTPS et NixOS. Lire son `docs/POSTGRESQL.md`, son
-`docs/MIGRATION.md` et `patches/matheval-postgresql.patch`.
+La migration complète VPS / Mémoire est autorisée et en cours de préparation,
+mais **la bascule serveur n'a pas été exécutée**.
 
-Reprendre la PR nº 8 / branche `infra/separer-nginx` du dépôt `MrJ-am/M-moire`.
-Le patch est fondé sur `deploy/matheval.nix` au commit
-`c83308ddfeefa03dfbb6692773c3d1274c867936`. Le comparer à la version actuelle
-avant de l'appliquer ; les empreintes amont et adaptée figurent dans
-`vendor/matheval/source.json` du dépôt VPS.
+VPS a intégré la provenance exacte de `deploy/matheval.nix` au commit amont
+`0bcdaf101cbdacb85694ca217fd21ab3f2eac828`, sans modifier ses octets. Le commit
+VPS est `e0f0c33a312708a54babdbfca00bd958682845b0` ; sa CI NixOS et PostgreSQL
+a réussi. Ne plus appliquer le patch PostgreSQL au module : il est déjà repris.
 
-Modifications à reprendre côté Mémoire :
+La PR nº 8 de Mémoire a été actualisée au commit
+`fdd71f8ea63da9e65f40cd59f4e6d5ea3ba942ad` avec les consignes d'accès via GitHub
+Actions. Elle reste en brouillon et non fusionnée jusqu'à la bascule vérifiée.
 
-1. Retirer de `deploy/matheval.nix` les déclarations `services.postgresql` et
-   `services.postgresqlBackup`. L'infrastructure gère l'instance PostgreSQL 17,
-   la création de la base et du rôle `matheval`, les accès et les sauvegardes locales.
-2. Conserver le service applicatif, ses comptes, chemins, secrets, publications,
-   migrations et l'export chiffré `matheval-backup` avec son workflow Actions.
-   Cet export utilise `config.services.postgresql.package` au lieu d'imposer
-   `pkgs.postgresql_17`. Attendre aussi `postgresql-setup.service` avec `after`
-   et `requires` dans le service Matheval.
-3. Maintenir l'ancienne configuration complète reconstructible : conserver les
-   anciens blocs PostgreSQL et sauvegardes locales dans un fichier
-   `deploy/legacy-postgresql.nix`, conditionné par `services.matheval.enable`,
-   importé uniquement par `deploy/hostinger/configuration.nix`, comme pour
-   `legacy-nginx.nix`. Étendre le contrôle de syntaxe CI à ce fichier. Ce module
-   historique ne doit jamais être importé dans la nouvelle infrastructure.
-4. Actualiser `AGENTS.md`, `deploy/INFRASTRUCTURE.org`, `deploy/README.org` et
-   `deploy/REPRISE.org` avec cette répartition et l'URL réelle du dépôt VPS.
-   Le raccordement reste socket `/run/postgresql`, base/rôle/compte Unix
-   `matheval`, et HTTP `127.0.0.1:3000`, préfixe `/matheval`.
-5. Renvoyer au projet VPS le commit du module repris pour qu'il remplace sa
-   copie adaptée par une copie amont identifiée, puis mette à jour ses empreintes.
+Le premier [diagnostic administratif GitHub Actions](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35324107274)
+s'est arrêté avant toute connexion : le secret `VPS_ADMIN_SSH_KEY` n'est pas
+disponible au workflow du dépôt VPS. La clé administrative existante est dans
+l'archive privée ; la configuration du secret attend la connexion GitHub à
+deux facteurs. Aucun changement système, SQL, de données ou de sauvegarde
+n'a été exécuté lors de cette reprise.
 
-La migration serveur reste préparée, **non activée**. Aucun déplacement de
-données ni changement de version majeure n'est demandé. Les restrictions
-HBA/SQL et le retour arrière de leurs ACL doivent être vérifiés côté VPS.
-Ne pas copier isolément le nouveau module sur l'ancienne installation et ne
-pas reconstruire NixOS depuis Mémoire. La bascule porte sur la configuration
-complète et reste coordonnée par le projet VPS.
+Depuis Work, les opérations distantes passent par GitHub Actions. Ne pas
+retenter SSH directement. VPS peut désormais déclencher son audit en publiant
+une demande `operations/audit-request.json`, puis lire les résultats du commit.
+
+Mémoire conserve les données, le schéma, les migrations, les publications et
+l'export chiffré. VPS prend en charge Nginx, HTTPS, NixOS, PostgreSQL, les bases,
+les rôles, les accès et les sauvegardes locales. La configuration historique
+reste reconstructible. Ne pas copier isolément le module adapté sur le VPS,
+importer les modules `legacy-*` dans la nouvelle infrastructure ni reconstruire
+NixOS depuis Mémoire. Les prochaines étapes côté VPS sont l'audit, la
+construction avec le Nixpkgs installé, les sauvegardes et le retour arrière,
+puis l'activation et ses contrôles avant la finalisation de la PR nº 8.
