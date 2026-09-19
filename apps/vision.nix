@@ -2,7 +2,7 @@
 let
   site = (builtins.fromJSON (builtins.readFile ../projects.json)).vision;
   mobileLiveTestUsername = "mobile-live";
-  mobileLiveTestPasswordHash = "$6$V1s10nT4$Le6qYcMd.mb.LnFGVJeUta3gJK4TX/zpIglkIyZJNi/y8zcAT8FA1/qAod0oOzjfHOJmDAs2UDYQdiDFESlPx0";
+  mobileLiveTestPasswordHash = "$6$M0bLive26$eKajMiudVvi4/NSD3YFmHxun73Wiv5rR750TUzt.dwrT5urrD07wQ4kP9VB8hrmDJogaGiH7mYnQC75GplKtL1";
   mobileLiveTestAuthFile = "/var/lib/vision/auth/mobile-live-test.htpasswd";
 in {
   imports = [ ../vendor/vision/vision.nix ];

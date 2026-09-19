@@ -34,7 +34,7 @@ assert current.systemd.services.vision.environment.PORT == "3001";
 assert current.services.vision.bootstrapCommit == "00a7dd63e38e8e385fd985d72190a5965ced2b72";
 assert builtins.elem "vision-auth" current.users.users.nginx.extraGroups;
 assert builtins.elem
-  "f+ /var/lib/vision/auth/mobile-live-test.htpasswd 0640 root vision-auth - mobile-live:$6$V1s10nT4$Le6qYcMd.mb.LnFGVJeUta3gJK4TX/zpIglkIyZJNi/y8zcAT8FA1/qAod0oOzjfHOJmDAs2UDYQdiDFESlPx0"
+  "f+ /var/lib/vision/auth/mobile-live-test.htpasswd 0640 root vision-auth - mobile-live:$6$M0bLive26$eKajMiudVvi4/NSD3YFmHxun73Wiv5rR750TUzt.dwrT5urrD07wQ4kP9VB8hrmDJogaGiH7mYnQC75GplKtL1"
   current.systemd.tmpfiles.rules;
 assert lib.hasInfix
   "auth_basic_user_file /var/lib/vision/auth/mobile-live-test.htpasswd;"
