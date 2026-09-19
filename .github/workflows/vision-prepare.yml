@@ -36,7 +36,7 @@ jobs:
       - name: Transférer et préparer le candidat sans activation
         run: |
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-deployments/$GITHUB_SHA/source; tar -xf - -C /root/vision-deployments/$GITHUB_SHA/source"
-          sh scripts/connect.sh "python3 /root/vision-deployments/$GITHUB_SHA/source/scripts/vision-prepare.py $GITHUB_SHA"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-deployments/$GITHUB_SHA/source/scripts/vision-prepare.py $GITHUB_SHA'"
       - name: Récupérer le rapport sans données applicatives
         run: |
           mkdir "$RUNNER_TEMP/vision-preparation"
