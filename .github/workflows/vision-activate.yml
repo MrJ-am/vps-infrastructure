@@ -69,7 +69,7 @@ jobs:
         env:
           PREPARED_COMMIT: ${{ inputs.prepared_commit }}
         run: |
-          python3 - <<'PY' | sh scripts/connect.sh "python3 /root/vision-deployments/$PREPARED_COMMIT/source/scripts/vision-activate.py $PREPARED_COMMIT"
+          python3 - <<'PY' | sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-deployments/$PREPARED_COMMIT/source/scripts/vision-activate.py $PREPARED_COMMIT'"
           import json, os, sys
           json.dump({
               'username': os.environ['VISION_ACTIVATION_USERNAME'],
