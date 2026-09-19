@@ -10,8 +10,8 @@ import shutil
 import subprocess
 import sys
 
-APP_COMMIT = "4034266b399c42c56b7ffe8d106525550b6a846f"
-DOMAIN = "vision.principiipetit.io"
+APP_COMMIT = "00a7dd63e38e8e385fd985d72190a5965ced2b72"
+DOMAIN = "vision.mrj.am"
 
 
 def require(condition, message):

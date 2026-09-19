@@ -124,7 +124,7 @@ let
 in {
   options.services.vision = {
     enable = lib.mkEnableOption "Vision API";
-    domain = lib.mkOption { type = lib.types.str; default = "vision.principiipetit.io"; };
+    domain = lib.mkOption { type = lib.types.str; default = "vision.mrj.am"; };
     port = lib.mkOption { type = lib.types.port; default = 3001; };
     version = lib.mkOption { type = lib.types.str; default = "1.0.0"; };
     bootstrapSource = lib.mkOption {

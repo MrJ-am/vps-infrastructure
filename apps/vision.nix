@@ -8,7 +8,7 @@ in {
   imports = [ ../vendor/vision/vision.nix ];
   assertions = [{
     assertion = site.port == 3001 && site.prefix == "" &&
-      site.domain == "vision.principiipetit.io" && site.service == "vision" &&
+      site.domain == "vision.mrj.am" && site.service == "vision" &&
       site.auth.prefix == "/api/" &&
       site.auth.basicUserFile == "/var/lib/vision/auth/htpasswd" &&
       site.privateHealthPath == "/healthz" &&
@@ -21,7 +21,7 @@ in {
     port = site.port;
     version = "1.0.0";
     bootstrapSource = ../vendor/vision/source;
-    bootstrapCommit = "4034266b399c42c56b7ffe8d106525550b6a846f";
+    bootstrapCommit = "00a7dd63e38e8e385fd985d72190a5965ced2b72";
     deploymentPublicKeys = [];
     backupRecipient = "age15zfsttzkz0n553mgq07czxk98j65y6pg47563c7gvneq65dmfgjs3x0x0l";
   };

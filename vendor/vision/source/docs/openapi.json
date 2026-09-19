@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "description": "Authenticated HTTPS API for the Vision project. Version 1 exposes operational and integration endpoints; future business resources will be added under /api/v1 without exposing PostgreSQL directly.",
     "license": { "name": "Private API" },
-    "x-privacy-policy": "https://vision.principiipetit.io/privacy"
+    "x-privacy-policy": "https://vision.mrj.am/privacy"
   },
   "servers": [
     {
-      "url": "https://vision.principiipetit.io",
+      "url": "https://vision.mrj.am",
       "description": "Production"
     }
   ],
