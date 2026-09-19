@@ -1,8 +1,10 @@
 import importlib.util
+from email.message import Message
 import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -47,6 +49,24 @@ class CurrentLinkRollback(unittest.TestCase):
 
             with self.assertRaisesRegex(RuntimeError, "sans être un lien"):
                 VISION_ACTIVATE.detach_current_link(current)
+
+
+class HttpsDiagnostics(unittest.TestCase):
+    def test_authenticated_refusal_reports_status_and_public_error_only(self):
+        headers = Message()
+        headers["Content-Type"] = "application/json"
+        headers["WWW-Authenticate"] = 'Basic realm="Vision"'
+        responses = iter([
+            (401, headers, b'{"error":"authentication_required"}'),
+            (401, headers, b'{"error":"authentication_required"}'),
+        ])
+
+        with mock.patch.object(VISION_ACTIVATE, "request", side_effect=lambda *args, **kwargs: next(responses)):
+            with self.assertRaisesRegex(
+                RuntimeError,
+                r"Santé authentifiée HTTP 401 \(authentication_required\)",
+            ):
+                VISION_ACTIVATE.verify_http("vision.example", "user", "secret")
 
 
 if __name__ == "__main__":
