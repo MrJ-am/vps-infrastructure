@@ -1,5 +1,6 @@
 # NIX_PATH doit pointer vers le Nixpkgs de validation, sans modifier le VPS.
 let
+  lib = import <nixpkgs/lib>;
   evaluate = extra: (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux";
     modules = [ ../hosts/hostinger/configuration.nix extra ];
@@ -30,8 +31,23 @@ assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/
 assert builtins.elem "vision-migrate.service" current.systemd.services.vision.requires;
 assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
-assert current.services.vision.bootstrapCommit == "6a6c3a6ac4f952b7ad9bb0db998d322eef82ef34";
+assert current.services.vision.bootstrapCommit == "4034266b399c42c56b7ffe8d106525550b6a846f";
 assert builtins.elem "vision-auth" current.users.users.nginx.extraGroups;
+assert builtins.elem
+  "f+ /var/lib/vision/auth/mobile-live-test.htpasswd 0640 root vision-auth - mobile-live:$6$V1s10nT4$Le6qYcMd.mb.LnFGVJeUta3gJK4TX/zpIglkIyZJNi/y8zcAT8FA1/qAod0oOzjfHOJmDAs2UDYQdiDFESlPx0"
+  current.systemd.tmpfiles.rules;
+assert lib.hasInfix
+  "auth_basic_user_file /var/lib/vision/auth/mobile-live-test.htpasswd;"
+  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+assert lib.hasInfix
+  "proxy_set_header X-Vision-Authenticated \"1\";"
+  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+assert lib.hasInfix
+  "add_header Strict-Transport-Security \"max-age=31536000\" always;"
+  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+assert lib.hasInfix
+  "return 401"
+  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."@vision-mobile-live-test-authentication-required".extraConfig;
 assert current.systemd.services.postgresql-setup.postStart != "";
 assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.systemd.services.nginx.serviceConfig.ExecStart;
 {

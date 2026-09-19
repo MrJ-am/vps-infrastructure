@@ -21,20 +21,39 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - name: Vérifier la révision et les secrets
+      - name: Vérifier la révision et préparer l'authentification
         env:
           PREPARED_COMMIT: ${{ inputs.prepared_commit }}
           API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
           API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
         run: |
           python3 - <<'PY'
-          import os, re
+          import os, re, secrets
+          from pathlib import Path
           commit = os.environ['PREPARED_COMMIT']
           assert re.fullmatch(r'[0-9a-f]{40}', commit), 'Commit préparé invalide'
           assert commit == os.environ['GITHUB_SHA'], 'Activer uniquement le commit main actuellement extrait'
-          assert re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', os.environ['API_USERNAME']), 'Identifiant invalide'
-          assert len(os.environ['API_PASSWORD']) >= 24, 'Mot de passe trop court'
-          print('Activation autorisée pour', commit)
+          username = os.environ.get('API_USERNAME', '')
+          password = os.environ.get('API_PASSWORD', '')
+          if bool(username) != bool(password):
+              raise AssertionError('Définir les deux secrets Vision ou aucun')
+          if username:
+              assert re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', username), 'Identifiant invalide'
+              assert len(password) >= 24 and '\n' not in password, 'Mot de passe invalide'
+              source = 'secrets vps-production'
+          else:
+              # Verrou de bootstrap : il permet de vérifier la protection de
+              # l'API sans rendre ses routes générales utilisables. Le secret
+              # aléatoire disparaît avec le runner après l'activation.
+              username = 'vision-bootstrap-locked'
+              password = secrets.token_urlsafe(48)
+              source = 'verrou aléatoire éphémère'
+          print(f'::add-mask::{username}')
+          print(f'::add-mask::{password}')
+          with Path(os.environ['GITHUB_ENV']).open('a', encoding='utf-8') as output:
+              print('VISION_ACTIVATION_USERNAME=' + username, file=output)
+              print('VISION_ACTIVATION_PASSWORD=' + password, file=output)
+          print('Activation autorisée pour', commit, '-', source)
           PY
       - name: Préparer la clé administrative
         env:
@@ -49,12 +68,13 @@ jobs:
       - name: Activer, contrôler et enregistrer la génération
         env:
           PREPARED_COMMIT: ${{ inputs.prepared_commit }}
-          API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
-          API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
         run: |
           python3 - <<'PY' | sh scripts/connect.sh "python3 /root/vision-deployments/$PREPARED_COMMIT/source/scripts/vision-activate.py $PREPARED_COMMIT"
           import json, os, sys
-          json.dump({'username': os.environ['API_USERNAME'], 'password': os.environ['API_PASSWORD']}, sys.stdout)
+          json.dump({
+              'username': os.environ['VISION_ACTIVATION_USERNAME'],
+              'password': os.environ['VISION_ACTIVATION_PASSWORD'],
+          }, sys.stdout)
           PY
       - name: Refaire les contrôles publics depuis le runner
         run: python3 scripts/probe.py
@@ -72,4 +92,6 @@ jobs:
           if-no-files-found: error
       - name: Effacer la clé du runner
         if: always()
-        run: rm -f -- "$RUNNER_TEMP/vps-vision-admin"
+        run: |
+          rm -f -- "$RUNNER_TEMP/vps-vision-admin"
+          unset VISION_ACTIVATION_USERNAME VISION_ACTIVATION_PASSWORD
