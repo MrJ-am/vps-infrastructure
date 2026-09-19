@@ -228,7 +228,8 @@ in {
           staging="$(mktemp -d /srv/vision/releases/.bootstrap.XXXXXX)"
           cp -R ${bootstrapPackage}/app/. "$staging/"
           chown -R vision-deploy:vision "$staging"
-          chmod 0750 "$staging"
+          chmod -R u=rwX,g=rX,o= "$staging"
+          chmod 0550 "$staging/vision"
           mv "$staging" "$target"
         fi
         if ! test -L /srv/vision/current; then
