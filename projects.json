@@ -31,7 +31,9 @@
     "probes": [
       {"path": "/docs", "status": 200, "contentType": "text/html"},
       {"path": "/openapi.json", "status": 200, "contentType": "application/json"},
+      {"path": "/mobile-live-test-openapi.json", "status": 200, "contentType": "application/json"},
       {"path": "/privacy", "status": 200, "contentType": "text/html"},
+      {"path": "/api/v1/mobile-live-test", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
       {"path": "/api/v1/health", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
       {"path": "/api/v1/capabilities", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}}
     ]

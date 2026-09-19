@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import sys
 
-APP_COMMIT = "6a6c3a6ac4f952b7ad9bb0db998d322eef82ef34"
+APP_COMMIT = "4034266b399c42c56b7ffe8d106525550b6a846f"
 DOMAIN = "vision.principiipetit.io"
 
 

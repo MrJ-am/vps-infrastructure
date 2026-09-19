@@ -216,6 +216,12 @@
      (write-response stream 200 "OK" (slurp-document "openapi.json")
                      "application/json; charset=utf-8"
                      :headers '(("Cache-Control" . "public, max-age=300"))))
+    ((and (string= method "GET")
+          (string= path "/mobile-live-test-openapi.json"))
+     (write-response stream 200 "OK"
+                     (slurp-document "mobile-live-test-openapi.json")
+                     "application/json; charset=utf-8"
+                     :headers '(("Cache-Control" . "public, max-age=300"))))
     ((and (string= method "GET") (string= path "/healthz"))
      (write-json stream 200 "OK"
                  (format nil "{\"status\":\"ok\",\"version\":~A}"
@@ -229,6 +235,10 @@
                  (format nil
                          "{\"api\":\"vision\",\"version\":~A,\"operations\":[\"getVisionHealth\",\"getVisionCapabilities\",\"sayHello\"]}"
                          (json-string *version*))))
+    ((and (string= method "GET")
+          (string= path "/api/v1/mobile-live-test"))
+     (write-json stream 200 "OK"
+                 "{\"ok\":true,\"proof\":\"VISION-MOBILE-LIVE-AUTH-OK\",\"scope\":\"test-only\",\"message\":\"HTTP Basic authentication succeeded. No Vision data was accessed.\"}"))
     ((and (string= method "POST") (string= path "/api/v1/hello"))
      (if (zerop content-length)
          (write-json stream 200 "OK" "{\"message\":\"World\"}")

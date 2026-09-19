@@ -22,6 +22,14 @@
   <h2>Contrat machine</h2>
   <p><a href="/openapi.json">Schema OpenAPI 3.1 (JSON)</a></p>
 
+  <h2>Test Mobile Live isole</h2>
+  <p><code>GET /api/v1/mobile-live-test</code> utilise un couple d'identifiants
+     jetable distinct de celui de l'API. Cette route renvoie uniquement une
+     preuve fixe de succes et ne peut lire ni modifier aucune donnee Vision.</p>
+  <p><a href="/mobile-live-test-openapi.json">Schema OpenAPI 3.1 du test</a></p>
+  <pre><code>curl --fail --user 'identifiant-test:mot-de-passe-test' \
+  https://vision.principiipetit.io/api/v1/mobile-live-test</code></pre>
+
   <h2>Exemple</h2>
   <pre><code>curl --fail --user 'identifiant:mot-de-passe' \
   https://vision.principiipetit.io/api/v1/health</code></pre>
