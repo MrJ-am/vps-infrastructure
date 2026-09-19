@@ -178,7 +178,7 @@ in {
       "d /srv/vision 0750 vision-deploy vision -"
       "d /srv/vision/releases 0750 vision-deploy vision -"
       "d /srv/vision/incoming 0700 vision-deploy vision -"
-      "d /var/lib/vision 0750 root vision -"
+      "d /var/lib/vision 0710 root vision-auth -"
       "d /var/lib/vision/auth 0750 root vision-auth -"
       "f /var/lib/vision/auth/htpasswd 0640 root vision-auth - vision-disabled:!"
     ];
