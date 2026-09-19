@@ -1,4 +1,6 @@
 import copy
+import hashlib
+import json
 import unittest
 
 from pathlib import Path
@@ -15,7 +17,7 @@ class RegistryChecks(unittest.TestCase):
 
     def test_vision_contract_is_protected(self):
         vision = self.projects["vision"]
-        self.assertEqual(vision["domain"], "vision.principiipetit.io")
+        self.assertEqual(vision["domain"], "vision.mrj.am")
         self.assertEqual(vision["port"], 3001)
         self.assertEqual(vision["auth"], {
             "prefix": "/api/",
@@ -50,6 +52,12 @@ class RegistryChecks(unittest.TestCase):
         projects["vision"]["probes"].append({"path": "/healthz", "status": 200})
         with self.assertRaises(ValueError):
             validate(projects)
+
+    def test_vision_module_matches_reviewed_upstream(self):
+        source = json.loads((ROOT / "vendor/vision/source.json").read_text())
+        module = (ROOT / "vendor/vision/vision.nix").read_bytes()
+        self.assertEqual(source["commit"], "00a7dd63e38e8e385fd985d72190a5965ced2b72")
+        self.assertEqual(hashlib.sha256(module).hexdigest(), source["sha256"])
 
 
 if __name__ == "__main__":

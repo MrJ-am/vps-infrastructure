@@ -31,23 +31,23 @@ assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/
 assert builtins.elem "vision-migrate.service" current.systemd.services.vision.requires;
 assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
-assert current.services.vision.bootstrapCommit == "4034266b399c42c56b7ffe8d106525550b6a846f";
+assert current.services.vision.bootstrapCommit == "00a7dd63e38e8e385fd985d72190a5965ced2b72";
 assert builtins.elem "vision-auth" current.users.users.nginx.extraGroups;
 assert builtins.elem
-  "f+ /var/lib/vision/auth/mobile-live-test.htpasswd 0640 root vision-auth - mobile-live:$6$V1s10nT4$Le6qYcMd.mb.LnFGVJeUta3gJK4TX/zpIglkIyZJNi/y8zcAT8FA1/qAod0oOzjfHOJmDAs2UDYQdiDFESlPx0"
+  "f+ /var/lib/vision/auth/mobile-live-test.htpasswd 0640 root vision-auth - mobile-live:$6$M0bLive26$eKajMiudVvi4/NSD3YFmHxun73Wiv5rR750TUzt.dwrT5urrD07wQ4kP9VB8hrmDJogaGiH7mYnQC75GplKtL1"
   current.systemd.tmpfiles.rules;
 assert lib.hasInfix
   "auth_basic_user_file /var/lib/vision/auth/mobile-live-test.htpasswd;"
-  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+  current.services.nginx.virtualHosts."vision.mrj.am".locations."= /api/v1/mobile-live-test".extraConfig;
 assert lib.hasInfix
   "proxy_set_header X-Vision-Authenticated \"1\";"
-  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+  current.services.nginx.virtualHosts."vision.mrj.am".locations."= /api/v1/mobile-live-test".extraConfig;
 assert lib.hasInfix
   "add_header Strict-Transport-Security \"max-age=31536000\" always;"
-  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."= /api/v1/mobile-live-test".extraConfig;
+  current.services.nginx.virtualHosts."vision.mrj.am".locations."= /api/v1/mobile-live-test".extraConfig;
 assert lib.hasInfix
   "return 401"
-  current.services.nginx.virtualHosts."vision.principiipetit.io".locations."@vision-mobile-live-test-authentication-required".extraConfig;
+  current.services.nginx.virtualHosts."vision.mrj.am".locations."@vision-mobile-live-test-authentication-required".extraConfig;
 assert current.systemd.services.postgresql-setup.postStart != "";
 assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.systemd.services.nginx.serviceConfig.ExecStart;
 {
