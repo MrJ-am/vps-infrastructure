@@ -10,6 +10,9 @@ let
     dontStrip = true;
     buildPhase = ''
       runHook preBuild
+      export HOME="$TMPDIR"
+      export XDG_CACHE_HOME="$TMPDIR/.cache"
+      mkdir -p "$XDG_CACHE_HOME"
       sh build.sh
       runHook postBuild
     '';
