@@ -1,0 +1,75 @@
+name: Activer Vision sur le VPS
+on:
+  workflow_dispatch:
+    inputs:
+      prepared_commit:
+        description: Commit exact validé par le workflow de préparation
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  activate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la révision et les secrets
+        env:
+          PREPARED_COMMIT: ${{ inputs.prepared_commit }}
+          API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          commit = os.environ['PREPARED_COMMIT']
+          assert re.fullmatch(r'[0-9a-f]{40}', commit), 'Commit préparé invalide'
+          assert commit == os.environ['GITHUB_SHA'], 'Activer uniquement le commit main actuellement extrait'
+          assert re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', os.environ['API_USERNAME']), 'Identifiant invalide'
+          assert len(os.environ['API_PASSWORD']) >= 24, 'Mot de passe trop court'
+          print('Activation autorisée pour', commit)
+          PY
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-vision-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Activer, contrôler et enregistrer la génération
+        env:
+          PREPARED_COMMIT: ${{ inputs.prepared_commit }}
+          API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: |
+          python3 - <<'PY' | sh scripts/connect.sh "python3 /root/vision-deployments/$PREPARED_COMMIT/source/scripts/vision-activate.py $PREPARED_COMMIT"
+          import json, os, sys
+          json.dump({'username': os.environ['API_USERNAME'], 'password': os.environ['API_PASSWORD']}, sys.stdout)
+          PY
+      - name: Refaire les contrôles publics depuis le runner
+        run: python3 scripts/probe.py
+      - name: Récupérer le rapport sans identifiants
+        env:
+          PREPARED_COMMIT: ${{ inputs.prepared_commit }}
+        run: |
+          mkdir "$RUNNER_TEMP/vision-activation"
+          sh scripts/connect.sh "cat /root/vision-deployments/$PREPARED_COMMIT/committed.json" > "$RUNNER_TEMP/vision-activation/committed.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vision-activation-${{ inputs.prepared_commit }}
+          path: ${{ runner.temp }}/vision-activation/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-vision-admin"

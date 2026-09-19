@@ -7,6 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DOMAIN = re.compile(r"(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}\Z")
 PREFIX = re.compile(r"(?:/[a-zA-Z0-9_-]+)+\Z")
+PATH = re.compile(r"/[a-zA-Z0-9_./-]*\Z")
+AUTH_FILE = re.compile(r"/var/lib/(?:[a-zA-Z0-9_.-]+/)*[a-zA-Z0-9_.-]+\Z")
+REALM = re.compile(r"[a-zA-Z0-9 ._-]{1,64}\Z")
 
 
 def unique_object(pairs):
@@ -18,15 +21,21 @@ def unique_object(pairs):
     return obj
 
 
+def valid_path(path):
+    return isinstance(path, str) and PATH.fullmatch(path) and ".." not in path and "//" not in path
+
+
 def validate(projects):
     if not isinstance(projects, dict) or not projects:
         raise ValueError("Le registre doit contenir au moins un projet.")
     domains, ports = set(), set()
     required = {"domain", "aliases", "port", "prefix", "maxBodySize", "service", "probes"}
+    optional = {"auth", "privateHealthPath"}
     for name, site in projects.items():
         if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
             raise ValueError(f"Identifiant de projet invalide : {name}")
-        if not isinstance(site, dict) or set(site) != required:
+        if (not isinstance(site, dict) or not required <= set(site)
+                or not set(site) <= required | optional):
             raise ValueError(f"{name} : propriétés manquantes ou inconnues.")
         if not isinstance(site["aliases"], list):
             raise ValueError(f"{name} : aliases doit être une liste.")
@@ -47,6 +56,27 @@ def validate(projects):
             raise ValueError(f"{name} : taille maximale invalide.")
         if not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"]):
             raise ValueError(f"{name} : nom de service invalide.")
+
+        auth = site.get("auth")
+        private_health = site.get("privateHealthPath")
+        if (auth is None) != (private_health is None):
+            raise ValueError(f"{name} : auth et privateHealthPath doivent être déclarés ensemble.")
+        if auth is not None:
+            if not isinstance(auth, dict) or set(auth) != {"prefix", "basicUserFile", "realm"}:
+                raise ValueError(f"{name} : configuration d'authentification invalide.")
+            auth_prefix = auth["prefix"]
+            if (not valid_path(auth_prefix) or not auth_prefix.endswith("/")
+                    or not auth_prefix.startswith(prefix + "/")):
+                raise ValueError(f"{name} : préfixe protégé invalide.")
+            if (not isinstance(auth["basicUserFile"], str)
+                    or not AUTH_FILE.fullmatch(auth["basicUserFile"])
+                    or ".." in auth["basicUserFile"]):
+                raise ValueError(f"{name} : chemin htpasswd invalide.")
+            if not isinstance(auth["realm"], str) or not REALM.fullmatch(auth["realm"]):
+                raise ValueError(f"{name} : realm d'authentification invalide.")
+            if not valid_path(private_health) or private_health.startswith(auth_prefix):
+                raise ValueError(f"{name} : chemin de santé privé invalide.")
+
         if not isinstance(site["probes"], list) or not site["probes"]:
             raise ValueError(f"{name} : contrôles HTTP requis.")
         paths = set()
@@ -54,8 +84,8 @@ def validate(projects):
             if not isinstance(probe, dict) or not {"path", "status"} <= set(probe) <= {"path", "status", "contentType", "json", "unchanged"}:
                 raise ValueError(f"{name} : définition de contrôle invalide.")
             path = probe["path"]
-            if (not isinstance(path, str) or not re.fullmatch(r"/[a-zA-Z0-9_./-]*", path)
-                    or ".." in path or "//" in path or not path.startswith(prefix + "/") or path in paths):
+            if (not valid_path(path) or not path.startswith(prefix + "/") or path in paths
+                    or path == private_health):
                 raise ValueError(f"{name} : chemin de contrôle invalide ou répété.")
             paths.add(path)
             if type(probe["status"]) is not int or not 100 <= probe["status"] <= 599:

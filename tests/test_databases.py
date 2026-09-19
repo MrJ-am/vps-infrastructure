@@ -12,17 +12,20 @@ from databases import load, validate
 
 
 class DatabaseChecks(unittest.TestCase):
-    def test_registered_matheval_preserved(self):
-        self.assertEqual(load()["matheval"], {"name": "matheval"})
+    def test_registered_projects_are_preserved(self):
+        self.assertEqual(load(), {
+            "matheval": {"name": "matheval"},
+            "vision": {"name": "vision"},
+        })
 
-    def test_vision_example_is_not_active(self):
+    def test_vision_example_matches_active_reservation(self):
         example = json.loads((ROOT / "examples/vision-database.json").read_text())
-        validate({**load(), **example})
-        self.assertNotIn("vision", load())
+        self.assertEqual(example["vision"], load()["vision"])
 
-    def test_another_project_cannot_take_matheval(self):
-        with self.assertRaises(ValueError):
-            validate({"matheval": {"name": "matheval"}, "vision": {"name": "matheval"}})
+    def test_another_project_cannot_take_registered_names(self):
+        for database in ("matheval", "vision"):
+            with self.subTest(database=database), self.assertRaises(ValueError):
+                validate({**load(), "other": {"name": database}})
 
     def test_reserved_names_and_sql_hba_injection_rejected(self):
         for name in ("postgres", "root", "template1", "all", "pg_monitor", "a" * 64,
@@ -39,8 +42,6 @@ class DatabaseChecks(unittest.TestCase):
 
     def test_local_patch_recovers_exact_upstream_module(self):
         source = json.loads((ROOT / "vendor/matheval/source.json").read_text())
-        # La reprise amont a intégré notre adaptation sans changer ses octets.
-        # Garder la preuve de réversibilité du patch historique.
         adaptation = source.get("historical_adaptation", source)
         self.assertEqual(source["sha256"], adaptation["sha256"])
         with tempfile.TemporaryDirectory() as directory:

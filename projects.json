@@ -14,5 +14,26 @@
       {"path": "/matheval/api/admin/me", "status": 401, "contentType": "application/json"},
       {"path": "/matheval/api/admin/statistics", "status": 401, "contentType": "application/json"}
     ]
+  },
+  "vision": {
+    "domain": "vision.principiipetit.io",
+    "aliases": [],
+    "port": 3001,
+    "prefix": "",
+    "maxBodySize": "4k",
+    "service": "vision",
+    "auth": {
+      "prefix": "/api/",
+      "basicUserFile": "/var/lib/vision/auth/htpasswd",
+      "realm": "Vision API"
+    },
+    "privateHealthPath": "/healthz",
+    "probes": [
+      {"path": "/docs", "status": 200, "contentType": "text/html"},
+      {"path": "/openapi.json", "status": 200, "contentType": "application/json"},
+      {"path": "/privacy", "status": 200, "contentType": "text/html"},
+      {"path": "/api/v1/health", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
+      {"path": "/api/v1/capabilities", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}}
+    ]
   }
 }

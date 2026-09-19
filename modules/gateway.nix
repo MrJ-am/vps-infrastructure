@@ -6,11 +6,25 @@ let
   ports = map (site: site.port) sites;
   validDomain = name: builtins.isString name &&
     builtins.match "[a-z0-9]([a-z0-9.-]*[a-z0-9])?" name != null;
+  validPath = path: builtins.isString path &&
+    builtins.match "/[a-zA-Z0-9_./-]*" path != null &&
+    !(lib.hasInfix ".." path) && !(lib.hasInfix "//" path);
+  validAuth = site: !(site ? auth) ||
+    builtins.attrNames site.auth == [ "basicUserFile" "prefix" "realm" ] &&
+    validPath site.auth.prefix && lib.hasSuffix "/" site.auth.prefix &&
+    lib.hasPrefix (site.prefix + "/") site.auth.prefix &&
+    builtins.match "/var/lib/([a-zA-Z0-9_.-]+/)*[a-zA-Z0-9_.-]+" site.auth.basicUserFile != null &&
+    !(lib.hasInfix ".." site.auth.basicUserFile) &&
+    builtins.match "[a-zA-Z0-9 ._-]+" site.auth.realm != null &&
+    site ? privateHealthPath && validPath site.privateHealthPath &&
+    !(lib.hasPrefix site.auth.prefix site.privateHealthPath);
   validSite = site:
     builtins.isInt site.port && site.port >= 1024 && site.port <= 65535 &&
     builtins.isString site.prefix &&
     (site.prefix == "" || builtins.match "(/[a-zA-Z0-9_-]+)+" site.prefix != null) &&
-    builtins.match "[1-9][0-9]*[km]" site.maxBodySize != null;
+    builtins.match "[1-9][0-9]*[km]" site.maxBodySize != null &&
+    ((site ? auth) == (site ? privateHealthPath)) && validAuth site;
+  hasProtectedAPI = lib.any (site: site ? auth) sites;
 
 in {
   assertions = [
@@ -20,10 +34,17 @@ in {
     { assertion = builtins.length ports == builtins.length (lib.unique ports);
       message = "Un port HTTP local est attribué à plusieurs projets."; }
     { assertion = lib.all validDomain domains && lib.all validSite sites;
-      message = "Domaine, port, préfixe ou taille de requête invalide dans projects.json."; }
+      message = "Domaine, port, préfixe, authentification ou taille de requête invalide dans projects.json."; }
   ];
   security.acme.acceptTerms = true;
-  services.nginx.enable = true;
-  services.nginx.virtualHosts = (import ../lib/virtual-hosts.nix) projects;
+  services.nginx = {
+    enable = true;
+    serverTokens = false;
+    commonHttpConfig = lib.optionalString hasProtectedAPI ''
+      limit_req_zone $binary_remote_addr zone=protected_api_per_ip:10m rate=5r/s;
+      limit_conn_zone $binary_remote_addr zone=protected_api_connections:10m;
+    '';
+    virtualHosts = (import ../lib/virtual-hosts.nix) projects;
+  };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }

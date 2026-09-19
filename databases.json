@@ -1,3 +1,4 @@
 {
-  "matheval": { "name": "matheval" }
+  "matheval": { "name": "matheval" },
+  "vision": { "name": "vision" }
 }

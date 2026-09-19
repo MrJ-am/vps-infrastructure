@@ -1,0 +1,171 @@
+#!/usr/bin/env python3
+"""Activer un candidat Vision préparé, le vérifier et revenir en arrière sinon."""
+import base64
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import socket
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+
+EXPECTED_IP = "187.77.95.158"
+
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+
+def run(*args, env=None, visible=False):
+    result = subprocess.run(
+        [str(arg) for arg in args], env=env,
+        stdout=None if visible else subprocess.PIPE,
+        stderr=None if visible else subprocess.PIPE,
+        text=True,
+    )
+    if result.returncode:
+        raise RuntimeError(f"{Path(str(args[0])).name} : code {result.returncode}")
+    return result.stdout
+
+
+def save(path, value):
+    Path(path).write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+
+
+def sha256(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def request(url, username=None, password=None, method="GET"):
+    headers = {"User-Agent": "vision-activation-check/1", "Accept": "application/json"}
+    if username is not None:
+        token = base64.b64encode(f"{username}:{password}".encode()).decode()
+        headers["Authorization"] = "Basic " + token
+    req = urllib.request.Request(url, headers=headers, method=method)
+    try:
+        response = urllib.request.urlopen(req, timeout=10)
+    except urllib.error.HTTPError as exc:
+        response = exc
+    with response:
+        body = response.read(65537)
+        require(len(body) <= 65536, "Réponse HTTP trop grande")
+        return response.status, response.headers, body
+
+
+def wait_for(check, message, attempts=60):
+    last = None
+    for _ in range(attempts):
+        try:
+            value = check()
+            if value:
+                return value
+        except Exception as exc:  # Le détail réseau n'inclut aucun secret.
+            last = exc
+        time.sleep(2)
+    raise RuntimeError(message + (f" ({last})" if last else ""))
+
+
+def verify_http(domain, username, password):
+    origin = "https://" + domain
+    status, headers, body = request(origin + "/api/v1/health")
+    require(status == 401, "L'API accepte une requête anonyme")
+    require(headers.get_content_type() == "application/json", "Le refus anonyme n'est pas JSON")
+    require(json.loads(body).get("error") == "authentication_required", "Refus anonyme inattendu")
+    require(headers.get("WWW-Authenticate", "").startswith("Basic "), "Challenge Basic absent")
+
+    status, _, body = request(origin + "/api/v1/health", username, password)
+    require(status == 200 and json.loads(body).get("status") == "ok", "Santé authentifiée invalide")
+    status, _, body = request(origin + "/api/v1/capabilities", username, password)
+    require(status == 200 and json.loads(body).get("api") == "vision", "Capacités authentifiées invalides")
+    status, _, body = request(origin + "/api/v1/hello", username, password, method="POST")
+    require(status == 200 and json.loads(body).get("message") == "World", "Action hello invalide")
+    return True
+
+
+def activate(commit, credentials):
+    require(os.geteuid() == 0, "Exécution root sur le VPS requise")
+    require(re.fullmatch(r"[0-9a-f]{40}", commit), "Commit invalide")
+    require(isinstance(credentials, dict) and set(credentials) == {"username", "password"},
+            "Charge d'identifiants invalide")
+    username, password = credentials["username"], credentials["password"]
+    require(isinstance(username, str) and re.fullmatch(r"[A-Za-z0-9_.-]{1,64}", username),
+            "Identifiant API invalide")
+    require(isinstance(password, str) and len(password) >= 24 and "\n" not in password,
+            "Mot de passe API invalide")
+
+    state = Path("/root/vision-deployments") / commit
+    report = json.loads((state / "prepared.json").read_text())
+    require(report["commit"] == commit and report["activated"] is False, "Préparation incohérente")
+    require(not (state / "committed.json").exists(), "Candidat déjà activé")
+    old_system, old_boot = report["old_system"], report["old_boot"]
+    candidate, domain = report["candidate"], report["domain"]
+    require(str(Path("/run/current-system").resolve()) == old_system, "Génération active modifiée depuis la préparation")
+    require(str(Path("/nix/var/nix/profiles/system").resolve()) == old_boot, "Génération de démarrage modifiée")
+    require(sha256("/etc/nixos/configuration.nix") == report["configuration_sha256"],
+            "Configuration NixOS modifiée depuis la préparation")
+    addresses = {item[4][0] for item in socket.getaddrinfo(domain, 443, socket.AF_INET)}
+    require(EXPECTED_IP in addresses, f"{domain} ne pointe pas vers le VPS")
+
+    config = Path("/etc/nixos/configuration.nix")
+    backup = state / "configuration.nix.before"
+    pointer = f"{{ imports = [ {report['installed']}/hosts/hostinger/configuration.nix ]; }}\n"
+    switched = False
+    try:
+        switched = True
+        run(Path(candidate) / "bin/switch-to-configuration", "test", visible=True)
+        require(all(run("systemctl", "is-active", service).strip() == "active"
+                    for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
+                "Un service requis n'est pas actif")
+
+        credential_env = os.environ.copy()
+        credential_env.update(VISION_API_USERNAME=username, VISION_API_PASSWORD=password)
+        run(Path(candidate) / "sw/bin/vision-set-credentials", env=credential_env)
+        credential_env.pop("VISION_API_PASSWORD", None)
+
+        wait_for(lambda: request("http://127.0.0.1:3001/healthz")[0] == 200,
+                 "Santé locale Vision indisponible", attempts=30)
+        wait_for(lambda: verify_http(domain, username, password),
+                 "API HTTPS Vision indisponible", attempts=90)
+        run("python3", Path(report["installed"]) / "scripts/probe.py", visible=True)
+
+        temporary = config.with_suffix(".nix.vision-new")
+        temporary.write_text(pointer)
+        os.chmod(temporary, 0o644)
+        os.replace(temporary, config)
+        run(Path(candidate) / "bin/switch-to-configuration", "boot", visible=True)
+        require(str(Path("/nix/var/nix/profiles/system").resolve()) == candidate,
+                "La génération candidate n'est pas enregistrée pour le démarrage")
+        committed = {
+            **report,
+            "activated": True,
+            "username_sha256": hashlib.sha256(username.encode()).hexdigest(),
+        }
+        save(state / "committed.json", committed)
+        print("ACTIVATION VISION VALIDÉE : " + json.dumps(committed, sort_keys=True), flush=True)
+    except Exception:
+        if backup.exists():
+            temporary = config.with_suffix(".nix.vision-rollback")
+            temporary.write_bytes(backup.read_bytes())
+            os.chmod(temporary, 0o644)
+            os.replace(temporary, config)
+        if switched:
+            subprocess.run([str(Path(old_system) / "bin/switch-to-configuration"), "test"])
+            subprocess.run([str(Path(old_boot) / "bin/switch-to-configuration"), "boot"])
+        save(state / "rollback.json", {"commit": commit, "candidate": candidate, "rolled_back": True})
+        raise
+    finally:
+        credentials["password"] = ""
+        password = ""
+
+
+if __name__ == "__main__":
+    try:
+        activate(sys.argv[1], json.load(sys.stdin))
+    except (OSError, RuntimeError, ValueError, KeyError, IndexError, json.JSONDecodeError) as exc:
+        print(f"ÉCHEC : {exc}", file=sys.stderr)
+        sys.exit(1)
