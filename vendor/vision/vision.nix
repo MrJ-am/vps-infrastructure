@@ -247,7 +247,7 @@ in {
         User = "vision";
         Group = "vision";
         WorkingDirectory = "/srv/vision/current";
-        ExecStart = "${pkgs.dash}/bin/sh /srv/vision/current/scripts/migrate.sh";
+        ExecStart = "${pkgs.dash}/bin/dash /srv/vision/current/scripts/migrate.sh";
         NoNewPrivileges = true;
         PrivateTmp = true;
         PrivateDevices = true;

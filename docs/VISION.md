@@ -9,7 +9,7 @@
 - contrat public du test Mobile Live : `/mobile-live-test-openapi.json` ;
 - API protégée par HTTP Basic : `/api/` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `00a7dd63e38e8e385fd985d72190a5965ced2b72`.
+- application : commit Vision `906ead1e6084e5abb0fb14b13aa5bc9146edfa0c`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
