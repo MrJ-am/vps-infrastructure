@@ -104,9 +104,15 @@ def verify_http(domain, username, password):
     require(headers.get("WWW-Authenticate", "").startswith("Basic "), "Challenge Basic absent")
 
     status, _, body = request(origin + "/api/v1/health", username, password)
+    if status != 200:
+        public_error = "réponse vide"
+        if body:
+            try:
+                public_error = json.loads(body).get("error", "réponse JSON")
+            except json.JSONDecodeError:
+                public_error = "réponse non JSON"
+        raise RuntimeError(f"Santé authentifiée HTTP {status} ({public_error})")
     payload = json.loads(body)
-    require(status == 200,
-            f"Santé authentifiée HTTP {status} ({payload.get('error', 'réponse JSON')})")
     require(payload.get("status") == "ok", "Contenu de santé authentifiée invalide")
     status, _, body = request(origin + "/api/v1/capabilities", username, password)
     require(status == 200 and json.loads(body).get("api") == "vision", "Capacités authentifiées invalides")
