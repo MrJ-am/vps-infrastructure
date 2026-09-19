@@ -68,6 +68,22 @@ class HttpsDiagnostics(unittest.TestCase):
             ):
                 VISION_ACTIVATE.verify_http("vision.example", "user", "secret")
 
+    def test_empty_internal_error_still_reports_http_status(self):
+        headers = Message()
+        headers["Content-Type"] = "application/json"
+        headers["WWW-Authenticate"] = 'Basic realm="Vision"'
+        responses = iter([
+            (401, headers, b'{"error":"authentication_required"}'),
+            (500, headers, b""),
+        ])
+
+        with mock.patch.object(VISION_ACTIVATE, "request", side_effect=lambda *args, **kwargs: next(responses)):
+            with self.assertRaisesRegex(
+                RuntimeError,
+                r"Santé authentifiée HTTP 500 \(réponse vide\)",
+            ):
+                VISION_ACTIVATE.verify_http("vision.example", "user", "secret")
+
 
 if __name__ == "__main__":
     unittest.main()

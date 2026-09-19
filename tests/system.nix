@@ -31,7 +31,10 @@ assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/
 assert builtins.elem "vision-migrate.service" current.systemd.services.vision.requires;
 assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
-assert current.services.vision.bootstrapCommit == "8d672a3fa7ab2ef2ee0fb58411349086df452b9e";
+assert current.services.vision.bootstrapCommit == "361a6458ff63e8d96e9f4125e81da8380a3d704b";
+assert builtins.elem
+  "d /var/lib/vision 0710 root vision-auth -"
+  current.systemd.tmpfiles.rules;
 assert lib.hasSuffix
   "/bin/dash /srv/vision/current/scripts/migrate.sh"
   current.systemd.services.vision-migrate.serviceConfig.ExecStart;
