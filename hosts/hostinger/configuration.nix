@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../apps/matheval.nix
+    ../../apps/vision.nix
     ../../modules/gateway.nix
     ../../modules/postgresql.nix
   ];
