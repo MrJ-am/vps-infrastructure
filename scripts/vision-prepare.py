@@ -10,7 +10,7 @@ import shutil
 import subprocess
 import sys
 
-APP_COMMIT = "00a7dd63e38e8e385fd985d72190a5965ced2b72"
+APP_COMMIT = "906ead1e6084e5abb0fb14b13aa5bc9146edfa0c"
 DOMAIN = "vision.mrj.am"
 
 

@@ -1,10 +1,10 @@
 {
   "repository": "MrJ-am/vision",
-  "commit": "00a7dd63e38e8e385fd985d72190a5965ced2b72",
+  "commit": "906ead1e6084e5abb0fb14b13aa5bc9146edfa0c",
   "path": "deploy/vision.nix",
-  "sha256": "798870a2fc62175a820f72ec05fd9e3421d4547ba718f5dd6fcf7214e62591b6",
+  "sha256": "187e157d9f412f28ccee06281aafdb088bdd4055e6196c02332886e04951d982",
   "source": "vendor/vision/source",
-  "verification": "GitHub Actions run 35474220433",
-  "pull_request": "https://github.com/MrJ-am/vision/pull/2",
+  "verification": "GitHub Actions run 35475042705",
+  "pull_request": "https://github.com/MrJ-am/vision/pull/3",
   "status": "copie amont exacte revue"
 }
