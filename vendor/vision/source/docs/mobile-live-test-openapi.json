@@ -5,11 +5,11 @@
     "version": "1.0.0",
     "description": "Isolated, read-only endpoint used only to test whether a client can send disposable HTTP Basic credentials. It exposes no Vision data or operation.",
     "license": { "name": "Private API" },
-    "x-privacy-policy": "https://vision.principiipetit.io/privacy"
+    "x-privacy-policy": "https://vision.mrj.am/privacy"
   },
   "servers": [
     {
-      "url": "https://vision.principiipetit.io",
+      "url": "https://vision.mrj.am",
       "description": "Production"
     }
   ],

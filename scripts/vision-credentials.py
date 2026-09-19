@@ -22,7 +22,7 @@ def require(condition, message):
 def check_api(username, password):
     token = base64.b64encode(f"{username}:{password}".encode()).decode()
     request = urllib.request.Request(
-        "https://vision.principiipetit.io/api/v1/health",
+        "https://vision.mrj.am/api/v1/health",
         headers={"Authorization": "Basic " + token, "Accept": "application/json"},
     )
     with urllib.request.urlopen(request, timeout=15) as response:
