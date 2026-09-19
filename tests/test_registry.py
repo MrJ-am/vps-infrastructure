@@ -56,7 +56,7 @@ class RegistryChecks(unittest.TestCase):
     def test_vision_module_matches_reviewed_upstream(self):
         source = json.loads((ROOT / "vendor/vision/source.json").read_text())
         module = (ROOT / "vendor/vision/vision.nix").read_bytes()
-        self.assertEqual(source["commit"], "d11c199fab58c7afa080b1d99899e3997a523102")
+        self.assertEqual(source["commit"], "8d672a3fa7ab2ef2ee0fb58411349086df452b9e")
         self.assertEqual(hashlib.sha256(module).hexdigest(), source["sha256"])
 
 

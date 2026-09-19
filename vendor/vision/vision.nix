@@ -86,7 +86,7 @@ let
 
   setCredentials = pkgs.writeShellApplication {
     name = "vision-set-credentials";
-    runtimeInputs = [ pkgs.apacheHttpd pkgs.coreutils ];
+    runtimeInputs = [ pkgs.openssl pkgs.coreutils ];
     text = ''
       if (( EUID != 0 )); then
         echo "vision-set-credentials doit etre execute par root" >&2
@@ -104,9 +104,9 @@ let
       fi
 
       temporary="$(mktemp /var/lib/vision/auth/.htpasswd.XXXXXX)"
-      trap 'rm -f -- "$temporary"; unset VISION_API_USERNAME VISION_API_PASSWORD' EXIT
-      printf '%s\n' "$VISION_API_PASSWORD" \
-        | htpasswd -i -n -B -C 12 "$VISION_API_USERNAME" > "$temporary"
+      trap 'rm -f -- "$temporary"; unset VISION_API_USERNAME VISION_API_PASSWORD password_hash' EXIT
+      password_hash="$(printf '%s\n' "$VISION_API_PASSWORD" | openssl passwd -6 -stdin)"
+      printf '%s:%s\n' "$VISION_API_USERNAME" "$password_hash" > "$temporary"
       chown root:vision-auth "$temporary"
       chmod 0640 "$temporary"
       mv -f -- "$temporary" /var/lib/vision/auth/htpasswd
