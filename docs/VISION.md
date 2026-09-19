@@ -8,7 +8,7 @@
 - documentation publique : `/docs`, `/openapi.json` et `/privacy` ;
 - API protégée par HTTP Basic : `/api/` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `b8d1de19be4bdc0db408820853239156117060ca`.
+- application : commit Vision `c2bb07a67fdd74fcf3fabd7f4217767864da9cae`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
@@ -43,6 +43,11 @@ pair `vision`; aucune donnée métier n'est inventée par cette intégration.
 Si un contrôle échoue, l'ancienne configuration, la génération active et la
 génération de démarrage sont rétablies automatiquement. La base Vision peut
 rester vide après un retour ; elle n'est jamais supprimée automatiquement.
+
+Pour une rotation ultérieure, remplacer les deux secrets dans l'environnement
+GitHub puis lancer **Renouveler les identifiants Vision**. L'ancien hash est
+restauré automatiquement si les nouveaux identifiants ne passent pas le test
+HTTPS.
 
 ## ChatGPT
 

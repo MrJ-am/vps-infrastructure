@@ -30,6 +30,9 @@ assert extended."www.principiipetit.io" == current."www.principiipetit.io";
 assert extended."demo.example.com".locations."/".proxyPass == "http://127.0.0.1:3001";
 assert builtins.attrNames extended."demo.example.com".locations == [ "/" ];
 assert vision.enableACME && vision.forceSSL;
+assert vision.extraConfig == ''
+  add_header Strict-Transport-Security "max-age=31536000" always;
+'';
 assert vision.locations."/".proxyPass == "http://127.0.0.1:3001";
 assert vision.locations."/".extraConfig == ''
   client_max_body_size 4k;
@@ -49,9 +52,12 @@ assert vision.locations."/api/".extraConfig == ''
   auth_basic_user_file /var/lib/vision/auth/htpasswd;
   limit_req zone=protected_api_per_ip burst=10 nodelay;
   limit_conn protected_api_connections 10;
+  limit_req_status 429;
+  limit_conn_status 429;
   proxy_set_header Authorization "";
   proxy_set_header X-Vision-Authenticated "1";
   error_page 401 = @vision-authentication-required;
+  error_page 429 = @vision-rate-limited;
 '';
 assert vision.locations."= /healthz".return == "404";
 assert vision.locations."@vision-authentication-required".extraConfig == ''
@@ -59,5 +65,11 @@ assert vision.locations."@vision-authentication-required".extraConfig == ''
   add_header Cache-Control "no-store" always;
   add_header WWW-Authenticate 'Basic realm="Vision API", charset="UTF-8"' always;
   return 401 '{"error":"authentication_required","message":"HTTP Basic authentication is required."}';
+'';
+assert vision.locations."@vision-rate-limited".extraConfig == ''
+  default_type application/json;
+  add_header Cache-Control "no-store" always;
+  add_header Retry-After "1" always;
+  return 429 '{"error":"rate_limited","message":"Too many requests."}';
 '';
 { mathevalPreserved = true; visionProtected = true; additionalProjectIsolated = true; }

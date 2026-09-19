@@ -292,6 +292,17 @@
     (sb-bsd-sockets:socket-listen socket 128)
     socket))
 
+(defun dispatch-client (client)
+  (handler-case
+      (sb-thread:make-thread
+       (lambda () (handle-client client))
+       :name "vision-http-client")
+    (error (condition)
+      ;; Une saturation transitoire ne doit pas arrêter le processus principal.
+      (format *error-output* "Client rejected: ~A~%" condition)
+      (finish-output *error-output*)
+      (ignore-errors (sb-bsd-sockets:socket-close client)))))
+
 (defun serve (&key (host "127.0.0.1") (port 3001))
   (let ((listener (make-listener host port)))
     (format t "vision ~A listening on http://~A:~D/~%" *version* host port)
@@ -299,9 +310,7 @@
     (unwind-protect
          (loop
            (let ((client (sb-bsd-sockets:socket-accept listener)))
-             (sb-thread:make-thread
-              (lambda () (handle-client client))
-              :name "vision-http-client")))
+             (dispatch-client client)))
       (sb-bsd-sockets:socket-close listener))))
 
 (defun main ()
