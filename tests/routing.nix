@@ -8,7 +8,7 @@ let
     example = { domain = "demo.example.com"; aliases = []; port = 3001; prefix = ""; maxBodySize = "1m"; };
   });
   primary = current."principiipetit.io";
-  vision = deployed."vision.principiipetit.io";
+  vision = deployed."vision.mrj.am";
 in
 assert builtins.attrNames current == [ "principiipetit.io" "www.principiipetit.io" ];
 assert primary.enableACME && primary.forceSSL;

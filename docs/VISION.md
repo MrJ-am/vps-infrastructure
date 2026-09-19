@@ -4,12 +4,12 @@
 
 ## Contrat public
 
-- origine : `https://vision.principiipetit.io` ;
+- origine : `https://vision.mrj.am` ;
 - documentation publique : `/docs`, `/openapi.json` et `/privacy` ;
 - contrat public du test Mobile Live : `/mobile-live-test-openapi.json` ;
 - API protégée par HTTP Basic : `/api/` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `4034266b399c42c56b7ffe8d106525550b6a846f`.
+- application : commit Vision `00a7dd63e38e8e385fd985d72190a5965ced2b72`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
@@ -27,7 +27,7 @@ dans la conversation de test puis doit être retirée avec cette route.
 
 ## Prérequis privés
 
-1. Créer l'enregistrement DNS `A` `vision.principiipetit.io` vers `187.77.95.158`.
+1. Vérifier l'enregistrement DNS `A` `vision.mrj.am` vers `187.77.95.158`.
 2. Pour rendre l'API générale immédiatement utilisable, définir dans
    l'environnement GitHub `vps-production` :
    - `VISION_API_USERNAME` : identifiant ASCII de 1 à 64 caractères ;
@@ -73,7 +73,7 @@ HTTPS.
 1. Ouvrir d'abord `/mobile-live-test-openapi.json` pour vérifier que la
    documentation publique est lisible.
 2. Demander à Mobile Live d'appeler exactement
-   `GET https://vision.principiipetit.io/api/v1/mobile-live-test` avec les
+   `GET https://vision.mrj.am/api/v1/mobile-live-test` avec les
    identifiants jetables fournis séparément.
 3. Le seul succès attendu contient `VISION-MOBILE-LIVE-AUTH-OK` et
    `"scope":"test-only"`.
@@ -83,7 +83,7 @@ HTTPS.
 
 ## ChatGPT
 
-Importer `https://vision.principiipetit.io/openapi.json` comme schéma d'action,
+Importer `https://vision.mrj.am/openapi.json` comme schéma d'action,
 choisir l'authentification HTTP Basic et renseigner les mêmes identifiants. Si
 l'interface ne propose qu'un champ secret Basic, y placer le Base64 de
 `identifiant:mot-de-passe`, sans préfixe `Basic `.
