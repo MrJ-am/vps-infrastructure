@@ -58,39 +58,60 @@ def nginx_config_for_test(configuration, temporary):
     configuration = Path(configuration)
     temporary = Path(temporary)
     content = configuration.read_text()
-    certificate = re.compile(
-        r"(?m)^(?P<prefix>\s*ssl_certificate\s+)(?P<path>[^;\r\n]+)(?P<suffix>;\s*)$"
-    )
-    key = re.compile(
-        r"(?m)^(?P<prefix>\s*ssl_certificate_key\s+)(?P<path>[^;\r\n]+)(?P<suffix>;\s*)$"
-    )
-    certificates = list(certificate.finditer(content))
-    keys = list(key.finditer(content))
-    require(certificates and len(certificates) == len(keys), "Paires TLS Nginx incohérentes")
+    names = ("ssl_certificate", "ssl_certificate_key", "ssl_trusted_certificate")
+    entries = {}
+    for name in names:
+        pattern = re.compile(
+            rf"(?m)^(?P<prefix>\s*{name}\s+)(?P<path>[^;\r\n]+)(?P<suffix>;[^\r\n]*)$"
+        )
+        entries[name] = []
+        for match in pattern.finditer(content):
+            path = Path(match.group("path").strip())
+            require(path.is_absolute(), "Chemin TLS Nginx non absolu")
+            entries[name].append((match, path))
+    require(entries["ssl_certificate"] and entries["ssl_certificate_key"],
+            "Paires TLS Nginx incohérentes")
 
-    pairs = []
-    for cert_match, key_match in zip(certificates, keys):
-        cert_path = Path(cert_match.group("path").strip())
-        key_path = Path(key_match.group("path").strip())
-        require(cert_path.is_absolute() and key_path.is_absolute(), "Chemin TLS Nginx non absolu")
-        pairs.append((cert_match, key_match, cert_path, key_path))
-
-    missing = [pair for pair in pairs if not pair[2].is_file() or not pair[3].is_file()]
+    missing = [
+        (name, match, path)
+        for name in names
+        for match, path in entries[name]
+        if not path.is_file()
+    ]
     if not missing:
         return configuration
-    fallback = next(
-        ((cert_path, key_path) for _, _, cert_path, key_path in pairs
-         if cert_path.is_file() and key_path.is_file() and cert_path.parent == key_path.parent),
-        None,
-    )
+
+    fallback = None
+    for _, cert_path in entries["ssl_certificate"]:
+        if not cert_path.is_file():
+            continue
+        key_path = next(
+            (path for _, path in entries["ssl_certificate_key"]
+             if path.is_file() and path.parent == cert_path.parent),
+            None,
+        )
+        trusted_path = next(
+            (path for _, path in entries["ssl_trusted_certificate"]
+             if path.is_file() and path.parent == cert_path.parent),
+            None,
+        )
+        if key_path is not None and (
+                not entries["ssl_trusted_certificate"] or trusted_path is not None):
+            fallback = {
+                "ssl_certificate": cert_path,
+                "ssl_certificate_key": key_path,
+                "ssl_trusted_certificate": trusted_path,
+            }
+            break
     require(fallback is not None, "Aucune paire TLS existante pour contrôler Nginx")
 
     replacements = []
-    for cert_match, key_match, cert_path, key_path in missing:
-        replacements.extend([
-            (cert_match.start("path"), cert_match.end("path"), str(fallback[0])),
-            (key_match.start("path"), key_match.end("path"), str(fallback[1])),
-        ])
+    for name, match, _ in missing:
+        require(fallback[name] is not None,
+                "Aucune chaîne TLS existante pour contrôler Nginx")
+        replacements.append(
+            (match.start("path"), match.end("path"), str(fallback[name]))
+        )
     for start, end, value in sorted(replacements, reverse=True):
         content = content[:start] + value + content[end:]
     temporary.write_text(content)
