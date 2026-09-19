@@ -8,7 +8,7 @@
 - documentation publique : `/docs`, `/openapi.json` et `/privacy` ;
 - API protégée par HTTP Basic : `/api/` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `c2bb07a67fdd74fcf3fabd7f4217767864da9cae`.
+- application : commit Vision `6a6c3a6ac4f952b7ad9bb0db998d322eef82ef34`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire

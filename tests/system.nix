@@ -30,7 +30,7 @@ assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/
 assert builtins.elem "vision-migrate.service" current.systemd.services.vision.requires;
 assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
-assert current.services.vision.bootstrapCommit == "c2bb07a67fdd74fcf3fabd7f4217767864da9cae";
+assert current.services.vision.bootstrapCommit == "6a6c3a6ac4f952b7ad9bb0db998d322eef82ef34";
 assert builtins.elem "vision-auth" current.users.users.nginx.extraGroups;
 assert current.systemd.services.postgresql-setup.postStart != "";
 assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.systemd.services.nginx.serviceConfig.ExecStart;

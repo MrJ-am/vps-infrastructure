@@ -202,6 +202,21 @@ in {
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
+        UMask = "0077";
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        PrivateDevices = true;
+        ProtectSystem = "strict";
+        ProtectHome = true;
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectKernelLogs = true;
+        ProtectControlGroups = true;
+        ProtectClock = true;
+        RestrictSUIDSGID = true;
+        LockPersonality = true;
+        ReadWritePaths = [ "/srv/vision" ];
+        RestrictAddressFamilies = [ "AF_UNIX" ];
       };
       script = ''
         set -eu
@@ -232,8 +247,22 @@ in {
         ExecStart = "${pkgs.dash}/bin/sh /srv/vision/current/scripts/migrate.sh";
         NoNewPrivileges = true;
         PrivateTmp = true;
+        PrivateDevices = true;
         ProtectSystem = "strict";
         ProtectHome = true;
+        ProtectKernelTunables = true;
+        ProtectKernelModules = true;
+        ProtectKernelLogs = true;
+        ProtectControlGroups = true;
+        ProtectClock = true;
+        ProtectHostname = true;
+        ProtectProc = "invisible";
+        ProcSubset = "pid";
+        RestrictSUIDSGID = true;
+        RestrictRealtime = true;
+        LockPersonality = true;
+        CapabilityBoundingSet = "";
+        RestrictAddressFamilies = [ "AF_UNIX" ];
         UMask = "0077";
       };
       path = [ config.services.postgresql.package ];
@@ -273,10 +302,16 @@ in {
         ProtectKernelLogs = true;
         ProtectControlGroups = true;
         ProtectClock = true;
+        ProtectHostname = true;
+        ProtectProc = "invisible";
+        ProcSubset = "pid";
         RestrictSUIDSGID = true;
+        RestrictRealtime = true;
         LockPersonality = true;
         CapabilityBoundingSet = "";
         RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" ];
+        IPAddressDeny = "any";
+        IPAddressAllow = [ "127.0.0.0/8" ];
         TasksMax = 64;
         MemoryMax = "256M";
         UMask = "0077";

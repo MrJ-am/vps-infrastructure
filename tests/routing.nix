@@ -64,12 +64,16 @@ assert vision.locations."@vision-authentication-required".extraConfig == ''
   default_type application/json;
   add_header Cache-Control "no-store" always;
   add_header WWW-Authenticate 'Basic realm="Vision API", charset="UTF-8"' always;
+  add_header Strict-Transport-Security "max-age=31536000" always;
+  add_header X-Content-Type-Options "nosniff" always;
   return 401 '{"error":"authentication_required","message":"HTTP Basic authentication is required."}';
 '';
 assert vision.locations."@vision-rate-limited".extraConfig == ''
   default_type application/json;
   add_header Cache-Control "no-store" always;
   add_header Retry-After "1" always;
+  add_header Strict-Transport-Security "max-age=31536000" always;
+  add_header X-Content-Type-Options "nosniff" always;
   return 429 '{"error":"rate_limited","message":"Too many requests."}';
 '';
 { mathevalPreserved = true; visionProtected = true; additionalProjectIsolated = true; }
