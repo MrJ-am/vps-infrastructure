@@ -53,6 +53,51 @@ def evaluate(source, configuration, nixpkgs):
     ))
 
 
+def nginx_config_for_test(configuration, temporary):
+    """Use an existing TLS pair when a candidate ACME certificate is not issued yet."""
+    configuration = Path(configuration)
+    temporary = Path(temporary)
+    content = configuration.read_text()
+    certificate = re.compile(
+        r"(?m)^(?P<prefix>\s*ssl_certificate\s+)(?P<path>[^;\r\n]+)(?P<suffix>;\s*)$"
+    )
+    key = re.compile(
+        r"(?m)^(?P<prefix>\s*ssl_certificate_key\s+)(?P<path>[^;\r\n]+)(?P<suffix>;\s*)$"
+    )
+    certificates = list(certificate.finditer(content))
+    keys = list(key.finditer(content))
+    require(certificates and len(certificates) == len(keys), "Paires TLS Nginx incohérentes")
+
+    pairs = []
+    for cert_match, key_match in zip(certificates, keys):
+        cert_path = Path(cert_match.group("path").strip())
+        key_path = Path(key_match.group("path").strip())
+        require(cert_path.is_absolute() and key_path.is_absolute(), "Chemin TLS Nginx non absolu")
+        pairs.append((cert_match, key_match, cert_path, key_path))
+
+    missing = [pair for pair in pairs if not pair[2].is_file() or not pair[3].is_file()]
+    if not missing:
+        return configuration
+    fallback = next(
+        ((cert_path, key_path) for _, _, cert_path, key_path in pairs
+         if cert_path.is_file() and key_path.is_file() and cert_path.parent == key_path.parent),
+        None,
+    )
+    require(fallback is not None, "Aucune paire TLS existante pour contrôler Nginx")
+
+    replacements = []
+    for cert_match, key_match, cert_path, key_path in missing:
+        replacements.extend([
+            (cert_match.start("path"), cert_match.end("path"), str(fallback[0])),
+            (key_match.start("path"), key_match.end("path"), str(fallback[1])),
+        ])
+    for start, end, value in sorted(replacements, reverse=True):
+        content = content[:start] + value + content[end:]
+    temporary.write_text(content)
+    os.chmod(temporary, 0o600)
+    return temporary
+
+
 def prepare(commit):
     require(os.geteuid() == 0, "Exécution root sur le VPS requise")
     require(re.fullmatch(r"[0-9a-f]{40}", commit), "Commit d'infrastructure invalide")
@@ -116,7 +161,10 @@ def prepare(commit):
     command = shlex.split(after["nginx"]["command"])
     require(command[0] == after["nginx"]["binary"] and "-c" in command,
             "Commande Nginx candidate inattendue")
-    run(command[0], "-t", "-c", command[command.index("-c") + 1], visible=True)
+    nginx_configuration = nginx_config_for_test(
+        command[command.index("-c") + 1], state / "nginx-test.conf"
+    )
+    run(command[0], "-t", "-c", nginx_configuration, visible=True)
     dry = run(Path(candidate) / "bin/switch-to-configuration", "dry-activate")
     (state / "dry-activate.txt").write_text(dry)
 
