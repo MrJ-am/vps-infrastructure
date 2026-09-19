@@ -51,6 +51,20 @@ class CurrentLinkRollback(unittest.TestCase):
                 VISION_ACTIVATE.detach_current_link(current)
 
 
+class SystemProfileRegistration(unittest.TestCase):
+    def test_candidate_is_registered_in_the_nixos_system_profile(self):
+        with mock.patch.object(VISION_ACTIVATE, "run") as run:
+            VISION_ACTIVATE.register_system("/nix/store/candidate-system")
+
+        run.assert_called_once_with(
+            "nix-env",
+            "--profile",
+            "/nix/var/nix/profiles/system",
+            "--set",
+            "/nix/store/candidate-system",
+        )
+
+
 class HttpsDiagnostics(unittest.TestCase):
     def test_authenticated_refusal_reports_status_and_public_error_only(self):
         headers = Message()

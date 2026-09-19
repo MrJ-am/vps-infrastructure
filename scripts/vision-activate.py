@@ -14,6 +14,7 @@ import urllib.error
 import urllib.request
 
 EXPECTED_IP = "187.77.95.158"
+SYSTEM_PROFILE = "/nix/var/nix/profiles/system"
 
 
 def require(condition, message):
@@ -39,6 +40,10 @@ def save(path, value):
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def register_system(system):
+    run("nix-env", "--profile", SYSTEM_PROFILE, "--set", system)
 
 
 def detach_current_link(path):
@@ -139,7 +144,7 @@ def activate(commit, credentials):
     old_system, old_boot = report["old_system"], report["old_boot"]
     candidate, domain = report["candidate"], report["domain"]
     require(str(Path("/run/current-system").resolve()) == old_system, "Génération active modifiée depuis la préparation")
-    require(str(Path("/nix/var/nix/profiles/system").resolve()) == old_boot, "Génération de démarrage modifiée")
+    require(str(Path(SYSTEM_PROFILE).resolve()) == old_boot, "Génération de démarrage modifiée")
     require(sha256("/etc/nixos/configuration.nix") == report["configuration_sha256"],
             "Configuration NixOS modifiée depuis la préparation")
     addresses = {item[4][0] for item in socket.getaddrinfo(domain, 443, socket.AF_INET)}
@@ -176,8 +181,9 @@ def activate(commit, credentials):
         temporary.write_text(pointer)
         os.chmod(temporary, 0o644)
         os.replace(temporary, config)
+        register_system(candidate)
         run(Path(candidate) / "bin/switch-to-configuration", "boot", visible=True)
-        require(str(Path("/nix/var/nix/profiles/system").resolve()) == candidate,
+        require(str(Path(SYSTEM_PROFILE).resolve()) == candidate,
                 "La génération candidate n'est pas enregistrée pour le démarrage")
         committed = {
             **report,
@@ -194,6 +200,9 @@ def activate(commit, credentials):
             os.replace(temporary, config)
         if switched:
             subprocess.run([str(Path(old_system) / "bin/switch-to-configuration"), "test"])
+            subprocess.run([
+                "nix-env", "--profile", SYSTEM_PROFILE, "--set", old_boot,
+            ])
             subprocess.run([str(Path(old_boot) / "bin/switch-to-configuration"), "boot"])
         if current_detached:
             restore_current_link(current, previous_current)
