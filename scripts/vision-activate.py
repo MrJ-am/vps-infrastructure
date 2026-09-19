@@ -41,6 +41,31 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def detach_current_link(path):
+    path = Path(path)
+    if path.is_symlink():
+        target = os.readlink(path)
+        path.unlink()
+        return target
+    require(not path.exists(), f"{path} existe sans être un lien symbolique")
+    return None
+
+
+def restore_current_link(path, previous_target):
+    path = Path(path)
+    if path.is_symlink():
+        path.unlink()
+    else:
+        require(not path.exists(), f"{path} existe sans être un lien symbolique")
+    if previous_target is None:
+        return
+    replacement = path.with_name(path.name + ".vision-rollback")
+    require(not replacement.exists() and not replacement.is_symlink(),
+            f"Lien temporaire inattendu : {replacement}")
+    replacement.symlink_to(previous_target)
+    os.replace(replacement, path)
+
+
 def request(url, username=None, password=None, method="GET"):
     headers = {"User-Agent": "vision-activation-check/1", "Accept": "application/json"}
     if username is not None:
@@ -114,8 +139,13 @@ def activate(commit, credentials):
     config = Path("/etc/nixos/configuration.nix")
     backup = state / "configuration.nix.before"
     pointer = f"{{ imports = [ {report['installed']}/hosts/hostinger/configuration.nix ]; }}\n"
+    current = Path("/srv/vision/current")
+    previous_current = None
+    current_detached = False
     switched = False
     try:
+        previous_current = detach_current_link(current)
+        current_detached = True
         switched = True
         run(Path(candidate) / "bin/switch-to-configuration", "test", visible=True)
         require(all(run("systemctl", "is-active", service).strip() == "active"
@@ -156,6 +186,8 @@ def activate(commit, credentials):
         if switched:
             subprocess.run([str(Path(old_system) / "bin/switch-to-configuration"), "test"])
             subprocess.run([str(Path(old_boot) / "bin/switch-to-configuration"), "boot"])
+        if current_detached:
+            restore_current_link(current, previous_current)
         save(state / "rollback.json", {"commit": commit, "candidate": candidate, "rolled_back": True})
         raise
     finally:
