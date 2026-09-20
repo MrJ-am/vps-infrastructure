@@ -1,0 +1,54 @@
+name: Préparer le site Vision et la connexion commune
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier le commit candidat
+        run: |
+          python3 - <<'PY'
+          import os, re
+          assert re.fullmatch(r'[0-9a-f]{40}', os.environ['GITHUB_SHA'])
+          print('Commit candidat :', os.environ['GITHUB_SHA'])
+          PY
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-vision-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Transférer et préparer le candidat sans activation
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-web-deployments/$GITHUB_SHA/source; tar -xf - -C /root/vision-web-deployments/$GITHUB_SHA/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 python3Packages.passlib --run 'python3 /root/vision-web-deployments/$GITHUB_SHA/source/scripts/vision-web-prepare.py $GITHUB_SHA'"
+      - name: Récupérer le rapport sans données applicatives
+        run: |
+          mkdir "$RUNNER_TEMP/vision-web-preparation"
+          sh scripts/connect.sh "cat /root/vision-web-deployments/$GITHUB_SHA/prepared.json" > "$RUNNER_TEMP/vision-web-preparation/prepared.json"
+          sh scripts/connect.sh "cat /root/vision-web-deployments/$GITHUB_SHA/dry-activate.txt" > "$RUNNER_TEMP/vision-web-preparation/dry-activate.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vision-web-preparation-${{ github.sha }}
+          path: ${{ runner.temp }}/vision-web-preparation/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-vision-admin"
+

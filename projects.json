@@ -1,18 +1,49 @@
 {
   "matheval": {
     "domain": "principiipetit.io",
-    "aliases": ["www.principiipetit.io"],
+    "aliases": [
+      "www.principiipetit.io"
+    ],
     "port": 3000,
     "prefix": "/matheval",
     "maxBodySize": "5m",
     "service": "matheval",
     "probes": [
-      {"path": "/matheval/", "status": 200, "contentType": "text/html", "unchanged": true},
-      {"path": "/matheval/admin/", "status": 200, "contentType": "text/html", "unchanged": true},
-      {"path": "/matheval/main.js", "status": 200, "unchanged": true},
-      {"path": "/matheval/api/health", "status": 200, "contentType": "application/json", "json": {"status": "ok"}},
-      {"path": "/matheval/api/admin/me", "status": 401, "contentType": "application/json"},
-      {"path": "/matheval/api/admin/statistics", "status": 401, "contentType": "application/json"}
+      {
+        "path": "/matheval/",
+        "status": 200,
+        "contentType": "text/html",
+        "unchanged": true
+      },
+      {
+        "path": "/matheval/admin/",
+        "status": 200,
+        "contentType": "text/html",
+        "unchanged": true
+      },
+      {
+        "path": "/matheval/main.js",
+        "status": 200,
+        "unchanged": true
+      },
+      {
+        "path": "/matheval/api/health",
+        "status": 200,
+        "contentType": "application/json",
+        "json": {
+          "status": "ok"
+        }
+      },
+      {
+        "path": "/matheval/api/admin/me",
+        "status": 401,
+        "contentType": "application/json"
+      },
+      {
+        "path": "/matheval/api/admin/statistics",
+        "status": 401,
+        "contentType": "application/json"
+      }
     ]
   },
   "vision": {
@@ -29,14 +60,69 @@
     },
     "privateHealthPath": "/healthz",
     "probes": [
-      {"path": "/docs", "status": 200, "contentType": "text/html"},
-      {"path": "/openapi.json", "status": 200, "contentType": "application/json"},
-      {"path": "/mobile-live-test-openapi.json", "status": 200, "contentType": "application/json"},
-      {"path": "/privacy", "status": 200, "contentType": "text/html"},
-      {"path": "/mcp", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
-      {"path": "/api/v1/mobile-live-test", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
-      {"path": "/api/v1/health", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}},
-      {"path": "/api/v1/capabilities", "status": 401, "contentType": "application/json", "json": {"error": "authentication_required"}}
-    ]
+      {
+        "path": "/docs",
+        "status": 200,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/openapi.json",
+        "status": 200,
+        "contentType": "application/json"
+      },
+      {
+        "path": "/mobile-live-test-openapi.json",
+        "status": 200,
+        "contentType": "application/json"
+      },
+      {
+        "path": "/privacy",
+        "status": 200,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/mcp",
+        "status": 401,
+        "contentType": "application/json",
+        "json": {
+          "error": "authentication_required"
+        }
+      },
+      {
+        "path": "/api/v1/mobile-live-test",
+        "status": 401,
+        "contentType": "application/json",
+        "json": {
+          "error": "authentication_required"
+        }
+      },
+      {
+        "path": "/api/v1/health",
+        "status": 401,
+        "contentType": "application/json",
+        "json": {
+          "error": "authentication_required"
+        }
+      },
+      {
+        "path": "/api/v1/capabilities",
+        "status": 401,
+        "contentType": "application/json",
+        "json": {
+          "error": "authentication_required"
+        }
+      },
+      {
+        "path": "/",
+        "status": 200,
+        "contentType": "text/html"
+      },
+      {
+        "path": "/auth/session",
+        "status": 401,
+        "contentType": "application/json"
+      }
+    ],
+    "browserAuth": true
   }
 }

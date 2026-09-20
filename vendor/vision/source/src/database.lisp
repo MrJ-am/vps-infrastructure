@@ -229,7 +229,7 @@
        CROSS JOIN vision_scheduler_settings AS cfg
       WHERE s.id = :'sheet_id'::bigint AND s.archived_at IS NULL
    ), observations AS (
-     SELECT o.id, o.outcome, o.note, o.context,
+     SELECT o.id, o.outcome, COALESCE(c.note,o.note) AS note, COALESCE(c.context,o.context) AS context,
             o.reviewed_at AS \"reviewedAt\",
             o.next_review_at AS \"nextReviewAt\",
             o.rating, o.scheduling_applied AS \"schedulingApplied\",
@@ -242,6 +242,7 @@
             o.elapsed_days AS \"elapsedDays\",
             o.scheduled_days AS \"scheduledDays\"
        FROM vision_memory_observations AS o
+       LEFT JOIN LATERAL (SELECT note,context FROM vision_observation_corrections c WHERE c.observation_id=o.id ORDER BY c.id DESC LIMIT 1) c ON true
       WHERE o.sheet_id = :'sheet_id'::bigint
       ORDER BY o.reviewed_at DESC, o.id DESC
       LIMIT :'observation_limit'::integer
@@ -535,3 +536,4 @@
        END
      )
    )")
+

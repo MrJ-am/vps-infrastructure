@@ -19,9 +19,9 @@ in {
     enable = true;
     domain = site.domain;
     port = site.port;
-    version = "1.2.0";
+    version = "1.3.0";
     bootstrapSource = ../vendor/vision/source;
-    bootstrapCommit = "445f9d7e6944d621de33283ca960d772813f47a2";
+    bootstrapCommit = "151ab64bd5c9c5c54297e88dbe4d548343cc4928";
     deploymentPublicKeys = [];
     backupRecipient = "age15zfsttzkz0n553mgq07czxk98j65y6pg47563c7gvneq65dmfgjs3x0x0l";
   };
@@ -95,3 +95,4 @@ in {
     };
   };
 }
+

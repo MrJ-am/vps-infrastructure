@@ -219,9 +219,16 @@
     (return-from route-request))
   (cond
     ((and (string= method "GET") (string= path "/"))
-     (write-response stream 308 "Permanent Redirect" "" "text/plain; charset=utf-8"
-                     :headers '(("Location" . "/docs")
-                                ("Cache-Control" . "no-store"))))
+     (write-response stream 200 "OK" (slurp-document "app.html") "text/html; charset=utf-8"
+       :headers '(("Cache-Control" . "no-store")
+                  ("Content-Security-Policy" . "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"))))
+    ((and (string= method "GET") (member path '("/app.js" "/app.css") :test #'string=))
+     (write-response stream 200 "OK" (slurp-document (subseq path 1))
+       (if (string= path "/app.js") "text/javascript; charset=utf-8" "text/css; charset=utf-8")
+       :headers '(("Cache-Control" . "no-cache"))))
+    ((and (string= method "POST") (>= (length path) 9)
+          (string= path "/api/web/" :end1 9))
+     (handle-browser-request stream path headers body))
     ((and (string= method "GET")
           (member path '("/docs" "/docs/") :test #'string=))
      (write-response stream 200 "OK" (slurp-document "index.html")
@@ -360,7 +367,7 @@
       (sb-bsd-sockets:socket-close listener))))
 
 (defun main ()
-  (setf *version* (environment-value "VISION_VERSION" "1.2.0")
+  (setf *version* (environment-value "VISION_VERSION" "1.3.0")
         *document-root* (environment-value "VISION_DOCUMENT_ROOT" "docs/"))
   (handler-case
       (serve :host (environment-value "IP" "127.0.0.1")

@@ -41,6 +41,8 @@ assert vision.locations."/".extraConfig == ''
   proxy_set_header X-Forwarded-For $remote_addr;
   proxy_set_header Authorization "";
   proxy_set_header X-Vision-Authenticated "";
+  proxy_set_header X-Vision-Browser "";
+  proxy_set_header X-Mrj-User "";
 '';
 assert vision.locations."/api/".proxyPass == "http://127.0.0.1:3001";
 assert vision.locations."/api/".extraConfig == ''
@@ -56,6 +58,8 @@ assert vision.locations."/api/".extraConfig == ''
   limit_conn_status 429;
   proxy_set_header Authorization "";
   proxy_set_header X-Vision-Authenticated "1";
+  proxy_set_header X-Vision-Browser "";
+  proxy_set_header X-Mrj-User "";
   error_page 401 = @vision-authentication-required;
   error_page 429 = @vision-rate-limited;
 '';
@@ -77,3 +81,4 @@ assert vision.locations."@vision-rate-limited".extraConfig == ''
   return 429 '{"error":"rate_limited","message":"Too many requests."}';
 '';
 { mathevalPreserved = true; visionProtected = true; additionalProjectIsolated = true; }
+
