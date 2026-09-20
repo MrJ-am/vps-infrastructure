@@ -7,6 +7,7 @@ from pathlib import Path
 import re
 import shlex
 import shutil
+import sqlite3
 import subprocess
 import sys
 
@@ -15,6 +16,7 @@ APP_VERSION = "1.3.0"
 PREVIOUS_APP_COMMIT = "445f9d7e6944d621de33283ca960d772813f47a2"
 PREVIOUS_APP_VERSION = "1.2.0"
 DOMAIN = "vision.mrj.am"
+RECOVERED_COMMIT = "7f7697227be70bd3dd0847a17851a9b1cbb81e79"
 
 
 def require(condition, message):
@@ -128,6 +130,22 @@ def nginx_config_for_test(configuration, temporary):
     return temporary
 
 
+def validate_recovery(previous_state, current, session_database):
+    """Accepter uniquement le retour complet de la tentative identifiée."""
+    require(not (previous_state / "committed.json").exists(), "Le SSO a déjà été enregistré")
+    require((previous_state / "rollback-started").exists(), "Retour précédent non engagé")
+    rollback = json.loads((previous_state / "rollback.json").read_text())
+    require(rollback == {"commit": RECOVERED_COMMIT, "restored": True}, "Retour précédent incomplet")
+    prepared = json.loads((previous_state / "prepared.json").read_text())
+    require(prepared["commit"] == RECOVERED_COMMIT, "Tentative précédente inconnue")
+    for key, value in current.items():
+        require(prepared[key] == value, "État modifié après retour : " + key)
+    if session_database.exists():
+        with sqlite3.connect(session_database.as_uri() + "?mode=ro", uri=True) as database:
+            require(database.execute("SELECT count(*) FROM sessions").fetchone()[0] == 0,
+                    "Des sessions existent : opération distincte requise")
+
+
 def prepare(commit):
     require(os.geteuid() == 0, "Exécution root sur le VPS requise")
     require(re.fullmatch(r"[0-9a-f]{40}", commit), "Commit d'infrastructure invalide")
@@ -137,13 +155,32 @@ def prepare(commit):
     require(source.is_dir(), "Archive source absente")
     require(not (state / "prepared.json").exists(), "Ce commit est déjà préparé")
 
-    require(not Path("/var/lib/mrj-auth/sessions.sqlite").exists(), "Le SSO existe déjà : préparer une opération de mise à jour distincte")
     old_system = str(Path("/run/current-system").resolve())
     old_boot = str(Path("/nix/var/nix/profiles/system").resolve())
     require(old_system == old_boot, "La génération active diffère de la génération de démarrage")
     require(all(run("systemctl", "is-active", service).strip() == "active"
                 for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
             "Un service existant n'est pas actif")
+    previous_state = state.parent / RECOVERED_COMMIT
+    session_database = Path("/var/lib/mrj-auth/sessions.sqlite")
+    if previous_state.exists() or session_database.exists():
+        require(previous_state.exists(), "Le SSO existe sans retour identifié")
+        validate_recovery(previous_state, {
+            "old_system": old_system, "old_boot": old_boot,
+            "configuration_sha256": sha256("/etc/nixos/configuration.nix"),
+            "credentials_sha256": sha256("/var/lib/vision/auth/htpasswd"),
+            "current_release": str(Path("/srv/vision/current").resolve()),
+        }, session_database)
+        require(subprocess.run(["systemctl", "is-active", "--quiet", "mrj-auth"]).returncode != 0,
+                "Le SSO tourne déjà")
+        # Le retour validé ne doit pas se redéclencher pendant la nouvelle opération.
+        run("systemctl", "stop", "vision-web-rollback-" + RECOVERED_COMMIT[:12] + ".timer")
+        for unit in ("vision-web-rollback-", "vision-web-apply-"):
+            require(subprocess.run(["systemctl", "is-active", "--quiet", unit + RECOVERED_COMMIT[:12]]).returncode != 0,
+                    "Une unité de la tentative précédente tourne encore")
+        if session_database.exists():
+            shutil.copy2(session_database, state / "sessions.before.sqlite")
+        print("Retour précédent contrôlé ; ancien timer désarmé ; aucune session existante.", flush=True)
     nixpkgs = run("nix-instantiate", "--find-file", "nixpkgs").strip()
     require(nixpkgs.startswith("/nix/store/") and Path(nixpkgs).is_dir(), "Nixpkgs installé introuvable")
 

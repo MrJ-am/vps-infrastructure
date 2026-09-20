@@ -42,7 +42,7 @@ jobs:
           ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
       - name: Activer avec retour autonome et contrôler les accès
         run: |
-          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-web-deployments/$GITHUB_SHA/source/scripts/vision-web-activate.py start $GITHUB_SHA'"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 openssl --run 'python3 /root/vision-web-deployments/$GITHUB_SHA/source/scripts/vision-web-activate.py start $GITHUB_SHA'"
       - name: Vérifier une nouvelle connexion SSH et les sites publics
         run: |
           sh scripts/connect.sh "systemctl is-active sshd nginx postgresql matheval vision mrj-auth"

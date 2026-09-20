@@ -72,6 +72,16 @@ def verify_web(domain,username,password):
     require(web_request(origin,'/auth/session',cookie=cookie)[0]==401,'Session encore valide après déconnexion')
 
 
+def probe_credential():
+    openssl=shutil.which('openssl')
+    require(openssl is not None,'OpenSSL absent : aucune activation effectuée')
+    username='vision-browser-check-'+secrets.token_hex(8)
+    password=secrets.token_urlsafe(40)
+    encoded=subprocess.run([openssl,'passwd','-6','-stdin'],input=password+'\n',text=True,capture_output=True,check=True).stdout.strip()
+    require(encoded.startswith('$6$'),'Empreinte de sonde inattendue')
+    return username,password,encoded
+
+
 def rollback(commit,stop_apply=True):
     state,report=paths(commit)
     if stop_apply:
@@ -102,6 +112,8 @@ def apply(commit):
     require(previous.sha256('/var/lib/vision/auth/htpasswd')==report['credentials_sha256'],'Identifiants modifiés')
     require(str(Path('/srv/vision/current').resolve())==report['current_release'],'Application modifiée')
     require('187.77.95.158' in {x[4][0] for x in socket.getaddrinfo(report['domain'],443,socket.AF_INET)},'DNS inattendu')
+    # Résoudre et vérifier les outils avant toute modification du serveur.
+    username,password,encoded=probe_credential()
     locks=[]
     for path in ('/srv/matheval/deploy.lock','/srv/vision/deploy.lock'):
         lock=open(path,'a');fcntl.flock(lock,fcntl.LOCK_EX);locks.append(lock)
@@ -117,8 +129,6 @@ def apply(commit):
         run(candidate/'bin/switch-to-configuration','test',visible=True)
         require(all(run('systemctl','is-active',s).strip()=='active' for s in ('sshd','nginx','postgresql','matheval','vision','mrj-auth')),'Un service requis est inactif')
         # Identifiant de sonde éphémère, ajouté sans remplacer le compte humain.
-        username='vision-browser-check-'+secrets.token_hex(8);password=secrets.token_urlsafe(40)
-        encoded=subprocess.run(['openssl','passwd','-6','-stdin'],input=password+'\n',text=True,capture_output=True,check=True).stdout.strip()
         atomic(credentials,(state/'credentials.before').read_bytes().rstrip(b'\n')+f'\n{username}:{encoded}\n'.encode(),0o640)
         previous.wait_for(lambda:previous.verify_http(report['domain'],username,password),'API existante invalide',attempts=5)
         verify_web(report['domain'],username,password)
