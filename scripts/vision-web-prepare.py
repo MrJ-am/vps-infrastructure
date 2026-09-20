@@ -218,8 +218,15 @@ def prepare(commit):
         command[command.index("-c") + 1], state / "nginx-test.conf"
     )
     run(command[0], "-t", "-c", nginx_configuration, visible=True)
-    dry = run(Path(candidate) / "bin/switch-to-configuration", "dry-activate")
+    dry_result = subprocess.run(
+        [str(Path(candidate) / "bin/switch-to-configuration"), "dry-activate"],
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
+    )
+    require(dry_result.returncode == 0, "Simulation d'activation refusée")
+    dry = dry_result.stdout
+    require(bool(dry.strip()), "Rapport de simulation vide")
     (state / "dry-activate.txt").write_text(dry)
+    print("SIMULATION D'ACTIVATION :\n" + dry, flush=True)
 
     require(all(run("systemctl", "is-active", service).strip() == "active"
                 for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
@@ -252,4 +259,3 @@ if __name__ == "__main__":
     except (OSError, RuntimeError, ValueError, KeyError, IndexError) as exc:
         print(f"ÉCHEC : {exc}", file=sys.stderr)
         sys.exit(1)
-
