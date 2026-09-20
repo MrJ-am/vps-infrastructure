@@ -56,6 +56,18 @@ et aucune donnée fictive n'est créée. Le retour rétablit la génération, le
 sources, le lien applicatif et les identifiants ; il ne restaure aucun dump et
 n'efface aucune table.
 
+## Reprise du premier essai
+
+L'[essai du 20 septembre 2026](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541277939)
+sur `7f7697227be70bd3dd0847a17851a9b1cbb81e79` a rétabli la génération précédente :
+OpenSSL n'était pas disponible dans l'environnement du processus de sonde.
+Le workflow fournit désormais cette dépendance et la sonde est préparée avant
+toute activation. La reprise valide le `rollback.json` de cet essai précis,
+la génération, la configuration, le lien applicatif et les identifiants
+rétablis. Elle exige l'absence de toute session et l'arrêt du service SSO,
+conserve la base de sessions initialisée et désarme l'ancien timer avant de
+préparer une nouvelle opération. Elle refuse un essai déjà enregistré.
+
 ## Identifiants durables
 
 L'activation précédente du 20 septembre utilisait un verrou de bootstrap dont
