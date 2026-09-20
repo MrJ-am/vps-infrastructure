@@ -360,7 +360,7 @@
       (sb-bsd-sockets:socket-close listener))))
 
 (defun main ()
-  (setf *version* (environment-value "VISION_VERSION" "1.1.0")
+  (setf *version* (environment-value "VISION_VERSION" "1.1.1")
         *document-root* (environment-value "VISION_DOCUMENT_ROOT" "docs/"))
   (handler-case
       (serve :host (environment-value "IP" "127.0.0.1")

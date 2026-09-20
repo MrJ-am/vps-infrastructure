@@ -12,7 +12,7 @@ opérations manuelles distinctes.
 - API protégée par HTTP Basic : `/api/` ;
 - MCP Streamable HTTP stateless protégé par HTTP Basic : `/mcp` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `71e1dbf4add390b9039fa0273f76bddbe7397fda`.
+- application : commit Vision `f2999dc1fa5d148bccf3f456912ba2e64bb795a9`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
