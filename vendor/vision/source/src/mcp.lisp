@@ -63,7 +63,7 @@
     "name" "list_due_memory_sheets"
     "title" "Lister les fiches à réviser"
     "description"
-    "Liste les fiches dont l'échéance explicite est atteinte, éventuellement filtrées par tags. Ne calcule pas un intervalle de répétition implicite."
+    "Liste les fiches dont l'échéance est atteinte, qu'elle ait été calculée par FSRS ou fixée manuellement, éventuellement filtrées par tags."
     "inputSchema"
     (object-schema
      (jobject
@@ -122,7 +122,7 @@
     "name" "record_review"
     "title" "Noter une observation de révision"
     "description"
-    "Ajoute une observation factuelle après un échange et, seulement si nextReviewAt est fourni, modifie l'échéance. Un échec isolé doit être décrit avec son contexte plutôt que transformé en jugement global de maîtrise."
+    "Ajoute une observation factuelle après un échange. Fournir rating seulement si le rappel a réellement été évalué : 1=Again (échec), 2=Hard (rappel réussi avec difficulté), 3=Good (rappel correct), 4=Easy (rappel immédiat et assuré). FSRS calcule alors l'échéance. En cas de fatigue, ambiguïté, aide excessive ou évaluation insuffisante, omettre rating : l'observation reste qualitative et ne modifie pas l'état FSRS. nextReviewAt est une dérogation manuelle, utilisable seulement sans rating."
     "inputSchema"
     (object-schema
      (jobject
@@ -131,14 +131,16 @@
       "note" (string-schema :description "Observation concrète et parcimonieuse." :maximum-length 4000)
       "context" (jobject "type" "object" "additionalProperties" :true)
       "reviewedAt" (string-schema :description "Date ISO 8601. Par défaut : maintenant." :maximum-length 64)
-      "nextReviewAt" (string-schema :description "Nouvelle échéance ISO 8601 ; null supprime l'échéance ; absence la conserve." :maximum-length 64 :nullable t))
+      "rating" (integer-schema :description "Note FSRS : 1=Again, 2=Hard, 3=Good, 4=Easy. Omettre si le rappel n'a pas été évalué de façon fiable." :minimum 1 :maximum 4)
+      "nextReviewAt" (string-schema :description "Dérogation manuelle sans rating : date ISO 8601 ; null supprime l'échéance ; absence la conserve." :maximum-length 64 :nullable t))
      "sheetId" "outcome" "note")
     "outputSchema"
     (object-schema
      (jobject "recorded" (jobject "type" "boolean")
               "sheet" (jobject "type" (jarray "object" "null"))
-              "observation" (jobject "type" (jarray "object" "null")))
-     "recorded" "sheet" "observation")
+              "observation" (jobject "type" (jarray "object" "null"))
+              "scheduling" (jobject "type" "object" "additionalProperties" :true))
+     "recorded" "sheet" "observation" "scheduling")
     "annotations" (tool-annotations nil nil))))
 
 (defun ensure-object (value description)
@@ -235,6 +237,17 @@
   (multiple-value-bind (value present) (json-object-get result key)
     (and present (eq value :true))))
 
+(defun database-object-value (object key)
+  (multiple-value-bind (value present) (json-object-get object key)
+    (unless present
+      (database-fail "Malformed PostgreSQL result."
+                     (format nil "Missing field ~S." key)))
+    value))
+
+(defun database-result-error (result)
+  (multiple-value-bind (value present) (json-object-get result "error")
+    (and present value)))
+
 (defun call-search-memory-sheets (arguments)
   (validate-object-keys arguments '("query" "tags" "limit"))
   (let ((query (validated-string (required-value arguments "query") "query" 500))
@@ -301,9 +314,128 @@
                   "save_memory_sheet_create" +sql-create-memory-sheet+ variables))))
       (values result (database-result-success-p result "saved")))))
 
+(defun call-qualitative-review
+    (arguments sheet-id outcome note context)
+  (let* ((variables
+           (append
+            (list (cons "sheet_id" (princ-to-string sheet-id))
+                  (cons "outcome" outcome)
+                  (cons "note" note)
+                  (cons "context" (json-encode context)))
+            (plain-timestamp-arguments arguments "reviewedAt" "reviewed_at")
+            (timestamp-arguments arguments "nextReviewAt" "next_review")))
+         (result (database-query-json
+                  "record_review" +sql-record-review+ variables)))
+    (values result (database-result-success-p result "recorded"))))
+
+(defun fsrs-state-from-database (sheet)
+  (let ((stability (database-object-value sheet "stability"))
+        (difficulty (database-object-value sheet "difficulty")))
+    (cond
+      ((and (eq stability :null) (eq difficulty :null)) nil)
+      ((and (fsrs-finite-number-p stability)
+            (fsrs-finite-number-p difficulty))
+       (make-fsrs-memory-state (coerce stability 'double-float)
+                               (coerce difficulty 'double-float)))
+      (t
+       (database-fail "Invalid FSRS state."
+                      "Stability and difficulty must both be null or finite.")))))
+
+(defun call-fsrs-review
+    (arguments sheet-id outcome note context rating &optional (attempt 1))
+  (let* ((prepared
+           (database-query-json
+            "prepare_fsrs_review" +sql-prepare-fsrs-review+
+            (append
+             (list (cons "sheet_id" (princ-to-string sheet-id)))
+             (plain-timestamp-arguments arguments "reviewedAt" "reviewed_at"))))
+         (found (database-object-value prepared "found")))
+    (unless (eq found :true)
+      (return-from call-fsrs-review
+        (values
+         (jobject "recorded" :false "sheet" :null "observation" :null
+                  "scheduling" (jobject "applied" :false)
+                  "error" "not_found")
+         nil)))
+    (let* ((sheet (database-object-value prepared "sheet"))
+           (settings (database-object-value prepared "settings"))
+           (model-version (database-object-value settings "modelVersion"))
+           (implementation-version
+             (database-object-value settings "implementationVersion"))
+           (desired-retention
+             (database-object-value settings "desiredRetention"))
+           (parameters
+             (fsrs-json-parameters
+              (database-object-value settings "parameters")))
+           (elapsed-days (database-object-value sheet "elapsedDays"))
+           (reviewed-at (database-object-value sheet "reviewedAt"))
+           (previous-state (fsrs-state-from-database sheet)))
+      (unless (and (stringp model-version)
+                   (string= model-version +fsrs-model-version+))
+        (database-fail "Unsupported FSRS model."
+                       (format nil "Expected ~A, received ~A."
+                               +fsrs-model-version+ model-version)))
+      (unless (eq (database-object-value sheet "chronological") :true)
+        (invalid-parameters
+         "reviewedAt precedes the last FSRS review; an incremental FSRS update must be chronological."))
+      (unless (and (integerp elapsed-days) (>= elapsed-days 0))
+        (database-fail "Invalid FSRS state." "elapsedDays must be non-negative."))
+      (unless (and (fsrs-finite-number-p desired-retention)
+                   (< 0.0d0 (coerce desired-retention 'double-float) 1.0d0))
+        (database-fail "Invalid FSRS settings."
+                       "desiredRetention must be between zero and one."))
+      (multiple-value-bind (next-state interval scheduled-days)
+          (fsrs-schedule previous-state rating elapsed-days
+                         desired-retention parameters)
+        (let* ((variables
+                 (list
+                  (cons "sheet_id" (princ-to-string sheet-id))
+                  (cons "expected_review_count"
+                        (princ-to-string
+                         (database-object-value sheet "reviewCount")))
+                  (cons "expected_fsrs_review_count"
+                        (princ-to-string
+                         (database-object-value sheet "fsrsReviewCount")))
+                  (cons "outcome" outcome)
+                  (cons "note" note)
+                  (cons "context" (json-encode context))
+                  (cons "reviewed_at" reviewed-at)
+                  (cons "rating" (princ-to-string rating))
+                  (cons "scheduler_version"
+                        (format nil "~A/~A" model-version implementation-version))
+                  (cons "model_version" model-version)
+                  (cons "implementation_version" implementation-version)
+                  (cons "desired_retention" (json-encode
+                                              (coerce desired-retention
+                                                      'double-float)))
+                  (cons "elapsed_days" (princ-to-string elapsed-days))
+                  (cons "new_stability"
+                        (json-encode
+                         (fsrs-memory-state-stability next-state)))
+                  (cons "new_difficulty"
+                        (json-encode
+                         (fsrs-memory-state-difficulty next-state)))
+                  (cons "interval_days" (json-encode interval))
+                  (cons "scheduled_days" (princ-to-string scheduled-days))))
+               (result
+                 (database-query-json
+                  "record_fsrs_review" +sql-record-fsrs-review+ variables)))
+          (cond
+            ((database-result-success-p result "recorded")
+             (values result t))
+            ((and (string= (or (database-result-error result) "") "conflict")
+                  (< attempt 3))
+             (call-fsrs-review arguments sheet-id outcome note context rating
+                               (1+ attempt)))
+            ((string= (or (database-result-error result) "") "conflict")
+             (database-fail "Concurrent review update failed."
+                            "The memory sheet changed during three FSRS retries."))
+            (t (values result nil))))))))
+
 (defun call-record-review (arguments)
   (validate-object-keys
-   arguments '("sheetId" "outcome" "note" "context" "reviewedAt" "nextReviewAt"))
+   arguments '("sheetId" "outcome" "note" "context" "reviewedAt" "rating"
+               "nextReviewAt"))
   (let* ((sheet-id (validated-integer (required-value arguments "sheetId")
                                       "sheetId" 1 most-positive-fixnum))
          (outcome (validated-string (required-value arguments "outcome")
@@ -316,17 +448,28 @@
     (unless (member outcome '("recalled" "partial" "forgotten" "not_assessed")
                     :test #'string=)
       (invalid-parameters "outcome is not supported."))
-    (let* ((variables
-             (append
-              (list (cons "sheet_id" (princ-to-string sheet-id))
-                    (cons "outcome" outcome)
-                    (cons "note" note)
-                    (cons "context" (json-encode context)))
-              (plain-timestamp-arguments arguments "reviewedAt" "reviewed_at")
-              (timestamp-arguments arguments "nextReviewAt" "next_review")))
-           (result (database-query-json
-                    "record_review" +sql-record-review+ variables)))
-      (values result (database-result-success-p result "recorded")))))
+    (multiple-value-bind (rating rating-present)
+        (json-object-get arguments "rating")
+      (multiple-value-bind (next-review-at next-review-at-present)
+          (json-object-get arguments "nextReviewAt")
+        (declare (ignore next-review-at))
+        (when rating-present
+          (validated-integer rating "rating" 1 4)
+          (when next-review-at-present
+            (invalid-parameters
+             "rating and nextReviewAt are mutually exclusive; FSRS determines the due date."))
+          (when (string= outcome "not_assessed")
+            (invalid-parameters
+             "rating must be omitted when outcome is not_assessed."))
+          (when (and (= rating 1) (string= outcome "recalled"))
+            (invalid-parameters "rating 1 (Again) is incompatible with recalled."))
+          (when (and (> rating 1) (string= outcome "forgotten"))
+            (invalid-parameters
+             "ratings 2 to 4 indicate successful recall and are incompatible with forgotten.")))
+        (if rating-present
+            (call-fsrs-review arguments sheet-id outcome note context rating)
+            (call-qualitative-review
+             arguments sheet-id outcome note context))))))
 
 (defun mcp-tool-result (structured &key (success t) message)
   (jobject
@@ -396,7 +539,7 @@
      "capabilities" (jobject "tools" (jobject "listChanged" :false))
      "serverInfo" (jobject "name" "vision" "title" "Vision" "version" *version*)
      "instructions"
-     "Vision conserve les informations que Jean-Christophe demande explicitement de mémoriser. Rechercher puis lire les fiches pertinentes avant une révision. Noter les réussites, oublis et indices de compréhension avec parcimonie et leur contexte ; ne jamais déduire une maîtrise globale d'un seul échange. La prochaine échéance est une décision explicite, pas un intervalle automatique.")))
+     "Vision conserve les informations que Jean-Christophe demande explicitement de mémoriser. Rechercher puis lire les fiches pertinentes avant une révision. Noter les réussites, oublis et indices de compréhension avec parcimonie et leur contexte ; ne jamais déduire une maîtrise globale d'un seul échange. Après une véritable tentative de rappel, fournir une note FSRS : 1=échec, 2=rappel difficile mais réussi, 3=rappel correct, 4=rappel immédiat et assuré. En cas de fatigue, ambiguïté, aide excessive ou évaluation insuffisante, omettre la note : l'observation ne changera pas la planification.")))
 
 (defun dispatch-mcp-request (request)
   (ensure-object request "JSON-RPC request")

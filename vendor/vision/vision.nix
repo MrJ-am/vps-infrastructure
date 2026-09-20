@@ -19,7 +19,7 @@ let
     installPhase = ''
       runHook preInstall
       mkdir -p "$out/app"
-      cp -R vision.asd src docs migrations scripts build.sh "$out/app/"
+      cp -R vision.asd src docs migrations scripts build.sh THIRD_PARTY_NOTICES.md "$out/app/"
       install -m 0550 vision "$out/app/vision"
       printf '%s\n' ${lib.escapeShellArg cfg.bootstrapCommit} > "$out/app/RELEASE"
       runHook postInstall
@@ -126,7 +126,7 @@ in {
     enable = lib.mkEnableOption "Vision API";
     domain = lib.mkOption { type = lib.types.str; default = "vision.mrj.am"; };
     port = lib.mkOption { type = lib.types.port; default = 3001; };
-    version = lib.mkOption { type = lib.types.str; default = "1.1.1"; };
+    version = lib.mkOption { type = lib.types.str; default = "1.2.0"; };
     bootstrapSource = lib.mkOption {
       type = lib.types.path;
       description = "Source Vision revue et epinglee par l'infrastructure.";
