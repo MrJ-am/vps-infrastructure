@@ -19,6 +19,7 @@ let
     site ? privateHealthPath && validPath site.privateHealthPath &&
     !(lib.hasPrefix site.auth.prefix site.privateHealthPath);
   validSite = site:
+    (!(site ? browserAuth) || builtins.isBool site.browserAuth) &&
     builtins.isInt site.port && site.port >= 1024 && site.port <= 65535 &&
     builtins.isString site.prefix &&
     (site.prefix == "" || builtins.match "(/[a-zA-Z0-9_-]+)+" site.prefix != null) &&
@@ -27,6 +28,7 @@ let
   hasProtectedAPI = lib.any (site: site ? auth) sites;
 
 in {
+  imports = [ ./mrj-auth.nix ];
   assertions = [
     { assertion = sites != []; message = "La passerelle doit conserver au moins un projet."; }
     { assertion = builtins.length domains == builtins.length (lib.unique domains);
@@ -48,3 +50,4 @@ in {
   };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 }
+

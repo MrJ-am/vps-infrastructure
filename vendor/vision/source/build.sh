@@ -21,3 +21,4 @@ fi
 
 echo 'SBCL or Roswell is required.' >&2
 exit 1
+

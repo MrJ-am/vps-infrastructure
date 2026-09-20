@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light"><meta name="robots" content="noindex,nofollow">
+<title>Vision — Mes fiches</title><link rel="stylesheet" href="/app.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="/" aria-label="Vision, accueil"><span class="brand-mark" aria-hidden="true">◉</span>Vision<span class="brand-dot">.</span></a><span class="caption">Un espace pour faire durer les idées.</span><div id="account" hidden><span id="username"></span><button class="quiet" id="logout">Se déconnecter</button></div></header>
+<main>
+<section id="login" class="login-layout" hidden>
+<div class="login-copy"><p class="eyebrow">Votre mémoire, au même endroit</p><h1>Retrouver.<br>Comprendre.<br><span>Se souvenir.</span></h1><p class="intro">Vos fiches, leurs liens et les observations qui les accompagnent.</p><p class="small muted">Une seule connexion pour vos espaces mrj.am.</p></div>
+<form id="login-form" class="login-panel"><span class="eyebrow">Espace personnel</span><h2>Bienvenue dans Vision</h2><p class="muted">Connectez-vous pour retrouver vos fiches.</p><label>Identifiant<input name="username" autocomplete="username" required maxlength="64"></label><label>Mot de passe<input name="password" type="password" autocomplete="current-password" required maxlength="1024"></label><p id="login-error" class="error" role="alert"></p><button class="primary" type="submit">Se connecter <span aria-hidden="true">→</span></button></form>
+</section>
+<div id="loading" class="empty" role="status">Ouverture de votre espace…</div>
+<section id="workspace" hidden>
+<div class="page-heading"><div><p class="eyebrow">Bibliothèque personnelle</p><h1>Mes fiches</h1><p class="muted">Les idées à retrouver, les savoirs à entretenir.</p></div><button class="primary" id="new-sheet"><span aria-hidden="true">＋</span> Nouvelle fiche</button></div>
+<div id="notice" role="status" aria-live="polite"></div>
+<div class="browser-layout">
+<aside class="sidebar"><div class="sidebar-heading"><span class="eyebrow">Parcourir</span><button class="quiet small" id="reset-filters">Réinitialiser</button></div><nav id="states" aria-label="État des fiches"></nav><div class="sidebar-heading tag-heading"><h2>Tags</h2><span id="tag-count" class="count"></span></div><label class="sr-only" for="tag-search">Rechercher un tag</label><input id="tag-search" type="search" placeholder="Trouver un tag…"><div id="tags" class="tag-list"></div><label class="small">Combiner les tags<select id="tag-mode"><option value="all">Tous les tags choisis</option><option value="any">Au moins un des tags</option></select></label></aside>
+<div class="collection">
+<form id="search-form" class="searchbar"><label class="search-input"><span aria-hidden="true">⌕</span><span class="sr-only">Rechercher dans les fiches</span><input id="query" type="search" maxlength="500" placeholder="Rechercher un titre, une idée, un alias…"></label><button type="submit" class="secondary">Rechercher</button></form>
+<details class="filters"><summary>Filtres supplémentaires <span id="active-filters"></span></summary><div class="filter-grid">
+<label>Importance<select id="filter-importance"><option value="">Toutes</option><option value="5">5 · Essentielle</option><option value="4">4 · Élevée</option><option value="3">3 · Normale</option><option value="2">2 · Faible</option><option value="1">1 · Secondaire</option></select></label>
+<label>Échéance à partir du<input id="filter-dueAfter" type="date"></label><label>Échéance jusqu’au<input id="filter-dueBefore" type="date"></label><label>Modifiée depuis le<input id="filter-updatedAfter" type="date"></label><label>Stabilité minimale (jours)<input id="filter-minStability" type="number" min="0.001" max="36500" step="any" placeholder="Toutes"></label><label>Difficulté maximale (1–10)<input id="filter-maxDifficulty" type="number" min="1" max="10" step="any" placeholder="Toutes"></label><label>Rappel estimé maximal (%)<input id="filter-maxRetrievability" type="number" min="0" max="100" step="any" placeholder="Tous"></label>
+</div><button class="secondary small" id="apply-filters">Appliquer les filtres</button></details>
+<div class="list-toolbar"><span id="result-count" aria-live="polite"></span><div><label class="sr-only" for="sort">Trier les fiches</label><select id="sort"><option value="updatedAt">Dernière modification</option><option value="title">Titre</option><option value="dueAt">Échéance</option><option value="importance">Importance</option><option value="createdAt">Date de création</option><option value="lastReviewedAt">Dernière observation</option><option value="reviewCount">Nombre d’observations</option><option value="fsrsStability">Stabilité</option><option value="fsrsDifficulty">Difficulté</option><option value="retrievability">Rappel estimé</option></select><button class="quiet" id="direction" aria-label="Ordre décroissant" title="Inverser l’ordre du tri">↓</button></div></div>
+<div class="table-container"><table><thead><tr><th scope="col">Fiche</th><th scope="col">Échéance</th><th scope="col">Stabilité</th><th scope="col">Rappel</th></tr></thead><tbody id="sheet-list"></tbody></table><div id="list-empty" class="empty" hidden></div></div>
+<div class="pagination"><button class="quiet" id="previous">← Précédent</button><span id="page-info"></span><button class="quiet" id="next">Suivant →</button></div>
+</div>
+<aside class="detail-panel" id="detail" aria-label="Détail de la fiche"><div class="empty"><span class="empty-symbol" aria-hidden="true">▤</span><h2>Une idée à explorer</h2><p>Sélectionnez une fiche pour lire son contenu, ses observations et ses paramètres.</p></div></aside>
+</div>
+</section>
+</main>
+<dialog id="observation-dialog"><form id="observation-form"><div class="dialog-heading"><h2>Corriger l’observation</h2><button type="button" class="quiet" id="cancel-observation" aria-label="Fermer">✕</button></div><p class="muted small">La version originale est conservée. Cette correction ne déclenche pas de nouvelle révision.</p><label>Observation<textarea name="note" rows="6" maxlength="4000" required></textarea></label><label>Informations complémentaires (JSON)<textarea name="context" rows="7" spellcheck="false" required></textarea></label><p class="error" id="observation-error" role="alert"></p><button class="primary" type="submit">Enregistrer la correction</button></form></dialog>
+<noscript><p class="empty">Activez JavaScript pour utiliser votre espace Vision.</p></noscript>
+</body></html>

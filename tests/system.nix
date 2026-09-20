@@ -33,8 +33,8 @@ assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
 assert current.systemd.services.vision.environment.PGDATABASE == "vision";
 assert current.systemd.services.vision.environment.PGUSER == "vision";
-assert current.services.vision.version == "1.2.0";
-assert current.services.vision.bootstrapCommit == "445f9d7e6944d621de33283ca960d772813f47a2";
+assert current.services.vision.version == "1.3.0";
+assert current.services.vision.bootstrapCommit == "151ab64bd5c9c5c54297e88dbe4d548343cc4928";
 assert lib.hasSuffix
   "/bin/psql"
   current.systemd.services.vision.environment.VISION_PSQL;
@@ -77,3 +77,4 @@ assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.system
   sharedPostgresql17 = true;
   visionIsolated = true;
 }
+

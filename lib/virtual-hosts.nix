@@ -13,6 +13,8 @@ let
     extraConfig = proxyHeaders site + (if site ? auth then ''
       proxy_set_header Authorization "";
       proxy_set_header X-Vision-Authenticated "";
+      proxy_set_header X-Vision-Browser "";
+      proxy_set_header X-Mrj-User "";
     '' else "");
   };
   protectedLocations = site: if site ? auth then {
@@ -27,6 +29,8 @@ let
         limit_conn_status 429;
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
+        proxy_set_header X-Vision-Browser "";
+        proxy_set_header X-Mrj-User "";
         error_page 401 = @${site.service}-authentication-required;
         error_page 429 = @${site.service}-rate-limited;
       '';
@@ -74,3 +78,4 @@ let
     value = { enableACME = true; forceSSL = true; globalRedirect = site.domain; };
   }) site.aliases;
 in builtins.listToAttrs (builtins.concatMap hostEntries sites)
+

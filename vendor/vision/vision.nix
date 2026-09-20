@@ -126,7 +126,7 @@ in {
     enable = lib.mkEnableOption "Vision API";
     domain = lib.mkOption { type = lib.types.str; default = "vision.mrj.am"; };
     port = lib.mkOption { type = lib.types.port; default = 3001; };
-    version = lib.mkOption { type = lib.types.str; default = "1.2.0"; };
+    version = lib.mkOption { type = lib.types.str; default = "1.3.0"; };
     bootstrapSource = lib.mkOption {
       type = lib.types.path;
       description = "Source Vision revue et epinglee par l'infrastructure.";
@@ -329,3 +329,4 @@ in {
     };
   };
 }
+

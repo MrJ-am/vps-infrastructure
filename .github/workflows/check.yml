@@ -13,11 +13,11 @@ jobs:
       - name: Installer Nix pour les contrôles locaux
         run: |
           sudo apt-get update
-          sudo apt-get install -y nix-bin
+          sudo apt-get install -y nix-bin python3-passlib nginx
       - name: Vérifier les registres, le routage et la syntaxe Nix
         # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
         # au compte runner. Ces contrôles n'ont besoin d'aucun démon.
-        run: sudo env NIX_REMOTE=local sh scripts/check.sh
+        run: sudo env NIX_REMOTE=local PYTHONPATH=/usr/lib/python3/dist-packages sh scripts/check.sh
       - name: Évaluer les configurations NixOS complètes
         run: |
           NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
@@ -32,3 +32,4 @@ jobs:
         run: |
           sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
           python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
+

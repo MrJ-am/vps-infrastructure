@@ -1,0 +1,64 @@
+name: Activer le site Vision et la connexion commune
+on:
+  workflow_dispatch:
+    inputs:
+      prepared_commit:
+        description: Commit exact préparé et contrôlé
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  activate:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la révision préparée
+        env:
+          PREPARED_COMMIT: ${{ inputs.prepared_commit }}
+        run: |
+          python3 - <<'PYCODE'
+          import os, re
+          assert re.fullmatch('[0-9a-f]{40}',os.environ['PREPARED_COMMIT'])
+          assert os.environ['PREPARED_COMMIT']==os.environ['GITHUB_SHA']
+          PYCODE
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/vps-vision-web"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Activer avec retour autonome et contrôler les accès
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-web-deployments/$GITHUB_SHA/source/scripts/vision-web-activate.py start $GITHUB_SHA'"
+      - name: Vérifier une nouvelle connexion SSH et les sites publics
+        run: |
+          sh scripts/connect.sh "systemctl is-active sshd nginx postgresql matheval vision mrj-auth"
+          python3 scripts/probe.py
+      - name: Enregistrer le démarrage après les contrôles indépendants
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-web-deployments/$GITHUB_SHA/source/scripts/vision-web-activate.py finalize $GITHUB_SHA'"
+      - name: Récupérer le rapport sans données ni secrets
+        run: |
+          mkdir "$RUNNER_TEMP/vision-web-activation"
+          sh scripts/connect.sh "cat /root/vision-web-deployments/$GITHUB_SHA/committed.json" > "$RUNNER_TEMP/vision-web-activation/committed.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vision-web-activation-${{ github.sha }}
+          path: ${{ runner.temp }}/vision-web-activation/
+          retention-days: 30
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vps-vision-web"

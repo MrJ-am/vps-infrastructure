@@ -30,7 +30,7 @@ def validate(projects):
         raise ValueError("Le registre doit contenir au moins un projet.")
     domains, ports = set(), set()
     required = {"domain", "aliases", "port", "prefix", "maxBodySize", "service", "probes"}
-    optional = {"auth", "privateHealthPath"}
+    optional = {"auth", "privateHealthPath", "browserAuth"}
     for name, site in projects.items():
         if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
             raise ValueError(f"Identifiant de projet invalide : {name}")
@@ -56,6 +56,11 @@ def validate(projects):
             raise ValueError(f"{name} : taille maximale invalide.")
         if not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"]):
             raise ValueError(f"{name} : nom de service invalide.")
+
+        if "browserAuth" in site and (type(site["browserAuth"]) is not bool or not site.get("auth") or not (site["domain"] == "mrj.am" or site["domain"].endswith(".mrj.am"))):
+            raise ValueError(f"{name} : session mrj.am invalide.")
+        if port == 3002:
+            raise ValueError("Port 3002 réservé aux sessions mrj.am.")
 
         auth = site.get("auth")
         private_health = site.get("privateHealthPath")
@@ -106,3 +111,4 @@ def load(path=ROOT / "projects.json"):
 if __name__ == "__main__":
     projects = load()
     print(f"Registre valide : {len(projects)} projet(s), domaines et ports distincts.")
+
