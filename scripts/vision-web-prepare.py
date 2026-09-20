@@ -16,7 +16,7 @@ APP_VERSION = "1.3.0"
 PREVIOUS_APP_COMMIT = "445f9d7e6944d621de33283ca960d772813f47a2"
 PREVIOUS_APP_VERSION = "1.2.0"
 DOMAIN = "vision.mrj.am"
-RECOVERED_COMMIT = "7f7697227be70bd3dd0847a17851a9b1cbb81e79"
+RECOVERED_COMMIT = "b71058c99e65aa3d25a8f116cc18d256988a58fd"
 
 
 def require(condition, message):
@@ -161,6 +161,11 @@ def prepare(commit):
     require(all(run("systemctl", "is-active", service).strip() == "active"
                 for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
             "Un service existant n'est pas actif")
+    for database in ("matheval", "vision"):
+        timer = "postgresqlBackup-" + database + ".timer"
+        require(run("systemctl", "is-active", timer).strip() == "active",
+                "Sauvegarde PostgreSQL inactive : " + database)
+    print("Timers de sauvegarde Matheval et Vision actifs.", flush=True)
     previous_state = state.parent / RECOVERED_COMMIT
     session_database = Path("/var/lib/mrj-auth/sessions.sqlite")
     if previous_state.exists() or session_database.exists():
