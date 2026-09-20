@@ -35,6 +35,7 @@ in {
     enabled = c.services.vision.enable;
     domain = c.services.vision.domain;
     port = c.services.vision.port;
+    version = c.services.vision.version;
     commit = c.services.vision.bootstrapCommit;
     service = c.systemd.services.vision.serviceConfig;
     environment = c.systemd.services.vision.environment;
