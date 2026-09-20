@@ -81,6 +81,25 @@
      SELECT s.id, s.title, s.summary, s.tags, s.aliases, s.importance,
             s.due_at AS \"dueAt\", s.last_reviewed_at AS \"lastReviewedAt\",
             s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\",
+            s.fsrs_stability AS \"fsrsStability\",
+            s.fsrs_difficulty AS \"fsrsDifficulty\",
+            s.fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+            s.fsrs_review_count AS \"fsrsReviewCount\",
+            s.fsrs_model_version AS \"fsrsModelVersion\",
+            cfg.desired_retention AS \"desiredRetention\",
+            CASE WHEN s.fsrs_stability IS NULL
+                       OR s.fsrs_last_reviewed_at IS NULL
+                 THEN NULL
+                 ELSE power(
+                   1.0
+                   + (GREATEST(
+                        0.0,
+                        round(extract(epoch FROM (now() - s.fsrs_last_reviewed_at))
+                              / 86400.0)
+                      ) / s.fsrs_stability)
+                     * (power(0.9, -1.0 / cfg.parameters[21]) - 1.0),
+                   -cfg.parameters[21])
+            END AS retrievability,
             s.updated_at AS \"updatedAt\",
             CASE WHEN input.query = '' THEN 0::real ELSE
               ts_rank(
@@ -89,6 +108,7 @@
             END AS rank
        FROM vision_memory_sheets AS s
        CROSS JOIN input
+       CROSS JOIN vision_scheduler_settings AS cfg
       WHERE s.archived_at IS NULL
         AND (
           input.query = ''
@@ -134,9 +154,29 @@
      SELECT s.id, s.title, s.summary, s.tags, s.aliases, s.importance,
             s.due_at AS \"dueAt\", s.last_reviewed_at AS \"lastReviewedAt\",
             s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\",
+            s.fsrs_stability AS \"fsrsStability\",
+            s.fsrs_difficulty AS \"fsrsDifficulty\",
+            s.fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+            s.fsrs_review_count AS \"fsrsReviewCount\",
+            s.fsrs_model_version AS \"fsrsModelVersion\",
+            cfg.desired_retention AS \"desiredRetention\",
+            CASE WHEN s.fsrs_stability IS NULL
+                       OR s.fsrs_last_reviewed_at IS NULL
+                 THEN NULL
+                 ELSE power(
+                   1.0
+                   + (GREATEST(
+                        0.0,
+                        round(extract(epoch FROM (now() - s.fsrs_last_reviewed_at))
+                              / 86400.0)
+                      ) / s.fsrs_stability)
+                     * (power(0.9, -1.0 / cfg.parameters[21]) - 1.0),
+                   -cfg.parameters[21])
+            END AS retrievability,
             s.updated_at AS \"updatedAt\"
        FROM vision_memory_sheets AS s
        CROSS JOIN input
+       CROSS JOIN vision_scheduler_settings AS cfg
       WHERE s.archived_at IS NULL
         AND s.due_at IS NOT NULL
         AND s.due_at <= input.before
@@ -165,13 +205,42 @@
      SELECT s.id, s.title, s.body, s.summary, s.tags, s.aliases, s.importance,
             s.due_at AS \"dueAt\", s.last_reviewed_at AS \"lastReviewedAt\",
             s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\",
+            s.fsrs_stability AS \"fsrsStability\",
+            s.fsrs_difficulty AS \"fsrsDifficulty\",
+            s.fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+            s.fsrs_review_count AS \"fsrsReviewCount\",
+            s.fsrs_model_version AS \"fsrsModelVersion\",
+            cfg.desired_retention AS \"desiredRetention\",
+            CASE WHEN s.fsrs_stability IS NULL
+                       OR s.fsrs_last_reviewed_at IS NULL
+                 THEN NULL
+                 ELSE power(
+                   1.0
+                   + (GREATEST(
+                        0.0,
+                        round(extract(epoch FROM (now() - s.fsrs_last_reviewed_at))
+                              / 86400.0)
+                      ) / s.fsrs_stability)
+                     * (power(0.9, -1.0 / cfg.parameters[21]) - 1.0),
+                   -cfg.parameters[21])
+            END AS retrievability,
             s.created_at AS \"createdAt\", s.updated_at AS \"updatedAt\"
        FROM vision_memory_sheets AS s
+       CROSS JOIN vision_scheduler_settings AS cfg
       WHERE s.id = :'sheet_id'::bigint AND s.archived_at IS NULL
    ), observations AS (
      SELECT o.id, o.outcome, o.note, o.context,
             o.reviewed_at AS \"reviewedAt\",
-            o.next_review_at AS \"nextReviewAt\"
+            o.next_review_at AS \"nextReviewAt\",
+            o.rating, o.scheduling_applied AS \"schedulingApplied\",
+            o.scheduler_version AS \"schedulerVersion\",
+            o.desired_retention AS \"desiredRetention\",
+            o.previous_stability AS \"previousStability\",
+            o.previous_difficulty AS \"previousDifficulty\",
+            o.new_stability AS \"newStability\",
+            o.new_difficulty AS \"newDifficulty\",
+            o.elapsed_days AS \"elapsedDays\",
+            o.scheduled_days AS \"scheduledDays\"
        FROM vision_memory_observations AS o
       WHERE o.sheet_id = :'sheet_id'::bigint
       ORDER BY o.reviewed_at DESC, o.id DESC
@@ -210,6 +279,11 @@
      RETURNING id, title, body, summary, tags, aliases, importance,
                due_at AS \"dueAt\", last_reviewed_at AS \"lastReviewedAt\",
                last_outcome AS \"lastOutcome\", review_count AS \"reviewCount\",
+               fsrs_stability AS \"fsrsStability\",
+               fsrs_difficulty AS \"fsrsDifficulty\",
+               fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+               fsrs_review_count AS \"fsrsReviewCount\",
+               fsrs_model_version AS \"fsrsModelVersion\",
                created_at AS \"createdAt\", updated_at AS \"updatedAt\"
    )
    SELECT jsonb_build_object(
@@ -235,6 +309,11 @@
       RETURNING id, title, body, summary, tags, aliases, importance,
                 due_at AS \"dueAt\", last_reviewed_at AS \"lastReviewedAt\",
                 last_outcome AS \"lastOutcome\", review_count AS \"reviewCount\",
+                fsrs_stability AS \"fsrsStability\",
+                fsrs_difficulty AS \"fsrsDifficulty\",
+                fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+                fsrs_review_count AS \"fsrsReviewCount\",
+                fsrs_model_version AS \"fsrsModelVersion\",
                 created_at AS \"createdAt\", updated_at AS \"updatedAt\"
    )
    SELECT COALESCE(
@@ -264,8 +343,12 @@
      RETURNING id, sheet_id, outcome, note, context, reviewed_at, next_review_at
    ), updated AS (
      UPDATE vision_memory_sheets AS s
-        SET last_reviewed_at = i.reviewed_at,
-            last_outcome = i.outcome,
+        SET last_reviewed_at = GREATEST(s.last_reviewed_at, i.reviewed_at),
+            last_outcome = CASE
+              WHEN s.last_reviewed_at IS NULL OR i.reviewed_at >= s.last_reviewed_at
+                THEN i.outcome
+              ELSE s.last_outcome
+            END,
             review_count = s.review_count + 1,
             due_at = CASE
               WHEN :'next_review_present'::boolean = false THEN s.due_at
@@ -276,7 +359,12 @@
        FROM inserted AS i
       WHERE s.id = i.sheet_id
       RETURNING s.id, s.due_at AS \"dueAt\", s.last_reviewed_at AS \"lastReviewedAt\",
-                s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\"
+                s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\",
+                s.fsrs_stability AS \"fsrsStability\",
+                s.fsrs_difficulty AS \"fsrsDifficulty\",
+                s.fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+                s.fsrs_review_count AS \"fsrsReviewCount\",
+                s.fsrs_model_version AS \"fsrsModelVersion\"
    )
    SELECT COALESCE(
      (SELECT jsonb_build_object(
@@ -289,9 +377,161 @@
           'note', inserted.note,
           'context', inserted.context,
           'reviewedAt', inserted.reviewed_at,
-          'nextReviewAt', inserted.next_review_at
+          'nextReviewAt', inserted.next_review_at,
+          'rating', null,
+          'schedulingApplied', false
+        ),
+        'scheduling', jsonb_build_object(
+          'applied', false,
+          'reason', 'rating_absent'
         )
       ) FROM inserted CROSS JOIN updated),
      jsonb_build_object('recorded', false, 'sheet', null, 'observation', null,
                         'error', 'not_found')
+   )")
+
+(defparameter +sql-prepare-fsrs-review+
+  "WITH reviewed AS (
+     SELECT CASE WHEN :'reviewed_at_present'::boolean
+                 THEN :'reviewed_at'::timestamptz ELSE clock_timestamp() END
+              AS reviewed_at
+   )
+   SELECT COALESCE(
+     (SELECT jsonb_build_object(
+        'found', true,
+        'sheet', jsonb_build_object(
+          'id', s.id,
+          'reviewCount', s.review_count,
+          'fsrsReviewCount', s.fsrs_review_count,
+          'stability', s.fsrs_stability,
+          'difficulty', s.fsrs_difficulty,
+          'lastFsrsReviewedAt', s.fsrs_last_reviewed_at,
+          'reviewedAt', reviewed.reviewed_at,
+          'chronological', s.fsrs_last_reviewed_at IS NULL
+                           OR reviewed.reviewed_at >= s.fsrs_last_reviewed_at,
+          'elapsedDays', CASE
+            WHEN s.fsrs_last_reviewed_at IS NULL THEN 0
+            ELSE GREATEST(
+              0,
+              round(extract(epoch FROM
+                    (reviewed.reviewed_at - s.fsrs_last_reviewed_at))
+                    / 86400.0)::integer
+            )
+          END
+        ),
+        'settings', jsonb_build_object(
+          'modelVersion', cfg.model_version,
+          'implementationVersion', cfg.implementation_version,
+          'sourceCommit', cfg.source_commit,
+          'desiredRetention', cfg.desired_retention,
+          'parameters', to_jsonb(cfg.parameters)
+        )
+      )
+      FROM vision_memory_sheets AS s
+      CROSS JOIN vision_scheduler_settings AS cfg
+      CROSS JOIN reviewed
+      WHERE s.id = :'sheet_id'::bigint AND s.archived_at IS NULL),
+     jsonb_build_object('found', false, 'sheet', null, 'settings', null)
+   )")
+
+(defparameter +sql-record-fsrs-review+
+  "WITH target AS (
+     SELECT s.id, s.fsrs_stability, s.fsrs_difficulty
+       FROM vision_memory_sheets AS s
+      WHERE s.id = :'sheet_id'::bigint
+        AND s.archived_at IS NULL
+        AND s.review_count = :'expected_review_count'::integer
+        AND s.fsrs_review_count = :'expected_fsrs_review_count'::integer
+   ), inserted AS (
+     INSERT INTO vision_memory_observations
+       (sheet_id, outcome, note, context, reviewed_at, next_review_at,
+        rating, scheduling_applied, scheduler_version, desired_retention,
+        previous_stability, previous_difficulty, new_stability, new_difficulty,
+        elapsed_days, scheduled_days)
+     SELECT target.id, :'outcome'::text, :'note'::text, :'context'::jsonb,
+            :'reviewed_at'::timestamptz,
+            :'reviewed_at'::timestamptz
+              + make_interval(days => :'scheduled_days'::integer),
+            :'rating'::smallint, true, :'scheduler_version'::text,
+            :'desired_retention'::double precision,
+            target.fsrs_stability, target.fsrs_difficulty,
+            :'new_stability'::double precision,
+            :'new_difficulty'::double precision,
+            :'elapsed_days'::integer, :'scheduled_days'::integer
+       FROM target
+     RETURNING id, sheet_id, outcome, note, context, reviewed_at, next_review_at,
+               rating, scheduling_applied, scheduler_version, desired_retention,
+               previous_stability, previous_difficulty,
+               new_stability, new_difficulty, elapsed_days, scheduled_days
+   ), updated AS (
+     UPDATE vision_memory_sheets AS s
+        SET last_reviewed_at = GREATEST(s.last_reviewed_at, i.reviewed_at),
+            last_outcome = CASE
+              WHEN s.last_reviewed_at IS NULL OR i.reviewed_at >= s.last_reviewed_at
+                THEN i.outcome
+              ELSE s.last_outcome
+            END,
+            review_count = s.review_count + 1,
+            due_at = i.next_review_at,
+            fsrs_stability = i.new_stability,
+            fsrs_difficulty = i.new_difficulty,
+            fsrs_last_reviewed_at = i.reviewed_at,
+            fsrs_review_count = s.fsrs_review_count + 1,
+            fsrs_model_version = :'model_version'::text,
+            updated_at = now()
+       FROM inserted AS i
+      WHERE s.id = i.sheet_id
+      RETURNING s.id, s.due_at AS \"dueAt\", s.last_reviewed_at AS \"lastReviewedAt\",
+                s.last_outcome AS \"lastOutcome\", s.review_count AS \"reviewCount\",
+                s.fsrs_stability AS \"fsrsStability\",
+                s.fsrs_difficulty AS \"fsrsDifficulty\",
+                s.fsrs_last_reviewed_at AS \"fsrsLastReviewedAt\",
+                s.fsrs_review_count AS \"fsrsReviewCount\",
+                s.fsrs_model_version AS \"fsrsModelVersion\"
+   )
+   SELECT COALESCE(
+     (SELECT jsonb_build_object(
+        'recorded', true,
+        'sheet', to_jsonb(updated),
+        'observation', jsonb_build_object(
+          'id', inserted.id,
+          'sheetId', inserted.sheet_id,
+          'outcome', inserted.outcome,
+          'note', inserted.note,
+          'context', inserted.context,
+          'reviewedAt', inserted.reviewed_at,
+          'nextReviewAt', inserted.next_review_at,
+          'rating', inserted.rating,
+          'schedulingApplied', inserted.scheduling_applied,
+          'schedulerVersion', inserted.scheduler_version,
+          'desiredRetention', inserted.desired_retention,
+          'previousStability', inserted.previous_stability,
+          'previousDifficulty', inserted.previous_difficulty,
+          'newStability', inserted.new_stability,
+          'newDifficulty', inserted.new_difficulty,
+          'elapsedDays', inserted.elapsed_days,
+          'scheduledDays', inserted.scheduled_days
+        ),
+        'scheduling', jsonb_build_object(
+          'applied', true,
+          'modelVersion', :'model_version'::text,
+          'implementationVersion', :'implementation_version'::text,
+          'desiredRetention', inserted.desired_retention,
+          'elapsedDays', inserted.elapsed_days,
+          'intervalDays', :'interval_days'::double precision,
+          'scheduledDays', inserted.scheduled_days,
+          'dueAt', inserted.next_review_at
+        )
+      ) FROM inserted CROSS JOIN updated),
+     jsonb_build_object(
+       'recorded', false, 'sheet', null, 'observation', null,
+       'scheduling', jsonb_build_object('applied', false),
+       'error', CASE
+         WHEN EXISTS (
+           SELECT 1 FROM vision_memory_sheets
+            WHERE id = :'sheet_id'::bigint AND archived_at IS NULL
+         ) THEN 'conflict'
+         ELSE 'not_found'
+       END
+     )
    )")
