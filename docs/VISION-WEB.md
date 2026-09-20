@@ -4,6 +4,13 @@ Le navigateur Vision 1.3 est servi sur `https://vision.mrj.am/`, avec lecture et
 édition des fiches, données qualitatives, paramètres, tags, filtres et tris.
 Sa migration 004 est additive et conserve les observations originales.
 
+La [mise en service du 20 septembre 2026 à 22:32 UTC](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541957332)
+est réussie et enregistrée, avec l'infrastructure `d3699cd829bf996540a53085fe2c0539d9552ebc`
+et l'application `151ab64bd5c9c5c54297e88dbe4d548343cc4928`.
+La connexion et les lectures ont été vérifiées avec une sonde temporaire,
+retirée après les contrôles. Le compte permanent reste à définir.
+Les références serveur et les preuves sont consignées dans [ETAT.md](ETAT.md).
+
 ## Sessions
 
 `modules/mrj-auth.nix` gère le service local `mrj-auth` sur 127.0.0.1:3002.

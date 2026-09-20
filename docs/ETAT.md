@@ -1,10 +1,52 @@
-# État attesté au 18 septembre 2026
+# État attesté au 20 septembre 2026
+
+## Vision web et sessions mrj.am
+
+Vision 1.3.0 est **activé et enregistré depuis 22:32 UTC** sur
+`https://vision.mrj.am/`. La [bascule nº 35541957332](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541957332)
+atteste la nouvelle génération après une nouvelle connexion SSH, six services
+actifs, les deux timers de sauvegarde et 22 contrôles HTTP/TLS depuis le VPS,
+puis 22 depuis le runner GitHub. La connexion web, CSRF, le refus anonyme,
+la lecture PostgreSQL et la révocation de session ont réussi. Les identifiants
+de sonde ont été retirés et les identifiants antérieurs conservés.
+
+| Élément | Référence vérifiée le 20 septembre |
+|---|---|
+| Sources d'infrastructure installées | `d3699cd829bf996540a53085fe2c0539d9552ebc` |
+| Sources Vision | `151ab64bd5c9c5c54297e88dbe4d548343cc4928` — version `1.3.0` |
+| Répertoire installé | `/etc/nixos/vps-infrastructure/d3699cd829bf996540a53085fe2c0539d9552ebc` |
+| Génération active et par défaut | `/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| Génération précédente protégée | `/nix/store/nndnndfac30p7rnwrxbk8sr6hljk5y5b-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| Services actifs | `sshd`, `nginx`, `postgresql`, `matheval`, `vision`, `mrj-auth` |
+| Sauvegardes quotidiennes actives | `postgresqlBackup-matheval.timer`, `postgresqlBackup-vision.timer` |
+| Compte permanent | À définir : `durable_credentials: false` |
+
+La [préparation nº 35541853819](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541853819)
+a contrôlé la génération, les invariants, les sauvegardes chiffrées des deux
+bases et le retour complet de l'essai précédent. Nixpkgs, PostgreSQL, les
+certificats et les paramètres de Matheval sont conservés. Le timer de retour
+de cette bascule est désarmé après enregistrement ; les anciennes générations
+et les preuves restent protégées. Aucun redémarrage du VPS n'a été effectué.
+
+Les comptes permanents n'étaient pas encore définis dans les secrets GitHub.
+Le site refuse le compte de verrouillage du bootstrap. Définir les deux secrets
+de compte puis exécuter le workflow de renouvellement selon [VISION-WEB.md](VISION-WEB.md).
+Le navigateur de la session Work a reçu une erreur 502 ; le rendu
+visuel n'a donc pas été vérifié depuis ce navigateur. Ce constat est distinct
+des contrôles HTTP/TLS réussis sur le VPS et sur le runner GitHub.
+
+La [CI d'infrastructure nº 35541763449](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541763449)
+et la [CI Vision nº 35540278729](https://github.com/MrJ-am/vision/actions/runs/35540278729)
+ont réussi. Les fonctionnalités et les reprises des deux premiers essais
+sont détaillées dans [VISION-WEB.md](VISION-WEB.md).
+
+## Historique : migration du 18 septembre 2026
 
 La migration de l'infrastructure est **activée et enregistrée depuis 21:10 UTC**.
 Nginx, HTTPS, NixOS et PostgreSQL sont gérés par ce dépôt. Matheval conserve
 son application, ses données, son schéma, ses publications et ses exports chiffrés.
 
-## Références installées
+## Références installées le 18 septembre
 
 | Élément | Référence vérifiée |
 |---|---|
