@@ -35,7 +35,7 @@ assert vision.extraConfig == ''
 '';
 assert vision.locations."/".proxyPass == "http://127.0.0.1:3001";
 assert vision.locations."/".extraConfig == ''
-  client_max_body_size 4k;
+  client_max_body_size 64k;
   proxy_set_header Host $host;
   proxy_set_header X-Forwarded-Proto $scheme;
   proxy_set_header X-Forwarded-For $remote_addr;
@@ -44,7 +44,7 @@ assert vision.locations."/".extraConfig == ''
 '';
 assert vision.locations."/api/".proxyPass == "http://127.0.0.1:3001";
 assert vision.locations."/api/".extraConfig == ''
-  client_max_body_size 4k;
+  client_max_body_size 64k;
   proxy_set_header Host $host;
   proxy_set_header X-Forwarded-Proto $scheme;
   proxy_set_header X-Forwarded-For $remote_addr;

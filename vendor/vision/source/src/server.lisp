@@ -3,10 +3,9 @@
 (defconstant +maximum-request-line-length+ 4096)
 (defconstant +maximum-header-line-length+ 8192)
 (defconstant +maximum-header-lines+ 64)
-(defconstant +maximum-body-length+ 4096)
+(defconstant +maximum-body-length+ 65536)
 (defconstant +request-timeout-seconds+ 10)
 
-(defparameter *version* "1.0.0")
 (defparameter *document-root* "docs/")
 
 (define-condition http-error (error)
@@ -143,22 +142,6 @@
   (format stream "~C~C~A" #\Return #\Linefeed body)
   (finish-output stream))
 
-(defun json-escape (text)
-  (with-output-to-string (output)
-    (loop for character across text
-          do (case character
-               (#\" (write-string "\\\"" output))
-               (#\\ (write-string "\\\\" output))
-               (#\Backspace (write-string "\\b" output))
-               (#\Page (write-string "\\f" output))
-               (#\Newline (write-string "\\n" output))
-               (#\Return (write-string "\\r" output))
-               (#\Tab (write-string "\\t" output))
-               (otherwise
-                (if (< (char-code character) 32)
-                    (format output "\\u~4,'0X" (char-code character))
-                    (write-char character output)))))))
-
 (defun json-string (text)
   (format nil "\"~A\"" (json-escape text)))
 
@@ -187,13 +170,51 @@
   (and (>= (length path) 5)
        (string= path "/api/" :end1 5 :end2 5)))
 
+(defun protected-path-p (path)
+  (or (api-path-p path) (string= path "/mcp")))
+
+(defun json-content-type-p (headers)
+  (let ((values (header-values "content-type" headers)))
+    (and (= (length values) 1)
+         (let* ((value (string-downcase (first values)))
+                (separator (position #\; value))
+                (media-type (string-trim '(#\Space #\Tab)
+                                         (if separator
+                                             (subseq value 0 separator)
+                                             value))))
+           (string= media-type "application/json")))))
+
+(defun read-request-body (stream content-length)
+  (with-output-to-string (output)
+    (loop with consumed = 0
+          while (< consumed content-length)
+          for character = (read-char stream nil nil)
+          do (unless character
+               (fail-request 400 "Bad Request" "Request body ended prematurely."))
+             (let ((width (utf-8-length (string character))))
+               (when (> (+ consumed width) content-length)
+                 (fail-request 400 "Bad Request" "Content-Length splits a UTF-8 character."))
+               (incf consumed width)
+               (write-char character output)))))
+
+(defun write-empty-response (stream status reason &key headers)
+  (format stream "HTTP/1.1 ~D ~A~C~C" status reason #\Return #\Linefeed)
+  (format stream "Content-Length: 0~C~C" #\Return #\Linefeed)
+  (format stream "Connection: close~C~C" #\Return #\Linefeed)
+  (format stream "X-Content-Type-Options: nosniff~C~C" #\Return #\Linefeed)
+  (dolist (header headers)
+    (format stream "~A: ~A~C~C" (car header) (cdr header)
+            #\Return #\Linefeed))
+  (format stream "~C~C" #\Return #\Linefeed)
+  (finish-output stream))
+
 (defun write-authentication-required (stream)
   (write-json stream 401 "Unauthorized"
               "{\"error\":\"authentication_required\",\"message\":\"HTTP Basic authentication is required.\"}"
               :headers '(("WWW-Authenticate" . "Basic realm=\"Vision API\", charset=\"UTF-8\""))))
 
-(defun route-request (stream method path headers content-length)
-  (when (and (api-path-p path) (not (authenticated-request-p headers)))
+(defun route-request (stream method path headers body)
+  (when (and (protected-path-p path) (not (authenticated-request-p headers)))
     (write-authentication-required stream)
     (return-from route-request))
   (cond
@@ -235,12 +256,26 @@
                  (format nil
                          "{\"api\":\"vision\",\"version\":~A,\"operations\":[\"getVisionHealth\",\"getVisionCapabilities\",\"sayHello\"]}"
                          (json-string *version*))))
+    ((and (string= method "GET") (string= path "/mcp"))
+     (write-json stream 405 "Method Not Allowed"
+                 "{\"error\":\"method_not_allowed\",\"message\":\"Use POST for the stateless MCP endpoint.\"}"
+                 :headers '(("Allow" . "POST"))))
+    ((and (string= method "POST") (string= path "/mcp"))
+     (if (not (json-content-type-p headers))
+         (write-json stream 415 "Unsupported Media Type"
+                     "{\"error\":\"unsupported_media_type\",\"message\":\"MCP requests require application/json.\"}")
+         (multiple-value-bind (status reason response-body)
+             (handle-mcp-message body)
+           (if response-body
+               (write-json stream status reason response-body)
+               (write-empty-response stream status reason
+                                     :headers '(("Cache-Control" . "no-store")))))))
     ((and (string= method "GET")
           (string= path "/api/v1/mobile-live-test"))
      (write-json stream 200 "OK"
                  "{\"ok\":true,\"proof\":\"VISION-MOBILE-LIVE-AUTH-OK\",\"scope\":\"test-only\",\"message\":\"HTTP Basic authentication succeeded. No Vision data was accessed.\"}"))
     ((and (string= method "POST") (string= path "/api/v1/hello"))
-     (if (zerop content-length)
+     (if (zerop (length body))
          (write-json stream 200 "OK" "{\"message\":\"World\"}")
          (write-json stream 415 "Unsupported Media Type"
                      "{\"error\":\"body_not_supported\",\"message\":\"This operation takes no request body.\"}")))
@@ -259,7 +294,8 @@
       (let ((content-length (request-content-length headers)))
         (when (and (> content-length 0) (string= method "GET"))
           (fail-request 400 "Bad Request" "GET requests must not contain a body."))
-        (route-request stream method (request-path target) headers content-length)))))
+        (route-request stream method (request-path target) headers
+                       (read-request-body stream content-length))))))
 
 (defun handle-client (client)
   (let ((stream (sb-bsd-sockets:socket-make-stream
@@ -324,7 +360,7 @@
       (sb-bsd-sockets:socket-close listener))))
 
 (defun main ()
-  (setf *version* (environment-value "VISION_VERSION" "1.0.0")
+  (setf *version* (environment-value "VISION_VERSION" "1.1.0")
         *document-root* (environment-value "VISION_DOCUMENT_ROOT" "docs/"))
   (handler-case
       (serve :host (environment-value "IP" "127.0.0.1")

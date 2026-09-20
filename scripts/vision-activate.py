@@ -14,6 +14,7 @@ import urllib.error
 import urllib.request
 
 EXPECTED_IP = "187.77.95.158"
+EXPECTED_VERSION = "1.1.0"
 SYSTEM_PROFILE = "/nix/var/nix/profiles/system"
 
 
@@ -71,12 +72,17 @@ def restore_current_link(path, previous_target):
     os.replace(replacement, path)
 
 
-def request(url, username=None, password=None, method="GET"):
-    headers = {"User-Agent": "vision-activation-check/1", "Accept": "application/json"}
+def request(url, username=None, password=None, method="GET", body=None):
+    headers = {
+        "User-Agent": "vision-activation-check/1",
+        "Accept": "application/json, text/event-stream",
+    }
     if username is not None:
         token = base64.b64encode(f"{username}:{password}".encode()).decode()
         headers["Authorization"] = "Basic " + token
-    req = urllib.request.Request(url, headers=headers, method=method)
+    if body is not None:
+        headers["Content-Type"] = "application/json"
+    req = urllib.request.Request(url, data=body, headers=headers, method=method)
     try:
         response = urllib.request.urlopen(req, timeout=10)
     except urllib.error.HTTPError as exc:
@@ -118,11 +124,59 @@ def verify_http(domain, username, password):
                 public_error = "réponse non JSON"
         raise RuntimeError(f"Santé authentifiée HTTP {status} ({public_error})")
     payload = json.loads(body)
-    require(payload.get("status") == "ok", "Contenu de santé authentifiée invalide")
+    require(payload.get("status") == "ok" and payload.get("version") == EXPECTED_VERSION,
+            "Contenu de santé authentifiée invalide")
     status, _, body = request(origin + "/api/v1/capabilities", username, password)
-    require(status == 200 and json.loads(body).get("api") == "vision", "Capacités authentifiées invalides")
+    capabilities = json.loads(body)
+    require(status == 200 and capabilities.get("api") == "vision"
+            and capabilities.get("version") == EXPECTED_VERSION,
+            "Capacités authentifiées invalides")
     status, _, body = request(origin + "/api/v1/hello", username, password, method="POST")
     require(status == 200 and json.loads(body).get("message") == "World", "Action hello invalide")
+
+    status, headers, body = request(origin + "/mcp")
+    require(status == 401, "MCP accepte une requête anonyme")
+    require(headers.get_content_type() == "application/json", "Le refus MCP anonyme n'est pas JSON")
+    require(json.loads(body).get("error") == "authentication_required", "Refus MCP anonyme inattendu")
+
+    def mcp(method, params, request_id):
+        payload = json.dumps({
+            "jsonrpc": "2.0",
+            "id": request_id,
+            "method": method,
+            "params": params,
+        }, separators=(",", ":")).encode()
+        rpc_status, rpc_headers, rpc_body = request(
+            origin + "/mcp", username, password, method="POST", body=payload
+        )
+        require(rpc_status == 200, f"MCP {method} HTTP {rpc_status}")
+        require(rpc_headers.get_content_type() == "application/json", f"MCP {method} non JSON")
+        document = json.loads(rpc_body)
+        require(document.get("id") == request_id and "error" not in document,
+                f"MCP {method} invalide")
+        return document["result"]
+
+    initialized = mcp("initialize", {
+        "protocolVersion": "2025-06-18",
+        "capabilities": {},
+        "clientInfo": {"name": "vision-activation-check", "version": "1"},
+    }, "initialize")
+    require(initialized.get("serverInfo", {}).get("name") == "vision"
+            and initialized.get("serverInfo", {}).get("version") == EXPECTED_VERSION,
+            "Initialisation MCP invalide")
+    tools = mcp("tools/list", {}, "tools-list").get("tools", [])
+    require({tool.get("name") for tool in tools} == {
+        "search_memory_sheets",
+        "list_due_memory_sheets",
+        "get_memory_sheet",
+        "save_memory_sheet",
+        "record_review",
+    }, "Liste des outils MCP invalide")
+    search = mcp("tools/call", {
+        "name": "search_memory_sheets",
+        "arguments": {"query": "__vision_activation_probe_no_match__", "limit": 1},
+    }, "database-search")
+    require(search.get("isError") is False, "Lecture PostgreSQL par MCP invalide")
     return True
 
 
@@ -140,6 +194,7 @@ def activate(commit, credentials):
     state = Path("/root/vision-deployments") / commit
     report = json.loads((state / "prepared.json").read_text())
     require(report["commit"] == commit and report["activated"] is False, "Préparation incohérente")
+    require(report["app_version"] == EXPECTED_VERSION, "Version préparée inattendue")
     require(not (state / "committed.json").exists(), "Candidat déjà activé")
     old_system, old_boot = report["old_system"], report["old_boot"]
     candidate, domain = report["candidate"], report["domain"]
