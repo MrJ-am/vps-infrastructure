@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import sys
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -16,18 +17,30 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def request(url):
+def retry_delay(headers):
+    try:
+        seconds = int(headers.get("Retry-After", "1"))
+    except (TypeError, ValueError):
+        seconds = 1
+    return max(1, min(seconds, 5))
+
+
+def request(url, attempts=4):
     opener = urllib.request.build_opener(NoRedirect())
     req = urllib.request.Request(url, headers={"User-Agent": "vps-infrastructure-check/1", "Accept-Encoding": "identity"})
-    try:
-        response = opener.open(req, timeout=10)
-    except urllib.error.HTTPError as exc:
-        response = exc
-    with response:
-        body = response.read(16 * 1024 * 1024 + 1)
-        if len(body) > 16 * 1024 * 1024:
-            raise ValueError(f"Réponse trop grande : {url}")
-        return response.code, response.headers, body
+    for attempt in range(attempts):
+        try:
+            response = opener.open(req, timeout=10)
+        except urllib.error.HTTPError as exc:
+            response = exc
+        with response:
+            body = response.read(16 * 1024 * 1024 + 1)
+            if len(body) > 16 * 1024 * 1024:
+                raise ValueError(f"Réponse trop grande : {url}")
+            result = response.code, response.headers, body
+        if response.code != 429 or attempt + 1 == attempts:
+            return result
+        time.sleep(retry_delay(response.headers))
 
 
 def validate_response(url, probe, response):
