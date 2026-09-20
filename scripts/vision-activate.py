@@ -14,7 +14,7 @@ import urllib.error
 import urllib.request
 
 EXPECTED_IP = "187.77.95.158"
-EXPECTED_VERSION = "1.1.0"
+EXPECTED_VERSION = "1.1.1"
 SYSTEM_PROFILE = "/nix/var/nix/profiles/system"
 
 

@@ -33,8 +33,11 @@ assert current.systemd.services.vision.serviceConfig.User == "vision";
 assert current.systemd.services.vision.environment.PORT == "3001";
 assert current.systemd.services.vision.environment.PGDATABASE == "vision";
 assert current.systemd.services.vision.environment.PGUSER == "vision";
-assert current.services.vision.version == "1.1.0";
-assert current.services.vision.bootstrapCommit == "71e1dbf4add390b9039fa0273f76bddbe7397fda";
+assert current.services.vision.version == "1.1.1";
+assert current.services.vision.bootstrapCommit == "f2999dc1fa5d148bccf3f456912ba2e64bb795a9";
+assert lib.hasSuffix
+  "/bin/psql"
+  current.systemd.services.vision.environment.VISION_PSQL;
 assert builtins.elem
   "d /var/lib/vision 0710 root vision-auth -"
   current.systemd.tmpfiles.rules;

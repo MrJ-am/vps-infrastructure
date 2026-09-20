@@ -114,15 +114,15 @@ class HttpsDiagnostics(unittest.TestCase):
         ]
         responses = iter([
             (401, unauthorized, b'{"error":"authentication_required"}'),
-            (200, ok, b'{"status":"ok","version":"1.1.0"}'),
-            (200, ok, b'{"api":"vision","version":"1.1.0"}'),
+            (200, ok, b'{"status":"ok","version":"1.1.1"}'),
+            (200, ok, b'{"api":"vision","version":"1.1.1"}'),
             (200, ok, b'{"message":"World"}'),
             (401, unauthorized, b'{"error":"authentication_required"}'),
             (200, ok, json.dumps({
                 "jsonrpc": "2.0",
                 "id": "initialize",
                 "result": {
-                    "serverInfo": {"name": "vision", "version": "1.1.0"},
+                    "serverInfo": {"name": "vision", "version": "1.1.1"},
                 },
             }).encode()),
             (200, ok, json.dumps({
