@@ -25,6 +25,8 @@ assert !current.services.postgresql.enableTCPIP;
 assert current.services.postgresqlBackup.databases == [ "matheval" "vision" ];
 assert extended.services.postgresqlBackup.databases == [ "example" "matheval" "vision" ];
 assert current.services.postgresqlBackup.location == "/var/backup/postgresql";
+assert current.systemd.timers ? postgresqlBackup-matheval;
+assert current.systemd.timers ? postgresqlBackup-vision;
 assert builtins.elem "postgresql-setup.service" current.systemd.services.matheval.requires;
 assert current.systemd.services.matheval.serviceConfig.User == "matheval";
 assert current.systemd.services.matheval.serviceConfig.EnvironmentFile == "/var/lib/matheval/secrets.env";
@@ -77,4 +79,3 @@ assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.system
   sharedPostgresql17 = true;
   visionIsolated = true;
 }
-

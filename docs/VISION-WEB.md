@@ -68,6 +68,16 @@ rétablis. Elle exige l'absence de toute session et l'arrêt du service SSO,
 conserve la base de sessions initialisée et désarme l'ancien timer avant de
 préparer une nouvelle opération. Elle refuse un essai déjà enregistré.
 
+Le [second essai](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541638104)
+sur `b71058c99e65aa3d25a8f116cc18d256988a58fd` a validé la connexion, les lectures,
+CSRF, la révocation et les 22 sondes HTTP. Il est revenu à la génération
+précédente parce que le contrôle des sauvegardes cherchait le timer global.
+Avec `backupAll = false`, NixOS installe un timer par base :
+`postgresqlBackup-matheval.timer` et `postgresqlBackup-vision.timer`.
+Leur présence est désormais vérifiée dans l'évaluation NixOS et leur activité
+est exigée dès la préparation, puis après activation. La reprise identifie
+désormais ce second essai et conserve les mêmes conditions de retour complet.
+
 ## Identifiants durables
 
 L'activation précédente du 20 septembre utilisait un verrou de bootstrap dont

@@ -82,6 +82,12 @@ def probe_credential():
     return username,password,encoded
 
 
+def verify_backup_timers():
+    for database in ('matheval','vision'):
+        require(run('systemctl','is-active','postgresqlBackup-'+database+'.timer').strip()=='active',
+                'Sauvegarde PostgreSQL inactive : '+database)
+
+
 def rollback(commit,stop_apply=True):
     state,report=paths(commit)
     if stop_apply:
@@ -137,7 +143,7 @@ def apply(commit):
         require(previous.sha256(credentials)==report['credentials_sha256'],'Identifiants non restaurés après sondes')
         run('python3',Path(report['installed'])/'scripts/probe.py',visible=True)
         # Les sauvegardes planifiées des deux bases doivent rester actives.
-        require(run('systemctl','is-active','postgresqlBackup.timer').strip()=='active','Sauvegarde PostgreSQL inactive')
+        verify_backup_timers()
         with (state/'finalize.lock').open('a') as lock:
             fcntl.flock(lock,fcntl.LOCK_EX)
             require(not (state/'rollback-started').exists(),'Le retour a commencé')

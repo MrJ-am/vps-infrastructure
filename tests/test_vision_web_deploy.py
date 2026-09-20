@@ -12,6 +12,13 @@ prepare_spec=importlib.util.spec_from_file_location('web_prepare',Path(__file__)
 prepare=importlib.util.module_from_spec(prepare_spec);prepare_spec.loader.exec_module(prepare)
 
 class WebDeploymentTests(unittest.TestCase):
+    def test_both_database_backup_timers_are_required(self):
+        with patch.object(module,'run',side_effect=['active','inactive']) as run:
+            with self.assertRaisesRegex(RuntimeError,'inactive : vision'):
+                module.verify_backup_timers()
+            self.assertEqual(run.call_args_list[0].args[-1],'postgresqlBackup-matheval.timer')
+            self.assertEqual(run.call_args_list[1].args[-1],'postgresqlBackup-vision.timer')
+
     def test_missing_openssl_is_reported_before_activation(self):
         with patch.object(module.shutil,'which',return_value=None),patch.object(module.subprocess,'run') as run:
             with self.assertRaisesRegex(RuntimeError,'aucune activation'):
