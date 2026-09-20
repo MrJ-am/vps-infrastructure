@@ -19,12 +19,19 @@ class RegistryChecks(unittest.TestCase):
         vision = self.projects["vision"]
         self.assertEqual(vision["domain"], "vision.mrj.am")
         self.assertEqual(vision["port"], 3001)
+        self.assertEqual(vision["maxBodySize"], "64k")
         self.assertEqual(vision["auth"], {
             "prefix": "/api/",
             "basicUserFile": "/var/lib/vision/auth/htpasswd",
             "realm": "Vision API",
         })
         self.assertEqual(vision["privateHealthPath"], "/healthz")
+        self.assertIn({
+            "path": "/mcp",
+            "status": 401,
+            "contentType": "application/json",
+            "json": {"error": "authentication_required"},
+        }, vision["probes"])
 
     def test_authentication_and_private_health_are_atomic(self):
         for removed in ("auth", "privateHealthPath"):
@@ -56,7 +63,7 @@ class RegistryChecks(unittest.TestCase):
     def test_vision_module_matches_reviewed_upstream(self):
         source = json.loads((ROOT / "vendor/vision/source.json").read_text())
         module = (ROOT / "vendor/vision/vision.nix").read_bytes()
-        self.assertEqual(source["commit"], "361a6458ff63e8d96e9f4125e81da8380a3d704b")
+        self.assertEqual(source["commit"], "71e1dbf4add390b9039fa0273f76bddbe7397fda")
         self.assertEqual(hashlib.sha256(module).hexdigest(), source["sha256"])
 
 

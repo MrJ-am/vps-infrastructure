@@ -13,14 +13,26 @@
   </style>
 </head>
 <body>
-  <h1>Vision API</h1>
-  <p>API HTTPS versionnee du projet Vision. Les routes sous <code>/api/v1/</code>
-     exigent toutes un identifiant et un mot de passe HTTP Basic.</p>
+  <h1>Vision</h1>
+  <p>Serveur HTTPS et MCP du projet Vision. Les routes sous
+     <code>/api/v1/</code> ainsi que <code>/mcp</code> exigent un identifiant et
+     un mot de passe HTTP Basic.</p>
   <p>La documentation peut etre lue sans authentification ; elle ne donne acces
      a aucune donnee. PostgreSQL n'est jamais expose sur Internet.</p>
 
   <h2>Contrat machine</h2>
   <p><a href="/openapi.json">Schema OpenAPI 3.1 (JSON)</a></p>
+
+  <h2>MCP</h2>
+  <p><code>POST /mcp</code> fournit un transport Streamable HTTP stateless. Il
+     permet de rechercher et enregistrer des fiches de memoire, de selectionner
+     les fiches arrivees a echeance et de conserver des observations de
+     revision. L'echeance reste explicite : Vision n'impose pas un algorithme
+     Anki ou SuperMemo.</p>
+  <p>Les donnees privees et les ecritures restent authentifiees. La connexion
+     directe depuis le mode Plugins de ChatGPT necessite OAuth 2.1 ou un tunnel
+     MCP securise ; l'endpoint ne doit pas etre rendu anonyme pour contourner
+     cette exigence.</p>
 
   <h2>Test Mobile Live isole</h2>
   <p><code>GET /api/v1/mobile-live-test</code> utilise un couple d'identifiants

@@ -12,16 +12,22 @@
 </head>
 <body>
   <h1>Confidentialite</h1>
-  <p>Version du 19 septembre 2026.</p>
-  <p>Les operations initiales de Vision ne collectent ni ne conservent le corps
-     des requetes. Le serveur peut journaliser les metadonnees techniques
-     necessaires a la securite et a l'exploitation, notamment l'adresse IP,
-     l'horodatage, la route demandee et le code de reponse.</p>
+  <p>Version du 20 septembre 2026.</p>
+  <p>Lorsque les outils MCP sont utilises, Vision conserve dans PostgreSQL les
+     fiches de memoire demandees, leurs tags, leurs echeances et les observations
+     de revision. Ces donnees servent uniquement a retrouver les connaissances
+     pertinentes et a organiser les revisions. Elles restent conservees jusqu'a
+     leur rectification, leur archivage ou leur suppression.</p>
+  <p>Le serveur peut journaliser les metadonnees techniques necessaires a la
+     securite et a l'exploitation, notamment l'adresse IP, l'horodatage, la
+     route demandee et le code de reponse. Les corps MCP ne sont pas inscrits
+     dans les journaux applicatifs ordinaires.</p>
   <p>Les identifiants, mots de passe et en-tetes d'autorisation ne sont pas
      inscrits dans les journaux applicatifs. Les donnees restent sur le VPS
-     administre pour Vision et ne sont pas vendues.</p>
-  <p>Lorsqu'une future operation manipulera des donnees metier, son schema,
-     sa finalite et ses effets seront documentes avant sa publication.</p>
+     administre pour Vision et ne sont pas vendues. Lorsqu'un client MCP tel que
+     ChatGPT demande une fiche, les donnees retournees sont necessairement
+     transmises a ce client et relevent alors aussi de ses propres conditions de
+     confidentialite.</p>
   <p><a href="/docs">Retour a la documentation</a></p>
 </body>
 </html>

@@ -10,7 +10,10 @@ import shutil
 import subprocess
 import sys
 
-APP_COMMIT = "361a6458ff63e8d96e9f4125e81da8380a3d704b"
+APP_COMMIT = "71e1dbf4add390b9039fa0273f76bddbe7397fda"
+APP_VERSION = "1.1.0"
+PREVIOUS_APP_COMMIT = "361a6458ff63e8d96e9f4125e81da8380a3d704b"
+PREVIOUS_APP_VERSION = "1.0.0"
 DOMAIN = "vision.mrj.am"
 
 
@@ -42,6 +45,12 @@ def save(path, value):
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def executable(name):
+    path = shutil.which(name)
+    require(path is not None, f"Executable requis introuvable : {name}")
+    return Path(path).resolve()
 
 
 def evaluate(source, configuration, nixpkgs):
@@ -132,7 +141,7 @@ def prepare(commit):
     old_boot = str(Path("/nix/var/nix/profiles/system").resolve())
     require(old_system == old_boot, "La génération active diffère de la génération de démarrage")
     require(all(run("systemctl", "is-active", service).strip() == "active"
-                for service in ("sshd", "nginx", "postgresql", "matheval")),
+                for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
             "Un service existant n'est pas actif")
     nixpkgs = run("nix-instantiate", "--find-file", "nixpkgs").strip()
     require(nixpkgs.startswith("/nix/store/") and Path(nixpkgs).is_dir(), "Nixpkgs installé introuvable")
@@ -147,22 +156,40 @@ def prepare(commit):
     after = evaluate(installed, installed / "hosts/hostinger/configuration.nix", nixpkgs)
     require(before["toplevel"] == old_system, "Les sources actives ne reconstruisent pas la génération courante")
     require(before["stable"] == after["stable"], "Un invariant système, PostgreSQL ou Matheval a changé")
-    require(before["vision"] is None, "Vision est déjà déclaré dans la génération active")
+    require(before["vision"] is not None and before["vision"]["enabled"] is True,
+            "Vision n'est pas actif dans la génération courante")
+    require(before["vision"]["domain"] == DOMAIN and before["vision"]["port"] == 3001,
+            "Contrat réseau Vision courant inattendu")
+    require(before["vision"]["version"] == PREVIOUS_APP_VERSION,
+            "Version Vision courante inattendue")
+    require(before["vision"]["commit"] == PREVIOUS_APP_COMMIT,
+            "Révision Vision courante inattendue")
+    require(before["vision"]["databases"] == ["matheval", "vision"],
+            "Sauvegardes PostgreSQL courantes incomplètes")
     require(after["vision"]["enabled"] is True, "Le candidat n'active pas Vision")
     require(after["vision"]["domain"] == DOMAIN and after["vision"]["port"] == 3001,
             "Contrat réseau Vision inattendu")
+    require(after["vision"]["version"] == APP_VERSION,
+            "Version Vision candidate inattendue")
     require(after["vision"]["commit"] == APP_COMMIT, "Révision applicative Vision inattendue")
     require(after["vision"]["databases"] == ["matheval", "vision"], "Sauvegardes PostgreSQL incomplètes")
+    require(before["vision"]["service"]["User"] == after["vision"]["service"]["User"] == "vision",
+            "Compte système Vision modifié")
     save(state / "config-before.json", before)
     save(state / "config-candidate.json", after)
 
     shutil.copy2("/etc/nixos/configuration.nix", state / "configuration.nix.before")
     (state / "configuration.sha256").write_text(sha256("/etc/nixos/configuration.nix") + "\n")
     with (state / "matheval-before.dump.age").open("wb") as output:
-        run(str(Path(shutil.which("matheval-backup")).resolve()), stdout=output)
+        run(executable("matheval-backup"), stdout=output)
     with (state / "matheval-before.dump.age").open("rb") as encrypted:
         require(encrypted.read(22) == b"age-encryption.org/v1\n",
                 "Sauvegarde Matheval non reconnue comme archive age")
+    with (state / "vision-before.dump.age").open("wb") as output:
+        run(executable("vision-backup"), stdout=output)
+    with (state / "vision-before.dump.age").open("rb") as encrypted:
+        require(encrypted.read(22) == b"age-encryption.org/v1\n",
+                "Sauvegarde Vision non reconnue comme archive age")
 
     print("Construction de la génération candidate.", flush=True)
     run(
@@ -190,11 +217,12 @@ def prepare(commit):
     (state / "dry-activate.txt").write_text(dry)
 
     require(all(run("systemctl", "is-active", service).strip() == "active"
-                for service in ("sshd", "nginx", "postgresql", "matheval")),
+                for service in ("sshd", "nginx", "postgresql", "matheval", "vision")),
             "Un service existant a changé pendant la préparation")
     report = {
         "commit": commit,
         "app_commit": APP_COMMIT,
+        "app_version": APP_VERSION,
         "candidate": candidate,
         "old_system": old_system,
         "old_boot": old_boot,
@@ -203,6 +231,7 @@ def prepare(commit):
         "domain": DOMAIN,
         "configuration_sha256": sha256("/etc/nixos/configuration.nix"),
         "matheval_backup": True,
+        "vision_backup": True,
         "activated": False,
     }
     save(state / "prepared.json", report)

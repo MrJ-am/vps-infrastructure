@@ -1,6 +1,8 @@
 # API Vision sur le VPS
 
-État : intégration préparée, non activée. Une fusion sur `main` ne déploie rien.
+État du présent candidat : serveur MCP 1.1 intégré et vérifié en CI. Une fusion
+sur `main` ne déploie rien ; la préparation puis l'activation restent deux
+opérations manuelles distinctes.
 
 ## Contrat public
 
@@ -8,14 +10,21 @@
 - documentation publique : `/docs`, `/openapi.json` et `/privacy` ;
 - contrat public du test Mobile Live : `/mobile-live-test-openapi.json` ;
 - API protégée par HTTP Basic : `/api/` ;
+- MCP Streamable HTTP stateless protégé par HTTP Basic : `/mcp` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `361a6458ff63e8d96e9f4125e81da8380a3d704b`.
+- application : commit Vision `71e1dbf4add390b9039fa0273f76bddbe7397fda`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
 l'en-tête `Authorization` avant le proxy et ajoute une preuve interne que
 l'application vérifie à nouveau. Le service SBCL écoute uniquement sur la boucle
 locale et s'exécute avec les protections systemd et sans privilèges.
+
+Le processus Common Lisp implémente lui-même `POST /mcp` et les méthodes
+`initialize`, `ping`, `tools/list` et `tools/call`. Les cinq outils manipulent
+des fiches de mémoire et des observations au moyen de requêtes SQL fixes ;
+`psql` rejoint PostgreSQL par socket Unix. La migration applicative 002 crée
+les deux tables correspondantes. Aucune échéance n'est recalculée implicitement.
 
 `GET /api/v1/mobile-live-test` est une exception exacte et volontaire : son
 fichier `htpasswd` est distinct, ses identifiants jetables ne fonctionnent sur
@@ -36,7 +45,12 @@ dans la conversation de test puis doit être retirée avec cette route.
    l'activation crée alors un verrou aléatoire éphémère, vérifie l'API puis en
    oublie la valeur. Seule la route de test jetable reste utilisable.
 3. Ne jamais définir un seul des deux secrets ni placer leurs valeurs dans Git,
-   un ticket ou un journal Actions.
+un ticket ou un journal Actions.
+
+Ces identifiants protègent aussi `/mcp`. Ils permettent les contrôles HTTPS et
+les clients MCP sachant produire HTTP Basic. ChatGPT Plugins exige OAuth 2.1
+pour des données privées ; ne jamais rendre les fiches anonymes pour contourner
+cette étape de connexion.
 
 Le mot de passe est transformé sur le VPS en bcrypt coût 12. Seul le fichier
 `/var/lib/vision/auth/htpasswd`, lisible par root et le groupe Nginx dédié, est
@@ -87,3 +101,7 @@ Importer `https://vision.mrj.am/openapi.json` comme schéma d'action,
 choisir l'authentification HTTP Basic et renseigner les mêmes identifiants. Si
 l'interface ne propose qu'un champ secret Basic, y placer le Base64 de
 `identifiant:mot-de-passe`, sans préfixe `Basic `.
+
+Pour tester directement le protocole MCP avec un client compatible HTTP Basic,
+utiliser `https://vision.mrj.am/mcp`. L'activation vérifie l'initialisation, la
+liste exacte des cinq outils et une recherche PostgreSQL en lecture seule.

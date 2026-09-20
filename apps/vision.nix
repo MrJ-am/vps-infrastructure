@@ -19,9 +19,9 @@ in {
     enable = true;
     domain = site.domain;
     port = site.port;
-    version = "1.0.0";
+    version = "1.1.0";
     bootstrapSource = ../vendor/vision/source;
-    bootstrapCommit = "361a6458ff63e8d96e9f4125e81da8380a3d704b";
+    bootstrapCommit = "71e1dbf4add390b9039fa0273f76bddbe7397fda";
     deploymentPublicKeys = [];
     backupRecipient = "age15zfsttzkz0n553mgq07czxk98j65y6pg47563c7gvneq65dmfgjs3x0x0l";
   };
@@ -36,6 +36,27 @@ in {
   # Une correspondance exacte passe avant la protection generale de /api/.
   # Ainsi, les identifiants jetables ne fonctionnent sur aucune autre route.
   services.nginx.virtualHosts.${site.domain}.locations = {
+    "= /mcp" = {
+      proxyPass = "http://127.0.0.1:${toString site.port}";
+      extraConfig = ''
+        client_max_body_size 64k;
+        proxy_http_version 1.1;
+        proxy_buffering off;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        auth_basic "${site.auth.realm}";
+        auth_basic_user_file ${site.auth.basicUserFile};
+        limit_req zone=protected_api_per_ip burst=10 nodelay;
+        limit_conn protected_api_connections 10;
+        limit_req_status 429;
+        limit_conn_status 429;
+        proxy_set_header Authorization "";
+        proxy_set_header X-Vision-Authenticated "1";
+        error_page 401 = @vision-authentication-required;
+        error_page 429 = @vision-rate-limited;
+      '';
+    };
     "= /api/v1/mobile-live-test" = {
       proxyPass = "http://127.0.0.1:${toString site.port}";
       extraConfig = ''

@@ -1,5 +1,6 @@
 import importlib.util
 from email.message import Message
+import json
 import os
 import tempfile
 import unittest
@@ -97,6 +98,55 @@ class HttpsDiagnostics(unittest.TestCase):
                 r"Santé authentifiée HTTP 500 \(réponse vide\)",
             ):
                 VISION_ACTIVATE.verify_http("vision.example", "user", "secret")
+
+    def test_complete_mcp_and_database_probe(self):
+        unauthorized = Message()
+        unauthorized["Content-Type"] = "application/json"
+        unauthorized["WWW-Authenticate"] = 'Basic realm="Vision"'
+        ok = Message()
+        ok["Content-Type"] = "application/json"
+        tool_names = [
+            "search_memory_sheets",
+            "list_due_memory_sheets",
+            "get_memory_sheet",
+            "save_memory_sheet",
+            "record_review",
+        ]
+        responses = iter([
+            (401, unauthorized, b'{"error":"authentication_required"}'),
+            (200, ok, b'{"status":"ok","version":"1.1.0"}'),
+            (200, ok, b'{"api":"vision","version":"1.1.0"}'),
+            (200, ok, b'{"message":"World"}'),
+            (401, unauthorized, b'{"error":"authentication_required"}'),
+            (200, ok, json.dumps({
+                "jsonrpc": "2.0",
+                "id": "initialize",
+                "result": {
+                    "serverInfo": {"name": "vision", "version": "1.1.0"},
+                },
+            }).encode()),
+            (200, ok, json.dumps({
+                "jsonrpc": "2.0",
+                "id": "tools-list",
+                "result": {"tools": [{"name": name} for name in tool_names]},
+            }).encode()),
+            (200, ok, json.dumps({
+                "jsonrpc": "2.0",
+                "id": "database-search",
+                "result": {"isError": False, "content": []},
+            }).encode()),
+        ])
+
+        with mock.patch.object(
+            VISION_ACTIVATE,
+            "request",
+            side_effect=lambda *args, **kwargs: next(responses),
+        ):
+            self.assertTrue(
+                VISION_ACTIVATE.verify_http("vision.example", "user", "secret")
+            )
+        with self.assertRaises(StopIteration):
+            next(responses)
 
 
 if __name__ == "__main__":
