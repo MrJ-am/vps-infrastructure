@@ -287,7 +287,12 @@ in {
         PORT = toString cfg.port;
         VISION_VERSION = cfg.version;
         VISION_DOCUMENT_ROOT = "/srv/vision/current/docs";
+        PGHOST = "/run/postgresql";
+        PGDATABASE = "vision";
+        PGUSER = "vision";
+        PGOPTIONS = "-c statement_timeout=5000";
       };
+      path = [ config.services.postgresql.package ];
       serviceConfig = {
         Type = "simple";
         User = "vision";
