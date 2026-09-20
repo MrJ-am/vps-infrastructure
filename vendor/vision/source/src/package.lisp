@@ -7,4 +7,4 @@
 
 (in-package #:vision)
 
-(defparameter *version* "1.1.0")
+(defparameter *version* "1.1.1")

@@ -10,8 +10,8 @@ import shutil
 import subprocess
 import sys
 
-APP_COMMIT = "71e1dbf4add390b9039fa0273f76bddbe7397fda"
-APP_VERSION = "1.1.0"
+APP_COMMIT = "f2999dc1fa5d148bccf3f456912ba2e64bb795a9"
+APP_VERSION = "1.1.1"
 PREVIOUS_APP_COMMIT = "361a6458ff63e8d96e9f4125e81da8380a3d704b"
 PREVIOUS_APP_VERSION = "1.0.0"
 DOMAIN = "vision.mrj.am"

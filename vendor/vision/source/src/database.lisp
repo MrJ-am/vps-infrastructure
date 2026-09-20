@@ -7,10 +7,47 @@
 (defun database-fail (message detail)
   (error 'database-error :message message :detail detail))
 
+(defun slurp-character-stream (stream)
+  (with-output-to-string (output)
+    (loop for character = (read-char stream nil nil)
+          while character
+          do (write-char character output))))
+
+(defun run-database-process (command sql)
+  ;; UIOP:RUN-PROGRAM ne peut traiter qu'un flux actif à la fois. Avec une
+  ;; entrée Lisp et deux sorties capturées, il crée donc des fichiers
+  ;; temporaires. Un exécutable sauvegardé pendant un build Nix conserverait
+  ;; alors /build comme répertoire temporaire. LAUNCH-PROGRAM et ses tubes
+  ;; évitent tout chemin de construction incorporé dans l'image SBCL.
+  (handler-case
+      (let* ((process (uiop:launch-program
+                       command
+                       :input :stream
+                       :output :stream
+                       :error-output :output
+                       :external-format :utf-8))
+             (input (uiop:process-info-input process))
+             (output (uiop:process-info-output process)))
+        (unwind-protect
+             (progn
+               (write-string sql input)
+               (finish-output input)
+               (close input)
+               (setf input nil)
+               (values (slurp-character-stream output)
+                       (uiop:wait-process process)))
+          (when input
+            (ignore-errors (close input)))
+          (ignore-errors (uiop:close-streams process))))
+    (error (condition)
+      (database-fail "PostgreSQL process could not be executed."
+                     (princ-to-string condition)))))
+
 (defun database-query-json (operation sql variables)
   (let ((command
           (append
-           (list "psql" "--no-psqlrc" "--quiet" "--tuples-only" "--no-align"
+           (list (or (sb-ext:posix-getenv "VISION_PSQL") "psql")
+                 "--no-psqlrc" "--quiet" "--tuples-only" "--no-align"
                  "--set=ON_ERROR_STOP=1" "--set=VERBOSITY=terse"
                  "--set" (format nil "operation=~A" operation))
            (loop for (name . value) in variables
@@ -19,26 +56,21 @@
            (list "--file=-"))))
     ;; psql n'applique la citation :'variable' que lorsqu'il lit son entrée,
     ;; pas quand la requête entière est fournie avec --command.
-    (with-input-from-string (input sql)
-      (multiple-value-bind (output error-output exit-code)
-          (uiop:run-program command
-                            :input input
-                            :output :string
-                            :error-output :string
-                            :ignore-error-status t)
-        (unless (zerop exit-code)
-          (database-fail "PostgreSQL request failed."
-                         (string-trim '(#\Space #\Tab #\Return #\Linefeed)
-                                      error-output)))
-        (let ((payload (string-trim '(#\Space #\Tab #\Return #\Linefeed)
-                                    output)))
-          (when (string= payload "")
-            (database-fail "PostgreSQL returned no result." "empty output"))
-          (handler-case
-              (parse-json payload)
-            (json-error (condition)
-              (database-fail "PostgreSQL returned invalid JSON."
-                             (json-error-message condition)))))))))
+    (multiple-value-bind (output exit-code)
+        (run-database-process command sql)
+      (unless (zerop exit-code)
+        (database-fail
+         "PostgreSQL request failed."
+         (string-trim '(#\Space #\Tab #\Return #\Linefeed) output)))
+      (let ((payload (string-trim '(#\Space #\Tab #\Return #\Linefeed)
+                                  output)))
+        (when (string= payload "")
+          (database-fail "PostgreSQL returned no result." "empty output"))
+        (handler-case
+            (parse-json payload)
+          (json-error (condition)
+            (database-fail "PostgreSQL returned invalid JSON."
+                           (json-error-message condition))))))))
 
 (defparameter +sql-search-memory-sheets+
   "WITH input AS (

@@ -126,7 +126,7 @@ in {
     enable = lib.mkEnableOption "Vision API";
     domain = lib.mkOption { type = lib.types.str; default = "vision.mrj.am"; };
     port = lib.mkOption { type = lib.types.port; default = 3001; };
-    version = lib.mkOption { type = lib.types.str; default = "1.0.0"; };
+    version = lib.mkOption { type = lib.types.str; default = "1.1.1"; };
     bootstrapSource = lib.mkOption {
       type = lib.types.path;
       description = "Source Vision revue et epinglee par l'infrastructure.";
@@ -291,6 +291,7 @@ in {
         PGDATABASE = "vision";
         PGUSER = "vision";
         PGOPTIONS = "-c statement_timeout=5000";
+        VISION_PSQL = "${config.services.postgresql.package}/bin/psql";
       };
       path = [ config.services.postgresql.package ];
       serviceConfig = {
