@@ -27,8 +27,9 @@
   <p><code>POST /mcp</code> fournit un transport Streamable HTTP stateless. Il
      permet de rechercher et enregistrer des fiches de memoire, de selectionner
      les fiches arrivees a echeance et de conserver des observations de
-     revision. L'echeance reste explicite : Vision n'impose pas un algorithme
-     Anki ou SuperMemo.</p>
+     revision. Une tentative de rappel effectivement evaluee est planifiee par
+     FSRS-6, le modele utilise par Anki ; une observation ambigue ou contextuelle
+     peut etre conservee sans modifier l'echeance.</p>
   <p>Les donnees privees et les ecritures restent authentifiees. La connexion
      directe depuis le mode Plugins de ChatGPT necessite OAuth 2.1 ou un tunnel
      MCP securise ; l'endpoint ne doit pas etre rendu anonyme pour contourner

@@ -1,6 +1,7 @@
 # API Vision sur le VPS
 
-État du présent candidat : serveur MCP 1.1 intégré et vérifié en CI. Une fusion
+État du présent candidat : serveur MCP 1.2 et ordonnanceur FSRS-6 intégrés et
+vérifiés en CI. Une fusion
 sur `main` ne déploie rien ; la préparation puis l'activation restent deux
 opérations manuelles distinctes.
 
@@ -12,7 +13,7 @@ opérations manuelles distinctes.
 - API protégée par HTTP Basic : `/api/` ;
 - MCP Streamable HTTP stateless protégé par HTTP Basic : `/mcp` ;
 - santé interne : `/healthz`, liée à `127.0.0.1` et masquée par Nginx ;
-- application : commit Vision `f2999dc1fa5d148bccf3f456912ba2e64bb795a9`.
+- application : commit Vision `445f9d7e6944d621de33283ca960d772813f47a2`.
 
 Nginx termine TLS, limite chaque IP à cinq requêtes par seconde avec une rafale
 de dix, limite les connexions simultanées, vérifie le fichier `htpasswd`, retire
@@ -23,8 +24,10 @@ locale et s'exécute avec les protections systemd et sans privilèges.
 Le processus Common Lisp implémente lui-même `POST /mcp` et les méthodes
 `initialize`, `ping`, `tools/list` et `tools/call`. Les cinq outils manipulent
 des fiches de mémoire et des observations au moyen de requêtes SQL fixes ;
-`psql` rejoint PostgreSQL par socket Unix. La migration applicative 002 crée
-les deux tables correspondantes. Aucune échéance n'est recalculée implicitement.
+`psql` rejoint PostgreSQL par socket Unix. La migration applicative 003 ajoute
+FSRS-6, son état courant et les instantanés d'audit. Une note de rappel de 1 à
+4 calcule l'échéance ; une observation sans note reste qualitative et ne
+modifie pas l'état FSRS.
 
 `GET /api/v1/mobile-live-test` est une exception exacte et volontaire : son
 fichier `htpasswd` est distinct, ses identifiants jetables ne fonctionnent sur
