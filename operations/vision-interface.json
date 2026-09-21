@@ -1,6 +1,5 @@
 {
-  "operation": "preparer",
+  "operation": "controler",
   "revision": "d224ab32928c43ef7f9445804077a2dbfb0fdfba",
-  "demande": "Vision : nouvelle connexion après expiration réseau, aucun transfert effectué",
-  "tentative": 2
+  "demande": "Relire la simulation complète avant activation, sans modifier le candidat"
 }
