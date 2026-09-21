@@ -1,0 +1,96 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vision Mobile Live Authentication Test",
+    "version": "1.0.0",
+    "description": "Isolated, read-only endpoint used only to test whether a client can send disposable HTTP Basic credentials. It exposes no Vision data or operation.",
+    "license": { "name": "Private API" },
+    "x-privacy-policy": "https://vision.mrj.am/privacy"
+  },
+  "servers": [
+    {
+      "url": "https://vision.mrj.am",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    { "mobileLiveTestBasicAuth": [] }
+  ],
+  "paths": {
+    "/api/v1/mobile-live-test": {
+      "get": {
+        "operationId": "testMobileLiveAuthentication",
+        "summary": "Test disposable HTTP Basic authentication",
+        "description": "Returns a fixed proof string. It performs no write, reads no Vision data and grants no access to another endpoint.",
+        "x-openai-isConsequential": false,
+        "responses": {
+          "200": {
+            "description": "The disposable credentials were accepted.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TestResult" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "mobileLiveTestBasicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Disposable credentials restricted to this harmless test endpoint."
+      }
+    },
+    "schemas": {
+      "TestResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["ok", "proof", "scope", "message"],
+        "properties": {
+          "ok": { "type": "boolean", "const": true },
+          "proof": {
+            "type": "string",
+            "const": "VISION-MOBILE-LIVE-AUTH-OK"
+          },
+          "scope": { "type": "string", "const": "test-only" },
+          "message": { "type": "string" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["error", "message"],
+        "properties": {
+          "error": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Missing or invalid disposable credentials.",
+        "headers": {
+          "WWW-Authenticate": { "schema": { "type": "string" } }
+        },
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Too many requests from the same source.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      }
+    }
+  }
+}

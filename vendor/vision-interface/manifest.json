@@ -1,0 +1,22 @@
+{
+  "revisionStyle": "c7b4d6e00cd0014a0a05e5a4e77627357498faa9",
+  "revisionSignature": "17495b13cefa24473e37434b98336b27caec8cdf",
+  "revisionApplication": "9a4c395b24e6eb8938a3246c96f5d80c030c2d2d",
+  "formatVersion": 1,
+  "validation": "Les workflows identifiés attestent les tests et la publication.",
+  "fichiers": {
+    "app.css": "269849922fea38b083fda0739220d518c5a63b6d96cc341aa3602b89fccfdabb",
+    "app.html": "e169f5732c349ee0856070a9bd8ba5dbfb15b50ea2896619c52f7eb8f70b2cf6",
+    "app.js": "c321907a1999e82216b384a11234293b38ffd667a081b52af22b85d09f811c0b",
+    "assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
+    "assets/mrjam/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
+    "assets/mrjam/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
+    "assets/mrjam/Parisienne-OFL.txt": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db",
+    "assets/mrjam/fenetres.js": "d2d5a7423ab08ba8e385fede28c0eb4c1c2d9d4d7a7e5d0d7eb46edc65ceaf26",
+    "assets/mrjam/signature.css": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830",
+    "index.html": "c3bca92d81311347afad7ee0b20da4a00539e1865707feb39ca546e89cd7b2f0",
+    "mobile-live-test-openapi.json": "6ed6f17c7cc661e001a3e17e67910688742885530bf763f82006550444f81d8a",
+    "openapi.json": "a99cfed0bedbadca5026ca02185a88387476a52772c45027bae81e337472dde9",
+    "privacy.html": "b3e3c72c2d1a0f36e40a5ada24e22e79f59fe8ebdab847ffc6ea1b0e355bbcc1"
+  }
+}
