@@ -12,9 +12,15 @@ n'était présent ; le nouveau précontrôle examine aussi `/srv/logique/current
 
 Le nouveau lot ajoute les candidats ACME puis HTTPS, les contrôles statiques
 et une préparation distincte de toute activation, intégrée sur `main`.
-L'archive applicative `10652278750`, révision `52a3d4b7714608e09561728508818525b53aacda`,
-a été vérifiée : ZIP et 75 fichiers `dist` conformes. Les réserves
-typographiques et de publication restent à lever dans le mécanisme collectif.
+L'archive applicative `10667157261`, révision `7a356ca3ec3682c95aa841c968822c24dc683dbe`,
+a été vérifiée : ZIP et 75 fichiers `dist` conformes, ressources identiques
+à la référence fonctionnelle initiale. La CI publique `35661154380` a réussi.
+La [validation typographique privée nº 35661307369](https://github.com/MrJ-am/Signature/actions/runs/35661307369)
+a également réussi : deux fontes originales, géométrie, huit contextes HTTP,
+sélection et copier-coller natif, puis examen des captures à 320 et 1280 pixels.
+Le rapport durable figure dans `operations/logique-typographie.json`.
+L'archive de préparation exclut les fontes et reste non publiable ; le candidat
+complet devra être contrôlé et conservé par le mécanisme privé collectif.
 La [construction VPS nº 35659924636](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35659924636)
 a réussi le 21 septembre à 21:57 UTC. Le commit opérateur
 `d659dde6034056dac2be73519804ce2ee33cb436` a construit les sources testées
