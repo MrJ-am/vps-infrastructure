@@ -79,6 +79,12 @@ Les tests Nginx exécutent les locations générées et vérifient les fichiers,
 types MIME, règles de cache, absences et fichiers cachés.
 Ils ne prouvent ni l'émission ACME ni l'état actuel du VPS.
 
+La [CI nº 35656506154](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35656506154)
+valide ce lot au commit `b722165485e9b3b325b150f05ae7da5919a57984` :
+55 tests, routage Nginx réel, évaluations des systèmes ACME/HTTPS,
+comparaison des invariants et tests PostgreSQL 17 avec restaurations isolées.
+La génération complète n'a pas encore été construite sur le VPS.
+
 ## Construction sur le VPS, sans activation
 
 Après intégration de cette branche, lancer manuellement **Préparer les
