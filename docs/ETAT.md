@@ -1,4 +1,4 @@
-# État attesté au 20 septembre 2026
+# État attesté au 21 septembre 2026
 
 ## Vision web et sessions mrj.am
 
@@ -19,7 +19,7 @@ de sonde ont été retirés et les identifiants antérieurs conservés.
 | Génération précédente protégée | `/nix/store/nndnndfac30p7rnwrxbk8sr6hljk5y5b-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
 | Services actifs | `sshd`, `nginx`, `postgresql`, `matheval`, `vision`, `mrj-auth` |
 | Sauvegardes quotidiennes actives | `postgresqlBackup-matheval.timer`, `postgresqlBackup-vision.timer` |
-| Compte permanent | À définir : `durable_credentials: false` |
+| Compte permanent | Activé le 21 septembre 2026 à 05:18 UTC ; accès API vérifié |
 
 La [préparation nº 35541853819](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541853819)
 a contrôlé la génération, les invariants, les sauvegardes chiffrées des deux
@@ -28,10 +28,16 @@ certificats et les paramètres de Matheval sont conservés. Le timer de retour
 de cette bascule est désarmé après enregistrement ; les anciennes générations
 et les preuves restent protégées. Aucun redémarrage du VPS n'a été effectué.
 
-Les comptes permanents n'étaient pas encore définis dans les secrets GitHub.
-Le site refuse le compte de verrouillage du bootstrap. Définir les deux secrets
-de compte puis exécuter le workflow de renouvellement selon [VISION-WEB.md](VISION-WEB.md).
-Le navigateur de la session Work a reçu une erreur 502 ; le rendu
+Lors de la bascule, le compte permanent n'était pas encore défini.
+Le propriétaire a ensuite enregistré les deux secrets de compte dans
+`vps-production`. Le [renouvellement nº 35564114945](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35564114945),
+exécuté au commit `65cedea8e71c157aafdf341e6894d4185b5ed651`, a réussi le
+21 septembre 2026 à 05:18 UTC : validation des secrets, installation du compte,
+accès HTTPS authentifié à l'API et nettoyage des fichiers temporaires.
+Le compte est commun au navigateur et à l'API générale ; le service de sessions
+lit ce même fichier d'identifiants. Aucun secret n'est conservé dans ce rapport.
+Les prochaines rotations suivent [VISION-WEB.md](VISION-WEB.md).
+Le navigateur de la session Work reçoit encore une erreur 502 au 21 septembre ; le rendu
 visuel n'a donc pas été vérifié depuis ce navigateur. Ce constat est distinct
 des contrôles HTTP/TLS réussis sur le VPS et sur le runner GitHub.
 

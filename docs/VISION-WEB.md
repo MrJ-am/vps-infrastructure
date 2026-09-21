@@ -8,7 +8,9 @@ La [mise en service du 20 septembre 2026 à 22:32 UTC](https://github.com/MrJ-am
 est réussie et enregistrée, avec l'infrastructure `d3699cd829bf996540a53085fe2c0539d9552ebc`
 et l'application `151ab64bd5c9c5c54297e88dbe4d548343cc4928`.
 La connexion et les lectures ont été vérifiées avec une sonde temporaire,
-retirée après les contrôles. Le compte permanent reste à définir.
+retirée après les contrôles. Le compte permanent a ensuite été activé le
+21 septembre 2026 à 05:18 UTC par le [renouvellement nº 35564114945](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35564114945),
+avec vérification de l'accès HTTPS authentifié à l'API.
 Les références serveur et les preuves sont consignées dans [ETAT.md](ETAT.md).
 
 ## Sessions
