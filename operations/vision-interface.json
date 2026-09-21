@@ -1,5 +1,6 @@
 {
   "operation": "preparer",
   "revision": "d224ab32928c43ef7f9445804077a2dbfb0fdfba",
-  "demande": "Vision : préparation complète après CI validée"
+  "demande": "Vision : nouvelle connexion après expiration réseau, aucun transfert effectué",
+  "tentative": 2
 }
