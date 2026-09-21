@@ -1,0 +1,70 @@
+name: Auditer le VPS avant le site Logique
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [operations/logique-audit.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Valider la demande de lecture seule
+        run: |
+          python3 - <<'PY'
+          import json, re
+          d = json.load(open('operations/logique-audit.json'))
+          assert set(d) == {'id', 'operation'} and d['operation'] == 'audit'
+          assert re.fullmatch('[a-z0-9-]{1,80}', d['id'])
+          print(d)
+          PY
+          mkdir -p "$RUNNER_TEMP/audit-logique"
+      - name: Préparer la clé du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/logique-audit-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Relever la génération et les publications réellement actives
+        run: sh scripts/connect.sh sh -s < scripts/audit-logique.sh | tee "$RUNNER_TEMP/audit-logique/serveur.json"
+      - name: Vérifier Nginx, services, certificats et sauvegardes
+        run: sh scripts/connect.sh sh -s < scripts/audit.sh | tee "$RUNNER_TEMP/audit-logique/systeme.txt"
+      - name: Vérifier les droits PostgreSQL existants
+        run: sh scripts/connect.sh sh -s < scripts/audit-postgresql.sh | tee "$RUNNER_TEMP/audit-logique/postgresql.txt"
+      - name: Contrôler tous les sites existants et le DNS demandé
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          p = json.load(open('projects.json'))
+          p.pop('logique', None)
+          Path(os.environ['RUNNER_TEMP'], 'audit-logique', 'registre-avant.json').write_text(json.dumps(p))
+          PY
+          python3 scripts/probe.py --registry "$RUNNER_TEMP/audit-logique/registre-avant.json" --output "$RUNNER_TEMP/audit-logique/http-avant.json"
+          python3 scripts/dns-logique.py | tee "$RUNNER_TEMP/audit-logique/dns.json"
+      - name: Vérifier une deuxième connexion indépendante
+        run: sh scripts/connect.sh sh -s < scripts/audit-logique.sh | tee "$RUNNER_TEMP/audit-logique/serveur-final.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: audit-logique-${{ github.sha }}
+          path: ${{ runner.temp }}/audit-logique/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/logique-audit-admin"
