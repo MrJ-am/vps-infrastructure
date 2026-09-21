@@ -41,16 +41,18 @@ revoir les préconditions si une autre publication intervient.
 
 | Élément | Référence figée |
 |---|---|
-| Application | `52a3d4b7714608e09561728508818525b53aacda` |
+| Application | `7a356ca3ec3682c95aa841c968822c24dc683dbe` |
 | Style | `492afe54cba22ed49c35423d4f37dae1ba0d9944` |
 | Signature | `17495b13cefa24473e37434b98336b27caec8cdf` |
-| Exécution applicative réussie | `35627133194` |
-| Artefact `apprendre-a-demontrer-preparation` | `10652278750` |
-| SHA-256 ZIP | `5d2d267fd520729180b08942cec30293608bb1da6a1ef4c4c78794858bfedc0a` |
-| Expiration annoncée par GitHub | 28 septembre 2026, 16:41 UTC |
+| Exécution applicative réussie | `35661154380` |
+| Artefact `apprendre-a-demontrer-preparation` | `10667157261` |
+| SHA-256 ZIP | `e07b6c68813d1b679e00b4bf9c82f7929504839b1fda3181a65a5c8e10111c55` |
+| Expiration annoncée par GitHub | 28 septembre 2026, 22:10 UTC |
 
 L'archive a été téléchargée et vérifiée pendant la reprise : empreinte ZIP
 identique, révisions cohérentes et 75 fichiers `dist` vérifiés, manifeste inclus.
+Ses 74 ressources restent identiques à l'archive initiale `10652278750` ;
+seule la référence applicative du manifeste évolue.
 Le vérificateur refuse les fichiers supplémentaires, les empreintes fausses,
 les liens et les chemins sortant du répertoire. Il peut extraire dans un
 répertoire neuf, jamais dans une publication active :
@@ -62,9 +64,36 @@ python3 scripts/logique_artefact.py /chemin/artefact.zip --extraire /chemin/neuf
 Son manifeste conserve `typographieValidee: false`,
 `hebergementConfirme: false`, `publicationAutorisee: false`.
 Ne pas modifier ces indicateurs dans le ZIP pour le rendre publiable :
-achever les validations dans l'application et produire les artefacts coordonnés.
+produire et contrôler les candidats complets dans le mécanisme coordonné.
 Cette archive reste une référence de préparation ; ne pas la conserver
 uniquement derrière un lien temporaire si la bascule a lieu après son expiration.
+
+## Typographie complète validée en atelier privé
+
+Signature est un dépôt privé. La CI publique de l'application conserve les
+tests fonctionnels ; les ressources d'identité complètes sont contrôlées par
+le [workflow privé nº 35661307369](https://github.com/MrJ-am/Signature/actions/runs/35661307369),
+réussi sur l'application `7a356ca3ec3682c95aa841c968822c24dc683dbe`.
+Le commit opérateur Signature est `04e2402ed5fc599d759e95824ba16a852c4241ec`,
+sur `validation/logique-typographie`. Les sources d'identité restent à la
+révision originale `17495b13cefa24473e37434b98336b27caec8cdf`.
+
+Le workflow recompile l'application, vérifie 190 cas du correcteur, 299 formules
+KaTeX, les 58 exercices, les 12 bilans et les pages vidéo simulées, puis charge
+les deux fontes originales et leur licence dans `.cache/site-complet`.
+Les huit contextes HTTP (racine et préfixe, largeurs 320, 390, 768 et 1280)
+valident les empreintes servies, les dimensions originales, la sélection et
+le copier-coller natif des six caractères de `MrJ.am`, point U+002E compris.
+Les captures à 320 et 1280 pixels ont été examinées.
+
+Le rapport complet et ses empreintes sont conservés dans
+`operations/logique-typographie.json`. Son artefact privé `10666862486` a été
+téléchargé et vérifié, ainsi que ses 75 fichiers `dist`. Le candidat complet
+ajoute uniquement les deux fontes et leur licence à ces ressources.
+L'archive de préparation exclut les fontes ; le rapport typographique y figure,
+mais son `dist` reste incomplet et non publiable. Aucune clé inter-dépôts ni
+accès VPS n'a été ajouté à cet atelier. La publication privée collective doit
+recomposer, contrôler puis conserver exactement le candidat complet à servir.
 
 ## Les deux générations candidates
 
@@ -150,7 +179,7 @@ restent à préparer et à exécuter dans le mécanisme collectif :
    `logique.echos.systems`. En cas d'échec, rétablir la génération initiale,
    son entrée et son profil par le retour indépendant. Ne pas effacer les
    certificats antérieurs ni restaurer une base.
-4. Valider la typographie, les droits d'intégration Vimeo pour ce domaine,
+4. Refaire les contrôles du candidat complet, vérifier les droits Vimeo pour ce domaine,
    les tests applicatifs et le manifeste privé collectif de Mémoire, Vision
    et Logique. Fixer les autorisations inter-dépôts sans réutiliser
    arbitrairement une clé ou un secret d'un autre projet.
@@ -174,6 +203,6 @@ restent à préparer et à exécuter dans le mécanisme collectif :
    puis désarmer les retours après réussite complète. Mettre à jour l'état
    attesté avec les URLs des exécutions. Aucun succès de CI n'est un déploiement.
 
-La publication coordonnée et la validation typographique restent des conditions
-de l'utilisateur et du contrat du style ; la disponibilité de Logique ne doit
-pas être annoncée avant leur réalisation et les contrôles de production.
+La typographie est validée pour la révision applicative ci-dessus. La publication
+coordonnée reste une condition de l'utilisateur et du contrat du style ; la
+disponibilité de Logique attend cette bascule et les contrôles de production.
