@@ -1,5 +1,50 @@
 # État attesté au 21 septembre 2026
 
+## Vision ElmUI : publiée et enregistrée le 21 septembre à 22:32 UTC
+
+L'[activation nº 35663052741](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35663052741)
+a réussi sur [vision.mrj.am](https://vision.mrj.am/), depuis le commit opérateur
+`12d9765413501c9911728bc3ca7a9220b6325e9b`. Les 13 fichiers du manifeste sont
+identiques à l'artefact applicatif testé. Chromium a vérifié le rendu à 375 et
+1280 pixels, la police exacte, la connexion avec le compte permanent, le cookie
+commun, CSRF et l'origine, la lecture PostgreSQL, Basic et la révocation.
+Les captures conservées montrent uniquement la connexion vide.
+
+| Élément | Référence active |
+|---|---|
+| Interface Vision | `9a4c395b24e6eb8938a3246c96f5d80c030c2d2d` |
+| Style partagé | `c7b4d6e00cd0014a0a05e5a4e77627357498faa9` |
+| Signature | `17495b13cefa24473e37434b98336b27caec8cdf` |
+| Sources du candidat d'infrastructure | `d224ab32928c43ef7f9445804077a2dbfb0fdfba` |
+| Génération active et par défaut | `/nix/store/bbp9i9c94l8f4lvkr23qlgghhlw29qdd-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| Génération précédente protégée | `/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| Serveur Vision conservé | `151ab64bd5c9c5c54297e88dbe4d548343cc4928` — 1.3.0 |
+| Matheval conservé | `0c2758f5a1df6821903a684e9a3c41f600acf02c` |
+
+La [préparation nº 35662657824](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35662657824)
+a conservé les sources et générations, produit les sauvegardes chiffrées des
+deux bases, comparé les invariants, testé Nginx et déclenché le timer indépendant.
+La [simulation complète nº 35662944719](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35662944719)
+annonçait seulement le redémarrage de Nginx. La bascule a vérifié une nouvelle
+connexion SSH, les six services, les deux timers de sauvegarde et les 22 contrôles
+HTTP/TLS. La génération testée est enregistrée ; le timer de retour est désarmé.
+Aucune écriture métier, migration SQL, rotation de compte ni mise à jour NixOS.
+
+L'entrée NixOS importe
+`/etc/nixos/vps-infrastructure/vision-interface-d224ab32928c43ef7f9445804077a2dbfb0fdfba/configuration-interface.nix`.
+Elle assemble l'entrée antérieure et le nouveau module de fichiers statiques.
+`/srv/vision-interface/current` pointe vers la révision applicative ci-dessus.
+L'import `apps/vision-interface.nix` est également intégré à la configuration
+principale du dépôt pour que les prochaines générations conservent cette desserte.
+Les preuves et le mécanisme de publication sont décrits dans
+[VISION-INTERFACE.md](VISION-INTERFACE.md).
+
+**Relais pour Logique :** toute préparation calculée avant cette bascule utilise
+une génération antérieure. La refaire depuis l'état actif et les sources intégrant
+le module Vision, en conservant ses cinq routes ; ne pas réutiliser aveuglément
+un ancien candidat ACME/HTTPS. La publication parallèle de Logique reste une
+opération distincte. Aucun redémarrage du VPS n'a été effectué.
+
 ## Logique : générations construites, aucune activation
 
 Le site `logique.echos.systems` est préparé sur `preparation/logique-vps`.
@@ -39,7 +84,7 @@ Nginx réel, évaluations NixOS complètes des deux phases et des invariants,
 ainsi que PostgreSQL 17 et ses restaurations isolées.
 Lire [LOGIQUE.md](LOGIQUE.md) pour les références, les preuves et les étapes restantes.
 
-## Vision web et sessions mrj.am
+## Historique : Vision web et sessions mrj.am, 20 septembre
 
 Vision 1.3.0 est **activé et enregistré depuis 22:32 UTC** sur
 `https://vision.mrj.am/`. La [bascule nº 35541957332](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35541957332)

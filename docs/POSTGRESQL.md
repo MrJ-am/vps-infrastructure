@@ -21,7 +21,7 @@ les lettres minuscules, chiffres et `_`, et commence par une lettre. Les noms
 réservés, les doublons et le préfixe `pg_` sont refusés. Cette convention
 permet l'authentification `peer` sans mot de passe ni fichier de secrets SQL.
 
-| Paramètre | Matheval | Vision, exemple non activé |
+| Paramètre | Matheval | Vision |
 |---|---|---|
 | Socket | `/run/postgresql` | `/run/postgresql` |
 | Port logique du socket | `5432` | `5432` |
