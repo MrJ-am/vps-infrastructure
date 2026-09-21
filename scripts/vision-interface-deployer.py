@@ -132,7 +132,8 @@ def preparer(revision):
         (racines / nom).symlink_to(cible)
     nginx = shlex.split(b['nginx'])
     executer(nginx[0], '-t', '-c', nginx[nginx.index('-c') + 1], visible=True)
-    simulation = executer(Path(candidat) / 'bin/switch-to-configuration', 'dry-activate')
+    simulation = subprocess.run([str(Path(candidat) / 'bin/switch-to-configuration'), 'dry-activate'],
+        text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, check=True).stdout
     (dossier / 'simulation.txt').write_text(simulation)
     print(simulation, flush=True)
     publication = Path('/srv/vision-interface/releases') / manifeste['revisionApplication']

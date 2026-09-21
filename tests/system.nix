@@ -36,6 +36,8 @@ assert current.systemd.services.vision.environment.PORT == "3001";
 assert current.systemd.services.vision.environment.PGDATABASE == "vision";
 assert current.systemd.services.vision.environment.PGUSER == "vision";
 assert current.services.vision.version == "1.3.0";
+assert current.services.nginx.virtualHosts."vision.mrj.am".locations."= /".root == "/srv/vision-interface/current";
+assert current.services.nginx.virtualHosts."vision.mrj.am".locations."^~ /assets/mrjam/".tryFiles == "$uri =404";
 assert current.services.vision.bootstrapCommit == "151ab64bd5c9c5c54297e88dbe4d548343cc4928";
 assert lib.hasSuffix
   "/bin/psql"

@@ -5,6 +5,7 @@
     ./hardware-configuration.nix
     ../../apps/matheval.nix
     ../../apps/vision.nix
+    ../../apps/vision-interface.nix
     ../../modules/gateway.nix
     ../../modules/postgresql.nix
   ];

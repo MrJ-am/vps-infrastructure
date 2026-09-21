@@ -4,7 +4,10 @@ Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
 plusieurs applications derrière une seule instance Nginx et partager une
 instance PostgreSQL 17 entre les projets qui en ont besoin.
 
-**État : migration activée et enregistrée le 18 septembre 2026 à 21:10 UTC.**
+**État actuel : l'interface ElmUI de Vision est publiée depuis le 21 septembre 2026 à 22:32 UTC.**
+Voir [la publication vérifiée](docs/VISION-INTERFACE.md) et [l'état du VPS](docs/ETAT.md).
+
+**Migration initiale : migration activée et enregistrée le 18 septembre 2026 à 21:10 UTC.**
 La [bascule vérifiée](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446)
 confirme les services, les données, les accès et les sauvegardes. Les sources
 installées correspondent à `fa059d61acfc8cf5c5bd7f3f9c83600787f2c6eb`.
@@ -44,8 +47,8 @@ La copie Matheval correspond exactement au module amont du commit
 `0bcdaf101cbdacb85694ca217fd21ab3f2eac828` de Mémoire. L'adaptation PostgreSQL
 a été reprise dans ce module : ne plus lui appliquer
 `patches/matheval-postgresql.patch`. Ce patch et ses empreintes antérieures
-restent conservés comme historique réversible. Vision dispose seulement
-d'un exemple de réservation ; aucune base Vision n'est activée à ce stade.
+restent conservés comme historique réversible. Vision et sa base sont activés ; son interface ElmUI est servie par le module
+`apps/vision-interface.nix`. Lire [l'état courant](docs/ETAT.md).
 
 Le raccordement initial reste `https://principiipetit.io/matheval/` vers
 `http://127.0.0.1:3000`, sans retirer le préfixe. `www` et les redirections
