@@ -1,5 +1,22 @@
 # État attesté au 21 septembre 2026
 
+## Logique : reprise de la préparation, aucune activation
+
+Le site `logique.echos.systems` est préparé sur `preparation/logique-vps`.
+L'[audit nº 35637628338](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35637628338),
+commit `ba66dfcf939f299f9a296658aeaab938366b719e`, a réussi à 18:19 UTC :
+22 contrôles HTTP/TLS existants, DNS A `187.77.95.158` sans AAAA, générations
+identiques et seconde connexion du runner. Aucun certificat ni publication
+Logique n'était présent.
+
+Le nouveau lot ajoute les candidats ACME puis HTTPS, les contrôles statiques
+et une préparation manuelle distincte de toute activation.
+L'archive applicative `10652278750`, révision `52a3d4b7714608e09561728508818525b53aacda`,
+a été vérifiée : ZIP et 75 fichiers `dist` conformes. Les réserves
+typographiques et de publication restent à lever dans le mécanisme collectif.
+Le workflow de construction VPS n'a pas été exécuté pendant cette reprise.
+Lire [LOGIQUE.md](LOGIQUE.md) pour les références, les preuves et les étapes restantes.
+
 ## Vision web et sessions mrj.am
 
 Vision 1.3.0 est **activé et enregistré depuis 22:32 UTC** sur

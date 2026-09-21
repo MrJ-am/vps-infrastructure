@@ -1,0 +1,56 @@
+name: Préparer les générations Logique sans activer
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  preparer:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Exiger une référence exacte et le DNS attendu
+        run: |
+          python3 - <<'PY'
+          import os, re
+          assert re.fullmatch('[0-9a-f]{40}', os.environ['GITHUB_SHA'])
+          PY
+          python3 scripts/dns-logique.py --exiger
+      - name: Préparer la clé du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/logique-preparation-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Contrôler les sites existants
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-avant.json"
+      - name: Transmettre les sources figées et construire à côté
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/logique-preparations/$GITHUB_SHA/source; tar -xf - -C /root/logique-preparations/$GITHUB_SHA/source"
+          NIXPKGS_LOGIQUE=$(python3 -c 'import json; print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_LOGIQUE -p python3 --run 'python3 /root/logique-preparations/$GITHUB_SHA/source/scripts/logique-preparer.py $GITHUB_SHA'"
+      - name: Nouvelle connexion et contrôles après construction
+        run: |
+          sh scripts/connect.sh sh -s < scripts/audit-logique.sh
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-avant.json"
+          sh scripts/connect.sh "cat /root/logique-preparations/$GITHUB_SHA/preparation.json" > "$RUNNER_TEMP/logique-preparation.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: logique-preparation-${{ github.sha }}
+          path: ${{ runner.temp }}/logique-preparation.json
+          retention-days: 30
+          if-no-files-found: error
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/logique-preparation-admin"

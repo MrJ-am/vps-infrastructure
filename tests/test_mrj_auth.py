@@ -81,7 +81,7 @@ class NginxGateTests(unittest.TestCase):
         nix=os.environ.get('TEST_NIX') or shutil.which('nix-instantiate')
         if not nginx or not nix:self.skipTest('Nginx et Nix requis pour le test de passerelle')
         root=Path(__file__).resolve().parents[1]
-        expression='let c = import ./modules/mrj-auth.nix { config = {}; pkgs = {}; lib = { filter = builtins.filter; mkIf = a: b: if a then b else {}; }; }; in c.services.nginx.virtualHosts."vision.mrj.am".locations'
+        expression='let c = import ./modules/mrj-auth.nix { config.infrastructure.gateway.projects = builtins.fromJSON (builtins.readFile ./projects.json); pkgs = {}; lib = { filter = builtins.filter; mkIf = a: b: if a then b else {}; }; }; in c.services.nginx.virtualHosts."vision.mrj.am".locations'
         locations=json.loads(subprocess.check_output([nix,'--eval','--strict','--json','--expr',expression],cwd=root,text=True))
         class Backend(module.BaseHTTPRequestHandler):
             def do_POST(self):
