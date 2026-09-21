@@ -28,7 +28,9 @@ commit `ba66dfcf939f299f9a296658aeaab938366b719e`, a réussi le 21 septembre 202
 à 18:19 UTC : 22 contrôles publics HTTP/TLS, droits PostgreSQL, sauvegardes,
 générations et seconde connexion depuis le runner.
 Le DNS avait exactement l'enregistrement A attendu, sans AAAA ni CNAME.
-Le certificat et la publication Logique étaient absents.
+Le certificat était absent, ainsi que la publication au chemin alors envisagé
+`/srv/apprendre-a-demontrer/current`. Le précontrôle actualisé vérifie aussi
+`/srv/logique/current`, chemin du candidat.
 
 `operations/logique-etat-attendu.json` conserve les références de cet audit :
 génération active et de démarrage, Nixpkgs, entrée NixOS et publications
