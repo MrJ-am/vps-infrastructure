@@ -1,5 +1,6 @@
 { configuration }:
 let
+  lib = import <nixpkgs/lib>;
   c = (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux";
     modules = [ (builtins.toPath configuration) ];
@@ -11,7 +12,8 @@ in {
     noyau = toString c.boot.kernelPackages.kernel;
     parametres = c.boot.kernelParams;
     demarrage = c.boot.loader.grub.device;
-    reseau = c.systemd.network.networks;
+    reseau = lib.mapAttrs (_: fichier: toString fichier.source)
+      (lib.filterAttrs (nom: _: lib.hasPrefix "systemd/network" nom) c.environment.etc);
     pareFeu = c.networking.firewall.allowedTCPPorts;
     cles = c.users.users.root.openssh.authorizedKeys.keys;
     publication = c.users.users.matheval-deploy.openssh.authorizedKeys.keys;

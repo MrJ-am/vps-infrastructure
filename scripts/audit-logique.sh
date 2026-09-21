@@ -17,5 +17,5 @@ jq -n --arg date "$(date -u +%FT%TZ)" \
   --arg cheminMatheval "$(readlink -f /srv/matheval/current)" \
   --arg cheminVision "$(readlink -f /srv/vision/current)" \
   --argjson certificat "$(if test -f /var/lib/acme/logique.echos.systems/fullchain.pem; then echo true; else echo false; fi)" \
-  --argjson publication "$(if test -e /srv/apprendre-a-demontrer/current || test -L /srv/apprendre-a-demontrer/current; then echo true; else echo false; fi)" \
+  --argjson publication "$(if test -e /srv/logique/current || test -L /srv/logique/current || test -e /srv/apprendre-a-demontrer/current || test -L /srv/apprendre-a-demontrer/current; then echo true; else echo false; fi)" \
   '{date:$date,actif:$actif,demarrage:$demarrage,nixpkgs:$nixpkgs,entree:$entree,empreinteEntree:$empreinte,matheval:$matheval,vision:$vision,cheminMatheval:$cheminMatheval,cheminVision:$cheminVision,certificatLogiquePresent:$certificat,publicationLogiquePresente:$publication}'

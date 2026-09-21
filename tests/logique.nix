@@ -13,7 +13,8 @@ let
     services = map (nom: c.systemd.units."${nom}.service".text)
       [ "sshd" "postgresql" "postgresql-setup" "matheval" "vision"
         "vision-migrate" "mrj-auth" "postgresqlBackup-matheval" "postgresqlBackup-vision" ];
-    reseau = c.systemd.network.networks;
+    reseau = lib.mapAttrs (_: fichier: toString fichier.source)
+      (lib.filterAttrs (nom: _: lib.hasPrefix "systemd/network" nom) c.environment.etc);
     pareFeu = c.networking.firewall.allowedTCPPorts;
     bases = c.services.postgresqlBackup.databases;
     sudo = c.security.sudo.extraRules;

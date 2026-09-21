@@ -6,8 +6,9 @@ Le site `logique.echos.systems` est préparé sur `preparation/logique-vps`.
 L'[audit nº 35637628338](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35637628338),
 commit `ba66dfcf939f299f9a296658aeaab938366b719e`, a réussi à 18:19 UTC :
 22 contrôles HTTP/TLS existants, DNS A `187.77.95.158` sans AAAA, générations
-identiques et seconde connexion du runner. Aucun certificat ni publication
-Logique n'était présent.
+identiques et seconde connexion du runner. Aucun certificat Logique ni
+publication au chemin alors contrôlé (`/srv/apprendre-a-demontrer/current`)
+n'était présent ; le nouveau précontrôle examine aussi `/srv/logique/current`.
 
 Le nouveau lot ajoute les candidats ACME puis HTTPS, les contrôles statiques
 et une préparation manuelle distincte de toute activation.
