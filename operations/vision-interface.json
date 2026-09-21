@@ -1,5 +1,7 @@
 {
-  "operation": "controler",
+  "operation": "activer",
   "revision": "d224ab32928c43ef7f9445804077a2dbfb0fdfba",
-  "demande": "Relire la simulation complète avant activation, sans modifier le candidat"
+  "preparation": 35662657824,
+  "simulation": 35662944719,
+  "demande": "Achever la publication Vision autorisée après préparation et simulation vérifiées"
 }
