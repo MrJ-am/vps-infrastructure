@@ -1,0 +1,19 @@
+{
+  "type": "static",
+  "domain": "logique.echos.systems",
+  "aliases": [],
+  "root": "/srv/logique/current",
+  "prefix": "",
+  "maxBodySize": "64k",
+  "probes": [
+    {"path": "/", "status": 200, "contentType": "text/html", "unchanged": true},
+    {"path": "/app.js", "status": 200, "unchanged": true},
+    {"path": "/course.js", "status": 200, "unchanged": true},
+    {"path": "/bridge.js", "status": 200, "unchanged": true},
+    {"path": "/video.js", "status": 200, "unchanged": true},
+    {"path": "/katex/katex.min.js", "status": 200, "unchanged": true},
+    {"path": "/assets/mrjam/Echologo.svg", "status": 200, "unchanged": true},
+    {"path": "/manifeste-preparation.json", "status": 200, "contentType": "application/json"},
+    {"path": "/ressource-absente.js", "status": 404}
+  ]
+}

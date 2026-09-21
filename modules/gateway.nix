@@ -1,9 +1,10 @@
-{ lib, ... }:
+{ config, lib, ... }:
 let
-  projects = builtins.fromJSON (builtins.readFile ../projects.json);
+  projects = config.infrastructure.gateway.projects;
   sites = builtins.attrValues projects;
+  statique = site: (site.type or "proxy") == "static";
   domains = lib.concatMap (site: [ site.domain ] ++ site.aliases) sites;
-  ports = map (site: site.port) sites;
+  ports = map (site: site.port) (lib.filter (site: !(statique site)) sites);
   validDomain = name: builtins.isString name &&
     builtins.match "[a-z0-9]([a-z0-9.-]*[a-z0-9])?" name != null;
   validPath = path: builtins.isString path &&
@@ -20,7 +21,12 @@ let
     !(lib.hasPrefix site.auth.prefix site.privateHealthPath);
   validSite = site:
     (!(site ? browserAuth) || builtins.isBool site.browserAuth) &&
-    builtins.isInt site.port && site.port >= 1024 && site.port <= 65535 &&
+    (if statique site then
+      !(site ? port) && !(site ? service) && !(site ? auth) && !(site ? browserAuth) &&
+      !(site ? privateHealthPath) && site.prefix == "" &&
+      builtins.match "/srv/[a-z][a-z0-9-]*/current" site.root != null
+    else (site.type or "proxy") == "proxy" && !(site ? root) &&
+      builtins.isInt site.port && site.port >= 1024 && site.port <= 65535) &&
     builtins.isString site.prefix &&
     (site.prefix == "" || builtins.match "(/[a-zA-Z0-9_-]+)+" site.prefix != null) &&
     builtins.match "[1-9][0-9]*[km]" site.maxBodySize != null &&
@@ -29,6 +35,12 @@ let
 
 in {
   imports = [ ./mrj-auth.nix ];
+  options.infrastructure.gateway.projects = lib.mkOption {
+    type = lib.types.attrs;
+    default = builtins.fromJSON (builtins.readFile ../projects.json);
+    description = "Registre explicite du candidat ; aucun chargement distant.";
+  };
+  config = {
   assertions = [
     { assertion = sites != []; message = "La passerelle doit conserver au moins un projet."; }
     { assertion = builtins.length domains == builtins.length (lib.unique domains);
@@ -49,5 +61,5 @@ in {
     virtualHosts = (import ../lib/virtual-hosts.nix) projects;
   };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
+  };
 }
-

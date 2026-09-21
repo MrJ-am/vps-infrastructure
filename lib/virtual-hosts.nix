@@ -1,6 +1,22 @@
 projects:
 let
   sites = builtins.attrValues projects;
+  statique = site: (site.type or "proxy") == "static";
+  hoteStatique = site: {
+    root = site.root;
+    extraConfig = ''
+      client_max_body_size ${site.maxBodySize};
+      add_header Cache-Control "no-cache" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    '';
+    # La navigation Elm utilise des fragments #/… : aucune réécriture SPA.
+    # Une ressource absente doit rester une 404, jamais recevoir index.html.
+    locations = {
+      "/" = { index = "index.html"; tryFiles = "$uri $uri/ =404"; };
+      "~ /\\.".return = "404";
+    };
+  };
   proxyHeaders = site: ''
     client_max_body_size ${site.maxBodySize};
     proxy_set_header Host $host;
@@ -62,13 +78,14 @@ let
     value = {
       enableACME = true;
       forceSSL = true;
+    } // (if statique site then hoteStatique site else {
       locations = {
         "${site.prefix}/" = publicLocation site;
       } // protectedLocations site // (if site.prefix != "" then {
         "= /".return = "308 ${site.prefix}/";
         "= ${site.prefix}".return = "308 ${site.prefix}/";
       } else {});
-    } // (if site ? auth then {
+    }) // (if site ? auth then {
       extraConfig = ''
         add_header Strict-Transport-Security "max-age=31536000" always;
       '';
@@ -78,4 +95,3 @@ let
     value = { enableACME = true; forceSSL = true; globalRedirect = site.domain; };
   }) site.aliases;
 in builtins.listToAttrs (builtins.concatMap hostEntries sites)
-
