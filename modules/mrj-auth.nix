@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  projects = builtins.fromJSON (builtins.readFile ../projects.json);
+  projects = config.infrastructure.gateway.projects;
   sites = lib.filter (site: site ? browserAuth && site.browserAuth) (builtins.attrValues projects);
   python = pkgs.python3.withPackages (p: [ p.passlib ]);
   sessionHeaders = ''
@@ -22,7 +22,7 @@ let
 in lib.mkIf (sites != []) {
   assertions = [ {
     assertion = lib.all (site: (site.domain == "mrj.am" || lib.hasSuffix ".mrj.am" site.domain) && site.port != 3002) sites
-      && lib.all (site: site.port != 3002) (builtins.attrValues projects);
+      && lib.all (site: (site.port or null) != 3002) (builtins.attrValues projects);
     message = "Les sessions mrj.am exigent un domaine mrj.am et réservent le port local 3002.";
   } ];
   users.groups.mrj-auth = {};

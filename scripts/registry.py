@@ -29,14 +29,20 @@ def validate(projects):
     if not isinstance(projects, dict) or not projects:
         raise ValueError("Le registre doit contenir au moins un projet.")
     domains, ports = set(), set()
-    required = {"domain", "aliases", "port", "prefix", "maxBodySize", "service", "probes"}
-    optional = {"auth", "privateHealthPath", "browserAuth"}
+    commun = {"domain", "aliases", "prefix", "maxBodySize", "probes"}
     for name, site in projects.items():
         if not re.fullmatch(r"[a-z][a-z0-9-]*", name):
             raise ValueError(f"Identifiant de projet invalide : {name}")
-        if (not isinstance(site, dict) or not required <= set(site)
+        if not isinstance(site, dict):
+            raise ValueError(f"{name} : objet attendu.")
+        statique = site.get("type") == "static"
+        required = commun | ({"type", "root"} if statique else {"port", "service"})
+        optional = set() if statique else {"type", "auth", "privateHealthPath", "browserAuth"}
+        if (not required <= set(site)
                 or not set(site) <= required | optional):
             raise ValueError(f"{name} : propriétés manquantes ou inconnues.")
+        if site.get("type", "proxy") not in ("proxy", "static"):
+            raise ValueError(f"{name} : type de site inconnu.")
         if not isinstance(site["aliases"], list):
             raise ValueError(f"{name} : aliases doit être une liste.")
         for domain in [site["domain"], *site["aliases"]]:
@@ -45,16 +51,21 @@ def validate(projects):
             if domain in domains:
                 raise ValueError(f"Domaine ou alias déjà attribué : {domain}")
             domains.add(domain)
-        port = site["port"]
-        if type(port) is not int or not 1024 <= port <= 65535 or port in ports:
-            raise ValueError(f"{name} : port local invalide ou déjà attribué.")
-        ports.add(port)
+        port = site.get("port")
+        if statique:
+            if (not isinstance(site["root"], str)
+                    or site["root"] != f"/srv/{name}/current" or site["prefix"] != ""):
+                raise ValueError(f"{name} : racine statique dédiée et préfixe vide requis.")
+        else:
+            if type(port) is not int or not 1024 <= port <= 65535 or port in ports:
+                raise ValueError(f"{name} : port local invalide ou déjà attribué.")
+            ports.add(port)
         prefix = site["prefix"]
         if not isinstance(prefix, str) or (prefix and not PREFIX.fullmatch(prefix)):
             raise ValueError(f"{name} : préfixe invalide, utiliser une chaîne vide pour la racine.")
         if not isinstance(site["maxBodySize"], str) or not re.fullmatch(r"[1-9][0-9]*[km]", site["maxBodySize"]):
             raise ValueError(f"{name} : taille maximale invalide.")
-        if not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"]):
+        if not statique and (not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"])):
             raise ValueError(f"{name} : nom de service invalide.")
 
         if "browserAuth" in site and (type(site["browserAuth"]) is not bool or not site.get("auth") or not (site["domain"] == "mrj.am" or site["domain"].endswith(".mrj.am"))):
@@ -111,4 +122,3 @@ def load(path=ROOT / "projects.json"):
 if __name__ == "__main__":
     projects = load()
     print(f"Registre valide : {len(projects)} projet(s), domaines et ports distincts.")
-
