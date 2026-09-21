@@ -17,9 +17,11 @@ restent ceux de l'artefact testé.
 **Rien n'est activé par ce lot.** `projects.json` et le point d'entrée
 `hosts/hostinger/configuration.nix` conservent les projets actuellement servis.
 Le module Logique et les deux points d'entrée candidats sont explicites.
-Le workflow de préparation est manuel, réservé à `main` et à
-`vps-production`, sans déclenchement par un push. Il ne devient utilisable
-qu'après intégration revue de la branche ; sa présence n'atteste pas son exécution.
+Le workflow de préparation est réservé à `main` et à `vps-production`.
+Il se lance manuellement ou par une demande explicite dans
+`operations/logique-preparation.json`, après intégration revue de la branche.
+Cette demande n'accepte que l'opération `prepare`, une révision exacte déjà
+intégrée et sa CI réussie. Sa présence n'atteste pas son exécution.
 
 ## Références et preuve de départ
 
@@ -87,8 +89,12 @@ La génération complète n'a pas encore été construite sur le VPS.
 
 ## Construction sur le VPS, sans activation
 
-Après intégration de cette branche, lancer manuellement **Préparer les
-générations Logique sans activer**, sur `main`.
+Après intégration de cette branche, lancer **Préparer les générations Logique
+sans activer**, sur `main`, manuellement ou en modifiant la demande dédiée.
+Le champ `revision` désigne les sources testées, indépendamment du commit
+qui déclenche le workflow. Le runner exige une CI `check.yml` réussie sur
+cette révision, vérifie qu'elle appartient à l'historique intégré, puis
+archive exclusivement ces sources. Une tentative déjà engagée n'est pas écrasée.
 Le runner utilise exclusivement `scripts/connect.sh` et `vps-production`.
 Il vérifie le DNS, les sites existants et les préconditions, conserve
 `/etc/nixos` dans un dossier privé, puis construit les deux générations avec

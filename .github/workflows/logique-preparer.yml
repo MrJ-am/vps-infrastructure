@@ -1,8 +1,12 @@
 name: Préparer les générations Logique sans activer
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [operations/logique-preparation.json]
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: vps-administration
   cancel-in-progress: false
@@ -16,12 +20,38 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
-      - name: Exiger une référence exacte et le DNS attendu
+          fetch-depth: 0
+      - name: Vérifier la demande et sa CI puis figer les sources
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           python3 - <<'PY'
-          import os, re
-          assert re.fullmatch('[0-9a-f]{40}', os.environ['GITHUB_SHA'])
+          import json, os, re, subprocess, urllib.request
+          from pathlib import Path
+          demande = json.loads(Path('operations/logique-preparation.json').read_text())
+          assert set(demande) == {'id', 'operation', 'revision'}, 'Demande invalide'
+          assert re.fullmatch('[a-z0-9-]{1,80}', demande['id']), 'Identifiant invalide'
+          assert demande['operation'] == 'prepare', 'Seule la préparation est permise'
+          revision = demande['revision']
+          assert re.fullmatch('[0-9a-f]{40}', revision), 'Révision exacte requise'
+          subprocess.run(['git', 'merge-base', '--is-ancestor', revision, os.environ['GITHUB_SHA']], check=True)
+          url = f"{os.environ['GITHUB_API_URL']}/repos/{os.environ['GITHUB_REPOSITORY']}/actions/workflows/check.yml/runs?head_sha={revision}&per_page=100"
+          requete = urllib.request.Request(url, headers={
+              'Accept': 'application/vnd.github+json',
+              'Authorization': 'Bearer ' + os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(requete, timeout=30) as reponse:
+              executions = json.load(reponse)['workflow_runs']
+          assert any(e['head_sha'] == revision and e['event'] == 'push'
+                     and e['status'] == 'completed' and e['conclusion'] == 'success'
+                     and e['head_repository']['full_name'] == os.environ['GITHUB_REPOSITORY']
+                     for e in executions), 'La CI exacte des sources doit avoir réussi'
+          with open(os.environ['GITHUB_ENV'], 'a') as sortie:
+              sortie.write(f'SOURCES_LOGIQUE_SHA={revision}\n')
+          print(f'Sources validées : {revision}')
+          subprocess.run(['git', 'checkout', '--detach', revision], check=True)
           PY
+      - name: Exiger le DNS attendu
+        run: |
           python3 scripts/dns-logique.py --exiger
       - name: Préparer la clé du runner
         env:
@@ -37,17 +67,17 @@ jobs:
         run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-avant.json"
       - name: Transmettre les sources figées et construire à côté
         run: |
-          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/logique-preparations/$GITHUB_SHA/source; tar -xf - -C /root/logique-preparations/$GITHUB_SHA/source"
+          git archive --format=tar "$SOURCES_LOGIQUE_SHA" | sh scripts/connect.sh "umask 077; test ! -e /root/logique-preparations/$SOURCES_LOGIQUE_SHA/commence; mkdir -p /root/logique-preparations/$SOURCES_LOGIQUE_SHA/source; tar -xf - -C /root/logique-preparations/$SOURCES_LOGIQUE_SHA/source"
           NIXPKGS_LOGIQUE=$(python3 -c 'import json; print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
-          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_LOGIQUE -p python3 --run 'python3 /root/logique-preparations/$GITHUB_SHA/source/scripts/logique-preparer.py $GITHUB_SHA'"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_LOGIQUE -p python3 --run 'python3 /root/logique-preparations/$SOURCES_LOGIQUE_SHA/source/scripts/logique-preparer.py $SOURCES_LOGIQUE_SHA'"
       - name: Nouvelle connexion et contrôles après construction
         run: |
           sh scripts/connect.sh sh -s < scripts/audit-logique.sh
           python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-avant.json"
-          sh scripts/connect.sh "cat /root/logique-preparations/$GITHUB_SHA/preparation.json" > "$RUNNER_TEMP/logique-preparation.json"
+          sh scripts/connect.sh "cat /root/logique-preparations/$SOURCES_LOGIQUE_SHA/preparation.json" > "$RUNNER_TEMP/logique-preparation.json"
       - uses: actions/upload-artifact@v4
         with:
-          name: logique-preparation-${{ github.sha }}
+          name: logique-preparation-${{ env.SOURCES_LOGIQUE_SHA }}
           path: ${{ runner.temp }}/logique-preparation.json
           retention-days: 30
           if-no-files-found: error
