@@ -82,6 +82,9 @@ Toute nouvelle évolution du système exige un nouvel audit et son propre plan.
 
 Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).
 Pour les accès, lire [ACCES.md](docs/ACCES.md).
+Pour le raccordement statique préparé de `logique.echos.systems`, lire
+[LOGIQUE.md](docs/LOGIQUE.md). Les candidats ACME/HTTPS sont distincts de la
+configuration courante ; leur présence ne signifie pas qu'ils sont activés.
 
 Une passerelle unique reste un point commun à tous les sites. Les validations,
 les comptes distincts et le retour arrière réduisent les risques ; ils ne

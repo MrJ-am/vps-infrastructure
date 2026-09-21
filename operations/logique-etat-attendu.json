@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-21T18:19:29Z",
+  "actif": "/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "demarrage": "/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
+  "entree": "{ imports = [ /etc/nixos/vps-infrastructure/d3699cd829bf996540a53085fe2c0539d9552ebc/hosts/hostinger/configuration.nix ]; }",
+  "empreinteEntree": "23a152db353792a6f8654656094a32a56313b01dc9d791ceb8c28247c06db4d3",
+  "matheval": "0c2758f5a1df6821903a684e9a3c41f600acf02c",
+  "vision": "151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+  "cheminMatheval": "/srv/matheval/releases/0c2758f5a1df6821903a684e9a3c41f600acf02c",
+  "cheminVision": "/srv/vision/releases/151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+  "certificatLogiquePresent": false,
+  "publicationLogiquePresente": false,
+  "audit": 35637628338,
+  "commitAudit": "ba66dfcf939f299f9a296658aeaab938366b719e"
+}
