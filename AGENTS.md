@@ -48,3 +48,12 @@
   nouvelle opération, mais préparer un nouvel audit et un retour adapté.
 - Après les contrôles pertinents, commit en français et push sur une branche
   dédiée. La publication d'applications et celle de l'infrastructure sont séparées.
+
+## Style MrJ.am
+
+- Lire `docs/STYLE-MRJAM.md` pour le périmètre, l’état réel et la coordination. La préparation des branches ne constitue ni une migration d’interface terminée ni un déploiement.
+- La bibliothèque ElmUI française appartient au dépôt public `MrJ-am/style-mrjam`, pas à l’infrastructure. Mutualiser les composants à la compilation, à une révision exacte. Les variantes de boutons sont sémantiques ; ne pas recréer leur décoration dans chaque application.
+- Garder le code lisible, compact et français lorsque les noms sont contrôlés. Avant les renommages de code existant, compiler une référence ; renommer un seul symbole avec tous ses usages, compiler et vérifier les contrats avant le suivant. Ne pas renommer aveuglément les protocoles ni les données persistantes.
+- Une adoption du style doit reconstruire et redéployer tous les consommateurs. Tester tous les artefacts avant toute activation, conserver les versions antérieures et vérifier les versions effectivement servies. Le dépôt public ne reçoit aucun secret de publication.
+- Signature reste la source du logo et de la signature à révision précise. Toute utilisation du logo est strictement réservée ; cette mention doit figurer clairement dans le README public de style. Conserver le texte sélectionnable `MrJ.am`.
+- Ne pas rejouer une migration NixOS, modifier PostgreSQL ou restaurer des données pour un changement de style. Confirmer les cibles réelles, y compris l’hébergement statique d’Apprendre à démontrer, avant de mettre en place l’orchestration.
