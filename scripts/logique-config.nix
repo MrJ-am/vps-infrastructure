@@ -23,7 +23,9 @@ in {
         "vision-migrate" "mrj-auth" "postgresqlBackup-matheval" "postgresqlBackup-vision" ];
     sauvegardes = map (nom: c.systemd.units."postgresqlBackup-${nom}.timer".text)
       [ "matheval" "vision" ];
-    sites = map (nom: c.services.nginx.virtualHosts.${nom})
+    # Nginx dérive ces deux chemins depuis les options ACME comparées ici.
+    sites = map (nom: builtins.removeAttrs c.services.nginx.virtualHosts.${nom}
+      [ "sslCertificate" "sslCertificateKey" ])
       [ "principiipetit.io" "www.principiipetit.io" "vision.mrj.am" ];
   };
 }

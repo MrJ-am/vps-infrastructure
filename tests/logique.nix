@@ -19,7 +19,9 @@ let
     bases = c.services.postgresqlBackup.databases;
     sudo = c.security.sudo.extraRules;
     cles = c.users.users.root.openssh.authorizedKeys.keys;
-    sites = map (nom: c.services.nginx.virtualHosts.${nom})
+    # Nginx dérive ces deux chemins depuis ACME ; les options brutes sont indéfinies.
+    sites = map (nom: builtins.removeAttrs c.services.nginx.virtualHosts.${nom}
+      [ "sslCertificate" "sslCertificateKey" ])
       [ "principiipetit.io" "www.principiipetit.io" "vision.mrj.am" ];
   };
 in
