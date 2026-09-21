@@ -1,0 +1,51 @@
+{
+  "execution": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/35659924636",
+  "commitDeclencheur": "d659dde6034056dac2be73519804ce2ee33cb436",
+  "artefact": 10667611152,
+  "sha256Archive": "e7a81a089c99d6baf5bc29bc0eb7ab7ce9db8aa12a340f97d26981bce0d6b306",
+  "controleFinal": "2026-09-21T21:57:12Z",
+  "controlesHTTPAvant": 22,
+  "controlesHTTPApres": 22,
+  "rapport": {
+    "revision": "e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae",
+    "avant": {
+      "date": "2026-09-21T21:56:08Z",
+      "actif": "/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "demarrage": "/nix/store/ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
+      "entree": "{ imports = [ /etc/nixos/vps-infrastructure/d3699cd829bf996540a53085fe2c0539d9552ebc/hosts/hostinger/configuration.nix ]; }",
+      "empreinteEntree": "23a152db353792a6f8654656094a32a56313b01dc9d791ceb8c28247c06db4d3",
+      "matheval": "0c2758f5a1df6821903a684e9a3c41f600acf02c",
+      "vision": "151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+      "cheminMatheval": "/srv/matheval/releases/0c2758f5a1df6821903a684e9a3c41f600acf02c",
+      "cheminVision": "/srv/vision/releases/151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+      "certificatLogiquePresent": false,
+      "publicationLogiquePresente": false
+    },
+    "candidats": {
+      "acme": {
+        "systeme": "/nix/store/wvh5hif7p6z5b8cvlyf4pmp96n2fnmq9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+        "configuration": "/etc/nixos/vps-infrastructure/e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae/hosts/hostinger/logique-acme.nix",
+        "nginx": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx -c '/nix/store/9jnyjj0saq0zq2b54g06y40vlvrp8kar-nginx.conf'",
+        "nginxTeste": true
+      },
+      "https": {
+        "systeme": "/nix/store/91jr4718xb1m0mbybzfbj14wa9p3dncr-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+        "configuration": "/etc/nixos/vps-infrastructure/e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae/hosts/hostinger/logique.nix",
+        "nginx": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx -c '/nix/store/q4zjxznqgb2vdnxz2jckajyfmc71y42b-nginx.conf'",
+        "nginxTeste": false
+      }
+    },
+    "retour": "/root/logique-preparations/e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae/retour.sh",
+    "empreinteRetour": "aa7e0b61b96c48eb5f68c6c15e19a2471ef86e5fbf26a14f3bf54962a5b5cb53",
+    "retourArme": false,
+    "active": false,
+    "publicationAutorisee": false,
+    "reste": [
+      "Essai ACME avec timer indépendant",
+      "nginx -t HTTPS avec le nouveau certificat réel",
+      "Validation typographique et de tous les artefacts coordonnés",
+      "Workflow distinct d'activation et de retour applicatif"
+    ]
+  }
+}

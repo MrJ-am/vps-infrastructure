@@ -1,6 +1,6 @@
 # État attesté au 21 septembre 2026
 
-## Logique : reprise de la préparation, aucune activation
+## Logique : générations construites, aucune activation
 
 Le site `logique.echos.systems` est préparé sur `preparation/logique-vps`.
 L'[audit nº 35637628338](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35637628338),
@@ -11,11 +11,22 @@ publication au chemin alors contrôlé (`/srv/apprendre-a-demontrer/current`)
 n'était présent ; le nouveau précontrôle examine aussi `/srv/logique/current`.
 
 Le nouveau lot ajoute les candidats ACME puis HTTPS, les contrôles statiques
-et une préparation manuelle distincte de toute activation.
+et une préparation distincte de toute activation, intégrée sur `main`.
 L'archive applicative `10652278750`, révision `52a3d4b7714608e09561728508818525b53aacda`,
 a été vérifiée : ZIP et 75 fichiers `dist` conformes. Les réserves
 typographiques et de publication restent à lever dans le mécanisme collectif.
-Le workflow de construction VPS n'a pas été exécuté pendant cette reprise.
+La [construction VPS nº 35659924636](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35659924636)
+a réussi le 21 septembre à 21:57 UTC. Le commit opérateur
+`d659dde6034056dac2be73519804ce2ee33cb436` a construit les sources testées
+`e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae` avec le Nixpkgs déjà installé.
+Les invariants sont identiques, Nginx ACME passe son test réel, les six services
+et les deux timers restent actifs. Les 22 contrôles HTTP/TLS réussissent avant
+et après, avec une nouvelle connexion du runner.
+Le relevé final conserve exactement génération, profil, entrée et versions
+Matheval/Vision ; certificat et publication Logique sont toujours absents.
+Le rapport est conservé dans `operations/logique-construction.json` et sur
+le VPS. Le retour est écrit et vérifié syntaxiquement, sans timer armé.
+HTTPS attend son vrai certificat ; aucune bascule n'est effectuée.
 La [CI nº 35656506154](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35656506154)
 a réussi au commit `b722165485e9b3b325b150f05ae7da5919a57984` : 55 tests,
 Nginx réel, évaluations NixOS complètes des deux phases et des invariants,

@@ -5,7 +5,7 @@
 La cible retenue par le propriétaire est **https://logique.echos.systems** sur
 le VPS NixOS `187.77.95.158`. Les indications antérieures sur ChatGPT Sites
 dans la documentation applicative ne décrivent plus la cible souhaitée.
-La préparation se trouve sur `preparation/logique-vps`.
+La préparation a été intégrée sur `main` depuis `preparation/logique-vps`.
 
 Le site est statique : Nginx lit `/srv/logique/current`, sans nouveau backend,
 port local, compte SQL ou base. Les routes pédagogiques utilisent `#/…` ;
@@ -85,7 +85,30 @@ La [CI nº 35656506154](https://github.com/MrJ-am/vps-infrastructure/actions/run
 valide ce lot au commit `b722165485e9b3b325b150f05ae7da5919a57984` :
 55 tests, routage Nginx réel, évaluations des systèmes ACME/HTTPS,
 comparaison des invariants et tests PostgreSQL 17 avec restaurations isolées.
-La génération complète n'a pas encore été construite sur le VPS.
+Les générations complètes ont ensuite été construites sur le VPS.
+
+## Construction attestée le 21 septembre à 21:57 UTC
+
+L'[exécution nº 35659924636](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35659924636)
+a réussi au commit opérateur `d659dde6034056dac2be73519804ce2ee33cb436`,
+sur les sources figées `e9a4ed68fa71a072ff0815d28e7e3ffd3e9517ae`.
+Le rapport complet figure dans `operations/logique-construction.json`.
+
+| Candidat construit | Génération NixOS |
+|---|---|
+| ACME, test Nginx réussi | `/nix/store/wvh5hif7p6z5b8cvlyf4pmp96n2fnmq9-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| HTTPS, test Nginx en attente du certificat | `/nix/store/91jr4718xb1m0mbybzfbj14wa9p3dncr-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+
+Les 22 contrôles HTTP/TLS réussissent avant et après la construction.
+Le relevé final à 21:57:12 UTC conserve la génération active et de démarrage
+`ppx3gxdx4rw36wah3wdz9lfdkl7z72ln-…`, l'entrée NixOS et les versions
+Matheval/Vision. Les six services et les deux timers sont actifs ; aucun
+certificat ni lien de publication Logique n'est apparu.
+Le script de retour n'a pas été armé ni exécuté. La demande est consommée :
+ne pas relancer la même révision, dont les preuves sont conservées.
+
+L'artefact de rapport est `10667611152`, SHA-256 ZIP
+`e7a81a089c99d6baf5bc29bc0eb7ab7ce9db8aa12a340f97d26981bce0d6b306`.
 
 ## Construction sur le VPS, sans activation
 
