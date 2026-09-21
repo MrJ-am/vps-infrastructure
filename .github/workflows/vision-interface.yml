@@ -28,7 +28,7 @@ jobs:
           python3 - <<'PY'
           import json, os, re, urllib.request
           d = json.load(open('operations/vision-interface.json'))
-          assert d['operation'] in ('preparer', 'activer')
+          assert d['operation'] in ('preparer', 'controler', 'activer')
           assert re.fullmatch('[0-9a-f]{40}', d['revision'])
           url = 'https://api.github.com/repos/' + os.environ['GITHUB_REPOSITORY'] + '/actions/workflows/check.yml/runs?head_sha=' + d['revision']
           req = urllib.request.Request(url, headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'], 'Accept': 'application/vnd.github+json'})
@@ -51,6 +51,9 @@ jobs:
           printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-interface-cle"
           ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-interface-cle" >/dev/null
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-interface-cle" >> "$GITHUB_ENV"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation == 'activer'
+        run: |
           python3 -m pip install playwright==1.57.0
           python3 -m playwright install --with-deps chromium
       - name: Préparer les sources, l’artefact et le candidat système
@@ -62,6 +65,15 @@ jobs:
           git archive --format=tar.gz HEAD > "$RUNNER_TEMP/vision-interface-source.tar.gz"
           sh scripts/connect.sh "umask 077; mkdir -p /root/vision-interface-operations/$REVISION/source; tar -xzf - -C /root/vision-interface-operations/$REVISION/source" < "$RUNNER_TEMP/vision-interface-source.tar.gz"
           sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-interface-operations/$REVISION/source/scripts/vision-interface-deployer.py preparer $REVISION'"
+      - name: Lire la simulation complète du candidat déjà construit
+        if: steps.demande.outputs.operation == 'controler'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          set -euo pipefail
+          mkdir -p rapports-vision
+          sh scripts/connect.sh "/root/vision-interface-operations/$REVISION/result/bin/switch-to-configuration dry-activate 2>&1" | tee rapports-vision/simulation-complete.txt
       - name: Activer l’interface avec retour autonome
         if: steps.demande.outputs.operation == 'activer'
         working-directory: candidat
