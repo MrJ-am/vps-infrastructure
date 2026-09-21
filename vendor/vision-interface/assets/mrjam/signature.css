@@ -1,0 +1,7 @@
+/* Generated from the current TeX composition; no JavaScript required. */
+@font-face{font-family:MrJamSignature;src:url("MrJamSignature.woff2") format("woff2");font-display:block}
+@font-face{font-family:EchoPoint;src:url("EchoPoint.woff2") format("woff2");font-display:block}
+@font-palette-values --echo-green{font-family:MrJamSignature,EchoPoint;base-palette:1}
+.mrjam,.echo-point{font-palette:var(--signature-palette,normal)}
+.mrjam{font-family:MrJamSignature,serif;font-size:var(--signature-size,100px);font-weight:400;font-style:normal;font-synthesis:none;text-rendering:geometricPrecision;font-kerning:none;font-variant-ligatures:none;letter-spacing:0;word-spacing:0;text-transform:none;white-space:nowrap;direction:ltr;unicode-bidi:isolate;display:inline-block;line-height:1.183;vertical-align:baseline;color:#000;user-select:text;-webkit-user-select:text}
+.echo-point{line-height:.12;vertical-align:middle;font-family:EchoPoint,serif;font-weight:400;font-style:normal;font-synthesis:none}

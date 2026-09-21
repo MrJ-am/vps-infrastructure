@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vision API</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 48rem; margin: 3rem auto; padding: 0 1.25rem; line-height: 1.55; }
+    code, pre { font-family: ui-monospace, monospace; }
+    pre { padding: 1rem; overflow-x: auto; background: #7772; border-radius: .5rem; }
+    a { color: #087ea4; }
+  </style>
+</head>
+<body>
+  <h1>Vision</h1>
+  <p>Serveur HTTPS et MCP du projet Vision. Les routes sous
+     <code>/api/v1/</code> ainsi que <code>/mcp</code> exigent un identifiant et
+     un mot de passe HTTP Basic.</p>
+  <p>La documentation peut etre lue sans authentification ; elle ne donne acces
+     a aucune donnee. PostgreSQL n'est jamais expose sur Internet.</p>
+
+  <h2>Contrat machine</h2>
+  <p><a href="/openapi.json">Schema OpenAPI 3.1 (JSON)</a></p>
+
+  <h2>MCP</h2>
+  <p><code>POST /mcp</code> fournit un transport Streamable HTTP stateless. Il
+     permet de rechercher et enregistrer des fiches de memoire, de selectionner
+     les fiches arrivees a echeance et de conserver des observations de
+     revision. Une tentative de rappel effectivement evaluee est planifiee par
+     FSRS-6, le modele utilise par Anki ; une observation ambigue ou contextuelle
+     peut etre conservee sans modifier l'echeance.</p>
+  <p>Les donnees privees et les ecritures restent authentifiees. La connexion
+     directe depuis le mode Plugins de ChatGPT necessite OAuth 2.1 ou un tunnel
+     MCP securise ; l'endpoint ne doit pas etre rendu anonyme pour contourner
+     cette exigence.</p>
+
+  <h2>Test Mobile Live isole</h2>
+  <p><code>GET /api/v1/mobile-live-test</code> utilise un couple d'identifiants
+     jetable distinct de celui de l'API. Cette route renvoie uniquement une
+     preuve fixe de succes et ne peut lire ni modifier aucune donnee Vision.</p>
+  <p><a href="/mobile-live-test-openapi.json">Schema OpenAPI 3.1 du test</a></p>
+  <pre><code>curl --fail --user 'identifiant-test:mot-de-passe-test' \
+  https://vision.mrj.am/api/v1/mobile-live-test</code></pre>
+
+  <h2>Exemple</h2>
+  <pre><code>curl --fail --user 'identifiant:mot-de-passe' \
+  https://vision.mrj.am/api/v1/health</code></pre>
+
+  <h2>Routes initiales</h2>
+  <ul>
+    <li><code>GET /api/v1/health</code> : etat et version ;</li>
+    <li><code>GET /api/v1/capabilities</code> : operations disponibles ;</li>
+    <li><code>POST /api/v1/hello</code> : test sans ecriture, repond <code>World</code>.</li>
+  </ul>
+
+  <p><a href="/privacy">Confidentialite</a></p>
+</body>
+</html>

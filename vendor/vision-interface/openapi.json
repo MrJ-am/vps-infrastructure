@@ -1,0 +1,160 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vision API",
+    "version": "1.0.0",
+    "description": "Authenticated HTTPS API for the Vision project. Version 1 exposes operational and integration endpoints; future business resources will be added under /api/v1 without exposing PostgreSQL directly.",
+    "license": { "name": "Private API" },
+    "x-privacy-policy": "https://vision.mrj.am/privacy"
+  },
+  "servers": [
+    {
+      "url": "https://vision.mrj.am",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    { "basicAuth": [] }
+  ],
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "operationId": "getVisionHealth",
+        "summary": "Check the Vision API",
+        "description": "Returns the service status and deployed API version. Use this before another operation when availability is uncertain.",
+        "responses": {
+          "200": {
+            "description": "The API is available.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Health" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/v1/capabilities": {
+      "get": {
+        "operationId": "getVisionCapabilities",
+        "summary": "List the available Vision operations",
+        "description": "Returns the stable operation identifiers currently implemented by this API.",
+        "responses": {
+          "200": {
+            "description": "Available operations.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Capabilities" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/api/v1/hello": {
+      "post": {
+        "operationId": "sayHello",
+        "summary": "Test the authenticated integration",
+        "description": "Performs no write and stores no data. It returns World and is intended to verify a ChatGPT action or another API client.",
+        "x-openai-isConsequential": false,
+        "responses": {
+          "200": {
+            "description": "The authenticated integration works.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HelloResponse" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "415": {
+            "description": "This operation does not accept a request body.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Error" }
+              }
+            }
+          },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "Dedicated Vision identifier and password, sent only over HTTPS."
+      }
+    },
+    "schemas": {
+      "Health": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["status", "version"],
+        "properties": {
+          "status": { "type": "string", "const": "ok" },
+          "version": { "type": "string", "examples": ["1.0.0"] }
+        }
+      },
+      "Capabilities": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["api", "version", "operations"],
+        "properties": {
+          "api": { "type": "string", "const": "vision" },
+          "version": { "type": "string" },
+          "operations": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      },
+      "HelloResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["message"],
+        "properties": {
+          "message": { "type": "string", "const": "World" }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["error", "message"],
+        "properties": {
+          "error": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Missing or invalid credentials.",
+        "headers": {
+          "WWW-Authenticate": {
+            "schema": { "type": "string" }
+          }
+        },
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "Too many requests from the same source.",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Error" }
+          }
+        }
+      }
+    }
+  }
+}
