@@ -16,6 +16,10 @@ L'archive applicative `10652278750`, révision `52a3d4b7714608e09561728508818525
 a été vérifiée : ZIP et 75 fichiers `dist` conformes. Les réserves
 typographiques et de publication restent à lever dans le mécanisme collectif.
 Le workflow de construction VPS n'a pas été exécuté pendant cette reprise.
+La [CI nº 35656506154](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35656506154)
+a réussi au commit `b722165485e9b3b325b150f05ae7da5919a57984` : 55 tests,
+Nginx réel, évaluations NixOS complètes des deux phases et des invariants,
+ainsi que PostgreSQL 17 et ses restaurations isolées.
 Lire [LOGIQUE.md](LOGIQUE.md) pour les références, les preuves et les étapes restantes.
 
 ## Vision web et sessions mrj.am
