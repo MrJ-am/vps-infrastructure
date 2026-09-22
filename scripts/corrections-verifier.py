@@ -9,6 +9,40 @@ from playwright.sync_api import sync_playwright, expect
 ORIGINE='https://logique.echos.systems'
 
 
+def verifier_videos(page):
+    """Constater les droits du fournisseur réel sans simuler son lecteur."""
+    videos=page.evaluate("""() => window.courseData.tracks.flatMap(t => t.lessons
+      .filter(l => l.video.provider === 'vimeo')
+      .map(l => ({parcours:t.id,lecon:l.id,video:l.video.id})))""")
+    vus=set();resultats=[]
+    for video in videos:
+        if video['video'] in vus:continue
+        vus.add(video['video'])
+        page.goto(ORIGINE+'/#/'+video['parcours']+'/'+video['lecon']+'/video')
+        expect(page.locator('course-video iframe')).to_have_count(0)
+        page.locator('course-video .video-play').click()
+        page.wait_for_function("""() => {const v=document.querySelector('course-video');
+          return v && !v.hasAttribute('aria-busy')}""",timeout=25000)
+        duree=page.evaluate("""async () => {
+          try {return await Promise.race([
+            document.querySelector('course-video').player?.getDuration(),
+            new Promise(r=>setTimeout(()=>r(null),15000))]);}
+          catch {return null;}
+        }""")
+        disponible=isinstance(duree,(float,int)) and duree>0
+        if disponible:
+            page.get_by_role('button',name='Arrêter la vidéo',exact=True).click()
+            expect(page.locator('course-video iframe')).to_have_count(0)
+        else:
+            # Les droits Vimeo ne sont pas détenus par Nginx : conserver le
+            # diagnostic et exiger le secours prévu, sans masquer cette limite.
+            expect(page.locator('course-video .video-fallback a')).to_be_visible()
+        resultats.append({**video,'lectureIntegreeDisponible':disponible})
+    Path('rapports-corrections').mkdir(exist_ok=True)
+    Path('rapports-corrections/videos-reelles.json').write_text(json.dumps(resultats,ensure_ascii=False,indent=2)+'\n')
+    print('Lecteurs Vimeo réels disponibles : '+str(sum(v['lectureIntegreeDisponible'] for v in resultats))+'/'+str(len(resultats)))
+
+
 def verifier():
     source=Path('artefacts-controles/logique')
     attendu=json.loads((source/'manifeste-preparation.json').read_text())
@@ -42,6 +76,7 @@ def verifier():
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth+1')
         assert not erreurs, 'Erreur JavaScript'
         assert not tiers, 'Contact tiers avant activation'
+        verifier_videos(page)
         navigateur.close()
     print('Logique : TLS réel, artefact exact, anciennes redirections récupérées, domaines inconnus refusés et quatre formats vérifiés.')
 

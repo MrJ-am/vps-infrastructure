@@ -1,0 +1,38 @@
+{
+  "logique": {
+    "application": "615439c841db1934ffaddc1dee64c85ff6c56cf2",
+    "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+    "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+    "sha256": "f48e3af59940957732520ba76eb9528bada6abc6284671837e2fd59ca712cf27",
+    "ci": {
+      "execution": 35716169678,
+      "revision": "615439c841db1934ffaddc1dee64c85ff6c56cf2",
+      "conclusion": "success",
+      "artefact": 10689610483
+    }
+  },
+  "vision": {
+    "application": "dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+    "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+    "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+    "sha256": "5477f7830c8cd1a36175f217531f8e1358d6ac02cc57ae2872b3631eaa315324",
+    "ci": {
+      "execution": 35715726024,
+      "revision": "dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+      "conclusion": "success",
+      "artefact": 10688579729
+    }
+  },
+  "matheval": {
+    "application": "ebae2c9d358e4b76d120b85e12afb4193cc37967",
+    "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+    "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+    "ci": {
+      "execution": 35718904657,
+      "revision": "ebae2c9d358e4b76d120b85e12afb4193cc37967",
+      "conclusion": "success",
+      "artefact": 10689619336,
+      "sha256Zip": "3c88a7dadd8ce88b7e5c9cf11c737fa804b8153dbac7b215d61c607b2a54dde0"
+    }
+  }
+}
