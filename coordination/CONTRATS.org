@@ -1,0 +1,51 @@
+#+TITLE: Contrats communs en vigueur
+#+OPTIONS: toc:nil
+
+Synthèse durable : lire à chaque reprise ; les preuves détaillées restent dans
+les documents liés. Ce fichier décrit les responsabilités, pas l'état du serveur.
+Tout changement de fond exige un message dans REGISTRE.org.
+
+* Coordination
+:PROPERTIES:
+:CUSTOM_ID: coordination
+:END:
+- Source unique : MrJ-am/vps-infrastructure, branche main, coordination/REGISTRE.org.
+- Chaque projet lit les nouveautés à la reprise, après interruption ou compaction,
+  avant de modifier un contrat partagé, avant publication et à la clôture du travail.
+- Informer avant tout changement ayant un impact extérieur ; après exécution,
+  publier le résultat avec révision et preuves. Les demandes ne sont pas des faits.
+- Une lecture n'est ni une validation technique ni une autorisation de déployer.
+- Accusés par destinataire et par contenu exact ; ne jamais acquitter pour un autre
+  projet. Un agent qui installe les consignes ne prouve pas que les autres les ont lues.
+- Le registre privé reste accessible par les outils GitHub autorisés. Ne pas le
+  recopier dans les dépôts publics ; aucun secret ou contenu métier dans les messages.
+
+* Infrastructure et applications
+:PROPERTIES:
+:CUSTOM_ID: infrastructure
+:END:
+- VPS possède NixOS, Nginx, HTTPS, domaines/ports, comptes système administratifs,
+  instance PostgreSQL, bases/rôles/accès et sauvegardes locales.
+- Les applications possèdent leur code, données, schéma, migrations applicatives,
+  publications et exports chiffrés. Un module proposé est intégré par VPS à une
+  révision et une empreinte explicites ; aucune reconstruction système applicative.
+- Depuis Work, les opérations distantes passent exclusivement par GitHub Actions.
+  Ne pas tenter SSH depuis Work ni demander une clé pour contourner cette limite.
+- Contrats détaillés : [[file:../docs/ACCES.md][accès]], [[file:../docs/POSTGRESQL.md][PostgreSQL]],
+  [[file:../docs/AJOUTER-UN-PROJET.md][intégration]]. État daté et preuves : [[file:../docs/ETAT.md][état VPS]].
+- Un nouveau changement système exige l'état réellement actif, ses contrôles et
+  son retour arrière. Une ancienne préparation peut être périmée après une autre bascule.
+
+* Style et signature
+:PROPERTIES:
+:CUSTOM_ID: style
+:END:
+- style-mrjam fournit les composants ElmUI communs à API française compacte.
+  Les variantes sont sémantiques ; préserver l'identité existante.
+- Chaque consommateur fige une révision complète à la compilation. Une mise à jour
+  coordonnée reconstruit les consommateurs concernés, valide leurs artefacts avant
+  activation et conserve un retour applicatif ; elle ne restaure pas les bases.
+- Signature est la source du logo et des fontes, à révision exacte. Leur utilisation
+  est strictement réservée ; conserver le texte sélectionnable « MrJ.am ».
+- Les états de déploiement sont propres à chaque application. Une CI réussie ou un
+  commit sur main ne prouve pas une publication sur le VPS.

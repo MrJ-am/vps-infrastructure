@@ -1,0 +1,68 @@
+name: Vérifier et entretenir la coordination
+on:
+  push:
+    paths:
+      - 'coordination/**'
+      - 'scripts/coordination.py'
+      - 'tests/test_coordination.py'
+      - '.github/workflows/coordination.yml'
+  pull_request:
+    paths:
+      - 'coordination/**'
+      - 'scripts/coordination.py'
+      - 'tests/test_coordination.py'
+      - '.github/workflows/coordination.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: coordination-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Vérifier le registre et ses transitions
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          python3 -m unittest discover -s tests -p 'test_coordination.py'
+          if [ -n "$BASE" ] && [ "$BASE" != '0000000000000000000000000000000000000000' ]; then
+            python3 scripts/coordination.py verifier --base "$BASE"
+          else
+            python3 scripts/coordination.py verifier
+          fi
+  entretenir:
+    needs: verifier
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Archiver uniquement les échanges terminés
+        run: |
+          set -euo pipefail
+          # Repartir du dernier main, y compris si une autre écriture l'a avancé.
+          git fetch origin main
+          git checkout -B entretien-coordination origin/main
+          python3 scripts/coordination.py verifier
+          python3 scripts/coordination.py archiver --appliquer
+          python3 scripts/coordination.py verifier --base origin/main
+          git add coordination/REGISTRE.org coordination/archives
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Archiver les échanges intégralement traités'
+          # Sans force : une écriture concurrente fait échouer ce push sans perte.
+          # La prochaine mise à jour ou exécution manuelle reprendra l'entretien.
+          git push origin HEAD:main

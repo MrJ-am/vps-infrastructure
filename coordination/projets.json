@@ -1,0 +1,8 @@
+{
+  "vps": {"depot": "MrJ-am/vps-infrastructure", "branche": "main"},
+  "memoire": {"depot": "MrJ-am/M-moire", "branche": "master"},
+  "vision": {"depot": "MrJ-am/vision", "branche": "main"},
+  "logique": {"depot": "MrJ-am/apprendre-a-demontrer", "branche": "main"},
+  "style": {"depot": "MrJ-am/style-mrjam", "branche": "main"},
+  "signature": {"depot": "MrJ-am/Signature", "branche": "main"}
+}
