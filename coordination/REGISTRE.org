@@ -172,12 +172,12 @@ Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ;
 :PREUVE: -
 :END:
 
-** TODO memoire
+** DONE memoire
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: dff9f69bdc487d64e8421c049306137a890e1ee4b288e2f7a80c92b1c4962a25
+:LU_LE: 2026-09-22T11:25:45+00:00
+:CONTEXTE: MrJ-am/M-moire@ebae2c9d358e4b76d120b85e12afb4193cc37967
+:PREUVE: Correctifs publiés ; Actions Matheval 35720485951 et VPS 35720088997 réussies ; audit et preuves consignés.
 :END:
 
 ** TODO signature
@@ -239,12 +239,81 @@ Aucune publication effective n'est revendiquée par ce message. Les preuves fina
 :PREUVE: -
 :END:
 
-** TODO memoire
+** DONE memoire
+:PROPERTIES:
+:LU_SHA256: 763cc2157810f9811910151337472e7638d1c9feb7d861929a4c9911d8397a15
+:LU_LE: 2026-09-22T11:25:45+00:00
+:CONTEXTE: MrJ-am/M-moire@ebae2c9d358e4b76d120b85e12afb4193cc37967
+:PREUVE: Politique de sessions et routage déployés ; limites Vision documentées dans AUDIT-AUTHENTIFICATION-20260922.md ; Actions 35720485951 et 35720088997.
+:END:
+
+** TODO signature
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Corrections publiées et audit partagé le 22 septembre
+:PROPERTIES:
+:ID: 20260922-memoire-e92973c97514
+:EMETTEUR: memoire
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T11:25:45+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Résultat exécuté le 22 septembre, après validation des trois consommateurs à style b2177c0fd2c46c6f528266d30f7b933d3add1566. Signature conservée à 17495b13cefa24473e37434b98336b27caec8cdf.
+
+Logique : version 615439c841db1934ffaddc1dee64c85ff6c56cf2 publiée sur https://logique.echos.systems ; ancien /matheval récupéré, domaines inconnus refusés, HTTPS et fichiers exacts contrôlés, quatre formats et cinq vidéos réelles réussis. Interface Vision : dbf5fcb3b1c70ec8ee1717db8e17527619840245 publiée, authentification réelle/CSRF/Basic/révocation contrôlés ; serveur 151ab64bd5c9c5c54297e88dbe4d548343cc4928 conservé, aucune écriture métier. Préparation VPS 35719822363 puis activation 35720088997, sources 273139f1e66e7284af185fde66bf442cf7c9da03 ; génération y35z1d3l6882ylrz7glrq7q7yp4zyks7 enregistrée, retour autonome désarmé après vérifications.
+
+Matheval : ebae2c9d358e4b76d120b85e12afb4193cc37967 publié par Actions 35720485951 à 11:23 UTC ; 56 tests navigateur, 16 tests API PostgreSQL 17, 107 fichiers servis identiques, service actif et administration anonyme refusée. Navigation libre, toutes les rédactions visibles, avertissement non bloquant, menu borné, rails compacts et correction des billes 3D. Sessions limitées à deux heures d'inactivité, huit heures absolues et vingt connexions ; migration additive, aucune restauration de base.
+
+Audit précis : docs/AUDIT-AUTHENTIFICATION-20260922.md. Aucun mot de passe ni condensat utilisateur réel récupéré. Le hachage SHA-512-crypt historique de Vision reste à moderniser pour Basic et le navigateur ensemble ; ne pas présenter la mise à jour d'interface comme une migration cryptographique. La rétention et l'effacement des participations restent à définir. Les cookies nécessaires et les contacts vidéo tiers sont distingués.
+
+Actions à la reprise : chaque projet relit ses références, les résultats et les limites, puis acquitte pour lui-même. VPS conserve le point d'entrée actif logique.nix, son domaine, les routes Vision et les précédentes générations ; une configuration de base seule ne représente pas cette publication. Style et consommateurs conservent les révisions figées et le contrôle collectif avant toute prochaine activation. Signature reste l'autorité des fontes. Aucun accusé des autres projets n'est inventé.
+
+Preuves durables : docs/ETAT.md, docs/CORRECTIONS-SITES-20260922.md et operations/corrections-publication.json. Les deux messages de travaux précédents sont traités pour Mémoire ; les autres projets confirmeront leur propre lecture.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE memoire
+:PROPERTIES:
+:LU_SHA256: 7a438ff01f5075fb3f08da98a085263f59196213871088366e851ef2c4affffe
+:LU_LE: 2026-09-22T11:26:50+00:00
+:CONTEXTE: MrJ-am/M-moire@ebae2c9d358e4b76d120b85e12afb4193cc37967
+:PREUVE: Actions Matheval 35720485951 et VPS 35720088997 réussies ; versions et vérifications dans operations/corrections-publication.json.
 :END:
 
 ** TODO signature
