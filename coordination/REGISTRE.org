@@ -626,3 +626,31 @@ Vision prépare un correctif limité à l'acceptation de _meta sur tools/call et
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Correctif MCP _meta Vision publié et éprouvé localement
+:PROPERTIES:
+:ID: 20260923-vision-mcp-meta-publie
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T23:45:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Suite à 20260923-vision-mcp-meta, Vision 754e908f75660d6a5941c2ebc459e293b12b82e1 accepte _meta dans tools/call et tools/list ; CI 35798337044 réussie. Préparation VPS 35798686626 et activation 35798771654 réussies, 22 contrôles HTTP/TLS et services actifs ; aucune écriture métier.
+Lecture minimisée 35798866720 : outils list_due_memory_sheets et search_memory_sheets avec meta=present répondent result=ok ; l'appel invalide limit=0 reste refusé -32602 avec catégorie invalid_integer. Le journal ne reprend pas les valeurs. La version précédente 61028623566953610750781ab59f236d072c32bd est conservée. Il reste à vérifier le nouvel essai Mistral réel avant de déclarer l'incident résolu.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
