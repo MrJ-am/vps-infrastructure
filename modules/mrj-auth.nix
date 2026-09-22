@@ -3,6 +3,12 @@ let
   projects = config.infrastructure.gateway.projects;
   sites = lib.filter (site: site ? browserAuth && site.browserAuth) (builtins.attrValues projects);
   python = pkgs.python3.withPackages (p: [ p.passlib ]);
+  source = pkgs.runCommand "mrj-auth-source" {} ''
+    mkdir -p "$out"
+    cp ${../services/mrj-auth/server.py} "$out/server.py"
+    cp ${../services/mrj-auth/mcp.html} "$out/mcp.html"
+    cp ${../services/mrj-auth/mcp.js} "$out/mcp.js"
+  '';
   sessionHeaders = ''
     proxy_set_header Host $host;
     proxy_set_header X-Forwarded-Host $host;
@@ -38,7 +44,7 @@ in lib.mkIf (sites != []) {
       MRJ_AUTH_HOSTS = lib.concatStringsSep "," (map (site: site.domain) sites);
     };
     serviceConfig = {
-      ExecStart = "${python}/bin/python3 ${../services/mrj-auth}/server.py";
+      ExecStart = "${python}/bin/python3 ${source}/server.py";
       User = "mrj-auth"; Group = "mrj-auth";
       StateDirectory = "mrj-auth"; StateDirectoryMode = "0700";
       Restart = "on-failure"; RestartSec = 3; UMask = "0077";
