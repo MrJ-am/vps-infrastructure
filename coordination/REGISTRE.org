@@ -539,3 +539,33 @@ Actions : chaque projet relit le contrat journal-http et l'état avant publicati
 :PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 
+
+* Préparer le diagnostic applicatif MCP Vision
+:PROPERTIES:
+:ID: 20260923-vision-diagnostic-mcp
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-23T04:30:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire demande de rendre les prochains essais Mistral diagnostiquables avant de les refaire.
+Vision a validé en CI le code 61028623566953610750781ab59f236d072c32bd sur une branche de diagnostic : une ligne par appel JSON-RPC, méthode, outil connu, noms/types d'arguments, résultat et compteur local, sans valeurs métier ni secrets.
+Impact VPS ciblé : publication du seul serveur Vision depuis la version active contrôlée, sans modification NixOS, Nginx, authentification ni données ; vérifier que journald vision.service reçoit une trace MCP de lecture et une erreur -32602 attendue. Préparation puis activation séparées via Actions ; retour à la version précédente en cas d'échec.
+VPS et Vision doivent contrôler l'état réellement actif avant la publication et consigner révision, exécution et preuves. Aucun essai Mistral n'est demandé avant validation de la trace en production.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
