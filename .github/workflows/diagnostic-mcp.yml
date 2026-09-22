@@ -1,0 +1,47 @@
+name: Déployer les traces MCP Vision
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-diagnostic.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    environment: vps-production
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la demande
+        run: |
+          python3 - <<'PY'
+          import json
+          demande = json.load(open('operations/vision-diagnostic.json'))
+          assert demande == {'operation': 'preparer', 'revision': '61028623566953610750781ab59f236d072c32bd'} or demande == {'operation': 'activer', 'revision': '61028623566953610750781ab59f236d072c32bd'}
+          PY
+      - name: Préparer la clé administrative
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-diagnostic-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-diagnostic-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-diagnostic-cle" >> "$GITHUB_ENV"
+      - name: Préparer ou activer le serveur Vision
+        run: |
+          operation="$(python3 -c 'import json; print(json.load(open("operations/vision-diagnostic.json"))["operation"])')"
+          if [ "$operation" = preparer ]; then
+            git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-diagnostic-mcp/source; tar -xf - -C /root/vision-diagnostic-mcp/source"
+          fi
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-diagnostic-mcp/source/scripts/vision-diagnostic-mcp.py $operation'"
+          sh scripts/connect.sh "systemctl is-active vision nginx mrj-auth postgresql"
+          python3 scripts/probe.py
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-diagnostic-cle"
