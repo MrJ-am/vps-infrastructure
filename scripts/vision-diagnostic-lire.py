@@ -26,7 +26,8 @@ def lire(*arguments):
 
 
 motif = re.compile(r"^mcp_trace=\d+ (?:method=[a-z/]+ tool=[a-z_]+ "
-                   r"arguments=[a-zA-Z0-9_:,-]+ result=(?:-?\d+|ok|tool_error)"
+                   r"arguments=[a-zA-Z0-9_:,-]+ (?:meta=(?:present|absent) )?"
+                   r"result=(?:-?\d+|ok|tool_error)(?: reason=[a-z_]+)?"
                    r"|result=(?:parse_error|invalid_request))$")
 appels = [ligne for ligne in lire("-u", "vision.service") if motif.fullmatch(ligne)]
 print("Traces JSON-RPC :", len(appels))
