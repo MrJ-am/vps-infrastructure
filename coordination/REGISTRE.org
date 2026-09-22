@@ -569,3 +569,32 @@ VPS et Vision doivent contrôler l'état réellement actif avant la publication 
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Diagnostic MCP Vision activé et lecture contrôlée
+:PROPERTIES:
+:ID: 20260923-vision-diagnostic-actif
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T23:30:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Résultat du chantier 20260923-vision-diagnostic-mcp : serveur Vision 61028623566953610750781ab59f236d072c32bd actif après compilation préparatoire 35796785006 et activation 35797216419 ; la tentative précédente 35796885915 a échoué avant changement du service sur le verrou deploy.lock, corrigé et repris. Journal applicatif JSON-RPC vérifié en production sur tools/list et tools/call invalide : résultat -32602, forme des arguments présente, valeur sentinelle absente. Services et 22 contrôles HTTPS réussis, anciennes sources conservées.
+Le lecteur minimisé est disponible depuis le workflow diagnostic-mcp-lecture.yml ; vérification 35797654193 : deux traces applicatives et une entrée HTTP 401 sur la fenêtre de sonde. Il ne transmet ni IP, ni identifiant HTTP, ni corps. Pour un essai Mistral, mettre à jour operations/vision-diagnostic-lecture.json avec une fenêtre UTC de 15 minutes maximum après l'essai ; le workflow se déclenche sur main. Aucune fiche fictive n'a été créée.
+Le propriétaire peut refaire son essai Mistral. Vision analysera les traces nouvelles après sa confirmation ; aucun résultat Mistral n'est encore conclu.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
