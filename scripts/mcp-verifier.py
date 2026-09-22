@@ -62,8 +62,9 @@ def verifier():
             for largeur in (375,1280):
                 page.set_viewport_size({'width':largeur,'height':850})
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'),'Débordement'
+            cree=True
             page.get_by_role('button',name='Créer le token',exact=True).click()
-            expect(page.locator('#token')).to_be_visible();cree=True
+            expect(page.locator('#token')).to_be_visible()
             token=page.locator('#token').input_value()
             assert len(token)==43,'Token incorrect'
             bearer={'Authorization':'Bearer '+token}
