@@ -1,7 +1,8 @@
 # Journal HTTP et audit DDoS
 
-Candidat du 22 septembre 2026. Ne pas confondre cette préparation avec une
-activation : les références exécutées seront consignées dans ETAT.md.
+Activé et vérifié le 22 septembre 2026, [exécution 35792035605](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35792035605).
+Sources `4345e4ef59765c156aec937fd3a2d4f646f188eb`, CI `35791604558`, préparation
+`35791837515`. État, génération et preuves dans ETAT.md et operations/http-publication.json.
 
 ## Journal HTTP
 
@@ -67,9 +68,15 @@ La même zone par IP est partagée entre les routes protégées. Les refus sont
 applicatifs restent locaux ; les hôtes inconnus sont refusés. Cela réduit les
 abus de quelques clients, mais pas le débit cumulé d'un réseau distribué.
 Les limites de connexions HTTP ne comptent pas toutes les connexions TCP
-avant réception complète des en-têtes. Les délais, workers et SYN cookies
-réellement actifs doivent être relevés par `http-auditer.py` et les sources
-Nixpkgs employées ; une directive absente conserve la valeur par défaut Nginx.
+avant réception complète des en-têtes. L'audit réel `35791837515` a confirmé ces directives et `tcp_syncookies=1`.
+Aucun réglage explicite de workers, connexions générales ou délais ne figure
+dans le Nginx généré : valeurs par défaut, notamment un worker, 512 connexions
+par worker et délais de lecture d'en-têtes/corps de 60 s. Les connexions vers
+les serveurs applicatifs comptent aussi dans cette capacité.
+Avant ajout : 1 906 374 octets de fichiers sous /var/log/nginx et 17,8 Mio dans
+le journal système ; aucun access_log personnalisé dans la configuration.
+Le format d'accès implicite de Nginx n'offrait donc pas cette minimisation et
+ce budget dédiés.
 
 Aucun plafond global HTTP, bannissement automatique ni filtrage amont n'est
 établi par ces sources. Une saturation de bande passante ou du traitement TLS
@@ -101,3 +108,5 @@ Références : [journal Nginx](https://nginx.org/en/docs/http/ngx_http_log_modul
 [limitation de débit](https://nginx.org/en/docs/http/ngx_http_limit_req_module.html),
 [connexions](https://nginx.org/en/docs/http/ngx_http_limit_conn_module.html),
 [journald](https://www.freedesktop.org/software/systemd/man/252/journald.conf.html).
+
+Références complémentaires : [valeurs globales Nginx](https://nginx.org/en/docs/ngx_core_module.html), [délais HTTP](https://nginx.org/en/docs/http/ngx_http_core_module.html).

@@ -204,12 +204,12 @@ Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ;
 :PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: dff9f69bdc487d64e8421c049306137a890e1ee4b288e2f7a80c92b1c4962a25
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 
 * Consigner les exigences communes d’authentification et la bascule Logique
@@ -271,12 +271,12 @@ Aucune publication effective n'est revendiquée par ce message. Les preuves fina
 :PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 763cc2157810f9811910151337472e7638d1c9feb7d861929a4c9911d8397a15
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 
 * Corrections publiées et audit partagé le 22 septembre
@@ -340,42 +340,12 @@ Preuves durables : docs/ETAT.md, docs/CORRECTIONS-SITES-20260922.md et operation
 :PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
-:END:
-
-* Ajouter un token MCP Vision pour Mistral
-:PROPERTIES:
-:ID: 20260922-vision-56a58492c106
-:EMETTEUR: vision
-:PORTEE: ciblee
-:DESTINATAIRES: vision vps
-:CREE_LE: 2026-09-22T21:02:55+00:00
-:CONSOLIDATION: sans-objet
-:END:
-Demande du propriétaire : permettre l’accès MCP Vision depuis Mistral par Authorization: Bearer, en conservant Basic et les sessions web.
-Changement préparé dans VPS : vérification dédiée au seul /mcp via mrj-auth et Nginx ; jeton aléatoire de 256 bits, condensat en base de sessions, expiration, révocation et génération depuis une page authentifiée avec CSRF. Aucun secret dans Git ou les journaux, aucune modification métier.
-VPS : construire avec Nixpkgs installé, comparer les invariants hors routes MCP et code mrj-auth, préserver Logique/Matheval/interfaces, armer le retour autonome, contrôler les accès avant enregistrement. Vision : documenter le raccordement Mistral et vérifier initialize, tools/list et les appels applicatifs. Écritures de test seulement en base isolée.
-Ceci annonce le travail ; aucun token Bearer n’est encore déclaré actif. Les preuves et commits seront consignés après activation.
-
-** DONE vision
-:PROPERTIES:
-:LU_SHA256: 867a07f77c51bcf1ba50c50a67ceae155626c459e1c4af4b3c58c369f9212a44
-:LU_LE: 2026-09-22T21:24:09+00:00
-:CONTEXTE: MrJ-am/vision@09872e561cb1249723d4b8ec17af388703ba22db
-:PREUVE: Activation VPS 35786083939 réussie ; contrôles HTTPS, token révoqué et CI Vision 35785184379 réussis.
-:END:
-
-** TODO vps
-:PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 7a438ff01f5075fb3f08da98a085263f59196213871088366e851ef2c4affffe
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 
 * Token MCP Vision publié et nouvel état du VPS
@@ -433,12 +403,12 @@ Actions : VPS et autres projets reprendre l’état actualisé avant leurs opér
 :PREUVE: Activation VPS 35786083939 réussie ; contrôles HTTPS, token révoqué et CI Vision 35785184379 réussis.
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 26331af567a47cb60115dde4330cd00d9f72a65af9ded481dab5bc2e64bd0ec0
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 
 
@@ -497,11 +467,75 @@ Chaque projet devra prendre connaissance du résultat final avant sa prochaine p
 :PREUVE: -
 :END:
 
-** TODO vps
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: a40ec47876c3b0a4b75259617d0f70708f552b35cda56bab1f05f016bd6b0acf
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
+:END:
+
+* Journal HTTP actif et limites DDoS vérifiées
+:PROPERTIES:
+:ID: 20260922-vps-32923d5c588c
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T22:25:19+00:00
+:CONSOLIDATION: CONTRATS.org#journal-http
+:END:
+Journal HTTP activé sur le VPS le 22 septembre 2026. Sources 4345e4ef59765c156aec937fd3a2d4f646f188eb ; CI 35791604558 ; préparation 35791837515 ; activation 35792035605 au commit c2c3cf2e1073fb17113eabe26798e9862de0eb0f.
+Génération active/par défaut dr7qkvrabfp62qqrc064pr99c9gjvjn6 ; entrée /etc/nixos/vps-infrastructure/http-4345e4ef59765c156aec937fd3a2d4f646f188eb/hosts/hostinger/logique.nix. Ancienne h4rv6sn1izf1hv53qihsgrvkg1hy0j28 conservée. Retour autonome désarmé après enregistrement ; seul Nginx redémarré.
+Journal JSON séparé namespace http, tag http_acces : métadonnées et catégories de routes, sans corps/cookies/Authorization/paramètres URL. Budget nominal 128 Mio avec marge journald des fichiers actifs, rétention maximale 14 jours, rotation/compression ; pertes admises sous saturation. Diagnostic natif Nginx limité à crit. Pas de journal applicatif JSON-RPC ajouté.
+Preuves : 32 contrôles HTTP/TLS, huit unités actives, nouvelle connexion runner et Basic ; statuts 200/401/429 présents, marqueurs confidentiels absents. Aucun token permanent remplacé/révoqué ni données métier modifiées ; versions applicatives conservées.
+Audit réel : Vision REST/MCP limité par IP à 5/s et dix connexions, protections partielles ; Matheval/statique sans limite explicite, absence de plafond global, SYN cookies actifs. Nginx seul ne couvre pas une saturation réseau ; protection fournisseur non auditée. Les limites HTTP existantes sont conservées.
+Actions : chaque projet relit le contrat journal-http et l'état avant publication ; VPS maintient ce module et l'entrée complète incluant Logique/MCP. Aucun changement de code applicatif requis. Preuves détaillées : docs/JOURNAL-HTTP.md, docs/ETAT.md, operations/http-publication.json.
+
+** TODO logique
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: 45f5357c2aa9ef8700d7a99ca3c6a3737257b65fd208be6f7a30a3daaa2be4ed
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
 :END:
 

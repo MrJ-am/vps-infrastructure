@@ -1,5 +1,41 @@
 # État attesté au 22 septembre 2026
 
+## Journal HTTP : activé le 22 septembre 2026
+
+La [bascule 35792035605](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35792035605)
+a réussi, commit opérateur `c2c3cf2e1073fb17113eabe26798e9862de0eb0f`.
+Sources `4345e4ef59765c156aec937fd3a2d4f646f188eb`,
+[CI 35791604558](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35791604558),
+[préparation 35791837515](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35791837515).
+
+Génération active et par défaut :
+`/nix/store/dr7qkvrabfp62qqrc064pr99c9gjvjn6-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Entrée conservant tous les sites et le token MCP :
+`/etc/nixos/vps-infrastructure/http-4345e4ef59765c156aec937fd3a2d4f646f188eb/hosts/hostinger/logique.nix`.
+Ancienne génération `h4rv6sn1izf1hv53qihsgrvkg1hy0j28` protégée. Retour autonome
+armé avant l'essai et désarmé après validation et enregistrement.
+
+Journal JSON Nginx dans `journalctl --namespace=http -t http_acces`, catégories
+de routes sans paramètres, corps, cookies ou Authorization. Budget persistant
+128 Mio (hors marge des fichiers actifs journald), rétention maximale 14 jours,
+rotation/compression et limitation de journalisation. L'espace séparé préserve
+les journaux système ; des pertes sont possibles sous saturation. Erreurs
+natives Nginx limitées à `crit` pour éviter de recopier les URL des refus usuels.
+Les anciennes traces ne sont pas supprimées.
+
+Preuves : sondes HTTP 200/401/429 présentes et marqueurs confidentiels absents
+du journal structuré ; 32 contrôles HTTP/TLS, huit unités actives, nouvelle
+connexion SSH, lecture Basic. Aucun token permanent remplacé ou révoqué,
+aucune écriture métier, restauration SQL ou modification applicative. Seul
+Nginx a redémarré ; Nixpkgs et PostgreSQL sont conservés.
+
+Audit réel : limites par IP 5/s et connexions sur REST/MCP Vision ; pas de
+plafond global ni limite explicite sur Matheval/statique. SYN cookies actifs.
+La configuration ne constitue pas une protection DDoS complète ; aucune
+protection réseau du fournisseur n'est attestée. Les limites HTTP existantes
+n'ont pas été modifiées. Rapport et modalités : [JOURNAL-HTTP.md](JOURNAL-HTTP.md),
+preuve machine : `operations/http-publication.json`.
+
 ## Token MCP Vision : activé le 22 septembre à 21:22 UTC
 
 L’authentification Bearer fonctionne sur `https://vision.mrj.am/mcp`, en plus
@@ -343,3 +379,4 @@ a exécuté le [retour complet nº 35394938751](https://github.com/MrJ-am/vps-in
 avec succès, droits SQL et contrôles publics compris. La nouvelle préparation
 puis la bascule réussie ci-dessus utilisent un dossier distinct. Les preuves
 de l'ancienne tentative restent conservées sous son identifiant `088d36c15f2f…`.
+
