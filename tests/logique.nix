@@ -37,6 +37,9 @@ assert acme.services.nginx.virtualHosts.${domaine}.root == null;
 assert apres.services.nginx.virtualHosts.${domaine}.forceSSL;
 assert apres.services.nginx.virtualHosts.${domaine}.root == "/srv/logique/current";
 assert apres.services.nginx.virtualHosts.${domaine}.locations."/".tryFiles == "$uri $uri/ =404";
+assert apres.services.nginx.virtualHosts.${domaine}.locations."= /matheval".return == "302 /?accueil=1";
+assert apres.services.nginx.virtualHosts.${domaine}.locations."^~ /matheval/".return == "302 /?accueil=1";
+assert lib.hasInfix "ssl_reject_handshake on" apres.services.nginx.appendHttpConfig;
 assert !(apres.systemd.services ? logique);
 assert !(apres.infrastructure.postgresql.projects ? logique);
 {
