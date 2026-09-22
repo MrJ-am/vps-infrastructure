@@ -136,11 +136,12 @@ coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 :PREUVE: -
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: f85ad4c5d0e5736b7fec4b3d3bb465ae0596be7607f3aabfb78ae66ff0ee5a5f
+:LU_LE: 2026-09-22T09:08:02+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@1af28b98678c022c32ab36fda3e4cc4c46969ca9
+:PREUVE: Protocole lu ; consignes distantes vérifiées dans six dépôts et onze branches ; CI coordination 35708551408 et CI VPS 35708319110 réussies.
 :END:
+Registre et entretien installés. Les cinq autres projets acquitteront eux-mêmes à leur reprise.
 
