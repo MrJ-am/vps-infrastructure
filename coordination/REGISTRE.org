@@ -654,3 +654,30 @@ Lecture minimisée 35798866720 : outils list_due_memory_sheets et search_memory_
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Essai Mistral réel confirmé après correctif MCP
+:PROPERTIES:
+:ID: 20260923-vision-mistral-confirme
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T23:59:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Lecture minimisée de l'essai du propriétaire : workflow 35799898928. Après publication de Vision 754e908f75660d6a5941c2ebc459e293b12b82e1, les appels Mistral list_due_memory_sheets et get_memory_sheet portant meta=present répondent result=ok ; initialisation et tools/list également. Capture utilisateur : fiche « Capitales européennes » lue et révision engagée. Aucun record_review n'apparaît dans cette fenêtre : le dialogue a été interrompu par la limite de messages du compte Mistral avant l'enregistrement de la performance. Une erreur -32602 dans la fenêtre provenait de la sonde délibérément invalide avant l'essai. Incident d'accès au connecteur résolu pour la consultation ; l'écriture d'une observation depuis Mistral reste non vérifiée par cet essai.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
