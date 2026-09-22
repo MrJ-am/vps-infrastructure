@@ -12,10 +12,10 @@ import tempfile
 import time
 import urllib.request
 
-REVISION = "61028623566953610750781ab59f236d072c32bd"
-BASE = "021078628d8451086c708ed9e63f4722ab1d811f468f4a1e7cd99147fc99d204"
-CANDIDAT = "a1688e6dde584fff72ff4f300e6456557a26efc1e5fd716b7e7ba975debf11ea"
-RACINE = Path("/root/vision-diagnostic-mcp")
+REVISION = "754e908f75660d6a5941c2ebc459e293b12b82e1"
+BASE = "a1688e6dde584fff72ff4f300e6456557a26efc1e5fd716b7e7ba975debf11ea"
+CANDIDAT = "4ae125a5c2f1cadbee633abc045b5f9ddf6a1fa9e8973dce35ba07f0c93ba696"
+RACINE = Path("/root/vision-correctif-mcp-meta")
 SOURCE = Path(__file__).resolve().parent.parent
 COURANT = Path("/srv/vision/current")
 ARCHIVE = Path("/srv/vision/incoming") / (REVISION + ".tar.gz")
@@ -32,7 +32,7 @@ def somme(chemin):
 def preparer():
     RACINE.mkdir(mode=0o700, exist_ok=True)
     ancien = COURANT.resolve()
-    assert ancien == Path("/srv/vision/releases/151ab64bd5c9c5c54297e88dbe4d548343cc4928"), ancien
+    assert ancien == Path("/srv/vision/releases/61028623566953610750781ab59f236d072c32bd"), ancien
     assert somme(ancien / "src/mcp.lisp") == BASE
     assert somme(SOURCE / "operations/vision-diagnostic-mcp.lisp") == CANDIDAT
     assert executer("systemctl", "is-active", "vision", capture_output=True).stdout.strip() == "active"
@@ -78,6 +78,14 @@ def activer():
         assert COURANT.resolve() == Path("/srv/vision/releases") / REVISION
         assert somme(COURANT / "src/mcp.lisp") == CANDIDAT
         assert "result" in appel("tools/list")
+        liste = appel("tools/call", {"name": "list_due_memory_sheets",
+                                    "arguments": {"limit": 1},
+                                    "_meta": {"progressToken": "controle"}})
+        assert liste["result"]["isError"] is False
+        recherche = appel("tools/call", {"name": "search_memory_sheets",
+                                        "arguments": {"query": ""},
+                                        "_meta": {"progressToken": "controle"}})
+        assert recherche["result"]["isError"] is False
         refus = appel("tools/call", {"name": "search_memory_sheets",
                                      "arguments": {"query": "sonde-diagnostic", "limit": 0}})
         assert refus["error"]["code"] == -32602
