@@ -1,0 +1,124 @@
+name: Préparer ou activer le token MCP Vision
+on:
+  push:
+    branches: [main]
+    paths: [operations/mcp-token.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  mcp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Vérifier la demande et la CI de sa révision exacte
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/mcp-token.json'))
+          assert set(d)=={'operation','revision'} and d['operation'] in ('preparer','activer')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:runs=json.load(r)['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['conclusion']=='success' for r in runs),'CI exacte non réussie'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('revision='+d['revision']+'\noperation='+d['operation']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/mcp-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/mcp-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/mcp-cle" >> "$GITHUB_ENV"
+      - name: Relever le Nixpkgs réellement installé sans mise à jour
+        working-directory: candidat
+        run: |
+          NIXPKGS_MCP=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          test -n "$NIXPKGS_MCP"
+          printf 'NIXPKGS_MCP=%s\n' "$NIXPKGS_MCP" >> "$GITHUB_ENV"
+      - name: Auditer et construire sans activation
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/mcp-preparations/$REVISION/commence; mkdir -p /root/mcp-preparations/$REVISION/source; tar -xf - -C /root/mcp-preparations/$REVISION/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 --run 'python3 /root/mcp-preparations/$REVISION/source/scripts/mcp-deployer.py preparer $REVISION'"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation == 'activer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Armer le retour autonome et essayer le candidat
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 --run 'python3 /root/mcp-preparations/$REVISION/source/scripts/mcp-deployer.py demarrer $REVISION'"
+      - name: Contrôler une nouvelle connexion, les sites et les sauvegardes
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
+          sh scripts/connect.sh "cat /root/mcp-preparations/$REVISION/http-avant.json" > "$RUNNER_TEMP/http-avant.json"
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-avant.json"
+      - name: Vérifier le token depuis HTTPS et le navigateur
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: python3 scripts/mcp-verifier.py
+      - name: Enregistrer la génération contrôlée
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 --run 'python3 /root/mcp-preparations/$REVISION/source/scripts/mcp-deployer.py finaliser $REVISION'"
+          sh scripts/connect.sh "cat /root/mcp-preparations/$REVISION/termine.json"
+      - name: Revenir si l’essai échoue
+        if: failure() && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 --run 'python3 /root/mcp-preparations/$REVISION/source/scripts/mcp-deployer.py retour $REVISION'"
+      - name: Conserver uniquement les preuves techniques
+        if: success()
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          mkdir -p rapports-mcp
+          sh scripts/connect.sh "cat /root/mcp-preparations/$REVISION/preparation.json" > rapports-mcp/preparation.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: mcp-${{ steps.demande.outputs.operation }}
+          path: candidat/rapports-mcp
+          retention-days: 30
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/mcp-cle"
