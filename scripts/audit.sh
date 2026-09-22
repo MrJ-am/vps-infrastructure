@@ -33,24 +33,9 @@ printf '\n%s\n' 'Avertissements Vision récents, sans corps de requête'
 journalctl --unit vision.service --unit vision-migrate.service \
   --since '-30 min' --priority warning --no-pager --output=short-iso --lines=200
 printf '%s\n' 'Vision MCP : statuts HTTP par minute sur les six dernières heures (sans IP ni contenu)'
-journalctl --namespace=http -t http_acces --since '-6 hours' --no-pager -o cat | python3 -c '
-import collections, json, sys
-counts = collections.Counter()
-for line in sys.stdin:
-    try:
-        event = json.loads(line)
-        if event.get("site") != "vision.mrj.am" or event.get("route") != "mcp":
-            continue
-        minute = str(event.get("date", ""))[:16]
-        status = int(event.get("statut", 0))
-        upstream = str(event.get("amont", ""))
-        counts[(minute, status, upstream)] += 1
-    except (ValueError, TypeError):
-        continue
-for (minute, status, upstream), count in sorted(counts.items()):
-    print(minute, "HTTP", status, "amont", upstream, "nombre", count)
-print("Total MCP Vision :", sum(counts.values()))
-'
+journalctl --namespace=http -t http_acces --since '-6 hours' --no-pager -o cat |
+  sed -n 's/.*"date":"\([^"]*\)".*"site":"vision\.mrj\.am".*"route":"mcp".*"statut":\([0-9]*\).*"amont":"\([^"]*\)".*/\1 HTTP \2 amont \3/p' |
+  sort | uniq -c
 printf '%s\n' 'Planification des certificats et sauvegardes'
 systemctl list-timers --all --no-pager 'acme*' 'postgresqlBackup*'
 printf '%s\n' 'Ressources et point d’entrée NixOS'
