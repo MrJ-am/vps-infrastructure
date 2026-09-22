@@ -598,3 +598,31 @@ Le propriétaire peut refaire son essai Mistral. Vision analysera les traces nou
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Corriger la compatibilité des métadonnées MCP Mistral
+:PROPERTIES:
+:ID: 20260923-vision-mcp-meta
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T23:38:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Essai Mistral du propriétaire, fenêtre UTC 23:32–23:35 : lecture minimisée 35798169979, 99 traces JSON-RPC dont initialisation et liste réussies ; 23 appels d'outils ont reçu -32602 de Vision alors que les noms et types des arguments sont plausibles. Toutes les requêtes ont traversé le proxy (102 requêtes HTTP /mcp). La validation actuelle refuse toute clé de paramètres hors name/arguments pour tools/call ; l'hypothèse ciblée est la clé MCP _meta, facultative et utilisée par des clients.
+Vision prépare un correctif limité à l'acceptation de _meta sur tools/call et tools/list, avec test d'intégration. La trace ajoutera seulement la présence de _meta et une catégorie d'erreur constante, sans contenu ni secret. Publication du seul serveur Vision avec préparation, retour possible et essais de lecture MCP contrôlés avant nouvelle sollicitation Mistral. Le défaut précis de la requête Mistral n'est pas encore prouvé par valeur ; ne pas déclarer l'incident clos avant un nouvel essai réel.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
