@@ -104,12 +104,12 @@ coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 :PREUVE: -
 :END:
 
-** TODO memoire
+** DONE memoire
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: f85ad4c5d0e5736b7fec4b3d3bb465ae0596be7607f3aabfb78ae66ff0ee5a5f
+:LU_LE: 2026-09-22T09:52:11+00:00
+:CONTEXTE: MrJ-am/M-moire@af8c26ea48d8a2e2af35da8245107d167b4d6821
+:PREUVE: Protocole lu, consigne distante vérifiée dans AGENTS.md sur master.
 :END:
 
 ** TODO signature
@@ -144,4 +144,71 @@ coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 :PREUVE: Protocole lu ; consignes distantes vérifiées dans six dépôts et onze branches ; CI coordination 35708551408 et CI VPS 35708319110 réussies.
 :END:
 Registre et entretien installés. Les cinq autres projets acquitteront eux-mêmes à leur reprise.
+
+* Corriger routage, interactions et sécurité des applications
+:PROPERTIES:
+:ID: 20260922-memoire-901c3e2460ef
+:EMETTEUR: memoire
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T09:52:11+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Demande du propriétaire du 22 septembre : corriger le routage Logique, les régressions tactiles/3D et la navigation libre de Matheval, les débordements de toutes les interfaces et auditer les authentifications.
+
+Constat documentaire : Logique reste préparé sans activation ; l'état réellement actif sera contrôlé par Actions avant toute bascule. Adresse contractuelle : logique.echos.systems. Aucun droit sur logic.ecos.systems n'est établi.
+
+Travail engagé par Mémoire, avec autorisation explicite du propriétaire pour les corrections transversales : correctifs dans style-mrjam puis révisions figées des trois consommateurs ; correctifs de routage exécutés exclusivement depuis VPS ; audit comparé Matheval / mrj-auth / Vision / Logique. Aucune réponse collectée ni secret ne doit apparaître dans les preuves.
+
+Actions : style et consommateurs relire les nouveaux contrats et commits avant leurs prochaines publications ; vps réserver les opérations système à ses workflows, vérifier l'état actuel et préparer le retour ; logique vérifier le domaine et le site servis ; vision préserver API, données et sessions. Les autres projets sont informés de ce chantier et ne doivent pas acquitter à la place d'un autre.
+
+Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ; versions effectivement servies identifiées ; audit avec paramètres, cookies, données et limites ; résultats inscrits dans un nouveau message. Ce message annonce des travaux, aucun correctif n'est encore déclaré déployé.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
