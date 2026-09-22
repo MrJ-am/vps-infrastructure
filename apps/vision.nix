@@ -45,6 +45,8 @@ in {
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $remote_addr;
+        satisfy any;
+        auth_request /_vision_mcp_token;
         auth_basic "${site.auth.realm}";
         auth_basic_user_file ${site.auth.basicUserFile};
         limit_req zone=protected_api_per_ip burst=10 nodelay;
@@ -53,8 +55,23 @@ in {
         limit_conn_status 429;
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
+        proxy_set_header X-Vision-Browser "";
+        proxy_set_header X-Mrj-User "";
+        proxy_set_header Cookie "";
         error_page 401 = @vision-authentication-required;
         error_page 429 = @vision-rate-limited;
+      '';
+    };
+    "= /_vision_mcp_token" = {
+      proxyPass = "http://127.0.0.1:3002/verify-mcp";
+      extraConfig = ''
+        internal;
+        proxy_pass_request_body off;
+        proxy_set_header Content-Length "";
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization $http_authorization;
+        proxy_set_header Cookie "";
       '';
     };
     "= /api/v1/mobile-live-test" = {
