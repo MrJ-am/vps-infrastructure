@@ -70,6 +70,9 @@ def activer():
     assert COURANT.resolve() == ancien, "Version active modifiée : préparation à refaire"
     debut = int(time.time())
     try:
+        verrou = Path("/srv/vision/deploy.lock")
+        assert verrou.is_file() and not verrou.is_symlink()
+        executer("chown", "vision-deploy:vision", verrou)
         executer("runuser", "-u", "vision-deploy", "--",
                  "/run/current-system/sw/bin/vision-release", REVISION)
         assert COURANT.resolve() == Path("/srv/vision/releases") / REVISION
