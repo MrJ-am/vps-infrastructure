@@ -1,5 +1,39 @@
 # État attesté au 22 septembre 2026
 
+## Token MCP Vision : activé le 22 septembre à 21:22 UTC
+
+L’authentification Bearer fonctionne sur `https://vision.mrj.am/mcp`, en plus
+de Basic. Après connexion, `https://vision.mrj.am/auth/mcp` permet de créer,
+remplacer ou révoquer son token. Le token de contrôle a été révoqué ; aucun
+secret permanent n’a été enregistré dans Git ou affiché dans les journaux.
+
+Sources : `b389fb7002ba4bd62e9585b98a9d0a5b89c4b92d`,
+[CI réussie](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35785539670).
+[Préparation 35785801163](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35785801163),
+[activation 35786083939](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35786083939),
+commit opérateur `64ac2c7009c6295987db45a02956d4eee01d2fba`.
+
+Génération active et par défaut :
+`/nix/store/h4rv6sn1izf1hv53qihsgrvkg1hy0j28-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Entrée NixOS :
+`/etc/nixos/vps-infrastructure/mcp-b389fb7002ba4bd62e9585b98a9d0a5b89c4b92d/hosts/hostinger/logique.nix`.
+L’ancienne génération `y35z1d3l6882ylrz7glrq7q7yp4zyks7` reste protégée.
+Le retour autonome a été armé avant l’essai puis désarmé après les contrôles.
+
+Seuls mrj-auth et Nginx ont été remplacés/redémarrés. Serveur Lisp, interfaces,
+Matheval, Logique, données et versions Nixpkgs/PostgreSQL conservés. Vérifications :
+32 contrôles HTTP/TLS, services et sauvegardes actifs, nouvelle connexion SSH
+du runner, Basic/Bearer, initialize, cinq outils, notification, lecture MCP,
+CSRF, refus hors MCP, rendu mobile/bureau, absence de stockage navigateur et
+révocation. Les écritures MCP passent en PostgreSQL isolé dans la
+[CI Vision 35785184379](https://github.com/MrJ-am/vision/actions/runs/35785184379).
+Aucune fiche ou observation de test n’a été créée en production.
+
+Détails : [VISION-MCP-TOKEN.md](VISION-MCP-TOKEN.md) ; preuve machine :
+`operations/mcp-publication.json`. Le raccordement dans le compte Mistral du
+propriétaire reste à faire avec le token qu’il générera ; aucun test dans son
+compte Mistral n’est revendiqué.
+
 ## Correction Logique et interfaces communes
 
 Logique et l'interface Vision sont publiés depuis le 22 septembre à 11:13 UTC.

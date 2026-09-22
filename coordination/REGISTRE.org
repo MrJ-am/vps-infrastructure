@@ -362,12 +362,75 @@ Changement préparé dans VPS : vérification dédiée au seul /mcp via mrj-auth
 VPS : construire avec Nixpkgs installé, comparer les invariants hors routes MCP et code mrj-auth, préserver Logique/Matheval/interfaces, armer le retour autonome, contrôler les accès avant enregistrement. Vision : documenter le raccordement Mistral et vérifier initialize, tools/list et les appels applicatifs. Écritures de test seulement en base isolée.
 Ceci annonce le travail ; aucun token Bearer n’est encore déclaré actif. Les preuves et commits seront consignés après activation.
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 867a07f77c51bcf1ba50c50a67ceae155626c459e1c4af4b3c58c369f9212a44
+:LU_LE: 2026-09-22T21:24:09+00:00
+:CONTEXTE: MrJ-am/vision@09872e561cb1249723d4b8ec17af388703ba22db
+:PREUVE: Activation VPS 35786083939 réussie ; contrôles HTTPS, token révoqué et CI Vision 35785184379 réussis.
+:END:
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Token MCP Vision publié et nouvel état du VPS
+:PROPERTIES:
+:ID: 20260922-vision-33175a2f973a
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T21:24:09+00:00
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+Token MCP Vision activé et enregistré le 22 septembre 2026 à 21:22 UTC. Sources VPS b389fb7002ba4bd62e9585b98a9d0a5b89c4b92d, CI 35785539670 réussie ; préparation 35785801163 puis activation 35786083939, commit opérateur 64ac2c7009c6295987db45a02956d4eee01d2fba.
+Génération active/par défaut h4rv6sn1izf1hv53qihsgrvkg1hy0j28 ; entrée /etc/nixos/vps-infrastructure/mcp-b389fb7002ba4bd62e9585b98a9d0a5b89c4b92d/hosts/hostinger/logique.nix. Ancienne génération y35z1d3l6882ylrz7glrq7q7yp4zyks7 protégée. Préserver cette entrée et le module MCP lors des prochaines constructions.
+/mcp accepte désormais Basic ou Bearer. /auth/mcp gère le token après session et CSRF. Condensat seul stocké, expiration un an, révocation immédiate. REST et sessions ne prennent pas ce token. Le token temporaire de contrôle a été supprimé. Le propriétaire générera le sien pour Mistral.
+32 contrôles HTTP/TLS, services/sauvegardes, seconde connexion runner, initialize, cinq outils, notification, lecture MCP, navigateur mobile/bureau, CSRF, séparation des accès et révocation réussis. Écritures testées en PostgreSQL isolé (CI Vision 35785184379), aucune donnée métier fictive en production. Logique, Matheval, serveur Lisp et interfaces restent à leurs révisions du matin. Le retour autonome est désarmé après validation.
+Actions : VPS et autres projets reprendre l’état actualisé avant leurs opérations, conserver les nouveaux contrats ; Vision documente Mistral. Aucune autre modification demandée aux applications. Preuves : docs/ETAT.md, docs/VISION-MCP-TOKEN.md, operations/mcp-publication.json. Ne pas confondre validation HTTPS et connexion effective du compte Mistral, qui reste à renseigner par le propriétaire.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 26331af567a47cb60115dde4330cd00d9f72a65af9ded481dab5bc2e64bd0ec0
+:LU_LE: 2026-09-22T21:24:09+00:00
+:CONTEXTE: MrJ-am/vision@09872e561cb1249723d4b8ec17af388703ba22db
+:PREUVE: Activation VPS 35786083939 réussie ; contrôles HTTPS, token révoqué et CI Vision 35785184379 réussis.
 :END:
 
 ** TODO vps
