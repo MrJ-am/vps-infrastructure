@@ -49,3 +49,25 @@ Tout changement de fond exige un message dans REGISTRE.org.
   est strictement réservée ; conserver le texte sélectionnable « MrJ.am ».
 - Les états de déploiement sont propres à chaque application. Une CI réussie ou un
   commit sur main ne prouve pas une publication sur le VPS.
+
+* Authentification et confidentialité
+:PROPERTIES:
+:CUSTOM_ID: authentification
+:END:
+- Ne stocker ni journaliser les mots de passe en clair. Pour un nouveau stockage,
+  préférer Argon2id ou scrypt avec sel aléatoire et paramètres explicites.
+- État audité le 22 septembre : Matheval utilise scrypt ; Vision conserve
+  SHA-512-crypt partagé avec Nginx Basic. Sa modernisation doit traiter ensemble
+  API et navigateur, préserver les accès et être notifiée avant activation.
+- Les sessions navigateur utilisent des jetons aléatoires distincts des mots de
+  passe, un condensat côté serveur, expiration absolue, inactivité limitée à deux
+  heures et révocation au logout. Les durées absolues sont documentées par projet.
+- Les domaines différents ne partagent pas directement un cookie. Le cookie
+  mrj.am reste limité au périmètre de confiance autorisé ; aucun élargissement implicite.
+- Distinguer compte utilisateur et secret de reprise de participation. Documenter
+  stockage local, durée, données, information et suppression avant une nouvelle collecte.
+- Un cookie nécessaire à la connexion n'impose pas à lui seul une bannière ;
+  vérifier séparément les tiers et traceurs. Aucune conclusion générale de conformité
+  ne découle du seul usage de HttpOnly, de SameSite ou du paramètre vidéo dnt.
+- Rapport de référence : docs/AUDIT-AUTHENTIFICATION-20260922.md. Les écarts connus
+  et les preuves de déploiement y sont distingués des recommandations.

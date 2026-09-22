@@ -212,3 +212,70 @@ Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ;
 :PREUVE: -
 :END:
 
+* Consigner les exigences communes d’authentification et la bascule Logique
+:PROPERTIES:
+:ID: 20260922-memoire-1ffa4f2c7ed4
+:EMETTEUR: memoire
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T10:38:36+00:00
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+Audit transversal demandé par le propriétaire : méthodes, cookies, maintien de connexion et protection du stockage. Référence durable proposée dans CONTRATS.org#authentification ; rapport détaillé docs/AUDIT-AUTHENTIFICATION-20260922.md dans ce dépôt privé.
+
+Constats : Matheval emploie scrypt N=131072,r=8,p=1 ; Vision/mrj-auth partage avec Basic un htpasswd SHA-512-crypt provisionné à 5 000 tours. Aucun mot de passe ni condensat utilisateur réel lu. La modernisation Vision reste à coordonner ensemble pour Basic et le navigateur ; aucun changement d'identifiant engagé.
+
+Changements préparés : Matheval ajoute deux heures d'inactivité, rotation du jeton présenté et vingt sessions maximum (migration additive sans perte de réponses) ; Logique diffère tous les contacts vidéo externes avant activation informée. Les cookies nécessaires à la connexion et les traceurs tiers sont évalués séparément.
+
+Routage : nouvel audit VPS 35712882397, actif bbp9i9c94l8f4lvkr23qlgghhlw29qdd ; préparation neuve obligatoire. Le futur workflow corrections-sites construira ACME/HTTPS, conservera les invariants et armera un retour autonome ; il publiera Logique et l'interface Vision seulement après contrôle des trois artefacts. Un hôte inconnu sera refusé au lieu de recevoir Matheval. Les anciennes redirections /matheval sur le domaine Logique seront récupérées vers une URL d'accueil distincte pour éviter le cache des 308.
+
+Aucune publication effective n'est revendiquée par ce message. Les preuves finales et révisions seront consignées à la clôture. Chaque projet relit son impact, sans acquittement fait par un autre projet.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
