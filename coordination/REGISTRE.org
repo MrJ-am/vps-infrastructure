@@ -128,12 +128,12 @@ coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: f85ad4c5d0e5736b7fec4b3d3bb465ae0596be7607f3aabfb78ae66ff0ee5a5f
+:LU_LE: 2026-09-22T21:02:55+00:00
+:CONTEXTE: MrJ-am/vision@dbf5fcb3b1c70ec8ee1717db8e17527619840245
+:PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
 ** DONE vps
@@ -196,12 +196,12 @@ Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ;
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: dff9f69bdc487d64e8421c049306137a890e1ee4b288e2f7a80c92b1c4962a25
+:LU_LE: 2026-09-22T21:02:55+00:00
+:CONTEXTE: MrJ-am/vision@dbf5fcb3b1c70ec8ee1717db8e17527619840245
+:PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
 ** TODO vps
@@ -263,12 +263,12 @@ Aucune publication effective n'est revendiquée par ce message. Les preuves fina
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 763cc2157810f9811910151337472e7638d1c9feb7d861929a4c9911d8397a15
+:LU_LE: 2026-09-22T21:02:55+00:00
+:CONTEXTE: MrJ-am/vision@dbf5fcb3b1c70ec8ee1717db8e17527619840245
+:PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
 :END:
 
 ** TODO vps
@@ -331,6 +331,36 @@ Preuves durables : docs/ETAT.md, docs/CORRECTIONS-SITES-20260922.md et operation
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 7a438ff01f5075fb3f08da98a085263f59196213871088366e851ef2c4affffe
+:LU_LE: 2026-09-22T21:02:55+00:00
+:CONTEXTE: MrJ-am/vision@dbf5fcb3b1c70ec8ee1717db8e17527619840245
+:PREUVE: Protocole, consigne distante, contrats et résultats lus ; versions conservées pour le chantier MCP.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Ajouter un token MCP Vision pour Mistral
+:PROPERTIES:
+:ID: 20260922-vision-56a58492c106
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T21:02:55+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Demande du propriétaire : permettre l’accès MCP Vision depuis Mistral par Authorization: Bearer, en conservant Basic et les sessions web.
+Changement préparé dans VPS : vérification dédiée au seul /mcp via mrj-auth et Nginx ; jeton aléatoire de 256 bits, condensat en base de sessions, expiration, révocation et génération depuis une page authentifiée avec CSRF. Aucun secret dans Git ou les journaux, aucune modification métier.
+VPS : construire avec Nixpkgs installé, comparer les invariants hors routes MCP et code mrj-auth, préserver Logique/Matheval/interfaces, armer le retour autonome, contrôler les accès avant enregistrement. Vision : documenter le raccordement Mistral et vérifier initialize, tools/list et les appels applicatifs. Écritures de test seulement en base isolée.
+Ceci annonce le travail ; aucun token Bearer n’est encore déclaré actif. Les preuves et commits seront consignés après activation.
 
 ** TODO vision
 :PROPERTIES:
