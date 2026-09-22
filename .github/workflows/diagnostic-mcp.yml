@@ -22,7 +22,7 @@ jobs:
           python3 - <<'PY'
           import json
           demande = json.load(open('operations/vision-diagnostic.json'))
-          assert demande['revision'] == '61028623566953610750781ab59f236d072c32bd'
+          assert demande['revision'] == '754e908f75660d6a5941c2ebc459e293b12b82e1'
           assert demande['operation'] in ('preparer', 'activer')
           assert set(demande) <= {'operation', 'revision', 'tentative'}
           if 'tentative' in demande: assert demande['tentative'] == 2 and demande['operation'] == 'activer'
@@ -39,8 +39,8 @@ jobs:
       - name: Préparer ou activer le serveur Vision
         run: |
           operation="$(python3 -c 'import json; print(json.load(open("operations/vision-diagnostic.json"))["operation"])')"
-          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-diagnostic-mcp/source; tar -xf - -C /root/vision-diagnostic-mcp/source"
-          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-diagnostic-mcp/source/scripts/vision-diagnostic-mcp.py $operation'"
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-correctif-mcp-meta/source; tar -xf - -C /root/vision-correctif-mcp-meta/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-correctif-mcp-meta/source/scripts/vision-diagnostic-mcp.py $operation'"
           sh scripts/connect.sh "systemctl is-active vision nginx mrj-auth postgresql"
           python3 scripts/probe.py
       - name: Effacer la clé temporaire
