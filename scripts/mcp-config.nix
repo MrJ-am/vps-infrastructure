@@ -6,9 +6,11 @@ let
     modules = [ (builtins.toPath configuration) ];
   }).config;
   base = import ./logique-config.nix { inherit configuration; };
-  nettoyer = nom: site: if nom == "vision.mrj.am"
-    then site // { locations = builtins.removeAttrs site.locations [ "= /mcp" "= /_vision_mcp_token" ]; }
-    else site;
+  # Les chemins TLS sont dérivés par Nginx depuis ACME, comparé séparément.
+  nettoyer = nom: site: builtins.removeAttrs
+    (if nom == "vision.mrj.am"
+     then site // { locations = builtins.removeAttrs site.locations [ "= /mcp" "= /_vision_mcp_token" ]; }
+     else site) [ "sslCertificate" "sslCertificateKey" ];
 in {
   inherit (base) systeme nginx;
   invariant = (builtins.removeAttrs base.invariant [ "sites" "services" ]) // {
