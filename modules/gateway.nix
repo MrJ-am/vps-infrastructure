@@ -59,6 +59,22 @@ in {
       limit_conn_zone $binary_remote_addr zone=protected_api_connections:10m;
     '';
     virtualHosts = (import ../lib/virtual-hosts.nix) projects;
+    # Un domaine oublié ne doit jamais emprunter le site ou le certificat d'un autre.
+    appendHttpConfig = ''
+      server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+        server_name _;
+        return 421;
+      }
+      server {
+        listen 443 ssl default_server;
+        listen [::]:443 ssl default_server;
+        server_name _;
+        ssl_reject_handshake on;
+        return 421;
+      }
+    '';
   };
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   };

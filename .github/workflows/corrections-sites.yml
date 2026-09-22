@@ -1,0 +1,134 @@
+name: Corriger le domaine Logique et publier les interfaces validées
+on:
+  push:
+    branches: [main]
+    paths: [operations/corrections-sites.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  correction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Exiger la CI exacte des sources et une opération explicite
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/corrections-sites.json'))
+          assert set(d)=={'operation','revision'} and d['operation'] in ('preparer','activer')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          url='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision']
+          req=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+          with urllib.request.urlopen(req,timeout=30) as r:runs=json.load(r)['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['status']=='completed' and r['conclusion']=='success' for r in runs),'CI exacte non réussie'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('revision='+d['revision']+'\noperation='+d['operation']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Vérifier les artefacts figés et le DNS réel
+        working-directory: candidat
+        run: |
+          python3 scripts/corrections_artefacts.py artefacts-controles
+          python3 scripts/dns-logique.py --exiger
+      - name: Préparer la clé du runner existant
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/corrections-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/corrections-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/corrections-cle" >> "$GITHUB_ENV"
+      - name: Préparer les candidats sans activer
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/logique-preparations/$REVISION/commence; mkdir -p /root/logique-preparations/$REVISION/source; tar -xf - -C /root/logique-preparations/$REVISION/source"
+          NIXPKGS_CORRECTION=$(python3 -c 'import json;print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CORRECTION -p python3 --run 'python3 /root/logique-preparations/$REVISION/source/scripts/corrections-sites.py preparer $REVISION'"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation == 'activer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Armer le retour autonome puis activer
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          NIXPKGS_CORRECTION=$(python3 -c 'import json;print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CORRECTION -p python3 --run 'python3 /root/logique-preparations/$REVISION/source/scripts/corrections-sites.py demarrer $REVISION'"
+      - name: Contrôler les services par une nouvelle connexion et préserver les sites existants
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "systemctl is-active sshd nginx postgresql matheval vision mrj-auth"
+          sh scripts/connect.sh "cat /root/logique-preparations/$REVISION/http-avant.json" > "$RUNNER_TEMP/http-avant.json"
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-avant.json"
+      - name: Vérifier les sites servis et les sessions réelles
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+          VISION_INTERFACE_ARTEFACT: artefacts-controles/vision
+        run: |
+          python3 scripts/corrections-verifier.py
+          python3 scripts/vision-interface-verifier.py
+      - name: Enregistrer la génération contrôlée pour les prochains démarrages
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          NIXPKGS_CORRECTION=$(python3 -c 'import json;print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CORRECTION -p python3 --run 'python3 /root/logique-preparations/$REVISION/source/scripts/corrections-sites.py finaliser $REVISION'"
+          sh scripts/connect.sh "cat /root/logique-preparations/$REVISION/termine.json"
+      - name: Retour immédiat si la bascule échoue
+        if: failure() && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          NIXPKGS_CORRECTION=$(python3 -c 'import json;print(json.load(open("operations/logique-etat-attendu.json"))["nixpkgs"])')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CORRECTION -p python3 --run 'python3 /root/logique-preparations/$REVISION/source/scripts/corrections-sites.py retour $REVISION'"
+      - name: Conserver les preuves sans données privées
+        if: success()
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          mkdir -p rapports-corrections
+          sh scripts/connect.sh "cat /root/logique-preparations/$REVISION/corrections.json" > rapports-corrections/preparation.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: corrections-${{ steps.demande.outputs.operation }}
+          path: |
+            candidat/rapports-corrections
+            candidat/rapports-vision
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/corrections-cle"

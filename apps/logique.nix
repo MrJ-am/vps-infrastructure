@@ -12,14 +12,22 @@ in {
       (builtins.fromJSON (builtins.readFile ../projects.json)) // { logique = site; }
     );
     # L'amorçage ne sert aucun fichier applicatif, et n'exige pas encore de TLS.
-    services.nginx.virtualHosts.${site.domain} = lib.mkIf
+    services.nginx.virtualHosts.${site.domain} = lib.mkMerge [ (lib.mkIf
       (config.infrastructure.logique.phase == "acme") (lib.mkForce {
         enableACME = true;
         forceSSL = false;
         addSSL = false;
         onlySSL = false;
         locations."/".return = "404";
-      });
+      }))
+      (lib.mkIf (config.infrastructure.logique.phase == "https") {
+        locations = {
+          # Éviter la racine mise en cache avec une ancienne 308 vers Matheval.
+          "= /matheval".return = "302 /?accueil=1";
+          "^~ /matheval/".return = "302 /?accueil=1";
+        };
+      })
+    ];
     systemd.tmpfiles.rules = [
       "d /srv/logique 0755 root root -"
       "d /srv/logique/releases 0755 root root -"

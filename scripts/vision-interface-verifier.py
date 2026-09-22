@@ -30,7 +30,7 @@ def requete(chemin, donnees=None, entetes=None):
 
 
 def verifier():
-    manifeste = json.loads(Path('vendor/vision-interface/manifest.json').read_text())
+    manifeste = json.loads(Path(os.environ.get('VISION_INTERFACE_ARTEFACT', 'vendor/vision-interface'), 'manifest.json').read_text())
     statut, _, corps = requete('/interface-manifest.json')
     assert statut == 200 and json.loads(corps) == manifeste, 'Manifeste servi différent'
     routes = {'app.html': '/', 'index.html': '/docs', 'privacy.html': '/privacy'}
