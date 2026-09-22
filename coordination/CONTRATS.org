@@ -66,6 +66,12 @@ Tout changement de fond exige un message dans REGISTRE.org.
   mrj.am reste limité au périmètre de confiance autorisé ; aucun élargissement implicite.
 - Distinguer compte utilisateur et secret de reprise de participation. Documenter
   stockage local, durée, données, information et suppression avant une nouvelle collecte.
+- Depuis le 22 septembre 2026, `/mcp` de Vision accepte Basic ou un token Bearer
+  aléatoire de 256 bits, stocké uniquement sous forme de SHA-256 par mrj-auth,
+  valable un an et révocable. Création/remplacement/révocation depuis
+  `/auth/mcp` avec session, origine et CSRF. Le token n’authentifie ni REST
+  ni le navigateur ; le logout ne le révoque pas. La rotation du fichier
+  des comptes l’invalide. Voir docs/VISION-MCP-TOKEN.md et docs/ETAT.md.
 - Un cookie nécessaire à la connexion n'impose pas à lui seul une bannière ;
   vérifier séparément les tiers et traceurs. Aucune conclusion générale de conformité
   ne découle du seul usage de HttpOnly, de SameSite ou du paramètre vidéo dnt.

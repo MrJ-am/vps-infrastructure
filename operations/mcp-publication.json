@@ -1,0 +1,35 @@
+{
+  "dateActivation": "2026-09-22T21:22:27Z",
+  "revision": "b389fb7002ba4bd62e9585b98a9d0a5b89c4b92d",
+  "etat": {
+    "actif": "/nix/store/h4rv6sn1izf1hv53qihsgrvkg1hy0j28-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/h4rv6sn1izf1hv53qihsgrvkg1hy0j28-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "aeb6463cd8f2ed3a0572392b31433ede42f77144375ca3b11b46f41129fa1ebb",
+    "matheval": "/srv/matheval/releases/ebae2c9d358e4b76d120b85e12afb4193cc37967",
+    "vision": "/srv/vision/releases/151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+    "vision-interface": "/srv/vision-interface/releases/dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+    "logique": "/srv/logique/releases/615439c841db1934ffaddc1dee64c85ff6c56cf2"
+  },
+  "ci": 35785539670,
+  "preparation": 35785801163,
+  "activation": 35786083939,
+  "commitOperateur": "64ac2c7009c6295987db45a02956d4eee01d2fba",
+  "ancienneGeneration": "/nix/store/y35z1d3l6882ylrz7glrq7q7yp4zyks7-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "controles": {
+    "httpTls": 32,
+    "basic": true,
+    "bearer": true,
+    "initialize": true,
+    "outils": 5,
+    "lecture": true,
+    "notification": true,
+    "csrf": true,
+    "revocation": true,
+    "renduMobileBureau": true,
+    "ecritureMetier": false,
+    "compteMistralTeste": false,
+    "tokenControleRevoque": true,
+    "retourAutonomeDesarme": true
+  },
+  "ciVision": 35785184379
+}
