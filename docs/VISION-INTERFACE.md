@@ -1,5 +1,16 @@
 # Publication de l'interface ElmUI de Vision
 
+L'interface a été actualisée le 22 septembre 2026 à la révision
+`dbf5fcb3b1c70ec8ee1717db8e17527619840245`, style
+`b2177c0fd2c46c6f528266d30f7b933d3add1566`.
+L'[activation 35720088997](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35720088997)
+a vérifié chaque fichier servi, les polices, deux formats d'écran, la connexion
+réelle, le cookie, CSRF, l'origine, Basic, la lecture PostgreSQL et la révocation.
+Le serveur Vision reste `151ab64bd5c9c5c54297e88dbe4d548343cc4928` ; aucune
+écriture métier ni migration de ses données. L'ancien artefact reste disponible.
+Lire [l'état courant](ETAT.md). Les références qui suivent décrivent la première
+publication, conservée comme historique.
+
 **Publié le 21 septembre 2026 à 22:32 UTC** : [activation vérifiée](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35663052741).
 Les références installées sont consignées dans [ETAT.md](ETAT.md).
 

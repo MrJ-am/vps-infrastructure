@@ -1,4 +1,64 @@
-# État attesté au 21 septembre 2026
+# État attesté au 22 septembre 2026
+
+## Correction Logique et interfaces communes
+
+Logique et l'interface Vision sont publiés depuis le 22 septembre à 11:13 UTC.
+La [préparation 35719822363](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35719822363)
+et l'[activation 35720088997](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35720088997)
+ont réussi sur les sources d'infrastructure
+`273139f1e66e7284af185fde66bf442cf7c9da03`, CI `35719627664` réussie.
+Le commit opérateur d'activation est `436b0019fd10f4ad37c0bc030511f568a80411b2`.
+
+| Élément | Référence réellement servie |
+|---|---|
+| Logique | `615439c841db1934ffaddc1dee64c85ff6c56cf2` |
+| Interface Vision | `dbf5fcb3b1c70ec8ee1717db8e17527619840245` |
+| Matheval | `ebae2c9d358e4b76d120b85e12afb4193cc37967` |
+| Style commun | `b2177c0fd2c46c6f528266d30f7b933d3add1566` |
+| Signature | `17495b13cefa24473e37434b98336b27caec8cdf` |
+| Serveur Vision inchangé | `151ab64bd5c9c5c54297e88dbe4d548343cc4928` |
+| Génération active et par défaut | `/nix/store/y35z1d3l6882ylrz7glrq7q7yp4zyks7-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+| Génération précédente protégée | `/nix/store/bbp9i9c94l8f4lvkr23qlgghhlw29qdd-nixos-system-nixos-26.05.8639.c5c4a43b0e80` |
+
+[Logique](https://logique.echos.systems/?accueil=1) sert l'application avec son
+vrai certificat. Les 80 ressources et le manifeste servi ont été vérifiés,
+ainsi que quatre formats d'écran et les cinq lecteurs Vimeo réels. Les anciennes
+adresses `/matheval/` sur ce domaine sont récupérées vers une URL distincte de la
+racine anciennement mise en cache. Les hôtes inconnus sont refusés par Nginx.
+Aucune intervention sur un éventuel domaine `logic.ecos.systems` n'est revendiquée.
+
+Les 13 ressources et le manifeste de Vision correspondent à l'artefact testé.
+Le rendu, les polices, deux formats, la connexion avec le compte existant,
+le cookie, CSRF, l'origine, la lecture PostgreSQL, Basic et la révocation
+ont été contrôlés sans écriture métier. Les captures ne montrent que la connexion vide.
+Les 22 contrôles HTTP/TLS précédents, les six services, les deux sauvegardes
+et une nouvelle connexion du runner ont réussi. Le retour autonome de vingt
+minutes a été armé avant l'essai, puis désarmé après enregistrement du démarrage.
+Les bases n'ont pas été restaurées ; les anciennes versions restent conservées.
+
+Matheval est publié à 11:23 UTC par son
+[workflow 35720485951](https://github.com/MrJ-am/M-moire/actions/runs/35720485951).
+Les 56 tests Firefox/Chromium/tactiles et les 16 tests API PostgreSQL 17 ont
+réussi, puis les 107 fichiers réellement servis ont été comparés à l'artefact.
+Le service est actif et les accès administratifs anonymes sont refusés.
+La migration additive des sessions accompagne cette version ; les réponses
+collectées et l'ancien déploiement `9ad544dfc7ce546a851e01b6c8f9a2a8334ca616`
+sont conservés. La version précédente ne serait restaurée que par retour
+applicatif, sans restauration de la base.
+
+L'entrée NixOS active importe
+`/etc/nixos/vps-infrastructure/273139f1e66e7284af185fde66bf442cf7c9da03/hosts/hostinger/logique.nix`.
+Ce point d'entrée complète `projects.json` avec `operations/logique-site.json`.
+Conserver ce domaine, les routes Vision et le refus des hôtes inconnus dans
+les prochaines générations : la configuration de base seule ne représente pas
+cette publication. Toute nouvelle opération reprend l'état réellement actif.
+
+Preuves durables : `operations/corrections-publication.json`,
+[procédure](CORRECTIONS-SITES-20260922.md),
+[audit de sécurité](AUDIT-AUTHENTIFICATION-20260922.md), registre de coordination.
+Les états antérieurs ci-dessous sont conservés comme historique.
+
+## Historique au 21 septembre
 
 ## Vision ElmUI : publiée et enregistrée le 21 septembre à 22:32 UTC
 
@@ -45,7 +105,7 @@ le module Vision, en conservant ses cinq routes ; ne pas réutiliser aveuglémen
 un ancien candidat ACME/HTTPS. La publication parallèle de Logique reste une
 opération distincte. Aucun redémarrage du VPS n'a été effectué.
 
-## Logique : générations construites, aucune activation
+## Préparation Logique du 21 septembre : aucune activation à cette date
 
 Le site `logique.echos.systems` est préparé sur `preparation/logique-vps`.
 L'[audit nº 35637628338](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35637628338),

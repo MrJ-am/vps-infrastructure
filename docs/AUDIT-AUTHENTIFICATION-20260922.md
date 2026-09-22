@@ -15,6 +15,17 @@ provisionnement. Le fichier de secrets déployé n'a pas été ouvert pour contr
 chaque ligne. Les références réellement publiées sont consignées séparément dans
 les preuves de déploiement ; une branche corrigée ne prouve pas son activation.
 
+## État effectif après les corrections
+
+Les correctifs sont publiés le 22 septembre : Logique et interface Vision à
+11:13 UTC ([preuve VPS](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35720088997)),
+Matheval à 11:23 UTC ([preuve applicative](https://github.com/MrJ-am/M-moire/actions/runs/35720485951)).
+Versions, fichiers comparés et limites des contrôles : [ETAT.md](ETAT.md) et
+`operations/corrections-publication.json`. Vision conserve son serveur et son
+hachage historique ; sa mise à jour d'interface ne constitue pas une migration
+cryptographique. Les cinq vidéos Vimeo ont été ouvertes depuis le vrai domaine,
+sans prétendre avoir inventorié tous leurs traceurs après activation.
+
 ## Méthodes par projet
 
 | Projet et usage | Mot de passe / identité | Persistance de l'accès | Évaluation |
@@ -50,7 +61,8 @@ code reste possible, mais rétablit son ancienne politique jusqu'à redéploieme
 
 Vision consulte sa session SQLite, sa durée absolue, sa dernière activité et
 l'empreinte du fichier d'identifiants. Il exige une origine autorisée et un jeton
-CSRF pour les écritures. Le navigateur conserve le CSRF en mémoire et aucune
+CSRF pour les écritures. Le logout web révoque ce jeton de session ; il ne révoque pas le mot de passe
+utilisé par les clients Basic. Le navigateur conserve le CSRF en mémoire et aucune
 fiche ni secret en localStorage/sessionStorage. Les en-têtes internes sont effacés
 puis réécrits par Nginx. Le service d'authentification écoute en boucle locale,
 dispose d'un répertoire privé et de restrictions systemd. Les échecs de connexion
@@ -113,7 +125,8 @@ analyse réseau exhaustive des fournisseurs après activation n'est revendiquée
 
 ## Améliorations et limites restantes
 
-Appliquées dans les candidats : sessions Matheval bornées/révoquées, fenêtres
+Déployées et vérifiées dans les limites précisées ci-dessus : sessions Matheval
+bornées/révoquées, fenêtres
 adaptatives, vidéo activable, refus des domaines inconnus par Nginx, tests de
 navigation/collecte/3D, et publication soumise aux contrôles des trois applications.
 
