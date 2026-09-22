@@ -441,3 +441,67 @@ Actions : VPS et autres projets reprendre l’état actualisé avant leurs opér
 :PREUVE: -
 :END:
 
+
+* Journaliser HTTP avec rétention bornée et auditer Nginx
+:PROPERTIES:
+:ID: 20260922-vps-827dd589cd1f
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T22:11:20+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Demande du propriétaire : journaliser les requêtes HTTP et auditer la protection DDoS actuelle de Nginx, conformément au diagnostic MCP Vision.
+Préparation VPS : journal HTTP JSON sans corps, cookies, Authorization ni paramètres d’URL ; chemins classés par route sans identifiants métier. Espace journald dédié, rotation/rétention et budget bornés ; pertes de traces admises sous saturation. Les erreurs techniques Nginx existantes seront également bornées dans cet espace.
+Audit réel par Actions avant bascule : configuration Nginx générée, limites par route, connexions, délais et journaux. Nginx seul ne protège pas une liaison saturée en amont. Aucun test de charge massif ni changement DNS ou fournisseur prévu.
+Préserver tous les routages, limites HTTP, versions et authentifications, notamment le token MCP permanent ; ne pas réutiliser le test qui remplace ce token. Construire avec Nixpkgs installé, comparer les invariants, sauvegarder et armer un retour autonome avant activation.
+Chaque projet devra prendre connaissance du résultat final avant sa prochaine publication. Ce message annonce une préparation ; aucun changement serveur encore effectué.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
