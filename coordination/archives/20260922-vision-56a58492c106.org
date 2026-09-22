@@ -1,0 +1,30 @@
+* Ajouter un token MCP Vision pour Mistral
+:PROPERTIES:
+:ID: 20260922-vision-56a58492c106
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-22T21:02:55+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Demande du propriétaire : permettre l’accès MCP Vision depuis Mistral par Authorization: Bearer, en conservant Basic et les sessions web.
+Changement préparé dans VPS : vérification dédiée au seul /mcp via mrj-auth et Nginx ; jeton aléatoire de 256 bits, condensat en base de sessions, expiration, révocation et génération depuis une page authentifiée avec CSRF. Aucun secret dans Git ou les journaux, aucune modification métier.
+VPS : construire avec Nixpkgs installé, comparer les invariants hors routes MCP et code mrj-auth, préserver Logique/Matheval/interfaces, armer le retour autonome, contrôler les accès avant enregistrement. Vision : documenter le raccordement Mistral et vérifier initialize, tools/list et les appels applicatifs. Écritures de test seulement en base isolée.
+Ceci annonce le travail ; aucun token Bearer n’est encore déclaré actif. Les preuves et commits seront consignés après activation.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 867a07f77c51bcf1ba50c50a67ceae155626c459e1c4af4b3c58c369f9212a44
+:LU_LE: 2026-09-22T21:24:09+00:00
+:CONTEXTE: MrJ-am/vision@09872e561cb1249723d4b8ec17af388703ba22db
+:PREUVE: Activation VPS 35786083939 réussie ; contrôles HTTPS, token révoqué et CI Vision 35785184379 réussis.
+:END:
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: 867a07f77c51bcf1ba50c50a67ceae155626c459e1c4af4b3c58c369f9212a44
+:LU_LE: 2026-09-22T22:25:54+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@c2c3cf2e1073fb17113eabe26798e9862de0eb0f
+:PREUVE: Consignes, contrats et état relus ; routage, services, authentification et versions conservés par les invariants et les 32 contrôles Actions 35791837515 / 35792035605. Journal HTTP vérifié ; détails dans operations/http-publication.json.
+:END:
+

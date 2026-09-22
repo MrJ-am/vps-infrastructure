@@ -77,3 +77,18 @@ Tout changement de fond exige un message dans REGISTRE.org.
   ne découle du seul usage de HttpOnly, de SameSite ou du paramètre vidéo dnt.
 - Rapport de référence : docs/AUDIT-AUTHENTIFICATION-20260922.md. Les écarts connus
   et les preuves de déploiement y sont distingués des recommandations.
+
+
+* Journal HTTP
+:PROPERTIES:
+:CUSTOM_ID: journal-http
+:END:
+- Depuis le 22 septembre 2026, Nginx journalise les métadonnées HTTP dans
+  journald namespace http, tag http_acces. Ni corps, cookie, Authorization,
+  paramètres URL ni identifiants métier ; catégories de routes constantes.
+- Budget nominal persistant 128 Mio, rétention maximale 14 jours, rotation,
+  compression et pertes possibles sous saturation. Ce n'est ni un historique
+  garanti ni une protection DDoS complète, ni un journal des erreurs JSON-RPC.
+- Conserver le module journal-http.nix et l'entrée active précisée dans ETAT.md.
+  Les IP restent sur le VPS ; pas de copie brute dans Git ou Actions.
+  Paramètres, limites natives et preuves : docs/JOURNAL-HTTP.md.
