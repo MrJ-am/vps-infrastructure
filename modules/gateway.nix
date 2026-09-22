@@ -34,7 +34,7 @@ let
   hasProtectedAPI = lib.any (site: site ? auth) sites;
 
 in {
-  imports = [ ./mrj-auth.nix ];
+  imports = [ ./mrj-auth.nix ./journal-http.nix ];
   options.infrastructure.gateway.projects = lib.mkOption {
     type = lib.types.attrs;
     default = builtins.fromJSON (builtins.readFile ../projects.json);
@@ -79,3 +79,4 @@ in {
   networking.firewall.allowedTCPPorts = [ 80 443 ];
   };
 }
+
