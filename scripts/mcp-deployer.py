@@ -90,7 +90,7 @@ def preparer(revision):
     # Copie cohérente privée, sans restauration automatique de sessions ou de tokens.
     with sqlite3.connect('file:/var/lib/mrj-auth/sessions.sqlite?mode=ro',uri=True) as original:
         with sqlite3.connect(d/'sessions-avant.sqlite') as sauvegarde:original.backup(sauvegarde)
-    executer(sys.executable,source/'scripts/probe.py','--output',d/'http-avant.json',visible=True)
+    executer(sys.executable,source/'scripts/mcp-probe.py','--output',d/'http-avant.json',visible=True)
     temoin=d/'timer-verifie'
     executer('systemd-run','--unit=mcp-temoin-'+revision[:12],'--on-active=2s',
              '--timer-property=AccuracySec=1s','/run/current-system/sw/bin/touch',temoin)
