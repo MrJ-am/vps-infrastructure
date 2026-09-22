@@ -1,5 +1,8 @@
 # Infrastructure VPS
 
+Coordination entre projets : [registre partagé](coordination/REGISTRE.org),
+[synthèse des contrats](coordination/CONTRATS.org) et [mode d’emploi](docs/COORDINATION.md).
+
 Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
 plusieurs applications derrière une seule instance Nginx et partager une
 instance PostgreSQL 17 entre les projets qui en ont besoin.

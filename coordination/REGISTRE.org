@@ -1,0 +1,146 @@
+#+TITLE: Coordination des projets MrJ.am
+#+TODO: TODO LU BLOQUE | DONE
+#+OPTIONS: toc:nil
+
+Source : MrJ-am/vps-infrastructure, branche main. Lire ce mode d'emploi à la
+première utilisation, puis CONTRATS.org et uniquement les messages pertinents.
+La commande =python3 scripts/coordination.py lire PROJET= produit cette vue.
+Identifiants et dépôts : [[file:projets.json][projets.json]]. Archives : =coordination/archives/ID.org=.
+
+Format version 1 (sous-ensemble Org, sans évaluation de code) :
+- Un message =* Titre= avec tiroir PROPERTIES : ID unique, EMETTEUR (projet),
+  PORTEE (globale/ciblee), DESTINATAIRES (identifiants séparés par espaces),
+  CREE_LE (date UTC ISO), CONSOLIDATION (a-faire, sans-objet, ou CONTRATS.org#ancre).
+- Corps bref : fait/demande/proposition, impact, actions par projet, ordre des
+  opérations, références exactes et critère de fin. Maximum 4 000 caractères
+  pour titre/tiroir/corps. Référencer les détails, ne pas copier leurs journaux.
+- Chaque destinataire a exactement une sous-partie =** TODO projet=, puis un
+  tiroir : LU_SHA256, LU_LE, CONTEXTE, PREUVE. Valeur initiale : =-=.
+  CONTEXTE = dépôt@commit complet du projet qui répond. Commentaire bref facultatif
+  sous le tiroir ; tâches Org =- [ ]= / =- [X]= possibles (2 000 caractères maximum).
+- TODO = non lu ; LU = lu, actions restantes ; BLOQUE = lu, obstacle expliqué ;
+  DONE = traité, PREUVE obligatoire (commit, contrôle ou justification sans action).
+  DONE exige aussi toutes les cases cochées. LU_SHA256 couvre exactement le titre,
+  le tiroir et le corps du message, avant les réponses. La vue affiche cette empreinte.
+- Toute modification du contenu couvert impose de remettre toutes les réponses à
+  TODO et leurs accusés à =-=. Préférer un nouveau message lié après publication ;
+  une correction, annulation ou nouvelle action ne doit jamais passer inaperçue.
+- Seul le projet destinataire écrit son accusé après lecture réelle. L'émetteur
+  est aussi destinataire. Ne pas inventer un reçu ni déduire « lu » d'une installation.
+
+Destinataires et reprise :
+- Impact général, architecture VPS ou règle commune : PORTEE globale, tous les
+  projets actifs de projets.json lors de la création, y compris l'émetteur.
+- Impact limité : PORTEE ciblee, émetteur et projets affectés explicitement listés ;
+  inclure vps pour infrastructure/déploiement partagé, style et ses consommateurs
+  pour une API commune, signature pour ses fontes. En cas de doute, portée globale.
+- Lire le main distant actuel, même si le travail applicatif reste sur une ancienne
+  branche. Après reprise, avant changement partagé/publication et avant clôture,
+  actualiser le registre. Un accusé ancien ne dispense pas une nouvelle session de
+  lire les contrats et les messages encore pertinents pour sa tâche.
+- Si l'accès manque : le signaler, poursuivre les travaux indépendants, suspendre
+  seulement les actions qui dépendent de contrats non vérifiés. Pas d'acquittement fictif.
+- À l'inscription d'un projet : ajouter projets.json et la consigne AGENTS.md,
+  lire CONTRATS.org, l'inclure dans tous les messages globaux ouverts et les messages
+  ciblés qui le concernent (réinitialiser leurs accusés), puis créer
+  son message d'accueil. Ne pas lui imposer la lecture de toutes les archives.
+- Ne jamais retirer un destinataire pour permettre l'archivage. Pour un projet
+  retiré, une reprise explicite de responsabilité doit être documentée ; pas de
+  péremption automatique des messages non lus.
+
+Écriture et entretien :
+- Préparer sur une branche dédiée depuis main actuel, vérifier, puis intégrer
+  uniquement le changement de coordination par avance rapide, sans forcer. Avec
+  l'API GitHub, parent = dernier main lu ; mise à jour de référence force=false.
+  Après conflit : relire, réappliquer son seul changement, revérifier. Ne pas
+  fusionner aveuglément les accusés ni écraser la réponse d'un autre projet.
+- Relire le résultat distant après publication. Un fichier local ou une branche
+  de travail non intégrée n'est pas un message livré.
+- =verifier= contrôle le format ; =lire PROJET= n'écrit aucun accusé ; =repondre=
+  exige l'empreinte effectivement lue. Aucune commande n'exécute le contenu Org.
+- =archiver= propose les messages éligibles ; =archiver --appliquer= les déplace
+  intégralement dans les archives. Exécuter après chaque mise à jour. La CI main
+  le fait aussi automatiquement après validation, sans toucher au VPS.
+- Archivage seulement si TOUS les destinataires sont DONE au contenu actuel,
+  avec preuves et cases cochées, et CONSOLIDATION n'est plus a-faire. Une décision
+  durable doit figurer dans CONTRATS.org à l'ancre indiquée ; sans-objet est réservé
+  aux informations transitoires. Les archives sont immuables et ne sont pas chargées
+  en contexte ordinaire. Le contrôle de transition interdit les disparitions.
+- Budget de lecture : synthèse ≤ 8 000 caractères, mode d'emploi ≤ 6 000 ; vue
+  filtrée et aucun historique par défaut. Au-delà de 20 messages ouverts, regrouper
+  les sujets liés et traiter les blocages ; ne jamais supprimer pour tenir un quota.
+* Adopter la coordination commune entre projets
+:PROPERTIES:
+:ID: 20260922-vps-6a1100f852f3
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-22T09:03:40+00:00
+:CONSOLIDATION: CONTRATS.org#coordination
+:END:
+Décision du propriétaire du 22 septembre 2026 : remplacer les messages manuels
+entre conversations par ce registre commun, ses accusés et les règles AGENTS.md.
+
+Impact : les six projets consultent désormais coordination/CONTRATS.org et ce
+registre sur le main actuel de vps-infrastructure, indépendamment de leur branche
+de travail. Le mécanisme n'altère aucun contrat de déploiement ni version figée.
+
+Action de chaque destinataire : à sa prochaine reprise, lire le protocole et les
+contrats, vérifier sa consigne AGENTS.md, puis répondre DONE avec le commit de son
+contexte et « protocole lu, consigne vérifiée ». L'installation de la consigne par
+VPS ne vaut pas accusé de lecture du projet. Signaler BLOQUE si le registre privé
+est inaccessible ; poursuivre seulement le travail indépendant de ces contrats.
+
+VPS installe le registre, ses contrôles et les consignes ; les autres projets
+appliquent la lecture et notifient leurs futurs impacts depuis leur propre session.
+Critère de fin : les six projets ont confirmé leur adoption. Règle durable :
+coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+

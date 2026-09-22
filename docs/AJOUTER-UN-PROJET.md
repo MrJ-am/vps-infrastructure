@@ -1,5 +1,10 @@
 # Raccorder un projet sans modifier les précédents
 
+Avant le raccordement, inscrire le projet dans `coordination/projets.json`, ajouter
+le bloc de coordination dans son `AGENTS.md` et lui adresser un message d’accueil.
+Il lit `coordination/CONTRATS.org` et les messages ouverts qui le concernent ;
+voir [le protocole commun](../coordination/REGISTRE.org) et [son mode d’emploi](COORDINATION.md).
+
 Chaque projet reçoit un domaine ou sous-domaine propre et un port local
 réservé. Le registre actuel réserve `principiipetit.io`,
 `www.principiipetit.io` et `127.0.0.1:3000` à Matheval. Le préfixe existant
