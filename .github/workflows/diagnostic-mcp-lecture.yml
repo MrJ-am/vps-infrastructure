@@ -1,0 +1,35 @@
+name: Lire les traces MCP Vision
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-diagnostic-lecture.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-diagnostic-mcp-lecture
+  cancel-in-progress: false
+jobs:
+  lire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer l'accès administratif
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-mcp-lecture-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-mcp-lecture-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-mcp-lecture-cle" >> "$GITHUB_ENV"
+      - name: Lire et minimiser les traces sur le VPS
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-diagnostic-lecture/source; tar -xf - -C /root/vision-diagnostic-lecture/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -p python3 --run 'python3 /root/vision-diagnostic-lecture/source/scripts/vision-diagnostic-lire.py'"
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-mcp-lecture-cle"
