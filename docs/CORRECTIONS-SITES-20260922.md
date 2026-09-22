@@ -1,6 +1,13 @@
 # Publication coordonnée du 22 septembre 2026
 
-L'audit réel `35712882397` constate l'absence du domaine Logique dans Nginx,
+Les [préparation 35719822363](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35719822363)
+et [activation 35720088997](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35720088997)
+ont réussi. Matheval a ensuite été publié par son
+[workflow 35720485951](https://github.com/MrJ-am/M-moire/actions/runs/35720485951).
+Les preuves et révisions figurent dans [ETAT.md](ETAT.md) et
+`operations/corrections-publication.json`. Le retour automatique est désarmé.
+
+L'audit initial `35712882397` constatait l'absence du domaine Logique dans Nginx,
 de son certificat et de sa publication. Le serveur par défaut renvoie alors
 vers Matheval. Le domaine contractuel est `logique.echos.systems`.
 
@@ -28,13 +35,14 @@ la configuration HTTPS. Les liens de Logique et de l'interface Vision sont
 changés, puis les contrôles publics comparent chaque fichier servi à l'artefact.
 Les sites précédents, les six services, les sauvegardes, une nouvelle connexion
 du runner et l'authentification Vision réelle sont vérifiés avant enregistrement
-de la génération de démarrage. Les captures de Vision montrent la connexion vide.
+de la génération de démarrage. Les captures de Vision montrent la connexion vide. Les cinq vidéos Vimeo sont
+contrôlées depuis le vrai domaine, avec disponibilité du lecteur ou du lien de
+secours consignée séparément des contrôles internes.
 
 Un échec rétablit la génération précédente et l'ancien lien Vision ; seul le
 lien Logique de cette tentative est retiré. Les versions et certificats sont
 conservés. Aucun retour ne restaure une base ni n'efface des réponses.
 
-Matheval utilise ensuite son propre workflow de publication, avec sa migration
-additive de sessions et son retour applicatif. Les preuves de publication
-effective doivent être consignées dans `ETAT.md` et le registre commun :
-ce document décrit la procédure et ne déclare pas encore une bascule réussie.
+Matheval a utilisé son propre workflow de publication, avec sa migration
+additive de sessions et son retour applicatif. Les preuves effectives sont
+consignées dans `ETAT.md`, le rapport JSON et le registre commun.

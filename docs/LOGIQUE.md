@@ -1,4 +1,24 @@
-# Préparer Apprendre à démontrer sur le VPS
+# Apprendre à démontrer — site publié
+
+Le site est publié depuis le 22 septembre 2026 à 11:13 UTC sur
+[logique.echos.systems](https://logique.echos.systems/?accueil=1).
+L'[activation 35720088997](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35720088997)
+a vérifié le certificat réel, toutes les ressources, quatre formats d'écran,
+la récupération des anciennes redirections `/matheval/` et les cinq lecteurs Vimeo.
+Les hôtes inconnus sont désormais refusés. Les autres sites et l'authentification
+Vision ont passé leurs contrôles ; la génération testée est enregistrée.
+
+Le code servi est `615439c841db1934ffaddc1dee64c85ff6c56cf2`, style
+`b2177c0fd2c46c6f528266d30f7b933d3add1566`, identité
+`17495b13cefa24473e37434b98336b27caec8cdf`. Son intégration sur le main
+applicatif est `6a0c76340d0c2132b80d002af3b13d9f35b78cef`, au même arbre Git.
+Lire [la procédure et ses preuves](CORRECTIONS-SITES-20260922.md),
+[l'état courant](ETAT.md) et `operations/corrections-publication.json`.
+Les anciennes préparations ci-dessous sont conservées comme historique ;
+elles ne doivent pas être rejouées après cette activation.
+
+## Historique de la préparation initiale
+
 
 ## Cible et état
 

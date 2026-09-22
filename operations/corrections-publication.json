@@ -1,0 +1,134 @@
+{
+  "dateActivation": "2026-09-22T11:13:57Z",
+  "infrastructure": {
+    "revision": "273139f1e66e7284af185fde66bf442cf7c9da03",
+    "ci": 35719627664,
+    "preparation": {
+      "execution": 35719822363,
+      "commit": "ec82fc320abd68aa860d145b74504b8773cf8aae"
+    },
+    "activation": {
+      "execution": 35720088997,
+      "commit": "436b0019fd10f4ad37c0bc030511f568a80411b2"
+    },
+    "etat": {
+      "actif": "/nix/store/y35z1d3l6882ylrz7glrq7q7yp4zyks7-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "demarrage": "/nix/store/y35z1d3l6882ylrz7glrq7q7yp4zyks7-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "configuration": "4aa2037715e080c49541e079f84cfc2cdbe96af742dc7a02bbb5732059fb3d71",
+      "matheval": "/srv/matheval/releases/9ad544dfc7ce546a851e01b6c8f9a2a8334ca616",
+      "vision": "/srv/vision/releases/151ab64bd5c9c5c54297e88dbe4d548343cc4928",
+      "vision-interface": "/srv/vision-interface/releases/dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+      "logique": "/srv/logique/releases/615439c841db1934ffaddc1dee64c85ff6c56cf2"
+    },
+    "ancienneGeneration": "/nix/store/bbp9i9c94l8f4lvkr23qlgghhlw29qdd-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "retourAutomatiqueDesarme": true,
+    "basesRestaurees": false
+  },
+  "applications": {
+    "logique": {
+      "application": "615439c841db1934ffaddc1dee64c85ff6c56cf2",
+      "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+      "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+      "sha256": "f48e3af59940957732520ba76eb9528bada6abc6284671837e2fd59ca712cf27",
+      "ci": {
+        "execution": 35716169678,
+        "revision": "615439c841db1934ffaddc1dee64c85ff6c56cf2",
+        "conclusion": "success",
+        "artefact": 10689610483
+      }
+    },
+    "vision": {
+      "application": "dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+      "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+      "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+      "sha256": "5477f7830c8cd1a36175f217531f8e1358d6ac02cc57ae2872b3631eaa315324",
+      "ci": {
+        "execution": 35715726024,
+        "revision": "dbf5fcb3b1c70ec8ee1717db8e17527619840245",
+        "conclusion": "success",
+        "artefact": 10688579729
+      }
+    },
+    "matheval": {
+      "application": "ebae2c9d358e4b76d120b85e12afb4193cc37967",
+      "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
+      "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+      "ci": {
+        "execution": 35718904657,
+        "revision": "ebae2c9d358e4b76d120b85e12afb4193cc37967",
+        "conclusion": "success",
+        "artefact": 10689619336,
+        "sha256Zip": "3c88a7dadd8ce88b7e5c9cf11c737fa804b8153dbac7b215d61c607b2a54dde0"
+      }
+    }
+  },
+  "controles": {
+    "anciensSitesHttpTls": 22,
+    "logique": {
+      "httpsReel": true,
+      "empreintesCompletes": true,
+      "redirectionHistoriqueRecuperee": true,
+      "domainesInconnusRefuses": true,
+      "formatsEcran": 4,
+      "videosVimeoDisponibles": 5,
+      "videosVimeoTotal": 5,
+      "videos": [
+        {
+          "parcours": "contrats",
+          "lecon": "nommer",
+          "video": "1003697436/afb23e1b66",
+          "lectureIntegreeDisponible": true
+        },
+        {
+          "parcours": "formaliser",
+          "lecon": "tous-un",
+          "video": "1003737827/7150ea876b",
+          "lectureIntegreeDisponible": true
+        },
+        {
+          "parcours": "deduire",
+          "lecon": "si-alors",
+          "video": "1003702315",
+          "lectureIntegreeDisponible": true
+        },
+        {
+          "parcours": "deduire",
+          "lecon": "et-cas",
+          "video": "1003741264",
+          "lectureIntegreeDisponible": true
+        },
+        {
+          "parcours": "deduire",
+          "lecon": "rigueur",
+          "video": "1003701428",
+          "lectureIntegreeDisponible": true
+        }
+      ]
+    },
+    "vision": {
+      "empreintesCompletes": true,
+      "connexionReelle": true,
+      "cookie": true,
+      "csrf": true,
+      "origine": true,
+      "lecturePostgresql": true,
+      "basic": true,
+      "revocation": true,
+      "ecritureMetier": false
+    }
+  },
+  "mathevalPublication": {
+    "etat": "reussie",
+    "execution": 35720485951,
+    "commit": "ebae2c9d358e4b76d120b85e12afb4193cc37967",
+    "date": "2026-09-22T11:23:14Z",
+    "artefact": 10691004002,
+    "sha256Zip": "c8b25e0df0d3f7a62e94f6312020f1e60fa62c3f68a05b71ba93c8d478135f0f",
+    "fichiersServisVerifies": 107,
+    "testsNavigateur": 56,
+    "testsApiPostgresql17": 16,
+    "serviceActif": true,
+    "administrationAnonymeRefusee": true,
+    "precedenteConservee": "9ad544dfc7ce546a851e01b6c8f9a2a8334ca616"
+  }
+}
