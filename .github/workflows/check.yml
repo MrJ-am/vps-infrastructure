@@ -27,6 +27,9 @@ jobs:
             nix-instantiate --eval --strict --json tests/system.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/logique.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/mcp-config.nix \
+            --argstr configuration "$PWD/hosts/hostinger/logique.nix" >/dev/null
           for CONFIGURATION_LOGIQUE in configuration logique-acme logique; do
             sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
               nix-instantiate --eval --strict --json scripts/logique-config.nix \
