@@ -22,7 +22,7 @@
     ForwardToWall=no
     ReadKMsg=no
   '';
-  systemd.services."systemd-journald@http" = {
+  systemd.services."systemd-journald@" = {
     restartTriggers = [ config.environment.etc."systemd/journald@http.conf".source ];
     stopIfChanged = false;
   };
