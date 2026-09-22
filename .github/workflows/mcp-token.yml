@@ -82,7 +82,7 @@ jobs:
         run: |
           sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
           sh scripts/connect.sh "cat /root/mcp-preparations/$REVISION/http-avant.json" > "$RUNNER_TEMP/http-avant.json"
-          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-avant.json"
+          python3 scripts/mcp-probe.py --baseline "$RUNNER_TEMP/http-avant.json"
       - name: Vérifier le token depuis HTTPS et le navigateur
         if: steps.demande.outputs.operation == 'activer'
         working-directory: candidat
