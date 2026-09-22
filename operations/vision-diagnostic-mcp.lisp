@@ -49,15 +49,29 @@
                                  "record_review")))
          (error (json-object-get response "error"))
          (code (json-object-get error "code"))
+         (data (json-object-get error "data"))
+         (message (json-object-get data "message"))
+         (reason (cond ((and (stringp message)
+                             (search "Unexpected argument" message)) "unexpected_argument")
+                       ((and (stringp message)
+                             (search "Missing required argument" message)) "missing_argument")
+                       ((and (stringp message)
+                             (search "must be an integer" message)) "invalid_integer")
+                       ((and (stringp message)
+                             (search "must be a string" message)) "invalid_string")
+                       ((and (stringp message)
+                             (search "must be an object" message)) "invalid_object")
+                       (t "autre")))
          (result (json-object-get response "result")))
     (format *error-output*
-            "mcp_trace=~D method=~A tool=~A arguments=~A result=~A~%"
+            "mcp_trace=~D method=~A tool=~A arguments=~A meta=~A result=~A reason=~A~%"
             number method tool
             (if (string= method "tools/call")
                 (mcp-argument-shape request) "sans-objet")
+            (if (nth-value 1 (json-object-get params "_meta")) "present" "absent")
             (cond ((integerp code) code)
                   ((eq (json-object-get result "isError") :true) "tool_error")
-                  (t "ok")))
+                  (t "ok")) reason)
     (finish-output *error-output*)))
 
 (define-condition invalid-parameters (error)
@@ -625,11 +639,11 @@
                 ((string= method "ping")
                  (values 200 (mcp-success-response id (jobject))))
                 ((string= method "tools/list")
-                 (validate-object-keys params '("cursor"))
+                 (validate-object-keys params '("cursor" "_meta"))
                  (values 200
                          (mcp-success-response id (jobject "tools" *mcp-tools*))))
                 ((string= method "tools/call")
-                 (validate-object-keys params '("name" "arguments"))
+                 (validate-object-keys params '("name" "arguments" "_meta"))
                  (let ((name (validated-string (required-value params "name")
                                                "name" 128 :allow-empty nil))
                        (arguments
