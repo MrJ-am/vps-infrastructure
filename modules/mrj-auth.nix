@@ -38,7 +38,7 @@ in lib.mkIf (sites != []) {
       MRJ_AUTH_HOSTS = lib.concatStringsSep "," (map (site: site.domain) sites);
     };
     serviceConfig = {
-      ExecStart = "${python}/bin/python3 ${../services/mrj-auth/server.py}";
+      ExecStart = "${python}/bin/python3 ${../services/mrj-auth}/server.py";
       User = "mrj-auth"; Group = "mrj-auth";
       StateDirectory = "mrj-auth"; StateDirectoryMode = "0700";
       Restart = "on-failure"; RestartSec = 3; UMask = "0077";

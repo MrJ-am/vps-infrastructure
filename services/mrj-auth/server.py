@@ -16,6 +16,7 @@ from passlib.hash import sha512_crypt
 COOKIE = '__Secure-mrj_session'
 LIFETIME = 12 * 60 * 60
 IDLE = 2 * 60 * 60
+DUREE_TOKEN_MCP = 365 * 24 * 60 * 60
 
 class Sessions:
     def __init__(self, path, credentials, domain, hosts):
@@ -26,7 +27,10 @@ class Sessions:
               digest TEXT PRIMARY KEY, username TEXT NOT NULL, csrf TEXT NOT NULL,
               expires INTEGER NOT NULL, last_seen INTEGER NOT NULL, fingerprint TEXT NOT NULL);
               CREATE TABLE IF NOT EXISTS attempts (ip TEXT NOT NULL, at INTEGER NOT NULL);
-              CREATE INDEX IF NOT EXISTS attempts_ip ON attempts(ip,at);''')
+              CREATE INDEX IF NOT EXISTS attempts_ip ON attempts(ip,at);
+              CREATE TABLE IF NOT EXISTS mcp_tokens (
+                username TEXT PRIMARY KEY, digest TEXT NOT NULL UNIQUE,
+                expires INTEGER NOT NULL, fingerprint TEXT NOT NULL);''')
     def connect(self):
         db = sqlite3.connect(self.path, timeout=5)
         db.row_factory = sqlite3.Row
@@ -83,6 +87,34 @@ class Sessions:
         if token:
             with closing(self.connect()) as db, db:
                 db.execute('DELETE FROM sessions WHERE digest=?',(hashlib.sha256(token.encode()).hexdigest(),))
+    def token_mcp(self, username, creer=False, revoquer=False):
+        """Un token par compte ; le secret n'est renvoyé qu'à sa création."""
+        with closing(self.connect()) as db, db:
+            if creer or revoquer:
+                db.execute('DELETE FROM mcp_tokens WHERE username=?', (username,))
+            if creer:
+                secret = secrets.token_urlsafe(32)
+                expiration = int(time.time()) + DUREE_TOKEN_MCP
+                db.execute('INSERT INTO mcp_tokens VALUES (?,?,?,?)',
+                           (username, hashlib.sha256(secret.encode()).hexdigest(),
+                            expiration, self.fingerprint()))
+                return {'token': secret, 'expiresAt': expiration}
+            ligne = db.execute('SELECT expires,fingerprint FROM mcp_tokens WHERE username=?',
+                               (username,)).fetchone()
+            actif = bool(ligne and ligne['expires'] > time.time()
+                         and hmac.compare_digest(ligne['fingerprint'], self.fingerprint()))
+            return {'active': actif, 'expiresAt': ligne['expires'] if actif else None}
+    def verifier_token_mcp(self, authorization):
+        correspondance = re.fullmatch(r'Bearer ([A-Za-z0-9_-]{43})', authorization, re.IGNORECASE)
+        if not correspondance:
+            return None
+        condensat = hashlib.sha256(correspondance[1].encode()).hexdigest()
+        with closing(self.connect()) as db:
+            ligne = db.execute('SELECT * FROM mcp_tokens WHERE digest=? AND expires>?',
+                               (condensat, int(time.time()))).fetchone()
+        if ligne and hmac.compare_digest(ligne['fingerprint'], self.fingerprint()):
+            return ligne['username']
+        return None
     def cookie(self,token='',clear=False):
         return f'{COOKIE}={token}; Domain={self.domain}; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age={0 if clear else LIFETIME}'
 
@@ -101,7 +133,35 @@ class Handler(BaseHTTPRequestHandler):
         host=self.headers.get('X-Forwarded-Host','')
         if host not in app.hosts or self.headers.get('X-Forwarded-Proto')!='https':
             return self.reply(403,{'error':'invalid_origin'})
+        if self.path == '/verify-mcp' and self.command == 'GET':
+            valeurs = self.headers.get_all('Authorization', [])
+            utilisateur = (app.verifier_token_mcp(valeurs[0])
+                           if len(valeurs) == 1 and host == 'vision.mrj.am' else None)
+            if not utilisateur:
+                return self.reply(401, {'error': 'authentication_required'},
+                                  {'WWW-Authenticate': 'Bearer realm="Vision MCP"'})
+            return self.reply(204)
+        if self.path in ('/auth/mcp', '/auth/mcp.js') and self.command == 'GET':
+            fichier = 'mcp.html' if self.path == '/auth/mcp' else 'mcp.js'
+            donnees = Path(__file__).with_name(fichier).read_bytes()
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html; charset=utf-8' if fichier.endswith('.html') else 'text/javascript; charset=utf-8')
+            self.send_header('Content-Length', str(len(donnees)))
+            self.send_header('Cache-Control', 'no-store')
+            self.send_header('X-Content-Type-Options', 'nosniff')
+            self.send_header('Referrer-Policy', 'no-referrer')
+            self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+            self.end_headers()
+            self.wfile.write(donnees)
+            return
         session=app.session(self.headers.get('Cookie',''))
+        if self.path == '/auth/mcp-token':
+            if host != 'vision.mrj.am':
+                return self.reply(403, {'error': 'invalid_origin'})
+            if not session:
+                return self.reply(401, {'error': 'authentication_required'})
+            if self.command == 'GET':
+                return self.reply(200, app.token_mcp(session['username']))
         if self.path=='/verify' and self.command=='GET':
             if not session:return self.reply(401,{'error':'authentication_required'})
             if self.headers.get('X-Original-Method') not in ('GET','HEAD'):
@@ -111,7 +171,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path=='/auth/session' and self.command=='GET':
             if not session:return self.reply(401,{'error':'authentication_required'})
             return self.reply(200,{'username':session['username'],'csrf':session['csrf'],'expiresAt':session['expires']})
-        if self.path not in ('/auth/login','/auth/logout') or self.command!='POST':
+        if self.path not in ('/auth/login','/auth/logout','/auth/mcp-token') or self.command!='POST':
             return self.reply(404,{'error':'not_found'})
         if self.headers.get('Origin')!='https://'+host:
             return self.reply(403,{'error':'invalid_origin'})
@@ -121,6 +181,13 @@ class Handler(BaseHTTPRequestHandler):
         if not 0 < length <= 8192:return self.reply(413,{'error':'invalid_input'})
         body=json.loads(self.rfile.read(length))
         if not isinstance(body,dict):return self.reply(400,{'error':'invalid_input'})
+        if self.path == '/auth/mcp-token':
+            if not hmac.compare_digest(self.headers.get('X-CSRF-Token',''), session['csrf']):
+                return self.reply(403, {'error': 'csrf_required'})
+            if set(body) != {'action'} or body['action'] not in ('creer', 'revoquer'):
+                return self.reply(400, {'error': 'invalid_input'})
+            return self.reply(200, app.token_mcp(session['username'],
+                              creer=body['action'] == 'creer', revoquer=body['action'] == 'revoquer'))
         if self.path=='/auth/logout':
             if not session:return self.reply(401,{'error':'authentication_required'})
             if not hmac.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):return self.reply(403,{'error':'csrf_required'})
