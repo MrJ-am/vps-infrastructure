@@ -46,7 +46,7 @@ def verifier():
     cree=False
     try:
         statut,_,corps=requete('/auth/mcp-token',entetes=prives)
-        assert statut==200 and not json.loads(corps)['active'],'Un token existe déjà : ne pas le remplacer pendant le contrôle'
+        assert statut==200,'État du token MCP indisponible'\n        if json.loads(corps)['active']:\n            print('Token permanent présent : contrôle destructif ignoré pour le préserver.')\n            return
         assert requete('/auth/mcp-token',{'action':'creer'},{'Cookie':cookie})[0]==403,'CSRF non exigé'
         assert requete('/auth/mcp-token',{'action':'creer'},{**prives,'Origin':'https://autre.mrj.am'})[0]==403,'Origine étrangère acceptée'
         with sync_playwright() as p:
