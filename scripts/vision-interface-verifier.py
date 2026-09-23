@@ -60,6 +60,8 @@ def verifier():
         page.get_by_label('Mot de passe', exact=True).fill(secret)
         page.get_by_role('button', name='Se connecter', exact=True).click()
         expect(page.get_by_role('heading', name='Mes fiches', exact=True)).to_be_visible(timeout=20000)
+        page.locator("summary[aria-label='Ouvrir le menu']").click()
+        expect(page.get_by_role('link', name='Tokens d’accès')).to_have_attribute('href', '/auth/mcp')
         # Attendre la réponse réelle PostgreSQL, même si la collection est vide.
         expect(page.get_by_role('button', name='Réessayer le chargement', exact=True)).to_have_count(0)
         cookies = contexte.cookies(ORIGINE)
