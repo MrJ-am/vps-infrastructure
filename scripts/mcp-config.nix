@@ -9,7 +9,11 @@ let
   # Les chemins TLS sont dérivés par Nginx depuis ACME, comparé séparément.
   nettoyer = nom: site: builtins.removeAttrs
     (if nom == "vision.mrj.am"
-     then site // { locations = builtins.removeAttrs site.locations [ "= /mcp" "= /_vision_mcp_token"\n       "= /.well-known/oauth-protected-resource"\n       "= /.well-known/oauth-protected-resource/mcp"\n       "= /.well-known/oauth-authorization-server"\n       "^~ /oauth/" "@vision-mcp-authentication-required" ]; }
+     then site // { locations = builtins.removeAttrs site.locations [ "= /mcp" "= /_vision_mcp_token"
+       "= /.well-known/oauth-protected-resource"
+       "= /.well-known/oauth-protected-resource/mcp"
+       "= /.well-known/oauth-authorization-server"
+       "^~ /oauth/" "@vision-mcp-authentication-required" ]; }
      else site) [ "sslCertificate" "sslCertificateKey" ];
 in {
   inherit (base) systeme nginx;
