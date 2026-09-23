@@ -1,4 +1,27 @@
-# État attesté au 22 septembre 2026
+# État attesté au 23 septembre 2026
+
+## Tokens Vision indépendants et menu publiés
+
+La gestion des tokens par nom, historique et révocation individuelle est active sur
+`https://vision.mrj.am/auth/mcp`. Le token Mistral préexistant a été conservé.
+La [préparation 35804593654](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35804593654)
+et l’[activation 35804717827](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35804717827)
+ont validé Basic, Bearer, cinq outils, lecture, CSRF, rendu mobile et révocation
+du seul token temporaire. Sources d’authentification `d71dff5858b221a4eb91655674ab1db74893a5a0` ;
+génération active et enregistrée `qd9nkmq2yv55zdb5wfhab1sdy4w1hxvv`.
+Les versions du serveur Vision, de Matheval et de Logique ont été conservées.
+
+L’artefact de l’interface Vision `cb92ffa7e4ea5b547e09c9ad1d6dbe01c7e93ccf`,
+validé par les CI applicatives 35801855474 et 35801855496, a été préparé par
+l’[exécution 35805254157](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35805254157)
+puis [publié et vérifié en production par 35805299046](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35805299046).
+Le manifeste, les fichiers servis, la connexion réelle, la lecture PostgreSQL,
+les protections CSRF et le lien du menu vers `/auth/mcp` ont été contrôlés.
+La publication statique remplace uniquement le lien de l’interface ; un retour
+autonome à quinze minutes était armé pendant les vérifications et a été désarmé
+après leur réussite. Aucune fiche de test n’a été créée.
+
+## Historique attesté au 22 septembre 2026
 
 ## Journal HTTP : activé le 22 septembre 2026
 
