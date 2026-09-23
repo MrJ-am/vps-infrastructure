@@ -112,12 +112,18 @@ def lire(revision):
 def retour(revision):
     d,r=lire(revision)
     if (d/'enregistre').exists():return
+    # Le timer d'un essai échoué peut encore être armé après un retour immédiat.
+    # Il ne doit jamais annuler la publication ultérieure du même dérivé Nix.
     subprocess.run(['systemctl','stop','mcp-appliquer-'+revision[:12]],check=False)
     with (d/'bascule.lock').open('a') as verrou:
         fcntl.flock(verrou,fcntl.LOCK_EX)
         if (d/'enregistre').exists():return
         exiger((d/'engage').exists(),'Aucune activation engagée')
-        exiger(etat()['actif'] in (r['avant']['actif'],r['candidat']),'Une autre génération est active')
+        actuel=etat()
+        exiger(actuel['actif'] in (r['avant']['actif'],r['candidat'])
+               and actuel['configuration']==r['avant']['configuration']
+               and actuel['demarrage']==r['avant']['demarrage'],
+               'Une autre opération a enregistré son démarrage : retour interdit')
         (d/'retour-engage').touch()
         temporaire=ENTREE.with_suffix('.mcp-retour')
         if temporaire.exists() or temporaire.is_symlink():temporaire.unlink()
@@ -126,6 +132,7 @@ def retour(revision):
         executer('nix-env','--profile','/nix/var/nix/profiles/system','--set',r['avant']['demarrage'])
         executer(r['avant']['actif']+'/bin/switch-to-configuration','switch',visible=True)
         services();sauver(d/'retour.json',etat())
+    subprocess.run(['systemctl','stop','mcp-retour-'+revision[:12]+'.timer'],check=False)
 
 
 def appliquer(revision):

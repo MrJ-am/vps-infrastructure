@@ -35,6 +35,27 @@ class GardeFous(unittest.TestCase):
         (self.d/'enregistre').touch()
         with patch.object(m.subprocess,'run') as run:m.retour(self.revision)
         run.assert_not_called();self.execution.assert_not_called()
+    def test_ancien_timer_ne_retablit_pas_la_generation_apres_autre_publication(self):
+        (self.d/'engage').touch()
+        with patch.object(m,'etat',return_value={
+                'actif':'nouveau','demarrage':'nouveau','configuration':'nouvelle-publication'}):
+            with patch.object(m.subprocess,'run'):
+                with self.assertRaisesRegex(RuntimeError,'retour interdit'):
+                    m.retour(self.revision)
+        self.execution.assert_not_called()
+        self.assertFalse((self.d/'retour-engage').exists())
+    def test_retour_immediat_annule_le_timer_de_la_revision(self):
+        (self.d/'engage').touch()
+        (self.d/'configuration-avant.nix').write_text('ancien')
+        entree=self.d/'configuration.nix'
+        entree.write_text('nouveau')
+        with patch.object(m,'etat',return_value=self.r['avant']):
+            with patch.object(m.subprocess,'run') as run:
+                with patch.object(m,'ENTREE',entree):
+                    m.retour(self.revision)
+        self.assertTrue((self.d/'retour-engage').exists())
+        run.assert_any_call(['systemctl','stop','mcp-retour-'+self.revision[:12]+'.timer'],
+                            check=False)
     def test_finalisation_refuse_changement_concurrent(self):
         (self.d/'essai.json').write_text('{}')
         with patch.object(m,'etat',return_value={**self.r['avant'],'actif':'nouveau','configuration':'autre'}):
