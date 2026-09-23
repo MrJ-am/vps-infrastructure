@@ -76,13 +76,15 @@ class OAuthTests(AuthTests):
             self.assertEqual(self.envoyer('/oauth/authorize', formulaire, cookie,
                 'application/x-www-form-urlencoded', origine='https://claude.ai')[0], 403)
             self.assertEqual(self.envoyer('/oauth/authorize', formulaire, cookie,
-                'application/x-www-form-urlencoded', origine='null')[0], 403)
+                'application/x-www-form-urlencoded', origine='https://evil.example')[0], 403)
             mauvais_csrf = urllib.parse.urlencode({'request_id': identifiant,
                 'csrf': 'incorrect', 'decision': 'autoriser'}).encode()
             self.assertEqual(self.envoyer('/oauth/authorize', mauvais_csrf, cookie,
                 'application/x-www-form-urlencoded', origine=None)[0], 400)
+            self.assertEqual(self.envoyer('/oauth/authorize', mauvais_csrf, cookie,
+                'application/x-www-form-urlencoded', origine='null')[0], 400)
             statut, _, _ = self.envoyer('/oauth/authorize', formulaire, cookie,
-                                        'application/x-www-form-urlencoded', origine=None)
+                                        'application/x-www-form-urlencoded', origine='null')
         finally:
             oauth.rediriger = original
         self.assertEqual(statut, 200)
