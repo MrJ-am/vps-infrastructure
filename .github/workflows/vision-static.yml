@@ -28,13 +28,8 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
               for k,v in d.items(): f.write(f'{k}={v}\n')
           PY
-      - uses: actions/download-artifact@v4
-        with:
-          name: interface-vision-verifiee
-          repository: MrJ-am/vision
-          run-id: ${{ steps.demande.outputs.run }}
-          github-token: ${{ github.token }}
-          path: artefact
+      - name: Extraire l’artefact vérifié et conservé
+        run: unzip -q vendor/vision-static.zip -d artefact
       - name: Vérifier le manifeste du candidat
         env:
           REVISION: ${{ steps.demande.outputs.revision }}
@@ -48,3 +43,47 @@ jobs:
               assert hashlib.sha256((p/nom).read_bytes()).hexdigest()==digest,nom
           print('Artefact exact et révision vérifiés.')
           PY
+      - name: Installer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-static-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-static-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-static-cle" >> "$GITHUB_ENV"
+      - name: Préparer les fichiers statiques sans bascule
+        if: steps.demande.outputs.operation == 'preparer'
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: python3 scripts/vision-static-deployer.py preparer "$REVISION"
+      - name: Installer le navigateur
+        if: steps.demande.outputs.operation == 'activer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Activer sous retour autonome
+        if: steps.demande.outputs.operation == 'activer'
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: python3 scripts/vision-static-deployer.py activer "$REVISION"
+      - name: Contrôler l’interface servie, le menu et la session
+        if: steps.demande.outputs.operation == 'activer'
+        env:
+          VISION_INTERFACE_ARTEFACT: artefact
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: python3 scripts/vision-interface-verifier.py
+      - name: Enregistrer la publication
+        if: steps.demande.outputs.operation == 'activer'
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: python3 scripts/vision-static-deployer.py finaliser "$REVISION"
+      - name: Retour immédiat en cas d’échec
+        if: failure() && steps.demande.outputs.operation == 'activer'
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: python3 scripts/vision-static-deployer.py retour "$REVISION"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-static-cle"
