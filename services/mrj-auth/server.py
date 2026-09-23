@@ -223,16 +223,19 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(401, {'error': 'authentication_required'},
                                   {'WWW-Authenticate': 'Bearer realm="Vision MCP", resource_metadata="https://vision.mrj.am/.well-known/oauth-protected-resource/mcp"'})
             return self.reply(204)
-        if self.path in ('/auth/mcp', '/auth/mcp.js') and self.command == 'GET':
-            fichier = 'mcp.html' if self.path == '/auth/mcp' else 'mcp.js'
+        if self.path in ('/auth/mcp', '/auth/mcp.js', '/auth/style.css') and self.command == 'GET':
+            fichier = {'/auth/mcp': 'mcp.html', '/auth/mcp.js': 'mcp.js',
+                       '/auth/style.css': 'style.css'}[self.path]
             donnees = Path(__file__).with_name(fichier).read_bytes()
             self.send_response(200)
-            self.send_header('Content-Type', 'text/html; charset=utf-8' if fichier.endswith('.html') else 'text/javascript; charset=utf-8')
+            self.send_header('Content-Type', 'text/html; charset=utf-8' if fichier.endswith('.html')
+                             else 'text/css; charset=utf-8' if fichier.endswith('.css')
+                             else 'text/javascript; charset=utf-8')
             self.send_header('Content-Length', str(len(donnees)))
             self.send_header('Cache-Control', 'no-store')
             self.send_header('X-Content-Type-Options', 'nosniff')
             self.send_header('Referrer-Policy', 'no-referrer')
-            self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+            self.send_header('Content-Security-Policy', "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
             self.end_headers()
             self.wfile.write(donnees)
             return

@@ -83,6 +83,8 @@ class TokensTests(AuthTests):
         self.assertEqual(statut, 200)
         self.assertIn('Historique et gestion', page)
         self.assertIn('/auth/mcp.js', page)
+        self.assertIn('/auth/style.css', page)
+        self.assertEqual(self.req_page('/auth/style.css')[0], 200)
 
     def req_page(self, path):
         requete = urllib.request.Request(
