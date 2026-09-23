@@ -109,3 +109,10 @@ print("Retour token lancé :", any(mot in journal for mot in ("Starting","Starte
 for ligne in journal.splitlines():
     if any(mot in ligne for mot in ("Starting","Started","Finished","Failed","result")):
         print("Événement retour :", ligne[:240])
+
+unites = subprocess.run(["systemctl","list-units","--all","--plain","--no-legend",
+                         "*retour*.service","*retour*.timer"],
+                        capture_output=True,text=True).stdout
+for ligne in unites.splitlines():
+    if any(m in ligne for m in ("mcp-", "vision-", "http-")):
+        print("Unité retour :", ligne[:180])
