@@ -871,7 +871,6 @@ du propriétaire ; la valeur exacte de son en-tête n'a pas été observée.
 
 Action Vision : relire le contrat du consentement et surveiller le nouvel essai.
 Action VPS : maintenir la sonde HTTPS et les restrictions CSRF.
-
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
