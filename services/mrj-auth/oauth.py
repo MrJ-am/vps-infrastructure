@@ -216,9 +216,11 @@ def consentir(handler, sessions):
     session = sessions.session(handler.headers.get("Cookie", ""))
     # Certains navigateurs ne transmettent pas Origin pour un formulaire HTML.
     # Le consentement reste lié à une session et à un jeton CSRF imprévisible.
-    # Une origine explicitement étrangère est toujours refusée.
+    # Les vues OAuth intégrées peuvent envoyer Origin: null (origine opaque).
+    # Le jeton CSRF reste obligatoire et lié à la session avant tout accord.
+    # Toute autre origine étrangère est refusée.
     origine = handler.headers.get("Origin")
-    if not session or (origine is not None and origine != ORIGINE):
+    if not session or origine not in (None, "null", ORIGINE):
         return erreur(handler, 403, "invalid_origin")
     try:
         q = parse_qs(lire_corps(handler, "application/x-www-form-urlencoded"),
