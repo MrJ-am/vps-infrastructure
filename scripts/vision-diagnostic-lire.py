@@ -63,6 +63,10 @@ with sqlite3.connect("file:/var/lib/mrj-auth/sessions.sqlite?mode=ro", uri=True)
     if "access_tokens" in tables:
         print("Nombre de tokens actifs :", db.execute(
             "SELECT count(*) FROM access_tokens WHERE revoked IS NULL AND expires > strftime('%s','now')").fetchone()[0])
+        empreinte = hashlib.sha256(Path("/var/lib/vision/auth/htpasswd").read_bytes()).hexdigest()
+        print("Tokens valides pour les identifiants actuels :", db.execute(
+            "SELECT count(*) FROM access_tokens WHERE revoked IS NULL AND expires > strftime('%s','now') AND fingerprint=?",
+            (empreinte,)).fetchone()[0])
 requete = urllib.request.Request("http://127.0.0.1:3002/auth/mcp",
     headers={"X-Forwarded-Host":"vision.mrj.am","X-Forwarded-Proto":"https"})
 try:
