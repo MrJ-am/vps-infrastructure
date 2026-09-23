@@ -1,5 +1,33 @@
 # État attesté au 23 septembre 2026
 
+## Rétablissement des tokens et OAuth Vision, 23 septembre à 02:11 UTC
+
+La génération active et de démarrage `sz7w3lqm1lspcdzrqisi23xb6lv9886d`
+importe les sources `96dc1e8e95b091dd0f13cc9d99002f0cd932210a`.
+La [préparation 35809113793](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35809113793)
+et l'[activation 35809202327](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35809202327)
+ont réussi. Le [contrôle après finalisation 35809360397](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35809360397)
+confirme le service actif, la page multi-tokens et la lecture de
+`access_tokens` ; deux tokens préexistants restent actifs. Le retour autonome
+est désarmé. Les 32 contrôles des sites et services, Basic, Bearer, les cinq
+outils, lecture MCP, CSRF, révocation et rendu mobile ont réussi. La sonde
+OAuth a vérifié découverte, enregistrement, consentement, code PKCE,
+initialisation MCP et révocation du jeton temporaire sans écrire de fiche.
+
+La précédente publication de tokens avait été annulée après coup par un
+ancien timer de retour issu d'une tentative échouée, alors que la nouvelle
+génération utilisait le même dérivé Nix. Le retour immédiat arrête désormais
+son propre timer et refuse de remplacer une génération enregistrée par une
+opération ultérieure ; deux tests couvrent le cas. La base SQLite n'a pas été
+restaurée et le token Mistral est conservé. Le test de connexion dans le compte
+Mammouth du propriétaire reste à refaire. Détails : [VISION-OAUTH.md](VISION-OAUTH.md).
+
+L'essai initial de cette nouvelle publication,
+[35808794433](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35808794433),
+a été annulé correctement par son retour. Il échouait dans la sonde qui ne
+lisait que le premier en-tête `WWW-Authenticate` ; Nginx émet plusieurs défis.
+La sonde corrigée vérifie l'ensemble et a réussi sur le candidat final.
+
 ## Tokens Vision indépendants et menu publiés
 
 La gestion des tokens par nom, historique et révocation individuelle est active sur
