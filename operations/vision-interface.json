@@ -1,5 +1,7 @@
 {
-  "operation": "preparer",
-  "revision": "079349c9cad9eb1fb27c4f5ac7f46e6238b59082",
-  "demande": "Publier l’interface Vision sans zone de synthèse après validation de la CI"
+  "operation": "activer",
+  "revision": "d224ab32928c43ef7f9445804077a2dbfb0fdfba",
+  "preparation": 35662657824,
+  "simulation": 35662944719,
+  "demande": "Achever la publication Vision autorisée après préparation et simulation vérifiées"
 }
