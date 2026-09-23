@@ -151,12 +151,21 @@ class Sessions:
                 (username, NOM_TOKEN_DEFAUT)).fetchone()
         if revoquer:
             if ligne:
-                return self.revoquer_token_acces(username, ligne['id'])
-            return {'active': False, 'expiresAt': None}
+                resultat = self.revoquer_token_acces(username, ligne['id'])
+            else:
+                resultat = {'active': False, 'expiresAt': None}
+            with closing(self.connect()) as db, db:
+                db.execute('DELETE FROM mcp_tokens WHERE username=?', (username,))
+            return resultat
         if creer:
             if ligne:
                 self.revoquer_token_acces(username, ligne['id'])
             cree = self.creer_token_acces(username, NOM_TOKEN_DEFAUT)
+            with closing(self.connect()) as db, db:
+                db.execute('DELETE FROM mcp_tokens WHERE username=?', (username,))
+                db.execute('INSERT INTO mcp_tokens VALUES (?,?,?,?)',
+                           (username, hashlib.sha256(cree['token'].encode()).hexdigest(),
+                            cree['expiresAt'], self.fingerprint()))
             return {'token': cree['token'], 'expiresAt': cree['expiresAt']}
         historique = self.tokens_acces(username)['tokens']
         mistral = next((t for t in historique if t['name'] == NOM_TOKEN_DEFAUT and t['active']), None)
