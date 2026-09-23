@@ -846,3 +846,44 @@ docs/VISION-OAUTH.md. Aucun changement demandé aux autres sites.
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Consentement OAuth Vision depuis la vue intégrée de Claude
+:PROPERTIES:
+:ID: 20260923-vps-oauth-opaque
+:EMETTEUR: vps
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-23T10:25:37+00:00
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+La vidéo du propriétaire montre le refus invalid_origin après le clic sur
+Autoriser Claude. Le premier correctif, actif en 2800fb6b2ee88b9f3fbd4384b11daabfb6337122,
+ne couvrait que l'absence de Origin et n'a pas résolu cet essai.
+
+Le service mrj-auth accepte désormais Origin: null au consentement si la session
+et le CSRF lié à la demande sont valides ; les origines étrangères restent
+refusées. Le refus distingue missing_session et unexpected_origin sans exposer
+l'en-tête. CI 35847887716, préparation 35848240001, activation HTTPS
+35848427815 ; sources e2541cd67463e6197ad6f41a1b7358aef4d6caa4.
+Le contrôle a parcouru PKCE, consentement avec Origin: null, MCP et accès
+préexistants. La connexion effective du compte Claude attend le nouvel essai
+du propriétaire ; la valeur exacte de son en-tête n'a pas été observée.
+
+Action Vision : relire le contrat du consentement et surveiller le nouvel essai.
+Action VPS : maintenir la sonde HTTPS et les restrictions CSRF.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: bb8cf6bdbd504116e25a567f303041ad7e150a4ea8a824370cc67da321410265
+:LU_LE: 2026-09-23T10:25:37+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@240f37b31f1eb1e104fa88ef9c01f9a7b18a471b
+:PREUVE: CI 35847887716, préparation 35848240001 et activation HTTPS 35848427815 réussies.
+:END:
