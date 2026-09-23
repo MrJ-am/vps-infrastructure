@@ -167,14 +167,17 @@ class Sessions:
         if not correspondance:
             return None
         condensat = hashlib.sha256(correspondance[1].encode()).hexdigest()
+        maintenant = int(time.time())
         with closing(self.connect()) as db:
-            ligne = db.execute(
-                'SELECT * FROM access_tokens WHERE digest=? AND expires>? AND revoked IS NULL',
-                (condensat, int(time.time()))).fetchone()
-            if ligne is None:
-                # Repli de sûreté pendant la migration : préserve le token historique.
-                ligne = db.execute('SELECT * FROM mcp_tokens WHERE digest=? AND expires>?',
-                                   (condensat, int(time.time()))).fetchone()
+            ligne = db.execute('SELECT * FROM access_tokens WHERE digest=?', (condensat,)).fetchone()
+            if ligne is not None:
+                if (ligne['revoked'] is None and ligne['expires'] > maintenant
+                        and hmac.compare_digest(ligne['fingerprint'], self.fingerprint())):
+                    return ligne['username']
+                return None
+            # Repli de sûreté uniquement pour une base antérieure à la migration.
+            ligne = db.execute('SELECT * FROM mcp_tokens WHERE digest=? AND expires>?',
+                               (condensat, maintenant)).fetchone()
         if ligne and hmac.compare_digest(ligne['fingerprint'], self.fingerprint()):
             return ligne['username']
         return None
