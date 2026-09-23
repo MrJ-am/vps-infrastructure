@@ -24,8 +24,9 @@ et expirent après cinq minutes.
 Le point `/mcp` accepte aussi HTTP Basic et les tokens Bearer nommés
 préexistants. Un jeton MCP ne donne accès ni au navigateur ni à l'API REST.
 Le consentement exige une session Vision et un CSRF valide. Une origine
-explicitement étrangère ou `null` est refusée ; l'absence d'en-tête `Origin`
-est acceptée pour les formulaires des navigateurs qui l'omettent. La révocation
+étrangère explicite est refusée ; `Origin: null` est accepté pour une vue
+OAuth à origine opaque, tout comme l'absence de cet en-tête. Le CSRF reste
+obligatoire dans les trois cas. La révocation
 requiert aussi l'origine Vision. Les condensats, jamais les secrets, sont enregistrés dans SQLite
 sur le VPS. Les journaux HTTP ne contiennent pas les paramètres de requête ni
 les en-têtes d'autorisation.
@@ -41,3 +42,10 @@ Le correctif du consentement sans `Origin` est actif à la révision
 préparation `35842320109`, activation HTTPS `35842570603`. Cette dernière
 vérifie le formulaire sans cet en-tête, PKCE, le MCP et les accès précédents.
 La connexion réelle depuis le compte Claude reste à refaire par son propriétaire.
+
+Après un nouvel échec filmé dans la vue intégrée de Claude, la révision
+`e2541cd67463e6197ad6f41a1b7358aef4d6caa4` prend en charge
+`Origin: null` et distingue désormais `missing_session` de
+`unexpected_origin` sans divulguer la valeur de l'en-tête. CI `35847887716`,
+préparation `35848240001`, activation et contrôle HTTPS `35848427815`.
+Le vrai retour dans Claude reste à confirmer par un nouvel essai.
