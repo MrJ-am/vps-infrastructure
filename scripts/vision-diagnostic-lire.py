@@ -71,3 +71,17 @@ try:
     print("Page active : gestion multi-tokens :", 'Historique et gestion' in page and '/auth/mcp.js' in page)
 except Exception as erreur:
     print("Page active indisponible :", type(erreur).__name__)
+
+# Identifier le code réellement exécuté, sans afficher sa configuration ni ses données.
+pid = subprocess.run(["systemctl","show","mrj-auth","-p","MainPID","--value"],
+                     check=True,capture_output=True,text=True).stdout.strip()
+arguments = Path("/proc",pid,"cmdline").read_bytes().decode().split("\0")
+programme = next((Path(a) for a in arguments if a.endswith("/server.py")), None)
+if programme and programme.is_file():
+    code = programme.read_text()
+    print("SHA-256 serveur actif :", hashlib.sha256(code.encode()).hexdigest())
+    print("Vérification dans access_tokens :", "SELECT * FROM access_tokens WHERE digest=?" in code)
+    print("Route historique seule :", "access_tokens" not in code)
+else:
+    print("Serveur actif introuvable")
+print("Page HTML active (préfixe) :", page[:160].replace("\n"," ") if "page" in globals() else "indisponible")
