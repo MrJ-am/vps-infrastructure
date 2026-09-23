@@ -11,11 +11,11 @@ import unittest
 
 
 class OAuthTests(AuthTests):
-    def envoyer(self, chemin, donnees=None, cookie=None, contenu=None):
+    def envoyer(self, chemin, donnees=None, cookie=None, contenu=None, origine='https://vision.mrj.am'):
         entetes = {'X-Forwarded-Host': 'vision.mrj.am',
                    'X-Forwarded-Proto': 'https'}
-        if donnees is not None:
-            entetes['Origin'] = 'https://vision.mrj.am'
+        if donnees is not None and origine is not None:
+            entetes['Origin'] = origine
         if cookie:
             entetes['Cookie'] = cookie
         if contenu is not None:
@@ -73,8 +73,16 @@ class OAuthTests(AuthTests):
             return True
         oauth.rediriger = capturer
         try:
+            self.assertEqual(self.envoyer('/oauth/authorize', formulaire, cookie,
+                'application/x-www-form-urlencoded', origine='https://claude.ai')[0], 403)
+            self.assertEqual(self.envoyer('/oauth/authorize', formulaire, cookie,
+                'application/x-www-form-urlencoded', origine='null')[0], 403)
+            mauvais_csrf = urllib.parse.urlencode({'request_id': identifiant,
+                'csrf': 'incorrect', 'decision': 'autoriser'}).encode()
+            self.assertEqual(self.envoyer('/oauth/authorize', mauvais_csrf, cookie,
+                'application/x-www-form-urlencoded', origine=None)[0], 400)
             statut, _, _ = self.envoyer('/oauth/authorize', formulaire, cookie,
-                                        'application/x-www-form-urlencoded')
+                                        'application/x-www-form-urlencoded', origine=None)
         finally:
             oauth.rediriger = original
         self.assertEqual(statut, 200)
