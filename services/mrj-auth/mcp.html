@@ -31,5 +31,6 @@ code{overflow-wrap:anywhere}#etat{min-height:1.6em}[hidden]{display:none!importa
 <div id="secret" hidden><p><strong>Copiez ce token maintenant :</strong> il ne sera plus affiché ensuite.</p><textarea id="token" rows="2" readonly aria-label="Token secret Vision" autocomplete="off" spellcheck="false"></textarea><button id="copier" type="button">Copier</button></div>
 </section>
 <section id="historique" hidden><h2>Historique et gestion</h2><div id="tokens"></div></section>
+<section id="oauth" hidden><h2>Applications autorisées par OAuth</h2><p>Une application autorisée peut lire et modifier vos fiches. Révoquer son accès ne modifie pas les autres tokens.</p><div id="applications"></div></section>
 <section><h2>Connexion MCP</h2><p>Serveur : <code>https://vision.mrj.am/mcp</code>. Choisissez une authentification par token API de type <strong>Bearer</strong> et collez uniquement la valeur du token, sans ajouter « Bearer ».</p></section>
 <script src="/auth/mcp.js" defer></script></html>

@@ -6,6 +6,7 @@ import socket
 import subprocess
 from pathlib import Path
 import tempfile
+import sys
 import threading
 import time
 import unittest
@@ -14,6 +15,7 @@ import urllib.error
 from http.server import ThreadingHTTPServer
 from unittest.mock import patch
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'services/mrj-auth'))
 spec=importlib.util.spec_from_file_location('mrj_auth',Path(__file__).resolve().parents[1]/'services/mrj-auth/server.py')
 module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 

@@ -32,6 +32,12 @@ def rpc(methode, parametres, entetes):
 
 
 def verifier():
+    statut,_,corps=requete('/.well-known/oauth-protected-resource/mcp')
+    assert statut==200 and json.loads(corps)['resource']==ORIGINE+'/mcp','Découverte OAuth indisponible'
+    statut,_,corps=requete('/.well-known/oauth-authorization-server')
+    assert statut==200 and json.loads(corps)['token_endpoint']==ORIGINE+'/oauth/token','Serveur OAuth indisponible'
+    statut,headers,_=requete('/mcp',{})
+    assert statut==401 and 'resource_metadata=' in headers.get('WWW-Authenticate',''),'Défi OAuth absent'
     utilisateur=os.environ['VISION_API_USERNAME'];mot_de_passe=os.environ['VISION_API_PASSWORD']
     basic={'Authorization':'Basic '+base64.b64encode((utilisateur+':'+mot_de_passe).encode()).decode()}
     assert requete('/api/v1/health',entetes=basic)[0]==200,'Basic API indisponible'
@@ -48,6 +54,7 @@ def verifier():
     try:
         statut,_,corps=requete('/auth/access-tokens',entetes=prives)
         assert statut==200,'Historique des tokens indisponible'
+        assert requete('/auth/oauth-connections',entetes=prives)[0]==200,'Gestion OAuth indisponible'
         avant=json.loads(corps)['tokens']
         assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{'Cookie':cookie})[0]==403,'CSRF non exigé'
         assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{**prives,'Origin':'https://autre.mrj.am'})[0]==403,'Origine étrangère acceptée'
