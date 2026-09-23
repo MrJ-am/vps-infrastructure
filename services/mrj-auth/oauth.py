@@ -220,8 +220,12 @@ def consentir(handler, sessions):
     # Le jeton CSRF reste obligatoire et lié à la session avant tout accord.
     # Toute autre origine étrangère est refusée.
     origine = handler.headers.get("Origin")
-    if not session or origine not in (None, "null", ORIGINE):
-        return erreur(handler, 403, "invalid_origin")
+    if not session:
+        handler.reply(403, {"error": "invalid_origin", "reason": "missing_session"})
+        return True
+    if origine not in (None, "null", ORIGINE):
+        handler.reply(403, {"error": "invalid_origin", "reason": "unexpected_origin"})
+        return True
     try:
         q = parse_qs(lire_corps(handler, "application/x-www-form-urlencoded"),
                      keep_blank_values=True)
