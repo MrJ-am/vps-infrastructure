@@ -753,3 +753,46 @@ Chaque destinataire relit le contrat avant sa prochaine opération d’authentif
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Rétablir les tokens Vision et ajouter OAuth pour Claude
+:PROPERTIES:
+:ID: 20260923-vision-oauth-retablissement
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-23T01:52:15.129Z
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+Le propriétaire signale que Mammouth reçoit 401 et que le menu renvoie à l'ancienne
+page Mistral. Diagnostic exécuté par Actions 35807304367 et 35807362274 :
+deux tokens actifs persistent dans SQLite, mais /run/current-system et le profil
+de démarrage pointent vers dr7qkvrabfp62qqrc064pr99c9gjvjn6 ; le service
+mrj-auth actif ne lit pas access_tokens et sert l'ancienne page. La génération
+qd9nkmq2yv55zdb5wfhab1sdy4w1hxvv avait pourtant été enregistrée par
+35804717827. Aucun retour du timer d71dff58 n'est constaté. La cause du
+changement ultérieur de génération reste à identifier ; l'état déclaré dans
+le message 20260923-vision-tokens-independants n'est plus l'état actif.
+
+Action Vision/VPS : tester la coexistence Mistral/Mammouth et la navigation
+menu-page, rétablir le service depuis l'état actif et contrôler sa persistance.
+Ajouter à mrj-auth une autorisation OAuth pour /mcp, avec découverte,
+enregistrement de client, PKCE S256, consentement du compte, jetons révocables
+et maintien du Bearer historique. Ne modifier ni les bases métier ni les
+autres applications. Vérifier HTTPS, CSRF, redirections, révocation et
+génération réellement active ; publier ensuite références et limites exactes.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
