@@ -43,12 +43,14 @@ def verifier():
     assert statut==200,'Connexion impossible'
     session=json.loads(corps);cookie=headers['Set-Cookie'].split(';')[0]
     prives={'Cookie':cookie,'X-CSRF-Token':session['csrf']}
-    cree=False
+    identifiant=None
+    bearer=None
     try:
-        statut,_,corps=requete('/auth/mcp-token',entetes=prives)
-        assert statut==200,'État du token MCP indisponible'\n        if json.loads(corps)['active']:\n            print('Token permanent présent : contrôle destructif ignoré pour le préserver.')\n            return
-        assert requete('/auth/mcp-token',{'action':'creer'},{'Cookie':cookie})[0]==403,'CSRF non exigé'
-        assert requete('/auth/mcp-token',{'action':'creer'},{**prives,'Origin':'https://autre.mrj.am'})[0]==403,'Origine étrangère acceptée'
+        statut,_,corps=requete('/auth/access-tokens',entetes=prives)
+        assert statut==200,'Historique des tokens indisponible'
+        avant=json.loads(corps)['tokens']
+        assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{'Cookie':cookie})[0]==403,'CSRF non exigé'
+        assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{**prives,'Origin':'https://autre.mrj.am'})[0]==403,'Origine étrangère acceptée'
         with sync_playwright() as p:
             navigateur=p.chromium.launch()
             contexte=navigateur.new_context(viewport={'width':375,'height':850})
@@ -58,17 +60,24 @@ def verifier():
             page=contexte.new_page();erreurs=[]
             page.on('pageerror',lambda _:erreurs.append(True))
             page.goto(ORIGINE+'/auth/mcp',wait_until='networkidle')
-            expect(page.get_by_role('button',name='Créer le token',exact=True)).to_be_visible()
+            expect(page.get_by_role('button',name='Créer un token',exact=True)).to_be_visible()
             for largeur in (375,1280):
                 page.set_viewport_size({'width':largeur,'height':850})
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1'),'Débordement'
-            cree=True
-            page.get_by_role('button',name='Créer le token',exact=True).click()
-            expect(page.locator('#token')).to_be_visible()
+            page.locator('#nom').fill('Contrôle temporaire')
+            page.get_by_role('button',name='Créer un token',exact=True).click()
+            expect(page.locator('#secret')).to_be_visible()
             token=page.locator('#token').input_value()
             assert len(token)==43,'Token incorrect'
+            statut,_,corps=requete('/auth/access-tokens',entetes=prives)
+            assert statut==200
+            apres=json.loads(corps)['tokens']
+            nouveaux=[t for t in apres if t['id'] not in {ancien['id'] for ancien in avant}]
+            assert len(nouveaux)==1 and nouveaux[0]['name']=='Contrôle temporaire'
+            identifiant=nouveaux[0]['id']
+            assert all(any(t['id']==ancien['id'] and t['active']==ancien['active'] for t in apres) for ancien in avant),'Token existant modifié'
             bearer={'Authorization':'Bearer '+token}
-            resultat=rpc('initialize',{'protocolVersion':'2025-06-18','capabilities':{},'clientInfo':{'name':'Mistral-compatibilite','version':'1'}},bearer)
+            resultat=rpc('initialize',{'protocolVersion':'2025-06-18','capabilities':{},'clientInfo':{'name':'controle','version':'1'}},bearer)
             assert resultat['protocolVersion']=='2025-06-18'
             outils=rpc('tools/list',{},bearer)['tools']
             assert {v['name'] for v in outils}=={'search_memory_sheets','list_due_memory_sheets','get_memory_sheet','save_memory_sheet','record_review'}
@@ -76,22 +85,25 @@ def verifier():
             assert not resultat.get('isError',False),'Lecture MCP échouée'
             assert requete('/api/v1/health',entetes=bearer)[0]==401,'Token accepté hors MCP'
             assert requete('/api/web/list',{},bearer)[0]==401,'Token utilisé comme session'
-            assert requete('/auth/mcp-token',entetes=bearer)[0]==401,'Token utilisé pour sa gestion'
+            assert requete('/auth/access-tokens',entetes=bearer)[0]==401,'Token utilisé pour sa gestion'
             assert requete('/mcp',{}, {'Cookie':cookie})[0]==401,'Session acceptée comme token MCP'
             assert requete('/mcp',{'jsonrpc':'2.0','method':'notifications/initialized'},bearer)[0]==202
             page.reload(wait_until='networkidle')
             expect(page.locator('#secret')).to_be_hidden()
             assert page.locator('#token').input_value()==''
             assert page.evaluate('localStorage.length + sessionStorage.length')==0
-            page.get_by_role('button',name='Révoquer le token',exact=True).click()
-            expect(page.get_by_role('button',name='Créer le token',exact=True)).to_be_visible()
+            with page.expect_event('dialog') as dialogue:
+                page.locator('#tokens .ligne').filter(has_text='Contrôle temporaire').get_by_role('button',name='Révoquer').click()
+            dialogue.value.accept()
+            expect(page.get_by_text('Token « Contrôle temporaire » révoqué.')).to_be_visible()
             assert requete('/mcp',{},bearer)[0]==401,'Révocation inefficace'
+            identifiant=None
             assert not erreurs,'Erreur JavaScript'
             contexte.close();navigateur.close()
-        print('Bearer, Basic, initialize, cinq outils, lecture, notification, CSRF, séparation, rendu et révocation : OK. Aucune écriture métier.')
+        print('Bearer, Basic, cinq outils, lecture, CSRF, historique, préservation des tokens, rendu et révocation : OK.')
     finally:
-        if cree:
-            assert requete('/auth/mcp-token',{'action':'revoquer'},prives)[0]==200,'Nettoyage du token de contrôle échoué'
+        if identifiant is not None:
+            assert requete('/auth/access-tokens',{'action':'revoquer','id':identifiant},prives)[0]==200,'Nettoyage du token temporaire échoué'
         assert requete('/auth/logout',{},prives)[0]==200,'Déconnexion de contrôle échouée'
     assert requete('/auth/session',entetes={'Cookie':cookie})[0]==401,'Session non révoquée'
 
