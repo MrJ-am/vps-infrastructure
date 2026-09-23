@@ -47,3 +47,27 @@ for ligne in lire("--namespace=http", "-t", "http_acces"):
 print("Requêtes HTTP /mcp :", len(http))
 for entree in http[-100:]:
     print(json.dumps(entree, ensure_ascii=False, separators=(",", ":")))
+
+# État du service actif, sans lire ni imprimer de secret utilisateur.
+import hashlib
+import sqlite3
+import urllib.request
+service = subprocess.run(["systemctl", "show", "mrj-auth", "-p", "ExecStart", "--value"],
+                         check=True, capture_output=True, text=True).stdout
+print("Service mrj-auth actif :", subprocess.run(
+    ["systemctl", "is-active", "mrj-auth"], check=True, capture_output=True, text=True).stdout.strip())
+print("Code authentification déclaré :", "access_tokens" in service or "server.py" in service)
+with sqlite3.connect("file:/var/lib/mrj-auth/sessions.sqlite?mode=ro", uri=True) as db:
+    tables = {r[0] for r in db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+    print("Table access_tokens présente :", "access_tokens" in tables)
+    if "access_tokens" in tables:
+        print("Nombre de tokens actifs :", db.execute(
+            "SELECT count(*) FROM access_tokens WHERE revoked IS NULL AND expires > strftime('%s','now')").fetchone()[0])
+requete = urllib.request.Request("http://127.0.0.1:3002/auth/mcp",
+    headers={"X-Forwarded-Host":"vision.mrj.am","X-Forwarded-Proto":"https"})
+try:
+    with urllib.request.urlopen(requete, timeout=5) as reponse:
+        page = reponse.read(8192).decode("utf-8")
+    print("Page active : gestion multi-tokens :", 'Historique et gestion' in page and '/auth/mcp.js' in page)
+except Exception as erreur:
+    print("Page active indisponible :", type(erreur).__name__)
