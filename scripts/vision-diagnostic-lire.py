@@ -85,3 +85,10 @@ if programme and programme.is_file():
 else:
     print("Serveur actif introuvable")
 print("Page HTML active (préfixe) :", page[:160].replace("\n"," ") if "page" in globals() else "indisponible")
+
+for cible in ("/run/current-system", "/nix/var/nix/profiles/system", "/etc/nixos/configuration.nix"):
+    print("Lien actif", cible, ":", str(Path(cible).resolve()))
+for unite in ("mcp-retour-d71dff5858b2.timer", "mcp-appliquer-d71dff5858b2.service"):
+    resultat = subprocess.run(["systemctl","show",unite,"-p","ActiveState","-p","Result"],
+                              capture_output=True,text=True)
+    print("Unité", unite, ":", resultat.stdout.strip().replace("\n"," "))
