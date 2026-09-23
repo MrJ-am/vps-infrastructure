@@ -4,8 +4,12 @@ import base64
 import json
 import os
 from pathlib import Path
+import hashlib
+import re
+import secrets
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 from playwright.sync_api import sync_playwright, expect
 
@@ -29,6 +33,56 @@ def rpc(methode, parametres, entetes):
     resultat=json.loads(corps)
     assert 'result' in resultat and 'error' not in resultat,'Réponse MCP invalide'
     return resultat['result']
+
+
+def formulaire(chemin, champs, entetes=None):
+    class SansRedirection(urllib.request.HTTPRedirectHandler):
+        def redirect_request(self,*arguments):return None
+    donnees=urllib.parse.urlencode(champs).encode()
+    demande=urllib.request.Request(ORIGINE+chemin,donnees,
+        {'Content-Type':'application/x-www-form-urlencoded','Origin':ORIGINE,
+         **(entetes or {})})
+    try:reponse=urllib.request.build_opener(SansRedirection).open(demande,timeout=20)
+    except urllib.error.HTTPError as e:reponse=e
+    with reponse:return reponse.status,reponse.headers,reponse.read()
+
+
+def verifier_oauth(cookie,csrf):
+    redirection=ORIGINE+'/oauth/controle-retour'
+    statut,_,corps=requete('/oauth/register',
+        {'client_name':'Contrôle temporaire OAuth','redirect_uris':[redirection],
+         'token_endpoint_auth_method':'none'})
+    assert statut==201,'Enregistrement OAuth refusé'
+    client=json.loads(corps)['client_id']
+    preuve=secrets.token_urlsafe(32)
+    challenge=base64.urlsafe_b64encode(
+        hashlib.sha256(preuve.encode()).digest()).rstrip(b'=').decode()
+    chemin='/oauth/authorize?'+urllib.parse.urlencode({
+        'response_type':'code','client_id':client,'redirect_uri':redirection,
+        'code_challenge':challenge,'code_challenge_method':'S256',
+        'resource':ORIGINE+'/mcp','state':'sonde'})
+    statut,_,page=requete(chemin,entetes={'Cookie':cookie})
+    assert statut==200 and b'Autoriser' in page,'Consentement OAuth absent'
+    correspondance=re.search(rb'name="request_id" value="([A-Za-z0-9_-]+)"',page)
+    assert correspondance,'Demande de consentement absente'
+    statut,entetes,_=formulaire('/oauth/authorize',
+        {'request_id':correspondance[1].decode(),'csrf':csrf,'decision':'autoriser'},
+        {'Cookie':cookie})
+    assert statut==302 and entetes['Location'].startswith(redirection+'?'),'Retour OAuth incorrect'
+    code=urllib.parse.parse_qs(urllib.parse.urlsplit(entetes['Location']).query)['code'][0]
+    statut,_,corps=formulaire('/oauth/token',
+        {'grant_type':'authorization_code','client_id':client,'code':code,
+         'redirect_uri':redirection,'code_verifier':preuve})
+    assert statut==200,'Échange du code OAuth refusé'
+    acces=json.loads(corps)['access_token']
+    try:
+        bearer={'Authorization':'Bearer '+acces}
+        assert 'serverInfo' in rpc('initialize',{'protocolVersion':'2025-06-18',
+            'capabilities':{},'clientInfo':{'name':'controle-oauth','version':'1'}},bearer)
+    finally:
+        assert requete('/auth/oauth-connections',{'client_id':client},
+            {'Cookie':cookie,'X-CSRF-Token':csrf})[0]==200,'Révocation OAuth impossible'
+    assert requete('/mcp',{},bearer)[0]==401,'Jeton OAuth encore actif'
 
 
 def verifier():
@@ -56,6 +110,7 @@ def verifier():
         assert statut==200,'Historique des tokens indisponible'
         assert requete('/auth/oauth-connections',entetes=prives)[0]==200,'Gestion OAuth indisponible'
         avant=json.loads(corps)['tokens']
+        verifier_oauth(cookie,session['csrf'])
         assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{'Cookie':cookie})[0]==403,'CSRF non exigé'
         assert requete('/auth/access-tokens',{'action':'creer','name':'Contrôle temporaire'},{**prives,'Origin':'https://autre.mrj.am'})[0]==403,'Origine étrangère acceptée'
         with sync_playwright() as p:
