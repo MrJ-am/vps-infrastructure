@@ -796,3 +796,53 @@ génération réellement active ; publier ensuite références et limites exacte
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Tokens Vision rétablis et OAuth Claude publié
+:PROPERTIES:
+:ID: 20260923-vision-oauth-publie
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-23T02:12:41.710Z
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+Résultat de 20260923-vision-oauth-retablissement : CI 35808944105,
+préparation 35809113793 et activation 35809202327 réussies ; contrôle
+indépendant après finalisation 35809360397. Sources
+96dc1e8e95b091dd0f13cc9d99002f0cd932210a, génération active et de
+démarrage sz7w3lqm1lspcdzrqisi23xb6lv9886d. Le service actif lit
+access_tokens, sert la page multi-tokens et conserve deux tokens existants.
+Le contrôle OAuth a réussi découverte, enregistrement, consentement,
+PKCE, initialisation MCP et révocation, avec Basic/Bearer, cinq outils,
+32 sondes HTTP/TLS et protections CSRF. Aucune fiche de test écrite.
+
+Cause corrigée de la régression : une tentative échouée antérieure conservait
+son timer de retour après le retour immédiat ; une nouvelle publication ayant
+le même dérivé Nix pouvait être annulée ultérieurement. Le retour coupe
+désormais son timer et refuse de remplacer une génération enregistrée par
+une autre opération. Tests de ce scénario dans tests/test_mcp_deployer.py.
+L'essai 35808794433 a été annulé en raison d'une sonde ne lisant que le
+premier des défis WWW-Authenticate ; la sonde corrigée vérifie tous les défis.
+Le raccordement réel dans le compte Mammouth et dans Claude reste à vérifier
+par le propriétaire ; ne pas le présenter comme déjà testé.
+
+Actions : Vision maintient le contrat MCP et les tests applicatifs ; VPS
+conserve les routes OAuth, la génération et le garde-fou du timer. Références
+durables : coordination/CONTRATS.org#authentification, docs/ETAT.md et
+docs/VISION-OAUTH.md. Aucun changement demandé aux autres sites.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
