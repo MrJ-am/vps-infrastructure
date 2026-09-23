@@ -100,3 +100,12 @@ if (preparation / "termine.json").exists():
     termine = json.loads((preparation / "termine.json").read_text())
     print("Génération enregistrée token :", termine.get("etat",{}).get("actif"))
 print("Import NixOS actif :", Path("/etc/nixos/configuration.nix").read_text()[:300].replace("\n"," "))
+
+journal = subprocess.run(
+    ["journalctl","-u","mcp-retour-d71dff5858b2.service",
+     "--since","2026-09-23 01:00:00 UTC","--until","2026-09-23 01:40:00 UTC",
+     "--no-pager","-o","short-iso"], capture_output=True,text=True).stdout
+print("Retour token lancé :", any(mot in journal for mot in ("Starting","Started","Finished")))
+for ligne in journal.splitlines():
+    if any(mot in ligne for mot in ("Starting","Started","Finished","Failed","result")):
+        print("Événement retour :", ligne[:240])
