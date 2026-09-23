@@ -681,3 +681,75 @@ Lecture minimisée de l'essai du propriétaire : workflow 35799898928. Après pu
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Gestion des tokens Vision et accès par le menu publiés
+:PROPERTIES:
+:ID: 20260923-vision-tokens-independants
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-23T01:15:00+00:00
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+Le propriétaire a demandé plusieurs tokens MCP indépendants, leur historique,
+création et révocation, sans couper l’accès Mistral, puis le lien dans le menu Vision.
+Le contrat est actualisé dans CONTRATS.org#authentification. La page /auth/mcp
+et le service mrj-auth sont activés depuis les sources d71dff5858b221a4eb91655674ab1db74893a5a0,
+préparation 35804593654 et activation 35804717827. Le contrôle a conservé
+les tokens existants et révoqué uniquement son token temporaire.
+
+L’interface Vision cb92ffa7e4ea5b547e09c9ad1d6dbe01c7e93ccf est servie
+après préparation 35805254157 et activation 35805299046. Les empreintes
+des fichiers, le menu, la session réelle, Basic, CSRF et la lecture ont réussi ;
+aucune fiche fictive. Le retour autonome a été désarmé après validation.
+Les versions du serveur Common Lisp, de Matheval et de Logique ont été conservées.
+Preuves détaillées : docs/ETAT.md ; aucune action immédiate pour les autres projets.
+Chaque destinataire relit le contrat avant sa prochaine opération d’authentification.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
