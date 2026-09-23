@@ -17,6 +17,7 @@ COOKIE = '__Secure-mrj_session'
 LIFETIME = 12 * 60 * 60
 IDLE = 2 * 60 * 60
 DUREE_TOKEN_MCP = 365 * 24 * 60 * 60
+NOM_TOKEN_DEFAUT = 'Mistral'
 
 class Sessions:
     def __init__(self, path, credentials, domain, hosts):
@@ -30,7 +31,21 @@ class Sessions:
               CREATE INDEX IF NOT EXISTS attempts_ip ON attempts(ip,at);
               CREATE TABLE IF NOT EXISTS mcp_tokens (
                 username TEXT PRIMARY KEY, digest TEXT NOT NULL UNIQUE,
-                expires INTEGER NOT NULL, fingerprint TEXT NOT NULL);''')
+                expires INTEGER NOT NULL, fingerprint TEXT NOT NULL);
+              CREATE TABLE IF NOT EXISTS access_tokens (
+                id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL,
+                name TEXT NOT NULL, digest TEXT NOT NULL UNIQUE,
+                created INTEGER NOT NULL, expires INTEGER NOT NULL,
+                revoked INTEGER, fingerprint TEXT NOT NULL);
+              CREATE INDEX IF NOT EXISTS access_tokens_user
+                ON access_tokens(username,created DESC);''')
+            # Migration additive : le token historique Mistral garde exactement
+            # son condensat et son expiration, donc reste utilisable.
+            now = int(time.time())
+            for row in db.execute('SELECT username,digest,expires,fingerprint FROM mcp_tokens').fetchall():
+                if not db.execute('SELECT 1 FROM access_tokens WHERE digest=?', (row['digest'],)).fetchone():
+                    db.execute('INSERT INTO access_tokens(username,name,digest,created,expires,revoked,fingerprint) VALUES (?,?,?,?,?,NULL,?)',
+                               (row['username'], NOM_TOKEN_DEFAUT, row['digest'], now, row['expires'], row['fingerprint']))
     def connect(self):
         db = sqlite3.connect(self.path, timeout=5)
         db.row_factory = sqlite3.Row
@@ -87,31 +102,79 @@ class Sessions:
         if token:
             with closing(self.connect()) as db, db:
                 db.execute('DELETE FROM sessions WHERE digest=?',(hashlib.sha256(token.encode()).hexdigest(),))
-    def token_mcp(self, username, creer=False, revoquer=False):
-        """Un token par compte ; le secret n'est renvoyé qu'à sa création."""
+    def tokens_acces(self, username):
+        """Historique des tokens d'un compte, sans jamais exposer leurs secrets."""
+        now = int(time.time())
+        empreinte = self.fingerprint()
+        with closing(self.connect()) as db:
+            lignes = db.execute(
+                'SELECT id,name,created,expires,revoked,fingerprint FROM access_tokens WHERE username=? ORDER BY created DESC,id DESC',
+                (username,)).fetchall()
+        return {'tokens': [
+            {'id': ligne['id'], 'name': ligne['name'], 'createdAt': ligne['created'],
+             'expiresAt': ligne['expires'], 'revokedAt': ligne['revoked'],
+             'active': ligne['revoked'] is None and ligne['expires'] > now
+                       and hmac.compare_digest(ligne['fingerprint'], empreinte)}
+            for ligne in lignes]}
+
+    def creer_token_acces(self, username, name):
+        nom = name.strip()
+        if not 1 <= len(nom) <= 80 or any(ord(c) < 32 for c in nom):
+            raise ValueError('invalid_token_name')
+        secret = secrets.token_urlsafe(32)
+        maintenant = int(time.time())
+        expiration = maintenant + DUREE_TOKEN_MCP
         with closing(self.connect()) as db, db:
-            if creer or revoquer:
-                db.execute('DELETE FROM mcp_tokens WHERE username=?', (username,))
-            if creer:
-                secret = secrets.token_urlsafe(32)
-                expiration = int(time.time()) + DUREE_TOKEN_MCP
-                db.execute('INSERT INTO mcp_tokens VALUES (?,?,?,?)',
-                           (username, hashlib.sha256(secret.encode()).hexdigest(),
-                            expiration, self.fingerprint()))
-                return {'token': secret, 'expiresAt': expiration}
-            ligne = db.execute('SELECT expires,fingerprint FROM mcp_tokens WHERE username=?',
-                               (username,)).fetchone()
-            actif = bool(ligne and ligne['expires'] > time.time()
-                         and hmac.compare_digest(ligne['fingerprint'], self.fingerprint()))
-            return {'active': actif, 'expiresAt': ligne['expires'] if actif else None}
+            curseur = db.execute(
+                'INSERT INTO access_tokens(username,name,digest,created,expires,revoked,fingerprint) VALUES (?,?,?,?,?,NULL,?)',
+                (username, nom, hashlib.sha256(secret.encode()).hexdigest(),
+                 maintenant, expiration, self.fingerprint()))
+            identifiant = curseur.lastrowid
+        return {'token': secret, 'id': identifiant, 'name': nom,
+                'createdAt': maintenant, 'expiresAt': expiration, 'active': True}
+
+    def revoquer_token_acces(self, username, identifiant):
+        maintenant = int(time.time())
+        with closing(self.connect()) as db, db:
+            curseur = db.execute(
+                'UPDATE access_tokens SET revoked=? WHERE id=? AND username=? AND revoked IS NULL',
+                (maintenant, identifiant, username))
+        if curseur.rowcount != 1:
+            raise ValueError('unknown_token')
+        return self.tokens_acces(username)
+
+    def token_mcp(self, username, creer=False, revoquer=False):
+        """Compatibilité de l'ancienne API : agit seulement sur le token nommé Mistral."""
+        with closing(self.connect()) as db:
+            ligne = db.execute(
+                'SELECT id FROM access_tokens WHERE username=? AND name=? AND revoked IS NULL ORDER BY id DESC LIMIT 1',
+                (username, NOM_TOKEN_DEFAUT)).fetchone()
+        if revoquer:
+            if ligne:
+                return self.revoquer_token_acces(username, ligne['id'])
+            return {'active': False, 'expiresAt': None}
+        if creer:
+            if ligne:
+                self.revoquer_token_acces(username, ligne['id'])
+            cree = self.creer_token_acces(username, NOM_TOKEN_DEFAUT)
+            return {'token': cree['token'], 'expiresAt': cree['expiresAt']}
+        historique = self.tokens_acces(username)['tokens']
+        mistral = next((t for t in historique if t['name'] == NOM_TOKEN_DEFAUT and t['active']), None)
+        return {'active': bool(mistral), 'expiresAt': mistral['expiresAt'] if mistral else None}
+
     def verifier_token_mcp(self, authorization):
         correspondance = re.fullmatch(r'Bearer ([A-Za-z0-9_-]{43})', authorization, re.IGNORECASE)
         if not correspondance:
             return None
         condensat = hashlib.sha256(correspondance[1].encode()).hexdigest()
         with closing(self.connect()) as db:
-            ligne = db.execute('SELECT * FROM mcp_tokens WHERE digest=? AND expires>?',
-                               (condensat, int(time.time()))).fetchone()
+            ligne = db.execute(
+                'SELECT * FROM access_tokens WHERE digest=? AND expires>? AND revoked IS NULL',
+                (condensat, int(time.time()))).fetchone()
+            if ligne is None:
+                # Repli de sûreté pendant la migration : préserve le token historique.
+                ligne = db.execute('SELECT * FROM mcp_tokens WHERE digest=? AND expires>?',
+                                   (condensat, int(time.time()))).fetchone()
         if ligne and hmac.compare_digest(ligne['fingerprint'], self.fingerprint()):
             return ligne['username']
         return None
@@ -155,13 +218,15 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(donnees)
             return
         session=app.session(self.headers.get('Cookie',''))
-        if self.path == '/auth/mcp-token':
+        if self.path in ('/auth/mcp-token', '/auth/access-tokens'):
             if host != 'vision.mrj.am':
                 return self.reply(403, {'error': 'invalid_origin'})
             if not session:
                 return self.reply(401, {'error': 'authentication_required'})
             if self.command == 'GET':
-                return self.reply(200, app.token_mcp(session['username']))
+                return self.reply(200, app.token_mcp(session['username'])
+                                  if self.path == '/auth/mcp-token'
+                                  else app.tokens_acces(session['username']))
         if self.path=='/verify' and self.command=='GET':
             if not session:return self.reply(401,{'error':'authentication_required'})
             if self.headers.get('X-Original-Method') not in ('GET','HEAD'):
@@ -171,7 +236,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path=='/auth/session' and self.command=='GET':
             if not session:return self.reply(401,{'error':'authentication_required'})
             return self.reply(200,{'username':session['username'],'csrf':session['csrf'],'expiresAt':session['expires']})
-        if self.path not in ('/auth/login','/auth/logout','/auth/mcp-token') or self.command!='POST':
+        if self.path not in ('/auth/login','/auth/logout','/auth/mcp-token','/auth/access-tokens') or self.command!='POST':
             return self.reply(404,{'error':'not_found'})
         if self.headers.get('Origin')!='https://'+host:
             return self.reply(403,{'error':'invalid_origin'})
@@ -181,13 +246,20 @@ class Handler(BaseHTTPRequestHandler):
         if not 0 < length <= 8192:return self.reply(413,{'error':'invalid_input'})
         body=json.loads(self.rfile.read(length))
         if not isinstance(body,dict):return self.reply(400,{'error':'invalid_input'})
-        if self.path == '/auth/mcp-token':
+        if self.path in ('/auth/mcp-token', '/auth/access-tokens'):
             if not hmac.compare_digest(self.headers.get('X-CSRF-Token',''), session['csrf']):
                 return self.reply(403, {'error': 'csrf_required'})
-            if set(body) != {'action'} or body['action'] not in ('creer', 'revoquer'):
-                return self.reply(400, {'error': 'invalid_input'})
-            return self.reply(200, app.token_mcp(session['username'],
-                              creer=body['action'] == 'creer', revoquer=body['action'] == 'revoquer'))
+            if self.path == '/auth/mcp-token':
+                if set(body) != {'action'} or body['action'] not in ('creer', 'revoquer'):
+                    return self.reply(400, {'error': 'invalid_input'})
+                return self.reply(200, app.token_mcp(session['username'],
+                                  creer=body['action'] == 'creer', revoquer=body['action'] == 'revoquer'))
+            action = body.get('action')
+            if action == 'creer' and set(body) == {'action','name'} and isinstance(body['name'], str):
+                return self.reply(200, app.creer_token_acces(session['username'], body['name']))
+            if action == 'revoquer' and set(body) == {'action','id'} and isinstance(body['id'], int):
+                return self.reply(200, app.revoquer_token_acces(session['username'], body['id']))
+            return self.reply(400, {'error': 'invalid_input'})
         if self.path=='/auth/logout':
             if not session:return self.reply(401,{'error':'authentication_required'})
             if not hmac.compare_digest(self.headers.get('X-CSRF-Token',''),session['csrf']):return self.reply(403,{'error':'csrf_required'})
