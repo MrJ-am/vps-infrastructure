@@ -1,12 +1,11 @@
 {
   "depot": "MrJ-am/vision",
-  "revision": "9a4c395b24e6eb8938a3246c96f5d80c030c2d2d",
-  "style": "c7b4d6e00cd0014a0a05e5a4e77627357498faa9",
+  "revision": "079349c9cad9eb1fb27c4f5ac7f46e6238b59082",
+  "style": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
   "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
-  "execution": 35661734934,
-  "artefact": 10667189503,
-  "sha256Archive": "fd945480853899899cd40bf8b3bdbc92ade6d72feb46af2949e706a18b1560c3",
-  "controlesHistoriques": 35661734943,
-  "controlesStyle": 35660762183,
+  "execution": 35925706949,
+  "artefact": 10778594422,
+  "sha256Archive": "94b1ec8044452f6e7098228f3ead5658d2fb62c0d787dd297f3c97b92c9a542c",
+  "controlesHistoriques": 35925706815,
   "droits": "Logo et signature : toute utilisation est strictement réservée."
 }
