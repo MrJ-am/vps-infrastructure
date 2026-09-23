@@ -68,8 +68,9 @@ Tout changement de fond exige un message dans REGISTRE.org.
   stockage local, durée, données, information et suppression avant une nouvelle collecte.
 - Depuis le 22 septembre 2026, `/mcp` de Vision accepte Basic ou un token Bearer
   aléatoire de 256 bits, stocké uniquement sous forme de SHA-256 par mrj-auth,
-  valable un an et révocable. Création/remplacement/révocation depuis
-  `/auth/mcp` avec session, origine et CSRF. Le token n’authentifie ni REST
+  valable un an et révocable. Plusieurs tokens indépendants peuvent coexister ;
+  historique, création et révocation individuelle depuis `/auth/mcp` avec session,
+  origine et CSRF. L’ancien `/auth/mcp-token` cible uniquement le token Mistral. Le token n’authentifie ni REST
   ni le navigateur ; le logout ne le révoque pas. La rotation du fichier
   des comptes l’invalide. Voir docs/VISION-MCP-TOKEN.md et docs/ETAT.md.
 - Un cookie nécessaire à la connexion n'impose pas à lui seul une bannière ;
