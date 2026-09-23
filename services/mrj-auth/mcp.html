@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Connecter Vision à Mistral</title>
-<style>body{font:18px/1.6 system-ui,sans-serif;color:#183c45;background:#f4f6f4;max-width:680px;margin:8vh auto;padding:24px}h1{line-height:1.2}button,a{color:#165d6d}button{font:inherit;padding:10px 18px;margin:6px 8px 6px 0;cursor:pointer;border:1px solid;border-radius:8px;background:white}textarea{box-sizing:border-box;width:100%;padding:12px;font:16px monospace}code{overflow-wrap:anywhere}section{background:white;padding:20px;border-radius:12px;margin:24px 0}[hidden]{display:none!important}</style>
-<h1>Connecter Vision à Mistral</h1>
+<title>Tokens d’accès Vision</title>
+<style>body{font:18px/1.6 system-ui,sans-serif;color:#183c45;background:#f4f6f4;max-width:760px;margin:6vh auto;padding:24px}h1,h2{line-height:1.2}button,a{color:#165d6d}button,input{font:inherit;padding:10px 14px}button{cursor:pointer;border:1px solid;border-radius:8px;background:white}input{box-sizing:border-box;width:100%;border:1px solid #9aa;border-radius:8px}textarea{box-sizing:border-box;width:100%;padding:12px;font:16px monospace}code{overflow-wrap:anywhere}section{background:white;padding:20px;border-radius:12px;margin:20px 0}.ligne{display:flex;gap:12px;align-items:center;justify-content:space-between;border-top:1px solid #dde;padding:14px 0}.meta{font-size:.9em;color:#526}.danger{color:#8b1d1d}[hidden]{display:none!important}@media(max-width:600px){.ligne{display:block}.ligne button{margin-top:8px}}</style>
+<h1>Tokens d’accès Vision</h1>
 <p><a href="/">Retour à Vision</a></p>
 <p id="etat" role="status">Vérification de la connexion…</p>
 <section id="gestion" hidden>
-<p>Ce token autorise Mistral à lire et modifier vos fiches via MCP. Il expire après un an. Vous pouvez le révoquer ici à tout moment.</p>
-<button id="creer" type="button">Créer le token</button><button id="revoquer" type="button" hidden>Révoquer le token</button>
-<div id="secret" hidden><p>Copiez ce token maintenant : il ne sera plus affiché ensuite.</p><textarea id="token" rows="2" readonly aria-label="Token secret Vision" autocomplete="off" spellcheck="false"></textarea><button id="copier" type="button">Copier</button></div>
+<h2>Créer un token</h2>
+<p>Chaque token autorise un client à lire et modifier vos fiches via MCP. Les tokens sont indépendants : en créer un nouveau ne révoque pas ceux qui existent déjà.</p>
+<label for="nom">Nom du client ou de l’usage</label><input id="nom" maxlength="80" placeholder="Ex. Mammouth, téléphone, test">
+<p><button id="creer" type="button">Créer un token</button></p>
+<div id="secret" hidden><p><strong>Copiez ce token maintenant :</strong> il ne sera plus affiché ensuite.</p><textarea id="token" rows="2" readonly aria-label="Token secret Vision" autocomplete="off" spellcheck="false"></textarea><button id="copier" type="button">Copier</button></div>
 </section>
-<section><h2>Dans Mistral</h2><p>Ajoutez un connecteur personnalisé nommé <strong>Vision</strong>.</p><ul><li>Serveur : <code>https://vision.mrj.am/mcp</code></li><li>Authentification : <strong>token API</strong></li><li>Type : <strong>Bearer</strong></li><li>Token : collez la valeur copiée, sans ajouter « Bearer ».</li><li>Visibilité : <strong>Personnel</strong></li></ul></section>
+<section id="historique" hidden><h2>Historique et gestion</h2><div id="tokens"></div></section>
+<section><h2>Connexion MCP</h2><p>Serveur : <code>https://vision.mrj.am/mcp</code>. Choisissez une authentification par token API de type <strong>Bearer</strong> et collez uniquement la valeur du token, sans ajouter « Bearer ».</p></section>
 <script src="/auth/mcp.js" defer></script></html>
