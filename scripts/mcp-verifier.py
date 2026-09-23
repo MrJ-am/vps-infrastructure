@@ -35,12 +35,13 @@ def rpc(methode, parametres, entetes):
     return resultat['result']
 
 
-def formulaire(chemin, champs, entetes=None):
+def formulaire(chemin, champs, entetes=None, origine=ORIGINE):
     class SansRedirection(urllib.request.HTTPRedirectHandler):
         def redirect_request(self,*arguments):return None
     donnees=urllib.parse.urlencode(champs).encode()
     demande=urllib.request.Request(ORIGINE+chemin,donnees,
-        {'Content-Type':'application/x-www-form-urlencoded','Origin':ORIGINE,
+        {'Content-Type':'application/x-www-form-urlencoded',
+         **({'Origin':origine} if origine is not None else {}),
          **(entetes or {})})
     try:reponse=urllib.request.build_opener(SansRedirection).open(demande,timeout=20)
     except urllib.error.HTTPError as e:reponse=e
@@ -67,7 +68,7 @@ def verifier_oauth(cookie,csrf):
     assert correspondance,'Demande de consentement absente'
     statut,entetes,_=formulaire('/oauth/authorize',
         {'request_id':correspondance[1].decode(),'csrf':csrf,'decision':'autoriser'},
-        {'Cookie':cookie})
+        {'Cookie':cookie}, origine=None)
     assert statut==302 and entetes['Location'].startswith(redirection+'?'),'Retour OAuth incorrect'
     code=urllib.parse.parse_qs(urllib.parse.urlsplit(entetes['Location']).query)['code'][0]
     statut,_,corps=formulaire('/oauth/token',
