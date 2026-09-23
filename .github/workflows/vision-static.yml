@@ -1,0 +1,50 @@
+name: Préparer l’interface Vision depuis son artefact vérifié
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-static.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lire la demande
+        id: demande
+        run: |
+          python3 - <<'PY'
+          import json,os,re
+          d=json.load(open('operations/vision-static.json'))
+          assert d['operation'] in ('preparer','activer')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          assert isinstance(d['run'],int) and isinstance(d['artifact'],int)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for k,v in d.items(): f.write(f'{k}={v}\n')
+          PY
+      - uses: actions/download-artifact@v4
+        with:
+          name: interface-vision-verifiee
+          repository: MrJ-am/vision
+          run-id: ${{ steps.demande.outputs.run }}
+          github-token: ${{ github.token }}
+          path: artefact
+      - name: Vérifier le manifeste du candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          p=pathlib.Path('artefact');m=json.loads((p/'manifest.json').read_text())
+          assert m['revisionApplication']==os.environ['REVISION']
+          assert {str(x.relative_to(p)) for x in p.rglob('*') if x.is_file()}==set(m['fichiers'])|{'manifest.json'}
+          for nom,digest in m['fichiers'].items():
+              assert hashlib.sha256((p/nom).read_bytes()).hexdigest()==digest,nom
+          print('Artefact exact et révision vérifiés.')
+          PY
