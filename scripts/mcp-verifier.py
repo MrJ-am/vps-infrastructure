@@ -92,9 +92,8 @@ def verifier():
             expect(page.locator('#secret')).to_be_hidden()
             assert page.locator('#token').input_value()==''
             assert page.evaluate('localStorage.length + sessionStorage.length')==0
-            with page.expect_event('dialog') as dialogue:
-                page.locator('#tokens .ligne').filter(has_text='Contrôle temporaire').get_by_role('button',name='Révoquer').click()
-            dialogue.value.accept()
+            page.on('dialog', lambda dialogue: dialogue.accept())
+            page.locator('#tokens .ligne').filter(has_text='Contrôle temporaire').get_by_role('button',name='Révoquer').click()
             expect(page.get_by_text('Token « Contrôle temporaire » révoqué.')).to_be_visible()
             assert requete('/mcp',{},bearer)[0]==401,'Révocation inefficace'
             identifiant=None
