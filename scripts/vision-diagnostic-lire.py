@@ -92,3 +92,11 @@ for unite in ("mcp-retour-d71dff5858b2.timer", "mcp-appliquer-d71dff5858b2.servi
     resultat = subprocess.run(["systemctl","show",unite,"-p","ActiveState","-p","Result"],
                               capture_output=True,text=True)
     print("Unité", unite, ":", resultat.stdout.strip().replace("\n"," "))
+
+preparation = Path("/root/mcp-preparations/d71dff5858b221a4eb91655674ab1db74893a5a0")
+print("Préparation token :",
+      {nom: (preparation / nom).exists() for nom in ("engage","enregistre","retour-engage","retour.json","termine.json")})
+if (preparation / "termine.json").exists():
+    termine = json.loads((preparation / "termine.json").read_text())
+    print("Génération enregistrée token :", termine.get("etat",{}).get("actif"))
+print("Import NixOS actif :", Path("/etc/nixos/configuration.nix").read_text()[:300].replace("\n"," "))
