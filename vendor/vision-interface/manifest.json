@@ -1,13 +1,13 @@
 {
-  "revisionStyle": "c7b4d6e00cd0014a0a05e5a4e77627357498faa9",
+  "revisionStyle": "b2177c0fd2c46c6f528266d30f7b933d3add1566",
   "revisionSignature": "17495b13cefa24473e37434b98336b27caec8cdf",
-  "revisionApplication": "9a4c395b24e6eb8938a3246c96f5d80c030c2d2d",
+  "revisionApplication": "079349c9cad9eb1fb27c4f5ac7f46e6238b59082",
   "formatVersion": 1,
   "validation": "Les workflows identifiés attestent les tests et la publication.",
   "fichiers": {
     "app.css": "269849922fea38b083fda0739220d518c5a63b6d96cc341aa3602b89fccfdabb",
     "app.html": "e169f5732c349ee0856070a9bd8ba5dbfb15b50ea2896619c52f7eb8f70b2cf6",
-    "app.js": "c321907a1999e82216b384a11234293b38ffd667a081b52af22b85d09f811c0b",
+    "app.js": "0c038c9e6595a35a8e80c47eec9e42a5615f901e8b1fe06bc4d74bf720b26166",
     "assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
     "assets/mrjam/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
     "assets/mrjam/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
