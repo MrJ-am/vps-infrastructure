@@ -12,6 +12,7 @@ import sqlite3
 import time
 from contextlib import closing
 from passlib.hash import sha512_crypt
+import oauth
 
 COOKIE = '__Secure-mrj_session'
 LIFETIME = 12 * 60 * 60
@@ -46,6 +47,7 @@ class Sessions:
                 if not db.execute('SELECT 1 FROM access_tokens WHERE digest=?', (row['digest'],)).fetchone():
                     db.execute('INSERT INTO access_tokens(username,name,digest,created,expires,revoked,fingerprint) VALUES (?,?,?,?,?,NULL,?)',
                                (row['username'], NOM_TOKEN_DEFAUT, row['digest'], now, row['expires'], row['fingerprint']))
+        oauth.initialiser(self)
     def connect(self):
         db = sqlite3.connect(self.path, timeout=5)
         db.row_factory = sqlite3.Row
@@ -172,6 +174,9 @@ class Sessions:
         return {'active': bool(mistral), 'expiresAt': mistral['expiresAt'] if mistral else None}
 
     def verifier_token_mcp(self, authorization):
+        utilisateur_oauth = oauth.verifier(self, authorization)
+        if utilisateur_oauth:
+            return utilisateur_oauth
         correspondance = re.fullmatch(r'Bearer ([A-Za-z0-9_-]{43})', authorization, re.IGNORECASE)
         if not correspondance:
             return None
@@ -208,13 +213,15 @@ class Handler(BaseHTTPRequestHandler):
         host=self.headers.get('X-Forwarded-Host','')
         if host not in app.hosts or self.headers.get('X-Forwarded-Proto')!='https':
             return self.reply(403,{'error':'invalid_origin'})
+        if oauth.traiter(self, app, host):
+            return
         if self.path == '/verify-mcp' and self.command == 'GET':
             valeurs = self.headers.get_all('Authorization', [])
             utilisateur = (app.verifier_token_mcp(valeurs[0])
                            if len(valeurs) == 1 and host == 'vision.mrj.am' else None)
             if not utilisateur:
                 return self.reply(401, {'error': 'authentication_required'},
-                                  {'WWW-Authenticate': 'Bearer realm="Vision MCP"'})
+                                  {'WWW-Authenticate': 'Bearer realm="Vision MCP", resource_metadata="https://vision.mrj.am/.well-known/oauth-protected-resource/mcp"'})
             return self.reply(204)
         if self.path in ('/auth/mcp', '/auth/mcp.js') and self.command == 'GET':
             fichier = 'mcp.html' if self.path == '/auth/mcp' else 'mcp.js'

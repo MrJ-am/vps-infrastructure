@@ -58,7 +58,7 @@ in {
         proxy_set_header X-Vision-Browser "";
         proxy_set_header X-Mrj-User "";
         proxy_set_header Cookie "";
-        error_page 401 = @vision-authentication-required;
+        error_page 401 = @vision-mcp-authentication-required;
         error_page 429 = @vision-rate-limited;
       '';
     };
@@ -72,6 +72,50 @@ in {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header Authorization $http_authorization;
         proxy_set_header Cookie "";
+      '';
+    };
+    "= /.well-known/oauth-protected-resource" = {
+      proxyPass = "http://127.0.0.1:3002";
+      extraConfig = ''
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization "";
+      '';
+    };
+    "= /.well-known/oauth-protected-resource/mcp" = {
+      proxyPass = "http://127.0.0.1:3002";
+      extraConfig = ''
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization "";
+      '';
+    };
+    "= /.well-known/oauth-authorization-server" = {
+      proxyPass = "http://127.0.0.1:3002";
+      extraConfig = ''
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Authorization "";
+      '';
+    };
+    "^~ /oauth/" = {
+      proxyPass = "http://127.0.0.1:3002";
+      extraConfig = ''
+        client_max_body_size 8k;
+        limit_req zone=protected_api_per_ip burst=5 nodelay;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Authorization "";
+      '';
+    };
+    "@vision-mcp-authentication-required" = {
+      extraConfig = ''
+        default_type application/json;
+        add_header Cache-Control "no-store" always;
+        add_header WWW-Authenticate 'Bearer realm="Vision MCP", resource_metadata="https://vision.mrj.am/.well-known/oauth-protected-resource/mcp"' always;
+        add_header Strict-Transport-Security "max-age=31536000" always;
+        return 401 '{"error":"authentication_required"}';
       '';
     };
     "= /api/v1/mobile-live-test" = {
@@ -112,4 +156,3 @@ in {
     };
   };
 }
-

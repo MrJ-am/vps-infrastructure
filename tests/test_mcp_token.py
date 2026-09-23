@@ -124,7 +124,7 @@ class TokensTests(AuthTests):
             extra=loc['extraConfig'].replace('X-Forwarded-Proto $scheme','X-Forwarded-Proto https').replace('/var/lib/vision/auth/htpasswd',str(self.file))
             proxy=loc['proxyPass'].replace('127.0.0.1:3002',f'127.0.0.1:{self.server.server_port}').replace('127.0.0.1:3001',f'127.0.0.1:{backend.server_port}')
             contenu+='location '+nom+' { proxy_pass '+proxy+';'+extra+'}'
-        contenu+='location @vision-authentication-required { return 401; } location @vision-rate-limited { return 429; } }}'
+        contenu+='location @vision-mcp-authentication-required { return 401; } location @vision-rate-limited { return 429; } }}'
         conf.write_text(contenu)
         proc=subprocess.Popen([nginx,'-p',self.tmp.name,'-c',str(conf)],stderr=subprocess.PIPE)
         def fermer():

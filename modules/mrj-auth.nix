@@ -6,6 +6,7 @@ let
   source = pkgs.runCommand "mrj-auth-source" {} ''
     mkdir -p "$out"
     cp ${../services/mrj-auth/server.py} "$out/server.py"
+    cp ${../services/mrj-auth/oauth.py} "$out/oauth.py"
     cp ${../services/mrj-auth/mcp.html} "$out/mcp.html"
     cp ${../services/mrj-auth/mcp.js} "$out/mcp.js"
   '';

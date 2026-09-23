@@ -37,6 +37,33 @@ function afficher(liste) {
     }
 }
 async function charger() { const r=await requete(); afficher(r.tokens || []); }
+async function chargerOAuth() {
+    const r=await fetch("/auth/oauth-connections",{credentials:"same-origin",cache:"no-store"});
+    if (!r.ok) throw new Error("Connexions OAuth indisponibles.");
+    const liste=(await r.json()).connections;
+    const cible=element("applications"); cible.replaceChildren();
+    if (!liste.length) {
+        const p=document.createElement("p"); p.textContent="Aucune application autorisée.";
+        cible.append(p);
+    }
+    for (const application of liste) {
+        const ligne=document.createElement("div"); ligne.className="ligne";
+        const nom=document.createElement("strong"); nom.textContent=application.name;
+        const bouton=document.createElement("button"); bouton.className="danger";
+        bouton.type="button"; bouton.textContent="Révoquer";
+        bouton.onclick=async()=>{
+            if (!confirm("Révoquer l’accès de « "+application.name+" » ?")) return;
+            const reponse=await fetch("/auth/oauth-connections",{
+                method:"POST",credentials:"same-origin",
+                headers:{"Content-Type":"application/json","X-CSRF-Token":csrf},
+                body:JSON.stringify({client_id:application.clientId})});
+            if (!reponse.ok) { element("etat").textContent="Révocation impossible."; return; }
+            element("etat").textContent="Accès de « "+application.name+" » révoqué.";
+            await chargerOAuth();
+        };
+        ligne.append(nom,bouton); cible.append(ligne);
+    }
+}
 async function creer() {
     const nom=element("nom").value.trim();
     if (!nom) { element("etat").textContent="Donnez un nom à ce token."; element("nom").focus(); return; }
@@ -64,7 +91,8 @@ window.addEventListener("pagehide",()=>{ element("token").value=""; element("sec
     try {
         const session=await fetch("/auth/session",{credentials:"same-origin",cache:"no-store"});
         if(!session.ok) throw new Error("Connectez-vous dans Vision, puis revenez sur cette page.");
-        csrf=(await session.json()).csrf; await charger();
-        element("gestion").hidden=false; element("historique").hidden=false; element("etat").textContent="Gestion des tokens d’accès.";
+        csrf=(await session.json()).csrf; await charger(); await chargerOAuth();
+        element("gestion").hidden=false; element("historique").hidden=false; element("oauth").hidden=false;
+        element("etat").textContent="Gestion des tokens d’accès.";
     } catch(e){ element("etat").textContent=e.message; }
 })();
