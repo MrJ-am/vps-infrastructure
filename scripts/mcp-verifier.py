@@ -68,7 +68,7 @@ def verifier_oauth(cookie,csrf):
     assert correspondance,'Demande de consentement absente'
     statut,entetes,_=formulaire('/oauth/authorize',
         {'request_id':correspondance[1].decode(),'csrf':csrf,'decision':'autoriser'},
-        {'Cookie':cookie}, origine=None)
+        {'Cookie':cookie}, origine='null')
     assert statut==302 and entetes['Location'].startswith(redirection+'?'),'Retour OAuth incorrect'
     code=urllib.parse.parse_qs(urllib.parse.urlsplit(entetes['Location']).query)['code'][0]
     statut,_,corps=formulaire('/oauth/token',
