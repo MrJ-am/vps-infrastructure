@@ -52,6 +52,46 @@ class TokensTests(AuthTests):
         self.file.write_text('test-user:!\n')
         self.assertIsNone(self.sessions.verifier_token_mcp('Bearer '+token))
 
+    def test_tokens_nommes_independants_et_migration_mistral(self):
+        cookie, session = self.login()
+        entetes = {'Cookie': cookie, 'X-CSRF-Token': session['csrf']}
+        mistral = self.req('/auth/mcp-token', {'action': 'creer'}, entetes)[2]['token']
+        avant = self.req('/auth/access-tokens', headers=entetes)[2]['tokens']
+        self.assertEqual(len(avant), 1)
+        self.assertEqual(avant[0]['name'], 'Mistral')
+        self.assertEqual(self.req('/auth/access-tokens', {'action': 'creer', 'name': 'Mammouth'},
+                                  {'Cookie': cookie})[0], 403)
+        statut, _, cree = self.req('/auth/access-tokens',
+                                   {'action': 'creer', 'name': 'Mammouth'}, entetes)
+        self.assertEqual(statut, 200)
+        mammouth = cree['token']
+        self.assertEqual(len(mammouth), 43)
+        for secret in (mistral, mammouth):
+            self.assertEqual(self.req('/verify-mcp',
+                                      headers={'Authorization': 'Bearer ' + secret})[0], 204)
+        liste = self.req('/auth/access-tokens', headers=entetes)[2]['tokens']
+        self.assertEqual({t['name'] for t in liste}, {'Mistral', 'Mammouth'})
+        self.assertTrue(all(t['active'] for t in liste))
+        self.assertTrue(all('token' not in t for t in liste))
+        self.assertEqual(self.req('/auth/access-tokens',
+                                  {'action': 'revoquer', 'id': cree['id']}, entetes)[0], 200)
+        self.assertEqual(self.req('/verify-mcp',
+                                  headers={'Authorization': 'Bearer ' + mammouth})[0], 401)
+        self.assertEqual(self.req('/verify-mcp',
+                                  headers={'Authorization': 'Bearer ' + mistral})[0], 204)
+        statut, _, page = self.req_page('/auth/mcp')
+        self.assertEqual(statut, 200)
+        self.assertIn('Historique et gestion', page)
+        self.assertIn('/auth/mcp.js', page)
+
+    def req_page(self, path):
+        requete = urllib.request.Request(
+            f'http://127.0.0.1:{self.server.server_port}{path}',
+            headers={'X-Forwarded-Host': 'vision.mrj.am',
+                     'X-Forwarded-Proto': 'https'})
+        with urllib.request.urlopen(requete) as resultat:
+            return resultat.status, resultat.headers, resultat.read().decode()
+
     def test_token_independant_de_la_session(self):
         cookie, session = self.login()
         headers = {'Cookie':cookie, 'X-CSRF-Token':session['csrf']}
