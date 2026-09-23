@@ -91,7 +91,8 @@ def verifier():
     statut,_,corps=requete('/.well-known/oauth-authorization-server')
     assert statut==200 and json.loads(corps)['token_endpoint']==ORIGINE+'/oauth/token','Serveur OAuth indisponible'
     statut,headers,_=requete('/mcp',{})
-    assert statut==401 and 'resource_metadata=' in headers.get('WWW-Authenticate',''),'Défi OAuth absent'
+    assert statut==401 and 'resource_metadata=' in str(headers.get_all('WWW-Authenticate',[])),(
+        'Défi OAuth absent : statut='+str(statut)+' ; défis='+str(headers.get_all('WWW-Authenticate',[])))
     utilisateur=os.environ['VISION_API_USERNAME'];mot_de_passe=os.environ['VISION_API_PASSWORD']
     basic={'Authorization':'Basic '+base64.b64encode((utilisateur+':'+mot_de_passe).encode()).decode()}
     assert requete('/api/v1/health',entetes=basic)[0]==200,'Basic API indisponible'

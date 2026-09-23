@@ -121,12 +121,12 @@ class TokensTests(AuthTests):
         with socket.socket() as sock:sock.bind(('127.0.0.1',0));port=sock.getsockname()[1]
         conf=Path(self.tmp.name)/'nginx.conf'
         contenu=f'user root; master_process off; daemon off; pid {self.tmp.name}/nginx.pid; error_log {self.tmp.name}/error.log; events {{}} http {{ access_log off; client_body_temp_path {self.tmp.name}/body; proxy_temp_path {self.tmp.name}/proxy; fastcgi_temp_path {self.tmp.name}/fastcgi; uwsgi_temp_path {self.tmp.name}/uwsgi; scgi_temp_path {self.tmp.name}/scgi; limit_req_zone $binary_remote_addr zone=protected_api_per_ip:1m rate=10000r/s; limit_conn_zone $binary_remote_addr zone=protected_api_connections:1m; server {{ listen 127.0.0.1:{port};'
-        for nom in ('= /mcp','= /_vision_mcp_token'):
+        for nom in ('= /mcp','= /_vision_mcp_token','@vision-mcp-authentication-required'):
             loc=locations[nom]
             extra=loc['extraConfig'].replace('X-Forwarded-Proto $scheme','X-Forwarded-Proto https').replace('/var/lib/vision/auth/htpasswd',str(self.file))
-            proxy=loc['proxyPass'].replace('127.0.0.1:3002',f'127.0.0.1:{self.server.server_port}').replace('127.0.0.1:3001',f'127.0.0.1:{backend.server_port}')
-            contenu+='location '+nom+' { proxy_pass '+proxy+';'+extra+'}'
-        contenu+='location @vision-mcp-authentication-required { return 401; } location @vision-rate-limited { return 429; } }}'
+            proxy=loc.get('proxyPass','').replace('127.0.0.1:3002',f'127.0.0.1:{self.server.server_port}').replace('127.0.0.1:3001',f'127.0.0.1:{backend.server_port}')
+            contenu+='location '+nom+' {'+('proxy_pass '+proxy+';' if proxy else '')+extra+'}'
+        contenu+='location @vision-rate-limited { return 429; } }}'
         conf.write_text(contenu)
         proc=subprocess.Popen([nginx,'-p',self.tmp.name,'-c',str(conf)],stderr=subprocess.PIPE)
         def fermer():
@@ -137,7 +137,7 @@ class TokensTests(AuthTests):
             req=urllib.request.Request(f'http://127.0.0.1:{port}'+path,b'{}',{'Host':'vision.mrj.am',**(headers or {})})
             try:r=urllib.request.urlopen(req,timeout=3)
             except urllib.error.HTTPError as e:r=e
-            with r:return r.status,r.read()
+            with r:return r.status,r.read(),r.headers
         for _ in range(40):
             if proc.poll() is not None:self.fail(proc.stderr.read().decode())
             try:via();break
@@ -145,12 +145,13 @@ class TokensTests(AuthTests):
         cookie,session=self.login();headers={'Cookie':cookie,'X-CSRF-Token':session['csrf']}
         token=self.req('/auth/mcp-token',{'action':'creer'},headers)[2]['token']
         self.assertEqual(via()[0],401)
+        self.assertIn('resource_metadata=',str(via()[2].get_all('WWW-Authenticate',[])))
         self.assertEqual(via(headers=headers)[0],401)
         self.assertEqual(via('/_vision_mcp_token')[0],404)
         self.assertEqual(via(headers={'X-Vision-Authenticated':'1','X-Vision-Browser':'1'})[0],401)
         self.assertEqual(via(headers={'Authorization':'Bearer wrong'})[0],401)
         for auth in ('Bearer '+token,'Basic '+base64.b64encode(('test-user:'+self.password).encode()).decode()):
-            status,body=via(headers={'Authorization':auth,'Cookie':'forged','X-Vision-Browser':'1','X-Mrj-User':'forged'})
+            status,body,_=via(headers={'Authorization':auth,'Cookie':'forged','X-Vision-Browser':'1','X-Mrj-User':'forged'})
             self.assertEqual(status,200)
             self.assertEqual(json.loads(body),{'Authorization':None,'Cookie':None,'X-Vision-Authenticated':'1','X-Vision-Browser':None,'X-Mrj-User':None})
         self.sessions.token_mcp('test-user',revoquer=True)
