@@ -23,8 +23,10 @@ et expirent après cinq minutes.
 
 Le point `/mcp` accepte aussi HTTP Basic et les tokens Bearer nommés
 préexistants. Un jeton MCP ne donne accès ni au navigateur ni à l'API REST.
-Le consentement et la révocation exigent une session Vision, l'origine attendue
-et le CSRF. Les condensats, jamais les secrets, sont enregistrés dans SQLite
+Le consentement exige une session Vision et un CSRF valide. Une origine
+explicitement étrangère ou `null` est refusée ; l'absence d'en-tête `Origin`
+est acceptée pour les formulaires des navigateurs qui l'omettent. La révocation
+requiert aussi l'origine Vision. Les condensats, jamais les secrets, sont enregistrés dans SQLite
 sur le VPS. Les journaux HTTP ne contiennent pas les paramètres de requête ni
 les en-têtes d'autorisation.
 
@@ -33,3 +35,9 @@ la preuve PKCE, la consommation unique du code, le renouvellement, la
 séparation des accès et la révocation. Le contrôle de production crée un
 client temporaire, vérifie l'initialisation MCP puis révoque ses jetons,
 sans écrire de fiche.
+
+Le correctif du consentement sans `Origin` est actif à la révision
+`2800fb6b2ee88b9f3fbd4384b11daabfb6337122` : CI `35842065564`,
+préparation `35842320109`, activation HTTPS `35842570603`. Cette dernière
+vérifie le formulaire sans cet en-tête, PKCE, le MCP et les accès précédents.
+La connexion réelle depuis le compte Claude reste à refaire par son propriétaire.
