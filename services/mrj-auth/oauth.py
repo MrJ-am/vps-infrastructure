@@ -119,7 +119,7 @@ def page(handler, contenu):
         "Content-Type": "text/html; charset=utf-8", "Content-Length": str(len(donnees)),
         "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "no-referrer",
-        "Content-Security-Policy": "default-src 'none'; script-src 'self'; style-src 'unsafe-inline'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
+        "Content-Security-Policy": "default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
     }.items():
         handler.send_header(cle, valeur)
     handler.end_headers()
@@ -179,12 +179,13 @@ def demande(handler, sessions):
         if not session:
             return page(handler, """<!doctype html><html lang="fr"><meta charset="utf-8">
               <meta name="viewport" content="width=device-width,initial-scale=1">
-              <title>Connexion Vision</title><body style="font:18px system-ui;max-width:35em;margin:3em auto;padding:1em">
-              <h1>Connectez-vous à Vision</h1><p>La connexion est nécessaire avant d’autoriser le client MCP.</p>
+              <title>Connexion Vision</title><link rel="stylesheet" href="/auth/style.css">
+              <body><main><h1>Connectez-vous à Vision</h1>
+              <p>La connexion est nécessaire avant d’autoriser le client MCP.</p>
               <form id="connexion"><label>Identifiant <input name="username" required></label>
               <label>Mot de passe <input name="password" type="password" required></label>
               <button>Se connecter</button></form><p id="etat" role="status"></p>
-              <script src="/auth/oauth.js" defer></script></body></html>""")
+              </main><script src="/auth/oauth.js" defer></script></body></html>""")
         identifiant = secrets.token_urlsafe(24)
         with closing(sessions.connect()) as db, db:
             db.execute("DELETE FROM oauth_demandes WHERE expiration<?", (int(time.time()),))
@@ -197,8 +198,8 @@ def demande(handler, sessions):
         return page(handler, f"""<!doctype html><html lang="fr"><meta charset="utf-8">
           <meta name="viewport" content="width=device-width,initial-scale=1">
           <title>Autoriser l’accès à Vision</title>
-          <body style="font:18px/1.5 system-ui;color:#193d38;background:#eef7f3;max-width:38em;margin:2em auto;padding:1em">
-          <main style="background:white;border-radius:16px;padding:1.5em">
+          <link rel="stylesheet" href="/auth/style.css">
+          <body><main>
           <h1>Autoriser {titre} ?</h1>
           <p>Ce client pourra lire et modifier toutes vos fiches Vision via MCP.
           Après votre décision, vous serez renvoyé vers {domaine}.</p>

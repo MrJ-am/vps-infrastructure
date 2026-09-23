@@ -58,6 +58,7 @@ class OAuthTests(AuthTests):
         statut, _, page = self.envoyer(chemin, cookie=cookie)
         self.assertEqual(statut, 200)
         self.assertIn('Autoriser Claude', page)
+        self.assertIn('/auth/style.css', page)
         identifiant = re.search(r'name="request_id" value="([^"]+)"', page)[1]
         formulaire = urllib.parse.urlencode(
             {'request_id': identifiant, 'csrf': session['csrf'],

@@ -9,6 +9,7 @@ let
     cp ${../services/mrj-auth/oauth.py} "$out/oauth.py"
     cp ${../services/mrj-auth/mcp.html} "$out/mcp.html"
     cp ${../services/mrj-auth/mcp.js} "$out/mcp.js"
+    cp ${../services/mrj-auth/style.css} "$out/style.css"
   '';
   sessionHeaders = ''
     proxy_set_header Host $host;
