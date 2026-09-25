@@ -459,11 +459,11 @@ Chaque projet devra prendre connaissance du résultat final avant sa prochaine p
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: a40ec47876c3b0a4b75259617d0f70708f552b35cda56bab1f05f016bd6b0acf
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -523,11 +523,11 @@ Actions : chaque projet relit le contrat journal-http et l'état avant publicati
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 45f5357c2aa9ef8700d7a99ca3c6a3737257b65fd208be6f7a30a3daaa2be4ed
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -554,11 +554,11 @@ Vision a validé en CI le code 61028623566953610750781ab59f236d072c32bd sur une 
 Impact VPS ciblé : publication du seul serveur Vision depuis la version active contrôlée, sans modification NixOS, Nginx, authentification ni données ; vérifier que journald vision.service reçoit une trace MCP de lecture et une erreur -32602 attendue. Préparation puis activation séparées via Actions ; retour à la version précédente en cas d'échec.
 VPS et Vision doivent contrôler l'état réellement actif avant la publication et consigner révision, exécution et preuves. Aucun essai Mistral n'est demandé avant validation de la trace en production.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 95e452f575a3ae768e3180084b4a234de970ace0ce218e68aa1d624a7fcf5e54
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -583,11 +583,11 @@ Résultat du chantier 20260923-vision-diagnostic-mcp : serveur Vision 6102862356
 Le lecteur minimisé est disponible depuis le workflow diagnostic-mcp-lecture.yml ; vérification 35797654193 : deux traces applicatives et une entrée HTTP 401 sur la fenêtre de sonde. Il ne transmet ni IP, ni identifiant HTTP, ni corps. Pour un essai Mistral, mettre à jour operations/vision-diagnostic-lecture.json avec une fenêtre UTC de 15 minutes maximum après l'essai ; le workflow se déclenche sur main. Aucune fiche fictive n'a été créée.
 Le propriétaire peut refaire son essai Mistral. Vision analysera les traces nouvelles après sa confirmation ; aucun résultat Mistral n'est encore conclu.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: bd4227286a254a7f47bfa7a5e131f2a39cffc3549ede2f644c9cf06bf6ba0ffa
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -611,11 +611,11 @@ Le propriétaire peut refaire son essai Mistral. Vision analysera les traces nou
 Essai Mistral du propriétaire, fenêtre UTC 23:32–23:35 : lecture minimisée 35798169979, 99 traces JSON-RPC dont initialisation et liste réussies ; 23 appels d'outils ont reçu -32602 de Vision alors que les noms et types des arguments sont plausibles. Toutes les requêtes ont traversé le proxy (102 requêtes HTTP /mcp). La validation actuelle refuse toute clé de paramètres hors name/arguments pour tools/call ; l'hypothèse ciblée est la clé MCP _meta, facultative et utilisée par des clients.
 Vision prépare un correctif limité à l'acceptation de _meta sur tools/call et tools/list, avec test d'intégration. La trace ajoutera seulement la présence de _meta et une catégorie d'erreur constante, sans contenu ni secret. Publication du seul serveur Vision avec préparation, retour possible et essais de lecture MCP contrôlés avant nouvelle sollicitation Mistral. Le défaut précis de la requête Mistral n'est pas encore prouvé par valeur ; ne pas déclarer l'incident clos avant un nouvel essai réel.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: b47406ceaaaefa4b50c250401790510f715077de7c5aa00f1cfd0c98f75b3079
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -639,11 +639,11 @@ Vision prépare un correctif limité à l'acceptation de _meta sur tools/call et
 Suite à 20260923-vision-mcp-meta, Vision 754e908f75660d6a5941c2ebc459e293b12b82e1 accepte _meta dans tools/call et tools/list ; CI 35798337044 réussie. Préparation VPS 35798686626 et activation 35798771654 réussies, 22 contrôles HTTP/TLS et services actifs ; aucune écriture métier.
 Lecture minimisée 35798866720 : outils list_due_memory_sheets et search_memory_sheets avec meta=present répondent result=ok ; l'appel invalide limit=0 reste refusé -32602 avec catégorie invalid_integer. Le journal ne reprend pas les valeurs. La version précédente 61028623566953610750781ab59f236d072c32bd est conservée. Il reste à vérifier le nouvel essai Mistral réel avant de déclarer l'incident résolu.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 4ccbf3e163710eba751f4f1a11c70d8de2c8b0af532bd99551887e2d41beee14
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -666,11 +666,11 @@ Lecture minimisée 35798866720 : outils list_due_memory_sheets et search_memory_
 :END:
 Lecture minimisée de l'essai du propriétaire : workflow 35799898928. Après publication de Vision 754e908f75660d6a5941c2ebc459e293b12b82e1, les appels Mistral list_due_memory_sheets et get_memory_sheet portant meta=present répondent result=ok ; initialisation et tools/list également. Capture utilisateur : fiche « Capitales européennes » lue et révision engagée. Aucun record_review n'apparaît dans cette fenêtre : le dialogue a été interrompu par la limite de messages du compte Mistral avant l'enregistrement de la performance. Une erreur -32602 dans la fenêtre provenait de la sonde délibérément invalide avant l'essai. Incident d'accès au connecteur résolu pour la consultation ; l'écriture d'une observation depuis Mistral reste non vérifiée par cet essai.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 28578e741e3207765bfafe8d6a7d9c7c48eccf76a029c80225e154dd1d812d40
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -738,11 +738,11 @@ Chaque destinataire relit le contrat avant sa prochaine opération d’authentif
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: d2dc48c03600be488df25c992bdbd8c92d88eca39e9b589fc4190b11b34d2efd
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -781,11 +781,11 @@ et maintien du Bearer historique. Ne modifier ni les bases métier ni les
 autres applications. Vérifier HTTPS, CSRF, redirections, révocation et
 génération réellement active ; publier ensuite références et limites exactes.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 2ff581a4f03cd94d92a172460fca08ce07e31e89b8a4c5c502e74addfc938b0d
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -831,11 +831,11 @@ conserve les routes OAuth, la génération et le garde-fou du timer. Référence
 durables : coordination/CONTRATS.org#authentification, docs/ETAT.md et
 docs/VISION-OAUTH.md. Aucun changement demandé aux autres sites.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 88f9c2cd79b4275a2d95a89c0e0f1c62283d508ce41c4f1edb2dc8531b5f4693
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -871,11 +871,11 @@ du propriétaire ; la valeur exacte de son en-tête n'a pas été observée.
 
 Action Vision : relire le contrat du consentement et surveiller le nouvel essai.
 Action VPS : maintenir la sonde HTTPS et les restrictions CSRF.
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: bb8cf6bdbd504116e25a567f303041ad7e150a4ea8a824370cc67da321410265
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
@@ -900,11 +900,11 @@ Vision travaille depuis main 079349c9cad9eb1fb27c4f5ac7f46e6238b59082 sur refont
 Impact VPS : transmettre l’identité authentifiée au serveur pour Basic et MCP, sans changer les identifiants, tokens, OAuth ni sessions ; préparer une opération Actions dédiée avec état réel, sauvegarde/restauration isolée, simulation, maintenance des écritures, retour applicatif et vérification HTTPS. Les sources et invariants NixOS actuels seront conservés ; seuls les en-têtes nécessaires évolueront.
 Avant activation : tests DB/API/MCP, isolation, idempotence, migration relançable, contrôles mobile et mesures des sélections. Après activation : révisions servies, contrats MCP réels, nombres migrés et preuves Actions consignés. Ce message annonce le chantier ; aucune migration ni publication réalisée.
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: c2bb111e1f3f02f366250dd061ae3d30492c1d6614b90e2db4fcc6ebfa542a16
+:LU_LE: 2026-09-25T13:31:38+00:00
+:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
 :PREUVE: -
 :END:
 
