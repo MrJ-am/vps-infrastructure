@@ -1,5 +1,21 @@
 # État attesté au 25 septembre 2026
 
+## Révision séquentielle publiée le 25 septembre 2026
+
+Application `608c34cacdd0040dd84c4507f26d7799d70d4f38`, source VPS
+`766316cae5b71964c98e73bce476243087d0a2b5`. Préparation
+[36164763326](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36164763326)
+(réussie à la deuxième tentative après un délai SSH avant tout changement),
+activation [36164997869](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36164997869)
+et constat [36165233858](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36165233858)
+réussis. Migrations additives 009 et 010 appliquées sans modification des données
+existantes. Une préparation ciblée expose au plus un item ; son texte de retour
+ordonne d’enregistrer chaque tentative par `evaluer_items` avant un nouvel appel
+à `preparer_revision`. Basic, Bearer, OAuth, navigateur, services et 32 sondes
+HTTP/TLS ont été contrôlés. L’état actif et de démarrage NixOS est conservé,
+les deux publications Vision pointent vers cette application, et le retour
+est désarmé après le constat.
+
 ## Publication réelle du 25 septembre 2026, 14:14 UTC
 
 Serveur et interface `ad0fbd80401c0d2aed77b12d11e3f1b3e8397367` actifs ;
