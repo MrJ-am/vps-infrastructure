@@ -111,17 +111,13 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Depuis le 25 septembre 2026, Vision 2.1 expose onze opérations fiches/items
-  communes à REST et MCP. initialize fournit les instructions db-1 ; tools/list
-  est la référence. Les anciens outils répondent contrat_retire ; rafraîchir
-  les catalogues des clients. Aucun rating FSRS n’est converti silencieusement.
-- preparer_revision suggère des fiches et signale les séances ouvertes.
-  ouvrir_seance persiste un lot borné (20 items au plus) et annonce environ
-  combien de questions seront posées. Une séance antérieure ouverte demande un
-  choix explicite avant une nouvelle séance, sans la bloquer. Les réponses ne
-  sont pas connues avant clore_seance : évaluations, déroulement factuel et retour
-  sont intégrés atomiquement. Les propositions d'ajout ou de reformulation
-  restent des propositions, sans modification automatique d'items.
+- Vision 2.1 expose onze outils REST/MCP ; tools/list est la référence et les
+  anciens noms répondent contrat_retire. Aucun rating FSRS n'est converti.
+- preparer_revision suggère et signale les séances ouvertes. ouvrir_seance
+  prépare au plus 20 items ; une autre séance reste possible après accord.
+  clore_seance écrit atomiquement le déroulement, les évaluations et le retour.
+  Avant clôture, Vision ignore les réponses. Ajouts et reformulations restent
+  des propositions sans écriture automatique dans les items.
 - Le serveur exige l’identité authentifiée transmise par Nginx ; préserver
   Basic, Bearer, OAuth, sessions et CSRF. Les données restent isolées par compte.
 - La migration conserve les sources historiques. Un retour applicatif ne
