@@ -46,7 +46,7 @@ let
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
         proxy_set_header X-Vision-Browser "";
-        proxy_set_header X-Mrj-User "";
+        proxy_set_header X-Mrj-User $remote_user;
         error_page 401 = @${site.service}-authentication-required;
         error_page 429 = @${site.service}-rate-limited;
       '';

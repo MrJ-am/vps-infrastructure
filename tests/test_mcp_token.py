@@ -28,6 +28,7 @@ class TokensTests(AuthTests):
         self.assertEqual(status, 200)
         token = result['token']; bearer = {'Authorization': 'Bearer ' + token}
         self.assertEqual(self.req('/verify-mcp', headers=bearer)[0], 204)
+        self.assertEqual(self.req('/verify-mcp', headers=bearer)[1]['X-Mrj-User'], 'test-user')
         self.assertEqual(self.req('/verify-mcp', headers=headers)[0], 401)
         self.assertEqual(self.req('/verify', headers=bearer)[0], 401)
         self.assertEqual(self.req('/auth/mcp-token', headers=bearer)[0], 401)
@@ -153,7 +154,7 @@ class TokensTests(AuthTests):
         for auth in ('Bearer '+token,'Basic '+base64.b64encode(('test-user:'+self.password).encode()).decode()):
             status,body,_=via(headers={'Authorization':auth,'Cookie':'forged','X-Vision-Browser':'1','X-Mrj-User':'forged'})
             self.assertEqual(status,200)
-            self.assertEqual(json.loads(body),{'Authorization':None,'Cookie':None,'X-Vision-Authenticated':'1','X-Vision-Browser':None,'X-Mrj-User':None})
+            self.assertEqual(json.loads(body),{'Authorization':None,'Cookie':None,'X-Vision-Authenticated':'1','X-Vision-Browser':None,'X-Mrj-User':'test-user'})
         self.sessions.token_mcp('test-user',revoquer=True)
         self.assertEqual(via(headers={'Authorization':'Bearer '+token})[0],401)
 

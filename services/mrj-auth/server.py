@@ -222,7 +222,7 @@ class Handler(BaseHTTPRequestHandler):
             if not utilisateur:
                 return self.reply(401, {'error': 'authentication_required'},
                                   {'WWW-Authenticate': 'Bearer realm="Vision MCP", resource_metadata="https://vision.mrj.am/.well-known/oauth-protected-resource/mcp"'})
-            return self.reply(204)
+            return self.reply(204, headers={'X-Mrj-User': utilisateur})
         if self.path in ('/auth/mcp', '/auth/mcp.js', '/auth/style.css') and self.command == 'GET':
             fichier = {'/auth/mcp': 'mcp.html', '/auth/mcp.js': 'mcp.js',
                        '/auth/style.css': 'style.css'}[self.path]
