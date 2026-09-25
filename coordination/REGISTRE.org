@@ -1081,12 +1081,12 @@ isolée ; conserver Basic, Bearer, OAuth, sessions, données et retour applicati
 sans restauration de base. Relever les versions et contrôles HTTPS après activation.
 Ce message annonce le changement ; aucune publication applicative n'est revendiquée.
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: b626def0ce9a9de4c9752642137828f9f0c04632ad6a017d981e6b3453c15330
+:LU_LE: 2026-09-25T22:57:00+00:00
+:CONTEXTE: MrJ-am/vision@5c92e0827c13cddaeb0bac852e57b3b26491670a
+:PREUVE: CI Vision 36198122892, interface 36198122897 ; activation 36198786537 et constat 36198944200 réussis, deux séances préservées.
 :END:
 
 ** TODO vps
