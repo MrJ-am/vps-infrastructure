@@ -41,6 +41,28 @@ def wrapper(d,base,compte):
  return p
 def migrations(source,base,compte):
  for p in sorted((source/'migrations').glob('*.sql')):psql(base,p.read_text(),compte)
+def empreinte_donnees(base):
+ # Empreintes locales uniquement, jamais le contenu ni les identifiants en sortie.
+ tables=('vision_fiches','vision_items','vision_liens','vision_episodes',
+         'vision_contextes','vision_journal','vision_migrations_metier',
+         'vision_memory_sheets','vision_memory_observations')
+ return {table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip()
+         for table in tables}
+
+def migration_sequentielle(source,base):
+ fichier=source/'migrations/009_revision_sequentielle.sql'
+ exiger(fichier.is_file(),'Migration de révision absente')
+ avant=empreinte_donnees(base)
+ psql(base,fichier.read_text())
+ exiger(empreinte_donnees(base)==avant,'Une donnée a changé pendant la migration de révision')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=9').strip()==b'1','Migration 009 non enregistrée')
+ u=proprietaire()
+ # Le propriétaire est validé comme identifiant ASCII sans apostrophe.
+ requete="SELECT jsonb_array_length(vision_preparer('"+u+"',jsonb_build_object('fiche_id',id,'limite',8,'repeter',true))->'usage_assistant'->'items') FROM vision_fiches WHERE utilisateur='"+u+"' AND archive_a IS NULL ORDER BY id LIMIT 1"
+ nombre=psql(base,requete).decode().strip()
+ exiger(nombre in ('0','1'),'La préparation révèle plusieurs items')
+ return {'mise_a_jour':True,'donnees_preservees':True,'migration_009':True,'selection_maximale':1}
+
 def sauvegarder(d,nom):
  p=d/(nom+'.dump')
  with p.open('wb') as f:
@@ -56,11 +78,17 @@ def restauration_et_plan(d,source,sauvegarde,nom):
   with sauvegarde.open('rb') as f:
    r=subprocess.run(['runuser','-u','postgres','--','pg_restore','--exit-on-error','--no-owner','--role=vision','-h','/run/postgresql','-d',base],stdin=f,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
   exiger(r.returncode==0,'Restauration isolée refusée')
+  # Une collection v2 existante exige une migration additive, sans nouvel import.
+  existante=bool(int(psql(base,"SELECT count(*) FROM vision_migrations_metier WHERE cle='fiches-items-v2'").strip()))
+  if existante:
+   rapport=migration_sequentielle(source,base)
+   sauver(d/(nom+'-rapport.json'),rapport)
+   return None,rapport
   migrations(source,base,'postgres')
   os.environ['VISION_PSQL']=str(wrapper(d,base,'postgres'));m=importer_module(source);plan=m.preparer();u=proprietaire()
   (d/(nom+'-plan-prive.json')).write_text(json.dumps(plan,ensure_ascii=False,indent=2))
   avant=json.loads(psql(base,"SELECT jsonb_build_object('fiches',(SELECT count(*) FROM vision_fiches),'items',(SELECT count(*) FROM vision_items))"))
-  exiger(avant=={'fiches':0,'items':0},'Une collection v2 existe déjà : migration initiale refusée')
+  exiger(avant=={'fiches':0,'items':0},'Collection sans migration initiale connue : opération refusée')
   simule=m.appliquer(u,plan,True)
   exiger(json.loads(psql(base,'SELECT count(*) FROM vision_items'))==0,'La simulation a laissé des données')
   applique=m.appliquer(u,plan);rejeu=m.appliquer(u,plan)
@@ -140,10 +168,14 @@ def appliquer(revision):
   # Nouveau dump après arrêt de toutes les écritures applicatives. Le plan de
   # préparation n'est jamais réutilisé sur des données qui ont pu évoluer.
   backup=sauvegarder(d,'activation');plan,rapport=restauration_et_plan(d,Path(r['serveur']),backup,'activation')
-  migrations(Path(r['serveur']),'vision','vision')
-  os.environ['VISION_PSQL']=str(wrapper(d,'vision','vision'));m=importer_module(Path(r['serveur']))
-  resultat=m.appliquer(proprietaire(),plan)
-  exiger(resultat.get('enregistre') and resultat['items_apres']==rapport['items_apres'],'Import non confirmé')
+  if plan is None:
+   resultat=migration_sequentielle(Path(r['serveur']),'vision')
+   exiger(resultat['donnees_preservees'],'Mise à jour non confirmée')
+  else:
+   migrations(Path(r['serveur']),'vision','vision')
+   os.environ['VISION_PSQL']=str(wrapper(d,'vision','vision'));m=importer_module(Path(r['serveur']))
+   resultat=m.appliquer(proprietaire(),plan)
+   exiger(resultat.get('enregistre') and resultat['items_apres']==rapport['items_apres'],'Import non confirmé')
   (d/'migration-commise').touch();lien(r['serveur'],'/srv/vision/current');lien(r['interface'],'/srv/vision-interface/current')
   executer('systemctl','start','vision');services();sauver(d/'essai.json',dict(etat=etat(),rapport=rapport))
  print('Migration atomique réalisée et deux publications activées sous retour autonome.')
