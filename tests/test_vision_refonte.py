@@ -41,3 +41,19 @@ class Migration(unittest.TestCase):
    f=tarfile.TarInfo('../interdit');f.size=1;t.addfile(f,io.BytesIO(b'x'))
   with self.assertRaisesRegex(RuntimeError,'non sûre'):m.decompresser(cible,p)
   self.assertFalse((self.d/'interdit').exists())
+
+class Candidat(unittest.TestCase):
+ def test_archives_exactes_et_manifeste(self):
+  import hashlib,zipfile
+  racine=Path(__file__).resolve().parents[1];p=racine/'operations/vision-refonte-candidat.json'
+  if not p.exists():self.skipTest('Branche préparatoire sans artefacts')
+  d=json.loads(p.read_text())
+  self.assertEqual(set(d['fichiers']),{'vendor/vision-refonte-source.tar.gz','vendor/vision-refonte-interface.zip'})
+  for n,h in d['fichiers'].items():self.assertEqual(hashlib.sha256((racine/n).read_bytes()).hexdigest(),h)
+  with tarfile.open(racine/'vendor/vision-refonte-source.tar.gz','r:gz') as t:
+   self.assertEqual(t.extractfile('revision-application.txt').read().decode().strip(),d['application'])
+   for f in t.getmembers():self.assertTrue(f.isfile() and not f.name.startswith('/') and '..' not in Path(f.name).parts)
+  with zipfile.ZipFile(racine/'vendor/vision-refonte-interface.zip') as z:
+   manifeste=json.loads(z.read('manifest.json'));self.assertEqual(manifeste['revisionApplication'],d['application'])
+   self.assertEqual({n for n in z.namelist() if not n.endswith('/')},set(manifeste['fichiers'])|{'manifest.json'})
+   for n,h in manifeste['fichiers'].items():self.assertEqual(hashlib.sha256(z.read(n)).hexdigest(),h)

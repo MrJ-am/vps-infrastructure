@@ -1,0 +1,10 @@
+{
+  "application": "ad0fbd80401c0d2aed77b12d11e3f1b3e8397367",
+  "ci_backend": 36144136851,
+  "ci_interface": 36144136848,
+  "artefact_interface": 10868577482,
+  "fichiers": {
+    "vendor/vision-refonte-source.tar.gz": "d0a96c0981353b30507bd69e678f9b7cee4d6ea772968d953581c5fd3850aea8",
+    "vendor/vision-refonte-interface.zip": "f7955e3f434b9001faebb9ce4fca96ff6a847607ba520645cf9529659dbf5679"
+  }
+}
