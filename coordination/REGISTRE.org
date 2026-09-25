@@ -1014,3 +1014,43 @@ operations/vision-refonte-publication.json. Messages de préparation
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Révision Vision séquentielle et mise à jour applicative
+:PROPERTIES:
+:ID: 20260925-vision-revision-sequentielle
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T16:42:00+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Lors d'une séance « Capitales européennes », cinq réponses ont été traitées
+sans nouvel appel au serveur après la préparation initiale. Vision main
+1b570946d9166275ccf1bf7199aee6595a829327 limite maintenant la préparation
+ciblée à un item et précise dans initialize/tools/list que chaque tentative doit
+être enregistrée avant la préparation suivante. La CI PostgreSQL et interface
+du candidat initial a réussi (36161745404, 36161745277).
+
+Action Vision : valider la CI de main, préparer un déploiement incrémental qui
+préserve les données v2, puis constater les contrats MCP réellement servis.
+Action VPS : préserver l'identité, les routes OAuth et les autres services ;
+une opération de migration initiale refuse légitimement une collection v2
+existante. Aucun changement VPS ni activation n'est déclaré dans ce message.
+Critère de fin : source et migration 009 actives, un seul item renvoyé lors
+d'une préparation ciblée, données et accès préservés, preuves Actions.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
