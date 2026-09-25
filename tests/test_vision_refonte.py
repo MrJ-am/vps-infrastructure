@@ -14,16 +14,19 @@ class Migration(unittest.TestCase):
   p=patch.object(m,'executer');self.commande=p.start();self.addCleanup(p.stop)
  def test_migration_additive_conserve_donnees_et_prepare_les_seances(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/011_seances.sql').write_text('migration')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant'},{'items':'avant'}]),patch.object(m,'psql',side_effect=[b'',b'1',b'0',b'array']) as sql,patch.object(m,'proprietaire',return_value='alice'):
+  (source/'migrations/011_seances.sql').write_text('migration 011')
+  (source/'migrations/012_reprise_seances.sql').write_text('migration 012')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'',b'',b'2',b'2',b'2']) as sql,patch.object(m,'proprietaire',return_value='alice'):
    rapport=m.migration_sequentielle(source,'isolée')
   self.assertTrue(rapport['donnees_preservees'])
+  self.assertEqual(rapport['seances_ouvertes_preservees'],2)
   self.assertEqual(rapport['seances_de_test'],0)
-  self.assertEqual(sql.call_args_list[0].args[1],'migration')
+  self.assertEqual([c.args[1] for c in sql.call_args_list[1:3]],['migration 011','migration 012'])
  def test_migration_additive_refuse_une_alteration(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/011_seances.sql').write_text('migration')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant'},{'items':'apres'}]),patch.object(m,'psql',return_value=b''):
+  (source/'migrations/011_seances.sql').write_text('migration 011')
+  (source/'migrations/012_reprise_seances.sql').write_text('migration 012')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'apres'}]),patch.object(m,'psql',return_value=b'2'):
    with self.assertRaisesRegex(RuntimeError,'Une donnée a changé'):
     m.migration_sequentielle(source,'isolée')
  def test_etat_perime_refuse_avant_arret(self):

@@ -144,11 +144,13 @@ def verifier():
             bearer={'Authorization':'Bearer '+token}
             resultat=rpc('initialize',{'protocolVersion':'2025-06-18','capabilities':{},'clientInfo':{'name':'controle','version':'1'}},bearer)
             assert resultat['protocolVersion']=='2025-06-18'
-            assert resultat['serverInfo']['version']=='2.1.0' and 'Calibrage db-1' in resultat['instructions']
+            assert resultat['serverInfo']['version']=='2.2.0' and 'Calibrage db-1' in resultat['instructions']
             outils=rpc('tools/list',{},bearer)['tools']
-            assert {v['name'] for v in outils}=={'rechercher','lire','preparer_revision','ouvrir_seance','clore_seance','enregistrer_fiche','enregistrer_item','lier_item','evaluer_items','enregistrer_contexte','regler_politique'}
+            assert {v['name'] for v in outils}=={'rechercher','lire','preparer_revision','lister_seances','lire_seance','ouvrir_seance','clore_seance','enregistrer_fiche','enregistrer_item','lier_item','evaluer_items','enregistrer_contexte','regler_politique'}
             assert 'clore_seance' in resultat['instructions'],'Consigne de clôture absente'
-            assert 'compte rendu' in next(o['description'] for o in outils if o['name']=='ouvrir_seance'),'Description de séance périmée'
+            assert 'informations sur les séances ouvertes' in next(o['description'] for o in outils if o['name']=='ouvrir_seance'),'Description de séance périmée'
+            liste=rpc('tools/call',{'name':'lister_seances','arguments':{'limite':20}},bearer)
+            assert not liste.get('isError',False) and 'total' in liste['structuredContent'],'Liste des séances indisponible'
             fiches=rpc('tools/call',{'name':'rechercher','arguments':{'type':'fiche','requete':'','limite':1}},bearer)['structuredContent']['resultats']
             if fiches:
                 selection=rpc('tools/call',{'name':'preparer_revision','arguments':{}},bearer)
@@ -172,7 +174,7 @@ def verifier():
             identifiant=None
             assert not erreurs,'Erreur JavaScript'
             contexte.close();navigateur.close()
-        print('Bearer, Basic, onze outils, lecture, CSRF, historique, préservation des tokens, rendu et révocation : OK.')
+        print('Bearer, Basic, treize outils, lecture, CSRF, historique, préservation des tokens, rendu et révocation : OK.')
     finally:
         if identifiant is not None:
             assert requete('/auth/access-tokens',{'action':'revoquer','id':identifiant},prives)[0]==200,'Nettoyage du token temporaire échoué'
