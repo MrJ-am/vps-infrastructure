@@ -1041,12 +1041,12 @@ Ce message annonce le chantier ; aucune publication sur le VPS n'est revendiqué
 Critère de fin : nouvelle révision exacte validée, migration additive et contrat
 MCP servis, contrôles HTTPS et état réel constatés après activation.
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: b0be140d87a741275f495aa41a6046383796a78947da23423fd1c51e86a71036
+:LU_LE: 2026-09-25T18:32:00+00:00
+:CONTEXTE: MrJ-am/vision@f3a63fb51bd86d81b53345a4be4fdefcf121b0ac
+:PREUVE: Contrat 2.1.0 et migration 011 publiés. CI Vision 36172802839 et interface 36172802879 ; candidat VPS 216dffce32c290a09c9d3ef4bf4f6a02f95e5aa8 ; préparation 36173512370 ; activation 36173650449 ; constat indépendant 36173900691 relancé avec succès après délai SSH. Onze outils et Basic/Bearer/OAuth contrôlés ; données conservées, aucune séance fictive.
 :END:
 
 ** TODO vps
