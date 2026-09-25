@@ -147,6 +147,13 @@ def verifier():
             assert resultat['serverInfo']['version']=='2.0.0' and 'Calibrage db-1' in resultat['instructions']
             outils=rpc('tools/list',{},bearer)['tools']
             assert {v['name'] for v in outils}=={'rechercher','lire','preparer_revision','enregistrer_fiche','enregistrer_item','lier_item','evaluer_items','enregistrer_contexte','regler_politique'}
+            assert 'Après **chaque réponse à une question**' in resultat['instructions'],'Consigne de boucle MCP absente'
+            assert 'Après CHAQUE tentative' in next(o['description'] for o in outils if o['name']=='preparer_revision'),'Description de préparation périmée'
+            fiches=rpc('tools/call',{'name':'rechercher','arguments':{'type':'fiche','requete':'','limite':1}},bearer)['structuredContent']['resultats']
+            if fiches:
+                selection=rpc('tools/call',{'name':'preparer_revision','arguments':{'fiche_id':fiches[0]['id'],'limite':8,'repeter':True}},bearer)
+                assert not selection.get('isError',False),'Préparation MCP échouée'
+                assert len(selection['structuredContent']['usage_assistant']['items'])<=1,'Liste d’items révélée'
             resultat=rpc('tools/call',{'name':'rechercher','arguments':{'type':'fiche','requete':'__controle_mcp_sans_creation__','limite':1}},bearer)
             assert not resultat.get('isError',False),'Lecture MCP échouée'
             assert rpc('tools/call',{'name':'record_review','arguments':{}},bearer)['structuredContent']['erreur']=='contrat_retire'

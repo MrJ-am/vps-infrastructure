@@ -12,6 +12,20 @@ class Migration(unittest.TestCase):
   (self.d/'preparation.json').write_text(json.dumps(self.r))
   p=patch.object(m,'dossier',return_value=self.d);p.start();self.addCleanup(p.stop)
   p=patch.object(m,'executer');self.commande=p.start();self.addCleanup(p.stop)
+ def test_migration_additive_conserve_donnees_et_borne_selection(self):
+  source=self.d/'source';(source/'migrations').mkdir(parents=True)
+  (source/'migrations/009_revision_sequentielle.sql').write_text('migration')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant'},{'items':'avant'}]),patch.object(m,'psql',side_effect=[b'',b'1',b'1']) as sql,patch.object(m,'proprietaire',return_value='alice'):
+   rapport=m.migration_sequentielle(source,'isolée')
+  self.assertTrue(rapport['donnees_preservees'])
+  self.assertEqual(rapport['selection_maximale'],1)
+  self.assertEqual(sql.call_args_list[0].args[1],'migration')
+ def test_migration_additive_refuse_une_alteration(self):
+  source=self.d/'source';(source/'migrations').mkdir(parents=True)
+  (source/'migrations/009_revision_sequentielle.sql').write_text('migration')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant'},{'items':'apres'}]),patch.object(m,'psql',return_value=b''):
+   with self.assertRaisesRegex(RuntimeError,'Une donnée a changé'):
+    m.migration_sequentielle(source,'isolée')
  def test_etat_perime_refuse_avant_arret(self):
   with patch.object(m,'etat',return_value={**self.avant,'vision':'autre'}):
    with self.assertRaisesRegex(RuntimeError,'État modifié'):m.appliquer(self.revision)
