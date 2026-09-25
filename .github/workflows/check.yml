@@ -33,6 +33,9 @@ jobs:
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json scripts/http-config.nix \
             --argstr configuration "$PWD/hosts/hostinger/logique.nix" >/dev/null
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/vision-identite-config.nix \
+            --argstr configuration "$PWD/hosts/hostinger/logique.nix" >/dev/null
           for CONFIGURATION_LOGIQUE in configuration logique-acme logique; do
             sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
               nix-instantiate --eval --strict --json scripts/logique-config.nix \

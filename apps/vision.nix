@@ -47,6 +47,7 @@ in {
         proxy_set_header X-Forwarded-For $remote_addr;
         satisfy any;
         auth_request /_vision_mcp_token;
+        auth_request_set $vision_mcp_user $upstream_http_x_mrj_user;
         auth_basic "${site.auth.realm}";
         auth_basic_user_file ${site.auth.basicUserFile};
         limit_req zone=protected_api_per_ip burst=10 nodelay;
@@ -56,7 +57,7 @@ in {
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
         proxy_set_header X-Vision-Browser "";
-        proxy_set_header X-Mrj-User "";
+        proxy_set_header X-Mrj-User "$remote_user$vision_mcp_user";
         proxy_set_header Cookie "";
         error_page 401 = @vision-mcp-authentication-required;
         error_page 429 = @vision-rate-limited;
