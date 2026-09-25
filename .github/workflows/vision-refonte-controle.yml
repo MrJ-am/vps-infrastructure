@@ -1,0 +1,49 @@
+name: Constater Vision après la publication
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-refonte-controle.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  constat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - id: demande
+        run: |
+          python3 - <<'PY'
+          import json,os,re
+          d=json.load(open('operations/vision-refonte-controle.json'))
+          assert set(d)=={'revision','application'}
+          assert all(re.fullmatch('[0-9a-f]{40}',v) for v in d.values())
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for k,v in d.items():f.write(k+'='+v+'\n')
+          PY
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-controle-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-controle-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-controle-cle" >> "$GITHUB_ENV"
+      - name: Constater les publications, services et retour inactif
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+          APPLICATION: ${{ steps.demande.outputs.application }}
+        run: |
+          NIXPKGS_CONTROLE=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          test -n "$NIXPKGS_CONTROLE"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CONTROLE -p python3 --run 'python3 - $REVISION $APPLICATION'" < scripts/vision-refonte-constater.py
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-controle-cle"
