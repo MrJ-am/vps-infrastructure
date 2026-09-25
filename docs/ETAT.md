@@ -1,4 +1,18 @@
-# État attesté au 25 septembre 2026
+# État attesté au 26 septembre 2026
+
+## Vision 2.2 publiée et séances ouvertes préservées
+
+Serveur et interface `5c92e0827c13cddaeb0bac852e57b3b26491670a` actifs ;
+source VPS `35718a7ba5cbaf14132aab990dabd8f6a08e4509`.
+CI applicative `36198122892`, interface `36198122897`, infrastructure
+`36198498811`, préparation `36198681603`, activation `36198786537`
+et constat indépendant `36198944200` réussis le 25 septembre UTC
+(26 septembre à Paris). La migration additive 012 a été testée sur une
+restauration isolée puis activée sans modifier les données : **deux séances
+ouvertes conservées**, aucune séance fictive créée. Treize outils MCP, Basic,
+Bearer, OAuth, interface et sites ont été contrôlés. Le retour autonome est
+désarmé ; la génération NixOS est inchangée. La clôture des séances reste
+à l'initiative de la personne.
 
 ## Révision séquentielle publiée le 25 septembre 2026
 

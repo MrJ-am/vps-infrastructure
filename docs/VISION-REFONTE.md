@@ -1,5 +1,22 @@
 # Publication Vision 2 — état et procédure
 
+## Reprise des séances et gain rapproché, publiée le 26 septembre 2026
+
+Vision `5c92e0827c13cddaeb0bac852e57b3b26491670a` et son interface sont
+actifs depuis la source VPS `35718a7ba5cbaf14132aab990dabd8f6a08e4509`.
+Le contrat 2.2 ajoute `lister_seances` et `lire_seance` : pagination par
+thème/date, reprise et clôture depuis toute conversation. Plusieurs séances
+ouvertes coexistent sans limite ; une nouvelle ouverture demande le choix de
+la personne. Un gain rapproché excessif est ramené à la borne admise, avec
+valeur demandée et appliquée dans le rapport atomique.
+
+CI Vision `36198122892`, interface `36198122897`, VPS `36198498811`,
+préparation `36198681603`, activation `36198786537` et constat indépendant
+`36198944200` réussis. La restauration isolée, puis la migration réelle 012
+ont préservé les **deux séances ouvertes** et le reste des données. Les treize
+outils, Basic/Bearer/OAuth, CSRF, navigateur et services ont passé les contrôles.
+Le retour autonome est désarmé. Aucune séance n'a été clôturée d'office.
+
 ## Révision séquentielle publiée le 25 septembre 2026
 
 Application `608c34cacdd0040dd84c4507f26d7799d70d4f38`, source VPS
