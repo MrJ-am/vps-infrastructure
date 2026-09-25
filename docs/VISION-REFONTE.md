@@ -1,4 +1,40 @@
-# Publication Vision 2 — procédure spécifique
+# Publication Vision 2 — état et procédure
+
+## Publication réelle du 25 septembre 2026, 14:14 UTC
+
+Serveur et interface `ad0fbd80401c0d2aed77b12d11e3f1b3e8397367` actifs ;
+source de migration `951e80e1a66c1240541655a3eca6b435e62e4165`.
+[Préparation 36145808884](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36145808884),
+[activation 36146012682](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36146012682)
+et [constat après finalisation 36146366039](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36146366039)
+réussis. L’activation s’est terminée et le constat confirme le retour inactif.
+
+Migration : **2 fiches, 58 items, 58 liens, 18 observations archivées**,
+45 items sans évaluation attribuable. Stabilité initiale : 45 à −15 dB,
+8 à −12, 4 à −17, 1 à −20 ; heuristique prudente documentée, aucune conversion
+des paramètres FSRS. Le dump frais après arrêt des écritures a été restauré,
+simulé et importé deux fois en base isolée avant l’import réel atomique.
+Les sources historiques et les écritures v2 restent conservées.
+
+Les 32 sondes HTTP/TLS, services/sauvegardes, nouvelle connexion runner,
+neuf outils MCP, instructions 2.0.0/db-1, Basic/Bearer/OAuth/Origin null,
+CSRF, tokens préexistants, artefact exact et navigateur ont été vérifiés.
+Les contrôles n’ont créé aucune donnée métier fictive en production.
+
+La génération active/par défaut reste
+`g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Matheval `f6706f8a6b6b08d797340e26f917a6cdc3bb9e5c` et Logique
+`615439c841db1934ffaddc1dee64c85ff6c56cf2` restent actifs.
+Sources identité `cb0294c8b78402de1566f54ea3009fbe6ee221c7`.
+Les chiffres et empreintes sont dans
+[vision-refonte-publication.json](../operations/vision-refonte-publication.json).
+
+Les clients MCP doivent recharger leur catalogue si les cinq anciens outils
+restent visibles. Aucun essai dans les comptes personnels des clients n’est
+revendiqué. Le [rapport applicatif](https://github.com/MrJ-am/vision/blob/main/rapports/REFONTE-20260925.md)
+décrit les contrôles, le modèle et ses limites.
+
+## Procédure de l’opération initiale
 
 Cette opération sépare l’identité authentifiée de la migration applicative.
 Les workflows historiques ne sont pas réutilisés avec leurs anciens garde-fous.

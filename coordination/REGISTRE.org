@@ -900,12 +900,12 @@ Vision travaille depuis main 079349c9cad9eb1fb27c4f5ac7f46e6238b59082 sur refont
 Impact VPS : transmettre l’identité authentifiée au serveur pour Basic et MCP, sans changer les identifiants, tokens, OAuth ni sessions ; préparer une opération Actions dédiée avec état réel, sauvegarde/restauration isolée, simulation, maintenance des écritures, retour applicatif et vérification HTTPS. Les sources et invariants NixOS actuels seront conservés ; seuls les en-têtes nécessaires évolueront.
 Avant activation : tests DB/API/MCP, isolation, idempotence, migration relançable, contrôles mobile et mesures des sélections. Après activation : révisions servies, contrats MCP réels, nombres migrés et preuves Actions consignés. Ce message annonce le chantier ; aucune migration ni publication réalisée.
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: c2bb111e1f3f02f366250dd061ae3d30492c1d6614b90e2db4fcc6ebfa542a16
-:LU_LE: 2026-09-25T13:31:38+00:00
-:CONTEXTE: MrJ-am/vision@ff423ae09116f11f2b81c7c98c4763bf1c2d09a1
-:PREUVE: -
+:LU_LE: 2026-09-25T14:20:07.887Z
+:CONTEXTE: MrJ-am/vision@9c0d90d850a04742b655aecd4bf9856170ceb067
+:PREUVE: Migration et publication 36146012682 réussies ; constat après finalisation 36146366039 ; application ad0fbd80401c0d2aed77b12d11e3f1b3e8397367.
 :END:
 
 ** TODO vps
@@ -946,12 +946,65 @@ aucune mise à jour NixOS ni changement de PostgreSQL majeur demandé.
 Preuves et procédure : docs/VISION-REFONTE.md. Le résultat de migration sera
 consigné séparément, après constat réel.
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: d13267e4d9ca8b520adee156f4852587963f99eecd8cd6f8a1e5f6f40b080606
-:LU_LE: 2026-09-25T14:07:50.985Z
-:CONTEXTE: MrJ-am/vision@ad0fbd80401c0d2aed77b12d11e3f1b3e8397367
+:LU_LE: 2026-09-25T14:20:07.887Z
+:CONTEXTE: MrJ-am/vision@9c0d90d850a04742b655aecd4bf9856170ceb067
+:PREUVE: Migration et publication 36146012682 réussies ; constat après finalisation 36146366039 ; application ad0fbd80401c0d2aed77b12d11e3f1b3e8397367.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Refonte Vision publiée, migration réelle et contrôle final réussis
+:PROPERTIES:
+:ID: 20260925-vision-refonte-publiee
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T14:20:07.887Z
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Serveur et interface Vision ad0fbd80401c0d2aed77b12d11e3f1b3e8397367
+publiés le 25 septembre à 14:14 UTC. Sources VPS
+951e80e1a66c1240541655a3eca6b435e62e4165 ; CI 36145471470 (118 tests),
+préparation 36145808884, activation 36146012682, constat indépendant
+36146366039 réussis. Ce dernier confirme les deux liens, leurs fichiers,
+les services, la génération g24p3rvq97s1x66wiaw29z5kwqgw0ksl active et
+de démarrage, et le timer de retour inactif.
+
+Migration réelle : 2 fiches, 58 items et 58 liens ; 18 observations historiques
+conservées, 45 items sans évaluation attribuable. Dump frais restauré isolément,
+simulation annulée et import rejoué sans doublon, puis import réel atomique.
+Sources et tables historiques conservées ; ancien modèle figé. Le retour
+ne restaure jamais la base et conserve les écritures v2.
+
+Contrat serveur 2.0.0 : neuf outils fiches/items et instructions db-1 réels
+dans initialize/tools/list ; ancien contrat explicitement retiré. Basic,
+Bearer, OAuth/PKCE/Origin null, CSRF, tokens préexistants, navigateur et 32
+sondes HTTP/TLS vérifiés. Aucun contenu métier fictif en production.
+Matheval, Logique, style et Signature restent à leurs versions précédentes.
+
+Action Vision : maintenir les tests, signaler le rafraîchissement du catalogue
+MCP et distinguer les contrôles serveur d’un essai dans les comptes clients.
+Action VPS : préserver le nouvel état et le retour sans restauration de base ;
+toute prochaine opération doit partir de cet état réellement actif.
+Références : docs/VISION-REFONTE.md, docs/ETAT.md et
+operations/vision-refonte-publication.json. Messages de préparation
+20260925-vision-da9f8ff09ab8 et 20260925-vision-10bdb8fce39f traités pour Vision.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: b870008b70ba5734b228b63eff1e5acd2bb2fd4bc27800d7b37a6dcc0bb4bca7
+:LU_LE: 2026-09-25T14:20:07.887Z
+:CONTEXTE: MrJ-am/vision@9c0d90d850a04742b655aecd4bf9856170ceb067
+:PREUVE: Migration et publication 36146012682 réussies ; constat après finalisation 36146366039 ; application ad0fbd80401c0d2aed77b12d11e3f1b3e8397367.
 :END:
 
 ** TODO vps
