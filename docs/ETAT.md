@@ -1,4 +1,16 @@
-# État attesté au 23 septembre 2026
+# État attesté au 25 septembre 2026
+
+## Identité Vision publiée ; migration applicative en préparation
+
+Sources identité `cb0294c8b78402de1566f54ea3009fbe6ee221c7`, préparation
+`36142255046`, activation `36142629501` réussies. Génération active et de
+démarrage `g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Les contrôles HTTPS, Basic/Bearer/OAuth, CSRF, tokens préexistants et 32 sondes
+ont réussi. À cette étape, serveur Vision `754e908f75660d6a5941c2ebc459e293b12b82e1`
+et interface `079349c9cad9eb1fb27c4f5ac7f46e6238b59082` restent actifs.
+Aucune migration métier encore effectuée. Voir [VISION-REFONTE.md](VISION-REFONTE.md).
+
+Les états datés ci-dessous sont historiques.
 
 ## Rétablissement des tokens et OAuth Vision, 23 septembre à 02:11 UTC
 

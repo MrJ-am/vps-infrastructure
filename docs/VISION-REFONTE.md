@@ -10,7 +10,10 @@ et MCP évolue. Les en-têtes clients sont écrasés. Le code mrj-auth renvoie l
 propriétaire déjà authentifié ; ses sessions, tokens et OAuth sont conservés.
 Préparation `36142255046` réussie : 32 sondes HTTP/TLS, construction, invariants,
 Nginx et timer de retour. La simulation ne prévoit que mrj-auth et Nginx.
-L’activation constitue une exécution distincte, sous retour autonome.
+Activation `36142629501` réussie, sources `cb0294c8b78402de1566f54ea3009fbe6ee221c7` :
+génération active et de démarrage `g24p3rvq97s1x66wiaw29z5kwqgw0ksl`.
+Basic, Bearer, OAuth/Origin null, CSRF, préservation des tokens et 32 sondes
+HTTP/TLS vérifiés. Retour autonome désarmé après enregistrement.
 
 `vision-refonte.yml` référence une révision infrastructure exactement vérifiée.
 Son `operations/vision-refonte-candidat.json` fige l’archive applicative, l’artefact

@@ -10,7 +10,7 @@ concurrency:
   group: vps-administration
   cancel-in-progress: false
 jobs:
-  mcp:
+  refonte:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     environment: vps-production
@@ -61,7 +61,7 @@ jobs:
         env:
           REVISION: ${{ steps.demande.outputs.revision }}
         run: |
-          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/vision-refonte-operations/$REVISION/commence; mkdir -p /root/vision-refonte-operations/$REVISION/source; tar -xf - -C /root/vision-refonte-operations/$REVISION/source"
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/vision-refonte-operations/$REVISION/preparation.json; mkdir -p /root/vision-refonte-operations/$REVISION/source; tar -xf - -C /root/vision-refonte-operations/$REVISION/source"
           sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-refonte-operations/$REVISION/source/scripts/vision-refonte-deployer.py preparer $REVISION'"
       - name: Installer le navigateur de contrôle
         if: steps.demande.outputs.operation == 'activer'
@@ -99,7 +99,7 @@ jobs:
         run: |
           unzip -q vendor/vision-refonte-interface.zip -d artefact
           python3 scripts/vision-refonte-verifier.py
-      - name: Enregistrer la génération contrôlée
+      - name: Enregistrer les deux publications contrôlées
         if: steps.demande.outputs.operation == 'activer'
         working-directory: candidat
         env:

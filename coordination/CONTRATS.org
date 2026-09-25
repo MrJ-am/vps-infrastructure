@@ -80,8 +80,12 @@ Tout changement de fond exige un message dans REGISTRE.org.
   Les applications autorisées se révoquent individuellement sur /auth/mcp.
   Les jetons OAuth et les tokens Bearer historiques conservent la séparation
   REST/navigateur et sont invalidés par la rotation des identifiants Vision.
-  Révision active 96dc1e8e95b091dd0f13cc9d99002f0cd932210a,
-  génération sz7w3lqm1lspcdzrqisi23xb6lv9886d ; voir docs/VISION-OAUTH.md.
+  Publication initiale 96dc1e8e95b091dd0f13cc9d99002f0cd932210a,
+  génération historique sz7w3lqm1lspcdzrqisi23xb6lv9886d ; voir docs/VISION-OAUTH.md.
+- Depuis le 25 septembre 2026, Nginx transmet à Vision X-Mrj-User uniquement
+  depuis Basic ou le vérificateur MCP authentifié ; l’en-tête client est écrasé.
+  Sessions, tokens et OAuth sont conservés. Sources cb0294c8b78402de1566f54ea3009fbe6ee221c7,
+  génération g24p3rvq97s1x66wiaw29z5kwqgw0ksl ; preuves dans docs/VISION-REFONTE.md.
 - Un cookie nécessaire à la connexion n'impose pas à lui seul une bannière ;
   vérifier séparément les tiers et traceurs. Aucune conclusion générale de conformité
   ne découle du seul usage de HttpOnly, de SameSite ou du paramètre vidéo dnt.

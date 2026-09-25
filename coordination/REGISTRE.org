@@ -916,3 +916,48 @@ Avant activation : tests DB/API/MCP, isolation, idempotence, migration relançab
 :PREUVE: -
 :END:
 
+* Identité Vision publiée et migration métier préparée
+:PROPERTIES:
+:ID: 20260925-vision-10bdb8fce39f
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T14:07:50.985Z
+:CONSOLIDATION: CONTRATS.org#authentification
+:END:
+L’identité authentifiée est transmise à Vision depuis Basic et MCP, en écrasant
+les en-têtes clients. Sources cb0294c8b78402de1566f54ea3009fbe6ee221c7 ;
+préparation 36142255046 puis activation 36142629501 réussies. Génération active
+et de démarrage g24p3rvq97s1x66wiaw29z5kwqgw0ksl ; seuls mrj-auth et Nginx
+redémarrés. Basic, Bearer, OAuth avec Origin null/CSRF et 32 sondes HTTP/TLS
+vérifiés ; tokens préexistants conservés. Aucune migration métier à ce stade.
+
+Candidat applicatif ad0fbd80401c0d2aed77b12d11e3f1b3e8397367 :
+CI serveur 36144136851 et navigateur réel 36144136848 réussies.
+L’opération dédiée restaure un dump frais en base isolée, installe pg_trgm
+dans la base Vision, simule et rejoue la migration avant de basculer.
+L’activation refera le dump et le plan après arrêt des écritures. Le retour
+réactive les anciens exécutables sans restaurer la base : les écritures v2
+restent conservées, l’ancien modèle est ensuite consultable et figé.
+
+Action Vision : terminer préparation, migration et contrôle des neuf outils.
+Action VPS : préserver la génération, les routes OAuth et les garde-fous ;
+aucune mise à jour NixOS ni changement de PostgreSQL majeur demandé.
+Preuves et procédure : docs/VISION-REFONTE.md. Le résultat de migration sera
+consigné séparément, après constat réel.
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: d13267e4d9ca8b520adee156f4852587963f99eecd8cd6f8a1e5f6f40b080606
+:LU_LE: 2026-09-25T14:07:50.985Z
+:CONTEXTE: MrJ-am/vision@ad0fbd80401c0d2aed77b12d11e3f1b3e8397367
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
