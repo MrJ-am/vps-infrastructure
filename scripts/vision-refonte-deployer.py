@@ -43,25 +43,27 @@ def migrations(source,base,compte):
  for p in sorted((source/'migrations').glob('*.sql')):psql(base,p.read_text(),compte)
 def empreinte_donnees(base):
  # Empreintes locales uniquement, jamais le contenu ni les identifiants en sortie.
- tables=('vision_fiches','vision_items','vision_liens','vision_episodes',
+ tables=('vision_fiches','vision_items','vision_liens','vision_episodes','vision_seances',
          'vision_contextes','vision_journal','vision_migrations_metier',
          'vision_memory_sheets','vision_memory_observations')
  return {table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip()
          for table in tables}
 
 def migration_sequentielle(source,base):
- fichier=source/'migrations/011_seances.sql'
- exiger(fichier.is_file(),'Migration de séances absente')
+ fichiers=[source/'migrations/011_seances.sql',source/'migrations/012_reprise_seances.sql']
+ exiger(all(p.is_file() for p in fichiers),'Migration de séances absente')
  avant=empreinte_donnees(base)
- psql(base,fichier.read_text())
+ ouvertes_avant=int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())
+ for fichier in fichiers:psql(base,fichier.read_text())
  exiger(empreinte_donnees(base)==avant,'Une donnée a changé pendant la migration de séances')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=11').strip()==b'1','Migration 011 non enregistrée')
- exiger(psql(base,'SELECT count(*) FROM vision_seances').strip()==b'0','Une séance fictive a été créée')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (11,12)').strip()==b'2','Migrations 011/012 non enregistrées')
+ exiger(int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())==ouvertes_avant,'Séances ouvertes modifiées')
  u=proprietaire()
  # Lecture seulement ; aucune séance de contrôle en production.
- requete="SELECT jsonb_typeof(vision_preparer('"+u+"','{}'::jsonb)->'seances_en_attente')"
- exiger(psql(base,requete).strip()==b'array','Lecture des séances ouvertes indisponible')
- return {'mise_a_jour':True,'donnees_preservees':True,'migration_011':True,'seances_de_test':0}
+ requete="SELECT (vision_lister_seances('"+u+"',20,0)->>'total')::integer"
+ exiger(int(psql(base,requete).strip())==ouvertes_avant,'Lecture des séances ouvertes indisponible')
+ return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[11,12],
+  'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test':0}
 
 def sauvegarder(d,nom):
  p=d/(nom+'.dump')
