@@ -886,3 +886,33 @@ Action VPS : maintenir la sonde HTTPS et les restrictions CSRF.
 :CONTEXTE: MrJ-am/vps-infrastructure@240f37b31f1eb1e104fa88ef9c01f9a7b18a471b
 :PREUVE: CI 35847887716, préparation 35848240001 et activation HTTPS 35848427815 réussies.
 :END:
+* Préparer la refonte Vision fiches–items et planification en dB
+:PROPERTIES:
+:ID: 20260925-vision-da9f8ff09ab8
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T12:38:47+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire demande la refonte complète de Vision selon vision-refonte-prompt-work.md : fiches et items partagés, stabilité entière en dB par item, priorité par fiche, épisodes idempotents, MCP et navigateur révisés, migration des données réelles et publication vérifiée.
+Vision travaille depuis main 079349c9cad9eb1fb27c4f5ac7f46e6238b59082 sur refonte/fiches-items-db. Les tables historiques seront conservées. Les écritures FSRS de fiche seront explicitement retirées, jamais converties silencieusement.
+Impact VPS : transmettre l’identité authentifiée au serveur pour Basic et MCP, sans changer les identifiants, tokens, OAuth ni sessions ; préparer une opération Actions dédiée avec état réel, sauvegarde/restauration isolée, simulation, maintenance des écritures, retour applicatif et vérification HTTPS. Les sources et invariants NixOS actuels seront conservés ; seuls les en-têtes nécessaires évolueront.
+Avant activation : tests DB/API/MCP, isolation, idempotence, migration relançable, contrôles mobile et mesures des sélections. Après activation : révisions servies, contrats MCP réels, nombres migrés et preuves Actions consignés. Ce message annonce le chantier ; aucune migration ni publication réalisée.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
