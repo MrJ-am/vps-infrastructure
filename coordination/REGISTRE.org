@@ -1056,3 +1056,43 @@ MCP servis, contrôles HTTPS et état réel constatés après activation.
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Rendre les séances Vision consultables et reprendre les clôtures
+:PROPERTIES:
+:ID: 20260926-vision-reprise-seances
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T22:37:28.333Z
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Le propriétaire demande la consultation des séances ouvertes par thème et date, la reprise
+et la clôture depuis toute conversation via MCP, sans clôture forcée. Plusieurs séances
+ouvertes coexistent sans limite ; avant d'en ouvrir une autre, l'assistant propose
+« nouvelle séance » ou « informations sur les séances ouvertes ».
+
+Vision prépare une migration additive 012 et un contrat MCP 2.2 : liste paginée,
+lecture du lot initial, clôture atomique avec gain rapproché borné et ajustements
+tracés. Les réponses absentes restent inconnues ; aucune séance existante n'est
+modifiée ou fermée pendant la migration.
+
+Impact VPS : avant publication, vérifier l'état actif et la migration en base
+isolée ; conserver Basic, Bearer, OAuth, sessions, données et retour applicatif
+sans restauration de base. Relever les versions et contrôles HTTPS après activation.
+Ce message annonce le changement ; aucune publication applicative n'est revendiquée.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
