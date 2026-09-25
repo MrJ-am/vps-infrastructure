@@ -106,3 +106,19 @@ Tout changement de fond exige un message dans REGISTRE.org.
 - Conserver le module journal-http.nix et l'entrée active précisée dans ETAT.md.
   Les IP restent sur le VPS ; pas de copie brute dans Git ou Actions.
   Paramètres, limites natives et preuves : docs/JOURNAL-HTTP.md.
+
+* Vision fiches et items
+:PROPERTIES:
+:CUSTOM_ID: vision
+:END:
+- Depuis le 25 septembre 2026, Vision 2 expose neuf opérations fiches/items
+  communes à REST et MCP. initialize fournit les instructions db-1 ; tools/list
+  est la référence. Les anciens outils répondent contrat_retire ; rafraîchir
+  les catalogues des clients. Aucun rating FSRS n’est converti silencieusement.
+- Le serveur exige l’identité authentifiée transmise par Nginx ; préserver
+  Basic, Bearer, OAuth, sessions et CSRF. Les données restent isolées par compte.
+- La migration conserve les sources historiques. Un retour applicatif ne
+  restaure pas PostgreSQL et ne supprime pas les écritures v2 ; l’ancien modèle
+  devient consultable et figé. Une reprise exige un nouvel audit de l’état actif.
+- Versions effectivement servies, tests et procédures : docs/VISION-REFONTE.md,
+  docs/ETAT.md et operations/vision-refonte-publication.json.

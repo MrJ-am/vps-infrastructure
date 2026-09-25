@@ -1,0 +1,70 @@
+{
+  "revision": "951e80e1a66c1240541655a3eca6b435e62e4165",
+  "application": "ad0fbd80401c0d2aed77b12d11e3f1b3e8397367",
+  "etat": {
+    "systeme": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "57cfbe6ac09438eab9a535e5618d2dfe510da3905d51d6eb32313a6c31b8b88d",
+    "vision": "/srv/vision/releases/ad0fbd80401c0d2aed77b12d11e3f1b3e8397367",
+    "vision-interface": "/srv/vision-interface/releases/ad0fbd80401c0d2aed77b12d11e3f1b3e8397367",
+    "matheval": "/srv/matheval/releases/f6706f8a6b6b08d797340e26f917a6cdc3bb9e5c",
+    "logique": "/srv/logique/releases/615439c841db1934ffaddc1dee64c85ff6c56cf2"
+  },
+  "rapport": {
+    "modele": "db-1",
+    "priorites": [
+      {
+        "id": 1,
+        "priorite": 0
+      },
+      {
+        "id": 2,
+        "priorite": 2
+      }
+    ],
+    "enregistre": true,
+    "stabilites": {
+      "-12": 8,
+      "-15": 45,
+      "-17": 4,
+      "-20": 1
+    },
+    "estimations": "−20 dernier oubli ; −17 réussite après oubli ; −16 partiel ; −12 rappel correct seul ; −15 sans évaluation. Heuristique prudente, sans conversion FSRS.",
+    "items_apres": 58,
+    "liens_apres": 58,
+    "fiches_apres": 2,
+    "fiches_avant": 2,
+    "items_prevus": 58,
+    "sans_evaluation": 45,
+    "corrections_archivees": 0,
+    "observations_archivees": 18,
+    "correspondance_priorite": "P = ancienne importance − 3 ; TSD +2, capitales 0 si valeurs inchangées.",
+    "restauration_verifiee": true,
+    "simulation_annulee": true,
+    "rejeu_verifie": true,
+    "sauvegarde_sha256": "5fe2d24da9573018e5ef92bf0e543f74a40032bbdeea51ae85cd9363321fa2dc",
+    "sauvegarde_octets": 65904
+  },
+  "publie_le": "2026-09-25T14:14:48Z",
+  "constate_le": "2026-09-25T14:16:35Z",
+  "preuves": {
+    "ci_application": 36144136851,
+    "ci_interface": 36144136848,
+    "ci_infrastructure": 36145471470,
+    "preparation": 36145808884,
+    "activation": 36146012682,
+    "constat": 36146366039
+  },
+  "candidat": {
+    "application": "ad0fbd80401c0d2aed77b12d11e3f1b3e8397367",
+    "ci_backend": 36144136851,
+    "ci_interface": 36144136848,
+    "artefact_interface": 10868577482,
+    "fichiers": {
+      "vendor/vision-refonte-source.tar.gz": "d0a96c0981353b30507bd69e678f9b7cee4d6ea772968d953581c5fd3850aea8",
+      "vendor/vision-refonte-interface.zip": "f7955e3f434b9001faebb9ce4fca96ff6a847607ba520645cf9529659dbf5679"
+    }
+  },
+  "retour_inactif": true,
+  "restauration_production": false
+}
