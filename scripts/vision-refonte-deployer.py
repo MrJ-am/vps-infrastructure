@@ -50,18 +50,18 @@ def empreinte_donnees(base):
          for table in tables}
 
 def migration_sequentielle(source,base):
- fichier=source/'migrations/009_revision_sequentielle.sql'
+ fichier=source/'migrations/010_consigne_revision.sql'
  exiger(fichier.is_file(),'Migration de révision absente')
  avant=empreinte_donnees(base)
  psql(base,fichier.read_text())
  exiger(empreinte_donnees(base)==avant,'Une donnée a changé pendant la migration de révision')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=9').strip()==b'1','Migration 009 non enregistrée')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=10').strip()==b'1','Migration 010 non enregistrée')
  u=proprietaire()
  # Le propriétaire est validé comme identifiant ASCII sans apostrophe.
  requete="SELECT jsonb_array_length(vision_preparer('"+u+"',jsonb_build_object('fiche_id',id,'limite',8,'repeter',true))->'usage_assistant'->'items') FROM vision_fiches WHERE utilisateur='"+u+"' AND archive_a IS NULL ORDER BY id LIMIT 1"
  nombre=psql(base,requete).decode().strip()
  exiger(nombre in ('0','1'),'La préparation révèle plusieurs items')
- return {'mise_a_jour':True,'donnees_preservees':True,'migration_009':True,'selection_maximale':1}
+ return {'mise_a_jour':True,'donnees_preservees':True,'migration_010':True,'selection_maximale':1}
 
 def sauvegarder(d,nom):
  p=d/(nom+'.dump')
