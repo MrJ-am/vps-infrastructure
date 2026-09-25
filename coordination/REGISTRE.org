@@ -1015,3 +1015,44 @@ operations/vision-refonte-publication.json. Messages de préparation
 :PREUVE: -
 :END:
 
+
+* Préparer les séances Vision par lots et compte rendu atomique
+:PROPERTIES:
+:ID: 20260925-vision-seances-batch
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-25T18:18:00+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Le propriétaire demande un lot borné d'items pour une séance, sans appel après
+chaque réponse, puis un retour final et un envoi atomique des évaluations.
+Une séance ouverte est un état informatif : les réponses restent inconnues de
+Vision avant la clôture ; une nouvelle séance reste possible après choix explicite.
+Les propositions de reformulation et d'ajout ne modifient pas les items seules.
+
+Vision prépare sur refonte/seances-batch une migration additive 011, deux outils
+ouvrir_seance et clore_seance, le contrat 2.1.0 et les tests PostgreSQL/MCP.
+La CI 36172156285 est réussie sur 4b0307bed2cc4b5fe3c1d7c47b7f403893d2ebf3.
+Impact VPS : publier l'application après vérification de l'état actif et une
+simulation en base isolée, conserver Basic/Bearer/OAuth, les données existantes,
+le retour applicatif sans restauration de base et les autres services.
+Ce message annonce le chantier ; aucune publication sur le VPS n'est revendiquée.
+Critère de fin : nouvelle révision exacte validée, migration additive et contrat
+MCP servis, contrôles HTTPS et état réel constatés après activation.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
