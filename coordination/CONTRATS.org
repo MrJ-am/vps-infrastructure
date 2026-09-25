@@ -111,20 +111,18 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.2 expose treize outils REST/MCP ; tools/list est la référence et les
-  anciens noms répondent contrat_retire. Aucun rating FSRS n'est converti.
-- preparer_revision suggère et signale le nombre de séances ouvertes.
-  lister_seances les pagine par thème et date ; lire_seance rend le lot initial.
-  Avant toute nouvelle séance lorsqu'il en existe, demander « nouvelle séance »
-  ou « informations sur les séances ouvertes ». Leur nombre n'est pas limité.
-  ouvrir_seance prépare au plus 20 items après ce choix. clore_seance écrit
-  atomiquement le déroulement, les évaluations et le retour. Les gains rapprochés
-  sont plafonnés avec les valeurs demandées/appliquées tracées dans le rapport.
-  Aucune séance ouverte n'est close par la migration 012.
-  Avant clôture, Vision ignore les réponses. Ajouts et reformulations restent
-  des propositions sans écriture automatique dans les items.
-- Le serveur exige l’identité authentifiée transmise par Nginx ; préserver
-  Basic, Bearer, OAuth, sessions et CSRF. Les données restent isolées par compte.
+- Vision 2.2 expose treize outils REST/MCP ; tools/list fait foi. Anciens noms :
+  contrat_retire ; aucune conversion FSRS.
+- preparer_revision indique les séances ouvertes ; lister_seances les pagine
+  par thème/date et lire_seance rend le lot. Avant une nouvelle ouverture,
+  demander « nouvelle séance » ou « informations sur les séances ouvertes ».
+  Leur nombre est illimité ; ouvrir_seance prépare au plus 20 items.
+- clore_seance écrit atomiquement les réponses connues, évaluations et retour ;
+  le rapport trace les gains rapprochés bornés. Vision ignore les réponses avant
+  clôture ; les propositions ne modifient pas les items. La migration 012 ne
+  clôt aucune séance ouverte.
+- Nginx transmet l'identité ; préserver Basic, Bearer, OAuth, sessions, CSRF
+  et l'isolation par compte.
 - La migration conserve les sources historiques. Un retour applicatif ne
   restaure pas PostgreSQL et ne supprime pas les écritures v2 ; l’ancien modèle
   devient consultable et figé. Une reprise exige un nouvel audit de l’état actif.
