@@ -115,6 +115,10 @@ Tout changement de fond exige un message dans REGISTRE.org.
   communes à REST et MCP. initialize fournit les instructions db-1 ; tools/list
   est la référence. Les anciens outils répondent contrat_retire ; rafraîchir
   les catalogues des clients. Aucun rating FSRS n’est converti silencieusement.
+- Depuis le 25 septembre, une préparation ciblée livre un seul item, même si
+  une limite plus haute est demandée. Chaque tentative appelle evaluer_items,
+  puis preparer_revision pour l’item suivant ; la consigne est répétée dans
+  chaque réponse. Voir docs/VISION-REFONTE.md.
 - Le serveur exige l’identité authentifiée transmise par Nginx ; préserver
   Basic, Bearer, OAuth, sessions et CSRF. Les données restent isolées par compte.
 - La migration conserve les sources historiques. Un retour applicatif ne
