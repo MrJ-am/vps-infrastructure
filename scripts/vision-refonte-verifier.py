@@ -41,7 +41,7 @@ def verifier():
     utilisateur, secret = os.environ['VISION_API_USERNAME'], os.environ['VISION_API_PASSWORD']
     basic = base64.b64encode((utilisateur + ':' + secret).encode()).decode()
     statut, _, corps = requete('/api/v1/health', entetes={'Authorization': 'Basic ' + basic})
-    assert statut == 200 and json.loads(corps)['version'] == '2.0.0', 'Version serveur différente'
+    assert statut == 200 and json.loads(corps)['version'] == '2.1.0', 'Version serveur différente'
     statut, _, corps = requete('/api/v1/rechercher', {'type':'fiche','requete':'','limite':1}, {'Authorization':'Basic '+basic,'X-Mrj-User':'identite-forgee'})
     assert statut == 200 and json.loads(corps)['total'] > 0, 'Identité Basic ou migration absente'
     with sync_playwright() as p:
