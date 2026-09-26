@@ -1264,3 +1264,71 @@ validation atteint ; les versions effectivement servies ne sont pas modifiées.
 :PREUVE: -
 :END:
 
+
+* Publier les interfaces documentaires validées jusqu’aux sites réels
+:PROPERTIES:
+:ID: 20260926-vision-f29420ec0a3c
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-26T16:38:44+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire précise que « pousser » inclut la mise en ligne et son contrôle, sauf demande contraire explicite. La publication des candidats validés le 26 septembre est autorisée ; aucune pull request.
+
+Les cinq CI de référence restent celles du message 20260926-vision-c39b7843a807. Style 3aab7233465ac0abe49464fa26a360765ccb4004 ; Vision b33ce9f0c20f4b8af5790831b59217408b496fc0 ; Mémoire fc3c2fcd36d920142de946b41154cc6f3a67d76e ; Logique 2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f. Les trois ZIP téléchargés correspondent exactement aux empreintes GitHub.
+
+VPS prépare une opération applicative commune : relever l'état réel, vérifier les trois artefacts et l'identité des schémas, construire le serveur Vision et conserver toutes les versions précédentes. Activer sous retour autonome ; Mémoire utilise son compte et son exécutable matheval-release existants. Aucun changement NixOS, aucun rejeu de migration SQL ni restauration de base. Contrôler HTTP/TLS, manifestes, navigation, sessions, CSRF et MCP ; consigner les versions réellement servies.
+
+L'audit 36256039764 a confirmé les services, générations identiques g24p3rvq97s1x66wiaw29z5kwqgw0ksl, PostgreSQL et sondes publiques. Deux contrôles historiques échouent : diagnostic figé sur la migration du 18 septembre et fichier RELEASE remplacé depuis par revision-application.txt dans Vision. La nouvelle opération relève les états actuels sans réutiliser ces préconditions périmées.
+
+Critère de fin : trois versions actives, contrôles réussis, retour désarmé après constat, références intégrées aux branches principales et preuves durables.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
