@@ -1,0 +1,134 @@
+name: Publier les trois interfaces validées sans migration
+on:
+  push:
+    branches: [main]
+    paths: [operations/interfaces.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  publication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Exiger la demande et la CI de la révision exacte
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/interfaces.json'))
+          assert set(d)=={'operation','revision'} and d['operation'] in ('preparer','activer','constater')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:runs=json.load(r)['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['conclusion']=='success' for r in runs),'CI exacte non réussie'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for k,v in d.items():f.write(k+'='+v+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Vérifier collectivement les trois artefacts avant toute connexion
+        working-directory: candidat
+        run: python3 scripts/publication_interfaces.py verifier
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/interfaces-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/interfaces-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/interfaces-cle" >> "$GITHUB_ENV"
+      - name: Relever le Nixpkgs installé et fixer la commande de cette opération
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          NIXPKGS_INTERFACES=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          [[ "$NIXPKGS_INTERFACES" =~ ^/nix/store/[a-z0-9-]+/nixos$ ]]
+          printf 'NIXPKGS_INTERFACES=%s\n' "$NIXPKGS_INTERFACES" >> "$GITHUB_ENV"
+          printf 'REVISION=%s\n' "$REVISION" >> "$GITHUB_ENV"
+      - name: Auditer et préparer les trois publications sans modifier les liens actifs
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/publications-interfaces/$REVISION/preparation.json; mkdir -p /root/publications-interfaces/$REVISION/source; tar -xf - -C /root/publications-interfaces/$REVISION/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_INTERFACES -p python3 --run 'python3 /root/publications-interfaces/$REVISION/source/scripts/publication_interfaces.py preparer $REVISION'"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation != 'preparer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Armer le retour autonome et activer les trois applications
+        id: activation
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_INTERFACES -p python3 --run 'python3 /root/publications-interfaces/$REVISION/source/scripts/publication_interfaces.py demarrer $REVISION'"
+      - name: Contrôler une nouvelle connexion, tous les sites et les sauvegardes
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
+          python3 scripts/mcp-probe.py
+      - name: Vérifier Basic, Bearer, OAuth et les treize outils MCP
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: python3 scripts/vision-refonte-mcp-verifier.py
+      - name: Vérifier les fichiers réellement servis et les navigateurs
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: python3 scripts/verifier_interfaces.py
+      - name: Enregistrer les publications contrôlées et désarmer le retour
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_INTERFACES -p python3 --run 'python3 /root/publications-interfaces/$REVISION/source/scripts/publication_interfaces.py finaliser $REVISION'"
+      - name: Constater après finalisation par une nouvelle connexion
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        run: |
+          mkdir -p rapports-interfaces
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_INTERFACES -p python3 --run 'python3 /root/publications-interfaces/$REVISION/source/scripts/publication_interfaces.py constater $REVISION'" | tee rapports-interfaces/constat.json
+      - name: Revenir aux trois versions précédentes si l’essai échoue
+        if: failure() && steps.activation.outcome != 'skipped' && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_INTERFACES -p python3 --run 'python3 /root/publications-interfaces/$REVISION/source/scripts/publication_interfaces.py retour $REVISION'"
+      - name: Conserver le relevé sans contenu privé
+        if: success()
+        working-directory: candidat
+        run: |
+          mkdir -p rapports-interfaces
+          sh scripts/connect.sh "cat /root/publications-interfaces/$REVISION/preparation.json" > rapports-interfaces/preparation.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: interfaces-${{ steps.demande.outputs.operation }}
+          path: |
+            candidat/rapports-interfaces
+            candidat/rapports-vision
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/interfaces-cle"

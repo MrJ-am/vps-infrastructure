@@ -10,8 +10,8 @@ from logique_artefact import exiger
 from registry import unique_object
 
 
-def lire(source, projet, reference):
-    archive = source / 'vendor/candidats' / (projet + '.zip')
+def lire(source, projet, reference, repertoire="candidats"):
+    archive = source / 'vendor' / repertoire / (projet + '.zip')
     exiger(hashlib.sha256(archive.read_bytes()).hexdigest() == reference['sha256'], 'Archive différente : ' + projet)
     fichiers = {}
     with zipfile.ZipFile(archive) as paquet:
@@ -70,3 +70,4 @@ if __name__ == '__main__':
             for nom, contenu in fichiers.items():
                 p = cible/projet/nom;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(contenu)
     print('Deux artefacts intègres, trois consommateurs validés, même style figé.')
+
