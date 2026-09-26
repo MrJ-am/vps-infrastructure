@@ -111,30 +111,20 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.3 expose quatorze outils REST/MCP ; tools/list fait foi. Anciens noms :
-  contrat_retire ; aucune conversion FSRS.
-- Chaque item exprime une information intelligible sans sa fiche ; les 58 items
-  historiques ont été reformulés. L'historique des observations d'item est
-  horodaté, immuable, accessible dans toutes ses fiches ; une fiche possède aussi
-  ses observations sur les liens entre notions. La date du fait inconnue reste
-  distincte de la date de saisie serveur. Les rectifications s'ajoutent.
-- La préparation suggère les fiches selon leurs items à réviser et non évalués.
-  L'ouverture négocie le nombre lorsque les items dans la fenêtre dépassent
-  le nombre typique ; le lot inclut fiche, items et observations structurés.
-  Le tuteur pose une question à la fois, varie les sens et calibre les indices
-  d'après les erreurs et questions antérieures, sans révéler les réponses.
-- preparer_revision indique les séances ouvertes ; lister_seances les pagine
-  par thème/date et lire_seance rend le lot. Avant une nouvelle ouverture,
-  demander « nouvelle séance » ou « informations sur les séances ouvertes ».
-  Leur nombre est illimité ; ouvrir_seance prépare au plus 20 items.
-- clore_seance écrit atomiquement les réponses connues, évaluations et retour ;
-  le rapport trace les gains rapprochés bornés. Vision ignore les réponses avant
-  clôture ; les propositions ne modifient pas les items. La migration 012 ne
-  clôt aucune séance ouverte.
-- Nginx transmet l'identité ; préserver Basic, Bearer, OAuth, sessions, CSRF
-  et l'isolation par compte.
-- La migration conserve les sources historiques. Un retour applicatif ne
-  restaure pas PostgreSQL et ne supprime pas les écritures v2 ; l’ancien modèle
-  devient consultable et figé. Une reprise exige un nouvel audit de l’état actif.
-- Versions effectivement servies, tests et procédures : docs/VISION-REFONTE.md,
-  docs/ETAT.md et operations/vision-refonte-publication.json.
+- Vision 2.3 expose quatorze outils REST/MCP ; tools/list fait foi. Anciens
+  noms : contrat_retire ; aucune conversion FSRS.
+- Chaque item est intelligible seul. Ses observations horodatées, immuables
+  et rectifiables par ajout sont partagées entre fiches. Celles de fiche
+  concernent les liens. Date du fait et saisie serveur restent distinctes.
+- preparer_revision suggère les fiches selon les items à réviser et nouveaux.
+  ouvrir_seance négocie le nombre si la fenêtre dépasse le nombre typique,
+  et livre fiche, items et historiques. Le tuteur varie les questions,
+  calibre les indices et interroge sans dévoiler les réponses.
+- Séances ouvertes paginées et lisibles ; demander avant d'en créer une
+  nouvelle. Nombre illimité, 20 items au plus par ouverture. clore_seance
+  écrit atomiquement tentatives, évaluations et retour ; Vision ne connaît
+  les réponses qu'après clôture.
+- Préserver Basic, Bearer, OAuth, sessions, CSRF et isolation par compte.
+  Un retour applicatif ne restaure pas PostgreSQL ni n'efface les écritures.
+  État et preuves : docs/VISION-REFONTE.md, docs/ETAT.md et
+  operations/vision-refonte-publication.json.
