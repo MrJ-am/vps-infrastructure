@@ -14,20 +14,19 @@ class Migration(unittest.TestCase):
   p=patch.object(m,'executer');self.commande=p.start();self.addCleanup(p.stop)
  def test_migration_additive_conserve_donnees_et_prepare_les_seances(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/011_seances.sql').write_text('migration 011')
-  (source/'migrations/012_reprise_seances.sql').write_text('migration 012')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'',b'',b'2',b'2',b'2']) as sql,patch.object(m,'proprietaire',return_value='alice'):
+  (source/'migrations/013_observations_seances.sql').write_text('migration 013')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'2',b'',b'1',b'2',b'2',b'58',b'20']) as sql,patch.object(m,'proprietaire',return_value='alice'):
    rapport=m.migration_sequentielle(source,'isolée')
   self.assertTrue(rapport['donnees_preservees'])
   self.assertEqual(rapport['seances_ouvertes_preservees'],2)
   self.assertEqual(rapport['seances_de_test'],0)
-  self.assertEqual([c.args[1] for c in sql.call_args_list[1:3]],['migration 011','migration 012'])
+  self.assertEqual(rapport['items_autonomes_verifies'],58)
+  self.assertEqual([c.args[1] for c in sql.call_args_list if c.args[1]=='migration 013'],['migration 013'])
  def test_migration_additive_refuse_une_alteration(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/011_seances.sql').write_text('migration 011')
-  (source/'migrations/012_reprise_seances.sql').write_text('migration 012')
+  (source/'migrations/013_observations_seances.sql').write_text('migration 013')
   with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'apres'}]),patch.object(m,'psql',return_value=b'2'):
-   with self.assertRaisesRegex(RuntimeError,'Une donnée a changé'):
+   with self.assertRaisesRegex(RuntimeError,'Une donnée mémorielle'):
     m.migration_sequentielle(source,'isolée')
  def test_etat_perime_refuse_avant_arret(self):
   with patch.object(m,'etat',return_value={**self.avant,'vision':'autre'}):
