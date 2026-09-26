@@ -1402,3 +1402,34 @@ Actions : préserver les verrous communs et prendre cet état publié comme réf
 :PREUVE: -
 :END:
 
+
+* Préparer Vision 2.3 et préserver la mémoire lors de sa publication
+:PROPERTIES:
+:ID: 20260926-vision-91fd82c7a553
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-26T23:09:47.112+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Demande du propriétaire : rendre les items intelligibles isolément, conserver des observations horodatées et auditables sur chaque item et fiche, et construire des séances pédagogiques selon l'historique, les fenêtres et le nombre souhaité.
+
+Candidat applicatif Vision c797c92be8c7a774e5566d5f8182442f52d609da : migration 013 additive, quatorze outils MCP, réglage du nombre typique et reformulation des 58 items historiques. Les états mémoriels et séances ouvertes sont protégés. Le serveur et l'interface seront activés uniquement après les deux CI exactes, restauration d'une sauvegarde récente dans une base isolée, comparaison des données mémorielles et contrôle HTTP/MCP réel. Aucun changement NixOS ni restauration automatique de production ; retour applicatif surveillé.
+
+VPS : adapter le workflow Vision existant à cette migration et vérifier les sauvegardes, services et accès pendant la bascule. Vision : assembler le candidat vérifié, déclencher préparation puis activation et publier les preuves. Ce message annonce un travail ; il ne revendique aucune activation. Critère de fin : version 2.3 et données reformulées servies, tests et rapport de publication réussis, retour désarmé.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:

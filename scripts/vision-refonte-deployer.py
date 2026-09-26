@@ -42,28 +42,47 @@ def wrapper(d,base,compte):
 def migrations(source,base,compte):
  for p in sorted((source/'migrations').glob('*.sql')):psql(base,p.read_text(),compte)
 def empreinte_donnees(base):
- # Empreintes locales uniquement, jamais le contenu ni les identifiants en sortie.
- tables=('vision_fiches','vision_items','vision_liens','vision_episodes','vision_seances',
+ # Empreintes locales uniquement. Titres, contenus, index et versions des items
+ # sont précisément les champs éditoriaux modifiés par la migration 013.
+ tables=('vision_fiches','vision_liens','vision_episodes','vision_seances',
          'vision_contextes','vision_journal','vision_migrations_metier',
          'vision_memory_sheets','vision_memory_observations')
- return {table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip()
+ resultat={table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip()
          for table in tables}
+ resultat['vision_items_memoire']=psql(base,"""SELECT md5(coalesce((SELECT jsonb_agg(
+   to_jsonb(t)-'titre'-'contenu'-'version'-'modifie_a'-'recherche'-'texte_recherche'
+   ORDER BY t.id)::text FROM vision_items t),'[]'))""").decode().strip()
+ resultat['vision_items_nombre']=psql(base,'SELECT count(*) FROM vision_items').decode().strip()
+ return resultat
 
 def migration_sequentielle(source,base):
- fichiers=[source/'migrations/011_seances.sql',source/'migrations/012_reprise_seances.sql']
- exiger(all(p.is_file() for p in fichiers),'Migration de séances absente')
+ fichier=source/'migrations/013_observations_seances.sql'
+ exiger(fichier.is_file(),'Migration pédagogique absente')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (11,12)').strip()==b'2',
+  'Socle de séances 011/012 absent')
  avant=empreinte_donnees(base)
  ouvertes_avant=int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())
- for fichier in fichiers:psql(base,fichier.read_text())
- exiger(empreinte_donnees(base)==avant,'Une donnée a changé pendant la migration de séances')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (11,12)').strip()==b'2','Migrations 011/012 non enregistrées')
+ psql(base,fichier.read_text())
+ exiger(empreinte_donnees(base)==avant,'Une donnée mémorielle ou une séance a changé')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=13').strip()==b'1',
+  'Migration 013 non enregistrée')
  exiger(int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())==ouvertes_avant,'Séances ouvertes modifiées')
  u=proprietaire()
  # Lecture seulement ; aucune séance de contrôle en production.
  requete="SELECT (vision_lister_seances('"+u+"',20,0)->>'total')::integer"
  exiger(int(psql(base,requete).strip())==ouvertes_avant,'Lecture des séances ouvertes indisponible')
- return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[11,12],
-  'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test':0}
+ autonomes=int(psql(base,"""SELECT count(*) FROM vision_items i JOIN vision_liens l
+   ON l.utilisateur=i.utilisateur AND l.item_id=i.id JOIN vision_fiches f
+   ON f.utilisateur=l.utilisateur AND f.id=l.fiche_id
+   WHERE (f.titre='Capitales européennes' AND i.titre LIKE 'Capitale (%) : %'
+     AND i.contenu LIKE '% est la capitale %')
+      OR (f.titre='TSD — Théorie des situations didactiques' AND i.titre LIKE 'TSD — %'
+     AND i.contenu LIKE 'Dans la théorie des situations didactiques de Guy Brousseau, le terme %')""").strip())
+ exiger(autonomes>=58,'Reformulation des 58 items historiques incomplète')
+ observations=int(psql(base,'SELECT count(*) FROM vision_observations').strip())
+ return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[13],
+  'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test':0,
+  'items_autonomes_verifies':autonomes,'observations_historiques':observations}
 
 def sauvegarder(d,nom):
  p=d/(nom+'.dump')
