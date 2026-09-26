@@ -43,3 +43,15 @@ ancien devient inopérant après enregistrement. Les tests couvrent ces scénari
 les archives sortantes ou dupliquées, l'intégrité et le refus d'un changement métier.
 Les contrôles de l'audit historique du 18 septembre ne sont pas réutilisés pour
 juger l'état actuel. Les preuves de cette opération seront ajoutées après exécution.
+
+## Reprise de la préparation du 26 septembre
+
+La première activation `36257289128` a échoué dans Mémoire avant la bascule
+Vision/Logique. Son retour a réussi ; le diagnostic `36257469181` confirme les
+quatre anciens liens, les services et 32 sondes HTTP/TLS. Cause : npm héritait
+du umask 0077 du répertoire privé d'opération ; ses dépendances 0700/0600,
+appartenant à matheval-deploy, n'étaient pas lisibles par le compte matheval.
+La préparation rend désormais les fichiers de publication lisibles après npm,
+puis importe les modules applicatifs sous le vrai compte matheval, sans ouvrir
+de connexion SQL. Une reprise accepte seulement un répertoire inactif dont
+les ressources sont identiques ; les anciennes publications restent conservées.

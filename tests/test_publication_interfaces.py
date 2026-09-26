@@ -55,3 +55,15 @@ class Publication(unittest.TestCase):
   for p in (a,b):
    (p/'src').mkdir(parents=True);(p/'src/server.lisp').write_text(str(p));(p/'src/mcp.lisp').write_text('identique')
   m.preserver_metier({'vision':str(a),'matheval':str(a)},{'vision':str(b),'matheval':str(b)})
+
+ def test_reutiliser_uniquement_des_octets_identiques_inactifs(self):
+  cible=self.d/'version';cible.mkdir();(cible/'fichier').write_bytes(b'identique')
+  m.ecrire(cible,{'fichier':b'identique'})
+  with self.assertRaisesRegex(RuntimeError,'différente'):m.ecrire(cible,{'fichier':b'autre'})
+  self.assertEqual((cible/'fichier').read_bytes(),b'identique')
+ def test_reprise_ne_modifie_pas_les_ressources_logique(self):
+  cible=self.d/'version';cible.mkdir()
+  manifeste={'application':'a'*40,'empreintes':{'main.js':'h'},'publicationAutorisee':True,'preuveInfrastructure':'b'*40}
+  (cible/'manifeste-preparation.json').write_text(json.dumps(manifeste))
+  m.ecrire(cible,{'manifeste-preparation.json':json.dumps({**manifeste,'publicationAutorisee':False,'preuveInfrastructure':'c'*40}).encode()})
+  with self.assertRaises(RuntimeError):m.ecrire(cible,{'manifeste-preparation.json':json.dumps({**manifeste,'empreintes':{}}).encode()})
