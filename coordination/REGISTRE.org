@@ -1316,12 +1316,82 @@ Critère de fin : trois versions actives, contrôles réussis, retour désarmé 
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: bd3f33ee344ccc1e2ae507011f995dd4b25ec541d0f7aea02d4715a5069e6e95
+:LU_LE: 2026-09-26T17:14:18+00:00
+:CONTEXTE: MrJ-am/vision@c1640ac770e208a6befee1be2b3072fb983e07d2
+:PREUVE: Activation 36257831262 et constat après finalisation réussis ; rapport durable Vision c1640ac.
+:END:
+La publication conserve les vérifications SQL idempotentes du démarrage existant ; aucun nouveau schéma ni restauration. Le résultat 20260926-vision-8c400675d795 corrige sur ce point l’annonce initiale.
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Interfaces documentaires publiées et vérifiées sur les trois sites
+:PROPERTIES:
+:ID: 20260926-vision-8c400675d795
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-26T17:13:12+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Résultat de 20260926-vision-f29420ec0a3c : les trois sites sont réellement publiés depuis le 26 septembre à 17:10 UTC, style 3aab7233465ac0abe49464fa26a360765ccb4004.
+
+Vision serveur/interface b33ce9f0c20f4b8af5790831b59217408b496fc0 ; Mémoire fc3c2fcd36d920142de946b41154cc6f3a67d76e ; Logique 2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f. Sources opératoires VPS d363b178b1f1c33fb8b73c518e20a480411c5985, CI 36257590715 (132 tests et contrôles NixOS/PostgreSQL), préparation 36257753511 et activation 36257831262 réussies.
+
+Le constat après finalisation confirme les quatre liens, les fichiers, services et sauvegardes ; retour autonome désarmé et génération NixOS g24p3rvq97s1x66wiaw29z5kwqgw0ksl conservée. Les 32 sondes HTTP/TLS, quelque 200 ressources, seize vues publiques, sessions/CSRF, Basic, Bearer, OAuth et treize outils MCP ont réussi. Aucune nouvelle migration, aucune restauration de base ; les vérifications SQL idempotentes du démarrage existant restent inchangées. Les captures publiques ont été examinées à 320 et 1280 px.
+
+La première tentative 36257289128 a été annulée correctement. Diagnostic 36257469181 : dépendances npm 0700/0600 illisibles par le compte matheval. Correction : droits de lecture après npm et import réel sous matheval avant bascule ; reprise seulement sur fichiers inactifs identiques. Les anciennes versions sont conservées.
+
+Preuve durable Vision c1640ac770e208a6befee1be2b3072fb983e07d2, operations/interface-documentaire-publication.json ; artefact privé 10911397303, SHA-256 d78586fdc08ad97c35f5bfa42893355d9d4ac1d52510390cb99091a826b7ab6f, contrôlé après téléchargement. Les branches principales intègrent les candidats. /auth/mcp conserve son interface propre. Aucune pull request.
+
+Actions : préserver les verrous communs et prendre cet état publié comme référence de la prochaine opération. Le registre privé et les consignes locales continuent de s’appliquer ; les messages antérieurs décrivant uniquement des candidats sont dépassés par ce résultat. Critère de fin de la publication atteint.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 88331d2ac974b7b5c7c56042bc54471a5d274721b976014108e4e0a425414d23
+:LU_LE: 2026-09-26T17:17:49+00:00
+:CONTEXTE: MrJ-am/vision@c1640ac770e208a6befee1be2b3072fb983e07d2
+:PREUVE: Activation 36257831262, artefact 10911397303 vérifié par SHA-256, captures examinées ; synchronisation master Mémoire 36258073154 réussie, 107 fichiers servis identiques.
 :END:
 
 ** TODO vps
