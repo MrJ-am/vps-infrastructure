@@ -1,0 +1,37 @@
+name: Diagnostiquer la publication des interfaces en lecture seule
+on:
+  push:
+    branches: [main]
+    paths: [operations/interfaces-diagnostic.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/interfaces-diagnostic-cle"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/interfaces-diagnostic-cle" >> "$GITHUB_ENV"
+      - name: Lire l’état et les diagnostics bornés
+        run: |
+          REVISION=$(python3 -c 'import json,re; d=json.load(open("operations/interfaces-diagnostic.json")); assert set(d)=={"revision"} and re.fullmatch("[0-9a-f]{40}",d["revision"]); print(d["revision"])')
+          NIXPKGS=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          [[ "$NIXPKGS" =~ ^/nix/store/[a-z0-9]{32}-[a-zA-Z0-9.+_-]+/nixos$ ]]
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS -p python3 --run 'python3 - $REVISION'" < scripts/diagnostic_interfaces.py
+          python3 scripts/mcp-probe.py
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/interfaces-diagnostic-cle"
