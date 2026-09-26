@@ -41,9 +41,18 @@ def verifier():
     utilisateur, secret = os.environ['VISION_API_USERNAME'], os.environ['VISION_API_PASSWORD']
     basic = base64.b64encode((utilisateur + ':' + secret).encode()).decode()
     statut, _, corps = requete('/api/v1/health', entetes={'Authorization': 'Basic ' + basic})
-    assert statut == 200 and json.loads(corps)['version'] == '2.2.0', 'Version serveur différente'
+    assert statut == 200 and json.loads(corps)['version'] == '2.3.0', 'Version serveur différente'
     statut, _, corps = requete('/api/v1/rechercher', {'type':'fiche','requete':'','limite':1}, {'Authorization':'Basic '+basic,'X-Mrj-User':'identite-forgee'})
     assert statut == 200 and json.loads(corps)['total'] > 0, 'Identité Basic ou migration absente'
+    statut, _, corps = requete('/api/v1/rechercher', {'type':'item','requete':'Capitale (France)','limite':5}, {'Authorization':'Basic '+basic})
+    assert statut == 200, 'Recherche des items indisponible'
+    identifiants=[i['id'] for i in json.loads(corps)['resultats'] if i['titre']=='Capitale (France) : Paris']
+    assert len(identifiants)==1, 'Item historique non reformulé'
+    statut, _, corps = requete('/api/v1/lire', {'type':'item','ids':identifiants}, {'Authorization':'Basic '+basic})
+    assert statut == 200, 'Lecture des observations indisponible'
+    item=json.loads(corps)['objets'][0]
+    assert item['contenu']=='Paris est la capitale de la France.' and isinstance(item['observations'],list)
+    assert isinstance(item['stabilite'],int) and 'reference_a' in item, 'État mémoriel absent'
     with sync_playwright() as p:
         navigateur = p.chromium.launch()
         contexte = navigateur.new_context(viewport={'width': 1280, 'height': 900})
@@ -91,4 +100,3 @@ def verifier():
 
 if __name__ == '__main__':
     verifier()
-
