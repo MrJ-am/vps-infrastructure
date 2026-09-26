@@ -1,4 +1,4 @@
-"""Publication coordonnée d'interfaces, sans SQL ni changement de génération."""
+"""Publication coordonnée d'interfaces, sans nouvelle migration ni changement de génération."""
 import fcntl, hashlib, importlib.util, json, os, re, shlex, subprocess, sys, tarfile, time
 from pathlib import Path
 from corrections_artefacts import lire as lire_interface
@@ -66,7 +66,7 @@ def inventaire(cible, prefixes):
 
 
 def preserver_metier(avant, publications):
-    for projet, prefixes, exceptions in [('vision',('src','migrations'),{'src/server.lisp'}), ('matheval',('server','research'),set())]:
+    for projet, prefixes, exceptions in [('vision',('src','migrations','scripts'),{'src/server.lisp','scripts/contrats.py','scripts/assembler-refonte.py','scripts/refonte.py'}), ('matheval',('server','research'),set())]:
         a,b = (inventaire(Path(e[projet]),prefixes) for e in (avant,publications))
         exiger({k:h for k,h in a.items() if k not in exceptions} == {k:h for k,h in b.items() if k not in exceptions}, 'Code métier ou schéma changé : '+projet)
 
@@ -139,7 +139,7 @@ def appliquer(revision):
         for p in ('vision','vision-interface','logique'):v.lien(r['publications'][p],'/srv/'+p+'/current')
         executer('systemctl','start','vision'); v.services()
         exiger(v.etat()==attendu(r),'État différent du candidat'); sauver(d/'essai.json',v.etat())
-    print('Trois applications activées sous retour autonome ; aucune migration SQL.')
+    print('Trois applications activées sous retour autonome ; schémas et données conservés.')
 
 
 def retour(revision):

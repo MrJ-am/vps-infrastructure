@@ -24,8 +24,9 @@ indépendant. Les versions actives doivent être identiques à la fin de la pré
 L'activation arme un retour à vingt minutes. Mémoire passe par son compte dédié
 `matheval-deploy` et l'exécutable installé `matheval-release`, avec son verrou et
 son contrôle de santé. Les deux liens Vision basculent pendant un bref arrêt du
-serveur ; Logique change de lien statique. Aucun schéma n'est rejoué, aucune base
-n'est restaurée et aucun système n'est reconstruit. Les anciens répertoires restent
+serveur ; Logique change de lien statique. Aucune nouvelle migration n'est introduite, aucune base n'est restaurée et aucun
+système n'est reconstruit. Les démarrages conservent leurs vérifications SQL
+idempotentes existantes, avec les mêmes fichiers de schéma et le même corpus. Les anciens répertoires restent
 présents. Seules les attestations de publication du manifeste Logique sont ajoutées
 aux métadonnées de préparation ; ses ressources restent celles de l'artefact testé.
 
@@ -37,7 +38,7 @@ le retour. Une nouvelle connexion constate l'état enregistré ; une seconde dem
 `constater` permet un contrôle indépendant après l'exécution initiale.
 
 En cas d'échec avant finalisation, le retour remet les trois versions antérieures
-sans SQL. Il refuse de remplacer une publication ou une génération tierce. Un timer
+sans restauration SQL. Il refuse de remplacer une publication ou une génération tierce. Un timer
 ancien devient inopérant après enregistrement. Les tests couvrent ces scénarios,
 les archives sortantes ou dupliquées, l'intégrité et le refus d'un changement métier.
 Les contrôles de l'audit historique du 18 septembre ne sont pas réutilisés pour
