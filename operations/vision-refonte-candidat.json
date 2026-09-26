@@ -1,10 +1,10 @@
 {
-  "application": "5c92e0827c13cddaeb0bac852e57b3b26491670a",
-  "ci_backend": 36198122892,
-  "ci_interface": 36198122897,
-  "artefact_interface": 10889844999,
+  "application": "c797c92be8c7a774e5566d5f8182442f52d609da",
+  "ci_backend": 36278489471,
+  "ci_interface": 36278489466,
+  "artefact_interface": 10918660505,
   "fichiers": {
-    "vendor/vision-refonte-source.tar.gz": "ff5cb10925db92f788bc539d1d74f245a80ab8fae444c6f178c49b00b9be7d18",
-    "vendor/vision-refonte-interface.zip": "65f36cc62bb8ed83d4a1706df0ddb009ca10eff5351b34bb4ab931c1362f2979"
+    "vendor/vision-refonte-source.tar.gz": "fdf1c8153cf91439bc374b6311bb7994a275851a7e92b7601d1d0d275c5d6b6f",
+    "vendor/vision-refonte-interface.zip": "42b4b406e6b04dff53267ba1c83fdcbed15cd79e0a916689a08b8050f6e65ed3"
   }
 }
