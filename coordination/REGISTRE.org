@@ -1096,3 +1096,84 @@ Ce message annonce le changement ; aucune publication applicative n'est revendiq
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Préparer l’interface documentaire commune et ses consommateurs
+:PROPERTIES:
+:ID: 20260926-vision-interface-documentaire
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-26T13:03:31.799323+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire demande une interface Vision plus compacte, inspirée de la lecture
+par tables et documents, intégralement composée par le style ElmUI partagé.
+Candidat style 3731a1b2d37a5e33c9678ccbf6a884012da131da : moteur unique de boutons,
+tableaux à colonnes typées, compositions documentaires, contrôles clavier et petits
+écrans. Vision retire ses ressources d’interface HTML historiques et adopte des
+liens directs typés ; aucune modification du protocole métier ou du schéma.
+
+Trois verrous consommateurs exacts sont préparés. Compilations et tests navigateur
+locaux réussis ; les suites PostgreSQL et les CI distantes restent à exécuter.
+Les copies finales des cinq bundles Matheval/Logique correspondent aux octets testés.
+Détails et limites : MrJ-am/vision, docs/AUDIT-INTERFACE-20260926.md.
+Aucune publication applicative ni activation n’est revendiquée.
+
+Actions : style publier et vérifier le candidat, push autorisé par le propriétaire ;
+Vision, mémoire et logique exécuter leurs CI complètes, figer les artefacts et
+préparer le retour applicatif. Signature est informée du rendu ElmUI du même texte,
+sans modification de ses ressources. VPS coordonne uniquement l’activation des
+artefacts validés, contrôle les manifestes et conserve les versions précédentes.
+Le service mrj-auth reste hors de ce portage ; ses accès sont préservés.
+Aucune restauration de base pour annuler le style ; aucun changement NixOS demandé.
+Critère de fin de cette étape : quatre branches publiées et CI complètes réussies,
+références et résultats consignés dans un nouveau message. L’activation applicative
+reste une étape distincte après validation collective des artefacts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
