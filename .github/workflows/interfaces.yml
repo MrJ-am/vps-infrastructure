@@ -59,7 +59,7 @@ jobs:
           REVISION: ${{ steps.demande.outputs.revision }}
         run: |
           NIXPKGS_INTERFACES=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
-          [[ "$NIXPKGS_INTERFACES" =~ ^/nix/store/[a-z0-9-]+/nixos$ ]]
+          [[ "$NIXPKGS_INTERFACES" =~ ^/nix/store/[a-z0-9]{32}-[a-zA-Z0-9.+_-]+/nixos$ ]]
           printf 'NIXPKGS_INTERFACES=%s\n' "$NIXPKGS_INTERFACES" >> "$GITHUB_ENV"
           printf 'REVISION=%s\n' "$REVISION" >> "$GITHUB_ENV"
       - name: Auditer et préparer les trois publications sans modifier les liens actifs
