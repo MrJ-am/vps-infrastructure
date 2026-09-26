@@ -1,0 +1,62 @@
+{
+  "date": "2026-09-26T17:10:07Z",
+  "sourceVps": "d363b178b1f1c33fb8b73c518e20a480411c5985",
+  "ciVps": 36257590715,
+  "preparation": 36257753511,
+  "activation": 36257831262,
+  "revisionStyle": "3aab7233465ac0abe49464fa26a360765ccb4004",
+  "applications": {
+    "vision": "b33ce9f0c20f4b8af5790831b59217408b496fc0",
+    "memoire": "fc3c2fcd36d920142de946b41154cc6f3a67d76e",
+    "logique": "2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+  },
+  "controle": {
+    "ressourcesExactes": true,
+    "vuesPubliques": 16,
+    "largeurs": [
+      320,
+      375,
+      768,
+      1280
+    ],
+    "httpTls": 32,
+    "basicBearerOauthMcp": true,
+    "retourDesarme": true,
+    "configurationNixosConservee": true,
+    "schemasIdentiques": true
+  },
+  "preuve": {
+    "artefact": 10911397303,
+    "sha256": "d78586fdc08ad97c35f5bfa42893355d9d4ac1d52510390cb99091a826b7ab6f",
+    "expiration": "2026-10-26T17:10:09Z"
+  },
+  "incidentCorrige": {
+    "activation": 36257289128,
+    "diagnostic": 36257469181,
+    "retourConfirme": true,
+    "cause": "Les dépendances npm héritaient du umask 0077 ; droits de lecture rétablis après installation, import des modules vérifié sous le compte matheval avant bascule."
+  },
+  "constat": {
+    "revision": "d363b178b1f1c33fb8b73c518e20a480411c5985",
+    "etat": {
+      "systeme": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "demarrage": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "configuration": "57cfbe6ac09438eab9a535e5618d2dfe510da3905d51d6eb32313a6c31b8b88d",
+      "vision": "/srv/vision/releases/b33ce9f0c20f4b8af5790831b59217408b496fc0",
+      "vision-interface": "/srv/vision-interface/releases/b33ce9f0c20f4b8af5790831b59217408b496fc0",
+      "matheval": "/srv/matheval/releases/fc3c2fcd36d920142de946b41154cc6f3a67d76e",
+      "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+    },
+    "schema_identique": true
+  },
+  "integrationMemoire": {
+    "revision": "fc3c2fcd36d920142de946b41154cc6f3a67d76e",
+    "ci": 36258073154,
+    "resultat": "success",
+    "deploiementEtFichiersServisVerifies": true
+  },
+  "documentation": {
+    "vision": "c1640ac770e208a6befee1be2b3072fb983e07d2",
+    "style": "c8f0727ef3cc8f5c458388b768474f323e88ef22"
+  }
+}

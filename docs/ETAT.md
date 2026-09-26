@@ -1,5 +1,37 @@
 # État attesté au 26 septembre 2026
 
+## Interfaces documentaires communes publiées le 26 septembre à 17:10 UTC
+
+Les trois sites servent le style `3aab7233465ac0abe49464fa26a360765ccb4004`.
+Vision serveur/interface : `b33ce9f0c20f4b8af5790831b59217408b496fc0` ;
+Matheval : `fc3c2fcd36d920142de946b41154cc6f3a67d76e` ;
+Logique : `2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f`.
+
+[CI 36257590715](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36257590715)
+(132 tests, NixOS et PostgreSQL),
+[préparation 36257753511](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36257753511)
+et [activation 36257831262](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36257831262)
+réussies, sources `d363b178b1f1c33fb8b73c518e20a480411c5985`.
+Une nouvelle connexion après finalisation confirme les quatre liens et fichiers,
+les services/sauvegardes et le retour automatique désarmé. La génération active
+et par défaut `g24p3rvq97s1x66wiaw29z5kwqgw0ksl` et l’entrée NixOS sont conservées.
+
+Les 32 sondes HTTP/TLS, les ressources exactes des trois sites, seize vues publiques,
+les sessions/CSRF, Basic, Bearer, OAuth et treize outils MCP ont été vérifiés.
+Les captures publiques ont été examinées. La première tentative a été annulée
+et corrigée : permissions npm trop restrictives, contrôlées maintenant sous le
+compte réel avant bascule. Aucun nouveau schéma ni restauration de données ;
+les démarrages gardent leurs vérifications SQL idempotentes existantes.
+
+La synchronisation finale de Mémoire sur `master`,
+[36258073154](https://github.com/MrJ-am/M-moire/actions/runs/36258073154),
+a également réussi : 56 tests navigateur et 107 fichiers servis identiques.
+
+Procédure et limites : [INTERFACES-DOCUMENTAIRES.md](INTERFACES-DOCUMENTAIRES.md).
+Références, preuves et empreintes : [interfaces-publication.json](../operations/interfaces-publication.json).
+La page `/auth/mcp` conserve son interface propre. Les anciennes versions restent
+disponibles ; un retour ultérieur constitue une nouvelle opération applicative.
+
 ## Vision 2.2 publiée et séances ouvertes préservées
 
 Serveur et interface `5c92e0827c13cddaeb0bac852e57b3b26491670a` actifs ;
