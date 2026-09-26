@@ -72,7 +72,16 @@ def preserver_metier(avant, publications):
 
 
 def ecrire(cible, fichiers):
-    exiger(not cible.exists(), 'Publication déjà préparée : '+str(cible))
+    if cible.exists():
+        exiger(all(Path('/srv/'+p+'/current').resolve()!=cible.resolve() for p in PROJETS), 'Publication déjà active')
+        for nom,contenu in fichiers.items():
+            p=cible/nom
+            if nom=='manifeste-preparation.json':
+                ignore={'hebergementConfirme','publicationAutorisee','preuveInfrastructure'}
+                a,b=({k:v for k,v in json.loads(x).items() if k not in ignore} for x in (p.read_bytes(),contenu))
+                exiger(a==b,'Préparation existante différente : '+nom)
+            else:exiger(p.is_file() and p.read_bytes()==contenu,'Préparation existante différente : '+nom)
+        return
     cible.mkdir(parents=True, mode=0o755)
     for nom, contenu in fichiers.items():
         p = cible/nom
@@ -101,6 +110,11 @@ def preparer(revision):
     executer('chmod','-R','a+rX',publications['vision'])
     executer('chown','-R','matheval-deploy:matheval',publications['matheval'])
     executer('runuser','-u','matheval-deploy','--','npm','--prefix',publications['matheval']+'/server','ci','--omit=dev','--ignore-scripts')
+    # npm hérite du umask privé de l'opération ; le service utilise un autre compte.
+    executer('chmod','-R','a+rX',publications['matheval'])
+    modules=[Path(publications['matheval'])/'server/src'/n for n in ('database.mjs','app.mjs')]
+    executer('runuser','-u','matheval','--','node','--input-type=module','--eval',
+             ';'.join('await import('+json.dumps(p.as_uri())+')' for p in modules))
     temoin=d/'timer-verifie'
     executer('systemd-run','--unit=interfaces-temoin-'+revision[:12],'--on-active=2s','--timer-property=AccuracySec=1s','/run/current-system/sw/bin/touch',temoin)
     for _ in range(15):
