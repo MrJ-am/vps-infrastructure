@@ -1,5 +1,38 @@
 # Publication Vision 2 — état et procédure
 
+## Vision 2.3 publiée le 26 septembre 2026
+
+Application `c797c92be8c7a774e5566d5f8182442f52d609da`, source
+VPS `886105f5f5b926fd7eb6f2d1391bcae973617661`. CI backend
+[36278489471](https://github.com/MrJ-am/vision/actions/runs/36278489471),
+interface [36278489466](https://github.com/MrJ-am/vision/actions/runs/36278489466),
+infrastructure [36278717893](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36278717893),
+[préparation 36278887497](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36278887497),
+[activation 36278976906](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36278976906)
+et [constat indépendant 36279153941](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36279153941)
+réussis. Le rapport d'activation confirme le retour désarmé et les deux
+publications exactes.
+
+La migration additive 013 a été essayée sur une restauration fraîche avant
+l'arrêt puis sur une seconde sauvegarde après arrêt des écritures. Le
+comparateur a conservé sans changement la stabilité, les références, les
+épisodes et les séances. **58 items** ont reçu une formulation autonome et
+**49 observations historiques** ont été reprises, avec date du fait quand elle
+était connue et date de saisie serveur. Une séance ouverte a été préservée.
+Les observations nouvelles sont immuables et transversales aux fiches pour
+un item partagé ; les fiches ont leur propre historique. Les 14 outils MCP
+incluent `ajouter_observation`, et `ouvrir_seance` fournit l'historique
+structuré pour construire des questions difficiles mais faisables.
+
+Les vérifications HTTPS ont couvert Basic, Bearer, OAuth, sessions/CSRF,
+interface, artefact et l'item France reformulé. Une lecture MCP ultérieure
+a confirmé les items France, République tchèque et Situation didactique et
+les suggestions chiffrées. Aucune séance de contrôle ni réponse fictive
+n'a été créée en production. Les clients doivent rafraîchir leur catalogue
+MCP pour afficher le nouvel outil. Le retour applicatif ne restaure pas la
+base ; les anciennes versions demeurent disponibles. Preuves agrégées :
+[vision-refonte-publication.json](../operations/vision-refonte-publication.json).
+
 ## Reprise des séances et gain rapproché, publiée le 26 septembre 2026
 
 Vision `5c92e0827c13cddaeb0bac852e57b3b26491670a` et son interface sont
