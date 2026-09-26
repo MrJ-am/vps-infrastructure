@@ -34,11 +34,12 @@
     }
   },
   "archives": {
-    "vision-source.tar.gz": "bbf90e45c62900e5e159a4cd43ead291647f8af37de59dc87fa92f5651a99fba",
+    "vision-source.tar.gz": "d74f5f6d1ca95756a07180344ed7b539ea421a2950f5493fac1b597afb077f13",
     "logique.zip": "7ee6839925f2104eb50bba779062e9f4158f84c6ddb68d7267543cb286f13f0c",
     "vision.zip": "466b894b4c2051158aa836782046b7b2d0a613506a7d4a6fd6896bd2b9be6dde",
     "matheval.tar.gz": "cc316510ede2359dae3deee61a29db83ddb218a38f1aee5a8c259fd706af537a"
   },
   "ciStyle": 36251549223,
-  "ciVisionServeur": 36251682106
+  "ciVisionServeur": 36251682106,
+  "assemblageVision": 36256944192
 }

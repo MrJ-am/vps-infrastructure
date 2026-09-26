@@ -1,4 +1,4 @@
-name: Publier les trois interfaces validées sans migration
+name: Publier les trois interfaces validées sans nouvelle migration
 on:
   push:
     branches: [main]
