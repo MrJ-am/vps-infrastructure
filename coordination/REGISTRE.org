@@ -1433,3 +1433,34 @@ VPS : adapter le workflow Vision existant à cette migration et vérifier les sa
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Vision 2.3 publié et contrôlé après finalisation
+:PROPERTIES:
+:ID: 20260926-vision-2c1ee03d1a74
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-26T23:22:39.226+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Résultat du message 20260926-vision-91fd82c7a553 : application c797c92be8c7a774e5566d5f8182442f52d609da publiée depuis la source VPS 886105f5f5b926fd7eb6f2d1391bcae973617661. CI backend 36278489471, interface 36278489466 et infrastructure 36278717893 ; préparation 36278887497, activation 36278976906 et constat indépendant 36279153941 réussis.
+
+La migration 013 a reformulé 58 items et repris 49 observations. Une séance ouverte et les états mémoriels ont été préservés. Quatorze outils MCP, Basic/Bearer/OAuth, navigateur et artefact exact ont passé les sondes réelles ; retour autonome désarmé. Aucun changement NixOS ni restauration de production. Contrat durable mis à jour dans coordination/CONTRATS.org#vision ; détails dans docs/VISION-REFONTE.md, docs/ETAT.md et operations/vision-refonte-publication.json.
+
+Action Vision : proposer le test utilisateur après rafraîchissement du catalogue MCP ; ne pas créer de séance de test dans son compte. Action VPS : conserver les preuves et lire ce résultat à la reprise. Critère de publication atteint.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:

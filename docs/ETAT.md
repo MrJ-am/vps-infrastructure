@@ -1,5 +1,25 @@
 # État attesté au 26 septembre 2026
 
+## Vision 2.3 — items autonomes et observations, 26 septembre 2026, 23:19 UTC
+
+Serveur et interface `c797c92be8c7a774e5566d5f8182442f52d609da` actifs,
+source VPS `886105f5f5b926fd7eb6f2d1391bcae973617661`.
+CI applicative 36278489471, interface 36278489466, infrastructure
+36278717893 ; préparation 36278887497, activation 36278976906 et constat
+indépendant 36279153941 réussis. Migration 013 : **58 items historiques
+reformulés**, **49 observations horodatées reprises**, une séance ouverte
+conservée, états mémoriels identiques. Les autres applications et la génération
+NixOS active et au démarrage sont restées inchangées.
+
+Quatorze outils MCP, Basic, Bearer, OAuth, sessions/CSRF, navigateur et artefact
+exact ont été vérifiés après bascule. Le retour autonome est désarmé. Une lecture
+réelle après finalisation confirme « Paris est la capitale de la France »,
+« Prague est la capitale de la République tchèque », les observations sur
+l'item TSD et les suggestions par fiche avec nombres à réviser. Les clients
+MCP doivent recharger leur catalogue pour voir `ajouter_observation`.
+Détails : [VISION-REFONTE.md](VISION-REFONTE.md) et
+[vision-refonte-publication.json](../operations/vision-refonte-publication.json).
+
 ## Interfaces documentaires communes publiées le 26 septembre à 17:10 UTC
 
 Les trois sites servent le style `3aab7233465ac0abe49464fa26a360765ccb4004`.
