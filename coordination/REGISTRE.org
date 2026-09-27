@@ -1464,3 +1464,32 @@ Action Vision : proposer le test utilisateur après rafraîchissement du catalog
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Épurer les items Vision et prioriser la fermeture des fenêtres
+:PROPERTIES:
+:ID: 20260927-vision-items-7c6f9a
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-27T17:08:00+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Décision du propriétaire : le contenu autonome est la seule connaissance d'un item. Le titre, les objectifs et les sens de rappel appartiennent à la fiche ; les constats datés demeurent dans les observations. La séance doit livrer fiche et observations, items dans la fenêtre et leurs observations, puis prioriser les fenêtres par date de fermeture ; les nouveaux items complètent le nombre choisi.
+
+Vision prépare une migration additive conservant les identifiants, historiques et séances ouvertes, et modifie le contrat MCP, les tests et l'interface. Le code sera publié après les CI ; VPS devra vérifier la procédure de déploiement applicatif et préserver les données et l'authentification. Aucun changement en production n'est attesté par ce message.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
