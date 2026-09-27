@@ -22,32 +22,22 @@ jobs:
           printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-diagnostic-cle"
           ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-diagnostic-cle" >/dev/null
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-diagnostic-cle" >> "$GITHUB_ENV"
-      - name: État et étape défaillante, sans contenu privé
+      - name: Compter les observations et doublons sans contenu privé
         run: |
           NIXPKGS_DIAGNOSTIC=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
           sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_DIAGNOSTIC -p python3 --run 'python3 -'" <<'PY'
-          import json, pathlib, subprocess
-          d=pathlib.Path('/root/vision-refonte-operations/e42476ff7b5ce1e7fff54341aa83efdfb4f216c4')
-          markers=['preparation.json','engage','migration-commise','essai.json','retour-engage','retour.json','enregistre','termine.json']
-          units=['vision','vision-migrate.service','vision-refonte-appliquer-e42476ff7b5c.service','vision-refonte-retour-e42476ff7b5c.timer']
-          state={u:subprocess.run(['systemctl','is-active',u],capture_output=True,text=True).stdout.strip() for u in units}
-          print(json.dumps({'marqueurs':{k:(d/k).exists() for k in markers},'unites':state}))
-          for unit in ('vision.service','postgresql.service'):
-              p=subprocess.run(['systemctl','show',unit,'-p','Requires','-p','After','-p','Result'],capture_output=True,text=True)
-              print(json.dumps({'dependance':unit,'proprietes':p.stdout.splitlines()}))
-          p=subprocess.run(['systemctl','list-units','--failed','--no-legend','--plain'],capture_output=True,text=True)
-          print(json.dumps({'unites_echouees':[line.split()[0] for line in p.stdout.splitlines()]}))
-          for unit in units:
-              p=subprocess.run(['journalctl','-u',unit,'-o','cat','--no-pager','-n','80'],capture_output=True,text=True)
-              lines=[]
-              for line in p.stdout.splitlines():
-                  if unit in ('vision','vision-migrate.service') and any(word in line.lower() for word in ('error','failed','fatal','exit','assert','migration')):
-                      lines.append(line.strip()[:240])
-                  elif 'File "' in line and ', in ' in line:
-                      lines.append(line.strip().split('/source/')[-1][:180])
-                  elif 'RuntimeError:' in line or 'Exception:' in line:
-                      lines.append(line.strip().split(' ; détails privés')[0][:180])
-              print(json.dumps({'unite':unit,'trace_sans_donnees':lines[-15:]}))
+          import json, subprocess
+          sql="""SELECT jsonb_build_object(
+            'total',(SELECT count(*) FROM vision_observations),
+            'sources',(SELECT jsonb_object_agg(source,n) FROM
+              (SELECT source,count(*) n FROM vision_observations GROUP BY source) s),
+            'doublons',(SELECT coalesce(sum(n-1),0) FROM
+              (SELECT count(*) n FROM vision_observations
+                GROUP BY utilisateur,item_id,fiche_id,texte,source,evenement_a
+                HAVING count(*)>1) d)
+          );"""
+          p=subprocess.run(['runuser','-u','postgres','--','psql','-XAtq','-h','/run/postgresql','-d','vision','-c',sql],check=True,capture_output=True,text=True)
+          print(p.stdout.strip())
           PY
       - name: Effacer la clé
         if: always()
