@@ -24,7 +24,8 @@ jobs:
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-diagnostic-cle" >> "$GITHUB_ENV"
       - name: État et étape défaillante, sans contenu privé
         run: |
-          sh scripts/connect.sh 'python3 -' <<'PY'
+          NIXPKGS_DIAGNOSTIC=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_DIAGNOSTIC -p python3 --run 'python3 -'" <<'PY'
           import json, pathlib, subprocess
           d=pathlib.Path('/root/vision-refonte-operations/e42476ff7b5ce1e7fff54341aa83efdfb4f216c4')
           markers=['preparation.json','engage','migration-commise','essai.json','retour-engage','retour.json','enregistre','termine.json']
