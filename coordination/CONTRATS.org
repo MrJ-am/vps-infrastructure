@@ -111,20 +111,19 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.3 expose quatorze outils REST/MCP ; tools/list fait foi. Anciens
+- Vision 2.4 expose quatorze outils REST/MCP ; tools/list fait foi. Anciens
   noms : contrat_retire ; aucune conversion FSRS.
-- Chaque item est intelligible seul. Ses observations horodatées, immuables
-  et rectifiables par ajout sont partagées entre fiches. Celles de fiche
-  concernent les liens. Date du fait et saisie serveur restent distinctes.
-- preparer_revision suggère les fiches selon les items à réviser et nouveaux.
-  ouvrir_seance négocie le nombre si la fenêtre dépasse le nombre typique,
-  et livre fiche, items et historiques. Le tuteur varie les questions,
-  calibre les indices et interroge sans dévoiler les réponses.
-- Séances ouvertes paginées et lisibles ; demander avant d'en créer une
-  nouvelle. Nombre illimité, 20 items au plus par ouverture. clore_seance
-  écrit atomiquement tentatives, évaluations et retour ; Vision ne connaît
-  les réponses qu'après clôture.
+- L'item porte une seule connaissance autonome, sans titre, objectif, sens
+  de rappel ni suivi éditorial. La fiche donne titre, contenu, objectif et
+  contexte de révision. Observations immuables, datées (fait et saisie),
+  rectifiables par ajout sur fiche et item ; les doublons historiques de
+  rejeu restent en audit brut mais ne sont montrés qu'une fois.
+- preparer_revision et ouvrir_seance privilégient la fermeture la plus proche
+  des fenêtres actives ; les items nouveaux complètent le nombre demandé.
+  La séance livre fiche et observations, puis items et observations. Les
+  séances ouvertes restent lisibles et demandent confirmation avant ajout ;
+  clore_seance écrit atomiquement le retour et les évaluations.
 - Préserver Basic, Bearer, OAuth, sessions, CSRF et isolation par compte.
-  Un retour applicatif ne restaure pas PostgreSQL ni n'efface les écritures.
-  État et preuves : docs/VISION-REFONTE.md, docs/ETAT.md et
+  Aucun retour applicatif ne restaure PostgreSQL. État et preuves :
+  docs/VISION-REFONTE.md, docs/ETAT.md,
   operations/vision-refonte-publication.json.
