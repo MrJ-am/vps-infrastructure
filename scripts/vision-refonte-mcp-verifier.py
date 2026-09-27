@@ -144,7 +144,7 @@ def verifier():
             bearer={'Authorization':'Bearer '+token}
             resultat=rpc('initialize',{'protocolVersion':'2025-06-18','capabilities':{},'clientInfo':{'name':'controle','version':'1'}},bearer)
             assert resultat['protocolVersion']=='2025-06-18'
-            assert resultat['serverInfo']['version']=='2.3.0' and 'Calibrage db-1' in resultat['instructions']
+            assert resultat['serverInfo']['version']=='2.4.0' and 'Calibrage db-1' in resultat['instructions']
             outils=rpc('tools/list',{},bearer)['tools']
             assert {v['name'] for v in outils}=={'rechercher','lire','preparer_revision','lister_seances','lire_seance','ouvrir_seance','clore_seance','enregistrer_fiche','enregistrer_item','lier_item','evaluer_items','ajouter_observation','enregistrer_contexte','regler_politique'}
             assert 'clore_seance' in resultat['instructions'],'Consigne de clôture absente'

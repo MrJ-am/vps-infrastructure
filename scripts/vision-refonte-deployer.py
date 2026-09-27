@@ -56,16 +56,16 @@ def empreinte_donnees(base):
  return resultat
 
 def migration_sequentielle(source,base):
- fichier=source/'migrations/013_observations_seances.sql'
- exiger(fichier.is_file(),'Migration pédagogique absente')
+ fichiers=[source/'migrations/013_observations_seances.sql', source/'migrations/014_items_contenu.sql']
+ exiger(all(f.is_file() for f in fichiers),'Migration pédagogique absente')
  exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (11,12)').strip()==b'2',
   'Socle de séances 011/012 absent')
  avant=empreinte_donnees(base)
  ouvertes_avant=int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())
- psql(base,fichier.read_text())
+ for fichier in fichiers:psql(base,fichier.read_text())
  exiger(empreinte_donnees(base)==avant,'Une donnée mémorielle ou une séance a changé')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=13').strip()==b'1',
-  'Migration 013 non enregistrée')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (13,14)').strip()==b'2',
+  'Migrations 013/014 non enregistrées')
  exiger(int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())==ouvertes_avant,'Séances ouvertes modifiées')
  u=proprietaire()
  # Lecture seulement ; aucune séance de contrôle en production.
@@ -74,13 +74,14 @@ def migration_sequentielle(source,base):
  autonomes=int(psql(base,"""SELECT count(*) FROM vision_items i JOIN vision_liens l
    ON l.utilisateur=i.utilisateur AND l.item_id=i.id JOIN vision_fiches f
    ON f.utilisateur=l.utilisateur AND f.id=l.fiche_id
-   WHERE (f.titre='Capitales européennes' AND i.titre LIKE 'Capitale (%) : %'
-     AND i.contenu LIKE '% est la capitale %')
-      OR (f.titre='TSD — Théorie des situations didactiques' AND i.titre LIKE 'TSD — %'
+   WHERE (f.titre='Capitales européennes' AND i.contenu LIKE '% est la capitale %')
+      OR (f.titre='TSD — Théorie des situations didactiques'
      AND i.contenu LIKE 'Dans la théorie des situations didactiques de Guy Brousseau, le terme %')""").strip())
  exiger(autonomes>=58,'Reformulation des 58 items historiques incomplète')
+ exiger(psql(base,"SELECT (vision_item_public(i) ?| ARRAY['titre','objectifs','sens','suivi']) FROM vision_items i LIMIT 1").strip()==b'f',
+   'Métadonnées de fiche encore visibles dans un item')
  observations=int(psql(base,'SELECT count(*) FROM vision_observations').strip())
- return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[13],
+ return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[13,14],
   'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test':0,
   'items_autonomes_verifies':autonomes,'observations_historiques':observations}
 
