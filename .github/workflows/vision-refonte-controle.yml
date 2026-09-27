@@ -43,7 +43,7 @@ jobs:
         run: |
           NIXPKGS_CONTROLE=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
           test -n "$NIXPKGS_CONTROLE"
-          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CONTROLE -p python3 --run 'python3 - $REVISION $APPLICATION'" < scripts/vision-refonte-constater.py
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_CONTROLE -p python3 postgresql_17 --run 'python3 - $REVISION $APPLICATION'" < scripts/vision-refonte-constater.py
       - name: Effacer la clé temporaire
         if: always()
         run: rm -f -- "$RUNNER_TEMP/vision-controle-cle"
