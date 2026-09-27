@@ -1,12 +1,12 @@
 {
-  "revision": "94f2de6a8b00016e14b5494a58ef4f0226a830ae",
-  "application": "3ff7f21f01fa63ed740672f9b331e46d50704b8c",
+  "revision": "4af66c01941887e04152d012579bf7f65b35d161",
+  "application": "3cbd57ff8d05798e3766fd0d6c93087739d8b608",
   "etat": {
     "systeme": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "demarrage": "/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "configuration": "57cfbe6ac09438eab9a535e5618d2dfe510da3905d51d6eb32313a6c31b8b88d",
-    "vision": "/srv/vision/releases/3ff7f21f01fa63ed740672f9b331e46d50704b8c",
-    "vision-interface": "/srv/vision-interface/releases/3ff7f21f01fa63ed740672f9b331e46d50704b8c",
+    "vision": "/srv/vision/releases/3cbd57ff8d05798e3766fd0d6c93087739d8b608",
+    "vision-interface": "/srv/vision-interface/releases/3cbd57ff8d05798e3766fd0d6c93087739d8b608",
     "matheval": "/srv/matheval/releases/fc3c2fcd36d920142de946b41154cc6f3a67d76e",
     "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
   },
@@ -14,34 +14,23 @@
     "mise_a_jour": true,
     "donnees_preservees": true,
     "migrations": [
-      13,
-      14
+      15
     ],
-    "seances_ouvertes_preservees": 1,
-    "seances_de_test": 0,
-    "items_autonomes_verifies": 58,
-    "observations_historiques": 187
+    "contrat_sql": 6,
+    "tables_preservees": 17,
+    "seances_ouvertes_preservees": 0,
+    "seances_de_test_production": 0,
+    "clotures_isolees_verifiees": 58,
+    "rejeu_cloture_verifie": true,
+    "tests_annules": true
   },
-  "publie_le": "2026-09-27T20:26:11Z",
-  "constate_le": "2026-09-27T20:27:37Z",
-  "preuves": {
-    "ci_application": 36347303978,
-    "ci_interface": 36347303976,
-    "ci_infrastructure": 36347509629,
-    "preparation": 36347688045,
-    "activation": 36347783328,
-    "constat": 36348090796
-  },
-  "candidat": {
-    "application": "3ff7f21f01fa63ed740672f9b331e46d50704b8c",
-    "ci_backend": 36347303978,
-    "ci_interface": 36347303976,
-    "artefact_interface": 10940389795,
-    "fichiers": {
-      "vendor/vision-refonte-source.tar.gz": "8109cf26fdf7432751b5bee24f0ffaf27d3d5fa4ad6974f5906f2b0c78b39e20",
-      "vendor/vision-refonte-interface.zip": "409204095380a253321688f9e9f0f3e6051230cd1de305daf05fe66c88018817"
-    }
-  },
+  "ci_backend": 36355860960,
+  "ci_interface": 36355860951,
+  "ci_infrastructure": 36356051235,
+  "preparation": 36356230474,
+  "activation": 36356320005,
+  "controle": 36356465429,
+  "controle_apres_finalisation": true,
   "retour_inactif": true,
-  "restauration_production": false
+  "rapport_utilisateur_preserve": true
 }

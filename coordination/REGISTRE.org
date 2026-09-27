@@ -1609,12 +1609,43 @@ Correction demandée après les refus de clôture : les listes historiques de se
 
 Vision : reproduire les échecs sur données historiques synthétiques et vérifier API/MCP, clôture et reprise après migration. VPS : restaurer une sauvegarde fraîche dans une base isolée, vérifier la cohérence des fonctions SQL et le parcours de clôture avant activation ; préserver toutes les données de production. Le déploiement ne sera attesté qu'après vérification de la version servie et constat indépendant. Aucune clôture forcée ni nouvelle séance de test dans le compte utilisateur.
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 7a4e337f3dd52e114bc1f431f2238177c53a0b2776180c6cd4d1180e6bab2ac5
+:LU_LE: 2026-09-27T22:50:15+00:00
+:CONTEXTE: MrJ-am/vision@3cbd57ff8d05798e3766fd0d6c93087739d8b608
+:PREUVE: Activation 36356320005 et constat 36356465429 réussis ; 58 clôtures isolées, 17 tables préservées.
+:END:
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Clôtures Vision 2.4.1 publiées et vérifiées
+:PROPERTIES:
+:ID: 20260927-vision-d39178958b9f
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-27T22:50:15+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Résultat de 20260927-vision-b1d96ae86827 : Vision 2.4.1, application 3cbd57ff8d05798e3766fd0d6c93087739d8b608, est publiée depuis la source VPS 4af66c01941887e04152d012579bf7f65b35d161. CI backend 36355860960, interface 36355860951 et infrastructure 36356051235 ; préparation 36356230474, activation 36356320005, constat indépendant 36356465429 réussis.
+
+La migration 015 découple les sens des anciennes métadonnées et simplifie la clôture : références techniques serveur, traces partielles honnêtes, aucun double crédit au rejeu. Le démarrage vérifie les fonctions SQL réellement installées et ne rejoue plus les migrations enregistrées. L'ancien format MCP demeure accepté.
+
+58 clôtures et rejeux vérifiés sur sauvegarde restaurée ; 17 tables applicatives préservées, aucun essai métier en production. Basic/Bearer/OAuth, sessions/CSRF, outils et interface vérifiés ; retour désarmé. Les résultats utilisateur préexistants sont identiques. NixOS et autres applications inchangés. Contrat durable actualisé ; preuves dans operations/vision-refonte-publication.json et les documents d'état. VPS : conserver ces preuves et les contrôles sur restauration lors des prochaines publications.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 47ebc472c261895e9a62fb46fe8cf5f4b504b4a3e7c26862353b03a381ee156f
+:LU_LE: 2026-09-27T22:50:44+00:00
+:CONTEXTE: MrJ-am/vision@3cbd57ff8d05798e3766fd0d6c93087739d8b608
+:PREUVE: Publication et contrôle indépendant 36356465429 ; rapport applicatif 34d0a2bd48128fe9c340172e9b2017a85e76805b.
 :END:
 
 ** TODO vps
