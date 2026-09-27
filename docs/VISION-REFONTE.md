@@ -151,3 +151,11 @@ contenu utilisateur ni secret ne doit entrer dans Git ou les artefacts Actions.
 
 Les rapports finaux et les identifiants des exécutions terminées seront ajoutés
 après les contrôles. Une préparation réussie ne prouve pas une activation.
+
+## Vision 2.4 publiée le 27 septembre 2026
+
+L'application et l'interface `d5d6217b95b7548af7b7ed9009321a413f1c998b` sont actives depuis le candidat VPS `be2b7fdd81a64b2f7aea02da106401da93789e68`. Les items exposent leur seul contenu autonome, sans titre ni directives de révision. La fiche fournit le contexte ; les observations horodatées des fiches et items accompagnent les séances. Les fenêtres qui ferment le plus tôt passent d'abord, puis les nouveaux items complètent le nombre demandé.
+
+[CI serveur](https://github.com/MrJ-am/vision/actions/runs/36338596805), [CI interface](https://github.com/MrJ-am/vision/actions/runs/36338596798), [CI VPS](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36338767151), [préparation](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36338925947), [activation](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36338989951) et [constat indépendant](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36339153877) réussis. Les migrations 013/014 ont préservé 58 items autonomes, les états mémoriels et une séance ouverte. Aucun item de test ni restauration de production. Les liens serveur/interface sont exacts, le retour autonome inactif ; génération NixOS inchangée. Rapport chiffré dans [vision-refonte-publication.json](../operations/vision-refonte-publication.json).
+
+Une première activation a révélé qu'un rejeu de 013 sous l'ancienne version dépassait la contrainte du titre interne TSD. Le service a été rétabli par workflow, puis 013 rendue relançable et testée. Un audit complémentaire a repéré 138 entrées historiques identiques sur 187 observations brutes. Elles restent conservées dans l'audit, une occurrence est exposée pour chaque fait historique identique, et les futurs replays n'en ajoutent plus. La dernière activation et le constat ont validé le correctif. Les observations explicites demeurent distinctes.

@@ -1493,3 +1493,34 @@ Vision prépare une migration additive conservant les identifiants, historiques 
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Vision 2.4 publiée avec items sans titre et ordre par échéance
+:PROPERTIES:
+:ID: 20260927-vision-items-publies-8e9d31
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-27T18:03:00+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Résultat du message 20260927-vision-items-7c6f9a : application d5d6217b95b7548af7b7ed9009321a413f1c998b publiée depuis le candidat VPS be2b7fdd81a64b2f7aea02da106401da93789e68. CI serveur 36338596805, interface 36338596798 et infrastructure 36338767151 ; préparation 36338925947, activation 36338989951 et constat indépendant 36339153877 réussis.
+
+Items sans titre ni objectifs, sens ou suivi exposés ; connaissance autonome en contenu. La fiche porte le contexte, les séances transmettent observations datées et priorisent la fermeture des fenêtres, puis complètent par de nouveaux items. Migrations 013/014, 58 items autonomes et une séance ouverte conservés ; retour inactif, NixOS inchangé, aucun essai métier en production.
+
+Une première tentative 36337073437 a échoué sur le rejeu de 013 ; service rétabli par 36337469288 (tentative 2). Un audit a identifié 138 doublons historiques de rejeu. Le correctif garde l'audit brut, expose une seule occurrence identique et empêche de nouveaux doublons ; tests de rejeu et seconde activation réussis. Contrat durable actualisé, preuves dans docs/VISION-REFONTE.md, docs/ETAT.md et operations/vision-refonte-publication.json. Critère de publication atteint.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
