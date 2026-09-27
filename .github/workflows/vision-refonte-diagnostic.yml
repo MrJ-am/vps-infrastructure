@@ -29,7 +29,7 @@ jobs:
           import json, pathlib, subprocess
           d=pathlib.Path('/root/vision-refonte-operations/e42476ff7b5ce1e7fff54341aa83efdfb4f216c4')
           markers=['preparation.json','engage','migration-commise','essai.json','retour-engage','retour.json','enregistre','termine.json']
-          units=['vision','vision-refonte-appliquer-e42476ff7b5c.service','vision-refonte-retour-e42476ff7b5c.timer']
+          units=['vision','vision-migrate.service','vision-refonte-appliquer-e42476ff7b5c.service','vision-refonte-retour-e42476ff7b5c.timer']
           state={u:subprocess.run(['systemctl','is-active',u],capture_output=True,text=True).stdout.strip() for u in units}
           print(json.dumps({'marqueurs':{k:(d/k).exists() for k in markers},'unites':state}))
           for unit in ('vision.service','postgresql.service'):
@@ -41,7 +41,7 @@ jobs:
               p=subprocess.run(['journalctl','-u',unit,'-o','cat','--no-pager','-n','80'],capture_output=True,text=True)
               lines=[]
               for line in p.stdout.splitlines():
-                  if unit == 'vision' and any(word in line.lower() for word in ('error','failed','fatal','exit','assert')):
+                  if unit in ('vision','vision-migrate.service') and any(word in line.lower() for word in ('error','failed','fatal','exit','assert','migration')):
                       lines.append(line.strip()[:240])
                   elif 'File "' in line and ', in ' in line:
                       lines.append(line.strip().split('/source/')[-1][:180])
