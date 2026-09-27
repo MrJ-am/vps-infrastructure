@@ -32,6 +32,11 @@ jobs:
           units=['vision','vision-refonte-appliquer-e42476ff7b5c.service','vision-refonte-retour-e42476ff7b5c.timer']
           state={u:subprocess.run(['systemctl','is-active',u],capture_output=True,text=True).stdout.strip() for u in units}
           print(json.dumps({'marqueurs':{k:(d/k).exists() for k in markers},'unites':state}))
+          for unit in ('vision.service','postgresql.service'):
+              p=subprocess.run(['systemctl','show',unit,'-p','Requires','-p','After','-p','Result'],capture_output=True,text=True)
+              print(json.dumps({'dependance':unit,'proprietes':p.stdout.splitlines()}))
+          p=subprocess.run(['systemctl','list-units','--failed','--no-legend','--plain'],capture_output=True,text=True)
+          print(json.dumps({'unites_echouees':[line.split()[0] for line in p.stdout.splitlines()]}))
           for unit in units:
               p=subprocess.run(['journalctl','-u',unit,'-o','cat','--no-pager','-n','80'],capture_output=True,text=True)
               lines=[]
