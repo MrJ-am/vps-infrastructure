@@ -1478,12 +1478,12 @@ Décision du propriétaire : le contenu autonome est la seule connaissance d'un 
 
 Vision prépare une migration additive conservant les identifiants, historiques et séances ouvertes, et modifie le contrat MCP, les tests et l'interface. Le code sera publié après les CI ; VPS devra vérifier la procédure de déploiement applicatif et préserver les données et l'authentification. Aucun changement en production n'est attesté par ce message.
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 90551e4973342a6de8279110deb6544053144a9f9ee533f888d93ef4383c64c8
+:LU_LE: 2026-09-27T19:27:59+00:00
+:CONTEXTE: MrJ-am/vision@d5d6217b95b7548af7b7ed9009321a413f1c998b
+:PREUVE: Publication 36338989951 et constat 36339153877 réussis.
 :END:
 
 ** TODO vps
@@ -1509,12 +1509,12 @@ Items sans titre ni objectifs, sens ou suivi exposés ; connaissance autonome en
 
 Une première tentative 36337073437 a échoué sur le rejeu de 013 ; service rétabli par 36337469288 (tentative 2). Un audit a identifié 138 doublons historiques de rejeu. Le correctif garde l'audit brut, expose une seule occurrence identique et empêche de nouveaux doublons ; tests de rejeu et seconde activation réussis. Contrat durable actualisé, preuves dans docs/VISION-REFONTE.md, docs/ETAT.md et operations/vision-refonte-publication.json. Critère de publication atteint.
 
-** TODO vision
+** DONE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: c7ba09952a5072331e1c0fb81111437691c7041a1f0941efafe7bb6193fc4ce5
+:LU_LE: 2026-09-27T19:27:59+00:00
+:CONTEXTE: MrJ-am/vision@d5d6217b95b7548af7b7ed9009321a413f1c998b
+:PREUVE: Rapport operations/vision-refonte-publication.json ; constat 36339153877.
 :END:
 
 ** TODO vps
