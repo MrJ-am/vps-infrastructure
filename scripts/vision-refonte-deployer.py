@@ -42,48 +42,34 @@ def wrapper(d,base,compte):
 def migrations(source,base,compte):
  for p in sorted((source/'migrations').glob('*.sql')):psql(base,p.read_text(),compte)
 def empreinte_donnees(base):
- # Empreintes locales uniquement. Titres, contenus, index et versions des items
- # sont précisément les champs éditoriaux modifiés par la migration 013.
- tables=('vision_fiches','vision_liens','vision_episodes','vision_seances',
-         'vision_contextes','vision_journal','vision_migrations_metier',
-         'vision_memory_sheets','vision_memory_observations')
- resultat={table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip()
-         for table in tables}
- resultat['vision_items_memoire']=psql(base,"""SELECT md5(coalesce((SELECT jsonb_agg(
-   to_jsonb(t)-'titre'-'contenu'-'version'-'modifie_a'-'recherche'-'texte_recherche'
-   ORDER BY t.id)::text FROM vision_items t),'[]'))""").decode().strip()
- resultat['vision_items_nombre']=psql(base,'SELECT count(*) FROM vision_items').decode().strip()
- return resultat
+ # Toutes les données applicatives, y compris le contenu, les dates et les rapports.
+ tables=psql(base,"SELECT tablename FROM pg_tables WHERE schemaname='public' AND tablename LIKE 'vision_%' AND tablename<>'vision_schema_migrations' ORDER BY tablename").decode().splitlines()
+ exiger(all(re.fullmatch('vision_[a-z_]+',n) for n in tables),'Table inattendue')
+ return {table:psql(base,"SELECT md5(coalesce((SELECT jsonb_agg(to_jsonb(t) ORDER BY to_jsonb(t)::text)::text FROM "+table+" t),'[]'))").decode().strip() for table in tables}
 
 def migration_sequentielle(source,base):
- fichiers=[source/'migrations/013_observations_seances.sql', source/'migrations/014_items_contenu.sql']
- exiger(all(f.is_file() for f in fichiers),'Migration pédagogique absente')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (11,12)').strip()==b'2',
-  'Socle de séances 011/012 absent')
+ fichier=source/'migrations/015_cloture_coherente.sql'
+ exiger(fichier.is_file(),'Migration de clôture absente')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version BETWEEN 1 AND 14').strip()==b'14',
+  'Socle 001–014 absent : nouvelle analyse requise')
  avant=empreinte_donnees(base)
  ouvertes_avant=int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())
- for fichier in fichiers:psql(base,fichier.read_text())
- exiger(empreinte_donnees(base)==avant,'Une donnée mémorielle ou une séance a changé')
- exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version IN (13,14)').strip()==b'2',
-  'Migrations 013/014 non enregistrées')
- exiger(int(psql(base,"SELECT count(*) FROM vision_seances WHERE etat='ouverte'").strip())==ouvertes_avant,'Séances ouvertes modifiées')
- u=proprietaire()
- # Lecture seulement ; aucune séance de contrôle en production.
- requete="SELECT (vision_lister_seances('"+u+"',20,0)->>'total')::integer"
- exiger(int(psql(base,requete).strip())==ouvertes_avant,'Lecture des séances ouvertes indisponible')
- autonomes=int(psql(base,"""SELECT count(*) FROM vision_items i JOIN vision_liens l
-   ON l.utilisateur=i.utilisateur AND l.item_id=i.id JOIN vision_fiches f
-   ON f.utilisateur=l.utilisateur AND f.id=l.fiche_id
-   WHERE (f.titre='Capitales européennes' AND i.contenu LIKE '% est la capitale %')
-      OR (f.titre='TSD — Théorie des situations didactiques'
-     AND i.contenu LIKE 'Dans la théorie des situations didactiques de Guy Brousseau, le terme %')""").strip())
- exiger(autonomes>=58,'Reformulation des 58 items historiques incomplète')
- exiger(psql(base,"SELECT (vision_item_public(i) ?| ARRAY['titre','objectifs','sens','suivi']) FROM vision_items i LIMIT 1").strip()==b'f',
+ psql(base,fichier.read_text())
+ exiger(empreinte_donnees(base)==avant,'Une donnée applicative a changé')
+ exiger(psql(base,'SELECT vision_revision_contrat()').strip()==b'6','Contrat SQL incohérent')
+ exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version=15').strip()==b'1','Migration 015 non enregistrée')
+ exiger(psql(base,"SELECT (vision_item_public(i) ?| ARRAY['titre','objectifs','sens','suivi']) FROM vision_items i LIMIT 1").strip() in (b'f',b''),
    'Métadonnées de fiche encore visibles dans un item')
- observations=int(psql(base,'SELECT count(*) FROM vision_observations').strip())
- return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[13,14],
-  'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test':0,
-  'items_autonomes_verifies':autonomes,'observations_historiques':observations}
+ return {'mise_a_jour':True,'donnees_preservees':True,'migrations':[15],
+  'contrat_sql':6,'tables_preservees':len(avant),'seances_ouvertes_preservees':ouvertes_avant,'seances_de_test_production':0}
+
+def verifier_clotures_isolees(source,base):
+ exiger(base.startswith('vision_refonte_'),'Tests métier réservés à une restauration isolée')
+ avant=empreinte_donnees(base)
+ nombre=int(psql(base,"SELECT count(*) FROM vision_items i WHERE archive_a IS NULL AND EXISTS(SELECT 1 FROM vision_liens l WHERE l.utilisateur=i.utilisateur AND l.item_id=i.id)").strip())
+ psql(base,(source/'tests/coherence_cloture.sql').read_text())
+ exiger(empreinte_donnees(base)==avant,'Le contrôle isolé a laissé des données')
+ return {'clotures_isolees_verifiees':nombre,'rejeu_cloture_verifie':True,'tests_annules':True}
 
 def sauvegarder(d,nom):
  p=d/(nom+'.dump')
@@ -104,6 +90,7 @@ def restauration_et_plan(d,source,sauvegarde,nom):
   existante=bool(int(psql(base,"SELECT count(*) FROM vision_migrations_metier WHERE cle='fiches-items-v2'").strip()))
   if existante:
    rapport=migration_sequentielle(source,base)
+   rapport.update(verifier_clotures_isolees(source,base))
    sauver(d/(nom+'-rapport.json'),rapport)
    return None,rapport
   migrations(source,base,'postgres')
