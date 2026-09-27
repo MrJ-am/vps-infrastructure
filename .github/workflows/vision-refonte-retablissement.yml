@@ -38,6 +38,7 @@ jobs:
           subprocess.run(['systemctl','reset-failed','vision-migrate.service'],check=True)
           subprocess.run(['systemctl','start','vision.service'],check=True)
           subprocess.run(['systemctl','is-active','--quiet','vision.service'],check=True)
+          subprocess.run(['systemctl','stop','vision-refonte-retour-e42476ff7b5c.timer'],check=True)
           print('Vision rétabli ; contenu et séances conservés.')
           PY
       - name: Effacer la clé
