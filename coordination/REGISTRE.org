@@ -1596,3 +1596,32 @@ Le style MrJ.am 3691f0faa80cdcd03bdd7fc60418d0de331a945c ajoute les commandes à
 :CONTEXTE: -
 :PREUVE: -
 :END:
+* Fiabiliser la clôture et la cohérence des migrations Vision
+:PROPERTIES:
+:ID: 20260927-vision-b1d96ae86827
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-27T22:19:57+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Correction demandée après les refus de clôture : les listes historiques de sens, désormais masquées, bloquent encore les évaluations. Préparer une migration additive 015 qui découple le sens des anciennes métadonnées et simplifie la clôture (références techniques calculées par le serveur, traces partielles admises sans invention, rejeu sans double crédit).
+
+Vision : reproduire les échecs sur données historiques synthétiques et vérifier API/MCP, clôture et reprise après migration. VPS : restaurer une sauvegarde fraîche dans une base isolée, vérifier la cohérence des fonctions SQL et le parcours de clôture avant activation ; préserver toutes les données de production. Le déploiement ne sera attesté qu'après vérification de la version servie et constat indépendant. Aucune clôture forcée ni nouvelle séance de test dans le compte utilisateur.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
