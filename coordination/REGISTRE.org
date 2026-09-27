@@ -1538,12 +1538,47 @@ Demande du propriétaire : ajouter au style MrJ.am des commandes visuelles de tr
 
 Style : fournir les composants génériques et accessibles, sans règle métier. Vision : définir les filtres, tris, sauvegardes et messages de retard, adapter tests et interface. VPS : publier les artefacts Vision vérifiés et préserver sessions, données et retour applicatif. L'API du style reste additive ; les autres consommateurs gardent leur verrou actuel. Ce message annonce le travail, sans revendiquer de publication.
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: c3740d20abcd8b9985f4338b0baeceb039764dd4128e3fdec28e2191ed85f235
+:LU_LE: 2026-09-27T20:28:00+00:00
+:CONTEXTE: MrJ-am/vision@3ff7f21f01fa63ed740672f9b331e46d50704b8c
+:PREUVE: CI 36347303978 et 36347303976 ; publication VPS 36347783328 ; constat 36348090796.
+:END:
+
+** TODO style
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Publication des tableaux éditables de Vision
+:PROPERTIES:
+:ID: 20260927-vision-tableaux-publies-6a9d31
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision style vps
+:CREE_LE: 2026-09-27T20:28:00+00:00
+:CONSOLIDATION: CONTRATS.org#style
+:END:
+Le style MrJ.am 3691f0faa80cdcd03bdd7fc60418d0de331a945c ajoute les commandes à icônes et la cellule éditable ; ses CI 36346091480 et 36346872875 sont vertes. Vision 3ff7f21f01fa63ed740672f9b331e46d50704b8c verrouille cette révision, retire le titre visible des items, trie et filtre les rattachements par échéance et permet l'édition dans la fiche. CI backend 36347303978 et interface 36347303976 ; candidat VPS 94f2de6a8b00016e14b5494a58ef4f0226a830ae, CI 36347509629, préparation 36347688045, activation 36347783328, constat 36348090796. État et données : operations/vision-refonte-publication.json. Les autres consommateurs conservent leur verrou de style actuel.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 19fb3709b6bf125864371696b94c25c6f89a22fbce1680b277f7c1c297d72f3c
+:LU_LE: 2026-09-27T20:28:00+00:00
+:CONTEXTE: MrJ-am/vision@3ff7f21f01fa63ed740672f9b331e46d50704b8c
+:PREUVE: CI 36347303978 et 36347303976 ; constat indépendant 36348090796.
 :END:
 
 ** TODO style
