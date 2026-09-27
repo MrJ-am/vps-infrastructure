@@ -1,5 +1,28 @@
 # État attesté au 26 septembre 2026
 
+## Vision 2.4.1 — clôtures et cohérence SQL, 27 septembre 2026, 22:46 UTC
+
+Application `3cbd57ff8d05798e3766fd0d6c93087739d8b608`, source VPS
+`4af66c01941887e04152d012579bf7f65b35d161`. CI backend `36355860960`,
+interface `36355860951`, infrastructure `36356051235` ; préparation
+`36356230474`, activation `36356320005`, constat indépendant `36356465429`
+réussis. Le retour autonome est désarmé.
+
+La migration additive 015 corrige la validation des sens et la clôture. Les
+références techniques manquantes sont fournies par Vision ; déroulement et
+retour sont facultatifs, sans invention. Un rejeu ne double pas les résultats.
+Le démarrage contrôle les empreintes des fonctions SQL et ne réexécute plus
+les migrations enregistrées. Contrat SQL 6, version HTTP/MCP 2.4.1.
+
+Les 58 items de la sauvegarde restaurée ont passé clôture et rejeu, essais
+annulés en base isolée. Les données des 17 tables applicatives sont inchangées.
+Aucune séance de test en production ; aucun résultat utilisateur rejoué.
+Basic, Bearer, OAuth, sessions/CSRF, quatorze outils et interface exacte vérifiés.
+Génération NixOS, autres applications et anciennes versions conservées.
+Preuves : `operations/vision-refonte-publication.json` et rapport applicatif
+`rapports/CLOTURES-20260928.md`.
+
+
 ## Vision 2.3 — items autonomes et observations, 26 septembre 2026, 23:19 UTC
 
 Serveur et interface `c797c92be8c7a774e5566d5f8182442f52d609da` actifs,

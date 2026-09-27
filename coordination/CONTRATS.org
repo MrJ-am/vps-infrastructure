@@ -111,19 +111,18 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.4 expose quatorze outils REST/MCP ; tools/list fait foi. Anciens
-  noms : contrat_retire ; aucune conversion FSRS.
-- L'item porte une seule connaissance autonome, sans titre, objectif, sens
-  de rappel ni suivi éditorial. La fiche donne titre, contenu, objectif et
-  contexte de révision. Observations immuables, datées (fait et saisie),
-  rectifiables par ajout sur fiche et item ; les doublons historiques de
-  rejeu restent en audit brut mais ne sont montrés qu'une fois.
-- preparer_revision et ouvrir_seance privilégient la fermeture la plus proche
-  des fenêtres actives ; les items nouveaux complètent le nombre demandé.
-  La séance livre fiche et observations, puis items et observations. Les
-  séances ouvertes restent lisibles et demandent confirmation avant ajout ;
-  clore_seance écrit atomiquement le retour et les évaluations.
-- Préserver Basic, Bearer, OAuth, sessions, CSRF et isolation par compte.
-  Aucun retour applicatif ne restaure PostgreSQL. État et preuves :
-  docs/VISION-REFONTE.md, docs/ETAT.md,
+- Vision 2.4.1 : quatorze outils REST/MCP ; tools/list fait foi. Anciens noms :
+  contrat_retire ; aucune conversion FSRS.
+- Item : une connaissance autonome, sans titre, objectif, sens ni suivi éditorial.
+  Fiche : titre, contenu, objectif et contexte de révision. Observations datées
+  (fait/saisie), immuables, rectifiables par ajout ; doublons historiques conservés
+  dans l'audit brut mais affichés une seule fois.
+- preparer_revision et ouvrir_seance priorisent la fermeture des fenêtres actives ;
+  les nouveaux items complètent le lot. Fiche, items et observations sont fournis.
+  Séances ouvertes lisibles ; confirmation avant ajout d'une nouvelle séance.
+- clore_seance : écriture atomique ; déroulement/retour facultatifs, versions et
+  épisodes gérés par Vision, sens libre. Aucun double crédit au rejeu. Démarrage :
+  contrôle des fonctions SQL de clôture, migrations enregistrées non rejouées.
+- Préserver Basic/Bearer/OAuth, sessions, CSRF et isolation par compte. Aucun retour
+  applicatif ne restaure PostgreSQL. Preuves : docs/VISION-REFONTE.md, docs/ETAT.md,
   operations/vision-refonte-publication.json.
