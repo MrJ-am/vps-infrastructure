@@ -1,0 +1,46 @@
+name: Diagnostiquer l'essai Vision échoué
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/vision-refonte-diagnostic.yml]
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-diagnostic-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-diagnostic-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-diagnostic-cle" >> "$GITHUB_ENV"
+      - name: État et étape défaillante, sans contenu privé
+        run: |
+          sh scripts/connect.sh 'python3 -' <<'PY'
+          import json, pathlib, subprocess
+          d=pathlib.Path('/root/vision-refonte-operations/e42476ff7b5ce1e7fff54341aa83efdfb4f216c4')
+          markers=['preparation.json','engage','migration-commise','essai.json','retour-engage','retour.json','enregistre','termine.json']
+          units=['vision','vision-refonte-appliquer-e42476ff7b5c.service','vision-refonte-retour-e42476ff7b5c.timer']
+          state={u:subprocess.run(['systemctl','is-active',u],capture_output=True,text=True).stdout.strip() for u in units}
+          print(json.dumps({'marqueurs':{k:(d/k).exists() for k in markers},'unites':state}))
+          for unit in units[1:]:
+              p=subprocess.run(['journalctl','-u',unit,'-o','cat','--no-pager','-n','80'],capture_output=True,text=True)
+              lines=[]
+              for line in p.stdout.splitlines():
+                  if 'File "' in line and ', in ' in line:
+                      lines.append(line.strip().split('/source/')[-1][:180])
+                  elif 'RuntimeError:' in line or 'Exception:' in line:
+                      lines.append(line.strip().split(' ; détails privés')[0][:180])
+              print(json.dumps({'unite':unit,'trace_sans_donnees':lines[-15:]}))
+          PY
+      - name: Effacer la clé
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-diagnostic-cle"
