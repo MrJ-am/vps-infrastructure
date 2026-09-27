@@ -15,16 +15,19 @@ class Migration(unittest.TestCase):
  def test_migration_additive_conserve_donnees_et_prepare_les_seances(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
   (source/'migrations/013_observations_seances.sql').write_text('migration 013')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'2',b'',b'1',b'2',b'2',b'58',b'20']) as sql,patch.object(m,'proprietaire',return_value='alice'):
+  (source/'migrations/014_items_contenu.sql').write_text('migration 014')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'2',b'',b'',b'2',b'2',b'2',b'58',b'f',b'20']) as sql,patch.object(m,'proprietaire',return_value='alice'):
    rapport=m.migration_sequentielle(source,'isolée')
   self.assertTrue(rapport['donnees_preservees'])
   self.assertEqual(rapport['seances_ouvertes_preservees'],2)
   self.assertEqual(rapport['seances_de_test'],0)
   self.assertEqual(rapport['items_autonomes_verifies'],58)
-  self.assertEqual([c.args[1] for c in sql.call_args_list if c.args[1]=='migration 013'],['migration 013'])
+  self.assertEqual(rapport['migrations'],[13,14])
+  self.assertEqual([c.args[1] for c in sql.call_args_list if c.args[1].startswith('migration ')],['migration 013','migration 014'])
  def test_migration_additive_refuse_une_alteration(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
   (source/'migrations/013_observations_seances.sql').write_text('migration 013')
+  (source/'migrations/014_items_contenu.sql').write_text('migration 014')
   with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'apres'}]),patch.object(m,'psql',return_value=b'2'):
    with self.assertRaisesRegex(RuntimeError,'Une donnée mémorielle'):
     m.migration_sequentielle(source,'isolée')
