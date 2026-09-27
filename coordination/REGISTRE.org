@@ -1524,3 +1524,40 @@ Une première tentative 36337073437 a échoué sur le rejeu de 013 ; service ré
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Outiller les tableaux de Vision et le style commun
+:PROPERTIES:
+:ID: 20260927-vision-tableaux-4e2b91
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision style vps
+:CREE_LE: 2026-09-27T19:46:00+00:00
+:CONSOLIDATION: CONTRATS.org#style
+:END:
+Demande du propriétaire : ajouter au style MrJ.am des commandes visuelles de tri, filtrage et édition pour les tableaux, puis les utiliser dans Vision. Les cellules des items liés à une fiche doivent pouvoir être éditées sans quitter la fiche. Vision doit afficher les échéances et le retard distinctement, y compris dans la préparation d'une séance.
+
+Style : fournir les composants génériques et accessibles, sans règle métier. Vision : définir les filtres, tris, sauvegardes et messages de retard, adapter tests et interface. VPS : publier les artefacts Vision vérifiés et préserver sessions, données et retour applicatif. L'API du style reste additive ; les autres consommateurs gardent leur verrou actuel. Ce message annonce le travail, sans revendiquer de publication.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
