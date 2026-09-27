@@ -12,25 +12,32 @@ class Migration(unittest.TestCase):
   (self.d/'preparation.json').write_text(json.dumps(self.r))
   p=patch.object(m,'dossier',return_value=self.d);p.start();self.addCleanup(p.stop)
   p=patch.object(m,'executer');self.commande=p.start();self.addCleanup(p.stop)
- def test_migration_additive_conserve_donnees_et_prepare_les_seances(self):
+ def test_migration_additive_conserve_toutes_les_donnees(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/013_observations_seances.sql').write_text('migration 013')
-  (source/'migrations/014_items_contenu.sql').write_text('migration 014')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'avant'}]),patch.object(m,'psql',side_effect=[b'2',b'2',b'',b'',b'2',b'2',b'2',b'58',b'f',b'20']) as sql,patch.object(m,'proprietaire',return_value='alice'):
+  (source/'migrations/015_cloture_coherente.sql').write_text('migration 015')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant','seances':'avant'},{'items':'avant','seances':'avant'}]),patch.object(m,'psql',side_effect=[b'14',b'2',b'',b'6',b'1',b'f']) as sql:
    rapport=m.migration_sequentielle(source,'isolée')
   self.assertTrue(rapport['donnees_preservees'])
   self.assertEqual(rapport['seances_ouvertes_preservees'],2)
-  self.assertEqual(rapport['seances_de_test'],0)
-  self.assertEqual(rapport['items_autonomes_verifies'],58)
-  self.assertEqual(rapport['migrations'],[13,14])
-  self.assertEqual([c.args[1] for c in sql.call_args_list if c.args[1].startswith('migration ')],['migration 013','migration 014'])
+  self.assertEqual(rapport['seances_de_test_production'],0)
+  self.assertEqual(rapport['migrations'],[15])
+  self.assertEqual(rapport['contrat_sql'],6)
+  self.assertEqual([c.args[1] for c in sql.call_args_list if c.args[1].startswith('migration ')],['migration 015'])
  def test_migration_additive_refuse_une_alteration(self):
   source=self.d/'source';(source/'migrations').mkdir(parents=True)
-  (source/'migrations/013_observations_seances.sql').write_text('migration 013')
-  (source/'migrations/014_items_contenu.sql').write_text('migration 014')
-  with patch.object(m,'empreinte_donnees',side_effect=[{'seances':'avant'},{'seances':'apres'}]),patch.object(m,'psql',return_value=b'2'):
-   with self.assertRaisesRegex(RuntimeError,'Une donnée mémorielle'):
+  (source/'migrations/015_cloture_coherente.sql').write_text('migration 015')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'items':'avant'},{'items':'apres'}]),patch.object(m,'psql',return_value=b'14'):
+   with self.assertRaisesRegex(RuntimeError,'Une donnée applicative'):
     m.migration_sequentielle(source,'isolée')
+ def test_controles_metier_interdits_en_production(self):
+  with self.assertRaisesRegex(RuntimeError,'restauration isolée'):
+   m.verifier_clotures_isolees(self.d,'vision')
+ def test_controles_isoles_sont_annules(self):
+  (self.d/'tests').mkdir();(self.d/'tests/coherence_cloture.sql').write_text('controle puis ROLLBACK')
+  with patch.object(m,'empreinte_donnees',side_effect=[{'donnees':'avant'},{'donnees':'avant'}]),patch.object(m,'psql',side_effect=[b'58',b'']):
+   rapport=m.verifier_clotures_isolees(self.d,'vision_refonte_test')
+  self.assertEqual(rapport['clotures_isolees_verifiees'],58)
+  self.assertTrue(rapport['tests_annules'])
  def test_etat_perime_refuse_avant_arret(self):
   with patch.object(m,'etat',return_value={**self.avant,'vision':'autre'}):
    with self.assertRaisesRegex(RuntimeError,'État modifié'):m.appliquer(self.revision)

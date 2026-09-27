@@ -12,6 +12,8 @@ spec=importlib.util.spec_from_file_location('publication',d/'source/scripts/visi
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 assert m.etat()==termine['etat']
 m.services()
+assert m.psql('vision','SELECT vision_revision_contrat()').strip()==b'6'
+assert m.psql('vision','SELECT count(*) FROM vision_schema_migrations WHERE version=15').strip()==b'1'
 for suffixe in ('retour-'+revision[:12]+'.timer','appliquer-'+revision[:12]+'.service'):
     assert subprocess.run(['systemctl','is-active','--quiet','vision-refonte-'+suffixe]).returncode!=0
 assert Path('/srv/vision/current/revision-application.txt').read_text().strip()==application
