@@ -553,3 +553,7 @@ de l'ancienne tentative restent conservées sous son identifiant `088d36c15f2f�
 ## Vision 2.4 — 27 septembre 2026
 
 Vision serveur et interface : `d5d6217b95b7548af7b7ed9009321a413f1c998b`, candidat VPS `be2b7fdd81a64b2f7aea02da106401da93789e68`. Préparation 36338925947, activation 36338989951, constat après finalisation 36339153877 réussis. Migration 013/014, états mémoriels et une séance ouverte préservés ; retour inactif, NixOS inchangé. Détails et incident corrigé dans [VISION-REFONTE.md](VISION-REFONTE.md) et [le rapport](../operations/vision-refonte-publication.json).
+
+## Vision — tableaux éditables et retards, 27 septembre 2026
+
+Serveur et interface actifs : `3ff7f21f01fa63ed740672f9b331e46d50704b8c`, candidat VPS `94f2de6a8b00016e14b5494a58ef4f0226a830ae`. Préparation 36347688045, activation 36347783328 et constat 36348090796 réussis. Les données, 187 observations historiques et une séance ouverte sont préservées ; retour inactif, génération NixOS inchangée. Voir [VISION-REFONTE.md](VISION-REFONTE.md) et [le rapport](../operations/vision-refonte-publication.json).
