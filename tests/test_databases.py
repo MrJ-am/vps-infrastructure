@@ -16,6 +16,7 @@ class DatabaseChecks(unittest.TestCase):
         self.assertEqual(load(), {
             "matheval": {"name": "matheval"},
             "vision": {"name": "vision"},
+            "nextcloud": {"name": "nextcloud"},
         })
 
     def test_vision_example_matches_active_reservation(self):
@@ -23,7 +24,7 @@ class DatabaseChecks(unittest.TestCase):
         self.assertEqual(example["vision"], load()["vision"])
 
     def test_another_project_cannot_take_registered_names(self):
-        for database in ("matheval", "vision"):
+        for database in ("matheval", "vision", "nextcloud"):
             with self.subTest(database=database), self.assertRaises(ValueError):
                 validate({**load(), "other": {"name": database}})
 
