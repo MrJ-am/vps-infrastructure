@@ -1,0 +1,98 @@
+name: Activer et vérifier Nextcloud sur le VPS
+on:
+  push:
+    branches: [main]
+    paths: [operations/nextcloud-activation.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  installer:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Valider la révision construite et récupérer son registre
+        run: |
+          python3 - <<'PY'
+          import json,re
+          d=json.load(open('operations/nextcloud-activation.json'))
+          assert set(d)=={'operation','revision'} and d['operation']=='activer'
+          assert d['revision']=='43a8cd0f551b74b75583bb8aaf849d2a90560618'
+          open('revision-nextcloud','w').write(d['revision'])
+          PY
+          REVISION=$(cat revision-nextcloud)
+          git clone --filter=blob:none --no-checkout https://github.com/MrJ-am/vps-infrastructure.git candidat
+          git -C candidat fetch --depth=1 origin "$REVISION"
+          git -C candidat checkout --detach "$REVISION"
+          test "$(git -C candidat rev-parse HEAD)" = "$REVISION"
+      - name: Relever les applications existantes avant la bascule
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/avant.json"
+      - name: Préparer une clé éphémère et un administrateur secret
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/nextcloud-activation-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+          openssl rand -hex 24 > "$RUNNER_TEMP/admin-password"
+          REVISION=$(cat revision-nextcloud)
+          sh scripts/connect.sh "umask 077; cat > /root/nextcloud-preparations/$REVISION/admin-password" < "$RUNNER_TEMP/admin-password"
+      - name: Installer, contrôler et enregistrer avec retour autonome
+        run: |
+          set -euo pipefail
+          REVISION=$(cat revision-nextcloud)
+          retour() {
+            code=$?
+            if [ "$code" -ne 0 ]; then
+              sh scripts/connect.sh sh -s retour "$REVISION" < scripts/nextcloud-activate.sh || true
+            fi
+          }
+          trap retour EXIT
+          sh scripts/connect.sh sh -s preparer "$REVISION" < scripts/nextcloud-activate.sh
+          sh scripts/connect.sh sh -s acme "$REVISION" < scripts/nextcloud-activate.sh
+          sh scripts/connect.sh sh -s https "$REVISION" < scripts/nextcloud-activate.sh
+          sh scripts/connect.sh sh -s "$REVISION" < scripts/nextcloud-admin.sh
+          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          curl --fail --silent --show-error --max-time 20 https://cloud.mrj.am/status.php |
+            jq -e '.installed == true and .maintenance == false and .versionstring == "34.0.4"' >/dev/null
+          # Le secret n'apparaît ni dans les arguments de curl ni dans les journaux.
+          umask 077
+          printf 'user = "admin:%s"\n' "$(cat "$RUNNER_TEMP/admin-password")" > "$RUNNER_TEMP/webdav.conf"
+          dossier="verification-nextcloud-${GITHUB_RUN_ID}"
+          origine="https://cloud.mrj.am/remote.php/dav/files/admin/$dossier"
+          printf 'Test Nextcloud %s\n' "$GITHUB_RUN_ID" > "$RUNNER_TEMP/texte.txt"
+          curl --config "$RUNNER_TEMP/webdav.conf" --fail --silent --show-error -X MKCOL "$origine/"
+          curl --config "$RUNNER_TEMP/webdav.conf" --fail --silent --show-error -T "$RUNNER_TEMP/texte.txt" "$origine/texte.txt"
+          curl --config "$RUNNER_TEMP/webdav.conf" --fail --silent --show-error "$origine/texte.txt" -o "$RUNNER_TEMP/retour.txt"
+          cmp "$RUNNER_TEMP/texte.txt" "$RUNNER_TEMP/retour.txt"
+          curl --config "$RUNNER_TEMP/webdav.conf" --fail --silent --show-error -X DELETE "$origine/"
+          printf 'WEBDAV_ALLER_RETOUR=oui\n'
+          sh scripts/connect.sh systemctl start nextcloud-backup.service
+          sh scripts/connect.sh sh -s "$REVISION" < scripts/nextcloud-restore-check.sh
+          sh scripts/connect.sh sh -s enregistrer "$REVISION" < scripts/nextcloud-activate.sh
+          sh scripts/connect.sh sh -s constater "$REVISION" < scripts/nextcloud-activate.sh
+          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          # Publier uniquement le chiffre RSA-OAEP ; la clé privée n'est pas sur GitHub.
+          openssl x509 -in operations/nextcloud-transport-cert.pem -pubkey -noout > "$RUNNER_TEMP/pub.pem"
+          printf 'ADMIN_CIPHERTEXT='
+          openssl pkeyutl -encrypt -pubin -inkey "$RUNNER_TEMP/pub.pem" -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 -in "$RUNNER_TEMP/admin-password" | base64 -w0
+          printf '\nINSTALLATION_VERIFIEE=oui\n'
+      - name: Vérification indépendante après finalisation
+        run: |
+          REVISION=$(cat revision-nextcloud)
+          sh scripts/connect.sh sh -s constater "$REVISION" < scripts/nextcloud-activate.sh
+          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          test "$(curl --fail --silent --show-error https://cloud.mrj.am/status.php | jq -r .installed)" = true
+      - name: Effacer les secrets temporaires
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/nextcloud-activation-admin" "$RUNNER_TEMP/admin-password" "$RUNNER_TEMP/webdav.conf" "$RUNNER_TEMP/pub.pem"
