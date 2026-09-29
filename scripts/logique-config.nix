@@ -26,6 +26,7 @@ in {
     # Nginx dérive ces deux chemins depuis les options ACME comparées ici.
     sites = map (nom: builtins.removeAttrs c.services.nginx.virtualHosts.${nom}
       [ "sslCertificate" "sslCertificateKey" ])
-      [ "principiipetit.io" "www.principiipetit.io" "vision.mrj.am" "logique.echos.systems" ];
+      (lib.filter (nom: builtins.hasAttr nom c.services.nginx.virtualHosts)
+        [ "principiipetit.io" "www.principiipetit.io" "vision.mrj.am" "logique.echos.systems" ]);
   };
 }
