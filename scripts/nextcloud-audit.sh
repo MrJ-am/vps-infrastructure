@@ -55,3 +55,12 @@ case "$nginx_bin:$nginx_conf" in
   /nix/store/*/bin/nginx:/nix/store/*) "$nginx_bin" -t -c "$nginx_conf" 2>&1 | tail -n 2 ;;
   *) printf 'commande nginx inattendue\n'; exit 1 ;;
 esac
+printf 'REPRISE_NEXTCLOUD\n'
+reprise=/root/nextcloud-preparations/43a8cd0f551b74b75583bb8aaf849d2a90560618
+for marqueur in termine retour-arme retour-effectue enregistre; do
+  if test -f "$reprise/$marqueur"; then printf '%s=oui\n' "$marqueur"; else printf '%s=non\n' "$marqueur"; fi
+done
+for chemin in /var/lib/nextcloud/config/config.php /var/lib/acme/cloud.mrj.am/fullchain.pem; do
+  if test -s "$chemin"; then printf '%s=present\n' "$chemin"; else printf '%s=absent\n' "$chemin"; fi
+done
+printf 'RETOUR_TIMER=%s\n' "$(systemctl is-active nextcloud-retour-43a8cd0f551b.timer || :)"
