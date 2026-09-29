@@ -29,6 +29,7 @@ assert current.services.postgresqlBackup.location == "/var/backup/postgresql";
 assert current.systemd.timers ? postgresqlBackup-matheval;
 assert current.systemd.timers ? postgresqlBackup-vision;
 assert current.systemd.timers ? postgresqlBackup-nextcloud;
+assert current.systemd.timers ? nextcloud-backup;
 assert current.services.nextcloud.package.version == "34.0.4";
 assert current.services.nextcloud.hostName == "cloud.mrj.am";
 assert current.services.nextcloud.config.dbtype == "pgsql";
