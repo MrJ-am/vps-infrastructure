@@ -1,0 +1,37 @@
+name: Vérifier le DNS public Nextcloud
+on:
+  workflow_dispatch:
+  push:
+    branches: ['nextcloud/installation-20260929']
+    paths: ['.github/workflows/nextcloud-dns.yml']
+permissions:
+  contents: read
+jobs:
+  dns:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Lire A, AAAA et CAA sans modifier la zone
+        run: |
+          python3 - <<'PY'
+          import json, urllib.parse, urllib.request
+          domaine = 'cloud.mrj.am'
+          rapport = {'domaine': domaine, 'ipv4_attendue': '187.77.95.158', 'reponses': {}}
+          for serveur in ('https://dns.google/resolve', 'https://cloudflare-dns.com/dns-query'):
+              lectures = {}
+              for type_dns in ('A', 'AAAA', 'CAA'):
+                  url = serveur + '?' + urllib.parse.urlencode({'name': domaine, 'type': type_dns})
+                  requete = urllib.request.Request(url, headers={'Accept': 'application/dns-json'})
+                  with urllib.request.urlopen(requete, timeout=20) as reponse:
+                      resultat = json.load(reponse)
+                  lectures[type_dns] = {'statut': resultat.get('Status'), 'reponses': resultat.get('Answer', [])}
+              rapport['reponses'][serveur] = lectures
+          print(json.dumps(rapport, indent=2))
+          a_valide = all(
+              donnees['A']['statut'] == 0 and
+              {r['data'] for r in donnees['A']['reponses'] if r['type'] == 1} == {'187.77.95.158'}
+              for donnees in rapport['reponses'].values())
+          print('A_attendu_confirme=' + str(a_valide).lower())
+          if not a_valide:
+              print('::warning::DNS non prêt pour ACME : ne pas activer HTTPS Nextcloud.')
+          PY
