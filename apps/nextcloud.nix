@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   site = (builtins.fromJSON (builtins.readFile ../projects.json)).nextcloud;
 
@@ -34,7 +34,7 @@ in {
     maxUploadSize = "2G";
     # L'option d'upload fixe aussi memory_limit à 2G par défaut.
     # Borner le pool sur le VPS de 8 Gio, sans retirer de mémoire à PostgreSQL.
-    phpOptions.memory_limit = "512M";
+    phpOptions.memory_limit = lib.mkForce "512M";
     poolSettings = {
       "pm" = "dynamic";
       "pm.max_children" = "4";
