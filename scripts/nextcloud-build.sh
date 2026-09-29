@@ -28,22 +28,28 @@ test ! -e /var/lib/acme/cloud.mrj.am
 nixpkgs=$(nix-instantiate --find-file nixpkgs)
 test "$nixpkgs" = /nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos
 installe="/etc/nixos/vps-infrastructure/$revision"
-test ! -e "$installe"
-cp -a "$source" "$installe"
+if test -e "$installe"; then
+  diff -qr "$source" "$installe" >/dev/null
+else
+  cp -a "$source" "$installe"
+fi
 racines="/nix/var/nix/gcroots/nextcloud/$revision"
 mkdir -p "$racines"
-ln -s "$actif" "$racines/avant"
-ln -s "$nixpkgs" "$racines/nixpkgs"
+for lien in avant nixpkgs; do
+  case "$lien" in avant) cible="$actif";; nixpkgs) cible="$nixpkgs";; esac
+  if test -L "$racines/$lien"; then
+    test "$(readlink "$racines/$lien")" = "$cible"
+  else
+    ln -s "$cible" "$racines/$lien"
+  fi
+done
 
 evaluer() {
   nix-instantiate --eval --strict --json "$installe/scripts/logique-config.nix" \
     --argstr configuration "$1" -I "nixpkgs=$nixpkgs"
 }
 evaluer /etc/nixos/configuration.nix > "$preparation/reference.json"
-python3 - "$preparation/reference.json" "$actif" <<'PY'
-import json,sys
-assert json.load(open(sys.argv[1]))['systeme'] == sys.argv[2], 'Sources actives non reproductibles'
-PY
+test "$(jq -r .systeme "$preparation/reference.json")" = "$actif"
 
 for phase in acme https; do
   case "$phase" in
@@ -51,26 +57,22 @@ for phase in acme https; do
     https) config="$installe/hosts/hostinger/logique.nix";;
   esac
   evaluer "$config" > "$preparation/$phase.json"
-  python3 - "$preparation/reference.json" "$preparation/$phase.json" <<'PY'
-import json,sys
-reference,candidat = (json.load(open(p)) for p in sys.argv[1:])
-assert reference['invariant'] == candidat['invariant'], 'Invariant existant modifié'
-assert reference['systeme'] != candidat['systeme'], 'Candidat identique à la production'
-PY
+  jq -e --slurpfile reference "$preparation/reference.json" \
+    '.invariant == $reference[0].invariant and .systeme != $reference[0].systeme' \
+    "$preparation/$phase.json" >/dev/null
   nix-build '<nixpkgs/nixos>' -A system -I "nixpkgs=$nixpkgs" \
     -I "nixos-config=$config" --out-link "$racines/$phase" > "$preparation/$phase.systeme"
-  python3 - "$preparation/$phase.json" "$preparation/$phase.systeme" <<'PY'
-import json,sys
-assert json.load(open(sys.argv[1]))['systeme'] == open(sys.argv[2]).read().strip(), 'Construction différente de l’évaluation'
-PY
+  test "$(jq -r .systeme "$preparation/$phase.json")" = "$(cat "$preparation/$phase.systeme")"
 done
 
 # Seule la phase ACME ne dépend pas encore d'un certificat absent.
-python3 - "$preparation/acme.json" <<'PY'
-import json,shlex,subprocess,sys
-command=shlex.split(json.load(open(sys.argv[1]))['nginx'])
-subprocess.run([*command,'-t'],check=True)
-PY
+nginx_command=$(jq -r .nginx "$preparation/acme.json")
+nginx_bin=$(printf '%s\n' "$nginx_command" | cut -d ' ' -f 1)
+nginx_conf=$(printf '%s\n' "$nginx_command" | sed -n 's/.* -c \([^ ]*\).*/\1/p')
+case "$nginx_bin:$nginx_conf" in
+  /nix/store/*/bin/nginx:/nix/store/*) "$nginx_bin" -t -c "$nginx_conf";;
+  *) printf 'Commande Nginx candidate inattendue\n' >&2; exit 1;;
+esac
 touch "$preparation/termine"
 printf 'CANDIDAT_CONSTRUIT=%s\nACME_SYSTEME=%s\nHTTPS_SYSTEME=%s\n' \
   "$revision" "$(cat "$preparation/acme.systeme")" "$(cat "$preparation/https.systeme")"
