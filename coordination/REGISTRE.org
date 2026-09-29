@@ -1711,11 +1711,12 @@ Fin : consigner la révision, les exécutions Actions et les contrôles après f
 :PREUVE: -
 :END:
 
-** TODO vps
+** DONE vps
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 262bdd5ba88c90f1aac953c38210f2055d5fe3a4898c103bdb9615fd9a7dc0d2
+:LU_LE: 2026-09-29T20:13:40.760Z
+:CONTEXTE: MrJ-am/vps-infrastructure@5304ca9637a7edb6377be1b52b18f5adc774d5d5
+:PREUVE: Construction 36623222464, activation et constat 36624255776 ; HTTPS, WebDAV, restauration 131 tables, 25 sondes.
 :END:
 
+Révision 43a8cd0f551b74b75583bb8aaf849d2a90560618 intégrée par PR 24. Génération active et profil c06sq9vp17l36j8xp2apyfav1nribpwc. Matheval, Vision et Logique conservés ; sauvegarde locale vérifiée, copie hors VPS encore à organiser.
