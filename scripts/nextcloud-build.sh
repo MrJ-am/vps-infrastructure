@@ -28,6 +28,10 @@ printf 'PRECONDITIONS_ACTIVES_OK\n'
 
 nixpkgs=$(nix-instantiate --find-file nixpkgs)
 test "$nixpkgs" = /nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos
+test "$(sha256sum "$source/modules/postgresql.nix" | cut -d ' ' -f 1)" = 2de21683bcecdc95e36d0357fb42fc2a8c84db465bd3a35cb6454e0032c8b9f9
+jq -e 'keys == ["matheval","nextcloud","vision"] and
+  .matheval.name == "matheval" and .vision.name == "vision" and
+  .nextcloud.name == "nextcloud"' "$source/databases.json" >/dev/null
 installe="/etc/nixos/vps-infrastructure/$revision"
 if test -e "$installe"; then
   if ! diff -qr "$source" "$installe" >/dev/null; then
@@ -65,7 +69,9 @@ for phase in acme https; do
   esac
   evaluer "$config" > "$preparation/$phase.json"
   if ! jq -e --slurpfile reference "$preparation/reference.json" \
-    '.invariant == $reference[0].invariant and .systeme != $reference[0].systeme' \
+    'def garder_existant: .invariant | .services = ([.services[0]] + .services[3:]);
+      garder_existant == ($reference[0] | garder_existant)
+      and .systeme != $reference[0].systeme' \
     "$preparation/$phase.json" >/dev/null; then
     jq -n --slurpfile a "$preparation/reference.json" --slurpfile b "$preparation/$phase.json" \
       '{clesModifiees: [($a[0].invariant|keys[]) as $k | select($a[0].invariant[$k] != $b[0].invariant[$k]) | $k],
