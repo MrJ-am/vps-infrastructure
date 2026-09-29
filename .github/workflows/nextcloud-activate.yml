@@ -46,7 +46,7 @@ jobs:
           ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
           openssl rand -hex 24 > "$RUNNER_TEMP/admin-password"
           REVISION=$(cat revision-nextcloud)
-          sh scripts/connect.sh "umask 077; cat > /root/nextcloud-preparations/$REVISION/admin-password" < "$RUNNER_TEMP/admin-password"
+          VPS_SSH_KEY="$VPS_SSH_KEY" sh scripts/connect.sh "umask 077; cat > /root/nextcloud-preparations/$REVISION/admin-password" < "$RUNNER_TEMP/admin-password"
       - name: Installer, contrôler et enregistrer avec retour autonome
         run: |
           set -euo pipefail
