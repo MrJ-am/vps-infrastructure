@@ -35,13 +35,15 @@ def validate(projects):
             raise ValueError(f"Identifiant de projet invalide : {name}")
         if not isinstance(site, dict):
             raise ValueError(f"{name} : objet attendu.")
-        statique = site.get("type") == "static"
-        required = commun | ({"type", "root"} if statique else {"port", "service"})
-        optional = set() if statique else {"type", "auth", "privateHealthPath", "browserAuth"}
+        type_site = site.get("type", "proxy")
+        statique = type_site == "static"
+        natif = type_site == "native"
+        required = commun | ({"type", "root"} if statique else {"type"} if natif else {"port", "service"})
+        optional = set() if (statique or natif) else {"type", "auth", "privateHealthPath", "browserAuth"}
         if (not required <= set(site)
                 or not set(site) <= required | optional):
             raise ValueError(f"{name} : propriétés manquantes ou inconnues.")
-        if site.get("type", "proxy") not in ("proxy", "static"):
+        if type_site not in ("proxy", "static", "native"):
             raise ValueError(f"{name} : type de site inconnu.")
         if not isinstance(site["aliases"], list):
             raise ValueError(f"{name} : aliases doit être une liste.")
@@ -56,6 +58,9 @@ def validate(projects):
             if (not isinstance(site["root"], str)
                     or site["root"] != f"/srv/{name}/current" or site["prefix"] != ""):
                 raise ValueError(f"{name} : racine statique dédiée et préfixe vide requis.")
+        elif natif:
+            if site["prefix"] != "":
+                raise ValueError(f"{name} : un service NixOS natif occupe la racine de son domaine.")
         else:
             if type(port) is not int or not 1024 <= port <= 65535 or port in ports:
                 raise ValueError(f"{name} : port local invalide ou déjà attribué.")
@@ -65,7 +70,7 @@ def validate(projects):
             raise ValueError(f"{name} : préfixe invalide, utiliser une chaîne vide pour la racine.")
         if not isinstance(site["maxBodySize"], str) or not re.fullmatch(r"[1-9][0-9]*[km]", site["maxBodySize"]):
             raise ValueError(f"{name} : taille maximale invalide.")
-        if not statique and (not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"])):
+        if not (statique or natif) and (not isinstance(site["service"], str) or not re.fullmatch(r"[a-z][a-z0-9-]*", site["service"])):
             raise ValueError(f"{name} : nom de service invalide.")
 
         if "browserAuth" in site and (type(site["browserAuth"]) is not bool or not site.get("auth") or not (site["domain"] == "mrj.am" or site["domain"].endswith(".mrj.am"))):
