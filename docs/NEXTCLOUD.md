@@ -6,12 +6,15 @@ La branche `nextcloud/installation-20260929` prépare Nextcloud **34.0.4**.
 Cette préparation n'est pas une preuve d'installation. Une nouvelle exécution
 Actions doit auditer le VPS, construire le candidat puis contrôler son activation.
 
-Le dernier état documenté est NixOS 26.05.8639, Nixpkgs `c5c4a43b0e80`,
+L'audit du 29 septembre à 19:32 UTC confirme NixOS 26.05.8639, Nixpkgs `c5c4a43b0e80`,
 avec Nextcloud 34.0.3 disponible. La révision stable utilisée pour la CI,
 `4c7870105e7f1fdf9c48688c8d7efc21abf0688a`, fournit 34.0.4 ; le module
 Nextcloud consulté était identique entre ces deux révisions. Le candidat
 rétroporte seulement cette maintenance et son empreinte, sans mettre à jour
-le système entier. Revalider versions, provenance et support avant activation.
+le système entier. La somme SHA-256 officielle de l'archive 34.0.4,
+`00f226e6364f96e0918ab06157158f66601b8cedc25af777f5ee5a3056f42b83`,
+correspond à l'empreinte Nix. La majeure 35.0.0 est parue, mais 34 reste
+maintenue ; choisir une majeure plus récente demandera une validation distincte.
 
 Aucune conversion vers les flakes n'est incluse : les opérations existantes
 utilisent NIX_PATH et les modules NixOS classiques. Le choix de 34.0.4 n'est
@@ -25,6 +28,10 @@ pas une incompatibilité de principe entre les flakes et une autre majeure.
 - PostgreSQL 17 partagé par socket Unix ; base/rôle/compte `nextcloud`.
 - Sauvegarde logique PostgreSQL quotidienne par l'infrastructure.
 - Données persistantes sous `/var/lib/nextcloud`.
+- PHP-FPM limité à quatre processus et 512 Mio par processus malgré les uploads
+  de 2 Gio. App store et mises à jour automatiques des applications désactivés.
+- Sauvegarde locale quotidienne cohérente à 03:30 UTC avec maintenance, base,
+  configuration, fichiers, contrôle SHA-256 et rétention de sept jours.
 
 Le registre réserve le domaine comme service `native`, sans port HTTP fictif.
 `database.createLocally = false` évite de confier PostgreSQL au module applicatif.
@@ -33,13 +40,15 @@ Les dépendances de `nextcloud-setup` sur PostgreSQL et son setup sont explicite
 Le dump PostgreSQL ne sauvegarde pas les fichiers utilisateurs. Avant usage
 comme stockage unique, il faut une sauvegarde cohérente base/configuration/
 fichiers, chiffrée hors VPS, une rétention bornée et un essai de restauration.
-Aucun tel dispositif complet n'est attesté par cette branche.
+Cette sauvegarde locale est préparée, sans exécution ni restauration attestée.
+Elle ne protège pas de la perte du VPS : aucune destination chiffrée hors
+serveur n'a encore été établie.
 
 ## DNS
 
-Dans la zone de `mrj.am`, créer un A : nom `cloud`, valeur `187.77.95.158`,
-TTL automatique ou valeur par défaut. Vérifier les réponses DNS réelles avant
-ACME. Ne pas ajouter d'AAAA tant que le routage public IPv6 n'est pas vérifié.
+Google et Cloudflare répondaient le 29 septembre vers 19:29 UTC
+`cloud.mrj.am A 187.77.95.158`. La zone est servie par Alwaysdata ; aucun
+AAAA ni CAA restrictif n'a été relevé. Revérifier avant ACME.
 
 ## Entrées NixOS et préservation des sites
 
@@ -50,9 +59,9 @@ Logique, Vision, Matheval et les modules communs. Il faut néanmoins comparer
 ces candidats à l'entrée réellement active sur le VPS avant toute activation.
 
 Ne jamais activer directement `configuration.nix` en oubliant le module Logique.
-Le fichier d'amorçage n'est pas, à lui seul, une procédure sûre d'émission ACME :
-le workflow doit réserver l'accès HTTP au challenge tant que HTTPS n'est pas
-valide, tester Nginx avec les vrais certificats et prévoir un retour autonome.
+Le candidat ACME désactive Nextcloud et répond 503 hors challenge ACME.
+La procédure doit encore tester Nginx avec les vrais certificats et prévoir
+un retour autonome.
 Aucun accès utilisateur ni identifiant ne doit transiter en HTTP.
 
 ## Premier administrateur
