@@ -1,0 +1,40 @@
+name: Auditer le VPS pour Nextcloud sans modification
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/nextcloud-audit.sh
+      - .github/workflows/nextcloud-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer une clé temporaire
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/nextcloud-audit-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: État serveur en lecture seule
+        run: sh scripts/connect.sh sh -s < scripts/nextcloud-audit.sh
+      - name: Contrôler une seconde connexion SSH
+        run: sh scripts/connect.sh sh -c 'readlink -f /run/current-system; systemctl is-active nginx postgresql sshd'
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/nextcloud-audit-admin"
