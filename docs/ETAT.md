@@ -580,3 +580,7 @@ Vision serveur et interface : `d5d6217b95b7548af7b7ed9009321a413f1c998b`, candid
 ## Vision — tableaux éditables et retards, 27 septembre 2026
 
 Serveur et interface actifs : `3ff7f21f01fa63ed740672f9b331e46d50704b8c`, candidat VPS `94f2de6a8b00016e14b5494a58ef4f0226a830ae`. Préparation 36347688045, activation 36347783328 et constat 36348090796 réussis. Les données, 187 observations historiques et une séance ouverte sont préservées ; retour inactif, génération NixOS inchangée. Voir [VISION-REFONTE.md](VISION-REFONTE.md) et [le rapport](../operations/vision-refonte-publication.json).
+
+## Nextcloud — 29 septembre 2026
+
+`cloud.mrj.am` sert Nextcloud 34.0.4 en HTTPS. Candidat `43a8cd0f551b74b75583bb8aaf849d2a90560618`, intégré par PR 24. Construction réelle sur Nixpkgs installé : exécution 36623222464 ; activation et constat indépendant : 36624255776. Génération active et de démarrage `c06sq9vp17l36j8xp2apyfav1nribpwc` ; retour autonome désarmé. Certificat ACME, administrateur, WebDAV aller-retour, première sauvegarde, restauration isolée (131 tables) et 25 contrôles HTTP/TLS réussis. Matheval, Vision et Logique conservent leurs releases. Le premier essai 36623847704 a été retourné après défaut du validateur de registre ; audit de retour 36624180463. Sauvegarde cohérente locale quotidienne, sans copie chiffrée hors VPS. Voir [NEXTCLOUD.md](NEXTCLOUD.md).
