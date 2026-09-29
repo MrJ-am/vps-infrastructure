@@ -33,6 +33,15 @@ class RegistryChecks(unittest.TestCase):
             "json": {"error": "authentication_required"},
         }, vision["probes"])
 
+    def test_nextcloud_native_contract_is_reserved(self):
+        cloud = self.projects["nextcloud"]
+        self.assertEqual(cloud["type"], "native")
+        self.assertEqual(cloud["domain"], "cloud.mrj.am")
+        self.assertNotIn("port", cloud)
+        self.assertNotIn("service", cloud)
+        self.assertIn({"path": "/status.php", "status": 200,
+                       "contentType": "application/json"}, cloud["probes"])
+
     def test_authentication_and_private_health_are_atomic(self):
         for removed in ("auth", "privateHealthPath"):
             projects = copy.deepcopy(self.projects)
