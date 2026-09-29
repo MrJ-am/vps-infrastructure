@@ -124,5 +124,24 @@
       }
     ],
     "browserAuth": true
+  },
+  "nextcloud": {
+    "type": "native",
+    "domain": "cloud.mrj.am",
+    "aliases": [],
+    "prefix": "",
+    "maxBodySize": "2048m",
+    "probes": [
+      {
+        "path": "/status.php",
+        "status": 200,
+        "contentType": "application/json"
+      },
+      {
+        "path": "/login",
+        "status": 200,
+        "contentType": "text/html"
+      }
+    ]
   }
 }
