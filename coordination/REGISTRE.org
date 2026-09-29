@@ -1720,3 +1720,32 @@ Fin : consigner la révision, les exécutions Actions et les contrôles après f
 :END:
 
 Révision 43a8cd0f551b74b75583bb8aaf849d2a90560618 intégrée par PR 24. Génération active et profil c06sq9vp17l36j8xp2apyfav1nribpwc. Matheval, Vision et Logique conservés ; sauvegarde locale vérifiée, copie hors VPS encore à organiser.
+
+* Faire évoluer le tutorat des séances Vision
+:PROPERTIES:
+:ID: 20260929-vision-remediation-a93c2e
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-09-29T20:23:43+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Après une séance de TSD de huit questions, le propriétaire a demandé une remédiation des réponses imprécises et un accompagnement gradué des erreurs. Vision précise les instructions MCP servies par initialize et les descriptions de ses outils : choix de préciser, recevoir une aide ou passer si la réponse est douteuse ; dialogue de tuteur si elle est erronée ; vérification après aide. Une reformulation après correction demeure dans la même tentative et ne produit aucun gain autonome.
+
+Vision : vérifier les contrats générés et publier la source applicative. VPS : pour le déploiement applicatif, préserver les données, l'authentification et les autres sites, puis contrôler la version réellement servie. Aucun changement SQL, NixOS ni style partagé n'est demandé. Ce message annonce le chantier, pas une activation. Critère de fin : instructions MCP nouvelles vérifiées en production et compte rendu de publication ajouté au registre.
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
