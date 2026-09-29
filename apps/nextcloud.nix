@@ -70,4 +70,19 @@ in {
     after = [ "postgresql.service" "postgresql-setup.service" ];
     requires = [ "postgresql.service" "postgresql-setup.service" ];
   };
+
+  systemd.services.nextcloud-backup = lib.mkIf config.services.nextcloud.enable {
+    description = "Sauvegarde locale cohérente de Nextcloud";
+    after = [ "nextcloud-setup.service" "postgresql.service" ];
+    requires = [ "nextcloud-setup.service" "postgresql.service" ];
+    path = [ pkgs.coreutils pkgs.util-linux pkgs.gnutar pkgs.findutils
+             config.services.postgresql.package config.services.nextcloud.occ ];
+    serviceConfig.Type = "oneshot";
+    script = builtins.readFile ../scripts/nextcloud-backup.sh;
+  };
+  systemd.timers.nextcloud-backup = lib.mkIf config.services.nextcloud.enable {
+    wantedBy = [ "timers.target" ];
+    timerConfig.OnCalendar = "*-*-* 03:30:00 UTC";
+    timerConfig.Persistent = true;
+  };
 }
