@@ -32,6 +32,20 @@ in {
     https = true;
     configureRedis = true;
     maxUploadSize = "2G";
+    # L'option d'upload fixe aussi memory_limit à 2G par défaut.
+    # Borner le pool sur le VPS de 8 Gio, sans retirer de mémoire à PostgreSQL.
+    phpOptions.memory_limit = "512M";
+    poolSettings = {
+      "pm" = "dynamic";
+      "pm.max_children" = "4";
+      "pm.start_servers" = "2";
+      "pm.min_spare_servers" = "1";
+      "pm.max_spare_servers" = "2";
+      "pm.max_requests" = "500";
+      "pm.status_path" = "/status";
+    };
+    appstoreEnable = false;
+    autoUpdateApps.enable = false;
 
     database.createLocally = false;
     config = {
