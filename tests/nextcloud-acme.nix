@@ -6,7 +6,10 @@ let
   }).config;
   hote = config.services.nginx.virtualHosts."cloud.mrj.am";
 in
-assert builtins.all (assertion: assertion.assertion) config.assertions;
+assert builtins.all (assertion: assertion.assertion) config.assertions
+  || builtins.throw (lib.concatStringsSep "; "
+    (map (assertion: assertion.message)
+      (builtins.filter (assertion: !assertion.assertion) config.assertions)));
 assert !config.services.nextcloud.enable;
 assert hote.enableACME;
 assert !hote.forceSSL;
