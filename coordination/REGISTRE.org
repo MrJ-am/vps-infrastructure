@@ -1734,13 +1734,14 @@ Après une séance de TSD de huit questions, le propriétaire a demandé une rem
 
 Vision : vérifier les contrats générés et publier la source applicative. VPS : pour le déploiement applicatif, préserver les données, l'authentification et les autres sites, puis contrôler la version réellement servie. Aucun changement SQL, NixOS ni style partagé n'est demandé. Ce message annonce le chantier, pas une activation. Critère de fin : instructions MCP nouvelles vérifiées en production et compte rendu de publication ajouté au registre.
 
-** TODO vision
+** BLOQUE vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 9eb10298c998f4191bf1fc179a9ce4993ec2d44ab869a2e665fcd16bac9e3d72
+:LU_LE: 2026-09-29T20:27:07+00:00
+:CONTEXTE: MrJ-am/vision@8a3307db1bd8f43520ad8bbd6f4ad82315541c28
+:PREUVE: Commit publié ; CI 36626129481 et 36626129628 échouent avant toute étape, y compris après relance. Aucun déploiement revendiqué.
 :END:
+Le runner GitHub n'a pas démarré (runner_id=0, steps=[]). Le workflow de publication exige une CI réussie sur le commit exact ; préparation et activation sont suspendues.
 
 ** TODO vps
 :PROPERTIES:
