@@ -23,7 +23,8 @@ jobs:
           python3 - <<'PY'
           import json,re
           d=json.load(open('operations/nextcloud-activation.json'))
-          assert set(d)=={'operation','revision'} and d['operation']=='activer'
+          assert set(d)=={'operation','revision','tentative'} and d['operation']=='activer'
+          assert isinstance(d['tentative'],int) and 1 <= d['tentative'] <= 10
           assert d['revision']=='43a8cd0f551b74b75583bb8aaf849d2a90560618'
           open('revision-nextcloud','w').write(d['revision'])
           PY
