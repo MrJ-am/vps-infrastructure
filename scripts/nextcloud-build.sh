@@ -24,15 +24,20 @@ test "$(df -Pk / | awk 'NR==2 {print $4}')" -gt 20000000
 test "$(awk '/MemAvailable:/ {print $2}' /proc/meminfo)" -gt 3000000
 test ! -e /var/lib/nextcloud
 test ! -e /var/lib/acme/cloud.mrj.am
+printf 'PRECONDITIONS_ACTIVES_OK\n'
 
 nixpkgs=$(nix-instantiate --find-file nixpkgs)
 test "$nixpkgs" = /nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos
 installe="/etc/nixos/vps-infrastructure/$revision"
 if test -e "$installe"; then
-  diff -qr "$source" "$installe" >/dev/null
+  if ! diff -qr "$source" "$installe" >/dev/null; then
+    printf 'La copie candidate diffère de la source exacte ; arrêt.\n' >&2
+    exit 1
+  fi
 else
   cp -a "$source" "$installe"
 fi
+printf 'SOURCES_CANDIDATES_IDENTIQUES\n'
 racines="/nix/var/nix/gcroots/nextcloud/$revision"
 mkdir -p "$racines"
 for lien in avant nixpkgs; do
@@ -43,12 +48,14 @@ for lien in avant nixpkgs; do
     ln -s "$cible" "$racines/$lien"
   fi
 done
+printf 'RACINES_NIX_CONSERVEES\n'
 
 evaluer() {
   nix-instantiate --eval --strict --json "$installe/scripts/logique-config.nix" \
     --argstr configuration "$1" -I "nixpkgs=$nixpkgs"
 }
 evaluer /etc/nixos/configuration.nix > "$preparation/reference.json"
+printf 'REFERENCE_SYSTEME=%s\n' "$(jq -r .systeme "$preparation/reference.json")"
 test "$(jq -r .systeme "$preparation/reference.json")" = "$actif"
 
 for phase in acme https; do
