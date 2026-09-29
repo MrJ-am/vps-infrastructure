@@ -1,0 +1,63 @@
+name: Construire Nextcloud sur le VPS sans activer
+on:
+  push:
+    branches: [main]
+    paths: [operations/nextcloud-build.json]
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  construire:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Valider la demande bornée
+        run: |
+          python3 - <<'PY'
+          import json,re
+          d=json.load(open('operations/nextcloud-build.json'))
+          assert set(d)=={'operation','revision'} and d['operation']=='construire'
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          with open('revision-nextcloud','w') as f: f.write(d['revision'])
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+          path: inutilise
+      - name: Préparer la source exacte
+        run: |
+          REVISION=$(cat revision-nextcloud)
+          git -C inutilise fetch --depth=1 origin "$REVISION"
+          git -C inutilise checkout --detach "$REVISION"
+          test "$(git -C inutilise rev-parse HEAD)" = "$REVISION"
+          test -f inutilise/hosts/hostinger/nextcloud-acme.nix
+      - name: Préparer la clé du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/nextcloud-build-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Transférer le candidat sans changer les services
+        run: |
+          REVISION=$(cat revision-nextcloud)
+          sh scripts/connect.sh mkdir -p "/root/nextcloud-preparations/$REVISION/source"
+          tar -C inutilise --exclude=.git -cf - . | sh scripts/connect.sh tar -C "/root/nextcloud-preparations/$REVISION/source" -xf -
+      - name: Évaluer et construire sur le Nixpkgs installé
+        run: sh scripts/connect.sh sh -s "$(cat revision-nextcloud)" < scripts/nextcloud-build.sh
+      - name: Vérifier une nouvelle connexion et la génération intacte
+        run: sh scripts/connect.sh sh -c 'readlink -f /run/current-system; systemctl is-active nginx postgresql sshd'
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/nextcloud-build-admin"
