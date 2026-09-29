@@ -1,4 +1,11 @@
 {
-  "matheval": { "name": "matheval" },
-  "vision": { "name": "vision" }
+  "matheval": {
+    "name": "matheval"
+  },
+  "vision": {
+    "name": "vision"
+  },
+  "nextcloud": {
+    "name": "nextcloud"
+  }
 }
