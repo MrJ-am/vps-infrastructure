@@ -2,6 +2,7 @@ projects:
 let
   sites = builtins.attrValues projects;
   statique = site: (site.type or "proxy") == "static";
+  natif = site: (site.type or "proxy") == "native";
   hoteStatique = site: {
     root = site.root;
     extraConfig = ''
@@ -78,7 +79,7 @@ let
     value = {
       enableACME = true;
       forceSSL = true;
-    } // (if statique site then hoteStatique site else {
+    } // (if natif site then {} else if statique site then hoteStatique site else {
       locations = {
         "${site.prefix}/" = publicLocation site;
       } // protectedLocations site // (if site.prefix != "" then {
