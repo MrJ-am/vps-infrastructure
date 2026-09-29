@@ -10,7 +10,11 @@ case "$phase" in preparer|acme|https|enregistrer|retour|constater) ;; *) exit 2;
 dossier="/root/nextcloud-preparations/$revision"
 racines="/nix/var/nix/gcroots/nextcloud/$revision"
 ancien=/nix/store/g24p3rvq97s1x66wiaw29z5kwqgw0ksl-nixos-system-nixos-26.05.8639.c5c4a43b0e80
-timer="nextcloud-retour-$(printf '%s' "$revision" | cut -c 1-12).timer"
+premier_timer="nextcloud-retour-$(printf '%s' "$revision" | cut -c 1-12).timer"
+timer="$premier_timer"
+if test -f "$dossier/retour-effectue" || test -d "$dossier/essai-1"; then
+  timer="${premier_timer%.timer}-2.timer"
+fi
 test -f "$dossier/termine"
 test "$(readlink -f "$racines/acme")" = "$(cat "$dossier/acme.systeme")"
 test "$(readlink -f "$racines/https")" = "$(cat "$dossier/https.systeme")"
@@ -26,12 +30,24 @@ verifier_anciens() {
 
 case "$phase" in
 preparer)
+  # Une tentative antérieure peut avoir installé les données puis été annulée.
+  # Archiver les marqueurs de retour ; ne jamais effacer base, certificat ou fichiers.
+  if test -e /var/lib/nextcloud; then
+    test -f "$dossier/retour-effectue"
+    test -f /var/lib/nextcloud/config/config.php
+    test ! -e "$dossier/essai-1"
+    systemctl stop "$premier_timer"
+    test "$(systemctl is-active "$premier_timer" || :)" != active
+    mkdir "$dossier/essai-1"
+    for trace in retour-arme retour-effectue retour.sh configuration-avant.nix bascule.lock; do
+      if test -e "$dossier/$trace"; then mv "$dossier/$trace" "$dossier/essai-1/$trace"; fi
+    done
+  fi
   test ! -e "$dossier/retour-arme"
   test "$(readlink -f /run/current-system)" = "$ancien"
   test "$(readlink -f /nix/var/nix/profiles/system)" = "$ancien"
   test "$(sha256sum /etc/nixos/configuration.nix | cut -d ' ' -f 1)" = 57cfbe6ac09438eab9a535e5618d2dfe510da3905d51d6eb32313a6c31b8b88d
   verifier_anciens
-  test ! -e /var/lib/nextcloud
   cp -a /etc/nixos/configuration.nix "$dossier/configuration-avant.nix"
   sh_bin=$(command -v sh)
   flock_bin=$(command -v flock)
