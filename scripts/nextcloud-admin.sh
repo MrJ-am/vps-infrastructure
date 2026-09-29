@@ -10,12 +10,14 @@ test -f "$dossier/retour-arme"
 test ! -e "$dossier/retour-effectue"
 test -s "$dossier/admin-password"
 umask 077
-if ! runuser -u nextcloud -- nextcloud-occ user:info admin >/dev/null 2>&1; then
-  OC_PASS=$(cat "$dossier/admin-password")
-  export OC_PASS
+OC_PASS=$(cat "$dossier/admin-password")
+export OC_PASS
+if runuser -u nextcloud -- nextcloud-occ user:info admin >/dev/null 2>&1; then
+  runuser -u nextcloud -- nextcloud-occ user:resetpassword --password-from-env admin >/dev/null
+else
   runuser -u nextcloud -- nextcloud-occ user:add --password-from-env --group=admin admin >/dev/null
-  unset OC_PASS
 fi
+unset OC_PASS
 runuser -u nextcloud -- nextcloud-occ user:info admin --output=json |
   jq -e '.enabled == true and (.groups | index("admin") != null)' >/dev/null
 printf 'ADMIN_CREE=oui\n'
