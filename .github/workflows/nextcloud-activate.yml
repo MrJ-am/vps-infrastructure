@@ -63,7 +63,7 @@ jobs:
           sh scripts/connect.sh sh -s acme "$REVISION" < scripts/nextcloud-activate.sh
           sh scripts/connect.sh sh -s https "$REVISION" < scripts/nextcloud-activate.sh
           sh scripts/connect.sh sh -s "$REVISION" < scripts/nextcloud-admin.sh
-          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          python3 candidat/scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
           curl --fail --silent --show-error --max-time 20 https://cloud.mrj.am/status.php |
             jq -e '.installed == true and .maintenance == false and .versionstring == "34.0.4"' >/dev/null
           # Le secret n'apparaît ni dans les arguments de curl ni dans les journaux.
@@ -82,7 +82,7 @@ jobs:
           sh scripts/connect.sh sh -s "$REVISION" < scripts/nextcloud-restore-check.sh
           sh scripts/connect.sh sh -s enregistrer "$REVISION" < scripts/nextcloud-activate.sh
           sh scripts/connect.sh sh -s constater "$REVISION" < scripts/nextcloud-activate.sh
-          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          python3 candidat/scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
           # Publier uniquement le chiffre RSA-OAEP ; la clé privée n'est pas sur GitHub.
           openssl x509 -in operations/nextcloud-transport-cert.pem -pubkey -noout > "$RUNNER_TEMP/pub.pem"
           printf 'ADMIN_CIPHERTEXT='
@@ -92,7 +92,7 @@ jobs:
         run: |
           REVISION=$(cat revision-nextcloud)
           sh scripts/connect.sh sh -s constater "$REVISION" < scripts/nextcloud-activate.sh
-          python3 scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
+          python3 candidat/scripts/probe.py --registry candidat/projects.json --baseline "$RUNNER_TEMP/avant.json"
           test "$(curl --fail --silent --show-error https://cloud.mrj.am/status.php | jq -r .installed)" = true
       - name: Effacer les secrets temporaires
         if: always()
