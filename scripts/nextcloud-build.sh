@@ -87,7 +87,7 @@ done
 # Seule la phase ACME ne dépend pas encore d'un certificat absent.
 nginx_command=$(jq -r .nginx "$preparation/acme.json")
 nginx_bin=$(printf '%s\n' "$nginx_command" | cut -d ' ' -f 1)
-nginx_conf=$(printf '%s\n' "$nginx_command" | sed -n 's/.* -c \([^ ]*\).*/\1/p')
+nginx_conf=$(printf '%s\n' "$nginx_command" | sed -n "s/.* -c '\\([^']*\\)'$/\\1/p")
 case "$nginx_bin:$nginx_conf" in
   /nix/store/*/bin/nginx:/nix/store/*) "$nginx_bin" -t -c "$nginx_conf";;
   *) printf 'Commande Nginx candidate inattendue: %s\n' "$nginx_command" >&2; exit 1;;
