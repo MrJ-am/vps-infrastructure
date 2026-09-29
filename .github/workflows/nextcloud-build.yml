@@ -23,8 +23,9 @@ jobs:
           python3 - <<'PY'
           import json,re
           d=json.load(open('operations/nextcloud-build.json'))
-          assert set(d)=={'operation','revision'} and d['operation']=='construire'
+          assert set(d)=={'operation','revision','tentative'} and d['operation']=='construire'
           assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          assert isinstance(d['tentative'],int) and 1 <= d['tentative'] <= 10
           with open('revision-nextcloud','w') as f: f.write(d['revision'])
           PY
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
