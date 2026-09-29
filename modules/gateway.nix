@@ -3,8 +3,9 @@ let
   projects = config.infrastructure.gateway.projects;
   sites = builtins.attrValues projects;
   statique = site: (site.type or "proxy") == "static";
+  natif = site: (site.type or "proxy") == "native";
   domains = lib.concatMap (site: [ site.domain ] ++ site.aliases) sites;
-  ports = map (site: site.port) (lib.filter (site: !(statique site)) sites);
+  ports = map (site: site.port) (lib.filter (site: !(statique site) && !(natif site)) sites);
   validDomain = name: builtins.isString name &&
     builtins.match "[a-z0-9]([a-z0-9.-]*[a-z0-9])?" name != null;
   validPath = path: builtins.isString path &&
@@ -25,6 +26,10 @@ let
       !(site ? port) && !(site ? service) && !(site ? auth) && !(site ? browserAuth) &&
       !(site ? privateHealthPath) && site.prefix == "" &&
       builtins.match "/srv/[a-z][a-z0-9-]*/current" site.root != null
+    else if natif site then
+      !(site ? port) && !(site ? service) && !(site ? root) &&
+      !(site ? auth) && !(site ? browserAuth) && !(site ? privateHealthPath) &&
+      site.prefix == ""
     else (site.type or "proxy") == "proxy" && !(site ? root) &&
       builtins.isInt site.port && site.port >= 1024 && site.port <= 65535) &&
     builtins.isString site.prefix &&

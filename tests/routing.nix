@@ -9,6 +9,7 @@ let
   });
   primary = current."principiipetit.io";
   vision = deployed."vision.mrj.am";
+  cloud = deployed."cloud.mrj.am";
 in
 assert builtins.attrNames current == [ "principiipetit.io" "www.principiipetit.io" ];
 assert primary.enableACME && primary.forceSSL;
@@ -72,6 +73,7 @@ assert vision.locations."@vision-authentication-required".extraConfig == ''
   add_header X-Content-Type-Options "nosniff" always;
   return 401 '{"error":"authentication_required","message":"HTTP Basic authentication is required."}';
 '';
+assert cloud == { enableACME = true; forceSSL = true; };
 assert vision.locations."@vision-rate-limited".extraConfig == ''
   default_type application/json;
   add_header Cache-Control "no-store" always;
