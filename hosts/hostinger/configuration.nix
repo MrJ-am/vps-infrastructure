@@ -6,6 +6,7 @@
     ../../apps/matheval.nix
     ../../apps/vision.nix
     ../../apps/vision-interface.nix
+    ../../apps/nextcloud.nix
     ../../modules/gateway.nix
     ../../modules/postgresql.nix
   ];
