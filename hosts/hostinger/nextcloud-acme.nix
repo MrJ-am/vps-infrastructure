@@ -1,9 +1,10 @@
 { lib, ... }:
 {
-  imports = [ ./configuration.nix ];
+  # Conserver le site Logique et tous les services de l'entrée de production.
+  imports = [ ./logique.nix ];
 
-  # Première activation seulement : permettre le challenge HTTP-01 avant
-  # l'existence du certificat. Aucun compte n'existe encore.
+  # Candidat d'amorçage uniquement, à construire et vérifier avant activation.
+  # Le déploiement doit réserver HTTP au challenge ACME jusqu'à HTTPS valide.
   services.nginx.virtualHosts."cloud.mrj.am".forceSSL = lib.mkForce false;
   services.nextcloud.https = lib.mkForce false;
 }
