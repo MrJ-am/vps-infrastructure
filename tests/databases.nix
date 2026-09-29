@@ -7,6 +7,7 @@ let
 in
 assert builtins.elem "matheval" current.databases;
 assert builtins.elem "vision" current.databases;
+assert builtins.elem "nextcloud" current.databases;
 assert builtins.elem "example" extended.databases;
 assert (builtins.head current.users).ensureDBOwnership;
 assert !(builtins.head current.users).ensureClauses.superuser;
