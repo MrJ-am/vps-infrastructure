@@ -64,9 +64,15 @@ for phase in acme https; do
     https) config="$installe/hosts/hostinger/logique.nix";;
   esac
   evaluer "$config" > "$preparation/$phase.json"
-  jq -e --slurpfile reference "$preparation/reference.json" \
+  if ! jq -e --slurpfile reference "$preparation/reference.json" \
     '.invariant == $reference[0].invariant and .systeme != $reference[0].systeme' \
-    "$preparation/$phase.json" >/dev/null
+    "$preparation/$phase.json" >/dev/null; then
+    jq -n --slurpfile a "$preparation/reference.json" --slurpfile b "$preparation/$phase.json" \
+      '{clesModifiees: [($a[0].invariant|keys[]) as $k | select($a[0].invariant[$k] != $b[0].invariant[$k]) | $k],
+        indicesServices: [range(0;($a[0].invariant.services|length)) as $i | select($a[0].invariant.services[$i] != $b[0].invariant.services[$i]) | $i]}'
+    printf 'Invariant modifié en phase %s ; construction interrompue.\n' "$phase" >&2
+    exit 1
+  fi
   nix-build '<nixpkgs/nixos>' -A system -I "nixpkgs=$nixpkgs" \
     -I "nixos-config=$config" --out-link "$racines/$phase" > "$preparation/$phase.systeme"
   test "$(jq -r .systeme "$preparation/$phase.json")" = "$(cat "$preparation/$phase.systeme")"
