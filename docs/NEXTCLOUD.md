@@ -1,96 +1,66 @@
-# Nextcloud sur cloud.mrj.am — candidat non déployé
+# Nextcloud sur cloud.mrj.am — installé et vérifié le 29 septembre 2026
 
-## Version proposée et état
+## Résultat et preuves
 
-La branche `nextcloud/installation-20260929` prépare Nextcloud **34.0.4**.
-Cette préparation n'est pas une preuve d'installation. Une nouvelle exécution
-Actions doit auditer le VPS, construire le candidat puis contrôler son activation.
+Nextcloud **34.0.4** fonctionne en HTTPS sur `cloud.mrj.am`. Le DNS A a été
+contrôlé vers `187.77.95.158` chez Google et Cloudflare avant la bascule.
+Le certificat ACME a été obtenu pendant la phase HTTP réservée au challenge ;
+l'instance finale ne sert les connexions et les fichiers que sous HTTPS.
 
-L'audit du 29 septembre à 19:32 UTC confirme NixOS 26.05.8639, Nixpkgs `c5c4a43b0e80`,
-avec Nextcloud 34.0.3 disponible. La révision stable utilisée pour la CI,
-`4c7870105e7f1fdf9c48688c8d7efc21abf0688a`, fournit 34.0.4 ; le module
-Nextcloud consulté était identique entre ces deux révisions. Le candidat
-rétroporte seulement cette maintenance et son empreinte, sans mettre à jour
-le système entier. La somme SHA-256 officielle de l'archive 34.0.4,
-`00f226e6364f96e0918ab06157158f66601b8cedc25af777f5ee5a3056f42b83`,
-correspond à l'empreinte Nix. La majeure 35.0.0 est parue, mais 34 reste
-maintenue ; choisir une majeure plus récente demandera une validation distincte.
+- Source exacte : `43a8cd0f551b74b75583bb8aaf849d2a90560618`, intégrée dans `main`
+  par la [PR 24](https://github.com/MrJ-am/vps-infrastructure/pull/24).
+- [Construction sur le VPS, exécution 36623222464](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36623222464) : deux générations construites avec le Nixpkgs installé, sans activer le candidat.
+- [Bascule et constat final, exécution 36624255776](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36624255776) : ACME, Nginx, Nextcloud, administrateur, WebDAV, sauvegarde, restauration isolée et contrôle indépendant réussis.
+- Génération active et profil de démarrage : `/nix/store/c06sq9vp17l36j8xp2apyfav1nribpwc-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+  Le retour autonome a été désarmé après enregistrement. L'ancienne génération
+  reste protégée par une racine Nix.
+- 25 sondes HTTP/TLS après finalisation, dont les anciennes publications
+  Matheval et Vision. Les releases Matheval, Vision et Logique ont gardé leurs
+  chemins exacts, et leurs services sont restés actifs.
 
-Aucune conversion vers les flakes n'est incluse : les opérations existantes
-utilisent NIX_PATH et les modules NixOS classiques. Le choix de 34.0.4 n'est
-pas une incompatibilité de principe entre les flakes et une autre majeure.
+Une première activation s'est arrêtée après installation sur un défaut de
+validateur du registre dans `main`. Le retour a rétabli l'ancienne génération ;
+[l'audit 36624180463](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36624180463)
+a vérifié cet état et la présence des données Nextcloud. La seconde activation
+a conservé ces données, régénéré le secret administrateur et réussi.
 
-## Architecture préparée
+## Configuration effective
 
-- Nginx commun et certificat ACME pour `cloud.mrj.am`.
-- PHP-FPM et tâches cron du module NixOS Nextcloud.
-- Redis local dédié au cache et au verrouillage.
-- PostgreSQL 17 partagé par socket Unix ; base/rôle/compte `nextcloud`.
-- Sauvegarde logique PostgreSQL quotidienne par l'infrastructure.
-- Données persistantes sous `/var/lib/nextcloud`.
-- PHP-FPM limité à quatre processus et 512 Mio par processus malgré les uploads
-  de 2 Gio. App store et mises à jour automatiques des applications désactivés.
-- Sauvegarde locale quotidienne cohérente à 03:30 UTC avec maintenance, base,
-  configuration, fichiers, contrôle SHA-256 et rétention de sept jours.
+Nginx commun avec ACME, PHP-FPM limité à quatre processus et 512 Mio par
+processus, Redis dédié, PostgreSQL 17 par socket Unix avec rôle/base
+`nextcloud`, cron Nextcloud et upload maximal de 2 Gio. L'App Store et les
+mises à jour automatiques des applications Nextcloud sont désactivés.
+L'entrée NixOS finale importe `hosts/hostinger/logique.nix` et conserve les
+modules des sites existants. Nextcloud utilise le paquet 34.0.4 avec empreinte
+SHA-256 de l'archive `00f226e6364f96e0918ab06157158f66601b8cedc25af777f5ee5a3056f42b83` ;
+le reste du système demeure sur le Nixpkgs déjà installé.
 
-Le registre réserve le domaine comme service `native`, sans port HTTP fictif.
-`database.createLocally = false` évite de confier PostgreSQL au module applicatif.
-Les dépendances de `nextcloud-setup` sur PostgreSQL et son setup sont explicites.
+L'administrateur `admin` a été créé par `nextcloud-occ` avec un secret généré
+sur le runner, transféré par SSH et absent des arguments et journaux en clair.
+L'aller-retour WebDAV a créé, relu avec comparaison exacte, puis supprimé un
+fichier de test dédié. Le propriétaire reçoit le secret séparément et doit le
+changer après sa première connexion.
 
-Le dump PostgreSQL ne sauvegarde pas les fichiers utilisateurs. Avant usage
-comme stockage unique, il faut une sauvegarde cohérente base/configuration/
-fichiers, chiffrée hors VPS, une rétention bornée et un essai de restauration.
-Cette sauvegarde locale est préparée, sans exécution ni restauration attestée.
-Elle ne protège pas de la perte du VPS : aucune destination chiffrée hors
-serveur n'a encore été établie.
+## Sauvegarde et restauration
 
-## DNS
+Le timer `nextcloud-backup.timer` exécute à 03:30 UTC une sauvegarde locale
+cohérente sous `/var/backup/nextcloud` : maintenance temporaire, dump PostgreSQL,
+configuration, données, sommes SHA-256 et rétention de sept jours. La première
+exécution manuelle a réussi. L'archive a été vérifiée puis restaurée dans une
+base distincte `nextcloud_validation` (131 tables) et un répertoire temporaire,
+sans toucher la base en service. Les timers PostgreSQL historiques restent
+actifs.
 
-Google et Cloudflare répondaient le 29 septembre vers 19:29 UTC
-`cloud.mrj.am A 187.77.95.158`. La zone est servie par Alwaysdata ; aucun
-AAAA ni CAA restrictif n'a été relevé. Revérifier avant ACME.
+**Limite restante :** cette sauvegarde est sur le même VPS. Aucune destination
+chiffrée hors serveur n'est configurée, donc la perte complète du VPS emporterait
+l'instance et sa sauvegarde locale. Prévoir cette destination avant d'y déposer
+des fichiers irremplaçables.
 
-## Entrées NixOS et préservation des sites
+## Reprise
 
-Le candidat d'amorçage `hosts/hostinger/nextcloud-acme.nix` importe désormais
-`./logique.nix`, et non `./configuration.nix`, afin de conserver Logique.
-L'entrée finale candidate est `hosts/hostinger/logique.nix`, qui conserve
-Logique, Vision, Matheval et les modules communs. Il faut néanmoins comparer
-ces candidats à l'entrée réellement active sur le VPS avant toute activation.
-
-Ne jamais activer directement `configuration.nix` en oubliant le module Logique.
-Le candidat ACME désactive Nextcloud et répond 503 hors challenge ACME.
-La procédure doit encore tester Nginx avec les vrais certificats et prévoir
-un retour autonome.
-Aucun accès utilisateur ni identifiant ne doit transiter en HTTP.
-
-## Premier administrateur
-
-Le candidat initialise sans administrateur (`adminuser` et `adminpassFile`
-à null). Il faut donc prévoir sa création sécurisée, sans laisser un assistant
-d'installation public permettant à un tiers de prendre possession de l'instance.
-L'instance n'est pas livrée tant que son propriétaire ne peut pas s'y connecter.
-
-La syntaxe documentée pour créer interactivement un administrateur est :
-
-```sh
-nextcloud-occ user:add --group=admin IDENTIFIANT
-```
-
-Le mot de passe doit être demandé interactivement ou transmis par une voie
-secrète adaptée, jamais dans Git, le Nix store, les arguments visibles ou les
-journaux Actions désormais publics. Ne pas réutiliser les identifiants Vision.
-Référence : https://docs.nextcloud.com/server/stable/admin_manual/occ_users.html
-
-## Validation nécessaire
-
-Préparer une opération Nextcloud distincte des migrations historiques : audit
-actuel, évaluation complète avec le Nixpkgs du serveur, comparaison des unités,
-construction, retour indépendant de SSH, essai temporaire puis enregistrement
-exact de la génération testée. Préserver toutes les anciennes générations et
-les données. Un rollback NixOS n'annule pas les migrations SQL ni les ACL.
-
-Contrôler les sites existants, les accès administratifs anonymes refusés,
-Basic/Bearer/OAuth et sessions Vision, une nouvelle connexion SSH du runner,
-les sauvegardes, HTTPS Nextcloud, cron, Redis et un aller-retour WebDAV avec
-fichier de test dédié. Vérifier séparément l'état après finalisation.
+Le workflow d'activation est borné à la révision ci-dessus, conserve l'ancienne
+génération et arme un retour systemd avant tout `switch-to-configuration test`.
+Le profil de démarrage n'a été changé qu'après les contrôles HTTPS, WebDAV et
+restauration. Les traces des deux essais se trouvent sous
+`/root/nextcloud-preparations/43a8cd0f551b74b75583bb8aaf849d2a90560618`.
+Un retour de génération ne réinitialise ni la base Nextcloud ni ses fichiers.
