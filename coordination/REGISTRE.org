@@ -1656,3 +1656,66 @@ La migration 015 découple les sens des anciennes métadonnées et simplifie la 
 :PREUVE: -
 :END:
 
+* Préparer et vérifier l’installation native Nextcloud
+:PROPERTIES:
+:ID: 20260929-vps-c3ed1aca5108
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-29T19:30:39+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Préparation de l'installation native de Nextcloud sur cloud.mrj.am. Le DNS A pointe désormais vers le VPS ; aucun certificat ni service n'est encore attesté. Le candidat conserve les sites Matheval, Vision et Logique, PostgreSQL 17, Nginx et l'entrée NixOS active.
+
+Action VPS : publier d'abord un audit en lecture seule sur main, contrôler ressources, sources, services, droits, sauvegardes et publications ; construire le candidat sur le Nixpkgs installé, tester un retour autonome et les deux phases ACME/HTTPS avant activation. Stopper en cas d'écart et protéger les données. Les projets applicatifs n'ont aucune action de publication à entreprendre ; ils doivent conserver leurs releases et authentifications.
+
+Fin : consigner la révision, les exécutions Actions et les contrôles après finalisation. Une CI réussie ou cette annonce ne vaut pas déploiement.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
