@@ -1750,3 +1750,62 @@ Le runner GitHub n'a pas démarré (runner_id=0, steps=[]). Le workflow de publi
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Installer Talk dans Nextcloud
+:PROPERTIES:
+:ID: 20260930-vps-talk
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-30T22:15:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Demande du propriétaire : installer Nextcloud Talk (spreed) sur cloud.mrj.am. L'App Store est désactivé ; l'application sera intégrée de façon déclarative, sur le Nixpkgs installé, sans mise à jour générale du système. Auditer d'abord la génération réelle et la compatibilité du paquet, conserver les comptes, fichiers et publications des autres applications. Préparer sauvegarde et retour autonome avant activation ; contrôler ensuite activation et endpoints Talk. Ce message annonce la préparation, sans revendiquer une installation ni un appel audio/vidéo vérifié. Aucun changement applicatif demandé aux autres projets.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
