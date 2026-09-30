@@ -1,4 +1,43 @@
-# Nextcloud sur cloud.mrj.am — installé et vérifié le 29 septembre 2026
+# Nextcloud et Talk sur cloud.mrj.am
+
+## Talk installé et vérifié le 30 septembre 2026 à 22:17 UTC
+
+Talk **24.0.4** (`spreed`) est installé et activé sur Nextcloud 34.0.4.
+Accès : https://cloud.mrj.am/index.php/apps/spreed/
+
+- Source : `cb55b9ce71acefe0686f23b5159150f2fe9d5f94`.
+  CI exacte [36783983804](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36783983804) réussie.
+- Audit en lecture seule [36783613726](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36783613726).
+- Construction réelle sans activation [36784323831](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36784323831).
+- Activation et constat indépendant [36784621012](https://github.com/MrJ-am/vps-infrastructure/actions/runs/36784621012),
+  commit opérateur `df52b749ddfdcb8d0d100aa50d78b39653f80b92`.
+- Génération active et de démarrage :
+  `/nix/store/mabshi6mmisnabl5qb5hwldnkxiz2s25-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+  Ancienne génération `c06sq9vp17l36j8xp2apyfav1nribpwc` conservée et protégée.
+  Retour autonome armé pendant la bascule puis désarmé après enregistrement.
+
+Le paquet provient de `nextcloud34Packages.apps.spreed` dans le Nixpkgs
+installé `c5c4a43b0e80`, archive officielle
+`https://github.com/nextcloud-releases/spreed/releases/download/v24.0.4/spreed-v24.0.4.tar.gz`,
+empreinte `sha256-puSnXtbKLtKX2EgXGoqCPB8n98cf+vvUXoEAGrn3FkY=`.
+L'installation est déclarative (`extraApps`, activation automatique) ;
+l'App Store et ses mises à jour automatiques restent désactivés.
+Aucune mise à jour générale NixOS ni modification de PostgreSQL, SSH,
+pare-feu, domaines ou comptes administrateurs.
+
+Contrôles exécutés : sauvegarde cohérente avant bascule réussie ; invariants
+des autres services identiques ; Nginx candidat valide ; Talk activé en
+version 24.0.4, tables Talk présentes, API des conversations anonyme refusée
+avec HTTP 401, Nextcloud installé hors maintenance et sans migration en
+attente. Comparaison privée des comptes et des métadonnées de fichiers
+avant/après identique. Les publications Matheval, Vision et Logique ont gardé
+leurs chemins exacts. Les 25 sondes HTTP/TLS ont réussi avant et après ;
+une nouvelle connexion runner a confirmé les deux générations et Talk.
+
+**Périmètre de vérification :** installation, activation et API protégée.
+Aucun appel audio/vidéo entre deux navigateurs, partage d'écran ou parcours
+invité complet n'a été testé. Aucun serveur TURN ni High Performance Backend
+n'a été ajouté. La sauvegarde reste locale au VPS.
 
 ## Résultat et preuves
 
