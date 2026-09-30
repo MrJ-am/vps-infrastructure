@@ -44,6 +44,9 @@ in {
       "pm.max_requests" = "500";
       "pm.status_path" = "/status";
     };
+    # Talk compatible avec Nextcloud 34, figé par le Nixpkgs installé.
+    extraApps.spreed = pkgs.nextcloud34Packages.apps.spreed;
+    extraAppsEnable = true;
     appstoreEnable = false;
     autoUpdateApps.enable = false;
 
