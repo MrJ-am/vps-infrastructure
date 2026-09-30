@@ -1,0 +1,77 @@
+name: Installer Talk avec sauvegarde et retour autonome
+on:
+  push:
+    branches: [main]
+    paths: [operations/nextcloud-talk.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  talk:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Valider la demande et la CI exacte
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json, re, os, urllib.request
+          d=json.load(open('operations/nextcloud-talk.json'))
+          assert set(d)=={'operation','revision','tentative'}
+          assert d['operation'] in ('construire','activer')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          assert type(d['tentative']) is int and 1 <= d['tentative'] <= 10
+          url='https://api.github.com/repos/MrJ-am/vps-infrastructure/actions/runs?head_sha='+d['revision']+'&per_page=100'
+          req=urllib.request.Request(url,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+          runs=json.load(urllib.request.urlopen(req))['workflow_runs']
+          assert any(r['path']=='.github/workflows/check.yml' and r['conclusion']=='success' for r in runs), 'CI exacte non réussie'
+          with open(os.environ['GITHUB_ENV'],'a') as f:
+              f.write('TALK_REVISION='+d['revision']+'\nTALK_OPERATION='+d['operation']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ env.TALK_REVISION }}
+          persist-credentials: false
+          path: candidat
+      - name: Préparer la clé éphémère
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          VPS_SSH_KEY="$RUNNER_TEMP/talk-admin"
+          printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
+          printf 'VPS_SSH_KEY=%s\n' "$VPS_SSH_KEY" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
+      - name: Relever les sites avant l'opération
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/avant.json"
+      - name: Transférer la source exacte puis construire sans activer
+        if: env.TALK_OPERATION == 'construire'
+        run: |
+          test "$(git -C candidat rev-parse HEAD)" = "$TALK_REVISION"
+          sh scripts/connect.sh mkdir -p "/root/nextcloud-talk/$TALK_REVISION" "/etc/nixos/vps-infrastructure/talk-$TALK_REVISION"
+          tar -C candidat --exclude=.git -cf - . | sh scripts/connect.sh tar -C "/etc/nixos/vps-infrastructure/talk-$TALK_REVISION" -xf -
+          sh scripts/connect.sh sh -s construire "$TALK_REVISION" < candidat/scripts/nextcloud-talk.sh
+      - name: Activer après sauvegarde avec retour autonome
+        if: env.TALK_OPERATION == 'activer'
+        run: sh scripts/connect.sh sh -s activer "$TALK_REVISION" < candidat/scripts/nextcloud-talk.sh
+      - name: Contrôler tous les sites publics
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/avant.json"
+      - name: Nouvelle connexion et enregistrement après contrôles
+        if: env.TALK_OPERATION == 'activer'
+        run: sh scripts/connect.sh sh -s constater "$TALK_REVISION" < candidat/scripts/nextcloud-talk.sh
+      - name: Vérification indépendante de la génération et de Talk
+        run: |
+          sh scripts/connect.sh sh -c 'readlink -f /run/current-system; readlink -f /nix/var/nix/profiles/system; systemctl is-active nginx postgresql sshd; runuser -u nextcloud -- nextcloud-occ app:list --output=json | jq "{spreed: .enabled.spreed}"'
+      - name: Effacer la clé éphémère
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/talk-admin"
