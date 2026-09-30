@@ -1802,10 +1802,74 @@ Demande du propriétaire : installer Nextcloud Talk (spreed) sur cloud.mrj.am. L
 :PREUVE: -
 :END:
 
-** TODO vps
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: cc7c0a4ae5fe2faf5bec2d3f61a165a4c77e6f1e0c847057564b1dbddee635eb
+:LU_LE: 2026-09-30T22:19:38+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@df52b749ddfdcb8d0d100aa50d78b39653f80b92
+:PREUVE: Activation et constat 36784621012 réussis, Talk 24.0.4 activé, comptes et fichiers préservés.
+:END:
+
+* Talk installé et contrôlé sur Nextcloud
+:PROPERTIES:
+:ID: 20260930-vps-42ec0256eb25
+:EMETTEUR: vps
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-09-30T22:19:38+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Talk 24.0.4 est installé et activé sur cloud.mrj.am, Nextcloud 34.0.4, depuis la source cb55b9ce71acefe0686f23b5159150f2fe9d5f94. CI 36783983804, audit 36783613726, construction 36784323831 et activation/constat 36784621012 réussis. Génération active et de démarrage mabshi6mmisnabl5qb5hwldnkxiz2s25 ; ancienne c06sq9vp17l36j8xp2apyfav1nribpwc protégée, retour autonome désarmé.
+
+App Store désactivé, Talk déclaré dans extraApps avec le paquet du Nixpkgs installé. Sauvegarde pré-bascule réussie ; comptes et métadonnées des fichiers identiques avant/après ; tables Talk et API protégée HTTP 401 contrôlées, 25 sondes HTTP/TLS réussies, publications Matheval/Vision/Logique inchangées. Aucun serveur TURN/HPB ajouté ni appel audio/vidéo réel vérifié. Documentation : docs/NEXTCLOUD.md et docs/ETAT.md.
+
+Action des autres projets : préserver cette génération et relire cet état avant une nouvelle intervention système ; aucune publication applicative demandée. VPS : installation terminée dans ce périmètre, preuves conservées.
+
+** TODO logique
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: f05c2bb399567498fb7f703dfe3448afc7e82a8ae21e4efc9cae8f080bead813
+:LU_LE: 2026-09-30T22:20:08+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@df52b749ddfdcb8d0d100aa50d78b39653f80b92
+:PREUVE: Activation 36784621012, constat indépendant et documentation Nextcloud vérifiés.
+:END:
+
