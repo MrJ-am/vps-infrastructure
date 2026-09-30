@@ -68,6 +68,6 @@ printf 'RETOUR_TIMER=%s\n' "$(systemctl is-active nextcloud-retour-43a8cd0f551b.
 printf 'NEXTCLOUD_ET_TALK\n'
 runuser -u nextcloud -- nextcloud-occ status --output=json
 runuser -u nextcloud -- nextcloud-occ app:list --output=json | jq '{spreed_enabled: .enabled.spreed, spreed_disabled: .disabled.spreed}'
-nix-instantiate --eval --strict --json -E 'let p = import <nixpkgs> {}; a = p.nextcloud34Packages.apps.spreed; in { version = a.version; name = a.name; }'
+nix-instantiate --eval --strict --json -E 'let p = import <nixpkgs> {}; a = p.nextcloud34Packages.apps.spreed; in { name = a.name; chemin = toString a; }'
 printf 'ENTRY_IMPORT\n'
 cat /etc/nixos/configuration.nix
