@@ -71,7 +71,13 @@ jobs:
         run: sh scripts/connect.sh sh -s constater "$TALK_REVISION" < candidat/scripts/nextcloud-talk.sh
       - name: Vérification indépendante de la génération et de Talk
         run: |
-          sh scripts/connect.sh sh -c 'readlink -f /run/current-system; readlink -f /nix/var/nix/profiles/system; systemctl is-active nginx postgresql sshd; runuser -u nextcloud -- nextcloud-occ app:list --output=json | jq "{spreed: .enabled.spreed}"'
+          sh scripts/connect.sh sh -s <<'SH'
+          set -eu
+          readlink -f /run/current-system
+          readlink -f /nix/var/nix/profiles/system
+          systemctl is-active nginx postgresql sshd
+          runuser -u nextcloud -- nextcloud-occ app:list --output=json | jq '{spreed: .enabled.spreed}'
+          SH
       - name: Effacer la clé éphémère
         if: always()
         run: rm -f -- "$RUNNER_TEMP/talk-admin"
