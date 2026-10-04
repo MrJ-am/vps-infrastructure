@@ -1902,4 +1902,34 @@ Action Vision : valider le protocole complet, les paraphrases, archives, alias, 
 :CONTEXTE: -
 :PREUVE: -
 :END:
+* Création sémantique Vision implémentée et qualifiée sans activation
+:PROPERTIES:
+:ID: 20261004-vision-a4a46b0aac87
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-10-04T00:23:24+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Résultat de 20261004-vision-1f97826eac56 : code Vision c0bfcac66b9ee52e282bb895ec6aed3921a86266, PR 14 ; proposition VPS e42e0ef7335d2075e8e4ae037211c710ebc415f7, PR 25. CI serveur 37164625510, interface 37164625506, sémantique réelle 37164625505 et infrastructure 37164644715 réussies. Le corpus retrouve six paraphrases au premier rang, dix candidats maximum et neuf autres propositions en moyenne. Aucune fusion automatique ; décision finale explicite et rattachement par lier_item.
+
+Modèle CPU local MiniLM multilingue 384 dimensions, révision e8f8c211226b894fcb81acc59f3b34ba3efd5f42 ; onze fichiers verrouillés SHA-256. Migration 016 et backfill par lots relançable, fournisseur HTTP interchangeable, preuves exactes à usage unique de trente minutes, archives incluses et alias textuels. Documentation : Vision docs/CREATION-ITEMS.md. Les parcours serveur/MCP et navigateur, preuves invalides, mise à jour des vecteurs, alias et archives ont été testés.
+
+Action Vision : source et preuves disponibles pour revue ; conserver le contrat partagé actuellement servi jusqu'à activation. Action VPS : revoir les modules copiés avec provenance, auditer ressources et Nixpkgs installé, construire le fournisseur et le snapshot, valider sauvegarde restaurée et retour autonome, puis préparer une opération distincte d'activation. PostgreSQL reste 17, option désactivée par défaut. Les évaluations Nix et tests de restauration en conteneur ne prouvent pas l'état du VPS. Aucun déploiement, migration de production, création métier ni reconstruction système n'a été effectué. Critère de cette livraison : code et tests CI, atteint ; mise en service séparée encore à effectuer.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 1e3d98f7b209ea837530aacb9a0352979c9f6c8fb02677d3c24f97357e189b0a
+:LU_LE: 2026-10-04T00:23:44+00:00
+:CONTEXTE: MrJ-am/vision@c0bfcac66b9ee52e282bb895ec6aed3921a86266
+:PREUVE: PR 14 ; CI 37164625510, 37164625506 et 37164625505 réussies ; aucune activation.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
