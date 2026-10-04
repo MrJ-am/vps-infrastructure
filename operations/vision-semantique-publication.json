@@ -1,0 +1,35 @@
+{
+  "revision": "32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2",
+  "application": "c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+  "etat": {
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+    "vision": "/srv/vision/releases/c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+    "vision-interface": "/srv/vision-interface/releases/c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+    "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3",
+    "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+  },
+  "rapport": {
+    "restauration_verifiee": true,
+    "tables_preservees": 17,
+    "embeddings_calcules": 58,
+    "rappel": 1,
+    "rang_moyen": 1,
+    "faux_positifs_moyens": 9,
+    "preuves_verifiees": true,
+    "modele": "contenu-fenetres-1:8e4f52f33f8935f81b1869cc081834734f01f2383e1e1e5813aff156649b42e4",
+    "sauvegarde_sha256": "b2cea217da819c9644d27f438868af0b4b75f1ec861d726853aaca786688345c",
+    "sauvegarde_octets": 371302
+  },
+  "embeddings_calcules": 58,
+  "donnees_preservees": true,
+  "audit": 37182284525,
+  "ci_vps": 37200246228,
+  "preparation": 37200466652,
+  "activation": 37200705574,
+  "constat": 37200895774,
+  "connexion_mcp_existante_verifiee": true,
+  "retour_desarme": true,
+  "reboot": false
+}

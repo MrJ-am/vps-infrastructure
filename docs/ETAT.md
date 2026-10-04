@@ -624,3 +624,19 @@ Serveur et interface actifs : `3ff7f21f01fa63ed740672f9b331e46d50704b8c`, candid
 ## Nextcloud — 29 septembre 2026
 
 `cloud.mrj.am` sert Nextcloud 34.0.4 en HTTPS. Candidat `43a8cd0f551b74b75583bb8aaf849d2a90560618`, intégré par PR 24. Construction réelle sur Nixpkgs installé : exécution 36623222464 ; activation et constat indépendant : 36624255776. Génération active et de démarrage `c06sq9vp17l36j8xp2apyfav1nribpwc` ; retour autonome désarmé. Certificat ACME, administrateur, WebDAV aller-retour, première sauvegarde, restauration isolée (131 tables) et 25 contrôles HTTP/TLS réussis. Matheval, Vision et Logique conservent leurs releases. Le premier essai 36623847704 a été retourné après défaut du validateur de registre ; audit de retour 36624180463. Sauvegarde cohérente locale quotidienne, sans copie chiffrée hors VPS. Voir [NEXTCLOUD.md](NEXTCLOUD.md).
+
+## Vision 2.5 — création sémantique, 4 octobre 2026
+
+Serveur et interface `c0bfcac66b9ee52e282bb895ec6aed3921a86266`, candidat VPS
+`32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2`. Audit 37182284525, CI 37200246228,
+construction/restauration réelle 37200466652, activation 37200705574 et constat
+indépendant 37200895774 réussis. Génération active et de démarrage
+`y1azkcagkf54nq5vjn4j16g5v1c61c4c`, ancienne `mabshi6mmisnabl5qb5hwldnkxiz2s25`
+protégée, retour désarmé. PostgreSQL reste 17.11 ; pgvector et fournisseur local
+activés, migration 016/backfill terminés : 58 items et embeddings, dix-sept tables
+historiques intactes. Basic, MCP, navigateur/sessions/CSRF, artefact exact et
+25 sondes HTTP/TLS vérifiés. Aucun reboot ni restauration de production.
+Le point d'entrée actif importe `vision-semantique.nix` sous la source privée
+conservée ; ne pas reconstruire le seul `logique.nix` en supprimant le fournisseur.
+Détails et limites : [VISION-CREATION-SEMANTIQUE.md](VISION-CREATION-SEMANTIQUE.md)
+et [rapport](../operations/vision-semantique-publication.json).
