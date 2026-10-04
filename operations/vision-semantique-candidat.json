@@ -1,0 +1,10 @@
+{
+  "application": "c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+  "ci_backend": 37164622544,
+  "ci_interface": 37164622706,
+  "artefact_interface": 11289296235,
+  "fichiers": {
+    "vendor/vision-semantique-source.tar.gz": "a0ea6ed051263ab088caa876ff20a00f30d612e61ce96308640857d826f0c322",
+    "vendor/vision-semantique-interface.zip": "68ce008113322eb8c7fefcbbcc7c9f84630c90546927aefa1adf015260b4d033"
+  }
+}
