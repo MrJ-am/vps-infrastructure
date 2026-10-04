@@ -1,0 +1,18 @@
+{
+  "repository": "MrJ-am/vision",
+  "commit": "c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+  "files": [
+    {
+      "path": "deploy/embeddings.nix",
+      "sha256": "5e05b99699f4216ca268cd53959be6daa08067d512cc8cb03045b1719d296e48"
+    },
+    {
+      "path": "deploy/modele.lock.json",
+      "sha256": "6c76ba6c1f7df20582f165b679e8a85efbb616fdc79ee7a913720b322758eb41"
+    },
+    {
+      "path": "deploy/modele.nix",
+      "sha256": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032"
+    }
+  ]
+}
