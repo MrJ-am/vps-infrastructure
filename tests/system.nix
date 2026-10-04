@@ -6,6 +6,16 @@ let
     modules = [ ../hosts/hostinger/configuration.nix extra ];
   }).config;
   current = evaluate {};
+  semantic = evaluate ({ ... }: {
+    imports = [ ../vendor/vision-embeddings/embeddings.nix ];
+    infrastructure.postgresql.visionSemantique = true;
+    services.visionEmbeddings = {
+      enable = true;
+      # Chemins de qualification seulement : aucun service n'est démarré ici.
+      source = ../.;
+      modelSource = ../.;
+    };
+  });
   extended = evaluate ({ lib, ... }: {
     infrastructure.postgresql.projects = lib.mkForce {
       matheval.name = "matheval";
@@ -18,7 +28,15 @@ let
   });
   valid = config: builtins.all (entry: entry.assertion) config.assertions;
 in
-assert valid current && valid extended;
+assert valid current && valid extended && valid semantic;
+assert !current.infrastructure.postgresql.visionSemantique;
+assert semantic.services.postgresql.package.psqlSchema == "17";
+assert semantic.services.postgresql.dataDir == current.services.postgresql.dataDir;
+assert lib.hasInfix "CREATE EXTENSION IF NOT EXISTS vector" semantic.systemd.services.postgresql-setup.postStart;
+assert builtins.length (semantic.services.postgresql.extensions semantic.services.postgresql.package.pkgs) == 1;
+assert semantic.systemd.services.vision-embeddings.serviceConfig.MemoryMax == "2G";
+assert semantic.systemd.services.vision-embeddings.serviceConfig.IPAddressAllow == [ "127.0.0.0/8" ];
+assert semantic.services.nginx.virtualHosts."vision.mrj.am".locations."= /".root == current.services.nginx.virtualHosts."vision.mrj.am".locations."= /".root;
 assert current.services.postgresql.package.psqlSchema == "17";
 assert current.services.postgresql.dataDir == "/var/lib/postgresql/17";
 assert current.services.postgresql.settings.listen_addresses == "";
@@ -94,8 +112,10 @@ assert lib.hasInfix
 assert current.systemd.services.postgresql-setup.postStart != "";
 assert current.systemd.services.nginx.serviceConfig.ExecStart == extended.systemd.services.nginx.serviceConfig.ExecStart;
 {
+  semanticDerivation = semantic.system.build.toplevel.drvPath;
   currentDerivation = current.system.build.toplevel.drvPath;
   withAdditionalDatabaseDerivation = extended.system.build.toplevel.drvPath;
   sharedPostgresql17 = true;
   visionIsolated = true;
 }
+

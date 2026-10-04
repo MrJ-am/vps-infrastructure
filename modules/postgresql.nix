@@ -4,6 +4,8 @@ let
   layout = import ../lib/databases.nix projects;
   permissions = pkgs.writeText "vps-postgresql-permissions.sql" layout.permissionsSQL;
 in {
+  options.infrastructure.postgresql.visionSemantique = lib.mkEnableOption
+    "pgvector pour l'anti-doublon Vision (activation après audit et restauration isolée)";
   options.infrastructure.postgresql.projects = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule {
       options.name = lib.mkOption {
@@ -25,6 +27,7 @@ in {
       enable = true;
       # Conserver la version majeure et le dataDir existants lors du transfert.
       package = pkgs.postgresql_17;
+      extensions = ps: lib.optional config.infrastructure.postgresql.visionSemantique ps.pgvector;
       enableTCPIP = false;
       settings = {
         listen_addresses = lib.mkForce "";
@@ -40,6 +43,12 @@ in {
     systemd.services.postgresql-setup.postStart = ''
       ${config.services.postgresql.package}/bin/psql -X --set=ON_ERROR_STOP=1 \
         --host=/run/postgresql --dbname=postgres --file=${permissions}
+    '' + lib.optionalString config.infrastructure.postgresql.visionSemantique ''
+      # pgvector n'est pas une extension trusted : installation par postgres,
+      # dans la seule base Vision, sans élargir les droits du rôle applicatif.
+      ${config.services.postgresql.package}/bin/psql -X --set=ON_ERROR_STOP=1 \
+        --host=/run/postgresql --dbname=vision \
+        --command='CREATE EXTENSION IF NOT EXISTS vector;'
     '';
 
     services.postgresqlBackup = {
