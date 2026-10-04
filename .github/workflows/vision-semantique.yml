@@ -1,0 +1,141 @@
+name: Déployer Vision sémantique avec restauration et retour autonome
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-semantique.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  publication:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Vérifier la demande, l'audit actuel et la CI exacte
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/vision-semantique.json'))
+          assert set(d)=={'operation','revision','audit'} and d['operation'] in ('preparer','activer','constater')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          base='https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']
+          def api(path):
+              req=urllib.request.Request(base+path,headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+              with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
+          audit=api('/actions/runs/'+str(d['audit']))
+          assert audit['path']=='.github/workflows/audit.yml' and audit['conclusion']=='success'
+          runs=api('/actions/workflows/check.yml/runs?head_sha='+d['revision'])['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['conclusion']=='success' for r in runs),'CI exacte non réussie'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('revision='+d['revision']+'\noperation='+d['operation']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vision-semantique-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-semantique-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-semantique-cle" >> "$GITHUB_ENV"
+      - name: Relever les sites avant l'opération
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/avant.json"
+      - name: Préparer sans activer
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/vision-semantique/$REVISION/preparation.json; mkdir -p /root/vision-semantique/$REVISION/source; tar -xf - -C /root/vision-semantique/$REVISION/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 postgresql_17 --run 'python3 /root/vision-semantique/$REVISION/source/scripts/vision-semantique-deployer.py preparer $REVISION'"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation == 'activer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Armer le retour puis essayer la génération et l'application
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 postgresql_17 --run 'python3 /root/vision-semantique/$REVISION/source/scripts/vision-semantique-deployer.py demarrer $REVISION'"
+      - name: Vérifier la version, MCP, le doublon sémantique et le navigateur
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          VISION_INTERFACE_ARTEFACT: artefact
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: |
+          unzip -q vendor/vision-semantique-interface.zip -d artefact
+          python3 scripts/vision-semantique-verifier.py
+      - name: Vérifier tous les sites et une nouvelle connexion SSH
+        working-directory: candidat
+        run: |
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/avant.json"
+          sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth nextcloud-backup.timer postgresqlBackup-vision.timer postgresqlBackup-matheval.timer'
+      - name: Enregistrer la publication validée
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 postgresql_17 --run 'python3 /root/vision-semantique/$REVISION/source/scripts/vision-semantique-deployer.py finaliser $REVISION'"
+          sh scripts/connect.sh "cat /root/vision-semantique/$REVISION/termine.json"
+      - name: Constater indépendamment la publication
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh sh -s "$REVISION" <<'SH'
+          set -eu
+          test -f "/root/vision-semantique/$1/enregistre"
+          readlink -f /run/current-system
+          readlink -f /nix/var/nix/profiles/system
+          readlink -f /srv/vision/current
+          systemctl is-active vision-embeddings nginx postgresql vision
+          test "$(systemctl is-active "vision-semantique-retour-$(printf '%s' "$1" | cut -c1-12).timer" || :)" != active
+          runuser -u postgres -- psql -XAtq vision -c "SELECT vision_creation_contrat(),vision_revision_contrat(); SELECT count(*) FROM vision_items; SELECT count(*) FROM vision_embeddings;"
+          cat "/root/vision-semantique/$1/termine.json"
+          SH
+      - name: Revenir si l'essai échoue
+        if: failure() && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 postgresql_17 --run 'python3 /root/vision-semantique/$REVISION/source/scripts/vision-semantique-deployer.py retour $REVISION'"
+      - name: Conserver le rapport sans contenu privé
+        if: success()
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          mkdir -p rapports-semantique
+          sh scripts/connect.sh "cat /root/vision-semantique/$REVISION/preparation-rapport.json" > rapports-semantique/preparation.json
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: vision-semantique-${{ steps.demande.outputs.operation }}
+          path: candidat/rapports-semantique
+          retention-days: 30
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-semantique-cle"
