@@ -11,6 +11,7 @@ in {
     };
     modelSource = lib.mkOption {
       type = lib.types.path;
+      default = import ./modele.nix { inherit pkgs; };
       description = "Snapshot complet et épinglé du modèle ; aucune récupération réseau au démarrage.";
     };
   };
