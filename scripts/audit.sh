@@ -27,7 +27,7 @@ cat /srv/matheval/current/RELEASE
 curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3000/matheval/api/health
 printf '\n%s\n' 'Publication Vision'
 readlink -f /srv/vision/current
-cat /srv/vision/current/RELEASE
+if test -f /srv/vision/current/revision-application.txt; then cat /srv/vision/current/revision-application.txt; else cat /srv/vision/current/RELEASE; fi
 curl --fail --silent --show-error --max-time 10 http://127.0.0.1:3001/healthz
 printf '\n%s\n' 'Avertissements Vision récents, sans corps de requête'
 journalctl --unit vision.service --unit vision-migrate.service \
