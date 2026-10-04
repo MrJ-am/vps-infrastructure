@@ -46,5 +46,32 @@ in {
       };
     };
     systemd.services.vision.environment.VISION_CURL = "${pkgs.curl}/bin/curl";
+    # Un lot est lancé explicitement par les Actions VPS ; il est relançable
+    # et ne bloque ni la migration SQL ni le démarrage du fournisseur.
+    systemd.services.vision-embeddings-backfill = {
+      description = "Vectoriser un lot d'items Vision sans modifier leurs contenus";
+      after = [ "vision-embeddings.service" "vision-migrate.service" ];
+      requires = [ "vision-embeddings.service" "vision-migrate.service" ];
+      environment = {
+        PGHOST = "/run/postgresql";
+        PGDATABASE = "vision";
+        PGUSER = "vision";
+        VISION_PSQL = "${config.services.postgresql.package}/bin/psql";
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        User = "vision";
+        Group = "vision";
+        ExecStart = "${python}/bin/python ${cfg.source}/scripts/backfill_embeddings.py --limite 100";
+        NoNewPrivileges = true;
+        PrivateTmp = true;
+        ProtectSystem = "strict";
+        ProtectHome = true;
+        RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" ];
+        IPAddressDeny = "any";
+        IPAddressAllow = [ "127.0.0.0/8" ];
+        UMask = "0077";
+      };
+    };
   };
 }

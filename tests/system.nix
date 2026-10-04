@@ -13,7 +13,6 @@ let
       enable = true;
       # Chemins de qualification seulement : aucun service n'est démarré ici.
       source = ../.;
-      modelSource = ../.;
     };
   });
   extended = evaluate ({ lib, ... }: {
