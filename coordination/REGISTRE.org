@@ -1932,4 +1932,66 @@ Action Vision : source et preuves disponibles pour revue ; conserver le contrat 
 :CONTEXTE: -
 :PREUVE: -
 :END:
+* Déployer Vision 2.5 après audit avec restauration et retour autonome
+:PROPERTIES:
+:ID: 20261004-vision-a7e5d479ae40
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-04T11:47:49+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Le propriétaire a explicitement demandé le déploiement de Vision 2.5. Les PR Vision 14 et VPS 25 sont fusionnées ; le candidat applicatif c0bfcac66b9ee52e282bb895ec6aed3921a86266 est assemblé depuis ses CI exactes réussies. Audit VPS 37182284525 réussi : génération mabshi6mmisnabl5qb5hwldnkxiz2s25 active et de démarrage, Nixpkgs 26.05 existant conservé, PostgreSQL 17.11, 58 items et 25 sondes publiques conformes.
+
+Préparer une nouvelle opération bornée : construire pgvector/fournisseur/snapshot sur le Nixpkgs installé, sauvegarder Vision et tester 016, backfill et protocole sémantique dans un cluster indépendant restauré. Comparer réseau, clés, routage, rôles et services non concernés. Puis arrêter les écritures Vision, sauvegarder à nouveau, armer un retour autonome, tester la génération et l'application, contrôler Basic/MCP, session/CSRF, artefact navigateur et tous les sites avant enregistrement. PostgreSQL peut redémarrer brièvement pour pgvector ; aucun changement de version majeure, stockage, ACL ou réseau.
+
+Vision et VPS : suivre la préparation et les preuves avant activation, préserver toute donnée et ne jamais restaurer un dump en production pour un retour. Les autres projets conservent leurs publications ; aucune action de code demandée. Aucune activation n'est attestée par cette annonce. Fin : version 2.5 et préparation sémantique effectivement servies, 58 items intacts, embeddings complets, nouvelle connexion et sites vérifiés, génération enregistrée et retour désarmé, résultat consigné.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
