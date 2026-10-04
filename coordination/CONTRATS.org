@@ -2,7 +2,7 @@
 #+OPTIONS: toc:nil
 
 Synthèse durable : lire à chaque reprise ; les preuves détaillées restent dans
-les documents liés. Ce fichier décrit les responsabilités, pas l'état du serveur.
+les documents liés. Responsabilités seulement ; état serveur dans les preuves.
 Tout changement de fond exige un message dans REGISTRE.org.
 
 * Coordination
@@ -80,15 +80,12 @@ Tout changement de fond exige un message dans REGISTRE.org.
   Les applications autorisées se révoquent individuellement sur /auth/mcp.
   Les jetons OAuth et les tokens Bearer historiques conservent la séparation
   REST/navigateur et sont invalidés par la rotation des identifiants Vision.
-  Publication initiale 96dc1e8e95b091dd0f13cc9d99002f0cd932210a,
-  génération historique sz7w3lqm1lspcdzrqisi23xb6lv9886d ; voir docs/VISION-OAUTH.md.
+  Preuves : docs/VISION-OAUTH.md.
 - Depuis le 25 septembre 2026, Nginx transmet à Vision X-Mrj-User uniquement
   depuis Basic ou le vérificateur MCP authentifié ; l’en-tête client est écrasé.
-  Sessions, tokens et OAuth sont conservés. Sources cb0294c8b78402de1566f54ea3009fbe6ee221c7,
-  génération g24p3rvq97s1x66wiaw29z5kwqgw0ksl ; preuves dans docs/VISION-REFONTE.md.
-- Un cookie nécessaire à la connexion n'impose pas à lui seul une bannière ;
-  vérifier séparément les tiers et traceurs. Aucune conclusion générale de conformité
-  ne découle du seul usage de HttpOnly, de SameSite ou du paramètre vidéo dnt.
+  Sessions, tokens et OAuth conservés ; preuves dans docs/VISION-REFONTE.md.
+- Un cookie nécessaire n'impose pas seul une bannière ; vérifier tiers et traceurs.
+  HttpOnly, SameSite et dnt ne prouvent pas une conformité générale.
 - Rapport de référence : docs/AUDIT-AUTHENTIFICATION-20260922.md. Les écarts connus
   et les preuves de déploiement y sont distingués des recommandations.
 
@@ -113,14 +110,11 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :END:
 - Vision 2.5 : quinze outils REST/MCP ; tools/list fait foi. Anciens noms :
   contrat_retire ; aucune conversion FSRS.
-- Création : preparer_creation_item reçoit le contenu complet, recherche tous les
-  items du compte (archives comprises) par embeddings/cosinus, texte et trigrammes.
-  Dix candidats complets au maximum ; le LLM décide de réutiliser/lier ou créer,
-  jamais de fusion par score. Preuve exacte liée au compte/contenu/candidats,
-  trente minutes, usage unique et examen déclaré. Ancien drapeau retiré explicitement.
-- Infrastructure active depuis le 4 octobre : pgvector sur PostgreSQL 17 et
-  fournisseur CPU local épinglé. Préserver l'entrée vision-semantique.nix,
-  sources et GC ; preuves dans docs/VISION-CREATION-SEMANTIQUE.md.
+- Création : preparer_creation_item reçoit le contenu complet ; recherche globale
+  hybride, archives incluses, dix candidats complets puis décision LLM, sans fusion.
+  Preuve exacte de trente minutes, usage unique et examen déclaré.
+- pgvector/PostgreSQL 17 et fournisseur local actifs : préserver vision-semantique.nix,
+  sources et GC. Contrat et preuves : docs/VISION-CREATION-SEMANTIQUE.md.
 - Item : une connaissance autonome, sans titre, objectif, sens ni suivi éditorial.
   Fiche : titre, contenu, objectif et contexte de révision. Observations datées
   (fait/saisie), immuables, rectifiables par ajout ; doublons historiques conservés
@@ -132,5 +126,4 @@ Tout changement de fond exige un message dans REGISTRE.org.
   épisodes gérés par Vision, sens libre. Aucun double crédit au rejeu. Démarrage :
   contrôle des fonctions SQL de clôture, migrations enregistrées non rejouées.
 - Préserver Basic/Bearer/OAuth, sessions, CSRF et isolation par compte. Aucun retour
-  applicatif ne restaure PostgreSQL. Preuves : docs/VISION-REFONTE.md, docs/ETAT.md,
-  operations/vision-refonte-publication.json.
+  applicatif ne restaure PostgreSQL. Preuves : docs/ETAT.md et operations/vision-refonte-publication.json.
