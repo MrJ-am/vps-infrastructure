@@ -57,7 +57,7 @@ jobs:
           df -Pk /
           for application in vision vision-interface matheval logique; do readlink -f "/srv/$application/current"; done
           systemctl list-timers --all --no-pager | rg 'retour|rollback|backup' || true
-          runuser -u postgres -- psql -XAtq vision -c "SELECT name,default_version,installed_version FROM pg_available_extensions WHERE name IN ('vector','pg_trgm'); SELECT count(*) FROM vision_objets WHERE type='item';"
+          runuser -u postgres -- psql -XAtq vision -c "SELECT name,default_version,installed_version FROM pg_available_extensions WHERE name IN ('vector','pg_trgm'); SELECT count(*) FROM vision_items;"
           SH
       - name: Lire l'état du système et des services
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
