@@ -1,10 +1,10 @@
 {
   "repository": "MrJ-am/vision",
-  "commit": "88b0131522e5ceab685fb8bc65448844928b8468",
+  "commit": "c0bfcac66b9ee52e282bb895ec6aed3921a86266",
   "files": [
     {
       "path": "deploy/embeddings.nix",
-      "sha256": "dc0849c066c50dbc2b25e04cd73c0f80a5c22d7ba136c0db01eff0f7582bd810"
+      "sha256": "5e05b99699f4216ca268cd53959be6daa08067d512cc8cb03045b1719d296e48"
     },
     {
       "path": "deploy/modele.lock.json",
