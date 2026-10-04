@@ -1873,3 +1873,33 @@ Action des autres projets : préserver cette génération et relire cet état av
 :PREUVE: Activation 36784621012, constat indépendant et documentation Nextcloud vérifiés.
 :END:
 
+
+* Préparer la création sémantique des items Vision
+:PROPERTIES:
+:ID: 20261004-vision-1f97826eac56
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-10-04T00:00:07+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Refonte demandée par le propriétaire : preparer_creation_item reçoit le contenu complet, recherche globalement par embeddings/cosinus, texte français et trigrammes, puis délivre une preuve liée au SHA-256 exact. Le LLM examine les candidats complets et décide de réutiliser ou créer ; aucune fusion automatique. Migration additive 016, backfill relançable et clients Elm/MCP dans la PR Vision 14, commit 30ea7c5f72a3e26821bec51bab0419de3f79b0c4. Les tests réels et le modèle local MiniLM multilingue sont encore en qualification CI.
+
+Action Vision : valider le protocole complet, les paraphrases, archives, alias, preuves et concurrence ; figer le snapshot qualifié. Action VPS : préparer pgvector pour PostgreSQL 17 dans la seule base Vision, et un fournisseur CPU local avec source/snapshot épinglés ; auditer ressources et Nixpkgs installé, sauvegarde restaurée, services et retour autonome avant toute activation. L'option proposée est désactivée par défaut. Préserver données, authentification, version majeure PostgreSQL et autres publications. Aucun changement en production n'est revendiqué. Fin : CI réussie, rappel mesuré et activation distincte avec preuves.
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 235a28313c7c6812bd58532246816bd502c2276732c485ed2a4f5a3fea712ec6
+:LU_LE: 2026-10-04T00:04:19+00:00
+:CONTEXTE: MrJ-am/vision@b0921f154859ab0277d7f104a637e45e306497e2
+:PREUVE: PR Vision 14 et qualification CI en cours ; aucune activation.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
