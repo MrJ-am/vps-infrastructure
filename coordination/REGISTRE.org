@@ -1887,12 +1887,12 @@ Refonte demandée par le propriétaire : preparer_creation_item reçoit le conte
 
 Action Vision : valider le protocole complet, les paraphrases, archives, alias, preuves et concurrence ; figer le snapshot qualifié. Action VPS : préparer pgvector pour PostgreSQL 17 dans la seule base Vision, et un fournisseur CPU local avec source/snapshot épinglés ; auditer ressources et Nixpkgs installé, sauvegarde restaurée, services et retour autonome avant toute activation. L'option proposée est désactivée par défaut. Préserver données, authentification, version majeure PostgreSQL et autres publications. Aucun changement en production n'est revendiqué. Fin : CI réussie, rappel mesuré et activation distincte avec preuves.
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 235a28313c7c6812bd58532246816bd502c2276732c485ed2a4f5a3fea712ec6
-:LU_LE: 2026-10-04T00:04:19+00:00
-:CONTEXTE: MrJ-am/vision@b0921f154859ab0277d7f104a637e45e306497e2
-:PREUVE: PR Vision 14 et qualification CI en cours ; aucune activation.
+:LU_LE: 2026-10-04T12:09:23+00:00
+:CONTEXTE: MrJ-am/vision@c0bfcac66b9ee52e282bb895ec6aed3921a86266
+:PREUVE: Activation 37200705574 et constat 37200895774 réussis ; 58 items et embeddings, protocole MCP réellement servi.
 :END:
 
 ** TODO vps
@@ -1979,12 +1979,74 @@ Vision et VPS : suivre la préparation et les preuves avant activation, préserv
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 8d47f4cd6a884efb9b80e528ec4b26658a52f769d763de347ca47fc2ce47a8b1
+:LU_LE: 2026-10-04T12:09:23+00:00
+:CONTEXTE: MrJ-am/vision@c0bfcac66b9ee52e282bb895ec6aed3921a86266
+:PREUVE: Activation 37200705574 et constat 37200895774 réussis ; 58 items et embeddings, protocole MCP réellement servi.
+:END:
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+* Vision 2.5 sémantique publiée et vérifiée en production
+:PROPERTIES:
+:ID: 20261004-vision-5860f437538c
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-04T12:07:55+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Résultat de 20261004-vision-a7e5d479ae40 et 20261004-vision-1f97826eac56 : Vision 2.5, serveur et interface c0bfcac66b9ee52e282bb895ec6aed3921a86266, publiée depuis le candidat VPS 32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2. Audit 37182284525, CI VPS 37200246228, construction/restauration réelle 37200466652, activation 37200705574 et constat indépendant 37200895774 réussis. Génération active et de démarrage y1azkcagkf54nq5vjn4j16g5v1c61c4c ; retour désarmé, ancienne mabshi6mmisnabl5qb5hwldnkxiz2s25 protégée.
+
+pgvector actif dans Vision sur PostgreSQL 17.11, fournisseur CPU local MiniLM multilingue épinglé, migration 016 et backfill complets : 58 items et 58 embeddings. Les dix-sept tables historiques sont intactes ; aucune restauration de production ni création de connaissance/séance fictive. Les créations et preuves ont été testées dans deux clusters restaurés indépendants ; six paraphrases au premier rang. En production, une paraphrase de capitale retrouve l'item historique via preparer_creation_item. Version 2.5, quinze outils, artefact exact, login/logout, sessions/CSRF, Basic, connexion MCP existante, découverte OAuth, nouvelle connexion SSH et 25 sondes HTTP/TLS vérifiés. Publications Matheval/Logique et services Nextcloud conservés, Nixpkgs inchangé, aucun reboot.
+
+Action VPS : préserver le point d'entrée vision-semantique.nix et le répertoire /root/vision-semantique/<candidat>/source, les releases, racines de GC et sauvegardes privées. Un futur build du seul logique.nix supprimerait le fournisseur/pgvector : auditer et conserver les services désormais actifs. Un retour ultérieur est une nouvelle opération ; aucun dump restauré pour annuler du code. Action Vision : recharger les catalogues MCP clients anciens, employer le contenu complet et la décision explicite après examen des candidats. Autres projets : conserver leurs publications, aucune modification applicative demandée. Contrat durable et détails mis à jour dans CONTRATS.org#vision, docs/VISION-CREATION-SEMANTIQUE.md et operations/vision-semantique-publication.json. Critère de déploiement atteint.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 8c66e42fbf4d2f16f4ec0719a93e72df7213d80913970d07dc574e0f04e8b899
+:LU_LE: 2026-10-04T12:09:23+00:00
+:CONTEXTE: MrJ-am/vision@c0bfcac66b9ee52e282bb895ec6aed3921a86266
+:PREUVE: Activation 37200705574 et constat 37200895774 réussis ; 58 items et embeddings, protocole MCP réellement servi.
 :END:
 
 ** TODO vps

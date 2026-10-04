@@ -111,8 +111,16 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.4.1 : quatorze outils REST/MCP ; tools/list fait foi. Anciens noms :
+- Vision 2.5 : quinze outils REST/MCP ; tools/list fait foi. Anciens noms :
   contrat_retire ; aucune conversion FSRS.
+- Création : preparer_creation_item reçoit le contenu complet, recherche tous les
+  items du compte (archives comprises) par embeddings/cosinus, texte et trigrammes.
+  Dix candidats complets au maximum ; le LLM décide de réutiliser/lier ou créer,
+  jamais de fusion par score. Preuve exacte liée au compte/contenu/candidats,
+  trente minutes, usage unique et examen déclaré. Ancien drapeau retiré explicitement.
+- Infrastructure active depuis le 4 octobre : pgvector sur PostgreSQL 17 et
+  fournisseur CPU local épinglé. Préserver l'entrée vision-semantique.nix,
+  sources et GC ; preuves dans docs/VISION-CREATION-SEMANTIQUE.md.
 - Item : une connaissance autonome, sans titre, objectif, sens ni suivi éditorial.
   Fiche : titre, contenu, objectif et contexte de révision. Observations datées
   (fait/saisie), immuables, rectifiables par ajout ; doublons historiques conservés
