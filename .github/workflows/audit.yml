@@ -45,8 +45,20 @@ jobs:
           install -d -m 700 "$(dirname -- "$VPS_SSH_KEY")"
           printf '%s\n' "$SSH_KEY" > "$VPS_SSH_KEY"
           ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
-      - name: Vérifier la migration enregistrée et le retour désarmé
-        run: sh scripts/connect.sh sh -s < scripts/diagnose-migration.sh
+      - name: Relever la génération actuelle et les ressources sans mutation
+        run: |
+          sh scripts/connect.sh sh -s <<'SH'
+          set -eu
+          readlink -f /run/current-system
+          readlink -f /nix/var/nix/profiles/system
+          cat /etc/nixos/configuration.nix
+          nix-instantiate --find-file nixpkgs
+          free -m
+          df -Pk /
+          for application in vision vision-interface matheval logique; do readlink -f "/srv/$application/current"; done
+          systemctl list-timers --all --no-pager | rg 'retour|rollback|backup' || true
+          runuser -u postgres -- psql -XAtq vision -c "SELECT name,default_version,installed_version FROM pg_available_extensions WHERE name IN ('vector','pg_trgm'); SELECT count(*) FROM vision_objets WHERE type='item';"
+          SH
       - name: Lire l'état du système et des services
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: sh scripts/connect.sh sh -s < scripts/audit.sh
