@@ -2057,3 +2057,32 @@ Action VPS : préserver le point d'entrée vision-semantique.nix et le répertoi
 :PREUVE: -
 :END:
 
+* Renforcer les séances et rendre Vision compréhensible et accessible
+:PROPERTIES:
+:ID: 20261005-vision-contrat-accessible
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-10-05T21:00:00+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Mission explicite du propriétaire : centraliser le contrat pédagogique livré au démarrage/reprise, dater les rappels selon la durée réelle de séance, exposer politique partielle, liens privés et rapports paginés, tutoriel partagé et accueil public. Préparation applicative additive à partir de Vision b1e58c8d619118f84e01530f5c7965bb54cd79a0. Préserver les historiques, le barème, Basic/Bearer/OAuth et les composants ElmUI existants. Aucune activation attestée.
+
+Vision : qualifier migrations, temps et accès sur bases isolées puis assembler les sources exactes et l’interface. VPS : adapter la publication applicative au nouveau contrat SQL, tester une sauvegarde restaurée et le retour de code sans restauration de production ; préserver pgvector/fournisseur et génération active. Aucun changement de style partagé prévu. Fin : CI exactes et parcours réellement servis, preuves et limites consignées.
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 21a05e652cd91c85587422ec19e4eccb162db99e1b96cda02e47e1ed1a74e65c
+:LU_LE: 2026-10-05T21:00:00+00:00
+:CONTEXTE: MrJ-am/vision@b1e58c8d619118f84e01530f5c7965bb54cd79a0
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
