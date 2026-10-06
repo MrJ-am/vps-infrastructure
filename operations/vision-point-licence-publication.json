@@ -1,0 +1,68 @@
+{
+  "revision": "f27ea81080d570bc2f905c7fcad4099ac245bc05",
+  "application": "ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf",
+  "etat": {
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+    "vision": "/srv/vision/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
+    "vision-interface": "/srv/vision-interface/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
+    "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3",
+    "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+  },
+  "rapport": {
+    "version": "2.6.1",
+    "audit": 37491350997,
+    "migrations": [],
+    "contrat_sql": 7,
+    "creation_items": 1,
+    "restauration_verifiee": true,
+    "demarrage_copie_sans_ecriture": true,
+    "timer_verifie": true,
+    "sauvegarde_sha256": "3c801906d601f19e22a66d34ff0dde9a147a554c18e797e33d5ffaac37be031e",
+    "sauvegarde_octets": 611008,
+    "donnees_preservees": true,
+    "tables_preservees": 20,
+    "sauvegarde_activation_sha256": "a84d4657c1ad174327ee4fd29032c8da85ab3fda82e34bfce5b6316c39597ff9",
+    "ecritures_metier_production": 0,
+    "restauration_production": false
+  },
+  "style": "4e8214970c22160059fe1024f854e8ecb0cbc59e",
+  "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+  "date": "2026-10-06",
+  "licence": "AGPL-3.0-or-later",
+  "identite": "droits réservés ; fontes sous OFL",
+  "ci_style": 37491731775,
+  "ci_backend": 37492347991,
+  "ci_interface": 37492348030,
+  "ci_creation": 37492347952,
+  "ci_infrastructure": 37492890918,
+  "assemblage": 37492761642,
+  "preparation": 37493315938,
+  "activation": 37493485203,
+  "constat": 37493885562,
+  "fichiers": {
+    "vendor/vision-vitrine-source.tar.gz": "3cb8057f2beca92af2717997d6e07d545edacb5c9d46921b2da0c231d3acb2b8",
+    "vendor/vision-vitrine-interface.zip": "175182cde3275a135232ecf08e16b37b296d2f1604279b06a21ce9e1cb92883f"
+  },
+  "retour_desarme": true,
+  "parcours": {
+    "largeurs": [
+      320,
+      375,
+      768,
+      1440
+    ],
+    "grossissement": 4,
+    "motifs_echo_identiques": true,
+    "alignement_pixels": true,
+    "visuels": 5,
+    "chapitres": 11,
+    "outils_mcp": 20,
+    "oauth_pkce": true,
+    "bearer": true,
+    "basic": true,
+    "session_csrf": true,
+    "revocation": true
+  }
+}
