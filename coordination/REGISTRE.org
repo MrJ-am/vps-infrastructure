@@ -2290,12 +2290,75 @@ Correctif demandé par le propriétaire : aligner Vision. et la signature MrJ.am
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: ee035775bf984f763a1c9b40c2392dcfcd9d2874a12837b67c4bee8be13f98ac
+:LU_LE: 2026-10-06T15:44:33+00:00
+:CONTEXTE: MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d
+:PREUVE: Style 3c87b98aa48a5f6a533d7f88de9faf57cff1706d ; application ba19503113f94e2bd73cec27a09b2cf11a143cbe ; préparation 37488460816 tentative 2 ; activation 37488989857 ; constat indépendant 37489386224 réussis. Rapport : operations/vision-alignement-publication.json à 06098f7094da9c0a17812d0ee9746677adb29611 ; quatre largeurs et zoom x4 validés sur pixels HTTPS.
+:END:
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Constater la marque Vision alignée en production
+:PROPERTIES:
+:ID: 20261006-vision-4808994f4a28
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T15:44:33+00:00
+:CONSOLIDATION: CONTRATS.org#style
+:END:
+Vision.MrJ.am est alignée sur une baseline commune dans Identite.marque. Le texte et les fontes de Signature restent intacts. Style 3c87b98aa48a5f6a533d7f88de9faf57cff1706d, application réellement servie ba19503113f94e2bd73cec27a09b2cf11a143cbe, opérateur 412bbcb9ea9983a7f2b29c6bac277402f90d49b9. Source et artefact exacts validés ; CI style 37487274118, interface 37487447204, serveur 37487447391, création 37487447187, infrastructure 37487971501 (140 tests) réussies.
+
+Audit 37486943452, préparation 37488460816 tentative 2, activation 37488989857 et constat indépendant 37489386224 réussis. La première préparation a été relancée après attente GitHub avant toute exécution ; aucune protection changée. Le test des pixels détecte le défaut précédent et passe sur la production HTTPS à 320, 375, 768 et 1440 px, ainsi qu'agrandi quatre fois. Signature entière, absence de débordement, onze chapitres, connexion, Basic/Bearer/OAuth PKCE, CSRF et révocation vérifiés. Vingt tables préservées, aucune migration SQL ni restauration de production, NixOS et autres releases inchangés. Retour désarmé et sauvegardes conservées.
+
+Rapports : MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d docs/ALIGNEMENT-MARQUE-20261006.md ; MrJ-am/vps-infrastructure@06098f7094da9c0a17812d0ee9746677adb29611 operations/vision-alignement-publication.json. Les projets concernés lisent ces preuves avant une future mise à jour. Les autres consommateurs gardent leur révision épinglée. Vision acquitte seulement sa propre lecture et réalisation.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 39bf82feb5364275a5f8baa6c17f6b6123f9d6d6397f6f6dc29a8c1eb9ffb5cb
+:LU_LE: 2026-10-06T15:44:43+00:00
+:CONTEXTE: MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d
+:PREUVE: Rapport publié 06098f7094da9c0a17812d0ee9746677adb29611 ; activation 37488989857 et constat 37489386224 réussis ; rendu HTTPS vérifié par comparaison des pixels à quatre largeurs et x4.
 :END:
 
 ** TODO vps
