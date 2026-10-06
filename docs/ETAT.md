@@ -702,3 +702,16 @@ Le point d'entrée actif importe `vision-semantique.nix` sous la source privée
 conservée ; ne pas reconstruire le seul `logique.nix` en supprimant le fournisseur.
 Détails et limites : [VISION-CREATION-SEMANTIQUE.md](VISION-CREATION-SEMANTIQUE.md)
 et [rapport](../operations/vision-semantique-publication.json).
+
+
+## Vision — alignement de la marque, 6 octobre 2026
+
+Serveur et interface : `ba19503113f94e2bd73cec27a09b2cf11a143cbe`, style
+`3c87b98aa48a5f6a533d7f88de9faf57cff1706d`, opérateur
+`412bbcb9ea9983a7f2b29c6bac277402f90d49b9`. Audit 37486943452, CI 37487971501,
+préparation 37488460816 (tentative 2), activation 37488989857 et constat
+indépendant 37489386224 réussis. Baseline commune et signature entière vérifiées
+sur le rendu HTTPS à quatre largeurs et agrandie quatre fois. Vingt tables
+préservées ; aucune migration, restauration de production ou modification
+NixOS. Retour désarmé. Les autres releases et sauvegardes restent conservées.
+Voir [le rapport](../operations/vision-alignement-publication.json).
