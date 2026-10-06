@@ -1,27 +1,27 @@
 {
-  "application": "ba19503113f94e2bd73cec27a09b2cf11a143cbe",
-  "style": "3c87b98aa48a5f6a533d7f88de9faf57cff1706d",
-  "ci_style": 37487274118,
-  "ci_backend": 37487447391,
-  "ci_interface": 37487447204,
-  "ci_creation": 37487447187,
-  "artefact_interface": 11424087311,
-  "audit": 37486943452,
-  "audit_revision": "717a608de1f8af1011b3395effe2eabd0d779d8d",
+  "application": "ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf",
+  "style": "4e8214970c22160059fe1024f854e8ecb0cbc59e",
+  "ci_style": 37491731775,
+  "ci_backend": 37492347991,
+  "ci_interface": 37492348030,
+  "ci_creation": 37492347952,
+  "artefact_interface": 11426251661,
+  "audit": 37491350997,
+  "audit_revision": "4a360eadc9485411496c16f081cfe5a8ec15439b",
   "migrations": [],
   "avant": {
     "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
-    "vision": "/srv/vision/releases/166fce94afa84d1dd9b786f756a1e958eecc764e-633471aa3a2f",
+    "vision": "/srv/vision/releases/ba19503113f94e2bd73cec27a09b2cf11a143cbe-412bbcb9ea99",
     "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3",
     "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f",
-    "vision-interface": "/srv/vision-interface/releases/166fce94afa84d1dd9b786f756a1e958eecc764e-633471aa3a2f"
+    "vision-interface": "/srv/vision-interface/releases/ba19503113f94e2bd73cec27a09b2cf11a143cbe-412bbcb9ea99"
   },
-  "assemblage": 37487771914,
-  "assemblage_commit": "6f9f9c107a2b511a2346fdb06a0630afd84da506",
+  "assemblage": 37492761642,
+  "assemblage_commit": "46870b77c8b7f947f4cb417c2ac46aa3d97fc5d1",
   "fichiers": {
-    "vendor/vision-vitrine-source.tar.gz": "c72c593859613cf5a2264e1fd6abe366cba1717950ba7ad286d1ba3ef397eb1a",
-    "vendor/vision-vitrine-interface.zip": "96575438d005bf2ca696a726a0bd0e9855b0e0ced990db841075e3f770b91338"
+    "vendor/vision-vitrine-source.tar.gz": "3cb8057f2beca92af2717997d6e07d545edacb5c9d46921b2da0c231d3acb2b8",
+    "vendor/vision-vitrine-interface.zip": "175182cde3275a135232ecf08e16b37b296d2f1604279b06a21ce9e1cb92883f"
   }
 }
