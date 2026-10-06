@@ -125,7 +125,7 @@ Tout changement de fond exige un message dans REGISTRE.org.
 - Politique partielle/versionnée, liens privés, rapports/Markdown paginés.
   Migrations 017/018, SQL 7/1. Basic/Bearer/OAuth, sessions/CSRF, isolation et
   données conservés ; retour sans restauration de base.
-- Vitrine Vision.MrJ.am : cinq visuels, style opt-in, autres apps épinglées.
-  Tutoriel commun de onze chapitres et MCP ; adresses configurées sans secret
-  ni en-tête client. SQL inchangé. Preuves :
-  operations/vision-{autonomie,vitrine}-publication.json.
+- Code Vision : AGPL-3.0-or-later ; identité réservée.
+- Vitrine : cinq visuels, style opt-in, autres apps épinglées.
+  Tutoriel web/MCP : onze chapitres ; adresses configurées sans secret ni
+  en-tête client. SQL inchangé. Preuves : operations/vision-*-publication.json.

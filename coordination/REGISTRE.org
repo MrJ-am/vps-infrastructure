@@ -2412,12 +2412,77 @@ Demande du propriétaire : remplacer le point entre Vision et MrJ.am par le dess
 :PREUVE: -
 :END:
 
-** TODO vision
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 0925ebf30d6030deb65626046cb75e5d9e836c14395d0f2530f31c0ae21a6479
+:LU_LE: 2026-10-06T16:16:37+00:00
+:CONTEXTE: MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad
+:PREUVE: Application ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf ; style 4e8214970c22160059fe1024f854e8ecb0cbc59e ; activation 37493485203 et constat 37493885562 réussis. Points Echo identiques en pixels HTTPS, baseline et interligne préservés. Licence complète et AGPL-3.0-or-later vérifiées dans les archives. Rapport : operations/vision-point-licence-publication.json à 150b05d4471127ab96cc0f9a8e4b2c89189e6d67.
+:END:
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Constater le point Echo et la licence AGPL de Vision
+:PROPERTIES:
+:ID: 20261006-vision-867e1947449d
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T16:16:37+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Le point séparateur de Vision.MrJ.am utilise maintenant la fonte EchoPoint originale avec les mêmes dimensions et la même position que le point interne de Signature. Les deux motifs sont comparés sur les pixels peints, avec prise en compte de l'anticrénelage. Points entiers, baseline commune, interligne de 41 px et texte sélectionnable conservés. Aucun dessin ni fichier de Signature modifié. Style 4e8214970c22160059fe1024f854e8ecb0cbc59e, application réellement servie ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf, opérateur f27ea81080d570bc2f905c7fcad4099ac245bc05.
+
+Le code original, les textes et les visuels originaux du dépôt Vision sont sous AGPL-3.0-or-later : LICENSE complet, concession « v3 ou ultérieure » et exclusions dans LICENCE.md, mentions README/ASDF/npm concordantes. Identité réservée et OFL conservées. La licence des dépôts externes n'a pas été modifiée. Règle durable : CONTRATS.org#vision, synthèse resserrée sans suppression des garanties existantes.
+
+CI style 37491731775, interface 37492348030, serveur 37492347991, création 37492347952 et infrastructure 37492890918 (140 tests) réussies. Quatre tests Elm et cinq contrôles d'archives locaux réussis ; AGPL intégrale et option ultérieure présentes dans l'archive exacte. Audit 37491350997, préparation 37493315938, activation 37493485203 et constat indépendant 37493885562 réussis. Quatre formats et motifs à x4 vérifiés en HTTPS ; Basic/Bearer/OAuth PKCE, sessions/CSRF/révocation, tutoriel et 35 sondes vérifiés. Vingt tables préservées, zéro écriture métier, aucune migration SQL/restauration de production ni changement NixOS. Retour désarmé, sauvegardes et autres releases conservées.
+
+Preuves : MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad docs/POINT-MARQUE-LICENCE-20261006.md ; MrJ-am/vps-infrastructure@150b05d4471127ab96cc0f9a8e4b2c89189e6d67 operations/vision-point-licence-publication.json. Lire ces références avant une future consommation. Vision acquitte seulement son propre travail et sa propre lecture.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 821667a11bfa2958b38fa9ad5f628eef38411e51b3aef1b064deb60a094ad1b7
+:LU_LE: 2026-10-06T16:18:00+00:00
+:CONTEXTE: MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad
+:PREUVE: Rapport 150b05d4471127ab96cc0f9a8e4b2c89189e6d67 ; activation 37493485203 et constat 37493885562 réussis ; motifs identiques en pixels HTTPS, quatre formats et zoom x4 ; licence AGPL-3.0-or-later et exclusions enregistrées dans Vision.
 :END:
 
 ** TODO vps
