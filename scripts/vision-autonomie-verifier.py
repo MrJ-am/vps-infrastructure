@@ -99,6 +99,8 @@ def verifier():
             expect(page.get_by_role('button', name='Réessayer le chargement', exact=True)).to_have_count(0)
             # Aucun contenu personnel ni capture de la fiche n'est publié.
             assert page.url.endswith('/#fiche/' + str(fiche_id))
+            # La navigation recharge Elm et referme le menu.
+            page.get_by_label('Ouvrir le menu', exact=True).click()
         page.get_by_role('button', name='Se déconnecter', exact=True).click()
         expect(page.get_by_label('Identifiant', exact=True)).to_be_visible()
         assert requete('/auth/session', entetes={'Cookie': entete})[0] == 401, 'Session non révoquée'
