@@ -27,7 +27,7 @@ jobs:
           python3 - <<'PY'
           import json,os,re,subprocess,urllib.request
           d=json.load(open('operations/vision-autonomie.json'))
-          assert set(d)=={'operation','revision','audit'} and d['operation'] in ('preparer','activer')
+          assert set(d)=={'operation','revision','audit'} and d['operation'] in ('preparer','activer','constater')
           assert re.fullmatch('[0-9a-f]{40}',d['revision'])
           subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
           req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
@@ -71,7 +71,7 @@ jobs:
           git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/vision-autonomie-operations/$REVISION/preparation.json; mkdir -p /root/vision-autonomie-operations/$REVISION/source; tar -xf - -C /root/vision-autonomie-operations/$REVISION/source"
           sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-autonomie-operations/$REVISION/source/scripts/vision-autonomie-deployer.py preparer $REVISION'"
       - name: Installer le navigateur de contrôle
-        if: steps.demande.outputs.operation == 'activer'
+        if: steps.demande.outputs.operation != 'preparer'
         run: |
           python3 -m pip install playwright==1.57.0
           python3 -m playwright install --with-deps chromium
@@ -90,14 +90,14 @@ jobs:
           sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
           python3 scripts/mcp-probe.py
       - name: Vérifier le token depuis HTTPS et le navigateur
-        if: steps.demande.outputs.operation == 'activer'
+        if: steps.demande.outputs.operation != 'preparer'
         working-directory: candidat
         env:
           VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
           VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
         run: python3 scripts/vision-autonomie-mcp-verifier.py
       - name: Vérifier l’interface exacte et les accès navigateur
-        if: steps.demande.outputs.operation == 'activer'
+        if: steps.demande.outputs.operation != 'preparer'
         working-directory: candidat
         env:
           VISION_INTERFACE_ARTEFACT: artefact
@@ -114,6 +114,24 @@ jobs:
         run: |
           sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-autonomie-operations/$REVISION/source/scripts/vision-autonomie-deployer.py finaliser $REVISION'"
           sh scripts/connect.sh "cat /root/vision-autonomie-operations/$REVISION/termine.json"
+      - name: Constater la publication depuis une nouvelle connexion
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh sh -s "$REVISION" <<'SH'
+          set -eu
+          test -f "/root/vision-autonomie-operations/$1/enregistre"
+          readlink -f /run/current-system
+          readlink -f /nix/var/nix/profiles/system
+          readlink -f /srv/vision/current
+          readlink -f /srv/vision-interface/current
+          systemctl is-active vision vision-embeddings nginx postgresql mrj-auth
+          test "$(systemctl is-active "vision-autonomie-retour-$(printf '%s' "$1" | cut -c1-12).timer" || :)" != active
+          runuser -u postgres -- psql -XAtq vision -c 'SELECT vision_revision_contrat(),vision_creation_contrat();'
+          cat "/root/vision-autonomie-operations/$1/termine.json"
+          SH
       - name: Revenir si l’essai échoue
         if: failure() && steps.demande.outputs.operation == 'activer'
         working-directory: candidat
