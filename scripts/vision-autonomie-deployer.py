@@ -66,8 +66,9 @@ def restauration_et_plan(d,source,sauvegarde,nom):
   toc=executer('pg_restore','--list',sauvegarde).decode()
   liste=d/(nom+'-toc-prive.txt')
   liste.write_text('\n'.join(l for l in toc.splitlines() if not re.search(r' (?:EXTENSION|COMMENT - EXTENSION) ',l))+'\n')
-  # Le compte postgres lit le TOC par stdin ; le dump est copié vers un chemin
-  # privé qui lui appartient et est supprimé dans finally.
+  # pg_restore ouvre le TOC par nom : /dev/stdin peut désigner un pipe root
+  # inaccessible après runuser. Les deux fichiers privés appartiennent à postgres
+  # et sont supprimés dans finally ; aucune donnée ne quitte le VPS.
   temporaire=Path('/var/lib/postgresql')/(base+'.dump')
   toc_prive=Path('/var/lib/postgresql')/(base+'.list')
   toc_prive.write_bytes(liste.read_bytes());executer('chown','postgres:postgres',toc_prive);toc_prive.chmod(0o600)
