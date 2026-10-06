@@ -2115,3 +2115,64 @@ Vision : preuves consolidées dans rapports/AUTONOMIE-20261006.md. VPS : résult
 :PREUVE: -
 :END:
 
+* Refaire la découverte de Vision et ajouter les composants de vitrine
+:PROPERTIES:
+:ID: 20261006-vision-0ccb7940a06f
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T10:22:50+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Demande explicite du propriétaire : remplacer l’accueil documentaire de Vision par une landing page visuelle avec phrases simples, images originales et captures réelles sur données fictives. Recentrer tutoriel et confidentialité sur les utilisateurs, ajouter les procédures MCP vérifiées, employer des pictogrammes partagés et afficher Vision.MrJ.am en haut sans signature de footer.
+
+Vision : composer les contenus et vérifier mobile/clavier/parcours publics et privés. Style : ajouter une vitrine, un cadre avec marque et des actions à pictogrammes comme API additive ; les composants existants restent compatibles. Signature : utiliser Parisienne originale pour Vision et préserver la signature MrJ.am exacte, vérifiée à sa révision actuelle. VPS : publier serveur et interface exacts après tests, sous retour applicatif, sans migration de données ni reconstruction NixOS. Matheval et Logique conservent leurs versions épinglées ; ces nouveaux composants sont adoptés par Vision uniquement. Aucun secret ou contenu personnel dans les captures. Critère de fin : nouvelle présentation réellement servie, procédures et confidentialité contrôlées, preuves consignées.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
