@@ -69,10 +69,13 @@ def restauration_et_plan(d,source,sauvegarde,nom):
   # Le compte postgres lit le TOC par stdin ; le dump est copié vers un chemin
   # privé qui lui appartient et est supprimé dans finally.
   temporaire=Path('/var/lib/postgresql')/(base+'.dump')
+  toc_prive=Path('/var/lib/postgresql')/(base+'.list')
+  toc_prive.write_bytes(liste.read_bytes());executer('chown','postgres:postgres',toc_prive);toc_prive.chmod(0o600)
   shutil.copyfile(sauvegarde,temporaire);executer('chown','postgres:postgres',temporaire);temporaire.chmod(0o600)
   try:
-   executer('runuser','-u','postgres','--','pg_restore','--exit-on-error','--no-owner','--role=vision','-h','/run/postgresql','-d',base,'--use-list=/dev/stdin',temporaire,entree=liste.read_bytes())
-  finally:temporaire.unlink(missing_ok=True)
+   executer('runuser','-u','postgres','--','pg_restore','--exit-on-error','--no-owner','--role=vision','-h','/run/postgresql','-d',base,'--use-list='+str(toc_prive),temporaire)
+  finally:
+   temporaire.unlink(missing_ok=True);toc_prive.unlink(missing_ok=True)
   definitions=fonctions(base)
   rapport=migration_sequentielle(source,base)
   avant=empreinte_donnees(base)
@@ -96,7 +99,7 @@ def decompresser(source,archive):
   for f in t.getmembers():exiger(not f.issym() and not f.islnk() and (source/f.name).resolve().is_relative_to(source.resolve()),'Archive source non sûre')
   t.extractall(source,filter='data')
 def interface(d,archive,revision):
- cible=Path('/srv/vision-interface/releases')/revision
+ cible=Path('/srv/vision-interface/releases')/(revision+'-'+d.name[:12])
  exiger(not cible.exists(),'Publication statique déjà existante')
  cible.mkdir(mode=0o755,parents=True)
  with zipfile.ZipFile(archive) as z:
@@ -113,7 +116,7 @@ def preparer(revision):
  exiger(avant['vision'].endswith('/c0bfcac66b9ee52e282bb895ec6aed3921a86266') and avant['vision-interface'].endswith('/c0bfcac66b9ee52e282bb895ec6aed3921a86266'),'Publication différente de l’audit')
  app=demande['application'];exiger(re.fullmatch('[0-9a-f]{40}',app),'Révision applicative invalide')
  for n,h in demande['fichiers'].items():exiger(empreinte(src/n)==h,'Archive différente du candidat validé')
- cible=Path('/srv/vision/releases')/app
+ cible=Path('/srv/vision/releases')/(app+'-'+revision[:12])
  exiger(not cible.exists(),'Publication serveur déjà existante')
  cible.mkdir(mode=0o755,parents=True);decompresser(cible,src/'vendor/vision-autonomie-source.tar.gz')
  exiger((cible/'revision-application.txt').read_text().strip()==app,'Source différente')

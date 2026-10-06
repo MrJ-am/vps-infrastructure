@@ -62,6 +62,18 @@ jobs:
           NIXPKGS_MCP=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
           test -n "$NIXPKGS_MCP"
           printf 'NIXPKGS_MCP=%s\n' "$NIXPKGS_MCP" >> "$GITHUB_ENV"
+      - name: Classer l'erreur de restauration précédente sans publier son contenu
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh python3 - <<'PY'
+          from pathlib import Path
+          p=Path('/root/vision-autonomie-operations/e88ba67c78624634819f5bab2c9dc51bdbbddf62/commande-echec-prive.log')
+          if p.exists():
+              t=p.read_text(errors='replace').lower()
+              motifs={'permission-fichier': 'permission denied', 'ouverture-toc': 'toc file', 'extension': 'extension', 'version-client': 'unsupported version'}
+              print('Diagnostic privé, catégories seulement :', ', '.join(k for k,v in motifs.items() if v in t))
+          PY
       - name: Auditer et construire sans activation
         if: steps.demande.outputs.operation == 'preparer'
         working-directory: candidat
