@@ -2160,13 +2160,14 @@ Vision : composer les contenus et vérifier mobile/clavier/parcours publics et p
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 3c6e23fbf466dd47fca2c49b467a78392b8e4aaac8a5cc4360d1b340979ebb2d
+:LU_LE: 2026-10-06T10:27:34+00:00
+:CONTEXTE: MrJ-am/vision@5d9b25e8769ffe2250711fd7d80619c2aa24d8cc
 :PREUVE: -
 :END:
+Lecture des contrats et de la demande ; réalisation en cours avec changements additifs et contrôles publics/privés.
 
 ** TODO vps
 :PROPERTIES:
