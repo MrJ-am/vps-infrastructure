@@ -1,0 +1,10 @@
+{
+  "application": "d382a0b4d9a7e305c42f10fb18596f7ed42b94b8",
+  "ci_backend": 37426238467,
+  "ci_interface": 37426238460,
+  "artefact_interface": 11395073509,
+  "fichiers": {
+    "vendor/vision-autonomie-source.tar.gz": "d097d7bfd46f964e98780c252f4d5495137d36304e90802c0e271829ebb5f13e",
+    "vendor/vision-autonomie-interface.zip": "435c06fbcc619ebd0e514c93a3f3bd2f35f76373384df62ac3be35e4e46335ef"
+  }
+}

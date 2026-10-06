@@ -1,0 +1,22 @@
+[
+  "rechercher",
+  "preparer_creation_item",
+  "lire",
+  "preparer_revision",
+  "lister_seances",
+  "lire_seance",
+  "ouvrir_seance",
+  "clore_seance",
+  "enregistrer_fiche",
+  "enregistrer_item",
+  "lier_item",
+  "evaluer_items",
+  "ajouter_observation",
+  "enregistrer_contexte",
+  "regler_politique",
+  "lire_politique",
+  "lien_fiche",
+  "etat_fiche",
+  "bilan_fiches",
+  "tutoriel"
+]

@@ -1,0 +1,33 @@
+name: Qualifier le retour SQL de Vision 2.6
+on:
+  push:
+    paths: ['scripts/vision-autonomie-*.py', 'tests/vision-autonomie-retour.py', '.github/workflows/vision-autonomie*.yml', 'vendor/vision-autonomie-source.tar.gz']
+  pull_request:
+    paths: ['scripts/vision-autonomie-*.py', 'tests/vision-autonomie-retour.py', '.github/workflows/vision-autonomie*.yml', 'vendor/vision-autonomie-source.tar.gz']
+permissions:
+  contents: read
+jobs:
+  retour:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.2-pg17
+        env:
+          POSTGRES_DB: vision_test
+          POSTGRES_PASSWORD: fixture-password
+        ports: ['5432:5432']
+        options: --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGDATABASE: vision_test
+      PGPASSWORD: fixture-password
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - run: |
+          mkdir application
+          tar -xzf vendor/vision-autonomie-source.tar.gz -C application
+          python3 -m py_compile scripts/vision-autonomie-deployer.py scripts/vision-autonomie-verifier.py scripts/vision-autonomie-mcp-verifier.py
+          python3 tests/vision-autonomie-retour.py
