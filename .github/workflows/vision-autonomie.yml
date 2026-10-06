@@ -66,7 +66,7 @@ jobs:
         if: steps.demande.outputs.operation == 'preparer'
         working-directory: candidat
         run: |
-          sh scripts/connect.sh python3 - <<'PY'
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 --run 'python3 -'" <<'PY'
           from pathlib import Path
           p=Path('/root/vision-autonomie-operations/e88ba67c78624634819f5bab2c9dc51bdbbddf62/commande-echec-prive.log')
           if p.exists():
