@@ -2160,14 +2160,84 @@ Vision : composer les contenus et vérifier mobile/clavier/parcours publics et p
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 3c6e23fbf466dd47fca2c49b467a78392b8e4aaac8a5cc4360d1b340979ebb2d
-:LU_LE: 2026-10-06T10:27:34+00:00
-:CONTEXTE: MrJ-am/vision@5d9b25e8769ffe2250711fd7d80619c2aa24d8cc
+:LU_LE: 2026-10-06T11:49:50+00:00
+:CONTEXTE: MrJ-am/vision@fec685505a156ab498a773c06f7e6190a052647c
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37457922254 ; rapports/VITRINE-20261006.md ; production 2.6.1 vérifiée
+:END:
+Accueil visuel et onze chapitres réellement servis. Contrôles complets, aucune migration de données.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
 :PREUVE: -
 :END:
-Lecture des contrats et de la demande ; réalisation en cours avec changements additifs et contrôles publics/privés.
+
+* Vision : vitrine visuelle et connexions MCP publiées
+:PROPERTIES:
+:ID: 20261006-vision-ef04979314f4
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T11:49:51+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Livraison exécutée le 6 octobre 2026 : Vision 2.6.1 est publié sur son site. Le nouvel accueil présente cinq visuels originaux ou captures réelles sur données fictives. Le tutoriel commun comporte onze chapitres et les procédures ChatGPT/OpenAI, Claude/Anthropic, Gemini CLI, Codex et autres clients. Tutoriel et confidentialité excluent les détails d’hébergement. La marque sélectionnable Vision.MrJ.am remplace la signature de footer ; les actions usuelles utilisent les pictogrammes communs.
+
+Vision compilé : 166fce94afa84d1dd9b786f756a1e958eecc764e. Rapport actuel : MrJ-am/vision@fec685505a156ab498a773c06f7e6190a052647c, rapports/VITRINE-20261006.md. Style commun : ed6e4af0c1c0080862b6f6f6e6417849cf8c84fb ; Signature originale : 17495b13cefa24473e37434b98336b27caec8cdf. API additionnelles de style : Documents.espaceMarque, Identite.marque, Pictogrammes et Vitrine. Les composants existants restent compatibles. Les fontes réservées ne sont pas distribuées dans le dépôt public de style. Matheval et Logique restent à leurs révisions actuelles.
+
+VPS : opérateur 633471aa3a2f00a354ac2341c3b1292bb2321a03. Préparation Actions 37456998498, activation 37457545367 et constat indépendant 37457922254 réussis. Sauvegarde restaurée sur une copie ; démarrage candidat sans écriture. Aucune migration ou restauration de production ; vingt tables, contrats SQL 7/1, configuration, générations, autres services, fournisseur local et anciennes releases conservés. Retour applicatif désarmé après contrôles. Preuve complète : operations/vision-vitrine-publication.json.
+
+Contrôles : CI style 37453911965, serveur 37455144825, interface 37455144907, création sémantique 37455144797 et infrastructure 37456659591 réussies. 35 sondes HTTPS, artefact exact, cinq visuels, fontes, quatre formats, copie MCP, onze chapitres web/MCP, confidentialité, Basic/Bearer/OAuth PKCE, sessions/CSRF et révocations vérifiés deux fois. Une revue anonyme de la vraie production a aussi réussi sur mobile et ordinateur. Les guides officiels des clients sont vérifiés ; aucune connexion à un compte personnel chez les fournisseurs n’est revendiquée.
+
+Impact MCP : les vingt outils sont conservés. tutoriel expose l’index des onze chapitres et leur contenu à la demande. Le GET public /mcp-config.json retourne les seules adresses réellement configurées. Aucun changement de politique, séance ou mémorisation n’est autorisé par la simple découverte du produit.
+
+Action des destinataires : prendre connaissance des nouvelles révisions et API avant une adoption ultérieure ; garder les versions épinglées actuelles tant qu’une nouvelle publication n’est pas préparée. Acquitter DONE avec le contexte réellement lu. Cette livraison ne demande aucun redéploiement supplémentaire ni changement de données.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: e7854e59365189bc2b72347479aa315f56fa26e793689294fd60e0fc93be73c3
+:LU_LE: 2026-10-06T11:54:36+00:00
+:CONTEXTE: MrJ-am/vision@fec685505a156ab498a773c06f7e6190a052647c
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37457922254 ; livraison 2.6.1 exécutée et relue
+:END:
+Compte rendu et état de production vérifiés. Les autres destinataires restent à acquitter par leurs propres projets.
 
 ** TODO vps
 :PROPERTIES:
