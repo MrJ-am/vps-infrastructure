@@ -1,5 +1,35 @@
 # État attesté au 6 octobre 2026
 
+## Vision 2.6.1 — vitrine publiée et constatée le 6 octobre 2026, 11:42 UTC
+
+Accueil visuel, cinq illustrations et captures fictives, marque Vision.MrJ.am,
+pictogrammes communs et suppression de la signature de bas de page. Tutoriel
+commun de onze chapitres avec procédures ChatGPT, Claude, Gemini CLI et Codex.
+La confidentialité et le tutoriel excluent les détails d’hébergement.
+
+Application `166fce94afa84d1dd9b786f756a1e958eecc764e`, style
+`ed6e4af0c1c0080862b6f6f6e6417849cf8c84fb`, opérateur
+`633471aa3a2f00a354ac2341c3b1292bb2321a03`.
+Préparation [37456998498](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37456998498),
+activation [37457545367](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37457545367)
+et constat indépendant [37457922254](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37457922254)
+réussis. [État complet et empreintes](../operations/vision-vitrine-publication.json).
+[Procédure](VISION-VITRINE.md).
+
+Aucune migration ni restauration de production. Les vingt tables, les contrats
+SQL 7/1, les générations NixOS, la configuration, les autres applications et le
+fournisseur local sont préservés. La sauvegarde est restaurée dans une base
+jetable et le serveur candidat y démarre sans écrire. Le retour applicatif
+est désarmé après contrôles ; anciennes releases et sauvegardes privées conservées.
+
+Les 35 sondes HTTP/TLS, vingt outils, OAuth PKCE, Basic, Bearer, sessions/CSRF,
+liens privés, rapports, révocations et artefact exact sont vérifiés. Les cinq
+visuels, les fontes, la copie de l’adresse MCP, les onze chapitres web et MCP,
+la confidentialité et quatre formats ont aussi passé le constat indépendant.
+Les connexions à des comptes personnels OpenAI, Anthropic ou Google ne sont
+pas simulées : leurs procédures reposent sur les guides officiels vérifiés.
+
+
 ## Vision 2.6 — publication et constat indépendant, 6 octobre 2026, 08:24 UTC
 
 Application `c747ad881849ffbc9bd7caa6c24e9934e75ce9a2`, source opérateur

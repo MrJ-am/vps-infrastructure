@@ -1,0 +1,65 @@
+{
+  "version": "2.6.1",
+  "date": "2026-10-06T11:42:28Z",
+  "application": "166fce94afa84d1dd9b786f756a1e958eecc764e",
+  "style": "ed6e4af0c1c0080862b6f6f6e6417849cf8c84fb",
+  "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+  "source_operateur": "633471aa3a2f00a354ac2341c3b1292bb2321a03",
+  "ci_backend": 37455144825,
+  "ci_interface": 37455144907,
+  "ci_creation": 37455144797,
+  "ci_style": 37453911965,
+  "ci_infrastructure": 37456659591,
+  "audit": 37452455646,
+  "assemblage": 37455469052,
+  "preparation": 37456998498,
+  "activation": 37457545367,
+  "constat": 37457922254,
+  "fichiers": {
+    "vendor/vision-vitrine-source.tar.gz": "34f515cad899168f24dd7f673ba950e760be07d6d65f70863c5f4d428ac564cc",
+    "vendor/vision-vitrine-interface.zip": "65058e07d9aea01419b69c48e633fd1442c6105fdeea69a4036c82e6f9faef47"
+  },
+  "etat": {
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+    "vision": "/srv/vision/releases/166fce94afa84d1dd9b786f756a1e958eecc764e-633471aa3a2f",
+    "vision-interface": "/srv/vision-interface/releases/166fce94afa84d1dd9b786f756a1e958eecc764e-633471aa3a2f",
+    "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3",
+    "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+  },
+  "rapport": {
+    "version": "2.6.1",
+    "audit": 37452455646,
+    "migrations": [],
+    "contrat_sql": 7,
+    "creation_items": 1,
+    "restauration_verifiee": true,
+    "demarrage_copie_sans_ecriture": true,
+    "timer_verifie": true,
+    "sauvegarde_sha256": "a2e2b1e607b3745add52c48d92c90ea4a50c0e6ebdb03403cb14d9bc117cc994",
+    "sauvegarde_octets": 606766,
+    "donnees_preservees": true,
+    "tables_preservees": 20,
+    "sauvegarde_activation_sha256": "7fa0effbf3fbbe29aa13c8ec91e15df8b324d61780898942daba56c12e990ee6",
+    "ecritures_metier_production": 0,
+    "restauration_production": false
+  },
+  "retour_desarme": true,
+  "parcours": {
+    "visuels": 5,
+    "chapitres": 11,
+    "largeurs": [
+      320,
+      375,
+      768,
+      1440
+    ],
+    "outils_mcp": 20,
+    "oauth_pkce": true,
+    "bearer": true,
+    "basic": true,
+    "session_csrf": true,
+    "revocation": true
+  }
+}
