@@ -2247,3 +2247,62 @@ Compte rendu et état de production vérifiés. Les autres destinataires restent
 :PREUVE: -
 :END:
 
+* Aligner la marque composée de Vision
+:PROPERTIES:
+:ID: 20261006-vision-1c30874c305c
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T15:22:18+00:00
+:CONSOLIDATION: CONTRATS.org#style
+:END:
+Correctif demandé par le propriétaire : aligner Vision. et la signature MrJ.am dans la marque composée. Le composant Identite.marque centre actuellement deux boîtes dont les fontes ont des métriques différentes. Passage à une ligne typographique commune, sans modification des fontes ni de la signature originale. Vision est le seul consommateur de cette variante ; Matheval et Logique gardent leurs artefacts épinglés. Contrôles : métriques et rendu agrandi, quatre largeurs, navigation privée et publique ; reconstruction Vision puis préparation/activation/constat via Actions, sans migration SQL ni modification NixOS.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
