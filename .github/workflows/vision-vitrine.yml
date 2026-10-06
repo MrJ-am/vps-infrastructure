@@ -1,0 +1,166 @@
+name: Publier la vitrine Vision sans modification de données
+on:
+  push:
+    branches: [main]
+    paths: [operations/vision-vitrine.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  refonte:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Vérifier la demande et la CI de sa révision exacte
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/vision-vitrine.json'))
+          assert set(d)=={'operation','revision','audit'} and d['operation'] in ('preparer','activer','constater')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:runs=json.load(r)['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['conclusion']=='success' for r in runs),'CI exacte non réussie'
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/runs/'+str(d['audit']),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:audit=json.load(r)
+          assert audit['path']=='.github/workflows/audit.yml' and audit['conclusion']=='success'
+          candidat=json.loads(subprocess.check_output(['git','show',d['revision']+':operations/vision-vitrine-candidat.json']))
+          assert d['audit']==candidat['audit'] and audit['head_sha']==candidat['audit_revision'],'Audit non lié au candidat'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('revision='+d['revision']+'\noperation='+d['operation']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Contrôler les archives exactes avant transfert
+        working-directory: candidat
+        run: python3 scripts/vision-vitrine-candidat.py
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/mcp-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/mcp-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/mcp-cle" >> "$GITHUB_ENV"
+      - name: Relever le Nixpkgs réellement installé sans mise à jour
+        working-directory: candidat
+        run: |
+          NIXPKGS_MCP=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          test -n "$NIXPKGS_MCP"
+          printf 'NIXPKGS_MCP=%s\n' "$NIXPKGS_MCP" >> "$GITHUB_ENV"
+      - name: Auditer et construire sans activation
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/vision-vitrine-operations/$REVISION/preparation.json; mkdir -p /root/vision-vitrine-operations/$REVISION/source; tar -xf - -C /root/vision-vitrine-operations/$REVISION/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-vitrine-operations/$REVISION/source/scripts/vision-vitrine-deployer.py preparer $REVISION'"
+      - name: Installer le navigateur de contrôle
+        if: steps.demande.outputs.operation != 'preparer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Armer le retour autonome et essayer le candidat
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-vitrine-operations/$REVISION/source/scripts/vision-vitrine-deployer.py demarrer $REVISION'"
+      - name: Contrôler une nouvelle connexion, les sites et les sauvegardes
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
+          python3 scripts/mcp-probe.py
+      - name: Vérifier le token depuis HTTPS et le navigateur
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: python3 scripts/vision-vitrine-mcp-verifier.py
+      - name: Vérifier l’interface exacte et les accès navigateur
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          VISION_INTERFACE_ARTEFACT: artefact
+          VISION_API_USERNAME: ${{ secrets.VISION_API_USERNAME }}
+          VISION_API_PASSWORD: ${{ secrets.VISION_API_PASSWORD }}
+        run: |
+          unzip -q vendor/vision-vitrine-interface.zip -d artefact
+          python3 scripts/vision-vitrine-verifier.py
+      - name: Enregistrer les deux publications contrôlées sans changement SQL
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-vitrine-operations/$REVISION/source/scripts/vision-vitrine-deployer.py finaliser $REVISION'"
+          sh scripts/connect.sh "cat /root/vision-vitrine-operations/$REVISION/termine.json"
+      - name: Constater la publication depuis une nouvelle connexion
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh sh -s "$REVISION" <<'SH'
+          set -eu
+          test -f "/root/vision-vitrine-operations/$1/enregistre"
+          readlink -f /run/current-system
+          readlink -f /nix/var/nix/profiles/system
+          readlink -f /srv/vision/current
+          readlink -f /srv/vision-interface/current
+          systemctl is-active vision vision-embeddings nginx postgresql mrj-auth
+          test "$(systemctl is-active "vision-vitrine-retour-$(printf '%s' "$1" | cut -c1-12).timer" || :)" != active
+          runuser -u postgres -- psql -XAtq vision -c 'SELECT vision_revision_contrat(),vision_creation_contrat();'
+          cat "/root/vision-vitrine-operations/$1/termine.json"
+          test "$(runuser -u postgres -- psql -XAtq vision -c "SELECT count(*) FROM pg_extension WHERE extname='vector'")" = 1
+          SH
+      - name: Revenir si l’essai échoue
+        if: failure() && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_MCP -p python3 postgresql_17 --run 'python3 /root/vision-vitrine-operations/$REVISION/source/scripts/vision-vitrine-deployer.py retour $REVISION'"
+      - name: Conserver uniquement le rapport sans contenu privé
+        if: success()
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          mkdir -p rapports-vitrine
+          sh scripts/connect.sh "cat /root/vision-vitrine-operations/$REVISION/preparation-rapport.json" > rapports-vitrine/preparation.json
+          if [ "${{ steps.demande.outputs.operation }}" != preparer ]; then
+            sh scripts/connect.sh "cat /root/vision-vitrine-operations/$REVISION/termine.json" > rapports-vitrine/publication.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: vision-vitrine-${{ steps.demande.outputs.operation }}
+          path: |
+            candidat/rapports-vitrine
+            candidat/rapports-vision
+          retention-days: 30
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/mcp-cle"
+
