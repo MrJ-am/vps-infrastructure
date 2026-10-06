@@ -715,3 +715,17 @@ sur le rendu HTTPS à quatre largeurs et agrandie quatre fois. Vingt tables
 préservées ; aucune migration, restauration de production ou modification
 NixOS. Retour désarmé. Les autres releases et sauvegardes restent conservées.
 Voir [le rapport](../operations/vision-alignement-publication.json).
+
+
+## Vision — point Echo et AGPL, 6 octobre 2026
+
+Serveur et interface : `ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf`, style
+`4e8214970c22160059fe1024f854e8ecb0cbc59e`, opérateur
+`f27ea81080d570bc2f905c7fcad4099ac245bc05`. Audit 37491350997, CI 37492890918,
+préparation 37493315938, activation 37493485203 et constat indépendant
+37493885562 réussis. Motifs des points identiques en HTTPS et marque alignée,
+quatre formats et grossissement ×4 vérifiés. Code Vision sous AGPL-3.0-or-later ;
+identité réservée, fontes OFL et licences externes conservées. Vingt tables
+préservées, aucune migration ni restauration de production. Génération NixOS
+et autres releases inchangées, retour désarmé, sauvegardes conservées.
+Voir [le rapport](../operations/vision-point-licence-publication.json).
