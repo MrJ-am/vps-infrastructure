@@ -20,7 +20,9 @@ avec l’audit. Elle construit avec le Nixpkgs réellement installé. Elle conse
 un dump privé et vérifie sa restauration dans une base jetable. Le serveur
 candidat démarre sur cette copie. Le compte Unix `postgres` ouvre la connexion
 avec le rôle SQL `vision`. Cela respecte le refus des bases étrangères pour
-le compte Unix `vision` sans modifier les règles d’accès de production. Les empreintes de toutes ses tables doivent
+le compte Unix `vision` sans modifier les règles d’accès de production.
+Le groupe supplémentaire `vision` permet de lire la release pendant ce seul
+processus de contrôle. Aucun compte ou droit de fichier n’est modifié. Les empreintes de toutes ses tables doivent
 rester identiques après les lectures. La base jetable est ensuite supprimée.
 Aucune donnée personnelle ne quitte le VPS ou n’entre dans les captures.
 

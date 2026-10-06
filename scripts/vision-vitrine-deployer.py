@@ -79,7 +79,9 @@ def essayer_serveur(cible,base,url_mcp):
         # La copie jetable passe par le pair postgres, avec SET ROLE dès la
         # connexion. Les requêtes gardent les droits SQL de vision et aucune
         # règle d’accès de production n’est élargie pour permettre le test.
-        processus=subprocess.Popen(['runuser','-u','postgres','--',str(cible/'vision')],
+        # Le groupe supplémentaire donne seulement la traversée des releases
+        # protégées. Aucun compte ni permission de fichier n’est modifié.
+        processus=subprocess.Popen(['runuser','-u','postgres','-g','postgres','-G','vision','--',str(cible/'vision')],
             cwd=cible,
             env={**os.environ,'IP':'127.0.0.1','PORT':str(port),'PGHOST':'/run/postgresql','PGDATABASE':base,'PGUSER':'postgres','PGOPTIONS':'-c role=vision','VISION_DOCUMENT_ROOT':str(cible/'docs')},
             stdout=journal,stderr=journal)
