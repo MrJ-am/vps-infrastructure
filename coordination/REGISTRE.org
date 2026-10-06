@@ -2369,3 +2369,62 @@ Rapports : MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d docs/ALIGNEMEN
 :PREUVE: -
 :END:
 
+* Unifier les points de la marque et licencier Vision
+:PROPERTIES:
+:ID: 20261006-vision-5c8b8153d436
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-06T15:53:51+00:00
+:CONSOLIDATION: CONTRATS.org#style
+:END:
+Demande du propriétaire : remplacer le point entre Vision et MrJ.am par le dessin Echo déjà présent dans la signature, et placer le dépôt Vision sous AGPL v3 ou ultérieure. Identite.marque utilisera la fonte EchoPoint existante et autorisée, à l'échelle du point de la composition originale. Signature et ses ressources ne changent pas. Code de Vision sous AGPL-3.0-or-later ; identité réservée et licences externes conservées. La licence du dépôt public style-mrjam n'est pas modifiée par cette demande visant Vision. Vision est le seul consommateur concerné par la variante ; autres artefacts épinglés inchangés. Vérification des pixels des deux points, baseline, petits écrans, parcours publics/privés et publication via Actions sans migration SQL ni changement NixOS.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
