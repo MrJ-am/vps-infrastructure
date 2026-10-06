@@ -37,7 +37,7 @@ def empreinte_donnees(base):
 def fonctions(base):
  # Définitions exactes et privées : restaurer le contrat ancien sans rejouer une
  # migration historique ni effacer les données collectées pendant l'essai.
- return psql(base,"SELECT string_agg(pg_get_functiondef(p.oid), E'\\n' ORDER BY p.oid) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.proname IN ('vision_politique','vision_evaluer','vision_clore_seance_v2','vision_clore_seance','vision_commande','vision_revision_contrat')").decode()
+ return psql(base,"SELECT string_agg(pg_get_functiondef(p.oid)||';', E'\\n' ORDER BY p.oid) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='public' AND p.proname IN ('vision_politique','vision_evaluer','vision_clore_seance_v2','vision_clore_seance','vision_commande','vision_revision_contrat')").decode()
 
 def migration_sequentielle(source,base):
  exiger(psql(base,'SELECT count(*) FROM vision_schema_migrations WHERE version BETWEEN 1 AND 16').strip()==b'16','Socle 001–016 absent')
