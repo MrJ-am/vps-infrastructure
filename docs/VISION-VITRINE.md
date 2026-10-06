@@ -18,7 +18,9 @@ Seul le workflow `vision-vitrine.yml` exécute les commandes distantes.
 La préparation compare les publications, les générations et la configuration
 avec l’audit. Elle construit avec le Nixpkgs réellement installé. Elle conserve
 un dump privé et vérifie sa restauration dans une base jetable. Le serveur
-candidat démarre sur cette copie. Les empreintes de toutes ses tables doivent
+candidat démarre sur cette copie. Le compte Unix `postgres` ouvre la connexion
+avec le rôle SQL `vision`. Cela respecte le refus des bases étrangères pour
+le compte Unix `vision` sans modifier les règles d’accès de production. Les empreintes de toutes ses tables doivent
 rester identiques après les lectures. La base jetable est ensuite supprimée.
 Aucune donnée personnelle ne quitte le VPS ou n’entre dans les captures.
 
