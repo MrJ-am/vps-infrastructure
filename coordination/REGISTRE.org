@@ -1734,14 +1734,14 @@ Après une séance de TSD de huit questions, le propriétaire a demandé une rem
 
 Vision : vérifier les contrats générés et publier la source applicative. VPS : pour le déploiement applicatif, préserver les données, l'authentification et les autres sites, puis contrôler la version réellement servie. Aucun changement SQL, NixOS ni style partagé n'est demandé. Ce message annonce le chantier, pas une activation. Critère de fin : instructions MCP nouvelles vérifiées en production et compte rendu de publication ajouté au registre.
 
-** BLOQUE vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 9eb10298c998f4191bf1fc179a9ce4993ec2d44ab869a2e665fcd16bac9e3d72
-:LU_LE: 2026-09-29T20:27:07+00:00
-:CONTEXTE: MrJ-am/vision@8a3307db1bd8f43520ad8bbd6f4ad82315541c28
-:PREUVE: Commit publié ; CI 36626129481 et 36626129628 échouent avant toute étape, y compris après relance. Aucun déploiement revendiqué.
+:LU_LE: 2026-10-06T08:30:10+00:00
+:CONTEXTE: MrJ-am/vision@c747ad881849ffbc9bd7caa6c24e9934e75ce9a2
+:PREUVE: Tutorat repris dans la mission 20261005-vision-contrat-accessible, contrat commun servi dans Vision 2.6. Activation 37435297652 et constat 37435615890 réussis.
 :END:
-Le runner GitHub n'a pas démarré (runner_id=0, steps=[]). Le workflow de publication exige une CI réussie sur le commit exact ; préparation et activation sont suspendues.
+Le blocage des runners du 29 septembre appartient à cette tentative historique. Les nouvelles preuves établissent la livraison du contrat commun sur les parcours réels, sans réécrire les résultats des anciens runs.
 
 ** TODO vps
 :PROPERTIES:
@@ -2070,12 +2070,41 @@ Mission explicite du propriétaire : centraliser le contrat pédagogique livré 
 
 Vision : qualifier migrations, temps et accès sur bases isolées puis assembler les sources exactes et l’interface. VPS : adapter la publication applicative au nouveau contrat SQL, tester une sauvegarde restaurée et le retour de code sans restauration de production ; préserver pgvector/fournisseur et génération active. Aucun changement de style partagé prévu. Fin : CI exactes et parcours réellement servis, preuves et limites consignées.
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 21a05e652cd91c85587422ec19e4eccb162db99e1b96cda02e47e1ed1a74e65c
-:LU_LE: 2026-10-05T21:00:00+00:00
-:CONTEXTE: MrJ-am/vision@b1e58c8d619118f84e01530f5c7965bb54cd79a0
+:LU_LE: 2026-10-06T08:30:10+00:00
+:CONTEXTE: MrJ-am/vision@c747ad881849ffbc9bd7caa6c24e9934e75ce9a2
+:PREUVE: Vision 2.6 publiée ; activation 37435297652 et constat indépendant 37435615890 réussis ; migrations additives 017/018 et 19 tables préservées. operations/vision-autonomie-publication.json.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
 :PREUVE: -
+:END:
+
+* Vision 2.6 publiée et constatée après finalisation
+:PROPERTIES:
+:ID: 20261006-vision-e3f62d1a5829
+:EMETTEUR: vision
+:PORTEE: ciblee
+:DESTINATAIRES: vision vps
+:CREE_LE: 2026-10-06T08:30:43+00:00
+:CONSOLIDATION: CONTRATS.org#vision
+:END:
+Vision 2.6.0 est effectivement publiée : source MrJ-am/vision@c747ad881849ffbc9bd7caa6c24e9934e75ce9a2, opérateur MrJ-am/vps-infrastructure@88b72ae8e5deb9eb1db6152f0eda910d555d58c1. Préparation 37435153077, activation 37435297652 et constat indépendant 37435615890 réussis. Sauvegarde restaurée et retour SQL essayés ; migrations additives 017/018, 19 tables historiques préservées, contrats SQL 7/1. Vingt outils MCP, 35 sondes HTTP/TLS et parcours Basic/Bearer/OAuth, sessions/CSRF, accueil, liens privés, politique, rapports, tutoriel et interface exacte vérifiés. Aucune séance fictive en production. Timer désarmé ; anciennes releases et génération active conservées. Aucun changement du style partagé, de NixOS ou des secrets.
+
+Vision : preuves consolidées dans rapports/AUTONOMIE-20261006.md. VPS : résultat et procédure dans operations/vision-autonomie-publication.json, docs/VISION-AUTONOMIE.md et docs/ETAT.md ; contrat commun synthétisé dans CONTRATS.org#vision. Les prescriptions pédagogiques ne certifient pas le comportement de tous les LLM ; les bornes temporelles ne prouvent pas la provenance des dates ; aucune provenance historique incertaine reconstituée. Les sauvegardes privées restent locales au VPS.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 00ec99658611d3dddad279f5fdcf68484277cb38aac7844db8446341e58cca19
+:LU_LE: 2026-10-06T08:31:17+00:00
+:CONTEXTE: MrJ-am/vision@c747ad881849ffbc9bd7caa6c24e9934e75ce9a2
+:PREUVE: Activation 37435297652 et constat 37435615890 réussis ; rapport applicatif et preuve JSON consolidés.
 :END:
 
 ** TODO vps

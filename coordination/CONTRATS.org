@@ -108,22 +108,25 @@ Tout changement de fond exige un message dans REGISTRE.org.
 :PROPERTIES:
 :CUSTOM_ID: vision
 :END:
-- Vision 2.5 : quinze outils REST/MCP ; tools/list fait foi. Anciens noms :
-  contrat_retire ; aucune conversion FSRS.
-- Création : preparer_creation_item reçoit le contenu complet ; recherche globale
-  hybride, archives incluses, dix candidats complets puis décision LLM, sans fusion.
-  Preuve exacte de trente minutes, usage unique et examen déclaré.
-- pgvector/PostgreSQL 17 et fournisseur local actifs : préserver vision-semantique.nix,
-  sources et GC. Contrat et preuves : docs/VISION-CREATION-SEMANTIQUE.md.
-- Item : une connaissance autonome, sans titre, objectif, sens ni suivi éditorial.
-  Fiche : titre, contenu, objectif et contexte de révision. Observations datées
-  (fait/saisie), immuables, rectifiables par ajout ; doublons historiques conservés
-  dans l'audit brut mais affichés une seule fois.
-- preparer_revision et ouvrir_seance priorisent la fermeture des fenêtres actives ;
-  les nouveaux items complètent le lot. Fiche, items et observations sont fournis.
-  Séances ouvertes lisibles ; confirmation avant ajout d'une nouvelle séance.
-- clore_seance : écriture atomique ; déroulement/retour facultatifs, versions et
-  épisodes gérés par Vision, sens libre. Aucun double crédit au rejeu. Démarrage :
-  contrôle des fonctions SQL de clôture, migrations enregistrées non rejouées.
-- Préserver Basic/Bearer/OAuth, sessions, CSRF et isolation par compte. Aucun retour
-  applicatif ne restaure PostgreSQL. Preuves : docs/ETAT.md et operations/vision-refonte-publication.json.
+- Vision 2.6 : vingt outils REST/MCP ; tools/list fait foi. Anciens noms :
+  contrat_retire, aucune conversion FSRS.
+- Création : contenu complet, recherche hybride globale/archives, dix candidats,
+  décision LLM sans fusion ; preuve trente minutes, usage unique/examen déclaré.
+  Préserver PG17/pgvector, fournisseur/GC ; docs/VISION-CREATION-SEMANTIQUE.md.
+- Item partagé autonome : stabilité/observations communes. Fiche : titre,
+  contenu/objectif/consignes. Observations immuables, rectification par ajout ;
+  doublons audités, dédupliqués à l'affichage.
+- Révision : fermeture des fenêtres prioritaire, nouveaux en complément ;
+  séances lisibles, confirmation avant ajout.
+  Contrat commun au démarrage/reprise : sens, faux/incomplet signalé, aides
+  graduées, autonomie distincte. Prescriptions LLM non garanties.
+- Clôture atomique, versions/épisodes serveur, sens libre ;
+  rejeu sans double gain, rectification aux dates historiques. Sous le seuil
+  personnel (60 min) : approximation à la clôture ; dès la borne : dates à
+  résoudre ou trace non datée, clôture incertaine avec accord explicite.
+  Dates hors bornes refusées atomiquement.
+- Politique lisible/partielle/versionnée ; liens privés configurés,
+  rapports/Markdown paginés, tutoriel commun, accueil public. Migrations
+  additives 017/018 ; démarrage SQL 7/1. Préserver Basic/Bearer/OAuth,
+  sessions/CSRF, isolation ; retour sans restauration PostgreSQL.
+  Preuves : operations/vision-autonomie-publication.json.

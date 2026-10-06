@@ -1,4 +1,36 @@
-# État attesté au 26 septembre 2026
+# État attesté au 6 octobre 2026
+
+## Vision 2.6 — publication et constat indépendant, 6 octobre 2026, 08:24 UTC
+
+Application `c747ad881849ffbc9bd7caa6c24e9934e75ce9a2`, source opérateur
+`88b72ae8e5deb9eb1db6152f0eda910d555d58c1`. Préparation
+[37435153077](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37435153077),
+activation [37435297652](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37435297652)
+et constat indépendant [37435615890](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37435615890)
+réussis. Source, interface et empreintes :
+[preuve complète](../operations/vision-autonomie-publication.json).
+[Procédure et limites](VISION-AUTONOMIE.md).
+
+Vision sert 2.6.0, vingt outils MCP et les contrats SQL 7/1. Migrations
+additives 017/018 appliquées ; 19 tables historiques préservées. Sauvegarde
+restaurée, essais annulés et vrai retour SQL testés avant activation.
+Aucune séance fictive ni restauration de la base de production.
+Publication enregistrée ; timer de retour autonome désarmé.
+Les 35 sondes HTTP/TLS, Basic/Bearer/OAuth PKCE, sessions/CSRF, révocation,
+accueil public, politique, tutoriel, liens privés, rapports et interface
+exacte ont réussi, puis ont été contrôlés une seconde fois après finalisation.
+
+Générations active et de démarrage conservées :
+`/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Matheval `04168b68723322afe18b51d20e8089121348b8b3` et Logique
+`2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f` conservent leurs publications.
+PostgreSQL 17.11, pgvector 0.8.2, fournisseur local, routage, secrets et style
+partagé conservés. Les anciennes releases et sauvegardes privées restent disponibles.
+
+Le contrat prescrit le comportement du LLM ; les tests ne certifient pas
+l'application de ces règles par tous les modèles. Les dates anciennes
+incertaines ne sont pas reconstituées. Les sauvegardes restent locales au VPS.
+
 
 ## Talk installé et vérifié le 30 septembre 2026 à 22:17 UTC
 

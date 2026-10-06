@@ -1,0 +1,70 @@
+{
+  "version": "2.6.0",
+  "revision": "88b72ae8e5deb9eb1db6152f0eda910d555d58c1",
+  "application": "c747ad881849ffbc9bd7caa6c24e9934e75ce9a2",
+  "etat": {
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+    "vision": "/srv/vision/releases/c747ad881849ffbc9bd7caa6c24e9934e75ce9a2-88b72ae8e5de",
+    "vision-interface": "/srv/vision-interface/releases/c747ad881849ffbc9bd7caa6c24e9934e75ce9a2-88b72ae8e5de",
+    "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3",
+    "logique": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f"
+  },
+  "rapport": {
+    "migrations": [
+      17,
+      18
+    ],
+    "contrat_sql": 7,
+    "donnees_preservees": true,
+    "tables_preservees": 19,
+    "seances_de_test_production": 0,
+    "restauration_verifiee": true,
+    "retour_sql_verifie": true,
+    "tests_annules": true,
+    "sauvegarde_sha256": "c663fcd8007b3821707a76601870ae2817f0655f10cad35b7702cce1cd549193",
+    "sauvegarde_octets": 549193
+  },
+  "preuves": {
+    "audit": 37427041831,
+    "ci_backend": 37433500057,
+    "ci_interface": 37433499844,
+    "ci_creation_semantique": 37433499839,
+    "assemblage": 37434144688,
+    "ci_infrastructure": 37434782274,
+    "ci_retour_sql": 37434782279,
+    "preparation": 37435153077,
+    "activation": 37435297652,
+    "constat_independant": 37435615890
+  },
+  "archives": {
+    "vendor/vision-autonomie-source.tar.gz": "8547643547502619ddb2b7a8856d69529c76c4fb6bf1c04a1eb639e8643f2ccb",
+    "vendor/vision-autonomie-interface.zip": "ab0d782cd2bad777eacfde9544ab3d5119c3636bebbb6c615bfc99b6daa58295"
+  },
+  "verification": {
+    "outils_mcp": 20,
+    "controles_http_tls": 35,
+    "tests_http_sql": 42,
+    "tests_unitaires_catalogue_contrat": 6,
+    "formats_navigateur": [
+      320,
+      375,
+      768,
+      1280
+    ],
+    "basic": true,
+    "bearer": true,
+    "oauth_pkce": true,
+    "sessions_csrf": true,
+    "retour_desarme": true,
+    "aucune_ecriture_metier_de_test_en_production": true
+  },
+  "limites": [
+    "Le contrat prescrit le comportement du LLM ; il ne prouve pas que chaque modèle l'appliquera.",
+    "Les bornes temporelles vérifient une plausibilité, pas l'authenticité d'une provenance.",
+    "Aucune provenance historique incertaine n'est reconstruite.",
+    "Les sauvegardes restent privées et locales au VPS."
+  ],
+  "constate_a": "2026-10-06T08:24:05Z"
+}
