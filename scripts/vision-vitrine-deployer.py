@@ -75,8 +75,13 @@ def essayer_serveur(cible,base,url_mcp):
     with socket.socket() as adresse:
         adresse.bind(('127.0.0.1',0));port=adresse.getsockname()[1]
     with (cible/'essai-prive.log').open('wb') as journal:
-        processus=subprocess.Popen(['runuser','-u','vision','--',str(cible/'vision')],
-            env={**os.environ,'IP':'127.0.0.1','PORT':str(port),'PGHOST':'/run/postgresql','PGDATABASE':base,'PGUSER':'vision','VISION_DOCUMENT_ROOT':str(cible/'docs')},
+        # Le compte Unix vision ne peut se connecter qu’à sa base de production.
+        # La copie jetable passe par le pair postgres, avec SET ROLE dès la
+        # connexion. Les requêtes gardent les droits SQL de vision et aucune
+        # règle d’accès de production n’est élargie pour permettre le test.
+        processus=subprocess.Popen(['runuser','-u','postgres','--',str(cible/'vision')],
+            cwd=cible,
+            env={**os.environ,'IP':'127.0.0.1','PORT':str(port),'PGHOST':'/run/postgresql','PGDATABASE':base,'PGUSER':'postgres','PGOPTIONS':'-c role=vision','VISION_DOCUMENT_ROOT':str(cible/'docs')},
             stdout=journal,stderr=journal)
         try:
             origine='http://127.0.0.1:'+str(port)
