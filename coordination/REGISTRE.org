@@ -96,12 +96,12 @@ appliquent la lecture et notifient leurs futurs impacts depuis leur propre sessi
 Critère de fin : les six projets ont confirmé leur adoption. Règle durable :
 coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 
-** LU logique
+** DONE logique
 :PROPERTIES:
 :LU_SHA256: f85ad4c5d0e5736b7fec4b3d3bb465ae0596be7607f3aabfb78ae66ff0ee5a5f
-:LU_LE: 2026-10-07T00:12:40+00:00
-:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
-:PREUVE: -
+:LU_LE: 2026-10-07T01:08:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@63f8a7fe940f3384e76ab8fb4764f033a49f02ca
+:PREUVE: Protocole lu, consigne distante AGENTS.md vérifiée ; contrats relus aux reprises, avant publication et à la clôture. Coordination appliquée à la livraison de l’atelier.
 :END:
 
 ** DONE memoire
@@ -2508,12 +2508,81 @@ Ajout prévu dans style-mrjam : un module optionnel de contours à cavités, san
 
 Actions : Logique implémente et valide noyau, extraction à deux niveaux, tactile et non-régression ; style livre le module additif à révision exacte ; VPS prépare une publication statique bornée via Actions après audit actuel, artefact testé et retour autonome. Vision, Mémoire et Signature sont informés, sans adoption demandée. Résultats et références finales seront consignés. Cette annonce ne revendique aucune publication.
 
-** TODO logique
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: 5bc45be7540743a7c1ead7016da8ff4ee35d0a7a05a9e13cc0cf7299d047adff
+:LU_LE: 2026-10-07T01:08:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@63f8a7fe940f3384e76ab8fb4764f033a49f02ca
+:PREUVE: Atelier implémenté et publié. CI application 37554360513, style 37553448100, VPS 37554642021 ; préparation 37554886674, activation 37555013283, constat indépendant 37555292312 réussis. Preuve : operations/logique-atelier-publication.json.
+:END:
+
+** TODO memoire
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Atelier de preuves composables publié et contrôlé
+:PROPERTIES:
+:ID: 20261007-logique-3de3563d679d
+:EMETTEUR: logique
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-07T01:09:02+00:00
+:CONSOLIDATION: sans-objet
+:END:
+L’Atelier de preuves est réellement publié à https://logique.echos.systems/#/atelier. Code servi : MrJ-am/apprendre-a-demontrer@63f8a7fe940f3384e76ab8fb4764f033a49f02ca ; guide final 31c4a52d2719a919e731e930bfc26d0dcb85e495, docs/ATELIER-PREUVES.org. Le noyau Elm distingue objectifs, propositions, faits et preuves ; extraction paramétrique, réutilisation à deux niveaux, développement avec lieurs frais, versions et import revalidé. Données uniquement locales, sans serveur de preuves ni IA.
+
+Style : module optionnel MrJam.Blocs à 90ced00b49bf1e26bea0c8b8477b630c966e2082, contours à cavités sans vocabulaire logique ; API existantes préservées. Logique seul adopte ce module. Vision et Matheval conservent leurs publications figées. Signature originale 17495b13cefa24473e37434b98336b27caec8cdf conservée.
+
+CI application 37554360513 et style 37553448100 réussies : 91 contrôles du noyau/modèle, 190 cas du correcteur historique, 299 formules KaTeX, 14 tests Python, douze parcours atelier, souris/clavier et événements tactiles CDP, six formats et huit contextes typographiques. Exemples et solutions séparés, création réelle de deux théorèmes, rechargement, JSON et refus des fuites de portée vérifiés. Aucun essai sur tablette physique revendiqué.
+
+Opérateur VPS 94f48f49efcfaa05fdc77af54fe036a5363e5ee6 ; CI 37554642021 réussie (145 tests, NixOS et PostgreSQL en conteneur jetable). Préparation 37554886674, activation 37555013283 et constat indépendant 37555292312 réussis. Les 84 fichiers sont vérifiés, dont 83 ressources HTTPS identiques plus le manifeste ; trois formats, extraction/rechargement et 35 sondes vérifiés deux fois. Captures de production examinées. Seul le lien statique Logique change ; ancienne release, autres publications, générations système, configuration et sauvegardes conservées. Aucune migration SQL, restauration de production ni reconstruction NixOS. Retour autonome testé puis désarmé.
+
+Preuve durable : MrJ-am/vps-infrastructure@c2edc3c0f9ecac74002e24a8489f82f96c416125, operations/logique-atelier-publication.json et docs/ATELIER-PREUVES.md. Limites : logique propositionnelle, un document actif avec bibliothèque locale et exports, aucune synchronisation entre appareils ; provenance classique explicite.
+
+Action des destinataires : prendre connaissance de cette livraison avant une adoption future de MrJam.Blocs. Aucun redéploiement supplémentaire ni changement de données demandé. Les contrats communs restent en vigueur. Logique acquitte uniquement sa propre lecture et réalisation ; les autres accusés restent à leurs destinataires.
+
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: c46419d2ad091471e4fa38d1efdc12cce24682791300da87e3f5e14e1b4f673e
+:LU_LE: 2026-10-07T01:09:12+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@31c4a52d2719a919e731e930bfc26d0dcb85e495
+:PREUVE: Constat indépendant Actions 37555292312 réussi ; preuve durable VPS c2edc3c0f9ecac74002e24a8489f82f96c416125 et guide applicatif final relus.
 :END:
 
 ** TODO memoire
