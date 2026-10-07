@@ -9,6 +9,28 @@ from playwright.sync_api import sync_playwright, expect
 from logique_atelier import verifier
 
 
+def verifier_graphique(page):
+    gauche=page.locator('.mrjam-atelier-palette').bounding_box()
+    droite=page.locator('#atelier-surface').bounding_box()
+    assert gauche['x']==0 and droite['x']>=gauche['width']-1
+    assert droite['height']>300 and droite['y']<450
+    assert page.evaluate('document.documentElement.scrollHeight <= innerHeight + 2')
+    assert page.locator('.mrjam-bloc-entete').first.evaluate('e=>getComputedStyle(e).backgroundColor')=='rgb(255, 203, 56)'
+    assert page.locator('.mrjam-proposition').first.evaluate('e=>getComputedStyle(e).backgroundColor')=='rgb(88, 182, 83)'
+    page.locator('#atelier-palette').get_by_role('button',name='Propositions',exact=True).click()
+    source=page.locator('#atelier-palette').get_by_role('button',name='⇒',exact=True)
+    destination=page.get_by_role('button',name='Modifier param:double:A',exact=True)
+    source.scroll_into_view_if_needed();destination.scroll_into_view_if_needed()
+    a=source.bounding_box();z=destination.bounding_box()
+    page.mouse.move(a['x']+a['width']/2,a['y']+a['height']/2);page.mouse.down()
+    page.mouse.move(z['x']+z['width']/2,z['y']+z['height']/2,steps=12);page.mouse.up()
+    page.wait_for_function('JSON.parse(localStorage.getItem("mrjam.atelier-preuves.v1")).preuves[0].parametres.A.type === "implique"')
+    expect(page.locator('[data-sous-formule="param:double:A|0"]')).to_have_count(1)
+    page.get_by_role('button',name='Annuler',exact=True).click()
+    expect(page.locator('#atelier-verification')).to_contain_text('✓ Preuve vérifiée')
+    page.locator('#atelier-palette').get_by_role('button',name='Construire',exact=True).click()
+
+
 def main():
     reference,manifeste,_=verifier()
     base='https://logique.echos.systems/'
@@ -42,14 +64,19 @@ def main():
             expect(page.locator('#atelier-verification')).to_contain_text('✓ Preuve vérifiée')
             assert page.evaluate('JSON.parse(localStorage.getItem("mrjam.atelier-preuves.v1")).bibliotheque.some(d=>d.nom==="Contrôle local de transitivité")')
             assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 2')
+            page.get_by_label('Exemple',exact=True).select_option('double')
+            page.get_by_role('button',name='Charger la solution manipulable',exact=True).click()
+            verifier_graphique(page)
             page.screenshot(path=str(sortie/f'atelier-https-{largeur}.png'),full_page=True)
             assert not erreurs,erreurs
             page.close()
         navigateur.close()
     (sortie/'https.json').write_text(json.dumps({'application':reference['application'],'style':reference['style'],
         'fichiers_identiques':len(manifeste['empreintes']),'formats':[390,768,1440],
-        'extraction_rechargement':True,'ecriture_serveur':False},indent=2)+'\n')
-    print('HTTPS : fichiers exacts, trois formats, extraction et rechargement contrôlés.')
+        'extraction_rechargement':True,'palette_gauche_canevas_droit':True,
+        'regles_jaunes_propositions_vertes':True,'depot_direct_connecteur':True,
+        'ecriture_serveur':False},indent=2)+'\n')
+    print('HTTPS : fichiers exacts, trois formats, palette gauche, blocs jaunes/verts, emboîtement, extraction et rechargement contrôlés.')
 
 
 if __name__=='__main__':main()

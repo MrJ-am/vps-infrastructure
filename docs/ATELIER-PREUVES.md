@@ -33,7 +33,9 @@ Chaque demande constitue un commit distinct. Aucun texte de commande libre.
    dix minutes, puis remplace uniquement le lien Logique sous verrou.
 3. Le runner ouvre une nouvelle connexion, exécute les 35 sondes existantes,
    compare tous les octets HTTPS au manifeste et contrôle l’atelier dans trois
-   formats. La création d’un théorème et son rechargement restent locaux au
+   formats. Le constat exige la palette à gauche, le canevas à droite, les règles
+   jaunes et les propositions vertes ; il dépose un connecteur directement dans
+   une règle et vérifie l’annulation. La création d’un théorème et son rechargement restent locaux au
    navigateur ; aucune donnée n’est envoyée au serveur.
 4. Après ces contrôles, `finaliser` enregistre le succès sous verrou et désarme
    le retour. Une nouvelle connexion vérifie les invariants. Une demande
@@ -58,3 +60,19 @@ indépendant `37555292312` réussis. Les 84 fichiers, les invariants et les parc
 HTTPS sont contrôlés ; le retour est désarmé et l’ancienne release conservée.
 L’état réellement publié et les exécutions figurent dans
 `operations/logique-atelier-publication.json` et `docs/ETAT.md`.
+
+## Candidat graphique du 7 octobre 2026
+
+La demande précisée par vidéo adopte une palette permanente à gauche et un
+canevas indépendant à droite, avec des pièces jaunes à encoches et des
+propositions vertes emboîtables. Candidat application
+`fb21030ca35fed6a82f65729e6f91e8562760e9f`, style
+`eaee86024ac2d158f507bfe798cee3af3a923930`. CI applicative `37597158853`
+et CI style `37596804467` réussies. L’archive exacte inclut les fontes
+originales et les contrôles typographiques. Le noyau et les formats JSON
+sont conservés ; 97 contrôles Elm, 13 parcours d’atelier et six formats passent.
+
+Le constat graphique destiné au VPS est déjà exécuté localement sur les trois
+formats avec extraction, rechargement et dépôt direct. Cette préparation
+n’atteste pas encore une nouvelle activation ; les preuves de publication
+sont consignées après exécution des opérations bornées.
