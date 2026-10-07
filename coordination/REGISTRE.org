@@ -2625,3 +2625,66 @@ Action des destinataires : prendre connaissance de cette livraison avant une ado
 :PREUVE: -
 :END:
 
+* Reprendre l’atelier avec des blocs graphiques inspirés de Scratch
+:PROPERTIES:
+:ID: 20261007-logique-4f75b9ef7365
+:EMETTEUR: logique
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-07T08:26:06+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire juge la première présentation trop éloignée de Scratch et fournit une vidéo de référence. Reprise demandée : palette de blocs à gauche, surface d’assemblage à droite, règles jaunes à encoches et propositions vertes emboîtables. Les explications et actions secondaires quittent les grandes cartes pour laisser la place à la manipulation directe.
+
+Logique est le seul consommateur concerné. Le module optionnel MrJam.Blocs sera enrichi dans style-mrjam ; les autres composants et les versions épinglées de Vision et Matheval sont conservés. Le noyau de déduction, les certificats et les sauvegardes existantes restent compatibles. Les gestes de dépôt, les emplacements imbriqués et les petits écrans seront revérifiés sur le programme exécuté.
+
+Après les validations, nouvelle publication statique par le workflow VPS logique-atelier, avec une nouvelle révision candidate, préparation inactive, retour autonome et constat HTTPS. Référence actuelle : application 63f8a7fe940f3384e76ab8fb4764f033a49f02ca, style 90ced00b49bf1e26bea0c8b8477b630c966e2082, constat 37555292312. Aucun changement de données, Signature ou NixOS. Résultats et captures seront consignés à la clôture ; ce message annonce les travaux.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
