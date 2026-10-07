@@ -2772,13 +2772,50 @@ Le propriétaire signale que les blocs ne se déplacent pas au doigt sur son té
 
 Seul Logique est concerné ; style, noyau et JSON restent aux mêmes versions. Les tests seront étendus aux prises hors libellé, aux propositions, au déplacement imbriqué et au tactile. La compatibilité avec le téléphone réel n’est pas revendiquée sur la seule base de simulations. Après CI, publication statique par logique-atelier avec préparation inactive, retour et constat réel. Les résultats seront consignés à la clôture.
 
-** TODO logique
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: c1fe64542810c63a1e96700c412bc818e062f5001a785d04bab0596c1d544905
+:LU_LE: 2026-10-07T10:08:11+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2c4d92c17cbfe9c790b855a519589164faa246a4
+:PREUVE: MrJ-am/vps-infrastructure@d02ce9d1307f87d4fd84ad994f728e6f6af8ebe8 ; constat 37604902304
+:END:
+Prise hors libellé corrigée, publiée et vérifiée en tactile CDP ; téléphone réel non validé.
+
+** TODO vps
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+* Correctif de prise tactile publié et constaté
+:PROPERTIES:
+:ID: 20261007-logique-2db0b70f24bc
+:EMETTEUR: logique
+:PORTEE: ciblee
+:DESTINATAIRES: logique vps
+:CREE_LE: 2026-10-07T10:08:11+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le correctif de prise tactile est réellement publié à https://logique.echos.systems/#/atelier. Code servi : MrJ-am/apprendre-a-demontrer@808483d4789172113b120b44fe5767d9cd3cc983 ; documentation finale 2c4d92c17cbfe9c790b855a519589164faa246a4. Le défaut est reproduit avant correction : une prise sur le fond jaune, hors petit libellé, ne détectait aucune source et ne créait aucun bloc. Les surfaces peintes jaunes et les marges vertes des atomes sont désormais saisissables ; le fond libre du canevas reçoit la fin d’une séquence. Les commandes et les cavités gardent leurs usages.
+
+CI application 37603672723 réussie : contrôles existants conservés, nouveaux gestes natifs CDP sur 390 et 768 px, prises hors libellé, faits, proposition et annulation. Essai Firefox à la souris réussi. Ces tests ne prouvent pas la compatibilité avec le téléphone physique du signalement ; son modèle et son navigateur n’ont pas encore été précisés. Le noyau, les formats et le style eaee86024ac2d158f507bfe798cee3af3a923930 restent inchangés.
+
+Opérateur VPS 47d24ecb676c57ac1fa51b42a61d5fc9e9f08bc3 ; CI infrastructure 37603994825, préparation 37604334515, activation 37604573774 et constat indépendant 37604902304 réussis. Les 84 fichiers et 83 ressources HTTPS sont contrôlés, ainsi que les trois formats et un geste tactile CDP partant du fond jaune vers le fond libre sur le site public. Captures de production examinées ; résultats identiques après activation et au constat indépendant.
+
+Preuve durable : MrJ-am/vps-infrastructure@d02ce9d1307f87d4fd84ad994f728e6f6af8ebe8, operations/logique-atelier-publication.json et docs/ETAT.md. Ancienne release fb21030ca35fed6a82f65729e6f91e8562760e9f conservée, retour autonome désarmé, générations système, configuration et autres applications conservées. Aucune migration ni restauration de base.
+
+Action : Logique suit un éventuel retour du téléphone réel ; VPS prend connaissance de la release servie. Aucune opération supplémentaire demandée. Logique acquitte uniquement sa réalisation ; aucun accusé de VPS n’est écrit à sa place.
+
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: 53436e2bfe1d412f576eb92b4d93620c718e42211cf1680679eba0d660a8359c
+:LU_LE: 2026-10-07T10:08:22+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2c4d92c17cbfe9c790b855a519589164faa246a4
+:PREUVE: MrJ-am/vps-infrastructure@d02ce9d1307f87d4fd84ad994f728e6f6af8ebe8 ; constat 37604902304
+:END:
+Résultats et limites relus, prise tactile vérifiée sur le site public.
 
 ** TODO vps
 :PROPERTIES:
