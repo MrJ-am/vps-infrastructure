@@ -1,0 +1,64 @@
+{
+  "operateur": "94f48f49efcfaa05fdc77af54fe036a5363e5ee6",
+  "application": "63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+  "etat": {
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+    "logique": "/srv/logique/releases/63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+    "vision": "/srv/vision/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
+    "vision-interface": "/srv/vision-interface/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
+    "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3"
+  },
+  "ancienne_release": "/srv/logique/releases/2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f",
+  "fichiers_verifies": 84,
+  "retour_autonome_actif": false,
+  "migration_sql": false,
+  "reconstruction_nixos": false,
+  "autres_publications_conservees": true,
+  "date": "2026-10-07",
+  "url": "https://logique.echos.systems/#/atelier",
+  "style": "90ced00b49bf1e26bea0c8b8477b630c966e2082",
+  "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+  "sha256_archive": "0b0f0be81722e92b755f7a628eea88889f1b487fa784c4cff1133cb64307de25",
+  "ci_application": 37554360513,
+  "ci_style": 37553448100,
+  "ci_infrastructure": 37554642021,
+  "preparation": 37554886674,
+  "activation": 37555013283,
+  "constat_independant": 37555292312,
+  "https": {
+    "application": "63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+    "style": "90ced00b49bf1e26bea0c8b8477b630c966e2082",
+    "fichiers_identiques": 83,
+    "formats": [
+      390,
+      768,
+      1440
+    ],
+    "extraction_rechargement": true,
+    "ecriture_serveur": false
+  },
+  "artefact_preuve": {
+    "id": 11454730387,
+    "sha256": "13e18fc0c10a51232e189c16d6badba501e2dc74b32ba274bc2f5a7141388929"
+  },
+  "controles": {
+    "noyau_atelier": 91,
+    "correcteur_existant": 190,
+    "formules_katex": 299,
+    "python_application": 14,
+    "python_infrastructure": 145,
+    "parcours_atelier": 12,
+    "formats_atelier": 6,
+    "contextes_typographie": 8,
+    "sondes_https": 35,
+    "tactile_cdp": true,
+    "appareil_tactile_physique": false
+  },
+  "archive_ci": {
+    "id": 11454188066,
+    "nom": "site-logique-verifie",
+    "sha256": "782fbad5f99b46e6b9bee30242a515ef5bcc5bdb6c20ddabf552ea1010e7383e"
+  }
+}
