@@ -1,4 +1,35 @@
-# État attesté au 6 octobre 2026
+# État attesté au 7 octobre 2026
+
+## Logique — atelier de preuves publié et constaté le 7 octobre 2026
+
+L’[atelier de preuves](https://logique.echos.systems/#/atelier) est réellement
+servi à la révision `63f8a7fe940f3384e76ab8fb4764f033a49f02ca`, avec le style
+`90ced00b49bf1e26bea0c8b8477b630c966e2082` et Signature originale conservée.
+Il permet de composer des preuves, d’en extraire des théorèmes paramétriques et
+de les réutiliser à deux niveaux. Noyau Elm, gestes Pointer Events, stockage
+local et export JSON ; aucune démonstration transmise à un serveur.
+
+Opérateur `94f48f49efcfaa05fdc77af54fe036a5363e5ee6`, CI infrastructure
+`37554642021` réussie : 145 tests, évaluations NixOS, PostgreSQL et restauration
+dans un conteneur jetable. Préparation
+[37554886674](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37554886674),
+activation [37555013283](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37555013283)
+et constat indépendant [37555292312](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37555292312)
+réussis. [Révisions, état réel et empreintes](../operations/logique-atelier-publication.json).
+[Procédure](ATELIER-PREUVES.md).
+
+Les 84 fichiers de la release sont intègres ; les 83 ressources hors manifeste
+sont identiques en HTTPS. Deux contrôles des 35 sondes et des parcours sur trois
+formats réussissent, avec extraction puis rechargement d’un théorème. Captures
+de production examinées. CI application `37554360513` et style `37553448100`
+réussies ; 91 cas du noyau, parcours souris/clavier/tactile CDP et non-régression.
+Aucun appareil tactile physique n’est revendiqué.
+
+Seul `/srv/logique/current` change. Ancienne release `2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f`
+conservée, retour autonome testé puis désarmé. Générations active et de démarrage,
+empreinte de configuration, Vision, interface Vision, Matheval et sauvegardes
+conservés. Aucune migration SQL, restauration de production ou reconstruction
+NixOS. Le module de style additionnel n’est adopté que par Logique.
 
 ## Vision 2.6.1 — vitrine publiée et constatée le 6 octobre 2026, 11:42 UTC
 

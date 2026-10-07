@@ -53,6 +53,8 @@ dans l’artefact, révision complète obligatoire et altération détectée.
 `sh scripts/check.sh` contrôle aussi l’archive candidate ; Nix et PostgreSQL
 sont vérifiés par la CI infrastructure existante.
 
-L’état réellement publié et les exécutions seront consignés dans
-`operations/logique-atelier-publication.json` et `docs/ETAT.md` après constat.
-Ce document décrit le mécanisme et ne prouve pas à lui seul une publication.
+Le 7 octobre 2026, préparation `37554886674`, activation `37555013283` et constat
+indépendant `37555292312` réussis. Les 84 fichiers, les invariants et les parcours
+HTTPS sont contrôlés ; le retour est désarmé et l’ancienne release conservée.
+L’état réellement publié et les exécutions figurent dans
+`operations/logique-atelier-publication.json` et `docs/ETAT.md`.
