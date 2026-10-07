@@ -1,0 +1,133 @@
+name: Publier l’atelier de preuves statique
+on:
+  push:
+    branches: [main]
+    paths: [operations/logique-atelier.json]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  publication:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Exiger la demande bornée et la CI opérateur exacte
+        id: demande
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import json,os,re,subprocess,urllib.request
+          d=json.load(open('operations/logique-atelier.json'))
+          assert set(d)=={'operation','revision'} and d['operation'] in ('preparer','activer','constater')
+          assert re.fullmatch('[0-9a-f]{40}',d['revision'])
+          subprocess.run(['git','merge-base','--is-ancestor',d['revision'],os.environ['GITHUB_SHA']],check=True)
+          req=urllib.request.Request('https://api.github.com/repos/'+os.environ['GITHUB_REPOSITORY']+'/actions/workflows/check.yml/runs?head_sha='+d['revision'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:runs=json.load(r)['workflow_runs']
+          assert any(r['head_sha']==d['revision'] and r['event']=='push' and r['conclusion']=='success' for r in runs),'CI exacte opérateur non réussie'
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for k,v in d.items():f.write(k+'='+v+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ steps.demande.outputs.revision }}
+          path: candidat
+          persist-credentials: false
+      - name: Contrôler l’artefact et sa CI applicative avant connexion
+        working-directory: candidat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/logique_atelier.py verifier
+          python3 - <<'PY'
+          import json,os,urllib.request
+          d=json.load(open('operations/logique-atelier-candidat.json'))
+          req=urllib.request.Request('https://api.github.com/repos/MrJ-am/apprendre-a-demontrer/actions/runs/'+str(d['ci']['execution']),headers={'Authorization':'Bearer '+os.environ['GH_TOKEN']})
+          with urllib.request.urlopen(req,timeout=30) as r:run=json.load(r)
+          assert run['head_sha']==d['application'] and run['conclusion']=='success'
+          PY
+      - name: Préparer la clé existante du runner
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/logique-atelier-cle"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/logique-atelier-cle" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/logique-atelier-cle" >> "$GITHUB_ENV"
+      - name: Relever le Nixpkgs installé sans le modifier
+        working-directory: candidat
+        env:
+          REVISION: ${{ steps.demande.outputs.revision }}
+        run: |
+          NIXPKGS_ATELIER=$(sh scripts/connect.sh 'nix-instantiate --find-file nixpkgs')
+          [[ "$NIXPKGS_ATELIER" =~ ^/nix/store/[a-z0-9]{32}-[a-zA-Z0-9.+_-]+/nixos$ ]]
+          printf 'NIXPKGS_ATELIER=%s\n' "$NIXPKGS_ATELIER" >> "$GITHUB_ENV"
+          printf 'REVISION=%s\n' "$REVISION" >> "$GITHUB_ENV"
+      - name: Auditer et préparer une release inactive avec retour autonome vérifié
+        if: steps.demande.outputs.operation == 'preparer'
+        working-directory: candidat
+        run: |
+          git archive --format=tar HEAD | sh scripts/connect.sh "umask 077; test ! -e /root/logique-atelier/$REVISION/preparation.json; mkdir -p /root/logique-atelier/$REVISION/source; tar -xf - -C /root/logique-atelier/$REVISION/source"
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_ATELIER -p python3 --run 'python3 /root/logique-atelier/$REVISION/source/scripts/logique_atelier.py preparer $REVISION'"
+      - name: Installer le navigateur du constat HTTPS
+        if: steps.demande.outputs.operation != 'preparer'
+        run: |
+          python3 -m pip install playwright==1.57.0
+          python3 -m playwright install --with-deps chromium
+      - name: Activer seulement le lien statique de Logique sous retour autonome
+        id: activation
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_ATELIER -p python3 --run 'python3 /root/logique-atelier/$REVISION/source/scripts/logique_atelier.py demarrer $REVISION'"
+      - name: Contrôler une nouvelle connexion et les sites existants
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh 'systemctl is-active sshd nginx postgresql matheval vision mrj-auth postgresqlBackup-matheval.timer postgresqlBackup-vision.timer'
+          python3 scripts/mcp-probe.py
+      - name: Vérifier les octets HTTPS et les parcours de l’atelier
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        run: python3 scripts/verifier_logique_atelier.py
+      - name: Enregistrer le constat et désarmer le retour
+        if: steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_ATELIER -p python3 --run 'python3 /root/logique-atelier/$REVISION/source/scripts/logique_atelier.py finaliser $REVISION'"
+      - name: Constater par une nouvelle connexion après finalisation
+        if: steps.demande.outputs.operation != 'preparer'
+        working-directory: candidat
+        run: |
+          mkdir -p rapports-logique-atelier
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_ATELIER -p python3 --run 'python3 /root/logique-atelier/$REVISION/source/scripts/logique_atelier.py constater $REVISION'" > rapports-logique-atelier/constat.json
+      - name: Revenir à l’ancienne release si l’essai échoue
+        if: failure() && steps.activation.outcome != 'skipped' && steps.demande.outputs.operation == 'activer'
+        working-directory: candidat
+        run: |
+          sh scripts/connect.sh "/run/current-system/sw/bin/nix-shell -I nixpkgs=$NIXPKGS_ATELIER -p python3 --run 'python3 /root/logique-atelier/$REVISION/source/scripts/logique_atelier.py retour $REVISION'"
+      - name: Conserver les preuves techniques sans données métier
+        if: success()
+        working-directory: candidat
+        run: |
+          mkdir -p rapports-logique-atelier
+          sh scripts/connect.sh "cat /root/logique-atelier/$REVISION/preparation.json" > rapports-logique-atelier/preparation.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: logique-atelier-${{ steps.demande.outputs.operation }}
+          path: candidat/rapports-logique-atelier
+          if-no-files-found: ignore
+          retention-days: 30
+      - name: Effacer la clé temporaire du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/logique-atelier-cle"
