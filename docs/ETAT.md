@@ -1,5 +1,25 @@
 # État attesté au 7 octobre 2026
 
+## Logique — correction de la prise tactile publiée le 7 octobre 2026
+
+Code servi `808483d4789172113b120b44fe5767d9cd3cc983` : prise sur les surfaces
+jaunes et marges vertes, dépôt sur le fond libre du canevas. Le défaut reproduit
+était une source limitée au petit libellé. Les gestes sur les anciennes poignées,
+le clavier, les boutons et le défilement sont conservés. Le téléphone physique
+du signalement n’est pas testé ; validation tactile automatisée CDP sur deux
+formats et essai Firefox à la souris, sans confondre ces niveaux de preuve.
+
+CI application `37603672723`, opérateur `47d24ecb676c57ac1fa51b42a61d5fc9e9f08bc3`,
+CI infrastructure `37603994825` ; préparation `37604334515`, activation
+[37604573774](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37604573774)
+et constat indépendant [37604902304](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37604902304)
+réussis. Les 84 fichiers, 83 ressources HTTPS, trois formats et gestes existants
+sont contrôlés, ainsi qu’un geste tactile CDP hors libellé sur le site servi.
+Captures de production examinées. Ancienne release `fb21030ca35fed6a82f65729e6f91e8562760e9f`
+conservée, retour désarmé ; autres publications, NixOS et données conservés.
+Style `eaee86024ac2d158f507bfe798cee3af3a923930`, Signature et formats inchangés.
+[Rapport final](../operations/logique-atelier-publication.json).
+
 ## Logique — refonte graphique publiée le 7 octobre 2026
 
 L’[atelier](https://logique.echos.systems/#/atelier) présente désormais une palette
