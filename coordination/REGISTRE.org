@@ -96,11 +96,11 @@ appliquent la lecture et notifient leurs futurs impacts depuis leur propre sessi
 Critère de fin : les six projets ont confirmé leur adoption. Règle durable :
 coordination/CONTRATS.org#coordination ; commandes : docs/COORDINATION.md.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: f85ad4c5d0e5736b7fec4b3d3bb465ae0596be7607f3aabfb78ae66ff0ee5a5f
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -164,11 +164,11 @@ Actions : style et consommateurs relire les nouveaux contrats et commits avant l
 
 Critère de fin : tests tactiles, redimensionnement, navigation et 3D réussis ; versions effectivement servies identifiées ; audit avec paramètres, cookies, données et limites ; résultats inscrits dans un nouveau message. Ce message annonce des travaux, aucun correctif n'est encore déclaré déployé.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: dff9f69bdc487d64e8421c049306137a890e1ee4b288e2f7a80c92b1c4962a25
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -231,11 +231,11 @@ Routage : nouvel audit VPS 35712882397, actif bbp9i9c94l8f4lvkr23qlgghhlw29qdd ;
 
 Aucune publication effective n'est revendiquée par ce message. Les preuves finales et révisions seront consignées à la clôture. Chaque projet relit son impact, sans acquittement fait par un autre projet.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 763cc2157810f9811910151337472e7638d1c9feb7d861929a4c9911d8397a15
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -300,11 +300,11 @@ Actions à la reprise : chaque projet relit ses références, les résultats et 
 
 Preuves durables : docs/ETAT.md, docs/CORRECTIONS-SITES-20260922.md et operations/corrections-publication.json. Les deux messages de travaux précédents sont traités pour Mémoire ; les autres projets confirmeront leur propre lecture.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 7a438ff01f5075fb3f08da98a085263f59196213871088366e851ef2c4affffe
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -363,11 +363,11 @@ Génération active/par défaut h4rv6sn1izf1hv53qihsgrvkg1hy0j28 ; entrée /etc/
 32 contrôles HTTP/TLS, services/sauvegardes, seconde connexion runner, initialize, cinq outils, notification, lecture MCP, navigateur mobile/bureau, CSRF, séparation des accès et révocation réussis. Écritures testées en PostgreSQL isolé (CI Vision 35785184379), aucune donnée métier fictive en production. Logique, Matheval, serveur Lisp et interfaces restent à leurs révisions du matin. Le retour autonome est désarmé après validation.
 Actions : VPS et autres projets reprendre l’état actualisé avant leurs opérations, conserver les nouveaux contrats ; Vision documente Mistral. Aucune autre modification demandée aux applications. Preuves : docs/ETAT.md, docs/VISION-MCP-TOKEN.md, operations/mcp-publication.json. Ne pas confondre validation HTTPS et connexion effective du compte Mistral, qui reste à renseigner par le propriétaire.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 26331af567a47cb60115dde4330cd00d9f72a65af9ded481dab5bc2e64bd0ec0
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -427,11 +427,11 @@ Audit réel par Actions avant bascule : configuration Nginx générée, limites 
 Préserver tous les routages, limites HTTP, versions et authentifications, notamment le token MCP permanent ; ne pas réutiliser le test qui remplace ce token. Construire avec Nixpkgs installé, comparer les invariants, sauvegarder et armer un retour autonome avant activation.
 Chaque projet devra prendre connaissance du résultat final avant sa prochaine publication. Ce message annonce une préparation ; aucun changement serveur encore effectué.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: a40ec47876c3b0a4b75259617d0f70708f552b35cda56bab1f05f016bd6b0acf
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -491,11 +491,11 @@ Preuves : 32 contrôles HTTP/TLS, huit unités actives, nouvelle connexion runne
 Audit réel : Vision REST/MCP limité par IP à 5/s et dix connexions, protections partielles ; Matheval/statique sans limite explicite, absence de plafond global, SYN cookies actifs. Nginx seul ne couvre pas une saturation réseau ; protection fournisseur non auditée. Les limites HTTP existantes sont conservées.
 Actions : chaque projet relit le contrat journal-http et l'état avant publication ; VPS maintient ce module et l'entrée complète incluant Logique/MCP. Aucun changement de code applicatif requis. Preuves détaillées : docs/JOURNAL-HTTP.md, docs/ETAT.md, operations/http-publication.json.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 45f5357c2aa9ef8700d7a99ca3c6a3737257b65fd208be6f7a30a3daaa2be4ed
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -706,11 +706,11 @@ Les versions du serveur Common Lisp, de Matheval et de Logique ont été conserv
 Preuves détaillées : docs/ETAT.md ; aucune action immédiate pour les autres projets.
 Chaque destinataire relit le contrat avant sa prochaine opération d’authentification.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: d2dc48c03600be488df25c992bdbd8c92d88eca39e9b589fc4190b11b34d2efd
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1130,11 +1130,11 @@ Critère de fin de cette étape : quatre branches publiées et CI complètes ré
 références et résultats consignés dans un nouveau message. L’activation applicative
 reste une étape distincte après validation collective des artefacts.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 14930141dc38f0afe8dcc3f4019499f21839fd3e4449db45e563a27022e1727b
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1216,11 +1216,11 @@ réel, les artefacts exacts et le retour applicatif avant toute activation deman
 Aucune restauration de base pour annuler le style. Critère de fin de l’étape de
 validation atteint ; les versions effectivement servies ne sont pas modifiées.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: bf6b7a064cc34106cc5c2271575a2a28da768f34fd6df70ae72924e5b3d1c1f9
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1284,11 +1284,11 @@ L'audit 36256039764 a confirmé les services, générations identiques g24p3rvq9
 
 Critère de fin : trois versions actives, contrôles réussis, retour désarmé après constat, références intégrées aux branches principales et preuves durables.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: bd3f33ee344ccc1e2ae507011f995dd4b25ec541d0f7aea02d4715a5069e6e95
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1354,11 +1354,11 @@ Preuve durable Vision c1640ac770e208a6befee1be2b3072fb983e07d2, operations/inter
 
 Actions : préserver les verrous communs et prendre cet état publié comme référence de la prochaine opération. Le registre privé et les consignes locales continuent de s’appliquer ; les messages antérieurs décrivant uniquement des candidats sont dépassés par ce résultat. Critère de fin de la publication atteint.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 88331d2ac974b7b5c7c56042bc54471a5d274721b976014108e4e0a425414d23
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1671,11 +1671,11 @@ Action VPS : publier d'abord un audit en lecture seule sur main, contrôler ress
 
 Fin : consigner la révision, les exécutions Actions et les contrôles après finalisation. Une CI réussie ou cette annonce ne vaut pas déploiement.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 262bdd5ba88c90f1aac953c38210f2055d5fe3a4898c103bdb9615fd9a7dc0d2
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1762,11 +1762,11 @@ Le blocage des runners du 29 septembre appartient à cette tentative historique.
 :END:
 Demande du propriétaire : installer Nextcloud Talk (spreed) sur cloud.mrj.am. L'App Store est désactivé ; l'application sera intégrée de façon déclarative, sur le Nixpkgs installé, sans mise à jour générale du système. Auditer d'abord la génération réelle et la compatibilité du paquet, conserver les comptes, fichiers et publications des autres applications. Préparer sauvegarde et retour autonome avant activation ; contrôler ensuite activation et endpoints Talk. Ce message annonce la préparation, sans revendiquer une installation ni un appel audio/vidéo vérifié. Aucun changement applicatif demandé aux autres projets.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: cc7c0a4ae5fe2faf5bec2d3f61a165a4c77e6f1e0c847057564b1dbddee635eb
+:LU_LE: 2026-10-07T00:12:40+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1825,11 +1825,11 @@ App Store désactivé, Talk déclaré dans extraApps avec le paquet du Nixpkgs i
 
 Action des autres projets : préserver cette génération et relire cet état avant une nouvelle intervention système ; aucune publication applicative demandée. VPS : installation terminée dans ce périmètre, preuves conservées.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: f05c2bb399567498fb7f703dfe3448afc7e82a8ae21e4efc9cae8f080bead813
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -1947,11 +1947,11 @@ Préparer une nouvelle opération bornée : construire pgvector/fournisseur/snap
 
 Vision et VPS : suivre la préparation et les preuves avant activation, préserver toute donnée et ne jamais restaurer un dump en production pour un retour. Les autres projets conservent leurs publications ; aucune action de code demandée. Aucune activation n'est attestée par cette annonce. Fin : version 2.5 et préparation sémantique effectivement servies, 58 items intacts, embeddings complets, nouvelle connexion et sites vérifiés, génération enregistrée et retour désarmé, résultat consigné.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 8d47f4cd6a884efb9b80e528ec4b26658a52f769d763de347ca47fc2ce47a8b1
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2009,11 +2009,11 @@ pgvector actif dans Vision sur PostgreSQL 17.11, fournisseur CPU local MiniLM mu
 
 Action VPS : préserver le point d'entrée vision-semantique.nix et le répertoire /root/vision-semantique/<candidat>/source, les releases, racines de GC et sauvegardes privées. Un futur build du seul logique.nix supprimerait le fournisseur/pgvector : auditer et conserver les services désormais actifs. Un retour ultérieur est une nouvelle opération ; aucun dump restauré pour annuler du code. Action Vision : recharger les catalogues MCP clients anciens, employer le contenu complet et la décision explicite après examen des candidats. Autres projets : conserver leurs publications, aucune modification applicative demandée. Contrat durable et détails mis à jour dans CONTRATS.org#vision, docs/VISION-CREATION-SEMANTIQUE.md et operations/vision-semantique-publication.json. Critère de déploiement atteint.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 8c66e42fbf4d2f16f4ec0719a93e72df7213d80913970d07dc574e0f04e8b899
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2128,11 +2128,11 @@ Demande explicite du propriétaire : remplacer l’accueil documentaire de Visio
 
 Vision : composer les contenus et vérifier mobile/clavier/parcours publics et privés. Style : ajouter une vitrine, un cadre avec marque et des actions à pictogrammes comme API additive ; les composants existants restent compatibles. Signature : utiliser Parisienne originale pour Vision et préserver la signature MrJ.am exacte, vérifiée à sa révision actuelle. VPS : publier serveur et interface exacts après tests, sous retour applicatif, sans migration de données ni reconstruction NixOS. Matheval et Logique conservent leurs versions épinglées ; ces nouveaux composants sont adoptés par Vision uniquement. Aucun secret ou contenu personnel dans les captures. Critère de fin : nouvelle présentation réellement servie, procédures et confidentialité contrôlées, preuves consignées.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 3c6e23fbf466dd47fca2c49b467a78392b8e4aaac8a5cc4360d1b340979ebb2d
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2198,11 +2198,11 @@ Impact MCP : les vingt outils sont conservés. tutoriel expose l’index des onz
 
 Action des destinataires : prendre connaissance des nouvelles révisions et API avant une adoption ultérieure ; garder les versions épinglées actuelles tant qu’une nouvelle publication n’est pas préparée. Acquitter DONE avec le contexte réellement lu. Cette livraison ne demande aucun redéploiement supplémentaire ni changement de données.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: e7854e59365189bc2b72347479aa315f56fa26e793689294fd60e0fc93be73c3
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2258,11 +2258,11 @@ Compte rendu et état de production vérifiés. Les autres destinataires restent
 :END:
 Correctif demandé par le propriétaire : aligner Vision. et la signature MrJ.am dans la marque composée. Le composant Identite.marque centre actuellement deux boîtes dont les fontes ont des métriques différentes. Passage à une ligne typographique commune, sans modification des fontes ni de la signature originale. Vision est le seul consommateur de cette variante ; Matheval et Logique gardent leurs artefacts épinglés. Contrôles : métriques et rendu agrandi, quatre largeurs, navigation privée et publique ; reconstruction Vision puis préparation/activation/constat via Actions, sans migration SQL ni modification NixOS.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: ee035775bf984f763a1c9b40c2392dcfcd9d2874a12837b67c4bee8be13f98ac
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2321,11 +2321,11 @@ Audit 37486943452, préparation 37488460816 tentative 2, activation 37488989857 
 
 Rapports : MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d docs/ALIGNEMENT-MARQUE-20261006.md ; MrJ-am/vps-infrastructure@06098f7094da9c0a17812d0ee9746677adb29611 operations/vision-alignement-publication.json. Les projets concernés lisent ces preuves avant une future mise à jour. Les autres consommateurs gardent leur révision épinglée. Vision acquitte seulement sa propre lecture et réalisation.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 39bf82feb5364275a5f8baa6c17f6b6123f9d6d6397f6f6dc29a8c1eb9ffb5cb
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2380,11 +2380,11 @@ Rapports : MrJ-am/vision@7c243d9b16d211a6890207ebce26e8614929886d docs/ALIGNEMEN
 :END:
 Demande du propriétaire : remplacer le point entre Vision et MrJ.am par le dessin Echo déjà présent dans la signature, et placer le dépôt Vision sous AGPL v3 ou ultérieure. Identite.marque utilisera la fonte EchoPoint existante et autorisée, à l'échelle du point de la composition originale. Signature et ses ressources ne changent pas. Code de Vision sous AGPL-3.0-or-later ; identité réservée et licences externes conservées. La licence du dépôt public style-mrjam n'est pas modifiée par cette demande visant Vision. Vision est le seul consommateur concerné par la variante ; autres artefacts épinglés inchangés. Vérification des pixels des deux points, baseline, petits écrans, parcours publics/privés et publication via Actions sans migration SQL ni changement NixOS.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 0925ebf30d6030deb65626046cb75e5d9e836c14395d0f2530f31c0ae21a6479
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2445,11 +2445,11 @@ CI style 37491731775, interface 37492348030, serveur 37492347991, création 3749
 
 Preuves : MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad docs/POINT-MARQUE-LICENCE-20261006.md ; MrJ-am/vps-infrastructure@150b05d4471127ab96cc0f9a8e4b2c89189e6d67 operations/vision-point-licence-publication.json. Lire ces références avant une future consommation. Vision acquitte seulement son propre travail et sa propre lecture.
 
-** TODO logique
+** LU logique
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
+:LU_SHA256: 821667a11bfa2958b38fa9ad5f628eef38411e51b3aef1b064deb60a094ad1b7
+:LU_LE: 2026-10-07T00:12:41+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f
 :PREUVE: -
 :END:
 
@@ -2483,6 +2483,69 @@ Preuves : MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad docs/POINT-MARQ
 :LU_LE: 2026-10-06T16:18:00+00:00
 :CONTEXTE: MrJ-am/vision@43bc38b7ce139dfadba78e2a059805411fd976ad
 :PREUVE: Rapport 150b05d4471127ab96cc0f9a8e4b2c89189e6d67 ; activation 37493485203 et constat 37493885562 réussis ; motifs identiques en pixels HTTPS, quatre formats et zoom x4 ; licence AGPL-3.0-or-later et exclusions enregistrées dans Vision.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Construire et publier l’atelier de preuves composables
+:PROPERTIES:
+:ID: 20261007-logique-50612199e334
+:EMETTEUR: logique
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-07T00:12:41+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire demande un atelier de preuves composables dans Logique, route distincte, noyau et état Elm, gestes Pointer Events et stockage local sans serveur de preuves. Référence relue : Logique 2e2dd6a48cbdad20bbc8d0ac34a9ace67f111a0f ; style consommé 3aab7233465ac0abe49464fa26a360765ccb4004.
+
+Ajout prévu dans style-mrjam : un module optionnel de contours à cavités, sans vocabulaire mathématique et sans modification des API existantes. Logique en sera le seul nouveau consommateur ; les autres applications gardent leurs versions exactes. Les contrôles de la bibliothèque et de Logique précèdent toute activation. Aucun changement de Signature, de données, de NixOS ou de protocole des autres projets.
+
+Actions : Logique implémente et valide noyau, extraction à deux niveaux, tactile et non-régression ; style livre le module additif à révision exacte ; VPS prépare une publication statique bornée via Actions après audit actuel, artefact testé et retour autonome. Vision, Mémoire et Signature sont informés, sans adoption demandée. Résultats et références finales seront consignés. Cette annonce ne revendique aucune publication.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
