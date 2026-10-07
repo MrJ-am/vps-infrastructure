@@ -2640,13 +2640,84 @@ Logique est le seul consommateur concerné. Le module optionnel MrJam.Blocs sera
 
 Après les validations, nouvelle publication statique par le workflow VPS logique-atelier, avec une nouvelle révision candidate, préparation inactive, retour autonome et constat HTTPS. Référence actuelle : application 63f8a7fe940f3384e76ab8fb4764f033a49f02ca, style 90ced00b49bf1e26bea0c8b8477b630c966e2082, constat 37555292312. Aucun changement de données, Signature ou NixOS. Résultats et captures seront consignés à la clôture ; ce message annonce les travaux.
 
-** TODO logique
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: b9947a2c8aadaac458ff3d2a5cd858014e996dc381ab20bdd0464a4ad5943b48
+:LU_LE: 2026-10-07T09:11:37+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@a161b92c8ca2a60fa15d791f787d9d5daccd80ca
+:PREUVE: MrJ-am/vps-infrastructure@3dea7f6ef4354c4fd8cdaad310b4a8d7279130ff ; constat HTTPS 37598302049
+:END:
+Refonte graphique demandée implémentée, testée, publiée et constatée.
+
+** TODO memoire
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Atelier graphique jaune et vert publié et vérifié
+:PROPERTIES:
+:ID: 20261007-logique-f242b2ac3ed5
+:EMETTEUR: logique
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-07T09:11:37+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La refonte demandée à partir de la vidéo Scratch est publiée à https://logique.echos.systems/#/atelier. Palette permanente à gauche, canevas pointillé à droite, règles jaunes à encoches et cavités, propositions vertes hexagonales directement emboîtables dans les paramètres et leurs sous-propositions. Zoom de 50 à 150 %, défilement indépendant des panneaux, glissement avec défilement aux bords, clavier et annuler/rétablir. Les preuves et théorèmes antérieurs restent compatibles.
+
+Code réellement servi : MrJ-am/apprendre-a-demontrer@fb21030ca35fed6a82f65729e6f91e8562760e9f. Guide final : a161b92c8ca2a60fa15d791f787d9d5daccd80ca, docs/ATELIER-PREUVES.org. Style optionnel MrJam.Blocs : eaee86024ac2d158f507bfe798cee3af3a923930, adopté uniquement par Logique. Signature originale 17495b13cefa24473e37434b98336b27caec8cdf conservée ; aucune adoption supplémentaire par Vision ou Matheval.
+
+CI application 37597158853 et style 37596804467 réussies : 97 contrôles Elm de l’atelier, treize parcours avec création de théorèmes à deux niveaux, six formats, souris/clavier et événements tactiles CDP ; cours et typographie originale vérifiés. Le noyau et le format JSON restent inchangés. Aucun essai sur appareil tactile physique revendiqué.
+
+Opérateur VPS 95e4fa1af48b0dce5e473510b9f7180cfa65a8c5, CI infrastructure 37597525950 réussie ; préparation 37597865546, activation 37598028422 et constat indépendant 37598302049 réussis. Les 84 fichiers sont vérifiés, dont 83 ressources HTTPS identiques. Trois formats, disposition, couleurs, dépôt direct d’un connecteur, annulation, extraction et rechargement d’un théorème ainsi que les 35 sondes sont contrôlés. Captures réelles de production examinées.
+
+Preuve durable : MrJ-am/vps-infrastructure@3dea7f6ef4354c4fd8cdaad310b4a8d7279130ff, operations/logique-atelier-publication.json et docs/ETAT.md. Seul le lien statique Logique change ; ancienne release 63f8a7fe940f3384e76ab8fb4764f033a49f02ca conservée, retour autonome désarmé. Le relevé serveur confirme les générations NixOS, la configuration, les autres publications et les services conservés. Aucune migration SQL ni restauration de production.
+
+Action des destinataires : prendre connaissance de l’API graphique optionnelle avant une adoption future ; aucune opération supplémentaire demandée. Les contrats communs restent en vigueur. Logique acquitte uniquement sa propre réalisation ; les autres destinataires conservent leurs accusés à traiter.
+
+** DONE logique
+:PROPERTIES:
+:LU_SHA256: e98f9957c1ad263cde58ef4fd6bcc7c22cc31144ccdafebc3a8dd3f3c0197df4
+:LU_LE: 2026-10-07T09:12:05+00:00
+:CONTEXTE: MrJ-am/apprendre-a-demontrer@a161b92c8ca2a60fa15d791f787d9d5daccd80ca
+:PREUVE: MrJ-am/vps-infrastructure@3dea7f6ef4354c4fd8cdaad310b4a8d7279130ff ; constat HTTPS 37598302049
+:END:
+Résultat relu ; déploiement et captures réelles vérifiés.
 
 ** TODO memoire
 :PROPERTIES:
