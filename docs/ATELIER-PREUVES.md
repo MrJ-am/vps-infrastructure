@@ -91,4 +91,8 @@ parcours natifs CDP sur 390 et 768 px, parcours existants et contrôle Firefox
 
 Le constat HTTPS ajoute un vrai geste tactile CDP partant du fond jaune, hors
 libellé, et aboutissant au fond libre du canevas. Ce même contrôle est exécuté
-localement avant publication. L’activation reste à consigner après son exécution.
+localement avant publication. Publication exécutée : opérateur `47d24ecb676c57ac1fa51b42a61d5fc9e9f08bc3`,
+CI infrastructure `37603994825`, préparation `37604334515`, activation
+`37604573774`, constat indépendant `37604902304`, tous réussis. Le geste
+hors libellé est vérifié sur le site public ; captures examinées, état et
+empreintes consignés dans `operations/logique-atelier-publication.json`.

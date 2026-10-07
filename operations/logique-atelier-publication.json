@@ -1,16 +1,16 @@
 {
-  "operateur": "95e4fa1af48b0dce5e473510b9f7180cfa65a8c5",
-  "application": "fb21030ca35fed6a82f65729e6f91e8562760e9f",
+  "operateur": "47d24ecb676c57ac1fa51b42a61d5fc9e9f08bc3",
+  "application": "808483d4789172113b120b44fe5767d9cd3cc983",
   "etat": {
     "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "demarrage": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
     "configuration": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
-    "logique": "/srv/logique/releases/fb21030ca35fed6a82f65729e6f91e8562760e9f",
+    "logique": "/srv/logique/releases/808483d4789172113b120b44fe5767d9cd3cc983",
     "vision": "/srv/vision/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
     "vision-interface": "/srv/vision-interface/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5",
     "matheval": "/srv/matheval/releases/04168b68723322afe18b51d20e8089121348b8b3"
   },
-  "ancienne_release": "/srv/logique/releases/63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+  "ancienne_release": "/srv/logique/releases/fb21030ca35fed6a82f65729e6f91e8562760e9f",
   "fichiers_verifies": 84,
   "retour_autonome_actif": false,
   "migration_sql": false,
@@ -20,15 +20,15 @@
   "url": "https://logique.echos.systems/#/atelier",
   "style": "eaee86024ac2d158f507bfe798cee3af3a923930",
   "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
-  "sha256_archive": "6aa70c3fb3030600fa2b1e4f359160edf4946badffbd67a37fcbd468fb3a835e",
-  "ci_application": 37597158853,
+  "sha256_archive": "ea66cd7489844d588f6be6513033575ac591bb405380e31e076172346a65d13c",
+  "ci_application": 37603672723,
   "ci_style": 37596804467,
-  "ci_infrastructure": 37597525950,
-  "preparation": 37597865546,
-  "activation": 37598028422,
-  "constat_independant": 37598302049,
+  "ci_infrastructure": 37603994825,
+  "preparation": 37604334515,
+  "activation": 37604573774,
+  "constat_independant": 37604902304,
   "https": {
-    "application": "fb21030ca35fed6a82f65729e6f91e8562760e9f",
+    "application": "808483d4789172113b120b44fe5767d9cd3cc983",
     "style": "eaee86024ac2d158f507bfe798cee3af3a923930",
     "fichiers_identiques": 83,
     "formats": [
@@ -40,11 +40,13 @@
     "palette_gauche_canevas_droit": true,
     "regles_jaunes_propositions_vertes": true,
     "depot_direct_connecteur": true,
+    "prise_tactile_hors_libelle": true,
+    "depot_tactile_fond_libre": true,
     "ecriture_serveur": false
   },
   "artefact_preuve": {
-    "id": 11471168437,
-    "sha256": "bd8731ad96f4c723a27770073bd0b0190c6129316adf3883c93c55524400bb26"
+    "id": 11474268168,
+    "sha256": "03c5c431aa5a464bcbc5a889c0cdaa3fe54d166bde4e211772a7ffad9654d1f0"
   },
   "controles": {
     "noyau_atelier": 97,
@@ -57,11 +59,17 @@
     "contextes_typographie": 8,
     "sondes_https": 35,
     "tactile_cdp": true,
-    "appareil_tactile_physique": false
+    "appareil_tactile_physique": false,
+    "prise_hors_libelle_cdp": true,
+    "formats_tactiles_hors_libelle": [
+      390,
+      768
+    ],
+    "firefox_souris": true
   },
   "archive_ci": {
-    "id": 11471550547,
+    "id": 11473264552,
     "nom": "site-logique-verifie",
-    "sha256": "7e6afb73bec78fcd8a40a1a7a7409ef1c0553dd09f03784c09aa1bbf6fb967f9"
+    "sha256": "836737cb13621709fe8ae2fef7d1eaacb22603e82e98593f53e71d4992268a53"
   }
 }
