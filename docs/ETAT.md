@@ -1,6 +1,35 @@
 # État attesté au 7 octobre 2026
 
-## Logique — atelier de preuves publié et constaté le 7 octobre 2026
+## Logique — refonte graphique publiée le 7 octobre 2026
+
+L’[atelier](https://logique.echos.systems/#/atelier) présente désormais une palette
+à gauche et un canevas à droite. Les règles sont des pièces jaunes à encoches et
+cavités ; les propositions vertes s’emboîtent directement dans les paramètres.
+Zoom, défilement indépendant, gestes tactiles et historique sont vérifiés.
+Code servi `fb21030ca35fed6a82f65729e6f91e8562760e9f`, style
+`eaee86024ac2d158f507bfe798cee3af3a923930`, Signature originale conservée.
+
+CI application `37597158853`, style `37596804467` et infrastructure
+`37597525950` réussies : 97 cas Elm de l’atelier, treize parcours, six formats,
+non-régression des cours, huit contextes typographiques et 145 tests de
+l’infrastructure, avec NixOS et PostgreSQL jetable dans la CI.
+
+Opérateur `95e4fa1af48b0dce5e473510b9f7180cfa65a8c5` ; préparation
+[37597865546](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37597865546),
+activation [37598028422](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37598028422)
+et constat indépendant [37598302049](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37598302049)
+réussis. Les 84 fichiers de la release et 83 ressources HTTPS sont vérifiés,
+ainsi que les 35 sondes, trois formats, la disposition, les couleurs, le dépôt
+direct et son annulation, l’extraction d’un théorème et sa restauration.
+Captures de production examinées ; tactile automatisé CDP, sans appareil physique.
+
+L’ancienne release `63f8a7fe940f3384e76ab8fb4764f033a49f02ca` est conservée.
+Le retour autonome est désarmé ; seul `/srv/logique/current` change. Le relevé
+confirme les mêmes générations système, empreinte de configuration et releases
+Vision/Matheval. Aucun changement SQL ni reconstruction NixOS. Les formats de
+sauvegarde et certificats restent compatibles. [Preuve durable](../operations/logique-atelier-publication.json).
+
+## Logique — première publication de l’atelier le 7 octobre 2026
 
 L’[atelier de preuves](https://logique.echos.systems/#/atelier) est réellement
 servi à la révision `63f8a7fe940f3384e76ab8fb4764f033a49f02ca`, avec le style

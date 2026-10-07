@@ -61,7 +61,7 @@ HTTPS sont contrôlés ; le retour est désarmé et l’ancienne release conserv
 L’état réellement publié et les exécutions figurent dans
 `operations/logique-atelier-publication.json` et `docs/ETAT.md`.
 
-## Candidat graphique du 7 octobre 2026
+## Refonte graphique publiée le 7 octobre 2026
 
 La demande précisée par vidéo adopte une palette permanente à gauche et un
 canevas indépendant à droite, avec des pièces jaunes à encoches et des
@@ -72,7 +72,10 @@ et CI style `37596804467` réussies. L’archive exacte inclut les fontes
 originales et les contrôles typographiques. Le noyau et les formats JSON
 sont conservés ; 97 contrôles Elm, 13 parcours d’atelier et six formats passent.
 
-Le constat graphique destiné au VPS est déjà exécuté localement sur les trois
-formats avec extraction, rechargement et dépôt direct. Cette préparation
-n’atteste pas encore une nouvelle activation ; les preuves de publication
-sont consignées après exécution des opérations bornées.
+Le constat graphique est exécuté sur le site réellement servi dans les trois
+formats, avec extraction, rechargement, dépôt direct d’un connecteur et annulation.
+Opérateur `95e4fa1af48b0dce5e473510b9f7180cfa65a8c5`, CI `37597525950` ;
+préparation `37597865546`, activation `37598028422` et constat indépendant
+`37598302049` réussis. L’archive et le rapport final sont identifiés dans
+`operations/logique-atelier-publication.json`. Les captures de production sont
+examinées. L’ancienne release reste disponible ; le retour autonome est désarmé.
