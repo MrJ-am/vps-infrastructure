@@ -2759,3 +2759,32 @@ Résultat relu ; déploiement et captures réelles vérifiés.
 :PREUVE: -
 :END:
 
+* Corriger la prise tactile des pièces de l’atelier
+:PROPERTIES:
+:ID: 20261007-logique-c90d4e4c4362
+:EMETTEUR: logique
+:PORTEE: ciblee
+:DESTINATAIRES: logique vps
+:CREE_LE: 2026-10-07T09:45:07+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire signale que les blocs ne se déplacent pas au doigt sur son téléphone. Un défaut est reproduit en événements tactiles natifs Chromium : saisir le fond jaune du bloc ne déclenche aucun geste, car seule une petite poignée textuelle porte la source. Correction applicative en cours : prise sur les surfaces des pièces, dépôt sur le fond libre du canevas, préservation du défilement des cavités et des boutons, contrôle des clics tactiles retardés.
+
+Seul Logique est concerné ; style, noyau et JSON restent aux mêmes versions. Les tests seront étendus aux prises hors libellé, aux propositions, au déplacement imbriqué et au tactile. La compatibilité avec le téléphone réel n’est pas revendiquée sur la seule base de simulations. Après CI, publication statique par logique-atelier avec préparation inactive, retour et constat réel. Les résultats seront consignés à la clôture.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
