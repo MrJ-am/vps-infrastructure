@@ -1,0 +1,16 @@
+{
+  "application": "63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+  "style": "90ced00b49bf1e26bea0c8b8477b630c966e2082",
+  "signature": "17495b13cefa24473e37434b98336b27caec8cdf",
+  "sha256": "0b0f0be81722e92b755f7a628eea88889f1b487fa784c4cff1133cb64307de25",
+  "ci": {
+    "conclusion": "success",
+    "revision": "63f8a7fe940f3384e76ab8fb4764f033a49f02ca",
+    "execution": 37554360513
+  },
+  "artefact": {
+    "id": 11454188066,
+    "nom": "site-logique-verifie",
+    "sha256": "782fbad5f99b46e6b9bee30242a515ef5bcc5bdb6c20ddabf552ea1010e7383e"
+  }
+}
