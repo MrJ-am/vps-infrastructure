@@ -79,3 +79,16 @@ préparation `37597865546`, activation `37598028422` et constat indépendant
 `37598302049` réussis. L’archive et le rapport final sont identifiés dans
 `operations/logique-atelier-publication.json`. Les captures de production sont
 examinées. L’ancienne release reste disponible ; le retour autonome est désarmé.
+
+## Correction de la prise au doigt
+
+Le signalement utilisateur est reproduit : les petits libellés sont saisissables,
+les fonds jaunes ne le sont pas. Le candidat `808483d4789172113b120b44fe5767d9cd3cc983`
+étend la prise aux surfaces peintes, aux marges vertes et le dépôt au fond libre.
+Style et noyau sont conservés. CI application `37603672723` réussie ; nouveaux
+parcours natifs CDP sur 390 et 768 px, parcours existants et contrôle Firefox
+à la souris réussis. Le téléphone physique n’a pas été testé.
+
+Le constat HTTPS ajoute un vrai geste tactile CDP partant du fond jaune, hors
+libellé, et aboutissant au fond libre du canevas. Ce même contrôle est exécuté
+localement avant publication. L’activation reste à consigner après son exécution.
