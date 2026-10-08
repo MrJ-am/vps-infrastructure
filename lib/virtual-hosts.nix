@@ -37,9 +37,13 @@ let
   protectedLocations = site: if site ? auth then {
     "${site.auth.prefix}" = {
       proxyPass = "http://127.0.0.1:${toString site.port}";
-      extraConfig = proxyHeaders site + ''
+      extraConfig = proxyHeaders site + (if site.oidcAuth or false then ''
+        auth_request /_vision_mcp_token;
+        auth_request_set $vision_api_user $upstream_http_x_mrj_user;
+        '' else ''
         auth_basic "${site.auth.realm}";
         auth_basic_user_file ${site.auth.basicUserFile};
+        '') + ''
         limit_req zone=protected_api_per_ip burst=10 nodelay;
         limit_conn protected_api_connections 10;
         limit_req_status 429;
@@ -47,7 +51,7 @@ let
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
         proxy_set_header X-Vision-Browser "";
-        proxy_set_header X-Mrj-User $remote_user;
+        proxy_set_header X-Mrj-User ${if site.oidcAuth or false then "$vision_api_user" else "$remote_user"};
         error_page 401 = @${site.service}-authentication-required;
         error_page 429 = @${site.service}-rate-limited;
       '';

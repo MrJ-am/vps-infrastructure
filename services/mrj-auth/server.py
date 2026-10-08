@@ -303,6 +303,18 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__=='__main__':
     os.umask(0o077)
-    server=ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('MRJ_AUTH_PORT','3002'))),Handler)
-    server.sessions=Sessions(os.environ['MRJ_AUTH_DATABASE'],os.environ['MRJ_AUTH_CREDENTIALS'],os.environ['MRJ_AUTH_DOMAIN'],os.environ['MRJ_AUTH_HOSTS'].split(','))
+    if os.environ.get('MRJ_AUTH_MODE')=='oidc':
+        from oidc import HandlerOIDC,creer_sessions
+        import threading
+        server=ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('MRJ_AUTH_PORT','3002'))),HandlerOIDC)
+        server.sessions=creer_sessions()
+        def nettoyer_periodiquement():
+            while True:
+                try:server.sessions.nettoyer_effacements()
+                except Exception:pass
+                time.sleep(3600)
+        threading.Thread(target=nettoyer_periodiquement,daemon=True).start()
+    else:
+        server=ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('MRJ_AUTH_PORT','3002'))),Handler)
+        server.sessions=Sessions(os.environ['MRJ_AUTH_DATABASE'],os.environ['MRJ_AUTH_CREDENTIALS'],os.environ['MRJ_AUTH_DOMAIN'],os.environ['MRJ_AUTH_HOSTS'].split(','))
     server.serve_forever()

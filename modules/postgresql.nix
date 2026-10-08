@@ -2,7 +2,13 @@
 let
   projects = config.infrastructure.postgresql.projects;
   layout = import ../lib/databases.nix projects;
-  permissions = pkgs.writeText "vps-postgresql-permissions.sql" layout.permissionsSQL;
+  multi = config.infrastructure.visionMultiutilisateur.enable or false;
+  identite = config.infrastructure.identite.enable or false;
+  permissions = pkgs.writeText "vps-postgresql-permissions.sql"
+    (if multi then lib.replaceStrings
+      [ ''GRANT USAGE, CREATE ON SCHEMA public TO "vision";'' ''GRANT CONNECT, TEMPORARY ON DATABASE "vision" TO "vision";'' ]
+      [ ''GRANT USAGE ON SCHEMA public TO "vision";'' ''GRANT CONNECT ON DATABASE "vision" TO "vision";'' ]
+      layout.permissionsSQL else layout.permissionsSQL);
 in {
   options.infrastructure.postgresql.visionSemantique = lib.mkEnableOption
     "pgvector pour l'anti-doublon Vision (activation après audit et restauration isolée)";
@@ -33,9 +39,14 @@ in {
         listen_addresses = lib.mkForce "";
         unix_socket_directories = "/run/postgresql";
       };
-      authentication = lib.mkForce layout.authentication;
+      authentication = lib.mkForce (
+        lib.optionalString identite "local mrjam_identite keycloak peer\n" +
+        lib.optionalString multi "local vision vision_identite peer map=mrj_identite\nlocal vision vision_administration peer\n" +
+        layout.authentication);
       ensureDatabases = layout.databases;
-      ensureUsers = layout.users;
+      ensureUsers = map (user: user // lib.optionalAttrs (multi && user.name=="vision") {
+        ensureDBOwnership = false;
+      }) layout.users;
     };
 
     # Exécuté après la création des bases/rôles, à chaque démarrage du setup,
@@ -53,7 +64,8 @@ in {
 
     services.postgresqlBackup = {
       enable = layout.databases != [];
-      databases = layout.databases;
+      # Vision et l'identité suivent la sauvegarde chiffrée du nouveau module.
+      databases = lib.filter (name: !multi || name != "vision") layout.databases;
       backupAll = false;
       startAt = "daily";
       location = "/var/backup/postgresql";

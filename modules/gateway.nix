@@ -39,7 +39,7 @@ let
   hasProtectedAPI = lib.any (site: site ? auth) sites;
 
 in {
-  imports = [ ./mrj-auth.nix ./journal-http.nix ];
+  imports = [ ./mrj-auth.nix ./journal-http.nix ./identite.nix ./vision-gestion.nix ];
   options.infrastructure.gateway.projects = lib.mkOption {
     type = lib.types.attrs;
     default = builtins.fromJSON (builtins.readFile ../projects.json);
@@ -63,7 +63,9 @@ in {
       limit_req_zone $binary_remote_addr zone=protected_api_per_ip:10m rate=5r/s;
       limit_conn_zone $binary_remote_addr zone=protected_api_connections:10m;
     '';
-    virtualHosts = (import ../lib/virtual-hosts.nix) projects;
+    virtualHosts = (import ../lib/virtual-hosts.nix)
+      (lib.mapAttrs (id: site: site // lib.optionalAttrs
+        (config.infrastructure.visionMultiutilisateur.enable && id=="vision") { oidcAuth = true; }) projects);
     # Un domaine oublié ne doit jamais emprunter le site ou le certificat d'un autre.
     appendHttpConfig = ''
       server {
