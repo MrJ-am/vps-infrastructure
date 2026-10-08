@@ -2871,29 +2871,29 @@ Avant ouverture publique : identifier le responsable du traitement et le public 
 ** DONE style
 :PROPERTIES:
 :LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
-:LU_LE: 2026-10-08T18:17:46+00:00
-:CONTEXTE: MrJ-am/style-mrjam@b0379641f6f5a1b13669472510fd71de73a6d4d5
-:PREUVE: https://github.com/MrJ-am/style-mrjam/actions/runs/37820410067
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/style-mrjam@96fa28ac564b9492768837d4087608e83acc721b
+:PREUVE: https://github.com/MrJ-am/style-mrjam/actions/runs/37824322731
 :END:
-Palette commune OKLab/OKLCH et variante Visio préparées sur PR 1 ; géométrie, 82 tests et atelier vérifiés. Vision reconstruit à la révision exacte ; aucun autre consommateur ni site actif modifié.
+Palette OKLab/OKLCH, Visio et composants finalisés sur PR 1 ; CI complètes réussies. Vision reconstruit à révision exacte ; aucun autre consommateur actif modifié.
 
 ** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
-:LU_LE: 2026-10-08T18:17:46+00:00
-:CONTEXTE: MrJ-am/vision@a2807b1be90209c30ac6858aa1075fba0cb627b7
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/vision@1f265ff40d940159dee1fb0a594d280452e583f3
 :PREUVE: https://github.com/MrJ-am/vision/pull/16
 :END:
-Implémentation et tests locaux réussis, candidat publié ; activation et ouverture bloquées par les faits juridiques et preuves du staging VPS encore absents. Notice explicite, inscriptions fermées. Aucun état servi nouveau revendiqué.
+Implémentation finale et CI réussies. Activation et ouverture restent bloquées par les faits juridiques et preuves du staging VPS absents. Notice explicite, inscriptions fermées ; aucun état servi nouveau revendiqué.
 
 ** BLOQUE vps
 :PROPERTIES:
 :LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
-:LU_LE: 2026-10-08T18:17:46+00:00
-:CONTEXTE: MrJ-am/vps-infrastructure@6201afddacdbf29404d3059013e4b97b53b909d1
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@92e8f19d2631dfa40cf52976cfaab0bca00bd664
 :PREUVE: https://github.com/MrJ-am/vps-infrastructure/pull/27
 :END:
-Candidat désactivé par défaut et qualification locale réussie ; activation distincte suspendue jusqu’à staging JDBC Unix/TLS/SMTP, retour autonome et ACL, registre hors machine, anciennes copies et dossier juridique réels. Audit Actions 37806601018 seulement, aucune bascule réalisée.
+Candidat désactivé et CI finales réussies. Activation distincte suspendue jusqu’à staging JDBC Unix/TLS/SMTP, retour autonome et ACL, registre hors machine, anciennes copies et faits juridiques réels. Audit Actions 37806601018 seulement, aucune bascule.
 
 * Vision multi-utilisateur et OKLab préparés, CI réussies, ouverture suspendue
 :PROPERTIES:
@@ -2969,4 +2969,73 @@ Préparation examinable et CI métier, interface/backend et sémantique réussie
 :PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37822799687
 :END:
 Préparation et CI publiées ; modules nouveaux désactivés. Restauration synthétique locale qualifiée. Activation et faits juridiques/exploitation restent BLOQUE dans le message initial.
+
+* Finaliser les candidats Vision et OKLCH aux références validées
+:PROPERTIES:
+:ID: 20261008-vision-04df7f6c620e
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-08T18:33:31+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Finalisation du candidat décrit par 20261008-vision-28d055089008. Les trois PR restent les mêmes ; leurs références finales remplacent celles de la première qualification :
+- Vision 1f265ff40d940159dee1fb0a594d280452e583f3 : PR https://github.com/MrJ-am/vision/pull/16. CI métier/sécurité 37824687408, navigateur/backend 37824687593 et recherche réelle 37824687504, toutes réussies.
+- Infrastructure 92e8f19d2631dfa40cf52976cfaab0bca00bd664 : PR https://github.com/MrJ-am/vps-infrastructure/pull/27. CI 37824691305 réussie, y compris Keycloak réel et les 153 tests.
+- Style 96fa28ac564b9492768837d4087608e83acc721b : PR https://github.com/MrJ-am/style-mrjam/pull/1. CI 37824322731 et qualification complète de l'atelier 37824322733 réussies. Aucun déploiement Pages depuis la PR.
+
+La revue finale a remplacé les dernières couleurs RGB de présentation des sélecteurs et blocs partagés par les variables sémantiques/OKLCH, préservé l'apparence des blocs, permis le repli des en-têtes de tableau et remplacé la saisie ISO des invitations par une date/heure avec UTC explicitement affiché. Le serveur de gestion normalise ses dates en UTC. Les contrastes réellement rendus, les quatre formats des composants partagés, les parcours Vision et les en-têtes dans leur colonne ont été vérifiés. Vision fige la révision Style ci-dessus et toutes ses empreintes. Les autres consommateurs restent à leurs révisions propres.
+
+Critère de clôture : correctifs préparés, fichiers publiés identiques aux arbres testés et CI réussies aux références finales. Aucun contrat actif, donnée de production, site servi ou inscription n'a changé. Les blocages juridiques et d'exploitation consignés dans le message initial 20261008-vision-905f20087226 restent valables ; l'ouverture demeure BLOQUE. Chaque projet relit les références finales avant une adoption distincte et vérifie ses propres préconditions.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE style
+:PROPERTIES:
+:LU_SHA256: 4d98e68e62bece3a286b90dac69dfd3e9893ff4b1b55144c0c6b2cba7864afc7
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/style-mrjam@96fa28ac564b9492768837d4087608e83acc721b
+:PREUVE: https://github.com/MrJ-am/style-mrjam/actions/runs/37824322733
+:END:
+Sources canoniques OKLCH finalisées, sélecteurs et en-têtes corrigés ; CI galerie et atelier complètes réussies. Vision épinglé et reconstruit ; aucune adoption des autres consommateurs déduite.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 4d98e68e62bece3a286b90dac69dfd3e9893ff4b1b55144c0c6b2cba7864afc7
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/vision@1f265ff40d940159dee1fb0a594d280452e583f3
+:PREUVE: https://github.com/MrJ-am/vision/actions/runs/37824687593
+:END:
+Candidat final : toutes les CI réussies, dates et en-têtes vérifiés. Recherche et lecture au-dessus du quota également vérifiées avec le rôle HTTP et sans croissance. Ouverture toujours bloquée ; production inchangée.
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: 4d98e68e62bece3a286b90dac69dfd3e9893ff4b1b55144c0c6b2cba7864afc7
+:LU_LE: 2026-10-08T18:34:35+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@92e8f19d2631dfa40cf52976cfaab0bca00bd664
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37824691305
+:END:
+Normalisation UTC et CI finales réussies ; candidature fermée et désactivée. Les conditions de staging, retour, sauvegardes et droit réel du message initial demeurent ouvertes ; aucun déploiement.
 
