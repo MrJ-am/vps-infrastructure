@@ -71,7 +71,7 @@ ans comme règle d'admission, sans en déduire un âge minimum légal universel.
 La création directe d'une identité ne doit pas contourner
 invitations, limites, contrôles parentaux ou fermeture des admissions. L'inscription
 native Keycloak reste désormais toujours fermée, même avec l'option d'ouverture.
-Seule une admission contrôlée pourra créer une identité après ses vérifications.
+Le service privé d’[admission contrôlée](ADMISSIONS-MRJAM.md) réserve les places, exige les confirmations et le contrôle manuel applicable, puis crée une identité désactivée. Le rattachement SQL doit réussir avant son activation. Tous les cas mineurs ou hors France restent en contrôle manuel au lancement.
 
 Le service SMTP retenu est Proton SMTP Submission, déjà compris dans le service
 de courriel du propriétaire : `smtp.protonmail.ch`, port 587, STARTTLS obligatoire,
@@ -130,7 +130,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 2. Qualifier une restauration **isolée** du dump chiffré Vision. Mesurer poids
    initial, nombre de propriétaires historiques et toutes les copies ; un
    propriétaire historique ambigu bloque la migration plutôt que deviner.
-   Exécuter les migrations 019–023 et `scripts/roles.sql` uniquement dans ce
+   Exécuter les migrations 019–024 et `scripts/roles.sql` uniquement dans ce
    staging, par l'exploitation. Vérifier refus croisés et rapprochement des
    compteurs avec toutes les lignes. Ne jamais lancer un script d'une release
    modifiable par le déployeur comme root/PostgreSQL.

@@ -3,6 +3,8 @@ import importlib.util
 import json
 from pathlib import Path
 import smtplib
+import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -18,6 +20,18 @@ CONFIG=dict(host='smtp.protonmail.ch',port=587,username='synthetique@example.tes
 
 
 class Cycle(unittest.TestCase):
+    @unittest.skipUnless(shutil.which('age') and shutil.which('age-keygen'),'age requis')
+    def test_piece_age_reelle_contient_uniquement_identifiant_et_date(self):
+        import courriel
+        with tempfile.TemporaryDirectory() as root:
+            cle=Path(root)/'cle.age'
+            subprocess.run(['age-keygen','-o',str(cle)],check=True,stderr=subprocess.DEVNULL)
+            recipient=subprocess.check_output(['age-keygen','-y',str(cle)],text=True).strip()
+            chiffre=courriel.chiffrer_effacement('compte-synthetique',123,recipient)
+            self.assertNotIn(b'compte-synthetique',chiffre)
+            clair=subprocess.check_output(['age','--decrypt','-i',str(cle)],input=chiffre,stderr=subprocess.DEVNULL)
+            self.assertEqual(json.loads(clair),{'version':1,'utilisateur':'compte-synthetique','confirmee_a':123})
+
     def test_intention_persiste_et_reprise_sans_double_effacement(self):
         with tempfile.TemporaryDirectory() as root:
             cycle=module.Cycle('dsn-synthetique',root,CONFIG,

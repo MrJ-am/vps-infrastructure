@@ -135,6 +135,14 @@ in {
           ${pkgs.age}/bin/age -r "$recipient" /var/lib/vision-cycle/effacements.jsonl > "$destination/effacements-cycle-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/effacements-cycle-$jour.age.tmp" "$destination/effacements-cycle-$jour.age"
         fi
+        if test -f /var/lib/mrjam-admission/admissions.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-admission/admissions.sqlite ".backup '$temporaire/admissions.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/admissions.sqlite" > "$destination/admissions-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/admissions-$jour.age.tmp" "$destination/admissions-$jour.age"
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-admission/courriels.sqlite ".backup '$temporaire/admissions-courriels.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/admissions-courriels.sqlite" > "$destination/admissions-courriels-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/admissions-courriels-$jour.age.tmp" "$destination/admissions-courriels-$jour.age"
+        fi
         ${pkgs.python3}/bin/python3 ${../scripts/sauvegarde-externe.py} manifeste --repertoire "$destination" --date "$jour"
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name 'mrjam-*.json' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name '*.age' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete

@@ -83,7 +83,7 @@ class Handler(BaseHTTPRequestHandler):
         except psycopg.errors.RaiseException as error:
             code=error.diag.message_primary
             permis={'administration_interdite','conflit','dernier_administrateur','budget_insuffisant',
-                    'compte_introuvable','invitation_introuvable','maximum_inferieur_aux_inscriptions',
+                    'compte_introuvable','invitation_introuvable','maximum_inferieur_aux_inscriptions','maximum_inferieur_aux_reservations',
                     'limites_invalides','expiration_invalide','preavis_deja_engage','preavis_introuvable',
                     'export_a_preserver','compte_suspendu','effacement_engage'}
             return self.reply(403 if code=='administration_interdite' else 409 if code=='conflit' else 400,

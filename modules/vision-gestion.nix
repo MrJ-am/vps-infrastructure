@@ -4,7 +4,7 @@ let
  python = pkgs.python3.withPackages (p: [ p.psycopg ]);
 in {
  options.infrastructure.visionMultiutilisateur.enable = lib.mkEnableOption
-   "isolation et administration Vision après les migrations 19 à 23";
+   "isolation et administration Vision après les migrations 19 à 24";
  config = lib.mkIf cfg.enable {
    assertions = [{ assertion = config.infrastructure.identite.enable;
      message = "L'administration Vision exige l'identité OIDC et sa double authentification."; }];
@@ -36,7 +36,7 @@ in {
      description = "Purge des données temporaires Vision sans export";
      after = [ "postgresql.service" ];
      serviceConfig = { Type = "oneshot"; User = "postgres"; UMask = "0077";
-       ExecStart = "${config.services.postgresql.package}/bin/psql -X --set=ON_ERROR_STOP=1 --dbname=vision --command 'SELECT vision_gestion.purger();'";
+       ExecStart = "${config.services.postgresql.package}/bin/psql -X --set=ON_ERROR_STOP=1 --dbname=vision --command 'SELECT vision_gestion.purger(); SELECT vision_gestion.purger_admissions();'";
        NoNewPrivileges = true; ProtectSystem = "strict"; ProtectHome = true;
        PrivateTmp = true; RestrictAddressFamilies = [ "AF_UNIX" ]; };
    };
@@ -49,7 +49,7 @@ in {
      (pkgs.writeShellScript "vision-verifier-migrations" ''
        set -eu
        resultat=$(${config.services.postgresql.package}/bin/psql -XAt --set=ON_ERROR_STOP=1 \
-         --command='SELECT count(*)=5 FROM vision_schema_migrations WHERE version BETWEEN 19 AND 23;')
+         --command='SELECT count(*)=6 FROM vision_schema_migrations WHERE version BETWEEN 19 AND 24;')
        test "$resultat" = t
      '');
    services.nginx.virtualHosts."vision.mrj.am".locations = {
