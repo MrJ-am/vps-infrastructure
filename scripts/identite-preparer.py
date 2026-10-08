@@ -73,6 +73,21 @@ def preparer(modele,destination,smtp=None):
         'serviceAccountClientId':'mrjam-admission','clientRoles':{'realm-management':['manage-users','view-users']}})
     realm.setdefault('clientScopeMappings',{}).setdefault('realm-management',[]).append(
         {'client':'mrjam-admission','roles':['manage-users','view-users']})
+    for nom in ('fermeture-hook.secret','fermeture-client.secret'):
+        fichier=root/nom
+        if not fichier.exists():
+            fd=os.open(fichier,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+            with os.fdopen(fd,'w') as f:f.write(secrets.token_urlsafe(32));f.flush();os.fsync(f.fileno())
+        if fichier.is_symlink() or fichier.stat().st_mode&0o077:raise ValueError('Secret fermeture non privé')
+        if not re.fullmatch(r'[A-Za-z0-9_-]{43}',fichier.read_text().strip()):raise ValueError('Secret fermeture invalide')
+    realm['clients'].append({'clientId':'mrjam-fermeture','secret':(root/'fermeture-client.secret').read_text().strip(),
+        'protocol':'openid-connect','publicClient':False,'serviceAccountsEnabled':True,
+        'standardFlowEnabled':False,'directAccessGrantsEnabled':False,'implicitFlowEnabled':False,
+        'fullScopeAllowed':False,'redirectUris':[],'webOrigins':[]})
+    realm.setdefault('users',[]).append({'username':'service-account-mrjam-fermeture','enabled':True,
+        'serviceAccountClientId':'mrjam-fermeture','clientRoles':{'realm-management':['manage-users']}})
+    realm.setdefault('clientScopeMappings',{}).setdefault('realm-management',[]).append(
+        {'client':'mrjam-fermeture','roles':['manage-users']})
     cible=root/'mrjam-realm.json'
     if cible.exists():raise ValueError('Import déjà préparé : utiliser le fichier existant ou préparer un nouveau staging')
     fd=os.open(cible,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)

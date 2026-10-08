@@ -130,7 +130,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 2. Qualifier une restauration **isolée** du dump chiffré Vision. Mesurer poids
    initial, nombre de propriétaires historiques et toutes les copies ; un
    propriétaire historique ambigu bloque la migration plutôt que deviner.
-   Exécuter les migrations 019–024 et `scripts/roles.sql` uniquement dans ce
+   Exécuter les migrations 019–025 et `scripts/roles.sql` uniquement dans ce
    staging, par l'exploitation. Vérifier refus croisés et rapprochement des
    compteurs avec toutes les lignes. Ne jamais lancer un script d'une release
    modifiable par le déployeur comme root/PostgreSQL.
@@ -159,7 +159,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 6. Tester restauration, registre d'effacement durable et ancien état SQL,
    puis armer un retour autonome **avant** l'essai de génération. Le compte
    HTTP ne lance plus de DDL ; le service vision-migrate vérifie seulement
-   les cinq migrations présentes. Préparer un retour des ACL, des owners
+   les sept migrations présentes. Préparer un retour des ACL, des owners
    et de RLS correspondant au relevé réel : revenir au seul binaire ancien
    ne restaure pas la base. Après admission de plusieurs personnes, le retour
    doit conserver une version compatible avec leurs données et l'isolation.

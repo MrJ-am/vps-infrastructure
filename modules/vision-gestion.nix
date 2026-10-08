@@ -4,7 +4,7 @@ let
  python = pkgs.python3.withPackages (p: [ p.psycopg ]);
 in {
  options.infrastructure.visionMultiutilisateur.enable = lib.mkEnableOption
-   "isolation et administration Vision après les migrations 19 à 24";
+   "isolation et administration Vision après les migrations 19 à 25";
  config = lib.mkIf cfg.enable {
    assertions = [{ assertion = config.infrastructure.identite.enable;
      message = "L'administration Vision exige l'identité OIDC et sa double authentification."; }];
@@ -49,7 +49,7 @@ in {
      (pkgs.writeShellScript "vision-verifier-migrations" ''
        set -eu
        resultat=$(${config.services.postgresql.package}/bin/psql -XAt --set=ON_ERROR_STOP=1 \
-         --command='SELECT count(*)=6 FROM vision_schema_migrations WHERE version BETWEEN 19 AND 24;')
+         --command='SELECT count(*)=7 FROM vision_schema_migrations WHERE version BETWEEN 19 AND 25;')
        test "$resultat" = t
      '');
    services.nginx.virtualHosts."vision.mrj.am".locations = {

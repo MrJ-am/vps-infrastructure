@@ -77,6 +77,16 @@ class Admission(unittest.TestCase):
             with self.assertRaises(ValueError): self.app.demander({**self.p, 'parent': parent})
         self.assertEqual(self.sql, [])
 
+    def test_fermeture_annule_demande_encore_sans_sujet_et_courriels(self):
+        d=self.demande()
+        with patch.object(self.app,'jeton',return_value={}),patch.object(m.requests,'get') as identite:
+            identite.return_value.status_code=200
+            identite.return_value.json.return_value={'id':'sujet','emailVerified':True,'email':self.p['courriel']}
+            self.app.effacer_sujet('sujet')
+        with closing(self.app.ouvrir()) as db:self.assertEqual(db.execute('SELECT count(*) FROM demandes').fetchone()[0],0)
+        with closing(self.app.file.ouvrir()) as db:self.assertEqual(db.execute('SELECT count(*) FROM courriels').fetchone()[0],0)
+        self.assertIn(('annuler',(d['id'],)),self.sql)
+
     def test_pas_de_creation_ni_mail_sans_reservation(self):
         self.app.sql = lambda *_: (_ for _ in ()).throw(ValueError('invitation_indisponible'))
         with self.assertRaises(ValueError): self.app.demander(self.p)

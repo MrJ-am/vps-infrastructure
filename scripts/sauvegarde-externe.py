@@ -46,7 +46,7 @@ def verifier(source,document):
         raise ValueError('Manifeste inconnu')
     date=valeur['date']
     datetime.datetime.strptime(date,'%Y-%m-%dT%H%M%SZ')
-    if not isinstance(valeur['fichiers'],dict) or not 3<=len(valeur['fichiers'])<=10:raise ValueError('Jeu de fichiers invalide')
+    if not isinstance(valeur['fichiers'],dict) or not 3<=len(valeur['fichiers'])<=12:raise ValueError('Jeu de fichiers invalide')
     for nom,sha in valeur['fichiers'].items():
         if not re.fullmatch(r'[a-z_-]+-'+re.escape(date)+r'\.age',nom) or not re.fullmatch(r'[a-f0-9]{64}',sha):
             raise ValueError('Nom ou empreinte invalide')

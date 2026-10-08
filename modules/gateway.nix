@@ -39,7 +39,7 @@ let
   hasProtectedAPI = lib.any (site: site ? auth) sites;
 
 in {
-  imports = [ ./mrj-auth.nix ./journal-http.nix ./identite.nix ./vision-gestion.nix ./courriel.nix ./vision-cycle.nix ./admission.nix ];
+  imports = [ ./mrj-auth.nix ./journal-http.nix ./identite.nix ./vision-gestion.nix ./courriel.nix ./vision-cycle.nix ./admission.nix ./fermeture.nix ];
   options.infrastructure.gateway.projects = lib.mkOption {
     type = lib.types.attrs;
     default = builtins.fromJSON (builtins.readFile ../projects.json);
