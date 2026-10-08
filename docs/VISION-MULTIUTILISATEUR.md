@@ -57,10 +57,10 @@ annoncé ; la version retenue traite les contenus en clair et ne promet pas
 de chiffrement de bout en bout. La notice déconseille les données personnelles
 sensibles concernant des personnes identifiables.
 
-Le responsable agit en France. Hostinger et l'Allemagne sont déclarés pour
-l'hébergement ; seule la consultation des informations de cette machine ou
-de son contrat peut établir sa région réelle. La localisation des sauvegardes
-et les accès des fournisseurs sont également à documenter. Un futur changement
+Le responsable agit en France. Le 8 octobre 2026, il confirme que hPanel
+Hostinger affiche l'Allemagne comme emplacement de son VPS. La source est
+cette confirmation de l'exploitant. La localisation des sauvegardes et les
+accès des fournisseurs sont à documenter séparément. Un futur changement
 de VPS impose de mettre à jour ces informations.
 
 Les inscriptions sont mondiales et réservées aux liens d'invitation. Pour les
