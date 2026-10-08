@@ -18,7 +18,7 @@ jobs:
           "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
       - name: Vérifier le realm, PKCE et la double authentification réels
         run: |
-          docker run -d --name keycloak-qualification -p 127.0.0.1:38085:8080 \
+          docker run -d --name keycloak-qualification --add-host host.docker.internal:host-gateway -p 127.0.0.1:38085:8080 \
             -e KC_BOOTSTRAP_ADMIN_USERNAME=qualification \
             -e KC_BOOTSTRAP_ADMIN_PASSWORD=uniquement-test-local \
             quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev

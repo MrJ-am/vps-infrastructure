@@ -41,7 +41,7 @@ in {
       };
       authentication = lib.mkForce (
         lib.optionalString identite "local mrjam_identite keycloak peer\n" +
-        lib.optionalString multi "local vision vision_identite peer map=mrj_identite\nlocal vision vision_administration peer\n" +
+        lib.optionalString multi "local vision vision_identite peer map=mrj_identite\nlocal vision vision_administration peer\nlocal vision vision_cycle peer\n" +
         layout.authentication);
       ensureDatabases = layout.databases;
       ensureUsers = map (user: user // lib.optionalAttrs (multi && user.name=="vision") {

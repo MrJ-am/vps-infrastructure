@@ -11,18 +11,23 @@ import base64
 import copy
 import hashlib
 import hmac
+import html
+import importlib.util
 import json
 import os
 from pathlib import Path
 import secrets
 import struct
+import tempfile
 import time
 import urllib.parse
 import urllib.request
+import urllib.error
 
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives import hashes
 from playwright.sync_api import sync_playwright
+from smtp_local import Relais
 
 RACINE = Path(__file__).resolve().parents[1]
 
@@ -52,12 +57,22 @@ def verifier(port, navigateur):
                  'grant_type': 'password'}, formulaire=True)['access_token']
     version = api('/admin/serverinfo', jeton=admin)['systemInfo']['version']
     assert version == '26.7.3', 'Qualifier la version Keycloak épinglée.'
-    modele = copy.deepcopy(json.loads((RACINE / 'operations/identite/realm.json').read_text()))
+    spec=importlib.util.spec_from_file_location('preparer_identite',RACINE/'scripts/identite-preparer.py')
+    preparation=importlib.util.module_from_spec(spec);spec.loader.exec_module(preparation)
+    with tempfile.TemporaryDirectory() as root:
+        preparation.preparer(RACINE/'operations/identite/realm.json',root)
+        modele=json.loads((Path(root)/'mrjam-realm.json').read_text())
+        secret_cycle=(Path(root)/'cycle-client.secret').read_text()
     realm = 'qualification-' + secrets.token_hex(6)
     modele['realm'] = realm
     secret_client = secrets.token_urlsafe(32)
     modele['clients'][0]['secret'] = secret_client
     assert not modele['registrationAllowed']
+    relais = Relais('0.0.0.0', 38086).demarrer()
+    # Exception limitée au relais synthétique local. L'import de production
+    # exige STARTTLS ; sa configuration est testée dans test_courriel.py.
+    modele['smtpServer'] = {'host':'host.docker.internal','port':'38086',
+                            'from':'qualification@example.test','starttls':'false','ssl':'false','auth':'false'}
     api('/admin/realms', modele, admin)
     try:
         mot_de_passe = secrets.token_urlsafe(32)
@@ -70,6 +85,17 @@ def verifier(port, navigateur):
                              {'type': 'otp', 'secretData': json.dumps({'value': otp}),
                               'credentialData': json.dumps({'subType': 'totp', 'digits': 6, 'counter': 0,
                                                             'period': 30, 'algorithm': 'HmacSHA1'})}]}, admin)
+        profil=api('/admin/realms/'+realm+'/users?username='+utilisateur,jeton=admin)[0]
+        jeton_cycle=api('/realms/'+realm+'/protocol/openid-connect/token',
+                       {'client_id':'mrjam-cycle','client_secret':secret_cycle,'grant_type':'client_credentials'},formulaire=True)['access_token']
+        lu=api('/admin/realms/'+realm+'/users/'+profil['id'],jeton=jeton_cycle)
+        assert lu['id']==profil['id'] and lu['email']=='synthetique@example.test'
+        try:
+            api('/admin/realms/'+realm+'/users/'+profil['id']+'/reset-password',
+                {'type':'password','value':'ChangementInterdit123'},jeton_cycle,methode='PUT')
+            raise AssertionError('Le processus de préavis ne doit pas pouvoir réinitialiser un mot de passe.')
+        except urllib.error.HTTPError as erreur:
+            assert erreur.code==403
         issuer = base + '/realms/' + realm
         protocole = '/realms/' + realm + '/protocol/openid-connect'
         retour = 'https://vision.mrj.am/auth/retour'
@@ -100,6 +126,33 @@ def verifier(port, navigateur):
                 reponse = urllib.parse.parse_qs(urllib.parse.urlsplit(page.url).query)
                 assert reponse['state'] == [etat]
                 code = reponse['code'][0]
+                # Reprise native par courriel : l'OTP existant doit survivre.
+                page = b.new_page()
+                page.route(retour + '**', lambda route: route.fulfill(status=200, body='Retour de qualification'))
+                page.goto(base + protocole + '/auth?' + urllib.parse.urlencode(parametres))
+                page.locator('a[href*="reset-credentials"]').click()
+                page.locator('#username').fill(utilisateur)
+                page.locator('[type="submit"]').click()
+                message = relais.messages.get(timeout=15)
+                texte = message.get_body(preferencelist=('plain',)).get_content()
+                liens = [l for l in texte.split() if '/login-actions/action-token?' in l]
+                assert len(liens) == 1
+                lien = html.unescape(liens[0])
+                page.goto(lien)
+                page.locator('#password-new').fill(secrets.token_urlsafe(32))
+                nouveau = page.locator('#password-new').input_value()
+                page.locator('#password-confirm').fill(nouveau)
+                page.locator('[type="submit"]').click()
+                # force-login termine la récupération sans ouvrir une session.
+                page.goto(base + protocole + '/auth?' + urllib.parse.urlencode(parametres))
+                page.locator('#username').fill(utilisateur)
+                page.locator('#password').fill(nouveau)
+                page.locator('#kc-login').click()
+                page.locator('#otp').wait_for()
+                # Le même lien ne peut pas effectuer une seconde récupération.
+                autre = b.new_page(); autre.goto(lien)
+                assert autre.locator('#password-new').count() == 0
+                autre.close()
             finally:
                 b.close()
         jetons = api(protocole + '/token', {'grant_type': 'authorization_code', 'client_id': 'mrjam-vision',
@@ -120,9 +173,12 @@ def verifier(port, navigateur):
         assert 0 <= maintenant - affirmations['auth_time'] < 60
         assert affirmations['iat'] <= maintenant < affirmations['exp']
         print(json.dumps({'keycloak': version, 'realm_versionne': True, 'signature_rs256': True,
-                          'pkce': True, 'amr_mot_de_passe_otp': True, 'auth_time_recent': True}))
+                          'pkce': True, 'amr_mot_de_passe_otp': True, 'auth_time_recent': True,
+                          'recuperation_courriel':True,'otp_conserve':True,'lien_usage_unique':True,
+                          'cycle_lecture_identite_sans_reinitialisation':True}))
     finally:
         api('/admin/realms/' + realm, jeton=admin, methode='DELETE')
+        relais.shutdown(); relais.server_close()
 
 
 if __name__ == '__main__':

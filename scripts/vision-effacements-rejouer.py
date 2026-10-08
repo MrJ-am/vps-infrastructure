@@ -13,10 +13,12 @@ def rejouer(registre,base):
     if not re.fullmatch(r'vision_restauration_[a-z0-9_]{1,40}',base):
         raise ValueError('La cible doit être une restauration isolée vision_restauration_*.')
     utilisateurs=set()
-    for ligne in Path(registre).read_text().splitlines():
-        demande=json.loads(ligne);u=demande['utilisateur']
-        if not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}',u):raise ValueError('Identifiant invalide')
-        utilisateurs.add(u)
+    registres=[registre] if isinstance(registre,(str,Path)) else registre
+    for source in registres:
+        for ligne in Path(source).read_text().splitlines():
+            demande=json.loads(ligne);u=demande['utilisateur']
+            if not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}',u):raise ValueError('Identifiant invalide')
+            utilisateurs.add(u)
     # Les valeurs ne peuvent contenir de quote après validation. Ne jamais
     # afficher les identifiants, le registre ou la sortie détaillée de psql.
     sql='BEGIN;\n'
@@ -27,5 +29,5 @@ def rejouer(registre,base):
     return len(utilisateurs)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--registre',required=True);p.add_argument('--base',required=True);a=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--registre',required=True,action='append');p.add_argument('--base',required=True);a=p.parse_args()
     n=rejouer(a.registre,a.base);print(json.dumps({'registre_rejoue':True,'demandes_distinctes':n,'base_isolee':True}))

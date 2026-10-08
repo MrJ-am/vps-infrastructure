@@ -69,8 +69,9 @@ vérification manuelle avant admission ; définir les règles selon le pays et
 la base juridique. En France, le propriétaire retient cet accord avant quinze
 ans comme règle d'admission, sans en déduire un âge minimum légal universel.
 La création directe d'une identité ne doit pas contourner
-invitations, limites, contrôles parentaux ou fermeture des admissions. L'option
-actuelle ouvrant l'inscription Keycloak ne suffit pas à réaliser ce contrôle.
+invitations, limites, contrôles parentaux ou fermeture des admissions. L'inscription
+native Keycloak reste désormais toujours fermée, même avec l'option d'ouverture.
+Seule une admission contrôlée pourra créer une identité après ses vérifications.
 
 Le service SMTP retenu est Proton SMTP Submission, déjà compris dans le service
 de courriel du propriétaire : `smtp.protonmail.ch`, port 587, STARTTLS obligatoire,
@@ -80,14 +81,16 @@ systemd hors store Nix. Ne pas utiliser le mot de passe du compte Proton. Aucun
 test d'authentification SMTP ni envoi réel n'est encore attesté. La réception du
 domaine reste distincte ; ne pas changer les MX pour configurer l'envoi.
 
-La récupération de mot de passe est activée dans le realm candidat mais demande
-SMTP et qualification de bout en bout. La connexion par lien magique reste à
+La récupération de mot de passe a été qualifiée sur Keycloak 26.7.3 et un relais
+local synthétique : courriel natif, usage unique, nouveau mot de passe, OTP
+conservé et nouvelle connexion obligatoire. Proton SMTP réel reste à qualifier.
+La connexion par lien magique reste à
 réaliser dans l'identité commune : jeton aléatoire à usage unique, courte durée,
 aucun secret dans les journaux, validation du parcours et protection contre
 l'énumération et le rejeu. L'administration garde son authentification forte
 récente ; une preuve de connexion par courriel ne vaut pas mot de passe et OTP.
 
-Prévoir la suppression administrative à préavis de trente jours : suivi de
+Le candidat implémente la suppression administrative à préavis de trente jours : suivi de
 l'envoi, échéance et annulation, export personnel accessible, effacement aveugle
 par une fonction dédiée. Un échec de courriel doit être visible et ne pas être
 traité silencieusement comme une notification réussie. Aucune suppression
@@ -95,7 +98,7 @@ automatique des comptes pour inactivité n'est retenue. L'effacement Vision et
 la fermeture de l'identité commune sont des opérations distinctes à qualifier.
 
 Le choix de rétention est trente jours pour les événements applicatifs de
-sécurité et d'administration, à implémenter et contrôler. Le journal HTTP
+sécurité et d'administration, appliqué dans le SQL et le realm candidats et à constater sur le VPS. Le journal HTTP
 commun garde sa limite existante de quatorze jours ; les historiques personnels
 d'apprentissage relèvent de leur propre finalité.
 
@@ -127,7 +130,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 2. Qualifier une restauration **isolée** du dump chiffré Vision. Mesurer poids
    initial, nombre de propriétaires historiques et toutes les copies ; un
    propriétaire historique ambigu bloque la migration plutôt que deviner.
-   Exécuter les migrations 019–022 et `scripts/roles.sql` uniquement dans ce
+   Exécuter les migrations 019–023 et `scripts/roles.sql` uniquement dans ce
    staging, par l'exploitation. Vérifier refus croisés et rapprochement des
    compteurs avec toutes les lignes. Ne jamais lancer un script d'une release
    modifiable par le déployeur comme root/PostgreSQL.
@@ -156,7 +159,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 6. Tester restauration, registre d'effacement durable et ancien état SQL,
    puis armer un retour autonome **avant** l'essai de génération. Le compte
    HTTP ne lance plus de DDL ; le service vision-migrate vérifie seulement
-   les quatre migrations présentes. Préparer un retour des ACL, des owners
+   les cinq migrations présentes. Préparer un retour des ACL, des owners
    et de RLS correspondant au relevé réel : revenir au seul binaire ancien
    ne restaure pas la base. Après admission de plusieurs personnes, le retour
    doit conserver une version compatible avec leurs données et l'isolation.
@@ -164,7 +167,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
    sites, MCP Basic/Bearer/OAuth, sessions/CSRF, MFA récent, administration
    anonyme refusée, export/effacement, sauvegardes et nouvelle connexion SSH
    depuis le runner. Ne finaliser la génération qu'après réussite des contrôles.
-8. Ouvrir séparément admission Vision et inscription Keycloak après les
+8. Ouvrir l'admission contrôlée Vision, en gardant l'inscription native Keycloak fermée, après les
    preuves juridiques et techniques. La configuration SQL exige les champs
    d'information, mais ne certifie pas les contrats ni le droit applicable.
 
