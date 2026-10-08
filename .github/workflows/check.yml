@@ -6,6 +6,30 @@ on:
 permissions:
   contents: read
 jobs:
+  keycloak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installer le navigateur et les outils de qualification
+        run: |
+          python3 -m venv "$RUNNER_TEMP/qualification"
+          "$RUNNER_TEMP/qualification/bin/pip" install playwright==1.57.0 cryptography==46.0.3
+          "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
+      - name: Vérifier le realm, PKCE et la double authentification réels
+        run: |
+          docker run -d --name keycloak-qualification -p 127.0.0.1:38085:8080 \
+            -e KC_BOOTSTRAP_ADMIN_USERNAME=qualification \
+            -e KC_BOOTSTRAP_ADMIN_PASSWORD=uniquement-test-local \
+            quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev
+          for ESSAI in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:38085/realms/master/.well-known/openid-configuration >/dev/null; then break; fi
+            sleep 1
+          done
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-integration.py
+      - name: Retirer le conteneur de qualification
+        if: always()
+        run: docker rm -f keycloak-qualification || true
   check:
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +37,7 @@ jobs:
       - name: Installer Nix pour les contrôles locaux
         run: |
           sudo apt-get update
-          sudo apt-get install -y nix-bin python3-passlib nginx
+          sudo apt-get install -y nix-bin python3-passlib python3-authlib python3-requests python3-psycopg nginx
       - name: Vérifier les registres, le routage et la syntaxe Nix
         # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
         # au compte runner. Ces contrôles n'ont besoin d'aucun démon.
@@ -23,6 +47,8 @@ jobs:
           NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
           curl --fail --location --retry 2 "https://github.com/NixOS/nixpkgs/archive/$NIXPKGS_REVISION.tar.gz" -o "$RUNNER_TEMP/nixpkgs.tar.gz"
           tar -xzf "$RUNNER_TEMP/nixpkgs.tar.gz" -C "$RUNNER_TEMP"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/vision-multiutilisateur.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/system.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
