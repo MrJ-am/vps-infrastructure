@@ -3167,13 +3167,14 @@ Actions des autres outils : relire les contrats d'identité et de fermeture comm
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 65fd0728798ceb4b32a3794437b7247026bba0e068ad4fe8323683b1c6775dd5
+:LU_LE: 2026-10-08T22:28:31+00:00
+:CONTEXTE: MrJ-am/vision@30adda56a1fbd9f23534ad8f237b781c01670ead
+:PREUVE: MrJ-am/vision@30adda56a1fbd9f23534ad8f237b781c01670ead
 :END:
+Exports JSON/XML et Markdown sélectif, préavis avec échéance et annulation, ACL sans contenu testés. Services courriel/cycle : MrJ-am/vps-infrastructure@6a7bf13b3614e01ede72e2dd9a60fcace14bcf9a ; récupération réelle Keycloak avec relais synthétique, OTP conservé, rôle IdP lecture sans réinitialisation. Admission parentale, lien magique, fermeture commune et qualification réelle restent en cours. Aucune activation ni ouverture.
 
 ** TODO vps
 :PROPERTIES:
