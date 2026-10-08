@@ -1,0 +1,54 @@
+name: Installer le courrier privé de Vision
+on:
+  workflow_dispatch:
+    inputs:
+      tester:
+        description: Envoyer une qualification chiffrée à la propre boîte de l'exploitant
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  courrier:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la connexion administrative du runner
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-courriel-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-courriel-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-courriel-admin" >/dev/null
+      - name: Conserver les réponses publiques avant installation
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Transférer la source exacte sans activer de service
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-courriel-operations/$GITHUB_SHA/source; tar -xf - -C /root/vision-courriel-operations/$GITHUB_SHA/source"
+      - name: Installer le secret privé et qualifier le relais si demandé
+        env:
+          JETON: ${{ secrets.VISION_PROTON_SMTP_TOKEN }}
+          TESTER: ${{ inputs.tester }}
+        run: |
+          test -n "$JETON"
+          RECIPIENT=$(python3 -c 'import re; from pathlib import Path; print(re.search(r"backupRecipient = \"(age1[0-9a-z]{58})\"",Path("apps/vision.nix").read_text()).group(1))')
+          OPTIONS=""
+          if test "$TESTER" = true; then OPTIONS="--tester --recipient-age $RECIPIENT"; fi
+          printf '%s' "$JETON" | sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 age --run 'python3 /root/vision-courriel-operations/$GITHUB_SHA/source/scripts/courriel-provisionner.py $OPTIONS'"
+      - name: Vérifier une nouvelle connexion et les autres sites
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-courriel-admin"

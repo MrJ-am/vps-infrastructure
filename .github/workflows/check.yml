@@ -36,11 +36,18 @@ jobs:
               p=Path(os.environ['RUNNER_TEMP'])/nom;p.write_text(secret);p.chmod(0o600)
           PY
           sudo chown 1000:1000 "$RUNNER_TEMP/qualification-hook-native.secret"
+          export QUALIFICATION_TLS="$RUNNER_TEMP/qualification-tls"
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-certificats.py --destination "$QUALIFICATION_TLS"
+          cp "$QUALIFICATION_TLS/confiance.p12" "$RUNNER_TEMP/confiance-native.p12"
+          sudo chown 1000:1000 "$RUNNER_TEMP/confiance-native.p12"
           docker run -d --name keycloak-qualification --network host \
             -v "$RUNNER_TEMP/mrjam-identite.jar:/opt/keycloak/providers/mrjam-identite.jar:ro" \
             -v "$PWD/services/keycloak-mrjam/theme:/opt/keycloak/themes/mrjam:ro" \
             -v "$RUNNER_TEMP/qualification-hook-native.secret:/tmp/qualification-hook.secret:ro" \
+            -v "$RUNNER_TEMP/confiance-native.p12:/tmp/confiance.p12:ro" \
+            -e JAVA_OPTS_APPEND='-Djavax.net.ssl.trustStore=/tmp/confiance.p12 -Djavax.net.ssl.trustStorePassword=qualification-locale -Djavax.net.ssl.trustStoreType=PKCS12' \
             -e MRJ_FERMETURE_SECRET_FILE=/tmp/qualification-hook.secret \
+            -e MRJ_QUALIFICATION_COURRIEL=1 \
             -e KC_BOOTSTRAP_ADMIN_USERNAME=qualification \
             -e KC_BOOTSTRAP_ADMIN_PASSWORD=uniquement-test-local \
             quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev --http-host=127.0.0.1 --http-port=38085

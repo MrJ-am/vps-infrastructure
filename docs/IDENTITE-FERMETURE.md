@@ -25,6 +25,30 @@ rôles de palette figés par Style 96fa28ac564b9492768837d4087608e83acc721b.
 Vision conserve ses composants ElmUI et sa teinte propre. Les styles tiers
 natifs de la console de compte restent ceux de Keycloak.
 
+Le fournisseur SMTP natif est remplacé par `CourrielSecurise`, compilé contre
+la même version exacte. Jakarta Mail impose STARTTLS avant AUTH, la chaîne de
+certificats et le nom du serveur, TLS 1.2 ou 1.3, sans confiance universelle ni
+repli en clair. La configuration d'exploitation accepte seulement Proton 587.
+Le relais loopback de qualification et ses certificats synthétiques exigent
+une variable absente du service de production. Les tests natifs prouvent le
+refus avant AUTH d'un relais sans STARTTLS, d'un certificat non reconnu et d'un
+certificat reconnu portant un autre nom ; ils prouvent aussi AUTH dans TLS.
+Les erreurs publiques et journaux ne contiennent pas la réponse du relais.
+
+Les tentatives natives sont plafonnées à dix par adresse et par heure, et
+250 par jour pour le processus Keycloak. Le compteur en mémoire utilise des
+condensats et est perdu au redémarrage ; les protections Nginx restent donc
+nécessaires. Ce plafond ne représente ni la limite contractuelle Proton ni
+le total des autres files transactionnelles privées.
+
+Le workflow manuel `vision-courriel.yml` installe le seul jeton fourni par
+`VISION_PROTON_SMTP_TOKEN` dans un fichier root 0600 hors store. Il refuse
+de remplacer une valeur différente. Son option de test envoie à l'expéditeur
+lui-même une pièce age sans donnée d'usager. Ce témoin n'est pas un registre
+d'effacement. Il reste à vérifier sa réception et son déchiffrement avec la
+clé de sauvegarde existante. Le workflow ne démarre aucun service, ne change
+pas les MX et n'ouvre aucune inscription.
+
 ## Fermeture
 
 Le droit natif account.delete-account ne permet que la fermeture personnelle.
