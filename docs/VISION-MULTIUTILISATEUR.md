@@ -47,6 +47,78 @@ Validation locale Nixpkgs `4c7870105e7f1fdf9c48688c8d7efc21abf0688a` ; construir
 le candidat sur le VPS avec le Nixpkgs réellement installé. La réussite d'une
 évaluation Nix locale n'est pas une reconstruction ou une activation serveur.
 
+## Décisions d'exploitation après entretien
+
+Le propriétaire retient un compte commun MrJ.am, avec droits propres à chaque
+outil. Le rôle administrateur Vision ne peut ni lire les contenus tiers,
+ni usurper une identité, ni réinitialiser un mot de passe. L'accès potentiel
+de l'exploitant et de l'hébergeur avec des droits techniques privilégiés est
+annoncé ; la version retenue traite les contenus en clair et ne promet pas
+de chiffrement de bout en bout. La notice déconseille les données personnelles
+sensibles concernant des personnes identifiables.
+
+Le responsable agit en France. Hostinger et l'Allemagne sont déclarés pour
+l'hébergement ; seule la consultation des informations de cette machine ou
+de son contrat peut établir sa région réelle. La localisation des sauvegardes
+et les accès des fournisseurs sont également à documenter. Un futur changement
+de VPS impose de mettre à jour ces informations.
+
+Les inscriptions sont mondiales et réservées aux liens d'invitation. Pour les
+mineurs nécessitant un accord parental, prévoir confirmation par courriel puis
+vérification manuelle avant admission ; définir les règles selon le pays et
+la base juridique. En France, le propriétaire retient cet accord avant quinze
+ans comme règle d'admission, sans en déduire un âge minimum légal universel.
+La création directe d'une identité ne doit pas contourner
+invitations, limites, contrôles parentaux ou fermeture des admissions. L'option
+actuelle ouvrant l'inscription Keycloak ne suffit pas à réaliser ce contrôle.
+
+Le service SMTP retenu est Proton SMTP Submission, déjà compris dans le service
+de courriel du propriétaire : `smtp.protonmail.ch`, port 587, STARTTLS obligatoire,
+certificat vérifié, expéditeur `Automath@MrJ.am`. Le jeton dédié est fourni,
+conservé hors des dépôts et à provisionner dans un fichier privé ou credential
+systemd hors store Nix. Ne pas utiliser le mot de passe du compte Proton. Aucun
+test d'authentification SMTP ni envoi réel n'est encore attesté. La réception du
+domaine reste distincte ; ne pas changer les MX pour configurer l'envoi.
+
+La récupération de mot de passe est activée dans le realm candidat mais demande
+SMTP et qualification de bout en bout. La connexion par lien magique reste à
+réaliser dans l'identité commune : jeton aléatoire à usage unique, courte durée,
+aucun secret dans les journaux, validation du parcours et protection contre
+l'énumération et le rejeu. L'administration garde son authentification forte
+récente ; une preuve de connexion par courriel ne vaut pas mot de passe et OTP.
+
+Prévoir la suppression administrative à préavis de trente jours : suivi de
+l'envoi, échéance et annulation, export personnel accessible, effacement aveugle
+par une fonction dédiée. Un échec de courriel doit être visible et ne pas être
+traité silencieusement comme une notification réussie. Aucune suppression
+automatique des comptes pour inactivité n'est retenue. L'effacement Vision et
+la fermeture de l'identité commune sont des opérations distinctes à qualifier.
+
+Le choix de rétention est trente jours pour les événements applicatifs de
+sécurité et d'administration, à implémenter et contrôler. Le journal HTTP
+commun garde sa limite existante de quatorze jours ; les historiques personnels
+d'apprentissage relèvent de leur propre finalité.
+
+Les sauvegardes payantes Hostinger sont exclues du budget actuel. Le propriétaire
+dispose d'un PC Linux et d'un disque externe ; il accepte une copie complète
+chiffrée **mensuelle**, avec le risque annoncé de perdre jusqu'à un mois de
+données si la machine entière disparaît et que la copie est à jour. Préparer
+une récupération simple par les opérations autorisées, vérifier les empreintes
+et une restauration isolée, protéger la clé hors Git et hors store. Définir
+la rétention et la purge du disque ; une fréquence mensuelle n'établit pas
+une durée maximale de conservation de trente jours.
+
+À **chaque effacement**, l'envoi automatique à la boîte Proton de l'exploitant
+d'une copie chiffrée du registre minimal est autorisé : identifiants techniques
+et dates, sans contenu de fiche ou d'item. Réaliser et qualifier ce canal externe
+avant ouverture. Vérifier l'ordre intention durable, dépôt externe, effacement
+SQL, reprises et idempotence. La réponse positive d'un relais SMTP n'est pas
+à elle seule une preuve de réception et de conservation durable dans la boîte.
+Si la preuve externe manque, ne pas annoncer qu'une suppression confirmée
+survivra à la perte de la machine ; ne pas réouvrir une restauration dépourvue
+du registre le plus récent. Les coordonnées privées de destination et la clé
+de restauration sont des paramètres d'exploitation, jamais des valeurs publiques.
+
 ## Préparation obligatoire avant activation
 
 1. Figer les trois révisions testées et relire la coordination. Faire un nouvel
