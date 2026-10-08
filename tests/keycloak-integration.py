@@ -13,6 +13,7 @@ import hashlib
 import hmac
 import html
 import importlib.util
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from pathlib import Path
@@ -20,6 +21,7 @@ import secrets
 import struct
 import tempfile
 import time
+import threading
 import urllib.parse
 import urllib.request
 import urllib.error
@@ -72,7 +74,7 @@ def verifier(port, navigateur):
     relais = Relais('0.0.0.0', 38086).demarrer()
     # Exception limitée au relais synthétique local. L'import de production
     # exige STARTTLS ; sa configuration est testée dans test_courriel.py.
-    modele['smtpServer'] = {'host':'host.docker.internal','port':'38086',
+    modele['smtpServer'] = {'host':'127.0.0.1','port':'38086',
                             'from':'qualification@example.test','starttls':'false','ssl':'false','auth':'false'}
     api('/admin/realms', modele, admin)
     try:
@@ -132,7 +134,8 @@ def verifier(port, navigateur):
                 page.locator('#password').fill(mot_de_passe)
                 page.locator('#kc-login').click()
                 page.locator('#otp').wait_for()
-                compteur = struct.pack('>Q', int(time.time()) // 30)
+                dernier_compteur_otp = int(time.time()) // 30
+                compteur = struct.pack('>Q', dernier_compteur_otp)
                 empreinte = hmac.new(otp.encode(), compteur, hashlib.sha1).digest()
                 position = empreinte[-1] & 15
                 code_otp = str((struct.unpack('>I', empreinte[position:position + 4])[0] & 0x7fffffff) % 1000000).zfill(6)
@@ -169,6 +172,47 @@ def verifier(port, navigateur):
                 autre = b.new_page(); autre.goto(lien)
                 assert autre.locator('#password-new').count() == 0
                 autre.close()
+                # Le courriel est une autre méthode de connexion, sans pwd AMR.
+                page = b.new_page()
+                page.route(retour + '**', lambda route: route.fulfill(status=200, body='Retour de qualification'))
+                page.goto(base + protocole + '/auth?' + urllib.parse.urlencode(parametres))
+                page.locator('#try-another-way').click()
+                page.get_by_role('button', name='Recevoir un lien par courriel', exact=False).click()
+                page.locator('#mrjam-courriel').fill('synthetique@example.test')
+                page.get_by_role('button',name='Recevoir mon lien de connexion',exact=True).click()
+                courrier = relais.messages.get(timeout=15)
+                texte = courrier.get_body(preferencelist=('plain',)).get_content()
+                liens = [l for l in texte.split() if '/login-actions/action-token?' in l]
+                assert len(liens) == 1
+                lien_magique = html.unescape(liens[0])
+                autre = b.new_page(); autre.goto(lien_magique)
+                assert autre.locator('#mrjam-confirmer').count() == 0
+                assert not autre.url.startswith(retour)
+                autre.close()
+                page.goto(lien_magique)
+                page.locator('#mrjam-confirmer').wait_for()
+                assert not page.url.startswith(retour)
+                page.locator('#mrjam-confirmer').click()
+                page.locator('#otp').wait_for()
+                # Le fournisseur refuse le rejeu du code déjà employé lors
+                # de la première connexion, même pendant sa fenêtre TOTP.
+                while int(time.time()) // 30 == dernier_compteur_otp:
+                    time.sleep(0.2)
+                compteur = struct.pack('>Q', int(time.time()) // 30)
+                empreinte = hmac.new(otp.encode(), compteur, hashlib.sha1).digest(); position = empreinte[-1] & 15
+                code_otp = str((struct.unpack('>I', empreinte[position:position + 4])[0] & 0x7fffffff) % 1000000).zfill(6)
+                page.locator('#otp').fill(code_otp); page.locator('#kc-login').click()
+                page.wait_for_url(retour+'**',timeout=10000)
+                magie = urllib.parse.parse_qs(urllib.parse.urlsplit(page.url).query)
+                assert magie['state']==[etat]
+                jetons_magie = api(protocole+'/token',{'grant_type':'authorization_code','client_id':'mrjam-vision',
+                    'client_secret':secret_client,'code':magie['code'][0],'code_verifier':preuve,'redirect_uri':retour},formulaire=True)
+                claims_magie=json.loads(decodage(jetons_magie['id_token'].split('.')[1]))
+                assert {'email','otp'} <= set(claims_magie.get('amr',[]))
+                assert 'pwd' not in claims_magie.get('amr',[])
+                assert claims_magie['nonce']==nonce and claims_magie['sub']==profil['id']
+                page.goto(lien_magique)
+                assert page.locator('#mrjam-confirmer').count()==0
             finally:
                 b.close()
         jetons = api(protocole + '/token', {'grant_type': 'authorization_code', 'client_id': 'mrjam-vision',
@@ -188,10 +232,72 @@ def verifier(port, navigateur):
         maintenant = int(time.time())
         assert 0 <= maintenant - affirmations['auth_time'] < 60
         assert affirmations['iat'] <= maintenant < affirmations['exp']
+        # Le service privé est synthétique ; le fournisseur d'identité est réel.
+        # Aucun courriel réel ni effacement de données de production.
+        hook = Path(os.environ['QUALIFICATION_HOOK_SECRET']).read_text().strip()
+        appels = []; statut = [202]
+        class FermetureLocale(BaseHTTPRequestHandler):
+            def log_message(self,*_):pass
+            def do_POST(self):
+                assert self.path=='/fermer'
+                assert self.headers['Authorization']=='Bearer '+hook
+                donnees=json.loads(self.rfile.read(int(self.headers['Content-Length'])))
+                assert donnees=={'emetteur':issuer,'sujet':profil['id'],'confirmation':'FERMER MON COMPTE'}
+                appels.append(donnees)
+                self.send_response(statut[0]);self.send_header('Content-Length','0');self.end_headers()
+        fermeture=ThreadingHTTPServer(('127.0.0.1',3028),FermetureLocale)
+        threading.Thread(target=fermeture.serve_forever,daemon=True).start()
+        try:
+            action=api('/admin/realms/'+realm+'/authentication/required-actions/delete_account',jeton=admin)
+            assert action['enabled'] is False
+            spec=importlib.util.spec_from_file_location('configurer_fermeture',RACINE/'scripts/identite-fermeture-configurer.py')
+            configuration=importlib.util.module_from_spec(spec);spec.loader.exec_module(configuration)
+            actions_avant=api('/admin/realms/'+realm+'/authentication/required-actions',jeton=admin)
+            def entretien(path,donnees=None,methode=None):return api(path,donnees,admin,methode=methode)
+            for _ in range(2):configuration.configurer(entretien,realm)
+            actions_apres=api('/admin/realms/'+realm+'/authentication/required-actions',jeton=admin)
+            assert [a for a in actions_avant if a['alias']!='delete_account']==[a for a in actions_apres if a['alias']!='delete_account']
+            # Le rôle par défaut donne à tous les comptes leur propre droit de
+            # fermeture, sans réattribuer un rôle d'administration d'identité.
+            with sync_playwright() as p:
+                b=p.chromium.launch(**({'executable_path':navigateur} if navigateur else {}))
+                try:
+                    page=b.new_page()
+                    page.route(retour+'**',lambda route:route.fulfill(status=200,body='Qualification'))
+                    page.goto(base+protocole+'/auth?'+urllib.parse.urlencode({**parametres,'kc_action':'delete_account'}))
+                    page.locator('#username').fill(utilisateur);page.locator('#password').fill(nouveau)
+                    page.locator('#kc-login').click();page.locator('#otp').wait_for()
+                    # Attendre un nouveau code après le code du lien magique.
+                    precedent=int(time.time())//30
+                    while int(time.time())//30==precedent:time.sleep(0.2)
+                    compteur=struct.pack('>Q',int(time.time())//30)
+                    empreinte=hmac.new(otp.encode(),compteur,hashlib.sha1).digest();position=empreinte[-1]&15
+                    valeur=str((struct.unpack('>I',empreinte[position:position+4])[0]&0x7fffffff)%1000000).zfill(6)
+                    page.locator('#otp').fill(valeur);page.locator('#kc-login').click()
+                    page.locator('#mrjam-fermeture').wait_for()
+                    page.locator('#mrjam-fermeture').fill('oui');page.locator('#mrjam-fermer').click()
+                    assert not appels
+                    page.locator('#mrjam-fermeture').fill('FERMER MON COMPTE');page.locator('#mrjam-fermer').click()
+                    page.locator('#mrjam-fermeture').wait_for()
+                    assert len(appels)==1
+                    assert api('/admin/realms/'+realm+'/users/'+profil['id'],jeton=admin)['enabled']
+                    statut[0]=200
+                    page.locator('#mrjam-fermeture').fill('FERMER MON COMPTE');page.locator('#mrjam-fermer').click()
+                    assert len(appels)==2
+                    try:
+                        api('/admin/realms/'+realm+'/users/'+profil['id'],jeton=admin)
+                        raise AssertionError('Identité native conservée après fermeture réussie')
+                    except urllib.error.HTTPError as erreur:assert erreur.code==404
+                finally:b.close()
+        finally:fermeture.shutdown();fermeture.server_close()
         print(json.dumps({'keycloak': version, 'realm_versionne': True, 'signature_rs256': True,
                           'pkce': True, 'amr_mot_de_passe_otp': True, 'auth_time_recent': True,
                           'recuperation_courriel':True,'otp_conserve':True,'lien_usage_unique':True,
                           'admission_identite_privee':True,'profil_minimal_sans_noms':True,
+                          'lien_magique_signe':True,'confirmation_expresse':True,'navigateur_origine_requis':True,
+                          'mfa_magique_conserve':True,'amr_courriel_sans_pwd':True,
+                          'fermeture_native_privee':True,'mfa_fermeture':True,'confirmation_exacte':True,
+                          'echec_service_identite_conservee':True,'identite_supprimee_apres_registre':True,
                           'cycle_lecture_identite_sans_reinitialisation':True}))
     finally:
         api('/admin/realms/' + realm, jeton=admin, methode='DELETE')

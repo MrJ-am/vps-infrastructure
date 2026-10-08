@@ -7,6 +7,7 @@ l'exploitant depuis Actions, sans rôle d'administration IdP dans Vision.
 import argparse
 from contextlib import closing
 import hashlib
+import hmac
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
@@ -212,6 +213,28 @@ class Admission:
             db.execute('UPDATE demandes SET controle_a=?,methode=?,reference=?,source_pays=? WHERE id=?',
                        (int(time.time()), methode, reference, source_pays, identifiant))
 
+    def effacer_sujet(self, sujet):
+        if not isinstance(sujet, str) or not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', sujet):
+            raise ValueError('sujet_invalide')
+        with self.verrou, closing(self.ouvrir()) as db, db:
+            # Avant le retrait natif, annuler aussi une demande personnelle
+            # encore sans sujet. Elle ne doit pas recréer l'identité fermée.
+            # L'adresse est lue dans l'IdP privé, jamais fournie par le navigateur
+            # ni conservée dans le registre extérieur des effacements.
+            r=requests.get(ADMIN+'/users/'+sujet,headers=self.jeton(),timeout=10)
+            courriel=''
+            if r.status_code!=404:
+                r.raise_for_status();profil=r.json()
+                if profil.get('emailVerified') and profil.get('email'):
+                    courriel=profil['email'].casefold()
+            demandes = db.execute('SELECT id FROM demandes WHERE sujet=? OR (courriel<>? AND lower(courriel)=?)', (sujet,'',courriel)).fetchall()
+            for d in demandes:
+                self.sql('annuler',d['id'])
+                with self.file.ouvrir() as file:
+                    for prefixe in ('admission:', 'parent:', 'admis:'):
+                        file.execute('DELETE FROM courriels WHERE cle=?', (prefixe+d['id'],))
+            for d in demandes:db.execute('DELETE FROM demandes WHERE id=?',(d['id'],))
+
     def jeton(self):
         r = requests.post(BACKEND+'/protocol/openid-connect/token',
             data={'grant_type': 'client_credentials', 'client_id': 'mrjam-admission', 'client_secret': self.secret}, timeout=10)
@@ -332,6 +355,19 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header(k, v)
         self.end_headers(); self.wfile.write(data)
     def do_POST(self):
+        if self.path == '/interne/effacer':
+            attendu = getattr(self.server.app, 'fermeture_secret', None)
+            entete = self.headers.get_all('Authorization')
+            if not attendu or not entete or len(entete) != 1 or not hmac.compare_digest(entete[0], 'Bearer '+attendu):
+                return self.reply(403, {'erreur':'operation_interdite'})
+            try:
+                n = int(self.headers.get('Content-Length','0'))
+                if not 0 < n <= 1024 or self.headers.get('Transfer-Encoding') or self.headers.get('Content-Type') != 'application/json': raise ValueError()
+                p = json.loads(self.rfile.read(n))
+                if not isinstance(p, dict) or set(p) != {'sujet'}: raise ValueError()
+                self.server.app.effacer_sujet(p['sujet'])
+                return self.reply(200, {'efface':True})
+            except Exception: return self.reply(400, {'erreur':'parametres_invalides'})
         if self.headers.get_all('Origin') != ['https://vision.mrj.am']:
             return self.reply(403, {'erreur': 'origine_refusee'})
         if self.headers.get('Content-Type', '').split(';')[0] != 'application/json' or self.headers.get('Transfer-Encoding'):
@@ -365,6 +401,7 @@ if __name__ == '__main__':
     p.add_argument('--approuver'); p.add_argument('--methode'); p.add_argument('--reference'); p.add_argument('--source-pays')
     p.add_argument('--lister', action='store_true')
     args = p.parse_args(); app = charger()
+    if os.environ.get('MRJ_ADMISSION_FERMETURE_SECRET'): app.fermeture_secret = secret_prive(os.environ['MRJ_ADMISSION_FERMETURE_SECRET'])
     if args.approuver:
         app.approuver(args.approuver, args.methode, args.reference, args.source_pays)
         print('{"controle_enregistre":true}')

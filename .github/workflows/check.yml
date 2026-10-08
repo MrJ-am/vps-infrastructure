@@ -11,6 +11,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
       - name: Installer le navigateur et les outils de qualification
         run: |
           python3 -m venv "$RUNNER_TEMP/qualification"
@@ -18,10 +22,28 @@ jobs:
           "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
       - name: Vérifier le realm, PKCE et la double authentification réels
         run: |
-          docker run -d --name keycloak-qualification --add-host host.docker.internal:host-gateway -p 127.0.0.1:38085:8080 \
+          docker create --name keycloak-librairies quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4
+          mkdir -p "$RUNNER_TEMP/keycloak-librairies"
+          docker cp keycloak-librairies:/opt/keycloak/lib/lib/main/. "$RUNNER_TEMP/keycloak-librairies/"
+          docker rm keycloak-librairies
+          sh services/keycloak-mrjam/compiler.sh "$RUNNER_TEMP/keycloak-librairies" "$RUNNER_TEMP/mrjam-identite.jar"
+          export QUALIFICATION_HOOK_SECRET="$RUNNER_TEMP/qualification-hook.secret"
+          python3 - <<'PY'
+          import os,secrets
+          from pathlib import Path
+          secret=secrets.token_urlsafe(32)
+          for nom in ('qualification-hook.secret','qualification-hook-native.secret'):
+              p=Path(os.environ['RUNNER_TEMP'])/nom;p.write_text(secret);p.chmod(0o600)
+          PY
+          sudo chown 1000:1000 "$RUNNER_TEMP/qualification-hook-native.secret"
+          docker run -d --name keycloak-qualification --network host \
+            -v "$RUNNER_TEMP/mrjam-identite.jar:/opt/keycloak/providers/mrjam-identite.jar:ro" \
+            -v "$PWD/services/keycloak-mrjam/theme:/opt/keycloak/themes/mrjam:ro" \
+            -v "$RUNNER_TEMP/qualification-hook-native.secret:/tmp/qualification-hook.secret:ro" \
+            -e MRJ_FERMETURE_SECRET_FILE=/tmp/qualification-hook.secret \
             -e KC_BOOTSTRAP_ADMIN_USERNAME=qualification \
             -e KC_BOOTSTRAP_ADMIN_PASSWORD=uniquement-test-local \
-            quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev
+            quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev --http-host=127.0.0.1 --http-port=38085
           for ESSAI in $(seq 1 60); do
             if curl --fail --silent http://127.0.0.1:38085/realms/master/.well-known/openid-configuration >/dev/null; then break; fi
             sleep 1

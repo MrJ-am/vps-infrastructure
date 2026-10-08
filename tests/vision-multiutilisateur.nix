@@ -12,6 +12,7 @@ let
     infrastructure.courriel.enable = true;
     infrastructure.visionCycle.enable = true;
     infrastructure.admission.enable = true;
+    infrastructure.fermeture.enable = true;
   });
   vh = cible.services.nginx.virtualHosts;
 in

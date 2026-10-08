@@ -116,6 +116,13 @@
       "config": {
         "force-login": "true"
       }
+    },
+    {
+      "alias": "mrjam-lien-courriel",
+      "config": {
+        "default.reference.value": "email",
+        "default.reference.maxAge": "300"
+      }
     }
   ],
   "authenticationFlows": [
@@ -146,11 +153,10 @@
       "builtIn": false,
       "authenticationExecutions": [
         {
-          "authenticator": "auth-username-password-form",
-          "authenticatorConfig": "mrjam-mot-de-passe",
+          "flowAlias": "mrjam-identification",
           "requirement": "REQUIRED",
           "priority": 10,
-          "authenticatorFlow": false
+          "authenticatorFlow": true
         },
         {
           "flowAlias": "mrjam-otp-conditionnel",
@@ -208,8 +214,32 @@
           "authenticatorFlow": false
         }
       ]
+    },
+    {
+      "alias": "mrjam-identification",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-username-password-form",
+          "authenticatorConfig": "mrjam-mot-de-passe",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "authenticatorFlow": false
+        },
+        {
+          "authenticator": "mrjam-courriel",
+          "authenticatorConfig": "mrjam-lien-courriel",
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "authenticatorFlow": false
+        }
+      ]
     }
   ],
   "resetCredentialsFlow": "mrjam-recuperation",
-  "actionTokenGeneratedByUserLifespan": 600
+  "actionTokenGeneratedByUserLifespan": 600,
+  "loginTheme": "mrjam",
+  "emailTheme": "mrjam"
 }

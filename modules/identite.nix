@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.infrastructure.identite;
+  extension = import ../services/keycloak-mrjam { inherit pkgs; };
+  theme = pkgs.runCommand "mrjam-theme-identite" {} ''
+    mkdir -p "$out"
+    cp -R ${../services/keycloak-mrjam/theme}/. "$out/"
+  '';
   realm = pkgs.writeText "mrjam-realm.json" (builtins.toJSON
     ((builtins.fromJSON (builtins.readFile ../operations/identite/realm.json)) // {
       # L'ouverture concerne l'admission contrôlée, jamais l'inscription native
@@ -24,7 +29,8 @@ in {
     # JDBC passe par junixsocket : PostgreSQL conserve listen_addresses=''.
     services.keycloak = {
       enable = true;
-      plugins = with pkgs.keycloak.plugins; [ junixsocket-common junixsocket-native-common ];
+      plugins = (with pkgs.keycloak.plugins; [ junixsocket-common junixsocket-native-common ]) ++ [ extension ];
+      themes.mrjam = theme;
       database = { type = "postgresql"; host = "/run/postgresql"; createLocally = false;
         name = "mrjam_identite"; username = "keycloak"; passwordFile = null; };
       # Le chemin de credential reste dans la dérivation, son contenu privé
@@ -142,6 +148,15 @@ in {
           ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-admission/courriels.sqlite ".backup '$temporaire/admissions-courriels.sqlite'"
           ${pkgs.age}/bin/age -r "$recipient" "$temporaire/admissions-courriels.sqlite" > "$destination/admissions-courriels-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/admissions-courriels-$jour.age.tmp" "$destination/admissions-courriels-$jour.age"
+        fi
+        if test -f /var/lib/mrjam-fermeture/courriels.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-fermeture/courriels.sqlite ".backup '$temporaire/fermetures.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/fermetures.sqlite" > "$destination/fermetures-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/fermetures-$jour.age.tmp" "$destination/fermetures-$jour.age"
+        fi
+        if test -f /var/lib/mrjam-fermeture/effacements.jsonl; then
+          ${pkgs.age}/bin/age -r "$recipient" /var/lib/mrjam-fermeture/effacements.jsonl > "$destination/effacements-communs-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/effacements-communs-$jour.age.tmp" "$destination/effacements-communs-$jour.age"
         fi
         ${pkgs.python3}/bin/python3 ${../scripts/sauvegarde-externe.py} manifeste --repertoire "$destination" --date "$jour"
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name 'mrjam-*.json' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
