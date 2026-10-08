@@ -63,6 +63,7 @@ def verifier(port, navigateur):
         preparation.preparer(RACINE/'operations/identite/realm.json',root)
         modele=json.loads((Path(root)/'mrjam-realm.json').read_text())
         secret_cycle=(Path(root)/'cycle-client.secret').read_text()
+        secret_admission=(Path(root)/'admission-client.secret').read_text()
     realm = 'qualification-' + secrets.token_hex(6)
     modele['realm'] = realm
     secret_client = secrets.token_urlsafe(32)
@@ -96,6 +97,21 @@ def verifier(port, navigateur):
             raise AssertionError('Le processus de préavis ne doit pas pouvoir réinitialiser un mot de passe.')
         except urllib.error.HTTPError as erreur:
             assert erreur.code==403
+        jeton_admission=api('/realms/'+realm+'/protocol/openid-connect/token',
+            {'client_id':'mrjam-admission','client_secret':secret_admission,'grant_type':'client_credentials'},formulaire=True)['access_token']
+        # Le profil ne réclame ni noms légaux ni date de naissance.
+        configuration_profil=api('/admin/realms/'+realm+'/users/profile',jeton=admin)
+        assert {a['name'] for a in configuration_profil['attributes']}=={'username','email'}
+        api('/admin/realms/'+realm+'/users',
+            {'username':'nouvelle-admission','email':'nouveau@example.test','emailVerified':True,
+             'enabled':False,'requiredActions':['UPDATE_PASSWORD']},jeton_admission)
+        admis=api('/admin/realms/'+realm+'/users?username=nouvelle-admission&exact=true',jeton=jeton_admission)[0]
+        assert admis['enabled'] is False and admis['emailVerified'] is True
+        api('/admin/realms/'+realm+'/users/'+admis['id'],{'enabled':True},jeton_admission,methode='PUT')
+        api('/admin/realms/'+realm+'/users/'+admis['id']+'/execute-actions-email?lifespan=600',
+            ['UPDATE_PASSWORD'],jeton_admission,methode='PUT')
+        creation = relais.messages.get(timeout=15)
+        assert str(creation['To'])=='nouveau@example.test'
         issuer = base + '/realms/' + realm
         protocole = '/realms/' + realm + '/protocol/openid-connect'
         retour = 'https://vision.mrj.am/auth/retour'
@@ -175,6 +191,7 @@ def verifier(port, navigateur):
         print(json.dumps({'keycloak': version, 'realm_versionne': True, 'signature_rs256': True,
                           'pkce': True, 'amr_mot_de_passe_otp': True, 'auth_time_recent': True,
                           'recuperation_courriel':True,'otp_conserve':True,'lien_usage_unique':True,
+                          'admission_identite_privee':True,'profil_minimal_sans_noms':True,
                           'cycle_lecture_identite_sans_reinitialisation':True}))
     finally:
         api('/admin/realms/' + realm, jeton=admin, methode='DELETE')

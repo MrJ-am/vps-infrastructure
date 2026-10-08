@@ -27,6 +27,10 @@ def preparer(modele,destination,smtp=None):
     root.mkdir(mode=0o700,parents=True,exist_ok=True)
     if root.is_symlink() or root.stat().st_mode & 0o077:raise ValueError('Répertoire non privé')
     realm=json.loads(Path(modele).read_text())
+    profil=json.loads((Path(__file__).resolve().parents[1]/'operations/identite/profil.json').read_text())
+    realm.setdefault('components',{})['org.keycloak.userprofile.UserProfileProvider']=[{
+        'providerId':'declarative-user-profile','subComponents':{},
+        'config':{'kc.user.profile.config':[json.dumps(profil,ensure_ascii=False)]}}]
     if realm['registrationAllowed'] is not False:raise ValueError('Le premier import doit garder les inscriptions fermées')
     if smtp:realm['smtpServer']=config_courriel(smtp)
     secret=root/'oidc-client.secret'
@@ -54,6 +58,21 @@ def preparer(modele,destination,smtp=None):
         'serviceAccountClientId':'mrjam-cycle','clientRoles':{'realm-management':['view-users']}})
     realm.setdefault('clientScopeMappings',{}).setdefault('realm-management',[]).append(
         {'client':'mrjam-cycle','roles':['view-users']})
+    admission=root/'admission-client.secret'
+    if not admission.exists():
+        fd=os.open(admission,os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600)
+        with os.fdopen(fd,'w') as f:f.write(secrets.token_urlsafe(32));f.flush();os.fsync(f.fileno())
+    if admission.is_symlink() or admission.stat().st_mode&0o077:raise ValueError('Secret admission non privé')
+    admission_secret=admission.read_text().strip()
+    if not re.fullmatch(r'[A-Za-z0-9_-]{43}',admission_secret):raise ValueError('Secret admission invalide')
+    realm['clients'].append({'clientId':'mrjam-admission','secret':admission_secret,
+        'protocol':'openid-connect','publicClient':False,'serviceAccountsEnabled':True,
+        'standardFlowEnabled':False,'directAccessGrantsEnabled':False,'implicitFlowEnabled':False,
+        'fullScopeAllowed':False,'redirectUris':[],'webOrigins':[]})
+    realm.setdefault('users',[]).append({'username':'service-account-mrjam-admission','enabled':True,
+        'serviceAccountClientId':'mrjam-admission','clientRoles':{'realm-management':['manage-users','view-users']}})
+    realm.setdefault('clientScopeMappings',{}).setdefault('realm-management',[]).append(
+        {'client':'mrjam-admission','roles':['manage-users','view-users']})
     cible=root/'mrjam-realm.json'
     if cible.exists():raise ValueError('Import déjà préparé : utiliser le fichier existant ou préparer un nouveau staging')
     fd=os.open(cible,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)

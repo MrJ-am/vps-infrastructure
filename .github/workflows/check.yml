@@ -37,7 +37,7 @@ jobs:
       - name: Installer Nix pour les contrôles locaux
         run: |
           sudo apt-get update
-          sudo apt-get install -y nix-bin python3-passlib python3-authlib python3-requests python3-psycopg nginx
+          sudo apt-get install -y nix-bin python3-passlib python3-authlib python3-requests python3-psycopg nginx age
       - name: Vérifier les registres, le routage et la syntaxe Nix
         # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
         # au compte runner. Ces contrôles n'ont besoin d'aucun démon.

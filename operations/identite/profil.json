@@ -1,0 +1,50 @@
+{
+  "attributes": [
+    {
+      "name": "username",
+      "displayName": "Identifiant du compte",
+      "permissions": {
+        "view": [
+          "admin",
+          "user"
+        ],
+        "edit": [
+          "admin"
+        ]
+      },
+      "validations": {
+        "length": {
+          "min": 3,
+          "max": 255
+        },
+        "username-prohibited-characters": {}
+      }
+    },
+    {
+      "name": "email",
+      "displayName": "Adresse de courrier",
+      "required": {
+        "roles": [
+          "user"
+        ]
+      },
+      "permissions": {
+        "view": [
+          "admin",
+          "user"
+        ],
+        "edit": [
+          "admin",
+          "user"
+        ]
+      },
+      "validations": {
+        "email": {},
+        "length": {
+          "max": 254
+        }
+      }
+    }
+  ],
+  "groups": []
+}
