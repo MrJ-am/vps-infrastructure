@@ -3113,3 +3113,73 @@ Cadrage publié dans les PR 16 et 27, avec fonctions réalisées et travaux rest
 :PREUVE: -
 :END:
 
+
+* Implémenter les parcours de lancement de Vision après le cadrage
+:PROPERTIES:
+:ID: 20261008-vision-38ae852ddf1f
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-08T21:53:15+00:00
+:CONSOLIDATION: a-faire
+:END:
+Le propriétaire demande de mettre en place le plan après l'entretien de cadrage. Départs : Vision 618d602b089a39bc5e6f8a2aaf49f36ac40a91fe, VPS 1a99ab152f041277cbb924ec68040c23962a47bd, Style 96fa28ac564b9492768837d4087608e83acc721b. Dossiers : Vision docs/MULTIUTILISATEUR.md et RGPD.md ; VPS docs/VISION-MULTIUTILISATEUR.md. Cette annonce précède les changements fonctionnels et ne vaut pas activation.
+
+VPS prépare les services communs de courriel et d'admission : Proton SMTP en STARTTLS vérifié, files durables et reprises, création d'identité exclusivement après invitation et contrôles nécessaires, parcours de mot de passe oublié et lien magique dans Keycloak. Vérifier les possibilités natives avec un véritable fournisseur isolé avant de retenir une extension. Le rôle administrateur Vision conserve son périmètre ; aucun secret de gestion IdP ou pouvoir d'usurpation n'est accordé au navigateur.
+
+Mineurs : règles par pays, confirmation par courriel et validation manuelle lorsque nécessaire ; les cas concernés restent en attente. Le choix français exige un accord parental avant quinze ans, sans assimiler ce choix à une base juridique universelle. Préparer une notice adaptée, une preuve minimale et une admission qui ne puisse être contournée par la page native d'inscription du fournisseur.
+
+Vision complète export sélectif Markdown épuré et export structuré, suppression administrative avec préavis de trente jours, état d'envoi/échéance/annulation, lecture et export maintenus, effacement autonome et fermeture distincte du compte commun. L'administration conserve uniquement les métadonnées ; tous les effacements sont réalisés sans consultation des contenus tiers. Faire évoluer explicitement SQL, ACL et contrats interservices.
+
+Conservation : événements applicatifs de sécurité et d'administration trente jours. Sauvegardes complètes externes mensuelles sur disque Linux ; à chaque effacement, copie du registre minimal chiffrée avant transmission à la boîte Proton de l'exploitant. Qualifier erreurs, reprises, déduplication, réception et restauration avant de promettre sa durabilité. Le pays VPS Allemagne est confirmé par l'exploitant d'après hPanel ; copies et contrats sont vérifiés séparément. Le journal HTTP garde son contrat propre.
+
+Actions des autres outils : relire les contrats d'identité et de fermeture commune avant adoption ; aucune modification silencieuse des comptes ou versions existants. Style conserve la révision candidate et ses contrôles ; les consommateurs adoptent chacun une révision exacte. Fin de cette phase : implémentations et tests réels isolés, preuves versionnées, dossier d'exploitation concret avec audit et retour ; ouverture seulement après les vérifications applicables. Chaque projet acquitte son propre travail.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
