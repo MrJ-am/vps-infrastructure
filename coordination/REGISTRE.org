@@ -2880,11 +2880,11 @@ Palette OKLab/OKLCH, Visio et composants finalisés sur PR 1 ; CI complètes ré
 ** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
-:LU_LE: 2026-10-08T21:30:17+00:00
-:CONTEXTE: MrJ-am/vision@2f39055c463019c42782f009eb837c298ae2eee2
-:PREUVE: Préparation et cadrage : MrJ-am/vision@2f39055c463019c42782f009eb837c298ae2eee2 ; CI 37846424292, 37846424217 et 37846424316 réussies ; plan docs/MULTIUTILISATEUR.md et dossier docs/RGPD.md.
+:LU_LE: 2026-10-08T21:39:18+00:00
+:CONTEXTE: MrJ-am/vision@618d602b089a39bc5e6f8a2aaf49f36ac40a91fe
+:PREUVE: Documents : MrJ-am/vision@618d602b089a39bc5e6f8a2aaf49f36ac40a91fe et MrJ-am/vps-infrastructure@1a99ab152f041277cbb924ec68040c23962a47bd ; git diff --check réussi. Dernière modification limitée aux documents ; qualification fonctionnelle précédente : CI Vision 37846424292, 37846424217, 37846424316 et VPS 37846428803 réussies.
 :END:
-Responsable, contact public, choix des mineurs, préavis, messagerie, confidentialité et stratégie de sauvegarde obtenus. L'ouverture reste bloquée : région et contrats à vérifier ; admissions parentales et identités réservées aux invitations, SMTP, lien magique, exports sélectifs, fermeture globale, préavis administrateur et registre externe à réaliser ou qualifier. Les modules et inscriptions restent fermés ; le succès des CI valide le candidat et ne prouve pas son activation.
+L'exploitant confirme le 8 octobre 2026 que hPanel Hostinger affiche l'Allemagne pour son VPS ; source consignée dans les documents. Responsable, contact, mineurs, préavis, SMTP, confidentialité et stratégie de sauvegarde définis. L'ouverture reste bloquée : contrats et localisation des copies à vérifier ; admissions parentales et identités réservées aux invitations, SMTP, lien magique, exports sélectifs, fermeture globale, préavis administrateur et registre externe à réaliser ou qualifier. Aucune ouverture ou activation.
 
 ** BLOQUE vps
 :PROPERTIES:
@@ -3099,11 +3099,11 @@ Actions : Vision formalise ces choix, leurs références juridiques et les écar
 ** DONE vision
 :PROPERTIES:
 :LU_SHA256: 51729276900af60303b30a93f42153a40c2f7d3b63598162f2fca3be3026a034
-:LU_LE: 2026-10-08T21:30:17+00:00
-:CONTEXTE: MrJ-am/vision@2f39055c463019c42782f009eb837c298ae2eee2
-:PREUVE: Plan et notice : MrJ-am/vision@2f39055c463019c42782f009eb837c298ae2eee2 ; dossier opérateur : MrJ-am/vps-infrastructure@197b371f3c22470e5ed7c68e7e52cd5a061a446c. CI Vision 37846424292, 37846424217 et 37846424316 ; CI VPS 37846428803 : réussies.
+:LU_LE: 2026-10-08T21:39:19+00:00
+:CONTEXTE: MrJ-am/vision@618d602b089a39bc5e6f8a2aaf49f36ac40a91fe
+:PREUVE: Plan et notice : MrJ-am/vision@618d602b089a39bc5e6f8a2aaf49f36ac40a91fe ; dossier opérateur : MrJ-am/vps-infrastructure@1a99ab152f041277cbb924ec68040c23962a47bd. Confirmation hPanel de l'exploitant consignée ; différences documentaires vérifiées. Code conservé depuis les CI réussies 37846424292, 37846424217, 37846424316 et 37846428803.
 :END:
-Cadrage documenté et publié dans les PR 16 et 27, avec état précis des fonctions réalisées et à compléter. La notice candidate déconseille les données personnelles sensibles et déclare les accès techniques privilégiés. La destination privée, l'identité de connexion initiale et le jeton SMTP sont hors dépôts. Aucun envoi, activation ou changement de contrat actif déduit de cette préparation.
+Cadrage publié dans les PR 16 et 27, avec fonctions réalisées et travaux restants. Emplacement du VPS confirmé Allemagne par l'exploitant d'après hPanel le 8 octobre 2026 ; copies et contrats à vérifier séparément. La notice déconseille les données sensibles et déclare les accès techniques potentiels. Destination privée, identité de connexion et jeton SMTP hors dépôts ; aucun envoi ou activation déduit de cette préparation.
 
 ** TODO vps
 :PROPERTIES:
