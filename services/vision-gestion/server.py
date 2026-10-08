@@ -50,7 +50,8 @@ def administrer(dsn,acteur,operation,parametres):
     if operation=='creer_invitation':
         secret=secrets.token_urlsafe(32)
         p['condensat']=hashlib.sha256(secret.encode()).hexdigest()
-    with psycopg.connect(dsn) as db:
+    # Les contrôles de date de l'interface affichent explicitement UTC.
+    with psycopg.connect(dsn,options='-c timezone=UTC') as db:
         resultat=db.execute('SELECT vision_gestion.administrer(%s,%s,%s)',(acteur,operation,json.dumps(p))).fetchone()[0]
     if secret:resultat['lien']='https://vision.mrj.am/invitation#'+secret
     return resultat
