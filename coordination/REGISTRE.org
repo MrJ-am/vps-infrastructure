@@ -2868,7 +2868,58 @@ Avant ouverture publique : identifier le responsable du traitement et le public 
 :PREUVE: -
 :END:
 
-** TODO style
+** DONE style
+:PROPERTIES:
+:LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
+:LU_LE: 2026-10-08T18:17:46+00:00
+:CONTEXTE: MrJ-am/style-mrjam@b0379641f6f5a1b13669472510fd71de73a6d4d5
+:PREUVE: https://github.com/MrJ-am/style-mrjam/actions/runs/37820410067
+:END:
+Palette commune OKLab/OKLCH et variante Visio préparées sur PR 1 ; géométrie, 82 tests et atelier vérifiés. Vision reconstruit à la révision exacte ; aucun autre consommateur ni site actif modifié.
+
+** BLOQUE vision
+:PROPERTIES:
+:LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
+:LU_LE: 2026-10-08T18:17:46+00:00
+:CONTEXTE: MrJ-am/vision@a2807b1be90209c30ac6858aa1075fba0cb627b7
+:PREUVE: https://github.com/MrJ-am/vision/pull/16
+:END:
+Implémentation et tests locaux réussis, candidat publié ; activation et ouverture bloquées par les faits juridiques et preuves du staging VPS encore absents. Notice explicite, inscriptions fermées. Aucun état servi nouveau revendiqué.
+
+** BLOQUE vps
+:PROPERTIES:
+:LU_SHA256: e542e01c068414d9bcfc51aac4d4867eb450e8684ce91f025c78818a8c859971
+:LU_LE: 2026-10-08T18:17:46+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@6201afddacdbf29404d3059013e4b97b53b909d1
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/pull/27
+:END:
+Candidat désactivé par défaut et qualification locale réussie ; activation distincte suspendue jusqu’à staging JDBC Unix/TLS/SMTP, retour autonome et ACL, registre hors machine, anciennes copies et dossier juridique réels. Audit Actions 37806601018 seulement, aucune bascule réalisée.
+
+* Vision multi-utilisateur et OKLab préparés, CI réussies, ouverture suspendue
+:PROPERTIES:
+:ID: 20261008-vision-28d055089008
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-08T18:19:41+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Trois candidats sont publiés, sans fusion ni activation de production :
+- Vision a2807b1be90209c30ac6858aa1075fba0cb627b7, PR https://github.com/MrJ-am/vision/pull/16.
+- Infrastructure 6201afddacdbf29404d3059013e4b97b53b909d1, PR https://github.com/MrJ-am/vps-infrastructure/pull/27.
+- Style b0379641f6f5a1b13669472510fd71de73a6d4d5, PR https://github.com/MrJ-am/style-mrjam/pull/1 ; source Signature inchangée.
+
+Vision 2.7 candidate : identité commune OIDC, admission et droits par outil, gestion sans accès aux contenus tiers, quotas transactionnels de 10 Mo décimaux avec limites de nombre/mots/octets, invitations nommées bornées et rétroactives, export personnel cohérent, effacement avec registre durable, notice RGPD et notes MCP synthétiques. Le compteur pondéré inclut historiques et vecteurs ; la capacité physique PostgreSQL reste un budget d'exploitation distinct. L'accès root/PostgreSQL potentiel aux contenus en clair est déclaré ; aucun chiffrement de bout en bout promis.
+
+Style : couleurs canoniques OKLab/OKLCH et Visio agrandi/recentré à contours conservés. Vision reconstruit à cette révision et ses empreintes exactes. Les autres consommateurs restent à leur révision actuelle : chacun doit relire, reconstruire et contrôler son propre artefact avant une adoption coordonnée.
+
+Preuves CI réussies aux révisions ci-dessus : Vision métier/SQL/sécurité https://github.com/MrJ-am/vision/actions/runs/37822795692 ; navigateur/backend https://github.com/MrJ-am/vision/actions/runs/37822795702 ; recherche sémantique réelle https://github.com/MrJ-am/vision/actions/runs/37822795691 ; infrastructure (153 tests, NixOS complet, PostgreSQL, Keycloak réel PKCE/OTP/AMR/auth_time) https://github.com/MrJ-am/vps-infrastructure/actions/runs/37822799687 ; style https://github.com/MrJ-am/style-mrjam/actions/runs/37820410067. Restauration age/PG17 et rejeu des effacements aussi réussis localement et reproductibles par tests/vision-restauration.py.
+
+Actions : Vision et VPS conservent les inscriptions et modules fermés ; avant activation distincte, qualifier staging JDBC Unix/DNS/TLS/SMTP, migration des identités historiques, retour autonome et ACL, anciennes copies et registre hors machine. Obtenir responsable/contact, région et accords de sous-traitance, transferts LLM, public mineur éventuel et durées réelles. Dossiers : Vision docs/MULTIUTILISATEUR.md, RGPD.md, VALIDATION-MULTIUTILISATEUR-20261008.md ; VPS docs/VISION-MULTIUTILISATEUR.md ; Style docs/OKLAB.md.
+
+Résultat lié à 20261008-vision-905f20087226. Critère de clôture de la préparation : candidats et preuves identifiés ; l'ouverture demeure BLOQUE et n'est jamais déduite d'une CI. Aucun site actif, compte existant ou schéma de production n'a été modifié.
+
+** TODO logique
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
@@ -2876,7 +2927,7 @@ Avant ouverture publique : identifier le responsable du traitement et le public 
 :PREUVE: -
 :END:
 
-** TODO vision
+** TODO memoire
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
@@ -2884,11 +2935,38 @@ Avant ouverture publique : identifier le responsable du traitement et le public 
 :PREUVE: -
 :END:
 
-** TODO vps
+** TODO signature
 :PROPERTIES:
 :LU_SHA256: -
 :LU_LE: -
 :CONTEXTE: -
 :PREUVE: -
 :END:
+
+** DONE style
+:PROPERTIES:
+:LU_SHA256: 225a00e36e6a3a84307435968a8e9845c827097107234d47273b051fb7f27bd2
+:LU_LE: 2026-10-08T18:20:22+00:00
+:CONTEXTE: MrJ-am/style-mrjam@b0379641f6f5a1b13669472510fd71de73a6d4d5
+:PREUVE: https://github.com/MrJ-am/style-mrjam/actions/runs/37820410067
+:END:
+Candidat et CI publiés ; Vision reconstruit et contrastes réels vérifiés. Les autres consommateurs gardent leurs révisions ; leur adoption exige leurs validations.
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 225a00e36e6a3a84307435968a8e9845c827097107234d47273b051fb7f27bd2
+:LU_LE: 2026-10-08T18:20:22+00:00
+:CONTEXTE: MrJ-am/vision@a2807b1be90209c30ac6858aa1075fba0cb627b7
+:PREUVE: https://github.com/MrJ-am/vision/actions/runs/37822795692
+:END:
+Préparation examinable et CI métier, interface/backend et sémantique réussies ; ouverture toujours BLOQUE dans le message initial. Aucune activation ni attestation globale RGPD.
+
+** DONE vps
+:PROPERTIES:
+:LU_SHA256: 225a00e36e6a3a84307435968a8e9845c827097107234d47273b051fb7f27bd2
+:LU_LE: 2026-10-08T18:20:22+00:00
+:CONTEXTE: MrJ-am/vps-infrastructure@6201afddacdbf29404d3059013e4b97b53b909d1
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37822799687
+:END:
+Préparation et CI publiées ; modules nouveaux désactivés. Restauration synthétique locale qualifiée. Activation et faits juridiques/exploitation restent BLOQUE dans le message initial.
 
