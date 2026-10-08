@@ -13,10 +13,12 @@ import psycopg
 CHAMPS={
  'lister_comptes':{'debut'}, 'lister_invitations':{'debut'},
  'modifier_compte':{'utilisateur','version','administrateur','actif','quota_octets','limites'},
+ 'demander_suppression':{'utilisateur','version'}, 'annuler_suppression':{'utilisateur','version'},
  'creer_invitation':{'intitule','maximum','quota_octets','limites','expire_a'},
  'modifier_invitation':{'id','version','intitule','maximum','quota_octets','limites','expire_a','retroactif','revoquer'},
 }
 REQUIS={'modifier_compte':{'utilisateur','version'},'creer_invitation':{'intitule','maximum','expire_a'},
+        'demander_suppression':{'utilisateur','version'},'annuler_suppression':{'utilisateur','version'},
         'modifier_invitation':{'id','version'}}
 
 def verifier(operation,p):
@@ -82,7 +84,8 @@ class Handler(BaseHTTPRequestHandler):
             code=error.diag.message_primary
             permis={'administration_interdite','conflit','dernier_administrateur','budget_insuffisant',
                     'compte_introuvable','invitation_introuvable','maximum_inferieur_aux_inscriptions',
-                    'limites_invalides','expiration_invalide'}
+                    'limites_invalides','expiration_invalide','preavis_deja_engage','preavis_introuvable',
+                    'export_a_preserver','compte_suspendu','effacement_engage'}
             return self.reply(403 if code=='administration_interdite' else 409 if code=='conflit' else 400,
                               {'erreur':code if code in permis else 'parametres_invalides'})
         except psycopg.IntegrityError:return self.reply(400,{'erreur':'parametres_invalides'})

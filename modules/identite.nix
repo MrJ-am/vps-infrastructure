@@ -3,7 +3,9 @@ let
   cfg = config.infrastructure.identite;
   realm = pkgs.writeText "mrjam-realm.json" (builtins.toJSON
     ((builtins.fromJSON (builtins.readFile ../operations/identite/realm.json)) // {
-      registrationAllowed = cfg.inscriptionsOuvertes;
+      # L'ouverture concerne l'admission contrôlée, jamais l'inscription native
+      # qui contournerait invitations, âge et accord parental.
+      registrationAllowed = false;
     }));
 in {
   options.infrastructure.identite = {
@@ -91,7 +93,7 @@ in {
       SystemMaxUse=32M
       SystemMaxFileSize=4M
       RuntimeMaxUse=8M
-      MaxRetentionSec=14day
+      MaxRetentionSec=30day
       MaxFileSec=1day
       ForwardToSyslog=no
       ForwardToConsole=no
@@ -124,6 +126,17 @@ in {
           ${pkgs.age}/bin/age -r "$recipient" /var/lib/vision-effacements/demandes.jsonl > "$destination/effacements-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/effacements-$jour.age.tmp" "$destination/effacements-$jour.age"
         fi
+        if test -f /var/lib/vision-cycle/courriels.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/vision-cycle/courriels.sqlite ".backup '$temporaire/cycle.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/cycle.sqlite" > "$destination/cycle-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/cycle-$jour.age.tmp" "$destination/cycle-$jour.age"
+        fi
+        if test -f /var/lib/vision-cycle/effacements.jsonl; then
+          ${pkgs.age}/bin/age -r "$recipient" /var/lib/vision-cycle/effacements.jsonl > "$destination/effacements-cycle-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/effacements-cycle-$jour.age.tmp" "$destination/effacements-cycle-$jour.age"
+        fi
+        ${pkgs.python3}/bin/python3 ${../scripts/sauvegarde-externe.py} manifeste --repertoire "$destination" --date "$jour"
+        ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name 'mrjam-*.json' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name '*.age' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
       '';
     };

@@ -9,6 +9,8 @@ let
     infrastructure.identite.enable = true;
     infrastructure.identite.preconditionsValidees = true;
     infrastructure.visionMultiutilisateur.enable = true;
+    infrastructure.courriel.enable = true;
+    infrastructure.visionCycle.enable = true;
   });
   vh = cible.services.nginx.virtualHosts;
 in
@@ -23,6 +25,9 @@ assert cible.services.keycloak.database.host == "/run/postgresql";
 assert cible.services.keycloak.settings.http-host == "127.0.0.1";
 assert cible.systemd.services.keycloak.serviceConfig.MemoryMax == "2G";
 assert cible.systemd.services.vision-gestion.serviceConfig.User == "vision_administration";
+assert cible.systemd.services.vision-cycle.serviceConfig.User == "vision_cycle";
+assert lib.hasInfix "auth_request /_mrj_session" vh."vision.mrj.am".locations."= /api/web/effacer_compte".extraConfig;
+assert vh."vision.mrj.am".locations."= /api/web/effacer_compte".proxyPass == "http://127.0.0.1:3026";
 assert cible.systemd.services.mrj-auth.environment.MRJ_AUTH_MODE == "oidc";
 assert lib.hasInfix "vision_identite peer map=mrj_identite" cible.services.postgresql.authentication;
 assert lib.hasInfix "auth_request /_vision_administration" vh."vision.mrj.am".locations."/api/gestion/".extraConfig;
