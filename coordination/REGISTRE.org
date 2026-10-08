@@ -2825,3 +2825,70 @@ Résultats et limites relus, prise tactile vérifiée sur le site public.
 :PREUVE: -
 :END:
 
+* Préparer Vision multi-utilisateur, identité commune et quotas privés
+:PROPERTIES:
+:ID: 20261008-vision-905f20087226
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-08T16:08:36+00:00
+:CONSOLIDATION: a-faire
+:END:
+Le propriétaire autorise le 8 octobre 2026 la mise en œuvre de Vision multi-utilisateur : identité commune aux outils, administration sans accès aux contenus, invitations à usages bornés et quotas rétroactifs, plafond initial de 10 Mo, notice de confidentialité et palette commune OKLab/OKLCH.
+
+Références de départ : Vision 43bc38b7ce139dfadba78e2a059805411fd976ad ; VPS 65b5ae5dfe12ea7922bdd13f7801a6b8f7f1f36d ; style 6c742b373ca6e6bbef8e6e2fbc474bbd846fe027. Préparation sur branches dédiées, sans activation de production attestée par cette annonce.
+
+Vision prépare l'isolation et les quotas transactionnels de toutes les données persistantes, les parcours de compte et les contrats MCP. VPS prépare l'identité commune OIDC, les rôles de gestion limités aux métadonnées et les migrations réversibles, puis constate capacité, sauvegardes et configuration réellement actives. Style centralise les couleurs OKLab/OKLCH et une variante Visio recentrée et agrandie à partir des contours existants. Les consommateurs relisent les changements partagés avant toute adoption à révision exacte.
+
+Les administrateurs de Vision ne reçoivent aucun accès aux textes, titres, observations, recherches ou vecteurs d'autrui, ni aucune possibilité d'usurpation d'identité. Les comptes, secrets et clients existants sont pris en compte dans une migration explicite. La portée du chiffrement vis-à-vis des responsables techniques du VPS reste à préciser ; le MCP actuel traite les contenus côté serveur.
+
+Avant ouverture publique : identifier le responsable du traitement et le public mineur éventuel, vérifier les destinataires et transferts, mettre en œuvre export/effacement, rétention et sauvegardes, et conserver les preuves de sécurité et de conformité. Fin : tests d'accès croisés, quotas concurrents, invitations, révocation et parcours web/MCP réussis ; migrations et retour testés ; versions réellement servies et limites de validation consignées. Aucun projet n'acquitte pour un autre.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
