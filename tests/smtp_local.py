@@ -12,6 +12,7 @@ class Relais(socketserver.ThreadingTCPServer):
 
     def __init__(self, host='127.0.0.1', port=0):
         self.messages = queue.Queue()
+        self.auth = queue.Queue()
         super().__init__((host, port), Dialogue)
 
     def demarrer(self):
@@ -27,7 +28,9 @@ class Dialogue(socketserver.StreamRequestHandler):
         while ligne := self.rfile.readline(8192):
             commande = ligne.decode('ascii', errors='replace').strip().upper()
             if commande.startswith(('EHLO ', 'HELO ')):
-                reponse = b'250-localhost\r\n250 SIZE 1048576\r\n'
+                reponse = b'250-localhost\r\n250-AUTH PLAIN\r\n250 SIZE 1048576\r\n'
+            elif commande.startswith('AUTH '):
+                self.server.auth.put(True);reponse=b'235 OK\r\n'
             elif commande.startswith('MAIL FROM:'):
                 reponse = b'250 OK\r\n'
             elif commande.startswith('RCPT TO:'):

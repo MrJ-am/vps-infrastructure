@@ -18,6 +18,8 @@ import json
 import os
 from pathlib import Path
 import secrets
+import socketserver
+import ssl
 import struct
 import tempfile
 import time
@@ -30,6 +32,7 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.primitives import hashes
 from playwright.sync_api import sync_playwright
 from smtp_local import Relais
+from test_courriel_tls import Dialogue as DialogueTLS
 
 RACINE = Path(__file__).resolve().parents[1]
 
@@ -114,6 +117,41 @@ def verifier(port, navigateur):
             ['UPDATE_PASSWORD'],jeton_admission,methode='PUT')
         creation = relais.messages.get(timeout=15)
         assert str(creation['To'])=='nouveau@example.test'
+        # Un relais annonçant AUTH mais pas STARTTLS doit être refusé avant
+        # toute transmission d'un credential, même si l'envoi est natif.
+        smtp_durci={**modele['smtpServer'],'auth':'true','user':'synthetique@example.test',
+                    'password':'credential-synthetique','starttls':'true'}
+        api('/admin/realms/'+realm,{'smtpServer':smtp_durci},admin,methode='PUT')
+        try:
+            api('/admin/realms/'+realm+'/users/'+admis['id']+'/execute-actions-email',
+                ['UPDATE_PASSWORD'],jeton_admission,methode='PUT')
+            raise AssertionError('Un relais sans STARTTLS a été accepté')
+        except urllib.error.HTTPError as erreur:assert erreur.code in (400,500)
+        assert relais.auth.empty() and relais.messages.empty()
+        # Certificat inconnu, nom erroné et véritable AUTH/DATA après TLS.
+        certificats=Path(os.environ['QUALIFICATION_TLS'])
+        for certificat,valide in [('autre',False),('nom-invalide',False),('correct',True)]:
+            class RelaisTLS(socketserver.ThreadingTCPServer):
+                allow_reuse_address=True;daemon_threads=True
+            tls=RelaisTLS(('127.0.0.1',38087),DialogueTLS)
+            import queue
+            tls.auth=queue.Queue();tls.messages=queue.Queue();tls.contexte=ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+            tls.contexte.load_cert_chain(certificats/(certificat+'.pem'),certificats/(certificat+'.key'))
+            threading.Thread(target=tls.serve_forever,daemon=True).start()
+            try:
+                api('/admin/realms/'+realm,{'smtpServer':{**smtp_durci,'port':'38087'}},admin,methode='PUT')
+                try:
+                    api('/admin/realms/'+realm+'/users/'+admis['id']+'/execute-actions-email',
+                        ['UPDATE_PASSWORD'],jeton_admission,methode='PUT')
+                    assert valide,'Une erreur TLS a été ignorée'
+                except urllib.error.HTTPError as erreur:
+                    assert not valide and erreur.code in (400,500)
+                if valide:
+                    assert tls.auth.get(timeout=5) is True
+                    assert tls.messages.get(timeout=5)
+                else:assert tls.auth.empty() and tls.messages.empty()
+            finally:tls.shutdown();tls.server_close()
+        api('/admin/realms/'+realm,{'smtpServer':modele['smtpServer']},admin,methode='PUT')
         issuer = base + '/realms/' + realm
         protocole = '/realms/' + realm + '/protocol/openid-connect'
         retour = 'https://vision.mrj.am/auth/retour'
@@ -298,8 +336,15 @@ def verifier(port, navigateur):
                           'mfa_magique_conserve':True,'amr_courriel_sans_pwd':True,
                           'fermeture_native_privee':True,'mfa_fermeture':True,'confirmation_exacte':True,
                           'echec_service_identite_conservee':True,'identite_supprimee_apres_registre':True,
+                          'smtp_natif_starttls_obligatoire_avant_auth':True,
+                          'smtp_natif_certificat_et_nom_verifies':True,'smtp_natif_auth_dans_tls':True,
                           'cycle_lecture_identite_sans_reinitialisation':True}))
     finally:
+        # Le jeton administrateur de qualification expire pendant les attentes
+        # de nouveaux codes OTP. Le nettoyage prend une session neuve.
+        admin = api('/realms/master/protocol/openid-connect/token',
+                    {'client_id': 'admin-cli', 'username': 'qualification', 'password': 'uniquement-test-local',
+                     'grant_type': 'password'}, formulaire=True)['access_token']
         api('/admin/realms/' + realm, jeton=admin, methode='DELETE')
         relais.shutdown(); relais.server_close()
 

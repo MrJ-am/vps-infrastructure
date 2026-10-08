@@ -36,9 +36,9 @@ par simple ressemblance de nom ou de courriel n'est autorisé.
 
 ## État connu et capacité
 
-Audit Actions `37806601018`, infrastructure `c0a78e693c302ca3c274e2b18fda3b4ce803d192` :
+Audit Actions `37858455559`, infrastructure `9fda3ad29ed2312311c84684c441a8490351517e` :
 PostgreSQL 17.11, socket `/run/postgresql`, données `/var/lib/postgresql/17`,
-listen_addresses vide ; environ 7 942 Mio RAM totaux, 6 092 Mio disponibles,
+listen_addresses vide ; environ 7 942 Mio RAM totaux, 6 170 Mio disponibles,
 80 Gio disque disponibles. Ce constat permet de préparer un IdP de 2 Go.
 Il ne prouve pas la capacité après charge réelle, ni la région contractuelle
 d'hébergement, ni les sauvegardes hors machine.
@@ -84,18 +84,20 @@ domaine reste distincte ; ne pas changer les MX pour configurer l'envoi.
 La récupération de mot de passe a été qualifiée sur Keycloak 26.7.3 et un relais
 local synthétique : courriel natif, usage unique, nouveau mot de passe, OTP
 conservé et nouvelle connexion obligatoire. Proton SMTP réel reste à qualifier.
-La connexion par lien magique reste à
-réaliser dans l'identité commune : jeton aléatoire à usage unique, courte durée,
-aucun secret dans les journaux, validation du parcours et protection contre
-l'énumération et le rejeu. L'administration garde son authentification forte
-récente ; une preuve de connexion par courriel ne vaut pas mot de passe et OTP.
+La connexion par lien magique est qualifiée sur la même version native :
+jeton d'action signé à usage unique, dix minutes, navigateur d'origine et
+confirmation expresse avant reprise de l'OTP. Aucun secret dans les journaux.
+Le fournisseur SMTP natif impose TLS et la vérification du nom du serveur ;
+voir [preuves et plafonds](IDENTITE-FERMETURE.md). L'administration garde son
+authentification forte récente ; une preuve par courriel ne vaut pas pwd et otp.
 
 Le candidat implémente la suppression administrative à préavis de trente jours : suivi de
 l'envoi, échéance et annulation, export personnel accessible, effacement aveugle
 par une fonction dédiée. Un échec de courriel doit être visible et ne pas être
 traité silencieusement comme une notification réussie. Aucune suppression
 automatique des comptes pour inactivité n'est retenue. L'effacement Vision et
-la fermeture de l'identité commune sont des opérations distinctes à qualifier.
+la fermeture de l'identité commune sont des opérations distinctes, qualifiées
+localement avec registre age et reprise ; leur activation reste séparée.
 
 Le choix de rétention est trente jours pour les événements applicatifs de
 sécurité et d'administration, appliqué dans le SQL et le realm candidats et à constater sur le VPS. Le journal HTTP
