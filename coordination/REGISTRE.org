@@ -3039,3 +3039,76 @@ Candidat final : toutes les CI réussies, dates et en-têtes vérifiés. Recherc
 :END:
 Normalisation UTC et CI finales réussies ; candidature fermée et désactivée. Les conditions de staging, retour, sauvegardes et droit réel du message initial demeurent ouvertes ; aucun déploiement.
 
+* Préciser le lancement de Vision après les réponses du propriétaire
+:PROPERTIES:
+:ID: 20261008-vision-1910ce55b09b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-08T21:15:02+00:00
+:CONSOLIDATION: a-faire
+:END:
+Le propriétaire précise le cadrage du lancement de Vision, après la préparation décrite par 20261008-vision-04df7f6c620e. Ces décisions ne constituent ni une activation ni une attestation globale de conformité.
+
+Identité : un seul compte MrJ.am, droits et admission propres à chaque outil. Responsable en France : Jean-Christophe Jameux ; contact public RGPD@MrJ.am. Accès mondial exclusivement sur invitation. Hébergement déclaré Hostinger en Allemagne, région de ce VPS encore à vérifier ; rendre les informations d'hébergement configurables.
+
+Mineurs : accueil avec règles du pays concerné ; en France, admission des moins de quinze ans avec accord parental. Pour le lancement, confirmation par courriel complétée par une vérification manuelle avant admission. Le seuil français du consentement n'est pas un âge minimum universel. Vérifier base juridique, capacité et méthode de contrôle proportionnée.
+
+Confidentialité : le rôle administrateur applicatif demeure exclu des contenus tiers. L'accès technique privilégié de l'exploitant et de l'hébergeur est annoncé ; aucun chiffrement de bout en bout dans cette architecture. Ajouter une mise en garde sur les données personnelles sensibles, tout en permettant les connaissances générales sur ces thèmes. Chaque personne fournit son propre LLM et choisit son autorisation MCP.
+
+Courriels : utiliser Proton SMTP Submission avec l'adresse d'envoi Automath@MrJ.am, port 587, STARTTLS obligatoire et certificat vérifié. Jeton fourni et conservé hors des dépôts ; aucune authentification SMTP constatée ni aucun envoi effectué. Prévoir récupération de mot de passe et lien magique dans l'identité commune, sans affaiblir le MFA administrateur.
+
+Cycle de vie : pas de suppression automatique pour inactivité. Préavis administrateur de trente jours, géré depuis l'interface, avec suivi du courriel, possibilité d'annulation et export accessible. Prévoir export sélectif Markdown sans données de révision, export structuré complet, effacement autonome de Vision et fermeture distincte de l'identité commune. Conservation des journaux applicatifs de sécurité et d'administration : trente jours, à mettre en œuvre ; le contrat HTTP VPS de quatorze jours reste distinct.
+
+Sauvegardes : supplément payant Hostinger exclu. Copie complète chiffrée mensuelle sur disque externe déjà disponible, PC Linux ; procédure à réaliser. En complément, copie chiffrée du registre minimal des effacements vers la boîte Proton de l'exploitant à chaque suppression, autorisée explicitement. Qualifier durabilité, ordre des opérations, reprise après panne, purge des copies et rejeu avant restauration ; ne pas présenter une sauvegarde mensuelle comme une protection de toutes les intentions récentes.
+
+Actions : Vision formalise ces choix, leurs références juridiques et les écarts du candidat ; VPS prépare les contraintes d'identité, SMTP, suppression et restauration. Tous les outils concernés relisent les évolutions d'identité avant leur adoption. Aucun champ d'ouverture ni contrat actif n'est changé par ce cadrage. Critère de fin de cette étape : décisions versionnées sans secret, état de réalisation explicite et notice candidate compilée ; l'ouverture reste conditionnée aux contrôles techniques et juridiques.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
