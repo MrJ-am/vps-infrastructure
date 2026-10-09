@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "keycloak": "26.7.3",
+  "profil_prive_courant": true,
+  "donnees_synthetiques": true,
+  "refus_identifiant_deux_caracteres": {
+    "statut": 400,
+    "validation_username_length": true,
+    "aucun_compte_cree": true
+  },
+  "identifiant_corrige": {
+    "statut": 201,
+    "compte_unique": true,
+    "aucun_mot_de_passe_operateur": true
+  }
+}

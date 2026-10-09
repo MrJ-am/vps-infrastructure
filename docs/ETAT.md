@@ -1,5 +1,27 @@
 # État attesté au 9 octobre 2026
 
+La tentative2 de l'[opération37997821227](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37997821227),
+0f8b9f3/PR70, job114048714100, a passé la correction du flux puis refusé
+`compte_et_courriel`. Le diagnostic privé n'a pas encore été projeté ; ce stade
+ne prouve ni création ni envoi. Six services/SSH/25sites finaux conservés.
+La première tentative avait seulement dépassé le délai du relevé public ;
+extraction et opérateur étaient restés non exécutés avant la relance ciblée.
+
+L'enveloppe autorisait un identifiant interne de deux caractères, alors que le
+profil immuable exige trois. [Reproduction native](../operations/vision-proprietaire-profil-qualification.json) :
+refusHTTP400 sans création pour deux caractères, succès201 avec l'identifiant
+corrigé sans mot de passe opérateur. Le minimum est corrigé avant API/intention
+et seul l'identifiant interne du contact chiffré change ; adresse commune,
+issuer, profil et realm restent identiques.
+La reprise demeure conditionnelle à la preuve root d'un uniqueHTTP400 au
+POST de création de0f8, aux sources/AST exacts, à la liste humaine vide, à
+l'absence de sujet reçu et de toute intention de courriel, aux contacts qui
+ne diffèrent que par ce nom, et au profil actuel minimum3. Une preuve fsync
+précède l'archivage privé de l'intention explicitement refusée. Cet usage
+unique ne permet jamais d'archiver une nouvelle intention ambiguë. Autres
+codes/étapes, réponse perdue, sujet ou courriel présent refusent la reprise.
+Cette préparation ne prouve toujours pas un compte ni un envoi réels.
+
 L'[enrôlement37996158121](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37996158121),
 f8343fb/PR69, job114042717040, s'est arrêté à `methodes_pwd_otp`, avant le
 contact, l'état durable, la création et le courriel. HTTPS/issuer/refus/sources,

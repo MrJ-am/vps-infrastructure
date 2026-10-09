@@ -5579,12 +5579,12 @@ Qualifier le lecteur corrigé sur le moteur natif et les refus d'exécutions dif
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: fd7167e5d2e0b2851874ea4adfd1afcf10e85816763c78ab396c72f9e6708602
-:LU_LE: 2026-10-09T22:04:54+00:00
+:LU_LE: 2026-10-09T22:23:04+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Lecteur corrigé qualifié sur moteur natif26.7.3/PG17 et flux privé courant ; huit contrôles de refus ajoutés,325 tests et Nix locaux réussis. Enrôlement réel toujours à qualifier après CI exacte.
+:PREUVE: 0f8b9f3/PR70/325 tests/CI37997309145 complète. Opération37997821227 tentative2/job114048714100 atteint compte_et_courriel : flux natif, valeurs SQL, contact et état durable contrôlés ; refus suivant distinct, six services/SSH/25sites finaux conservés. Parcours synthétique complet pwd/otp frais sur PG17 également réussi.
 :END:
 
 ** TODO vps
@@ -5644,12 +5644,12 @@ Qualifier ces refus et le contact corrigé avant CI exacte, puis l'agent lance l
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 1469ef79c995aecad4ecddb3d2e1aefd2d9077977604b9c6c7bf661f267b835b
+:LU_LE: 2026-10-09T22:23:04+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 335tests et Nix locaux réussis ; native26.7.3 refuse deux caractères sans création et accepte la correction sans mot de passe opérateur. Reprise fermée préparée, sources antérieures conservées ; preuves serveur du refus explicite et création/mail réels encore nécessaires après CI exacte.
 :END:
 
 ** TODO vps

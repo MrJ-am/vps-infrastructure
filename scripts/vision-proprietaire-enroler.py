@@ -96,6 +96,7 @@ def main(revision, observer=False):
     controle=charger('controle_identite','identite-amorcage-controle.py')
     observation=charger('observation_initiale','vision-proprietaire-observation.py')
     notes_module=charger('notes_initiales','identite-session-proprietaire.py')
+    refus_module=charger('refus_creation','identite-proprietaire-refus.py')
     boucle=charger('boucle_identite','vision-identite-boucle-locale.py')
     for p in (dossier.parent,dossier,ROOT):construction.dossier_prive(p)
     candidat=json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
@@ -169,6 +170,31 @@ def main(revision, observer=False):
             except FileNotFoundError:return None
         def ecrire(nom,valeur):identite.ecrire(fd,nom,json.dumps(valeur))
         enregistrer=lire('compte.json')
+        if not observer and enregistrer is None and lire('creation-demandee') is not None:
+            ETAPE='refus_precedent'
+            precedent=dossier.parent/refus_module.PRECEDENTE
+            for p in (precedent,precedent/'source',precedent/'source/scripts'):construction.dossier_prive(p)
+            pd=os.open(precedent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+            sd=os.open(precedent/'source/scripts',os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+            try:
+                trace=identite.lire(pd,'diagnostic-proprietaire-prive.log',262144)
+                sources={nom:identite.lire(sd,nom,65536) for nom in refus_module.SOURCES}
+            finally:os.close(sd);os.close(pd)
+            ancien=dechiffrer((precedent/'source/operations/vision-proprietaire.age.b64').read_bytes(),
+                preparer.outil(resume,'age_paquet','age'))
+            # L'adresse est normalisée seulement en RAM, comme pour le compte natif.
+            ancien={**ancien,'courriel':ancien['courriel'].lower()}
+            contact_normalise=compte_module.verifier_enveloppe(contact)
+            noms=('creation-demandee','compte.json','courriel-demande','courriel-accepte',refus_module.ARCHIVE,refus_module.RECU)
+            preuve=refus_module.verifier(trace,sources,ancien,contact_normalise,{k:lire(k) for k in noms},
+                api('/admin/realms/mrjam/users?max=2'),api('/admin/realms/mrjam/users/profile'))
+            print(json.dumps(dict(refus_creation_precedent_verifie=True,post_refuse_http400=True,
+                aucun_compte_humain=True,aucun_courriel_demande=True)),flush=True)
+            # Préserver l'intention refusée, avec une preuve fsync et un usage unique.
+            ecrire(refus_module.RECU,preuve)
+            os.rename('creation-demandee',refus_module.ARCHIVE,src_dir_fd=fd,dst_dir_fd=fd);os.fsync(fd)
+            verifier_actif()
+            ETAPE='etat_durable'
         controle.verifier(secret,realm,opener=opener,sujet_proprietaire=enregistrer['sujet'] if enregistrer else None)
         if lire('executions.json') is None:ecrire('executions.json',ids)
         else:exiger(lire('executions.json')==ids)
@@ -217,8 +243,9 @@ if __name__=='__main__':
         except Exception:pass
         rapport=dict(enrolement_refuse=True,etape=ETAPE,inscriptions=False,mode_vision_oidc=False)
         raisons={'observation_sql','observation_json','observation_modele','observation_hierarchie',
-            'observation_identifiant','observation_provider','observation_configuration','observation_methodes'}
-        if type(erreur).__name__=='ObservationRefusee' and len(erreur.args)==1 and erreur.args[0] in raisons:
+            'observation_identifiant','observation_provider','observation_configuration','observation_methodes',
+            'reprise_source','reprise_reponse','reprise_etape','reprise_etat','reprise_contact','reprise_profil'}
+        if type(erreur).__name__ in ('ObservationRefusee','RepriseRefusee') and len(erreur.args)==1 and erreur.args[0] in raisons:
             rapport['raison']=erreur.args[0]
         print(json.dumps(rapport))
         raise SystemExit(1)
