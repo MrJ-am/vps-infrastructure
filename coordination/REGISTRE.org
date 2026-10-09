@@ -5201,12 +5201,12 @@ La phase suivante est seulement diagnostic, dans le point d’entrée main/CI ex
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: d482753344e913e32b5f33348592f326eb5ca96d6ee0780bc08774181d839d4f
+:LU_LE: 2026-10-09T20:52:50+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Diagnostic fermé f763 préparé ; retour attesté 37987992248. Motif initial inconnu, aucune nouvelle activation.
 :END:
 
 ** TODO vps

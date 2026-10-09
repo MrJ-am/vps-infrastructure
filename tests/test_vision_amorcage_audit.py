@@ -63,7 +63,7 @@ class Audit(unittest.TestCase):
             self.assertFalse(r['defaut']['disponible']);self.assertNotIn('detail-prive',json.dumps(r))
             for a in appels.call_args_list:
                 self.assertIn('--unit=nginx.service',a.args[0]);self.assertIn('--unit=nginx-validate-config.service',a.args[0])
-                self.assertIn('--since=2026-10-09 17:05:00 UTC',a.args[0]);self.assertIn('--until=2026-10-09 17:06:40 UTC',a.args[0])
+                self.assertIn('--since=2026-10-09 20:35:50 UTC',a.args[0]);self.assertIn('--until=2026-10-09 20:38:00 UTC',a.args[0])
             self.assertIn('--namespace=http',appels.call_args_list[0].args[0]);self.assertNotIn('--namespace=http',appels.call_args_list[1].args[0])
         for erreur in (OSError('detail-prive'),audit.subprocess.TimeoutExpired(['detail-prive'],10)):
             with patch.object(audit.subprocess,'run',side_effect=erreur):r=audit.journaux_nginx(Path('/outils'))
@@ -101,6 +101,29 @@ class Audit(unittest.TestCase):
         self.assertEqual(r['etapes'],['essai_generation'])
         self.assertEqual(r['categories'],['lancement_python_refuse','bibliotheque_python_absente'])
         self.assertNotIn(secret,json.dumps(r))
+
+    def test_refus_locaux_uniquement_ligne_exception_sans_source_ou_valeurs(self):
+        for nom,message in audit.REFUS_LOCAUX.items():
+            with self.subTest(nom=nom):
+                for classe in ('ValueError','construction_identite.ConstructionRefusee'):
+                    r=audit.classer('trace privée\n'+classe+': '+message+'\n','')
+                    self.assertEqual(r['categories'],[nom]);self.assertNotIn('privée',json.dumps(r))
+                for texte in ('    exiger(False, '+repr(message)+')', 'ValueError: '+message+' donnée privée',
+                        'journal ValueError: '+message, 'ValueError: contenu privé'):
+                    self.assertEqual(audit.classer(texte,'')['categories'],[])
+
+    def test_worker_courant_exige_revision_exacte_du_controleur(self):
+        revision='a'*40
+        for val,attendue in ((revision,None),(revision,'b'*40),('../'+revision,'../'+revision),('A'*40,'A'*40)):
+            with self.subTest(val=val,attendue=attendue),patch.object(audit.subprocess,'run') as appel:
+                with self.assertRaises(ValueError):audit.etat_worker(Path('/outils'),val,revision_attendue=attendue)
+                appel.assert_not_called()
+        reponses=[SimpleNamespace(stdout=b'ActiveState=inactive\nExecMainStatus=1\n',returncode=0),
+            SimpleNamespace(stdout=b'journal prive',returncode=0)]
+        with patch.object(audit.subprocess,'run',side_effect=reponses) as appels:
+            etat,journal=audit.etat_worker(Path('/outils'),revision,revision_attendue=revision)
+            self.assertEqual(etat,dict(etat='inactive',code=1))
+            self.assertIn('vision-amorcage-essai-'+revision[:12]+'.service',appels.call_args_list[0].args[0])
 
     def test_worker_actif_et_etat_indetermine_refuses(self):
         for sortie,code in ((b'ActiveState=active\nExecMainStatus=0\n',0),

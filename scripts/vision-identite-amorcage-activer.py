@@ -410,7 +410,7 @@ class Essai:
         construction.verifier_socle(self.candidat)
         def lire_si_present(nom):
             return audit.lire(self.d/nom) if (self.d/nom).exists() else ''
-        etat, journal = audit.etat_worker(self.outils,self.revision)
+        etat, journal = audit.etat_worker(self.outils,self.revision,revision_attendue=self.revision)
         rapport = dict(revision=self.revision, socle_conserve=True,
             retour_termine=self.marque('retour-termine'), generation_enregistree=False,
             worker=etat, controle_worker=audit.classer_worker(lire_si_present('worker-prive.log')+'\n'+journal),
