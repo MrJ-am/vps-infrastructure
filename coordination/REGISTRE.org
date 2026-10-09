@@ -5032,3 +5032,64 @@ La prochaine construction conserve compte/groupe nginx et les droits, vérifie l
 :PREUVE: -
 :END:
 
+* Donner au test Nginx des répertoires temporaires privés
+:PROPERTIES:
+:ID: 20261009-vision-2027a1b5de06
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T20:06:40+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR62/291 tests, CI push37983593787 et PR37983598405 quatre jobs verts, intégration542c15e87573f9f3d948fe0a5f9b5b2717df3e1f. Signal37984149004, construction37984167434/job114001897220 : capacité et réseau privé franchis, contrôle Nginx refuse open avec errno30 (système de fichiers en lecture seule). Socle/six services/nouvelle SSH/25sites sont conservés, aucune activation/SQL/personne. Ce refus concerne le confinement ajouté au test, pas une preuve de refus du service natif, dont RuntimeDirectory/CacheDirectory/LogsDirectory sont inscriptibles.
+
+La prochaine construction conserve UID/groupe nginx, sa seule CAP_NET_BIND_SERVICE, NoNewPrivileges, réseau privé et ProtectSystem strict. Les trois répertoires natifs /run/nginx, /var/cache/nginx, /var/log/nginx sont remplacés seulement dans la namespace de l’unité de test par des tmpfs privés inscriptibles, appartenant aux UID/GID nginx évalués et vérifiés sur le socle. Aucun accès en écriture aux PID/cache/logs du service actif. Même nginx -t, aucun daemon ou requête. Les chemins fermés PID/cache/logs sont classifiés en métadonnées pour identifier le refus précédent sans afficher sa sortie privée ; source542, génération et fichiers sont conservés/audités. Même main/CI exacte, construction sans activation et contrôles avant/après. Une reprise ultérieure exige preuve native réussie, copie à froid chiffrée du cluster existant et retour autonome, aucun effacement.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
