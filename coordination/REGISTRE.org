@@ -4646,12 +4646,73 @@ La lecture du gestionnaire Rust switch-to-configuration de Nixpkgs c5c4a43b0e805
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 18d7b233dd13b73353a2526295663da8ae55f47841fb49a9260da165c2617e1a
-:LU_LE: 2026-10-09T18:20:26+00:00
+:LU_LE: 2026-10-09T18:30:39+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée1e0871b3bbfd88b84f489fecb3abb5a6261ec443. Bilan stderr du switcher Rust source Nixpkgs exact vérifié ; stockage append privé conservé. Projection unités connues/compteur inconnu et absence de fuite qualifiées, sans nouvel accès/processus. CI exacte et unité du refus restent à constater.
+:PREUVE: PR57/281tests/CI37972655858/37972660633 intégrées239962e014c35c02ef4f4c5b2da96e0fb8e04fd2. Bilan37973425279 réussi : nginx.service seul échoué. Cluster17 arrêté et préservé ; socle/six services/SSH/25sites vérifiés. Aucun enregistrement/compte/reprise.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le refus Nginx dans son namespace réservé, sans lignes privées
+:PROPERTIES:
+:ID: 20261009-vision-8ef158fc23de
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T18:30:39+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR57/281tests et CI push37972655858/PR37972660633 sont intégrées239962e014c35c02ef4f4c5b2da96e0fb8e04fd2. Signal37973407826, orchestration37973425279/job113965629376 réussis : bilan18:28:33. Le switcher désigne uniquement nginx.service, aucun inconnu. Cluster17 privé toujours proprement arrêté et préservé ; retour/socle, six services/SSH et25sites avant/après passent. Aucun enregistrement/compte.
+
+Le module actif journal-http.nix réserve les sorties de Nginx au namespace http. Le diagnostic lira uniquement les unités nginx.service et nginx-validate-config.service dans ce namespace et le namespace par défaut, avec bornes strictes. Projection fermée des familles d’erreurs Nginx, noms de directives statiques connus ou compteur d’inconnus, codes/étapes connus ; aucune ligne, URL, IP, valeur, certificat ou clé. Aucun journal HTTP général, lancement, SQL, réparation, suppression ou relance. Point d’entrée autonome après CI exacte, mêmes contrôles des six services/25sites. Identifier le refus HTTPS avant toute reprise, en préservant le cluster existant.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
