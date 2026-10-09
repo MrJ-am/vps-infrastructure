@@ -29,7 +29,18 @@ de préparation, puis échoue pendant `construction_paquet`. Les six services,
 nouvelle connexion SSH et 25 sondes passent après échec. Le diagnostic
 `vision-identite-construction-auditer.py` classe seulement ce journal privé,
 borné à 256 Kio, en catégories constantes ; le workflow d'audit reste en
-lecture seule. Le refus précis et la construction réussie restent à constater.
+lecture seule. L'audit `37914413033` confirme `permission_refusee` pendant le
+build du SPI, sans publier le journal. Une reproduction sur Nixpkgs installé,
+avec un utilisateur `nixbld` sans privilège et des sources privées, échoue lors
+du nettoyage de `classes/META-INF/services` : `cp -R` conserve les permissions
+de répertoires en lecture seule du store. Le compilateur rend maintenant sa
+seule copie temporaire inscriptible avant de créer le jar et de l'effacer.
+La source du store reste intacte. Le test natif `keycloak-compilation.py`
+impose un utilisateur sans privilège, des ressources en lecture seule, un jar
+valide et aucun temporaire restant. Le diagnostic précis est complété par
+des catégories de contexte et de nettoyage, sans restituer de chemin.
+La confirmation de ce contexte sur le VPS et sa construction corrigée restent
+à constater ; aucune permission de fichier de production n'est modifiée.
 L'essai JDBC Unix natif sur ce VPS, l'identité initiale/MFA et le retour autonome
 constituent les étapes suivantes.
 
