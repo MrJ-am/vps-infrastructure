@@ -3489,13 +3489,14 @@ Après diagnostic, corriger uniquement la préparation isolée avec une reproduc
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 37d3d109655963c495c5fd4ff307a8a6f8789414f12c7f5ba1022e5c44d3ec05
+:LU_LE: 2026-10-09T08:58:41+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: PR35 et PR36 intégrées, CI exactes 37905767682/37905770112 et 37906787975/37906793461 réussies. Audits réels 37906264873 et 37907271873 : refus pg_restore/COPY, dump age conservé et clair supprimé, 25 sondes passent. Régression synthétique SQL_ASCII refusé/UTF8 restauré, migrations 19–25 et retour des droits deux fois réussis.
 :END:
+Correction UTF8 du seul cluster isolé préparée ; confirmer la catégorie de contrainte réelle puis relancer la préparation. Aucune activation, migration de production ni inscription.
 
 ** TODO vps
 :PROPERTIES:
