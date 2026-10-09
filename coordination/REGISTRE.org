@@ -3683,6 +3683,72 @@ Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b94927688
 :PREUVE: -
 :END:
 
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 0cf62d1bc8cb01c4b100afececf7cba4ff79ddf9b5385fd46735d57cca58c90d
+:LU_LE: 2026-10-09T11:13:30+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37921899243
+:END:
+Essai réel arrêté au cluster synthétique ; Keycloak non démarré. Socle et retrait des runtimes, six services et 25 sondes passent. Diagnostic privé à classer avant relance.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le démarrage Unix et qualifier les permissions des lanceurs
+:PROPERTIES:
+:ID: 20261009-vision-4184b99cf810
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T11:13:30+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La qualification native37921899243 (job113791555228, opérateur ebf5a5bfb65fdb0e479e1bc3717d8e6e0d3986d7) vérifie le socle et la construction réelle, puis s'arrête à cluster_synthetique_peer : cluster synthétique indisponible. L'essai Keycloak n'a pas commencé. L'arrêt/retrait des runtimes et le contrôle du socle passent ; six services, nouvelle connexion SSH et25 sondes HTTP/TLS réussissent après échec. Aucune migration de production, identité réelle ni inscription.
+
+VPS prépare un diagnostic en lecture seule, via audit.yml existant et demande strictement operation=audit : journal privé de cette seule qualification et logs natifs synthétiques root0600, lecture bornée sans lien symbolique. Seules catégories constantes, noms de phases connus et booléens quittent le VPS ; ni stderr brut, nom arbitraire, secret ou contenu SQL. Les tests injectent un faux secret et contenu personnel pour vérifier leur absence. Aucun nouveau déclencheur de mutation par push.
+
+La revue locale constate aussi que le lanceur public sans secret est copié sous un dossier root demandé0711 avec umask077 : son mode réel devient0700 et empêche sa traversée par postgres. Reproduire cette propriété et qualifier explicitement la traversée par un UID distinct, tout en refusant la lecture des fichiers privés ; corriger uniquement ce dossier de lanceurs prévu pour être traversable, jamais les dossiers de données/logs/credentials ou le store. Le diagnostic réel devra confirmer ou distinguer cette cause avant la relance du workflow manuel corrigé, avec les mêmes garde-fous et contrôles.
+
+Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b, paquet v3g29yfxvp9bdnjgw3p91zvh4jggvk45 et issuer candidat log.mrj.am restent inchangés. Les autres projets ne changent ni compte ni publication. Fin : cause réelle classée, correction qualifiée et essai natif identifié ; aucune réussite JDBC/systemd n'est déduite des seuls conteneurs. Identité initiale/MFA, retour autonome, contrats, clé et copie externe restent distincts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
