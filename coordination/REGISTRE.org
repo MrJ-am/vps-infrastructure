@@ -4955,12 +4955,73 @@ Même phase construction autonome main/CI exacte, contrôles avant/après, aucun
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: ad5f3e40d601a1f664ebdfa7fdade5acd9c7baa58917c1121135a030545545bb
-:LU_LE: 2026-10-09T19:40:37+00:00
+:LU_LE: 2026-10-09T19:50:36+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Préparation du contrôle natif sous UID nginx avec util-linux explicite ; audit root privé du refus f27 ; aller-retour AGE réel qualifié en local. Activation absente, résultat VPS encore attendu.
+:PREUVE: PR61/291 tests et deux CI vertes, intégration6072227fdae8d7f8b8ebd8476405073cef8960bb ; construction37982527127/job113996386934. Runuser présent, syntaxe valide ; EACCES bind80 sans capacité établi par déchiffrement privé réel. Socle/sixSSH/25sites préservés. Correction annoncée séparément.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Qualifier Nginx avec sa capacité native dans un réseau privé
+:PROPERTIES:
+:ID: 20261009-vision-51019c70bed9
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T19:50:16+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR61/291 tests, CI push37981958775 et PR37981963767 quatre jobs verts, intégration6072227fdae8d7f8b8ebd8476405073cef8960bb. Signal37982509132, construction37982527127/job113996386934 : ancienne préparation et commande qualifiées, runuser du socle présent ; generation construite mais contrôle natif encore refusé. Socle/six services/SSH/25sites conservés, aucune activation/SQL/personne. Le cryptogramme a été déchiffré uniquement dans Work : la configuration complète hilg8wyk9x5iq3ffqfr9ffjgnxdj9knm-nginx.conf a une syntaxe valide, bind port80 refuse EACCES sous runuser sans capacité. Le message sur le journal par défaut accompagne le test ; aucun fichier de données ou certificat refusé. Le lanceur absent n’était donc pas la cause. Clé et diagnostic Work seront détruits après cette lecture.
+
+La prochaine construction conserve compte/groupe nginx et les droits, vérifie les capacités natives du service dans l’évaluation privée, puis exécute seulement nginx -t dans une unité transitoire systemd avec CAP_NET_BIND_SERVICE (sous-ensemble du service réel), NoNewPrivileges et réseau privé isolé. Pas de serveur, daemon ou requête ; aucun port du réseau actif modifié. La sortie reste privée, seules catégories et métadonnées fermées sont publiées. L’ancien refus607 et sa génération sont conservés ; audit privé root identifié, pas de relance du même dossier. Même main/CI exacte, construction sans activation et contrôles avant/après. Après succès seulement, publier la preuve avant une reprise séparée avec copie chiffrée à froid du cluster existant et retour autonome ; aucun effacement de cluster.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
