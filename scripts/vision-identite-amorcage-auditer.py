@@ -1,11 +1,13 @@
 """Diagnostic du seul essai identifié ; jamais d'extrait privé dans la sortie."""
 import argparse
 import ast
+import hashlib
 import importlib.util
 import json
 import os
 from pathlib import Path
 import re
+import pwd
 import stat
 import subprocess
 
@@ -14,8 +16,12 @@ ETAPE = 'demarrage'
 REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
 DERNIERE = 'f9dae92a39f350d5aa5b5795f74b04f6827d60ff'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
-SCRIPTS = ('vision-identite-amorcage-activer.py','vision-identite-construire.py',
-    'vision-multiutilisateur-preparer.py','vision-semantique-socle.py')
+EMPREINTES = {
+    'vision-identite-amorcage-activer.py':'c6f9871bc0d8a7db4ccf85627317b098b3137f0df978cb538f360d803f21cb66',
+    'vision-identite-construire.py':'59b622d13d06994f203bfaf570d142ab214aed6ea3c62ca0d92141ecba6843c5',
+    'vision-multiutilisateur-preparer.py':'79bc15f3bbd242e29aa1f9321d90adf35145adeeec28e77c833c3a3c255143d3',
+}
+SCRIPTS = tuple(EMPREINTES)
 UNITES = frozenset(('sshd.service', 'nginx.service', 'postgresql.service', 'vision.service',
     'matheval.service', 'mrj-auth.service', 'nginx-config-reload.service', 'nginx-validate-config.service',
     'systemd-journald.service', 'systemd-journald@identite.service', 'systemd-journald@http.service',
@@ -47,6 +53,15 @@ MOTIFS = {
     'journal_db_absente': r'database "mrjam_identite" does not exist',
     'journal_role_absent': r'role "keycloak" does not exist',
     'journal_memoire': r'out of memory|OutOfMemoryError|oom-kill',
+    'unite_pg_echec': r'Failed to start.*mrjam-amorcage-postgresql|mrjam-amorcage-postgresql\.service:.*(?:Failed|failed|status=[1-9])',
+    'unite_identite_echec': r'Failed to start.*mrjam-amorcage-identite|mrjam-amorcage-identite\.service:.*(?:Failed|failed|status=[1-9])',
+    'dependance_identite_refusee': r'Dependency failed.*amorcage|Job mrjam-amorcage-identite\.service/start failed with result .dependency',
+    'outil_shell_absent': r'(?:id|ls|cat|chmod|find|bash|pg_ctl|initdb|psql): (?:command not found|not found)',
+    'pg_memoire_partagee': r'could not (?:map dynamic|open|create) shared memory',
+    'pg_configuration_inaccessible': r'could not (?:open|access) (?:file|configuration file)',
+    'jdbc_connexion_refusee': r'Unable to obtain isolated JDBC connection|Failed to obtain JDBC connection|org\.postgresql\.util\.PSQLException',
+    'keycloak_echec_demarrage': r'Failed to start server in \(production\) mode|ERROR: Failed to start server',
+    'credential_indisponible': r'Failed to (?:load|set up) credentials|Failed at step CREDENTIALS',
 }
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
 
@@ -98,6 +113,9 @@ def verifier_reprise(rapport):
 
 
 def cadres(texte, source):
+    source=Path(source);s=source.lstat()
+    if not stat.S_ISDIR(s.st_mode) or s.st_uid!=os.geteuid() or stat.S_IMODE(s.st_mode)!=0o700:
+        raise ValueError('Source hors dossier privé')
     connus={}
     for nom in SCRIPTS:
         p=Path(source)/'scripts'/nom
@@ -105,9 +123,11 @@ def cadres(texte, source):
         fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
         try:
             s=os.fstat(fd)
-            if not stat.S_ISREG(s.st_mode) or s.st_uid!=os.geteuid() or s.st_nlink!=1 or s.st_mode&0o022 or s.st_size>131072:
+            if not stat.S_ISREG(s.st_mode) or s.st_uid!=os.geteuid() or s.st_nlink!=1 or s.st_mode&0o002 or s.st_size>131072:
                 raise ValueError('Source de diagnostic non conforme')
-            code=os.read(fd,131073).decode()
+            contenu=os.read(fd,131073)
+            if hashlib.sha256(contenu).hexdigest()!=EMPREINTES[nom]:raise ValueError('Source historique différente')
+            code=contenu.decode()
         finally:os.close(fd)
         arbre=ast.parse(code);fonctions={'<module>':[(1,len(code.splitlines()))]}
         for n in ast.walk(arbre):
@@ -150,15 +170,57 @@ def unites_identite(outils):
             re.fullmatch(r'[0-9]{1,3}',code) is not None and int(code)<=255)
         resultats=('success','exit-code','signal','timeout','oom-kill','resources','protocol','start-limit-hit')
         resultat=v.get('Result');resultat=resultat if disponible and resultat in resultats else 'indetermine'
-        try:
-            j=subprocess.run([str(outils/'journalctl'),'--namespace=identite','--unit='+nom+'.service',
-                '--lines=100','--output=cat','--no-pager'],capture_output=True,timeout=10)
-        except (OSError,subprocess.TimeoutExpired):j=None
-        journal_disponible=j is not None and j.returncode==0 and len(j.stdout)<=1048576
+        journaux={};categories=set()
+        for namespace in ('identite','defaut'):
+            try:
+                j=subprocess.run([str(outils/'journalctl'),*(['--namespace=identite'] if namespace=='identite' else []),
+                    '--unit='+nom+'.service','--lines=160','--output=cat','--no-pager'],capture_output=True,timeout=10)
+            except (OSError,subprocess.TimeoutExpired):j=None
+            disponible_j=j is not None and j.returncode==0 and len(j.stdout)<=1048576
+            journaux[namespace]=disponible_j
+            if disponible_j:categories.update(classer(j.stdout.decode(errors='replace'),'')['categories'])
         rapports[nom]=dict(etat=etat if disponible else 'indetermine',code=int(code) if disponible else None,
-            resultat=resultat,etat_disponible=disponible,journal_disponible=journal_disponible,
-            categories=classer(j.stdout.decode(errors='replace'),'')['categories'] if journal_disponible else [])
+            resultat=resultat,etat_disponible=disponible,journal_disponible=all(journaux.values()),
+            journaux_disponibles=journaux,categories=sorted(categories))
     return rapports
+
+
+def lire_pg(p,uid):
+    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+    try:
+        s=os.fstat(fd)
+        if not stat.S_ISREG(s.st_mode) or s.st_uid!=uid or s.st_nlink!=1 or s.st_mode&0o077 or s.st_size>262144:
+            raise ValueError('Fichier PostgreSQL privé requis')
+        return os.read(fd,262145).decode(errors='replace')
+    finally:os.close(fd)
+
+
+def cluster_arrete(paquet):
+    d=Path('/var/lib/mrjam-amorcage-postgresql')
+    if not d.exists():return dict(present=False)
+    uid=pwd.getpwnam('postgres').pw_uid;s=d.lstat()
+    prive=stat.S_ISDIR(s.st_mode) and s.st_uid==uid and stat.S_IMODE(s.st_mode)==0o700
+    r=dict(present=True,dossier_prive=prive,version17=False,controle_disponible=False,
+        etat='indetermine',pid_present=(d/'postmaster.pid').exists(),
+        socket_present=Path('/run/mrjam-amorcage-postgresql').exists(),journal_disponible=False,categories=[])
+    if not prive:return r
+    try:r['version17']=lire_pg(d/'PG_VERSION',uid)=='17\n'
+    except (OSError,ValueError):pass
+    try:
+        texte=lire_pg(d/'serveur-prive.log',uid);r['categories']=classer(texte,'')['categories'];r['journal_disponible']=True
+    except (OSError,ValueError):pass
+    if not r['version17'] or r['pid_present'] or r['socket_present']:return r
+    if not re.fullmatch(r'/nix/store/[0-9a-z]{32}-postgresql-and-plugins-[A-Za-z0-9._+-]+',paquet):
+        raise ValueError('Paquet PostgreSQL différent')
+    env={k:v for k,v in os.environ.items() if not k.startswith('PG')};env['LC_ALL']='C'
+    try:
+        c=subprocess.run([paquet+'/bin/pg_controldata','-D',str(d)],capture_output=True,timeout=10,env=env)
+        if c.returncode or len(c.stdout)>65536:return r
+        etat=re.search(r'(?m)^Database cluster state:\s+([a-z ]+)$',c.stdout.decode(errors='replace'))
+        if etat and etat[1] in ('shut down','shut down in recovery','in production','in crash recovery','in archive recovery','shutting down','starting up'):
+            r['controle_disponible']=True;r['etat']=etat[1]
+    except (OSError,subprocess.TimeoutExpired):pass
+    return r
 
 
 def main(reprise=False):
@@ -191,6 +253,16 @@ def main(reprise=False):
         try:details=dict(cadres=cadres(diagnostic,dossier/'source'),cadres_disponibles=True)
         except (OSError,ValueError,SyntaxError,UnicodeError):details=dict(cadres=[],cadres_disponibles=False)
         ETAPE='unites_secondaires';details['unites_identite']=unites_identite(outils)
+        ETAPE='cluster_arrete'
+        prepare=Path('/root/vision-identite-amorcage-operations/765ce372ccd61ad623e33bf8bb476a5c3be21fba')
+        try:
+            for chemin in (prepare.parent,prepare):
+                s=chemin.lstat()
+                if not stat.S_ISDIR(s.st_mode) or s.st_uid!=0 or stat.S_IMODE(s.st_mode)!=0o700:
+                    raise ValueError('Préparation privée différente')
+            resume=json.loads(lire(prepare/'evaluation-privee.json'))
+            details['cluster']=cluster_arrete(resume['postgres_paquet']);details['cluster_disponible']=True
+        except (OSError,ValueError,KeyError):details['cluster_disponible']=False
     ETAPE='socle_apres';construction.verifier_socle(candidat)
     rapport = dict(audit_amorcage=3, revision=revision, socle_conserve=True,
         retour_termine=True, generation_enregistree=False, activation=False, inscriptions=False,

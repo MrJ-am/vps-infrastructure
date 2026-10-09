@@ -4524,12 +4524,12 @@ Les cadres doivent accepter les seuls fichiers historiques exacts : vérifier le
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: a11fc903b18d3e221f452a6271169071086eacdd5463fc214ec8c3bdf11af5da
+:LU_LE: 2026-10-09T17:45:05+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée d20782fe87fa62a5e841958ad7840f934393f279. Relevés complémentaires sans SQL/démarrage, fichiers historiques liés aux SHA-256 f9 et refus de cluster actif/permissions/données arbitraires qualifiés. CI exacte et constat du cluster restent à terminer.
 :END:
 
 ** TODO vps

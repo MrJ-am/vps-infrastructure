@@ -69,6 +69,16 @@ supprimer le rapport principal. Une indisponibilité ne prouve aucun état sûr
 et n'autorise aucune reprise. Aucun changement de génération demandé.
 [Rapport du refus de diagnostic](../operations/vision-amorcage-commande-diagnostic.json).
 
+Le [diagnostic37967591960](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37967591960),
+opérateur55309e2f0f232f084139e0f27579103229338e8b, job113945795441,
+réussit à17:38:21. Socle/retour et worker arrêté sont vérifiés ; il a atteint
+`essai_generation`, le cluster privé est présent. Les états actuels des trois
+unités sont inactifs/success, sans cause classée ; cadres indisponibles.
+Six services/nouvelle SSH et25HTTP/TLS avant/après passent à17:38:34.
+La suite prépare un relevé de métadonnées du cluster arrêté et des journaux
+des unités dans les deux namespaces. Aucun SQL, lancement ou effacement.
+[Rapport du cluster présent](../operations/vision-amorcage-cluster-present.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),
