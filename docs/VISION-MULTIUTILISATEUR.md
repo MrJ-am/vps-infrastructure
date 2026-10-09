@@ -21,6 +21,23 @@ les identifiants de rôles arbitraires ou du SQL. Le workflow d’audit reste en
 lecture seule ; une catégorie inconnue ne justifie aucun assouplissement du
 contrôle de restauration. Aucune modification des données de production.
 
+Les audits réels `37906264873` et `37907271873` passent : le refus vient de
+`pg_restore`, pendant `COPY`, et ne correspond pas aux premières catégories.
+Ils confirment le dump age présent et l’absence du dump temporaire en clair ;
+aucun rapport de préparation ni retour ACL n’est encore produit.
+
+La reproduction synthétique révèle un défaut du nouveau préparateur : avec
+`--no-locale` seul, PostgreSQL choisit SQL_ASCII. Un titre de 180 « é », accepté
+par la limite de 200 caractères dans la source UTF-8, est compté comme
+360 octets et refusé lors de la copie. Le démarrage impose désormais UTF-8 et
+vérifie réellement l’encodage, PostgreSQL 17 et l’absence de TCP avant copie.
+Le test `vision-preparation-utf8.py` reproduit le refus initial, utilise le
+véritable démarrage corrigé, restaure le schéma 18 et ses textes multioctets,
+applique 19–25, puis rejoue deux fois le retour ACL/owners/RLS. Empreintes
+historiques et attributs du rôle sont préservés. Le diagnostic est complété
+par des catégories de contrainte et de valeur invalide pour confirmer le
+refus réel ; la reproduction locale seule n’en établit pas encore la cause.
+
 ## Architecture candidate
 
 Keycloak 26.7.3 porte `https://log.mrj.am/realms/mrjam`. Vision demeure

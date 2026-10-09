@@ -53,6 +53,13 @@ class Diagnostic(unittest.TestCase):
         self.assertNotIn('synthetique', json.dumps(resultat))
         self.assertNotIn('personnel', json.dumps(resultat))
 
+    def test_refus_de_longueur_sans_restituer_la_ligne(self):
+        texte = 'pg_restore: error: COPY failed for table "vision_fiches": ERROR:  new row for relation "vision_fiches" violates check constraint "vision_fiches_titre_check"\nDETAIL: Failing row contains (contenu privé synthétique).\n'
+        resultat = MODULE.classer(texte)
+        self.assertEqual(resultat['categories'], ['ligne_refusee_contrainte'])
+        self.assertTrue(resultat['longueur_titre_fiche_refusee'])
+        self.assertNotIn('contenu privé', json.dumps(resultat))
+
     def test_lecture_refuse_lien_permissions_et_depassement(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / 'journal'; p.write_text('privé'); p.chmod(0o600)

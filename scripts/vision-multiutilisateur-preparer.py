@@ -116,6 +116,16 @@ def empreintes(socket, base, tables):
         ' ORDER BY md5(to_jsonb(t)::text)),\'\')) FROM public.' + acl.identifiant(t) + ' t;') for t in tables}
 
 
+def initialiser_cluster(isole, b):
+    # Avec --no-locale seul, initdb choisit SQL_ASCII : char_length compte
+    # alors les octets et peut refuser des titres/textes UTF-8 valides.
+    commande('runuser', '-u', 'postgres', '--', b / 'initdb', '-D', isole / 'data',
+        '--auth-local=trust', '--auth-host=reject', '--no-locale', '--encoding=UTF8')
+    commande('runuser', '-u', 'postgres', '--', b / 'pg_ctl', '-D', isole / 'data',
+        '-l', isole / 'serveur.log', '-w', '-o',
+        "-c listen_addresses='' -c unix_socket_directories=" + str(isole), 'start')
+
+
 def preparer(revision):
     global DIAGNOSTIC
     exiger(os.geteuid() == 0 and re.fullmatch('[0-9a-f]{40}', revision), 'Exécution Actions root identifiée requise')
@@ -136,7 +146,9 @@ def preparer(revision):
     etape('invariants_actifs'); controler()
     exiger(not (d / 'preparation.json').exists(), 'Préparation déjà terminée')
     etape('source_candidate')
-    source = d / 'vision'; source.mkdir(mode=0o700)
+    source = d / 'vision'
+    exiger(not source.exists(), 'Source déjà extraite : nouvelle révision corrigée requise')
+    source.mkdir(mode=0o700)
     extraire(ROOT / 'vendor/vision-multiutilisateur-source.tar.gz', source, candidat['source_sha256'], candidat['vision'])
     exiger(json.loads((source / 'interface/style.lock.json').read_text())['revision'] == candidat['style'], 'Style différent')
     etape('evaluation_nixos')
@@ -192,10 +204,9 @@ def preparer(revision):
     dump = isole / 'vision.dump'; shutil.copyfile(d / 'vision.dump', dump); dump.chmod(0o600); os.chown(dump, postgres.pw_uid, postgres.pw_gid)
     (d / 'vision.dump').unlink()
     try:
-        commande('runuser', '-u', 'postgres', '--', b / 'initdb', '-D', isole / 'data', '--auth-local=trust', '--auth-host=reject', '--no-locale')
-        commande('runuser', '-u', 'postgres', '--', b / 'pg_ctl', '-D', isole / 'data', '-l', isole / 'serveur.log', '-w',
-            '-o', "-c listen_addresses='' -c unix_socket_directories=" + str(isole), 'start'); actif = True
+        initialiser_cluster(isole, b); actif = True
         etape('restauration_isolee')
+        exiger(sql(str(isole), 'postgres', "SELECT current_setting('server_encoding')='UTF8' AND current_setting('listen_addresses')='' AND current_setting('server_version_num')::int BETWEEN 170000 AND 179999") == 't', 'Cluster isolé incompatible')
         sql(str(isole), 'postgres', 'CREATE ROLE vision LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS; CREATE DATABASE vision OWNER vision;')
         commande('runuser', '-u', 'postgres', '--', b / 'pg_restore', '--exit-on-error', '-h', isole, '-U', 'postgres', '-d', 'vision', dump)
         exiger(empreintes(str(isole), 'vision', tables) == avant, 'La copie restaurée diffère')

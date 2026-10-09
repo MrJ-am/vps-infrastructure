@@ -31,6 +31,9 @@ MOTIFS = {
     'objet_deja_present': r'(?m)^.*ERROR:\s+(?:relation|schema|type|function|extension) [^\n]{1,500} already exists\s*$',
     'syntaxe_invalide': r'(?m)^.*ERROR:\s+syntax error at or near.*$',
     'contrainte_refusee': r'(?m)^.*ERROR:\s+(?:duplicate key value|insert or update|check constraint).*$',
+    'ligne_refusee_contrainte': r'(?m)^.*ERROR:\s+new row for relation "[^"\n]{1,200}" violates check constraint "[^"\n]{1,200}"\s*$',
+    'valeur_invalide': r'(?m)^.*ERROR:\s+invalid input syntax for type [^\n]{1,200}.*$',
+    'valeur_nulle_refusee': r'(?m)^.*ERROR:\s+null value in column .*violates not-null constraint\s*$',
     'archive_incomplete': r'(?m)^pg_restore: error: (?:could not read from input file|did not find magic string|input file does not appear).*$',
 }
 
@@ -43,6 +46,8 @@ def classer(contenu):
         'refus_pg_restore': bool(re.search(r'(?m)^pg_restore: error:', contenu)),
         'refus_sql': bool(re.search(r'(?m)^pg_restore: error: could not execute query: ERROR:', contenu)),
         'refus_copy': bool(re.search(r'(?m)^pg_restore: error: COPY failed for table ', contenu)),
+        'longueur_titre_fiche_refusee': bool(re.search(r'ERROR:\s+new row for relation "vision_fiches" violates check constraint "vision_fiches_titre_check"', contenu)),
+        'longueur_item_refusee': bool(re.search(r'ERROR:\s+new row for relation "vision_items" violates check constraint "vision_items_(?:titre|contenu)_check"', contenu)),
         'encodage_sql_ascii_mentionne': bool(re.search(r'(?m)^pg_restore: error:.*(?:encoding|locale|collation).*SQL_ASCII', contenu))}
 
 

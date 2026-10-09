@@ -174,3 +174,6 @@ jobs:
           m.extraire(Path('vendor/vision-multiutilisateur-source.tar.gz'),destination,c['source_sha256'],c['vision'])
           PY
           python3 tests/vision-acl-integration.py --vision source-vision-isolee
+      - name: Restaurer les titres multioctets dans le cluster UTF-8 du préparateur
+        run: |
+          python3 tests/vision-preparation-utf8.py --conteneur '${{ job.services.postgres.id }}' --vision source-vision-isolee
