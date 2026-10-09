@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "run": 37909401754,
+  "job": 113750641103,
+  "infrastructure": "48f40f3eebbbd18eb9048c7036284185a56050e9",
+  "vision": "a9c51acac81510d7dc896f5daf4e6fb28a36b979",
+  "style": "96fa28ac564b9492768837d4087608e83acc721b",
+  "source_sha256": "cdcefebd7dc0a14845e610bead2fedad1e0ea251aa6dee8866bf458af45ddec9",
+  "restauration_vision_reelle": true,
+  "migrations_sans_perte": true,
+  "retour_acl_owners_rls": true,
+  "retour_rejouable": true,
+  "services_actifs": 6,
+  "sondes_http_tls": 25,
+  "nouvelle_connexion_ssh": true,
+  "activation": false,
+  "inscriptions": false,
+  "doublon_refuse": 37909419903
+}

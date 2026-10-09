@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.infrastructure.identite;
+  keycloak = import ../services/keycloak-mrjam/paquet.nix { inherit pkgs; };
   extension = import ../services/keycloak-mrjam { inherit pkgs; };
   theme = pkgs.runCommand "mrjam-theme-identite" {} ''
     mkdir -p "$out"
@@ -29,7 +30,8 @@ in {
     # JDBC passe par junixsocket : PostgreSQL conserve listen_addresses=''.
     services.keycloak = {
       enable = true;
-      plugins = (with pkgs.keycloak.plugins; [ junixsocket-common junixsocket-native-common ]) ++ [ extension ];
+      package = keycloak;
+      plugins = (with keycloak.plugins; [ junixsocket-common junixsocket-native-common ]) ++ [ extension ];
       themes.mrjam = theme;
       database = { type = "postgresql"; host = "/run/postgresql"; createLocally = false;
         name = "mrjam_identite"; username = "keycloak"; passwordFile = null; };
