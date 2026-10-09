@@ -4768,12 +4768,12 @@ La précision suivante conserve les mêmes unités/fenêtre bornées. Elle disti
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 90e8a000aa74f43141118167986c0737643e48c249d9adccac17b786c7e36cb5
-:LU_LE: 2026-10-09T18:50:17+00:00
+:LU_LE: 2026-10-09T19:03:39+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonces livréesfcc6e780e3cff7c29322a0fdc90682950c2d2012 etbe9c56af271330531f3284358660a3c0e9afe91c. 286 tests/contrôles locaux passent ; aller-retour AGE natif avec clé Work privée et sélection hors requêtes qualifiés, lecture de ligne immuable refusant liens/droits/chemins inconnus. CI exacte et cause réelle restent à constater.
+:PREUVE: PR59/286tests/CI37976118015/37976123742 intégréesc320f1b5562cddf11efcdafc3ccdd3d4e0765d44. Diagnostic37976909188 : jeton inattendu ligne215, types, fichier0444. types {}; reproduit nativement unexpected semicolon ; types {} passe. Cluster17/socle/six services/SSH/25sites préservés.
 :END:
 
 ** TODO vps
@@ -4829,12 +4829,75 @@ Cette voie confidentielle permet de résoudre la cause sans multiplier les proje
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 10357c298107d1c5162825461e4727037b40f546cdb0a1207c134882d981ddf1
-:LU_LE: 2026-10-09T18:50:17+00:00
+:LU_LE: 2026-10-09T19:03:39+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonces livréesfcc6e780e3cff7c29322a0fdc90682950c2d2012 etbe9c56af271330531f3284358660a3c0e9afe91c. 286 tests/contrôles locaux passent ; aller-retour AGE natif avec clé Work privée et sélection hors requêtes qualifiés, lecture de ligne immuable refusant liens/droits/chemins inconnus. CI exacte et cause réelle restent à constater.
+:PREUVE: Canal AGE natif qualifié, diagnostic37976909188 effectif. Préfixe daté, zéro ligne sélectionnée/transférée : aucun déchiffrement réel. La projection immuable situe types ligne215 et la reproduction native identifie le semicolon. Clé privée Work supprimée. Canal temporaire retiré dans la correction suivante.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Corriger les blocs Nginx et construire automatiquement avec validation native
+:PROPERTIES:
+:ID: 20261009-vision-61e71acd6016
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T19:03:39+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR59/286tests et CI push37976118015 et PR37976123742 (quatre jobs chacun) sont intégréesc320f1b5562cddf11efcdafc3ccdd3d4e0765d44. Signal37976891574, diagnostic37976909188/job113977466748 réussi18:58:32 : Nginx signale un jeton inattendu à la ligne215 de sa configuration immuable, directive types, mode0444. Cluster17 arrêté/préservé ; socle/six services/SSH/25sites passent, fin18:58:44. Les lignes emerg ont un préfixe daté, donc zéro ligne chiffrée transférée ; la clé éphémère Work a été supprimée. Aucun déchiffrement réel revendiqué.
+
+Le bloc types {}; dans identite-amorcage.nix reproduit nativement unexpected semicolon, tandis que types {} passe. Deux blocs analogues existent dans vision-gestion.nix. VPS corrige les trois et qualifie les extraConfig réels avec Nginx, sans desserrer de droits. Retrait du canal chiffré temporaire devenu inutile. La construction réservée devient une phase fermée construction du point d’entrée main/CI exacte, workflow réutilisable sans saisie ni concurrence imbriquée, extraction privée sans rétablissement de modes. Elle construit seulement, puis valide la configuration complète produite avec le Nginx effectivement choisi et le compte nginx, sans lancer de serveur. Le paquet/configuration sont issus de l’évaluation exacte et validés comme chemins immuables ; stdout/stderr restent privés en cas de refus. Rapports booléens, six services/nouvelle SSH/25sites avant/après conservés. Nixpkgs/PG majeur/routage actuel/clés/secret SMTP/client restent identiques ; pas de SQL de production, activation, compte ou inscription.
+
+Après preuve réelle de la nouvelle génération et syntaxe : préparer la reprise explicitement qualifiée du cluster17 existant, avec copie chiffrée à froid et retour autonome ; pas de suppression/initialisation automatique. Cette reprise fera une opération suivante distincte. Les anciennes préparations/générations sont conservées.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
