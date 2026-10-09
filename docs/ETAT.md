@@ -1,5 +1,22 @@
 # État attesté au 9 octobre 2026
 
+Le [diagnostic37991412168](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37991412168),
+opérateur6dbdb2f6123142145ba6077ed3d6ca38ed39222c, job114026288555,
+identifie le seul refus de f763 : contrôle de boucle locale verifier_local:301,
+après essai_generation puis controles_locaux. Source/cadres vérifiés ; worker
+arrêté, clusterPG17 privé sain et proprement arrêté, import/credential valides.
+Socle/six services/SSH/25HTTP/TLS conservés ; aucune activation.
+[Projection fermée réelle](../operations/vision-amorcage-diagnostic-f763.json).
+Le parseur qualifié accepte maintenant la même adresse127.0.0.1:8085 en IPv4
+ou IPv6 mappée, avec une seule écoute LISTEN. Il refuse les autres adresses,
+ports, scopes et écoutes multiples. Le même Keycloak26.7.3 local emploie
+une écoute mappée ; sa sortie ss réelle, avec seul port de fixture normalisé,
+est refusée par l'ancien contrôle et acceptée par le parseur strict.
+L'ancienne notation VPS n'a pas été enregistrée.
+La reprise est gardée sur ce seul diagnostic, unités privées arrêtées et
+cluster sain ; audit et copie froide chiffrée frais avant démarrage.
+Le correctif ne constitue pas encore une preuve d'activation.
+
 L'[essai37987992248](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37987992248),
 opérateurf7634858fa7a7fbfe33f4c00ecc0047bc48b811f, job114014731892,
 a préparé et vérifié une copie froide chiffrée du cluster réservé,
