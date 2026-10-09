@@ -3947,14 +3947,79 @@ Cette construction ne lève pas preconditionsValidees du mode commun ordinaire. 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 36a94fca44edb3b06499a63c08a8c1cb70790a6c4ea0da19264155350bc84ec8
-:LU_LE: 2026-10-09T13:11:50+00:00
+:LU_LE: 2026-10-09T14:10:16+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/pull/45
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602
 :END:
-Amorçage distinct préparé : PostgreSQL privé/peer, même paquet optimisé, anciennes unités/hôtes/production conservés. 244 tests et lanceurs natifs sans réseau passent localement. Construction réelle/activation/possession/MFA restent à constater ; aucune identité ou association créée.
+Génération réservée réellement construite, unités/hôtes et PostgreSQL de production conservés. Un propriétaire historique unique, sans contenu lu ; six services/nouvelle SSH et 25 sondes réussis. Aucune activation ou identité humaine.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Essayer l’identité réservée avec retour autonome avant enrôlement du propriétaire
+:PROPERTIES:
+:ID: 20261009-vision-fafa852191e7
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T14:10:16+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La construction réservée réussit réellement : Actions37941066602, job113855262092, opérateur765ce372ccd61ad623e33bf8bb476a5c3be21fba, génération39b7g3x42qp2q58idfv7nl6w5j3y78np. Les anciennes unités et tous les anciens hôtes Nginx, PostgreSQL de production et le socle restent identiques. Inventaire strictement en lecture seule : un propriétaire historique, quatorze tables personnelles, aucune identité/contenu affiché. Six services, nouvelle SSH et25HTTP/TLS passent. PR46 et ses CI sont intégrées ; aucun switch, compte humain ni inscription.
+
+VPS prépare un essai manuel distinct de cette seule génération d'amorçage sur log.mrj.am. Vérifier les rapports privés et le même socle, conserver l'entrée/génération initiales, créer seulement un credential technique root hors store sans rotation et une copie locale chiffrée. Qualifier le dry-activate, l'entrée NixOS réversible et un timer indépendant avant d'armer le retour autonome. L'essai tourne dans une unité systemd indépendante de SSH ; toute erreur ou perte du runner laisse le retour rétablir l'ancien socle, sans restauration ni modification SQL de production.
+
+Le runner vérifie les25sites existants et une nouvelle SSH, puis HTTPS/certificat, issuer canonique, en-têtes falsifiés sans effet, refus master/admin/enregistrement dynamique et offre AGPL. Localement : cluster privé sans TCP/peer, unité DynamicUser, import exact sans personne et copie age. Les données techniques sensibles et diagnostics restent root privés ; seules références/compteurs/booléens sont publics. L'enregistrement de la génération et de l'entrée d'amorçage sera permis uniquement après ces contrôles, sous le verrou partagé avec le retour. Ne pas neutraliser le retour avant les preuves complètes.
+
+Vision conserve sa release et son authentification actuelles ; mode commun, admission et inscriptions restent fermés. Les autres applications ne changent ni compte ni publication. Cet essai ne crée pas encore le compte du propriétaire et n'envoie aucun courriel : enrôlement privé, possession/MFA, retrait de l'admin technique puis transfert explicite iss/sub restent distincts. La possession de la clé age/copie PC et les conditions juridiques restent nécessaires avant des tiers, sans bloquer cet essai fermé. Fin : contrôleur/test du retour et CI exacts validés, puis activation réelle d'amorçage ou retour identifié avec services/sites conservés.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
 ** TODO vps
 :PROPERTIES:
