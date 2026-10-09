@@ -5140,12 +5140,12 @@ Plan fermé action amorcage dans le point d’entrée main/CI exacte : entrée r
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 1122db45bc063acb222c316b1cd26206ba61434e5473c8023f0b2e0b1959cd2c
-:LU_LE: 2026-10-09T20:29:11+00:00
+:LU_LE: 2026-10-09T21:42:31+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 296 tests locaux réussis ; garde f9/cluster arrêté qualifiée, archive tar/AGE et restitution réelles en conteneur, copie altérée refusée, diagnostic refusé pendant essai/enregistrement. Essai réservé VPS et déchiffrement de copie réelle encore absents.
+:PREUVE: Reprises à froid suivies sans effacement du cluster ; ac3d8e0/37994597242/job114037335784 activation réservée finale réussie et enregistrée, copies chiffrées avant/après, socle/six services/SSH/25sites conservés ; aucun humain ni inscription tierce.
 :END:
 
 ** TODO vps
@@ -5451,12 +5451,77 @@ Reprise liée au diagnostic c527/cadres/classes/HTTP503 exacts et aux unités pr
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 7dbbe91fa7ab614dfed14ad381eca4fc739779d35ff3dba1fca44f67d9fc57cb
-:LU_LE: 2026-10-09T21:31:53+00:00
+:LU_LE: 2026-10-09T21:42:31+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Attente monotone120s GET seul, aucun credential ni POST rejoué ; refus autres codes/redirections ; garde source/cadres/503 de c527. Tests préparés, reprise non encore exécutée.
+:PREUVE: ac3d8e0/PR68/307 tests/CI37994138571 ; activation37994597242/job114037335784 entièrement réussie. Découverte disponible, tous contrôles natifs/SSH/25HTTP/TLS/refus/sources puis générationk4q enregistrée, copies chiffrées ; aucun humain ni OIDC Vision.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Enrôler le seul propriétaire après activation réservée réelle
+:PROPERTIES:
+:ID: 20261009-vision-f734a74ea6d5
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T21:42:31+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Activation réservée réelleac3d8e0ab466a536c9ac3190d360e163d364b8fb : signal37994586355, Actions37994597242/job114037335784 réussi. Générationk4q préparée25f enregistrée après tous les contrôles natifs, copie froide et copie d'identité chiffrées, SSH/six services/25HTTP/TLS/issuer/certificat/refus admin-inscriptions/sources validés. Retour neutralisé par marqueur durable. Aucun humain ni OIDC Vision, inscription tierce fermée. Le profil y1 et ses sources restent conservés.
+
+Ajouter au même point d'entrée la seule phase propriétaire. Exiger la preuve publique exactement égale à activation.json privé, marqueurs et chemins du système réellement enregistré, sources/units/Vision/fournisseur conservés et écoute loopback. Déchiffrer en RAM l'enveloppe de contact avec la clé d'hôte existante, sans export, rotation ou lecture de mot de passe utilisateur. Enrôlement unique du propriétaire autorisé dans la session, sujet exact créé par l'API native et enregistré avant courriel ; aucun rapprochement ultérieur par adresse, aucun admin d'identité.
+
+Intentions et compte/courriel sous dossier root700/fichiers600 avec fsync/flock. Toute réponse ambiguë bloque un rejeu de création ou courriel. Actions UPDATE_PASSWORD+CONFIGURE_TOTP via lien natif30min, aucun mot de passe choisi par l'exploitation ; SMTP accepté ne signifie pas réception. Un contrôle limité du flux pwd/otp avant mail prépare l'observation ultérieure : seules notes de session du sujet durable exact, auth_time et méthodes fraîches≤300s, pas les fiches/items ni simples credentials. Aucune migration SQL de production ou admission tierce dans cette phase ; OIDC Vision restera fermé jusqu'au rattachement qualifié.
+
+Qualifiers déjà rédigés et parcours natif26.7.3/PG17/SMTP synthétique/Chromium précédemment validé ; compléter les contrôles de wrapper et refaire CI du commit exact avant envoi. Prochaine intervention propriétaire uniquement sur le formulaire sécurisé pour choisir son mot de passe et configurer le second facteur. Aucune nouvelle demande de Run workflow. Les préconditions contractuelles/de sauvegarde externe/autorisation mineurs restent distinctes avant toute ouverture tierce.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
