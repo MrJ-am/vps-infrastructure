@@ -4955,12 +4955,12 @@ Même phase construction autonome main/CI exacte, contrôles avant/après, aucun
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: ad5f3e40d601a1f664ebdfa7fdade5acd9c7baa58917c1121135a030545545bb
+:LU_LE: 2026-10-09T19:40:37+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Préparation du contrôle natif sous UID nginx avec util-linux explicite ; audit root privé du refus f27 ; aller-retour AGE réel qualifié en local. Activation absente, résultat VPS encore attendu.
 :END:
 
 ** TODO vps

@@ -267,7 +267,7 @@ class Essai:
         pg = Path(self.resume['postgres_paquet'])/'bin/psql'; socket = '/run/mrjam-amorcage-postgresql'
         env = {k:v for k,v in os.environ.items() if not k.startswith('PG')}; env['PGCONNECT_TIMEOUT']='5'
         sql = "SELECT json_build_object('tcp',current_setting('listen_addresses'),'socket',current_setting('unix_socket_directories'),'data',current_setting('data_directory'),'encodage',current_setting('server_encoding'),'majeure',current_setting('server_version_num')::int/10000,'role',(SELECT json_build_object('login',rolcanlogin,'super',rolsuper,'base',rolcreatedb,'role',rolcreaterole,'replication',rolreplication,'bypass',rolbypassrls,'heritage',rolinherit,'sans_mdp',rolpassword IS NULL) FROM pg_authid WHERE rolname='keycloak'),'groupes',(SELECT count(*) FROM pg_auth_members WHERE member=(SELECT oid FROM pg_roles WHERE rolname='keycloak')));"
-        r = subprocess.run([str(self.outils/'runuser'), '-u', 'postgres', '--', str(pg), '-XAtq', '-v', 'ON_ERROR_STOP=1',
+        r = subprocess.run([preparer.outil(self.resume, 'runuser_paquet', 'runuser'), '-u', 'postgres', '--', str(pg), '-XAtq', '-v', 'ON_ERROR_STOP=1',
             '-h', socket, '-U', 'postgres', '-d', 'mrjam_identite', '-c', sql], env=env, capture_output=True, timeout=15)
         exiger(r.returncode == 0, 'Cluster privé indisponible'); resultat = json.loads(r.stdout)
         exiger(resultat == dict(tcp='', socket=socket, data='/var/lib/mrjam-amorcage-postgresql', encodage='UTF8', majeure=17,

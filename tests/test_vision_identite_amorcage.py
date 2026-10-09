@@ -1,11 +1,14 @@
 """Un seul propriétaire, aucun hash/identifiant public et preuves fermées."""
 import copy
+import contextlib
+import io
 import importlib.util
 import json
 import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,6 +24,47 @@ a = charger('amorcage_test', 'vision-identite-amorcage-preparer.py')
 
 
 class Proprietaire(unittest.TestCase):
+    def test_refus_ne_projette_ni_message_ni_chemin_prive(self):
+        texte = "FileNotFoundError: [Errno 2] secret_contact@exemple.test /root/prive\n"
+        r = a.classer_refus(texte)
+        self.assertEqual(r['exceptions'], ['FileNotFoundError'])
+        self.assertNotIn('secret_contact', json.dumps(r))
+        self.assertNotIn('/root/prive', json.dumps(r))
+
+    def test_nginx_sous_compte_systeme_et_paquet_identifie(self):
+        paquet='/nix/store/'+'a'*32+'-nginx'
+        runuser='/nix/store/'+'b'*32+'-util-linux'
+        age='/nix/store/'+'c'*32+'-age'
+        configuration='/nix/store/'+'d'*32+'-nginx.conf'
+        r=dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c '+configuration,
+            runuser_paquet=runuser,age_paquet=age)
+        with patch.object(a.subprocess, 'run') as executer:
+            executer.return_value.returncode=0
+            a.verifier_nginx(r)
+            self.assertEqual(executer.call_args.args[0], [runuser+'/bin/runuser', '-u', 'nginx',
+                '--', paquet+'/bin/nginx', '-t', '-c', configuration])
+
+    def test_erreur_native_en_clair_reste_privee(self):
+        paquet='/nix/store/'+'a'*32+'-nginx'
+        r=dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c /nix/store/'+'b'*32+'-nginx.conf',
+            runuser_paquet='/nix/store/'+'c'*32+'-util-linux',age_paquet='/nix/store/'+'d'*32+'-age')
+        sortie=io.StringIO(); prive=b'secret_contact@exemple.test permission denied'
+        with patch.object(a.subprocess, 'run') as executer, \
+                patch.object(a.construction.preparation, 'diagnostic_prive') as garder, \
+                patch.object(a, 'chiffrer_diagnostic', return_value=dict(disponible=False)), \
+                contextlib.redirect_stdout(sortie):
+            executer.return_value.returncode=1; executer.return_value.stderr=prive
+            with self.assertRaises(a.construction.ConstructionRefusee): a.verifier_nginx(r)
+            self.assertIn(prive, garder.call_args.args[0])
+        self.assertNotIn('secret_contact', sortie.getvalue())
+        self.assertEqual(json.loads(sortie.getvalue())['nginx_native'], 'refuse')
+
+    def test_diagnostic_trop_long_non_chiffre_ni_affiche(self):
+        with patch.object(a.subprocess, 'run') as executer:
+            self.assertEqual(a.chiffrer_diagnostic(b'a'*16385, '/outil/age'), dict(disponible=False))
+            self.assertEqual(a.chiffrer_diagnostic(b'', '/outil/age'), dict(disponible=False))
+            executer.assert_not_called()
+
     def test_commande_nginx_immuable_sans_option_ou_commande_libre(self):
         paquet='/nix/store/'+'a'*32+'-nginx-1.28.2'
         configuration='/nix/store/'+'b'*32+'-nginx.conf'
