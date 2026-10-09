@@ -8,6 +8,7 @@ on:
         default: false
 permissions:
   contents: read
+  actions: read
 concurrency:
   group: vps-administration
   cancel-in-progress: false
@@ -21,6 +22,10 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+      - name: Vérifier la CI du commit opérateur exact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci-exacte.py
       - name: Préparer la connexion administrative du runner
         env:
           CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}

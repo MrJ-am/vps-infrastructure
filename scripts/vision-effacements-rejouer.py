@@ -23,7 +23,7 @@ def charger(registres):
             if not isinstance(p,dict):raise ValueError('Registre invalide')
             if set(p)=={'utilisateur','confirmee_a'} or (set(p)=={'version','utilisateur','confirmee_a'} and type(p['version']) is int and p['version']==1):
                 ids=[p['utilisateur']]
-            elif set(p)=={'version','type','emetteur','sujet','confirmee_a','outils'} and p['version']==2 and p['type']=='fermeture_commune' and p['emetteur']==EMETTEUR:
+            elif set(p)=={'version','type','emetteur','sujet','confirmee_a','outils'} and type(p['version']) is int and p['version']==2 and p['type']=='fermeture_commune' and p['emetteur']==EMETTEUR:
                 if not isinstance(p['outils'],dict) or set(p['outils'])!={'vision'}:raise ValueError('Outil inconnu')
                 ids=p['outils']['vision']
                 if not isinstance(ids,list) or len(ids)>10 or not isinstance(p['sujet'],str) or not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}',p['sujet']):raise ValueError('Sujet invalide')
@@ -43,7 +43,7 @@ def effacer_identites(sujets,configuration):
     with os.fdopen(fd) as f:
         if os.fstat(f.fileno()).st_mode&0o077:raise ValueError('Configuration privée requise')
         p=json.load(f)
-    if set(p)!={'version','base_isolee','realm','utilisateur','mot_de_passe'} or p['version']!=1:raise ValueError('Configuration invalide')
+    if set(p)!={'version','base_isolee','realm','utilisateur','mot_de_passe'} or type(p['version']) is not int or p['version']!=1:raise ValueError('Configuration invalide')
     if not re.fullmatch(r'http://127\.0\.0\.1:38\d{3}',p['base_isolee']):raise ValueError('Fournisseur isolé sur loopback requis')
     if not re.fullmatch(r'mrjam|qualification-[a-z0-9-]{1,60}|mrjam-restauration_[a-z0-9_]{1,40}',p['realm']):raise ValueError('Realm isolé invalide')
     base=p['base_isolee'];realm=p['realm']

@@ -22,6 +22,7 @@ class Registre(unittest.TestCase):
                 with self.assertRaisesRegex(ValueError,'fournisseur restauré isolé'):m.rejouer(p,'vision_restauration_test')
                 sql.assert_not_called()
             for faux in ({**commun,'emetteur':'https://etranger.test'},
+                         {**commun,'version':2.0},
                          {**commun,'outils':{'vision':["personne';DROP"]}},
                          {**commun,'confirmee_a':True},{**commun,'courriel':'tiers@example.test'}):
                 p.write_text(json.dumps(faux))
