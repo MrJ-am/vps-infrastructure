@@ -4288,3 +4288,68 @@ La comparaison des répertoires reste strictement qualifiée ; ne l'élargir ni 
 :PREUVE: -
 :END:
 
+* Corriger le dispatch du worker après preuve privée de son refus
+:PROPERTIES:
+:ID: 20261009-vision-4c368b9e86db
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T16:51:49+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic retourné réussit réellement : PR51/270tests/CI37960616874 et37960620505 intégrées exactement49ac1e7d9b86e454056d12abb3be1b1fd219411e ; signal37961565873, orchestration37961581194, job113925573398. Socle et retour terminé vérifiés, worker arrêté, aucun cluster privé présent, aucune étape du worker atteinte ; délai d'essai identifié. Six services/nouvelle SSH et25HTTP/TLS avant/après passent. Aucun enregistrement, compte humain ou mode commun.
+
+L'examen du contrôleur88dc20580cbfc3e790eb19f366794b8b94f87e9d reproduit un défaut de dispatch : self.worker est une chaîne nommant l'unité et masque la méthode worker. L'appel getattr(essai,a.action)() reçoit cette chaîne pour l'action worker, avant tout switch. Le journal privé n'a pas encore classé cette exception. VPS prépare le renommage de ce seul attribut en unite_essai, un contrôle de non-masquage des actions et la reconnaissance constante de la trace TypeError à cet appel précis, sans restituer ses fragments.
+
+Avant tout nouvel essai, la phase d'amorçage devra lire et classifier cette seule tentative88dc retournée. Exiger retour terminé/socle, aucun enregistrement, worker arrêté et cluster absent, aucune étape engagée dans le worker et exactement l'action masquée suivie du délai. Tout autre état/cause refuse la reprise. Si cette preuve réelle passe, préparer une nouvelle tentative identifiée de la même génération39b7g3x42qp2q58idfv7nl6w5j3y78np ; comparaison tmpfiles, sauvegarde, répétition du timer/retour autonome, contrôles locaux/25sites/nouvelle SSH/HTTPS et enregistrement restent inchangés. Aucun nettoyage, reprise du dossier échoué, rotation, SQL de production ou inscription. L'agent suit l'enchaînement au point d'entrée existant ; aucune intervention technique du propriétaire.
+
+Enrôlement distinct toujours non activé. Sa qualification synthétique vérifie déjà adresse cible, un seul envoi sans rejeu, confirmation email, choix du mot de passe et OTP puis connexion fraîche pwd+otp et sujet exact. Aucun email réel ni compte créé. Les preuves légales, possession age et copie extérieure restent nécessaires avant les tiers, sans empêcher ce travail réservé.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
