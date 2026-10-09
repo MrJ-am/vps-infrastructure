@@ -91,6 +91,17 @@ namespace réservé complet ; contrôle de l'import et du format du credential,
 sans valeur, lancement, SQL ou reprise.
 [Rapport du cluster arrêté](../operations/vision-amorcage-cluster-arrete.json).
 
+Le [diagnostic37971727525](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37971727525),
+opérateur1f9ad7a2d1c778a3d5bb4b2420c4e291ba841fd3, job113959828149,
+réussit à18:13:55 : sortie historique143 du service d'identité, aucun motif
+d'exception/étape ; import et format du credential vérifiés. Le code143
+correspond à un arrêt par signal et n'identifie pas le refus initial du switch.
+Cluster17 privé proprement arrêté, socle/retour, six services/nouvelle SSH et
+25HTTP/TLS avant/après passent à18:14:09. La projection suivante classe le
+bilan d'unités échouées déjà conservé sur stderr par le gestionnaire NixOS ;
+noms techniques connus seulement, compteur pour les inconnus, aucune reprise.
+[Rapport de sortie](../operations/vision-amorcage-sortie-identite.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

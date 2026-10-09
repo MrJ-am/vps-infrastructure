@@ -118,6 +118,14 @@ entier reste réservé à ces composants et sa sortie uniquement classifiée ;
 aucun journal général du serveur. Le format des credentials et l'import
 peuvent être contrôlés sans envoi ni restitution de leurs valeurs.
 
+Le relevé `37971727525` donne une sortie143, import et credential valides,
+aucune exception classée. La cause initiale reste inconnue : le gestionnaire
+NixOS émet sur stderr son bilan d'unités échouées avant le retour4.
+Le diagnostic privé contient déjà cette sortie ; seuls noms techniques
+prédéfinis et nombre d'inconnus sont projetés. Aucun journal supplémentaire,
+lancement ou relaxation des restrictions du service n'est nécessaire à cette
+lecture. La sonde Java locale sans AF_NETLINK n'a pas confirmé cette piste.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

@@ -23,6 +23,7 @@ EMPREINTES = {
 }
 SCRIPTS = tuple(EMPREINTES)
 UNITES = frozenset(('sshd.service', 'nginx.service', 'postgresql.service', 'vision.service',
+    'acme-log.mrj.am.service',
     'matheval.service', 'mrj-auth.service', 'nginx-config-reload.service', 'nginx-validate-config.service',
     'systemd-journald.service', 'systemd-journald@identite.service', 'systemd-journald@http.service',
     'systemd-journald@identite.socket', 'systemd-journald-varlink@identite.socket',
@@ -85,10 +86,15 @@ def classer(diagnostic, dry):
         connues = valeurs & UNITES
         acme = {v for v in valeurs if re.fullmatch(r'acme-[A-Za-z0-9_.@-]+\.(?:service|timer|target)', v)}
         unites[action] = dict(connues=sorted(connues), acme=len(acme), inconnues=len(valeurs-connues-acme))
+    echecs=set()
+    for noms in re.findall(r'warning: the following units failed: ([^\n]+)',diagnostic):
+        echecs.update(n.strip() for n in noms.split(','))
+    echecs.update(re.findall(r'Failed to (?:start|restart|reload) ([A-Za-z0-9_.@-]+\.(?:service|socket|timer|target))',diagnostic))
     return dict(categories=[nom for nom,motif in MOTIFS.items() if re.search(motif, diagnostic+'\n'+dry)],
         activation_annoncee='would activate the configuration' in dry,
         redemarrage_systemd='would restart systemd' in dry,
-        arret_swap='would stop swap' in dry, unites=unites)
+        arret_swap='would stop swap' in dry, unites=unites,
+        unites_echec=dict(bilan_present=bool(echecs),connues=sorted(echecs&UNITES),inconnues=len(echecs-UNITES)))
 
 
 def lire(path):

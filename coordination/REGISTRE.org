@@ -4646,12 +4646,12 @@ La lecture du gestionnaire Rust switch-to-configuration de Nixpkgs c5c4a43b0e805
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 18d7b233dd13b73353a2526295663da8ae55f47841fb49a9260da165c2617e1a
+:LU_LE: 2026-10-09T18:20:26+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée1e0871b3bbfd88b84f489fecb3abb5a6261ec443. Bilan stderr du switcher Rust source Nixpkgs exact vérifié ; stockage append privé conservé. Projection unités connues/compteur inconnu et absence de fuite qualifiées, sans nouvel accès/processus. CI exacte et unité du refus restent à constater.
 :END:
 
 ** TODO vps
