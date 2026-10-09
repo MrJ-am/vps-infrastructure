@@ -4892,12 +4892,12 @@ Après preuve réelle de la nouvelle génération et syntaxe : préparer la repr
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: f9a84f09a2f233731fdd60252f2fcedf509a86a20c10e25819e7f67aeb55d9fc
-:LU_LE: 2026-10-09T19:10:33+00:00
+:LU_LE: 2026-10-09T20:19:17+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce livrée568ed187e4bb91fe61e2c8120280c8620c3ca3e3. Trois blocs corrigés, test natif des extraConfig réels et contrôle négatif passent. 287 tests/contrôles locaux verts ; commande native immuable sans option libre, plan construction fermé, vieille preuve sans test Nginx refusée. Canal temporaire retiré. CI exacte et nouvelle construction réelle restent à obtenir.
+:PREUVE: PR60 à63 : trois blocs corrigés, validation native complète réelle37985768542/job114007309842 par25f685900a9b65cb7cef872f0b55bcb21e35567d. Génération k4q retenue, preuve native vraie ; socle/sixSSH/25sites inchangés, aucune activation.
 :END:
 
 ** TODO vps
@@ -5016,12 +5016,12 @@ La prochaine construction conserve compte/groupe nginx et les droits, vérifie l
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: f8084418e74cbb07cca53011f25c107c6d6d43991b7c6b80610b20f21b83fa5d
-:LU_LE: 2026-10-09T19:53:19+00:00
+:LU_LE: 2026-10-09T20:19:17+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 291 tests locaux réussis ; commande transitoire UID nginx, CAP_NET_BIND_SERVICE seule, NoNewPrivileges et réseau privé. Test VPS encore attendu ; aucun succès natif supplémentaire revendiqué.
+:PREUVE: Native VPS37985768542/job114007309842 réussi sous UID/groupe nginx avec capacité NET_BIND_SERVICE, NoNewPrivileges et réseau privé. Socle/sixSSH/25sites conservés ; clé et diagnostic éphémères supprimés.
 :END:
 
 ** TODO vps
@@ -5077,12 +5077,75 @@ La prochaine construction conserve UID/groupe nginx, sa seule CAP_NET_BIND_SERVI
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 2734071db5279a069828c300ff3e791f18723623cf8bbaf2af70c5938dffa601
-:LU_LE: 2026-10-09T20:09:59+00:00
+:LU_LE: 2026-10-09T20:19:17+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 292 tests locaux passent ; nginx -t natif sous UID non root reproduit le refus RO et réussit avec trois tmpfs privés dans un conteneur à racine readonly. Configuration complète VPS encore attendue.
+:PREUVE: PR63/292 tests, CI37985226219 et37985230853 vertes ; native37985768542/job114007309842 réussie. Refus précédent PID errno30 identifié ; tmpfs privés validés, socle/sixSSH/25sites conservés, aucune activation.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Reprendre le cluster réservé après preuve Nginx avec copie à froid et retour autonome
+:PROPERTIES:
+:ID: 20261009-vision-5d07d27c5711
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T20:18:50+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR63/292 tests, CI push37985226219 et PR37985230853 quatre jobs verts, intégration25f685900a9b65cb7cef872f0b55bcb21e35567d. Signal37985753916, construction37985768542/job114007309842 réussie : nginx -t complet sous UID/groupe nginx, capacité native et tmpfs/réseau privés. L’ancien refus542 est identifié : open PID nginx errno30. Génération k4q4i4m9r4070xwwpnd24hpi9g6zngyn construite et retenue ; le rapport privé amorcage.json est créé avec preuve native vraie. Socle/six services/nouvelle SSH/25sites avant-après conservés ; aucun compte/SQL production/activation.
+
+Étape suivante explicitement réservée au propriétaire : publier cette preuve exacte, puis reprendre le seul cluster PostgreSQL17 créé lors de f9, sans le supprimer. Un audit root privé refait les marqueurs de retour, worker arrêté, seule unité échouée nginx, import/secret au format inchangé et cluster arrêté proprement sans PID/socket/erreur. Toute divergence bloque la reprise. Copie à froid de ce seul répertoire, sans objet spécial/lien externe, tar en pipe vers AGE avec le destinataire de sauvegarde existant ; aucun dump ou archive en clair. Fichier root0600 fsync et preuve chiffrée avec empreinte ; même contrôle cluster avant/après. Aller-retour archive/AGE et garde de reprise sont qualifiés localement ; la copie réelle n’est pas encore déchiffrée. Sources/secrets/générations/cluster historiques sont conservés.
+
+Plan fermé action amorcage dans le point d’entrée main/CI exacte : entrée reproduite, comparaison des règles, dry-activate, copie Vision chiffrée, répétition du timer et retour indépendant15min restent requis avant essai. Même Keycloak26.7.3, cluster privé distinct de PostgreSQL de production, inscriptions fermées et aucun humain jusqu’à une étape ultérieure. Les contrôles locaux/SSH/25sites/issuer/certificat/refus/sources et copie identite chiffrée précèdent l’enregistrement ; retour sur échec sans effacement du cluster. Après retour, un diagnostic technique automatique de la tentative courante publiera uniquement des catégories/états fermés pour éviter une nouvelle série de diagnostics manuels. Aucun utilisateur tiers, ouverture d’inscription ou migration Vision pendant cet amorçage.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
