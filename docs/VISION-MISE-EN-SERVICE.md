@@ -38,7 +38,7 @@ restent deux actions distinctes.
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
 | Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Identifier le refus du service d'identité avant toute reprise |
-| Compte commun du propriétaire | Aucun compte humain créé | Qualifier l'enrôlement privé, puis faire choisir le mot de passe et configurer le second facteur sur la page sécurisée ; aucun secret en conversation |
+| Compte commun du propriétaire | Compte initial créé et mail accepté par le relais :69e0d1d/37999358368 ;335tests/CI exacte réussis | Le propriétaire choisit son mot de passe et configure son OTP via le lien initial1800s ; confirmer ensuite la connexion pwd/otp réellement effectuée depuis moins de300s, aucun secret en conversation |
 | Rattachement historique et bascule Vision | Non exécutés | Ajouter une phase qualifiée à ce même point d'entrée ; l'agent la déclenchera et la suivra |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
