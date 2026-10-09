@@ -4353,3 +4353,66 @@ Enrôlement distinct toujours non activé. Sa qualification synthétique vérifi
 :PREUVE: -
 :END:
 
+* Identifier la commande refusée par l’essai corrigé sans extraire de données privées
+:PROPERTIES:
+:ID: 20261009-vision-85feabf44900
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T17:12:58+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR52/272tests/CI37962760564 et37962765205 sont intégrées exactementf9dae92a39f350d5aa5b5795f74b04f6827d60ff. Signal37963538181 puis orchestration37963555297, job113932183678, lancés par Work. La preuve privée retrouve exactement action_masquee et essai_timeout dans88dc, aucune étape/cluster ; la reprise conditionnée est autorisée réellement. Comparaison tmpfiles, simulation/copie/timer passent, retour armé et worker corrigé engagé. Un nouveau refus de commande apparaît ; retour terminé à17:06:10, socle et25HTTP/TLS finaux passent à17:06:25. Aucun enregistrement, compte humain ou mode commun.
+
+VPS affine le diagnostic strictement en lecture seule de la seule tentativef9 retournée. Conserver la lecture séparée de88dc exigée par l'ancienne preuve de dispatch, mais ne pas relancer. Exiger socle/retour/worker arrêté ; classer les journaux privés bornés et les états des seules unités techniques d'amorçage. Restituer les cadres Python seulement si le chemin correspond à un fichier opérateur prédéfini et si fonction/ligne appartiennent réellement à son code qualifié : nom de fichier, fonction et ligne, jamais argument, fragment ou chemin privé. Les journaux des unités dans le namespace identite seront uniquement classés par motifs constants ; aucun secret, identifiant métier ou contenu ne sort.
+
+Cette précision identifie la commande et l'état laissés, au lieu de corriger sur un refus générique. Aucun nettoyage ou effacement de cluster, reconstruction, SQL de production, rotation, réparation automatique ou inscription. La phase courante est diagnostic au même point d'entrée main/CI exacte, vps-production et exclusion VPS ; six services/nouvelle SSH/25sites avant/après. L'agent demande et suit l'opération. Préparer seulement après les faits un correctif et une reprise adaptés, en préservant toute donnée privée éventuellement créée. L'enrôlement et les qualifications synthétiques restent distincts, aucun email réel ; aucun nouveau lancement humain.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
