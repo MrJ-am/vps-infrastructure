@@ -5201,12 +5201,12 @@ La phase suivante est seulement diagnostic, dans le point d’entrée main/CI ex
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: d482753344e913e32b5f33348592f326eb5ca96d6ee0780bc08774181d839d4f
-:LU_LE: 2026-10-09T20:52:50+00:00
+:LU_LE: 2026-10-09T21:08:51+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Diagnostic fermé f763 préparé ; retour attesté 37987992248. Motif initial inconnu, aucune nouvelle activation.
+:PREUVE: 6dbdb2f/PR65/298 tests/CI37990999693. Diagnostic37991412168/job114026288555 réussi : refus boucle locale identifié, cluster sain arrêté, socle/six services/SSH/25HTTP conservés ; aucune activation.
 :END:
 
 ** TODO vps
@@ -5264,12 +5264,75 @@ Cela ne change aucune image ou paquet du VPS ni la source Nixpkgs ou la recette 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 5ff5aaa845a1212c1caa61770cc7ec1f087b27b01fd201a80a8b7ece2ec0058c
-:LU_LE: 2026-10-09T21:00:22+00:00
+:LU_LE: 2026-10-09T21:08:51+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Trois images du miroir téléchargées par digest en Work ; tous les tests conservés, aucun accès VPS ; CI complète à refaire.
+:PREUVE: 6dbdb2f/PR65 : trois images OCI épinglées, CI37990999693 complète réussie et diagnostic VPS37991412168 exécuté. Tous les tests conservés, aucune image VPS modifiée.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Reconnaître la même boucle IPv4 et reprendre le seul essai f763
+:PROPERTIES:
+:ID: 20261009-vision-6c9dd3305d3e
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T21:08:51+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Diagnostic réel 6dbdb2f6123142145ba6077ed3d6ca38ed39222c : signal37991399147, Actions37991412168/job114026288555 réussi. Les six services, nouvelle SSH et25HTTP/TLS passent. L'essai f763 est retourné et non enregistré ; worker inactive/code0, étapes essai_generation puis controles_locaux. Sa seule catégorie de refus est identite_hors_boucle_locale ; cadres vérifiés verifier_local:301/exiger:26. Cluster privé PG17 proprement arrêté, sans PID/socket/erreur, import et credential technique valides. Aucune personne ni inscription créée.
+
+Le contrôle actuel compare la chaîne ss exactement à 127.0.0.1:8085. Le même Keycloak26.7.3 local a été observé en AF_INET6 ::ffff:127.0.0.1 ; ce fait local n'est pas la preuve de la notation de l'ancien essai VPS. Préparer un parseur strict de l'unique écoute LISTEN:8085 : accepter IPv4 127.0.0.1 et seulement ses représentations IPv6 mappées, rejeter IPv6 ::1, wildcard, adresse publique/autre boucle, scope, port différent ou écoute multiple. La sécurité reste définie par la même adresse IPv4, sans élargissement d'interface.
+
+Garde de reprise liée au seul essai f763 et à ce diagnostic réel, source/cadres vérifiés, retour établi, worker et trois unités privées arrêtés et réussis, import conforme, cluster sain. Refaire cet audit et une copie froide chiffrée avec empreinte avant tout démarrage ; réutiliser la génération k4q construite et testée nativement par25f/37985768542. Conserver le retour indépendant et tous les contrôles natifs puis SSH/HTTP/TLS avant enregistrement. Aucun effacement du cluster, SQL de production, compte humain ou inscription tierce. Consigner le résultat réel ; aucun fait d'activation déduit de la CI.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
