@@ -35,6 +35,7 @@ repertoires = charger('amorcage_repertoires', 'vision-amorcage-repertoires.py')
 audit = charger('amorcage_audit', 'vision-identite-amorcage-auditer.py')
 reprise = charger('amorcage_reprise', 'vision-amorcage-reprise.py')
 copie_froide = charger('amorcage_copie_froide', 'vision-amorcage-copie-froide.py')
+boucle_locale = charger('amorcage_boucle_locale', 'vision-identite-boucle-locale.py')
 exiger = construction.exiger
 SERVICES = ('sshd', 'postgresql', 'vision', 'matheval', 'mrj-auth')
 
@@ -297,8 +298,8 @@ class Essai:
         pid = int(self.commande(self.outils/'systemctl', 'show', 'mrjam-amorcage-identite', '--property=MainPID', '--value'))
         ligne = next(l for l in Path('/proc/'+str(pid)+'/status').read_text().splitlines() if l.startswith('Uid:'))
         exiger(all(int(x)>0 for x in ligne.split()[1:]), 'Identité lancée avec privilèges root')
-        ecoutes = self.commande(self.outils/'ss', '-Hltpn', 'sport = :8085').splitlines()
-        exiger(len(ecoutes)==1 and ecoutes[0].split()[3]=='127.0.0.1:8085', 'Identité exposée hors boucle locale')
+        ecoutes = self.commande(self.outils/'ss', '-Hltpn', 'sport = :8085')
+        exiger(boucle_locale.verifier(ecoutes), 'Identité exposée hors boucle locale')
         pg = Path(self.resume['postgres_paquet'])/'bin/psql'; socket = '/run/mrjam-amorcage-postgresql'
         env = {k:v for k,v in os.environ.items() if not k.startswith('PG')}; env['PGCONNECT_TIMEOUT']='5'
         sql = "SELECT json_build_object('tcp',current_setting('listen_addresses'),'socket',current_setting('unix_socket_directories'),'data',current_setting('data_directory'),'encodage',current_setting('server_encoding'),'majeure',current_setting('server_version_num')::int/10000,'role',(SELECT json_build_object('login',rolcanlogin,'super',rolsuper,'base',rolcreatedb,'role',rolcreaterole,'replication',rolreplication,'bypass',rolbypassrls,'heritage',rolinherit,'sans_mdp',rolpassword IS NULL) FROM pg_authid WHERE rolname='keycloak'),'groupes',(SELECT count(*) FROM pg_auth_members WHERE member=(SELECT oid FROM pg_roles WHERE rolname='keycloak')));"

@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "keycloak": "26.7.3",
+  "sortie_ss_native_locale": true,
+  "ancien_comparateur_refuse": true,
+  "parseur_strict_accepte": true,
+  "port_fixture_uniquement_normalise": true,
+  "preuve_ancienne_notation_vps": false,
+  "activation": false
+}

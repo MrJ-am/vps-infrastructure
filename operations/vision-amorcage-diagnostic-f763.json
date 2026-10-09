@@ -1,0 +1,215 @@
+{
+  "audit_amorcage": 3,
+  "revision": "f7634858fa7a7fbfe33f4c00ecc0047bc48b811f",
+  "socle_conserve": true,
+  "retour_termine": true,
+  "generation_enregistree": false,
+  "activation": false,
+  "inscriptions": false,
+  "worker": {
+    "etat": "inactive",
+    "code": 0
+  },
+  "controle_worker": {
+    "etapes": [
+      "essai_generation",
+      "controles_locaux"
+    ],
+    "categories": [],
+    "activation_annoncee": false,
+    "redemarrage_systemd": false,
+    "arret_swap": false,
+    "unites": {},
+    "unites_echec": {
+      "bilan_present": false,
+      "connues": [],
+      "inconnues": 0
+    }
+  },
+  "cluster_prive_present": true,
+  "categories": [
+    "identite_hors_boucle_locale"
+  ],
+  "activation_annoncee": true,
+  "redemarrage_systemd": false,
+  "arret_swap": false,
+  "unites": {
+    "stop": {
+      "connues": [
+        "systemd-tmpfiles-resetup.service"
+      ],
+      "acme": 1,
+      "inconnues": 0
+    },
+    "restart": {
+      "connues": [
+        "nginx.service"
+      ],
+      "acme": 0,
+      "inconnues": 0
+    }
+  },
+  "unites_echec": {
+    "bilan_present": false,
+    "connues": [],
+    "inconnues": 0
+  },
+  "cadres": [
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "<module>",
+      "ligne": 429
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "worker",
+      "ligne": 328
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "verifier_local",
+      "ligne": 301
+    },
+    {
+      "script": "vision-identite-construire.py",
+      "fonction": "exiger",
+      "ligne": 26
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "<module>",
+      "ligne": 429
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "attendre",
+      "ligne": 346
+    },
+    {
+      "script": "vision-identite-construire.py",
+      "fonction": "exiger",
+      "ligne": 26
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "<module>",
+      "ligne": 429
+    },
+    {
+      "script": "vision-identite-amorcage-activer.py",
+      "fonction": "diagnostiquer",
+      "ligne": 413
+    }
+  ],
+  "cadres_disponibles": true,
+  "unites_identite": {
+    "mrjam-amorcage-postgresql": {
+      "etat": "inactive",
+      "code": 0,
+      "resultat": "success",
+      "etat_disponible": true,
+      "journal_disponible": true,
+      "journaux_disponibles": {
+        "identite": true,
+        "defaut": true
+      },
+      "categories": [],
+      "codes": [],
+      "etapes_systemd": [],
+      "exceptions": []
+    },
+    "mrjam-amorcage-identite": {
+      "etat": "inactive",
+      "code": 0,
+      "resultat": "success",
+      "etat_disponible": true,
+      "journal_disponible": true,
+      "journaux_disponibles": {
+        "identite": true,
+        "defaut": true
+      },
+      "categories": [
+        "unite_identite_echec"
+      ],
+      "codes": [
+        143
+      ],
+      "etapes_systemd": [],
+      "exceptions": []
+    },
+    "mrjam-amorcage-sauvegarde": {
+      "etat": "inactive",
+      "code": 0,
+      "resultat": "success",
+      "etat_disponible": true,
+      "journal_disponible": true,
+      "journaux_disponibles": {
+        "identite": true,
+        "defaut": true
+      },
+      "categories": [],
+      "codes": [],
+      "etapes_systemd": [],
+      "exceptions": []
+    }
+  },
+  "journal_namespace_identite": {
+    "disponible": true,
+    "categories": [],
+    "codes": [],
+    "etapes_systemd": [],
+    "exceptions": []
+  },
+  "journaux_nginx": {
+    "http": {
+      "disponible": true,
+      "categories": [
+        "permission_refusee"
+      ],
+      "directives_connues": [],
+      "directives_inconnues": 0,
+      "operations": [
+        "open"
+      ],
+      "types_chemins": [
+        "logs_nginx"
+      ],
+      "errno": [
+        13
+      ],
+      "codes": [],
+      "etapes_systemd": [],
+      "exceptions": [],
+      "configurations": []
+    },
+    "defaut": {
+      "disponible": true,
+      "categories": [],
+      "directives_connues": [],
+      "directives_inconnues": 0,
+      "operations": [],
+      "types_chemins": [],
+      "errno": [],
+      "codes": [],
+      "etapes_systemd": [],
+      "exceptions": [],
+      "configurations": []
+    }
+  },
+  "import_prive": {
+    "import_verifie": true,
+    "secret_amorcage_format_verifie": true
+  },
+  "cluster": {
+    "present": true,
+    "dossier_prive": true,
+    "version17": true,
+    "controle_disponible": true,
+    "etat": "shut down",
+    "pid_present": false,
+    "socket_present": false,
+    "journal_disponible": true,
+    "categories": []
+  },
+  "cluster_disponible": true
+}

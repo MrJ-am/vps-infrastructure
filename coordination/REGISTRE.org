@@ -5327,12 +5327,12 @@ Garde de reprise liée au seul essai f763 et à ce diagnostic réel, source/cadr
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: bf35567941e8ab921a939ab41fdc88bbd28fe60227280fc1d974357cdaa75999
+:LU_LE: 2026-10-09T21:09:56+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Parseur strict et garde f763 préparés ; diagnostic37991412168 consigné. Reprise non encore exécutée.
 :END:
 
 ** TODO vps
