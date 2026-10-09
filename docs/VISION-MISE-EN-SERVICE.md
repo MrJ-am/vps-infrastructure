@@ -48,6 +48,19 @@ du timer, retour autonome armé, essai indépendant de SSH, contrôles privés,
 25 sondes HTTP/TLS et nouvelle SSH, HTTPS d'identité, puis enregistrement.
 Les qualifications de construction précédentes ne sont pas refaites.
 
+La phase courante vient uniquement de `operations/vision-mise-en-service.json`
+sur le main qualifié : valeurs `amorcage` ou `diagnostic`, sans paramètre libre.
+Le diagnostic lit seulement les journaux privés de la tentative identifiée,
+classe les refus et revérifie le socle. Il ne modifie ni génération ni base.
+Les phases restent des jobs explicites du même point d'entrée.
+
+Le déclenchement autonome est attesté par le signal `37953863382` puis
+[l'exécution 37953882332](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37953882332).
+Elle s'arrête pendant la simulation, avant l'essai ; l'entrée candidate
+reproduit bien la génération construite, le contrôle final du socle et les
+25 sondes passent. Le refus sera diagnostiqué par l'agent via ce même point
+d'entrée, sans solliciter un nouveau lancement du propriétaire.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

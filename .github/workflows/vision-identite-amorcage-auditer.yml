@@ -1,0 +1,49 @@
+name: Vision — diagnostic réservé en lecture seule
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  auditer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Vérifier de nouveau la demande et la CI exacte
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Préparer la connexion existante
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-audit-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-audit-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-audit-admin" >/dev/null
+      - name: Relever les sites avant diagnostic
+        id: sites
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Extraire le seul opérateur exact
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-mise-en-service-operations/$GITHUB_SHA/source; tar -xf - -C /root/vision-mise-en-service-operations/$GITHUB_SHA/source"
+      - name: Classer le refus privé et vérifier le socle sans activer
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-mise-en-service-operations/$GITHUB_SHA/source/scripts/vision-identite-amorcage-auditer.py'"
+      - name: Vérifier une nouvelle connexion et les six services
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+      - name: Vérifier les 25 sites même après un refus
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-audit-admin"
