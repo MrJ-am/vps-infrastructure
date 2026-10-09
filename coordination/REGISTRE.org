@@ -3170,11 +3170,11 @@ Actions des autres outils : relire les contrats d'identité et de fermeture comm
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: 65fd0728798ceb4b32a3794437b7247026bba0e068ad4fe8323683b1c6775dd5
-:LU_LE: 2026-10-08T22:28:31+00:00
-:CONTEXTE: MrJ-am/vision@30adda56a1fbd9f23534ad8f237b781c01670ead
-:PREUVE: MrJ-am/vision@30adda56a1fbd9f23534ad8f237b781c01670ead
+:LU_LE: 2026-10-09T00:32:02+00:00
+:CONTEXTE: MrJ-am/vision@3dd6c4c0ffff622b5002f34edd8abdea08396a37
+:PREUVE: Vision CI 37862890521, 37862890385, 37862890386 réussies ; infrastructure MrJ-am/vps-infrastructure@6982a87ca4495e7838c2dfaa1481a3263f1fd586 ; Keycloak natif, TLS SMTP et JDBC Unix peer qualifiés localement.
 :END:
-Exports JSON/XML et Markdown sélectif, préavis avec échéance et annulation, ACL sans contenu testés. Services courriel/cycle : MrJ-am/vps-infrastructure@6a7bf13b3614e01ede72e2dd9a60fcace14bcf9a ; récupération réelle Keycloak avec relais synthétique, OTP conservé, rôle IdP lecture sans réinitialisation. Admission parentale, lien magique, fermeture commune et qualification réelle restent en cours. Aucune activation ni ouverture.
+Code intégré dans Vision main 9649ddaad655aaba3393bd67fe82c27a4af1b8d6, arbre identique au candidat testé. Admission contrôlée, récupération et magie avec OTP, fermeture commune, préavis, exports et registre age/rejeu sont implémentés. L’administration reste limitée aux métadonnées. SMTP Proton/réception, DNS compte.mrj.am, clé et copie Linux, contrats applicables, migration réelle et essai NixOS avec retour autonome restent à établir. Aucune activation ni ouverture.
 
 ** TODO vps
 :PROPERTIES:
@@ -3231,13 +3231,14 @@ Actions : Vision et VPS vérifient archives, concordance avec la publication et 
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 7b6ffa271313cad838848cf31bdff17fec86b533b9dd8d40515bfe95bcdaccc0
+:LU_LE: 2026-10-09T00:32:02+00:00
+:CONTEXTE: MrJ-am/vision@3dd6c4c0ffff622b5002f34edd8abdea08396a37
+:PREUVE: MrJ-am/vps-infrastructure@6982a87ca4495e7838c2dfaa1481a3263f1fd586 : workflows manuels, CI exacte, archives AGPL et qualification owners/ACL/RLS. CI 37864913174 en cours ; étapes SQL, NixOS et restauration native réussies à la lecture, JDBC Unix en cours.
 :END:
+Le candidat fige Vision 3dd6c4c0ffff622b5002f34edd8abdea08396a37 et Style 96fa28ac564b9492768837d4087608e83acc721b. Archives whitelist construites et inspectées, sans configs privées, données ni registre ; offre de téléchargement dans la notice. Retour SQL de droits rejouable sans réécriture des contenus. Les opérations n’activent rien ; secret Actions et lancement manuel nécessitent l’interface GitHub, non disponible via les outils Work actuels. La qualification VPS et l’offre réellement servie restent à constater.
 
 ** TODO vps
 :PROPERTIES:
