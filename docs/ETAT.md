@@ -16,8 +16,10 @@ peut continuer ; aucune rotation de clé n'est effectuée.
 Les 25 contrôles HTTP/TLS réussissent avant et après l'installation, ainsi
 qu'une nouvelle connexion administrative et les états actifs de sshd, nginx,
 PostgreSQL, Vision et Matheval. Cette opération ne lance aucune activation
-NixOS, migration SQL de production ou ouverture des comptes. Le DNS de
-compte.mrj.am et les autres préconditions du dossier restent à établir.
+NixOS, migration SQL de production ou ouverture des comptes. Le propriétaire
+retient ensuite `log.mrj.am` pour l'identité commune ; son A vers
+`187.77.95.158` est observé le 9 octobre. Le certificat et les autres
+préconditions du dossier restent à établir.
 [Rapport technique](../operations/vision-courriel-qualification.json).
 
 ## Logique — correction de la prise tactile publiée le 7 octobre 2026

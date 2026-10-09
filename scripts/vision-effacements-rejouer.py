@@ -13,7 +13,7 @@ import urllib.parse
 import urllib.request
 import urllib.error
 
-EMETTEUR='https://compte.mrj.am/realms/mrjam'
+EMETTEUR='https://log.mrj.am/realms/mrjam'
 
 def charger(registres):
     utilisateurs=set();sujets=set()

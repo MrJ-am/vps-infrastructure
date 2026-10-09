@@ -41,7 +41,7 @@ try:
         modele={'realm':realm,'enabled':True,'users':[{'id':sujet,'username':'synthetique','enabled':True,'email':'synthetique@example.test','emailVerified':True}]}
         api('/admin/realms',modele)
         assert api('/admin/realms/'+realm+'/users/'+sujet)['id']==sujet
-        sql(source,f"INSERT INTO vision_gestion.comptes(utilisateur,affichage) VALUES('{u2}','Synthétique'); INSERT INTO vision_profils(utilisateur) VALUES('{u2}'); INSERT INTO vision_gestion.identites VALUES('https://compte.mrj.am/realms/mrjam','{sujet}','{u2}'); INSERT INTO vision_fiches(utilisateur,titre,contenu) VALUES('{u2}','Privé','À effacer après restauration');")
+        sql(source,f"INSERT INTO vision_gestion.comptes(utilisateur,affichage) VALUES('{u2}','Synthétique'); INSERT INTO vision_profils(utilisateur) VALUES('{u2}'); INSERT INTO vision_gestion.identites VALUES('https://log.mrj.am/realms/mrjam','{sujet}','{u2}'); INSERT INTO vision_fiches(utilisateur,titre,contenu) VALUES('{u2}','Privé','À effacer après restauration');")
     with tempfile.TemporaryDirectory() as root:
         r=Path(root);cle=r/'cle.age';dump=r/'dump.age';clair=r/'restauration.dump';registre=r/'registre.jsonl'
         commande('age-keygen','-o',str(cle),stderr=subprocess.DEVNULL)
@@ -61,7 +61,7 @@ try:
         arguments=['--registre',str(registre),'--base',nom]
         if realm:
             global_registre=r/'global.jsonl';config=r/'identite.json';chiffre=r/'global.age'
-            global_registre.write_text(json.dumps({'version':2,'type':'fermeture_commune','emetteur':'https://compte.mrj.am/realms/mrjam',
+            global_registre.write_text(json.dumps({'version':2,'type':'fermeture_commune','emetteur':'https://log.mrj.am/realms/mrjam',
                 'sujet':sujet,'confirmee_a':1,'outils':{'vision':[u2]}})+'\n');global_registre.chmod(0o600)
             commande('age','-r',recipient,'-o',str(chiffre),str(global_registre))
             global_registre.unlink();commande('age','-d','-i',str(cle),'-o',str(global_registre),str(chiffre));global_registre.chmod(0o600)

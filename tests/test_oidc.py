@@ -31,7 +31,7 @@ class OIDC(unittest.TestCase):
         root=Path(self.tmp.name);(root/'credentials').write_text('fixture-sans-mot-de-passe\n');(root/'secret').write_text(secrets.token_urlsafe(32))
         self.registre=Registre()
         self.app=oidc.SessionsOIDC(root/'sessions.sqlite',root/'credentials','mrj.am',['vision.mrj.am','notes.mrj.am'],
-          'https://compte.mrj.am/realms/mrjam','http://127.0.0.1:8085/realms/mrjam','mrjam-vision',root/'secret',self.registre)
+          'https://log.mrj.am/realms/mrjam','http://127.0.0.1:8085/realms/mrjam','mrjam-vision',root/'secret',self.registre)
         self.cle=JsonWebKey.generate_key('RSA',2048,is_private=True,options={'kid':'test-local'})
 
     def callback(self,extra=None):
@@ -70,7 +70,7 @@ class OIDC(unittest.TestCase):
             self.assertFalse(self.app.session(self.app.cookie(token),'vision.mrj.am')['mfa'])
 
     def test_signed_claims_checked_before_identity(self):
-        for extra in ({'iss':'https://evil.example.test'},{'aud':'autre-outil'}, {'nonce':'substitution'},
+        for extra in ({'iss':'https://evil.example.test'},{'iss':'https://compte.mrj.am/realms/mrjam'},{'aud':'autre-outil'}, {'nonce':'substitution'},
                       {'exp':int(time.time())-60}):
             with self.assertRaises(JoseError):self.callback(extra)
 
@@ -102,7 +102,7 @@ class OIDC(unittest.TestCase):
         (secret,_),_,_=self.callback()
         response=Mock();response.json.return_value={'keys':[self.cle.as_dict(is_private=False)]}
         with patch.object(oidc.requests,'get',return_value=response):
-            for extra in ({'iss':'https://evil.test'},{'aud':'autre-outil'},{'nonce':'interdit'},
+            for extra in ({'iss':'https://evil.test'},{'iss':'https://compte.mrj.am/realms/mrjam'},{'aud':'autre-outil'},{'nonce':'interdit'},
                           {'iat':int(time.time())-121},{'events':{}},{'sub':''}):
                 with self.assertRaises((JoseError,ValueError)):self.app.deconnexion_commune(self.logout_token(extra))
         self.assertIsNotNone(self.app.session(self.app.cookie(secret),'vision.mrj.am'))
