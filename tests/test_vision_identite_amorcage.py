@@ -21,6 +21,15 @@ a = charger('amorcage_test', 'vision-identite-amorcage-preparer.py')
 
 
 class Proprietaire(unittest.TestCase):
+    def test_commande_nginx_immuable_sans_option_ou_commande_libre(self):
+        paquet='/nix/store/'+'a'*32+'-nginx-1.28.2'
+        configuration='/nix/store/'+'b'*32+'-nginx.conf'
+        r=dict(nginx_paquet=paquet,nginx_commande=paquet+"/bin/nginx -c '"+configuration+"'")
+        self.assertEqual(a.commande_nginx(r),(paquet+'/bin/nginx',configuration))
+        for commande in (r['nginx_commande']+' -g daemon=off',paquet+'/bin/nginx -c /etc/nginx/nginx.conf',
+                paquet+'/bin/nginx -c '+configuration+'; id', '/tmp/nginx -c '+configuration):
+            with self.subTest(commande=commande),self.assertRaises(RuntimeError):a.commande_nginx({**r,'nginx_commande':commande})
+
     def requete(self, contenu):
         def executer(q):
             if 'information_schema.columns' in q: return json.dumps(list(contenu))

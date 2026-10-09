@@ -37,7 +37,7 @@ jobs:
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-mise-en-service-operations/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-mise-en-service-operations/$GITHUB_SHA/source"
       - name: Classer le refus privé et vérifier le socle sans activer
         run: |
-          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 age --run 'python3 /root/vision-mise-en-service-operations/$GITHUB_SHA/source/scripts/vision-identite-amorcage-auditer.py'"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-mise-en-service-operations/$GITHUB_SHA/source/scripts/vision-identite-amorcage-auditer.py'"
       - name: Vérifier une nouvelle connexion et les six services
         if: ${{ always() && steps.sites.outcome == 'success' }}
         run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth

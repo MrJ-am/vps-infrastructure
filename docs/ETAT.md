@@ -1142,3 +1142,28 @@ privé0600 ; toute publication ultérieure expurge les valeurs privées.
 Les erreurs par requête, autres niveaux et journaux généraux sont exclus.
 Nix-shell fournit AGE depuis le Nixpkgs installé. Ce diagnostic ne
 lance pas Nginx et ne modifie ni configuration ni données.
+
+Le 9 octobre à18:58:32 UTC, diagnostic autonome `37976909188`
+(job `113977466748`, commit `c320f1b5562cddf11efcdafc3ccdd3d4e0765d44`,
+PR59/286 tests, CI push `37976118015` et PR `37976123742` quatre jobs verts) :
+jeton inattendu dans le fichier immuable Nginx, ligne215, directive `types`,
+mode0444/publicement lisible. Le bloc `types {};` du téléchargement de
+sources reproduit nativement `unexpected ";"` ; `types {}` passe.
+Six services/SSH et25 HTTP/TLS avant/après passent, fin18:58:44 UTC ;
+cluster17 privé proprement arrêté/préservé, aucune activation ou personne.
+Voir `operations/vision-amorcage-nginx-cause.json`. Les erreurs ont un
+préfixe daté : le canal temporaire ne sélectionne donc aucune ligne.
+Aucun déchiffrement réel ; clé Work supprimée et canal retiré.
+
+Les trois blocs analogues (amorçage et deux téléchargements Vision) sont
+corrigés. Une régression native vérifie les extraConfig effectivement
+présents, avec contrôle négatif du point-virgule. La nouvelle phase fermée
+`construction` du point d’entrée main/CI exacte appelle le préparateur
+sans saisie manuelle ni concurrence imbriquée. Il construit puis teste
+la configuration complète avec le paquet Nginx produit, `nginx -t`,
+sous le compte nginx. Paquet/configuration immuables et arguments fermés ;
+aucun serveur lancé, stderr privé, rapport booléen. L’activation exige
+désormais cette preuve native, absente de l’ancienne préparation765.
+La nouvelle construction ne modifie pas le cluster existant ou la
+génération active. Une reprise qualifiée avec sauvegarde chiffrée à froid
+et retour indépendant sera une opération suivante, sans effacement.

@@ -102,6 +102,7 @@ def preuve_valide(rapport, preuve, candidat):
     exiger(rapport == preuve and rapport['systeme_actif'] == candidat['audit']['systeme'] and
         rapport['vision'] == candidat['vision'] and rapport['style'] == candidat['style'] and
         rapport['proprietaires'] == 1 and rapport['authentification_unique'] is True and
+        rapport.get('configuration_nginx_native') is True and
         all(rapport[k] is True for k in ('construction', 'unites_conservees', 'hotes_conserves',
             'postgres_production_conserve', 'cluster_independant')) and
         all(rapport[k] is False for k in ('mode_vision_oidc', 'preconditions_validees',

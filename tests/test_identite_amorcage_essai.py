@@ -133,8 +133,10 @@ class Retour(unittest.TestCase):
     def test_preuve_ne_permet_pas_mode_commun_ou_autre_generation(self):
         preuve=json.loads((ROOT/'operations/vision-identite-amorcage-qualification.json').read_text())
         candidat=json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
+        with self.assertRaises(RuntimeError):essai.preuve_valide(preuve,preuve,candidat)
+        preuve={**preuve,'configuration_nginx_native':True}
         essai.preuve_valide(preuve,preuve,candidat)
-        for cle,valeur in [('activation',True),('identite_humaine',True),('proprietaires',2),('mode_vision_oidc',True),('systeme_actif','/nix/store/'+'a'*32+'-autre')]:
+        for cle,valeur in [('configuration_nginx_native',False),('activation',True),('identite_humaine',True),('proprietaires',2),('mode_vision_oidc',True),('systeme_actif','/nix/store/'+'a'*32+'-autre')]:
             change={**preuve,cle:valeur}
             with self.assertRaises(RuntimeError): essai.preuve_valide(change,change,candidat)
         with self.assertRaises(RuntimeError): essai.entree_nix('/tmp/${injection}.nix','/tmp/module.nix',None)
