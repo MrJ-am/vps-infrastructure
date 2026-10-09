@@ -77,6 +77,10 @@ jobs:
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vision-identite-construction-auditer.py
+      - name: Classer le démarrage Unix privé sans afficher les journaux
+        if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vision-identite-unix-auditer.py
       - name: Vérifier les points d'accès publics
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: python3 scripts/probe.py

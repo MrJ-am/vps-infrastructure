@@ -37,15 +37,31 @@ def verifier(paquet, image_outils, volume, racine_volume, diagnostic=None):
         secret = secrets.token_urlsafe(32)
         (root / 'credentials/bootstrap').write_text(secret)
         (root / 'credentials/bootstrap').chmod(0o600)
-        for fichier, amont in (('demarrer.sh', 'vision-identite-unix-demarrer.sh'),
-                ('postgresql.sh', 'vision-identite-unix-postgresql.sh'), ('qualification-http.py', 'vision-identite-unix-http.py')):
-            shutil.copyfile(ROOT / 'scripts' / amont, root / fichier); (root / fichier).chmod(0o444)
+        shutil.copyfile(ROOT / 'scripts/vision-identite-unix-http.py', root / 'qualification-http.py')
+        (root / 'qualification-http.py').chmod(0o444)
         try:
             commande('docker', 'run', '--rm', '--network', 'none', '-v', str(root) + ':/test',
                 '--entrypoint', 'chown', 'pgvector/pgvector:0.8.0-pg17', '-R', '999:999', '/test')
+            # Reproduire le véritable propriétaire root, umask 077 et UID
+            # distinct du service ; le montage entier ne devient pas public.
+            preparation = '''import importlib.util,os
+from pathlib import Path
+s=importlib.util.spec_from_file_location('unix','/qualification/scripts/vision-identite-unix-qualifier.py')
+m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+os.umask(0o077);os.chown('/test',0,0)
+m.preparer_lanceurs(Path('/test/lanceurs'))
+p=Path('/test/prive-root');p.mkdir(mode=0o700)
+(p/'secret').write_text('secret strictement synthétique')
+'''
+            commande('docker', 'run', '--rm', '--network', 'none', '--user', '0',
+                '-v', str(ROOT) + ':/qualification:ro', '-v', str(root) + ':/test',
+                image_outils, 'python3', '-c', preparation)
+            commande('docker', 'run', '--rm', '--network', 'none', '--user', '999:999',
+                '-v', str(root) + ':/test:ro', image_outils, 'sh', '-c',
+                'test -r /test/lanceurs/postgresql.sh && test -r /test/lanceurs/demarrer.sh && ! test -r /test/prive-root/secret')
             commande('docker', 'run', '-d', '--name', pg, '--network', 'none', '--user', '999:999',
                 '-v', str(root) + ':/test', '--entrypoint', 'sh', 'pgvector/pgvector:0.8.0-pg17',
-                '/test/postgresql.sh', '/usr/lib/postgresql/17/bin', '/test/pg-runtime', 'postgres')
+                '/test/lanceurs/postgresql.sh', '/usr/lib/postgresql/17/bin', '/test/pg-runtime', 'postgres')
             def sql(q):
                 return commande('docker', 'exec', '--user', '999', pg, 'psql', '-XAtq',
                     '-v', 'ON_ERROR_STOP=1', '-h', '/test/pg-runtime/socket', '-U', 'postgres', '-c', q)
@@ -60,7 +76,7 @@ def verifier(paquet, image_outils, volume, racine_volume, diagnostic=None):
             commande('docker', 'run', '-d', '--name', idp, '--network', 'none', '--user', '999:999',
                 '-v', volume + ':' + racine_volume + ':ro',
                 '-v', str(root) + ':/test', '-e', 'CREDENTIALS_DIRECTORY=/test/credentials',
-                image_outils, 'sh', '/test/demarrer.sh',
+                image_outils, 'sh', '/test/lanceurs/demarrer.sh',
                 paquet, '/test/runtime', '/test/pg-runtime/socket')
             http = json.loads(commande('docker', 'exec', '-i', idp, 'python3',
                 '/test/qualification-http.py', entree=json.dumps({'secret': secret}).encode(), timeout=160))
@@ -72,7 +88,8 @@ def verifier(paquet, image_outils, volume, racine_volume, diagnostic=None):
                 stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
             assert mauvais.returncode != 0
             print(json.dumps(dict(**http, paquet_nix=True, jdbc_unix=True, peer=True,
-                autre_uid_refuse=True, postgresql_tcp_ferme=True, conteneurs_synthetiques=True)), flush=True)
+                autre_uid_refuse=True, postgresql_tcp_ferme=True, conteneurs_synthetiques=True,
+                lanceurs_root_traversables=True, fichier_root_prive_refuse=True)), flush=True)
         except Exception:
             if diagnostic:
                 fd = os.open(diagnostic, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)

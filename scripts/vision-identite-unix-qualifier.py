@@ -59,6 +59,18 @@ def unite(nom, proprietes, args):
         *['--property=' + p for p in proprietes], '--', *[str(a) for a in args]]
 
 
+def preparer_lanceurs(source):
+    """Dossier traversable contenant seulement deux scripts publics sans secret."""
+    source.mkdir(mode=0o711)
+    # umask 077 enlève les bits de traversée demandés à mkdir. Rétablir
+    # explicitement ce seul dossier public, jamais un dossier de données.
+    source.chmod(0o711)
+    for nom in ('demarrer', 'postgresql'):
+        fichier = source / (nom + '.sh')
+        shutil.copyfile(ROOT / ('scripts/vision-identite-unix-' + nom + '.sh'), fichier)
+        fichier.chmod(0o444)
+
+
 def arreter(noms, runtimes):
     """Arrêter même après échec ; ne retirer aucun runtime encore utilisé."""
     erreurs = []
@@ -119,10 +131,7 @@ def qualifier(revision):
     (d / 'bootstrap').write_text(secret); (d / 'bootstrap').chmod(0o600)
     # Seuls deux lanceurs sans secret sont traversables par les utilisateurs
     # transitoires. Les rapports et logs restent dans le dossier root 0700.
-    source.mkdir(mode=0o711)
-    for nom in ('demarrer', 'postgresql'):
-        fichier = source / (nom + '.sh')
-        shutil.copyfile(ROOT / ('scripts/vision-identite-unix-' + nom + '.sh'), fichier); fichier.chmod(0o444)
+    preparer_lanceurs(source)
     logs = {}
     for nom in ('idp', 'pg'):
         logs[nom] = d / (nom + '-prive.log'); logs[nom].touch(mode=0o600, exist_ok=False)
