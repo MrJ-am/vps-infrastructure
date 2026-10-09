@@ -81,6 +81,8 @@ c=root/'credentials/realm-import';c.write_text(json.dumps(realm));c.chmod(0o600)
 c=root/'credentials/amorcage-admin';c.write_bytes(os.read(0,4096));c.chmod(0o600);os.chown(c,1001,1001)
 shutil.copyfile('/qualification/tests/identite-amorcage-integration.py',root/'verifier-http.py')
 (root/'verifier-http.py').chmod(0o444)
+shutil.copyfile('/qualification/scripts/identite-amorcage-controle.py',root/'controle-local.py')
+(root/'controle-local.py').chmod(0o444)
 '''
             cmd('docker', 'run', '--rm', '-i', '--network', 'none', '--user', '0',
                 '-v', str(root) + ':/test', '-v', str(ROOT) + ':/qualification:ro',
@@ -137,9 +139,13 @@ exec tail -f /dev/null
             controle = json.loads(cmd('docker', 'exec', '-i', '--user', '1001:1001', idp,
                 'python3', '/test/verifier-http.py', '--http', entree=secret.encode(), timeout=150))
             assert all(controle.values())
+            verification = "import importlib.util,json,sys; s=importlib.util.spec_from_file_location('controle','/test/controle-local.py'); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); print(json.dumps(m.verifier(sys.stdin.read(4096),json.load(open('/test/credentials/realm-import')))))"
+            local = json.loads(cmd('docker', 'exec', '-i', '--user', '1001:1001', idp,
+                'python3', '-c', verification, entree=secret.encode(), timeout=30))
+            assert all(local.values())
             assert sql("SELECT count(*)>0 FROM pg_stat_activity WHERE usename='keycloak' AND datname='mrjam_identite' AND client_addr IS NULL") == 't'
             assert sql("SELECT current_setting('listen_addresses')='' AND current_setting('server_encoding')='UTF8'") == 't'
-            print(json.dumps(dict(**controle, postgres_prive=True, peer=True, autre_uid_refuse=True,
+            print(json.dumps(dict(**controle, controle_essai_local=True, postgres_prive=True, peer=True, autre_uid_refuse=True,
                 role_privilegie_refuse=True, relance_sans_perte=True, conteneurs_sans_reseau=True)), flush=True)
         except Exception:
             if diagnostic:

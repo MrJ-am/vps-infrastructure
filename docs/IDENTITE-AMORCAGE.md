@@ -76,6 +76,10 @@ ni systemd, ACME, SMTP ou activation réels de cette nouvelle phase.
 
 ## Étapes suivantes
 
+La construction réelle `37941066602` est réussie ; le rapport exact et
+le nouvel essai avec retour autonome sont détaillés dans
+[IDENTITE-AMORCAGE-ESSAI.md](IDENTITE-AMORCAGE-ESSAI.md). L'essai reste à lancer.
+
 1. Constater la construction réelle, puis préparer l'activation temporaire :
    DNS/ACME, copie locale et retour autonome armé avant essai. Les anciens
    workflows de migration et leurs garde-fous ne sont pas réutilisés.

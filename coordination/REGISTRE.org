@@ -4013,13 +4013,14 @@ Vision conserve sa release et son authentification actuelles ; mode commun, admi
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: e7d2bf2718bcdad6da05da2493dfa66c267b631190ec714c028b30646a712882
+:LU_LE: 2026-10-09T14:36:29+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/commit/632449d2e563378d0a07237d9b882c6eeb597feb
 :END:
+Contrôleur réservé préparé, retour réel de fixture/verrou/idempotence et refus de finalisation après retour qualifiés. 251 tests complets puis huit tests ciblés, entrée Nix identique et API native sans réseau passent. Essai réel/ACME/HTTPS et génération enregistrée restent à constater.
 
 ** TODO vps
 :PROPERTIES:
