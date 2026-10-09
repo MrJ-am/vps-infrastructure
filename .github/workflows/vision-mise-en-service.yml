@@ -16,6 +16,8 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 3
+    outputs:
+      action: ${{ steps.plan.outputs.action }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -29,7 +31,16 @@ jobs:
         run: python3 scripts/ci-exacte.py
         env:
           GH_TOKEN: ${{ github.token }}
+      - name: Choisir la phase qualifiée dans le plan du main
+        id: plan
+        run: python3 scripts/vision-plan.py
   amorcage:
     needs: demande
+    if: needs.demande.outputs.action == 'amorcage'
     uses: ./.github/workflows/vision-identite-amorcage-activer.yml
+    secrets: inherit
+  diagnostic:
+    needs: demande
+    if: needs.demande.outputs.action == 'diagnostic'
+    uses: ./.github/workflows/vision-identite-amorcage-auditer.yml
     secrets: inherit

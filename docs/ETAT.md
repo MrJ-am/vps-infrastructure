@@ -10,6 +10,14 @@ L'essai réservé devient une étape réutilisable ; les preuves et le retour
 autonome sont conservés. Ce regroupement ne prouve aucune activation : l'état
 VPS constaté reste celui décrit ci-dessous tant qu'une exécution n'est pas citée.
 
+Le déclenchement par l'agent est réellement vérifié : signal37953863382,
+orchestration37953882332, job113899388028, opérateurb82f1eba3bf8b8de102b0e1568978f085ef721ca.
+Demande/CI exactes et état initial passent ; l'entrée reproduit la génération
+préparée. Arrêt en `dry_activate` avant toute activation ; contrôle du socle
+et25HTTP/TLS finaux réussis. Vision reste historique, aucune identité humaine.
+Le diagnostic en lecture seule est préparé dans ce même point d'entrée.
+[Rapport de tentative](../operations/vision-amorcage-tentative.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

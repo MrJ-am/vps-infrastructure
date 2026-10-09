@@ -4079,12 +4079,12 @@ Vision préserve ses données et accès historiques ; aucun autre outil ne chang
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: cb58bceccd0743f98190f57762aa826c281d7551fd602892caf3d88e3c3c7a7f
-:LU_LE: 2026-10-09T15:34:11+00:00
+:LU_LE: 2026-10-09T15:53:18+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée sur main VPS d88f868df343fbfcb623fb3d5626fa63a96f9715. Six contrôles ciblés de provenance, révision et reprise passent ; orchestration et CI exacte à terminer, aucune activation VPS.
+:PREUVE: PR48 intégrée exactement b82f1eba3bf8b8de102b0e1568978f085ef721ca, CI37953219981/37953225405 et258tests réussis. Signal37953863382 puis orchestration37953882332 réellement déclenchés par Work sans intervention du propriétaire. Refus en simulation avant activation, contrôle du socle et25HTTP/TLS finaux réussis ; diagnostic et suite dans20261009-vision-0cffd154006b.
 :END:
 
 ** TODO vps
@@ -4144,12 +4144,12 @@ Après le refus établi, corriger uniquement la recette nécessaire et qualifier
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 3f582cbd91ad2f551a0552c951ef9a23d2859e51c55841efb378471198293dd0
+:LU_LE: 2026-10-09T15:53:18+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée c2140a83040b599bb64ccba212cf9038a1ee5360. Phase en lecture seule et sélection fermée préparées ; quatre tests de refus/fuite/lecture privée passent. Diagnostic VPS et éventuel correctif restent à constater.
 :END:
 
 ** TODO vps
