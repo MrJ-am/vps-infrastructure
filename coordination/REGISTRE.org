@@ -5660,3 +5660,63 @@ Qualifier ces refus et le contact corrigé avant CI exacte, puis l'agent lance l
 :PREUVE: -
 :END:
 
+* Observer automatiquement l’activation et la connexion du propriétaire
+:PROPERTIES:
+:ID: 20261009-vision-6a4a478be71f
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T22:50:41+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Préparation d'une phase automatisée proprietaire-observer, distincte de la création déjà réussie69e0d1d/37999358368. Le propriétaire déclare avoir terminé le lien initial ; cette déclaration n'est pas une preuve technique. Vérifier le sujet durable exact, email vérifié, password/OTP configurés et absence d'admin identité, puis attendre au plus10minutes une connexion pwd ET otp réellement exécutée depuis≤300s. API administrative GET seulement, SQL READ ONLY du seul cluster privé et projection des seules notes d'authentification du sujet exact. Aucun compte, courriel, secret, rattachement historique, rôle applicatif ou SQL Vision créé/modifié ; seul un reçu privé root peut être écrit après la preuve. État/lock/executions/courriel existants obligatoires ; ni reprise ni intention de création dans cette phase.
+L'automatisation existante choisira cette phase dans l'énumération fermée après CI du commit exact. Étapes séparées pour vérifier l'activation puis attendre la connexion, afin de demander au propriétaire sa connexion normale seulement lorsque le contrôle est prêt, sans nouveau Run workflow. Conserver six services,25sites, sources et génération ; inscriptions/OIDC Vision restent fermés. Les autres projets prennent connaissance sans opération sur leur configuration. Vision consignera le résultat réel et les limites ; le rattachement/migration restera une opération distincte à qualifier.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: b471f0800d4bc9908d656182bb3cc1ed1d4959a39869c08ab4eeb5251b2106aa
+:LU_LE: 2026-10-09T22:50:55+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Lecture effective ; phase dédiée en préparation. Aucun constat technique déduit du Fait humain et aucun rattachement/migration engagé.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
