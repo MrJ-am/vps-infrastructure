@@ -5451,12 +5451,12 @@ Reprise liée au diagnostic c527/cadres/classes/HTTP503 exacts et aux unités pr
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 7dbbe91fa7ab614dfed14ad381eca4fc739779d35ff3dba1fca44f67d9fc57cb
+:LU_LE: 2026-10-09T21:31:53+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Attente monotone120s GET seul, aucun credential ni POST rejoué ; refus autres codes/redirections ; garde source/cadres/503 de c527. Tests préparés, reprise non encore exécutée.
 :END:
 
 ** TODO vps

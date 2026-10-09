@@ -1,5 +1,7 @@
 """Contrôles locaux en lecture seule ; token technique et réponses restent privés."""
 import json
+import errno
+import time
 import re
 import urllib.error
 import urllib.parse
@@ -13,7 +15,7 @@ class SansRedirection(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def api(opener, chemin, *, token=None, formulaire=None):
+def api(opener, chemin, *, token=None, formulaire=None, timeout=10):
     entetes = {'Host': 'log.mrj.am', 'X-Forwarded-Proto': 'https', 'X-Forwarded-Port': '443'}
     if token: entetes['Authorization'] = 'Bearer ' + token
     data = None
@@ -21,17 +23,35 @@ def api(opener, chemin, *, token=None, formulaire=None):
         entetes['Content-Type'] = 'application/x-www-form-urlencoded'
         data = urllib.parse.urlencode(formulaire).encode()
     req = urllib.request.Request(URL + chemin, headers=entetes, data=data)
-    with opener.open(req, timeout=10) as response:
+    with opener.open(req, timeout=timeout) as response:
         contenu = response.read(1048577)
         if response.code != 200 or len(contenu) > 1048576:
             raise ValueError('Contrôle privé interrompu')
         return json.loads(contenu)
 
 
+def attendre_decouverte(opener, *, maximum=120):
+    """Seulement un GET sans credential ; aucun autre contrôle n'est rejoué."""
+    limite=time.monotonic()+maximum
+    while True:
+        restant=limite-time.monotonic()
+        if restant<=0:raise ValueError('Attente d’identité dépassée')
+        try:
+            return api(opener,'/realms/mrjam/.well-known/openid-configuration',timeout=min(10,restant))
+        except urllib.error.HTTPError as erreur:
+            if erreur.code!=503:raise
+            erreur.close()
+        except urllib.error.URLError as erreur:
+            if not isinstance(erreur.reason,OSError) or erreur.reason.errno!=errno.ECONNREFUSED:raise
+        restant=limite-time.monotonic()
+        if restant<=0:raise ValueError('Attente d’identité dépassée')
+        time.sleep(min(1,restant))
+
+
 def verifier(secret, realm, opener=None):
     if opener is None:
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), SansRedirection())
-    info = api(opener, '/realms/mrjam/.well-known/openid-configuration')
+    info = attendre_decouverte(opener)
     if info.get('issuer') != 'https://log.mrj.am/realms/mrjam':
         raise ValueError('Issuer local différent')
     token = api(opener, '/realms/master/protocol/openid-connect/token', formulaire={

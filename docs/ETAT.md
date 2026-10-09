@@ -1,5 +1,19 @@
 # État attesté au 9 octobre 2026
 
+Le [diagnostic37993555900](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37993555900),
+opérateur5dcfb0484599d8b74cedfc0c36217e8563337b74, job114033697403,
+identifie HTTP503 au premier GET de découverte verifier34/api24 dans c527.
+Les contrôles boucle locale/PG17/rejet peer ont précédé ce refus.
+Source/cadres exacts, cluster sain arrêté, retour/six services/SSH/25 sites
+conservés ; aucune activation ou personne.
+[Projection fermée](../operations/vision-amorcage-diagnostic-c527.json).
+Une attente monotone120s, réseau borné et pauses1s, retente seulement
+le GET de découverte sur503 ou connexion refusée. Aucun credential envoyé
+pendant cette attente, aucun rejeu de POST ; autres codes/redirections,
+réponses invalides ou issuer différent refusés. Après disponibilité,
+tous les contrôles initiaux restent exigés. Reprise gardée sur ce seul
+HTTP503/source/cluster, avec nouvel audit/copie froide/retour avant essai.
+
 L'[essai37992389053](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37992389053),
 opérateurc527fcfd64dc5478da1011aafc28ce6e3d3fd199, job114029672958,
 a réussi préparation/audit/copie froide/empreinte/dry/timer et démarrage,

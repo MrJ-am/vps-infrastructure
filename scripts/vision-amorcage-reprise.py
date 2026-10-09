@@ -1,5 +1,5 @@
-"""Garde de reprise ciblée de l’essai f763 ; jamais un effacement automatique."""
-REVISION='f7634858fa7a7fbfe33f4c00ecc0047bc48b811f'
+"""Garde de reprise ciblée de l’essai c527 ; jamais un effacement automatique."""
+REVISION='c527fcfd64dc5478da1011aafc28ce6e3d3fd199'
 
 def verifier_cluster(cluster):
     if not all(cluster.get(k) is True for k in ('present','dossier_prive','version17','controle_disponible','journal_disponible')):raise ValueError('Cluster non qualifié')
@@ -10,13 +10,13 @@ def verifier(rapport):
     ok=ok and all(rapport.get(k) is True for k in ('socle_conserve','retour_termine','cluster_prive_present'))
     ok=ok and all(rapport.get(k) is False for k in ('generation_enregistree','activation','inscriptions'))
     if not ok:raise ValueError('Reprise privée non conforme')
-    if rapport.get('categories')!=['identite_hors_boucle_locale']:raise ValueError('Cause différente')
+    if rapport.get('categories')!=[] or rapport.get('exception_privee')!=dict(classes=['ConstructionRefusee','HTTPError'],codes_http=[503]):raise ValueError('Cause différente')
     worker=rapport.get('worker',{})
     if worker.get('etat') not in ('inactive','failed') or (type(worker.get('code')) is not int or not 0<=worker['code']<=255):raise ValueError('Worker non arrêté')
     etapes=rapport.get('controle_worker',{})
     if etapes.get('etapes')!=['essai_generation','controles_locaux'] or etapes.get('categories')!=[]:raise ValueError('Étape différente')
     if rapport.get('unites_echec')!=dict(bilan_present=False,connues=[],inconnues=0):raise ValueError('Bilan différent')
-    if rapport.get('cadres_disponibles') is not True or dict(script='vision-identite-amorcage-activer.py',fonction='verifier_local',ligne=301) not in rapport.get('cadres',[]):raise ValueError('Source ou contrôle différents')
+    if rapport.get('cadres_disponibles') is not True or not all(c in rapport.get('cadres',[]) for c in (dict(script='vision-identite-amorcage-activer.py',fonction='verifier_local',ligne=321),dict(script='identite-amorcage-controle.py',fonction='verifier',ligne=34),dict(script='identite-amorcage-controle.py',fonction='api',ligne=24))):raise ValueError('Source ou contrôle différents')
     unites=rapport.get('unites_identite',{})
     if set(unites)!={'mrjam-amorcage-postgresql','mrjam-amorcage-identite','mrjam-amorcage-sauvegarde'}:raise ValueError('Unités privées différentes')
     for u in unites.values():
