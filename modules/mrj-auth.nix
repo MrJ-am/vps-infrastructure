@@ -2,11 +2,13 @@
 let
   projects = config.infrastructure.gateway.projects;
   sites = lib.filter (site: site ? browserAuth && site.browserAuth) (builtins.attrValues projects);
-  python = pkgs.python3.withPackages (p: [ p.passlib ]);
+  oidc = config.infrastructure.visionMultiutilisateur.enable or false;
+  python = pkgs.python3.withPackages (p: [ p.passlib ] ++ lib.optionals oidc [ p.authlib p.requests p.psycopg ]);
   source = pkgs.runCommand "mrj-auth-source" {} ''
     mkdir -p "$out"
     cp ${../services/mrj-auth/server.py} "$out/server.py"
     cp ${../services/mrj-auth/oauth.py} "$out/oauth.py"
+    cp ${../services/mrj-auth/oidc.py} "$out/oidc.py"
     cp ${../services/mrj-auth/mcp.html} "$out/mcp.html"
     cp ${../services/mrj-auth/mcp.js} "$out/mcp.js"
     cp ${../services/mrj-auth/style.css} "$out/style.css"
@@ -44,6 +46,13 @@ in lib.mkIf (sites != []) {
       MRJ_AUTH_CREDENTIALS = "/var/lib/vision/auth/htpasswd";
       MRJ_AUTH_DOMAIN = "mrj.am";
       MRJ_AUTH_HOSTS = lib.concatStringsSep "," (map (site: site.domain) sites);
+    } // lib.optionalAttrs oidc {
+      MRJ_AUTH_MODE = "oidc";
+      MRJ_OIDC_ISSUER = "https://compte.mrj.am/realms/mrjam";
+      MRJ_OIDC_BACKEND = "http://127.0.0.1:8085/realms/mrjam";
+      MRJ_OIDC_CLIENT = "mrjam-vision";
+      MRJ_OIDC_SECRET_FILE = "/run/credentials/mrj-auth.service/oidc-client";
+      MRJ_IDENTITES_DSN = "dbname=vision user=vision_identite host=/run/postgresql";
     };
     serviceConfig = {
       ExecStart = "${python}/bin/python3 ${source}/server.py";
@@ -57,6 +66,7 @@ in lib.mkIf (sites != []) {
       CapabilityBoundingSet = ""; RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" ];
       IPAddressDeny = "any"; IPAddressAllow = [ "127.0.0.0/8" ];
       TasksMax = 32; MemoryMax = "192M";
+      LoadCredential = lib.optionals oidc [ "oidc-client:${config.infrastructure.identite.secretClient}" ];
     };
   };
   services.nginx.virtualHosts = builtins.listToAttrs (map (site: {
@@ -65,6 +75,7 @@ in lib.mkIf (sites != []) {
       "/auth/" = {
         proxyPass = "http://127.0.0.1:3002";
         extraConfig = sessionHeaders + ''
+          access_log off;
           client_max_body_size 8k;
           limit_req zone=protected_api_per_ip burst=5 nodelay;
           limit_req_status 429;

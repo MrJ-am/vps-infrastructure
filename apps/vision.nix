@@ -1,6 +1,7 @@
-{ config, ... }:
+{ config, lib ? { optionalString = condition: value: if condition then value else ""; }, ... }:
 let
   site = (builtins.fromJSON (builtins.readFile ../projects.json)).vision;
+  multi = config.infrastructure.visionMultiutilisateur.enable or false;
   mobileLiveTestUsername = "mobile-live";
   mobileLiveTestPasswordHash = "$6$M0bLive26$eKajMiudVvi4/NSD3YFmHxun73Wiv5rR750TUzt.dwrT5urrD07wQ4kP9VB8hrmDJogaGiH7mYnQC75GplKtL1";
   mobileLiveTestAuthFile = "/var/lib/vision/auth/mobile-live-test.htpasswd";
@@ -45,11 +46,13 @@ in {
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-For $remote_addr;
-        satisfy any;
+        ${lib.optionalString (!multi) "satisfy any;"}
         auth_request /_vision_mcp_token;
         auth_request_set $vision_mcp_user $upstream_http_x_mrj_user;
+        ${lib.optionalString (!multi) ''
         auth_basic "${site.auth.realm}";
         auth_basic_user_file ${site.auth.basicUserFile};
+        ''}
         limit_req zone=protected_api_per_ip burst=10 nodelay;
         limit_conn protected_api_connections 10;
         limit_req_status 429;
@@ -57,7 +60,7 @@ in {
         proxy_set_header Authorization "";
         proxy_set_header X-Vision-Authenticated "1";
         proxy_set_header X-Vision-Browser "";
-        proxy_set_header X-Mrj-User "$remote_user$vision_mcp_user";
+        proxy_set_header X-Mrj-User "${if multi then "$vision_mcp_user" else "$remote_user$vision_mcp_user"}";
         proxy_set_header Cookie "";
         error_page 401 = @vision-mcp-authentication-required;
         error_page 429 = @vision-rate-limited;

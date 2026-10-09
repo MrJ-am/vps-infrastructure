@@ -6,6 +6,76 @@ on:
 permissions:
   contents: read
 jobs:
+  keycloak:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Installer le navigateur et les outils de qualification
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y age nix-bin
+          python3 -m venv "$RUNNER_TEMP/qualification"
+          "$RUNNER_TEMP/qualification/bin/pip" install playwright==1.57.0 cryptography==46.0.3
+          "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
+      - name: Vérifier le realm, PKCE et la double authentification réels
+        run: |
+          docker create --name keycloak-librairies quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4
+          mkdir -p "$RUNNER_TEMP/keycloak-librairies"
+          docker cp keycloak-librairies:/opt/keycloak/lib/lib/main/. "$RUNNER_TEMP/keycloak-librairies/"
+          docker rm keycloak-librairies
+          sh services/keycloak-mrjam/compiler.sh "$RUNNER_TEMP/keycloak-librairies" "$RUNNER_TEMP/mrjam-identite.jar"
+          export QUALIFICATION_HOOK_SECRET="$RUNNER_TEMP/qualification-hook.secret"
+          python3 - <<'PY'
+          import os,secrets
+          from pathlib import Path
+          secret=secrets.token_urlsafe(32)
+          for nom in ('qualification-hook.secret','qualification-hook-native.secret'):
+              p=Path(os.environ['RUNNER_TEMP'])/nom;p.write_text(secret);p.chmod(0o600)
+          PY
+          sudo chown 1000:1000 "$RUNNER_TEMP/qualification-hook-native.secret"
+          export QUALIFICATION_TLS="$RUNNER_TEMP/qualification-tls"
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-certificats.py --destination "$QUALIFICATION_TLS"
+          cp "$QUALIFICATION_TLS/confiance.p12" "$RUNNER_TEMP/confiance-native.p12"
+          sudo chown 1000:1000 "$RUNNER_TEMP/confiance-native.p12"
+          docker run -d --name keycloak-qualification --network host \
+            -v "$RUNNER_TEMP/mrjam-identite.jar:/opt/keycloak/providers/mrjam-identite.jar:ro" \
+            -v "$PWD/services/keycloak-mrjam/theme:/opt/keycloak/themes/mrjam:ro" \
+            -v "$RUNNER_TEMP/qualification-hook-native.secret:/tmp/qualification-hook.secret:ro" \
+            -v "$RUNNER_TEMP/confiance-native.p12:/tmp/confiance.p12:ro" \
+            -e JAVA_OPTS_APPEND='-Djavax.net.ssl.trustStore=/tmp/confiance.p12 -Djavax.net.ssl.trustStorePassword=qualification-locale -Djavax.net.ssl.trustStoreType=PKCS12' \
+            -e MRJ_FERMETURE_SECRET_FILE=/tmp/qualification-hook.secret \
+            -e MRJ_QUALIFICATION_COURRIEL=1 \
+            -e KC_BOOTSTRAP_ADMIN_USERNAME=qualification \
+            -e KC_BOOTSTRAP_ADMIN_PASSWORD=uniquement-test-local \
+            quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4 start-dev --http-host=127.0.0.1 --http-port=38085
+          for ESSAI in $(seq 1 60); do
+            if curl --fail --silent http://127.0.0.1:38085/realms/master/.well-known/openid-configuration >/dev/null; then break; fi
+            sleep 1
+          done
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-integration.py
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-postgresql-restauration.py --jar "$RUNNER_TEMP/mrjam-identite.jar"
+      - name: Qualifier JDBC Unix et peer sans ouvrir PostgreSQL en TCP
+        run: |
+          NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
+          curl --fail --location --retry 2 "https://github.com/NixOS/nixpkgs/archive/$NIXPKGS_REVISION.tar.gz" -o "$RUNNER_TEMP/nixpkgs-keycloak.tar.gz"
+          tar -xzf "$RUNNER_TEMP/nixpkgs-keycloak.tar.gz" -C "$RUNNER_TEMP"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr '(import <nixpkgs> {}).keycloak.plugins.junixsocket-common' \
+            --out-link "$RUNNER_TEMP/junixsocket-common"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr '(import <nixpkgs> {}).keycloak.plugins.junixsocket-native-common' \
+            --out-link "$RUNNER_TEMP/junixsocket-native-common"
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-unix.py \
+            --jar "$RUNNER_TEMP/mrjam-identite.jar" --common "$RUNNER_TEMP/junixsocket-common" \
+            --native "$RUNNER_TEMP/junixsocket-native-common"
+      - name: Retirer le conteneur de qualification
+        if: always()
+        run: docker rm -f keycloak-qualification || true
   check:
     runs-on: ubuntu-latest
     steps:
@@ -13,7 +83,7 @@ jobs:
       - name: Installer Nix pour les contrôles locaux
         run: |
           sudo apt-get update
-          sudo apt-get install -y nix-bin python3-passlib nginx
+          sudo apt-get install -y nix-bin python3-passlib python3-authlib python3-requests python3-psycopg nginx age
       - name: Vérifier les registres, le routage et la syntaxe Nix
         # Le paquet Ubuntu peut laisser le socket du démon Nix inaccessible
         # au compte runner. Ces contrôles n'ont besoin d'aucun démon.
@@ -23,6 +93,15 @@ jobs:
           NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
           curl --fail --location --retry 2 "https://github.com/NixOS/nixpkgs/archive/$NIXPKGS_REVISION.tar.gz" -o "$RUNNER_TEMP/nixpkgs.tar.gz"
           tar -xzf "$RUNNER_TEMP/nixpkgs.tar.gz" -C "$RUNNER_TEMP"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/vision-multiutilisateur.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/vision-multiutilisateur-config.nix \
+            --argstr configuration "$PWD/hosts/hostinger/configuration.nix" >/dev/null
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr 'import ./services/sources-mrjam.nix { pkgs=import <nixpkgs> {}; }' \
+            --out-link "$RUNNER_TEMP/sources-services"
+          python3 tests/sources-mrjam.py "$RUNNER_TEMP/sources-services/services-mrjam.tar.gz"
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/system.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
@@ -56,3 +135,40 @@ jobs:
         run: |
           sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
           python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
+  migration-vision:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.0-pg17
+        env:
+          POSTGRES_PASSWORD: uniquement-qualification-locale
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: uniquement-qualification-locale
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Installer le client PostgreSQL et psycopg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client python3-psycopg
+      - name: Qualifier le retour des droits sans restaurer les contenus
+        run: |
+          psql -X --set=ON_ERROR_STOP=1 --dbname=postgres --command='CREATE ROLE vision LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS'
+          python3 - <<'PY'
+          import importlib.util,json,tempfile
+          from pathlib import Path
+          spec=importlib.util.spec_from_file_location('preparer',Path('scripts/vision-multiutilisateur-preparer.py'))
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          c=json.load(open('operations/vision-multiutilisateur-candidat.json'))
+          destination=Path('source-vision-isolee');destination.mkdir(mode=0o700)
+          m.extraire(Path('vendor/vision-multiutilisateur-source.tar.gz'),destination,c['source_sha256'],c['vision'])
+          PY
+          python3 tests/vision-acl-integration.py --vision source-vision-isolee
