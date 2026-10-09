@@ -1,6 +1,7 @@
 """Refuser une preuve incohérente et arrêter les deux unités après incident."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -23,6 +24,18 @@ class Qualification(unittest.TestCase):
 
     def test_preuve_reelle_coherente(self):
         m.preuve_construction(self.rapport, self.preuve, self.candidat, self.resume)
+
+    def test_lanceurs_traversables_sous_umask_prive_sans_elargir_les_donnees(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d); prive = root / 'prive'; prive.mkdir(mode=0o700)
+            secret = prive / 'secret'; secret.write_text('uniquement synthétique'); secret.chmod(0o600)
+            precedent = os.umask(0o077)
+            try: m.preparer_lanceurs(root / 'lanceurs')
+            finally: os.umask(precedent)
+            self.assertEqual((root / 'lanceurs').stat().st_mode & 0o777, 0o711)
+            self.assertEqual(set(p.name for p in (root / 'lanceurs').iterdir()), {'postgresql.sh', 'demarrer.sh'})
+            self.assertEqual(prive.stat().st_mode & 0o777, 0o700)
+            self.assertEqual(secret.stat().st_mode & 0o777, 0o600)
 
     def test_rapport_partiel_ou_autre_paquet_refuse(self):
         for k in self.rapport:

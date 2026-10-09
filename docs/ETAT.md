@@ -40,7 +40,16 @@ Les six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent.
 Ce paquet n'a pas encore été démarré sur le VPS : le workflow distinct
 `vision-identite-unix-qualifier.yml` prépare seulement un essai synthétique
 avec PostgreSQL peer/Unix et systemd DynamicUser dans un réseau privé.
-Sa réussite réelle reste à constater avant toute activation.
+Son [essai réel 37921899243](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37921899243),
+opérateur `ebf5a5bfb65fdb0e479e1bc3717d8e6e0d3986d7`, s'arrête au démarrage
+du cluster synthétique : indisponible. Keycloak n'est pas démarré. Le socle
+inchangé et le retrait des runtimes sont constatés ; six services, nouvelle
+connexion SSH et 25 sondes passent après échec. Le diagnostic privé est classé
+en lecture seule, sans afficher ses journaux. Une reproduction locale relève
+que `mkdir(mode=0711)` sous umask 077 laisse le dossier des lanceurs root 0700.
+Le correctif rend explicitement ce seul dossier de deux scripts publics
+traversable et teste un UID distinct, avec refus du fichier root privé. La
+confirmation de la cause réelle et la qualification corrigée restent à constater.
 Préconditions d'activation, identité initiale,
 contrats, clé et copie externe demeurent à établir.
 

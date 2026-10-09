@@ -65,7 +65,18 @@ réussite ; services et sites sont contrôlés même après échec. Les mots de 
 synthétiques et logs natifs restent privés hors artefacts et leur credential
 de bootstrap est retiré. La CI utilise des conteneurs sans réseau pour vérifier
 le même lanceur optimisé ; elle ne prouve pas systemd sur le VPS. La réussite
-réelle de ce workflow reste à constater. Identité initiale/MFA, droits SQL de
+réelle de ce workflow reste à constater. L'essai `37921899243`, opérateur
+`ebf5a5bfb65fdb0e479e1bc3717d8e6e0d3986d7`, s'arrête avant Keycloak : cluster
+PostgreSQL synthétique indisponible, avec retrait des runtimes et socle inchangé,
+six services et 25 sondes vérifiés. Le diagnostic `vision-identite-unix-auditer.py`
+classe ses trois seuls logs root 0600, sans lien et bornés, via l'audit existant.
+La revue et reproduction relèvent un dossier de lanceurs 0700 malgré le mode
+0711 demandé, à cause de l'umask 077. Le correctif établit explicitement 0711
+sur ce seul dossier sans secrets ; les deux scripts publics sont 0444. La CI
+les fait lire par un UID distinct du propriétaire root et refuse la lecture
+d'un fichier root privé. Aucun dossier de données/logs/credentials ou store
+n'est élargi. La confirmation réelle de cette cause et l'essai corrigé restent
+distincts. Identité initiale/MFA, droits SQL de
 production et retour autonome de génération restent des étapes distinctes.
 
 ### Diagnostic préalable résolu
