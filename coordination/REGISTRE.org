@@ -4461,12 +4461,75 @@ VPS rend ce même diagnostic plus robuste. Les préconditions de socle, retour d
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: b360b6a8cac50b148fc96d445c1ec704f7b4eb5a926d9382c3c325040549cbc7
-:LU_LE: 2026-10-09T17:31:49+00:00
+:LU_LE: 2026-10-09T17:41:02+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée2592e6aa7ec552b0bc8d4631f0450dc96e0c2960. Refus du diagnostic37966437838 et contrôles six services/SSH/25sites constatés. Lectures secondaires indisponibles explicitement qualifiées sans fuite ; aucune reprise autorisée. CI et diagnostic robuste restent à terminer.
+:PREUVE: PR54/276tests/CI37967007082/37967010673 intégrées exactement55309e2f0f232f084139e0f27579103229338e8b. Diagnostic37967591960 réussi : socle/retour, worker inactif, essai_generation atteint, cluster présent préservé. Six services/SSH/25sites avant-après passent ; aucun enregistrement/personne. Cause exacte reste à préciser sans reprise.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Auditer le cluster réservé présent et les échecs historiques de ses unités
+:PROPERTIES:
+:ID: 20261009-vision-c3ed136e0e60
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T17:41:02+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR54/276tests/CI37967007082 et37967010673 sont intégrées exactement55309e2f0f232f084139e0f27579103229338e8b. Signal37967576753 puis orchestration37967591960/job113945795441 réussissent. Diagnostic17:38:21 : f9 retourné, socle conservé, worker inactif ; étape essai_generation atteinte, commande_refusee, cluster privé présent. États actuels des trois unités inactifs/success et classifications vides ; cadres indisponibles. Six services/nouvelle SSH et25HTTP/TLS avant/après passent17:38:34. Aucun enregistrement ou compte humain.
+
+L'appel à préciser est switch-to-configuration test, avant contrôles_locaux. VPS complète la lecture seule : journaux techniques des unités dans le namespace par défaut (gestionnaire systemd) et identite ; classification fermée de leurs échecs, du seul journal PostgreSQL privé et de la génération. Relever exclusivement propriétés de fichiers/PG_VERSION/pg_controldata du cluster arrêté, sans SQL, lancement ou contenu métier. Toute présence est préservée ; aucune reprise tant que l'initialisation et la cause ne sont pas établies.
+
+Les cadres doivent accepter les seuls fichiers historiques exacts : vérifier leurs SHA-256 publics f9 et leur confinement dans un dossier root0700 avant d'accepter un mode d'archive0664. Les extractions suivantes respecteront umask077 ; liens, droits monde, contenu différent restent refusés. En cas d'indisponibilité, produire seulement le motif constant du composant concerné. Aucun effacement, réparation automatique, reconstruction ou rotation. Même point d'entrée qualifié/retour/25sites, suivi autonome de Work. L'enrôlement n'est pas encore activé ; sa qualification locale synthétique prouve désormais aussi les notes réelles PostgreSQL17 d'une connexion fraîche pwd+otp et le refus d'une preuve périmée/sans mot de passe.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
