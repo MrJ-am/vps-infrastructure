@@ -39,10 +39,34 @@ La source du store reste intacte. Le test natif `keycloak-compilation.py`
 impose un utilisateur sans privilège, des ressources en lecture seule, un jar
 valide et aucun temporaire restant. Le diagnostic précis est complété par
 des catégories de contexte et de nettoyage, sans restituer de chemin.
-La confirmation de ce contexte sur le VPS et sa construction corrigée restent
-à constater ; aucune permission de fichier de production n'est modifiée.
-L'essai JDBC Unix natif sur ce VPS, l'identité initiale/MFA et le retour autonome
-constituent les étapes suivantes.
+L'audit `37916043224` confirme le nettoyage SPI refusé sur le VPS. La
+[construction corrigée 37916844094](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37916844094),
+opérateur `6a3f3d56d7a63795674fd243859b3d689340005c`, réussit avec les cinq
+plugins, six services et 25 sondes HTTP/TLS. Aucune permission de fichier de
+production n'est modifiée.
+[Preuve de construction](../operations/vision-identite-construction.json).
+
+Le workflow manuel `vision-identite-unix-qualifier.yml` prépare l'essai natif
+sur ce VPS, sous CI du commit exact et exclusion des autres opérations VPS.
+Il vérifie ce rapport privé et le même paquet, puis crée un autre cluster
+PostgreSQL 17 UTF-8, exclusivement synthétique, avec peer et écoute TCP vide.
+Le rôle SQL `keycloak` n'a ni mot de passe ni privilèges administratifs. La
+correspondance peer vise uniquement le nom système dynamique de qualification.
+Le paquet **optimisé** tourne avec systemd DynamicUser, runtime 0700,
+MemoryMax 2G et un réseau privé ; l'API de test est atteinte seulement depuis
+ce namespace, sans port d'identité exposé sur l'hôte. Aucun import de compte
+réel, connexion SMTP ou accès SQL aux données de production.
+
+Le test vérifie version, SPI, découverte et API maître synthétiques, connexion
+JDBC Unix et refus d'un autre UID. Les deux unités transitoires ont aussi une
+durée maximale autonome (240/480 secondes), en cas de perte du runner. Arrêt,
+suppression des runtimes et contrôle du socle sont exigés avant un rapport de
+réussite ; services et sites sont contrôlés même après échec. Les mots de passe
+synthétiques et logs natifs restent privés hors artefacts et leur credential
+de bootstrap est retiré. La CI utilise des conteneurs sans réseau pour vérifier
+le même lanceur optimisé ; elle ne prouve pas systemd sur le VPS. La réussite
+réelle de ce workflow reste à constater. Identité initiale/MFA, droits SQL de
+production et retour autonome de génération restent des étapes distinctes.
 
 ### Diagnostic préalable résolu
 

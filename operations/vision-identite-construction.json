@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "infrastructure": "6a3f3d56d7a63795674fd243859b3d689340005c",
+  "run": 37916844094,
+  "job": 113775009239,
+  "preparation": "48f40f3eebbbd18eb9048c7036284185a56050e9",
+  "vision": "a9c51acac81510d7dc896f5daf4e6fb28a36b979",
+  "style": "96fa28ac564b9492768837d4087608e83acc721b",
+  "keycloak": "26.7.3",
+  "paquet": "/nix/store/v3g29yfxvp9bdnjgw3p91zvh4jggvk45-keycloak-26.7.3",
+  "plugins": [
+    "9xbaq9smq14vyklmfrps31kgjxi0p24d-com_kohlschutter_junixsocket_junixsocket-native-common-2.10.1.jar",
+    "mrjam-identite.jar",
+    "p96gwmfyz64g77m5xf7x8kgw5yibg6fs-io_quarkiverse_systemd_notify_quarkus-systemd-notify-deployment-1.0.1.jar",
+    "ril6w1h4vz5b7ld8rarfjdmqc8iz78mq-io_quarkiverse_systemd_notify_quarkus-systemd-notify-1.0.1.jar",
+    "ymbgv4yf8rxgi9hn6vrgrm6ms1mam4kc-com_kohlschutter_junixsocket_junixsocket-common-2.10.1.jar"
+  ],
+  "construction": true,
+  "jdbc_unix_configure": true,
+  "jdbc_unix_vps_qualifie": false,
+  "identite_initiale": false,
+  "activation": false,
+  "inscriptions": false,
+  "services_actifs": 6,
+  "sondes_http_tls": 25,
+  "nouvelle_connexion_ssh": true
+}

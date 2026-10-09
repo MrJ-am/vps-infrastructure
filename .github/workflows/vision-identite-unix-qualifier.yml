@@ -1,0 +1,66 @@
+name: Qualifier JDBC Unix et peer sans activer l'identité
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  qualifier:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la CI du commit opérateur exact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci-exacte.py
+      - name: Préparer la connexion administrative existante
+        id: connexion
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-identite-unix-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-identite-unix-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-identite-unix-admin" >/dev/null
+      - name: Relever les sites avant qualification
+        id: releve
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Extraire le seul opérateur exact
+        id: source
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-identite-unix-operations/$GITHUB_SHA/source; tar -xf - -C /root/vision-identite-unix-operations/$GITHUB_SHA/source"
+      - name: Qualifier le paquet optimisé dans les unités privées synthétiques
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-unix-operations/$GITHUB_SHA/source/scripts/vision-identite-unix-qualifier.py $GITHUB_SHA'"
+      - name: Vérifier le socle et le retrait des runtimes même après échec
+        if: ${{ always() && steps.source.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-unix-operations/$GITHUB_SHA/source/scripts/vision-identite-unix-qualifier.py $GITHUB_SHA --controler'"
+      - name: Contrôler les services et une nouvelle connexion même après échec
+        if: ${{ always() && steps.connexion.outcome == 'success' && steps.releve.outcome == 'success' }}
+        run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+      - name: Contrôler les sites même après échec
+        if: ${{ always() && steps.releve.outcome == 'success' }}
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Conserver seulement le rapport technique
+        run: |
+          mkdir -p "$RUNNER_TEMP/rapport-unix"
+          sh scripts/connect.sh "cat /root/vision-identite-unix-operations/$GITHUB_SHA/qualification.json" > "$RUNNER_TEMP/rapport-unix/qualification.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualification-jdbc-unix-mrjam
+          path: ${{ runner.temp }}/rapport-unix/
+          retention-days: 14
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-identite-unix-admin"
