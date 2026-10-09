@@ -1,5 +1,27 @@
 # État attesté au 9 octobre 2026
 
+## Vision — identité native Unix qualifiée sur le VPS
+
+La [qualification 37924485219](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219),
+job `113800035423`, opérateur `64402023f6ec4d0a733df3ad09f7663d789a4737`,
+réussit à 11:35 UTC. Le paquet optimisé Keycloak 26.7.3 démarre réellement dans
+une unité systemd DynamicUser avec réseau privé ; version, SPI et API
+synthétiques passent. JDBC utilise le socket Unix du cluster PostgreSQL 17
+isolé et peer sans mot de passe ; un autre UID est refusé, aucune écoute TCP.
+Les runtimes sont retirés. Génération et release restent inchangées ; six
+services, une nouvelle connexion SSH et 25 sondes HTTP/TLS passent avant/après.
+[Rapport technique](../operations/vision-identite-unix-qualification.json).
+
+L'audit `37923766983` confirme que le premier échec ci-dessous venait de la
+traversée refusée du dossier root des lanceurs. PR42 rend uniquement ce dossier
+de scripts publics traversable ; le refus des fichiers root privés est testé.
+CI `37923202540` et `37923206284` réussies, 220 tests Python.
+
+L'[import privé initial](IDENTITE-IMPORT-INITIAL.md) est maintenant préparé dans
+le code et son workflow manuel distinct. Sa création effective sur le VPS reste
+à constater. Aucun compte humain, migration SQL de production, activation
+NixOS ou inscription n'a été réalisé pendant cette qualification.
+
 ## Vision — copie réelle et retour des droits qualifiés le 9 octobre 2026
 
 La [qualification 37909401754](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37909401754),
@@ -37,7 +59,7 @@ Keycloak 26.7.3 et cinq plugins dans le paquet
 `/nix/store/v3g29yfxvp9bdnjgw3p91zvh4jggvk45-keycloak-26.7.3`.
 Les six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent.
 [Preuve de construction](../operations/vision-identite-construction.json).
-Ce paquet n'a pas encore été démarré sur le VPS : le workflow distinct
+Le paquet n'avait pas encore été démarré sur le VPS : le workflow distinct
 `vision-identite-unix-qualifier.yml` prépare seulement un essai synthétique
 avec PostgreSQL peer/Unix et systemd DynamicUser dans un réseau privé.
 Son [essai réel 37921899243](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37921899243),
@@ -49,7 +71,7 @@ en lecture seule, sans afficher ses journaux. Une reproduction locale relève
 que `mkdir(mode=0711)` sous umask 077 laisse le dossier des lanceurs root 0700.
 Le correctif rend explicitement ce seul dossier de deux scripts publics
 traversable et teste un UID distinct, avec refus du fichier root privé. La
-confirmation de la cause réelle et la qualification corrigée restent à constater.
+cause réelle et la qualification corrigée sont désormais constatées ci-dessus.
 Préconditions d'activation, identité initiale,
 contrats, clé et copie externe demeurent à établir.
 

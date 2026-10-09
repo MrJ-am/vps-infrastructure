@@ -65,7 +65,7 @@ réussite ; services et sites sont contrôlés même après échec. Les mots de 
 synthétiques et logs natifs restent privés hors artefacts et leur credential
 de bootstrap est retiré. La CI utilise des conteneurs sans réseau pour vérifier
 le même lanceur optimisé ; elle ne prouve pas systemd sur le VPS. La réussite
-réelle de ce workflow reste à constater. L'essai `37921899243`, opérateur
+réelle de ce workflow est constatée ci-dessous. L'essai `37921899243`, opérateur
 `ebf5a5bfb65fdb0e479e1bc3717d8e6e0d3986d7`, s'arrête avant Keycloak : cluster
 PostgreSQL synthétique indisponible, avec retrait des runtimes et socle inchangé,
 six services et 25 sondes vérifiés. Le diagnostic `vision-identite-unix-auditer.py`
@@ -75,9 +75,22 @@ La revue et reproduction relèvent un dossier de lanceurs 0700 malgré le mode
 sur ce seul dossier sans secrets ; les deux scripts publics sont 0444. La CI
 les fait lire par un UID distinct du propriétaire root et refuse la lecture
 d'un fichier root privé. Aucun dossier de données/logs/credentials ou store
-n'est élargi. La confirmation réelle de cette cause et l'essai corrigé restent
-distincts. Identité initiale/MFA, droits SQL de
-production et retour autonome de génération restent des étapes distinctes.
+n'est élargi. L'audit `37923766983` confirme la traversée refusée sur le VPS.
+La [qualification corrigée 37924485219](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219),
+opérateur `64402023f6ec4d0a733df3ad09f7663d789a4737`, réussit : paquet
+optimisé, SPI/API, JDBC Unix/peer sans mot de passe, autre UID refusé,
+DynamicUser/réseau privé et aucun TCP. Runtimes retirés, socle inchangé, six
+services/nouvelle connexion SSH et 25 sondes passent.
+[Preuve native](../operations/vision-identite-unix-qualification.json).
+
+Le workflow manuel `vision-identite-import-preparer.yml` prépare le seul
+[import initial privé](IDENTITE-IMPORT-INITIAL.md) et cinq secrets hors store,
+sans démarrage, import en base, personne ni envoi. Les clés existantes sont
+vérifiées et conservées ; une divergence bloque la préparation. Le préparateur
+refuse liens, fichiers non réguliers/partagés, mauvais propriétaire, permissions
+faibles et lectures excessives. L'essai réel de cette préparation reste à
+constater. Identité initiale/MFA, droits SQL de production et retour autonome
+de génération restent des étapes distinctes.
 
 ### Diagnostic préalable résolu
 
@@ -190,12 +203,15 @@ de courriel du propriétaire : `smtp.protonmail.ch`, port 587, STARTTLS obligato
 certificat vérifié, expéditeur `Automath@MrJ.am`. Le jeton dédié est fourni,
 conservé hors des dépôts et à provisionner dans un fichier privé ou credential
 systemd hors store Nix. Ne pas utiliser le mot de passe du compte Proton. Aucun
-test d'authentification SMTP ni envoi réel n'est encore attesté. La réception du
+changement des MX n'est requis. L'authentification SMTP et l'acceptation du
+message synthétique sont attestées par `37891204452` ; le propriétaire confirme
+la réception et le format age. Cela ne prouve pas le déchiffrement ou une copie
+hors machine. La réception du
 domaine reste distincte ; ne pas changer les MX pour configurer l'envoi.
 
 La récupération de mot de passe a été qualifiée sur Keycloak 26.7.3 et un relais
 local synthétique : courriel natif, usage unique, nouveau mot de passe, OTP
-conservé et nouvelle connexion obligatoire. Proton SMTP réel reste à qualifier.
+conservé et nouvelle connexion obligatoire. Proton SMTP réel est qualifié par cette opération distincte.
 La connexion par lien magique est qualifiée sur la même version native :
 jeton d'action signé à usage unique, dix minutes, navigateur d'origine et
 confirmation expresse avant reprise de l'OTP. Aucun secret dans les journaux.

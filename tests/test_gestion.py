@@ -26,7 +26,7 @@ class Gestion(unittest.TestCase):
             self.assertFalse(resultat['inscriptions']);self.assertFalse(resultat['secret_affiche'])
             secret=Path(root)/'oidc-client.secret';ancien=secret.read_bytes()
             self.assertEqual(secret.stat().st_mode&0o077,0)
-            with self.assertRaises(ValueError):identite.preparer(modele,root)
+            self.assertTrue(identite.preparer(modele,root)['import_existant_verifie'])
             self.assertEqual(secret.read_bytes(),ancien)
 
 if __name__=='__main__':unittest.main()
