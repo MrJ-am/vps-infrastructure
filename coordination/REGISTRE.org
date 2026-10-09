@@ -5140,12 +5140,12 @@ Plan fermé action amorcage dans le point d’entrée main/CI exacte : entrée r
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 1122db45bc063acb222c316b1cd26206ba61434e5473c8023f0b2e0b1959cd2c
+:LU_LE: 2026-10-09T20:29:11+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 296 tests locaux réussis ; garde f9/cluster arrêté qualifiée, archive tar/AGE et restitution réelles en conteneur, copie altérée refusée, diagnostic refusé pendant essai/enregistrement. Essai réservé VPS et déchiffrement de copie réelle encore absents.
 :END:
 
 ** TODO vps

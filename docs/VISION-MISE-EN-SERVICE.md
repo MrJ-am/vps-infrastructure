@@ -220,3 +220,23 @@ désormais cette preuve native, absente de l’ancienne préparation765.
 La nouvelle construction ne modifie pas le cluster existant ou la
 génération active. Une reprise qualifiée avec sauvegarde chiffrée à froid
 et retour indépendant sera une opération suivante, sans effacement.
+
+La construction `37985768542` (25f685900a9b65cb7cef872f0b55bcb21e35567d,
+job114007309842) réussit réellement le test natif complet et les contrôles
+du socle/six services/SSH/25sites. La preuve exacte référence désormais
+la génération k4q4i4m9r4070xwwpnd24hpi9g6zngyn, avec validation native vraie.
+
+La phase `amorcage` reprend uniquement le cluster créé par f9 : audit de
+retour et worker arrêté, seul échec Nginx connu, PostgreSQL17 arrêté proprement
+sans PID/socket/erreur, import et secret existants conservés. Toute divergence
+refuse la reprise. Une archive à froid passe directement de tar à AGE vers
+le destinataire de sauvegarde existant ; ni archive ni dump en clair sur disque.
+Objets spéciaux et liens externes refusés, fichier root0600 fsync et empreinte
+contrôlée avant essai. Le test d'archive/AGE/restitution est synthétique ;
+le déchiffrement de cette copie réelle reste une vérification distincte.
+
+Entrée reproduite, règles/dry-activate, copie Vision, répétition du timer,
+retour15min, contrôles locaux/25sites/HTTPS et copie d'identité précèdent
+l'enregistrement. Une erreur déclenche le retour puis un diagnostic automatique
+limité à la tentative courante et aux états/catégories fermés. Aucun effacement
+de cluster, aucun humain, inscription ou migration Vision dans cette phase.

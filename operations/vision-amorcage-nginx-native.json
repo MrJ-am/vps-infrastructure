@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "infrastructure": "25f685900a9b65cb7cef872f0b55bcb21e35567d",
+  "signal": 37985753916,
+  "run": 37985768542,
+  "job": 114007309842,
+  "configuration_nginx_native": true,
+  "uid_nginx_verifie": true,
+  "capacite_native": "CAP_NET_BIND_SERVICE",
+  "reseau_prive": true,
+  "repertoires_tmpfs_prives": true,
+  "generation_retenue": true,
+  "socle_inchange": true,
+  "services_actifs": 6,
+  "sondes_http_tls": 25,
+  "nouvelle_connexion_ssh": true,
+  "activation": false,
+  "inscriptions": false,
+  "identite_humaine": false
+}

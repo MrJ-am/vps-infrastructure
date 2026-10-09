@@ -14,6 +14,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,29 @@ https=charger('https_test', 'identite-amorcage-https.py')
 
 
 class Retour(unittest.TestCase):
+    def test_diagnostic_interdit_pendant_essai_ou_apres_enregistrement(self):
+        for marqueurs in ({'enregistre'}, {'commence'}):
+            e=object.__new__(essai.Essai);e.marque=lambda n:n in marqueurs
+            with self.subTest(marqueurs=marqueurs), patch.object(essai.construction,'verifier_socle') as socle:
+                with self.assertRaises(RuntimeError):e.diagnostiquer()
+                socle.assert_not_called()
+
+    def test_copie_froide_corrompue_bloque_le_demarrage(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);p=d/'cluster-avant.tar.age';p.write_bytes(b'age-encryption.org/v1\nfixture privee');p.chmod(0o600)
+            fd=os.open(d,os.O_RDONLY|os.O_DIRECTORY)
+            try:
+                e=object.__new__(essai.Essai);e.fd=fd
+                preuve=dict(chiffree=True,cluster_arrete_avant_apres=True,restauration_reelle=False,
+                    taille=p.stat().st_size,sha256=hashlib.sha256(p.read_bytes()).hexdigest())
+                e.lire=lambda nom:preuve
+                e.verifier_copie_froide()
+                p.write_bytes(b'age-encryption.org/v1\nfixture autre!')
+                with self.assertRaises(RuntimeError):e.verifier_copie_froide()
+                p.chmod(0o644)
+                with self.assertRaises(ValueError):e.verifier_copie_froide()
+            finally:os.close(fd)
+
     def test_attribut_ne_masque_aucune_action_du_controleur(self):
         source=ast.parse((ROOT/'scripts/vision-identite-amorcage-activer.py').read_text())
         classe=next(n for n in source.body if isinstance(n,ast.ClassDef) and n.name=='Essai')
@@ -133,7 +157,8 @@ class Retour(unittest.TestCase):
     def test_preuve_ne_permet_pas_mode_commun_ou_autre_generation(self):
         preuve=json.loads((ROOT/'operations/vision-identite-amorcage-qualification.json').read_text())
         candidat=json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
-        with self.assertRaises(RuntimeError):essai.preuve_valide(preuve,preuve,candidat)
+        ancienne=copy.deepcopy(preuve);ancienne.pop('configuration_nginx_native',None)
+        with self.assertRaises(RuntimeError):essai.preuve_valide(ancienne,ancienne,candidat)
         preuve={**preuve,'configuration_nginx_native':True}
         essai.preuve_valide(preuve,preuve,candidat)
         for cle,valeur in [('configuration_nginx_native',False),('activation',True),('identite_humaine',True),('proprietaires',2),('mode_vision_oidc',True),('systeme_actif','/nix/store/'+'a'*32+'-autre')]:
