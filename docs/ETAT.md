@@ -25,8 +25,13 @@ construction réelle `37912940648`, opérateur
 `226a928a58121b25a3c097c8d32b6843a05e19e6`, passe le socle et la preuve de
 préparation, puis échoue à `construction_paquet`. Six services, nouvelle
 connexion SSH et 25 sondes passent après échec. Le diagnostic privé sera
-classé en lecture seule par le workflow d'audit ; la construction réussie
-n'est pas encore constatée. Préconditions d'activation, identité initiale,
+classé en lecture seule par l'audit `37914413033`, qui confirme un refus de
+permission dans le build du SPI ; 25 sondes réussissent. La reproduction
+locale avec `nixbld` identifie la copie des ressources en lecture seule et
+son nettoyage refusé. Le correctif ne rend inscriptible que cette copie
+temporaire, avec une régression native sans privilège. Le contexte précis
+du refus VPS et la construction corrigée restent à constater.
+Préconditions d'activation, identité initiale,
 contrats, clé et copie externe demeurent à établir.
 
 ## Vision — qualification isolée arrêtée avant dump, 9 octobre 2026

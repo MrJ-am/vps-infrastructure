@@ -29,6 +29,7 @@ jobs:
           docker cp keycloak-librairies:/opt/keycloak/lib/lib/main/. "$RUNNER_TEMP/keycloak-librairies/"
           docker rm keycloak-librairies
           sh services/keycloak-mrjam/compiler.sh "$RUNNER_TEMP/keycloak-librairies" "$RUNNER_TEMP/mrjam-identite.jar"
+          python3 tests/keycloak-compilation.py --librairies "$RUNNER_TEMP/keycloak-librairies"
           export QUALIFICATION_HOOK_SECRET="$RUNNER_TEMP/qualification-hook.secret"
           python3 - <<'PY'
           import os,secrets

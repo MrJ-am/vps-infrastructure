@@ -17,6 +17,7 @@ MOTIFS = {
     'certificat_refuse': r'(?mi)^(?:error:|curl:).*?(?:SSL certificate|certificate verify|certificate verification)',
     'espace_disque_insuffisant': r'(?m)^.*(?:error:|No space left on device).*No space left on device',
     'permission_refusee': r'(?m)^(?:error:|[^\n]{1,200}:).*Permission denied',
+    'nettoyage_spi_refuse': r"(?m)^\s*(?:>\s*)?rm: cannot remove '[^'\n]{1,300}/classes/META-INF/services/org\.keycloak\.[A-Za-z.]+': Permission denied",
     'groupe_nix_absent': r"(?m)^error: the group 'nixbld' specified in 'build-users-group' does not exist",
     'javac_absent': r'(?m)^.*javac: command not found',
     'symbole_java_absent': r'(?m)^.*error: cannot find symbol',
@@ -39,10 +40,22 @@ BUILDS = {
 
 def classer(contenu):
     refuses = re.findall(r"(?m)^error: (?:builder for|Cannot build) '(/nix/store/[0-9a-z]{32}-[^'\n]{1,160}\.drv)'", contenu)
+    permissions = '\n'.join(l for l in contenu.splitlines() if 'Permission denied' in l)
     return {'categories': [nom for nom, motif in MOTIFS.items() if re.search(motif, contenu)],
         'builders_refuses': [nom for nom, motif in BUILDS.items() if
             any(re.search(motif + '$', p) for p in refuses)],
-        'refus_nix': bool(re.search(r'(?m)^error:', contenu))}
+        'refus_nix': bool(re.search(r'(?m)^error:', contenu)),
+        'permission_contexte': [nom for nom, motif in {
+            'compilateur_mrjam': r'compiler\.sh',
+            'source_java': r'/src/|\.java\b',
+            'javac': r'\bjavac\b', 'java': r'\bjava\b', 'jar': r'\bjar\b',
+            'find': r'\bfind:', 'cp': r'\bcp:', 'cd': r'\bcd:', 'mkdir': r'\bmkdir:', 'rm': r'\brm:',
+            'mktemp': r'\bmktemp:', 'sh': r'(?:^|\s)sh:',
+            'repertoire_root': r'/root/', 'repertoire_build': r'/build/',
+            'repertoire_tmp': r'/tmp/', 'repertoire_store': r'/nix/store/',
+            'librairies': r'/lib/|\.jar\b',
+            'ressources_spi': r'/classes/META-INF/services/',
+        }.items() if re.search(motif, permissions)]}
 
 
 def lire(path):
