@@ -30,6 +30,21 @@ class Diagnostic(unittest.TestCase):
         self.assertFalse(resultat['refus_psql'])
         self.assertFalse(resultat['refus_pg_restore'])
 
+    def test_erreur_sql_technique_sans_valeur_privee(self):
+        texte = 'pg_restore: error: could not execute query: ERROR:  collation "nom-prive" for encoding "SQL_ASCII" does not exist\n'
+        resultat = MODULE.classer(texte)
+        self.assertEqual(resultat['categories'], ['collation_absente'])
+        self.assertTrue(resultat['refus_sql'])
+        self.assertTrue(resultat['encodage_sql_ascii_mentionne'])
+        self.assertNotIn('nom-prive', json.dumps(resultat))
+
+    def test_refus_inconnu_ne_restitue_pas_son_texte(self):
+        texte = 'pg_restore: error: could not execute query: ERROR:  refus inconnu avec du contenu personnel\n'
+        resultat = MODULE.classer(texte)
+        self.assertEqual(resultat['categories'], [])
+        self.assertTrue(resultat['refus_sql'])
+        self.assertNotIn('personnel', json.dumps(resultat))
+
     def test_lecture_refuse_lien_permissions_et_depassement(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / 'journal'; p.write_text('privé'); p.chmod(0o600)

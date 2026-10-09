@@ -20,6 +20,17 @@ MOTIFS = {
     'permission_refusee': r'(?m)^(?:psql|pg_restore):.*(?:Permission denied|ERROR:\s+permission denied for [^\n]{1,200})\s*$',
     'socket_inaccessible': r'(?m)^(?:psql|pg_restore):.*connection to server on socket.*failed:.*$',
     'archive_incompatible': r'(?m)^pg_restore: error: unsupported version \([0-9.]+\) in file header\s*$',
+    'collation_absente': r'(?m)^.*ERROR:\s+collation "[^"\n]{1,200}".*does not exist\s*$',
+    'encodage_invalide': r'(?m)^.*ERROR:\s+(?:invalid byte sequence for encoding|character with byte sequence|conversion between).*$',
+    'parametre_inconnu': r'(?m)^.*ERROR:\s+unrecognized configuration parameter "[^"\n]{1,200}"\s*$',
+    'extension_version_indisponible': r'(?m)^.*ERROR:\s+extension "[^"\n]{1,200}" has no installation script nor update path.*$',
+    'extension_fichier_absent': r'(?m)^.*ERROR:\s+could not open extension control file.*$',
+    'bibliotheque_indisponible': r'(?m)^.*ERROR:\s+could not (?:access|load) (?:file|library).*$',
+    'objet_absent': r'(?m)^.*ERROR:\s+(?:relation|schema|type|function|operator class) [^\n]{1,500} does not exist\s*$',
+    'objet_deja_present': r'(?m)^.*ERROR:\s+(?:relation|schema|type|function|extension) [^\n]{1,500} already exists\s*$',
+    'syntaxe_invalide': r'(?m)^.*ERROR:\s+syntax error at or near.*$',
+    'contrainte_refusee': r'(?m)^.*ERROR:\s+(?:duplicate key value|insert or update|check constraint).*$',
+    'archive_incomplete': r'(?m)^pg_restore: error: (?:could not read from input file|did not find magic string|input file does not appear).*$',
 }
 
 
@@ -28,7 +39,9 @@ def classer(contenu):
     # inconnue reste inconnue ; aucune déduction par simple mot présent.
     return {'categories': [nom for nom, motif in MOTIFS.items() if re.search(motif, contenu)],
         'refus_psql': bool(re.search(r'(?m)^psql:(?:<stdin>:[0-9]+:| error:)', contenu)),
-        'refus_pg_restore': bool(re.search(r'(?m)^pg_restore: error:', contenu))}
+        'refus_pg_restore': bool(re.search(r'(?m)^pg_restore: error:', contenu)),
+        'refus_sql': bool(re.search(r'(?m)^pg_restore: error: could not execute query: ERROR:', contenu)),
+        'encodage_sql_ascii_mentionne': bool(re.search(r'(?m)^pg_restore: error:.*(?:encoding|locale|collation).*SQL_ASCII', contenu))}
 
 
 def lire(path):
