@@ -84,6 +84,32 @@ class Audit(unittest.TestCase):
                 ('controle_worker',dict(etapes=[],categories=['commande_refusee']))):
             with self.subTest(cle=cle),self.assertRaises(ValueError):audit.verifier_reprise(rapport|{cle:valeur})
 
+    def test_cadres_limitent_fichier_fonction_et_ligne_sans_fragment(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            source=Path(tmp);(source/'scripts').mkdir()
+            p=source/'scripts'/audit.SCRIPTS[0]
+            p.write_text('def worker():\n    raise ValueError("message privé")\n');p.chmod(0o600)
+            prive='contenu-personnel-secret'
+            trace=f'File "{p}", line 2, in worker\n{prive}\nFile "{p}", line 999, in worker\nFile "{p}", line 1, in {prive}\nFile "/autre/{prive}", line 1, in worker\n'
+            r=audit.cadres(trace,source)
+            self.assertEqual(r,[dict(script=audit.SCRIPTS[0],fonction='worker',ligne=2)])
+            self.assertNotIn(prive,json.dumps(r));self.assertNotIn(str(source),json.dumps(r))
+            p.chmod(0o666)
+            with self.assertRaises(ValueError):audit.cadres(trace,source)
+            p.chmod(0o600);autre=source/'original';p.rename(autre);p.symlink_to(autre)
+            with self.assertRaises(OSError):audit.cadres(trace,source)
+
+    def test_etats_unites_et_journaux_namespace_restent_fermes(self):
+        secret=b'valeur-utilisateur-privee'
+        reponses=[SimpleNamespace(stdout=b'ActiveState=inactive\nExecMainStatus=0\nResult='+secret+b'\n',returncode=0),
+            SimpleNamespace(stdout=b'peer authentication failed '+secret,returncode=0)]*3
+        with patch.object(audit.subprocess,'run',side_effect=reponses) as appels:
+            r=audit.unites_identite(Path('/outils'))
+            self.assertEqual(len(r),3)
+            for v in r.values():self.assertEqual(v,dict(etat='inactive',code=0,resultat='indetermine',categories=['journal_pg_peer_refuse']))
+            self.assertNotIn(secret.decode(),json.dumps(r))
+            for a in appels.call_args_list[1::2]:self.assertIn('--namespace=identite',a.args[0])
+
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)/'prive';p.write_text('texte');p.chmod(0o600)

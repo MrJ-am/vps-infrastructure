@@ -47,6 +47,18 @@ reprise exige d'abord cette trace précise dans le journal privé, puis conserve
 la même génération et tous les contrôles/retour. Toute autre cause bloque.
 [Rapport du worker](../operations/vision-amorcage-worker-diagnostic.json).
 
+La [reprise37963555297](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37963555297),
+opérateurf9dae92a39f350d5aa5b5795f74b04f6827d60ff, job113932183678,
+confirme réellement la trace d'action masquée puis délai dans88dc ; aucune
+étape ni cluster présents à ce contrôle, reprise conditionnée autorisée.
+Préflight/copie/timer passent et le worker corrigé est engagé. Un nouveau
+refus de commande bloque les contrôles locaux ; retour terminé à17:06:10,
+socle rétabli et25sondes finaux réussis à17:06:25. Aucun enregistrement/personne.
+Le diagnostic courant examine cette tentative retournée avec cadres Python
+validés contre le code exact et états/journaux des seules unités d'identité.
+Aucun argument ou fragment privé n'est publié ; aucune reprise/effacement.
+[Rapport de reprise corrigée](../operations/vision-amorcage-dispatch-reprise.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

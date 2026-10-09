@@ -4337,12 +4337,12 @@ Enrôlement distinct toujours non activé. Sa qualification synthétique vérifi
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 3e4f4e630c7e1b2de548dae60a8ff798abbaa41ce41696d535836587b0e425e0
-:LU_LE: 2026-10-09T16:55:08+00:00
+:LU_LE: 2026-10-09T17:16:27+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée b63cc4f2d36ddf4a3f880eaa724b2007e6cc5376. Test de masquage échoue avant le correctif, passe après ; contrôle de trace/retour/cluster/étapes fermé qualifié. CI complète et preuve/reprise VPS restent à constater.
+:PREUVE: PR52/272tests/CI37962760564/37962765205 intégrées exactementf9dae92a39f350d5aa5b5795f74b04f6827d60ff. Reprise37963555297 confirme la trace exacte action masquée/délai, pas de cluster/étape ; garde réel passé puis worker corrigé engagé. Nouveau refus de commande, retour terminé/socle et25sites conservés ; diagnostic annoncé20261009-vision-85feabf44900.
 :END:
 
 ** TODO vps
@@ -4400,12 +4400,12 @@ Cette précision identifie la commande et l'état laissés, au lieu de corriger 
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 0c2c9e1c6a73c6c5c0ef891d9d0306645ef59ced0fbb21976c83c81cf83cb800
+:LU_LE: 2026-10-09T17:16:27+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée33d1abcf0067b065295e55d8e793f281b1f3a15b. Cadres limités au fichier/fonction/ligne qualifiés et états/journaux fermés préparés ; refus des fragments, paths, fonctions/lignes arbitraires qualifiés. CI et état serveur précis restent à terminer.
 :END:
 
 ** TODO vps
