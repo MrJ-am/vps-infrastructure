@@ -13,5 +13,8 @@ with tarfile.open(a.archive) as t:
                 './services/keycloak-mrjam/resources/META-INF/services/org.keycloak.email.EmailSenderProviderFactory',
                 './services/mrj-auth/oidc.py', './operations/identite/realm.json'):
         assert nom in noms, 'Source nécessaire manquante : ' + nom
+    for nom in ('./scripts/identite-amorcage-demarrer.sh', './scripts/identite-amorcage-postgresql.sh',
+                './modules/identite-amorcage.nix', './lib/keycloak-optimise.nix'):
+        assert nom in noms, 'Source d’amorçage nécessaire manquante : ' + nom
     assert b'GNU AFFERO GENERAL PUBLIC LICENSE' in t.extractfile('./LICENSE').read()
 print('Offre de source : licence, extension native, compilation et code présents ; fichiers privés exclus.')

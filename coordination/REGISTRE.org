@@ -3947,13 +3947,14 @@ Cette construction ne lève pas preconditionsValidees du mode commun ordinaire. 
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 36a94fca44edb3b06499a63c08a8c1cb70790a6c4ea0da19264155350bc84ec8
+:LU_LE: 2026-10-09T13:11:50+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/pull/45
 :END:
+Amorçage distinct préparé : PostgreSQL privé/peer, même paquet optimisé, anciennes unités/hôtes/production conservés. 244 tests et lanceurs natifs sans réseau passent localement. Construction réelle/activation/possession/MFA restent à constater ; aucune identité ou association créée.
 
 ** TODO vps
 :PROPERTIES:

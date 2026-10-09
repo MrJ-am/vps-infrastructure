@@ -1,5 +1,11 @@
 # Construction des composants MrJ.am
 
+La construction réelle [37930689913](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37930689913),
+opérateur `296e4d159544f01af1345ea844871d11f17897f7`, réussit le 9 octobre
+à 12:33 UTC : sept unités, six imports sans privilèges et sources AGPL ;
+garde fermé, socle inchangé, six services/nouvelle SSH et 25 HTTP/TLS.
+[Rapport technique](../operations/vision-mrjam-composants-qualification.json).
+
 Le workflow manuel `vision-mrjam-composants-construire.yml` construit à côté
 du système actif les unités Keycloak, mrj-auth, administration Vision, cycle,
 admission, fermeture et courriels, ainsi que leurs dépendances et sources AGPL.
@@ -42,6 +48,7 @@ DNS/ACME ou création d'identité humaine.
 La CI construit aussi le lot sur son Nixpkgs de qualification et teste les
 imports. La construction locale du 9 octobre sur le Nixpkgs installé `c5c4a43`
 réussit avec des utilisateurs `nixbld` sans privilèges et les six imports sous
-`nobody`. Elle ne prouve pas l'état du VPS : consigner séparément l'exécution
-manuelle réelle. L'identité du propriétaire/MFA, l'association historique,
-la génération complète et son retour restent à préparer avant activation.
+`nobody`. La preuve VPS distincte est consignée ci-dessus. L'identité du
+propriétaire/MFA, l'association historique, la génération complète et son
+retour restent à préparer avant activation. La [phase d'amorçage](IDENTITE-AMORCAGE.md)
+prépare ce compte sans changer Vision ni lever le garde du mode commun.
