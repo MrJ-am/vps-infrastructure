@@ -79,6 +79,23 @@ def store(path):
     return path
 
 
+def verifier_socle(candidat):
+    """Contrôle identique avant/après construction ou qualification isolée."""
+    audit = candidat['audit']
+    exiger(str(Path('/run/current-system').resolve()) == audit['systeme'] and
+        str(Path('/nix/var/nix/profiles/system').resolve()) == audit['systeme'], 'Génération différente : nouvel audit requis')
+    exiger(str(Path('/srv/vision/current').resolve()) == audit['vision'], 'Release Vision différente : nouvel audit requis')
+    exiger(commande('nix-instantiate', '--find-file', 'nixpkgs').strip() == audit['nixpkgs'], 'Nixpkgs installé différent')
+    exiger(preparation.socle.source_fournisseur_active() == audit['fournisseur'], 'Fournisseur actif différent : nouvel audit requis')
+    configuration = json.loads(commande('nix-instantiate', '--eval', '--strict', '--json',
+        ROOT / 'scripts/vision-multiutilisateur-config.nix', '--argstr', 'configuration', '/etc/nixos/configuration.nix',
+        '--argstr', 'fournisseur', audit['fournisseur'], '-I', 'nixpkgs=' + audit['nixpkgs']))
+    exiger(configuration['systeme'] == audit['systeme'] and configuration['postgres_majeure'] == '17' and
+        configuration['postgres_tcp'] is False and configuration['postgres_ecoute'] == '' and
+        configuration['fournisseur_source'] == audit['fournisseur'], 'Socle actif non reproduit')
+    return configuration
+
+
 def construire(revision):
     global DIAGNOSTIC
     exiger(os.geteuid() == 0 and re.fullmatch('[0-9a-f]{40}', revision), 'Exécution Actions root identifiée requise')
@@ -92,20 +109,7 @@ def construire(revision):
     preuve = json.loads((ROOT / 'operations/vision-multiutilisateur-qualification.json').read_text())
     audit = candidat['audit']
 
-    def controler():
-        exiger(str(Path('/run/current-system').resolve()) == audit['systeme'] and
-            str(Path('/nix/var/nix/profiles/system').resolve()) == audit['systeme'], 'Génération différente : nouvel audit requis')
-        exiger(str(Path('/srv/vision/current').resolve()) == audit['vision'], 'Release Vision différente : nouvel audit requis')
-        exiger(commande('nix-instantiate', '--find-file', 'nixpkgs').strip() == audit['nixpkgs'], 'Nixpkgs installé différent')
-        exiger(preparation.socle.source_fournisseur_active() == audit['fournisseur'], 'Fournisseur actif différent : nouvel audit requis')
-        configuration = json.loads(commande('nix-instantiate', '--eval', '--strict', '--json',
-            ROOT / 'scripts/vision-multiutilisateur-config.nix', '--argstr', 'configuration', '/etc/nixos/configuration.nix',
-            '--argstr', 'fournisseur', audit['fournisseur'], '-I', 'nixpkgs=' + audit['nixpkgs']))
-        exiger(configuration['systeme'] == audit['systeme'] and configuration['postgres_majeure'] == '17' and
-            configuration['postgres_tcp'] is False and configuration['postgres_ecoute'] == '' and
-            configuration['fournisseur_source'] == audit['fournisseur'], 'Socle actif non reproduit')
-
-    etape('invariants_actifs'); controler()
+    etape('invariants_actifs'); verifier_socle(candidat)
     exiger(not (d / 'construction.json').exists(), 'Construction déjà terminée')
     etape('preuve_preparation')
     exiger(re.fullmatch('[0-9a-f]{40}', preuve['infrastructure']), 'Révision de qualification invalide')
@@ -142,7 +146,7 @@ def construire(revision):
     exiger('mrjam-identite.jar' in providers and len(providers) == 5 and
         any('junixsocket-common' in p for p in providers) and
         any('junixsocket-native-common' in p for p in providers), 'Plugins construits incomplets')
-    etape('invariants_finaux'); controler()
+    etape('invariants_finaux'); verifier_socle(candidat)
     rapport = dict(version=1, infrastructure=revision, preparation=preuve['infrastructure'],
         vision=candidat['vision'], style=candidat['style'], keycloak='26.7.3', paquet=paquet,
         plugins=providers, construction=True, jdbc_unix_configure=True,

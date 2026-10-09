@@ -30,7 +30,17 @@ permission dans le build du SPI ; 25 sondes réussissent. La reproduction
 locale avec `nixbld` identifie la copie des ressources en lecture seule et
 son nettoyage refusé. Le correctif ne rend inscriptible que cette copie
 temporaire, avec une régression native sans privilège. Le contexte précis
-du refus VPS et la construction corrigée restent à constater.
+du refus VPS est confirmé par l'audit `37916043224` : nettoyage SPI refusé.
+La [construction corrigée 37916844094](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37916844094),
+opérateur `6a3f3d56d7a63795674fd243859b3d689340005c`, réussit ensuite :
+Keycloak 26.7.3 et cinq plugins dans le paquet
+`/nix/store/v3g29yfxvp9bdnjgw3p91zvh4jggvk45-keycloak-26.7.3`.
+Les six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent.
+[Preuve de construction](../operations/vision-identite-construction.json).
+Ce paquet n'a pas encore été démarré sur le VPS : le workflow distinct
+`vision-identite-unix-qualifier.yml` prépare seulement un essai synthétique
+avec PostgreSQL peer/Unix et systemd DynamicUser dans un réseau privé.
+Sa réussite réelle reste à constater avant toute activation.
 Préconditions d'activation, identité initiale,
 contrats, clé et copie externe demeurent à établir.
 
