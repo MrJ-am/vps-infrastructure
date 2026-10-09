@@ -88,8 +88,13 @@ Le workflow manuel `vision-identite-import-preparer.yml` prépare le seul
 sans démarrage, import en base, personne ni envoi. Les clés existantes sont
 vérifiées et conservées ; une divergence bloque la préparation. Le préparateur
 refuse liens, fichiers non réguliers/partagés, mauvais propriétaire, permissions
-faibles et lectures excessives. L'essai réel de cette préparation reste à
-constater. Identité initiale/MFA, droits SQL de production et retour autonome
+faibles et lectures excessives. La [préparation réelle 37927013329](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329)
+réussit avec cinq secrets et import vérifiés ; aucun import en base, compte
+humain ou activation. Six services, nouvelle SSH et 25 sondes passent.
+[Preuve d'import privé](../operations/vision-identite-import-qualification.json).
+Le [lot de composants](VISION-COMPOSANTS-MRJAM.md) est préparé pour construire
+les unités/dépendances, avec l'assertion d'activation toujours fermée.
+Identité initiale/MFA, droits SQL de production et retour autonome
 de génération restent des étapes distinctes.
 
 ### Diagnostic préalable résolu

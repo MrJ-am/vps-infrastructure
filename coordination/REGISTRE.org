@@ -3881,13 +3881,14 @@ Fin : lot de composants et contrôle du garde-fou testés puis construction rée
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 109ae7c87776ae7d6388183d85875259470f9d652206327b13f4d28fd00c0d8b
+:LU_LE: 2026-10-09T12:15:25+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329
 :END:
+Import privé réel consigné. Lot construit localement sur Nixpkgs installé avec nixbld, sept unités et six imports sans privilège qualifiés ; garde de génération fermé. CI et construction réelle VPS encore attendues.
 
 ** TODO vps
 :PROPERTIES:

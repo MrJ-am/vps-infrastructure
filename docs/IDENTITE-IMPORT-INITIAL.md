@@ -5,6 +5,12 @@ privés nécessaires au compte commun. Il **ne démarre pas Keycloak**, n'import
 aucun realm dans une base et ne crée pas de personne. L'identité du propriétaire,
 son MFA et son rapprochement avec l'ancien compte Vision sont des étapes suivantes.
 
+La préparation réelle [37927013329](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329),
+opérateur `ce847e1519eac78b37352cd070eb949346d61a47`, réussit le 9 octobre à
+11:59 UTC : cinq secrets et import vérifiés, aucune rotation/import en base,
+six services/nouvelle SSH et 25 sondes passent. Le dossier privé reste sur le VPS.
+[Preuve technique](../operations/vision-identite-import-qualification.json).
+
 ## Préconditions et opération
 
 Le workflow exige `main`, l'environnement `vps-production`, la CI du commit exact

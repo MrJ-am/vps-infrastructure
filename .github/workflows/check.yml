@@ -22,6 +22,15 @@ jobs:
           tar -xzf "$RUNNER_TEMP/nixpkgs-optimise.tar.gz" -C "$RUNNER_TEMP"
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-build scripts/vision-identite-paquet.nix --attr paquet --out-link "$RUNNER_TEMP/keycloak-optimise" --max-jobs 1 --cores 2
+      - name: Construire les composants et qualifier leurs imports sans privilège
+        run: |
+          NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/vision-mrjam-composants.nix --attr resume > "$RUNNER_TEMP/composants.json"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build scripts/vision-mrjam-composants.nix --attr lot --out-link "$RUNNER_TEMP/composants" --max-jobs 1 --cores 2
+          python3 scripts/vision-mrjam-verifier.py "$RUNNER_TEMP/composants.json" --qualification-locale
+          python3 tests/sources-mrjam.py "$RUNNER_TEMP/composants/sources/services-mrjam.tar.gz"
       - name: Qualifier le lanceur optimisé et les plugins par socket Unix
         run: |
           mkdir -p "$RUNNER_TEMP/outils-unix"
@@ -123,6 +132,8 @@ jobs:
             nix-instantiate --eval --strict --json tests/vision-multiutilisateur.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/vision-identite-paquet.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/vision-mrjam-composants.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json scripts/vision-multiutilisateur-config.nix \
             --argstr configuration "$PWD/hosts/hostinger/configuration.nix" >/dev/null
