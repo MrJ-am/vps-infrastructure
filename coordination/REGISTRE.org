@@ -4160,3 +4160,68 @@ Après le refus établi, corriger uniquement la recette nécessaire et qualifier
 :PREUVE: -
 :END:
 
+* Contrôler les règles de répertoires avant la reprise de l’amorçage Vision
+:PROPERTIES:
+:ID: 20261009-vision-5d9691f1f37b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T16:04:56+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic réservé est réellement réussi par le point d'entrée unique : signal37955799458, orchestration37955815952, job113906002350, opérateurc849613768fdcd7868c4a38b6e44bc0ec9d3ffbd, PR49/CI37955231453 et37955237704 intégrées (262tests). Socle conservé, six services/nouvelle SSH et25HTTP/TLS avant/après. Aucun marqueur d'engagement ou plan enregistré dans la tentativeb82f1eba3bf8b8de102b0e1568978f085ef721ca ; aucun compte humain, mode commun ou inscription.
+
+La simulation annonce un arrêt de systemd-tmpfiles-resetup.service et d'une unité ACME, puis un redémarrage de nginx.service ; aucune unité inconnue, redémarrage systemd ou arrêt swap. Le contrôle strict omit l'unité de réinstallation des répertoires utilisée normalement par NixOS à chaque changement tmpfiles. Source Nixpkgs installé c5c4a43b0e8056328ec4529f735cabdb8f1942bb, nixos/modules/system/boot/systemd/tmpfiles.nix : oneshot déclenché par tmpfiles.d, ExecStart systemd-tmpfiles --create --remove --exclude-prefix=/dev.
+
+VPS qualifie une correction étroite : autoriser seulement l'arrêt de cette unité, après comparaison des fichiers tmpfiles des générations immuables ancienne/candidate. Aucun retrait/changement de règle ancienne, aucun nouveau fichier ni autre chemin ajouté ; seule l'ajout d'une règle de création root0700 du répertoire /var/backup/mrjam-amorcage est admis. L'unité doit être identique sauf son déclencheur de configuration. Toute autre différence reste un refus, sans nettoyage automatique ni contournement de socle. Même génération39b7g3x42qp2q58idfv7nl6w5j3y78np, anciens services/données/accès/hosts et clés conservés.
+
+Intégrer ce contrôle au préflight et qualifier les refus avec fixtures, puis relancer l'amorçage via le même point d'entrée après CI exacte, avec retour autonome inchangé. Ajouter au refus un classement sûr automatique afin de ne plus préparer un workflow séparé pour un diagnostic courant. Le mode commun et les tiers restent fermés. L'agent dépose et suit l'opération ; le propriétaire n'a aucune nouvelle intervention technique. Fin : contrôle des répertoires exact et correction testés, puis exécution réelle identifiée, activation contrôlée ou refus préservant les sites.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
