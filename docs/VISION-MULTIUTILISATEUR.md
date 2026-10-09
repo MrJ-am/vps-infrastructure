@@ -23,8 +23,15 @@ l'override ultérieur des plugins conserve cette source et que le garde-fou
 d'activation reste fermé. La construction exige la preuve privée de la
 qualification précédente et les mêmes candidats ; elle conserve des racines
 GC et vérifie la version et les plugins, sans démarrer Keycloak ni créer de
-compte. Elle reste **à lancer sur le VPS**. L'essai JDBC Unix natif sur ce VPS,
-l'identité initiale/MFA et le retour autonome constituent les étapes suivantes.
+compte. Son premier lancement réel `37912940648`, opérateur
+`226a928a58121b25a3c097c8d32b6843a05e19e6`, passe les invariants et la preuve
+de préparation, puis échoue pendant `construction_paquet`. Les six services,
+nouvelle connexion SSH et 25 sondes passent après échec. Le diagnostic
+`vision-identite-construction-auditer.py` classe seulement ce journal privé,
+borné à 256 Kio, en catégories constantes ; le workflow d'audit reste en
+lecture seule. Le refus précis et la construction réussie restent à constater.
+L'essai JDBC Unix natif sur ce VPS, l'identité initiale/MFA et le retour autonome
+constituent les étapes suivantes.
 
 ### Diagnostic préalable résolu
 
