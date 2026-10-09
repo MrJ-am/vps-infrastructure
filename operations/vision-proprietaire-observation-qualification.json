@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "keycloak": "26.7.3",
+  "donnees_synthetiques": true,
+  "observation_activation_native": true,
+  "email_verifie": true,
+  "mot_de_passe_otp_configures": true,
+  "sujet_durable_exact": true,
+  "aucune_mutation_par_observateur": true,
+  "aucun_courriel_supplementaire": true,
+  "aucun_admin_identite": true,
+  "tests_cibles": 8,
+  "tests_locaux": 343,
+  "preuves_sessions_pwd_otp": "vision-proprietaire-flux-qualification.json",
+  "production_verifiee": false
+}

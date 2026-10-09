@@ -54,3 +54,10 @@ jobs:
     if: needs.demande.outputs.action == 'proprietaire'
     uses: ./.github/workflows/vision-proprietaire-enroler.yml
     secrets: inherit
+  proprietaire-observer:
+    needs: demande
+    if: needs.demande.outputs.action == 'proprietaire-observer'
+    uses: ./.github/workflows/vision-proprietaire-enroler.yml
+    with:
+      observer: true
+    secrets: inherit
