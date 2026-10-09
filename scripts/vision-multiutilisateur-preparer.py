@@ -31,6 +31,8 @@ ETAPES = frozenset(('demarrage', 'invariants_actifs', 'source_candidate',
     'invariants_finaux', 'rapport_final'))
 spec = importlib.util.spec_from_file_location('vision_acl', ROOT / 'scripts/vision-acl.py')
 acl = importlib.util.module_from_spec(spec); spec.loader.exec_module(acl)
+spec_socle = importlib.util.spec_from_file_location('vision_socle', ROOT / 'scripts/vision-socle-auditer.py')
+socle = importlib.util.module_from_spec(spec_socle); spec_socle.loader.exec_module(socle)
 
 
 class PreparationRefusee(RuntimeError):
@@ -130,6 +132,7 @@ def preparer(revision):
             str(Path('/nix/var/nix/profiles/system').resolve()) == audit['systeme'], 'Génération différente : nouvel audit requis')
         exiger(str(Path('/srv/vision/current').resolve()) == audit['vision'], 'Release Vision différente : nouvel audit requis')
         exiger(commande('nix-instantiate', '--find-file', 'nixpkgs').decode().strip() == audit['nixpkgs'], 'Nixpkgs installé différent')
+        exiger(socle.source_fournisseur_active() == audit['fournisseur'], 'Fournisseur actif différent : nouvel audit requis')
     etape('invariants_actifs'); controler()
     exiger(not (d / 'preparation.json').exists(), 'Préparation déjà terminée')
     etape('source_candidate')
@@ -139,9 +142,11 @@ def preparer(revision):
     etape('evaluation_nixos')
     configuration = json.loads(commande('nix-instantiate', '--eval', '--strict', '--json',
         ROOT / 'scripts/vision-multiutilisateur-config.nix', '--argstr', 'configuration', '/etc/nixos/configuration.nix',
+        '--argstr', 'fournisseur', audit['fournisseur'],
         '-I', 'nixpkgs=' + audit['nixpkgs']).decode())
     exiger(configuration['systeme'] == audit['systeme'] and configuration['postgres_majeure'] == '17' and
-        configuration['postgres_tcp'] is False and configuration['postgres_ecoute'] == '', 'Socle actif non reproduit')
+        configuration['postgres_tcp'] is False and configuration['postgres_ecoute'] == '' and
+        configuration['fournisseur_source'] == audit['fournisseur'], 'Socle actif non reproduit')
     sauver(d / 'systeme-actif.json', configuration)
     etape('conservation_configuration')
     commande('tar', '--acls', '--xattrs', '-cpf', d / 'nixos-avant.tar', '-C', '/etc', 'nixos')

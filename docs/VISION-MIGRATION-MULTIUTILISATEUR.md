@@ -131,6 +131,19 @@ prouve pas encore la cause ni l'effet d'un épinglage. Le diagnostic conserve
 désormais la présence de chaque script et poursuit son évaluation si un fichier
 manque, sans publier de contenu et sans modifier le système.
 
+L'audit [37901569064](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37901569064),
+opérateur `566b279f15c9042d4b8f31906318d3cdf56fdf7b`, identifie la source
+réellement active `/nix/store/20nds4zvi1pcnljpwnwzcsysvyk15g11-vision-fournisseur-c0bfcac`
+avec ses deux scripts présents. Le chemin recalculé n'est pas réalisé par
+`--eval` : l'absence de sa copie dans le store n'est pas une perte de fichier.
+La première conversion `toPath` conserve une unité mais perd le contexte de
+source et change la génération. Le test synthétique confirme que `storePath`
+rétablit exactement celle-ci, y compris après ajout d'un répertoire au brut.
+Le manifeste épingle la source active observée et le préparateur vérifie
+encore la génération entière, la source du fournisseur et PostgreSQL. Il ne
+modifie aucun fichier brut ni système actif. L'audit réel `storePath` et la
+nouvelle préparation restent à qualifier.
+
 Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
 le thème tiers de la console native conserve les limites déclarées.
 
