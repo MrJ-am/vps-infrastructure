@@ -8,7 +8,7 @@ permissions:
 jobs:
   keycloak:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -18,7 +18,7 @@ jobs:
       - name: Installer le navigateur et les outils de qualification
         run: |
           sudo apt-get update
-          sudo apt-get install -y age
+          sudo apt-get install -y age nix-bin
           python3 -m venv "$RUNNER_TEMP/qualification"
           "$RUNNER_TEMP/qualification/bin/pip" install playwright==1.57.0 cryptography==46.0.3
           "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
@@ -59,6 +59,20 @@ jobs:
           done
           "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-integration.py
           "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-postgresql-restauration.py --jar "$RUNNER_TEMP/mrjam-identite.jar"
+      - name: Qualifier JDBC Unix et peer sans ouvrir PostgreSQL en TCP
+        run: |
+          NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
+          curl --fail --location --retry 2 "https://github.com/NixOS/nixpkgs/archive/$NIXPKGS_REVISION.tar.gz" -o "$RUNNER_TEMP/nixpkgs-keycloak.tar.gz"
+          tar -xzf "$RUNNER_TEMP/nixpkgs-keycloak.tar.gz" -C "$RUNNER_TEMP"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr '(import <nixpkgs> {}).keycloak.plugins.junixsocket-common' \
+            --out-link "$RUNNER_TEMP/junixsocket-common"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr '(import <nixpkgs> {}).keycloak.plugins.junixsocket-native-common' \
+            --out-link "$RUNNER_TEMP/junixsocket-native-common"
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-unix.py \
+            --jar "$RUNNER_TEMP/mrjam-identite.jar" --common "$RUNNER_TEMP/junixsocket-common" \
+            --native "$RUNNER_TEMP/junixsocket-native-common"
       - name: Retirer le conteneur de qualification
         if: always()
         run: docker rm -f keycloak-qualification || true

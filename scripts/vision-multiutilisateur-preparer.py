@@ -154,7 +154,7 @@ def preparer(revision):
     rapport = dict(version=1, infrastructure=revision, vision=candidat['vision'], style=candidat['style'],
         restauration_vision_reelle=True, migrations_sans_perte=True, retour_acl_owners_rls=True,
         retour_rejouable=True, activation=False, inscriptions=False,
-        keycloak_installe=configuration['keycloak_version'],
+        keycloak_candidat=configuration['keycloak_version'],
         reste=['construction et qualification JDBC Unix', 'identité initiale et MFA', 'SMTP et registre externe',
             'contrats et clé de restauration', 'essai NixOS avec retour autonome'])
     sauver(d / 'preparation.json', rapport); print(json.dumps(rapport, ensure_ascii=False))

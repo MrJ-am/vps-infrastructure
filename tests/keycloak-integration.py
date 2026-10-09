@@ -57,9 +57,11 @@ def verifier(port, navigateur):
             contenu = reponse.read()
             return json.loads(contenu) if contenu else None
 
-    admin = api('/realms/master/protocol/openid-connect/token',
-                {'client_id': 'admin-cli', 'username': 'qualification', 'password': 'uniquement-test-local',
-                 'grant_type': 'password'}, formulaire=True)['access_token']
+    def session_administrative():
+        return api('/realms/master/protocol/openid-connect/token',
+                   {'client_id': 'admin-cli', 'username': 'qualification', 'password': 'uniquement-test-local',
+                    'grant_type': 'password'}, formulaire=True)['access_token']
+    admin = session_administrative()
     version = api('/admin/serverinfo', jeton=admin)['systemInfo']['version']
     assert version == '26.7.3', 'Qualifier la version Keycloak épinglée.'
     spec=importlib.util.spec_from_file_location('preparer_identite',RACINE/'scripts/identite-preparer.py')
@@ -286,6 +288,7 @@ def verifier(port, navigateur):
         fermeture=ThreadingHTTPServer(('127.0.0.1',3028),FermetureLocale)
         threading.Thread(target=fermeture.serve_forever,daemon=True).start()
         try:
+            admin = session_administrative()
             action=api('/admin/realms/'+realm+'/authentication/required-actions/delete_account',jeton=admin)
             assert action['enabled'] is False
             spec=importlib.util.spec_from_file_location('configurer_fermeture',RACINE/'scripts/identite-fermeture-configurer.py')
@@ -318,6 +321,7 @@ def verifier(port, navigateur):
                     page.locator('#mrjam-fermeture').fill('FERMER MON COMPTE');page.locator('#mrjam-fermer').click()
                     page.locator('#mrjam-fermeture').wait_for()
                     assert len(appels)==1
+                    admin = session_administrative()
                     assert api('/admin/realms/'+realm+'/users/'+profil['id'],jeton=admin)['enabled']
                     statut[0]=200
                     page.locator('#mrjam-fermeture').fill('FERMER MON COMPTE');page.locator('#mrjam-fermer').click()
@@ -342,9 +346,7 @@ def verifier(port, navigateur):
     finally:
         # Le jeton administrateur de qualification expire pendant les attentes
         # de nouveaux codes OTP. Le nettoyage prend une session neuve.
-        admin = api('/realms/master/protocol/openid-connect/token',
-                    {'client_id': 'admin-cli', 'username': 'qualification', 'password': 'uniquement-test-local',
-                     'grant_type': 'password'}, formulaire=True)['access_token']
+        admin = session_administrative()
         api('/admin/realms/' + realm, jeton=admin, methode='DELETE')
         relais.shutdown(); relais.server_close()
 
