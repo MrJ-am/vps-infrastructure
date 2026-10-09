@@ -1,5 +1,16 @@
 # État attesté au 9 octobre 2026
 
+La construction [37982527127](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37982527127),
+opérateur6072227fdae8d7f8b8ebd8476405073cef8960bb, établit que runuser
+est présent et que la syntaxe Nginx complète est valide. Le test refuse
+l'ouverture du port80 sans CAP_NET_BIND_SERVICE ; diagnostic chiffré,
+déchiffré en privé dans Work, clé/diagnostic éphémères ensuite supprimés.
+Socle/six services/SSH/25HTTP restent vérifiés, aucune activation.
+[Rapport factuel](../operations/vision-amorcage-nginx-capacite.json).
+Le test suivant emploie seulement cette capacité native, sous UID/groupe
+nginx avec NoNewPrivileges, dans une unité transitoire au réseau privé.
+Il conserve les permissions et utilise uniquement nginx -t, sans daemon.
+
 La construction réservée [37979390241](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37979390241),
 opérateur f27c4d1e1f0b731da9e16116d584293599ee10d4, a construit sa génération,
 puis refusé le contrôle Nginx natif avant activation. Sa cause n'est pas encore
