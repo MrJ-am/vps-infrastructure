@@ -12,7 +12,9 @@ nouvelle SSH et25HTTP/TLS réussis. Aucun switch ou compte humain à cette étap
 
 ## Préparation et lancement
 
-Workflow manuel `vision-identite-amorcage-activer.yml`, main, vps-production,
+Le [point d'entrée unique](VISION-MISE-EN-SERVICE.md) appelle
+`vision-identite-amorcage-activer.yml` comme étape réutilisable. Demande dédiée
+sur `operations/vision` ou lancement de secours sur main, vps-production,
 CI du commit opérateur exact et exclusion vps-administration. Il ne reprend
 pas les anciennes migrations et ne modifie ni canal Nixpkgs ni SQL de Vision.
 
@@ -84,4 +86,4 @@ Tests dry-activate/credential/preuves/HTTP (issuer falsifié, redirection,
 clé privée et admin public refusés). Le test Nix compare l'entrée persistante
 à l'expression préparée. Le contrôle API local est aussi exécuté sur le vrai
 Keycloak26.7.3/PostgreSQL17 dans des conteneurs sans réseau. Ces tests ne prouvent
-pas systemd/ACME/HTTPS sur le VPS : seul le workflow manuel identifié les atteste.
+pas systemd/ACME/HTTPS sur le VPS : seule une exécution Actions identifiée les atteste.

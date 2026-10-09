@@ -1,6 +1,7 @@
 name: Vérifier l'infrastructure sans déployer
 on:
   push:
+    branches-ignore: [operations/vision]
   pull_request:
   workflow_dispatch:
 permissions:

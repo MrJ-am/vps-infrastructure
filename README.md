@@ -24,6 +24,11 @@ manuel [Auditer le VPS](.github/workflows/audit.yml) utilise les scripts de
 lecture seule ; sa configuration initiale est détaillée dans
 [ACCES.md](docs/ACCES.md). Il n'active pas la migration.
 
+Pour la mise en service multi-utilisateur de Vision, utiliser désormais
+[le point d'entrée unique](docs/VISION-MISE-EN-SERVICE.md). L'agent peut
+déposer et suivre les demandes techniques sans demander au propriétaire
+de lancer séparément chaque contrôle.
+
 | Ce dépôt | Chaque projet applicatif |
 |---|---|
 | NixOS, démarrage, réseau, SSH, pare-feu | Code, tests et contenu |
