@@ -4079,12 +4079,12 @@ Vision préserve ses données et accès historiques ; aucun autre outil ne chang
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: cb58bceccd0743f98190f57762aa826c281d7551fd602892caf3d88e3c3c7a7f
+:LU_LE: 2026-10-09T15:34:11+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée sur main VPS d88f868df343fbfcb623fb3d5626fa63a96f9715. Six contrôles ciblés de provenance, révision et reprise passent ; orchestration et CI exacte à terminer, aucune activation VPS.
 :END:
 
 ** TODO vps

@@ -335,6 +335,21 @@ class Essai:
         subprocess.run([str(self.outils/'systemctl'), 'stop', self.retour+'.timer'], capture_output=True, timeout=20)
         print(json.dumps(rapport), flush=True)
 
+    def statut(self):
+        enregistre = self.marque('enregistre')
+        if enregistre:
+            rapport = self.lire('activation.json')
+            exiger(rapport.get('infrastructure') == self.revision and
+                rapport.get('systeme_amorcage') == self.nouveau and
+                rapport.get('generation_enregistree') is True, 'Preuve enregistrée différente')
+            self.verifier_local(enregistre=True)
+        else:
+            exiger(not (self.d/'plan.json').exists() and
+                not any(self.marque(n) for n in ('commence', 'echec', 'retour-commence', 'retour-termine')),
+                'Tentative précédente à diagnostiquer ; aucune relance automatique')
+            construction.verifier_socle(self.candidat)
+        print(json.dumps(dict(infrastructure=self.revision, enregistre=enregistre)), flush=True)
+
     def retourner(self):
         if self.marque('enregistre'):
             print(json.dumps({'retour': 'enregistrement_deja_termine'})); return
@@ -350,7 +365,7 @@ class Essai:
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('revision'); p.add_argument('action', choices=('preparer','demarrer','worker','attendre','finaliser','retourner'))
+    p.add_argument('revision'); p.add_argument('action', choices=('preparer','demarrer','worker','attendre','finaliser','retourner','statut'))
     a = p.parse_args(); essai = None
     try:
         essai = Essai(a.revision); getattr(essai, a.action)()

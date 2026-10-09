@@ -1,0 +1,12 @@
+name: Vision — demande d'opération
+on:
+  push:
+    branches: [operations/vision]
+permissions: {}
+jobs:
+  signal:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+    steps:
+      - name: Déposer le signal sans code extrait ni credential
+        run: echo 'Demande déposée ; le workflow administratif vérifiera main et la CI exacte.'

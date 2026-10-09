@@ -1,5 +1,15 @@
 # État attesté au 9 octobre 2026
 
+## Vision — regroupement des opérations
+
+À la demande du propriétaire, les lancements techniques passent par
+[un point d'entrée Actions unique](VISION-MISE-EN-SERVICE.md). L'agent peut
+déposer une demande sur `operations/vision`, pour le seul commit intégré et
+validé par la CI exacte. Les publications ordinaires ne déploient pas.
+L'essai réservé devient une étape réutilisable ; les preuves et le retour
+autonome sont conservés. Ce regroupement ne prouve aucune activation : l'état
+VPS constaté reste celui décrit ci-dessous tant qu'une exécution n'est pas citée.
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

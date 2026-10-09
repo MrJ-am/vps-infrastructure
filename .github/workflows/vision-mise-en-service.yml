@@ -1,0 +1,35 @@
+name: Vision — mise en service suivie
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Vision — demande d'opération"]
+    types: [completed]
+    branches: [operations/vision]
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  demande:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Vérifier la demande dédiée et le main exact avant tout accès VPS
+        run: python3 scripts/vision-demande-verifier.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Exiger la réussite de la CI de ce même commit
+        run: python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+  amorcage:
+    needs: demande
+    uses: ./.github/workflows/vision-identite-amorcage-activer.yml
+    secrets: inherit
