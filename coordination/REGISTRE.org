@@ -4416,3 +4416,64 @@ Cette précision identifie la commande et l'état laissés, au lieu de corriger 
 :PREUVE: -
 :END:
 
+* Conserver le diagnostic principal quand un relevé secondaire est indisponible
+:PROPERTIES:
+:ID: 20261009-vision-8f00ed8b6c58
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T17:29:51+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR53 et 274 tests sont intégrés exactement d8a974efefa8141f8e52e737936c4778d82d25db après CI push37965415868 et PR37965421211, quatre jobs réussis chacune. Signal37966422430 puis orchestration37966437838/job113941899050, lancés par Work, n'ont pas produit le diagnostic complet : refus de lecture à17:28:36. Six services et nouvelle SSH passent ;25HTTP/TLS avant/après, derniers17:28:52. Aucune activation ou réparation demandée. L'état privé de f9 demeure inconnu.
+
+VPS rend ce même diagnostic plus robuste. Les préconditions de socle, retour durable et worker arrêté restent strictes. Une unité d'amorçage peut être absente après retour : sa lecture secondaire restituera un état indéterminé et un indicateur d'indisponibilité constants sans masquer les cadres déjà obtenus. Les sous-étapes seront identifiées par un nom fermé en cas de refus ; aucune trace privée. Les relevés complémentaires (unités ou cadres) ne doivent pas faire disparaître le diagnostic principal, mais une preuve manquante interdira toujours une reprise. Aucun SQL, nettoyage, reconstruction, nouveau compte, rotation ou changement de génération. Tests de sorties absentes et exceptions nécessaires avant CI exacte puis diagnostic autonome au point d'entrée actuel. Le correctif de la commande de f9 attend toujours les faits.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
