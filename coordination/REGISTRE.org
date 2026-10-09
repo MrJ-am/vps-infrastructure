@@ -3881,14 +3881,79 @@ Fin : lot de composants et contrôle du garde-fou testés puis construction rée
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 109ae7c87776ae7d6388183d85875259470f9d652206327b13f4d28fd00c0d8b
-:LU_LE: 2026-10-09T12:15:25+00:00
+:LU_LE: 2026-10-09T12:40:18+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37930689913
 :END:
-Import privé réel consigné. Lot construit localement sur Nixpkgs installé avec nixbld, sept unités et six imports sans privilège qualifiés ; garde de génération fermé. CI et construction réelle VPS encore attendues.
+Construction réelle réussie : sept unités, six imports sans privilèges et sources AGPL ; garde fermé, aucune identité humaine. Socle inchangé, six services/nouvelle SSH et 25 HTTP/TLS réussis.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Préparer un amorçage réservé du compte initial sans modifier Vision
+:PROPERTIES:
+:ID: 20261009-vision-853622d33046
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T12:40:18+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La construction réelle des composants réussit : Actions37930689913, job113820359864, opérateur296e4d159544f01af1345ea844871d11f17897f7. Sept unités, six imports Python sans privilèges et sources AGPL passent ; la génération ordinaire reste impossible et les inscriptions fermées. Génération/release inchangées, six services/nouvelle SSH et25HTTP/TLS réussis. Visiona9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b et Keycloak26.7.3 restent les références.
+
+VPS prépare maintenant une génération d'amorçage distincte, réservée à la future identité du propriétaire. Elle dérive de la configuration réellement active, conserve les unités et domaines existants et ajoute seulement Keycloak, un cluster PostgreSQL17 indépendant sans TCP et le domaine HTTPSlog.mrj.am. Ce cluster ne lit ni ne modifie les bases/rôles/HBA de production. Aucun mode OIDC Vision, administration, admission ou fermeture publique n'est activé ; aucune identité humaine n'est créée pendant la construction. Les imports privés et le SMTP restent hors store. Le mot de passe technique d'amorçage sera un credential séparé hors store, à provisionner seulement dans une opération d'activation adaptée.
+
+Construire sans switch ni enregistrement de génération par défaut, sur Nixpkgs installé, après les preuves privées réelles et vérification du socle. Comparer les unités essentielles, tous les anciens hôtes Nginx et PostgreSQL de production ; refuser une divergence. Relever uniquement les identifiants historiques et comptes d'authentification en mémoire privée, sans notes/titres/contenus ni valeurs affichées ; un propriétaire ambigu ou un compte discordant bloque le futur rattachement. Sortie technique et compteurs seulement ; six services/nouvelle SSH/25HTTP-TLS avant/après même après échec.
+
+Cette construction ne lève pas preconditionsValidees du mode commun ordinaire. Elle ne prouve ni activation/ACME, possession/MFA, association OIDC, retour autonome ni sauvegarde extérieure. Préparer ensuite l'activation temporaire et son retour autonome, puis l'enrôlement du seul propriétaire par courriel privé et le contrôle de son sujet exact. L'association aux données sera explicite et transactionnelle, sans deviner un email. Avant toute inscription tierce, les preuves juridiques, possession de la clé age et copie extérieure restent nécessaires ; l'absence du PC ne bloque pas cette construction fermée.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
 ** TODO vps
 :PROPERTIES:
