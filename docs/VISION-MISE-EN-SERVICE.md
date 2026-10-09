@@ -166,3 +166,32 @@ d’erreurs, noms de directives prédéfinis, compteur d’inconnus, codes
 numériques/étapes systemd connus. Aucun fragment, chemin, URL, IP ou valeur
 n’est publié ; le journal HTTP général n’est jamais lu. Pas de réparation
 ou de relance avant la cause précise, pas d’effacement du cluster.
+
+Diagnostic réservé du 9 octobre à 18:39:40 UTC, exécution `37974721935`
+(job `113970038399`, commit `717e9d378e96e63445691e220da6e57f56cc9826`,
+PR58/283 tests, CI push `37974107919` et PR `37974111241`) : le journal
+Nginx `http` classe le refus comme configuration/syntaxe/permissions ;
+le journal par défaut donne une sortie 1. Aucun détail privé publié.
+Le cluster17 reste proprement arrêté et préservé ; six services/SSH
+et 25 contrôles HTTP/TLS avant/après passent, fin18:39:54 UTC.
+Voir `operations/vision-amorcage-nginx-diagnostic.json`.
+
+La précision suivante distingue les sous-familles de syntaxe, opérations
+et errno techniques, types de chemins fermés. Seule la ligne numérotée
+d’un fichier immuable `/nix/store/HASH-nginx.conf` référencé par l’erreur
+est examinée en mémoire : sortie numéro, premier mot s’il est une
+directive prédéfinie, mode/lecture publique. Aucun texte ou valeur.
+Liens, fichier non régulier, propriétaire/droits invalides, taille excessive
+ou chemin inconnu sont refusés. Aucune commande Nginx, relance, SQL,
+modification ou effacement. Les mêmes unités/fenêtre/bornes restent imposées.
+
+Complément confidentiel : les seules lignes commençant par
+`nginx: [emerg]` de ce relevé sont sélectionnées (16 lignes/16Kio maximum)
+et chiffrées en mémoire par AGE vers la clé publique éphémère Work épinglée.
+Actions ne reçoit que le cryptogramme ASCII/base64 ; la clé privée reste
+dans Work, mode0600, jamais sur VPS/Git/Actions, puis sera supprimée après
+le diagnostic. Déchiffrement seulement dans Work en mémoire ou fichier
+privé0600 ; toute publication ultérieure expurge les valeurs privées.
+Les erreurs par requête, autres niveaux et journaux généraux sont exclus.
+Nix-shell fournit AGE depuis le Nixpkgs installé. Ce diagnostic ne
+lance pas Nginx et ne modifie ni configuration ni données.

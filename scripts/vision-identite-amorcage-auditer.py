@@ -1,6 +1,7 @@
 """Diagnostic du seul essai identifié ; jamais d'extrait privé dans la sortie."""
 import argparse
 import ast
+import base64
 import hashlib
 import importlib.util
 import json
@@ -87,18 +88,81 @@ MOTIFS_NGINX = {
     'permission_refusee': r'Permission denied',
     'fichier_absent': r'No such file or directory',
     'configuration_refusee': r'configuration file .* test failed',
+    'parametre_invalide': r'invalid parameter',
+    'nombre_arguments': r'invalid number of arguments',
+    'fin_fichier': r'unexpected end of file',
+    'jeton_inattendu': r'unexpected "',
+    'parametre_syslog': r'(?:invalid|unknown) syslog parameter|syslog.*invalid parameter',
+    'socket_syslog': r'(?:connect|send).*syslog.*failed|syslog.*(?:connect|send).*failed',
 }
 DIRECTIVES_NGINX = frozenset(('client_max_body_size','proxy_pass','proxy_set_header','add_header',
     'limit_req','limit_req_zone','limit_conn','limit_conn_zone','ssl_certificate','ssl_certificate_key',
-    'listen','location','server','server_name','access_log','error_log','return','include','pid'))
+    'listen','location','server','server_name','access_log','error_log','return','include','pid',
+    'log_format','default_type','types','ssl_trusted_certificate'))
+DESTINATAIRE_DIAGNOSTIC = 'age19tndze9vpljjvkljzxw0wj2zje5vjg0jh4e8npm82jkt65gs9vpsw5909d'
+
+
+def erreurs_demarrage_nginx(texte):
+    lignes=[l for l in texte.splitlines() if l.startswith('nginx: [emerg]')]
+    contenu='\n'.join(lignes[:16]).encode()
+    if len(contenu)>16384:raise ValueError('Diagnostic technique trop grand')
+    return contenu
+
+
+def chiffrer_erreurs_nginx(texte):
+    try:contenu=erreurs_demarrage_nginx(texte)
+    except ValueError:return dict(disponible=False)
+    if not contenu:return dict(disponible=True,lignes=0)
+    try:
+        r=subprocess.run(['age','-a','-r',DESTINATAIRE_DIAGNOSTIC],input=contenu,capture_output=True,timeout=10)
+        if r.returncode or len(r.stdout)>32768 or not r.stdout.startswith(b'-----BEGIN AGE ENCRYPTED FILE-----\n'):
+            return dict(disponible=False)
+        return dict(disponible=True,lignes=len(contenu.splitlines()),age_base64=base64.b64encode(r.stdout).decode())
+    except (OSError,subprocess.TimeoutExpired):return dict(disponible=False)
+
+
+def ligne_configuration_nginx(chemin, numero):
+    if not re.fullmatch(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-nginx\.conf',chemin) or not 1<=numero<=200000:
+        return dict(disponible=False)
+    try:
+        fd=os.open(chemin,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+        try:
+            s=os.fstat(fd)
+            if not stat.S_ISREG(s.st_mode) or s.st_uid!=os.geteuid() or s.st_nlink!=1 or s.st_mode&0o022 or s.st_size>1048576:
+                return dict(disponible=False)
+            lignes=os.read(fd,1048577).decode(errors='replace').splitlines()
+            if numero>len(lignes):return dict(disponible=False)
+            premier=re.match(r'\s*([a-z_]+)\b',lignes[numero-1])
+            directive=premier.group(1) if premier and premier.group(1) in DIRECTIVES_NGINX else None
+            return dict(disponible=True,ligne=numero,directive=directive,
+                droits=stat.S_IMODE(s.st_mode),lecture_autres=bool(s.st_mode&0o004))
+        finally:os.close(fd)
+    except OSError:return dict(disponible=False)
+
+
+def references_nginx(texte):
+    configurations=[]
+    for chemin,numero in sorted(set(re.findall(r'\bin (/[^\s:\n]+):([0-9]{1,6})',texte)))[:16]:
+        configurations.append(ligne_configuration_nginx(chemin,int(numero)))
+    return configurations[:16]
 
 
 def classer_nginx(texte):
     directives=set(re.findall(r'"([^"\n]+)" directive is (?:duplicate|not allowed here)',texte))
     directives.update(re.findall(r'unknown directive "([^"\n]+)"',texte))
+    directives.update(re.findall(r'invalid number of arguments in "([^"\n]+)" directive',texte))
+    operations=sorted({n for n in ('open','mkdir','chown','connect','bind','socket','send','read','write') if re.search(r'\b'+n+r'\(\)',texte)})
+    chemins=set(re.findall(r'(?:open|mkdir|chown|connect|bind)\(\) "([^"\n]+)"',texte))
+    types_chemins=set()
+    for p in chemins:
+        if p=='/run/systemd/journal.http/syslog':types_chemins.add('socket_journal_http')
+        elif p in ('/var/lib/acme/log.mrj.am/fullchain.pem','/var/lib/acme/log.mrj.am/key.pem','/var/lib/acme/log.mrj.am/chain.pem'):types_chemins.add('certificat_log')
+        elif re.fullmatch(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-nginx\.conf',p):types_chemins.add('configuration_nginx')
+        else:types_chemins.add('inconnu')
     return dict(categories=sorted(n for n,m in MOTIFS_NGINX.items() if re.search(m,texte)),
         directives_connues=sorted(directives & DIRECTIVES_NGINX),
-        directives_inconnues=len(directives-DIRECTIVES_NGINX),**sorties(texte))
+        directives_inconnues=len(directives-DIRECTIVES_NGINX),operations=operations,types_chemins=sorted(types_chemins),
+        errno=sorted({int(n) for n in re.findall(r'\(([0-9]{1,3}): ',texte) if int(n)<=255}),**sorties(texte))
 
 
 def journaux_nginx(outils):
@@ -111,7 +175,9 @@ def journaux_nginx(outils):
                 '--lines=300','--output=cat','--no-pager'],capture_output=True,timeout=10)
         except (OSError,subprocess.TimeoutExpired):r=None
         disponible=r is not None and r.returncode==0 and len(r.stdout)<=1048576
-        rapports[namespace]=dict(disponible=disponible,**classer_nginx(r.stdout.decode(errors='replace') if disponible else ''))
+        texte=r.stdout.decode(errors='replace') if disponible else ''
+        rapports[namespace]=dict(disponible=disponible,**classer_nginx(texte),configurations=references_nginx(texte),
+            erreurs_demarrage_chiffrees=chiffrer_erreurs_nginx(texte) if namespace=='http' and disponible else dict(disponible=False))
     return rapports
 
 

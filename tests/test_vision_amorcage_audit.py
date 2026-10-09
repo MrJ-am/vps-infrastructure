@@ -22,6 +22,47 @@ plan = charger('vision-plan')
 
 
 class Audit(unittest.TestCase):
+    def test_chiffrement_ne_prend_que_erreurs_de_demarrage_jamais_requetes(self):
+        texte='nginx: [emerg] erreur-technique-confidentielle\n2026/10/09 [error] URL-et-contenu-personnel\nnginx: [warn] autre\n'
+        self.assertEqual(audit.erreurs_demarrage_nginx(texte),b'nginx: [emerg] erreur-technique-confidentielle')
+        armure=b'-----BEGIN AGE ENCRYPTED FILE-----\ncryptogramme\n-----END AGE ENCRYPTED FILE-----\n'
+        with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=armure,returncode=0)) as appel:
+            r=audit.chiffrer_erreurs_nginx(texte);self.assertTrue(r['disponible']);self.assertEqual(r['lignes'],1)
+            self.assertNotIn('confidentielle',json.dumps(r));self.assertNotIn('personnel',json.dumps(r))
+            self.assertEqual(appel.call_args.args[0],['age','-a','-r',audit.DESTINATAIRE_DIAGNOSTIC])
+            self.assertEqual(appel.call_args.kwargs['input'],b'nginx: [emerg] erreur-technique-confidentielle')
+        with patch.object(audit.subprocess,'run') as appel:
+            self.assertEqual(audit.chiffrer_erreurs_nginx('requete-personnelle'),dict(disponible=True,lignes=0));appel.assert_not_called()
+        for stdout,code in ((b'erreur-technique-confidentielle',1),(b'erreur-technique-confidentielle',0),(armure+b'x'*32768,0)):
+            with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=stdout,returncode=code)):
+                self.assertEqual(audit.chiffrer_erreurs_nginx(texte),dict(disponible=False))
+        with self.assertRaises(ValueError):audit.erreurs_demarrage_nginx('nginx: [emerg] '+('x'*16384))
+
+    def test_ligne_nginx_ne_sort_que_directive_et_droits_et_refuse_liens(self):
+        prive='valeur-privee'
+        chemin='/nix/store/'+'a'*32+'-nginx.conf'
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp)/'configuration';p.write_text('http {\n  access_log '+prive+';\n}\n');p.chmod(0o444)
+            ouvrir=os.open
+            def lecture(nom,*a,**k):return ouvrir(p,*a,**k)
+            with patch.object(audit.os,'open',side_effect=lecture):
+                r=audit.ligne_configuration_nginx(chemin,2)
+                self.assertEqual(r,dict(disponible=True,ligne=2,directive='access_log',droits=0o444,lecture_autres=True));self.assertNotIn(prive,json.dumps(r))
+                p.chmod(0o400);r=audit.ligne_configuration_nginx(chemin,2);self.assertFalse(r['lecture_autres'])
+                p.chmod(0o666);self.assertEqual(audit.ligne_configuration_nginx(chemin,2),dict(disponible=False))
+                p.chmod(0o444);autre=p.with_name('original');p.rename(autre);p.symlink_to(autre)
+                self.assertEqual(audit.ligne_configuration_nginx(chemin,2),dict(disponible=False))
+        with patch.object(audit.os,'open') as appel:
+            for inconnu,numero in (('/var/lib/utilisateur/'+prive,2),(chemin,0),(chemin,200001),(chemin+'/autre',2)):
+                self.assertEqual(audit.ligne_configuration_nginx(inconnu,numero),dict(disponible=False))
+            appel.assert_not_called()
+
+    def test_sous_familles_operations_errno_nginx_sans_valeurs(self):
+        prive='valeur-privee'
+        r=audit.classer_nginx('invalid number of arguments in "access_log" directive '+prive+'\nopen() "'+prive+'" failed (13: Permission denied)\ninvalid parameter "'+prive+'"\nunexpected end of file')
+        self.assertEqual(r['directives_connues'],['access_log']);self.assertEqual(r['operations'],['open']);self.assertEqual(r['errno'],[13])
+        self.assertTrue({'nombre_arguments','parametre_invalide','fin_fichier'}<=set(r['categories']));self.assertNotIn(prive,json.dumps(r))
+
     def test_erreurs_nginx_classees_sans_directive_ou_valeur_privee(self):
         prive='valeur-personnelle-confidentielle'
         texte='nginx: [emerg] "client_max_body_size" directive is duplicate in /'+prive+':42\nunknown directive "'+prive+'"\ncannot load certificate "/'+prive+'": BIO_new_file failed (No such file or directory)\nconfiguration file /'+prive+' test failed\nstatus=1/FAILURE'

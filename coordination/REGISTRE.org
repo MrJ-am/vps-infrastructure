@@ -4768,12 +4768,12 @@ La précision suivante conserve les mêmes unités/fenêtre bornées. Elle disti
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 90e8a000aa74f43141118167986c0737643e48c249d9adccac17b786c7e36cb5
+:LU_LE: 2026-10-09T18:50:17+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonces livréesfcc6e780e3cff7c29322a0fdc90682950c2d2012 etbe9c56af271330531f3284358660a3c0e9afe91c. 286 tests/contrôles locaux passent ; aller-retour AGE natif avec clé Work privée et sélection hors requêtes qualifiés, lecture de ligne immuable refusant liens/droits/chemins inconnus. CI exacte et cause réelle restent à constater.
 :END:
 
 ** TODO vps
@@ -4829,12 +4829,12 @@ Cette voie confidentielle permet de résoudre la cause sans multiplier les proje
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 10357c298107d1c5162825461e4727037b40f546cdb0a1207c134882d981ddf1
+:LU_LE: 2026-10-09T18:50:17+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonces livréesfcc6e780e3cff7c29322a0fdc90682950c2d2012 etbe9c56af271330531f3284358660a3c0e9afe91c. 286 tests/contrôles locaux passent ; aller-retour AGE natif avec clé Work privée et sélection hors requêtes qualifiés, lecture de ligne immuable refusant liens/droits/chemins inconnus. CI exacte et cause réelle restent à constater.
 :END:
 
 ** TODO vps
