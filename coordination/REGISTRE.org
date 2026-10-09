@@ -3248,3 +3248,68 @@ Le candidat fige Vision 3dd6c4c0ffff622b5002f34edd8abdea08396a37 et Style 96fa28
 :PREUVE: -
 :END:
 
+* Utiliser log.mrj.am pour l’identité commune avant activation
+:PROPERTIES:
+:ID: 20261009-vision-ae7239ba9b16
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T06:50:05+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Décision explicite du propriétaire le 9 octobre 2026 : l’adresse commune d’identité sera https://log.mrj.am/realms/mrjam. L’enregistrement A log.mrj.am vers 187.77.95.158 est créé chez alwaysdata et observé publiquement ; aucun AAAA au relevé. Cette décision précède toute activation de Keycloak et toute admission multi-utilisateur.
+
+Vision et VPS adaptent les candidats : origine exacte autorisée par le navigateur, hostname natif, vhost HTTPS/ACME, issuer OIDC, contrôles d’admission, fermeture, cycle et rejeu des effacements. Les sujets resteront associés au couple iss/sub exact. Les registres anciens et les preuves historiques ne sont pas réécrits. Le nouveau commit Vision et son archive doivent être figés dans le manifeste opérateur après leurs contrôles.
+
+Les autres outils prennent connaissance de cette adresse lors de leur adoption propre de l’identité commune ; leurs comptes, versions, cookies et routages actuels restent inchangés. SMTP réellement accepté et fichier age reçu sont attestés par Actions 37891204452 ; clé privée/déchiffrement restent à vérifier au retour au PC. La première qualification SQL isolée 37893102123 a échoué sans activation ; son diagnostic et les contrôles après échec sont intégrés à VPS 53e5c80d0b54bf4dcf3c22b3e1c9d957ed0231b2, CI 37893922851 et 37893948040 réussies après relance du job natif.
+
+Fin de cette adaptation : candidats cohérents, CI identifiées et qualification réelle relancée sur le VPS. Elle ne prouve ni une activation, ni la conformité générale RGPD, ni une restauration déchiffrable. Les inscriptions restent fermées.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
