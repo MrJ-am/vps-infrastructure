@@ -18,6 +18,15 @@ et25HTTP/TLS finaux réussis. Vision reste historique, aucune identité humaine.
 Le diagnostic en lecture seule est préparé dans ce même point d'entrée.
 [Rapport de tentative](../operations/vision-amorcage-tentative.json).
 
+Le [diagnostic37955815952](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37955815952),
+job113906002350, opérateurc849613768fdcd7868c4a38b6e44bc0ec9d3ffbd,
+réussit à16:00UTC : arrêt prévu de tmpfiles-resetup et d'une unité ACME,
+redémarrage Nginx, aucune unité inconnue/systemd/swap. Socle, six services,
+nouvelle SSH et25HTTP/TLS avant/après passent, aucune activation.
+La correction ajoute une comparaison stricte des fichiers/règles immuables
+avant d'autoriser ce seul arrêt ; reprise réelle encore à constater.
+[Rapport du diagnostic](../operations/vision-amorcage-diagnostic.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

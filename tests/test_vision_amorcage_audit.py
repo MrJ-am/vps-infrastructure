@@ -32,6 +32,10 @@ class Audit(unittest.TestCase):
         self.assertEqual(r['categories'],[]);self.assertEqual(r['unites']['reload'],dict(connues=[],acme=1,inconnues=0))
         self.assertNotIn('domaine-prive',json.dumps(r))
 
+    def test_exception_reelle_du_controle_est_classee(self):
+        r = audit.classer('construction_identite.ConstructionRefusee: Dry-activate annonce une unité étrangère à l’amorçage', '')
+        self.assertEqual(r['categories'],['unite_etrangere'])
+
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)/'prive';p.write_text('texte');p.chmod(0o600)

@@ -61,6 +61,14 @@ reproduit bien la génération construite, le contrôle final du socle et les
 25 sondes passent. Le refus sera diagnostiqué par l'agent via ce même point
 d'entrée, sans solliciter un nouveau lancement du propriétaire.
 
+Le diagnostic `37955815952` établit l'arrêt prévu de
+`systemd-tmpfiles-resetup.service`, d'une unité ACME et le redémarrage de Nginx,
+avec aucune unité inconnue ; socle, six services/nouvelle SSH et25sondes passent.
+La reprise ajoute un contrôle strict des répertoires avant d'autoriser ce seul
+arrêt. Les règles anciennes et la commande de l'unité doivent être conservées ;
+seule la création root0700 du répertoire de sauvegarde réservé est admise.
+Les prochains refus seront aussi classés automatiquement dans l'exécution.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.
