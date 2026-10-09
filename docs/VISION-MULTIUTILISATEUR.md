@@ -4,6 +4,30 @@ Cette opération est distincte des anciennes publications de présentation et de
 la migration sémantique. Les modules sont **désactivés par défaut**. Ce dossier
 ne revendique ni une activation NixOS ni une conformité globale en production.
 
+La qualification réelle du 9 octobre
+[37909401754](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37909401754),
+opérateur `48f40f3eebbbd18eb9048c7036284185a56050e9`, réussit : snapshot
+restauré en UTF-8, migrations 019–025 sans perte et retour des ACL/owners/RLS
+rejoué deux fois. Six services, nouvelle connexion SSH et 25 sondes HTTP/TLS
+passent avant et après. Le doublon `37909419903` est refusé car la préparation
+est déjà terminée, avec contrôles réussis.
+[Preuve technique sans données](../operations/vision-multiutilisateur-qualification.json).
+Le schéma de production, la génération et les inscriptions restent inchangés.
+
+Le workflow manuel `vision-identite-construire.yml` prépare maintenant le
+paquet configuré par le module NixOS, avec ses cinq plugins JDBC Unix, SPI et
+systemd. Le Nixpkgs installé fournit 26.7.2 ; `services/keycloak-mrjam/paquet.nix`
+épingle seulement l'archive officielle 26.7.3 et son hash, avec la recette et
+les dépendances installées. Aucune mise à jour de canal. La CI vérifie que
+l'override ultérieur des plugins conserve cette source et que le garde-fou
+d'activation reste fermé. La construction exige la preuve privée de la
+qualification précédente et les mêmes candidats ; elle conserve des racines
+GC et vérifie la version et les plugins, sans démarrer Keycloak ni créer de
+compte. Elle reste **à lancer sur le VPS**. L'essai JDBC Unix natif sur ce VPS,
+l'identité initiale/MFA et le retour autonome constituent les étapes suivantes.
+
+### Diagnostic préalable résolu
+
 Le 9 octobre, l’audit réel [37903503795](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37903503795)
 confirme la reproduction exacte du socle actif après épinglage de son fournisseur
 avec `builtins.storePath` (PR34, opérateur `bb26c11a3afd5b924b91c579cc5fc5cd7841d3df`).
@@ -23,8 +47,8 @@ contrôle de restauration. Aucune modification des données de production.
 
 Les audits réels `37906264873` et `37907271873` passent : le refus vient de
 `pg_restore`, pendant `COPY`, et ne correspond pas aux premières catégories.
-Ils confirment le dump age présent et l’absence du dump temporaire en clair ;
-aucun rapport de préparation ni retour ACL n’est encore produit.
+Ils confirmaient le dump age présent et l’absence du dump temporaire en clair ;
+aucun rapport de préparation ni retour ACL n’était alors produit.
 
 La reproduction synthétique révèle un défaut du nouveau préparateur : avec
 `--no-locale` seul, PostgreSQL choisit SQL_ASCII. Un titre de 180 « é », accepté
@@ -36,7 +60,8 @@ véritable démarrage corrigé, restaure le schéma 18 et ses textes multioctets
 applique 19–25, puis rejoue deux fois le retour ACL/owners/RLS. Empreintes
 historiques et attributs du rôle sont préservés. Le diagnostic est complété
 par des catégories de contrainte et de valeur invalide pour confirmer le
-refus réel ; la reproduction locale seule n’en établit pas encore la cause.
+refus réel. L'audit `37908917349` confirme une contrainte de longueur d'item ;
+la qualification réelle corrigée ci-dessus établit ensuite le succès.
 
 ## Architecture candidate
 

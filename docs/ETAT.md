@@ -1,5 +1,29 @@
 # État attesté au 9 octobre 2026
 
+## Vision — copie réelle et retour des droits qualifiés le 9 octobre 2026
+
+La [qualification 37909401754](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37909401754),
+opérateur `48f40f3eebbbd18eb9048c7036284185a56050e9`, réussit à 09:10 UTC :
+restauration du snapshot réel dans le seul cluster privé UTF-8, migrations
+019–025 sans modification des empreintes historiques et retour ciblé des
+ACL/owners/RLS rejoué deux fois. Le cluster isolé est retiré après le test.
+Les six services, une nouvelle connexion SSH et 25 sondes HTTP/TLS passent.
+Le second lancement `37909419903` est refusé à « Préparation déjà terminée » ;
+ses contrôles passent également. Aucune migration de production ni activation.
+
+Le socle actif est reproduit exactement en conservant sa source fournisseur
+immuable avec `builtins.storePath` ; la divergence décrite ci-dessous est
+résolue pour cette préparation. Le défaut SQL_ASCII du cluster de test est
+corrigé et sa régression multioctet passe.
+Vision `a9c51acac81510d7dc896f5daf4e6fb28a36b979` et Style
+`96fa28ac564b9492768837d4087608e83acc721b` restent les candidats.
+[Rapport technique](../operations/vision-multiutilisateur-qualification.json).
+
+Le paquet Keycloak 26.7.3 avec ses plugins est préparé pour une construction
+manuelle distincte sur le Nixpkgs installé (qui fournit 26.7.2). Cette
+construction n'est pas encore constatée sur le VPS. Préconditions d'activation,
+identité initiale, contrats, clé et copie externe demeurent à établir.
+
 ## Vision — qualification isolée arrêtée avant dump, 9 octobre 2026
 
 La relance [37897757438](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37897757438),
