@@ -133,6 +133,10 @@ def classer_nginx(texte):
     types_chemins=set()
     for p in chemins:
         if p=='/run/systemd/journal.http/syslog':types_chemins.add('socket_journal_http')
+        elif p=='/run/nginx/nginx.pid':types_chemins.add('pid_nginx')
+        elif p=='/run/nginx' or p.startswith('/run/nginx/'):types_chemins.add('runtime_nginx')
+        elif p=='/var/cache/nginx' or p.startswith('/var/cache/nginx/'):types_chemins.add('cache_nginx')
+        elif p=='/var/log/nginx' or p.startswith('/var/log/nginx/'):types_chemins.add('logs_nginx')
         elif p in ('/var/lib/acme/log.mrj.am/fullchain.pem','/var/lib/acme/log.mrj.am/key.pem','/var/lib/acme/log.mrj.am/chain.pem'):types_chemins.add('certificat_log')
         elif re.fullmatch(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-nginx\.conf',p):types_chemins.add('configuration_nginx')
         else:types_chemins.add('inconnu')

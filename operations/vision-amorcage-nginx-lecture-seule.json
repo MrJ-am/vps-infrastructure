@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "infrastructure": "542c15e87573f9f3d948fe0a5f9b5b2717df3e1f",
+  "signal": 37984149004,
+  "run": 37984167434,
+  "job": 114001897220,
+  "configuration_nginx_native": false,
+  "operation_refusee": "open",
+  "errno": 30,
+  "cause": "confinement_test_lecture_seule",
+  "chemin_exact_etabli": false,
+  "socle_inchange": true,
+  "services_actifs": 6,
+  "sondes_http_tls": 25,
+  "nouvelle_connexion_ssh": true,
+  "activation": false,
+  "inscriptions": false,
+  "identite_humaine": false
+}
