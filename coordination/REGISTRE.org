@@ -3683,14 +3683,14 @@ Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b94927688
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 0cf62d1bc8cb01c4b100afececf7cba4ff79ddf9b5385fd46735d57cca58c90d
-:LU_LE: 2026-10-09T11:13:30+00:00
+:LU_LE: 2026-10-09T11:40:02+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37921899243
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219
 :END:
-Essai réel arrêté au cluster synthétique ; Keycloak non démarré. Socle et retrait des runtimes, six services et 25 sondes passent. Diagnostic privé à classer avant relance.
+Qualification native VPS réussie : paquet optimisé, JDBC Unix/peer sans mot de passe, autre UID refusé, DynamicUser/réseau privé et aucun TCP. Runtimes retirés, socle inchangé, six services et 25 sondes passent. Aucune activation.
 
 ** TODO vps
 :PROPERTIES:
@@ -3716,6 +3716,72 @@ VPS prépare un diagnostic en lecture seule, via audit.yml existant et demande s
 La revue locale constate aussi que le lanceur public sans secret est copié sous un dossier root demandé0711 avec umask077 : son mode réel devient0700 et empêche sa traversée par postgres. Reproduire cette propriété et qualifier explicitement la traversée par un UID distinct, tout en refusant la lecture des fichiers privés ; corriger uniquement ce dossier de lanceurs prévu pour être traversable, jamais les dossiers de données/logs/credentials ou le store. Le diagnostic réel devra confirmer ou distinguer cette cause avant la relance du workflow manuel corrigé, avec les mêmes garde-fous et contrôles.
 
 Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b, paquet v3g29yfxvp9bdnjgw3p91zvh4jggvk45 et issuer candidat log.mrj.am restent inchangés. Les autres projets ne changent ni compte ni publication. Fin : cause réelle classée, correction qualifiée et essai natif identifié ; aucune réussite JDBC/systemd n'est déduite des seuls conteneurs. Identité initiale/MFA, retour autonome, contrats, clé et copie externe restent distincts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 0a27a54961ad373463b1d3cf41acc8ac0ad1ccc18fd9dc713ebc0e536b33431e
+:LU_LE: 2026-10-09T11:40:02+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219
+:END:
+Audit37923766983 confirme la traversée du lanceur refusée. PR42 établit 0711 sur le seul dossier public, CI37923202540/37923206284 et régression UID distinct passent. Essai corrigé37924485219 réussi avec contrôles finaux.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Préparer l’import privé initial MrJ.am sans activer ni créer de compte humain
+:PROPERTIES:
+:ID: 20261009-vision-fed22f8f4eb8
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T11:40:02+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La qualification native réelle 37924485219, job113800035423, opérateur64402023f6ec4d0a733df3ad09f7663d789a4737, réussit : paquet optimisé Keycloak26.7.3 v3g29yfxvp9bdnjgw3p91zvh4jggvk45, SPI, API synthétique, JDBC Unix/peer sans mot de passe, DynamicUser et réseau privé. Un autre UID est refusé et PostgreSQL ne reçoit aucun TCP. Runtimes retirés et génération/release inchangées ; six services, nouvelle connexion SSH et25 sondes HTTP/TLS passent. L'audit37923766983 confirme le refus de traversée de l'ancien dossier root0700 ; PR42 corrige seulement le dossier de deux lanceurs publics, avec CI37923202540/37923206284 réussies et220 tests Python.
+
+VPS prépare maintenant une opération manuelle distincte pour le seul import initial privé MrJ.am, après vérification des preuves privées de construction et de qualification Unix et du même socle. Préparer les secrets des clients et le realm hors Git/store, fichiers root0600 et dossier0700 ; reprendre les clés existantes valides sans rotation, refuser symlinks, fichiers partagés ou droits faibles. Une relance vérifie l'import existant et ne l'écrase pas. Le SMTP déjà provisionné est lu localement pour la configuration, sans connexion ni envoi. La sortie et l'artefact contiennent uniquement versions, révisions et booléens. Les fichiers privés ne sont jamais remontés dans Actions.
+
+Cette phase ne démarre pas Keycloak, n'importe rien dans une base, ne crée pas d'identité humaine, ne change ni SQL de production ni NixOS/routage/DNS. L'inscription native reste fermée. Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979 et Style96fa28ac564b9492768837d4087608e83acc721b sont conservés ; les autres outils ne changent ni compte ni publication. Vision consigne la preuve Unix et VPS qualifie la préparation privée avec CI pertinente et contrôles des services/sites même après échec.
+
+Fin : préparateur sécurisé et workflow manuel exact testés puis import privé réellement préparé et vérifié, sans rotation ni fuite. Création et possession de l'identité du propriétaire/MFA, rapprochement historique explicite, retour autonome, génération candidate et activation restent des opérations distinctes. Les contrats applicables, clé age privée et copie externe restent nécessaires avant l'ouverture à des tiers ; l'absence actuelle du PC ne bloque pas cette préparation fermée.
 
 ** TODO logique
 :PROPERTIES:
