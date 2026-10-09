@@ -5532,3 +5532,66 @@ Qualifiers déjà rédigés et parcours natif26.7.3/PG17/SMTP synthétique/Chrom
 :PREUVE: -
 :END:
 
+* Reconnaître le flux natif mot de passe ou lien magique avant enrôlement
+:PROPERTIES:
+:ID: 20261009-vision-7a3eeef4493d
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T22:00:13+00:00
+:CONSOLIDATION: sans-objet
+:END:
+f8343fb/PR69/317 tests, CI push37995701180 réussie, signal37996147533 puis enrôlement37996158121/job114042717040 : HTTPS/issuer/refus/source, six services et25sites réussis ; refus methodes_pwd_otp avant enveloppe_contact/etat_durable/compte_et_courriel. Aucun compte ni courrier créés par cette tentative. La génération réservée ac3 reste enregistrée et active.
+
+Reproduction native26.7.3 avec l'import préparé courant et realm synthétique temporaire : auth-username-password-form est ALTERNATIVE, otp REQUIRED. Le lecteur ajouté en PR69 exigeait à tort les deux REQUIRED alors que le flux d'identification courant propose mot de passe ou lien magique. Corriger uniquement le lecteur pour comparer toute la hiérarchie réelle (providers, sous-flux, requirements, niveaux, priorités, identifiants et configurations de méthode) au modèle privé immuable déjà contrôlé. Ne changer ni realm ni méthode, ni secret ni NixOS ni SQL applicatif. La preuve sensible reste pwd ET otp effectivement exécutés depuis moins de300secondes, jamais magic-link ou credentials seuls. Ajouter une projection fermée des raisons de ce lecteur, aucun message privé.
+
+Qualifier le lecteur corrigé sur le moteur natif et les refus d'exécutions différentes, puis relancer automatiquement le même enrôlement réservé après CI exacte. Les intentions durables de création/envoi et les refus de rejeu restent en place. L'ouverture aux tiers et le passage Vision en OIDC restent fermés. Le propriétaire n'intervient que pour choisir son mot de passe et configurer son OTP.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
