@@ -22,6 +22,28 @@ plan = charger('vision-plan')
 
 
 class Audit(unittest.TestCase):
+    def test_erreurs_nginx_classees_sans_directive_ou_valeur_privee(self):
+        prive='valeur-personnelle-confidentielle'
+        texte='nginx: [emerg] "client_max_body_size" directive is duplicate in /'+prive+':42\nunknown directive "'+prive+'"\ncannot load certificate "/'+prive+'": BIO_new_file failed (No such file or directory)\nconfiguration file /'+prive+' test failed\nstatus=1/FAILURE'
+        r=audit.classer_nginx(texte)
+        self.assertEqual(r['directives_connues'],['client_max_body_size']);self.assertEqual(r['directives_inconnues'],1)
+        self.assertEqual(r['categories'],['certificat_inaccessible','configuration_refusee','configuration_tls','directive_dupliquee','directive_inconnue','fichier_absent'])
+        self.assertEqual(r['codes'],[1]);self.assertNotIn(prive,json.dumps(r))
+
+    def test_nginx_uniquement_unites_techniques_et_fenetre_du_refus(self):
+        reponses=[SimpleNamespace(stdout=b'unknown directive "detail-prive"',returncode=0),
+            SimpleNamespace(stdout=b'detail-prive',returncode=1)]
+        with patch.object(audit.subprocess,'run',side_effect=reponses) as appels:
+            r=audit.journaux_nginx(Path('/outils'));self.assertTrue(r['http']['disponible'])
+            self.assertFalse(r['defaut']['disponible']);self.assertNotIn('detail-prive',json.dumps(r))
+            for a in appels.call_args_list:
+                self.assertIn('--unit=nginx.service',a.args[0]);self.assertIn('--unit=nginx-validate-config.service',a.args[0])
+                self.assertIn('--since=2026-10-09 17:05:00 UTC',a.args[0]);self.assertIn('--until=2026-10-09 17:06:40 UTC',a.args[0])
+            self.assertIn('--namespace=http',appels.call_args_list[0].args[0]);self.assertNotIn('--namespace=http',appels.call_args_list[1].args[0])
+        for erreur in (OSError('detail-prive'),audit.subprocess.TimeoutExpired(['detail-prive'],10)):
+            with patch.object(audit.subprocess,'run',side_effect=erreur):r=audit.journaux_nginx(Path('/outils'))
+            self.assertTrue(all(v['disponible'] is False for v in r.values()));self.assertNotIn('detail-prive',json.dumps(r))
+
     def test_sortie_sans_fragment_prive_et_avec_unites_connues(self):
         secret = 'valeur-utilisateur-confidentielle'
         r = audit.classer('RuntimeError: Dry-activate annonce une unité étrangère '+secret,

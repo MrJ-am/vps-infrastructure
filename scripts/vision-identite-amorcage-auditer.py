@@ -71,6 +71,48 @@ EXCEPTIONS = frozenset(('IOException','FileNotFoundException','NoSuchFileExcepti
     'LiquibaseException','DatabaseException','ExecutionException','SecurityException','TimeoutException','CompletionException'))
 ETAPES_SYSTEMD = frozenset(('EXEC','USER','GROUP','CHDIR','CREDENTIALS','NAMESPACE','RUNTIME_DIRECTORY',
     'STATE_DIRECTORY','LOGS_DIRECTORY','CACHE_DIRECTORY','STDOUT','STDERR','CAPABILITIES'))
+MOTIFS_NGINX = {
+    'directive_dupliquee': r'"[^"\n]+" directive is duplicate',
+    'directive_inconnue': r'unknown directive "',
+    'directive_contexte': r'directive is not allowed here',
+    'variable_inconnue': r'unknown "[^"\n]+" variable',
+    'syntaxe': r'unexpected "|unexpected end of file|invalid number of arguments|invalid parameter',
+    'certificat_inaccessible': r'cannot load certificate\b',
+    'cle_inaccessible': r'cannot load certificate key\b',
+    'cle_certificat_differents': r'key values mismatch',
+    'configuration_tls': r'SSL_CTX_|PEM_read_bio|BIO_new_file',
+    'zone_sans_taille': r'zero size shared memory zone',
+    'zone_dupliquee': r'zone "[^"\n]+" is already bound',
+    'port_occupe': r'bind\(\).*Address already in use',
+    'permission_refusee': r'Permission denied',
+    'fichier_absent': r'No such file or directory',
+    'configuration_refusee': r'configuration file .* test failed',
+}
+DIRECTIVES_NGINX = frozenset(('client_max_body_size','proxy_pass','proxy_set_header','add_header',
+    'limit_req','limit_req_zone','limit_conn','limit_conn_zone','ssl_certificate','ssl_certificate_key',
+    'listen','location','server','server_name','access_log','error_log','return','include','pid'))
+
+
+def classer_nginx(texte):
+    directives=set(re.findall(r'"([^"\n]+)" directive is (?:duplicate|not allowed here)',texte))
+    directives.update(re.findall(r'unknown directive "([^"\n]+)"',texte))
+    return dict(categories=sorted(n for n,m in MOTIFS_NGINX.items() if re.search(m,texte)),
+        directives_connues=sorted(directives & DIRECTIVES_NGINX),
+        directives_inconnues=len(directives-DIRECTIVES_NGINX),**sorties(texte))
+
+
+def journaux_nginx(outils):
+    rapports={}
+    for namespace in ('http','defaut'):
+        try:
+            r=subprocess.run([str(outils/'journalctl'),*(['--namespace=http'] if namespace=='http' else []),
+                '--unit=nginx.service','--unit=nginx-validate-config.service',
+                '--since=2026-10-09 17:05:00 UTC','--until=2026-10-09 17:06:40 UTC',
+                '--lines=300','--output=cat','--no-pager'],capture_output=True,timeout=10)
+        except (OSError,subprocess.TimeoutExpired):r=None
+        disponible=r is not None and r.returncode==0 and len(r.stdout)<=1048576
+        rapports[namespace]=dict(disponible=disponible,**classer_nginx(r.stdout.decode(errors='replace') if disponible else ''))
+    return rapports
 
 
 def sorties(texte):
@@ -294,6 +336,7 @@ def main(reprise=False):
         except (OSError,ValueError,SyntaxError,UnicodeError):details=dict(cadres=[],cadres_disponibles=False)
         ETAPE='unites_secondaires';details['unites_identite']=unites_identite(outils)
         ETAPE='namespace_identite';details['journal_namespace_identite']=namespace_identite(outils)
+        ETAPE='journaux_nginx';details['journaux_nginx']=journaux_nginx(outils)
         ETAPE='import_prive';details['import_prive']=import_prive()
         ETAPE='cluster_arrete'
         prepare=Path('/root/vision-identite-amorcage-operations/765ce372ccd61ad623e33bf8bb476a5c3be21fba')

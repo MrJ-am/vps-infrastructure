@@ -1094,3 +1094,22 @@ identité réservée, fontes OFL et licences externes conservées. Vingt tables
 préservées, aucune migration ni restauration de production. Génération NixOS
 et autres releases inchangées, retour désarmé, sauvegardes conservées.
 Voir [le rapport](../operations/vision-point-licence-publication.json).
+
+Le 9 octobre à 18:28:33 UTC, diagnostic autonome `37973425279`
+(job `113965629376`, commit `239962e014c35c02ef4f4c5b2da96e0fb8e04fd2`,
+PR57/281 tests, CI push `37972655858` et PR `37972660633`) : le bilan du
+gestionnaire désigne uniquement `nginx.service`, sans unité inconnue.
+Le cluster PostgreSQL17 privé reste proprement arrêté et préservé ; aucune
+génération enregistrée ni compte humain. Six services/SSH et 25 contrôles
+HTTP/TLS avant/après passent, fin 18:28:45 UTC. Voir
+`operations/vision-amorcage-bilan-switch.json`. La sortie 143 de l’identité
+ne constituait pas la cause initiale.
+
+Le complément suivant lit uniquement `nginx.service` et
+`nginx-validate-config.service` dans les namespaces `http` et par défaut,
+sur la fenêtre fixe de cet essai (17:05:00–17:06:40 UTC). Le module actif
+`journal-http.nix` dirige Nginx vers `http`. Sortie fermée : familles
+d’erreurs, noms de directives prédéfinis, compteur d’inconnus, codes
+numériques/étapes systemd connus. Aucun fragment, chemin, URL, IP ou valeur
+n’est publié ; le journal HTTP général n’est jamais lu. Pas de réparation
+ou de relance avant la cause précise, pas d’effacement du cluster.

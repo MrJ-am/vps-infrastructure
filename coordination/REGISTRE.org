@@ -4707,12 +4707,12 @@ Le module actif journal-http.nix réserve les sorties de Nginx au namespace http
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: b154f4c6df76e8beadfc8c2349554822112f2839255e82c54b77efff26317760
+:LU_LE: 2026-10-09T18:32:52+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce livrée1cc5b306e610bf91b6b989142d036f0ffd783c82. Module Nginx/namespace http lu. 283 tests et contrôles locaux réussis, projection sans détail privé, bornes de temps/unités et indisponibilité qualifiées. CI exacte et cause détaillée restent à constater.
 :END:
 
 ** TODO vps

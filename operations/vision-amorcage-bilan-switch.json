@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "infrastructure": "239962e014c35c02ef4f4c5b2da96e0fb8e04fd2",
+  "signal": 37973407826,
+  "execution": 37973425279,
+  "job": 113965629376,
+  "revision_examinee": "f9dae92a39f350d5aa5b5795f74b04f6827d60ff",
+  "socle_conserve": true,
+  "retour_termine": true,
+  "generation_enregistree": false,
+  "cluster17_prive_proprement_arrete": true,
+  "unites_echec": [
+    "nginx.service"
+  ],
+  "unites_inconnues": 0,
+  "activation": false,
+  "identite_humaine": false,
+  "inscriptions": false,
+  "services_actifs": 6,
+  "nouvelle_ssh": true,
+  "http_tls_avant": 25,
+  "http_tls_apres": 25
+}
