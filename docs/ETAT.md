@@ -1,5 +1,17 @@
 # État attesté au 9 octobre 2026
 
+L'[essai37992389053](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37992389053),
+opérateurc527fcfd64dc5478da1011aafc28ce6e3d3fd199, job114029672958,
+a réussi préparation/audit/copie froide/empreinte/dry/timer et démarrage,
+puis rencontré une exception non classée à controles_locaux.
+Le retour et le diagnostic automatique ont réussi ; clusterPG17 sain arrêté,
+socle/six services/SSH/25HTTP/TLS conservés. Génération non enregistrée,
+aucune migration SQL de production, personne ni inscription.
+Le diagnostic suivant vérifie la source exacte de c527 et projette seulement
+les classes Python fermées, codes HTTP d'exceptions réelles et cadres AST
+connus ; aucun message, URL, corps ou valeur privée. Aucune reprise avant
+constat réel de cette cause, aucun redémarrage ou SQL dans le diagnostic.
+
 Le [diagnostic37991412168](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37991412168),
 opérateur6dbdb2f6123142145ba6077ed3d6ca38ed39222c, job114026288555,
 identifie le seul refus de f763 : contrôle de boucle locale verifier_local:301,

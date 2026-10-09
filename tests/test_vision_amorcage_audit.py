@@ -63,7 +63,7 @@ class Audit(unittest.TestCase):
             self.assertFalse(r['defaut']['disponible']);self.assertNotIn('detail-prive',json.dumps(r))
             for a in appels.call_args_list:
                 self.assertIn('--unit=nginx.service',a.args[0]);self.assertIn('--unit=nginx-validate-config.service',a.args[0])
-                self.assertIn('--since=2026-10-09 20:35:50 UTC',a.args[0]);self.assertIn('--until=2026-10-09 20:38:00 UTC',a.args[0])
+                self.assertIn('--since=2026-10-09 21:18:00 UTC',a.args[0]);self.assertIn('--until=2026-10-09 21:18:50 UTC',a.args[0])
             self.assertIn('--namespace=http',appels.call_args_list[0].args[0]);self.assertNotIn('--namespace=http',appels.call_args_list[1].args[0])
         for erreur in (OSError('detail-prive'),audit.subprocess.TimeoutExpired(['detail-prive'],10)):
             with patch.object(audit.subprocess,'run',side_effect=erreur):r=audit.journaux_nginx(Path('/outils'))
@@ -124,6 +124,17 @@ class Audit(unittest.TestCase):
             etat,journal=audit.etat_worker(Path('/outils'),revision,revision_attendue=revision)
             self.assertEqual(etat,dict(etat='inactive',code=1))
             self.assertIn('vision-amorcage-essai-'+revision[:12]+'.service',appels.call_args_list[0].args[0])
+
+    def test_exceptions_python_et_codes_http_sans_message_url_ou_corps(self):
+        prive='information-personnelle'
+        texte='urllib.error.HTTPError: HTTP Error 401: '+prive+'\njson.decoder.JSONDecodeError: '+prive+'\nExceptionInconnue: '+prive
+        r=audit.exception_privee(texte)
+        self.assertEqual(r,dict(classes=['HTTPError','JSONDecodeError'],codes_http=[401]))
+        self.assertNotIn(prive,json.dumps(r))
+        for texte in ('    raise HTTPError(401, '+repr(prive)+')', 'journal HTTPError: HTTP Error 403: '+prive,
+                'ValueError: donnée privée HTTPError: HTTP Error 403: '+prive):
+            self.assertEqual(audit.exception_privee(texte)['codes_http'],[])
+        self.assertEqual(audit.exception_privee('ExceptionInconnue: '+prive),dict(classes=[],codes_http=[]))
 
     def test_worker_actif_et_etat_indetermine_refuses(self):
         for sortie,code in ((b'ActiveState=active\nExecMainStatus=0\n',0),

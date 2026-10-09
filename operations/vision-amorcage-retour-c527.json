@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "infrastructure": "c527fcfd64dc5478da1011aafc28ce6e3d3fd199",
+  "signal": 37992377437,
+  "run": 37992389053,
+  "job": 114029672958,
+  "preparation_reussie": true,
+  "retour_reussi": true,
+  "diagnostic_automatique_reussi": true,
+  "sondes_http_tls": 25,
+  "exception_initiale_connue": false,
+  "rapport": {
+    "revision": "c527fcfd64dc5478da1011aafc28ce6e3d3fd199",
+    "socle_conserve": true,
+    "retour_termine": true,
+    "generation_enregistree": false,
+    "worker": {
+      "etat": "inactive",
+      "code": 0
+    },
+    "controle_worker": {
+      "etapes": [
+        "essai_generation",
+        "controles_locaux"
+      ],
+      "categories": [],
+      "activation_annoncee": false,
+      "redemarrage_systemd": false,
+      "arret_swap": false,
+      "unites": {},
+      "unites_echec": {
+        "bilan_present": false,
+        "connues": [],
+        "inconnues": 0
+      }
+    },
+    "categories": [],
+    "activation_annoncee": true,
+    "redemarrage_systemd": false,
+    "arret_swap": false,
+    "unites": {
+      "stop": {
+        "connues": [
+          "systemd-tmpfiles-resetup.service"
+        ],
+        "acme": 1,
+        "inconnues": 0
+      },
+      "restart": {
+        "connues": [
+          "nginx.service"
+        ],
+        "acme": 0,
+        "inconnues": 0
+      }
+    },
+    "unites_echec": {
+      "bilan_present": false,
+      "connues": [],
+      "inconnues": 0
+    },
+    "unites_identite": {
+      "mrjam-amorcage-postgresql": {
+        "etat": "inactive",
+        "code": 0,
+        "resultat": "success",
+        "etat_disponible": true,
+        "journal_disponible": true,
+        "journaux_disponibles": {
+          "identite": true,
+          "defaut": true
+        },
+        "categories": [],
+        "codes": [],
+        "etapes_systemd": [],
+        "exceptions": []
+      },
+      "mrjam-amorcage-identite": {
+        "etat": "inactive",
+        "code": 0,
+        "resultat": "success",
+        "etat_disponible": true,
+        "journal_disponible": true,
+        "journaux_disponibles": {
+          "identite": true,
+          "defaut": true
+        },
+        "categories": [
+          "unite_identite_echec"
+        ],
+        "codes": [
+          143
+        ],
+        "etapes_systemd": [],
+        "exceptions": []
+      },
+      "mrjam-amorcage-sauvegarde": {
+        "etat": "inactive",
+        "code": 0,
+        "resultat": "success",
+        "etat_disponible": true,
+        "journal_disponible": true,
+        "journaux_disponibles": {
+          "identite": true,
+          "defaut": true
+        },
+        "categories": [],
+        "codes": [],
+        "etapes_systemd": [],
+        "exceptions": []
+      }
+    },
+    "cluster": {
+      "present": true,
+      "dossier_prive": true,
+      "version17": true,
+      "controle_disponible": true,
+      "etat": "shut down",
+      "pid_present": false,
+      "socket_present": false,
+      "journal_disponible": true,
+      "categories": []
+    },
+    "activation": false,
+    "inscriptions": false
+  }
+}
