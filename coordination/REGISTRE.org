@@ -4585,12 +4585,12 @@ VPS précise ce même audit en lecture seule avec les seuls codes numériques de
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 99ff03be9a55bcfd47e1434e2f8370ff7310501196956d7b02586f21dca43315
+:LU_LE: 2026-10-09T18:06:53+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée a625636729d97ea2e645c9cf8d7296251e54632a. Codes/étapes/classes fermés et namespace réservé sans extrait qualifiés ; contrôle privé sans envoi. Cluster f9 préservé, aucun SQL/lancement. CI exacte et cause du service d’identité restent à constater.
 :END:
 
 ** TODO vps

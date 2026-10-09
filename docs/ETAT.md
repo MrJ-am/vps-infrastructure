@@ -79,6 +79,18 @@ La suite prépare un relevé de métadonnées du cluster arrêté et des journau
 des unités dans les deux namespaces. Aucun SQL, lancement ou effacement.
 [Rapport du cluster présent](../operations/vision-amorcage-cluster-present.json).
 
+Le [diagnostic37969887755](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37969887755),
+opérateura006fdc48acc58b333f8e5b2fee9f3a8fd3d7f49, job113953556759,
+réussit à17:58:16 : cadres f9 vérifiés, refus au `worker` ligne291
+(switch-to-configuration test). Le cluster17 est privé et proprement arrêté,
+aucun PID/socket ; journal privé PostgreSQL disponible sans motif d'erreur.
+Seule l'unité d'identité présente un échec historique classé. Socle/retour,
+six services/nouvelle SSH et25HTTP/TLS avant/après passent à17:58:40.
+Le complément préparé classifie les codes de sortie/exceptions connus et le
+namespace réservé complet ; contrôle de l'import et du format du credential,
+sans valeur, lancement, SQL ou reprise.
+[Rapport du cluster arrêté](../operations/vision-amorcage-cluster-arrete.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),
