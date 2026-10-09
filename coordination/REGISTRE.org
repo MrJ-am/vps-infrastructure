@@ -4461,12 +4461,12 @@ VPS rend ce même diagnostic plus robuste. Les préconditions de socle, retour d
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: b360b6a8cac50b148fc96d445c1ec704f7b4eb5a926d9382c3c325040549cbc7
+:LU_LE: 2026-10-09T17:31:49+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée2592e6aa7ec552b0bc8d4631f0450dc96e0c2960. Refus du diagnostic37966437838 et contrôles six services/SSH/25sites constatés. Lectures secondaires indisponibles explicitement qualifiées sans fuite ; aucune reprise autorisée. CI et diagnostic robuste restent à terminer.
 :END:
 
 ** TODO vps

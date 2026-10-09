@@ -106,9 +106,32 @@ class Audit(unittest.TestCase):
         with patch.object(audit.subprocess,'run',side_effect=reponses) as appels:
             r=audit.unites_identite(Path('/outils'))
             self.assertEqual(len(r),3)
-            for v in r.values():self.assertEqual(v,dict(etat='inactive',code=0,resultat='indetermine',categories=['journal_pg_peer_refuse']))
+            for v in r.values():self.assertEqual(v,dict(etat='inactive',code=0,resultat='indetermine',
+                etat_disponible=True,journal_disponible=True,categories=['journal_pg_peer_refuse']))
             self.assertNotIn(secret.decode(),json.dumps(r))
             for a in appels.call_args_list[1::2]:self.assertIn('--namespace=identite',a.args[0])
+
+    def test_unite_retiree_et_journal_absent_ne_masquent_pas_le_reste(self):
+        prive=b'valeur-privee'
+        sorties=[SimpleNamespace(stdout=b'ActiveState=inactive\n',returncode=1),
+            SimpleNamespace(stdout=prive,returncode=1),
+            SimpleNamespace(stdout=b'ActiveState=failed\nExecMainStatus=1\nResult=exit-code\n',returncode=0),
+            SimpleNamespace(stdout=b'initdb: error: '+prive,returncode=0),
+            SimpleNamespace(stdout=b'ActiveState='+prive+b'\nExecMainStatus=512\n',returncode=0),
+            SimpleNamespace(stdout=b'',returncode=0)]
+        with patch.object(audit.subprocess,'run',side_effect=sorties):r=audit.unites_identite(Path('/outils'))
+        absent=r['mrjam-amorcage-postgresql'];self.assertEqual(absent['etat'],'indetermine')
+        self.assertIsNone(absent['code']);self.assertFalse(absent['etat_disponible']);self.assertFalse(absent['journal_disponible'])
+        connu=r['mrjam-amorcage-identite'];self.assertEqual(connu['categories'],['journal_pg_initialisation_refusee'])
+        self.assertTrue(connu['etat_disponible']);self.assertNotIn(prive.decode(),json.dumps(r))
+
+    def test_erreurs_de_lecture_secondaire_sortent_seulement_indisponibilite(self):
+        for erreur in (OSError('detail privé'),audit.subprocess.TimeoutExpired(['argument privé'],5)):
+            with patch.object(audit.subprocess,'run',side_effect=erreur):r=audit.unites_identite(Path('/outils'))
+            self.assertEqual(len(r),3)
+            for v in r.values():
+                self.assertFalse(v['etat_disponible']);self.assertFalse(v['journal_disponible']);self.assertEqual(v['categories'],[])
+            self.assertNotIn('privé',json.dumps(r))
 
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:

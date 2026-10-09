@@ -59,6 +59,16 @@ validés contre le code exact et états/journaux des seules unités d'identité.
 Aucun argument ou fragment privé n'est publié ; aucune reprise/effacement.
 [Rapport de reprise corrigée](../operations/vision-amorcage-dispatch-reprise.json).
 
+Le [diagnostic37966437838](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37966437838),
+opérateurd8a974efefa8141f8e52e737936c4778d82d25db, job113941899050,
+refuse sa lecture à17:28:36 ; la cause et l'état privé de f9 restent inconnus.
+Six services/nouvelle SSH et25HTTP/TLS avant/après passent à17:28:52.
+La préparation suivante conserve les préconditions strictes, indique la
+sous-étape d'un refus et marque les relevés secondaires indisponibles sans
+supprimer le rapport principal. Une indisponibilité ne prouve aucun état sûr
+et n'autorise aucune reprise. Aucun changement de génération demandé.
+[Rapport du refus de diagnostic](../operations/vision-amorcage-commande-diagnostic.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

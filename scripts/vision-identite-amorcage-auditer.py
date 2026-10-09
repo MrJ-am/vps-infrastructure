@@ -10,6 +10,7 @@ import stat
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
+ETAPE = 'demarrage'
 REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
 DERNIERE = 'f9dae92a39f350d5aa5b5795f74b04f6827d60ff'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
@@ -139,23 +140,30 @@ def etat_worker(outils, revision=REVISION):
 def unites_identite(outils):
     rapports={}
     for nom in ('mrjam-amorcage-postgresql','mrjam-amorcage-identite','mrjam-amorcage-sauvegarde'):
-        r=subprocess.run([str(outils/'systemctl'),'show',nom+'.service',
-            '--property=ActiveState','--property=ExecMainStatus','--property=Result'],capture_output=True,timeout=5)
-        v=dict(l.split('=',1) for l in r.stdout.decode().splitlines() if '=' in l)
+        try:
+            r=subprocess.run([str(outils/'systemctl'),'show',nom+'.service',
+                '--property=ActiveState','--property=ExecMainStatus','--property=Result'],capture_output=True,timeout=5)
+        except (OSError,subprocess.TimeoutExpired):r=None
+        v={} if r is None or len(r.stdout)>65536 else dict(l.split('=',1) for l in r.stdout.decode(errors='replace').splitlines() if '=' in l)
         etat=v.get('ActiveState');code=v.get('ExecMainStatus','')
-        if r.returncode or etat not in ('active','inactive','failed','activating','deactivating') or not re.fullmatch(r'[0-9]{1,3}',code) or int(code)>255:
-            raise ValueError('État d’unité indéterminé')
+        disponible=(r is not None and r.returncode==0 and etat in ('active','inactive','failed','activating','deactivating') and
+            re.fullmatch(r'[0-9]{1,3}',code) is not None and int(code)<=255)
         resultats=('success','exit-code','signal','timeout','oom-kill','resources','protocol','start-limit-hit')
-        resultat=v.get('Result');resultat=resultat if resultat in resultats else 'indetermine'
-        j=subprocess.run([str(outils/'journalctl'),'--namespace=identite','--unit='+nom+'.service',
-            '--lines=100','--output=cat','--no-pager'],capture_output=True,timeout=10)
-        if j.returncode or len(j.stdout)>1048576:raise ValueError('Journal technique indisponible')
-        rapports[nom]=dict(etat=etat,code=int(code),resultat=resultat,
-            categories=classer(j.stdout.decode(errors='replace'),'')['categories'])
+        resultat=v.get('Result');resultat=resultat if disponible and resultat in resultats else 'indetermine'
+        try:
+            j=subprocess.run([str(outils/'journalctl'),'--namespace=identite','--unit='+nom+'.service',
+                '--lines=100','--output=cat','--no-pager'],capture_output=True,timeout=10)
+        except (OSError,subprocess.TimeoutExpired):j=None
+        journal_disponible=j is not None and j.returncode==0 and len(j.stdout)<=1048576
+        rapports[nom]=dict(etat=etat if disponible else 'indetermine',code=int(code) if disponible else None,
+            resultat=resultat,etat_disponible=disponible,journal_disponible=journal_disponible,
+            categories=classer(j.stdout.decode(errors='replace'),'')['categories'] if journal_disponible else [])
     return rapports
 
 
 def main(reprise=False):
+    global ETAPE
+    ETAPE='dossier_prive'
     if os.geteuid() != 0: raise ValueError('Audit root Actions requis')
     revision=REVISION if reprise else DERNIERE
     dossier=DOSSIER if reprise else DOSSIER.parent/DERNIERE
@@ -166,22 +174,30 @@ def main(reprise=False):
     spec = importlib.util.spec_from_file_location('construction', ROOT/'scripts/vision-identite-construire.py')
     construction = importlib.util.module_from_spec(spec); spec.loader.exec_module(construction)
     candidat = json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
-    construction.verifier_socle(candidat)
+    ETAPE='socle_avant';construction.verifier_socle(candidat)
+    ETAPE='retour_durable'
     marqueurs = {nom:(dossier/nom).exists() for nom in ('commence','plan.json','enregistre','retour-commence','retour-termine')}
     verifier_retour(marqueurs)
     for nom,present in marqueurs.items():
         if present: lire(dossier/nom)
+    ETAPE='journaux_prives'
     diagnostic = lire(dossier/'diagnostic-prive.log'); dry = lire(dossier/'dry-activate-prive.txt')
     worker = lire(dossier/'worker-prive.log') if (dossier/'worker-prive.log').exists() else ''
     outils=Path(candidat['audit']['systeme'])/'sw/bin'
-    etat,journal = etat_worker(outils,revision)
-    details={} if reprise else dict(cadres=cadres(diagnostic,dossier/'source'),unites_identite=unites_identite(outils))
-    construction.verifier_socle(candidat)
+    ETAPE='worker_arrete';etat,journal = etat_worker(outils,revision)
+    details={}
+    if not reprise:
+        ETAPE='cadres_connus'
+        try:details=dict(cadres=cadres(diagnostic,dossier/'source'),cadres_disponibles=True)
+        except (OSError,ValueError,SyntaxError,UnicodeError):details=dict(cadres=[],cadres_disponibles=False)
+        ETAPE='unites_secondaires';details['unites_identite']=unites_identite(outils)
+    ETAPE='socle_apres';construction.verifier_socle(candidat)
     rapport = dict(audit_amorcage=3, revision=revision, socle_conserve=True,
         retour_termine=True, generation_enregistree=False, activation=False, inscriptions=False,
         worker=etat, controle_worker=classer_worker(worker+'\n'+journal),
         cluster_prive_present=Path('/var/lib/mrjam-amorcage-postgresql').exists(),
         **classer(diagnostic,dry),**details)
+    ETAPE='preuve_reprise'
     if reprise:
         verifier_reprise(rapport); rapport['reprise_worker_autorisee']=True
     print(json.dumps(rapport, ensure_ascii=False))
@@ -190,6 +206,9 @@ def main(reprise=False):
 if __name__ == '__main__':
     p=argparse.ArgumentParser();p.add_argument('--reprise-worker',action='store_true');a=p.parse_args()
     try: main(a.reprise_worker)
-    except Exception:
-        print(json.dumps(dict(audit_amorcage=1, diagnostic_refuse=True, activation=False)))
+    except Exception as erreur:
+        causes={ValueError:'valeur_refusee',FileNotFoundError:'fichier_absent',PermissionError:'permission_refusee',
+            subprocess.TimeoutExpired:'lecture_timeout'}
+        print(json.dumps(dict(audit_amorcage=1, diagnostic_refuse=True, activation=False,
+            etape=ETAPE,cause=causes.get(type(erreur),'indeterminee'))))
         raise SystemExit(1)
