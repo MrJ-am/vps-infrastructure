@@ -13,6 +13,14 @@ premier essai `37893102123` retrouve seulement la source extraite, sans
 à établir par le diagnostic technique du workflow d'audit existant ; le
 garde-fou du préparateur reste strict.
 
+L'audit [37899364733](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37899364733),
+opérateur `98ab45e24b2b82fec512fe046681830092919531`, réussit ensuite.
+Génération active et démarrage restent conformes, PostgreSQL 17 sans TCP.
+Les trois évaluations des sources installées produisent toutes la génération
+`mvgw1a0cy7mmf1fq2ji02zynafmg604m`, différente de l'active ; 25 sondes passent.
+La comparaison des unités et du fournisseur reste à constater. Le diagnostic
+est en lecture seule ; aucune correction du système n'est encore appliquée.
+
 ## Vision — courrier Proton qualifié le 9 octobre 2026
 
 L'exécution [37891204452](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37891204452),

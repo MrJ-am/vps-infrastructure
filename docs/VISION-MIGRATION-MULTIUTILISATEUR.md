@@ -113,6 +113,16 @@ d'audit existant compare désormais les seuls paramètres techniques des trois
 évaluations : point d'entrée, source installée et import classique NixOS.
 Ce diagnostic ne remplace ni ne relâche le contrôle strict du préparateur.
 
+L'audit [37899364733](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37899364733),
+opérateur `98ab45e24b2b82fec512fe046681830092919531`, réussit : génération
+active et démarrage conformes au relevé, PostgreSQL 17 sans TCP/écoute.
+Les trois évaluations produisent cependant la même autre génération
+`/nix/store/mvgw1a0cy7mmf1fq2ji02zynafmg604m-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Le diagnostic compare ensuite les textes des seules unités techniques et
+les deux scripts du fournisseur, sans en publier les contenus ni empreintes.
+L'évaluation supplémentaire avec sa source active épinglée reste une lecture
+de configuration ; elle n'est pas une activation ni une correction du socle.
+
 Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
 le thème tiers de la console native conserve les limites déclarées.
 

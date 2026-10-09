@@ -2,6 +2,7 @@
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 
 SPEC = importlib.util.spec_from_file_location('socle', Path(__file__).resolve().parents[1] / 'scripts/vision-socle-auditer.py')
@@ -29,6 +30,11 @@ class DiagnosticSocle(unittest.TestCase):
     def test_chemin_arbitraire_non_publie(self):
         with self.assertRaisesRegex(ValueError, '^Métadonnée de génération inattendue$'):
             SOCLE.generation('/home/personne/contenu-prive')
+
+    def test_comparaison_refuse_une_source_hors_store_sans_la_lire(self):
+        with patch.object(Path, 'read_bytes', side_effect=AssertionError('Lecture privée interdite')):
+            r = SOCLE.comparer_sources('/home/personne/prive', '/home/personne/autre')
+        self.assertEqual(r, {'sources_identifiees': False})
 
 
 if __name__ == '__main__': unittest.main()
