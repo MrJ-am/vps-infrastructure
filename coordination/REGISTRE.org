@@ -5595,3 +5595,68 @@ Qualifier le lecteur corrigé sur le moteur natif et les refus d'exécutions dif
 :PREUVE: -
 :END:
 
+* Reprendre uniquement une création explicitement refusée et sans compte
+:PROPERTIES:
+:ID: 20261009-vision-0c73be8fc02f
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T22:18:21+00:00
+:CONSOLIDATION: sans-objet
+:END:
+0f8b9f3/PR70/325tests, CIpush37997309145 complète réussie. Signal37997811087 et opération37997821227 : première tentative arrêtée sur timeout du relevé public avant extraction/opérateur ; seule tâche échouée relancée par agent. Tentative2/job114048714100 : flux natif corrigé passe, refus compte_et_courriel, six services et25sites finaux réussis. Aucun diagnostic privé de cette exception n'a encore été projeté ; ne pas considérer ce stade comme preuve d'une création ou d'un envoi.
+
+Reproduction native26.7.3 avec profil privé courant et personne fictive : un identifiant de deux caractères est explicitement refuséHTTP400, validation username/length, liste humaine toujours vide. Le profil minimum3 et l'enveloppe minimum2 étaient incohérents. Corriger le minimum de l'enveloppe avant toute API/intention, et l'identifiant interne du seul contact chiffré (adresse de compte et issuer inchangés). Aucune modification du profil/realm, SMTP, secret, génération ou SQL Vision.
+
+Préparer une reprise conditionnelle fermée de la seule tentative0f8 : sources antérieures exactes par empreintes, traceback root600 borné avec uniqueHTTP400 au POST de création précisément repéré dans son AST, zéro compte humain, aucune réception de sujet ni intention/acceptation de courriel, ancien contact déchiffré seulement en RAM de longueur2, contact corrigé strictement même adresse/issuer, profil actuel minimum3. Si et seulement si ces preuves réelles passent, conserver une preuve privée puis renommer l'ancienne intention de création vers une archive privée dédiée, sans effacer. Une reprise déjà consommée ou une erreur de transport, réponse perdue, sujet présent ou étape mail refuse toute reprise. Le nouveau POST conserve sa propre intention fsync et l'interdiction de rejeu ambigu. Projeter seulement classe/code/étape et booléens, aucun traceback/message/contact.
+
+Qualifier ces refus et le contact corrigé avant CI exacte, puis l'agent lance la phase réservée dans la même automatisation. Les inscriptions tierces, OIDC Vision et migration applicative restent fermés ; aucun workflow à faire lancer au propriétaire.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
