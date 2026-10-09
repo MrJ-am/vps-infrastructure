@@ -1,0 +1,245 @@
+{
+  "realm": "mrjam",
+  "displayName": "MrJ.am — compte commun",
+  "enabled": true,
+  "registrationAllowed": false,
+  "registrationEmailAsUsername": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "verifyEmail": true,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "rememberMe": false,
+  "sslRequired": "external",
+  "bruteForceProtected": true,
+  "failureFactor": 5,
+  "waitIncrementSeconds": 60,
+  "maxFailureWaitSeconds": 900,
+  "ssoSessionIdleTimeout": 7200,
+  "ssoSessionMaxLifespan": 43200,
+  "accessTokenLifespan": 300,
+  "passwordPolicy": "hashAlgorithm(argon2) and hashIterations(2) and length(12) and notUsername(undefined)",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "fr"
+  ],
+  "defaultLocale": "fr",
+  "eventsEnabled": true,
+  "eventsExpiration": 2592000,
+  "adminEventsEnabled": true,
+  "adminEventsDetailsEnabled": false,
+  "browserFlow": "mrjam-browser",
+  "clients": [
+    {
+      "clientId": "mrjam-vision",
+      "name": "Vision",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": false,
+      "fullScopeAllowed": false,
+      "redirectUris": [
+        "https://vision.mrj.am/auth/retour"
+      ],
+      "webOrigins": [
+        "https://vision.mrj.am"
+      ],
+      "attributes": {
+        "pkce.code.challenge.method": "S256",
+        "post.logout.redirect.uris": "https://vision.mrj.am/",
+        "backchannel.logout.url": "http://127.0.0.1:3002/auth/deconnexion-commune",
+        "backchannel.logout.session.required": "true",
+        "backchannel.logout.revoke.offline.tokens": "true"
+      },
+      "defaultClientScopes": [],
+      "optionalClientScopes": [],
+      "protocolMappers": [
+        {
+          "name": "Authentification réellement effectuée",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-amr-mapper",
+          "config": {
+            "id.token.claim": "true",
+            "access.token.claim": "true"
+          }
+        },
+        {
+          "name": "Identifiant d’affichage uniquement",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-property-mapper",
+          "config": {
+            "user.attribute": "username",
+            "claim.name": "preferred_username",
+            "jsonType.label": "String",
+            "id.token.claim": "true",
+            "access.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        },
+        {
+          "name": "auth_time nécessaire à la vérification renforcée",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usersessionmodel-note-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.session.note": "AUTH_TIME",
+            "claim.name": "auth_time",
+            "jsonType.label": "long",
+            "id.token.claim": "true",
+            "access.token.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "authenticatorConfig": [
+    {
+      "alias": "mrjam-mot-de-passe",
+      "config": {
+        "default.reference.value": "pwd",
+        "default.reference.maxAge": "300"
+      }
+    },
+    {
+      "alias": "mrjam-second-facteur",
+      "config": {
+        "default.reference.value": "otp",
+        "default.reference.maxAge": "300"
+      }
+    },
+    {
+      "alias": "mrjam-recuperation-email",
+      "config": {
+        "force-login": "true"
+      }
+    },
+    {
+      "alias": "mrjam-lien-courriel",
+      "config": {
+        "default.reference.value": "email",
+        "default.reference.maxAge": "300"
+      }
+    }
+  ],
+  "authenticationFlows": [
+    {
+      "alias": "mrjam-browser",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-cookie",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "authenticatorFlow": false
+        },
+        {
+          "flowAlias": "mrjam-formulaires",
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "authenticatorFlow": true
+        }
+      ]
+    },
+    {
+      "alias": "mrjam-formulaires",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "flowAlias": "mrjam-identification",
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "authenticatorFlow": true
+        },
+        {
+          "flowAlias": "mrjam-otp-conditionnel",
+          "requirement": "CONDITIONAL",
+          "priority": 20,
+          "authenticatorFlow": true
+        }
+      ]
+    },
+    {
+      "alias": "mrjam-otp-conditionnel",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "conditional-user-configured",
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "authenticatorFlow": false
+        },
+        {
+          "authenticator": "auth-otp-form",
+          "authenticatorConfig": "mrjam-second-facteur",
+          "requirement": "REQUIRED",
+          "priority": 20,
+          "authenticatorFlow": false
+        }
+      ]
+    },
+    {
+      "alias": "mrjam-recuperation",
+      "description": "Courriel, nouveau mot de passe ; le second facteur est conservé.",
+      "providerId": "basic-flow",
+      "topLevel": true,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "reset-credentials-choose-user",
+          "requirement": "REQUIRED",
+          "priority": 10,
+          "authenticatorFlow": false
+        },
+        {
+          "authenticator": "reset-credential-email",
+          "authenticatorConfig": "mrjam-recuperation-email",
+          "requirement": "REQUIRED",
+          "priority": 20,
+          "authenticatorFlow": false
+        },
+        {
+          "authenticator": "reset-password",
+          "requirement": "REQUIRED",
+          "priority": 30,
+          "authenticatorFlow": false
+        }
+      ]
+    },
+    {
+      "alias": "mrjam-identification",
+      "providerId": "basic-flow",
+      "topLevel": false,
+      "builtIn": false,
+      "authenticationExecutions": [
+        {
+          "authenticator": "auth-username-password-form",
+          "authenticatorConfig": "mrjam-mot-de-passe",
+          "requirement": "ALTERNATIVE",
+          "priority": 10,
+          "authenticatorFlow": false
+        },
+        {
+          "authenticator": "mrjam-courriel",
+          "authenticatorConfig": "mrjam-lien-courriel",
+          "requirement": "ALTERNATIVE",
+          "priority": 20,
+          "authenticatorFlow": false
+        }
+      ]
+    }
+  ],
+  "resetCredentialsFlow": "mrjam-recuperation",
+  "actionTokenGeneratedByUserLifespan": 600,
+  "loginTheme": "mrjam",
+  "emailTheme": "mrjam"
+}

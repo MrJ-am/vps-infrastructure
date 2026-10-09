@@ -1,0 +1,55 @@
+name: Qualifier la migration multi-utilisateur de Vision
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  preparer:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la CI du commit opérateur exact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/ci-exacte.py
+      - name: Préparer la connexion administrative existante
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-multi-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-multi-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-multi-admin" >/dev/null
+      - name: Relever les autres sites avant préparation
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Transférer le candidat exact et restaurer dans le seul cluster isolé
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-multiutilisateur-operations/$GITHUB_SHA/source; tar -xf - -C /root/vision-multiutilisateur-operations/$GITHUB_SHA/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 age --run 'python3 /root/vision-multiutilisateur-operations/$GITHUB_SHA/source/scripts/vision-multiutilisateur-preparer.py $GITHUB_SHA'"
+      - name: Contrôler les services et une nouvelle connexion
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Conserver seulement le rapport technique sans données
+        run: |
+          mkdir -p "$RUNNER_TEMP/rapport-multi"
+          sh scripts/connect.sh "cat /root/vision-multiutilisateur-operations/$GITHUB_SHA/preparation.json" > "$RUNNER_TEMP/rapport-multi/preparation.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualification-migration-vision
+          path: ${{ runner.temp }}/rapport-multi/
+          retention-days: 14
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-multi-admin"
