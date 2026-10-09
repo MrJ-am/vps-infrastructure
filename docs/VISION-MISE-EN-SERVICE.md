@@ -37,7 +37,7 @@ restent deux actions distinctes.
 | Phase | Situation au regroupement | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
-| Génération réservée | Construite réellement par Actions `37941066602` ; essais retournés, génération non enregistrée | Identifier le refus du service d'identité avant toute reprise |
+| Génération réservée | Construite et contrôlée nativement par Actions `37985768542` ; essai `37987992248` retourné, génération non enregistrée | Identifier le refus du service d'identité avant toute reprise |
 | Compte commun du propriétaire | Aucun compte humain créé | Qualifier l'enrôlement privé, puis faire choisir le mot de passe et configurer le second facteur sur la page sécurisée ; aucun secret en conversation |
 | Rattachement historique et bascule Vision | Non exécutés | Ajouter une phase qualifiée à ce même point d'entrée ; l'agent la déclenchera et la suivra |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |

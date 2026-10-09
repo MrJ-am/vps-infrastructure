@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "infrastructure": "f7634858fa7a7fbfe33f4c00ecc0047bc48b811f",
+  "signal": 37987975061,
+  "run": 37987992248,
+  "job": 114014731892,
+  "preparation_reussie": true,
+  "copie_froide_chiffree": true,
+  "empreinte_copie_verifiee": true,
+  "essai_lance": true,
+  "controles_locaux_reussis": false,
+  "motif_initial_connu": false,
+  "retour_termine": true,
+  "socle_retabli": true,
+  "sondes_http_tls": 25,
+  "diagnostic_automatique_reussi": false,
+  "generation_enregistree": false,
+  "activation": false,
+  "inscriptions": false,
+  "identite_humaine": false
+}

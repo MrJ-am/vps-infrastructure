@@ -1,5 +1,19 @@
 # État attesté au 9 octobre 2026
 
+L'[essai37987992248](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37987992248),
+opérateurf7634858fa7a7fbfe33f4c00ecc0047bc48b811f, job114014731892,
+a préparé et vérifié une copie froide chiffrée du cluster réservé,
+puis échoué aux contrôles locaux. Le retour a rétabli le socle et les
+25HTTP/TLS passent à20:38:09 UTC. La génération n'est pas enregistrée ;
+aucun compte humain ni inscription, aucune migration SQL de production.
+[Rapport de retour](../operations/vision-amorcage-reprise-retour.json).
+Le motif initial reste inconnu. Le diagnostic automatique était limité
+aux anciennes révisions ; il accepte désormais la révision exacte du
+contrôleur déjà lié à son dossier root. Le diagnostic suivant lit seulement
+les fichiers bornés de f763, ses cadres de source vérifiés et les motifs
+fermés des exceptions réelles. Aucun redémarrage ou SQL, aucune reprise
+avant constat du motif et de l'état du cluster retourné.
+
 La [construction37985768542](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37985768542),
 opérateur25f685900a9b65cb7cef872f0b55bcb21e35567d, job114007309842,
 réussit le test Nginx natif complet sous UID/groupe vérifiés, capacité native,

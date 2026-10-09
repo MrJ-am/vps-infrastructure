@@ -14,10 +14,10 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
 REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
-DERNIERE = 'f9dae92a39f350d5aa5b5795f74b04f6827d60ff'
+DERNIERE = 'f7634858fa7a7fbfe33f4c00ecc0047bc48b811f'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
 EMPREINTES = {
-    'vision-identite-amorcage-activer.py':'c6f9871bc0d8a7db4ccf85627317b098b3137f0df978cb538f360d803f21cb66',
+    'vision-identite-amorcage-activer.py':'5db3474df55dda46c03ea20ce1d4d5383f7330547ad03839fe83b61c70a912b2',
     'vision-identite-construire.py':'59b622d13d06994f203bfaf570d142ab214aed6ea3c62ca0d92141ecba6843c5',
     'vision-multiutilisateur-preparer.py':'79bc15f3bbd242e29aa1f9321d90adf35145adeeec28e77c833c3a3c255143d3',
 }
@@ -64,6 +64,10 @@ MOTIFS = {
     'keycloak_echec_demarrage': r'Failed to start server in \(production\) mode|ERROR: Failed to start server',
     'credential_indisponible': r'Failed to (?:load|set up) credentials|Failed at step CREDENTIALS',
 }
+# Les messages de source dans un traceback ne constituent pas une exception.
+REFUS_LOCAUX = {'generation_inattendue': 'Génération inattendue', 'service_essentiel_redemarre': 'Service essentiel redémarré', 'unite_essentielle_differente': 'Unité essentielle différente', 'vision_fournisseur_change': 'Vision ou fournisseur changé', 'confinement_systemd_different': 'Confinement systemd différent', 'identite_root': 'Identité lancée avec privilèges root', 'identite_hors_boucle_locale': 'Identité exposée hors boucle locale', 'cluster_prive_indisponible': 'Cluster privé indisponible', 'parametres_cluster_prive_differents': 'Paramètres du cluster privé différents', 'autre_uid_peer_non_refuse': 'Autre UID non refusé par peer', 'issuer_local_different': 'Issuer local différent', 'realm_different_ou_ouvert': 'Realm différent ou inscription ouverte', 'politique_identite_differente': 'Politique d’identité différente', 'version_spi_different': 'Version ou SPI différent', 'personne_avant_enrolement': 'Personne présente avant enrôlement', 'clients_techniques_differents': 'Clients techniques différents', 'identifiant_technique_different': 'Identifiant technique différent', 'flux_client_different': 'Flux client différent', 'redirections_client_differentes': 'Redirections client différentes', 'compte_technique_different': 'Compte technique différent'}
+MOTIFS.update({nom: r"(?m)^(?:[A-Za-z_][A-Za-z0-9_]*\.)?(?:ConstructionRefusee|ValueError): " + re.escape(message) + r"$"
+    for nom, message in REFUS_LOCAUX.items()})
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
 EXCEPTIONS = frozenset(('IOException','FileNotFoundException','NoSuchFileException','AccessDeniedException',
     'IllegalArgumentException','IllegalStateException','ClassNotFoundException','NoClassDefFoundError',
@@ -152,7 +156,7 @@ def journaux_nginx(outils):
         try:
             r=subprocess.run([str(outils/'journalctl'),*(['--namespace=http'] if namespace=='http' else []),
                 '--unit=nginx.service','--unit=nginx-validate-config.service',
-                '--since=2026-10-09 17:05:00 UTC','--until=2026-10-09 17:06:40 UTC',
+                '--since=2026-10-09 20:35:50 UTC','--until=2026-10-09 20:38:00 UTC',
                 '--lines=300','--output=cat','--no-pager'],capture_output=True,timeout=10)
         except (OSError,subprocess.TimeoutExpired):r=None
         disponible=r is not None and r.returncode==0 and len(r.stdout)<=1048576
@@ -249,8 +253,13 @@ def cadres(texte, source):
     return resultat[-16:]
 
 
-def etat_worker(outils, revision=REVISION):
-    if revision not in (REVISION,DERNIERE):raise ValueError('Tentative non qualifiée')
+def etat_worker(outils, revision=REVISION, *, revision_attendue=None):
+    if revision_attendue is None:
+        qualifiee = revision in (REVISION, DERNIERE)
+    else:
+        # Seul le contrôleur déjà lié à son dossier root fournit cette valeur.
+        qualifiee = isinstance(revision, str) and re.fullmatch(r'[a-f0-9]{40}', revision) is not None and revision == revision_attendue
+    if not qualifiee: raise ValueError('Tentative non qualifiée')
     unite = 'vision-amorcage-essai-' + revision[:12] + '.service'
     r = subprocess.run([str(outils/'systemctl'),'show',unite,'--property=ActiveState',
         '--property=ExecMainStatus'], capture_output=True, timeout=5)
@@ -385,7 +394,7 @@ def main(reprise=False):
         ETAPE='journaux_nginx';details['journaux_nginx']=journaux_nginx(outils)
         ETAPE='import_prive';details['import_prive']=import_prive()
         ETAPE='cluster_arrete'
-        prepare=Path('/root/vision-identite-amorcage-operations/765ce372ccd61ad623e33bf8bb476a5c3be21fba')
+        prepare=Path('/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d')
         try:
             for chemin in (prepare.parent,prepare):
                 s=chemin.lstat()
