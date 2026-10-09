@@ -1,5 +1,22 @@
 # État attesté au 9 octobre 2026
 
+## Vision — composants construits sur le VPS
+
+La [construction 37930689913](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37930689913),
+job `113820359864`, opérateur `296e4d159544f01af1345ea844871d11f17897f7`,
+réussit à 12:33 UTC. Sept unités, six imports Python sans privilèges et sources
+AGPL sont vérifiés ; le paquet Keycloak qualifié est conservé. Le garde empêche
+toujours une génération du mode commun, aucune identité humaine n'est créée.
+Socle et release inchangés, six services/nouvelle SSH et 25 HTTP/TLS avant/après.
+[Rapport technique](../operations/vision-mrjam-composants-qualification.json).
+PR44 intégrée ; CI `37929201747`/`37929205485` réussie, 238 tests Python.
+
+La [phase réservée d'amorçage](IDENTITE-AMORCAGE.md) prépare une génération
+distincte à partir du socle actif, avec un cluster indépendant et un futur
+enrôlement du seul propriétaire. Sa construction et toute activation restent
+à constater. Le mode commun, l'association historique et l'admission
+ne sont pas activés.
+
 ## Vision — import initial privé préparé sur le VPS
 
 La [préparation 37927013329](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329),
@@ -12,10 +29,10 @@ connexion SSH et 25 contrôles HTTP/TLS passent avant et après.
 [Preuve sans données](../operations/vision-identite-import-qualification.json).
 PR43 intégrée, CI `37926200637`/`37926204998` réussies, 232 tests Python.
 
-La [construction des composants](VISION-COMPOSANTS-MRJAM.md) est préparée dans
-un workflow manuel distinct, sans lever l'assertion de génération ni démarrer
-les services. Sa réussite réelle reste à constater. L'identité du propriétaire,
-son MFA, le rapprochement historique et l'activation demeurent des étapes séparées.
+La [construction des composants](VISION-COMPOSANTS-MRJAM.md) réussit réellement
+dans l'exécution consignée ci-dessus, sans lever l'assertion ni démarrer les
+services. L'identité du propriétaire, son MFA, le rapprochement historique et
+l'activation demeurent des étapes séparées.
 
 ## Vision — identité native Unix qualifiée sur le VPS
 

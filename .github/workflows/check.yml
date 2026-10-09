@@ -40,6 +40,16 @@ jobs:
           EOF
           docker build -t qualification-keycloak-outils "$RUNNER_TEMP/outils-unix"
           python3 tests/keycloak-unix-optimise.py --paquet "$(readlink -f "$RUNNER_TEMP/keycloak-optimise")" --image-outils qualification-keycloak-outils
+      - name: Qualifier l'amorçage réservé dans des conteneurs sans réseau
+        run: |
+          NIXPKGS_REVISION=$(python3 -c 'import json; print(json.load(open("tests/nixpkgs.json"))["revision"])')
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/vision-identite-amorcage.nix \
+            --argstr configuration "$PWD/hosts/hostinger/logique.nix" --attr resume > "$RUNNER_TEMP/amorcage.json"
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build scripts/vision-identite-amorcage.nix --argstr configuration "$PWD/hosts/hostinger/logique.nix" \
+            --attr composants --out-link "$RUNNER_TEMP/amorcage-composants" --max-jobs 1 --cores 2
+          python3 tests/identite-amorcage-integration.py --resume "$RUNNER_TEMP/amorcage.json" --image-outils qualification-keycloak-outils
   keycloak:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -134,6 +144,8 @@ jobs:
             nix-instantiate --eval --strict --json tests/vision-identite-paquet.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/vision-mrjam-composants.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/vision-identite-amorcage.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json scripts/vision-multiutilisateur-config.nix \
             --argstr configuration "$PWD/hosts/hostinger/configuration.nix" >/dev/null
