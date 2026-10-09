@@ -404,6 +404,7 @@ def main(reprise=False):
     if reprise:
         verifier_reprise(rapport); rapport['reprise_worker_autorisee']=True
     print(json.dumps(rapport, ensure_ascii=False))
+    return rapport
 
 
 if __name__ == '__main__':

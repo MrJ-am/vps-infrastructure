@@ -1,5 +1,19 @@
 # État attesté au 9 octobre 2026
 
+La [construction37985768542](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37985768542),
+opérateur25f685900a9b65cb7cef872f0b55bcb21e35567d, job114007309842,
+réussit le test Nginx natif complet sous UID/groupe vérifiés, capacité native,
+réseau privé et trois tmpfs privés. L'ancien refus542 était l'ouverture du
+PID Nginx sur un système de fichiers readonly. Socle/six services/SSH et
+25HTTP/TLS avant-après passent, fin20:17:27 UTC ; aucune activation.
+[Preuve de construction exacte](../operations/vision-identite-amorcage-qualification.json)
+et [contrôles natifs](../operations/vision-amorcage-nginx-native.json).
+La génération k4q4i4m9r4070xwwpnd24hpi9g6zngyn reste retenue pour l'essai.
+La reprise réservée du seul cluster arrêté f9 est préparée avec audit,
+copie à froid chiffrée, empreinte vérifiée avant démarrage, retour indépendant
+et diagnostic automatique après retour. Cette préparation ne prouve encore
+ni son activation, ni le déchiffrement d'une sauvegarde réelle.
+
 Le contrôle [37984167434](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37984167434),
 opérateur542c15e87573f9f3d948fe0a5f9b5b2717df3e1f, refuse une ouverture
 avec errno30 dans le confinement readonly du test. Les six services/SSH,

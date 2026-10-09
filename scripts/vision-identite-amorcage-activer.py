@@ -33,6 +33,8 @@ identite = preparer.composants.initial.identite
 controle = charger('amorcage_controle', 'identite-amorcage-controle.py')
 repertoires = charger('amorcage_repertoires', 'vision-amorcage-repertoires.py')
 audit = charger('amorcage_audit', 'vision-identite-amorcage-auditer.py')
+reprise = charger('amorcage_reprise', 'vision-amorcage-reprise.py')
+copie_froide = charger('amorcage_copie_froide', 'vision-amorcage-copie-froide.py')
 exiger = construction.exiger
 SERVICES = ('sshd', 'postgresql', 'vision', 'matheval', 'mrj-auth')
 
@@ -168,12 +170,41 @@ class Essai:
         p = Path('/etc/nixos/configuration.nix')
         return hashlib.sha256((os.readlink(p).encode() if p.is_symlink() else b'') + p.read_bytes()).hexdigest()
 
+    def verifier_copie_froide(self):
+        preuve = self.lire('copie-froide.json')
+        exiger(preuve.get('chiffree') is True and preuve.get('cluster_arrete_avant_apres') is True and
+            preuve.get('restauration_reelle') is False and type(preuve.get('taille')) is int and
+            22 < preuve['taille'] < 1024**3 and re.fullmatch('[0-9a-f]{64}', preuve.get('sha256','')),
+            'Preuve de copie froide différente')
+        fd = identite.ouvrir_prive(self.fd, 'cluster-avant.tar.age', maximum=1024**3)
+        try:
+            exiger(os.read(fd,22) == b'age-encryption.org/v1\n' and
+                copie_froide.empreinte(fd) == {k:preuve[k] for k in ('taille','sha256')},
+                'Copie froide différente ou incomplète')
+        finally: os.close(fd)
+
     def preparer(self):
         exiger(not (self.d/'plan.json').exists() and not self.marque('commence'), 'Essai déjà préparé ou engagé')
-        etape('socle_avant_essai'); construction.verifier_socle(self.candidat)
+        etape('socle_avant_essai'); configuration = construction.verifier_socle(self.candidat)
         exiger(not self.commande(self.outils/'ss', '-Hltpn', 'sport = :8085').strip(), 'Port d’identité déjà occupé')
-        exiger(not Path('/var/lib/mrjam-amorcage-postgresql').exists() and
-            not Path('/run/mrjam-amorcage-postgresql').exists(), 'Cluster réservé déjà présent : audit requis')
+        etape('audit_reprise_cluster')
+        rapport_reprise = audit.main(); reprise.verifier(rapport_reprise)
+        self.sauver('reprise-verifiee.json', rapport_reprise)
+        etape('copie_froide_cluster')
+        def verifier_arret():
+            construction.verifier_socle(self.candidat)
+            reprise.verifier_cluster(audit.cluster_arrete(self.resume['postgres_paquet']))
+            etat, _ = audit.etat_worker(self.outils, reprise.REVISION)
+            exiger(etat['etat'] in ('inactive','failed'), 'Ancien worker actif')
+            exiger(not self.commande(self.outils/'ss', '-Hltpn', 'sport = :8085').strip(), 'Identité active pendant copie')
+        fd = identite.ouvrir_prive(self.fd, 'cluster-avant.tar.age', os.O_RDWR | os.O_CREAT | os.O_EXCL)
+        try:
+            preuve_copie = copie_froide.copier(fd, preparer.outil(self.resume,'tar_paquet','tar'),
+                preparer.outil(self.resume,'age_paquet','age'), configuration['recipient_age'],
+                verifier_arret, construction.preparation.diagnostic_prive)
+        finally: os.close(fd)
+        os.fsync(self.fd); self.sauver('copie-froide.json', preuve_copie)
+        self.verifier_copie_froide()
         etape('import_prive_verifie')
         destination = preparer.composants.initial.DESTINATION
         identite.preparer(ROOT/'operations/identite/realm.json', destination, destination/'proton-smtp.json', controler=True)
@@ -220,14 +251,18 @@ class Essai:
         self.sauver('plan.json', dict(ancien=self.ancien, nouveau=self.nouveau,
             pids=pids, entree_empreinte=self.empreinte_entree(),
             programme_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-            timer_repete=True, copie_locale_chiffree=True, repertoires_verifies=True))
+            timer_repete=True, copie_locale_chiffree=True, repertoires_verifies=True,
+            reprise_cluster_verifiee=True, copie_froide_chiffree=True))
         print(json.dumps({'plan_verifie': True, 'timer_repete': True, 'activation': False}), flush=True)
 
     def demarrer(self):
         plan = self.lire('plan.json')
         exiger(not self.marque('commence') and self.marque('timer-repete') and
-            plan['programme_sha256'] == hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'Plan absent ou déjà engagé')
+            plan['programme_sha256'] == hashlib.sha256(Path(__file__).read_bytes()).hexdigest() and
+            plan.get('reprise_cluster_verifiee') is True and plan.get('copie_froide_chiffree') is True,
+            'Plan absent ou déjà engagé')
         construction.verifier_socle(self.candidat)
+        self.verifier_copie_froide()
         exiger(self.verifier_pid() == plan['pids'] and self.empreinte_entree() == plan['entree_empreinte'], 'Socle changé depuis le plan')
         self.commande(self.outils/'systemd-run', '--unit='+self.retour, '--on-active=15min',
             '--timer-property=AccuracySec=1s', '--property=Type=oneshot', '--property=TimeoutStartSec=6min', self.d/'retour.sh')
@@ -333,6 +368,7 @@ class Essai:
                 systeme_ancien=self.ancien, systeme_amorcage=self.nouveau, vision=self.candidat['vision'],
                 style=self.candidat['style'], activation_reservee=True, generation_enregistree=True,
                 retour_autonome=True, retour_neutralise=True, copie_locale_chiffree=True,
+                reprise_cluster_verifiee=True, copie_froide_chiffree=True,
                 postgres_prive=True, services_conserves=True, identite_humaine=False, mode_vision_oidc=False, inscriptions=False)
             self.sauver('activation.json', rapport)
             self.ecrire('enregistre', '')
@@ -368,10 +404,26 @@ class Essai:
         construction.verifier_socle(self.candidat)
         print(json.dumps({'retour_termine': True, 'socle_retabli': True, 'inscriptions': False}))
 
+    def diagnostiquer(self):
+        exiger(not self.marque('enregistre'), 'Diagnostic après enregistrement interdit')
+        exiger(not self.marque('commence') or self.marque('retour-termine'), 'Retour non terminé : diagnostic interdit')
+        construction.verifier_socle(self.candidat)
+        def lire_si_present(nom):
+            return audit.lire(self.d/nom) if (self.d/nom).exists() else ''
+        etat, journal = audit.etat_worker(self.outils,self.revision)
+        rapport = dict(revision=self.revision, socle_conserve=True,
+            retour_termine=self.marque('retour-termine'), generation_enregistree=False,
+            worker=etat, controle_worker=audit.classer_worker(lire_si_present('worker-prive.log')+'\n'+journal),
+            **audit.classer(lire_si_present('diagnostic-prive.log'),lire_si_present('dry-activate-prive.txt')),
+            unites_identite=audit.unites_identite(self.outils),
+            cluster=audit.cluster_arrete(self.resume['postgres_paquet']), activation=False, inscriptions=False)
+        construction.verifier_socle(self.candidat)
+        print(json.dumps(rapport),flush=True)
+
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('revision'); p.add_argument('action', choices=('preparer','demarrer','worker','attendre','finaliser','retourner','statut'))
+    p.add_argument('revision'); p.add_argument('action', choices=('preparer','demarrer','worker','attendre','finaliser','retourner','statut','diagnostiquer'))
     a = p.parse_args(); essai = None
     try:
         essai = Essai(a.revision); getattr(essai, a.action)()

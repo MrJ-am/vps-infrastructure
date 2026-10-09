@@ -38,7 +38,7 @@ jobs:
       - name: Extraire le seul opérateur exact
         id: source
         run: |
-          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-identite-amorcage-essais/$GITHUB_SHA/source; tar -xf - -C /root/vision-identite-amorcage-essais/$GITHUB_SHA/source"
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-identite-amorcage-essais/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-identite-amorcage-essais/$GITHUB_SHA/source"
       - name: Lire l'avancement privé et refuser une reprise après échec
         id: etat
         run: |
@@ -47,7 +47,6 @@ jobs:
       - name: Vérifier le socle, la copie locale, le dry-activate et le timer
         if: steps.etat.outputs.enregistre == 'false'
         run: |
-          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-auditer.py --reprise-worker'"
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA preparer'"
       - name: Armer le retour puis lancer l'essai indépendant de SSH
         id: essai
@@ -70,9 +69,14 @@ jobs:
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA finaliser'"
       - name: Rétablir le socle si l'essai ou ses contrôles échouent
+        id: retour
         if: ${{ always() && steps.source.outcome == 'success' && steps.etat.outputs.enregistre != 'true' && steps.enregistrer.outcome != 'success' }}
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA retourner'"
+      - name: Diagnostiquer automatiquement la tentative seulement après retour
+        if: ${{ always() && steps.retour.outcome == 'success' && steps.enregistrer.outcome != 'success' && steps.etat.outputs.enregistre != 'true' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA diagnostiquer'"
       - name: Contrôler les sites même après un échec
         if: ${{ always() && steps.sites.outcome == 'success' }}
         run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
