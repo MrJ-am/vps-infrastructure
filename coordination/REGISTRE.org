@@ -3184,3 +3184,66 @@ Exports JSON/XML et Markdown sélectif, préavis avec échéance et annulation, 
 :PREUVE: -
 :END:
 
+* Préparer les opérations privées et l’accès au code AGPL de Vision
+:PROPERTIES:
+:ID: 20261009-vision-3ec256b30c47
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T00:04:05+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Complément à 20261008-vision-38ae852ddf1f. La préparation ajoute deux workflows manuels standard sur main, sous environnement vps-production et CI du commit exact : provisionnement Proton par secret Actions et qualification de migration sur un autre cluster PostgreSQL. Aucun déclencheur push privilégié nouveau, aucun accès SSH Work et aucune activation automatique. Le retour owners/ACL/RLS refuse toute ouverture ou nouveau compte tiers ; il ne restaure pas les données.
+
+Vision étant un dépôt privé, l'offre AGPL du service doit être accessible aux personnes invitées sans droits GitHub. Le candidat prévoit /code-source/vision.tar.gz pour la révision applicative exacte et /code-source/services-mrjam.tar.gz pour les sources des services compilés. L'archive services suit une liste fermée de répertoires de code et modèles sans secrets : aucun registre de coordination, dossier utilisateur ou configuration privée. Les droits réservés sur l'identité graphique restent explicites. Les sources tierces et la révision Style sont identifiées.
+
+Actions : Vision et VPS vérifient archives, concordance avec la publication et absence de secrets avant ouverture. Les autres outils ne changent ni version ni compte ; ils relisent l'identité commune et reprennent l'offre de source lors de leur adoption propre. Références en préparation : PR Vision 16, VPS 27 ; Style 96fa28ac564b9492768837d4087608e83acc721b. L'audit réel 37858455559 reste la base du dossier, avec refus en cas de dérive. Fin de cette étape : code et workflows examinables, CI identifiée et preuves de qualification ; l'ouverture demeure conditionnée aux faits techniques et juridiques, jamais déduite de la CI.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
