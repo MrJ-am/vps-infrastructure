@@ -1,5 +1,22 @@
 # État attesté au 9 octobre 2026
 
+## Vision — import initial privé préparé sur le VPS
+
+La [préparation 37927013329](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329),
+job `113808266809`, opérateur `ce847e1519eac78b37352cd070eb949346d61a47`,
+réussit à 11:59 UTC. Les cinq secrets clients/hook et le realm sont créés
+et vérifiés dans le dossier root privé, hors Git/store et sans rotation.
+SMTP est configuré mais non contacté. Aucun compte humain, import en base,
+migration de production ou activation. Socle inchangé ; six services, nouvelle
+connexion SSH et 25 contrôles HTTP/TLS passent avant et après.
+[Preuve sans données](../operations/vision-identite-import-qualification.json).
+PR43 intégrée, CI `37926200637`/`37926204998` réussies, 232 tests Python.
+
+La [construction des composants](VISION-COMPOSANTS-MRJAM.md) est préparée dans
+un workflow manuel distinct, sans lever l'assertion de génération ni démarrer
+les services. Sa réussite réelle reste à constater. L'identité du propriétaire,
+son MFA, le rapprochement historique et l'activation demeurent des étapes séparées.
+
 ## Vision — identité native Unix qualifiée sur le VPS
 
 La [qualification 37924485219](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219),
@@ -18,8 +35,8 @@ de scripts publics traversable ; le refus des fichiers root privés est testé.
 CI `37923202540` et `37923206284` réussies, 220 tests Python.
 
 L'[import privé initial](IDENTITE-IMPORT-INITIAL.md) est maintenant préparé dans
-le code et son workflow manuel distinct. Sa création effective sur le VPS reste
-à constater. Aucun compte humain, migration SQL de production, activation
+le code et son workflow manuel distinct. Sa création effective sur le VPS est
+constatée ci-dessus. Aucun compte humain, migration SQL de production, activation
 NixOS ou inscription n'a été réalisé pendant cette qualification.
 
 ## Vision — copie réelle et retour des droits qualifiés le 9 octobre 2026
