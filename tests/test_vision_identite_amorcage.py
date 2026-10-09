@@ -31,39 +31,41 @@ class Proprietaire(unittest.TestCase):
         self.assertNotIn('secret_contact', json.dumps(r))
         self.assertNotIn('/root/prive', json.dumps(r))
 
-    def test_nginx_sous_compte_systeme_et_paquet_identifie(self):
+    def resume_nginx(self):
         paquet='/nix/store/'+'a'*32+'-nginx'
-        runuser='/nix/store/'+'b'*32+'-util-linux'
-        age='/nix/store/'+'c'*32+'-age'
-        configuration='/nix/store/'+'d'*32+'-nginx.conf'
-        r=dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c '+configuration,
-            runuser_paquet=runuser,age_paquet=age)
-        with patch.object(a.subprocess, 'run') as executer:
-            executer.return_value.returncode=0
-            a.verifier_nginx(r)
-            self.assertEqual(executer.call_args.args[0], [runuser+'/bin/runuser', '-u', 'nginx',
-                '--', paquet+'/bin/nginx', '-t', '-c', configuration])
+        return dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c /nix/store/'+'b'*32+'-nginx.conf',
+            systeme_actif='/nix/store/'+'c'*32+'-systeme',nginx_confinement=dict(User='nginx',Group='nginx',
+                AmbientCapabilities=['CAP_NET_BIND_SERVICE','CAP_SYS_RESOURCE'],
+                CapabilityBoundingSet=['CAP_NET_BIND_SERVICE','CAP_SYS_RESOURCE'],NoNewPrivileges=True))
+
+    def test_nginx_isole_sous_uid_sans_capacite_supplementaire(self):
+        r=self.resume_nginx();c=a.commande_nginx_isolee(r,'d'*40)
+        self.assertIn('--property=User=nginx',c)
+        self.assertIn('--property=Group=nginx',c)
+        self.assertIn('--property=PrivateNetwork=yes',c)
+        self.assertIn('--property=NoNewPrivileges=yes',c)
+        self.assertIn('--property=CapabilityBoundingSet=CAP_NET_BIND_SERVICE',c)
+        self.assertEqual(c[-6:],[r['nginx_paquet']+'/bin/nginx','-t','-e','stderr','-c','/nix/store/'+'b'*32+'-nginx.conf'])
+        self.assertNotIn('CAP_SYS_RESOURCE',' '.join(c))
+
+    def test_confinement_different_et_revision_libre_refuses(self):
+        r=self.resume_nginx()
+        for cle,valeur in (('User','root'),('Group','root'),('NoNewPrivileges',False),
+                ('AmbientCapabilities',['CAP_SYS_ADMIN']),('CapabilityBoundingSet',['CAP_SYS_ADMIN'])):
+            f=copy.deepcopy(r);f['nginx_confinement'][cle]=valeur
+            with self.subTest(cle=cle),self.assertRaises(RuntimeError):a.commande_nginx_isolee(f,'d'*40)
+        with self.assertRaises(RuntimeError):a.commande_nginx_isolee(r,'revision; id')
 
     def test_erreur_native_en_clair_reste_privee(self):
-        paquet='/nix/store/'+'a'*32+'-nginx'
-        r=dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c /nix/store/'+'b'*32+'-nginx.conf',
-            runuser_paquet='/nix/store/'+'c'*32+'-util-linux',age_paquet='/nix/store/'+'d'*32+'-age')
-        sortie=io.StringIO(); prive=b'secret_contact@exemple.test permission denied'
-        with patch.object(a.subprocess, 'run') as executer, \
-                patch.object(a.construction.preparation, 'diagnostic_prive') as garder, \
-                patch.object(a, 'chiffrer_diagnostic', return_value=dict(disponible=False)), \
+        sortie=io.StringIO();prive=b'secret_contact@exemple.test permission denied'
+        with patch.object(a.subprocess,'run') as executer, \
+                patch.object(a.construction.preparation,'diagnostic_prive') as garder, \
                 contextlib.redirect_stdout(sortie):
-            executer.return_value.returncode=1; executer.return_value.stderr=prive
-            with self.assertRaises(a.construction.ConstructionRefusee): a.verifier_nginx(r)
-            self.assertIn(prive, garder.call_args.args[0])
-        self.assertNotIn('secret_contact', sortie.getvalue())
-        self.assertEqual(json.loads(sortie.getvalue())['nginx_native'], 'refuse')
-
-    def test_diagnostic_trop_long_non_chiffre_ni_affiche(self):
-        with patch.object(a.subprocess, 'run') as executer:
-            self.assertEqual(a.chiffrer_diagnostic(b'a'*16385, '/outil/age'), dict(disponible=False))
-            self.assertEqual(a.chiffrer_diagnostic(b'', '/outil/age'), dict(disponible=False))
-            executer.assert_not_called()
+            executer.return_value.returncode=1;executer.return_value.stderr=prive
+            with self.assertRaises(a.construction.ConstructionRefusee):a.verifier_nginx(self.resume_nginx(),'d'*40)
+            self.assertIn(prive,garder.call_args.args[0])
+        self.assertNotIn('secret_contact',sortie.getvalue())
+        self.assertEqual(json.loads(sortie.getvalue())['nginx_native'],'refuse')
 
     def test_commande_nginx_immuable_sans_option_ou_commande_libre(self):
         paquet='/nix/store/'+'a'*32+'-nginx-1.28.2'

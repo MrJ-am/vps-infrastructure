@@ -71,6 +71,8 @@ assert keycloak.version == "26.7.3";
     postgres_paquet = toString c.services.postgresql.finalPackage;
     nginx_paquet = toString c.services.nginx.package;
     nginx_commande = c.systemd.services.nginx.serviceConfig.ExecStart;
+    nginx_confinement = lib.getAttrs [ "User" "Group" "AmbientCapabilities"
+      "CapabilityBoundingSet" "NoNewPrivileges" ] c.systemd.services.nginx.serviceConfig;
     runuser_paquet = toString (lib.getBin pkgs.util-linux);
     age_paquet = toString (lib.getBin pkgs.age);
     tar_paquet = toString (lib.getBin pkgs.gnutar);

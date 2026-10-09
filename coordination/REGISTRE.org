@@ -5016,12 +5016,12 @@ La prochaine construction conserve compte/groupe nginx et les droits, vérifie l
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: f8084418e74cbb07cca53011f25c107c6d6d43991b7c6b80610b20f21b83fa5d
+:LU_LE: 2026-10-09T19:53:19+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 291 tests locaux réussis ; commande transitoire UID nginx, CAP_NET_BIND_SERVICE seule, NoNewPrivileges et réseau privé. Test VPS encore attendu ; aucun succès natif supplémentaire revendiqué.
 :END:
 
 ** TODO vps

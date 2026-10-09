@@ -1,6 +1,5 @@
 """Construire l'amorçage réservé, sans activation, SQL de production ou personne."""
 import argparse
-import base64
 import grp
 import hashlib
 import importlib.util
@@ -15,9 +14,8 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
-REFUS_PRECEDENT = 'f27c4d1e1f0b731da9e16116d584293599ee10d4'
-SOURCE_PRECEDENTE = '8b015d952d55292ebce4fcfe99e7338eebc9bfac3b7b20f615cb02daa13acd55'
-DESTINATAIRE_DIAGNOSTIC = 'age1uwzjmva3gz905h8hdussadzh5a2hpj7zyy37d3eq4fk3pq7q6vtquul8ue'
+REFUS_PRECEDENT = '6072227fdae8d7f8b8ebd8476405073cef8960bb'
+SOURCE_PRECEDENTE = 'bc0a977fff5ce6a7216477e11e3422519154842030d2549d98178122f48bbfae'
 
 
 def charger(nom, fichier):
@@ -142,36 +140,35 @@ def auditer_refus(candidat, paquet):
         **classer_refus(diagnostic))
 
 
-def chiffrer_diagnostic(texte, age):
-    # Seulement le stderr du nginx -t fixe, jamais un journal HTTP.
-    if not isinstance(texte, bytes) or not texte or len(texte) > 16384:
-        return dict(disponible=False)
-    try:
-        r = subprocess.run([age, '-a', '-r', DESTINATAIRE_DIAGNOSTIC], input=texte,
-            capture_output=True, timeout=10)
-        if r.returncode or len(r.stdout) > 32768 or not r.stdout.startswith(
-                b'-----BEGIN AGE ENCRYPTED FILE-----\n') or not r.stdout.endswith(
-                b'-----END AGE ENCRYPTED FILE-----\n'):
-            return dict(disponible=False)
-        return dict(disponible=True, age_base64=base64.b64encode(r.stdout).decode('ascii'))
-    except (OSError, subprocess.TimeoutExpired):
-        return dict(disponible=False)
-
-
-def verifier_nginx(resume):
+def commande_nginx_isolee(resume, revision):
     nginx, configuration = commande_nginx(resume)
-    runuser = outil(resume, 'runuser_paquet', 'runuser')
-    age = outil(resume, 'age_paquet', 'age')
+    exiger(re.fullmatch('[0-9a-f]{40}', revision), 'Révision du contrôle Nginx invalide')
+    exiger(resume['nginx_confinement'] == dict(User='nginx', Group='nginx',
+        AmbientCapabilities=['CAP_NET_BIND_SERVICE', 'CAP_SYS_RESOURCE'],
+        CapabilityBoundingSet=['CAP_NET_BIND_SERVICE', 'CAP_SYS_RESOURCE'], NoNewPrivileges=True),
+        'Confinement Nginx natif différent')
+    outils = Path(construction.store(resume['systeme_actif']))/'sw/bin'
+    return [str(outils/'systemd-run'), '--quiet', '--wait', '--pipe', '--collect',
+        '--service-type=exec', '--unit=vision-nginx-validation-'+revision[:12],
+        '--property=User=nginx', '--property=Group=nginx',
+        '--property=AmbientCapabilities=CAP_NET_BIND_SERVICE',
+        '--property=CapabilityBoundingSet=CAP_NET_BIND_SERVICE',
+        '--property=NoNewPrivileges=yes', '--property=PrivateNetwork=yes',
+        '--property=ProtectSystem=strict', '--property=ProtectHome=yes',
+        '--property=PrivateTmp=yes', '--property=PrivateDevices=yes',
+        '--property=RuntimeMaxSec=30s', '--property=TimeoutStopSec=5s',
+        nginx, '-t', '-e', 'stderr', '-c', configuration]
+
+
+def verifier_nginx(resume, revision):
     try:
-        r = subprocess.run([runuser, '-u', 'nginx', '--', nginx, '-t', '-c', configuration],
-            capture_output=True, timeout=30)
+        r = subprocess.run(commande_nginx_isolee(resume, revision), capture_output=True, timeout=40)
     except (OSError, subprocess.TimeoutExpired):
         raise construction.ConstructionRefusee('Lanceur ou délai du contrôle Nginx refusé') from None
     if r.returncode:
         construction.preparation.diagnostic_prive(b'\nTest Nginx prive :\n'+r.stderr)
         print(json.dumps({'nginx_native': 'refuse',
-            'diagnostic': classer_refus(r.stderr.decode(errors='replace')),
-            'diagnostic_chiffre': chiffrer_diagnostic(r.stderr, age)}), flush=True)
+            'diagnostic': classer_refus(r.stderr.decode(errors='replace'))}), flush=True)
         raise construction.ConstructionRefusee('Configuration Nginx native refusée')
 
 
@@ -230,7 +227,7 @@ def preparer(revision, controler=False):
         os.access(Path(generation) / 'bin/switch-to-configuration', os.X_OK),
         'Génération construite différente ou incomplète')
     etape('configuration_nginx_native')
-    verifier_nginx(resume)
+    verifier_nginx(resume, revision)
     etape('invariants_finaux'); construction.verifier_socle(candidat)
     resultat = dict(version=1, infrastructure=revision, composants=preuve['infrastructure'],
         vision=candidat['vision'], style=candidat['style'], paquet=resume['paquet'],
