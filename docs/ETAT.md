@@ -1,5 +1,21 @@
 # État attesté au 9 octobre 2026
 
+## Vision — génération d'amorçage construite sans activation
+
+[Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),
+job113855262092, opérateur765ce372ccd61ad623e33bf8bb476a5c3be21fba,
+réussit à14:03UTC. Génération39b7g3x42qp2q58idfv7nl6w5j3y78np construite,
+anciennes unités/tous les hôtes/PostgreSQL de production conservés. Inventaire
+privé en lecture seule : un propriétaire, quatorze tables, aucun contenu lu.
+Six services/nouvelle SSH et25HTTP/TLS passent avant/après. Aucun compte humain,
+switch ou inscription. Rapport exact : operations/vision-identite-amorcage-qualification.json.
+
+L'[essai réservé](IDENTITE-AMORCAGE-ESSAI.md) est préparé avec ancien socle,
+entrée réversible, copie locale age, dry-activate et répétition du timer,
+worker indépendant de SSH et retour autonome. HTTPS/issuer/refus et25sites
+doivent passer avant l'enregistrement de cette seule génération. L'essai
+réel, ACME, possession/MFA et association historique ne sont pas encore constatés.
+
 ## Vision — composants construits sur le VPS
 
 La [construction 37930689913](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37930689913),

@@ -1,0 +1,80 @@
+name: Essayer l'identité réservée avec retour autonome
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  activer:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier la CI du commit opérateur exact
+        run: python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Préparer la connexion administrative existante
+        id: connexion
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-amorcage-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-amorcage-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-amorcage-admin" >/dev/null
+      - name: Relever les sites avant essai
+        id: sites
+        run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+      - name: Extraire le seul opérateur exact
+        id: source
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-identite-amorcage-essais/$GITHUB_SHA/source; tar -xf - -C /root/vision-identite-amorcage-essais/$GITHUB_SHA/source"
+      - name: Vérifier le socle, la copie locale, le dry-activate et le timer
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA preparer'"
+      - name: Armer le retour puis lancer l'essai indépendant de SSH
+        id: essai
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA demarrer'"
+      - name: Attendre les contrôles locaux privés et la copie chiffrée
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA attendre'"
+      - name: Vérifier une nouvelle connexion et les six services existants
+        run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+      - name: Vérifier les 25 sites avant enregistrement
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Vérifier le certificat, l'issuer, les refus et les sources
+        run: python3 scripts/identite-amorcage-https.py
+      - name: Enregistrer uniquement l'amorçage contrôlé
+        id: enregistrer
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA finaliser'"
+      - name: Rétablir le socle si l'essai ou ses contrôles échouent
+        if: ${{ always() && steps.source.outcome == 'success' && steps.enregistrer.outcome != 'success' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-identite-amorcage-essais/$GITHUB_SHA/source/scripts/vision-identite-amorcage-activer.py $GITHUB_SHA retourner'"
+      - name: Contrôler les sites même après un échec
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Conserver seulement le rapport technique
+        run: |
+          mkdir -p "$RUNNER_TEMP/rapport-amorcage"
+          sh scripts/connect.sh "cat /root/vision-identite-amorcage-essais/$GITHUB_SHA/activation.json" > "$RUNNER_TEMP/rapport-amorcage/activation.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: activation-reservee-identite
+          path: ${{ runner.temp }}/rapport-amorcage/
+          retention-days: 14
+          if-no-files-found: error
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-amorcage-admin"
