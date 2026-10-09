@@ -3555,14 +3555,14 @@ Vision et VPS consignent les preuves et qualifient cette construction avant l’
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 66c0ae5f301e0f7f12f1418ab43725aa8b96e22c5df2858ecb736369bbad77db
-:LU_LE: 2026-10-09T09:45:10+00:00
+:LU_LE: 2026-10-09T10:25:21+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: PR38 intégrée 226a928a58121b25a3c097c8d32b6843a05e19e6, CI37911626328/37911629119 réussies, construction réelle37912940648 arrêtée à construction_paquet ; six services, SSH et25sondes passent.
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37916844094
 :END:
-Diagnostic privé du build à qualifier avant correction ; aucune activation, mutation SQL ou ouverture.
+Construction réelle 26.7.3 et cinq plugins réussie sur le socle inchangé ; six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent. JDBC natif, identité et activation restent distincts.
 
 ** TODO vps
 :PROPERTIES:
@@ -3586,6 +3586,70 @@ La PR38 (226a928a58121b25a3c097c8d32b6843a05e19e6) épingle Keycloak26.7.3 sur l
 VPS prépare un diagnostic strictement en lecture seule dans audit.yml existant, operation=audit : lire uniquement le diagnostic privé de cette construction, dossier root et fichier0600, sans suivre de lien, lecture bornée. Publier des catégories constantes de refus Nix/Java/téléchargement et l'étape publique, jamais le stderr brut ni une valeur privée. Les nouveaux tests doivent prouver qu'un faux secret ou contenu personnel n'est pas restitué. Aucun nouveau déclencheur de mutation par push. La reproduction locale construit le même paquet configuré pour qualifier l'archive officielle et le SPI ; elle ne prouve pas le VPS.
 
 Après le diagnostic réel, corriger la seule construction ou recette nécessaire, préserver les contrôles stricts et qualifier le correctif avant une relance. Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b et issuer log.mrj.am restent les candidats. Les autres outils ne changent ni publication ni comptes. Fin : refus établi, correctif qualifié et construction réelle identifiée. JDBC natif VPS, identité initiale/MFA, retour autonome, contrats, clé et copie externe restent distincts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** DONE vision
+:PROPERTIES:
+:LU_SHA256: 301da444534a99214ede33f22750f5969a16453d188946e530e0d78702cd0670
+:LU_LE: 2026-10-09T10:25:22+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37916844094
+:END:
+Refus de nettoyage SPI confirmé par audit réel ; copie temporaire rendue inscriptible dans PR40, régression sans privilège et CI37915490903/37915494533 passent. Construction corrigée réelle réussie, aucune activation.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Qualifier JDBC Unix et peer dans une identité native isolée sur le VPS
+:PROPERTIES:
+:ID: 20261009-vision-7be9df581175
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T10:25:22+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La construction réelle 37916844094 (job113775009239, opérateur6a3f3d56d7a63795674fd243859b3d689340005c) réussit : Keycloak26.7.3, paquet v3g29yfxvp9bdnjgw3p91zvh4jggvk45, SPI MrJ.am, deux plugins junixsocket et deux plugins systemd. Les six services, une nouvelle connexion SSH et 25 sondes HTTP/TLS passent. L'audit37916043224 confirme le refus de nettoyage des ressources SPI copiées en lecture seule ; la PR40 ne rend inscriptible que la copie temporaire de compilation, jamais le store. Régression native sans privilège et construction complète avec nixbld passent ; CI37915490903/37915494533 réussies. La connexion JDBC réelle reste à qualifier, sans identité réelle ni activation.
+
+VPS prépare un workflow manuel distinct, main, environnement vps-production, CI du commit exact et exclusion vps-administration. Il exige le rapport privé de construction identifié et les mêmes candidats, paquet et invariants. Un cluster PostgreSQL17 UTF-8 séparé ne contient que des données synthétiques ; écoute TCP vide, authentification peer, rôle SQL sans mot de passe ni privilèges administratifs. Le paquet optimisé construit tourne dans une unité systemd transitoire avec DynamicUser, répertoire runtime privé et réseau privé : aucun port d'identité exposé sur l'hôte, aucune connexion aux bases ou SMTP de production. Vérifier initialisation native, socket Unix, identité système transitoire/peer, refus d'un autre UID et absence de TCP ; arrêt et retrait contrôlés même après échec, avec contrôle final du socle et des sites.
+
+Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b, issuer candidat log.mrj.am. Aucun autre outil ne change de publication ou de compte. Rapports publics limités aux versions, révisions et booléens ; logs natifs, identifiants et mots de passe synthétiques restent privés. Cette qualification ne vaut pas activation de l'unité Keycloak définitive ni validation de ses accès SQL de production. Fin : CI pertinente et essai JDBC natif isolé sur le VPS identifiés, avec absence de résidu actif et contrôles inchangés. Identité initiale/MFA, retour autonome, contrats, clé privée et copie externe restent des conditions distinctes avant l'ouverture à des tiers.
 
 ** TODO logique
 :PROPERTIES:
