@@ -3815,13 +3815,14 @@ Fin : préparateur sécurisé et workflow manuel exact testés puis import priv�
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: f82ac623074a8c3f2a3b862ae3def0862a12701afb542f59b460217e074d3a04
+:LU_LE: 2026-10-09T11:48:57+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219
 :END:
+Preuve native réelle consignée. Préparateur privé sans rotation et workflow distinct préparés ; CI et opération réelle d’import encore attendues. Aucune identité humaine ou activation.
 
 ** TODO vps
 :PROPERTIES:
