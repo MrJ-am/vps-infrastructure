@@ -103,6 +103,16 @@ L'adresse retenue par le propriétaire le 9 octobre 2026 est `log.mrj.am`.
 Son enregistrement A chez alwaysdata répond `187.77.95.158` au relevé public.
 Ce DNS ne prouve pas encore l'émission du certificat ACME ni l'activation IdP.
 Ne pas ajouter d'AAAA sans routage IPv6 qualifié et ne pas modifier les MX Proton.
+
+La relance réelle [37897757438](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37897757438),
+opérateur `8c3721c5fc25724c409a5f9e2b56e0bccfdd702b`, est arrêtée à
+`evaluation_nixos` : « Socle actif non reproduit ». Les invariants initiaux et
+l'archive candidate passent ; le dump et les migrations ne commencent pas.
+Les six services et les 25 sondes HTTP/TLS passent après l'arrêt. Le workflow
+d'audit existant compare désormais les seuls paramètres techniques des trois
+évaluations : point d'entrée, source installée et import classique NixOS.
+Ce diagnostic ne remplace ni ne relâche le contrôle strict du préparateur.
+
 Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
 le thème tiers de la console native conserve les limites déclarées.
 

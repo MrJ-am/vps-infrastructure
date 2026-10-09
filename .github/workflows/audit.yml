@@ -65,6 +65,10 @@ jobs:
       - name: Lire les bases et les droits PostgreSQL
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: sh scripts/connect.sh sh -s < scripts/audit-postgresql.sh
+      - name: Comparer le socle NixOS calculé sans activation ni données applicatives
+        if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vision-socle-auditer.py
       - name: Vérifier les points d'accès publics
         if: ${{ !cancelled() && steps.ssh.outcome == 'success' }}
         run: python3 scripts/probe.py
