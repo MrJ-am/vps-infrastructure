@@ -3361,6 +3361,70 @@ Vision conserve a9c51acac81510d7dc896f5daf4e6fb28a36b979 et Style 96fa28ac564b94
 :PREUVE: -
 :END:
 
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 22969cbb65db1d8fbdecf194feecd23a7f795fc294de6084f2604e21ef58ee26
+:LU_LE: 2026-10-09T07:59:52+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Audits réels 37899364733, 37900599245 et 37901569064 réussis ; PR31/32/33 intégrées, CI finales exactes réussies (port local CI relancé une fois). Génération active inchangée ; dix unités identiques, deux unités du fournisseur différentes.
+:END:
+Source active 20nds4zvi1pcnljpwnwzcsysvyk15g11 identifiée, deux scripts présents. Le test local storePath conserve la génération ; confirmation réelle et préparation restent à faire, sans activation.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Épingler la source réellement active pour reproduire le socle Vision
+:PROPERTIES:
+:ID: 20261009-vision-f18e5ace7f98
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T07:59:13+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Après la relance refusée 37897757438, audits réels 37899364733, 37900599245 et 37901569064 sans mutation : génération active/démarrage y1azkcagkf54nq5vjn4j16g5v1c61c4c inchangée, PostgreSQL 17 sans TCP, dix unités identiques. Seuls fournisseur local d’embeddings et backfill diffèrent dans le recalcul. Source réellement active identifiée : /nix/store/20nds4zvi1pcnljpwnwzcsysvyk15g11-vision-fournisseur-c0bfcac ; ses deux scripts existent. Le chemin recalculé gkwlc1xzk6xpfbxb08qyinmavy79rr9w est non réalisé par --eval ; aucune perte de fichier personnel n’en est déduite.
+
+Le test local confirme qu’une conversion toPath perd le contexte et change la génération malgré une unité identique ; storePath garde la génération exacte. VPS prépare un épinglage explicite de la source réellement active dans le manifeste et l’évaluation de référence. Le contrôle strict génération/PG reste obligatoire ; actualiser le diagnostic en lecture seule pour confirmer ce résultat réel avant tout nouvel essai. Ne pas modifier la source brute, la génération, les services, le réseau ni les données de production. Aucun autre outil ne change de publication.
+
+Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style 96fa28ac564b9492768837d4087608e83acc721b et adresse log.mrj.am. Préparer une régression Nix avec ajout d’un répertoire à une source synthétique ; la source immuable doit rétablir exactement la génération initiale. Fin : CI, audit storePath réel et nouvelle préparation isolée identifiés, sans activation. Les conditions d’identité/MFA, retour, restauration/clé et droit demeurent distinctes.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
