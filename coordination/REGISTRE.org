@@ -4585,12 +4585,73 @@ VPS précise ce même audit en lecture seule avec les seuls codes numériques de
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 99ff03be9a55bcfd47e1434e2f8370ff7310501196956d7b02586f21dca43315
-:LU_LE: 2026-10-09T18:06:53+00:00
+:LU_LE: 2026-10-09T18:18:15+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée a625636729d97ea2e645c9cf8d7296251e54632a. Codes/étapes/classes fermés et namespace réservé sans extrait qualifiés ; contrôle privé sans envoi. Cluster f9 préservé, aucun SQL/lancement. CI exacte et cause du service d’identité restent à constater.
+:PREUVE: PR56/280tests/CI37971117333/37971121610 intégrées1f9ad7a2d1c778a3d5bb4b2420c4e291ba841fd3. Diagnostic37971727525 réussi : code143, import/credential valides, cluster17 proprement arrêté, aucun PID/socket/exception. Socle/six services/SSH/25sites passent. La cause initiale reste à chercher dans le bilan stderr du switcher, sans reprise.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Projeter le bilan d’échec du gestionnaire NixOS depuis le diagnostic privé existant
+:PROPERTIES:
+:ID: 20261009-vision-bf170700bf3a
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T18:18:15+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR56/280tests/CI37971117333 et37971121610 sont intégrées exactement1f9ad7a2d1c778a3d5bb4b2420c4e291ba841fd3. Signal37971710569, orchestration37971727525/job113959828149 réussis : relevé18:13:55. Sortie historique de l'identité143 (arrêt par signal), aucune étape systemd ni exception classée ; namespace réservé sans motif, import et format du credential vérifiés. Cluster17 privé proprement arrêté et préservé ; socle/retour, six services/SSH et25HTTP/TLS avant/après passent18:14:09. Aucun enregistrement/compte. Le code143 ne détermine pas la cause initiale de la bascule.
+
+La lecture du gestionnaire Rust switch-to-configuration de Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb montre qu'il publie sur stderr les Failed to start/restart/reload UNIT et warning: the following units failed: UNIT, puis retourne4. Ces lignes sont déjà conservées dans le diagnostic privé du contrôleur ; leur bilan n'était pas projeté. VPS ajoute cette projection fermée : seulement unités techniques connues et acme-log.mrj.am.service, compteur pour toute unité inconnue, jamais sa valeur. Aucun nouveau accès, journal général, processus, SQL, réparation ou relance. Le diagnostic reste en lecture seule, au point d'entrée autonome après CI exacte et contrôles six services/25sites. La reproduction Java locale sans AF_NETLINK ne confirme pas cette autre piste ; aucune restriction réseau n'est changée. Corriger ensuite selon le bilan réel, sans effacer ni reprendre automatiquement le cluster.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
