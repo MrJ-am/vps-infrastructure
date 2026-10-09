@@ -5343,3 +5343,64 @@ Garde de reprise liée au seul essai f763 et à ce diagnostic réel, source/cadr
 :PREUVE: -
 :END:
 
+* Identifier l’exception privée de c527 après retour réussi
+:PROPERTIES:
+:ID: 20261009-vision-a252d832d535
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T21:20:55+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Essai réservé c527fcfd64dc5478da1011aafc28ce6e3d3fd199 : signal37992377437, Actions37992389053/job114029672958. Préparation/audit/copie froide/empreinte/dry/timer puis lancement réussis. Refus pendant controles_locaux, retour indépendant réussi, socle et25HTTP/TLS conservés. Diagnostic automatique courant réussi : worker arrêté, clusterPG17 sain arrêté, mais aucune catégorie connue pour cette exception. Aucun enregistrement, migration de production, compte humain ou inscription.
+
+Avant toute reprise, étendre le diagnostic arrêté à la seule tentative c527, avec les empreintes exactes de sa source et des deux helpers de contrôle. Projeter seulement les classes Python sur liste fermée, les codes HTTP d'une ligne HTTPError réelle, les cadres AST des fichiers vérifiés et les motifs constants existants. Ne publier ni message d'exception, URL, corps de réponse, argument, valeur personnelle ou credential. Cette lecture n'exécute aucun SQL ni démarrage, n'efface rien et exige le retour et le socle avant/après. Le nouveau plan est diagnostic seulement ; un correctif et une reprise exigent ensuite le constat réel de cette cause.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
