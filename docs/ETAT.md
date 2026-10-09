@@ -7,13 +7,13 @@ commit opérateur `48aa2fa6d05388d48bc6e7ef3625b358bdb53905`, a réussi.
 Le jeton est installé dans le fichier privé root 0600 hors Git et store Nix.
 La connexion réelle à Proton exige STARTTLS et vérifie le certificat ;
 l'authentification réussit et le relais accepte le témoin avec pièce jointe age.
-Le témoin ne contient aucune donnée d'usager. L'exploitant déclare le 9 octobre
-sa réception dans Proton avec une pièce jointe. Le format qu'il décrit doit
-encore être rapproché du fichier attendu `qualification-smtp.json.age`, dont
-l'en-tête est `age-encryption.org/v1`. Le déchiffrement et la possession de la
-clé privée restent à vérifier ; l'accusé SMTP ne les prouve pas. L'indisponibilité
-temporaire du PC ne bloque pas la préparation isolée, mais aucune restauration
-chiffrée utilisable n'est attestée et aucune clé n'est tournée.
+Le témoin ne contient aucune donnée d'usager. L'exploitant confirme le 9 octobre
+sa réception dans Proton et le format age de la pièce jointe. Son premier
+signalement XML concernait un autre fichier resté ouvert dans son lecteur.
+La lecture du fichier chiffré n'est pas son déchiffrement : ce dernier et la
+possession de la clé privée restent à vérifier. L'indisponibilité temporaire
+du PC ne bloque pas la préparation isolée, mais aucune restauration chiffrée
+utilisable n'est attestée et aucune clé n'est tournée.
 
 Les 25 contrôles HTTP/TLS réussissent avant et après l'installation, ainsi
 qu'une nouvelle connexion administrative et les états actifs de sshd, nginx,
