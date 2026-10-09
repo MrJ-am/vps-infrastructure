@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "infrastructure": "ac3d8e0ab466a536c9ac3190d360e163d364b8fb",
+  "preparation": "25f685900a9b65cb7cef872f0b55bcb21e35567d",
+  "systeme_ancien": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "systeme_amorcage": "/nix/store/k4q4i4m9r4070xwwpnd24hpi9g6zngyn-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "vision": "a9c51acac81510d7dc896f5daf4e6fb28a36b979",
+  "style": "96fa28ac564b9492768837d4087608e83acc721b",
+  "activation_reservee": true,
+  "generation_enregistree": true,
+  "retour_autonome": true,
+  "retour_neutralise": true,
+  "copie_locale_chiffree": true,
+  "reprise_cluster_verifiee": true,
+  "copie_froide_chiffree": true,
+  "postgres_prive": true,
+  "services_conserves": true,
+  "identite_humaine": false,
+  "mode_vision_oidc": false,
+  "inscriptions": false
+}

@@ -5516,12 +5516,12 @@ Qualifiers déjà rédigés et parcours natif26.7.3/PG17/SMTP synthétique/Chrom
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 682abd6cf5b7f740b10543ccaaec6ecddfe48350145301615b2bbce7cd67d433
+:LU_LE: 2026-10-09T21:45:47+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Enrôlement root privé et reçu réel37994597242 intégrés au plan fermé ; état durable sans rejeu, aucun mot de passe opérateur ou admin identité ; courriel non encore envoyé.
 :END:
 
 ** TODO vps

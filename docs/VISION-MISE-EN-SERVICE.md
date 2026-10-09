@@ -37,7 +37,7 @@ restent deux actions distinctes.
 | Phase | Situation au regroupement | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
-| Génération réservée | Construite et contrôlée nativement par Actions `37985768542` ; essai `37987992248` retourné, génération non enregistrée | Identifier le refus du service d'identité avant toute reprise |
+| Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Identifier le refus du service d'identité avant toute reprise |
 | Compte commun du propriétaire | Aucun compte humain créé | Qualifier l'enrôlement privé, puis faire choisir le mot de passe et configurer le second facteur sur la page sécurisée ; aucun secret en conversation |
 | Rattachement historique et bascule Vision | Non exécutés | Ajouter une phase qualifiée à ce même point d'entrée ; l'agent la déclenchera et la suivra |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
@@ -251,3 +251,19 @@ Les téléchargements et empreintes ont été vérifiés dans Work. La CI
 précharge les mêmes images sous les noms attendus par les recettes ;
 aucun test n'est omis. Cela ne modifie pas les paquets Nix ou images VPS.
 La réussite du commit exact reste exigée avant toute demande administrative.
+
+## Enrôlement initial
+
+La phase `proprietaire` compare le reçu d'activation public au privé et
+vérifie le système réellement enregistré. Le contact reste une enveloppe
+chiffrée, ouverte seulement en RAM avec la clé d'hôte existante, sans export.
+Un état root durable précède création et courriel ; une réponse ambiguë bloque
+tout rejeu. Le compte reçoit uniquement UPDATE_PASSWORD et CONFIGURE_TOTP,
+aucun mot de passe choisi par l'exploitation ni privilège d'administration
+d'identité. Le lien dure30min ; SMTP accepté ne prouve pas sa réception.
+La création et l'envoi réels seront attestés après exécution, pas par la CI.
+L'ancien accès Vision reste actif, OIDC Vision et inscriptions tierces fermés.
+L'observation ultérieure ne lit que les notes de session du sujet initial
+exact et exige les méthodes pwd/otp fraîches≤300s. La simple présence des
+credentials ne constitue pas une preuve de connexion. Le rattachement
+historique et le statut administrateur applicatif restent une phase distincte.

@@ -49,3 +49,8 @@ jobs:
     if: needs.demande.outputs.action == 'construction'
     uses: ./.github/workflows/vision-identite-amorcage-preparer.yml
     secrets: inherit
+  proprietaire:
+    needs: demande
+    if: needs.demande.outputs.action == 'proprietaire'
+    uses: ./.github/workflows/vision-proprietaire-enroler.yml
+    secrets: inherit
