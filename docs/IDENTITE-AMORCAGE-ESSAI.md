@@ -19,6 +19,12 @@ complet dans les dix minutes ; le retour est terminé et les25sites passent.
 L'identité n'est pas enregistrée. Diagnostiquer ce processus arrêté via
 le point d'entrée unique avant toute reprise adaptée à l'état privé laissé.
 
+Le diagnostic37961581194 établit retour terminé, worker arrêté et cluster
+absent. Le conflit attribut/méthode `worker` est reproduit localement et corrigé.
+Le nouvel essai exige avant sa préparation la trace exacte d'action masquée,
+puis délai, dans ce journal privé retourné ; une autre cause, étape ou cluster
+bloque. Aucun dossier échoué ni donnée ne sont effacés pour permettre la reprise.
+
 Le [point d'entrée unique](VISION-MISE-EN-SERVICE.md) appelle
 `vision-identite-amorcage-activer.yml` comme étape réutilisable. Demande dédiée
 sur `operations/vision` ou lancement de secours sur main, vps-production,

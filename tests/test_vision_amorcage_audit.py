@@ -66,6 +66,24 @@ class Audit(unittest.TestCase):
         with patch.object(audit.subprocess,'run',side_effect=valeurs):
             self.assertEqual(audit.etat_worker(Path('/outils')),(dict(etat='failed',code=203),'journal-prive'))
 
+    def test_reprise_exige_la_trace_exacte_et_absence_de_cluster_ou_etape(self):
+        prive='contenu-prive-inconnu'
+        trace='essai = Essai(a.revision); getattr(essai, a.action)()\n'+prive+"\nTypeError: 'str' object is not callable\nValueError: Délai d’essai dépassé"
+        resultat=audit.classer(trace,'')
+        self.assertEqual(set(resultat['categories']),{'action_masquee','essai_timeout'})
+        self.assertNotIn(prive,json.dumps(resultat))
+        self.assertEqual(audit.classer("TypeError: 'str' object is not callable",'')['categories'],[])
+        rapport=dict(revision=audit.REVISION,socle_conserve=True,retour_termine=True,
+            generation_enregistree=False,activation=False,inscriptions=False,cluster_prive_present=False,
+            worker=dict(etat='inactive'),controle_worker=dict(etapes=[],categories=[]),**resultat)
+        audit.verifier_reprise(rapport)
+        for cle,valeur in (('revision','a'*40),('socle_conserve',False),('retour_termine',False),
+                ('generation_enregistree',True),('activation',True),('inscriptions',True),('cluster_prive_present',True),
+                ('categories',['essai_timeout']),('categories',['action_masquee','essai_timeout','commande_refusee']),
+                ('worker',dict(etat='active')),('controle_worker',dict(etapes=['essai_generation'],categories=[])),
+                ('controle_worker',dict(etapes=[],categories=['commande_refusee']))):
+            with self.subTest(cle=cle),self.assertRaises(ValueError):audit.verifier_reprise(rapport|{cle:valeur})
+
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)/'prive';p.write_text('texte');p.chmod(0o600)

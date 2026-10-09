@@ -1,4 +1,5 @@
 """Retour réel avec flock, données de fixture et API publique sans compte."""
+import ast
 import copy
 import fcntl
 import hashlib
@@ -28,6 +29,14 @@ https=charger('https_test', 'identite-amorcage-https.py')
 
 
 class Retour(unittest.TestCase):
+    def test_attribut_ne_masque_aucune_action_du_controleur(self):
+        source=ast.parse((ROOT/'scripts/vision-identite-amorcage-activer.py').read_text())
+        classe=next(n for n in source.body if isinstance(n,ast.ClassDef) and n.name=='Essai')
+        methodes={n for n,v in vars(essai.Essai).items() if callable(v)}
+        attributs={n.attr for n in ast.walk(classe) if isinstance(n,ast.Attribute) and
+            isinstance(n.ctx,ast.Store) and isinstance(n.value,ast.Name) and n.value.id=='self'}
+        self.assertEqual(methodes&attributs,set(),'Une chaîne d’unité ne doit pas masquer une action exécutable')
+
     def fixture(self, root):
         d=root/'etat'; d.mkdir(); outils=root/'outils'; outils.mkdir()
         log=root/'operations.txt'; courant=root/'courant'; profil=root/'profil'

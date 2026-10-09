@@ -140,7 +140,7 @@ class Essai:
             'Génération préparée différente')
         self.ancien = self.rapport['systeme_actif']; self.nouveau = self.rapport['systeme_amorcage']
         self.outils = Path(self.ancien) / 'sw/bin'
-        self.worker = 'vision-amorcage-essai-' + revision[:12]
+        self.unite_essai = 'vision-amorcage-essai-' + revision[:12]
         self.retour = 'vision-amorcage-retour-' + revision[:12]
         self.py = str(Path(sys.executable).resolve())
 
@@ -205,7 +205,7 @@ class Essai:
         exiger(r.returncode == 0, 'Copie locale Vision refusée')
         with (self.d/'vision-avant.dump.age').open('rb') as f:
             exiger(f.read(22) == b'age-encryption.org/v1\n', 'Copie locale non chiffrée')
-        self.ecrire('retour.sh', script_retour(self.d, self.ancien, self.ancien, self.outils, worker=self.worker+'.service'))
+        self.ecrire('retour.sh', script_retour(self.d, self.ancien, self.ancien, self.outils, worker=self.unite_essai+'.service'))
         os.chmod(self.d/'retour.sh', 0o700)
         self.commande(self.outils/'bash', '-n', self.d/'retour.sh')
         self.ecrire('finalisation.lock', '')
@@ -232,7 +232,7 @@ class Essai:
             '--timer-property=AccuracySec=1s', '--property=Type=oneshot', '--property=TimeoutStartSec=6min', self.d/'retour.sh')
         self.commande(self.outils/'systemctl', 'is-active', self.retour+'.timer')
         self.ecrire('commence', '')
-        self.commande(self.outils/'systemd-run', '--unit='+self.worker, '--property=Type=exec',
+        self.commande(self.outils/'systemd-run', '--unit='+self.unite_essai, '--property=Type=exec',
             '--property=TimeoutStopSec=45s', '--property=RuntimeMaxSec=10min', '--property=UMask=0077',
             '--property=StandardOutput=append:'+str(self.d/'worker-prive.log'),
             '--property=StandardError=append:'+str(self.d/'worker-prive.log'),
