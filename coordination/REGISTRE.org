@@ -4908,3 +4908,66 @@ Après preuve réelle de la nouvelle génération et syntaxe : préparer la repr
 :PREUVE: -
 :END:
 
+* Auditer le contrôle Nginx refusé et utiliser ses outils explicitement évalués
+:PROPERTIES:
+:ID: 20261009-vision-279f0b4ef8ff
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T19:31:09+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR60/287tests/CI push37978501403 et PR37978505212 sont intégréesf27c4d1e1f0b731da9e16116d584293599ee10d4. Signal37979376587, construction37979390241/job113985787083 : génération construite19:20:37, refus immédiat à configuration_nginx_native avant activation. Les invariants/six services/nouvelle SSH/25sites restent vérifiés, fin19:21:04. Aucun compte ou SQL de production ; cluster privé préservé. La génération reste retenue en GCroot, sans preuve native finale.
+
+La préparation suivante commence par auditer en lecture seule ce refus f27 : dossier/fichiers root privés bornés, génération/source/preparation identifiées, classes d’erreur fermées, paramètres Nginx uniquement sous forme booléenne et présence du lanceur dans le socle, pas de messages privés. Elle utilise ensuite le runuser explicitement évalué depuis le paquet util-linux du Nixpkgs installé, plutôt que présumer un lien dans systemPath ; même UID nginx et mêmes droits. Ce chemin explicite sera aussi employé pour les futurs contrôles peer sous postgres. Paquets AGE/tar sont identifiés dans la seule évaluation privée pour le diagnostic et la prochaine sauvegarde à froid. Si le test Nginx fixe échoue, son seul stderr de configuration (16Kio maximum, pas de serveur ni requête) sera chiffré en mémoire par AGE vers une nouvelle clé Work éphémère épinglée ; Actions reçoit seulement ce cryptogramme et des catégories fermées, jamais le stderr en clair. Clé Work0600 jamais VPS/Git/Actions, destruction après résolution. Cette fois la sélection porte sur le stderr de la commande fixe, sans dépendre d’un préfixe de journal.
+
+Même phase construction autonome main/CI exacte, contrôles avant/après, aucune activation ou changement de permissions/SQL/contenu. La génération ne sera qualifiée qu’après test natif réussi. L’ancienne construction f27 et ses sources sont conservées, pas de relance aveugle du même identifiant.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
