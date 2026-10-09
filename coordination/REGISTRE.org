@@ -4030,3 +4030,68 @@ Contrôleur réservé préparé, retour réel de fixture/verrou/idempotence et r
 :PREUVE: -
 :END:
 
+* Regrouper les opérations Vision sans multiplier les interventions du propriétaire
+:PROPERTIES:
+:ID: 20261009-vision-284f5bf9e53f
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T15:26:57+00:00
+:CONSOLIDATION: sans-objet
+:END:
+À la demande explicite du propriétaire, suspendre la succession de lancements manuels et regrouper la mise en service Vision. L'essai réservé préparé par PR47 n'a pas été lancé : génération39b7g3x42qp2q58idfv7nl6w5j3y78np construite, Vision historique toujours active, aucun compte humain commun.
+
+VPS prépare un point d'entrée Actions unique. Une demande dédiée sur la branche operations/vision pourra être déposée par les outils GitHub de Work ; elle désigne uniquement un commit déjà intégré sur main et dont la CI exacte réussit. Le push main ordinaire, les PR, les branches applicatives et les branches étrangères ne déploient pas. Vérifier la provenance et l'égalité avec main avant d'utiliser les credentials. Aucune commande distante, URL, révision applicative ou secret libre dans la demande. Conserver vps-production, exclusion vps-administration, host key épinglée et accès exclusivement depuis les runners.
+
+Les étapes techniques deviennent un enchaînement suivi par l'agent : réutiliser les qualifications déjà réussies, exécuter l'essai réservé et son retour autonome/25 sondes/nouvelle SSH/HTTPS avant enregistrement, publier un état lisible et distinguer ce qui exige la participation du propriétaire (mot de passe/OTP) des opérations exécutables par l'agent. Le premier enchaînement garde exactement le candidat construit et ne crée pas de compte humain, ne modifie pas le SQL de production, n'active pas le mode commun Vision et n'ouvre pas d'inscriptions. L'enrôlement et la bascule restent des phases explicites, à qualifier avant ajout à ce point d'entrée, sans contournement de preconditionsValidees.
+
+Vision préserve ses données et accès historiques ; aucun autre outil ne change de release, comptes ou style. Lire ce regroupement avant toute utilisation des anciennes recettes. Les essais échoués restent arrêtés avec leurs preuves privées ; aucune boucle automatique de réparation ou suppression. Fin : demande contrôlée et orchestration testées, CI et révision identifiées ; puis chaque état VPS attesté par une exécution Actions distincte, sans nouvelle intervention technique du propriétaire si les outils GitHub peuvent la déposer.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
