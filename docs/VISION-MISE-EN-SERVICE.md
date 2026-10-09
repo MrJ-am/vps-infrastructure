@@ -101,6 +101,15 @@ La sous-étape d'un refus est un nom fermé ; aucun message d'exception privé
 ne sort. Le socle, le retour durable et l'arrêt du worker restent obligatoires.
 Une donnée absente n'est jamais une preuve autorisant une reprise.
 
+Le relevé `37967591960` établit la présence du cluster et l'étape
+`essai_generation` avant le retour. Le contrôleur refuse toujours une reprise
+sur ce cluster. Le diagnostic complémentaire lit les journaux techniques dans
+les namespaces identite et par défaut, les attributs/PG_VERSION et
+`pg_controldata` du seul cluster arrêté. Il ne lance ni service ni SQL.
+Les cadres historiques sont liés aux trois SHA-256 publics de f9 dans un
+dossier privé ; leur mode d'archive0664 est alors acceptable, sans droits monde,
+lien ou contenu différent. Les nouvelles extractions respectent umask077.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

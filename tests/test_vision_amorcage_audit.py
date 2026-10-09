@@ -1,5 +1,6 @@
 """La classification technique ne recopie ni unité inconnue ni données privées."""
 import importlib.util
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -91,9 +92,13 @@ class Audit(unittest.TestCase):
             p.write_text('def worker():\n    raise ValueError("message privé")\n');p.chmod(0o600)
             prive='contenu-personnel-secret'
             trace=f'File "{p}", line 2, in worker\n{prive}\nFile "{p}", line 999, in worker\nFile "{p}", line 1, in {prive}\nFile "/autre/{prive}", line 1, in worker\n'
-            r=audit.cadres(trace,source)
-            self.assertEqual(r,[dict(script=audit.SCRIPTS[0],fonction='worker',ligne=2)])
-            self.assertNotIn(prive,json.dumps(r));self.assertNotIn(str(source),json.dumps(r))
+            with patch.dict(audit.EMPREINTES,{audit.SCRIPTS[0]:hashlib.sha256(p.read_bytes()).hexdigest()}):
+                r=audit.cadres(trace,source)
+                self.assertEqual(r,[dict(script=audit.SCRIPTS[0],fonction='worker',ligne=2)])
+                self.assertNotIn(prive,json.dumps(r));self.assertNotIn(str(source),json.dumps(r))
+                p.chmod(0o664);self.assertEqual(audit.cadres(trace,source),r)
+                p.write_text('def worker():\n    return "autre contenu"\n')
+                with self.assertRaises(ValueError):audit.cadres(trace,source)
             p.chmod(0o666)
             with self.assertRaises(ValueError):audit.cadres(trace,source)
             p.chmod(0o600);autre=source/'original';p.rename(autre);p.symlink_to(autre)
@@ -102,23 +107,25 @@ class Audit(unittest.TestCase):
     def test_etats_unites_et_journaux_namespace_restent_fermes(self):
         secret=b'valeur-utilisateur-privee'
         reponses=[SimpleNamespace(stdout=b'ActiveState=inactive\nExecMainStatus=0\nResult='+secret+b'\n',returncode=0),
-            SimpleNamespace(stdout=b'peer authentication failed '+secret,returncode=0)]*3
+            SimpleNamespace(stdout=b'peer authentication failed '+secret,returncode=0),
+            SimpleNamespace(stdout=secret,returncode=0)]*3
         with patch.object(audit.subprocess,'run',side_effect=reponses) as appels:
             r=audit.unites_identite(Path('/outils'))
             self.assertEqual(len(r),3)
             for v in r.values():self.assertEqual(v,dict(etat='inactive',code=0,resultat='indetermine',
-                etat_disponible=True,journal_disponible=True,categories=['journal_pg_peer_refuse']))
+                etat_disponible=True,journal_disponible=True,journaux_disponibles=dict(identite=True,defaut=True),categories=['journal_pg_peer_refuse']))
             self.assertNotIn(secret.decode(),json.dumps(r))
-            for a in appels.call_args_list[1::2]:self.assertIn('--namespace=identite',a.args[0])
+            for a in appels.call_args_list[1::3]:self.assertIn('--namespace=identite',a.args[0])
+            for a in appels.call_args_list[2::3]:self.assertNotIn('--namespace=identite',a.args[0])
 
     def test_unite_retiree_et_journal_absent_ne_masquent_pas_le_reste(self):
         prive=b'valeur-privee'
         sorties=[SimpleNamespace(stdout=b'ActiveState=inactive\n',returncode=1),
-            SimpleNamespace(stdout=prive,returncode=1),
+            SimpleNamespace(stdout=prive,returncode=1),SimpleNamespace(stdout=prive,returncode=1),
             SimpleNamespace(stdout=b'ActiveState=failed\nExecMainStatus=1\nResult=exit-code\n',returncode=0),
-            SimpleNamespace(stdout=b'initdb: error: '+prive,returncode=0),
+            SimpleNamespace(stdout=b'initdb: error: '+prive,returncode=0),SimpleNamespace(stdout=prive,returncode=0),
             SimpleNamespace(stdout=b'ActiveState='+prive+b'\nExecMainStatus=512\n',returncode=0),
-            SimpleNamespace(stdout=b'',returncode=0)]
+            SimpleNamespace(stdout=b'',returncode=0),SimpleNamespace(stdout=b'',returncode=0)]
         with patch.object(audit.subprocess,'run',side_effect=sorties):r=audit.unites_identite(Path('/outils'))
         absent=r['mrjam-amorcage-postgresql'];self.assertEqual(absent['etat'],'indetermine')
         self.assertIsNone(absent['code']);self.assertFalse(absent['etat_disponible']);self.assertFalse(absent['journal_disponible'])
@@ -132,6 +139,30 @@ class Audit(unittest.TestCase):
             for v in r.values():
                 self.assertFalse(v['etat_disponible']);self.assertFalse(v['journal_disponible']);self.assertEqual(v['categories'],[])
             self.assertNotIn('privé',json.dumps(r))
+
+    def test_cluster_lu_sans_sql_ou_modification_et_refuse_si_actif(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)/'cluster';d.mkdir(mode=0o700)
+            for nom,contenu in (('PG_VERSION','17\n'),('serveur-prive.log','peer authentication failed contenu-prive')):
+                p=d/nom;p.write_text(contenu);p.chmod(0o600)
+            chemin=lambda p: d if p=='/var/lib/mrjam-amorcage-postgresql' else Path(tmp)/'socket' if p=='/run/mrjam-amorcage-postgresql' else Path(p)
+            paquet='/nix/store/'+'a'*32+'-postgresql-and-plugins-17.11'
+            instantane={p.name:p.read_bytes() for p in d.iterdir()}
+            with patch.object(audit,'Path',side_effect=chemin),patch.object(audit.pwd,'getpwnam',return_value=SimpleNamespace(pw_uid=os.geteuid())),patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=b'Database cluster state:               shut down\nidentifiant-prive',returncode=0)) as appel:
+                r=audit.cluster_arrete(paquet)
+                self.assertTrue(r['version17']);self.assertTrue(r['controle_disponible']);self.assertEqual(r['etat'],'shut down')
+                self.assertEqual(r['categories'],['journal_pg_peer_refuse']);self.assertNotIn('contenu-prive',json.dumps(r));self.assertNotIn('identifiant-prive',json.dumps(r))
+                self.assertEqual(appel.call_args.args[0],[paquet+'/bin/pg_controldata','-D',str(d)])
+                self.assertEqual(instantane,{p.name:p.read_bytes() for p in d.iterdir()})
+                (d/'postmaster.pid').write_text('processus-prive')
+                appel.reset_mock();r=audit.cluster_arrete(paquet);self.assertFalse(r['controle_disponible']);appel.assert_not_called()
+                (d/'postmaster.pid').unlink();d.chmod(0o755)
+                r=audit.cluster_arrete(paquet);self.assertFalse(r['dossier_prive']);appel.assert_not_called()
+
+    def test_journaux_de_demarrage_classent_les_seules_causes_connues(self):
+        texte='mrjam-amorcage-postgresql.service: Failed with result exit-code\ninitdb: error: contenu-prive\nid: command not found\nDependency failed for mrjam-amorcage-identite.service'
+        r=audit.classer(texte,'');self.assertEqual(set(r['categories']),{'unite_pg_echec','journal_pg_initialisation_refusee','outil_shell_absent','dependance_identite_refusee'})
+        self.assertNotIn('contenu-prive',json.dumps(r))
 
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
