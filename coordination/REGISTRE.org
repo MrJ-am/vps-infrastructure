@@ -5217,3 +5217,66 @@ La phase suivante est seulement diagnostic, dans le point d’entrée main/CI ex
 :PREUVE: -
 :END:
 
+* Stabiliser les téléchargements CI sans sauter les tests
+:PROPERTIES:
+:ID: 20261009-vision-833a99bf5d6d
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T20:59:08+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La CI du diagnostic 5afe274ae4f181c068670568009c7b76bf0125e8 (37990014408) a passé les contrôles locaux et évaluations NixOS, puis les quatre jobs ont échoué sur les images Docker Hub, quota anonyme 429. Une relance ciblée a reproduit le refus dès l'initialisation de migration-vision. Aucun accès VPS ni diagnostic serveur n'a été exécuté.
+
+Préparer dans la même PR de diagnostic une source de téléchargement de qualification qui évite ce quota : miroir public Google des images Docker Hub, images PostgreSQL17, pgvector0.8.0-pg17 et Debian bookworm-slim épinglées par digest OCI. Vérifier les digests et précharger les mêmes images sous les noms historiques nécessaires aux tests. La copie mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87 a déjà été téléchargée avec cette empreinte exacte en Work.
+
+Cela ne change aucune image ou paquet du VPS ni la source Nixpkgs ou la recette de retour. Ne pas omettre de tests ni assouplir le contrôle de CI exacte : refaire la CI complète du commit révisé, puis seulement déclencher le diagnostic fermé de f763. Consigner les preuves et l'impact de qualification transversale après exécution.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
