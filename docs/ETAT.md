@@ -1,5 +1,22 @@
 # État attesté au 9 octobre 2026
 
+L'[enrôlement37996158121](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37996158121),
+f8343fb/PR69, job114042717040, s'est arrêté à `methodes_pwd_otp`, avant le
+contact, l'état durable, la création et le courriel. HTTPS/issuer/refus/sources,
+SSH/six services et25sites réussis ; génération réservée conservée.
+Le lecteur exigeait à tort `REQUIRED` pour le mot de passe : l'import privé
+courant prévoit `ALTERNATIVE` avec le lien magique dans un sous-flux obligatoire.
+La correction compare toute la hiérarchie native à cet import immuable,
+y compris exigences, providers, niveaux, priorités, UUID et configurations.
+L'API masque les valeurs ; une requête en lecture seule sur le seul cluster
+privé vérifie les trois configurations exactes. La preuve sensible reste
+mot de passe ET OTP réellement exécutés depuis moins de300secondes.
+[Qualification native26.7.3/PG17](../operations/vision-proprietaire-flux-qualification.json)
+et325tests locaux, dont huit refus ciblés. Aucun changement de realm, de
+méthode, de secret, de génération ou de SQL Vision. La relance demeure
+réservée au sujet initial, après CI exacte, avec intentions durables et refus
+de rejeu ; cette correction seule ne prouve pas un compte ou un envoi réel.
+
 L'[activation37994597242](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37994597242),
 opérateurac3d8e0ab466a536c9ac3190d360e163d364b8fb, job114037335784,
 a réussi tous les contrôles natifs, copies chiffrées, SSH/six services,
