@@ -3815,14 +3815,79 @@ Fin : préparateur sécurisé et workflow manuel exact testés puis import priv�
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: f82ac623074a8c3f2a3b862ae3def0862a12701afb542f59b460217e074d3a04
-:LU_LE: 2026-10-09T11:48:57+00:00
+:LU_LE: 2026-10-09T12:02:50+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37924485219
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/37927013329
 :END:
-Preuve native réelle consignée. Préparateur privé sans rotation et workflow distinct préparés ; CI et opération réelle d’import encore attendues. Aucune identité humaine ou activation.
+Import privé réellement préparé et vérifié, cinq secrets sans rotation ; SMTP non contacté, aucune identité humaine ou import en base. Socle inchangé, six services/nouvelle SSH et 25 sondes HTTP/TLS passent.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Construire les composants MrJ.am sans lever le garde-fou d’activation
+:PROPERTIES:
+:ID: 20261009-vision-432187fb9dd9
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T12:02:50+00:00
+:CONSOLIDATION: sans-objet
+:END:
+L'import privé initial réussit sur le VPS : Actions37927013329, job113808266809, opérateurce847e1519eac78b37352cd070eb949346d61a47. Les cinq secrets clients/hook et le realm privé root0600 sont créés et vérifiés, sans rotation. SMTP est configuré mais non contacté ; aucune identité humaine, import en base ni activation. Socle inchangé, six services, nouvelle connexion SSH et25 sondes HTTP/TLS passent. PR43 et CI37926200637/37926204998 sont intégrées,232 tests Python réussis. Visiona9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b et Keycloak26.7.3 restent les références.
+
+VPS prépare une construction manuelle des composants configurés pour le futur mode multi-utilisateur : unités et exécutables de l'identité, authentification, administration, cycle de vie, admission, fermeture et courriels, avec les sources AGPL correspondantes. Évaluer ces seules dérivations sur le Nixpkgs installé ; preconditionsValidees et inscriptionsOuvertes restent fausses. L'assertion empêchant une génération activable demeure présente et est vérifiée : aucune génération ni switch-to-configuration dans ce lot. Il ne lit aucun secret dans Nix ; seuls les chemins de credentials sont configurés. Les fichiers privés déjà préparés sont vérifiés séparément par Python root, sans contenu affiché ni rotation.
+
+Le workflow exige main, CI exacte, vps-production, exclusion VPS, preuves privées de construction/Unix/import et les mêmes invariants actifs avant/après. Construire à côté des services, conserver une racine GC, vérifier les dépendances des unités et les imports Python avec leurs interpréteurs réellement configurés. Sortie limitée aux versions, chemins store et booléens, diagnostics privés ; contrôles six services/nouvelle SSH/25HTTP-TLS même après échec. Aucun lancement de service candidat, SQL de production, DNS/ACME ou envoi. Les autres projets ne changent ni compte ni publication.
+
+Fin : lot de composants et contrôle du garde-fou testés puis construction réelle identifiée. Ce lot ne prouve ni génération complète, routage/certificat actif, association historique, possession/MFA du propriétaire, ni retour autonome. Ces étapes et les contrats, clé age privée/copie extérieure restent distincts avant ouverture à des tiers.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
 ** TODO vps
 :PROPERTIES:
