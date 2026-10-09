@@ -37,8 +37,8 @@ restent deux actions distinctes.
 | Phase | Situation au regroupement | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
-| Génération réservée | Construite réellement par Actions `37941066602` ; aucun service activé | Essai, retour autonome, contrôles et enregistrement dans un même enchaînement |
-| Compte commun du propriétaire | Aucun compte humain créé | Préparer et qualifier l'enrôlement privé, puis demander au propriétaire son mot de passe et son second facteur |
+| Génération réservée | Construite réellement par Actions `37941066602` ; essais retournés, génération non enregistrée | Identifier le refus du service d'identité avant toute reprise |
+| Compte commun du propriétaire | Aucun compte humain créé | Qualifier l'enrôlement privé, puis faire choisir le mot de passe et configurer le second facteur sur la page sécurisée ; aucun secret en conversation |
 | Rattachement historique et bascule Vision | Non exécutés | Ajouter une phase qualifiée à ce même point d'entrée ; l'agent la déclenchera et la suivra |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
@@ -109,6 +109,14 @@ les namespaces identite et par défaut, les attributs/PG_VERSION et
 Les cadres historiques sont liés aux trois SHA-256 publics de f9 dans un
 dossier privé ; leur mode d'archive0664 est alors acceptable, sans droits monde,
 lien ou contenu différent. Les nouvelles extractions respectent umask077.
+
+Le diagnostic `37969887755` valide ces cadres historiques et le cluster17
+privé proprement arrêté. L'échec classé concerne le service d'identité.
+Les codes de sortie/étapes systemd sont des valeurs fermées, les classes
+d'exception appartiennent à une liste prédéfinie. Le namespace identite
+entier reste réservé à ces composants et sa sortie uniquement classifiée ;
+aucun journal général du serveur. Le format des credentials et l'import
+peuvent être contrôlés sans envoi ni restitution de leurs valeurs.
 
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour

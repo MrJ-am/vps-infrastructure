@@ -64,6 +64,18 @@ MOTIFS = {
     'credential_indisponible': r'Failed to (?:load|set up) credentials|Failed at step CREDENTIALS',
 }
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
+EXCEPTIONS = frozenset(('IOException','FileNotFoundException','NoSuchFileException','AccessDeniedException',
+    'IllegalArgumentException','IllegalStateException','ClassNotFoundException','NoClassDefFoundError',
+    'UnsatisfiedLinkError','OutOfMemoryError','PSQLException','SQLException','PersistenceException',
+    'LiquibaseException','DatabaseException','ExecutionException','SecurityException','TimeoutException','CompletionException'))
+ETAPES_SYSTEMD = frozenset(('EXEC','USER','GROUP','CHDIR','CREDENTIALS','NAMESPACE','RUNTIME_DIRECTORY',
+    'STATE_DIRECTORY','LOGS_DIRECTORY','CACHE_DIRECTORY','STDOUT','STDERR','CAPABILITIES'))
+
+
+def sorties(texte):
+    return dict(codes=sorted({int(n) for n in re.findall(r'status=([0-9]{1,3})(?:/|,|\s)',texte) if int(n)<=255}),
+        etapes_systemd=sorted({e for e in ETAPES_SYSTEMD if re.search(r'Failed at step '+e+r'\b',texte)}),
+        exceptions=sorted({e for e in EXCEPTIONS if re.search(r'(?<![A-Za-z0-9_])'+e+r'\b',texte)}))
 
 
 def classer(diagnostic, dry):
@@ -170,7 +182,7 @@ def unites_identite(outils):
             re.fullmatch(r'[0-9]{1,3}',code) is not None and int(code)<=255)
         resultats=('success','exit-code','signal','timeout','oom-kill','resources','protocol','start-limit-hit')
         resultat=v.get('Result');resultat=resultat if disponible and resultat in resultats else 'indetermine'
-        journaux={};categories=set()
+        journaux={};categories=set();textes=[]
         for namespace in ('identite','defaut'):
             try:
                 j=subprocess.run([str(outils/'journalctl'),*(['--namespace=identite'] if namespace=='identite' else []),
@@ -178,11 +190,33 @@ def unites_identite(outils):
             except (OSError,subprocess.TimeoutExpired):j=None
             disponible_j=j is not None and j.returncode==0 and len(j.stdout)<=1048576
             journaux[namespace]=disponible_j
-            if disponible_j:categories.update(classer(j.stdout.decode(errors='replace'),'')['categories'])
+            if disponible_j:
+                texte=j.stdout.decode(errors='replace');textes.append(texte);categories.update(classer(texte,'')['categories'])
         rapports[nom]=dict(etat=etat if disponible else 'indetermine',code=int(code) if disponible else None,
             resultat=resultat,etat_disponible=disponible,journal_disponible=all(journaux.values()),
-            journaux_disponibles=journaux,categories=sorted(categories))
+            journaux_disponibles=journaux,categories=sorted(categories),**sorties('\n'.join(textes)))
     return rapports
+
+
+def namespace_identite(outils):
+    try:
+        r=subprocess.run([str(outils/'journalctl'),'--namespace=identite','--lines=300',
+            '--output=cat','--no-pager'],capture_output=True,timeout=10)
+    except (OSError,subprocess.TimeoutExpired):return dict(disponible=False)
+    if r.returncode or len(r.stdout)>1048576:return dict(disponible=False)
+    texte=r.stdout.decode(errors='replace')
+    return dict(disponible=True,categories=classer(texte,'')['categories'],**sorties(texte))
+
+
+def import_prive():
+    destination=Path('/var/lib/mrjam-identite')
+    spec=importlib.util.spec_from_file_location('identite_import',ROOT/'scripts/identite-preparer.py')
+    m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+    try:
+        m.preparer(ROOT/'operations/identite/realm.json',destination,destination/'proton-smtp.json',controler=True)
+        secret=lire(destination/'amorcage-admin.secret')
+        return dict(import_verifie=True,secret_amorcage_format_verifie=re.fullmatch(r'[A-Za-z0-9_-]{43}\n',secret) is not None)
+    except (OSError,ValueError,KeyError):return dict(import_verifie=False,secret_amorcage_format_verifie=False)
 
 
 def lire_pg(p,uid):
@@ -253,6 +287,8 @@ def main(reprise=False):
         try:details=dict(cadres=cadres(diagnostic,dossier/'source'),cadres_disponibles=True)
         except (OSError,ValueError,SyntaxError,UnicodeError):details=dict(cadres=[],cadres_disponibles=False)
         ETAPE='unites_secondaires';details['unites_identite']=unites_identite(outils)
+        ETAPE='namespace_identite';details['journal_namespace_identite']=namespace_identite(outils)
+        ETAPE='import_prive';details['import_prive']=import_prive()
         ETAPE='cluster_arrete'
         prepare=Path('/root/vision-identite-amorcage-operations/765ce372ccd61ad623e33bf8bb476a5c3be21fba')
         try:

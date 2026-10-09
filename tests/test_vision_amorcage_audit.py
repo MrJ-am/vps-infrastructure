@@ -113,7 +113,7 @@ class Audit(unittest.TestCase):
             r=audit.unites_identite(Path('/outils'))
             self.assertEqual(len(r),3)
             for v in r.values():self.assertEqual(v,dict(etat='inactive',code=0,resultat='indetermine',
-                etat_disponible=True,journal_disponible=True,journaux_disponibles=dict(identite=True,defaut=True),categories=['journal_pg_peer_refuse']))
+                etat_disponible=True,journal_disponible=True,journaux_disponibles=dict(identite=True,defaut=True),categories=['journal_pg_peer_refuse'],codes=[],etapes_systemd=[],exceptions=[]))
             self.assertNotIn(secret.decode(),json.dumps(r))
             for a in appels.call_args_list[1::3]:self.assertIn('--namespace=identite',a.args[0])
             for a in appels.call_args_list[2::3]:self.assertNotIn('--namespace=identite',a.args[0])
@@ -163,6 +163,19 @@ class Audit(unittest.TestCase):
         texte='mrjam-amorcage-postgresql.service: Failed with result exit-code\ninitdb: error: contenu-prive\nid: command not found\nDependency failed for mrjam-amorcage-identite.service'
         r=audit.classer(texte,'');self.assertEqual(set(r['categories']),{'unite_pg_echec','journal_pg_initialisation_refusee','outil_shell_absent','dependance_identite_refusee'})
         self.assertNotIn('contenu-prive',json.dumps(r))
+
+    def test_sorties_et_classes_n_exposent_jamais_identifiants_ou_fragments(self):
+        texte='status=203/EXEC contenu-prive\nstatus=999/secret\nFailed at step EXEC\nFailed at step SECRET\njava.nio.file.AccessDeniedException: chemin-prive\nexemple.InconnueException: contenu-prive'
+        r=audit.sorties(texte);self.assertEqual(r,dict(codes=[203],etapes_systemd=['EXEC'],exceptions=['AccessDeniedException']))
+        for prive in ('contenu-prive','chemin-prive','SECRET','InconnueException'):self.assertNotIn(prive,json.dumps(r))
+
+    def test_namespace_reserve_lit_sans_ouvrir_le_journal_general(self):
+        with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=b'java.lang.IllegalStateException: contenu-prive',returncode=0)) as appel:
+            r=audit.namespace_identite(Path('/outils'))
+            self.assertTrue(r['disponible']);self.assertEqual(r['exceptions'],['IllegalStateException']);self.assertNotIn('contenu-prive',json.dumps(r))
+            self.assertIn('--namespace=identite',appel.call_args.args[0])
+        with patch.object(audit.subprocess,'run',side_effect=OSError('detail-prive')):
+            self.assertEqual(audit.namespace_identite(Path('/outils')),dict(disponible=False))
 
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
