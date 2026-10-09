@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "vision": "3dd6c4c0ffff622b5002f34edd8abdea08396a37",
+  "style": "96fa28ac564b9492768837d4087608e83acc721b",
+  "source_sha256": "d987d2aea1983a2a69bcb7e8e3432ceaf0736533c273370345625bf7adad1d66",
+  "activation": false,
+  "audit": {
+    "commit": "9fda3ad29ed2312311c84684c441a8490351517e",
+    "run": 37858455559,
+    "systeme": "/nix/store/y1azkcagkf54nq5vjn4j16g5v1c61c4c-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
+    "vision": "/srv/vision/releases/ba6c9d8b1f4ef6ad6d0c78ef570d89bbe223eccf-f27ea81080d5"
+  }
+}

@@ -17,6 +17,8 @@ jobs:
           java-version: '21'
       - name: Installer le navigateur et les outils de qualification
         run: |
+          sudo apt-get update
+          sudo apt-get install -y age
           python3 -m venv "$RUNNER_TEMP/qualification"
           "$RUNNER_TEMP/qualification/bin/pip" install playwright==1.57.0 cryptography==46.0.3
           "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
@@ -56,6 +58,7 @@ jobs:
             sleep 1
           done
           "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-integration.py
+          "$RUNNER_TEMP/qualification/bin/python" tests/keycloak-postgresql-restauration.py --jar "$RUNNER_TEMP/mrjam-identite.jar"
       - name: Retirer le conteneur de qualification
         if: always()
         run: docker rm -f keycloak-qualification || true
@@ -78,6 +81,13 @@ jobs:
           tar -xzf "$RUNNER_TEMP/nixpkgs.tar.gz" -C "$RUNNER_TEMP"
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/vision-multiutilisateur.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json scripts/vision-multiutilisateur-config.nix \
+            --argstr configuration "$PWD/hosts/hostinger/configuration.nix" >/dev/null
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-build --expr 'import ./services/sources-mrjam.nix { pkgs=import <nixpkgs> {}; }' \
+            --out-link "$RUNNER_TEMP/sources-services"
+          python3 tests/sources-mrjam.py "$RUNNER_TEMP/sources-services/services-mrjam.tar.gz"
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/system.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
@@ -111,3 +121,40 @@ jobs:
         run: |
           sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
           python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
+  migration-vision:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.0-pg17
+        env:
+          POSTGRES_PASSWORD: uniquement-qualification-locale
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '5432'
+      PGUSER: postgres
+      PGPASSWORD: uniquement-qualification-locale
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Installer le client PostgreSQL et psycopg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client python3-psycopg
+      - name: Qualifier le retour des droits sans restaurer les contenus
+        run: |
+          psql -X --set=ON_ERROR_STOP=1 --dbname=postgres --command='CREATE ROLE vision LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS'
+          python3 - <<'PY'
+          import importlib.util,json,tempfile
+          from pathlib import Path
+          spec=importlib.util.spec_from_file_location('preparer',Path('scripts/vision-multiutilisateur-preparer.py'))
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          c=json.load(open('operations/vision-multiutilisateur-candidat.json'))
+          destination=Path('source-vision-isolee');destination.mkdir(mode=0o700)
+          m.extraire(Path('vendor/vision-multiutilisateur-source.tar.gz'),destination,c['source_sha256'],c['vision'])
+          PY
+          python3 tests/vision-acl-integration.py --vision source-vision-isolee

@@ -2,6 +2,7 @@
 let
  cfg = config.infrastructure.visionMultiutilisateur;
  python = pkgs.python3.withPackages (p: [ p.psycopg ]);
+ sources = import ../services/sources-mrjam.nix { inherit pkgs; };
 in {
  options.infrastructure.visionMultiutilisateur.enable = lib.mkEnableOption
    "isolation et administration Vision après les migrations 19 à 25";
@@ -53,6 +54,24 @@ in {
        test "$resultat" = t
      '');
    services.nginx.virtualHosts."vision.mrj.am".locations = {
+     "= /code-source/vision.tar.gz" = {
+       alias = toString ../vendor/vision-multiutilisateur-source.tar.gz;
+       extraConfig = ''
+         types {};
+         default_type application/gzip;
+         add_header Content-Disposition 'attachment; filename="vision.tar.gz"' always;
+         add_header Cache-Control "no-store" always;
+       '';
+     };
+     "= /code-source/services-mrjam.tar.gz" = {
+       alias = "${sources}/services-mrjam.tar.gz";
+       extraConfig = ''
+         types {};
+         default_type application/gzip;
+         add_header Content-Disposition 'attachment; filename="services-mrjam.tar.gz"' always;
+         add_header Cache-Control "no-store" always;
+       '';
+     };
      "= /_vision_administration" = {
        proxyPass = "http://127.0.0.1:3002/verify-gestion";
        extraConfig = ''

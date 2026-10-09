@@ -114,8 +114,13 @@ HTTP n'est autorisé pour cet appel privé. Un schéma inconnu bloque le rejeu.
 La qualification `tests/vision-restauration.py --vision SOURCE --identite-port
 38085` réalise dump/restauration PostgreSQL 17, chiffrement/déchiffrement age,
 effacement de contenus et d'une identité native importée, puis second rejeu.
-Keycloak de test emploie H2 ; la restauration de son dump PostgreSQL réel et
-la récupération physique du disque Linux restent des contrôles de staging.
+Ce parcours combiné utilise Keycloak H2. Un contrôle complémentaire
+`tests/keycloak-postgresql-restauration.py` réalise réellement le dump natif
+Keycloak sur PostgreSQL 17, age, restauration, connexion avec le mot de passe
+et l'OTP restaurés, puis double retrait du sujet dans la seule copie isolée.
+Le sujet original reste présent. Cette qualification synthétique emploie
+JDBC TCP loopback ; JDBC Unix, les données réelles et la récupération physique
+du disque Linux restent des contrôles de staging.
 
 ## Preuves et limites d'activation
 
