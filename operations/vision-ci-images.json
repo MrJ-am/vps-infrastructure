@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "registre": "mirror.gcr.io",
+  "postgresql17": "mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3",
+  "pgvector": "mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87",
+  "outils": "mirror.gcr.io/library/debian@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587",
+  "images_telechargees_et_digests_verifies_work": true,
+  "images_vps_modifiees": false,
+  "qualification_ci_requise": true
+}

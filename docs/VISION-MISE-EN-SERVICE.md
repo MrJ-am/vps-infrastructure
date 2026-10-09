@@ -240,3 +240,14 @@ retour15min, contrôles locaux/25sites/HTTPS et copie d'identité précèdent
 l'enregistrement. Une erreur déclenche le retour puis un diagnostic automatique
 limité à la tentative courante et aux états/catégories fermés. Aucun effacement
 de cluster, aucun humain, inscription ou migration Vision dans cette phase.
+
+## Images de qualification
+
+La CI du diagnostic5afe a rencontré le quota anonyme Docker Hub429,
+y compris après relance. Les images PostgreSQL17, pgvector0.8.0-pg17
+et Debian bookworm-slim proviennent désormais du miroir public Google,
+[épinglées par digest OCI](../operations/vision-ci-images.json).
+Les téléchargements et empreintes ont été vérifiés dans Work. La CI
+précharge les mêmes images sous les noms attendus par les recettes ;
+aucun test n'est omis. Cela ne modifie pas les paquets Nix ou images VPS.
+La réussite du commit exact reste exigée avant toute demande administrative.
