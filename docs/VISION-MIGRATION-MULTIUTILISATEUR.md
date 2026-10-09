@@ -74,7 +74,20 @@ migrations 19–25, owners/ACL/RLS rétablis deux fois, refus après ajout d'un 
 contenu préservé. Ils sont exécutés en CI avec l'archive Vision exacte.
 Le test complémentaire d'IdP réalise un dump PostgreSQL natif chiffré, restaure
 le sujet et ses credentials, ouvre une session par mot de passe et OTP, puis
-retire le sujet deux fois dans la seule copie. Il ne prouve pas JDBC Unix.
+retire le sujet deux fois dans la seule copie.
+
+`tests/keycloak-unix.py` démarre également Keycloak natif avec les deux plugins
+junixsocket du Nixpkgs épinglé : URL JDBC de la configuration NixOS, socket Unix,
+rôle sans mot de passe et règle `peer` effectivement chargée. PostgreSQL n'a
+aucune écoute TCP et son conteneur aucun réseau. La console native répond après
+création du schéma ; les connexions sont bien locales et un autre UID est refusé.
+Cette qualification synthétique ne remplace pas l'essai de la génération sur VPS.
+
+Le DNS public de `compte.mrj.am` répond NXDOMAIN au relevé du 9 octobre 2026.
+Créer son enregistrement A vers `187.77.95.158` chez alwaysdata avant ACME.
+Ne pas ajouter d'AAAA sans routage IPv6 qualifié et ne pas modifier les MX Proton.
+Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
+le thème tiers de la console native conserve les limites déclarées.
 
 L'audit de la machine active est réel et identifié. L'exécution VPS de cette
 nouvelle préparation, SMTP Proton/réception, la possession de la clé privée,
