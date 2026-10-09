@@ -3555,6 +3555,70 @@ Vision et VPS consignent les preuves et qualifient cette construction avant l’
 :PREUVE: -
 :END:
 
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 66c0ae5f301e0f7f12f1418ab43725aa8b96e22c5df2858ecb736369bbad77db
+:LU_LE: 2026-10-09T09:45:10+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: PR38 intégrée 226a928a58121b25a3c097c8d32b6843a05e19e6, CI37911626328/37911629119 réussies, construction réelle37912940648 arrêtée à construction_paquet ; six services, SSH et25sondes passent.
+:END:
+Diagnostic privé du build à qualifier avant correction ; aucune activation, mutation SQL ou ouverture.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le refus de construction Keycloak sans publier son journal privé
+:PROPERTIES:
+:ID: 20261009-vision-73616d26a444
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T09:46:08+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La PR38 (226a928a58121b25a3c097c8d32b6843a05e19e6) épingle Keycloak26.7.3 sur le Nixpkgs installé ; 205 tests locaux et CI37911626328/37911629119 passent. La construction réelle37912940648, job113762180007, vérifie le socle exact et la preuve de préparation37909401754, puis échoue à construction_paquet. Aucun démarrage IdP, SQL de production, génération ou inscription. Les six services, une nouvelle connexion SSH et les25contrôles HTTP/TLS passent après échec.
+
+VPS prépare un diagnostic strictement en lecture seule dans audit.yml existant, operation=audit : lire uniquement le diagnostic privé de cette construction, dossier root et fichier0600, sans suivre de lien, lecture bornée. Publier des catégories constantes de refus Nix/Java/téléchargement et l'étape publique, jamais le stderr brut ni une valeur privée. Les nouveaux tests doivent prouver qu'un faux secret ou contenu personnel n'est pas restitué. Aucun nouveau déclencheur de mutation par push. La reproduction locale construit le même paquet configuré pour qualifier l'archive officielle et le SPI ; elle ne prouve pas le VPS.
+
+Après le diagnostic réel, corriger la seule construction ou recette nécessaire, préserver les contrôles stricts et qualifier le correctif avant une relance. Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style96fa28ac564b9492768837d4087608e83acc721b et issuer log.mrj.am restent les candidats. Les autres outils ne changent ni publication ni comptes. Fin : refus établi, correctif qualifié et construction réelle identifiée. JDBC natif VPS, identité initiale/MFA, retour autonome, contrats, clé et copie externe restent distincts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
