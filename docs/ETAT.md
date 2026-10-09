@@ -1,5 +1,18 @@
 # État attesté au 9 octobre 2026
 
+## Vision — qualification isolée arrêtée avant dump, 9 octobre 2026
+
+La relance [37897757438](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37897757438),
+opérateur `8c3721c5fc25724c409a5f9e2b56e0bccfdd702b`, vérifie les invariants
+actifs et l'archive Vision `a9c51acac81510d7dc896f5daf4e6fb28a36b979`, puis
+refuse le socle NixOS recalculé à `evaluation_nixos`. Aucun dump, migration ni
+activation ne commence. Après arrêt : nouvelle connexion administrative,
+six services actifs et 25 contrôles HTTP/TLS réussis. Le constat privé du
+premier essai `37893102123` retrouve seulement la source extraite, sans
+évaluation conservée, ACL ni dump. La cause précise de la divergence reste
+à établir par le diagnostic technique du workflow d'audit existant ; le
+garde-fou du préparateur reste strict.
+
 ## Vision — courrier Proton qualifié le 9 octobre 2026
 
 L'exécution [37891204452](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37891204452),
