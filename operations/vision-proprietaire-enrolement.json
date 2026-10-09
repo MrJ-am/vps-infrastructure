@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "infrastructure": "69e0d1dc8193865693b55fc2485a459d71529a7b",
+  "execution": 37999358368,
+  "job": 114053418862,
+  "refus_creation_precedent_verifie": true,
+  "post_creation_precedent_refuse_http400": true,
+  "ancienne_intention_archivee": true,
+  "compte_initial_prepare": true,
+  "courriel_accepte_par_relais": true,
+  "participation_proprietaire_requise": true,
+  "mot_de_passe_fourni_par_exploitation": false,
+  "privilege_administrateur_identite": false,
+  "copie_identite_chiffree": true,
+  "services_conserves": true,
+  "controles_http_tls": 25,
+  "mode_vision_oidc": false,
+  "inscriptions": false
+}

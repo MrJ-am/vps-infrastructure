@@ -1,5 +1,24 @@
 # État attesté au 9 octobre 2026
 
+L'[enrôlement37999358368](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37999358368),
+69e0d1dc8193865693b55fc2485a459d71529a7b/PR71, job114053418862,
+a réussi après la CI complète37998961876 et335tests locaux. Les preuves
+privées ont confirmé le POST de création antérieur explicitement refuséHTTP400,
+aucun compte et aucun courriel demandé. L'intention refusée a été archivée
+sans effacement, puis le compte initial créé avec l'identifiant corrigé.
+Le relais a accepté le mail natif, sans mot de passe choisi par l'exploitation
+ni privilège humain d'administration d'identité. Copie locale chiffrée de
+l'identité, nouvelle connexion SSH/six services et25HTTP/TLS finaux réussis.
+[Reçu sans donnée personnelle](../operations/vision-proprietaire-enrolement.json).
+Le lien initial a une durée1800secondes ; son acceptation SMTP ne prouve
+pas sa réception ni la possession par le propriétaire. Le propriétaire doit
+choisir son mot de passe et configurer son OTP dans le portail. La preuve
+ultérieure reste limitée au sujet durable exact et à pwd/otp effectivement
+exécutés depuis moins de300secondes. Aucun OIDC Vision, première attribution
+d'admin applicatif, migrationSQL019–025 ou inscription tierce dans cette phase.
+Les lancements techniques demeurent automatiques ; cette étape humaine ne
+nécessite aucun Run workflow ni accès au PC Linux de sauvegarde.
+
 La tentative2 de l'[opération37997821227](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37997821227),
 0f8b9f3/PR70, job114048714100, a passé la correction du flux puis refusé
 `compte_et_courriel`. Le diagnostic privé n'a pas encore été projeté ; ce stade
@@ -45,7 +64,7 @@ a réussi tous les contrôles natifs, copies chiffrées, SSH/six services,
 25HTTP/TLS, certificat/issuer/refus/sources. La génération réservéek4q
 est enregistrée, le retour neutralisé ; l'ancienne générationy1 reste conservée.
 [Preuve exacte](../operations/vision-identite-amorcage-activation.json).
-Aucun compte humain, OIDC Vision, migration SQL de production ou inscription.
+Lors de cette activation : aucun compte humain, OIDC Vision, migration SQL de production ou inscription.
 La phase propriétaire suivante exige ce reçu égal au privé et l'état actif,
 déchiffre le contact seulement en RAM, conserve des intentions privées
 avant création/courriel, interdit tout rejeu ambigu et admin d'identité.

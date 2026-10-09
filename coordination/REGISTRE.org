@@ -5516,12 +5516,12 @@ Qualifiers déjà rédigés et parcours natif26.7.3/PG17/SMTP synthétique/Chrom
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 682abd6cf5b7f740b10543ccaaec6ecddfe48350145301615b2bbce7cd67d433
-:LU_LE: 2026-10-09T21:45:47+00:00
+:LU_LE: 2026-10-09T22:30:29+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Enrôlement root privé et reçu réel37994597242 intégrés au plan fermé ; état durable sans rejeu, aucun mot de passe opérateur ou admin identité ; courriel non encore envoyé.
+:PREUVE: 69e0d1d/PR71/335 tests, CI37998961876 complète ; opération37999358368/job114053418862 réussie : compte initial préparé, mail accepté par relais, aucun mot de passe opérateur ni admin IdP, copie chiffrée, SSH/six services/25HTTP-TLS finaux. Choix du mot de passe/OTP par propriétaire reste nécessaire ; pas de preuve de réception/session humaine, VisionOIDC/inscriptions fermés.
 :END:
 
 ** TODO vps
@@ -5644,12 +5644,12 @@ Qualifier ces refus et le contact corrigé avant CI exacte, puis l'agent lance l
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 1469ef79c995aecad4ecddb3d2e1aefd2d9077977604b9c6c7bf661f267b835b
-:LU_LE: 2026-10-09T22:23:04+00:00
+:LU_LE: 2026-10-09T22:30:29+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 335tests et Nix locaux réussis ; native26.7.3 refuse deux caractères sans création et accepte la correction sans mot de passe opérateur. Reprise fermée préparée, sources antérieures conservées ; preuves serveur du refus explicite et création/mail réels encore nécessaires après CI exacte.
+:PREUVE: 69e0d1d/PR71/335 tests/CI37998961876. Réel37999358368/job114053418862 : sources/uniquePOST400/absence de compte et courrier confirmées, intention refusée archivée, création corrigée et mail acceptés, copie chiffrée et socle/25sites conservés. Reprise déjà consommée ou ambiguë refuse ; aucun profil/secret/SQL Vision changé. Participation du propriétaire nécessaire pour mot de passe/OTP.
 :END:
 
 ** TODO vps
