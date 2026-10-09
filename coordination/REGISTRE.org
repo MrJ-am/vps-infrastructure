@@ -5156,3 +5156,64 @@ Plan fermé action amorcage dans le point d’entrée main/CI exacte : entrée r
 :PREUVE: -
 :END:
 
+* Lire le refus des contrôles de f763 et réparer le diagnostic courant
+:PROPERTIES:
+:ID: 20261009-vision-7c3f6d975d71
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T20:44:42+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR64/296 tests, CI push37987455235 réussie, intégrationf7634858fa7a7fbfe33f4c00ecc0047bc48b811f. Signal37987975061, essai37987992248/job114014731892 : audit f9 complet, copie à froid chiffrée avec empreinte, entrée/règles/dry-activate/copie Vision/répétition du timer passent. Retour armé et worker lancé ; attente des contrôles locaux échoue, retour terminé, socle et25HTTP/TLS finaux vérifiés. Aucune génération enregistrée, personne ou migration Vision. La raison initiale n’est pas encore établie ; le diagnostic automatique a été refusé car son lecteur n’autorise encore que88/f9.
+
+La phase suivante est seulement diagnostic, dans le point d’entrée main/CI exacte, de la tentativef763 explicitement identifiée et retournée. Marqueurs/fichiers root privés bornés, worker arrêté, source vérifiée par SHA et cadres AST, état du cluster/import/units, aucune activation/SQL/personne/effacement. Catégories fermées des raisons de refus des contrôles locaux (PID/unités/boucle locale/peer/realm/clients) ajoutées, pas de messages ou valeurs privées publiés. La fenêtre Nginx sera celle de ce seul essai. La fonction de lecture du worker acceptera aussi la révision courante explicitement attendue par le contrôleur après validation de son dossier/source, jamais une commande ou unité libre. Cela répare le diagnostic automatique des prochains essais, sans autoriser de reprise. Une nouvelle reprise ne sera envisagée qu’après cause et état réels qualifiés ; les sauvegardes/générations/sources/cluster/secrets existants restent préservés.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
