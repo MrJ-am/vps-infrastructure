@@ -86,6 +86,14 @@ sans autre cause connue, étape engagée ou cluster présent. Il refuse toute
 divergence ; la reprise qualifiée utilise un nouveau dossier de tentative,
 avec la même génération et le retour autonome inchangé.
 
+Cette preuve de dispatch est réellement passée dans `37963555297`. Le worker
+corrigé démarre, mais une commande refuse la poursuite ; le retour rétablit
+le socle et les25sites passent. Le diagnostic normal examine maintenant cette
+seule tentativef9 retournée, avec cadres Python limités à son code connu et
+états/journaux du namespace identite classés. L'ancienne preuve88dc reste
+distincte et inchangée pour le contrôle de reprise antérieur. Aucun argument,
+chemin privé, extrait ou donnée métier n'est transmis.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

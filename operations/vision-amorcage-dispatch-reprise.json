@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "infrastructure": "f9dae92a39f350d5aa5b5795f74b04f6827d60ff",
+  "signal": 37963538181,
+  "execution": 37963555297,
+  "job": 113932183678,
+  "lancement_par_agent": true,
+  "action_masquee_confirmee": true,
+  "reprise_worker_autorisee": true,
+  "preflight_reussi": true,
+  "retour_arme": true,
+  "worker_engage": true,
+  "controles_locaux_termines": false,
+  "categories": ["commande_refusee"],
+  "retour_termine": true,
+  "socle_retabli": true,
+  "generation_enregistree": false,
+  "identite_humaine": false,
+  "mode_vision_oidc": false,
+  "inscriptions": false,
+  "http_tls_avant": 25,
+  "http_tls_apres": 25
+}

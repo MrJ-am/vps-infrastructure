@@ -1,5 +1,6 @@
 """Diagnostic du seul essai identifié ; jamais d'extrait privé dans la sortie."""
 import argparse
+import ast
 import importlib.util
 import json
 import os
@@ -10,7 +11,10 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
+DERNIERE = 'f9dae92a39f350d5aa5b5795f74b04f6827d60ff'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
+SCRIPTS = ('vision-identite-amorcage-activer.py','vision-identite-construire.py',
+    'vision-multiutilisateur-preparer.py','vision-semantique-socle.py')
 UNITES = frozenset(('sshd.service', 'nginx.service', 'postgresql.service', 'vision.service',
     'matheval.service', 'mrj-auth.service', 'nginx-config-reload.service', 'nginx-validate-config.service',
     'systemd-journald.service', 'systemd-journald@identite.service', 'systemd-journald@http.service',
@@ -35,6 +39,13 @@ MOTIFS = {
     'commande_refusee': r'(?:RuntimeError|ConstructionRefusee): Commande de construction ou de contrôle refusée',
     'essai_timeout': r'ValueError: Délai d’essai dépassé',
     'action_masquee': r"getattr\(essai, a\.action\)\(\)[\s\S]{0,1024}TypeError: 'str' object is not callable",
+    'nixpkgs_introuvable': r"file 'nixpkgs' was not found|cannot find.*nixpkgs",
+    'journal_pg_peer_refuse': r'peer authentication failed',
+    'journal_pg_initialisation_refusee': r'initdb: error:',
+    'journal_pg_proprietaire_incorrect': r'(?:data directory.*wrong ownership|must be owned by)',
+    'journal_db_absente': r'database "mrjam_identite" does not exist',
+    'journal_role_absent': r'role "keycloak" does not exist',
+    'journal_memoire': r'out of memory|OutOfMemoryError|oom-kill',
 }
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
 
@@ -85,8 +96,35 @@ def verifier_reprise(rapport):
         raise ValueError('Cause ou état différents : reprise du worker interdite')
 
 
-def etat_worker(outils):
-    unite = 'vision-amorcage-essai-' + REVISION[:12] + '.service'
+def cadres(texte, source):
+    connus={}
+    for nom in SCRIPTS:
+        p=Path(source)/'scripts'/nom
+        if not p.exists(): continue
+        fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
+        try:
+            s=os.fstat(fd)
+            if not stat.S_ISREG(s.st_mode) or s.st_uid!=os.geteuid() or s.st_nlink!=1 or s.st_mode&0o022 or s.st_size>131072:
+                raise ValueError('Source de diagnostic non conforme')
+            code=os.read(fd,131073).decode()
+        finally:os.close(fd)
+        arbre=ast.parse(code);fonctions={'<module>':[(1,len(code.splitlines()))]}
+        for n in ast.walk(arbre):
+            if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)):
+                fonctions.setdefault(n.name,[]).append((n.lineno,n.end_lineno))
+        connus[str(p)]=(nom,fonctions)
+    resultat=[]
+    for chemin,ligne,fonction in re.findall(r'File "([^"\n]+)", line ([0-9]{1,6}), in ([A-Za-z0-9_]+|<module>)',texte):
+        if chemin not in connus:continue
+        nom,fonctions=connus[chemin];numero=int(ligne)
+        if any(debut<=numero<=fin for debut,fin in fonctions.get(fonction,[])):
+            resultat.append(dict(script=nom,fonction=fonction,ligne=numero))
+    return resultat[-16:]
+
+
+def etat_worker(outils, revision=REVISION):
+    if revision not in (REVISION,DERNIERE):raise ValueError('Tentative non qualifiée')
+    unite = 'vision-amorcage-essai-' + revision[:12] + '.service'
     r = subprocess.run([str(outils/'systemctl'),'show',unite,'--property=ActiveState',
         '--property=ExecMainStatus'], capture_output=True, timeout=5)
     valeurs = dict(l.split('=',1) for l in r.stdout.decode().splitlines() if '=' in l)
@@ -98,9 +136,30 @@ def etat_worker(outils):
     return dict(etat=valeurs['ActiveState'], code=int(valeurs['ExecMainStatus'])), journal.stdout.decode(errors='replace')
 
 
+def unites_identite(outils):
+    rapports={}
+    for nom in ('mrjam-amorcage-postgresql','mrjam-amorcage-identite','mrjam-amorcage-sauvegarde'):
+        r=subprocess.run([str(outils/'systemctl'),'show',nom+'.service',
+            '--property=ActiveState','--property=ExecMainStatus','--property=Result'],capture_output=True,timeout=5)
+        v=dict(l.split('=',1) for l in r.stdout.decode().splitlines() if '=' in l)
+        etat=v.get('ActiveState');code=v.get('ExecMainStatus','')
+        if r.returncode or etat not in ('active','inactive','failed','activating','deactivating') or not re.fullmatch(r'[0-9]{1,3}',code) or int(code)>255:
+            raise ValueError('État d’unité indéterminé')
+        resultats=('success','exit-code','signal','timeout','oom-kill','resources','protocol','start-limit-hit')
+        resultat=v.get('Result');resultat=resultat if resultat in resultats else 'indetermine'
+        j=subprocess.run([str(outils/'journalctl'),'--namespace=identite','--unit='+nom+'.service',
+            '--lines=100','--output=cat','--no-pager'],capture_output=True,timeout=10)
+        if j.returncode or len(j.stdout)>1048576:raise ValueError('Journal technique indisponible')
+        rapports[nom]=dict(etat=etat,code=int(code),resultat=resultat,
+            categories=classer(j.stdout.decode(errors='replace'),'')['categories'])
+    return rapports
+
+
 def main(reprise=False):
     if os.geteuid() != 0: raise ValueError('Audit root Actions requis')
-    for path in (DOSSIER.parent, DOSSIER):
+    revision=REVISION if reprise else DERNIERE
+    dossier=DOSSIER if reprise else DOSSIER.parent/DERNIERE
+    for path in (dossier.parent, dossier):
         s = path.lstat()
         if not stat.S_ISDIR(s.st_mode) or s.st_uid != 0 or stat.S_IMODE(s.st_mode) != 0o700:
             raise ValueError('Dossier privé requis')
@@ -108,19 +167,21 @@ def main(reprise=False):
     construction = importlib.util.module_from_spec(spec); spec.loader.exec_module(construction)
     candidat = json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
     construction.verifier_socle(candidat)
-    marqueurs = {nom:(DOSSIER/nom).exists() for nom in ('commence','plan.json','enregistre','retour-commence','retour-termine')}
+    marqueurs = {nom:(dossier/nom).exists() for nom in ('commence','plan.json','enregistre','retour-commence','retour-termine')}
     verifier_retour(marqueurs)
     for nom,present in marqueurs.items():
-        if present: lire(DOSSIER/nom)
-    diagnostic = lire(DOSSIER/'diagnostic-prive.log'); dry = lire(DOSSIER/'dry-activate-prive.txt')
-    worker = lire(DOSSIER/'worker-prive.log') if (DOSSIER/'worker-prive.log').exists() else ''
-    etat,journal = etat_worker(Path(candidat['audit']['systeme'])/'sw/bin')
+        if present: lire(dossier/nom)
+    diagnostic = lire(dossier/'diagnostic-prive.log'); dry = lire(dossier/'dry-activate-prive.txt')
+    worker = lire(dossier/'worker-prive.log') if (dossier/'worker-prive.log').exists() else ''
+    outils=Path(candidat['audit']['systeme'])/'sw/bin'
+    etat,journal = etat_worker(outils,revision)
+    details={} if reprise else dict(cadres=cadres(diagnostic,dossier/'source'),unites_identite=unites_identite(outils))
     construction.verifier_socle(candidat)
-    rapport = dict(audit_amorcage=2, revision=REVISION, socle_conserve=True,
+    rapport = dict(audit_amorcage=3, revision=revision, socle_conserve=True,
         retour_termine=True, generation_enregistree=False, activation=False, inscriptions=False,
         worker=etat, controle_worker=classer_worker(worker+'\n'+journal),
         cluster_prive_present=Path('/var/lib/mrjam-amorcage-postgresql').exists(),
-        **classer(diagnostic,dry))
+        **classer(diagnostic,dry),**details)
     if reprise:
         verifier_reprise(rapport); rapport['reprise_worker_autorisee']=True
     print(json.dumps(rapport, ensure_ascii=False))
