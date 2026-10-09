@@ -1,0 +1,11 @@
+{
+  "keycloak": "26.7.3",
+  "donnees_synthetiques": true,
+  "lecture_native": true,
+  "postgresql17_reel": true,
+  "configurations_masquees_verifiees_sql": true,
+  "identification_alternative": true,
+  "otp_required": true,
+  "comparaison_hierarchie_entiere": true,
+  "mot_de_passe_et_otp_exiges_pour_preuve_sensible": true
+}

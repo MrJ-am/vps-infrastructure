@@ -5579,12 +5579,12 @@ Qualifier le lecteur corrigé sur le moteur natif et les refus d'exécutions dif
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: fd7167e5d2e0b2851874ea4adfd1afcf10e85816763c78ab396c72f9e6708602
+:LU_LE: 2026-10-09T22:04:54+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Lecteur corrigé qualifié sur moteur natif26.7.3/PG17 et flux privé courant ; huit contrôles de refus ajoutés,325 tests et Nix locaux réussis. Enrôlement réel toujours à qualifier après CI exacte.
 :END:
 
 ** TODO vps

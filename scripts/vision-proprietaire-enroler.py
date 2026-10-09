@@ -151,7 +151,7 @@ def main(revision, observer=False):
     api=ApiPrivee(token)
     # Vérifier le flux de preuve avant le premier courriel, pas après la réponse humaine.
     ETAPE='methodes_pwd_otp'
-    ids=observation.executions(api,preparer.outil(resume,'runuser_paquet','runuser'),resume['postgres_paquet']+'/bin/psql')
+    ids=observation.executions(api,preparer.outil(resume,'runuser_paquet','runuser'),resume['postgres_paquet']+'/bin/psql',realm)
     ETAPE='enveloppe_contact'
     contact=dechiffrer((ROOT/'operations/vision-proprietaire.age.b64').read_bytes(),preparer.outil(resume,'age_paquet','age'))
     compte_module.verifier_enveloppe(contact)
@@ -202,7 +202,7 @@ def main(revision, observer=False):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('revision');p.add_argument('--observer',action='store_true');a=p.parse_args()
     try:main(a.revision,a.observer)
-    except Exception:
+    except Exception as erreur:
         # Le traceback reste sous le dossier root de cette opération, jamais Actions.
         try:
             dirfd=os.open(ROOT.parent,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
@@ -215,5 +215,10 @@ if __name__=='__main__':
                 finally:os.close(fd)
             finally:os.close(dirfd)
         except Exception:pass
-        print(json.dumps(dict(enrolement_refuse=True,etape=ETAPE,inscriptions=False,mode_vision_oidc=False)))
+        rapport=dict(enrolement_refuse=True,etape=ETAPE,inscriptions=False,mode_vision_oidc=False)
+        raisons={'observation_sql','observation_json','observation_modele','observation_hierarchie',
+            'observation_identifiant','observation_provider','observation_configuration','observation_methodes'}
+        if type(erreur).__name__=='ObservationRefusee' and len(erreur.args)==1 and erreur.args[0] in raisons:
+            rapport['raison']=erreur.args[0]
+        print(json.dumps(rapport))
         raise SystemExit(1)

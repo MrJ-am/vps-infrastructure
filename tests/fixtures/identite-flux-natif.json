@@ -1,0 +1,247 @@
+{
+  "keycloak": "26.7.3",
+  "donnees_synthetiques": true,
+  "modele": {
+    "browserFlow": "mrjam-browser",
+    "authenticationFlows": [
+      {
+        "alias": "mrjam-browser",
+        "providerId": "basic-flow",
+        "topLevel": true,
+        "builtIn": false,
+        "authenticationExecutions": [
+          {
+            "authenticator": "auth-cookie",
+            "requirement": "ALTERNATIVE",
+            "priority": 10,
+            "authenticatorFlow": false
+          },
+          {
+            "flowAlias": "mrjam-formulaires",
+            "requirement": "ALTERNATIVE",
+            "priority": 20,
+            "authenticatorFlow": true
+          }
+        ]
+      },
+      {
+        "alias": "mrjam-formulaires",
+        "providerId": "basic-flow",
+        "topLevel": false,
+        "builtIn": false,
+        "authenticationExecutions": [
+          {
+            "flowAlias": "mrjam-identification",
+            "requirement": "REQUIRED",
+            "priority": 10,
+            "authenticatorFlow": true
+          },
+          {
+            "flowAlias": "mrjam-otp-conditionnel",
+            "requirement": "CONDITIONAL",
+            "priority": 20,
+            "authenticatorFlow": true
+          }
+        ]
+      },
+      {
+        "alias": "mrjam-otp-conditionnel",
+        "providerId": "basic-flow",
+        "topLevel": false,
+        "builtIn": false,
+        "authenticationExecutions": [
+          {
+            "authenticator": "conditional-user-configured",
+            "requirement": "REQUIRED",
+            "priority": 10,
+            "authenticatorFlow": false
+          },
+          {
+            "authenticator": "auth-otp-form",
+            "authenticatorConfig": "mrjam-second-facteur",
+            "requirement": "REQUIRED",
+            "priority": 20,
+            "authenticatorFlow": false
+          }
+        ]
+      },
+      {
+        "alias": "mrjam-recuperation",
+        "description": "Courriel, nouveau mot de passe ; le second facteur est conservé.",
+        "providerId": "basic-flow",
+        "topLevel": true,
+        "builtIn": false,
+        "authenticationExecutions": [
+          {
+            "authenticator": "reset-credentials-choose-user",
+            "requirement": "REQUIRED",
+            "priority": 10,
+            "authenticatorFlow": false
+          },
+          {
+            "authenticator": "reset-credential-email",
+            "authenticatorConfig": "mrjam-recuperation-email",
+            "requirement": "REQUIRED",
+            "priority": 20,
+            "authenticatorFlow": false
+          },
+          {
+            "authenticator": "reset-password",
+            "requirement": "REQUIRED",
+            "priority": 30,
+            "authenticatorFlow": false
+          }
+        ]
+      },
+      {
+        "alias": "mrjam-identification",
+        "providerId": "basic-flow",
+        "topLevel": false,
+        "builtIn": false,
+        "authenticationExecutions": [
+          {
+            "authenticator": "auth-username-password-form",
+            "authenticatorConfig": "mrjam-mot-de-passe",
+            "requirement": "ALTERNATIVE",
+            "priority": 10,
+            "authenticatorFlow": false
+          },
+          {
+            "authenticator": "mrjam-courriel",
+            "authenticatorConfig": "mrjam-lien-courriel",
+            "requirement": "ALTERNATIVE",
+            "priority": 20,
+            "authenticatorFlow": false
+          }
+        ]
+      }
+    ],
+    "authenticatorConfig": [
+      {
+        "alias": "mrjam-mot-de-passe",
+        "config": {
+          "default.reference.value": "pwd",
+          "default.reference.maxAge": "300"
+        }
+      },
+      {
+        "alias": "mrjam-second-facteur",
+        "config": {
+          "default.reference.value": "otp",
+          "default.reference.maxAge": "300"
+        }
+      },
+      {
+        "alias": "mrjam-recuperation-email",
+        "config": {
+          "force-login": "true"
+        }
+      },
+      {
+        "alias": "mrjam-lien-courriel",
+        "config": {
+          "default.reference.value": "email",
+          "default.reference.maxAge": "300"
+        }
+      }
+    ]
+  },
+  "executions": [
+    {
+      "id": "4a425a20-d773-4a3e-bb6a-a9096d9d02c0",
+      "requirement": "ALTERNATIVE",
+      "priority": 10,
+      "level": 0,
+      "displayName": "Cookie",
+      "providerId": "auth-cookie"
+    },
+    {
+      "id": "7c8e399c-2376-4601-8771-8bf8fd94921b",
+      "requirement": "ALTERNATIVE",
+      "priority": 20,
+      "level": 0,
+      "authenticationFlow": true,
+      "displayName": "mrjam-formulaires",
+      "flowId": "c554a3f6-75e7-4a3f-877d-01294e0da146"
+    },
+    {
+      "id": "ae842176-0c4a-4486-88e5-9128c4570e78",
+      "requirement": "REQUIRED",
+      "priority": 10,
+      "level": 1,
+      "authenticationFlow": true,
+      "displayName": "mrjam-identification",
+      "flowId": "6b08fadf-e3ed-43b1-8314-c138e895d3ef"
+    },
+    {
+      "id": "764771ed-bc11-4daf-821c-f3ee5f63135e",
+      "requirement": "ALTERNATIVE",
+      "priority": 10,
+      "level": 2,
+      "displayName": "Username Password Form",
+      "providerId": "auth-username-password-form",
+      "authenticationConfig": "c9fda8ca-7ba1-4b2e-b4b7-c4d2a4fab054"
+    },
+    {
+      "id": "ab9a43bf-9c54-4b56-956c-6113a876f0da",
+      "requirement": "ALTERNATIVE",
+      "priority": 20,
+      "level": 2,
+      "displayName": "Recevoir un lien par courriel",
+      "providerId": "mrjam-courriel",
+      "authenticationConfig": "9583d78f-69f1-4da4-91b7-6dc7ca7a2e2b"
+    },
+    {
+      "id": "226d010b-835b-474e-b0bc-f25ffe105aa8",
+      "requirement": "CONDITIONAL",
+      "priority": 20,
+      "level": 1,
+      "authenticationFlow": true,
+      "displayName": "mrjam-otp-conditionnel",
+      "flowId": "fe31aae0-105b-4eea-8b85-d098dbe7e2b1"
+    },
+    {
+      "id": "6060e599-059c-45da-b5cb-c75f5a67745e",
+      "requirement": "REQUIRED",
+      "priority": 10,
+      "level": 2,
+      "displayName": "Condition - user configured",
+      "providerId": "conditional-user-configured"
+    },
+    {
+      "id": "fdba2c92-0e49-4987-9291-55a29b752a74",
+      "requirement": "REQUIRED",
+      "priority": 20,
+      "level": 2,
+      "displayName": "OTP Form",
+      "providerId": "auth-otp-form",
+      "authenticationConfig": "c513b3bf-e2a5-464d-a7e5-817fc13d2816"
+    }
+  ],
+  "configs": {
+    "c9fda8ca-7ba1-4b2e-b4b7-c4d2a4fab054": {
+      "id": "c9fda8ca-7ba1-4b2e-b4b7-c4d2a4fab054",
+      "alias": "mrjam-mot-de-passe",
+      "config": {
+        "default.reference.value": "**********",
+        "default.reference.maxAge": "**********"
+      }
+    },
+    "9583d78f-69f1-4da4-91b7-6dc7ca7a2e2b": {
+      "id": "9583d78f-69f1-4da4-91b7-6dc7ca7a2e2b",
+      "alias": "mrjam-lien-courriel",
+      "config": {
+        "default.reference.value": "**********",
+        "default.reference.maxAge": "**********"
+      }
+    },
+    "c513b3bf-e2a5-464d-a7e5-817fc13d2816": {
+      "id": "c513b3bf-e2a5-464d-a7e5-817fc13d2816",
+      "alias": "mrjam-second-facteur",
+      "config": {
+        "default.reference.value": "**********",
+        "default.reference.maxAge": "**********"
+      }
+    }
+  }
+}
