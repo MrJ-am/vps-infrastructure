@@ -34,4 +34,11 @@ class Attente(unittest.TestCase):
         with patch.object(m.time,'monotonic',side_effect=[10,10,10.5,11]),patch.object(m.time,'sleep') as pause,patch.object(m,'api',side_effect=self.erreur(503)) as api:
             with self.assertRaisesRegex(ValueError,'Attente d’identité dépassée'):m.attendre_decouverte(object(),maximum=1)
             self.assertEqual(api.call_count,1);self.assertEqual(api.call_args.kwargs,dict(timeout=1));pause.assert_called_once_with(.5)
+    def test_sujet_initial_exact_seule_exception_au_refus_de_personne(self):
+        sujet='a'*8+'-'+'b'*4+'-'+'c'*4+'-'+'d'*4+'-'+'e'*12
+        m.verifier_personnes([]);m.verifier_personnes([{'id':sujet}],sujet)
+        for personnes,attendu in (([{'id':sujet}],None),([],sujet),([{'id':'etranger'}],sujet),
+                ([{'id':sujet},{'id':'etranger'}],sujet),([{'id':sujet}],'../'+sujet)):
+            with self.subTest(personnes=personnes,attendu=attendu),self.assertRaises(ValueError):m.verifier_personnes(personnes,attendu)
+
 if __name__=='__main__':unittest.main()

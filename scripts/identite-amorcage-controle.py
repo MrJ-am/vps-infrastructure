@@ -48,7 +48,15 @@ def attendre_decouverte(opener, *, maximum=120):
         time.sleep(min(1,restant))
 
 
-def verifier(secret, realm, opener=None):
+def verifier_personnes(personnes, sujet_proprietaire=None):
+    if sujet_proprietaire is None:
+        if personnes: raise ValueError('Personne présente avant enrôlement')
+    elif (not isinstance(sujet_proprietaire,str) or not re.fullmatch(r'[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}',sujet_proprietaire)
+            or not isinstance(personnes,list) or len(personnes)!=1 or personnes[0].get('id')!=sujet_proprietaire):
+        raise ValueError('Sujet initial différent')
+
+
+def verifier(secret, realm, opener=None, *, sujet_proprietaire=None):
     if opener is None:
         opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), SansRedirection())
     info = attendre_decouverte(opener)
@@ -68,8 +76,8 @@ def verifier(secret, realm, opener=None):
     info = api(opener, '/admin/serverinfo', token=token)
     if info['systemInfo']['version'] != '26.7.3' or 'mrjam-courriel' not in info['providers']['authenticator']['providers']:
         raise ValueError('Version ou SPI différent')
-    if api(opener, '/admin/realms/mrjam/users?max=2', token=token):
-        raise ValueError('Personne présente avant enrôlement')
+    personnes = api(opener, '/admin/realms/mrjam/users?max=2', token=token)
+    verifier_personnes(personnes,sujet_proprietaire)
     clients = api(opener, '/admin/realms/mrjam/clients', token=token)
     attendus = {c['clientId']: c for c in realm['clients']}
     actuels = {c['clientId']: c for c in clients if c['clientId'].startswith('mrjam-')}
@@ -86,5 +94,5 @@ def verifier(secret, realm, opener=None):
             account = api(opener, '/admin/realms/mrjam/clients/' + c['id'] + '/service-account-user', token=token)
             if account.get('username') != 'service-account-' + nom:
                 raise ValueError('Compte technique différent')
-    return dict(import_verifie=True, aucune_personne=True, inscription_native_fermee=True,
+    return dict(import_verifie=True, aucune_personne=sujet_proprietaire is None, inscription_native_fermee=True,
         issuer_canonique=True, smtp_configure_sans_envoi=True, clients_fermes=True)

@@ -1,5 +1,20 @@
 # État attesté au 9 octobre 2026
 
+L'[activation37994597242](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37994597242),
+opérateurac3d8e0ab466a536c9ac3190d360e163d364b8fb, job114037335784,
+a réussi tous les contrôles natifs, copies chiffrées, SSH/six services,
+25HTTP/TLS, certificat/issuer/refus/sources. La génération réservéek4q
+est enregistrée, le retour neutralisé ; l'ancienne générationy1 reste conservée.
+[Preuve exacte](../operations/vision-identite-amorcage-activation.json).
+Aucun compte humain, OIDC Vision, migration SQL de production ou inscription.
+La phase propriétaire suivante exige ce reçu égal au privé et l'état actif,
+déchiffre le contact seulement en RAM, conserve des intentions privées
+avant création/courriel, interdit tout rejeu ambigu et admin d'identité.
+Le propriétaire choisira son mot de passe et son second facteur via lien natif ;
+SMTP accepté ne prouve pas réception. L'observation ultérieure reste limitée
+au sujet durable exact et ses méthodes pwd/otp fraîches, aucun contenu personnel.
+Cette préparation ne prouve pas encore une création ou un courriel réel.
+
 Le [diagnostic37993555900](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37993555900),
 opérateur5dcfb0484599d8b74cedfc0c36217e8563337b74, job114033697403,
 identifie HTTP503 au premier GET de découverte verifier34/api24 dans c527.
