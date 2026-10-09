@@ -69,6 +69,14 @@ arrêt. Les règles anciennes et la commande de l'unité doivent être conservé
 seule la création root0700 du répertoire de sauvegarde réservé est admise.
 Les prochains refus seront aussi classés automatiquement dans l'exécution.
 
+La reprise `37958354048`, commit88dc20580cbfc3e790eb19f366794b8b94f87e9d,
+passe réellement ce contrôle, simulation, copie et répétition du timer. Le
+worker est demandé avec le retour armé ; aucun résultat local complet n'arrive
+dans les dix minutes. Le retour rétablit le socle et les25sondes passent.
+Le diagnostic du même point d'entrée exige maintenant une tentative retournée
+et un worker arrêté ; il classe aussi le journal privé et les états systemd.
+Aucune boucle de relance ou suppression de cluster n'est autorisée.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

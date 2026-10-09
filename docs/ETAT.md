@@ -24,8 +24,18 @@ réussit à16:00UTC : arrêt prévu de tmpfiles-resetup et d'une unité ACME,
 redémarrage Nginx, aucune unité inconnue/systemd/swap. Socle, six services,
 nouvelle SSH et25HTTP/TLS avant/après passent, aucune activation.
 La correction ajoute une comparaison stricte des fichiers/règles immuables
-avant d'autoriser ce seul arrêt ; reprise réelle encore à constater.
+avant d'autoriser ce seul arrêt.
 [Rapport du diagnostic](../operations/vision-amorcage-diagnostic.json).
+
+La [reprise37958354048](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37958354048),
+opérateur88dc20580cbfc3e790eb19f366794b8b94f87e9d, job113914603028,
+passe réellement comparaison des règles/unité, simulation, copie chiffrée
+et répétition du timer. Retour autonome armé, worker demandé ; les contrôles
+locaux ne terminent pas dans les dix minutes. Le retour est attesté terminé
+à16:31:54, socle rétabli ;25HTTP/TLS finaux passent à16:32:11.
+Aucun enregistrement, personne, mode commun ou inscription. Le diagnostic
+en lecture seule examine désormais ce worker arrêté, pas une nouvelle reprise.
+[Rapport de reprise](../operations/vision-amorcage-reprise.json).
 
 ## Vision — génération d'amorçage construite sans activation
 

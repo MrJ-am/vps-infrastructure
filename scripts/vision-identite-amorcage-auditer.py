@@ -5,9 +5,10 @@ import os
 from pathlib import Path
 import re
 import stat
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
-REVISION = 'b82f1eba3bf8b8de102b0e1568978f085ef721ca'
+REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
 UNITES = frozenset(('sshd.service', 'nginx.service', 'postgresql.service', 'vision.service',
     'matheval.service', 'mrj-auth.service', 'nginx-config-reload.service', 'nginx-validate-config.service',
@@ -26,7 +27,14 @@ MOTIFS = {
     'permission_refusee': r'Permission denied',
     'systemd_indisponible': r'Failed to connect to (?:system|bus)|System has not been booted with systemd',
     'activation_script_refuse': r'activation script failed|failed to run activation script',
+    'lancement_python_refuse': r'Failed at step EXEC|status=203/EXEC|Failed to (?:execute|locate executable)|Exec format error',
+    'bibliotheque_python_absente': r'ModuleNotFoundError:',
+    'source_operateur_differente': r'(?:RuntimeError|ConstructionRefusee): Source opérateur différente',
+    'commande_timeout': r'(?:RuntimeError|ConstructionRefusee): Délai de construction ou de contrôle dépassé',
+    'commande_refusee': r'(?:RuntimeError|ConstructionRefusee): Commande de construction ou de contrôle refusée',
+    'essai_timeout': r'ValueError: Délai d’essai dépassé',
 }
+ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
 
 
 def classer(diagnostic, dry):
@@ -54,6 +62,29 @@ def lire(path):
     finally: os.close(fd)
 
 
+def verifier_retour(marqueurs):
+    if not all(marqueurs.get(n) is True for n in ('commence','plan.json','retour-commence','retour-termine')) or marqueurs.get('enregistre') is not False:
+        raise ValueError('Tentative non retournée : aucune lecture de diagnostic')
+
+
+def classer_worker(texte):
+    etapes = re.findall(r'\{"etape": "([a-z_]+)"\}', texte)
+    return dict(etapes=[e for e in etapes if e in ETAPES], **classer(texte, ''))
+
+
+def etat_worker(outils):
+    unite = 'vision-amorcage-essai-' + REVISION[:12] + '.service'
+    r = subprocess.run([str(outils/'systemctl'),'show',unite,'--property=ActiveState',
+        '--property=ExecMainStatus'], capture_output=True, timeout=5)
+    valeurs = dict(l.split('=',1) for l in r.stdout.decode().splitlines() if '=' in l)
+    if r.returncode or valeurs.get('ActiveState') not in ('inactive','failed') or not re.fullmatch(r'[0-9]{1,3}',valeurs.get('ExecMainStatus','')) or int(valeurs['ExecMainStatus']) > 255:
+        raise ValueError('Worker non arrêté ou état indéterminé')
+    journal = subprocess.run([str(outils/'journalctl'),'--unit='+unite,'--lines=120',
+        '--output=cat','--no-pager'], capture_output=True, timeout=10)
+    if journal.returncode or len(journal.stdout)>1048576: raise ValueError('Journal technique indisponible')
+    return dict(etat=valeurs['ActiveState'], code=int(valeurs['ExecMainStatus'])), journal.stdout.decode(errors='replace')
+
+
 def main():
     if os.geteuid() != 0: raise ValueError('Audit root Actions requis')
     for path in (DOSSIER.parent, DOSSIER):
@@ -65,11 +96,18 @@ def main():
     candidat = json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
     construction.verifier_socle(candidat)
     marqueurs = {nom:(DOSSIER/nom).exists() for nom in ('commence','plan.json','enregistre','retour-commence','retour-termine')}
-    if any(marqueurs.values()): raise ValueError('Diagnostic avant activation seulement')
+    verifier_retour(marqueurs)
+    for nom,present in marqueurs.items():
+        if present: lire(DOSSIER/nom)
     diagnostic = lire(DOSSIER/'diagnostic-prive.log'); dry = lire(DOSSIER/'dry-activate-prive.txt')
+    worker = lire(DOSSIER/'worker-prive.log') if (DOSSIER/'worker-prive.log').exists() else ''
+    etat,journal = etat_worker(Path(candidat['audit']['systeme'])/'sw/bin')
     construction.verifier_socle(candidat)
-    print(json.dumps(dict(audit_amorcage=1, revision=REVISION, socle_conserve=True,
-        activation=False, inscriptions=False, **classer(diagnostic,dry)), ensure_ascii=False))
+    print(json.dumps(dict(audit_amorcage=2, revision=REVISION, socle_conserve=True,
+        retour_termine=True, generation_enregistree=False, activation=False, inscriptions=False,
+        worker=etat, controle_worker=classer_worker(worker+'\n'+journal),
+        cluster_prive_present=Path('/var/lib/mrjam-amorcage-postgresql').exists(),
+        **classer(diagnostic,dry)), ensure_ascii=False))
 
 
 if __name__ == '__main__':

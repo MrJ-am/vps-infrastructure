@@ -12,6 +12,13 @@ nouvelle SSH et25HTTP/TLS réussis. Aucun switch ou compte humain à cette étap
 
 ## Préparation et lancement
 
+Le contrôle des répertoires est attesté par la reprise37958354048,
+opérateur88dc20580cbfc3e790eb19f366794b8b94f87e9d : simulation, copie locale
+et répétition du timer passent. Le worker demandé ne fournit pas de résultat
+complet dans les dix minutes ; le retour est terminé et les25sites passent.
+L'identité n'est pas enregistrée. Diagnostiquer ce processus arrêté via
+le point d'entrée unique avant toute reprise adaptée à l'état privé laissé.
+
 Le [point d'entrée unique](VISION-MISE-EN-SERVICE.md) appelle
 `vision-identite-amorcage-activer.yml` comme étape réutilisable. Demande dédiée
 sur `operations/vision` ou lancement de secours sur main, vps-production,
