@@ -7,6 +7,7 @@ import argparse
 import base64
 import hashlib
 import hmac
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import importlib.util
 import json
 import os
@@ -16,6 +17,7 @@ import struct
 import subprocess
 import tempfile
 import time
+import threading
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -61,6 +63,13 @@ def verifier(jar, navigateur):
     assert jar.is_file()
     nom = 'qualification-idp-' + uuid.uuid4().hex[:12]
     pg = nom + '-pg'; original = nom + '-original'; restaure = nom + '-restaure'
+    class Retour(BaseHTTPRequestHandler):
+        def log_message(self, *_): pass
+        def do_GET(self):
+            self.send_response(200); self.send_header('Content-Type', 'text/plain; charset=utf-8'); self.end_headers()
+            self.wfile.write(b'Qualification du retour OIDC')
+    callback = ThreadingHTTPServer(('127.0.0.1', 38999), Retour)
+    threading.Thread(target=callback.serve_forever, daemon=True).start()
     try:
         commande('docker', 'run', '-d', '--name', pg, '--network', 'host',
             '-e', 'POSTGRES_PASSWORD=uniquement-test-local-db', '-e', 'POSTGRES_DB=identite_source',
@@ -118,14 +127,19 @@ def verifier(jar, navigateur):
             with sync_playwright() as p:
                 b = p.chromium.launch(**({'executable_path': navigateur} if navigateur else {}))
                 try:
-                    page = b.new_page(); page.route(retour + '**', lambda route: route.fulfill(status=200, body='Qualification'))
+                    page = b.new_page()
+                    echecs = []
+                    page.on('requestfailed', lambda r: echecs.append(r.failure))
                     page.goto('http://127.0.0.1:38089/realms/' + realm + '/protocol/openid-connect/auth?' + urllib.parse.urlencode(parametres))
                     page.locator('#username').fill('synthetique'); page.locator('#password').fill(mot_de_passe)
                     page.locator('#kc-login').click(); page.locator('#otp').wait_for()
                     empreinte = hmac.new(otp.encode(), struct.pack('>Q', int(time.time()) // 30), hashlib.sha1).digest()
                     position = empreinte[-1] & 15
                     code = str((struct.unpack('>I', empreinte[position:position + 4])[0] & 0x7fffffff) % 1000000).zfill(6)
-                    page.locator('#otp').fill(code); page.locator('#kc-login').click(); page.wait_for_url(retour + '**')
+                    page.locator('#otp').fill(code); page.locator('#kc-login').click()
+                    try: page.wait_for_url(retour + '**')
+                    except Exception:
+                        raise AssertionError('Retour OIDC de qualification indisponible : ' + ','.join(echecs)) from None
                     assert urllib.parse.parse_qs(urllib.parse.urlsplit(page.url).query)['state'] == [parametres['state']]
                 finally: b.close()
             config = root / 'identite.json'
@@ -143,6 +157,7 @@ def verifier(jar, navigateur):
             mot_de_passe_et_otp_restaures=True, effacement_rejoue_deux_fois=True, source_preservee=True,
             jdbc_unix_production=False)))
     finally:
+        callback.shutdown(); callback.server_close()
         for conteneur in (restaure, original, pg):
             subprocess.run(['docker', 'rm', '-f', conteneur], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
