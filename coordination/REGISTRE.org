@@ -4095,3 +4095,68 @@ Vision préserve ses données et accès historiques ; aucun autre outil ne chang
 :PREUVE: -
 :END:
 
+* Diagnostiquer le refus de simulation via le point d’entrée Vision
+:PROPERTIES:
+:ID: 20261009-vision-0cffd154006b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T15:48:22+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le regroupement PR48 est intégré exactement sur main VPS b82f1eba3bf8b8de102b0e1568978f085ef721ca : 258 tests, CI push37953219981 et PR37953225405 (quatre jobs chacun), coordination réussies. Work dépose la demande sur operations/vision ; le signal37953863382 puis l'orchestration37953882332 prouvent le lancement sans intervention du propriétaire. Le code administratif vient de main, provenance/révision/CI vérifiées avant la clé, aucun paramètre de commande libre.
+
+L'orchestration37953882332 (job113899388028) s'arrête en dry_activate avant toute activation, timer armé, copie nouvelle ou identité humaine. Le socle, l'import privé, l'entrée réversible et son évaluation reproduisant exactement39b7g3x42qp2q58idfv7nl6w5j3y78np ont passé. Le workflow de retour avant engagement puis25HTTP/TLS finaux passent ; Vision historique reste active, mode commun et inscriptions fermés. Aucun contenu ou diagnostic brut n'est public.
+
+Ajouter une phase de diagnostic strictement en lecture seule au même point d'entrée : cible b82f1eba3bf8b8de102b0e1568978f085ef721ca, journaux privés bornés/nofollow/root0600 ; ne restituer que motifs constants et noms techniques prédéfinis, jamais extrait brut ou unité inconnue arbitraire. Vérifier de nouveau le socle, six services, nouvelle SSH et25sondes. Sélection de phase depuis un fichier du main qualifié, enum fermé, aucun paramètre libre issu de la demande. L'agent dépose et suit cette demande, pas le propriétaire.
+
+Après le refus établi, corriger uniquement la recette nécessaire et qualifier le correctif avant une reprise ; ne pas élargir aveuglément les unités autorisées, effacer un cluster ou contourner une précondition. Même génération préparée, références Vision/Style, données, autres outils et clés conservés. Fin : diagnostic sûr et refus réel identifié, correctif testé, nouvelle exécution attestée. Enrôlement et bascule restent des phases ultérieures au même point d'entrée ; aucun nouveau lancement manuel demandé.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
