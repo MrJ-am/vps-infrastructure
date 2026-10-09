@@ -4225,3 +4225,66 @@ Intégrer ce contrôle au préflight et qualifier les refus avec fixtures, puis 
 :PREUVE: -
 :END:
 
+* Diagnostiquer le worker après le retour contrôlé de l’amorçage
+:PROPERTIES:
+:ID: 20261009-vision-b5718ce1c6e0
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T16:34:19+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La reprise PR50 est intégrée exactement 88dc20580cbfc3e790eb19f366794b8b94f87e9d ; 267tests et CI37957472532/37957479137 réussissent. Signal37958338033 puis orchestration37958354048, job113914603028, sont lancés par Work sans intervention humaine. Le contrôle réel des fichiers tmpfiles, simulation, copie chiffrée et répétition du timer passent. Le retour est armé et le worker lancé ; aucun marqueur de réussite n'arrive dans les dix minutes. Le retour37958354048 rétablit le socle à16:31:54 et les25HTTP/TLS finaux passent à16:32:11. Aucun enregistrement de génération, personne, mode commun ou inscription.
+
+VPS prépare le diagnostic strictement en lecture seule de cette seule tentative retournée. Exiger l'ancienne génération/release, les marqueurs root600 de début et retour terminé, aucun enregistrement, et des workers arrêtés. Lire en mémoire le journal privé borné/nofollow et quelques états systemd techniques constants ; ne restituer ni fragment, commande, chemin arbitraire, secret ou unité inconnue. Relever seulement les étapes prédéfinies, classes de refus connues et code de sortie. Garder la sélection fermée du main, demande/CI exactes, vps-production, exclusion d'administration, clé existante et25sondes/six services/nouvelle SSH.
+
+La comparaison des répertoires reste strictement qualifiée ; ne l'élargir ni relancer un essai retourné. Aucun nettoyage de cluster, SQL de production, rotation ou réparation automatique. L'agent demande et suit ce diagnostic au même point d'entrée, sans nouveau lancement du propriétaire. Après identification, corriger la seule cause et qualifier une reprise adaptée à l'état laissé par l'essai. L'enrôlement du propriétaire reste une étape ultérieure ; les contrôles de ciblage et absence de rejeu sont préparés séparément, sans création réelle ni courrier.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
