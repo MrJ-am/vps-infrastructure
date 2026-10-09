@@ -68,6 +68,8 @@ assert keycloak.version == "26.7.3";
     systeme_amorcage = toString c.system.build.toplevel;
     paquet = toString keycloak; keycloak_version = keycloak.version;
     postgres_paquet = toString c.services.postgresql.finalPackage;
+    nginx_paquet = toString c.services.nginx.package;
+    nginx_commande = c.systemd.services.nginx.serviceConfig.ExecStart;
     fournisseur_source = if fournisseur == null then null else toString c.services.visionEmbeddings.source;
     unites_essentielles = unites c;
     unite_identite = toString c.systemd.units."mrjam-amorcage-identite.service".unit;

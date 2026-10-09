@@ -44,3 +44,8 @@ jobs:
     if: needs.demande.outputs.action == 'diagnostic'
     uses: ./.github/workflows/vision-identite-amorcage-auditer.yml
     secrets: inherit
+  construction:
+    needs: demande
+    if: needs.demande.outputs.action == 'construction'
+    uses: ./.github/workflows/vision-identite-amorcage-preparer.yml
+    secrets: inherit

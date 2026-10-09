@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import sys
 import traceback
@@ -95,6 +96,15 @@ def inventorier(pg):
         p.stdout.close()
 
 
+def commande_nginx(resume):
+    paquet=resume['nginx_paquet'];construction.store(paquet)
+    args=shlex.split(resume['nginx_commande'])
+    exiger(len(args)==3 and args[0]==paquet+'/bin/nginx' and args[1]=='-c' and
+        re.fullmatch(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-nginx\.conf',args[2]),
+        'Commande Nginx native non qualifiée')
+    return args[0],args[2]
+
+
 def preparer(revision, controler=False):
     exiger(os.geteuid() == 0 and re.fullmatch('[0-9a-f]{40}', revision),
            'Exécution Actions root identifiée requise')
@@ -144,11 +154,15 @@ def preparer(revision, controler=False):
         str((d / 'generation-amorcage').resolve()) == generation and
         os.access(Path(generation) / 'bin/switch-to-configuration', os.X_OK),
         'Génération construite différente ou incomplète')
+    etape('configuration_nginx_native')
+    nginx,configuration_nginx=commande_nginx(resume)
+    construction.commande(Path(resume['systeme_actif'])/'sw/bin/runuser','-u','nginx','--',
+        nginx,'-t','-c',configuration_nginx,timeout=30)
     etape('invariants_finaux'); construction.verifier_socle(candidat)
     resultat = dict(version=1, infrastructure=revision, composants=preuve['infrastructure'],
         vision=candidat['vision'], style=candidat['style'], paquet=resume['paquet'],
         systeme_actif=resume['systeme_actif'], systeme_amorcage=generation,
-        construction=True, unites_conservees=True, hotes_conserves=True,
+        construction=True, configuration_nginx_native=True, unites_conservees=True, hotes_conserves=True,
         postgres_production_conserve=True, cluster_independant=True,
         **proprietaire.public(historique), mode_vision_oidc=False,
         preconditions_validees=False, identite_humaine=False, activation=False, inscriptions=False)

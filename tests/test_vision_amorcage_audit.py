@@ -22,22 +22,6 @@ plan = charger('vision-plan')
 
 
 class Audit(unittest.TestCase):
-    def test_chiffrement_ne_prend_que_erreurs_de_demarrage_jamais_requetes(self):
-        texte='nginx: [emerg] erreur-technique-confidentielle\n2026/10/09 [error] URL-et-contenu-personnel\nnginx: [warn] autre\n'
-        self.assertEqual(audit.erreurs_demarrage_nginx(texte),b'nginx: [emerg] erreur-technique-confidentielle')
-        armure=b'-----BEGIN AGE ENCRYPTED FILE-----\ncryptogramme\n-----END AGE ENCRYPTED FILE-----\n'
-        with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=armure,returncode=0)) as appel:
-            r=audit.chiffrer_erreurs_nginx(texte);self.assertTrue(r['disponible']);self.assertEqual(r['lignes'],1)
-            self.assertNotIn('confidentielle',json.dumps(r));self.assertNotIn('personnel',json.dumps(r))
-            self.assertEqual(appel.call_args.args[0],['age','-a','-r',audit.DESTINATAIRE_DIAGNOSTIC])
-            self.assertEqual(appel.call_args.kwargs['input'],b'nginx: [emerg] erreur-technique-confidentielle')
-        with patch.object(audit.subprocess,'run') as appel:
-            self.assertEqual(audit.chiffrer_erreurs_nginx('requete-personnelle'),dict(disponible=True,lignes=0));appel.assert_not_called()
-        for stdout,code in ((b'erreur-technique-confidentielle',1),(b'erreur-technique-confidentielle',0),(armure+b'x'*32768,0)):
-            with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=stdout,returncode=code)):
-                self.assertEqual(audit.chiffrer_erreurs_nginx(texte),dict(disponible=False))
-        with self.assertRaises(ValueError):audit.erreurs_demarrage_nginx('nginx: [emerg] '+('x'*16384))
-
     def test_ligne_nginx_ne_sort_que_directive_et_droits_et_refuse_liens(self):
         prive='valeur-privee'
         chemin='/nix/store/'+'a'*32+'-nginx.conf'
@@ -264,7 +248,7 @@ class Audit(unittest.TestCase):
             with self.assertRaises(ValueError): audit.lire(fifo)
 
     def test_plan_n_admet_aucun_parametre_ou_commande(self):
-        for action in ('amorcage','diagnostic'):
+        for action in ('amorcage','diagnostic','construction'):
             self.assertEqual(plan.verifier(dict(version=1,action=action)),action)
         for valeur in (dict(version=True,action='amorcage'),dict(version=1,action='shell'),
                 dict(version=1,action='diagnostic',commande='libre'),dict(version=1,action='diagnostic\nautre=oui')):

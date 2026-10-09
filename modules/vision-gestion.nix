@@ -57,7 +57,7 @@ in {
      "= /code-source/vision.tar.gz" = {
        alias = toString ../vendor/vision-multiutilisateur-source.tar.gz;
        extraConfig = ''
-         types {};
+         types {}
          default_type application/gzip;
          add_header Content-Disposition 'attachment; filename="vision.tar.gz"' always;
          add_header Cache-Control "no-store" always;
@@ -66,7 +66,7 @@ in {
      "= /code-source/services-mrjam.tar.gz" = {
        alias = "${sources}/services-mrjam.tar.gz";
        extraConfig = ''
-         types {};
+         types {}
          default_type application/gzip;
          add_header Content-Disposition 'attachment; filename="services-mrjam.tar.gz"' always;
          add_header Cache-Control "no-store" always;

@@ -1,7 +1,6 @@
 """Diagnostic du seul essai identifié ; jamais d'extrait privé dans la sortie."""
 import argparse
 import ast
-import base64
 import hashlib
 import importlib.util
 import json
@@ -99,28 +98,6 @@ DIRECTIVES_NGINX = frozenset(('client_max_body_size','proxy_pass','proxy_set_hea
     'limit_req','limit_req_zone','limit_conn','limit_conn_zone','ssl_certificate','ssl_certificate_key',
     'listen','location','server','server_name','access_log','error_log','return','include','pid',
     'log_format','default_type','types','ssl_trusted_certificate'))
-DESTINATAIRE_DIAGNOSTIC = 'age19tndze9vpljjvkljzxw0wj2zje5vjg0jh4e8npm82jkt65gs9vpsw5909d'
-
-
-def erreurs_demarrage_nginx(texte):
-    lignes=[l for l in texte.splitlines() if l.startswith('nginx: [emerg]')]
-    contenu='\n'.join(lignes[:16]).encode()
-    if len(contenu)>16384:raise ValueError('Diagnostic technique trop grand')
-    return contenu
-
-
-def chiffrer_erreurs_nginx(texte):
-    try:contenu=erreurs_demarrage_nginx(texte)
-    except ValueError:return dict(disponible=False)
-    if not contenu:return dict(disponible=True,lignes=0)
-    try:
-        r=subprocess.run(['age','-a','-r',DESTINATAIRE_DIAGNOSTIC],input=contenu,capture_output=True,timeout=10)
-        if r.returncode or len(r.stdout)>32768 or not r.stdout.startswith(b'-----BEGIN AGE ENCRYPTED FILE-----\n'):
-            return dict(disponible=False)
-        return dict(disponible=True,lignes=len(contenu.splitlines()),age_base64=base64.b64encode(r.stdout).decode())
-    except (OSError,subprocess.TimeoutExpired):return dict(disponible=False)
-
-
 def ligne_configuration_nginx(chemin, numero):
     if not re.fullmatch(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-nginx\.conf',chemin) or not 1<=numero<=200000:
         return dict(disponible=False)
@@ -176,8 +153,7 @@ def journaux_nginx(outils):
         except (OSError,subprocess.TimeoutExpired):r=None
         disponible=r is not None and r.returncode==0 and len(r.stdout)<=1048576
         texte=r.stdout.decode(errors='replace') if disponible else ''
-        rapports[namespace]=dict(disponible=disponible,**classer_nginx(texte),configurations=references_nginx(texte),
-            erreurs_demarrage_chiffrees=chiffrer_erreurs_nginx(texte) if namespace=='http' and disponible else dict(disponible=False))
+        rapports[namespace]=dict(disponible=disponible,**classer_nginx(texte),configurations=references_nginx(texte))
     return rapports
 
 
