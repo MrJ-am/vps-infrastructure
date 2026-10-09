@@ -3297,6 +3297,70 @@ Fin de cette adaptation : candidats cohérents, CI identifiées et qualification
 :PREUVE: -
 :END:
 
+** LU vision
+:PROPERTIES:
+:LU_SHA256: f89cc67c5f0c895e487cf9b10ff4ee84413506d7cf96174f6744e4500af5adf5
+:LU_LE: 2026-10-09T07:19:42+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Vision PR17 intégrée et cinq CI exactes réussies ; VPS PR30 intégrée 8c3721c5fc25724c409a5f9e2b56e0bccfdd702b, CI 37897175873 et 37897242905 réussies. Relance réelle 37897757438 arrêtée à evaluation_nixos ; six services et 25 sondes après échec réussis.
+:END:
+Adresse log cohérente, archive exacte et restauration synthétique/rejeu vérifiés. La qualification VPS reste refusée avant dump : socle calculé à diagnostiquer. Aucune activation ni inscription.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le socle actif avant la migration de Vision
+:PROPERTIES:
+:ID: 20261009-vision-b9cbb9e6045b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T07:19:42+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La relance réelle de préparation Actions 37897757438, opérateur 8c3721c5fc25724c409a5f9e2b56e0bccfdd702b, s’arrête à evaluation_nixos : Socle actif non reproduit. Invariants de génération/release initiaux et source candidate passent ; aucun dump, migration ni activation ne commencent. Les six services et 25 sondes HTTP/TLS passent après échec. Le constat du premier essai 37893102123 retrouve uniquement la source extraite, sans évaluation, ACL ni dump.
+
+VPS prépare un diagnostic technique en lecture seule dans son workflow audit.yml existant. La demande audit-request reste strictement operation=audit ; aucune nouvelle passerelle de mutation ni déclenchement d’activation. Comparer séparément génération calculée, majeure PostgreSQL et absence de TCP/écoute depuis le point d’entrée et la source réellement installée. Sortie limitée à métadonnées de configuration ; ni clé, ni dump, ni donnée applicative. Le contrôle strict du préparateur demeure en place.
+
+Vision conserve a9c51acac81510d7dc896f5daf4e6fb28a36b979 et Style 96fa28ac564b9492768837d4087608e83acc721b ; log.mrj.am reste l’adresse candidate. Les autres outils ne changent ni compte ni publication. Après constat du diagnostic, consigner la cause établie et préparer sa correction réversible avec tests avant nouvelle qualification. Cette annonce n’atteste ni conformité RGPD générale ni ouverture.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
