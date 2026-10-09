@@ -27,6 +27,15 @@ identiques et les deux unités du fournisseur d'embeddings différentes. La
 comparaison des fichiers ne termine pas et l'épinglage n'est pas encore
 qualifié. La génération active reste inchangée et les 25 sondes réussissent.
 
+L'audit [37901569064](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37901569064),
+opérateur `566b279f15c9042d4b8f31906318d3cdf56fdf7b`, confirme les deux scripts
+présents dans la source active `20nds4zvi1pcnljpwnwzcsysvyk15g11`. La source
+recalculée n'est pas réalisée par `--eval`. L'essai `toPath` ne conserve pas
+le contexte Nix ; un test local reproduit cet écart et vérifie que `storePath`
+rétablit la génération exacte. Le candidat prépare cet épinglage explicite,
+sans modifier le brut, en conservant tous les contrôles de génération et PG.
+Son audit réel et la préparation isolée restent à réaliser.
+
 ## Vision — courrier Proton qualifié le 9 octobre 2026
 
 L'exécution [37891204452](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37891204452),

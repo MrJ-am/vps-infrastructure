@@ -25,7 +25,7 @@ let
   }).config else (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux"; modules = [ (builtins.toPath configuration) ]
       ++ lib.optional (fournisseur != null) ({ lib, ... }: {
-        services.visionEmbeddings.source = lib.mkForce (builtins.toPath fournisseur);
+        services.visionEmbeddings.source = lib.mkForce (builtins.storePath fournisseur);
       });
   }).config;
 in {
