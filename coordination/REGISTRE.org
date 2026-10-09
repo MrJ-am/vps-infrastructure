@@ -3425,12 +3425,12 @@ Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style 96fa28ac564b9492768
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: a1da2612c0fcdcc0c5ce1d36650384306f31f75df12e490093270efd34bf9edb
-:LU_LE: 2026-10-09T08:31:09+00:00
+:LU_LE: 2026-10-09T09:17:37+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: PR34 bb26c11 intégrée, CI exactes 37902914537 et 37902994228 réussies ; audit réel 37903503795 reproduit exactement le socle. Préparation 37904714100 passe évaluation/dump/chiffrement mais échoue dans la restauration isolée ; six services et 25 sondes passent.
+:PREUVE: PR34 bb26c11 et ses CI, audit storePath réel 37903503795 : socle exact. PR37 48f40f3 et CI 37908440452/37908442866/37908917174 réussies ; préparation réelle 37909401754 réussie, données historiques, retour des droits deux fois, six services et 25 sondes vérifiés. Aucune activation.
 :END:
 Diagnostic de restauration à établir avant nouvelle qualification ; aucune activation ni ouverture.
 
@@ -3489,14 +3489,79 @@ Après diagnostic, corriger uniquement la préparation isolée avec une reproduc
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 37d3d109655963c495c5fd4ff307a8a6f8789414f12c7f5ba1022e5c44d3ec05
-:LU_LE: 2026-10-09T08:58:41+00:00
+:LU_LE: 2026-10-09T09:17:37+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: PR35 et PR36 intégrées, CI exactes 37905767682/37905770112 et 37906787975/37906793461 réussies. Audits réels 37906264873 et 37907271873 : refus pg_restore/COPY, dump age conservé et clair supprimé, 25 sondes passent. Régression synthétique SQL_ASCII refusé/UTF8 restauré, migrations 19–25 et retour des droits deux fois réussis.
+:PREUVE: Audits 37906264873, 37907271873 et 37908917349 : refus COPY/contrainte de longueur, aucune donnée publiée. UTF8 explicite, régression native et 202 tests passent, PR37 48f40f3 intégrée. Préparation réelle 37909401754 réussie, invariants finaux et retour deux fois, contrôles après opération réussis.
 :END:
-Correction UTF8 du seul cluster isolé préparée ; confirmer la catégorie de contrainte réelle puis relancer la préparation. Aucune activation, migration de production ni inscription.
+Le doublon 37909419903 est refusé sur Préparation déjà terminée, services et 25 sondes passent. Construction Keycloak et activation restent distinctes.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Construire Keycloak 26.7.3 sur le socle VPS après qualification réelle Vision
+:PROPERTIES:
+:ID: 20261009-vision-f251affea77d
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T09:17:37+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La préparation réelle 37909401754, opérateur 48f40f3eebbbd18eb9048c7036284185a56050e9, réussit : restauration du snapshot Vision, migrations 019–025 sans perte, retour des ACL/owners/RLS rejoué deux fois et invariants finaux. Les six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent. Le lancement doublon 37909419903 est refusé car la préparation est terminée, avec contrôles réussis. Le défaut d’encodage du cluster isolé est corrigé en UTF-8 (PR37) et sa régression passe ; le contenu et le schéma de production n’ont pas été modifiés. Vision a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style 96fa28ac564b9492768837d4087608e83acc721b restent les candidats.
+
+Le Nixpkgs réellement installé fournit Keycloak 26.7.2 ; les parcours natifs et notre SPI sont qualifiés sur 26.7.3. VPS prépare un remplacement ciblé du seul paquet Keycloak : archive officielle 26.7.3 et hash extrait de la référence Nixpkgs qualifiée, recettes et dépendances du socle installé conservées. Le prototype confirme que l’override des plugins conserve version et source. Aucun changement global de canal, PostgreSQL, OS, routage actif ou autres applications.
+
+Préparer une construction manuelle distincte sous vps-production, main et CI du commit exact. Elle exige la preuve de préparation précédente et les mêmes candidats et invariants ; construit le paquet avec ses plugins JDBC Unix/SPI et sa configuration publique, conserve les références dans le store et vérifie sa version. Elle ne lance ni Keycloak, ni SQL de production, ni import d’identité, ni activation NixOS. La condition preconditionsValidees reste fausse et les inscriptions fermées. Le diagnostic privé reste hors logs ; contrôles des sites et services même après échec.
+
+Vision et VPS consignent les preuves et qualifient cette construction avant l’essai JDBC natif sur staging VPS. Les autres outils ne changent ni publication ni comptes ; leurs futurs raccordements garderont issuer log.mrj.am et admission propre. Fin de cette phase : paquet 26.7.3 réellement construit sur le socle VPS, version/plugins identifiés et contrôles inchangés. Identité initiale/MFA, retour autonome, contrats applicables, clé et copie externe restent des conditions distinctes ; l’absence actuelle de PC ne bloque pas cette construction, sans ouvrir l’accès à des tiers.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
 
 ** TODO vps
 :PROPERTIES:
