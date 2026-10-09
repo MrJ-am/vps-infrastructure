@@ -1,4 +1,21 @@
-# État attesté au 7 octobre 2026
+# État attesté au 9 octobre 2026
+
+## Vision — courrier Proton qualifié le 9 octobre 2026
+
+L'exécution [37891204452](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37891204452),
+commit opérateur `48aa2fa6d05388d48bc6e7ef3625b358bdb53905`, a réussi.
+Le jeton est installé dans le fichier privé root 0600 hors Git et store Nix.
+La connexion réelle à Proton exige STARTTLS et vérifie le certificat ;
+l'authentification réussit et le relais accepte le témoin avec pièce jointe age.
+Le témoin ne contient aucune donnée d'usager. Sa présence en boîte et son
+déchiffrement par l'exploitant restent à confirmer ; l'accusé SMTP ne les prouve pas.
+
+Les 25 contrôles HTTP/TLS réussissent avant et après l'installation, ainsi
+qu'une nouvelle connexion administrative et les états actifs de sshd, nginx,
+PostgreSQL, Vision et Matheval. Cette opération ne lance aucune activation
+NixOS, migration SQL de production ou ouverture des comptes. Le DNS de
+compte.mrj.am et les autres préconditions du dossier restent à établir.
+[Rapport technique](../operations/vision-courriel-qualification.json).
 
 ## Logique — correction de la prise tactile publiée le 7 octobre 2026
 
