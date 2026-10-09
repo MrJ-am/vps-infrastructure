@@ -104,9 +104,12 @@ def comparer_sources(actif, calcule):
     chemins = ('scripts/embeddings.py', 'scripts/backfill_embeddings.py')
     def empreinte(p): return hashlib.sha256(p.read_bytes()).digest()
     def arbre(p): return sorted(str(x.relative_to(p)) for x in p.rglob('*'))
+    presences = {p: {'actif': (Path(actif)/p).is_file(), 'calcule': (Path(calcule)/p).is_file()} for p in chemins}
+    complets = all(v['actif'] and v['calcule'] for v in presences.values())
     return {'sources_identifiees': True, 'chemin_identique': actif == calcule,
-        'deux_scripts_identiques': all(empreinte(Path(actif)/p) == empreinte(Path(calcule)/p) for p in chemins),
-        'arborescence_identique': arbre(Path(actif)) == arbre(Path(calcule))}
+        'source_active': actif, 'source_calculee': calcule, 'scripts_presents': presences,
+        'deux_scripts_identiques': complets and all(empreinte(Path(actif)/p) == empreinte(Path(calcule)/p) for p in chemins),
+        'arborescence_identique': Path(actif).is_dir() and Path(calcule).is_dir() and arbre(Path(actif)) == arbre(Path(calcule))}
 
 
 def main():

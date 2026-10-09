@@ -123,6 +123,14 @@ les deux scripts du fournisseur, sans en publier les contenus ni empreintes.
 L'évaluation supplémentaire avec sa source active épinglée reste une lecture
 de configuration ; elle n'est pas une activation ni une correction du socle.
 
+L'audit [37900599245](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37900599245),
+opérateur `99d355bc12c11d3eb48a6af8014e138ab2e62e57`, réussit : dix unités
+comparées sont identiques, seules `vision-embeddings` et son backfill diffèrent.
+La comparaison des fichiers du fournisseur est interrompue ; ce constat ne
+prouve pas encore la cause ni l'effet d'un épinglage. Le diagnostic conserve
+désormais la présence de chaque script et poursuit son évaluation si un fichier
+manque, sans publier de contenu et sans modifier le système.
+
 Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
 le thème tiers de la console native conserve les limites déclarées.
 

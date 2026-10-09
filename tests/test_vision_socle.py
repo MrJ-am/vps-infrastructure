@@ -36,5 +36,15 @@ class DiagnosticSocle(unittest.TestCase):
             r = SOCLE.comparer_sources('/home/personne/prive', '/home/personne/autre')
         self.assertEqual(r, {'sources_identifiees': False})
 
+    def test_script_manquant_reste_un_resultat_explicite(self):
+        a = '/nix/store/' + 'a' * 32 + '-vision-fournisseur-c0bfcac'
+        b = '/nix/store/' + 'b' * 32 + '-vision-fournisseur-c0bfcac'
+        with patch.object(Path, 'is_file', return_value=False), patch.object(Path, 'is_dir', return_value=False), patch.object(Path, 'read_bytes', side_effect=AssertionError('Aucun contenu à lire')):
+            r = SOCLE.comparer_sources(a, b)
+        self.assertTrue(r['sources_identifiees'])
+        self.assertFalse(r['deux_scripts_identiques'])
+        self.assertFalse(r['arborescence_identique'])
+        self.assertEqual(r['scripts_presents']['scripts/backfill_embeddings.py'], {'actif': False, 'calcule': False})
+
 
 if __name__ == '__main__': unittest.main()

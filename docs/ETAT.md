@@ -21,6 +21,12 @@ Les trois évaluations des sources installées produisent toutes la génération
 La comparaison des unités et du fournisseur reste à constater. Le diagnostic
 est en lecture seule ; aucune correction du système n'est encore appliquée.
 
+L'audit [37900599245](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37900599245),
+opérateur `99d355bc12c11d3eb48a6af8014e138ab2e62e57`, retrouve dix unités
+identiques et les deux unités du fournisseur d'embeddings différentes. La
+comparaison des fichiers ne termine pas et l'épinglage n'est pas encore
+qualifié. La génération active reste inchangée et les 25 sondes réussissent.
+
 ## Vision — courrier Proton qualifié le 9 octobre 2026
 
 L'exécution [37891204452](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37891204452),
