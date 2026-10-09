@@ -11,13 +11,24 @@
   "authentification_smtp": true,
   "piece_jointe_age": true,
   "accepte_par_relais": true,
-  "presence_en_boite": "a_confirmer",
+  "presence_en_boite": "confirmee_par_exploitant",
   "dechiffrement_par_exploitant": "a_confirmer",
   "controles_http_avant": 25,
   "controles_http_apres": 25,
   "nouvelle_connexion_administrative": true,
-  "services_controles": ["sshd", "nginx", "postgresql", "vision", "matheval"],
+  "services_controles": [
+    "sshd",
+    "nginx",
+    "postgresql",
+    "vision",
+    "matheval"
+  ],
   "activation_identite": false,
   "ouverture_inscriptions": false,
-  "migration_sql_production": false
+  "migration_sql_production": false,
+  "preuve_reception": {
+    "source": "confirmation_exploitant_dans_la_session",
+    "date": "2026-10-09",
+    "piece_jointe_presente": true
+  }
 }

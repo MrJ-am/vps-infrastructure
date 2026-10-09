@@ -7,8 +7,9 @@ commit opérateur `48aa2fa6d05388d48bc6e7ef3625b358bdb53905`, a réussi.
 Le jeton est installé dans le fichier privé root 0600 hors Git et store Nix.
 La connexion réelle à Proton exige STARTTLS et vérifie le certificat ;
 l'authentification réussit et le relais accepte le témoin avec pièce jointe age.
-Le témoin ne contient aucune donnée d'usager. Sa présence en boîte et son
-déchiffrement par l'exploitant restent à confirmer ; l'accusé SMTP ne les prouve pas.
+Le témoin ne contient aucune donnée d'usager. L'exploitant confirme le 9 octobre
+sa réception dans Proton avec la pièce jointe. Le déchiffrement reste à vérifier ;
+l'accusé SMTP et cette réception ne prouvent pas la possession de la clé privée.
 
 Les 25 contrôles HTTP/TLS réussissent avant et après l'installation, ainsi
 qu'une nouvelle connexion administrative et les états actifs de sshd, nginx,
