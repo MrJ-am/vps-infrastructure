@@ -177,6 +177,14 @@ class Audit(unittest.TestCase):
         with patch.object(audit.subprocess,'run',side_effect=OSError('detail-prive')):
             self.assertEqual(audit.namespace_identite(Path('/outils')),dict(disponible=False))
 
+    def test_bilan_nixos_reel_ne_restitue_que_unites_connues(self):
+        prive='unite-contenant-un-identifiant-prive.service'
+        texte='Failed to start acme-log.mrj.am.service\nwarning: the following units failed: acme-log.mrj.am.service, nginx.service, '+prive+'\nFailed to restart nginx.service: detail-prive'
+        r=audit.classer(texte,'')
+        self.assertEqual(r['unites_echec'],dict(bilan_present=True,connues=['acme-log.mrj.am.service','nginx.service'],inconnues=1))
+        self.assertNotIn(prive,json.dumps(r));self.assertNotIn('detail-prive',json.dumps(r))
+        self.assertEqual(audit.classer('trace quelconque','')['unites_echec'],dict(bilan_present=False,connues=[],inconnues=0))
+
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:
             p = Path(tmp)/'prive';p.write_text('texte');p.chmod(0o600)
