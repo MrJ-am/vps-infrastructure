@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "infrastructure": "c849613768fdcd7868c4a38b6e44bc0ec9d3ffbd",
+  "signal": 37955799458,
+  "run": 37955815952,
+  "job": 113906002350,
+  "revision_examinee": "b82f1eba3bf8b8de102b0e1568978f085ef721ca",
+  "socle_conserve": true,
+  "activation": false,
+  "inscriptions": false,
+  "activation_annoncee": true,
+  "redemarrage_systemd": false,
+  "arret_swap": false,
+  "unites": {
+    "stop": {"connues": ["systemd-tmpfiles-resetup.service"], "acme": 1, "inconnues": 0},
+    "restart": {"connues": ["nginx.service"], "acme": 0, "inconnues": 0}
+  },
+  "services_actifs": 6,
+  "nouvelle_connexion_ssh": true,
+  "sondes_http_tls_avant": 25,
+  "sondes_http_tls_apres": 25
+}

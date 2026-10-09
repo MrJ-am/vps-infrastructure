@@ -31,6 +31,8 @@ preparer = charger('amorcage_prepare', 'vision-identite-amorcage-preparer.py')
 construction = preparer.construction
 identite = preparer.composants.initial.identite
 controle = charger('amorcage_controle', 'identite-amorcage-controle.py')
+repertoires = charger('amorcage_repertoires', 'vision-amorcage-repertoires.py')
+audit = charger('amorcage_audit', 'vision-identite-amorcage-auditer.py')
 exiger = construction.exiger
 SERVICES = ('sshd', 'postgresql', 'vision', 'matheval', 'mrj-auth')
 
@@ -51,7 +53,7 @@ def entree_nix(original, module, fournisseur):
         'infrastructure.amorcageIdentite.enable = true;\n' + source + '\n}\n'
 
 
-def verifier_dry(texte):
+def verifier_dry(texte, repertoires_verifies=False):
     exiger('would activate the configuration' in texte and len(texte) < 1048576,
         'Dry-activate absent ou incomplet')
     exiger(not re.search(r'would (?:restart systemd|stop swap)', texte), 'Interruption du socle annoncée')
@@ -63,7 +65,8 @@ def verifier_dry(texte):
     modifies = set()
     for action, noms in re.findall(r'would (stop|restart|reload) the following units: ([^\n]+)', texte):
         unites = {u.strip() for u in noms.split(',')}
-        exiger(all(u in autorises or u.startswith('acme-') for u in unites),
+        exiger(all(u in autorises or u.startswith('acme-') or
+            (u == repertoires.UNITE and action == 'stop' and repertoires_verifies) for u in unites),
             'Dry-activate annonce une unité étrangère à l’amorçage')
         modifies.update(unites)
     return len(modifies)
@@ -186,11 +189,13 @@ class Essai:
             ROOT/'scripts/vision-identite-amorcage-systeme.nix', '--argstr', 'configuration', self.d/'entree.nix',
             '-I', 'nixpkgs='+self.candidat['audit']['nixpkgs']))
         exiger(systeme == self.nouveau, 'Entrée persistante ne reproduisant pas la construction')
+        etape('repertoires_verifies')
+        fichiers_verifies = repertoires.verifier(self.ancien, self.nouveau)
         etape('dry_activate')
         r = subprocess.run([self.nouveau+'/bin/switch-to-configuration', 'dry-activate'],
             capture_output=True, timeout=120)
         texte = (r.stdout+r.stderr).decode(); self.ecrire('dry-activate-prive.txt', texte)
-        exiger(r.returncode == 0, 'Dry-activate refusé'); verifier_dry(texte)
+        exiger(r.returncode == 0, 'Dry-activate refusé'); verifier_dry(texte, fichiers_verifies)
         construction.verifier_socle(self.candidat)
         etape('copie_locale_chiffree')
         fd = identite.ouvrir_prive(self.fd, 'vision-avant.dump.age', os.O_WRONLY | os.O_CREAT | os.O_EXCL)
@@ -214,7 +219,7 @@ class Essai:
         self.sauver('plan.json', dict(ancien=self.ancien, nouveau=self.nouveau,
             pids=pids, entree_empreinte=self.empreinte_entree(),
             programme_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-            timer_repete=True, copie_locale_chiffree=True))
+            timer_repete=True, copie_locale_chiffree=True, repertoires_verifies=True))
         print(json.dumps({'plan_verifie': True, 'timer_repete': True, 'activation': False}), flush=True)
 
     def demarrer(self):
@@ -372,6 +377,12 @@ if __name__ == '__main__':
     except Exception:
         try: construction.preparation.diagnostic_prive(traceback.format_exc().encode())
         except Exception: pass
+        if essai is not None:
+            try:
+                rapport = audit.classer(audit.lire(essai.d/'diagnostic-prive.log'),
+                    audit.lire(essai.d/'dry-activate-prive.txt') if (essai.d/'dry-activate-prive.txt').exists() else '')
+                print(json.dumps(dict(diagnostic_sur=True, **rapport), ensure_ascii=False))
+            except Exception: pass
         print(json.dumps({'essai': 'interrompu', 'etape': ETAPE, 'donnees_affichees': False}), file=sys.stderr)
         sys.exit(1)
     finally:

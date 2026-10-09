@@ -19,10 +19,10 @@ UNITES = frozenset(('sshd.service', 'nginx.service', 'postgresql.service', 'visi
     'systemd-tmpfiles-setup.service', 'systemd-tmpfiles-resetup.service', 'systemd-sysctl.service',
     'systemd-udevd.service', 'logrotate.service', 'user@0.service', 'user-runtime-dir@0.service'))
 MOTIFS = {
-    'dry_refuse': r'RuntimeError: Dry-activate refusé',
-    'dry_incomplet': r'RuntimeError: Dry-activate absent ou incomplet',
-    'interruption_socle': r'RuntimeError: Interruption du socle annoncée',
-    'unite_etrangere': r'RuntimeError: Dry-activate annonce une unité étrangère',
+    'dry_refuse': r'(?:RuntimeError|ConstructionRefusee): Dry-activate refusé',
+    'dry_incomplet': r'(?:RuntimeError|ConstructionRefusee): Dry-activate absent ou incomplet',
+    'interruption_socle': r'(?:RuntimeError|ConstructionRefusee): Interruption du socle annoncée',
+    'unite_etrangere': r'(?:RuntimeError|ConstructionRefusee): Dry-activate annonce une unité étrangère',
     'permission_refusee': r'Permission denied',
     'systemd_indisponible': r'Failed to connect to (?:system|bus)|System has not been booted with systemd',
     'activation_script_refuse': r'activation script failed|failed to run activation script',

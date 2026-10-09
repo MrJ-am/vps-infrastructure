@@ -31,6 +31,12 @@ préparé, avec le même fournisseur storePath. Son évaluation doit reproduire
 exactement la génération construite. L'entrée originale est conservée,
 l'ancienne génération reçoit une racine GC. Le dry-activate reste root privé ;
 toute interruption du socle ou modification d'un service étranger bloque.
+L'arrêt de `systemd-tmpfiles-resetup.service` est admis seulement après
+comparaison des fichiers immuables : une unique règle ajoutée crée
+`/var/backup/mrjam-amorcage` root0700 ; tous les fichiers/règles antérieurs
+restent identiques. Son unité est identique sauf le déclencheur de configuration.
+Son rechargement ou redémarrage annoncé demeure un refus. Le contrôleur
+classe automatiquement les échecs, sans recopier de journal privé.
 Une copie Vision age locale et une répétition effective de timer privé sont
 exigées avant d'armer le retour. Cette copie ne prouve pas un déchiffrement.
 
