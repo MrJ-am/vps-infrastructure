@@ -94,6 +94,13 @@ seule tentativef9 retournée, avec cadres Python limités à son code connu et
 distincte et inchangée pour le contrôle de reprise antérieur. Aucun argument,
 chemin privé, extrait ou donnée métier n'est transmis.
 
+Le diagnostic `37966437838` refuse sa lecture complète ; six services et les
+25sites sont vérifiés après ce refus. Un relevé secondaire indisponible doit
+être marqué comme tel, sans masquer les cadres/classifications principales.
+La sous-étape d'un refus est un nom fermé ; aucun message d'exception privé
+ne sort. Le socle, le retour durable et l'arrêt du worker restent obligatoires.
+Une donnée absente n'est jamais une preuve autorisant une reprise.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.

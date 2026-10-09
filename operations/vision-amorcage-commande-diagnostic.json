@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "infrastructure": "d8a974efefa8141f8e52e737936c4778d82d25db",
+  "signal": 37966422430,
+  "execution": 37966437838,
+  "job": 113941899050,
+  "lancement_par_agent": true,
+  "revision_examinee": "f9dae92a39f350d5aa5b5795f74b04f6827d60ff",
+  "diagnostic_refuse": true,
+  "cause_identifiee": false,
+  "activation": false,
+  "services_actifs": 6,
+  "nouvelle_ssh": true,
+  "http_tls_avant": 25,
+  "http_tls_apres": 25
+}
