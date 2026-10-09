@@ -3425,6 +3425,70 @@ Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style 96fa28ac564b9492768
 :PREUVE: -
 :END:
 
+** LU vision
+:PROPERTIES:
+:LU_SHA256: a1da2612c0fcdcc0c5ce1d36650384306f31f75df12e490093270efd34bf9edb
+:LU_LE: 2026-10-09T08:31:09+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: PR34 bb26c11 intégrée, CI exactes 37902914537 et 37902994228 réussies ; audit réel 37903503795 reproduit exactement le socle. Préparation 37904714100 passe évaluation/dump/chiffrement mais échoue dans la restauration isolée ; six services et 25 sondes passent.
+:END:
+Diagnostic de restauration à établir avant nouvelle qualification ; aucune activation ni ouverture.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le refus de restauration isolée sans afficher les données Vision
+:PROPERTIES:
+:ID: 20261009-vision-89b15253677a
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T08:31:09+00:00
+:CONSOLIDATION: sans-objet
+:END:
+L’audit réel 37903503795 et la PR34 intégrée (bb26c11a3afd5b924b91c579cc5fc5cd7841d3df, CI 37902914537/37902994228 réussies) confirment que storePath reproduit exactement la génération active. La préparation réelle 37904714100 passe ce contrôle, conserve la configuration, relève snapshot/ACL/empreintes, produit le dump privé et son chiffrement age, puis s’arrête à restauration_isolee sur une commande refusée. Aucune activation ni migration de production. Les six services et 25 sondes HTTP/TLS passent après échec. Le second lancement 37904735624 du même commit s’arrête sur la source déjà extraite ; les contrôles passent aussi.
+
+VPS prépare un diagnostic strictement en lecture seule dans audit.yml existant : identifier le type de refus à partir du fichier privé de cette seule opération. Ne publier que des catégories constantes et booléens ; aucun stderr brut, nom de rôle arbitraire, contenu SQL ou donnée personnelle. Le fichier reste root privé, lecture bornée et sans lien symbolique. Demande audit-request inchangée, operation=audit ; aucune nouvelle mutation déclenchée par push. Ajouter des tests avec faux contenu personnel et erreurs ambiguës avant le constat réel.
+
+Après diagnostic, corriger uniquement la préparation isolée avec une reproduction synthétique PostgreSQL, conserver le refus de toute dérive du socle et les contrôles après échec. Vision reste a9c51acac81510d7dc896f5daf4e6fb28a36b979, Style 96fa28ac564b9492768837d4087608e83acc721b, issuer log.mrj.am. Les autres outils ne changent ni compte ni publication. Fin : cause technique établie, correction testée et nouvelle qualification réelle identifiée. Les inscriptions et conditions juridiques/restauration indépendante restent distinctes.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
 ** TODO vision
 :PROPERTIES:
 :LU_SHA256: -
