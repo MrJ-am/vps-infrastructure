@@ -24,7 +24,7 @@ def importer(nom, chemin):
 def verifier(conteneur, vision):
     assert re.fullmatch(r'[A-Za-z0-9_-]{1,80}', conteneur)
     image = subprocess.check_output(['docker', 'inspect', '--format', '{{.Config.Image}}', conteneur], text=True).strip()
-    assert image == 'pgvector/pgvector:0.8.0-pg17', 'Conteneur de qualification requis'
+    assert image in ('pgvector/pgvector:0.8.0-pg17', 'mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87'), 'Conteneur de qualification requis'
     m = importer('preparer_utf8', ROOT / 'scripts/vision-multiutilisateur-preparer.py')
     audit = importer('audit_utf8', ROOT / 'scripts/vision-restauration-auditer.py')
     nom = 'vision_encodage_' + uuid.uuid4().hex[:12]
