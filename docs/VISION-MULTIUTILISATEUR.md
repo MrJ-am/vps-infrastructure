@@ -4,6 +4,23 @@ Cette opération est distincte des anciennes publications de présentation et de
 la migration sémantique. Les modules sont **désactivés par défaut**. Ce dossier
 ne revendique ni une activation NixOS ni une conformité globale en production.
 
+Le 9 octobre, l’audit réel [37903503795](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37903503795)
+confirme la reproduction exacte du socle actif après épinglage de son fournisseur
+avec `builtins.storePath` (PR34, opérateur `bb26c11a3afd5b924b91c579cc5fc5cd7841d3df`).
+La préparation [37904714100](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37904714100)
+passe ce contrôle, le relevé transactionnel privé, le dump et son chiffrement age,
+puis échoue à `restauration_isolee`. Les migrations isolées n’ont pas commencé.
+Six services, nouvelle connexion SSH et 25 sondes HTTP/TLS passent après échec.
+Le second lancement du même commit, `37904735624`, refuse la source déjà extraite ;
+ses contrôles après échec passent également. Ne pas relancer ce même dossier.
+
+Le diagnostic `vision-restauration-auditer.py` lit seulement le journal privé
+de cette opération, borné à 256 Kio, sans suivre de lien symbolique. Il publie
+une liste fermée de catégories et des booléens de présence, jamais le stderr,
+les identifiants de rôles arbitraires ou du SQL. Le workflow d’audit reste en
+lecture seule ; une catégorie inconnue ne justifie aucun assouplissement du
+contrôle de restauration. Aucune modification des données de production.
+
 ## Architecture candidate
 
 Keycloak 26.7.3 porte `https://log.mrj.am/realms/mrjam`. Vision demeure
