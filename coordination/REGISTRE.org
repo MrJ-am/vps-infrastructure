@@ -4524,12 +4524,73 @@ Les cadres doivent accepter les seuls fichiers historiques exacts : vérifier le
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: a11fc903b18d3e221f452a6271169071086eacdd5463fc214ec8c3bdf11af5da
-:LU_LE: 2026-10-09T17:45:05+00:00
+:LU_LE: 2026-10-09T18:03:50+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée d20782fe87fa62a5e841958ad7840f934393f279. Relevés complémentaires sans SQL/démarrage, fichiers historiques liés aux SHA-256 f9 et refus de cluster actif/permissions/données arbitraires qualifiés. CI exacte et constat du cluster restent à terminer.
+:PREUVE: PR55/278tests/CI37968695918 et37968699557 tentative2 intégrées a006fdc48acc58b333f8e5b2fee9f3a8fd3d7f49. Diagnostic37969887755 : cadres liés f9/worker291, cluster17 privé proprement arrêté, aucun PID/socket/erreurPG. Échec historique identite seulement ; aucune reprise. Six services/SSH/25sites avant-après passent.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Préciser la sortie historique du service d’identité et son journal réservé
+:PROPERTIES:
+:ID: 20261009-vision-a388135d913b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T18:03:50+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR55/278tests/CI push37968695918 et PR37968699557 (tentative2, seul job navigateur relancé113951435404 après délai de navigation) sont intégrées exactementa006fdc48acc58b333f8e5b2fee9f3a8fd3d7f49. Signal37969869400, orchestration37969887755/job113953556759 réussis : diagnostic17:58:16. Cadres publics f9 vérifiés, refus à activer.py worker ligne291 (switch-to-configuration test). Cluster postgres privé/version17 initialisés et proprement arrêtés, aucun PID/socket, journal sans motif d'erreur. L'unité d'identité a échoué historiquement, sans cause plus précise dans les relevés filtrés. Socle/retour/worker arrêtés, six services/SSH et25HTTP/TLS avant/après passent17:58:40. Aucun enregistrement ou compte humain.
+
+VPS précise ce même audit en lecture seule avec les seuls codes numériques de sortie/étapes systemd connus des unités, et des classes d'exception prédéfinies. Le namespace identite entier, réservé à ces composants, pourra être classé sans filtre d'unité pour conserver les messages non attribués ; jamais le journal général de tout le serveur. Les credentials/import existants seront seulement vérifiés contre leur format et leur modèle, sans valeur ni envoi. Aucun lancement, SQL, réparation, effacement ou changement de génération ; ne pas reprendre sur une cause générique. Même point d'entrée main/CI exacte, six services et25sites, suivi Work autonome. La préparation du compte propre reste locale/synthétique, six tests et parcours natif pwd+otp ; le mot de passe sera choisi par le propriétaire sur la page sécurisée, jamais demandé en conversation.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
