@@ -34,9 +34,11 @@ jobs:
           python3 tests/sources-mrjam.py "$RUNNER_TEMP/composants/sources/services-mrjam.tar.gz"
       - name: Qualifier le lanceur optimisé et les plugins par socket Unix
         run: |
+          docker pull mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87
+          docker tag mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87 pgvector/pgvector:0.8.0-pg17
           mkdir -p "$RUNNER_TEMP/outils-unix"
           cat > "$RUNNER_TEMP/outils-unix/Dockerfile" <<'EOF'
-          FROM debian:bookworm-slim
+          FROM mirror.gcr.io/library/debian@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
           RUN apt-get update && apt-get install -y --no-install-recommends python3 && rm -rf /var/lib/apt/lists/*
           EOF
           docker build -t qualification-keycloak-outils "$RUNNER_TEMP/outils-unix"
@@ -69,6 +71,8 @@ jobs:
           "$RUNNER_TEMP/qualification/bin/python" -m playwright install --with-deps chromium
       - name: Vérifier le realm, PKCE et la double authentification réels
         run: |
+          docker pull mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87
+          docker tag mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87 pgvector/pgvector:0.8.0-pg17
           docker create --name keycloak-librairies quay.io/keycloak/keycloak:26.7.3@sha256:29be7252db0a106f1cd2ac17b9a56ff2668073da645638a38b9fc67deeb2d6c4
           mkdir -p "$RUNNER_TEMP/keycloak-librairies"
           docker cp keycloak-librairies:/opt/keycloak/lib/lib/main/. "$RUNNER_TEMP/keycloak-librairies/"
@@ -190,12 +194,14 @@ jobs:
       - name: Vérifier PostgreSQL 17 et les restaurations dans un conteneur jetable
         run: |
           sudo env NIX_REMOTE=local nix-instantiate --eval --strict --json tests/database-fixture.nix > "$RUNNER_TEMP/postgresql-fixture.json"
+          docker pull mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3
+          docker tag mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3 postgres:17
           python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
   migration-vision:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: pgvector/pgvector:0.8.0-pg17
+        image: mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87
         env:
           POSTGRES_PASSWORD: uniquement-qualification-locale
         ports: ['5432:5432']
