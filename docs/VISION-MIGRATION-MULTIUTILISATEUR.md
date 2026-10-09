@@ -39,6 +39,22 @@ actuel vise l'instance historique à un propriétaire ; plusieurs propriétaires
 exigent une migration distincte. Le dossier privé est
 `/root/vision-multiutilisateur-operations/<commit>/`.
 
+L'exécution [37893102123](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37893102123)
+sur `48aa2fa6d05388d48bc6e7ef3625b358bdb53905` s'est interrompue sans
+activation. Le journal initial masquait l'étape fautive ; les 25 contrôles
+HTTP/TLS relancés depuis Work réussissent après cet arrêt. Cela ne prouve pas
+encore une nouvelle connexion administrative après l'échec.
+
+Le correctif affiche seulement des noms d'étapes fixes et des raisons écrites
+par le programme. Les erreurs des sous-processus et la trace Python demeurent
+dans `diagnostic-prive.log`, root 0600, jamais dans un artifact ou la sortie
+Actions. Le constat de l'ancienne tentative lit uniquement la présence de
+fichiers connus, sans ouvrir leur contenu. Le workflow conserve séparément
+les contrôles HTTP et la nouvelle connexion même après échec de qualification.
+Les diagnostics privés inutiles sont à retirer après résolution avec les
+autres copies privées de l'opération ; ne pas conserver de traces de personnes
+dans les preuves versionnées.
+
 ## Retour et ouverture
 
 Le retour SQL verrouille la configuration et les comptes. Il refuse toute

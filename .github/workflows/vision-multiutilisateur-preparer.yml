@@ -22,6 +22,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python3 scripts/ci-exacte.py
       - name: Préparer la connexion administrative existante
+        id: connexion
         env:
           CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
         run: |
@@ -31,15 +32,19 @@ jobs:
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-multi-admin" >> "$GITHUB_ENV"
           ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-multi-admin" >/dev/null
       - name: Relever les autres sites avant préparation
+        id: releve
         run: python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
       - name: Transférer le candidat exact et restaurer dans le seul cluster isolé
         run: |
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-multiutilisateur-operations/$GITHUB_SHA/source; tar -xf - -C /root/vision-multiutilisateur-operations/$GITHUB_SHA/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 age --run 'python3 /root/vision-multiutilisateur-operations/$GITHUB_SHA/source/scripts/vision-multiutilisateur-preparer.py 48aa2fa6d05388d48bc6e7ef3625b358bdb53905 --constater'"
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 age --run 'python3 /root/vision-multiutilisateur-operations/$GITHUB_SHA/source/scripts/vision-multiutilisateur-preparer.py $GITHUB_SHA'"
-      - name: Contrôler les services et une nouvelle connexion
-        run: |
-          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
-          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Contrôler les services et une nouvelle connexion même après échec
+        if: ${{ always() && steps.connexion.outcome == 'success' && steps.releve.outcome == 'success' }}
+        run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+      - name: Contrôler les autres sites même après échec
+        if: ${{ always() && steps.releve.outcome == 'success' }}
+        run: python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
       - name: Conserver seulement le rapport technique sans données
         run: |
           mkdir -p "$RUNNER_TEMP/rapport-multi"
