@@ -5388,12 +5388,12 @@ Avant toute reprise, étendre le diagnostic arrêté à la seule tentative c527,
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 816144f303bf2137b6010bbbf721253f70e336b3847030c03175e992147fb69e
+:LU_LE: 2026-10-09T21:22:25+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Projection des classes Python, codes HTTP et cadres de source c527 préparée ; aucun message privé, aucun redémarrage ni SQL.
 :END:
 
 ** TODO vps

@@ -14,10 +14,12 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
 REVISION = '88dc20580cbfc3e790eb19f366794b8b94f87e9d'
-DERNIERE = 'f7634858fa7a7fbfe33f4c00ecc0047bc48b811f'
+DERNIERE = 'c527fcfd64dc5478da1011aafc28ce6e3d3fd199'
 DOSSIER = Path('/root/vision-identite-amorcage-essais')/REVISION
 EMPREINTES = {
-    'vision-identite-amorcage-activer.py':'5db3474df55dda46c03ea20ce1d4d5383f7330547ad03839fe83b61c70a912b2',
+    'vision-identite-amorcage-activer.py':'8d2ac69f550f76deae59afd74d3615d16b5f18d3eb844f2d0552a3210abed739',
+    'identite-amorcage-controle.py':'3b134c05d572b4203bc904e7f4bb12ac5c2d9e71a5eb0156b45c70937f421a69',
+    'vision-identite-boucle-locale.py':'9c950e08902ab313b9e3d830db1107af4fb7f68ec4732d50c80fc18d874e7b66',
     'vision-identite-construire.py':'59b622d13d06994f203bfaf570d142ab214aed6ea3c62ca0d92141ecba6843c5',
     'vision-multiutilisateur-preparer.py':'79bc15f3bbd242e29aa1f9321d90adf35145adeeec28e77c833c3a3c255143d3',
 }
@@ -65,7 +67,7 @@ MOTIFS = {
     'credential_indisponible': r'Failed to (?:load|set up) credentials|Failed at step CREDENTIALS',
 }
 # Les messages de source dans un traceback ne constituent pas une exception.
-REFUS_LOCAUX = {'generation_inattendue': 'Génération inattendue', 'service_essentiel_redemarre': 'Service essentiel redémarré', 'unite_essentielle_differente': 'Unité essentielle différente', 'vision_fournisseur_change': 'Vision ou fournisseur changé', 'confinement_systemd_different': 'Confinement systemd différent', 'identite_root': 'Identité lancée avec privilèges root', 'identite_hors_boucle_locale': 'Identité exposée hors boucle locale', 'cluster_prive_indisponible': 'Cluster privé indisponible', 'parametres_cluster_prive_differents': 'Paramètres du cluster privé différents', 'autre_uid_peer_non_refuse': 'Autre UID non refusé par peer', 'issuer_local_different': 'Issuer local différent', 'realm_different_ou_ouvert': 'Realm différent ou inscription ouverte', 'politique_identite_differente': 'Politique d’identité différente', 'version_spi_different': 'Version ou SPI différent', 'personne_avant_enrolement': 'Personne présente avant enrôlement', 'clients_techniques_differents': 'Clients techniques différents', 'identifiant_technique_different': 'Identifiant technique différent', 'flux_client_different': 'Flux client différent', 'redirections_client_differentes': 'Redirections client différentes', 'compte_technique_different': 'Compte technique différent'}
+REFUS_LOCAUX = {'controle_prive_interrompu':'Contrôle privé interrompu', 'generation_inattendue': 'Génération inattendue', 'service_essentiel_redemarre': 'Service essentiel redémarré', 'unite_essentielle_differente': 'Unité essentielle différente', 'vision_fournisseur_change': 'Vision ou fournisseur changé', 'confinement_systemd_different': 'Confinement systemd différent', 'identite_root': 'Identité lancée avec privilèges root', 'identite_hors_boucle_locale': 'Identité exposée hors boucle locale', 'cluster_prive_indisponible': 'Cluster privé indisponible', 'parametres_cluster_prive_differents': 'Paramètres du cluster privé différents', 'autre_uid_peer_non_refuse': 'Autre UID non refusé par peer', 'issuer_local_different': 'Issuer local différent', 'realm_different_ou_ouvert': 'Realm différent ou inscription ouverte', 'politique_identite_differente': 'Politique d’identité différente', 'version_spi_different': 'Version ou SPI différent', 'personne_avant_enrolement': 'Personne présente avant enrôlement', 'clients_techniques_differents': 'Clients techniques différents', 'identifiant_technique_different': 'Identifiant technique différent', 'flux_client_different': 'Flux client différent', 'redirections_client_differentes': 'Redirections client différentes', 'compte_technique_different': 'Compte technique différent'}
 MOTIFS.update({nom: r"(?m)^(?:[A-Za-z_][A-Za-z0-9_]*\.)?(?:ConstructionRefusee|ValueError): " + re.escape(message) + r"$"
     for nom, message in REFUS_LOCAUX.items()})
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
@@ -156,13 +158,25 @@ def journaux_nginx(outils):
         try:
             r=subprocess.run([str(outils/'journalctl'),*(['--namespace=http'] if namespace=='http' else []),
                 '--unit=nginx.service','--unit=nginx-validate-config.service',
-                '--since=2026-10-09 20:35:50 UTC','--until=2026-10-09 20:38:00 UTC',
+                '--since=2026-10-09 21:18:00 UTC','--until=2026-10-09 21:18:50 UTC',
                 '--lines=300','--output=cat','--no-pager'],capture_output=True,timeout=10)
         except (OSError,subprocess.TimeoutExpired):r=None
         disponible=r is not None and r.returncode==0 and len(r.stdout)<=1048576
         texte=r.stdout.decode(errors='replace') if disponible else ''
         rapports[namespace]=dict(disponible=disponible,**classer_nginx(texte),configurations=references_nginx(texte))
     return rapports
+
+
+EXCEPTIONS_PYTHON = frozenset(('HTTPError','URLError','JSONDecodeError','KeyError','TypeError',
+    'ValueError','IndexError','AttributeError','UnicodeDecodeError','ConnectionRefusedError',
+    'TimeoutError','FileNotFoundError','PermissionError','OSError','ConstructionRefusee'))
+
+def exception_privee(texte):
+    # Une ligne d'exception réelle seulement ; aucune valeur ni corps HTTP.
+    prefixe=r'(?m)^(?:[A-Za-z_][A-Za-z0-9_]*\.)*'
+    classes=sorted(c for c in EXCEPTIONS_PYTHON if re.search(prefixe+re.escape(c)+r':',texte))
+    http=sorted({int(n) for n in re.findall(prefixe+r'HTTPError: HTTP Error ([1-5][0-9]{2}):',texte)})
+    return dict(classes=classes,codes_http=http)
 
 
 def sorties(texte):
@@ -387,8 +401,9 @@ def main(reprise=False):
     details={}
     if not reprise:
         ETAPE='cadres_connus'
-        try:details=dict(cadres=cadres(diagnostic,dossier/'source'),cadres_disponibles=True)
+        try:details=dict(cadres=cadres(diagnostic+'\n'+worker+'\n'+journal,dossier/'source'),cadres_disponibles=True)
         except (OSError,ValueError,SyntaxError,UnicodeError):details=dict(cadres=[],cadres_disponibles=False)
+        details['exception_privee']=exception_privee(diagnostic+'\n'+worker+'\n'+journal)
         ETAPE='unites_secondaires';details['unites_identite']=unites_identite(outils)
         ETAPE='namespace_identite';details['journal_namespace_identite']=namespace_identite(outils)
         ETAPE='journaux_nginx';details['journaux_nginx']=journaux_nginx(outils)
