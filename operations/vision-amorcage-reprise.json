@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "infrastructure": "88dc20580cbfc3e790eb19f366794b8b94f87e9d",
+  "signal": 37958338033,
+  "execution": 37958354048,
+  "job": 113914603028,
+  "lancement_par_agent": true,
+  "regles_repertoires_verifiees": true,
+  "dry_activate": true,
+  "copie_locale_chiffree": true,
+  "timer_repete": true,
+  "retour_arme": true,
+  "worker_demande": true,
+  "controles_locaux_termines": false,
+  "retour_termine": true,
+  "socle_retabli": true,
+  "generation_enregistree": false,
+  "identite_humaine": false,
+  "mode_vision_oidc": false,
+  "inscriptions": false,
+  "http_tls_avant": 25,
+  "http_tls_apres": 25
+}

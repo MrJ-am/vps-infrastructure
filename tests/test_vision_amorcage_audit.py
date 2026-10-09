@@ -5,6 +5,8 @@ import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -35,6 +37,34 @@ class Audit(unittest.TestCase):
     def test_exception_reelle_du_controle_est_classee(self):
         r = audit.classer('construction_identite.ConstructionRefusee: Dry-activate annonce une unité étrangère à l’amorçage', '')
         self.assertEqual(r['categories'],['unite_etrangere'])
+
+    def test_retour_non_etabli_interdit_lecture(self):
+        etat=dict(commence=True, **{'plan.json':True,'retour-commence':True,'retour-termine':True,'enregistre':False})
+        audit.verifier_retour(etat)
+        for nom in etat:
+            with self.subTest(nom=nom),self.assertRaises(ValueError):
+                audit.verifier_retour(etat|{nom:not etat[nom]})
+        with self.assertRaises(ValueError):audit.verifier_retour({})
+
+    def test_trace_worker_et_journal_ne_sortent_que_etapes_et_motifs_fermes(self):
+        secret='valeur-confidentielle'
+        texte='{"etape": "essai_generation"}\n{"etape": "'+secret+'"}\nModuleNotFoundError: '+secret+'\nFailed at step EXEC '+secret
+        r=audit.classer_worker(texte)
+        self.assertEqual(r['etapes'],['essai_generation'])
+        self.assertEqual(r['categories'],['lancement_python_refuse','bibliotheque_python_absente'])
+        self.assertNotIn(secret,json.dumps(r))
+
+    def test_worker_actif_et_etat_indetermine_refuses(self):
+        for sortie,code in ((b'ActiveState=active\nExecMainStatus=0\n',0),
+                (b'ActiveState=inactive\nExecMainStatus=donnee-privee\n',0),
+                (b'ActiveState=inactive\nExecMainStatus=256\n',0),(b'',1)):
+            with patch.object(audit.subprocess,'run',return_value=SimpleNamespace(stdout=sortie,returncode=code)) as appel:
+                with self.assertRaises(ValueError):audit.etat_worker(Path('/outils'))
+                self.assertEqual(appel.call_count,1)
+        valeurs=[SimpleNamespace(stdout=b'ActiveState=failed\nExecMainStatus=203\n',returncode=0),
+            SimpleNamespace(stdout=b'journal-prive',returncode=0)]
+        with patch.object(audit.subprocess,'run',side_effect=valeurs):
+            self.assertEqual(audit.etat_worker(Path('/outils')),(dict(etat='failed',code=203),'journal-prive'))
 
     def test_lecture_refuse_liens_droits_taille_et_type(self):
         with tempfile.TemporaryDirectory() as tmp:

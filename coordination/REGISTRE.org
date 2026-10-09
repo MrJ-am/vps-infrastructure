@@ -4209,12 +4209,12 @@ Intégrer ce contrôle au préflight et qualifier les refus avec fixtures, puis 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 101d59f9243a205902acb7aac27f174055601739ae96602ec2510c75a1abd186
-:LU_LE: 2026-10-09T16:11:04+00:00
+:LU_LE: 2026-10-09T16:36:06+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée bf2577034a61abba970def79fb1cd3cde9fb06ca. Contrôle immuable des règles/unité et classement automatique préparés ; quatre tests ciblés passent. CI complète et reprise réelle à terminer, même génération conservée.
+:PREUVE: PR50/267tests/CI37957472532/37957479137 intégrées exactement88dc20580cbfc3e790eb19f366794b8b94f87e9d. Reprise37958354048 : comparaison réelle des règles et unité, simulation/copie/timer passent ; essai arrêté après délai, retour terminé et25sondes finaux réussis. Diagnostic du worker annoncé20261009-vision-b5718ce1c6e0.
 :END:
 
 ** TODO vps
@@ -4272,12 +4272,12 @@ La comparaison des répertoires reste strictement qualifiée ; ne l'élargir ni 
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 01eb202b7a2eaa0c70b9beafd7e17c4ae0d7ce7a769dc628765fd85ede59a0ba
+:LU_LE: 2026-10-09T16:36:06+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée 88d1238b444546602468d6e5771cde11d6722917 ; diagnostic retourné en lecture seule et tests de refus/absence de fuite préparés. CI et constat VPS restent à terminer.
 :END:
 
 ** TODO vps
