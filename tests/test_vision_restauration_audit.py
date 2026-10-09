@@ -45,6 +45,14 @@ class Diagnostic(unittest.TestCase):
         self.assertTrue(resultat['refus_sql'])
         self.assertNotIn('personnel', json.dumps(resultat))
 
+    def test_copie_unicode_sans_restituer_la_table(self):
+        texte = 'pg_restore: error: COPY failed for table "prive-synthetique": ERROR:  unsupported Unicode escape sequence\nDETAIL: contenu personnel\n'
+        resultat = MODULE.classer(texte)
+        self.assertEqual(resultat['categories'], ['echappement_unicode_non_supporte'])
+        self.assertTrue(resultat['refus_copy'])
+        self.assertNotIn('synthetique', json.dumps(resultat))
+        self.assertNotIn('personnel', json.dumps(resultat))
+
     def test_lecture_refuse_lien_permissions_et_depassement(self):
         with tempfile.TemporaryDirectory() as d:
             p = Path(d) / 'journal'; p.write_text('privé'); p.chmod(0o600)
