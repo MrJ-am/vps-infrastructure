@@ -6,6 +6,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import pwd
 import re
 import shlex
 import subprocess
@@ -14,8 +15,8 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
-REFUS_PRECEDENT = '6072227fdae8d7f8b8ebd8476405073cef8960bb'
-SOURCE_PRECEDENTE = 'bc0a977fff5ce6a7216477e11e3422519154842030d2549d98178122f48bbfae'
+REFUS_PRECEDENT = '542c15e87573f9f3d948fe0a5f9b5b2717df3e1f'
+SOURCE_PRECEDENTE = '784703243eef71d916ee5cc15951456adc6d9ff5086df5a5e1f4978617a823d0'
 
 
 def charger(nom, fichier):
@@ -147,6 +148,11 @@ def commande_nginx_isolee(resume, revision):
         AmbientCapabilities=['CAP_NET_BIND_SERVICE', 'CAP_SYS_RESOURCE'],
         CapabilityBoundingSet=['CAP_NET_BIND_SERVICE', 'CAP_SYS_RESOURCE'], NoNewPrivileges=True),
         'Confinement Nginx natif différent')
+    uid, gid = resume['nginx_uid'], resume['nginx_gid']
+    exiger(type(uid) is int and type(gid) is int and 0 < uid < 65536 and 0 < gid < 65536,
+        'UID ou GID Nginx natif invalide')
+    repertoires = ('/run/nginx', '/var/cache/nginx', '/var/log/nginx')
+    tmpfs = ' '.join(p+f':rw,mode=0750,uid={uid},gid={gid}' for p in repertoires)
     outils = Path(construction.store(resume['systeme_actif']))/'sw/bin'
     return [str(outils/'systemd-run'), '--quiet', '--wait', '--pipe', '--collect',
         '--service-type=exec', '--unit=vision-nginx-validation-'+revision[:12],
@@ -156,6 +162,8 @@ def commande_nginx_isolee(resume, revision):
         '--property=NoNewPrivileges=yes', '--property=PrivateNetwork=yes',
         '--property=ProtectSystem=strict', '--property=ProtectHome=yes',
         '--property=PrivateTmp=yes', '--property=PrivateDevices=yes',
+        '--property=TemporaryFileSystem='+tmpfs,
+        '--property=ReadWritePaths='+' '.join(repertoires),
         '--property=RuntimeMaxSec=30s', '--property=TimeoutStopSec=5s',
         nginx, '-t', '-e', 'stderr', '-c', configuration]
 
@@ -227,6 +235,8 @@ def preparer(revision, controler=False):
         os.access(Path(generation) / 'bin/switch-to-configuration', os.X_OK),
         'Génération construite différente ou incomplète')
     etape('configuration_nginx_native')
+    exiger(pwd.getpwnam('nginx').pw_uid == resume['nginx_uid'] and
+        grp.getgrnam('nginx').gr_gid == resume['nginx_gid'], 'Compte Nginx différent de l’évaluation')
     verifier_nginx(resume, revision)
     etape('invariants_finaux'); construction.verifier_socle(candidat)
     resultat = dict(version=1, infrastructure=revision, composants=preuve['infrastructure'],

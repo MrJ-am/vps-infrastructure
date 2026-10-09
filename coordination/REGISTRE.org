@@ -5077,12 +5077,12 @@ La prochaine construction conserve UID/groupe nginx, sa seule CAP_NET_BIND_SERVI
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 2734071db5279a069828c300ff3e791f18723623cf8bbaf2af70c5938dffa601
+:LU_LE: 2026-10-09T20:09:59+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 292 tests locaux passent ; nginx -t natif sous UID non root reproduit le refus RO et réussit avec trois tmpfs privés dans un conteneur à racine readonly. Configuration complète VPS encore attendue.
 :END:
 
 ** TODO vps

@@ -1,5 +1,15 @@
 # État attesté au 9 octobre 2026
 
+Le contrôle [37984167434](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37984167434),
+opérateur542c15e87573f9f3d948fe0a5f9b5b2717df3e1f, refuse une ouverture
+avec errno30 dans le confinement readonly du test. Les six services/SSH,
+le socle et25HTTP/TLS restent conservés, aucune activation.
+[Rapport du refus](../operations/vision-amorcage-nginx-lecture-seule.json).
+Le test emploie ensuite trois tmpfs privés pour PID/cache/logs, appartenant
+aux UID/GID Nginx évalués et vérifiés ; aucune écriture sur leurs équivalents
+du service actif. Un test natif sous UID non root reproduit le refus RO,
+puis valide nginx -t avec ces répertoires privés dans un conteneur readonly.
+
 La construction [37982527127](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37982527127),
 opérateur6072227fdae8d7f8b8ebd8476405073cef8960bb, établit que runuser
 est présent et que la syntaxe Nginx complète est valide. Le test refuse

@@ -34,7 +34,8 @@ class Proprietaire(unittest.TestCase):
     def resume_nginx(self):
         paquet='/nix/store/'+'a'*32+'-nginx'
         return dict(nginx_paquet=paquet,nginx_commande=paquet+'/bin/nginx -c /nix/store/'+'b'*32+'-nginx.conf',
-            systeme_actif='/nix/store/'+'c'*32+'-systeme',nginx_confinement=dict(User='nginx',Group='nginx',
+            systeme_actif='/nix/store/'+'c'*32+'-systeme',nginx_uid=60,nginx_gid=60,
+            nginx_confinement=dict(User='nginx',Group='nginx',
                 AmbientCapabilities=['CAP_NET_BIND_SERVICE','CAP_SYS_RESOURCE'],
                 CapabilityBoundingSet=['CAP_NET_BIND_SERVICE','CAP_SYS_RESOURCE'],NoNewPrivileges=True))
 
@@ -47,6 +48,8 @@ class Proprietaire(unittest.TestCase):
         self.assertIn('--property=CapabilityBoundingSet=CAP_NET_BIND_SERVICE',c)
         self.assertEqual(c[-6:],[r['nginx_paquet']+'/bin/nginx','-t','-e','stderr','-c','/nix/store/'+'b'*32+'-nginx.conf'])
         self.assertNotIn('CAP_SYS_RESOURCE',' '.join(c))
+        self.assertIn('--property=TemporaryFileSystem=/run/nginx:rw,mode=0750,uid=60,gid=60 '
+            '/var/cache/nginx:rw,mode=0750,uid=60,gid=60 /var/log/nginx:rw,mode=0750,uid=60,gid=60',c)
 
     def test_confinement_different_et_revision_libre_refuses(self):
         r=self.resume_nginx()
@@ -55,6 +58,16 @@ class Proprietaire(unittest.TestCase):
             f=copy.deepcopy(r);f['nginx_confinement'][cle]=valeur
             with self.subTest(cle=cle),self.assertRaises(RuntimeError):a.commande_nginx_isolee(f,'d'*40)
         with self.assertRaises(RuntimeError):a.commande_nginx_isolee(r,'revision; id')
+        for valeur in (0,False,-1,'60',65536):
+            with self.subTest(uid=valeur),self.assertRaises(RuntimeError):
+                a.commande_nginx_isolee({**r,'nginx_uid':valeur},'d'*40)
+
+    def test_diagnostic_pid_nginx_sans_chemin_ou_message_prive(self):
+        r=a.classer_refus('open() "/run/nginx/nginx.pid" failed (30: Read-only file system) secret_contact@exemple.test')
+        self.assertEqual(r['nginx']['types_chemins'],['pid_nginx'])
+        self.assertEqual(r['nginx']['errno'],[30])
+        self.assertNotIn('secret_contact',json.dumps(r))
+        self.assertNotIn('/run/nginx',json.dumps(r))
 
     def test_erreur_native_en_clair_reste_privee(self):
         sortie=io.StringIO();prive=b'secret_contact@exemple.test permission denied'

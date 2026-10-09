@@ -73,6 +73,8 @@ assert keycloak.version == "26.7.3";
     nginx_commande = c.systemd.services.nginx.serviceConfig.ExecStart;
     nginx_confinement = lib.getAttrs [ "User" "Group" "AmbientCapabilities"
       "CapabilityBoundingSet" "NoNewPrivileges" ] c.systemd.services.nginx.serviceConfig;
+    nginx_uid = c.users.users.nginx.uid;
+    nginx_gid = c.users.groups.nginx.gid;
     runuser_paquet = toString (lib.getBin pkgs.util-linux);
     age_paquet = toString (lib.getBin pkgs.age);
     tar_paquet = toString (lib.getBin pkgs.gnutar);
