@@ -21,8 +21,13 @@ Vision `a9c51acac81510d7dc896f5daf4e6fb28a36b979` et Style
 
 Le paquet Keycloak 26.7.3 avec ses plugins est préparé pour une construction
 manuelle distincte sur le Nixpkgs installé (qui fournit 26.7.2). Cette
-construction n'est pas encore constatée sur le VPS. Préconditions d'activation,
-identité initiale, contrats, clé et copie externe demeurent à établir.
+construction réelle `37912940648`, opérateur
+`226a928a58121b25a3c097c8d32b6843a05e19e6`, passe le socle et la preuve de
+préparation, puis échoue à `construction_paquet`. Six services, nouvelle
+connexion SSH et 25 sondes passent après échec. Le diagnostic privé sera
+classé en lecture seule par le workflow d'audit ; la construction réussie
+n'est pas encore constatée. Préconditions d'activation, identité initiale,
+contrats, clé et copie externe demeurent à établir.
 
 ## Vision — qualification isolée arrêtée avant dump, 9 octobre 2026
 
