@@ -44,7 +44,7 @@ class Cycle:
             return db.execute(requete, args).fetchone()[0]
 
     def email(self, demande):
-        if demande['emetteur'] != 'https://compte.mrj.am/realms/mrjam':
+        if demande['emetteur'] != 'https://log.mrj.am/realms/mrjam':
             raise ValueError('Émetteur non prévu')
         sujet = demande['sujet']
         if not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', sujet):

@@ -48,7 +48,7 @@ in lib.mkIf (sites != []) {
       MRJ_AUTH_HOSTS = lib.concatStringsSep "," (map (site: site.domain) sites);
     } // lib.optionalAttrs oidc {
       MRJ_AUTH_MODE = "oidc";
-      MRJ_OIDC_ISSUER = "https://compte.mrj.am/realms/mrjam";
+      MRJ_OIDC_ISSUER = "https://log.mrj.am/realms/mrjam";
       MRJ_OIDC_BACKEND = "http://127.0.0.1:8085/realms/mrjam";
       MRJ_OIDC_CLIENT = "mrjam-vision";
       MRJ_OIDC_SECRET_FILE = "/run/credentials/mrj-auth.service/oidc-client";

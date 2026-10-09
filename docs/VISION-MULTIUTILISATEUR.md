@@ -6,7 +6,7 @@ ne revendique ni une activation NixOS ni une conformité globale en production.
 
 ## Architecture candidate
 
-Keycloak 26.7.3 porte `https://compte.mrj.am/realms/mrjam`. Vision demeure
+Keycloak 26.7.3 porte `https://log.mrj.am/realms/mrjam`. Vision demeure
 Common Lisp/ElmUI/PostgreSQL 17/pgvector ; aucune réécriture du moteur métier.
 Keycloak utilise une base `mrjam_identite` et un rôle `keycloak` distincts,
 JDBC sur socket Unix avec junixsocket. PostgreSQL ne reçoit aucun port TCP.
@@ -128,7 +128,7 @@ de restauration sont des paramètres d'exploitation, jamais des valeurs publique
 
 1. Figer les trois révisions testées et relire la coordination. Faire un nouvel
    audit actuel ; conserver source, génération active, releases, manifestes,
-   ACL PostgreSQL et état des rôles. Vérifier DNS/ACME de compte.mrj.am et SMTP.
+   ACL PostgreSQL et état des rôles. Vérifier DNS/ACME de log.mrj.am et SMTP.
 2. Qualifier une restauration **isolée** du dump chiffré Vision. Mesurer poids
    initial, nombre de propriétaires historiques et toutes les copies ; un
    propriétaire historique ambigu bloque la migration plutôt que deviner.

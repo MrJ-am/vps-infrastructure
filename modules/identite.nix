@@ -37,7 +37,7 @@ in {
       # demeure hors store. L'import Keycloak ignore un realm déjà présent.
       realmFiles = [ "/run/credentials/keycloak.service/realm-import" ];
       settings = {
-        hostname = "https://compte.mrj.am";
+        hostname = "https://log.mrj.am";
         http-enabled = true; http-host = "127.0.0.1"; http-port = 8085;
         proxy-headers = "xforwarded"; hostname-strict = true;
         health-enabled = true; metrics-enabled = false;
@@ -65,7 +65,7 @@ in {
         --command='ALTER DATABASE mrjam_identite OWNER TO keycloak; REVOKE ALL ON DATABASE mrjam_identite FROM PUBLIC; GRANT CONNECT ON DATABASE mrjam_identite TO keycloak;'
     '';
     services.postgresql.identMap = "mrj_identite mrj-auth vision_identite";
-    services.nginx.virtualHosts."compte.mrj.am" = {
+    services.nginx.virtualHosts."log.mrj.am" = {
       enableACME = true; forceSSL = true;
       extraConfig = ''
         add_header Strict-Transport-Security "max-age=31536000" always;

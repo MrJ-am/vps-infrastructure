@@ -65,7 +65,7 @@ Ne pas lancer `retour-acl.sql` indépendamment des arrêts et du retour système
 La préparation produit et qualifie cette pièce, elle ne lance pas la bascule.
 
 L'activation doit encore construire avec le Nixpkgs réellement installé,
-comparer les unités/routage, vérifier JDBC Unix et réserver compte.mrj.am,
+comparer les unités/routage, vérifier JDBC Unix et réserver log.mrj.am,
 préparer l'import privé, vérifier la possession de l'identité initiale et son
 MFA, rattacher exactement iss/sub à l'ancien utilisateur et ses principaux
 MCP. Aucun rattachement par courriel ressemblant n'est autorisé. Conserver les
@@ -99,8 +99,9 @@ aucune écoute TCP et son conteneur aucun réseau. La console native répond apr
 création du schéma ; les connexions sont bien locales et un autre UID est refusé.
 Cette qualification synthétique ne remplace pas l'essai de la génération sur VPS.
 
-Le DNS public de `compte.mrj.am` répond NXDOMAIN au relevé du 9 octobre 2026.
-Créer son enregistrement A vers `187.77.95.158` chez alwaysdata avant ACME.
+L'adresse retenue par le propriétaire le 9 octobre 2026 est `log.mrj.am`.
+Son enregistrement A chez alwaysdata répond `187.77.95.158` au relevé public.
+Ce DNS ne prouve pas encore l'émission du certificat ACME ni l'activation IdP.
 Ne pas ajouter d'AAAA sans routage IPv6 qualifié et ne pas modifier les MX Proton.
 Les pages d'accès MCP utilisent aussi les rôles OKLCH de la palette commune ;
 le thème tiers de la console native conserve les limites déclarées.

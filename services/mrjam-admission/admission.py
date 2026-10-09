@@ -24,7 +24,7 @@ import requests
 
 from courriel import FileCourriel, adresse, lire_prive, verifier_smtp
 
-ISSUER = 'https://compte.mrj.am/realms/mrjam'
+ISSUER = 'https://log.mrj.am/realms/mrjam'
 BACKEND = 'http://127.0.0.1:8085/realms/mrjam'
 ADMIN = 'http://127.0.0.1:8085/admin/realms/mrjam'
 MESSAGE = {'demande_enregistree': True,
