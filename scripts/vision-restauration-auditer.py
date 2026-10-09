@@ -22,6 +22,7 @@ MOTIFS = {
     'archive_incompatible': r'(?m)^pg_restore: error: unsupported version \([0-9.]+\) in file header\s*$',
     'collation_absente': r'(?m)^.*ERROR:\s+collation "[^"\n]{1,200}".*does not exist\s*$',
     'encodage_invalide': r'(?m)^.*ERROR:\s+(?:invalid byte sequence for encoding|character with byte sequence|conversion between).*$',
+    'echappement_unicode_non_supporte': r'(?m)^.*ERROR:\s+unsupported Unicode escape sequence\s*$',
     'parametre_inconnu': r'(?m)^.*ERROR:\s+unrecognized configuration parameter "[^"\n]{1,200}"\s*$',
     'extension_version_indisponible': r'(?m)^.*ERROR:\s+extension "[^"\n]{1,200}" has no installation script nor update path.*$',
     'extension_fichier_absent': r'(?m)^.*ERROR:\s+could not open extension control file.*$',
@@ -41,6 +42,7 @@ def classer(contenu):
         'refus_psql': bool(re.search(r'(?m)^psql:(?:<stdin>:[0-9]+:| error:)', contenu)),
         'refus_pg_restore': bool(re.search(r'(?m)^pg_restore: error:', contenu)),
         'refus_sql': bool(re.search(r'(?m)^pg_restore: error: could not execute query: ERROR:', contenu)),
+        'refus_copy': bool(re.search(r'(?m)^pg_restore: error: COPY failed for table ', contenu)),
         'encodage_sql_ascii_mentionne': bool(re.search(r'(?m)^pg_restore: error:.*(?:encoding|locale|collation).*SQL_ASCII', contenu))}
 
 
