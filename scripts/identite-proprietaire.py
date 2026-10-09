@@ -18,7 +18,7 @@ def verifier_enveloppe(valeur):
         valeur['objet'] == 'mrjam-enrolement-proprietaire' and valeur['issuer'] == ISSUER)
     exiger(isinstance(valeur['courriel'], str) and
         re.fullmatch(r'[A-Za-z0-9._+-]{1,64}@[A-Za-z0-9.-]{1,190}', valeur['courriel']) and
-        isinstance(valeur['nom_connexion'], str) and re.fullmatch(r'[A-Za-z0-9._-]{2,64}', valeur['nom_connexion']))
+        isinstance(valeur['nom_connexion'], str) and re.fullmatch(r'[A-Za-z0-9._-]{3,64}', valeur['nom_connexion']))
     return {**valeur, "courriel": valeur["courriel"].lower()}
 
 
