@@ -4707,12 +4707,73 @@ Le module actif journal-http.nix réserve les sorties de Nginx au namespace http
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: b154f4c6df76e8beadfc8c2349554822112f2839255e82c54b77efff26317760
-:LU_LE: 2026-10-09T18:32:52+00:00
+:LU_LE: 2026-10-09T18:43:13+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce livrée1cc5b306e610bf91b6b989142d036f0ffd783c82. Module Nginx/namespace http lu. 283 tests et contrôles locaux réussis, projection sans détail privé, bornes de temps/unités et indisponibilité qualifiées. CI exacte et cause détaillée restent à constater.
+:PREUVE: PR58/283tests/CI37974107919/37974111241 intégrées717e9d378e96e63445691e220da6e57f56cc9826. Diagnostic37974721935 : refus configuration Nginx, familles syntaxe/permissions. Cluster17 arrêté/préservé ; socle/six services/SSH/25sites vérifiés. Aucune reprise.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Préciser la syntaxe Nginx et les droits de sa configuration immuable
+:PROPERTIES:
+:ID: 20261009-vision-c2e2dabdb892
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T18:43:13+00:00
+:CONSOLIDATION: sans-objet
+:END:
+PR58/283tests/CI push37974107919 et PR37974111241 sont intégrées717e9d378e96e63445691e220da6e57f56cc9826. Signal37974704287, diagnostic37974721935/job113970038399 réussi18:39:40 : Nginx refuse sa configuration, avec familles syntaxe et permissions dans son namespace http ; sortie1 dans le namespace par défaut. Le cluster17 reste proprement arrêté ; six services/SSH et25sites passent avant/après18:39:54. Aucune activation/personne.
+
+La précision suivante conserve les mêmes unités/fenêtre bornées. Elle distingue les sous-familles de syntaxe et opérations/errno techniques, et lit uniquement la ligne numérotée du fichier immuable /nix/store/HASH-nginx.conf référencé par une erreur de configuration. Sortie : numéro, premier mot uniquement s’il est une directive connue, métadonnées de droits ; aucune valeur de directive, ligne, URL, IP, certificat ou clé. Fichier inconnu, lien, non régulier, propriétaire/droits invalides ou taille excessive refusés. Aucun processus supplémentaire, lancement Nginx, journal général, SQL, modification ou relance. Identifier le refus exact avant correction et reprise conservant le cluster.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
