@@ -64,10 +64,12 @@ class SansRedirection(urllib.request.HTTPRedirectHandler):
 
 
 class ApiPrivee:
-    def __init__(self,token):
+    def __init__(self,token,lecture_seule=False):
         self.token=token
+        self.lecture_seule=lecture_seule
         self.opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),SansRedirection())
     def __call__(self,path,body=None,method=None):
+        exiger(not self.lecture_seule or (body is None and method in (None,'GET')))
         exiger(isinstance(path,str) and path.startswith('/admin/realms/mrjam/') and
             not any(c in path for c in ('\r','\n','#')))
         headers={'Host':'log.mrj.am','X-Forwarded-Proto':'https','X-Forwarded-Port':'443',
@@ -82,9 +84,11 @@ class ApiPrivee:
             exiger(r.status==200);return result
 
 
-def main(revision, observer=False):
+def main(revision, observer=False, activation_seule=False, attendre_connexion=False):
     global ETAPE
     ETAPE='preuve_activation'
+    exiger(not (activation_seule and attendre_connexion) and
+        (observer or not (activation_seule or attendre_connexion)))
     exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision) is not None)
     os.umask(0o077)
     dossier=Path('/root/vision-proprietaire-operations')/revision
@@ -96,6 +100,7 @@ def main(revision, observer=False):
     controle=charger('controle_identite','identite-amorcage-controle.py')
     observation=charger('observation_initiale','vision-proprietaire-observation.py')
     notes_module=charger('notes_initiales','identite-session-proprietaire.py')
+    compte_observer=charger('compte_observer','identite-proprietaire-observer.py')
     refus_module=charger('refus_creation','identite-proprietaire-refus.py')
     boucle=charger('boucle_identite','vision-identite-boucle-locale.py')
     for p in (dossier.parent,dossier,ROOT):construction.dossier_prive(p)
@@ -149,7 +154,7 @@ def main(revision, observer=False):
     ETAPE='api_privee'
     token=controle.api(opener,'/realms/master/protocol/openid-connect/token',formulaire={
         'grant_type':'password','client_id':'admin-cli','username':'amorcage-local','password':secret})['access_token']
-    api=ApiPrivee(token)
+    api=ApiPrivee(token,lecture_seule=observer)
     # Vérifier le flux de preuve avant le premier courriel, pas après la réponse humaine.
     ETAPE='methodes_pwd_otp'
     ids=observation.executions(api,preparer.outil(resume,'runuser_paquet','runuser'),resume['postgres_paquet']+'/bin/psql',realm)
@@ -158,11 +163,12 @@ def main(revision, observer=False):
     compte_module.verifier_enveloppe(contact)
     ETAPE='etat_durable'
     state=Path('/var/lib/mrjam-proprietaire')
-    try:state.mkdir(mode=0o700)
-    except FileExistsError:pass
+    if not observer:
+        try:state.mkdir(mode=0o700)
+        except FileExistsError:pass
     construction.dossier_prive(state)
     fd=os.open(state,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
-    lock=identite.ouvrir_prive(fd,'enrolement.lock',os.O_RDWR|os.O_CREAT,maximum=0)
+    lock=identite.ouvrir_prive(fd,'enrolement.lock',os.O_RDONLY if observer else os.O_RDWR|os.O_CREAT,maximum=0)
     try:
         fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         def lire(nom):
@@ -196,19 +202,34 @@ def main(revision, observer=False):
             verifier_actif()
             ETAPE='etat_durable'
         controle.verifier(secret,realm,opener=opener,sujet_proprietaire=enregistrer['sujet'] if enregistrer else None)
-        if lire('executions.json') is None:ecrire('executions.json',ids)
+        if lire('executions.json') is None:
+            exiger(not observer)
+            ecrire('executions.json',ids)
         else:exiger(lire('executions.json')==ids)
         if observer:
-            exiger(enregistrer is not None and lire('courriel-accepte') is not None)
-            compte_module.preparer_compte(api,contact,lire,ecrire)
-            actuel=api('/admin/realms/mrjam/users/'+enregistrer['sujet'])
-            credentials=api('/admin/realms/mrjam/users/'+enregistrer['sujet']+'/credentials')
-            exiger(actuel.get('enabled') is True and actuel.get('emailVerified') is True and actuel.get('requiredActions',[])==[] and
-                {c.get('type') for c in credentials}=={'password','otp'})
-            valeurs=observation.sessions(preparer.outil(resume,'runuser_paquet','runuser'),resume['postgres_paquet']+'/bin/psql',enregistrer['sujet'])
-            maintenant=int(__import__('time').time())
-            exiger(any(notes_module.verifier_notes(v,ids,maintenant) for v in valeurs))
-            preuve=dict(version=1,issuer=compte_module.ISSUER,sujet=enregistrer['sujet'],pwd_otp_frais=True,date=maintenant)
+            ETAPE='activation_compte'
+            contact=compte_module.verifier_enveloppe(contact)
+            sujet=compte_observer.verifier_compte(api,contact,{nom:lire(nom) for nom in
+                ('compte.json','creation-demandee','courriel-demande','courriel-accepte','executions.json')},ids)
+            verifier_actif()
+            if activation_seule:
+                print(json.dumps(dict(compte_initial_verifie=True,courriel_verifie=True,mot_de_passe_configure=True,
+                    second_facteur_configure=True,privilege_administrateur_identite=False,
+                    connexion_pwd_otp_fraiche=False,inscriptions=False,mode_vision_oidc=False)),flush=True)
+                return
+            ETAPE='attente_connexion'
+            print(json.dumps(dict(compte_initial_verifie=True,attente_connexion=True,inscriptions=False,mode_vision_oidc=False)),flush=True)
+            maintenant=compte_observer.attendre_connexion(lambda:observation.sessions(
+                preparer.outil(resume,'runuser_paquet','runuser'),resume['postgres_paquet']+'/bin/psql',sujet),
+                notes_module.verifier_notes,ids,maximum=600 if attendre_connexion else 0)
+            verifier_actif()
+            if maintenant is None:
+                print(json.dumps(dict(compte_initial_verifie=True,connexion_pwd_otp_fraiche=False,
+                    preuve_humaine_en_attente=True,inscriptions=False,mode_vision_oidc=False)),flush=True)
+                return
+            ETAPE='preuve_humaine'
+            exiger(0<=int(__import__('time').time())-maintenant<=30)
+            preuve=dict(version=1,issuer=compte_module.ISSUER,sujet=sujet,pwd_otp_frais=True,date=maintenant)
             ecrire('connexion-'+str(maintenant)+'.json',preuve)
             verifier_actif()
             print(json.dumps(dict(compte_initial_verifie=True,connexion_pwd_otp_fraiche=True,inscriptions=False,mode_vision_oidc=False)))
@@ -226,8 +247,9 @@ def main(revision, observer=False):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('revision');p.add_argument('--observer',action='store_true');a=p.parse_args()
-    try:main(a.revision,a.observer)
+    p=argparse.ArgumentParser();p.add_argument('revision');p.add_argument('--observer',action='store_true')
+    g=p.add_mutually_exclusive_group();g.add_argument('--activation-seule',action='store_true');g.add_argument('--attendre-connexion',action='store_true');a=p.parse_args()
+    try:main(a.revision,a.observer,a.activation_seule,a.attendre_connexion)
     except Exception as erreur:
         # Le traceback reste sous le dossier root de cette opération, jamais Actions.
         try:
@@ -241,7 +263,8 @@ if __name__=='__main__':
                 finally:os.close(fd)
             finally:os.close(dirfd)
         except Exception:pass
-        rapport=dict(enrolement_refuse=True,etape=ETAPE,inscriptions=False,mode_vision_oidc=False)
+        rapport=dict(etape=ETAPE,inscriptions=False,mode_vision_oidc=False)
+        rapport['observation_refusee' if a.observer else 'enrolement_refuse']=True
         raisons={'observation_sql','observation_json','observation_modele','observation_hierarchie',
             'observation_identifiant','observation_provider','observation_configuration','observation_methodes',
             'reprise_source','reprise_reponse','reprise_etape','reprise_etat','reprise_contact','reprise_profil'}

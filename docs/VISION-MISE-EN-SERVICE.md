@@ -267,3 +267,29 @@ L'observation ultérieure ne lit que les notes de session du sujet initial
 exact et exige les méthodes pwd/otp fraîches≤300s. La simple présence des
 credentials ne constitue pas une preuve de connexion. Le rattachement
 historique et le statut administrateur applicatif restent une phase distincte.
+
+La phase automatisée `proprietaire-observer` est séparée de cet enrôlement.
+Elle exige tous les reçus privés déjà existants, le verrou et les identifiants
+d'exécutions inchangés. Elle interdit les mutations de l'API administrative,
+ne crée aucun état d'enrôlement et ne rappelle jamais le chemin de création
+ou de courriel. La première étape vérifie email, mot de passe et OTP configurés,
+sur le sujet durable exact, sans rôle d'administration d'identité. Ce constat
+ne vaut pas authentification récente. La seconde attend au plus600secondes,
+en ne réessayant que la projection SQL READ ONLY des notes de ce sujet.
+La preuve exige pwd ET otp exécutés depuis≤300secondes ; un lien magique,
+une session ancienne ou la seule présence de credentials ne suffisent pas.
+Sans preuve, un résultat explicite `preuve_humaine_en_attente` est rendu sans
+écrire de reçu de connexion. Après preuve, seul le reçu root0600 est écrit.
+Le runner expose une étape d'attente identifiable : demander une connexion
+normale seulement lorsque cette étape est active, jamais avant les minutes
+de CI. La personne utilise son navigateur ; aucun Run workflow ni secret
+en conversation n'est nécessaire. Cette phase ne rattache aucune donnée,
+ne promeut aucun administrateur Vision et n'exécute aucune migration SQL.
+
+Qualification de l’observateur sur Keycloak26.7.3 natif, avec compte/courriel
+strictement synthétiques : activation par lien, choix de mot de passe et OTP,
+vérification du sujet exact et absence d’admin, sans seconde création ni envoi.
+[Reçu de qualification](../operations/vision-proprietaire-observation-qualification.json).
+Huit tests de refus/attente,343tests locaux et évaluations Nix réussis. La
+preuve de session native/PG17 reste celle du lecteur inchangé de PR70 ;
+la vérification du compte réel reste à exécuter après CI exacte.
