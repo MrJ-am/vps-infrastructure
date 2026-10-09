@@ -5327,12 +5327,12 @@ Garde de reprise liée au seul essai f763 et à ce diagnostic réel, source/cadr
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: bf35567941e8ab921a939ab41fdc88bbd28fe60227280fc1d974357cdaa75999
-:LU_LE: 2026-10-09T21:09:56+00:00
+:LU_LE: 2026-10-09T21:30:01+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Parseur strict et garde f763 préparés ; diagnostic37991412168 consigné. Reprise non encore exécutée.
+:PREUVE: c527/PR66/302 tests/CI37991890423 ; essai37992389053 puis diagnostic37993555900 confirment les contrôles boucle locale et PG passés. Refus503 ultérieur à la découverte, retour réussi et25 sites conservés. Génération non enregistrée.
 :END:
 
 ** TODO vps
@@ -5388,12 +5388,75 @@ Avant toute reprise, étendre le diagnostic arrêté à la seule tentative c527,
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 816144f303bf2137b6010bbbf721253f70e336b3847030c03175e992147fb69e
-:LU_LE: 2026-10-09T21:22:25+00:00
+:LU_LE: 2026-10-09T21:30:01+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Projection des classes Python, codes HTTP et cadres de source c527 préparée ; aucun message privé, aucun redémarrage ni SQL.
+:PREUVE: 5dcfb048/PR67/303 tests/CI37993127010. Diagnostic37993555900/job114033697403 : source vérifiée et HTTP503 découverte verifier34/api24, sans message privé. Retour/cluster/socle/six services/SSH/25 sites conservés, aucune activation.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Attendre la découverte après le503 de démarrage attesté
+:PROPERTIES:
+:ID: 20261009-vision-4cdefed3bd53
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-09T21:30:01+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Diagnostic réel5dcfb0484599d8b74cedfc0c36217e8563337b74, signal37993544476, Actions37993555900/job114033697403 réussi. Source/cadres c527 exacts : verifier_local321, identite-amorcage-controle.verifier34/api24, HTTPError503 au premier GET de découverte. Les contrôles de génération, services, confinement, UID, boucle locale, paramètresPG17 et rejet peer ont donc précédé ce refus. Worker/cluster arrêtés propres, retour établi, six services/SSH/25HTTP conservés. Aucun enregistrement, humain, inscription ou SQL de production.
+
+Ajouter une attente strictement bornée sur le seul GET loopback /realms/mrjam/.well-known/openid-configuration. Retenter seulement503 de démarrage et connexion refusée, sans corps de réponse ni envoi de credentials ; pas de retry des POST de token ou des contrôles de politique. Conserver le refus des autres codes, redirections, réponses invalides et issuer différent. Limite monotone120s, timeout réseau borné, pauses1s, exception constante à expiration. Après disponibilité, exécuter tous les contrôles initiaux sans modification.
+
+Reprise liée au diagnostic c527/cadres/classes/HTTP503 exacts et aux unités privées arrêtées réussies/import conforme/cluster sain. Audit et copie froide chiffrée frais avant démarrage de la même génération k4q25f ; retour indépendant conservé, contrôles natifs/SSH/HTTP/TLS avant enregistrement. Aucun effacement, aucun élargissement réseau ou création humaine. Consigner le diagnostic réel et le résultat, ne déduire aucune activation d'un test local ou CI.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO vision
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
 :END:
 
 ** TODO vps
