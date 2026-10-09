@@ -29,6 +29,10 @@
   "preuve_reception": {
     "source": "confirmation_exploitant_dans_la_session",
     "date": "2026-10-09",
-    "piece_jointe_presente": true
-  }
+    "piece_jointe_presente": "declaree_par_exploitant",
+    "format_attendu": "age-encryption.org/v1",
+    "format_observe": "XML_et_logo_signales_identification_en_cours"
+  },
+  "identification_piece_jointe": "a_verifier_format_observe",
+  "possession_cle_privee": "non_etablie"
 }
