@@ -2,6 +2,7 @@
 { configuration, fournisseur ? null }:
 let
   lib = import <nixpkgs/lib>;
+  pkgs = import <nixpkgs> {};
   modules = [ (builtins.toPath configuration) ] ++
     lib.optional (fournisseur != null) ({ lib, ... }: {
       services.visionEmbeddings.source = lib.mkForce (builtins.storePath fournisseur);
@@ -70,6 +71,9 @@ assert keycloak.version == "26.7.3";
     postgres_paquet = toString c.services.postgresql.finalPackage;
     nginx_paquet = toString c.services.nginx.package;
     nginx_commande = c.systemd.services.nginx.serviceConfig.ExecStart;
+    runuser_paquet = toString (lib.getBin pkgs.util-linux);
+    age_paquet = toString (lib.getBin pkgs.age);
+    tar_paquet = toString (lib.getBin pkgs.gnutar);
     fournisseur_source = if fournisseur == null then null else toString c.services.visionEmbeddings.source;
     unites_essentielles = unites c;
     unite_identite = toString c.systemd.units."mrjam-amorcage-identite.service".unit;

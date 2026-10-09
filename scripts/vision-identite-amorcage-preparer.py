@@ -1,6 +1,8 @@
 """Construire l'amorçage réservé, sans activation, SQL de production ou personne."""
 import argparse
+import base64
 import grp
+import hashlib
 import importlib.util
 import json
 import os
@@ -13,6 +15,9 @@ import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
+REFUS_PRECEDENT = 'f27c4d1e1f0b731da9e16116d584293599ee10d4'
+SOURCE_PRECEDENTE = '8b015d952d55292ebce4fcfe99e7338eebc9bfac3b7b20f615cb02daa13acd55'
+DESTINATAIRE_DIAGNOSTIC = 'age1uwzjmva3gz905h8hdussadzh5a2hpj7zyy37d3eq4fk3pq7q6vtquul8ue'
 
 
 def charger(nom, fichier):
@@ -25,6 +30,7 @@ composants = charger('composants_amorcage', 'vision-mrjam-composants-construire.
 proprietaire = charger('proprietaire_amorcage', 'vision-proprietaire.py')
 construction = composants.construction
 exiger = construction.exiger
+audit = charger('audit_construction_amorcage', 'vision-identite-amorcage-auditer.py')
 
 
 def etape(nom):
@@ -105,6 +111,70 @@ def commande_nginx(resume):
     return args[0],args[2]
 
 
+def outil(resume, paquet, executable):
+    return construction.store(resume[paquet]) + '/bin/' + executable
+
+
+def classer_refus(texte):
+    classes = ('FileNotFoundError', 'PermissionError', 'ConstructionRefusee',
+        'ValueError', 'KeyError', 'TimeoutExpired')
+    return dict(exceptions=sorted(c for c in classes if re.search(r'\b'+c+r'\b', texte)),
+        nginx=audit.classer_nginx(texte), configurations=audit.references_nginx(texte))
+
+
+def auditer_refus(candidat, paquet):
+    d = Path('/root/vision-identite-amorcage-operations') / REFUS_PRECEDENT
+    for p in (d.parent, d, d/'source', d/'source/scripts'):
+        construction.dossier_prive(p)
+    exiger(not (d/'amorcage.json').exists(), 'Ancienne préparation déjà qualifiée')
+    source = audit.lire(d/'source/scripts/vision-identite-amorcage-preparer.py')
+    exiger(hashlib.sha256(source.encode()).hexdigest() == SOURCE_PRECEDENTE,
+        'Source du refus précédent différente')
+    resume = json.loads(audit.lire(d/'evaluation-privee.json'))
+    verifier_resume(resume, candidat, paquet)
+    exiger(str((d/'generation-amorcage').resolve()) == resume['systeme_amorcage'],
+        'Génération précédente non retenue')
+    commande_nginx(resume)
+    diagnostic = audit.lire(d/'diagnostic-prive.log')
+    return dict(revision=REFUS_PRECEDENT, generation_retenue=True,
+        commande_nginx_qualifiee=True,
+        runuser_socle_present=os.access(Path(resume['systeme_actif'])/'sw/bin/runuser', os.X_OK),
+        **classer_refus(diagnostic))
+
+
+def chiffrer_diagnostic(texte, age):
+    # Seulement le stderr du nginx -t fixe, jamais un journal HTTP.
+    if not isinstance(texte, bytes) or not texte or len(texte) > 16384:
+        return dict(disponible=False)
+    try:
+        r = subprocess.run([age, '-a', '-r', DESTINATAIRE_DIAGNOSTIC], input=texte,
+            capture_output=True, timeout=10)
+        if r.returncode or len(r.stdout) > 32768 or not r.stdout.startswith(
+                b'-----BEGIN AGE ENCRYPTED FILE-----\n') or not r.stdout.endswith(
+                b'-----END AGE ENCRYPTED FILE-----\n'):
+            return dict(disponible=False)
+        return dict(disponible=True, age_base64=base64.b64encode(r.stdout).decode('ascii'))
+    except (OSError, subprocess.TimeoutExpired):
+        return dict(disponible=False)
+
+
+def verifier_nginx(resume):
+    nginx, configuration = commande_nginx(resume)
+    runuser = outil(resume, 'runuser_paquet', 'runuser')
+    age = outil(resume, 'age_paquet', 'age')
+    try:
+        r = subprocess.run([runuser, '-u', 'nginx', '--', nginx, '-t', '-c', configuration],
+            capture_output=True, timeout=30)
+    except (OSError, subprocess.TimeoutExpired):
+        raise construction.ConstructionRefusee('Lanceur ou délai du contrôle Nginx refusé') from None
+    if r.returncode:
+        construction.preparation.diagnostic_prive(b'\nTest Nginx prive :\n'+r.stderr)
+        print(json.dumps({'nginx_native': 'refuse',
+            'diagnostic': classer_refus(r.stderr.decode(errors='replace')),
+            'diagnostic_chiffre': chiffrer_diagnostic(r.stderr, age)}), flush=True)
+        raise construction.ConstructionRefusee('Configuration Nginx native refusée')
+
+
 def preparer(revision, controler=False):
     exiger(os.geteuid() == 0 and re.fullmatch('[0-9a-f]{40}', revision),
            'Exécution Actions root identifiée requise')
@@ -124,6 +194,9 @@ def preparer(revision, controler=False):
     build = public('vision-identite-construction.json')
     unix = public('vision-identite-unix-qualification.json')
     import_prive = public('vision-identite-import-qualification.json')
+    etape('audit_refus_precedent')
+    print(json.dumps({'refus_precedent': auditer_refus(candidat, build['paquet'])}), flush=True)
+    construction.verifier_socle(candidat)
     rapport = composants.rapport_prive('vision-mrjam-composants-operations', preuve, 'composants.json')
     preuve_composants(rapport, preuve, candidat, build['paquet'])
     composants.initial.preuve_unix(composants.rapport_prive('vision-identite-unix-operations',
@@ -143,6 +216,8 @@ def preparer(revision, controler=False):
     resume = json.loads(construction.commande('nix-instantiate', '--eval', '--strict', '--json',
         *args, '--attr', 'resume'))
     verifier_resume(resume, candidat, build['paquet'])
+    for paquet in ('runuser_paquet', 'age_paquet', 'tar_paquet'):
+        construction.store(resume[paquet])
     construction.preparation.sauver(d / 'evaluation-privee.json', resume)
     disponible = next(int(l.split()[1]) for l in Path('/proc/meminfo').read_text().splitlines()
         if l.startswith('MemAvailable:'))
@@ -155,9 +230,7 @@ def preparer(revision, controler=False):
         os.access(Path(generation) / 'bin/switch-to-configuration', os.X_OK),
         'Génération construite différente ou incomplète')
     etape('configuration_nginx_native')
-    nginx,configuration_nginx=commande_nginx(resume)
-    construction.commande(Path(resume['systeme_actif'])/'sw/bin/runuser','-u','nginx','--',
-        nginx,'-t','-c',configuration_nginx,timeout=30)
+    verifier_nginx(resume)
     etape('invariants_finaux'); construction.verifier_socle(candidat)
     resultat = dict(version=1, infrastructure=revision, composants=preuve['infrastructure'],
         vision=candidat['vision'], style=candidat['style'], paquet=resume['paquet'],

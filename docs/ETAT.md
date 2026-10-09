@@ -1,5 +1,15 @@
 # État attesté au 9 octobre 2026
 
+La construction réservée [37979390241](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37979390241),
+opérateur f27c4d1e1f0b731da9e16116d584293599ee10d4, a construit sa génération,
+puis refusé le contrôle Nginx natif avant activation. Sa cause n'est pas encore
+établie. Socle, six services, nouvelle SSH et 25 HTTP/TLS restent vérifiés.
+Le [rapport du refus](../operations/vision-amorcage-construction-refus.json)
+ne qualifie aucune nouvelle génération. Le contrôle suivant lit ce seul refus
+privé et utilise util-linux explicitement évalué depuis le Nixpkgs installé.
+En cas d'échec, seul le stderr de cette commande fixe est chiffré vers une clé
+Work éphémère ; aucune erreur privée n'est publiée en clair.
+
 ## Vision — regroupement des opérations
 
 À la demande du propriétaire, les lancements techniques passent par

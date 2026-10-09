@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "infrastructure": "f27c4d1e1f0b731da9e16116d584293599ee10d4",
+  "run": "37979390241",
+  "job": "113985787083",
+  "generation_construite": true,
+  "configuration_nginx_native": false,
+  "etape_refus": "configuration_nginx_native",
+  "cause_connue": false,
+  "amorcage_qualifie": false,
+  "socle_inchange": true,
+  "services_actifs": 6,
+  "sondes_http_tls": 25,
+  "nouvelle_connexion_ssh": true,
+  "activation": false,
+  "inscriptions": false,
+  "identite_humaine": false
+}
