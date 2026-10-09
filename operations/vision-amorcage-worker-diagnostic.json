@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "infrastructure": "49ac1e7d9b86e454056d12abb3be1b1fd219411e",
+  "signal": 37961565873,
+  "execution": 37961581194,
+  "job": 113925573398,
+  "revision_examinee": "88dc20580cbfc3e790eb19f366794b8b94f87e9d",
+  "socle_conserve": true,
+  "retour_termine": true,
+  "generation_enregistree": false,
+  "worker_arrete": true,
+  "worker_etapes": [],
+  "cluster_prive_present": false,
+  "categories": ["essai_timeout"],
+  "identite_humaine": false,
+  "mode_vision_oidc": false,
+  "inscriptions": false,
+  "services_actifs": 6,
+  "nouvelle_ssh": true,
+  "http_tls_avant": 25,
+  "http_tls_apres": 25
+}

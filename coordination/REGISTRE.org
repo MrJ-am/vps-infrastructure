@@ -4272,12 +4272,12 @@ La comparaison des répertoires reste strictement qualifiée ; ne l'élargir ni 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 01eb202b7a2eaa0c70b9beafd7e17c4ae0d7ce7a769dc628765fd85ede59a0ba
-:LU_LE: 2026-10-09T16:36:06+00:00
+:LU_LE: 2026-10-09T16:55:08+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Annonce intégrée 88d1238b444546602468d6e5771cde11d6722917 ; diagnostic retourné en lecture seule et tests de refus/absence de fuite préparés. CI et constat VPS restent à terminer.
+:PREUVE: PR51/270tests/CI37960616874/37960620505 intégrées exactement49ac1e7d9b86e454056d12abb3be1b1fd219411e. Diagnostic réel37961581194 : retour terminé, worker arrêté, aucune étape ni cluster. Socle/six services/nouvelle SSH et25sondes passent. Conflit de dispatch identifié localement, garde de preuve privée et correctif annoncés20261009-vision-4c368b9e86db.
 :END:
 
 ** TODO vps
@@ -4337,12 +4337,12 @@ Enrôlement distinct toujours non activé. Sa qualification synthétique vérifi
 :PREUVE: -
 :END:
 
-** TODO vision
+** LU vision
 :PROPERTIES:
-:LU_SHA256: -
-:LU_LE: -
-:CONTEXTE: -
-:PREUVE: -
+:LU_SHA256: 3e4f4e630c7e1b2de548dae60a8ff798abbaa41ce41696d535836587b0e425e0
+:LU_LE: 2026-10-09T16:55:08+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Annonce intégrée b63cc4f2d36ddf4a3f880eaa724b2007e6cc5376. Test de masquage échoue avant le correctif, passe après ; contrôle de trace/retour/cluster/étapes fermé qualifié. CI complète et preuve/reprise VPS restent à constater.
 :END:
 
 ** TODO vps

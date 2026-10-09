@@ -37,6 +37,16 @@ Aucun enregistrement, personne, mode commun ou inscription. Le diagnostic
 en lecture seule examine désormais ce worker arrêté, pas une nouvelle reprise.
 [Rapport de reprise](../operations/vision-amorcage-reprise.json).
 
+Le [diagnostic37961581194](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37961581194),
+opérateur49ac1e7d9b86e454056d12abb3be1b1fd219411e, job113925573398,
+réussit à16:47:59 : retour terminé, worker arrêté, aucune étape du worker
+et aucun cluster réservé présent. Six services/nouvelle SSH et25sondes passent.
+L'examen local identifie `self.worker` masquant la méthode `worker` ; le test
+échoue sur l'ancien code et passe après renommage de l'attribut. La prochaine
+reprise exige d'abord cette trace précise dans le journal privé, puis conserve
+la même génération et tous les contrôles/retour. Toute autre cause bloque.
+[Rapport du worker](../operations/vision-amorcage-worker-diagnostic.json).
+
 ## Vision — génération d'amorçage construite sans activation
 
 [Actions37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),

@@ -1,4 +1,5 @@
 """Diagnostic du seul essai identifié ; jamais d'extrait privé dans la sortie."""
+import argparse
 import importlib.util
 import json
 import os
@@ -33,6 +34,7 @@ MOTIFS = {
     'commande_timeout': r'(?:RuntimeError|ConstructionRefusee): Délai de construction ou de contrôle dépassé',
     'commande_refusee': r'(?:RuntimeError|ConstructionRefusee): Commande de construction ou de contrôle refusée',
     'essai_timeout': r'ValueError: Délai d’essai dépassé',
+    'action_masquee': r"getattr\(essai, a\.action\)\(\)[\s\S]{0,1024}TypeError: 'str' object is not callable",
 }
 ETAPES = frozenset(('demarrage', 'essai_generation', 'controles_locaux', 'copie_identite_chiffree'))
 
@@ -72,6 +74,17 @@ def classer_worker(texte):
     return dict(etapes=[e for e in etapes if e in ETAPES], **classer(texte, ''))
 
 
+def verifier_reprise(rapport):
+    if (not isinstance(rapport,dict) or rapport.get('revision') != REVISION or
+        not all(rapport.get(k) is True for k in ('socle_conserve','retour_termine')) or
+        not all(rapport.get(k) is False for k in ('generation_enregistree','activation','inscriptions','cluster_prive_present')) or
+        set(rapport.get('categories',[])) != {'action_masquee','essai_timeout'} or
+        rapport.get('worker',{}).get('etat') not in ('inactive','failed') or
+        rapport.get('controle_worker',{}).get('etapes') != [] or
+        rapport.get('controle_worker',{}).get('categories') != []):
+        raise ValueError('Cause ou état différents : reprise du worker interdite')
+
+
 def etat_worker(outils):
     unite = 'vision-amorcage-essai-' + REVISION[:12] + '.service'
     r = subprocess.run([str(outils/'systemctl'),'show',unite,'--property=ActiveState',
@@ -85,7 +98,7 @@ def etat_worker(outils):
     return dict(etat=valeurs['ActiveState'], code=int(valeurs['ExecMainStatus'])), journal.stdout.decode(errors='replace')
 
 
-def main():
+def main(reprise=False):
     if os.geteuid() != 0: raise ValueError('Audit root Actions requis')
     for path in (DOSSIER.parent, DOSSIER):
         s = path.lstat()
@@ -103,15 +116,19 @@ def main():
     worker = lire(DOSSIER/'worker-prive.log') if (DOSSIER/'worker-prive.log').exists() else ''
     etat,journal = etat_worker(Path(candidat['audit']['systeme'])/'sw/bin')
     construction.verifier_socle(candidat)
-    print(json.dumps(dict(audit_amorcage=2, revision=REVISION, socle_conserve=True,
+    rapport = dict(audit_amorcage=2, revision=REVISION, socle_conserve=True,
         retour_termine=True, generation_enregistree=False, activation=False, inscriptions=False,
         worker=etat, controle_worker=classer_worker(worker+'\n'+journal),
         cluster_prive_present=Path('/var/lib/mrjam-amorcage-postgresql').exists(),
-        **classer(diagnostic,dry)), ensure_ascii=False))
+        **classer(diagnostic,dry))
+    if reprise:
+        verifier_reprise(rapport); rapport['reprise_worker_autorisee']=True
+    print(json.dumps(rapport, ensure_ascii=False))
 
 
 if __name__ == '__main__':
-    try: main()
+    p=argparse.ArgumentParser();p.add_argument('--reprise-worker',action='store_true');a=p.parse_args()
+    try: main(a.reprise_worker)
     except Exception:
         print(json.dumps(dict(audit_amorcage=1, diagnostic_refuse=True, activation=False)))
         raise SystemExit(1)

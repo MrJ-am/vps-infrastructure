@@ -77,6 +77,15 @@ Le diagnostic du même point d'entrée exige maintenant une tentative retournée
 et un worker arrêté ; il classe aussi le journal privé et les états systemd.
 Aucune boucle de relance ou suppression de cluster n'est autorisée.
 
+Le diagnostic `37961581194` confirme un worker arrêté sans étape atteinte ni
+cluster privé créé, socle et25sites conservés. L'attribut `self.worker` masque
+la méthode à appeler : le contrôle de non-masquage échoue sur l'ancien code.
+L'attribut devient `unite_essai`. Avant le prochain essai, le diagnostic doit
+retrouver le TypeError à cet appel précis dans la seule tentative88dc retournée,
+sans autre cause connue, étape engagée ou cluster présent. Il refuse toute
+divergence ; la reprise qualifiée utilise un nouveau dossier de tentative,
+avec la même génération et le retour autonome inchangé.
+
 Le résumé Actions explique l'avancement et la suite ; les rapports ne
 contiennent que références et booléens. Un enregistrement déjà terminé pour
 le même opérateur est recontrôlé, sans nouvel essai ni rotation de secret.
