@@ -1,5 +1,28 @@
 # État attesté au 10 octobre 2026
 
+La préparation complète [38045641408](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045641408)
+réussit sur464c81f/PR79, job114194522693, après CI exacte38045367821
+(365tests Python et quatre jobs réussis). La génération k4 et les six PID
+restent identiques, la référence réparée est validée sans nouveau remplacement.
+Les deux copies réelles Vision/IdP sont restaurées dans un cluster privé PG17
+UTF-8 sans TCP. Sujet et credentials d'identité, données historiques et ACL
+sont conservés ; migrations019–025, association explicite du propriétaire et
+administrateur applicatif sans privilège de contenu passent. Le retour ACL
+est rejoué deux fois puis le cluster est arrêté/retiré. Les dix unités sont
+construites avec sources publiques figées dans le store, modules actualisés
+et invariants hors Vision/identité préservés. Le contrôle final du socle,
+nouvelle SSH/six services et25sites réussit.
+[Rapport réel](../operations/vision-bascule-preparation-reelle.json).
+
+Cette qualification ne migre aucune donnée de production et n'active ni OIDC
+Vision ni administrateur applicatif en production. La génération complète
+reste impossible avec le garde fermé et les inscriptions restent fermées.
+La possession de la clé personnelle et la copie extérieure récupérable sur le
+PC Linux ne sont toujours pas prouvées. Elles conditionnent la bascule ;
+l'essai futur nécessitera son retour SQL/NixOS autonome et sa publication
+d'interface figée, sans réutiliser l'ancien audit périmé. Les préconditions
+juridiques d'une admission tierce restent distinctes.
+
 Le diagnostic de construction [38045107089](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045107089),
 2a102a6/PR78, job114192973693, confirme les sources exactes, l'évaluation passée,
 la garde fermée et l'absence de cluster. Le refus concerne `vision-bootstrap` :
