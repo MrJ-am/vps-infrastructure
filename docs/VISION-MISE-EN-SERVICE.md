@@ -49,7 +49,7 @@ du timer, retour autonome armé, essai indépendant de SSH, contrôles privés,
 Les qualifications de construction précédentes ne sont pas refaites.
 
 La phase courante vient uniquement de `operations/vision-mise-en-service.json`
-sur le main qualifié : valeurs fermées `amorcage`, `diagnostic`, `construction`, `proprietaire` ou `proprietaire-observer`, sans paramètre libre.
+sur le main qualifié : valeurs fermées `amorcage`, `diagnostic`, `construction`, `proprietaire` `proprietaire-observer` ou `vision-preparer`, sans paramètre libre.
 Le diagnostic lit seulement les journaux privés de la tentative identifiée,
 classe les refus et revérifie le socle. Il ne modifie ni génération ni base.
 Les phases restent des jobs explicites du même point d'entrée.
@@ -293,3 +293,51 @@ vérification du sujet exact et absence d’admin, sans seconde création ni env
 Huit tests de refus/attente,343tests locaux et évaluations Nix réussis. La
 preuve de session native/PG17 reste celle du lecteur inchangé de PR70 ;
 la vérification du compte réel reste à exécuter après CI exacte.
+
+
+## Préparation de la bascule depuis le compte initial vérifié
+
+La phase `vision-preparer` ne réutilise pas les gardes de l'ancien audity1.
+Elle appelle uniquement l'observateur déjà qualifié0fbce8d, depuis sa source
+root protégée et dont le SHA256 exact est contrôlé, pour constater le soclek4
+et le compte actuel. Le reçu privé de connexion doit correspondre au sujet
+durable et à la fenêtre de l'observation réelle38002451652. Ce reçu atteste
+la possession à l'amorçage ; aucune fraîcheur actuelle n'en est déduite.
+
+Le nouveau relevé Vision, les ACL et les empreintes utilisent une même
+transaction REPEATABLE READ READ ONLY et un snapshot exporté pour le dump.
+Le propriétaire historique doit encore être unique et correspondre à l'unique
+compte htpasswd actif, dont aucun hash n'est conservé. Le cluster privé IdP
+possède son propre snapshot cohérent. Les deux dumps restent sur le VPS :
+chiffrés dans le dossier opérateur et temporairement en clair uniquement dans
+le staging privé supprimé après arrêt. Aucun dump/identifiant/email/contenu
+n'est publié dans Actions ou Git ; les diagnostics sont root0600 bornés.
+
+Le staging UTF-8/PG17 sans TCP exige un socket et un data_directory distincts
+de la production. Il restaure les deux bases et compare toutes les empreintes
+de lignes, y compris celles de l'identité. Les migrations019–025 et roles.sql
+sont appliqués uniquement dans cette copie. L'association explicite(iss,sub)
+à l'ancien identifiant et le premier admin applicatif n'existent que dans le
+staging ; aucun rapprochement par email et aucun rôle humain d'admin IdP.
+Les privilèges de contenu et rôles SQL privilégiés sont refusés. Le retour
+ACL/owners/RLS est rejoué deux fois et les données historiques restent identiques.
+
+Les composants sont construits sur l'entrée actuellement active et avec son
+Nixpkgs, les sources Vision/style épinglées, le fournisseur immuable conservé,
+un job/deux cœurs et des seuils mémoire/disque. Le routage hors Vision/identité,
+le paquet/dataDir PostgreSQL et le pare-feu sont comparés. Les protections de
+l'hôte d'identité déjà actives sont conservées, dont le refus d'enregistrement
+public de clients et les en-têtes fixes. Le garde preconditionsValidees demeure
+false : la génération complète n'est pas constructible et n'est jamais activée.
+Ce n'est pas une attestation de possession de la clé privée personnelle ou de
+copie extérieure ; celles-ci restent à vérifier avant la bascule. L'essai
+nécessitera une recette distincte avec retour SQL/NixOS autonome et validation
+juridique avant admission tierce. Les dossiers chiffrés de préparation doivent
+être inclus dans l'inventaire de conservation, sans prétendre que le timer des
+sauvegardes ordinaires purge automatiquement ces dossiers opérateur.
+
+[Qualification locale](../operations/vision-bascule-qualification.json) :349tests,
+six refus ciblés, association et admin sans contenu sur PG17 jetable, rejet
+d'un second rattachement et d'un retour avec tiers, retour rejoué deux fois,
+évaluation Nix avec le garde fermé. L'exécution réelle après CI exacte reste
+nécessaire pour attester restauration et construction sur le VPS.

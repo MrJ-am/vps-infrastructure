@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "donnees_synthetiques": true,
+  "tests_locaux": 349,
+  "tests_preuve_et_refus": 6,
+  "association_expresse": true,
+  "administrateur_applicatif_unique": true,
+  "admin_sans_contenu": true,
+  "rejeu_association_refuse": true,
+  "retour_avec_tiers_refuse": true,
+  "retour_rejoue_deux_fois": true,
+  "donnees_conservees": true,
+  "garde_activation_verifie_nix": true,
+  "generation_activable": false,
+  "production_verifiee": false
+}
