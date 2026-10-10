@@ -1,5 +1,23 @@
 # État attesté au 10 octobre 2026
 
+La réparation réelle [38041573468](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38041573468),
+a873080/PR76, job114182734569, vérifie l'empreinte de l'original, reproduit
+exactement la génération k4 avant/après et répare atomiquement sa référence
+persistante. Les six PID restent identiques, aucune activation ni donnée de
+production modifiée. Les copies réelles Vision/IdP sont restaurées dans un
+cluster indépendant ; migrations, association explicite du propriétaire,
+administrateur applicatif sans accès aux contenus, conservation des données
+historiques et deux retours ACL passent. Le cluster est arrêté et retiré.
+La préparation refuse ensuite l'évaluation `composants_garde_ferme`, catégorie
+`nix_option` ; les nouveaux services ne sont pas construits. Nouvelle SSH,
+six services et25sites finaux réussis.
+[Projection partielle](../operations/vision-bascule-reparation-reelle.json).
+La préparation charge désormais explicitement les modules récents en
+remplaçant leurs anciennes déclarations, tout en conservant les registres
+effectifs du VPS. Un test reproduit l'absence des anciennes options d'identité.
+La garde d'activation demeure fermée ; clé personnelle et copie extérieure
+toujours non vérifiées.
+
 Le diagnostic affiné [38040462649](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38040462649),
 4cb942c/PR75, job114179522422, constate la cause : l'entrée privée importe
 `/etc/nixos/configuration.nix`, qui est devenu son propre lien. Récursion Nix

@@ -5768,10 +5768,11 @@ Préparer la génération prospective depuis l'entrée active avec sources/paque
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: 60548f0524e5c5f501da38b737bf77148d4fd00d7514db90d1e9ca4ec54256aa
-:LU_LE: 2026-10-10T08:07:49+00:00
+:LU_LE: 2026-10-10T10:11:42+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Identité initiale réellement vérifiée ; préparation distincte sur socle enregistré, sans DDL de production. Clé personnelle/copie extérieure toujours non établies.
+:PREUVE: a873080/PR76/CI38041296103 ; Actions38041573468/job114182734569 ; operations/vision-bascule-reparation-reelle.json
 :END:
+Restaurations réelles et association/admin/retour ACL isolés passés, cluster arrêté/retiré. Évaluation composants refusée nix_option ; préparation inachevée. Charger les modules récents sur le socle ancien sans lever la garde. Aucun DDL production/activation/inscription ; clé/copie extérieure non vérifiées.
 
 ** TODO vps
 :PROPERTIES:
@@ -5895,11 +5896,11 @@ Ensuite seulement, reprendre les snapshots cohérents, restaurations et associat
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: d89cab249d7670be26a2b33666bec77b9b3bde69cb69911bf46184bb4a38a0c8
-:LU_LE: 2026-10-10T09:13:58+00:00
+:LU_LE: 2026-10-10T10:11:42+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: -
+:PREUVE: a873080/PR76/CI38041296103 ; Actions38041573468/job114182734569 ; operations/vision-bascule-reparation-reelle.json
 :END:
-Lu : qualifier la réparation précise de référence avec original signé et génération k4 identique, puis reprendre la préparation isolée sans activation ni DDL de production.
+Référence réparée réellement, original vérifié, génération k4 reproduite avant/après et six PID inchangés. Copies/migrations/association/retours ACL isolés passent. Construction encore refusée nix_option ; reprise avec modules récents explicites et registres effectifs conservés, garde fermée.
 
 ** TODO vps
 :PROPERTIES:
