@@ -6153,14 +6153,14 @@ Les autres projets prennent connaissance sans action sur leur code/données ; au
 :PREUVE: -
 :END:
 
-** BLOQUE vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 54f92173f74b88527bc5e02fa8602355b674108adb21b09fd596c78d2b7b902c
-:LU_LE: 2026-10-10T14:36:39+00:00
+:LU_LE: 2026-10-10T16:08:45+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 1760809/PR82, CI38059310193/377tests ; Actions38059719721/job114235349085 ; operations/vision-essai-preparation-refus.json
+:PREUVE: Actions38065842787/job114253227210, operations/vision-essai-preparation-reelle.json
 :END:
-Restaurations/association/admin/ACL isolés puis génération complète/Nginx natif réussis. Garde de simulation refusé ; unité réelle à identifier avant correction. Ancien socle et nouvelle SSH/six services/25sites conservés, aucune production/activation. Entrée persistante et timer de test non atteints ; retour non armé.
+Nouvelle préparation complète réussie après correction de portée, sans production/activation. Entrée persistante et timer de test atteints ; retour effectif distinct encore non qualifié ni armé.
 
 ** TODO vps
 :PROPERTIES:
@@ -6217,14 +6217,14 @@ Aucun nouvel essai, construction, SQL ou configuration de production ; aucune re
 :PREUVE: -
 :END:
 
-** BLOQUE vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 9c09d96231723582f4bcc81d9d312e391a4508b3f80c4ea3668b74585fa81cb3
-:LU_LE: 2026-10-10T14:57:57+00:00
+:LU_LE: 2026-10-10T16:08:45+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38060939425
+:PREUVE: Actions38064313476,38065842787 ; operations/vision-essai-unites-generees.json
 :END:
-Lecteur réservé refusé avant projection complète ; cause précise inconnue. Nouvelle SSH/six services/25sites passent, aucune production ou activation. Affinage fermé sous nouvel opérateur, garde inchangé.
+Cause complète identifiée et périmètre vérifié : bus et tmpfiles. Préparation distincte réussie ; ce DONE concerne le diagnostic, aucune activation effective.
 
 ** TODO vps
 :PROPERTIES:
@@ -6347,14 +6347,14 @@ Même phase fermée vision-essai-diagnostic, nouvel opérateur après CI exacte.
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: d4073c5029c7b9aabf9e68f0275294039943df05c3300bd319576b50acc92d4a
-:LU_LE: 2026-10-10T15:42:33+00:00
+:LU_LE: 2026-10-10T16:08:45+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38064313476
+:PREUVE: Actions38064313476 et38065842787, operations/vision-essai-preparation-reelle.json
 :END:
-Lecture réelle complète : dbus-broker reload identifié par source publique, zéro inconnu, seul10-keycloak.conf ajouté, règles existantes hors périmètre identiques. Le lien reste non qualifié par comparaison littérale ; quotes natives à décoder et revérifier dans la préparation distincte. Six services/SSH/25sites conservés, aucune activation.
+Dernière unité identifiée : reload du bus partagé, désormais évité par conservation de ses paquets/politiques. Lien natif à champs quotés décodé sans shell puis qualifié réellement ; aucune action D-Bus autorisée, zéro inconnu.
 
 ** TODO vps
 :PROPERTIES:
@@ -6413,14 +6413,80 @@ Même préconditions de récupération et nouvelles restaurations réelles isol�
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 59665c085d66a20f807c0f61e28d9e503731fffcf1eabb1207df9366e26dcee4
-:LU_LE: 2026-10-10T15:48:48+00:00
+:LU_LE: 2026-10-10T16:08:45+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: scripts/vision-essai-generation.nix
+:PREUVE: Actions38065842787/job114253227210, opérateur a2509f53ea44e91efb83f8b1ff936e4ab5e78e36, operations/vision-essai-preparation-reelle.json
 :END:
-389 tests et deux socles sur Nixpkgs VPS passent : bus conservé, profil de répertoires strict, quotes natives et cibles étrangères vérifiées. Préparation réelle après CI exacte encore attendue ; aucun retour effectif armé ni activation.
+Préparation complète réelle réussie : bus conservé, lien natif et seules règles tmpfiles qualifiés, restaurations/migrations/association/ACL isolés, Nginx natif et simulation, entrée identique et timer répété. Nouvelle SSH/six services/25sites passent. Retour seulement syntaxique, non armé ; aucune activation/SQL production/inscription.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Qualifier le retour courant de Vision et ses interruptions avant activation
+:PROPERTIES:
+:ID: 20261010-vision-9599b5ad08f8
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T16:19:27+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La préparation complète a2509f5/PR87 réussit réellement : CI exacte38065328757 (389tests/quatre jobs), signal38065835737, Actions38065842787/job114253227210. Restaurations/migrations/association/admin/ACL isolés, génération complète, Nginx natif, simulation, entrée identique et timer répété passent. Bus conservé et seules différences tmpfiles qualifiées. Nouvelle SSH/six services/25sites finaux passent ; aucune activation ou SQL production. Reçu operations/vision-essai-preparation-reelle.json. Copie extérieure téléphone confirmée, clés/copies anciennes conservées.
+
+Renforcer le retour avant l'essai distinct : marqueurs atomiques synchronisés, arrêt vérifié des clients et services/timers nouveaux, conditions natives fermées pendant le transfert plutôt que masques qui font échouer switch-to-configuration. Copie d'identité courante après arrêt des deux Keycloak, pg_restore inverse transactionnel et comparaison ; jamais ancien dump Vision. Une inversion achevée n'est pas rejouée, pour conserver les changements ultérieurs de l'ancien cluster. Refus ACL/identité conserve Vision/auth/IdP fermés et rétablit Nginx pour les autres sites. Copies privées conservées sur refus, supprimées seulement après fin durable. Verrou finalisation et verrou de publication applicative.
+
+Exécuter réellement ce shell en fixture isolée root avec SIGKILL pendant copie/inversion/SQL puis reprise/rejeu et refus fermés. PostgreSQL17 natif teste copie courante, sujet/empreintes/OTP, échec après chargement des données annulé atomiquement, deux retours. Nouvelle phase fermée vision-retour-qualifier après CI exacte : relire le reçu privé de préparation, observer compte/socle avant/après, trois démarrages d'une seule unité systemd jetable à condition fausse, aucune commande applicative. Conserver le script syntaxique en root privé, nouvelle SSH/six services/25sites finaux. Pas de SQL production, activation, SMTP, rotation active, invitation ni lancement utilisateur.
+
+Cette phase ne qualifie ni n'arme un retour effectif de production ou après redémarrage de machine. Le dispositif de reprise au démarrage et l'activation/finalisation restent distincts. Autres projets prennent connaissance sans action sur leur code/données. Vision consignera les preuves réelles et limites. Admission tierce fermée jusqu'aux préconditions juridiques distinctes ; copie mensuelle Linux/disque et conservation indépendante de clé ultérieures. Détails : docs/VISION-MISE-EN-SERVICE.md, scripts/vision-essai-retour.sh et scripts/vision-retour-qualifier.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 1cfdc1bde87ebc30b742f18f0d3a9690e911c5362c6e952ff886bac360cbc86e
+:LU_LE: 2026-10-10T16:21:14+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 394tests root hors réseau et PostgreSQL17 natif local ; qualification VPS encore attendue
+:END:
+Shell réel exécuté : interruptions SIGKILL et reprise, refus fermés, copie conservée et inversion achevée jamais écrasée. PostgreSQL17 annule le retour partiel et conserve identité courante/sujet/credentials. Les conditions systemd VPS restent à vérifier après CI exacte. Aucun retour de production/boot qualifié ou armé, aucune activation.
 
 ** TODO vps
 :PROPERTIES:
