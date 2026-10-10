@@ -5957,14 +5957,14 @@ Après la preuve réelle, corriger seulement la recette concernée et qualifier 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 043f4ecfc785ea3f67efd9d196cf2ea559fa9aefa47547765b648db9ce20ab23
-:LU_LE: 2026-10-10T10:25:17+00:00
+:LU_LE: 2026-10-10T10:32:55+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 0856c8a/PR77/CI38044106600 ; Actions38044400745/job114190916262 ; operations/vision-bascule-construction-refus.json
+:PREUVE: 2a102a6/PR78/CI38044883973 ; Actions38045107089/job114192973693 ; operations/vision-bascule-construction-diagnostic.json
 :END:
-Refus constructeur réel après évaluation réussie et copies isolées retirées ; lecteur borné et projection fermée à qualifier avant exécution.
+Cause réelle : archive non reconnue, source Vision hors store ; composants connus vision-bootstrap et vision-bascule-composants. Garde fermée, cluster absent, six services/SSH/25sites finaux conservés. La correction fige les sources publiques vérifiées avant une nouvelle préparation, sans DDL ni activation.
 
 ** TODO vps
 :PROPERTIES:

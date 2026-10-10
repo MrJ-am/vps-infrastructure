@@ -55,6 +55,9 @@ def commande(*args, input=None, env=None, timeout=180, sortie=None):
         try:
             lecteur = charger('categories_commande_bascule',ROOT/'scripts/vision-bascule-diagnostiquer.py')
             print(json.dumps(dict(categories_commande=lecteur.classer(r.stderr.decode(errors='replace'),{})['categories'])),flush=True)
+            if str(args[0]) == 'nix-build':
+                construction = charger('projection_construction_bascule',ROOT/'scripts/vision-bascule-construction-diagnostiquer.py')
+                print(json.dumps(dict(construction_refusee=construction.classer(r.stderr.decode(errors='replace')))),flush=True)
         except Exception: pass
         diagnostic(r.stderr); exiger(False)
     return r.stdout.decode() if r.stdout is not None else ''
@@ -235,6 +238,7 @@ def preparer(revision):
         '--argstr','source',source,'--argstr','fournisseur',candidat['audit']['fournisseur'],'-I','nixpkgs='+candidat['audit']['nixpkgs']]
     compos = json.loads(commande('nix-instantiate','--eval','--strict','--json',*args,'--attr','resume'))
     exiger(compos['systeme_actif'] == activation['systeme_amorcage'] and compos['postgres_paquet'] == resume['postgres_paquet'] and
+        compos['source_vision_store'] is True and
         compos['fournisseur_source'] == candidat['audit']['fournisseur'] and compos['garde_activation'] is True and
         all(compos[k] is False for k in ('preconditions_validees','generation_constructible','inscriptions','activation')))
     sauver('evaluation-privee.json',compos)
@@ -244,7 +248,7 @@ def preparer(revision):
     observateur.main(association.OBSERVATION, observer=True, activation_seule=True)
     rapport = dict(version=1,infrastructure=revision,observation=association.OBSERVATION,vision=candidat['vision'],style=candidat['style'],
         restauration_vision_reelle=True,restauration_identite_reelle=True,sujet_identite_conserve=True,credentials_identite_conserves=True,
-        migrations_isolees_sans_perte=True,association_et_admin_isoles=True,retour_acl_rejoue=True,composants_construits=True,
+        migrations_isolees_sans_perte=True,association_et_admin_isoles=True,retour_acl_rejoue=True,composants_construits=True,sources_vision_figees_store=True,
         garde_activation=True,cle_personnelle_verifiee=False,copie_exterieure_verifiee=False,
         source_configuration_reparee=True,production_modifiee=REPARATION.SOURCE_MODIFIEE,
         donnees_production_modifiees=False,generation_active_modifiee=False,activation=False,inscriptions=False)

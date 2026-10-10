@@ -1,5 +1,16 @@
 # État attesté au 10 octobre 2026
 
+Le diagnostic de construction [38045107089](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045107089),
+2a102a6/PR78, job114192973693, confirme les sources exactes, l'évaluation passée,
+la garde fermée et l'absence de cluster. Le refus concerne `vision-bootstrap` :
+archive non reconnue et source restée hors store dans le dossier root privé.
+Le relevé local de la dérivation reproduit ce chemin absolu. Nouvelle SSH,
+six services/25sites finaux réussis ; aucune production modifiée.
+[Projection](../operations/vision-bascule-construction-diagnostic.json).
+La recette copie désormais les seules sources publiques vérifiées dans le
+store Nix ; la préparation exigera cette propriété avant la construction.
+Les futures erreurs de construction sont aussi classées immédiatement.
+
 La reprise [38044400745](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38044400745),
 0856c8a/PR77, job114190916262, conserve la référence réparée, la génération k4
 et les six PID. Restaurations, association/admin et deux retours ACL isolés

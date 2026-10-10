@@ -11,5 +11,6 @@ assert !resultat.resume.generation_constructible;
 assert !resultat.resume.inscriptions;
 assert !resultat.resume.activation;
 assert resultat.resume.hors_vision_identite_conserve;
+assert resultat.resume.source_vision_store;
 assert resultat.lot.drvPath != "";
 { gardeFerme = true; composantsSansActivation = true; routageExterneConserve = true; }

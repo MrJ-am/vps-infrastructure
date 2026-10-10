@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "infrastructure": "2a102a6452b18abac2923d2861243d6a29a40c0a",
+  "refus": "0856c8a0e7466f7aa2dc6d6f44e432306542cdcf",
+  "sources_exactes": true,
+  "cadres": [
+    {
+      "fichier": "vision-bascule-preparer.py",
+      "ligne": 258,
+      "fonction": "<module>"
+    },
+    {
+      "fichier": "vision-bascule-preparer.py",
+      "ligne": 241,
+      "fonction": "preparer"
+    },
+    {
+      "fichier": "vision-bascule-preparer.py",
+      "ligne": 59,
+      "fonction": "commande"
+    },
+    {
+      "fichier": "vision-bascule-preparer.py",
+      "ligne": 31,
+      "fonction": "exiger"
+    }
+  ],
+  "exceptions": [
+    "ValueError"
+  ],
+  "categories_nix": [],
+  "construction": {
+    "categories": [
+      "archive_non_reconnue",
+      "copie_source_hors_store"
+    ],
+    "composants": [
+      "vision-bascule-composants",
+      "vision-bootstrap"
+    ]
+  },
+  "evaluation_composants_reussie": true,
+  "garde_activation": true,
+  "cluster_isole_present": false,
+  "preparation_achevee": false,
+  "production_modifiee": false,
+  "activation": false,
+  "inscriptions": false,
+  "execution": 38045107089,
+  "job": 114192973693,
+  "services_finaux": 6,
+  "sites_finaux": 25
+}
