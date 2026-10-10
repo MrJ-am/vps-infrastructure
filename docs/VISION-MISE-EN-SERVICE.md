@@ -667,3 +667,21 @@ Reçu : `operations/vision-reprise-credentials-refus.json`. La phase de
 diagnostic lit seulement les catégories fermées de ce journal privé borné et
 les permissions des quatre fichiers connus. Elle ne lit pas les secrets,
 ne lance pas de service et ne modifie ni SQL ni permissions.
+
+Le diagnostic57ecc60/PR93 réussit réellement après un premier timeout réseau
+avant SSH et la reprise du seul job : Actions38077543270/job114287854614,
+tentative2, CI38077186889 (413tests/quatre jobs). Refus de lecteur privé au
+SMTP, sources root0600 régulières/uniques, aucun autre refus projeté ;
+socle/SQL25/association/nouvelleSSH/six services/25sites avant/après passent.
+Reçu : `operations/vision-credentials-diagnostic-reel.json`.
+
+systemd260 utilise une ACL pour accorder la lecture au seul UID du service.
+Le masque ACL apparaît comme0440 dans st_mode, bien que le groupe propriétaire
+n'ait aucun accès. Le lecteur vérifie maintenant l'ACL Linux exacte : owner:r,
+user UIDcourant:r, group:aucun, mask:r, other:aucun ; fichier régulier,
+propriétaire root/courant, unique, borné, sans lien. Sans ACL, les droits privés
+restent exigés. Aucun chmod/rotation des secrets. JSON SMTP/config et secrets
+client/hook utilisent ce même contrôle. Des lectures natives sous deux UID
+qualifient accès/refus ; ACL supplémentaire ou accès de groupe restent refusés.
+Le même programme sous DynamicUser/LoadCredential doit réussir sur le VPS
+avant armement et reprise. Cela ne prouve pas encore une activation.

@@ -497,10 +497,7 @@ assert os.geteuid()!=0
 d=pathlib.Path(os.environ['CREDENTIALS_DIRECTORY'])
 m.verifier_smtp(m.lire_prive(d/'smtp'))
 c=m.lire_prive(d/'config');m.adresse(c['adresse_exploitant']);assert re.fullmatch('age1[0-9a-z]{58}',c['recipient_age'])
-for n in ('client','hook'):
- p=d/n;f=os.open(p,os.O_RDONLY|os.O_NOFOLLOW);i=os.fstat(f)
- assert stat.S_ISREG(i.st_mode) and not i.st_mode&0o077 and i.st_uid in (0,os.geteuid())
- with os.fdopen(f) as r:assert re.fullmatch('[A-Za-z0-9_-]{43}',r.read(128).strip())
+for n in ('client','hook'):m.lire_secret_prive(d/n)
 print(json.dumps(dict(credentials_natifs_prives_valides=True,smtp_contacte=False)))
 """
         self.commande(self.outils/'systemd-run','--unit=vision-credentials-'+self.revision[:12],
