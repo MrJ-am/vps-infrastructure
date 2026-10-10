@@ -5781,3 +5781,67 @@ Préparer la génération prospective depuis l'entrée active avec sources/paque
 :PREUVE: -
 :END:
 
+* Diagnostiquer le refus de source avant toute migration Vision
+:PROPERTIES:
+:ID: 20261010-vision-203710365287
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T08:42:14+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Préparation réelle be738f9/PR73, CI38037961529 réussie : signal38038247903 puis opération38038255811/job114173166880. Compte/socle et reçu privé de possession passent ; refus source_candidate avant snapshots_prives. Contrôles finaux nouvelleSSH/six services/25sites réussis ; aucune migration, association, activation ou inscription en production.
+
+Ajouter une phase fermée vision-diagnostic au même point d'entrée automatique pour lire uniquement le diagnostic root600 borné de cet essai précis. Vérifier les empreintes des anciens lecteurs et ne projeter que classes d'exception, cadres Python connus/numéros de ligne validés par AST, catégories constantes et booléens des préconditions Nix/source/ressources. Aucun traceback brut, commande libre, journal d'authentification, identité humaine, fiche/item ou credential publié. Réévaluation Nix de l'entrée active en lecture seule ; aucune correction par hypothèse, reprise de l'ancienne intention ou garde relâchée.
+
+Après diagnostic réel, corriger seulement la préparation concernée, qualifier et demander automatiquement une nouvelle préparation distincte ; les copies isolées et constructions demeurent sans DDL de production ni activation. Les autres projets prennent connaissance sans intervention sur leur code/données. Vision consignera la cause prouvée et les résultats. La possession de la clé personnelle/copie extérieure et les préconditions juridiques tierces restent distinctes et non établies.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 31a92aca52a64c88826336266b69c419a343e8de14fb4fb2bd2dc77eb39f2908
+:LU_LE: 2026-10-10T08:42:32+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: -
+:END:
+Lu : préparer une projection fermée du diagnostic be738 sans modifier les données de production ni solliciter un nouveau lancement humain.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
