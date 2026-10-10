@@ -29,6 +29,15 @@ MOTIFS = {
     'nix_option': r'The option .* does not exist|has conflicting definition',
     'nix_store': r'is not allowed to refer to a store path|is not in the Nix store|not a valid store path',
     'nix_absence': r'No such file or directory|cannot find.*nixpkgs',
+    'nix_attribut': r'attribute .* missing|attribute .* not found',
+    'nix_type': r'cannot coerce|expected a|while a .* was expected|attempt to call something which is not a function',
+    'nix_recursion': r'infinite recursion|stack overflow',
+    'nix_chemin_absent': r'path .* does not exist|file .* was not found',
+    'nix_impur': r'pure evaluation mode|forbidden in pure eval',
+    'nix_argument': r'called with unexpected argument|without required argument',
+    'nix_securite_paquet': r'marked as insecure|unfree license|not supported on',
+    'nix_permission': r'Permission denied|Operation not permitted',
+    'nix_syntaxe': r'syntax error|undefined variable',
 }
 
 
@@ -43,6 +52,7 @@ def charger(nom, chemin):
 
 def classer(texte, sources):
     """Seuls les noms de fichiers/fonctions prouvés par la source sont émis."""
+    texte = re.sub(r'\x1b\[[0-9;]*[A-Za-z]', '', texte)
     cadres = []
     motif = r'(?m)^  File "'+re.escape(str(DOSSIER/'source/scripts'))+r'/([^"/\n]+)", line ([0-9]{1,6}), in ([A-Za-z_][A-Za-z_0-9]*|<module>)$'
     for nom, ligne, fonction in re.findall(motif, texte):
@@ -62,6 +72,17 @@ def invariants(config, activation, resume, candidat):
         postgresql17=config.get('postgres_majeure') == '17',
         postgresql_sans_tcp=config.get('postgres_tcp') is False and config.get('postgres_ecoute') == '',
         fournisseur_identique=config.get('fournisseur_source') == candidat['audit']['fournisseur'])
+
+
+def classer_oom(lignes):
+    """Seuls les événements kernel OOM du processus Nix exact sont retenus."""
+    dates = []
+    for ligne in lignes:
+        v = json.loads(ligne)
+        if re.search(r'(?:Out of memory|Memory cgroup out of memory): Killed process [0-9]+ \(nix-instantiate\)',v.get('MESSAGE','')):
+            date = v.get('__REALTIME_TIMESTAMP','')
+            if isinstance(date,str) and re.fullmatch('[0-9]{16}',date): dates.append(int(date))
+    return dict(nix_instantiate_oom=len(dates),dates_oom_microsecondes=sorted(dates)[:8])
 
 
 def main(revision):
@@ -86,12 +107,20 @@ def main(revision):
     qual = json.loads((ROOT/'operations/vision-identite-amorcage-qualification.json').read_text())
     exiger(re.fullmatch('[a-f0-9]{40}',qual['infrastructure']))
     resume = json.loads(lire(Path('/root/vision-identite-amorcage-operations')/qual['infrastructure'],'evaluation-privee.json'))
-    r = subprocess.run(['nix-instantiate','--eval','--strict','--json',str(ROOT/'scripts/vision-multiutilisateur-config.nix'),
-        '--argstr','configuration','/etc/nixos/configuration.nix','--argstr','fournisseur',candidat['audit']['fournisseur'],
+    # Ne pas répéter la construction de la génération complète pour diagnostiquer
+    # l’évaluation : retirer cet attribut paresseusement, avant --strict.
+    expression = 'builtins.removeAttrs ((import '+str(ROOT/'scripts/vision-multiutilisateur-config.nix')+') {'+ \
+        'configuration="/etc/nixos/configuration.nix"; fournisseur='+json.dumps(candidat['audit']['fournisseur'])+';}) ["systeme"]'
+    r = subprocess.run(['nix-instantiate','--eval','--strict','--json','--expr',expression,
         '-I','nixpkgs='+candidat['audit']['nixpkgs']],capture_output=True,timeout=180)
     evaluation = r.returncode == 0 and len(r.stdout) < 16384 and len(r.stderr) < 262144
     controles = invariants(json.loads(r.stdout),activation,resume,candidat) if evaluation else {}
+    controles.pop('generation_identique',None)
     nix = classer(r.stderr.decode(errors='replace'),{})['categories']
+    journal = subprocess.run(['journalctl','-k','--since=2026-10-10 08:30:00 UTC','--until=2026-10-10 08:53:30 UTC',
+        '--lines=400','--output=json','--no-pager'],capture_output=True,timeout=10)
+    journal_disponible = journal.returncode == 0 and len(journal.stdout) <= 1048576
+    oom = classer_oom(journal.stdout.decode().splitlines()) if journal_disponible else {}
     style = DOSSIER/'vision/interface/style.lock.json'
     style_conforme = False
     if style.exists():
@@ -103,7 +132,9 @@ def main(revision):
     disponible = next(int(l.split()[1]) for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:'))
     espace = os.statvfs('/var/lib/postgresql')
     rapport = dict(version=1,infrastructure=revision,refus=REFUS,sources_exactes=True,**projection,
-        evaluation_actuelle_reussie=evaluation,invariants=controles,categories_nix=nix,
+        evaluation_legere_reussie=evaluation,invariants=controles,categories_nix=nix,
+        evaluation_code=r.returncode if -64 <= r.returncode <= 255 else None,
+        journal_kernel_disponible=journal_disponible,**oom,
         style_extrait_conforme=style_conforme,configuration_sauvee=(DOSSIER/'systeme-actif.json').exists(),
         memoire_3gio=disponible >= 3*1024*1024,disque_2gio=espace.f_bavail*espace.f_frsize >= 2*1024**3,
         cluster_isole_present=(Path('/var/lib/postgresql')/('vision-bascule-'+REFUS[:12])).exists(),

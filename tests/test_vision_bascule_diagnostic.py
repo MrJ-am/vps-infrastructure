@@ -40,5 +40,17 @@ class Diagnostic(unittest.TestCase):
         self.assertFalse(autre['generation_identique']); self.assertTrue(autre['paquet_postgresql_identique'])
         self.assertFalse(m.invariants({**c,'postgres_tcp':1},a,r,candidat)['postgresql_sans_tcp'])
 
+    def test_oom_ne_publie_ni_pid_ni_message_ni_autre_processus(self):
+        lignes = [json.dumps(dict(MESSAGE='Out of memory: Killed process 123 (nix-instantiate) secret=root-privé',__REALTIME_TIMESTAMP='1791620000000000')),
+                  json.dumps(dict(MESSAGE='Out of memory: Killed process 456 (java) adresse privée',__REALTIME_TIMESTAMP='1791620001000000')),
+                  json.dumps(dict(MESSAGE='Killed process 789 (nix-instantiate)',__REALTIME_TIMESTAMP='1791620002000000'))]
+        r = m.classer_oom(lignes)
+        self.assertEqual(r,dict(nix_instantiate_oom=1,dates_oom_microsecondes=[1791620000000000]))
+        self.assertNotIn('root-privé',json.dumps(r)); self.assertNotIn('123',json.dumps(r))
+
+    def test_categories_nix_apres_codes_couleur(self):
+        r = m.classer('\x1b[31merror:\x1b[0m cannot coerce a set to a string avec un secret',{})
+        self.assertEqual(r['categories'],['nix_type']); self.assertNotIn('secret',json.dumps(r))
+
 
 if __name__ == '__main__': unittest.main()

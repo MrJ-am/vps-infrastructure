@@ -9,6 +9,17 @@ La CI complète38037961529 et349tests réussis qualifient le code,
 pas l'exécution isolée arrêtée. Le lecteur dédié ne publie que des cadres
 de source vérifiée, classes d'exception, catégories constantes et booléens.
 
+Le [diagnostic38039371924](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38039371924),
+0c68dd8/PR74, job114176403003, confirme les sources exactes et le refus du
+processus Nix appelé ligne140, sans classe Nix reconnue. L'archive/style
+passent, ressources suffisantes, aucune configuration sauvée ni copie/cluster
+créés ; six services/SSH/25sites finaux conservés.
+[Projection sans journal privé](../operations/vision-bascule-diagnostic.json).
+Un affinage lit seulement les événements kernel OOM du processus Nix dans
+la fenêtre de l'essai et réévalue les attributs PostgreSQL/fournisseur, sans
+forcer la génération complète ni exécuter de SQL. Ce constat doit précéder
+toute correction ; aucun manque de mémoire ou bug d'expression n'est présumé.
+
 L’[observation38002451652](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38002451652),
 0fbce8dbad7534b007d5f127d55f4071962f9ccb/PR72, job114063522619, est réussie.
 Email vérifié, mot de passe et OTP configurés sur le seul sujet durable exact,

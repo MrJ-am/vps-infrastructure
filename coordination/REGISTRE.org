@@ -5831,11 +5831,11 @@ Après diagnostic réel, corriger seulement la préparation concernée, qualifie
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: 31a92aca52a64c88826336266b69c419a343e8de14fb4fb2bd2dc77eb39f2908
-:LU_LE: 2026-10-10T08:42:32+00:00
+:LU_LE: 2026-10-10T08:59:23+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: -
+:PREUVE: 0c68dd8/PR74/CI38039094671/Actions38039371924/job114176403003 ; operations/vision-bascule-diagnostic.json
 :END:
-Lu : préparer une projection fermée du diagnostic be738 sans modifier les données de production ni solliciter un nouveau lancement humain.
+Diagnostic réel réussi : source/style conformes, ValueError de commande Nix ligne140 ; six services/SSH/25sites conservés, aucune copie/cluster/production. Cause Nix encore indéterminée ; affiner catégories et code retour, lire seulement OOM Nix dans la fenêtre réelle et réévaluer sans attribut de génération complète. Aucun SQL ou nouvelle tentative de migration.
 
 ** TODO vps
 :PROPERTIES:
