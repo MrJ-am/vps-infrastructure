@@ -69,3 +69,38 @@ class Diagnostic(unittest.TestCase):
         try:m.exiger(False)
         except Exception as e:r=m.refus_ferme(e)
         self.assertEqual(r['cadres_lecteur'],[dict(ligne=m.exiger.__code__.co_firstlineno+1,fonction='exiger')])
+
+    def test_unite_native_sans_contenu_ni_instance_nominative(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);store=d/'store';s=store/'generation';u=s/'etc/systemd/system';u.mkdir(parents=True)
+            (u/'opaque-native.service').write_text('contenu-prive@exemple.test')
+            (u/'personne@exemple.test.service').write_text('identite')
+            prive=d/'externe.service';prive.write_text('secret');(u/'externe.service').symlink_to(prive)
+            connus=m.unites_publiques((s,),store)
+            self.assertEqual(connus,{'opaque-native.service'})
+            r=m.classer('would stop the following units: opaque-native.service, secret.service',connus)
+            self.assertEqual(r['actions_connues'],[dict(action='stop',unite='opaque-native.service',source_unite_generee=True)])
+            self.assertEqual(r['unites_inconnues'],1);self.assertEqual(r['unites_rattachees_source_generee'],1)
+            for valeur in ('contenu-prive','personne@','externe','secret.service'):self.assertNotIn(valeur,json.dumps(r))
+
+    def test_montage_credential_a_nom_constant(self):
+        unite=r'run-credentials-mrjam\x2damorcage\x2didentite.service.mount'
+        r=m.classer('would stop the following units: '+unite)
+        self.assertEqual(r['actions_connues'],[dict(action='stop',unite=unite)])
+        self.assertEqual(r['unites_inconnues'],0)
+
+    def test_seul_nouveau_lien_import_keycloak_identifie(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            store=Path(tmp);a,n=store/'ancien',store/'nouveau'
+            for p in (a,n):
+                (p/'etc/systemd/system').mkdir(parents=True);(p/'etc/tmpfiles.d').mkdir(parents=True)
+                (p/'etc/systemd/system/systemd-tmpfiles-resetup.service').write_text('[Unit]\nX-Restart-Triggers=fixe\n')
+                (p/'etc/tmpfiles.d/nixos.conf').write_text('d /var/lib/autre 0700 root root -\n')
+            lien=n/'etc/tmpfiles.d/10-keycloak.conf'
+            lien.write_text('L+ /run/keycloak/data/import/realm-import.json - - - - /run/credentials/keycloak.service/realm-import\n')
+            r=m.comparer_repertoires(a,n,store)
+            self.assertTrue(r['lien_import_keycloak_nouveau_exact']);self.assertTrue(r['regles_existantes_hors_perimetre_identiques'])
+            self.assertEqual(r['fichiers_tmpfiles_ajoutes'],['10-keycloak.conf'])
+            lien.write_text(lien.read_text().replace('keycloak.service','secret-autre.service'))
+            r=m.comparer_repertoires(a,n,store)
+            self.assertFalse(r['lien_import_keycloak_nouveau_exact']);self.assertNotIn('secret',json.dumps(r))
