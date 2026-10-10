@@ -24,13 +24,14 @@ def demander(opener, origine, chemin, *, headers=None, data=None):
         return response.code, response.headers, body
 
 
-def verifier(opener, origine=ORIGINE):
+def verifier(opener, origine=ORIGINE, *, demander_fn=None):
+    lire=demander_fn or demander
     issuer = origine + '/realms/mrjam'
     chemin = '/realms/mrjam/.well-known/openid-configuration'
     for headers in ({}, {'X-Forwarded-Host': 'exemple.invalid',
             'X-Forwarded-Proto': 'http', 'X-Forwarded-Port': '80',
             'X-Forwarded-Prefix': '/injection', 'Forwarded': 'host=exemple.invalid;proto=http'}):
-        code, entetes, body = demander(opener, origine, chemin, headers=headers)
+        code, entetes, body = lire(opener, origine, chemin, headers=headers)
         info = json.loads(body)
         if code != 200 or info.get('issuer') != issuer: raise ValueError('Issuer différent')
         for nom in ('authorization_endpoint', 'token_endpoint', 'jwks_uri'):
@@ -38,7 +39,7 @@ def verifier(opener, origine=ORIGINE):
                 raise ValueError('Endpoint hors issuer')
         if entetes.get('Referrer-Policy') != 'no-referrer' or 'max-age=31536000' not in entetes.get('Strict-Transport-Security', ''):
             raise ValueError('En-têtes de confidentialité absents')
-    code, _, body = demander(opener, origine, '/realms/mrjam/protocol/openid-connect/certs')
+    code, _, body = lire(opener, origine, '/realms/mrjam/protocol/openid-connect/certs')
     keys = json.loads(body).get('keys', [])
     if code != 200 or not keys or any(not k.get('kid') or set(k) & {'d', 'p', 'q', 'dp', 'dq', 'qi', 'k'} for k in keys):
         raise ValueError('Clés publiques absentes ou privées')
@@ -46,12 +47,12 @@ def verifier(opener, origine=ORIGINE):
             '/realms/master/protocol/openid-connect/token', '/metrics', '/health',
             '/realms/mrjam/clients-registrations', '/realms/mrjam/clients-registrations/',
             '/realms/mrjam/clients-registrations/default'):
-        if demander(opener, origine, chemin)[0] != 404:
+        if lire(opener, origine, chemin)[0] != 404:
             raise ValueError('Route réservée publiquement accessible')
-    if demander(opener, origine, '/realms/mrjam/clients-registrations/default',
+    if lire(opener, origine, '/realms/mrjam/clients-registrations/default',
             headers={'Content-Type': 'application/json'}, data=b'{}')[0] != 404:
         raise ValueError('Enregistrement dynamique accessible')
-    code, _, body = demander(opener, origine, '/code-source/services-mrjam.tar.gz')
+    code, _, body = lire(opener, origine, '/code-source/services-mrjam.tar.gz')
     if code != 200 or not body.startswith(b'\x1f\x8b'):
         raise ValueError('Offre de sources indisponible')
     return dict(https=True, issuer_canonique=True, proxy_falsifie_sans_effet=True,
