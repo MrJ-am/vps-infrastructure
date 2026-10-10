@@ -368,3 +368,13 @@ clé publique générée sur le téléphone du propriétaire. Aucune rotation de
 configuration des sauvegardes, copie réelle, migration ou activation. L'envoi
 est idempotent pour le même opérateur et une remise ambiguë exige diagnostic.
 Voir [la procédure et ses limites](COURRIEL-PROVISIONNEMENT.md).
+
+Après le déchiffrement rapporté du témoin par l'exploitant, la phase fermée
+`vision-sauvegarder` réutilise les snapshots/restaurations READ ONLY isolées,
+sans réparation, migration ni construction/activation. Elle prépare une copie
+réelle chiffrée vers cette clé, destinée uniquement au propriétaire, avec un
+lecteur sans extraction pour le téléphone et une preuve aléatoire dans le
+manifeste chiffré. La réception/vérification extérieure ne sont pas déduites
+du SMTP ou de la CI. Aucun Run workflow ou accès au PC Linux n'est nécessaire
+pour préparer cette copie. Les anciennes clés/copies et autres projets restent
+conservés ; les conditions de bascule et d'admission demeurent séparées.

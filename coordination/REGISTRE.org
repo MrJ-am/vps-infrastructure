@@ -6036,3 +6036,69 @@ Relais Proton accepte le nouveau témoin, génération conservée et nouvelle SS
 :PREUVE: -
 :END:
 
+* Préparer une copie réelle récupérable de Vision et de l’identité sur téléphone
+:PROPERTIES:
+:ID: 20261010-vision-e6b3dc1236bb
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T11:41:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire a reçu et déchiffré le témoin38047719442 sur Nix-on-Droid, puis retourné le JSON et le SHA256 exact de sa nouvelle clé publique. Consigner cette confirmation rapportée par l’exploitant sans prétendre qu’elle prouve encore une sauvegarde réelle ou une copie extérieure complète. La clé privée reste uniquement sur son téléphone.
+
+Ajouter la phase fermée vision-sauvegarder : réutiliser les snapshots READ ONLY cohérents Vision/IdP et restaurations PG17 isolées, sans réparation de configuration, migration, association, construction ni activation. Comparer les données/credentials, arrêter le cluster, constituer une enveloppe AGE à la nouvelle clé avec dumps, copie cohérente des sessions SQLite/WAL, intégrité, htpasswd hashé, ACL/contexte et registres d’effacement présents aux seuls chemins connus. Retirer les clair et le cluster avant envoi ; générations, compte et invariants vérifiés avant/après, nouvelle SSH/six services/25sites. Copie bornée512Mio clair/15Mo chiffré.
+
+Remettre uniquement au propriétaire par le relais/boîte Proton existants la copie chiffrée et un lecteur public, avec intention fsync et blocage de toute remise ambiguë. Aucun dump, identité, credential, clé privée ou défi dans Git/Actions. Le lecteur téléphone n’extrait aucun fichier : empreinte chiffrée, manifeste, tous les fichiers/SHA256 et AGE consommé jusqu’à la fin/code0. Un défi aléatoire256bits chiffré permet de rapprocher le résultat de la copie réelle ; uniquement son SHA256 au reçu public. Qualification native AGE, mauvaises clés/troncatures, chemins étrangers/doublons/copie incomplète et SQLite WAL. La réception/vérification extérieure sera consignée après retour du propriétaire, jamais déduite du SMTP.
+
+Pas de rotation de configuration active, purge de copies anciennes, modification Matheval ou autre projet. Le jeu couvre les données et accès Vision/identité avant bascule, pas le VPS entier ; la copie mensuelle sur disque Linux et le registre externe récent restent nécessaires. Les archives opérateur demeurent à inventorier ; le timer courant ne les purge pas. La future activation distincte devra cibler la nouvelle clé pour Vision/identité et conserver les autres clés. Inscriptions tierces fermées. Les autres projets prennent connaissance sans intervention sur leur code/données. Détails : docs/COURRIEL-PROVISIONNEMENT.md, scripts/vision-recuperation.py et scripts/verifier-vision-recuperation.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 741bf48f0b6e66beb5378bdaa0b2bb20bb766a570f6df9c2828de0646cb0bb5b
+:LU_LE: 2026-10-10T11:42:35+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Confirmation du témoin et quatre tests de récupération/AGE natif réussis ; préparation qualifiée, copie réelle à exécuter après CI exacte.
+:END:
+Réception/déchiffrement du témoin rapportés ; copie réelle et preuve extérieure encore à obtenir.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
