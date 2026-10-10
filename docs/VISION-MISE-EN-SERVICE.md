@@ -471,3 +471,11 @@ d'essai et générations active/enregistrée vérifiées, avant l'observation du
 compte. Chaque projection partielle indique ses limites ; tous les gardes
 restent nécessaires à un rapport complet. Les unités connues de sysinit
 sont classées, sans autorisation de les activer par ce seul diagnostic.
+
+Un conteneur jetable sans réseau, avec les archives exactes des lecteurs et
+la source immuable de l'observateur, reproduit le TypeError de son empreinte :
+le lecteur donnait du texte à hashlib.sha256. La correction encode en UTF-8,
+qualifie la source exacte et refuse sa corruption. Le même essai importe
+ensuite l'observateur et atteint le contrôle du socle, qui refuse normalement
+les preuves serveur absentes de la fixture. Cela localise le défaut du lecteur
+sans prétendre prouver l'état VPS ; la lecture réelle reste nécessaire.

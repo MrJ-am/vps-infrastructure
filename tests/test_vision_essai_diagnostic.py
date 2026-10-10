@@ -10,6 +10,11 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_observateur_texte_utf8_exact_et_corruption_refusee(self):
+        texte=(Path(__file__).resolve().parents[1]/'scripts/vision-proprietaire-enroler.py').read_text()
+        m.verifier_observateur(texte)
+        with self.assertRaises(ValueError):m.verifier_observateur(texte+'\n')
+
     def test_action_concrete_connue_et_triggers(self):
         r=m.classer('would stop the following units: systemd-tmpfiles-resetup.service\nwould activate the configuration')
         self.assertEqual(r['actions_connues'],[dict(action='stop',unite='systemd-tmpfiles-resetup.service')])
