@@ -102,3 +102,10 @@ jobs:
     if: needs.demande.outputs.action == 'vision-retour-qualifier'
     uses: ./.github/workflows/vision-retour-qualifier.yml
     secrets: inherit
+  vision-reprise-qualifier:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-reprise-qualifier'
+    uses: ./.github/workflows/vision-retour-qualifier.yml
+    with:
+      reprise: true
+    secrets: inherit

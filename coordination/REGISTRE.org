@@ -6479,14 +6479,80 @@ Cette phase ne qualifie ni n'arme un retour effectif de production ou après red
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 1cfdc1bde87ebc30b742f18f0d3a9690e911c5362c6e952ff886bac360cbc86e
-:LU_LE: 2026-10-10T16:21:14+00:00
+:LU_LE: 2026-10-10T16:30:03+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 394tests root hors réseau et PostgreSQL17 natif local ; qualification VPS encore attendue
+:PREUVE: 9048968822ef9261be1f01b77c318d192681b6ca/Actions38067754633/job114258793747 ; operations/vision-retour-qualification-reelle.json
 :END:
-Shell réel exécuté : interruptions SIGKILL et reprise, refus fermés, copie conservée et inversion achevée jamais écrasée. PostgreSQL17 annule le retour partiel et conserve identité courante/sujet/credentials. Les conditions systemd VPS restent à vérifier après CI exacte. Aucun retour de production/boot qualifié ou armé, aucune activation.
+394 tests root, shell réel SIGKILL/reprise/refus et PostgreSQL17 transactionnel passent en CI exacte. Sur VPS, reçu privé exact et socle/compte avant/après vérifiés, trois démarrages natifs de la seule unité jetable bloqués sans erreur et recette syntaxique conservée. Nouvelle SSH/six services/25sites finaux passent. Ce DONE couvre la qualification isolée ; aucune activation ni reprise effective après redémarrage machine, aucun retour armé.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Qualifier la reprise persistante de Vision et la fermeture avant démarrage
+:PROPERTIES:
+:ID: 20261010-vision-c4eafa78de4d
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T16:37:17+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Qualification du retour9048968/PR88 réussie : CI exacte38067361145 (394tests/quatre jobs), signal38067747128, Actions38067754633/job114258793747. Reçu privé a250 exact, socle/compte avant/après, trois démarrages systemd natifs bloqués sans erreur, script syntaxique et nouvelle SSH/six services/25sites passent. Aucun retour de production armé ou exécuté ; machine non redémarrée. Reçu operations/vision-retour-qualification-reelle.json.
+
+Qualifier maintenant la reprise persistante avant activation. Le futur essai conservera un générateur systemd sur disque, des outils/racines GC de l'ancien socle et un timer indépendant15min. Sur redémarrage, le générateur republiera le seul service de retour si l'essai a commencé et n'est ni finalisé ni terminé. ExecStartPre prend le verrou commun, marque le retour de manière atomique/synchronisée avant de créer les conditions ; aucune course avec finalisation ne peut laisser une fermeture après succès. Type=exec termine son job de démarrage après le précontrôle, afin de permettre ensuite la relance des clients par le retour. Fermer aussi les migrations et services mutateurs pendant transfert, retirer toutes les conditions propres à l'opérateur en fin de retour, sans conditions résiduelles sur services désactivés.
+
+Exécuter le générateur dans des dossiers jetables : contenu exact de l'unité/lien, aucune sortie après enregistre/retour-termine, refus de lien étranger. En CI root, shell de retour réel/reprises SIGKILL/refus fermés et générateur/conditions sont exécutés ; PostgreSQL17 conserve son test transactionnel courant. Nouvelle phase automatique vision-reprise-qualifier après CI exacte. Sur VPS, observateur actuel avant/après, condition native déjà qualifiée, puis deux seules unités techniques jetables répètent ExecStartPre/Type=exec/consommateur : marque/fermeture avant le client, retour simulé réellement exécuté, client conditionnel restant inactif. Configuration native vérifiée par systemd-analyze ; copies/logs root privés, projection de booléens/constants seulement. Unités de répétition retirées puis nouvelle SSH/six services/25sites finaux.
+
+Aucun service métier arrêté ou modifié, SQL production, reconstruction, générateur persistant installé, timer effectif armé, activation, SMTP ou ouverture. La machine n'est pas redémarrée : cette preuve concerne reconstruction et ordonnancement sur le systemd réel, pas une coupure physique. L'installation et l'essai d'activation resteront distincts, sans demande Run workflow. Autres projets prennent connaissance sans action sur leur code/données. Vision consignera preuve réelle et limites. Copie extérieure téléphone confirmée, copies/clé anciennes conservées ; copie mensuelle Linux/disque et copie indépendante de la clé restent ultérieures. Admission tierce fermée jusqu'aux préconditions juridiques distinctes. Détails : docs/VISION-MISE-EN-SERVICE.md et scripts/vision-essai-reprise.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: c15ede1b98c4f7bd05af234f6cf042f30289e3962e7202b6b9515d54d0d19308
+:LU_LE: 2026-10-10T16:38:59+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 399tests root hors réseau, qualification native encore attendue
+:END:
+Générateur, marques terminales, fermeture durable avant conditions et neutralisation après finalisation passent. Shell de retour réel et reprises SIGKILL/refus restent qualifiés avec toutes conditions retirées au succès. Deux unités de répétition et ordre Type=exec attendent encore le systemd VPS après CI exacte. Aucun générateur/timer de retour effectif installé ou armé, aucune activation.
 
 ** TODO vps
 :PROPERTIES:
