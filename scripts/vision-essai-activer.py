@@ -16,6 +16,7 @@ import sys
 import time
 import argparse
 import secrets
+import shlex
 
 ROOT=Path(__file__).resolve().parents[1]
 REPRISE='9ef9b074057ee9eac15a6f5cd0a0dc467d4fc80d'
@@ -67,6 +68,23 @@ def installer_prive(p,contenu,mode=0o600):
     finally:os.close(fd)
 
 
+def generateur_essai(d,outils,unite,volatile):
+    """Le timer arme l'essai courant ; seul un nouveau boot ajoute le want.
+
+    NixOS redémarre les cibles actives pendant test. /run disparaît au reboot.
+    L'unité de retour qualifiée reste publiée dans les deux situations.
+    """
+    exiger(re.fullmatch(r'vision-essai-retour-[a-f0-9]{12}',unite))
+    q=shlex.quote
+    return f'''#!{outils}/bash
+set -euo pipefail
+{q(str(d/'reprise-generateur.sh'))} "$@"
+if test -e {q(str(volatile))}; then
+  {q(str(outils/'rm'))} -f "$1/multi-user.target.wants/{unite}.service"
+fi
+'''
+
+
 class Essai:
     def __init__(self,revision):
         exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision))
@@ -108,6 +126,7 @@ class Essai:
         self.fd=os.open(self.d,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
         self.generateur=Path('/usr/local/lib/systemd/system-generators')/('vision-essai-'+revision[:12])
         self.timer=Path('/run/systemd/system')/(self.unite_retour+'.timer')
+        self.volatile=Path('/run')/('vision-essai-'+revision[:12]+'-actif')
 
     def lire(self,nom,d=None):
         d=d or self.d;self.construction.dossier_prive(d)
@@ -363,6 +382,9 @@ class Essai:
             if n.endswith('.sh'):
                 (self.d/n).chmod(0o700);self.commande(self.outils/'bash','-n',self.d/n)
         # Le backend est copié sous le verrou sans changer le lien actif.
+        self.ecrire('generateur-essai.sh',generateur_essai(self.d,self.outils,self.unite_retour,self.volatile))
+        (self.d/'generateur-essai.sh').chmod(0o700)
+        self.commande(self.outils/'bash','-n',self.d/'generateur-essai.sh')
         lock=os.open('/srv/vision/deploy.lock',os.O_RDWR|os.O_CREAT|os.O_NOFOLLOW,0o600)
         try:fcntl.flock(lock,fcntl.LOCK_EX);nouveau=self.copier_backend()
         finally:os.close(lock)
@@ -385,7 +407,8 @@ class Essai:
             exiger(hashlib.sha256((ROOT/'scripts'/nom).read_bytes()).digest()==
                 hashlib.sha256((qualification/nom).read_bytes()).digest())
         # /etc/systemd/system-generators appartient au store Nix en lecture seule.
-        installer_prive(self.generateur,(self.d/'reprise-generateur.sh').read_bytes(),0o700)
+        installer_prive(self.volatile,b'1\n')
+        installer_prive(self.generateur,(self.d/'generateur-essai.sh').read_bytes(),0o700)
         installer_prive(self.timer,(self.d/'reprise.timer').read_bytes())
         self.marquer('commence')
         self.commande(self.outils/'systemctl','daemon-reload')
@@ -437,7 +460,7 @@ class Essai:
             self.marquer('enregistre')
         finally:os.close(lock)
         self.commande(self.outils/'systemctl','stop',self.unite_retour+'.timer')
-        for p in (self.generateur,self.timer):
+        for p in (self.generateur,self.timer,self.volatile):
             if p.exists():
                 exiger(not p.is_symlink() and p.stat().st_uid==0);p.unlink()
                 self.commande(self.outils/'sync','-f',p.parent)

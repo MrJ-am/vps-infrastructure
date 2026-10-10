@@ -36,7 +36,7 @@ def verifier(opener,manifeste):
     code,_,body=demander(opener,origine,'/interface-manifest.json')
     if code!=200 or json.loads(body)!=manifeste:raise ValueError('Manifeste public différent')
     for entetes in ({},{'X-Mrj-User':'qualification-falsifiee','X-Vision-Administration':'1',
-            'X-Mrj-Admin':'1','X-CSRF-Token':'invalide','Cookie':'mrj_session=invalide'}):
+            'X-Mrj-Admin':'1','X-CSRF-Token':'invalide','Cookie':'__Secure-mrj_session=invalide'}):
         for route in ('/auth/session','/api/gestion/comptes','/api/v1/health','/mcp'):
             if demander(opener,origine,route,headers=entetes)[0]!=401:
                 raise ValueError('Accès anonyme ou falsifié accepté')
