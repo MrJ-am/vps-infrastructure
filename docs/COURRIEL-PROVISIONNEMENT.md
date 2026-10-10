@@ -65,3 +65,12 @@ Il ne modifie pas la configuration des sauvegardes, les clés précédentes ou l
 copies existantes ; Matheval reste inchangé. La nouvelle clé ne déchiffre pas les
 anciens fichiers. Les nouvelles sauvegardes Vision/identité nécessiteront leur
 préparation propre et leur vérification avant toute bascule.
+
+Remise réelle réussie le 10 octobre2026 à13:15 Europe/Paris :
+[Actions38047719442](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38047719442),
+job114200542052, opérateur415e9d7/PR80 après CI exacte38047434345/369tests.
+Le relais accepte le nouveau témoin, générations conservées et contrôles finaux
+nouvelle SSH/six services/25sites réussis. Aucun secret privé transmis depuis
+le téléphone. [Reçu public borné](../operations/vision-telephone-resultat.json).
+Réception, déchiffrement, sauvegarde réelle et copie extérieure restent distincts
+et non vérifiés par cette opération.

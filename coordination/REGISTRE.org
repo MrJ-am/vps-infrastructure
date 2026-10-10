@@ -6019,14 +6019,14 @@ Aucune rotation de configuration de sauvegarde, aucun changement Matheval, aucun
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 24761379e7149d8ce1aafc3ff1ef17563426c95bc53c949bb76171dd3d43c278
-:LU_LE: 2026-10-10T11:09:29+00:00
+:LU_LE: 2026-10-10T11:16:40+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: AGE public validé et 369 tests locaux réussis ; recette prête, remise réelle à exécuter après CI exacte.
+:PREUVE: Opérateur415e9d7503b83e93b3e4f1c030b70ce8d0ad2f4d/PR80, CI38047434345/369tests ; Actions38047719442/job114200542052, operations/vision-telephone-resultat.json.
 :END:
-La clé privée reste sur le téléphone ; ni possession ni déchiffrement réel encore prouvés.
+Relais Proton accepte le nouveau témoin, génération conservée et nouvelle SSH/six services/25sites finaux réussis. Aucune rotation ou copie réelle ; réception/déchiffrement sur téléphone et sauvegarde extérieure complète restent non vérifiés.
 
 ** TODO vps
 :PROPERTIES:
