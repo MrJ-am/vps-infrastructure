@@ -21,7 +21,7 @@ def verifier_diagnostic(r):
         r.get('activation') is False and r.get('inscriptions') is False)
 
 
-def verifier_precedent(root,prive,construction):
+def verifier_precedent(root,prive,construction,*,socle_ancien=True):
     verifier_diagnostic(json.loads((root/'operations/vision-activation-diagnostic-reel.json').read_text()))
     d=Path('/root/vision-essais')/ESSAI
     construction.dossier_prive(d)
@@ -31,8 +31,13 @@ def verifier_precedent(root,prive,construction):
             exiger(prive.lire(fd,n)=='1\n')
         exiger(not (d/'enregistre').exists())
         plan=json.loads(prive.lire(fd,'plan.json'))
-        exiger(plan['infrastructure']==ESSAI and Path('/run/current-system').resolve()==Path(plan['ancien']) and
-            Path('/nix/var/nix/profiles/system').resolve()==Path(plan['ancien']))
+        exiger(plan['infrastructure']==ESSAI)
+        # La provenance du précédent reste exigée après test. La génération
+        # ancienne n'est exigée qu'avant préparation/mutation ; finaliser vérifie
+        # ensuite le candidat exact avec verifier_local, sous le verrou du retour.
+        if socle_ancien:
+            exiger(Path('/run/current-system').resolve()==Path(plan['ancien']) and
+                Path('/nix/var/nix/profiles/system').resolve()==Path(plan['ancien']))
     finally:os.close(fd)
 
 

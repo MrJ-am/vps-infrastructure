@@ -122,7 +122,7 @@ class Essai:
         if self.resumption:
             exiger(rapport['reprise_essai']==self.resumption.ESSAI and rapport['schema_initial']==25 and
                 rapport['association_existante_verifiee'] is True)
-            self.resumption.verifier_precedent(ROOT,self.prive,self.construction)
+            self.resumption.verifier_precedent(ROOT,self.prive,self.construction,socle_ancien=False)
         self.evaluation=self.lire('evaluation-essai.json',self.prepare)
         self.ancien=self.evaluation['systeme_actif'];self.nouveau=self.evaluation['systeme_candidat']
         for n in ('systeme_actif','systeme_candidat','postgres_paquet','backend_paquet','interface_store'):

@@ -4,6 +4,9 @@ import importlib.util
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+import tempfile
+from types import SimpleNamespace
 
 ROOT=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('reservee',ROOT/'scripts/vision-reprise-reservee.py')
@@ -35,6 +38,27 @@ class Reprise(unittest.TestCase):
             original=r[k];r[k]=v
             with self.subTest(k=k),self.assertRaises(ValueError):m.verifier_association(sql,i,h)
             r[k]=original
+
+    def test_preuve_precedente_conservee_apres_test_sans_exiger_generation_ancienne(self):
+        spec=importlib.util.spec_from_file_location('prive_reprise',ROOT/'scripts/identite-preparer.py')
+        prive=importlib.util.module_from_spec(spec);spec.loader.exec_module(prive)
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);(d/'operations').mkdir()
+            (d/'operations/vision-activation-diagnostic-reel.json').write_text((ROOT/'operations/vision-activation-diagnostic-reel.json').read_text())
+            precedent=d/'precedent';precedent.mkdir()
+            for n in ('commence','sql-engage','identite-migree','identite-retablie','retour-termine','echec'):
+                p=precedent/n;p.write_text('1\n');p.chmod(0o600)
+            p=precedent/'plan.json';p.write_text(json.dumps(dict(infrastructure=m.ESSAI,ancien=str(d/'ancien'))));p.chmod(0o600)
+            def chemin(n):
+                return {'/root/vision-essais':d,str(d/m.ESSAI):precedent,
+                    '/run/current-system':d/'nouveau','/nix/var/nix/profiles/system':d/'ancien'}.get(str(n),Path(n))
+            # /root/vision-essais / ESSAI utilise l'opérateur de Path, donc
+            # faire correspondre son parent à un dossier fixture du même nom.
+            precedent.rename(d/m.ESSAI)
+            construction=SimpleNamespace(dossier_prive=lambda p:None)
+            with patch.object(m,'Path',side_effect=chemin):
+                m.verifier_precedent(d,prive,construction,socle_ancien=False)
+                with self.assertRaises(ValueError):m.verifier_precedent(d,prive,construction)
 
 
 if __name__=='__main__':unittest.main()
