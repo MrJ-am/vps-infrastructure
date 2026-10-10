@@ -18,6 +18,13 @@ let
     cles = cfg.users.users.root.openssh.authorizedKeys.keys;
   };
   essentiels = [ "sshd" "matheval" "vision-embeddings" "postgresqlBackup-matheval" ];
+  bus = cfg: {
+    inherit (cfg.services.dbus) enable implementation apparmor;
+    paquet = toString cfg.services.dbus.dbusPackage;
+    courtier = toString cfg.services.dbus.brokerPackage;
+    paquets = map toString cfg.services.dbus.packages;
+    nss = toString cfg.system.nssModules.path;
+  };
   bootstrap = builtins.head (lib.splitString "/app/."
     (builtins.elemAt (lib.splitString "cp -R " c.systemd.services.vision-bootstrap.script) 1));
 in
@@ -26,6 +33,9 @@ assert builtins.all (a: a.assertion) c.assertions;
 assert builtins.toJSON (hote base) == builtins.toJSON (hote c);
 assert builtins.all (n: toString base.systemd.units."${n}.service".unit == toString c.systemd.units."${n}.service".unit) essentiels;
 assert builtins.toJSON (reseau base) == builtins.toJSON (reseau c);
+assert builtins.toJSON (bus base) == builtins.toJSON (bus c);
+assert (!base.services.dbus.enable || base.services.dbus.implementation != "broker") ||
+  toString base.systemd.units."dbus-broker.service".unit == toString c.systemd.units."dbus-broker.service".unit;
 assert base.services.postgresql.dataDir == c.services.postgresql.dataDir;
 assert toString base.services.postgresql.finalPackage == toString c.services.postgresql.finalPackage;
 assert !c.services.postgresql.enableTCPIP && c.services.postgresql.settings.listen_addresses == "";
@@ -44,6 +54,7 @@ assert !c.infrastructure.identite.inscriptionsOuvertes;
     interface_store = c.systemd.services.vision.environment.VISION_DOCUMENT_ROOT;
     recipient_age = c.services.vision.backupRecipient;
     hors_vision_identite_conserve = true;
+    bus_systeme_conserve = true;
     preconditions_validees = true;
     inscriptions = false;
     activation = false;

@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "infrastructure": "51fdf30a24792df33ee98cc0038691a651a73c75",
+  "refus": "1760809584d4a9e59264cb8761bdb3d69aaef445",
+  "sources_exactes": true,
+  "generation_construite_presente": true,
+  "cluster_retire": true,
+  "socle_conserve": true,
+  "resetup_identique_hors_triggers": true,
+  "fichiers_tmpfiles_identiques": false,
+  "fichiers_tmpfiles_ajoutes": [
+    "10-keycloak.conf"
+  ],
+  "fichiers_tmpfiles_retires": [],
+  "lien_import_keycloak_nouveau_exact": false,
+  "regles_existantes_hors_perimetre_identiques": true,
+  "regles_hors_perimetre_identiques": false,
+  "regles_connues": {
+    "sauvegarde_amorcage": {
+      "avant": 1,
+      "apres": 0
+    },
+    "sauvegarde_commune": {
+      "avant": 0,
+      "apres": 1
+    },
+    "effacements_vision": {
+      "avant": 0,
+      "apres": 1
+    }
+  },
+  "activation_simulee": true,
+  "redemarrage_systemd_annonce": false,
+  "arret_swap_annonce": false,
+  "actions_connues": [
+    {
+      "action": "reload",
+      "unite": "dbus-broker.service",
+      "source_unite_generee": true
+    },
+    {
+      "action": "restart",
+      "unite": "nginx.service"
+    },
+    {
+      "action": "start",
+      "unite": "mrj-auth.service"
+    },
+    {
+      "action": "start",
+      "unite": "postgresql-setup.service"
+    },
+    {
+      "action": "start",
+      "unite": "postgresql.service"
+    },
+    {
+      "action": "start",
+      "unite": "systemd-tmpfiles-resetup.service"
+    },
+    {
+      "action": "start",
+      "unite": "vision-bootstrap.service"
+    },
+    {
+      "action": "start",
+      "unite": "vision.service"
+    },
+    {
+      "action": "stop",
+      "unite": "mrj-auth.service"
+    },
+    {
+      "action": "stop",
+      "unite": "mrjam-amorcage-identite.service"
+    },
+    {
+      "action": "stop",
+      "unite": "mrjam-amorcage-postgresql.service"
+    },
+    {
+      "action": "stop",
+      "unite": "mrjam-amorcage-sauvegarde.timer"
+    },
+    {
+      "action": "stop",
+      "unite": "postgresql-setup.service"
+    },
+    {
+      "action": "stop",
+      "unite": "postgresql.service"
+    },
+    {
+      "action": "stop",
+      "unite": "postgresqlBackup-vision.timer"
+    },
+    {
+      "action": "stop",
+      "unite": "systemd-tmpfiles-resetup.service"
+    },
+    {
+      "action": "stop",
+      "unite": "vision-bootstrap.service"
+    },
+    {
+      "action": "stop",
+      "unite": "vision.service"
+    }
+  ],
+  "unites_inconnues": 0,
+  "unites_rattachees_source_generee": 1,
+  "production_modifiee": false,
+  "activation": false,
+  "inscriptions": false,
+  "pr": 86,
+  "ci_exacte": 38063998558,
+  "signal": 38064305295,
+  "execution": 38064313476,
+  "job": 114248780725,
+  "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38064313476",
+  "nouvelle_ssh_verifiee": true,
+  "six_services_verifies": true,
+  "sites_verifies": 25,
+  "actualise_le": "2026-10-10T15:37:59Z"
+}

@@ -47,5 +47,29 @@ class Essai(unittest.TestCase):
                 'vision-essai-aaaaaaaaaaaa.service'))
             subprocess.run(['bash','-n',str(p)],check=True)
 
+    def test_repertoires_exigent_profil_complet_sans_perte(self):
+        r=dict(resetup_identique_hors_triggers=True,regles_existantes_hors_perimetre_identiques=True,
+            lien_import_keycloak_nouveau_exact=True,fichiers_tmpfiles_ajoutes=['10-keycloak.conf'],
+            fichiers_tmpfiles_retires=[],regles_connues={'sauvegarde_amorcage':dict(avant=1,apres=1),
+                'sauvegarde_commune':dict(avant=0,apres=1),'effacements_vision':dict(avant=0,apres=1)})
+        self.assertTrue(m.verifier_repertoires(r))
+        for k,v in [('resetup_identique_hors_triggers',False),('regles_existantes_hors_perimetre_identiques',False),
+            ('lien_import_keycloak_nouveau_exact',False),('fichiers_tmpfiles_ajoutes',['10-keycloak.conf','autre.conf']),
+            ('fichiers_tmpfiles_retires',['ancien.conf'])]:
+            d=copy.deepcopy(r);d[k]=v
+            with self.subTest(k=k),self.assertRaises(ValueError):m.verifier_repertoires(d)
+        for valeur in (0,2,True):
+            d=copy.deepcopy(r);d['regles_connues']['sauvegarde_amorcage']['apres']=valeur
+            with self.assertRaises(ValueError):m.verifier_repertoires(d)
+
+    def test_arret_demarrage_tmpfiles_seulement_apres_preuve_et_bus_refuse(self):
+        t='would stop the following units: systemd-tmpfiles-resetup.service\nwould start the following units: systemd-tmpfiles-resetup.service\nwould activate the configuration'
+        with self.assertRaises(ValueError):m.verifier_dry(t)
+        self.assertEqual(m.verifier_dry(t,True),['systemd-tmpfiles-resetup.service'])
+        self.assertEqual(m.verifier_dry('\x1b[32m'+t+'\x1b[0m',True),['systemd-tmpfiles-resetup.service'])
+        for texte in (t.replace('would start','would reload'),t.replace('would start','would restart'),
+            t+'\nwould reload the following units: dbus-broker.service',t+'\nwould stop the following units: sshd.service'):
+            with self.assertRaises(ValueError):m.verifier_dry(texte,True)
+
 
 if __name__=='__main__':unittest.main()

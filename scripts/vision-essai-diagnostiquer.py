@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import traceback
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -24,7 +25,7 @@ CONNUS=frozenset(('sshd','nginx','nginx-config-reload','postgresql','postgresql-
     'systemd-tmpfiles-resetup','systemd-journald','systemd-journald@identite','systemd-networkd',
     'systemd-journald-varlink@identite','systemd-sysctl','nix-daemon','acme-log.mrj.am',
     'sysinit-reactivation','acme-finished-log.mrj.am','systemd-sysusers','userborn',
-    'systemd-random-seed','systemd-journald@http','systemd-journald-varlink@http',
+    'systemd-random-seed','dbus-broker','systemd-journald@http','systemd-journald-varlink@http',
     r'run-credentials-mrjam\x2damorcage\x2didentite.service',
     r'run-credentials-mrj\x2dauth.service'))
 
@@ -88,11 +89,12 @@ def comparer_repertoires(ancien,nouveau,racine_store=Path('/nix/store')):
     ajoutes=set(apres)-set(avant);retires=set(avant)-set(apres)
     exiger(all(re.fullmatch(r'[A-Za-z0-9_.+-]+\.conf',n) for n in ajoutes|retires))
     lien='L+ /run/keycloak/data/import/realm-import.json - - - - /run/credentials/keycloak.service/realm-import'
-    lignes_lien=[' '.join(l.split()) for l in apres.get('10-keycloak.conf',[]) if l.strip() and not l.lstrip().startswith('#')]
+    lignes_lien=[shlex.split(l,comments=False,posix=True) for l in apres.get('10-keycloak.conf',[])
+        if l.strip() and not l.lstrip().startswith('#')]
     return dict(resetup_identique_hors_triggers=unite(ancien)==unite(nouveau),
         fichiers_tmpfiles_identiques=set(avant)==set(apres),
         fichiers_tmpfiles_ajoutes=sorted(ajoutes),fichiers_tmpfiles_retires=sorted(retires),
-        lien_import_keycloak_nouveau_exact='10-keycloak.conf' in ajoutes and lignes_lien==[lien],
+        lien_import_keycloak_nouveau_exact='10-keycloak.conf' in ajoutes and lignes_lien==[lien.split()],
         regles_existantes_hors_perimetre_identiques=all(filtre(avant[n])==filtre(apres[n]) for n in set(avant)&set(apres)),
         regles_hors_perimetre_identiques=set(avant)==set(apres) and
             all(filtre(avant[n])==filtre(apres[n]) for n in avant),

@@ -6350,11 +6350,77 @@ Même phase fermée vision-essai-diagnostic, nouvel opérateur après CI exacte.
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: d4073c5029c7b9aabf9e68f0275294039943df05c3300bd319576b50acc92d4a
-:LU_LE: 2026-10-10T15:29:11+00:00
+:LU_LE: 2026-10-10T15:42:33+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: scripts/vision-essai-diagnostiquer.py
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38064313476
 :END:
-Qualification native de noms publics générés et lien import seulement ; tests refusent instance nominative, source hors store et cible de credential étrangère. Garde inchangé. Résultat réel après CI exacte attendu.
+Lecture réelle complète : dbus-broker reload identifié par source publique, zéro inconnu, seul10-keycloak.conf ajouté, règles existantes hors périmètre identiques. Le lien reste non qualifié par comparaison littérale ; quotes natives à décoder et revérifier dans la préparation distincte. Six services/SSH/25sites conservés, aucune activation.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Conserver le bus système et qualifier uniquement les répertoires de l’essai Vision
+:PROPERTIES:
+:ID: 20261010-vision-f7796d691301
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T15:42:34+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic51fdf30/PR86, CI exacte38063998558 (387tests/quatre jobs), Actions38064313476/job114248780725 réussit. La dernière unité est dbus-broker.service en reload, rattachée au seul fichier système public généré ; zéro inconnu. L'unité tmpfiles reste identique hors triggers, toutes les règles existantes hors périmètre identiques, seul10-keycloak.conf ajouté, aucun fichier retiré. Sa comparaison littérale échoue ; le module Nixpkgs installé génère des champs entourés de quotes. Compte/soclek4 avant/après et nouvelle SSH/six services/25HTTP/TLS passent ; aucune production modifiée. Reçu operations/vision-essai-unites-generees.json.
+
+Préparer une nouvelle vision-essai-preparer, sans autoriser de reload du bus partagé. Conserver explicitement la liste de paquets/politiques D-Bus du socle ; ces services ajoutés n'apportent aucun service D-Bus. L'évaluation exigera paramètres/paquets/NSS et unité dbus-broker identiques. Tout mouvement D-Bus, SSH ou Matheval dans la simulation restera refusé. Conserver aussi la règle root0700 de l'ancienne sauvegarde réservée, sans toucher à ses fichiers/clé.
+
+Qualifier les seules différences tmpfiles avant d'autoriser stop/start de systemd-tmpfiles-resetup : unité inchangée hors X-Restart-Triggers, aucun fichier retiré, seul10-keycloak.conf nouveau, toutes autres règles inchangées, ancien répertoire conservé exactement une fois, deux nouveaux répertoires sauvegarde commune/effacements exactement une fois. Décoder les quotes avec un parseur de mots sans shell/expansion et comparer les sept champs du seul lien d'import Keycloak aux constantes attendues. Aucun accès au contenu du credential/import. Tout autre lien, cible, action, permission, suppression ou règle bloque. Tests incluent quotes natives et cibles étrangères.
+
+Même préconditions de récupération et nouvelles restaurations réelles isolées avant cette génération, migrations/association/admin sans contenu et deux retours ACL, cluster retiré ; Nginx natif, nouvelle simulation, entrée identique sans cycle, shell de retour syntaxique et timer indépendant de test. Classer immédiatement tout refus de simulation par liste fermée, sans journal privé. Cette préparation ne qualifie ni n'arme le retour effectif et ne fait aucune activation, SQL de production, SMTP ou ouverture. Opérateur distinct après CI exacte par la branche de demande, aucune relance du propriétaire. Autres projets prennent connaissance sans action ; Vision publiera les preuves réelles avant l'essai distinct. Admission tierce et validation juridique restent distinctes, copie mensuelle Linux/disque et copie indépendante de clé ultérieures.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 59665c085d66a20f807c0f61e28d9e503731fffcf1eabb1207df9366e26dcee4
+:LU_LE: 2026-10-10T15:48:48+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: scripts/vision-essai-generation.nix
+:END:
+389 tests et deux socles sur Nixpkgs VPS passent : bus conservé, profil de répertoires strict, quotes natives et cibles étrangères vérifiées. Préparation réelle après CI exacte encore attendue ; aucun retour effectif armé ni activation.
 
 ** TODO vps
 :PROPERTIES:
