@@ -14,6 +14,20 @@ Cela ne prouve ni sauvegarde du VPS entier, ni copie mensuelle sur disque
 Linux, ni copie indépendante de la clé. Aucune migration/activation ou
 ouverture des inscriptions n’est effectuée par cette confirmation.
 
+Le lecteur affiné [38062136739](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38062136739),
+6097fa2/PR84, job114242394126, confirme les deux sources et classe la simulation :
+PostgreSQL/Vision, ancien IdP privé, sauvegardes associées, Nginx et tmpfiles.
+Aucun SSH ou Matheval annoncé ; une unité inconnue demeure. Il refuse ensuite
+`observateur_exact` avant la comparaison des répertoires. Cela ne qualifie ni
+l'observation complète du compte, ni les règles. Nouvelle SSH/six services
+et25sites finaux passent, aucune production modifiée.
+[Reçu partiel](../operations/vision-essai-diagnostic-partiel.json).
+Le lecteur sépare import et lecture de l'observateur, émet classe/cadres de
+son seul code public sans message privé, et compare les répertoires après
+les gardes de sources/trace/génération, avant l'observation encore distincte.
+Les unités système de réactivation ont des noms fermés ; le garde de
+simulation n'est pas élargi.
+
 Le lecteur réservé [38060939425](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38060939425),
 a5fd36b/PR83, job114238911989, refuse le diagnostic avant sa projection
 complète. Aucun détail de simulation ni cause précise n'en sont déduits.
