@@ -450,3 +450,13 @@ La phase fermée `vision-essai-diagnostic` lit uniquement cette simulation et
 ses sources/trace exactes, sans journal brut, nouvelle construction ou essai.
 Les noms d'unités exportés appartiennent à une liste technique fermée ; les
 inconnus ne sont que comptés. Toute correction attend cette cause réelle.
+
+Le lecteur38060939425/a5fd36b refuse avant sa projection finale ; cette
+exécution ne fournit aucune cause de simulation. Nouvelle SSH/six services
+et25sites passent, aucune activation. Le lecteur affiné conserve tous les
+gardes et indique une étape constante en cas de refus. Après validation des
+sources, il émet la classification fermée de la simulation ; la qualification
+complète de ses autres preuves reste distincte. Les règles tmpfiles sont
+comparées sans publier leurs textes : mêmes fichiers, mêmes règles hors
+périmètre, comptages avant/après pour les trois seules règles réservées.
+Aucun changement système ni élargissement de verifier_dry dans ce diagnostic.
