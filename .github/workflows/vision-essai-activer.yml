@@ -1,0 +1,79 @@
+name: Vision — essai protégé et activation réservée
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  activer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Exiger la demande, le main et la CI exacts
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Préparer la connexion existante
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-essai-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-essai-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-essai-admin" >/dev/null
+      - name: Relever les 25 sites et l'identité avant préparation
+        id: sites
+        run: |
+          python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+          python3 scripts/identite-amorcage-https.py
+      - name: Copier les deux opérateurs privés depuis le seul commit exact
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-bascule-preparations/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-bascule-preparations/$GITHUB_SHA/source"
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-essais/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-essais/$GITHUB_SHA/source"
+      - name: Répéter les restaurations, construire et qualifier la génération exacte
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-bascule-preparations/$GITHUB_SHA/source/scripts/vision-bascule-preparer.py $GITHUB_SHA --essai'"
+      - name: Préparer les copies, le backend root et le retour sans mutation
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-essais/$GITHUB_SHA/source/scripts/vision-essai-activer.py $GITHUB_SHA preparer'"
+      - name: Relire la provenance avant l'essai effectif
+        run: python3 scripts/vision-demande-verifier.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Armer le retour puis lancer le transfert et l'essai
+        id: essai
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-essais/$GITHUB_SHA/source/scripts/vision-essai-activer.py $GITHUB_SHA lancer'"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-essais/$GITHUB_SHA/source/scripts/vision-essai-activer.py $GITHUB_SHA attendre'"
+      - name: Vérifier une nouvelle SSH, les sites et les refus publics
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth keycloak vision-gestion vision-cycle mrjam-admission mrjam-fermeture mrjam-courriel
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+          python3 scripts/vision-essai-https.py
+      - name: Enregistrer uniquement après les contrôles indépendants
+        id: finalisation
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-essais/$GITHUB_SHA/source/scripts/vision-essai-activer.py $GITHUB_SHA finaliser'"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Exécuter le retour indépendant après un refus d'essai
+        if: ${{ failure() && steps.essai.outcome != 'skipped' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-essais/$GITHUB_SHA/source/scripts/vision-essai-activer.py $GITHUB_SHA retourner'"
+      - name: Vérifier les sites et la nouvelle connexion en fin d'opération
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-essai-admin"
