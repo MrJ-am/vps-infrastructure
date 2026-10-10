@@ -46,6 +46,11 @@ let
       infrastructure.visionCycle.enable = true;
       infrastructure.admission.enable = true;
       infrastructure.fermeture.enable = true;
+      # Aucun nouveau service n'ajoute de politique D-Bus. Garder le répertoire
+      # de recherche du socle pour éviter le reload du bus partagé observé.
+      services.dbus.packages = lib.mkForce base.services.dbus.packages;
+      systemd.tmpfiles.rules = lib.mkIf preconditionsValidees
+        [ "d /var/backup/mrjam-amorcage 0700 root root -" ];
       services.vision.bootstrapSource = lib.mkForce sourceVision;
       services.vision.bootstrapCommit = lib.mkForce "a9c51acac81510d7dc896f5daf4e6fb28a36b979";
       services.vision.backupRecipient = lib.mkIf preconditionsValidees (lib.mkForce "age1p95t4z0aafq7j4fl7cc9f0cjz8j03dtlmz56kec4lj6vwxrvzpqqnc53cc");

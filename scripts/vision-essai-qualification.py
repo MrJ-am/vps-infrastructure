@@ -62,7 +62,23 @@ def extraire_interface(archive, destination):
     return m
 
 
-def verifier_dry(texte):
+def verifier_repertoires(rapport):
+    regles=rapport.get('regles_connues',{})
+    exiger(isinstance(regles,dict) and all(isinstance(r,dict) and
+        all(type(v) is int for v in r.values()) for r in regles.values()))
+    exiger(all(rapport.get(k) is True for k in ('resetup_identique_hors_triggers',
+        'regles_existantes_hors_perimetre_identiques','lien_import_keycloak_nouveau_exact')) and
+        rapport.get('fichiers_tmpfiles_ajoutes') == ['10-keycloak.conf'] and
+        rapport.get('fichiers_tmpfiles_retires') == [] and
+        regles == {
+            'sauvegarde_amorcage':dict(avant=1,apres=1),
+            'sauvegarde_commune':dict(avant=0,apres=1),
+            'effacements_vision':dict(avant=0,apres=1)})
+    return True
+
+
+def verifier_dry(texte,repertoires_valides=False):
+    texte=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',texte)
     exiger(len(texte)<1048576 and 'would activate the configuration' in texte and
         not re.search(r'would (?:restart systemd|stop swap)',texte))
     autorises = {'nginx.service','nginx-config-reload.service','postgresql.service','postgresql-setup.service',
@@ -78,7 +94,9 @@ def verifier_dry(texte):
     modifies=set()
     for action,noms in re.findall(r'would (stop|restart|reload|start) the following units: ([^\n]+)',texte):
         unites={u.strip() for u in noms.split(',')}
-        exiger(unites <= autorises)
+        special=unites & {'systemd-tmpfiles-resetup.service'}
+        exiger(not special or (repertoires_valides is True and action in ('stop','start')))
+        exiger(unites-special <= autorises)
         modifies.update(unites)
     return sorted(modifies)
 
@@ -156,6 +174,7 @@ def preparer(d, source, root, config, resume, revision, charger, commande, sauve
         r['postgres_paquet']==resume['postgres_paquet'] and r['recipient_age']==RECIPIENT and
         r['fournisseur_source']==candidat['audit']['fournisseur'] and
         r['hors_vision_identite_conserve'] is True and r['preconditions_validees'] is True and
+        r['bus_systeme_conserve'] is True and
         r['inscriptions'] is False and r['activation'] is False)
     construction=charger('construction_essai',root/'scripts/vision-identite-construire.py')
     for n in ('systeme_actif','systeme_candidat','backend_paquet','interface_store','nginx_paquet'):
@@ -164,10 +183,16 @@ def preparer(d, source, root, config, resume, revision, charger, commande, sauve
         '--max-jobs','1','--cores','2',timeout=1800).strip()
     exiger(systeme==r['systeme_candidat'] and (Path(r['backend_paquet'])/'app/vision').is_file())
     exiger(hashlib.sha256((Path(r['interface_store'])/'manifest.json').read_bytes()).hexdigest()==MANIFESTE)
+    sauver('evaluation-essai.json',r)
     nginx=charger('nginx_essai',root/'scripts/vision-identite-amorcage-preparer.py')
     nginx.construction.preparation.DIAGNOSTIC = d/'diagnostic-prive.log'
     # Ce contrôle reprend le confinement natif déjà qualifié, en réseau privé.
     nginx.verifier_nginx(r,revision)
+    lecteur=charger('lecteur_perimetre_essai',root/'scripts/vision-essai-diagnostiquer.py')
+    repertoires=lecteur.comparer_repertoires(config['systeme'],systeme)
+    sauver('repertoires-essai.json',repertoires)
+    print(json.dumps(dict(perimetre_repertoires=repertoires)),flush=True)
+    qualifies=verifier_repertoires(repertoires)
     dry=subprocess.run([str(Path(systeme)/'bin/switch-to-configuration'),'dry-activate'],
         capture_output=True,timeout=120)
     texte=(dry.stdout+dry.stderr).decode()
@@ -176,7 +201,10 @@ def preparer(d, source, root, config, resume, revision, charger, commande, sauve
     try: prive.ecrire(fd,'dry-activate-prive.txt',texte)
     finally: os.close(fd)
     exiger(dry.returncode==0)
-    modifies=verifier_dry(texte)
+    try:modifies=verifier_dry(texte,qualifies)
+    except Exception:
+        print(json.dumps(dict(simulation_refusee=True,**lecteur.classer(texte))),flush=True)
+        raise
     # Une entrée persistante indépendante du futur lien /etc doit reproduire
     # exactement cette génération ; éviter le cycle de référence déjà corrigé.
     original=str(Path('/etc/nixos/configuration.nix').resolve())
@@ -207,7 +235,6 @@ def preparer(d, source, root, config, resume, revision, charger, commande, sauve
     limite=time.monotonic()+20
     while not (d/'timer-repete').exists() and time.monotonic()<limite: time.sleep(1)
     exiger((d/'timer-repete').is_file())
-    sauver('evaluation-essai.json',r)
     return dict(generation_complete_construite=True,configuration_nginx_native=True,
         dry_activate_qualifie=True,unites_dry=len(modifies),interface_exacte=True,fichiers_interface=len(m['fichiers']),
         nouvelle_cle_vision_identite=True,cle_personnelle_verifiee=True,copie_exterieure_verifiee=True,

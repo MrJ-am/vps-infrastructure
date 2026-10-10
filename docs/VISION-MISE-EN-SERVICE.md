@@ -492,3 +492,23 @@ attendu : /run/keycloak/data/import/realm-import.json vers le credential de
 keycloak.service. Les données de l'import ne sont jamais ouvertes. Un
 rattachement technique ne vaut pas autorisation d'activer une unité ; le garde
 et la préparation distincte restent fermés à toute différence non qualifiée.
+
+Le résultat51fdf30/38064313476 identifie dbus-broker.service en reload,
+zéro inconnu, seul10-keycloak.conf ajouté et aucune autre règle existante
+modifiée. La préparation suivante préserve les paquets/politiques D-Bus du
+socle et exige paramètres, NSS et unité identiques ; le dry continue à
+refuser tout mouvement du bus partagé. Aucune politique D-Bus nouvelle n'est
+nécessaire pour les services Vision ajoutés.
+
+L'ancienne règle de sauvegarde réservée est conservée. Stop/start tmpfiles
+sont permis seulement après preuve native : unité identique hors triggers,
+aucun fichier retiré, seul10-keycloak.conf ajouté, mêmes autres règles,
+ancien répertoire présent une fois et deux nouveaux répertoires chacun une
+fois. Les sept champs du lien sont comparés après décodage des quotes, sans
+shell ni expansion. Une cible, permission ou action différente refuse la
+poursuite. Toute projection de refus de simulation reste fermée ; l'existence
+d'une unité dans le store ne lui donne aucun droit d'activation. Les rapports
+partiels sont conservés avant le garde, sans marqueur de préparation achevée.
+Nouvelles restaurations isolées et retour ACL restent nécessaires à chaque
+opérateur, puis entrée exactement reproductible et répétition du timer. Le
+retour effectif et la bascule sur production demeurent des opérations distinctes.

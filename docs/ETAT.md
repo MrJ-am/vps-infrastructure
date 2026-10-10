@@ -14,6 +14,24 @@ Cela ne prouve ni sauvegarde du VPS entier, ni copie mensuelle sur disque
 Linux, ni copie indépendante de la clé. Aucune migration/activation ou
 ouverture des inscriptions n’est effectuée par cette confirmation.
 
+La lecture [38064313476](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38064313476),
+51fdf30/PR86 après CI exacte38063998558 (387tests/quatre jobs), identifie
+`dbus-broker.service` en reload par son fichier public généré : zéro inconnu.
+Seul10-keycloak.conf est ajouté, aucun fichier retiré, toutes les règles
+existantes hors périmètre sont identiques. Le test littéral du lien reste
+faux ; le générateur Nixpkgs entoure ses champs de quotes. Source/trace,
+compte/soclek4 avant/après, six services/nouvelle SSH et25sites passent.
+Aucune activation ou donnée de production modifiée.
+[Rapport](../operations/vision-essai-unites-generees.json).
+La nouvelle préparation conserve les paquets/politiques du bus du socle,
+exige son unité et NSS identiques, et continue à refuser tout reload D-Bus.
+Elle conserve l'ancien répertoire de sauvegarde et qualifie les seuls deux
+répertoires/lien ajoutés avant stop/start tmpfiles. Les quotes sont décodées
+sans shell ou expansion ; toute autre règle/cible/permission/suppression
+bloque. Évaluation et projection bornée des règles sont conservées avant
+les gardes ; un refus de simulation est classé immédiatement. Cette
+préparation reste sans activation ; retour effectif non qualifié ni armé.
+
 Le diagnostic complet [38063150415](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38063150415),
 88e9516/PR85, job114245351935, réussit après CI exacte38062812884
 (384tests/quatre jobs). Les deux sources/trace, candidat présent et cluster
