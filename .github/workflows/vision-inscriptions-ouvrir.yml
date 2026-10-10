@@ -1,0 +1,70 @@
+name: Vision — ouvrir les inscriptions par invitation
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  ouvrir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Exiger la demande et la CI exactes
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Préparer la connexion existante
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-inscriptions-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-inscriptions-admin" >> "$GITHUB_ENV"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/vision-inscriptions-admin" >/dev/null
+      - name: Vérifier les sites et les accès privés avant ouverture
+        id: sites
+        run: |
+          python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+          python3 scripts/vision-essai-https.py
+      - name: Copier le seul opérateur exact et vérifier la génération enregistrée
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-inscriptions/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-inscriptions/$GITHUB_SHA/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-inscriptions/$GITHUB_SHA/source/scripts/vision-inscriptions-ouvrir.py $GITHUB_SHA preparer'"
+      - name: Relire la provenance puis ouvrir sans consommer le lien existant
+        id: ouverture
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-inscriptions/$GITHUB_SHA/source/scripts/vision-inscriptions-ouvrir.py $GITHUB_SHA ouvrir'"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Vérifier les 25 sites et les refus publics après ouverture
+        run: |
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+          python3 scripts/vision-essai-https.py
+          python3 scripts/vision-inscriptions-https.py
+      - name: Consigner uniquement après les contrôles indépendants
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-inscriptions/$GITHUB_SHA/source/scripts/vision-inscriptions-ouvrir.py $GITHUB_SHA finaliser'"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Refermer les admissions après un refus
+        if: ${{ failure() && steps.ouverture.outcome != 'skipped' }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-inscriptions/$GITHUB_SHA/source/scripts/vision-inscriptions-ouvrir.py $GITHUB_SHA fermer'"
+      - name: Vérifier la nouvelle SSH et les sites en fin d'opération
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth keycloak vision-gestion mrjam-admission mrjam-courriel.timer mrjam-sauvegarde.timer
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-inscriptions-admin"

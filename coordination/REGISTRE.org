@@ -7020,3 +7020,67 @@ Reprise réelle008671e/PR96 réussie après CI exacte38080099599 (418tests/quatr
 :PREUVE: -
 :END:
 
+* Ouvrir Vision par invitation après vérification des fournisseurs
+:PROPERTIES:
+:ID: 20261010-vision-55a081b74a6b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T21:21:42+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire confirme le fonctionnement de Vision et la création d'une invitation, puis demande explicitement vérification fournisseurs et déblocage. Contrats officiels relus10octobre2026 : Hostinger conditions2/DPA29septembre couvre VPS et est incorporé ; Proton conditions7/DPA10février applicable au responsable de traitement, SMTP prévu pour offre payante existante. Aucun achat ou signature séparée exigé par ces textes ; Suisse adéquate, hébergement Vision Allemagne, courrier Suisse/Allemagne/Norvège, sous-traitants et accès potentiels documentés. Pas de certificat général ni prétendue lecture d'un écran privé. Détails docs/VISION-OUVERTURE-INVITATIONS.md.
+
+Ajouter phase fermée vision-inscriptions-ouvrir au seul orchestrateur CI/main/provenance exacts. Exiger génération008671e activée ET enregistrée inchangée, schéma25/PG17Unix, services/SMTP qualifié, notice effective et admin sans contenu. Ouvrir configuration.inscriptions_ouvertes et renseigner les seuls champs publics confirmés (responsable Jean-Christophe Jameux, contact RGPD@MrJ.am, Allemagne, version vision-20261010), trouvés vides par GET réel /auth/configuration ; refuser des valeurs contradictoires ; aucun rebuild, ancien retour, migration, quota, compte, secret ou contenu modifié/lu. Réserver une invitation réelle en sous-transaction annulée, vérifier tous ses paramètres/usages et réservations identiques, puis25HTTP/TLS/22artefacts/refusprivés/IdP/offreAGPL et nouvelleSSH. Aucun lien ou mail utilisateur exposé/envoyé. Refus avant finalisation referme seulement admissions sans supprimer de données.
+
+Inscription native IdP reste désactivée ; invitations/plafonds/expiration/notice/courriel vérifié obligatoires. Mineurs et autres pays restent en examen manuel, moins15France exige accord parental et vérification de représentant. Rétention/purges existantes conservées ; copie téléphone qualifiée, disque Linux ultérieur. Autres projets prennent connaissance sans changer leur code/données ni intégrer automatiquement leurs utilisateurs. Publier le reçu réel après exécution, sans nouveau clic utilisateur.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 382d0b6960a3b771a2f3eb1ffb983cf2f003cf5a0d872b8dfa7dacf258ddce2a
+:LU_LE: 2026-10-10T21:24:18+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://proton.me/legal/terms
+:END:
+Contrats publics vérifiés, ouverture explicitement demandée. Lecture publique réelle : OIDC actif/inscriptions fermées, coordonnées et version de notice vides ; renseigner les seuls champs publics confirmés avec ouverture atomique, refuser toute valeur contradictoire. Tests réels de réservation annulée sans consommation, expiration/révocation/plafonds préservés ; CI exacte avant exécution.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+

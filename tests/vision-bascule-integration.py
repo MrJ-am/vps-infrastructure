@@ -83,6 +83,7 @@ def verifier(conteneur, vision):
         assert sql("SELECT count(*)=1 AND bool_and(sujet='11111111-1111-4111-8111-111111111111' AND utilisateur='owner-synthetique') FROM vision_gestion.identites;") == 't'
         assert sql("SELECT count(*)=0 FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace WHERE n.nspname='public' AND c.relname LIKE 'vision_%' AND c.relkind IN ('r','p','v','m') AND has_table_privilege('vision_administration',c.oid,'SELECT,INSERT,UPDATE,DELETE');") == 't'
         sql(q,ok=False)
+        qualifier_ouverture(sql)
         assert sql('SELECT to_jsonb(t) FROM vision_fiches t ORDER BY id;') == donnees
         # La copie initiale ne doit pas écraser une donnée ajoutée après migration.
         sql("UPDATE vision_fiches SET titre='Modifié pendant essai' WHERE utilisateur='owner-synthetique';")
@@ -113,6 +114,38 @@ def verifier(conteneur, vision):
             copie_courante_schema25_restauree=True,association_existante_rejouee_sans_insertion=True,
             reprise_compte_ferme_refusee=True)))
     finally: sql('DROP DATABASE '+base+';',db='postgres')
+
+
+def qualifier_ouverture(sql):
+    ouverture = charger('vision-inscriptions-ouvrir')
+    sql("UPDATE vision_gestion.configuration SET responsable='',contact='',pays_hebergement='',notice_version='',sauvegardes_jours=30;")
+    sql(ouverture.ouverture_sql(), ok=False)
+    assert sql('SELECT NOT inscriptions_ouvertes FROM vision_gestion.configuration;') == 't'
+    sql("INSERT INTO vision_gestion.invitations(condensat,intitule,maximum,quota_octets,expire_a) VALUES(repeat('a',64),'Synthétique',1,10000000,now()+interval '1 day');")
+    avant = sql('SELECT to_jsonb(i) FROM vision_gestion.invitations i;')
+    assert sql(ouverture.ouverture_sql()) == 't'
+    assert sql("SELECT responsable='Jean-Christophe Jameux' AND contact='RGPD@MrJ.am' AND pays_hebergement='Allemagne' AND notice_version='vision-20261010' FROM vision_gestion.configuration;") == 't'
+    assert sql('SELECT to_jsonb(i) FROM vision_gestion.invitations i;') == avant
+    assert sql('SELECT count(*)=0 FROM vision_gestion.admissions;') == 't'
+    # Une relance ne rouvre ni ne modifie une opération déjà ouverte.
+    sql(ouverture.ouverture_sql(), ok=False)
+    assert sql('SELECT inscriptions_ouvertes FROM vision_gestion.configuration;') == 't'
+    sql('UPDATE vision_gestion.configuration SET inscriptions_ouvertes=false;')
+    for avant_sql, retour_sql in (
+        ("UPDATE vision_gestion.configuration SET responsable='Inattendu';", "UPDATE vision_gestion.configuration SET responsable='Jean-Christophe Jameux';"),
+        ("UPDATE vision_gestion.invitations SET revoque_a=now();", "UPDATE vision_gestion.invitations SET revoque_a=NULL;"),
+        ("UPDATE vision_gestion.invitations SET expire_a=now()-interval '1 day';", "UPDATE vision_gestion.invitations SET expire_a=now()+interval '1 day';"),
+        ("UPDATE vision_gestion.invitations SET utilise=maximum;", "UPDATE vision_gestion.invitations SET utilise=0;"),
+        ("INSERT INTO vision_gestion.admissions(id,invitation_id,notice_version) SELECT gen_random_uuid(),id,'qualification' FROM vision_gestion.invitations;", "DELETE FROM vision_gestion.admissions;")):
+        sql(avant_sql)
+        sql(ouverture.ouverture_sql(), ok=False)
+        assert sql('SELECT NOT inscriptions_ouvertes FROM vision_gestion.configuration;') == 't'
+        sql(retour_sql)
+    sql('DELETE FROM vision_gestion.invitations;')
+    print(json.dumps(dict(ouverture_invitation_reelle_synthetique=True,
+        reservation_annulee=True,quota_usage_et_version_conserves=True,
+        invitation_absente_revoquee_expiree_epuisee_ou_reservee_refusee=True,
+        notice_inattendue_et_relance_refusees=True)))
 
 
 if __name__ == '__main__':
