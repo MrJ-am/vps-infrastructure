@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "qualification_locale": true,
+  "nixpkgs": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "source_bootstrap_dans_store": true,
+  "source_referencee_par_derivation": true,
+  "socle_ancien_drvpath": true,
+  "socle_actuel_drvpath": true,
+  "garde_activation_fermee": true,
+  "tests_python": 365,
+  "construction_reelle_vps": false,
+  "activation": false
+}

@@ -13,5 +13,6 @@ assert !(base.options.infrastructure ? courriel);
 assert p.resume.modules_passerelle_actualises;
 assert p.resume.module_postgresql_actualise;
 assert p.resume.garde_activation && !p.resume.generation_constructible;
+assert p.resume.source_vision_store;
 assert p.lot.drvPath != "";
 { ancien_sans_identite_qualifie = true; garde_activation_ferme = true; }

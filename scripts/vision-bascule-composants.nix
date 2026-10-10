@@ -20,6 +20,11 @@ let
   remplacerPostgres = ancienPostgres != postgresActuel;
   locaux = [ "gateway.nix" "mrj-auth.nix" "journal-http.nix" "identite.nix"
     "vision-gestion.nix" "courriel.nix" "vision-cycle.nix" "admission.nix" "fermeture.nix" ];
+  # toPath garde une chaîne absolue hors store : le constructeur ne voit pas
+  # le dossier root privé. Copier uniquement l'archive publique déjà vérifiée.
+  sourceVision = builtins.path {
+    path = source; name = "vision-source-a9c51acac81510d7dc896f5daf4e6fb28a36b979";
+  };
   c = (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux";
     modules = modules ++ [ ({ lib, ... }: {
@@ -40,7 +45,7 @@ let
       infrastructure.visionCycle.enable = true;
       infrastructure.admission.enable = true;
       infrastructure.fermeture.enable = true;
-      services.vision.bootstrapSource = lib.mkForce (builtins.toPath source);
+      services.vision.bootstrapSource = lib.mkForce sourceVision;
       services.vision.bootstrapCommit = lib.mkForce "a9c51acac81510d7dc896f5daf4e6fb28a36b979";
       services.visionEmbeddings.source = lib.mkForce (builtins.storePath fournisseur);
       # Conserver les protections déjà actives de l'hôte d'identité.
@@ -89,6 +94,7 @@ assert c.systemd.services.mrj-auth.environment.MRJ_AUTH_MODE == "oidc";
     lot = toString lot; inherit unites;
     postgres_paquet = toString c.services.postgresql.finalPackage;
     fournisseur_source = toString c.services.visionEmbeddings.source;
+    source_vision_store = lib.hasPrefix "/nix/store/" (toString c.services.vision.bootstrapSource);
     preconditions_validees = false; garde_activation = true;
     generation_constructible = generation.success;
     hors_vision_identite_conserve = true; inscriptions = false; activation = false;
