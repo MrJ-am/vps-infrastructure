@@ -6281,14 +6281,80 @@ Même phase automatique vision-essai-diagnostic, nouvel opérateur après CI exa
 :PREUVE: -
 :END:
 
-** BLOQUE vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 2116bc2a396cfe78ed51fd128cd595b8a3f5e56a6316d9b5fe0692f6e0809dce
-:LU_LE: 2026-10-10T15:10:16+00:00
+:LU_LE: 2026-10-10T15:27:38+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38062136739
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38063150415
 :END:
-Sources exactes et simulation classées réellement ; une unité inconnue, refus observateur_exact avant règles tmpfiles. Nouvelle SSH/six services/25sites passent. Affinage au même périmètre : séparer lecture/import, classe et cadres du seul lecteur public, projection des règles après preuves techniques avant observation distincte. Garde inchangé, aucune production ou activation.
+Lecteur corrigé en UTF-8 ; diagnostic complet réel réussi. Simulation/règles projetées, génération et compte observés avant/après ; six services/SSH/25sites conservés. Différences tmpfiles et une unité non reconnue restent à qualifier avant correction, sans production/activation. Ce DONE porte sur la lecture affinee, pas sur la bascule.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Rattacher la dernière unité Vision à sa source système générée et qualifier le lien Keycloak
+:PROPERTIES:
+:ID: 20261010-vision-bac64be86ef8
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T15:27:38+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic complet88e9516/PR85, CI exacte38062812884 (384tests/quatre jobs), signal38063142265 puis Actions38063150415/job114245351935 réussit. Sources/trace exactes, candidat présent, cluster retiré, propriétaire et soclek4 avant/après passent. Unité tmpfiles identique hors X-Restart-Triggers ; ancien répertoire de sauvegarde absent des nouvelles règles, nouvelles règles sauvegarde commune/effacements présentes ; ensemble de fichiers différent et une unité non reconnue. Nouvelle SSH/six services/25HTTP/TLS finaux conservés. Aucune activation/migration de production. Reçu operations/vision-essai-diagnostic-complet.json. TypeError du lecteur SHA256 corrigé en UTF-8 et reproduit/vérifié en conteneur sans réseau.
+
+Dernière qualification en lecture seule de cette même tentative1760809 : identifier les noms techniques restants en les rapprochant des seuls fichiers d'unités générés par Nix dans les générations ancienne/candidate. Nom borné/syntaxe de système, fichier regular/public résolu dans le store, même basename ; aucune identité, instance nominative ou adresse de courriel permise. Un nom arbitraire du journal privé sans ce rattachement n'est jamais publié. Les montages de credentials et namespaces HTTP/identité ont des noms constants explicitement définis, sans lecture de credentials. Aucun contenu d'unité, ligne de journal ou chemin libre exporté.
+
+Comparer aussi les fichiers tmpfiles existants hors les trois règles connues, noms des nouveaux fichiers publics générés, et présence exacte du seul lien d'import Keycloak créé par le module Nixpkgs installé. Aucun texte de règle inconnu ni contenu de l'import/credential n'est lu ou publié. Cela permet de préparer ensuite un garde strict des seules différences qualifiées et de conserver l'ancienne règle de sauvegarde. Le garde verifier_dry reste inchangé dans cette lecture ; aucun élargissement d'activation n'est déduit de l'existence d'un fichier natif.
+
+Même phase fermée vision-essai-diagnostic, nouvel opérateur après CI exacte. Pas de construction, SQL de production, configuration, SMTP, ouverture ou intervention du propriétaire. Les autres projets prennent connaissance sans action ; Vision consignera les faits et limites avant la préparation distincte. Récupération téléphone confirmée ; copie Linux/disque et conservation indépendante de clé restent ultérieures. Admission tierce fermée jusqu'à validation juridique distincte.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: d4073c5029c7b9aabf9e68f0275294039943df05c3300bd319576b50acc92d4a
+:LU_LE: 2026-10-10T15:29:11+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: scripts/vision-essai-diagnostiquer.py
+:END:
+Qualification native de noms publics générés et lien import seulement ; tests refusent instance nominative, source hors store et cible de credential étrangère. Garde inchangé. Résultat réel après CI exacte attendu.
 
 ** TODO vps
 :PROPERTIES:

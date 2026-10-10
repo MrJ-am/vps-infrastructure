@@ -24,7 +24,9 @@ CONNUS=frozenset(('sshd','nginx','nginx-config-reload','postgresql','postgresql-
     'systemd-tmpfiles-resetup','systemd-journald','systemd-journald@identite','systemd-networkd',
     'systemd-journald-varlink@identite','systemd-sysctl','nix-daemon','acme-log.mrj.am',
     'sysinit-reactivation','acme-finished-log.mrj.am','systemd-sysusers','userborn',
-    'systemd-random-seed'))
+    'systemd-random-seed','systemd-journald@http','systemd-journald-varlink@http',
+    r'run-credentials-mrjam\x2damorcage\x2didentite.service',
+    r'run-credentials-mrj\x2dauth.service'))
 
 
 def exiger(c):
@@ -44,6 +46,23 @@ def etape(nom):
 def verifier_observateur(texte):
     exiger(hashlib.sha256(texte.encode('utf-8')).hexdigest()==
         '61ba89f8551a95a026293fca6ff3e79a6e5a9b6ed34c96255aa9828986ec2c2e')
+
+
+def unites_publiques(systemes,racine_store=Path('/nix/store')):
+    """Noms du seul code système public généré, aucun contenu de fichier."""
+    resultat=set();store=racine_store.resolve()
+    for systeme in systemes:
+        fichiers=list((Path(systeme)/'etc/systemd/system').iterdir())
+        exiger(len(fichiers)<=2048)
+        for p in fichiers:
+            nom=p.name
+            if len(nom)>200 or not re.fullmatch(r'[A-Za-z0-9_.:+@-]+\.(?:service|timer|socket|target|mount|path)',nom):continue
+            if '@' in nom and not any(nom.startswith(n+'@'+i+'.') for n in
+                ('systemd-journald','systemd-journald-varlink') for i in ('','http','identite')):continue
+            reel=p.resolve(strict=True)
+            if reel.is_relative_to(store) and reel.is_file() and reel.name==nom and reel.stat().st_size<=1048576:
+                resultat.add(nom)
+    return resultat
 
 
 def comparer_repertoires(ancien,nouveau,racine_store=Path('/nix/store')):
@@ -66,27 +85,37 @@ def comparer_repertoires(ancien,nouveau,racine_store=Path('/nix/store')):
         return {p.name:lire(p).splitlines() for p in fichiers}
     avant,apres=configs(ancien),configs(nouveau)
     filtre=lambda ls:[l for l in ls if l.strip() not in regles.values()]
+    ajoutes=set(apres)-set(avant);retires=set(avant)-set(apres)
+    exiger(all(re.fullmatch(r'[A-Za-z0-9_.+-]+\.conf',n) for n in ajoutes|retires))
+    lien='L+ /run/keycloak/data/import/realm-import.json - - - - /run/credentials/keycloak.service/realm-import'
+    lignes_lien=[' '.join(l.split()) for l in apres.get('10-keycloak.conf',[]) if l.strip() and not l.lstrip().startswith('#')]
     return dict(resetup_identique_hors_triggers=unite(ancien)==unite(nouveau),
         fichiers_tmpfiles_identiques=set(avant)==set(apres),
+        fichiers_tmpfiles_ajoutes=sorted(ajoutes),fichiers_tmpfiles_retires=sorted(retires),
+        lien_import_keycloak_nouveau_exact='10-keycloak.conf' in ajoutes and lignes_lien==[lien],
+        regles_existantes_hors_perimetre_identiques=all(filtre(avant[n])==filtre(apres[n]) for n in set(avant)&set(apres)),
         regles_hors_perimetre_identiques=set(avant)==set(apres) and
             all(filtre(avant[n])==filtre(apres[n]) for n in avant),
         regles_connues={n:dict(avant=sum(l.strip()==r for ls in avant.values() for l in ls),
             apres=sum(l.strip()==r for ls in apres.values() for l in ls)) for n,r in regles.items()})
 
 
-def classer(texte):
+def classer(texte,unites_generees=frozenset()):
     texte=re.sub(r'\x1b\[[0-9;]*[A-Za-z]','',texte)
     exiger(len(texte)<1048576)
-    actions=[];inconnues=0
+    actions=[];inconnues=0;generees=0
     for action,noms in re.findall(r'would (stop|restart|reload|start) the following units: ([^\n]+)',texte):
         for u in {u.strip() for u in noms.split(',')}:
-            suffixe=next((s for s in ('.service','.timer','.socket','.target') if u.endswith(s)),None)
+            suffixe=next((s for s in ('.service','.timer','.socket','.target','.mount','.path') if u.endswith(s)),None)
             if suffixe and u[:-len(suffixe)] in CONNUS:actions.append(dict(action=action,unite=u))
+            elif u in unites_generees:
+                actions.append(dict(action=action,unite=u,source_unite_generee=True));generees+=1
             else:inconnues+=1
     return dict(activation_simulee='would activate the configuration' in texte,
         redemarrage_systemd_annonce=bool(re.search(r'would restart systemd',texte)),
         arret_swap_annonce=bool(re.search(r'would stop swap',texte)),
-        actions_connues=sorted(actions,key=lambda a:(a['action'],a['unite']))[:64],unites_inconnues=inconnues)
+        actions_connues=sorted(actions,key=lambda a:(a['action'],a['unite']))[:64],unites_inconnues=inconnues,
+        unites_rattachees_source_generee=generees)
 
 
 def refus_ferme(exception):
@@ -136,6 +165,7 @@ def main(revision):
         str(Path('/nix/var/nix/profiles/system').resolve(strict=True))==courant)
     etape('repertoires')
     repertoires=comparer_repertoires(courant,generation)
+    resultat=classer(lire(d,'dry-activate-prive.txt'),unites_publiques((courant,generation)))
     print(json.dumps(dict(generation_construite_presente=True,socle_generation_identique=True,
         observateur_complet=False,**repertoires)),flush=True)
     etape('observateur_exact')

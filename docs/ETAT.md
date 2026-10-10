@@ -14,6 +14,21 @@ Cela ne prouve ni sauvegarde du VPS entier, ni copie mensuelle sur disque
 Linux, ni copie indépendante de la clé. Aucune migration/activation ou
 ouverture des inscriptions n’est effectuée par cette confirmation.
 
+Le diagnostic complet [38063150415](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38063150415),
+88e9516/PR85, job114245351935, réussit après CI exacte38062812884
+(384tests/quatre jobs). Les deux sources/trace, candidat présent et cluster
+retiré sont confirmés ; le compte et soclek4 sont observés avant/après.
+L'unité tmpfiles est identique hors X-Restart-Triggers, mais les fichiers de
+règles diffèrent ; règle de sauvegarde réservée retirée, sauvegarde commune
+et effacements ajoutés. Une unité reste non classée. Les six services/nouvelle
+SSH et25HTTP/TLS passent ; aucune production modifiée.
+[Rapport complet](../operations/vision-essai-diagnostic-complet.json).
+La prochaine lecture rattache les noms techniques restants aux seuls fichiers
+publics d'unités générés dans le store, sans contenu ni instance nominative.
+Elle compare les règles existantes séparément et qualifie exactement le lien
+d'import du module Keycloak natif, sans lire l'import ou un credential. Aucun
+garde de simulation n'est élargi par cette qualification.
+
 Le lecteur affiné [38062136739](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38062136739),
 6097fa2/PR84, job114242394126, confirme les deux sources et classe la simulation :
 PostgreSQL/Vision, ancien IdP privé, sauvegardes associées, Nginx et tmpfiles.

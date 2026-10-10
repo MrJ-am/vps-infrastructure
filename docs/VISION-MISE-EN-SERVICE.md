@@ -479,3 +479,16 @@ qualifie la source exacte et refuse sa corruption. Le même essai importe
 ensuite l'observateur et atteint le contrôle du socle, qui refuse normalement
 les preuves serveur absentes de la fixture. Cela localise le défaut du lecteur
 sans prétendre prouver l'état VPS ; la lecture réelle reste nécessaire.
+
+Le diagnostic88e9516/38063150415 réussit complètement, y compris observation
+avant/après du socle et du compte. Le changement tmpfiles exige encore sa
+qualification : ancien répertoire de sauvegarde retiré, deux ajouts, fichiers
+différents. Une unité n'est pas classée. La dernière lecture compare son nom
+aux seuls fichiers publics générés par Nix, bornés et sans instance nominative,
+ou à des noms constants de montages de credentials/namespaces déjà déclarés.
+Aucun fichier de credential, contenu d'unité ou ligne privée n'est publié.
+Elle vérifie aussi les règles existantes et le seul nouveau lien Keycloak
+attendu : /run/keycloak/data/import/realm-import.json vers le credential de
+keycloak.service. Les données de l'import ne sont jamais ouvertes. Un
+rattachement technique ne vaut pas autorisation d'activer une unité ; le garde
+et la préparation distincte restent fermés à toute différence non qualifiée.
