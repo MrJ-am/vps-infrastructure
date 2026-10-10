@@ -6088,11 +6088,11 @@ Pas de rotation de configuration active, purge de copies anciennes, modification
 ** LU vision
 :PROPERTIES:
 :LU_SHA256: 741bf48f0b6e66beb5378bdaa0b2bb20bb766a570f6df9c2828de0646cb0bb5b
-:LU_LE: 2026-10-10T11:42:35+00:00
+:LU_LE: 2026-10-10T11:52:33+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Confirmation du témoin et quatre tests de récupération/AGE natif réussis ; préparation qualifiée, copie réelle à exécuter après CI exacte.
+:PREUVE: Opérateur6f0d38cddaabb6d685efcefc9b7b5036b0ef9950/PR81, CI38049451451/373tests ; Actions38049744292/job114206319683, operations/vision-recuperation-resultat.json.
 :END:
-Réception/déchiffrement du témoin rapportés ; copie réelle et preuve extérieure encore à obtenir.
+Deux restaurations comparées, SQLite intègre, archive AGE473596octets et lecteur remis au relais ; cluster/clair retirés, socle et nouvelle SSH/six services/25sites finaux conservés. Aucune rotation/migration/activation. Réception et vérification complète par le propriétaire encore attendues ; elles ne sont pas déduites du SMTP.
 
 ** TODO vps
 :PROPERTIES:
