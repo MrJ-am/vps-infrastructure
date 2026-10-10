@@ -37,8 +37,8 @@ restent deux actions distinctes.
 | Phase | Situation au regroupement | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
-| Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Identifier le refus du service d'identité avant toute reprise |
-| Compte commun du propriétaire | Compte initial créé et mail accepté par le relais :69e0d1d/37999358368 ;335tests/CI exacte réussis | Le propriétaire choisit son mot de passe et configure son OTP via le lien initial1800s ; confirmer ensuite la connexion pwd/otp réellement effectuée depuis moins de300s, aucun secret en conversation |
+| Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
+| Compte commun du propriétaire | Compte/email/password/OTP et connexion pwd+otp fraîche vérifiés :0fbce8d/38002451652 | Étape humaine validée ; préparer association historique et bascule, sans considérer la session historique comme fraîche aujourd’hui |
 | Rattachement historique et bascule Vision | Non exécutés | Ajouter une phase qualifiée à ce même point d'entrée ; l'agent la déclenchera et la suivra |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
@@ -49,7 +49,7 @@ du timer, retour autonome armé, essai indépendant de SSH, contrôles privés,
 Les qualifications de construction précédentes ne sont pas refaites.
 
 La phase courante vient uniquement de `operations/vision-mise-en-service.json`
-sur le main qualifié : valeurs `amorcage` ou `diagnostic`, sans paramètre libre.
+sur le main qualifié : valeurs fermées `amorcage`, `diagnostic`, `construction`, `proprietaire` ou `proprietaire-observer`, sans paramètre libre.
 Le diagnostic lit seulement les journaux privés de la tentative identifiée,
 classe les refus et revérifie le socle. Il ne modifie ni génération ni base.
 Les phases restent des jobs explicites du même point d'entrée.
