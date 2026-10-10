@@ -592,7 +592,11 @@ déployeur en root ; seuls les SQL de l'archive revue sont lus via stdin par
 psql sous postgres. Ancien schéma18 exigé avant toute première mutation.
 
 Le générateur est installé dans `/usr/local/lib/systemd/system-generators`,
-après vérification du chemin de recherche natif. Le timer15min et les outils
+après vérification du chemin de recherche natif. Une marque volatile dans
+`/run` empêche le nouveau démarrage des cibles actives par NixOS de déclencher
+le retour avant le délai. Le service exact reste généré ; après un reboot,
+la marque volatile absente permet son want multi-user et la fermeture native.
+Le timer15min et les outils
 épinglés sont indépendants de SSH. Migration et essai test n'interviennent
 qu'après armement. Retour : copie courante d'identité, restauration inverse
 transactionnelle et ACL ciblées ; jamais un vieux dump Vision. Une migration

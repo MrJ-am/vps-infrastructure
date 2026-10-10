@@ -5,6 +5,8 @@ import json
 import os
 from pathlib import Path
 import stat
+import subprocess
+import shutil
 import tempfile
 import unittest
 
@@ -50,6 +52,27 @@ class Activation(unittest.TestCase):
             self.assertFalse((autre/'fichier').exists())
             autre.chmod(0o777)
             with self.assertRaises(ValueError):m.installer_prive(autre/'fichier',b'refuse')
+
+
+    def test_retour_au_boot_mais_pas_au_redemarrage_des_cibles_durant_test(self):
+        spec=importlib.util.spec_from_file_location('reprise_activation',ROOT/'scripts/vision-essai-reprise.py')
+        reprise=importlib.util.module_from_spec(spec);spec.loader.exec_module(reprise)
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);outils=d/'outils';outils.mkdir()
+            for n in ('bash','cp','mkdir','ln','rm'):(outils/n).symlink_to(shutil.which(n))
+            unite='vision-essai-retour-aaaaaaaaaaaa';volatile=d/'marque-volatile'
+            recette=reprise.fichiers(d,outils,unite)
+            for n,t in recette.items():(d/n).write_text(t)
+            (d/'reprise-generateur.sh').chmod(0o700)
+            wrapper=d/'generateur-essai.sh';wrapper.write_text(m.generateur_essai(d,outils,unite,volatile))
+            (d/'commence').write_text('1\n');volatile.write_text('1\n')
+            for boot in (False,True):
+                if boot:volatile.unlink()
+                sorties=[d/('sortie-'+str(boot)+str(i)) for i in range(3)]
+                for p in sorties:p.mkdir()
+                subprocess.run(['bash',str(wrapper),*map(str,sorties)],check=True,capture_output=True)
+                self.assertEqual((sorties[0]/(unite+'.service')).read_text(),recette['reprise.service'])
+                self.assertEqual((sorties[0]/'multi-user.target.wants'/(unite+'.service')).is_symlink(),boot)
 
 
 if __name__=='__main__':unittest.main()
