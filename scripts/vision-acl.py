@@ -72,16 +72,26 @@ DO $$ BEGIN
   LOCK TABLE vision_gestion.comptes IN ACCESS EXCLUSIVE MODE;
   PERFORM 1 FROM vision_gestion.configuration WHERE singleton FOR UPDATE;
   IF EXISTS(SELECT FROM vision_gestion.configuration WHERE inscriptions_ouvertes)
-   OR EXISTS(SELECT FROM vision_gestion.admissions WHERE annulee_a IS NULL AND consommee_a IS NULL AND expire_a>now())
-   OR EXISTS(SELECT FROM vision_gestion.comptes WHERE utilisateur NOT IN (""" + autorises + """)) THEN
+   OR EXISTS(SELECT FROM vision_gestion.comptes WHERE NOT actif OR utilisateur NOT IN (""" + autorises + """))
+   OR (SELECT count(*) FROM vision_gestion.comptes)<>""" + str(len(releve['proprietaires'])) + """ THEN
    RAISE EXCEPTION 'Retour ancien incompatible : conserver une version multi-utilisateur et son isolation';
+  END IF;
+  IF to_regclass('vision_gestion.admissions') IS NOT NULL THEN
+   IF EXISTS(SELECT FROM vision_gestion.admissions WHERE annulee_a IS NULL AND consommee_a IS NULL AND expire_a>now()) THEN
+    RAISE EXCEPTION 'Retour ancien incompatible : admission en cours';
+   END IF;
+  END IF;
+  IF to_regclass('vision_gestion.effacements') IS NOT NULL THEN
+   IF EXISTS(SELECT FROM vision_gestion.effacements) THEN
+    RAISE EXCEPTION 'Retour ancien incompatible : ne pas rétablir un accès effacé';
+   END IF;
   END IF;
  END IF;
 END $$;
 """]
     # NOT IN(NULL) ne représente pas l'ensemble vide dans SQL.
     if not releve['proprietaires']:
-        lignes[-1] = lignes[-1].replace('WHERE utilisateur NOT IN (NULL)', '')
+        lignes[-1] = lignes[-1].replace(' OR utilisateur NOT IN (NULL)', '')
     # PostgreSQL refuse de changer le propriétaire d'une séquence liée avant
     # celui de sa table. Le relevé garde son ordre canonique pour comparaison.
     ordre = {'DATABASE': 0, 'SCHEMA': 1, 'TABLE': 2, 'VIEW': 3, 'MATERIALIZED VIEW': 4, 'SEQUENCE': 5, 'FUNCTION': 6}
@@ -95,9 +105,13 @@ END $$;
         # Les nouveaux rôles sont présents après roles.sql ; le retour ne les
         # supprime pas et ne touche pas leurs usages dans d'autres bases.
         destinataires = {'PUBLIC', *ROLES, *(g['grantee'] for g in o['grants'])}
-        roles = ','.join('PUBLIC' if r == 'PUBLIC' else identifiant(r) for r in sorted(destinataires))
         type_grant = 'TABLE' if o['type'] in ('VIEW', 'MATERIALIZED VIEW') else o['type']
-        lignes.append('REVOKE ALL ON ' + type_grant + ' ' + o['nom'] + ' FROM ' + roles + ';')
+        # Une migration peut échouer avant la transaction créant les rôles.
+        # Révoquer seulement les destinataires présents, sans créer de rôle
+        # et sans rendre le retour dépendant de la fin de roles.sql.
+        candidats = ','.join(litteral(r) for r in sorted(destinataires))
+        prefixe = litteral('REVOKE ALL ON ' + type_grant + ' ' + o['nom'] + ' FROM ')
+        lignes.append("DO $$ DECLARE roles text; BEGIN SELECT string_agg(CASE WHEN r='PUBLIC' THEN 'PUBLIC' ELSE quote_ident(r) END,',' ORDER BY r) INTO roles FROM unnest(ARRAY["+candidats+"]) r WHERE r='PUBLIC' OR EXISTS(SELECT FROM pg_roles WHERE rolname=r); EXECUTE "+prefixe+"||roles; END $$;")
         for g in o['grants']:
             r = 'PUBLIC' if g['grantee'] == 'PUBLIC' else identifiant(g['grantee'])
             lignes.append('GRANT ' + g['privilege'] + ' ON ' + type_grant + ' ' + o['nom'] + ' TO ' + r +

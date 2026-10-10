@@ -192,6 +192,8 @@ jobs:
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json tests/vision-bascule-composants-ancien.nix
           sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
+            nix-instantiate --eval --strict --json tests/vision-essai-generation.nix
+          sudo env NIX_REMOTE=local NIX_PATH="nixpkgs=$RUNNER_TEMP/nixpkgs-$NIXPKGS_REVISION" \
             nix-instantiate --eval --strict --json scripts/vision-semantique-config.nix \
             --argstr configuration "$PWD/hosts/hostinger/logique.nix" >/dev/null
           PYTHONPYCACHEPREFIX="$RUNNER_TEMP/python-cache" python3 -m py_compile scripts/vision-semantique-deployer.py scripts/vision-semantique-verifier.py

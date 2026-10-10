@@ -393,3 +393,48 @@ extérieure sur téléphone sont validées ; copie mensuelle sur disque Linux
 et conservation indépendante de la clé restent à réaliser. La préparation
 d’un essai protégé reste distincte, ainsi que les conditions juridiques
 d’admission tierce. Aucun Run workflow n’est demandé au propriétaire.
+
+## Génération complète préparée, essai encore distinct
+
+La phase fermée `vision-essai-preparer` exige la confirmation exacte de la
+copie réelle extérieure avant toute préparation. Elle rejoue les snapshots,
+restaurations, migrations019–025, association du seul propriétaire et deux
+retours de droits dans un cluster privé, puis le retire. Aucune migration
+ou mutation SQL de production dans cette phase.
+
+Un assemblage Nix commun conserve les composants à garde fermée et fournit
+un candidat complet seulement à la préparation qualifiée. Les registres
+actifs, les unités SSH/Matheval/fournisseur/sauvegarde Matheval, réseau,
+PostgreSQL17/dataDir/absence TCP et hôtes hors Vision/identité sont comparés.
+La future sauvegarde Vision/identité utilise explicitement la clé téléphone
+confirmée ; les sauvegardes actives et les clés/copies antérieures restent
+inchangées tant que l'essai distinct n'est pas exécuté.
+
+L'interface a9c51a/style96fa28/signature17495b est épinglée par ZIP, manifeste
+et22 empreintes. Les23 fichiers publics sont copiés dans le store, sans secret
+ni contenu utilisateur. Nginx et le document root Lisp ciblent ce jeu exact ;
+le retour NixOS rétablit le routage et l'ancien document root. Le lien de la
+release backend reste à transférer lors de l'essai distinct.
+
+Nginx est testé dans son confinement natif privé ; le dry-activate refuse
+toute unité étrangère au changement. L'entrée persistante importe la
+référence originale stable et doit reproduire exactement la génération
+construite, sans auto-référence au futur lien /etc. Un script shell de retour
+hors réseau/Python est conservé en privé, vérifié par bash, et un timer
+indépendant de test est réellement répété. Le retour effectif n'est pas
+armé ici. Sa qualification opérationnelle et l'essai sur production restent
+une phase distincte, avec nouvelles preuves avant enregistrement.
+
+Le retour SQL ciblé traite aussi un échec avant admissions ou roles.sql ;
+aucun rôle absent n'est créé et aucun ancien dump Vision n'est restauré.
+Il refuse tiers, admissions en cours, effacement, propriétaire manquant ou
+inactif. Les tests synthétiques conservent les données modifiées après
+migration et vérifient ces refus. La recette de retour d'identité transfère
+la copie courante à la fin de l'essai, pas une ancienne sauvegarde. Sa mise
+en œuvre et ses interruptions devront être éprouvées avant armement.
+
+Le rapport réel de cette phase ne peut être déduit de la CI. Le contrôle
+final vérifie l'ancien socle puis nouvelle SSH/six services/25sites. Aucun
+envoi SMTP supplémentaire, activation ou inscription tierce ici. La copie
+mensuelle Linux/disque et la conservation indépendante de la clé privée
+restent à réaliser ; les conditions juridiques tierces restent distinctes.

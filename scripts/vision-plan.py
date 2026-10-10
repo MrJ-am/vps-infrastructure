@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def verifier(plan):
-    if not isinstance(plan, dict) or set(plan) != {'version', 'action'} or type(plan['version']) is not int or plan['version'] != 1 or plan['action'] not in ('amorcage', 'diagnostic', 'construction', 'proprietaire', 'proprietaire-observer', 'vision-preparer', 'vision-diagnostic', 'vision-telephone', 'vision-sauvegarder'):
+    if not isinstance(plan, dict) or set(plan) != {'version', 'action'} or type(plan['version']) is not int or plan['version'] != 1 or plan['action'] not in ('amorcage', 'diagnostic', 'construction', 'proprietaire', 'proprietaire-observer', 'vision-preparer', 'vision-diagnostic', 'vision-telephone', 'vision-sauvegarder', 'vision-essai-preparer'):
         raise ValueError('Plan de mise en service non qualifié')
     return plan['action']
 

@@ -6102,3 +6102,71 @@ Copie réelle reçue et déchiffrée complètement sur Nix-on-Droid : empreinte 
 :PREUVE: -
 :END:
 
+* Qualifier la génération complète et préparer le retour de Vision sans activation
+:PROPERTIES:
+:ID: 20261010-vision-584bbbe49cc1
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T14:19:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La copie réelle38049744292 a été reçue et déchiffrée intégralement sur Nix-on-Droid ; tous les fichiers/empreintes et le défi256bits retourné correspondent au reçu. Confirmation séparée1c5d142/operations/vision-recuperation-confirmation.json, clé privée non transmise. La copie mensuelle Linux/disque et la conservation indépendante de cette clé restent à réaliser, sans attendre le PC pour cette qualification.
+
+Préparer une phase fermée vision-essai-preparer au point d’entrée automatique, après CI exacte : même observateur immuable du soclek4 et du compte, nouvelles restaurations réelles isolées, migrations019–025 et association/admin sans accès aux contenus, retour ACL deux fois. Le retour traite aussi une migration partielle avant admissions/roles.sql ; il refuse compte manquant/inactif, effacement, tiers ou admission en cours, afin de ne pas rétablir un accès supprimé. Les essais synthétiques vérifient la conservation de données ajoutées pendant l’essai.
+
+Construire ensuite la génération complète uniquement après la confirmation exacte de récupération et les nouvelles preuves isolées. Même assemblage que les composants fermés ; registres actifs, paquet PG/dataDir/absence TCP/fournisseur, SSH/réseau, unités Matheval et sauvegarde Matheval, routage hors Vision/identité conservés. Source Vision a9c51a/style96fa28 et interface23 fichiers (22 au manifeste) épinglés par empreintes ; documents/actifs publics dans le store, aucun secret. Destinataire de la future sauvegarde Vision/identité explicitement limité à la nouvelle clé téléphone ; Matheval et copies/clé anciennes inchangés. Aucun changement de la sauvegarde actuellement active.
+
+Valider Nginx dans son confinement natif privé, dry-activate avec unités autorisées, entrée persistante sans cycle reproduisant exactement le candidat, script shell de retour hors réseau/Python avec droits ciblés et identité courante (jamais ancien dump utilisateur), syntaxe et répétition d’un timer indépendant. Conserver rapports/diagnostics root0600, ne publier que catégories/booleens/preuves. Pas d’activation, SQL production, ouverture ou remise SMTP supplémentaire dans cette phase. La phase d’essai effectif et ses contrôles de retour demeurent distincts ; son timer n’est pas armé ici. Conditions juridiques d’admission tierce distinctes, inscriptions fermées.
+
+Les autres projets prennent connaissance sans action sur leur code/données ; aucune reconstruction par les consommateurs n’est prétendue. Vision publiera le résultat réel et les limites avant l’essai distinct. Détails : docs/VISION-MISE-EN-SERVICE.md et scripts/vision-essai-qualification.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 54f92173f74b88527bc5e02fa8602355b674108adb21b09fd596c78d2b7b902c
+:LU_LE: 2026-10-10T14:19:54+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Qualification locale :377tests, PG17 synthétique avec modifications pendant essai/retour partiel/refus effacement ; Nix générations ancien/actuel et gardes fermés.
+:END:
+Préparation complète sans activation : interface figée, nouvelle clé Vision/identité prospective, génération complète/Nginx/dry-activate/entrée persistante/timer de test. Résultat réel Actions encore attendu ; aucun retour effectif armé ou essai de production.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
