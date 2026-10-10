@@ -74,5 +74,21 @@ class Activation(unittest.TestCase):
                 self.assertEqual((sorties[0]/(unite+'.service')).read_text(),recette['reprise.service'])
                 self.assertEqual((sorties[0]/'multi-user.target.wants'/(unite+'.service')).is_symlink(),boot)
 
+    @unittest.skipUnless(os.geteuid()==0,'Qualification root exécutée en CI')
+    def test_parent_backend_reellement_traversable_malgre_umask_prive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);os.chown(d,0,65534);d.chmod(0o750)
+            parent=d/'backend';ancien=os.umask(0o077)
+            try:m.preparer_parent_backend(parent,65534)
+            finally:os.umask(ancien)
+            fichier=parent/'preuve';fichier.write_text('technique')
+            os.chown(fichier,0,65534);fichier.chmod(0o440)
+            def sans_privilege():os.setgid(65534);os.setuid(65534)
+            r=subprocess.run(['/bin/cat',str(fichier)],capture_output=True,preexec_fn=sans_privilege)
+            self.assertEqual(r.returncode,0);self.assertEqual(r.stdout,b'technique')
+            parent.chmod(0o700)
+            r=subprocess.run(['/bin/cat',str(fichier)],capture_output=True,preexec_fn=sans_privilege)
+            self.assertNotEqual(r.returncode,0)
+
 
 if __name__=='__main__':unittest.main()
