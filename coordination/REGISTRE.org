@@ -6217,14 +6217,78 @@ Aucun nouvel essai, construction, SQL ou configuration de production ; aucune re
 :PREUVE: -
 :END:
 
-** LU vision
+** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: 9c09d96231723582f4bcc81d9d312e391a4508b3f80c4ea3668b74585fa81cb3
-:LU_LE: 2026-10-10T14:37:56+00:00
+:LU_LE: 2026-10-10T14:57:57+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Lecteur fermé qualifié localement ;379tests. Cible1760809/38059719721 ; deux SHA et cadre AST fixes.
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38060939425
 :END:
-Diagnostic en lecture seule préparé, garde de simulation inchangé ; résultat réel encore attendu après CI exacte. Aucun SQL/construction/activation ou inscription.
+Lecteur réservé refusé avant projection complète ; cause précise inconnue. Nouvelle SSH/six services/25sites passent, aucune production ou activation. Affinage fermé sous nouvel opérateur, garde inchangé.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Affiner la lecture du refus Vision sans modifier ses gardes
+:PROPERTIES:
+:ID: 20261010-vision-b1d46dbd41ea
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T14:57:57+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic fermé a5fd36b/PR83, Actions38060939425/job114238911989 après CI exacte38060384022 (379tests/quatre jobs), refuse avant projection finale. Aucun motif précis n'est déduit de cette lecture. Nouvelle SSH/six services/25HTTP/TLS finaux réussissent ; production inchangée. Reçu partiel operations/vision-essai-diagnostic-refus.json. Confirmation de récupération téléphone1c5d142 inchangée et validée.
+
+Affiner uniquement le lecteur de cette même tentative1760809 : conserver tous les gardes, émettre l'étape constante d'un refus, projeter les actions/noms connus dès validation des deux sources exactes, puis qualifier les autres preuves séparément. Lire les configurations tmpfiles publiques construites dans le store ; émettre seulement égalité des fichiers/règles hors périmètre, égalité de l'unité hors X-Restart-Triggers et comptages avant/après de trois règles déjà définies (répertoire sauvegarde réservée, sauvegarde commune et effacements Vision). Aucun nom/ligne/chemin libre ni journal privé exporté. Essais synthétiques refusent règle étrangère ou changement de commande, et vérifient absence de données privées dans la projection.
+
+Même phase automatique vision-essai-diagnostic, nouvel opérateur après CI exacte ; aucun SQL, construction, configuration, activation, SMTP, ouverture ou relance du propriétaire. Le garde verifier_dry n'est pas élargi. Vision publiera les constats réels avant toute correction ; autres projets prennent connaissance sans action. Sauvegarde mensuelle Linux/disque et conservation indépendante de clé restent distinctes, sans attendre le PC pour ce diagnostic. Préconditions juridiques tierces inchangées.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 2116bc2a396cfe78ed51fd128cd595b8a3f5e56a6316d9b5fe0692f6e0809dce
+:LU_LE: 2026-10-10T14:58:10+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: scripts/vision-essai-diagnostiquer.py
+:END:
+Lecture affinee sans changement de garde, tests de projection et de règles étrangères réussis. Diagnostic réel après CI exacte encore attendu.
 
 ** TODO vps
 :PROPERTIES:

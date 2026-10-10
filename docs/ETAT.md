@@ -14,6 +14,16 @@ Cela ne prouve ni sauvegarde du VPS entier, ni copie mensuelle sur disque
 Linux, ni copie indépendante de la clé. Aucune migration/activation ou
 ouverture des inscriptions n’est effectuée par cette confirmation.
 
+Le lecteur réservé [38060939425](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38060939425),
+a5fd36b/PR83, job114238911989, refuse le diagnostic avant sa projection
+complète. Aucun détail de simulation ni cause précise n'en sont déduits.
+Nouvelle SSH/six services et25HTTP/TLS finaux réussissent ; aucune production
+modifiée. [Reçu partiel](../operations/vision-essai-diagnostic-refus.json).
+Le lecteur affiche désormais l'étape fermée du refus et projette la simulation
+aussitôt après les deux sources exactes. Il compare aussi les règles tmpfiles
+par booléens et compte les seules règles prévues, sans texte privé. Ces
+constats n'assouplissent aucun garde ni ne qualifient l'essai actif.
+
 La préparation complète [38045641408](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045641408)
 réussit sur464c81f/PR79, job114194522693, après CI exacte38045367821
 (365tests Python et quatre jobs réussis). La génération k4 et les six PID
