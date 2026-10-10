@@ -50,11 +50,11 @@ def charger(nom, chemin):
     m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
 
 
-def classer(texte, sources):
+def classer(texte, sources, dossier=DOSSIER):
     """Seuls les noms de fichiers/fonctions prouvés par la source sont émis."""
     texte = re.sub(r'\x1b\[[0-9;]*[A-Za-z]', '', texte)
     cadres = []
-    motif = r'(?m)^  File "'+re.escape(str(DOSSIER/'source/scripts'))+r'/([^"/\n]+)", line ([0-9]{1,6}), in ([A-Za-z_][A-Za-z_0-9]*|<module>)$'
+    motif = r'(?m)^  File "'+re.escape(str(dossier/'source/scripts'))+r'/([^"/\n]+)", line ([0-9]{1,6}), in ([A-Za-z_][A-Za-z_0-9]*|<module>)$'
     for nom, ligne, fonction in re.findall(motif, texte):
         if nom not in sources or not nom.endswith('.py'): continue
         n = int(ligne); arbre = ast.parse(sources[nom])

@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "synthetique": true,
+  "entree_persistante_identique": true,
+  "remplacement_regulier_sans_cycle": true,
+  "refus_source_etrangere": true,
+  "refus_copie_modifiee": true,
+  "refus_injection_chemin": true,
+  "projection_refus_sans_message_prive": true,
+  "qualification_vps": false,
+  "activation": false
+}

@@ -36,6 +36,7 @@ audit = charger('amorcage_audit', 'vision-identite-amorcage-auditer.py')
 reprise = charger('amorcage_reprise', 'vision-amorcage-reprise.py')
 copie_froide = charger('amorcage_copie_froide', 'vision-amorcage-copie-froide.py')
 boucle_locale = charger('amorcage_boucle_locale', 'vision-identite-boucle-locale.py')
+entree_configuration = charger('amorcage_entree_configuration', 'vision-entree-configuration.py')
 exiger = construction.exiger
 SERVICES = ('sshd', 'postgresql', 'vision', 'matheval', 'mrj-auth')
 
@@ -217,6 +218,7 @@ class Essai:
         self.commande(self.outils/'nix-store', '--add-root', self.d/'ancienne-generation', '--realise', self.ancien)
         original = Path('/etc/nixos/configuration.nix').resolve()
         shutil.copy2('/etc/nixos/configuration.nix', self.d/'configuration-avant.nix', follow_symlinks=False)
+        original = entree_configuration.reference_originale(original, self.d/'configuration-avant.nix')
         self.ecrire('entree.nix', entree_nix(original, self.prepare/'source/modules/identite-amorcage.nix', self.candidat['audit']['fournisseur']))
         systeme = json.loads(self.commande('nix-instantiate', '--eval', '--strict', '--json',
             ROOT/'scripts/vision-identite-amorcage-systeme.nix', '--argstr', 'configuration', self.d/'entree.nix',
