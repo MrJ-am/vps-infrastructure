@@ -10,7 +10,7 @@ in lib.recursiveUpdate base {
   ];
   infrastructure.amorcageIdentite.enable = true;
   infrastructure.postgresql.visionSemantique = true;
-  services.vision.bootstrapSource = lib.mkForce ../vendor/vision/source;
+  services.vision.bootstrapSource = lib.mkDefault ../vendor/vision/source;
   services.visionEmbeddings.source = lib.mkForce
     (builtins.storePath (builtins.toFile "vision-fournisseur-ancien-test" "qualification"));
 }

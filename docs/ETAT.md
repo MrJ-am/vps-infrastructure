@@ -1,5 +1,16 @@
 # État attesté au 10 octobre 2026
 
+La reprise [38044400745](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38044400745),
+0856c8a/PR77, job114190916262, conserve la référence réparée, la génération k4
+et les six PID. Restaurations, association/admin et deux retours ACL isolés
+passent de nouveau ; le cluster est arrêté/retiré. L'évaluation des composants
+réussit avec les modules récents et la garde fermée. `nix-build` refuse ensuite
+la construction (code100, cadre241 du préparateur) ; la cause reste à classer.
+Nouvelle SSH/six services/25sites finaux réussis, aucune production modifiée.
+[Projection partielle](../operations/vision-bascule-construction-refus.json).
+Le diagnostic suivant lit seulement cette tentative privée exacte et exporte
+des catégories et composants connus, sans journal brut ni nouvelle construction.
+
 La réparation réelle [38041573468](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38041573468),
 a873080/PR76, job114182734569, vérifie l'empreinte de l'original, reproduit
 exactement la génération k4 avant/après et répare atomiquement sa référence
