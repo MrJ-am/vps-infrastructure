@@ -1,5 +1,21 @@
 # État attesté au 10 octobre 2026
 
+Les inscriptions Vision sont désormais **ouvertes exclusivement par invitation**,
+après demande explicite du propriétaire et vérification des contrats fournisseurs.
+L'opération ad8123c/PR97,
+[Actions38087925818](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38087925818),
+job 114318255509, réussit après CI exacte 38087565641 (422 tests/quatre jobs).
+Les coordonnées publiques et version vision-20261010 de la notice sont renseignées
+et relues par HTTPS ; une invitation réelle est réservée puis annulée sans
+consommation ni modification. Aucun compte ou mail créé par ce contrôle.
+La génération reste identique ; services/ACL/PG17Unix/schéma 25,25 HTTP/TLS,
+22 fichiers/refus publics et nouvelle SSH réussissent. Mineurs et autres pays
+restent soumis à examen manuel ; aucune inscription native IdP ouverte.
+[Vérification fournisseurs et procédure](VISION-OUVERTURE-INVITATIONS.md),
+[reçu réel](../operations/vision-inscriptions-ouverture-reelle.json).
+Le propriétaire confirme le fonctionnement de Vision et la création d'une
+invitation ; sa vérification humaine de l'accès applicatif est ainsi consignée.
+
 Vision multi-utilisateur est **activé et enregistré** depuis le 10 octobre
 à 19:39 UTC. La bascule réservée008671e/PR96, après CI exacte 38080099599
 (418 tests/quatre jobs), signal38080445435 et
@@ -17,11 +33,10 @@ sont enregistrées seulement après ces contrôles. Anciennes générations et
 copies restent conservées. [Reçu réel](../operations/vision-multiutilisateur-activation-reelle.json).
 
 Le compte commun reste **JC@MrJ.am**, avec l'identité sur **log.mrj.am**.
-La vérification humaine de connexion à Vision et de son interface
-administrative reste à confirmer ; les tests automatisés n'en tiennent pas
-lieu. Les inscriptions tierces demeurent **fermées** : DPA applicables,
-procédure parentale et conservation des preuves/archives doivent être réglées
-avant ouverture. Aucun certificat général de conformité RGPD n'est revendiqué.
+La vérification humaine de l'accès à Vision est maintenant confirmée par le
+propriétaire, qui a créé une invitation. Les vérifications fournisseurs et
+la procédure parentale sont consignées dans le document d'ouverture ci-dessus.
+Aucun certificat général de conformité RGPD n'est revendiqué.
 La copie extérieure sur téléphone est qualifiée ; copie mensuelle Linux et
 copie indépendante de la clé restent ultérieures. Aucun redémarrage réel de
 la machine n'a été testé pendant cette bascule.

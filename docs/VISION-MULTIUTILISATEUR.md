@@ -12,10 +12,14 @@ nouvelle SSH et25 HTTP/TLS passent avant l'enregistrement et après l'opération
 [Reçu réel](../operations/vision-multiutilisateur-activation-reelle.json).
 
 Les modules restent désactivés par défaut pour les autres installations.
-Les inscriptions de tiers sont fermées et la connexion humaine à Vision
-reste à confirmer. La conformité juridique générale n'est pas certifiée :
-contrats de sous-traitance applicables, procédure parentale et rétention
-requièrent encore une vérification avant ouverture. Le quota par défaut
+La connexion humaine et la création d'une invitation sont confirmées par
+l'exploitant. Les inscriptions par invitation sont ouvertes par l'opération
+distincte ad8123c/38087925818, après 422 tests/quatre jobs de CI exacte 38087565641.
+[Contrats fournisseurs et procédure](VISION-OUVERTURE-INVITATIONS.md),
+[reçu réel](../operations/vision-inscriptions-ouverture-reelle.json).
+La génération, les quotas et les invitations sont conservés ; la notice est
+renseignée et relue publiquement. Mineurs et autres pays restent en examen
+manuel. La conformité juridique générale n'est pas certifiée. Le quota par défaut
 est 10 Mo décimaux de données logiques ; ce compteur ne représente pas
 l'espace physique total des index, WAL et sauvegardes PostgreSQL.
 
