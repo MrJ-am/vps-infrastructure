@@ -126,3 +126,8 @@ jobs:
     with:
       reprise: true
     secrets: inherit
+  vision-inscriptions-ouvrir:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-inscriptions-ouvrir'
+    uses: ./.github/workflows/vision-inscriptions-ouvrir.yml
+    secrets: inherit
