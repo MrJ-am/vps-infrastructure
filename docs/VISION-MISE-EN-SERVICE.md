@@ -39,7 +39,7 @@ restent deux actions distinctes.
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
 | Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
 | Compte commun du propriétaire | Compte/email/password/OTP et connexion pwd+otp fraîche vérifiés :0fbce8d/38002451652 | Étape humaine validée ; préparer association historique et bascule, sans considérer la session historique comme fraîche aujourd’hui |
-| Rattachement historique et bascule Vision | Restaurations/association/retour ACL isolés et évaluation des composants validés ; diagnostic38045107089 confirme la source de construction hors store | Copier les sources vérifiées dans le store puis construire avec garde fermée avant une bascule distincte |
+| Rattachement historique et bascule Vision | Préparation complète réussie38045641408 : restaurations/association/admin/ACL isolés et dix composants construits ; production inchangée | Vérifier clé personnelle et copie extérieure, puis qualifier un essai distinct avec retour SQL/NixOS autonome et interface figée |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
 Le premier enchaînement appelle la recette réservée déjà préparée : lecture
@@ -353,3 +353,11 @@ six refus ciblés, association et admin sans contenu sur PG17 jetable, rejet
 d'un second rattachement et d'un retour avec tiers, retour rejoué deux fois,
 évaluation Nix avec le garde fermé. L'exécution réelle après CI exacte reste
 nécessaire pour attester restauration et construction sur le VPS.
+Cette preuve est maintenant fournie par464c81f/PR79,
+[Actions38045641408](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045641408),
+job114194522693 : deux restaurations réelles, association/admin applicatif
+isolés, retour ACL rejoué, dix composants construits avec source dans le store,
+garde fermée et contrôles finaux SSH/six services/25sites réussis.
+Voir [le rapport réel](../operations/vision-bascule-preparation-reelle.json).
+Clé personnelle et copie extérieure restent non vérifiées ; aucune activation
+ou migration de production, aucune invitation ouverte.

@@ -5765,14 +5765,14 @@ Préparer la génération prospective depuis l'entrée active avec sources/paque
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 60548f0524e5c5f501da38b737bf77148d4fd00d7514db90d1e9ca4ec54256aa
-:LU_LE: 2026-10-10T10:25:17+00:00
+:LU_LE: 2026-10-10T10:42:50+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 0856c8a/PR77/CI38044106600 ; Actions38044400745/job114190916262 ; operations/vision-bascule-construction-refus.json
+:PREUVE: 464c81f/PR79/CI38045367821 ; Actions38045641408/job114194522693 ; operations/vision-bascule-preparation-reelle.json
 :END:
-Restaurations/association/admin/ACL isolés et évaluation composants passent. Construction code100 refusée, diagnostic ciblé annoncé. Production conservée, clé personnelle/copie extérieure non vérifiées.
+Préparation complète réelle réussie : deux restaurations, sujet/credentials et données conservés, association/admin sans accès aux contenus isolés, retour ACL rejoué et dix composants construits avec source figée dans le store. Garde fermée, six services/SSH/25sites finaux sains. Aucune production migrée/activée ; clé personnelle/copie extérieure et admission tierce restent distinctes et non vérifiées.
 
 ** TODO vps
 :PROPERTIES:
@@ -5893,14 +5893,14 @@ Ensuite seulement, reprendre les snapshots cohérents, restaurations et associat
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: d89cab249d7670be26a2b33666bec77b9b3bde69cb69911bf46184bb4a38a0c8
-:LU_LE: 2026-10-10T10:11:42+00:00
+:LU_LE: 2026-10-10T10:42:50+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: a873080/PR76/CI38041296103 ; Actions38041573468/job114182734569 ; operations/vision-bascule-reparation-reelle.json
+:PREUVE: Réparation réelle a873080/38041573468 ; validation et préparation complète464c81f/38045641408/job114194522693 ; operations/vision-bascule-preparation-reelle.json
 :END:
-Référence réparée réellement, original vérifié, génération k4 reproduite avant/après et six PID inchangés. Copies/migrations/association/retours ACL isolés passent. Construction encore refusée nix_option ; reprise avec modules récents explicites et registres effectifs conservés, garde fermée.
+Référence persistante réparée et original vérifié ; génération k4 reproduite avant/après, six PID inchangés. Restaurations/association/ACL isolés et construction avec garde fermée réussissent après correction des modules et source store. Six services/SSH/25sites conservés ; aucun DDL production/activation/inscription.
 
 ** TODO vps
 :PROPERTIES:
