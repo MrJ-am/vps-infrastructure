@@ -74,3 +74,54 @@ nouvelle SSH/six services/25sites réussis. Aucun secret privé transmis depuis
 le téléphone. [Reçu public borné](../operations/vision-telephone-resultat.json).
 Réception, déchiffrement, sauvegarde réelle et copie extérieure restent distincts
 et non vérifiés par cette opération.
+
+Le propriétaire a ensuite déchiffré ce témoin depuis Documents dans Nix-on-Droid
+et retourné le JSON attendu, avec l'empreinte
+`86e1797da7805848ab8e56858f4308a483249c6130fc09cf23b45cd321673725`.
+[Confirmation](../operations/vision-telephone-confirmation.json) : réception et
+déchiffrement rapportés par l'exploitant, sans transmission de clé privée. Cette
+confirmation porte sur le témoin ; elle ne prouve pas une sauvegarde complète.
+
+## Copie réelle vérifiable sur téléphone
+
+La phase fermée `vision-sauvegarder` reprend les mêmes snapshots READ ONLY et
+restaurations PG17 isolées, avec le compte/socle immuable déjà qualifié. Elle
+ne répare aucune configuration, ne migre aucun schéma et ne construit/active
+aucune génération. Les deux bases doivent rester identiques après restauration,
+avec les credentials et le sujet IdP ; le cluster est arrêté avant l'archive,
+puis retiré avant l'envoi. SQLite utilise l'API de sauvegarde cohérente, WAL
+compris, et `integrity_check`. Le mot de passe historique n'est jamais en clair :
+son fichier htpasswd privé est inclus seulement dans l'enveloppe chiffrée.
+
+La pièce `vision-recuperation-20261010.tar.gz.age` contient les deux dumps,
+les sessions, les ACL, le htpasswd, le contexte technique et les registres
+d'effacement présents aux seuls chemins connus. Chaque fichier est décrit
+par taille/SHA256 dans le manifeste chiffré. Un défi aléatoire de256bits reste
+dans ce manifeste ; seulement son SHA256 figure dans le reçu public. Tout
+Les copies chiffrées restent root600 sur le VPS ; les fichiers en clair
+temporaires sont retirés après l'archive. La limite de copie est512Mio en clair
+et15Mo chiffrés pour le courrier ; un dépassement refuse la remise plutôt
+qu'une pièce incomplète. Aucun dump, credential, nom de personne, défi ou
+contenu dans Git/Actions.
+
+L'envoi autorisé au propriétaire utilise le relais et la seule boîte existants,
+avec une intention fsync avant SMTP ; une remise ambiguë interdit le rejeu.
+Le mail fournit aussi `verifier-vision-recuperation.py`, code sans donnée privée.
+Contrôler son SHA256 indiqué dans la conversation avant exécution. Le lecteur
+vérifie le SHA256 du cryptogramme, la clé locale privée, tous les fichiers et
+leurs empreintes, puis consomme AGE jusqu'à sa fin et exige le code0. Pas
+d'extraction ni de données en clair écrites sur le téléphone. Une mauvaise clé,
+troncature, archive incomplète, doublon, lien ou chemin étranger est refusé.
+Le résultat affiché ne contient que références/booléens/empreinte chiffrée et
+le défi aléatoire, à rapprocher du reçu : aucune donnée des bases ou clé privée.
+
+Ce jeu couvre Vision et l'identité avant bascule, pas le VPS entier. La réception
+et la vérification du fichier réel restent nécessaires ; elles ne sont pas
+déduites du témoin ou de l'acceptation SMTP. La copie mensuelle sur disque Linux
+reste à organiser à son retour ; conserver aussi la clé privée hors téléphone.
+Une restauration future exige le registre externe d'effacement récent et une
+recette propre, sans réintroduire des comptes supprimés. Les archives opérateur
+restent dans l'inventaire de conservation ; le timer ordinaire ne les purge pas.
+Ni configuration de sauvegarde active ni ancienne copie ni Matheval modifié ;
+les sauvegardes futures Vision/identité devront cibler la nouvelle clé lors de
+l'opération d'activation distincte, sans toucher aux autres clés de projets.

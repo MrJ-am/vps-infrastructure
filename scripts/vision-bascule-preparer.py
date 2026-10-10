@@ -95,13 +95,15 @@ def empreintes(requete, tables, acl):
     return {t:requete("SELECT md5(coalesce(string_agg(md5(to_jsonb(t)::text),' ' ORDER BY md5(to_jsonb(t)::text)),'')) FROM public."+acl.identifiant(t)+' t') for t in tables}
 
 
-def preparer(revision):
+def preparer(revision, sauvegarde_telephone=False):
     global DIAGNOSTIC, REPARATION
     exiger(os.geteuid() == 0 and re.fullmatch('[a-f0-9]{40}', revision))
     os.umask(0o077)
     d = Path('/root/vision-bascule-preparations')/revision
     exiger(ROOT == d/'source')
     construction = charger('construction_bascule', ROOT/'scripts/vision-identite-construire.py')
+    recuperation = charger('recuperation_telephone', ROOT/'scripts/vision-recuperation.py') if sauvegarde_telephone else None
+    if recuperation: recuperation.verifier_confirmation(ROOT/'operations/vision-telephone-confirmation.json')
     prive = charger('prive_bascule', ROOT/'scripts/identite-preparer.py')
     association = charger('association_bascule', ROOT/'scripts/vision-bascule-principaux.py')
     legacy = charger('legacy_bascule', ROOT/'scripts/vision-proprietaire.py')
@@ -146,8 +148,9 @@ def preparer(revision):
     etape('reference_configuration')
     disponible = next(int(l.split()[1]) for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:'))
     exiger(disponible >= 3*1024*1024)
-    REPARATION = charger('reparation_configuration_bascule',ROOT/'scripts/vision-configuration-reparer.py')
-    REPARATION.reparer(ROOT,d,activation,qualification,candidat,prive,construction,commande)
+    if not sauvegarde_telephone:
+        REPARATION = charger('reparation_configuration_bascule',ROOT/'scripts/vision-configuration-reparer.py')
+        REPARATION.reparer(ROOT,d,activation,qualification,candidat,prive,construction,commande)
     etape('source_candidate')
     source = d/'vision'; source.mkdir(mode=0o700)
     preparation.extraire(ROOT/'vendor/vision-multiutilisateur-source.tar.gz',source,candidat['source_sha256'],candidat['vision'])
@@ -159,7 +162,8 @@ def preparer(revision):
         config['postgres_majeure'] == '17' and config['postgres_tcp'] is False and config['postgres_ecoute'] == '' and
         config['fournisseur_source'] == candidat['audit']['fournisseur'])
     sauver('systeme-actif.json',config)
-    commande('tar','--acls','--xattrs','-cpf',d/'nixos-avant.tar','-C','/etc','nixos')
+    if not sauvegarde_telephone:
+        commande('tar','--acls','--xattrs','-cpf',d/'nixos-avant.tar','-C','/etc','nixos')
     disponible = next(int(l.split()[1]) for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:'))
     espace = os.statvfs('/var/lib/postgresql')
     exiger(disponible >= 3*1024*1024 and espace.f_bavail*espace.f_frsize >= 2*1024**3)
@@ -189,7 +193,8 @@ def preparer(revision):
                 commande(runuser,'-u','postgres','--',b/'pg_dump','-Fc','--snapshot='+snapshot,'-h','/run/mrjam-amorcage-postgresql','-U','postgres','mrjam_identite',env=environnement(),timeout=600,sortie=f)
         for nom in ('vision','identite'):
             dump = isole/(nom+'.dump'); dump.chmod(0o600)
-            commande(age,'-r',config['recipient_age'],'-o',d/(nom+'.dump.age'),dump,timeout=120)
+            recipient = recuperation.RECIPIENT if recuperation else config['recipient_age']
+            commande(age,'-r',recipient,'-o',d/(nom+'.dump.age'),dump,timeout=120)
             os.chown(dump,postgres.pw_uid,postgres.pw_gid)
         etape('restauration_isolee')
         # Une réponse ambiguë du démarrage n'autorise pas à effacer un serveur.
@@ -207,6 +212,19 @@ def preparer(revision):
         exiger(empreintes(lambda q:sql('vision',q),tables,acl) == avant and
             empreintes(lambda q:sql('mrjam_identite',q),tables_idp,acl) == idp_avant)
         exiger(sql('vision','SELECT count(*)=18 AND max(version)=18 FROM vision_schema_migrations;') == 't')
+        if sauvegarde_telephone:
+            etape('sauvegarde_restauree')
+            commande(runuser,'-u','postgres','--',b/'pg_ctl','-D',isole/'data','-m','fast','-w','stop')
+            actif = False
+            rapport = recuperation.preparer(d,isole,ROOT,config,age,revision)
+            shutil.rmtree(isole)
+            observateur.main(association.OBSERVATION, observer=True, activation_seule=True)
+            etape('transmission_sauvegarde')
+            recuperation.transmettre(d,ROOT,rapport)
+            observateur.main(association.OBSERVATION, observer=True, activation_seule=True)
+            sauver('recuperation.json',rapport)
+            print(json.dumps(rapport),flush=True)
+            return
         etape('migrations_et_association_isolees')
         env = {**environnement(),'PGHOST':str(isole),'PGUSER':'postgres','PGDATABASE':'vision',
             'PATH':str(b)+':'+os.environ['PATH']}
@@ -232,7 +250,7 @@ def preparer(revision):
             exiger(empreintes(lambda q:sql('vision',q),tables,acl) == avant)
     finally:
         if actif: commande(runuser,'-u','postgres','--',b/'pg_ctl','-D',isole/'data','-m','fast','-w','stop')
-        shutil.rmtree(isole)
+        if isole.exists(): shutil.rmtree(isole)
     etape('composants_garde_ferme')
     args = [ROOT/'scripts/vision-bascule-composants.nix','--argstr','configuration','/etc/nixos/configuration.nix',
         '--argstr','source',source,'--argstr','fournisseur',candidat['audit']['fournisseur'],'-I','nixpkgs='+candidat['audit']['nixpkgs']]
@@ -258,8 +276,8 @@ def preparer(revision):
 if __name__ == '__main__':
     def interruption(*_): raise InterruptedError('Préparation interrompue')
     for sig in (signal.SIGTERM,signal.SIGHUP,signal.SIGINT): signal.signal(sig,interruption)
-    p = argparse.ArgumentParser(); p.add_argument('revision'); a = p.parse_args()
-    try: preparer(a.revision)
+    p = argparse.ArgumentParser(); p.add_argument('revision'); p.add_argument('--sauvegarde-telephone',action='store_true'); a = p.parse_args()
+    try: preparer(a.revision, sauvegarde_telephone=a.sauvegarde_telephone)
     except Exception:
         trace = traceback.format_exc()
         try: diagnostic(trace.encode())
@@ -268,7 +286,7 @@ if __name__ == '__main__':
             lecteur = charger('projection_refus_bascule',ROOT/'scripts/vision-bascule-diagnostiquer.py')
             noms = ('vision-bascule-preparer.py','vision-multiutilisateur-preparer.py',
                 'vision-configuration-reparer.py','vision-entree-configuration.py','vision-acl.py',
-                'vision-proprietaire.py','vision-bascule-principaux.py')
+                'vision-proprietaire.py','vision-bascule-principaux.py','vision-recuperation.py')
             projection = lecteur.classer(trace,{n:(ROOT/'scripts'/n).read_text() for n in noms},ROOT.parent)
             print(json.dumps(dict(refus_bascule=projection)),flush=True)
         except Exception: pass

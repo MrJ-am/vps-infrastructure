@@ -76,3 +76,10 @@ jobs:
     if: needs.demande.outputs.action == 'vision-telephone'
     uses: ./.github/workflows/vision-telephone.yml
     secrets: inherit
+  vision-sauvegarder:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-sauvegarder'
+    uses: ./.github/workflows/vision-bascule-preparer.yml
+    with:
+      sauvegarde-telephone: true
+    secrets: inherit

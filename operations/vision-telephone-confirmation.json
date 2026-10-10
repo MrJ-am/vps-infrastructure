@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "reference": "vision-telephone-20261010",
+  "execution": 38047719442,
+  "cle_publique": "age1p95t4z0aafq7j4fl7cc9f0cjz8j03dtlmz56kec4lj6vwxrvzpqqnc53cc",
+  "cle_publique_sha256": "86e1797da7805848ab8e56858f4308a483249c6130fc09cf23b45cd321673725",
+  "reception_confirmee_par_exploitant": true,
+  "dechiffrement_temoin_confirme_par_exploitant": true,
+  "support": "Nix-on-Droid",
+  "repertoire_piece": "Documents",
+  "cle_privee_transmise": false,
+  "sauvegarde_reelle_verifiee": false,
+  "copie_exterieure_complete_verifiee": false
+}
