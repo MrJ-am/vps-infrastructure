@@ -572,3 +572,43 @@ service métier, SQL de production, générateur persistant ou timer de retour
 réel n'est installé ici. La machine n'est pas redémarrée ; il s'agit d'une
 qualification de reconstruction et d'ordonnancement sur son systemd réel.
 Une installation et une activation protégées resteront une opération distincte.
+# Essai réservé avec retour indépendant
+
+La qualification de reprise `9ef9b074057ee9eac15a6f5cd0a0dc467d4fc80d`
+a réussi sur le VPS : Actions `38068969303`, job `114262328234`, après
+les quatre jobs CI `38068556400` (399 tests). Générateur exact, marques
+terminales, ordre de fermeture et Type=exec ont été répétés sur deux unités
+jetables. Aucun générateur persistant installé ou retour de production armé,
+aucune activation, SQL de production ou admission ; machine non redémarrée.
+Reçu : `operations/vision-reprise-qualification-reelle.json`.
+
+La phase fermée `vision-essai-activer` répète les restaurations et la génération
+sur son commit exact, puis prépare un opérateur root séparé. Elle conserve
+l'ancien cluster, copie son identité courante, applique SQL19–25 et associe
+le sujet initial prouvé au compte historique. Aucun nouveau compte humain
+administrateur de l'identité. L'administration Vision ne reçoit aucun accès
+SQL aux contenus. Backend sous un parent root, sans exécution de scripts
+déployeur en root ; seuls les SQL de l'archive revue sont lus via stdin par
+psql sous postgres. Ancien schéma18 exigé avant toute première mutation.
+
+Le générateur est installé dans `/usr/local/lib/systemd/system-generators`,
+après vérification du chemin de recherche natif. Le timer15min et les outils
+épinglés sont indépendants de SSH. Migration et essai test n'interviennent
+qu'après armement. Retour : copie courante d'identité, restauration inverse
+transactionnelle et ACL ciblées ; jamais un vieux dump Vision. Une migration
+partielle peut laisser le schéma avancé ; une nouvelle opération devra alors
+être auditée. Effacement, compte fermé ou tierce admission interdisent le
+rétablissement de droits antérieurs. Sur refus, Vision/auth/IdP restent fermés.
+
+L'enregistrement exige une nouvelle SSH, les services,25HTTP/TLS,22artefacts
+publics exacts et les refus anonymes/falsifiés. La sauvegarde commune doit
+s'être exécutée avec la clé téléphone confirmée. Finalisation et retour
+partagent un verrou ; la marque durable neutralise le retour après boot et
+contrôles locaux. Anciennes générations, cluster et copies sont conservés.
+Ce document décrit une recette : seul le reçu d'exécution prouvera l'activation.
+
+Inscriptions tierces toujours fermées. La connexion humaine Vision avec
+mot de passe/OTP reste à vérifier après activation. Une conformité RGPD
+générale n'est pas déduite de ces contrôles ; DPA, procédure mineurs et
+rétention des archives d'exploitation restent à finaliser avant admission.
+Copie mensuelle Linux/disque et copie indépendante de clé ultérieures.

@@ -109,3 +109,8 @@ jobs:
     with:
       reprise: true
     secrets: inherit
+  vision-essai-activer:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-essai-activer'
+    uses: ./.github/workflows/vision-essai-activer.yml
+    secrets: inherit

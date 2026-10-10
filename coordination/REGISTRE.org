@@ -6545,14 +6545,82 @@ Aucun service métier arrêté ou modifié, SQL production, reconstruction, gén
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: c15ede1b98c4f7bd05af234f6cf042f30289e3962e7202b6b9515d54d0d19308
-:LU_LE: 2026-10-10T16:38:59+00:00
+:LU_LE: 2026-10-10T16:54:22+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 399tests root hors réseau, qualification native encore attendue
+:PREUVE: 9ef9b074057ee9eac15a6f5cd0a0dc467d4fc80d/Actions38068969303/job114262328234 ; operations/vision-reprise-qualification-reelle.json
 :END:
-Générateur, marques terminales, fermeture durable avant conditions et neutralisation après finalisation passent. Shell de retour réel et reprises SIGKILL/refus restent qualifiés avec toutes conditions retirées au succès. Deux unités de répétition et ordre Type=exec attendent encore le systemd VPS après CI exacte. Aucun générateur/timer de retour effectif installé ou armé, aucune activation.
+399tests/quatre jobs CI exacte ; reconstruction du générateur/unité/lien et marques terminales qualifiées. Systemd natif vérifie configuration et ordre ExecStartPre/Typeexec : marque/fermeture avant client, retour simulé exécuté, consommateur inactif. Socle/compte avant/après, nouvelle SSH/six services/25sites passent. Aucune installation persistante, activation, SQL de production, retour effectif armé ou redémarrage machine.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Activer Vision réservé après récupération réelle et contrôles protégés
+:PROPERTIES:
+:ID: 20261010-vision-a57338c2b7cf
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T17:29:00+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La reprise9ef9b0/PR89 réussit réellement : CI exacte38068556400 (399tests/quatre jobs), signal38068961055, Actions38068969303/job114262328234. Générateur reconstitué, unité/lien exacts, marques terminales neutralisées ; systemd natif vérifie fermeture avant client et Type=exec sur deux unités jetables. Socle/compte avant/après, SSH/six services/25sites conservés. Machine non redémarrée, aucun retour de production armé. Reçu operations/vision-reprise-qualification-reelle.json. Récupération téléphone complète confirmée, sans clé privée transmise.
+
+Préparer puis exécuter une phase distincte vision-essai-activer après CI exacte et main/provenance identiques, via la branche automatique operations/vision sans nouvelle intervention utilisateur. Répéter toutes les restaurations et qualifications sur le commit effectif ; SQL19–25 puis association du sujet initial explicitement prouvé, aucun compte humain administrateur global de l'identité. L'administration applicative conserve l'interdiction SQL de lire les contenus. Admission tierce et inscription native restent fermées. L'ancien cluster d'identité est conservé ; transfert de ses données courantes après arrêt vérifié des écrivains, comparaison de toutes les tables avant démarrage de Keycloak commun. Copie chiffrée fraîche avec seule clé téléphone Vision/identité, Matheval et ses clés inchangés.
+
+Retour indépendant installé en root hors store sous /usr/local/lib/systemd/system-generators après contrôle du chemin de recherche systemd ; marque synchronisée, générateur persistant, outils et générations protégés contre GC, timer15min armé avant toute SQL. Worker root utilise exclusivement l'archive exacte et garde le verrou applicatif pendant les contrôles HTTP. Backend copié dans un parent root non modifiable par le déployeur. Nouvelle génération test seulement, même PG17/socket/dataDir, réseau/SSH/Matheval/fournisseur conservés. Retour reprend l'identité courante et ACL ciblées, jamais vieux dump Vision ; schéma SQL peut rester avancé. Sur refus d'effacement/tiers/ACL, accès Vision fermé plutôt que rétablissement d'un droit supprimé.
+
+Avant boot/enregistrement : nouvelle SSH, services anciens/nouveaux, 25HTTP/TLS identiques,22artefacts publics exacts, issuer canonique/master/DCR refusés, accès anonymes et en-têtes falsifiés refusés, sauvegarde commune exécutée. Finalisation sous le verrou du retour, configuration persistante exacte, génération par défaut puis boot, nouvelle vérification locale, marque durable neutralisant le retour. Toute erreur avant finalisation déclenche le retour indépendant ; contrôle final des sites dans tous les cas. Ancienne génération/cluster/copies/clé ne sont pas effacés. Une connexion humaine Vision mot de passe/OTP sera vérifiée séparément après activation, sans demander ces secrets.
+
+Cette activation réservée ne prétend ni conformité juridique générale ni reprise après coupure physique prouvée. Préconditions RGPD/DPA/mineurs et rétention des archives d'exploitation restent distinctes avant admission tierce ; copie mensuelle Linux/disque et copie indépendante de clé ultérieures. Autres projets prennent connaissance sans action sur leur code/données ; aucune reconstruction de leurs consommateurs. Vision publiera résultat réel, commit et limites. Détails : scripts/vision-essai-activer.py, scripts/vision-essai-https.py, workflow vision-essai-activer.yml et docs/VISION-MISE-EN-SERVICE.md.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 69a38858bca45e9bf6c810f9c84ea3901012ab52fc9c629f12dc32afa999b6f7
+:LU_LE: 2026-10-10T17:30:58+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Recette revue, tests locaux et publication dédiés avant exécution
+:END:
+Lu : nouvelle phase effective distincte, retour natif qualifié9ef inchangé, CI et état réel exacts exigés ; admission tierce fermée.
 
 ** TODO vps
 :PROPERTIES:
