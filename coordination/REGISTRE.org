@@ -5828,14 +5828,78 @@ Après diagnostic réel, corriger seulement la préparation concernée, qualifie
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 31a92aca52a64c88826336266b69c419a343e8de14fb4fb2bd2dc77eb39f2908
-:LU_LE: 2026-10-10T08:59:23+00:00
+:LU_LE: 2026-10-10T09:13:35+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 0c68dd8/PR74/CI38039094671/Actions38039371924/job114176403003 ; operations/vision-bascule-diagnostic.json
+:PREUVE: 4cb942c/PR75/CI38040198729/Actions38040462649/job114179522422 ; operations/vision-bascule-diagnostic-affine.json
 :END:
-Diagnostic réel réussi : source/style conformes, ValueError de commande Nix ligne140 ; six services/SSH/25sites conservés, aucune copie/cluster/production. Cause Nix encore indéterminée ; affiner catégories et code retour, lire seulement OOM Nix dans la fenêtre réelle et réévaluer sans attribut de génération complète. Aucun SQL ou nouvelle tentative de migration.
+Cause réelle constatée : entrée privée importe son lien courant, recursion Nix. Sauvegarde régulière présente, aucune nouvelle évaluation du cycle, zéro OOM Nix dans la fenêtre. Six services/SSH/25sites conservés ; aucun SQL ni copie/cluster. Une réparation de référence et une nouvelle préparation sont annoncées séparément.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Réparer la référence de configuration puis reprendre la préparation Vision
+:PROPERTIES:
+:ID: 20261010-vision-36d6134a82ca
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T09:13:35+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Diagnostic réel4cb942c/PR75, CI38040198729 réussie, signal38040456525 puis Actions38040462649/job114179522422 : sources exactes, recursion Nix et entrée privée qui importe son propre lien courant, sauvegarde régulière présente. Évaluation ignorée pour ce cycle ; zéro OOM Nix dans la fenêtre contrôlée. Aucune copie/cluster/production modifiée, six services/SSH/25HTTP conservés. Ce cycle de source ne signifie pas une corruption de la génération activek4.
+
+Corriger la référence persistante avant de reprendre vision-preparer. Réparation réservée au seul cycle exact d'ac3 : socle/compte/reçu contrôlés par le lecteur immuable qualifié ; texte d'entrée exactement égal au générateur connu ; copie originale régulière root et SHA égal à entree_empreinte du plan privé antérieur ; mêmes module/fournisseur. Générer une entrée candidate qui importe cette copie stable, puis exiger qu'une évaluation avec le Nixpkgs installé reproduise exactementk4. Archiver l'entrée défectueuse et l'intention en root600/fsync ; remplacement atomique dans le même dossier, lien /etc inchangé, réévaluation identiquek4 et PID des six services inchangés. Aucun switch/test/boot NixOS, secret, compte, DDL, clé ou réseau modifié. Réparer aussi le générateur pour qu'une future copie de fichier régulier ne référence jamais le lien remplaçable.
+
+Ensuite seulement, reprendre les snapshots cohérents, restaurations et associations isolées de la préparation précédemment annoncée, avec comparaison de données/credentials et retour ACL, puis construction des composants avec garde d'activation fermée. Le rapport distinguera la réparation de source de toute modification de données/activation. Ajouter une projection fermée des futurs refus pour éviter un autre cycle de diagnostic aveugle. Les autres projets prennent connaissance : aucune reconstruction depuis l'entrée circulaire avant ce résultat ; aucun changement de leurs données ou services. Vision consignera révision, preuve réelle de source corrigée, contrôles finaux et résultat de préparation. Sauvegarde personnelle extérieure et préconditions juridiques tierces demeurent distinctes et non établies ; inscriptions fermées.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: d89cab249d7670be26a2b33666bec77b9b3bde69cb69911bf46184bb4a38a0c8
+:LU_LE: 2026-10-10T09:13:58+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: -
+:END:
+Lu : qualifier la réparation précise de référence avec original signé et génération k4 identique, puis reprendre la préparation isolée sans activation ni DDL de production.
 
 ** TODO vps
 :PROPERTIES:
