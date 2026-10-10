@@ -1,5 +1,36 @@
 # État attesté au 10 octobre 2026
 
+Vision multi-utilisateur est **activé et enregistré** depuis le 10 octobre
+à 19:39 UTC. La bascule réservée008671e/PR96, après CI exacte 38080099599
+(418 tests/quatre jobs), signal38080445435 et
+[Actions38080453548](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38080453548),
+job114296135430, réussit intégralement. Les copies actuelles du schéma 25
+et de l'identité sont restaurées en isolation avant l'essai ; l'association
+existante du propriétaire et ses données historiques sont conservées.
+Les credentials systemd natifs, le transfert de l'identité courante,
+l'administrateur applicatif sans accès aux contenus d'autrui et la sauvegarde
+commune chiffrée sont vérifiés. Les22 fichiers de l'interface figée a9c51ac,
+les refus anonymes/de mutation/d'identité falsifiée, l'identité publique et
+l'offre AGPL réussissent. NouvelleSSH, services et25 HTTP/TLS passent avant,
+pendant et après ; la configuration persistante et la génération par défaut
+sont enregistrées seulement après ces contrôles. Anciennes générations et
+copies restent conservées. [Reçu réel](../operations/vision-multiutilisateur-activation-reelle.json).
+
+Le compte commun reste **JC@MrJ.am**, avec l'identité sur **log.mrj.am**.
+La vérification humaine de connexion à Vision et de son interface
+administrative reste à confirmer ; les tests automatisés n'en tiennent pas
+lieu. Les inscriptions tierces demeurent **fermées** : DPA applicables,
+procédure parentale et conservation des preuves/archives doivent être réglées
+avant ouverture. Aucun certificat général de conformité RGPD n'est revendiqué.
+La copie extérieure sur téléphone est qualifiée ; copie mensuelle Linux et
+copie indépendante de la clé restent ultérieures. Aucun redémarrage réel de
+la machine n'a été testé pendant cette bascule.
+
+## Historique des qualifications et tentatives antérieures
+
+Les constats ci-dessous décrivent leurs dates propres ; les refus et mentions
+de production inchangée ne remplacent pas l'état actuel attesté ci-dessus.
+
 Le propriétaire a vérifié sur Nix-on-Droid la copie réelle
 `vision-recuperation-20261010.tar.gz.age` préparée par
 [Actions38049744292](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38049744292).

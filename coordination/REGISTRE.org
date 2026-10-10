@@ -7003,14 +7003,14 @@ Reprise automatique distincte après CI exacte/main/provenance. Les autres parti
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 9c89ea7060a064da3eaf71f24e83984f029cb4348b5b9281648f8cab235c3f4a
-:LU_LE: 2026-10-10T19:29:57+00:00
+:LU_LE: 2026-10-10T19:41:17+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: -
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38080453548
 :END:
-Lu : offre AGPL existante rétablie sur log via le même store public que Vision ; aucune route admin ouverte ni donnée/secret ajouté. Reprise qualifiée avec retour inchangé.
+Reprise réelle008671e/PR96 réussie après CI exacte38080099599 (418tests/quatre jobs). OffreAGPL,22artefacts/refuspublics/identité/services/sauvegarde/SSH/25TLS validés ; activation et configuration persistante enregistrées19:39:18Z, contrôles finaux réussis. Identité/données/association conservées, admin sans contenu. Inscriptions fermées ; connexion humaine Vision non encore confirmée.
 
 ** TODO vps
 :PROPERTIES:

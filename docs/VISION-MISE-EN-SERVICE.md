@@ -1,5 +1,17 @@
 # Mise en service Vision : un seul point d'entrée
 
+**État actuel,10 octobre 2026 à 19:39 UTC : Vision multi-utilisateur activé et
+enregistré.** La reprise008671e/PR96 réussit dans
+[Actions38080453548](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38080453548),
+job114296135430, après les quatre jobs de CI exacte 38080099599 et418tests.
+Identité courante, données historiques, association et sauvegarde chiffrée
+sont conservées/vérifiées ; admin applicatif sans contenu d'autrui,
+22 fichiers exacts, refus publics, sources AGPL, nouvelle SSH et25 HTTP/TLS
+passent avant enregistrement puis contrôles finaux réussis.
+[Preuve](../operations/vision-multiutilisateur-activation-reelle.json).
+La connexion humaine à Vision reste à confirmer. Les inscriptions de tiers
+restent fermées ; les préconditions juridiques sont distinctes.
+
 Depuis le 9 octobre 2026, le propriétaire ne sert plus de relais entre chaque
 contrôle technique. L'agent prépare, teste, demande et suit les opérations avec
 [Vision — mise en service suivie](../.github/workflows/vision-mise-en-service.yml).
@@ -34,12 +46,13 @@ restent deux actions distinctes.
 
 ## Avancement et interventions
 
-| Phase | Situation au regroupement | Suite |
+| Phase | Situation actuelle | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
 | Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
 | Compte commun du propriétaire | Compte/email/password/OTP et connexion pwd+otp fraîche vérifiés :0fbce8d/38002451652 | Étape humaine validée ; préparer association historique et bascule, sans considérer la session historique comme fraîche aujourd’hui |
-| Rattachement historique et bascule Vision | Préparation complète réussie38045641408 : restaurations/association/admin/ACL isolés et dix composants construits ; production inchangée | Vérifier clé personnelle et copie extérieure, puis qualifier un essai distinct avec retour SQL/NixOS autonome et interface figée |
+| Récupération extérieure | Déchiffrement complet sur téléphone confirmé, sans écriture en clair | Copie mensuelle Linux et clé indépendante ultérieures |
+| Rattachement historique et bascule Vision | Activés et enregistrés008671e/38080453548, données/association conservées, identité courante transférée, admin sans accès aux contenus, sauvegarde commune exécutée | Confirmer la connexion humaine à Vision et l'accès au menu Administration |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
 Le premier enchaînement appelle la recette réservée déjà préparée : lecture
@@ -48,11 +61,16 @@ du timer, retour autonome armé, essai indépendant de SSH, contrôles privés,
 25 sondes HTTP/TLS et nouvelle SSH, HTTPS d'identité, puis enregistrement.
 Les qualifications de construction précédentes ne sont pas refaites.
 
-La phase courante vient uniquement de `operations/vision-mise-en-service.json`
-sur le main qualifié : valeurs fermées `amorcage`, `diagnostic`, `construction`, `proprietaire`, `proprietaire-observer`, `vision-preparer` ou `vision-diagnostic`, sans paramètre libre.
+La phase vient uniquement de `operations/vision-mise-en-service.json`
+sur le main qualifié : valeurs fermées, sans paramètre libre. La dernière
+opération réelle est `vision-essai-reprendre`, désormais terminée ; ne pas
+avancer la branche d'opérations lors d'une simple publication de preuves.
 Le diagnostic lit seulement les journaux privés de la tentative identifiée,
 classe les refus et revérifie le socle. Il ne modifie ni génération ni base.
 Les phases restent des jobs explicites du même point d'entrée.
+
+Les paragraphes suivants conservent l'historique daté des tentatives ; leurs
+refus et états préparatoires ne décrivent pas la dernière bascule réussie.
 
 Le déclenchement autonome est attesté par le signal `37953863382` puis
 [l'exécution 37953882332](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37953882332).
