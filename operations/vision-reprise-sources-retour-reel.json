@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "infrastructure": "8c7d29e0a97d5cc616ca4d61d4987f6ad6d21bf1",
+  "ci_exacte": 38079213697,
+  "tests": 418,
+  "pr": 95,
+  "signal": 38079584560,
+  "execution": 38079593546,
+  "job": 114293600143,
+  "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38079593546",
+  "preparation_complete_reussie": true,
+  "credentials_natifs_prives_valides": true,
+  "essai_actif_controles_locaux": true,
+  "sauvegarde_commune_executee": true,
+  "sondes_25_en_essai": true,
+  "interface_22_fichiers_exacte": true,
+  "acces_anonymes_et_cookies_falsifies_refuses": true,
+  "identite_publique_et_routes_admin_verifiees": true,
+  "refus_https": {
+    "controle_https_refuse": true,
+    "phase": "identite_ou_transport",
+    "raison": "sources_indisponibles"
+  },
+  "retour_effectif": true,
+  "nouvelle_ssh_finale_verifiee": true,
+  "six_services_finaux_verifies": true,
+  "sites_finaux_verifies": 25,
+  "activation": false,
+  "inscriptions": false,
+  "actualise_le": "2026-10-10T19:26:54Z"
+}

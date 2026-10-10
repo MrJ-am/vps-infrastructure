@@ -38,6 +38,9 @@ assert lib.hasInfix "auth_request /_vision_administration" vh."vision.mrj.am".lo
 assert lib.hasInfix "$vision_gestion_method" vh."vision.mrj.am".locations."= /_vision_administration".extraConfig;
 assert !(lib.hasInfix "auth_basic" vh."vision.mrj.am".locations."= /mcp".extraConfig);
 assert vh."log.mrj.am".locations."/".return == "404";
+assert vh."log.mrj.am".locations."= /code-source/services-mrjam.tar.gz".alias ==
+  vh."vision.mrj.am".locations."= /code-source/services-mrjam.tar.gz".alias;
+assert lib.hasPrefix "/nix/store/" vh."log.mrj.am".locations."= /code-source/services-mrjam.tar.gz".alias;
 assert lib.hasSuffix "vision-multiutilisateur-source.tar.gz" vh."vision.mrj.am".locations."= /code-source/vision.tar.gz".alias;
 assert lib.hasSuffix "services-mrjam.tar.gz" vh."vision.mrj.am".locations."= /code-source/services-mrjam.tar.gz".alias;
 assert vh."vision.mrj.am".locations."= /".root == base.services.nginx.virtualHosts."vision.mrj.am".locations."= /".root;

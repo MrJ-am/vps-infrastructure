@@ -701,3 +701,18 @@ invalides. Dans ce seul essai, les contrôles d'identité bénéficient du même
 traitement429 borné que les autres requêtes ; comportement par défaut des
 anciens appelants conservé. La nouvelle exécution doit qualifier ces contrôles
 avant boot ; aucune cause du refus précédent n'est inventée.
+
+La reprise8c7d29e/PR95, CI38079213697 (418tests/quatre jobs),
+Actions38079593546/job114293600143, réussit préparation/credentials,
+essai/services/backup/nouvelleSSH/25HTTP/TLS, puis22artefacts et refus
+anonymes/cookies, issuer/clés/master/admin/DCR. Le seul refus projeté est
+sources_indisponibles pour l'offre AGPL sur log.mrj.am. Aucun enregistrement ;
+retour indépendant19:26:42Z et nouvelleSSH/six services/25sites finaux passent.
+Reçu : `operations/vision-reprise-sources-retour-reel.json`.
+
+L'offre figurait dans le module d'amorçage supprimé lors de la bascule,
+mais le module d'identité commune ne la reprenait pas. Il conserve maintenant
+ce même emplacement public, vers l'archive filtrée du store également proposée
+par Vision. Évaluation NixOS exige alias égal et chemin du store ; parseur
+Nginx qualifie les offres avant/après. Aucune source privée ni route admin
+exposée. Le contrôle HTTPS de cette offre reste requis avant enregistrement.

@@ -6939,14 +6939,78 @@ Nouvelle génération/restaurations/nativecredentials, armement avantSQL, servic
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 4b568170f5ab49d5b3c0d545ebdcfb6289101ee9e41006d6f5d1b03870c54888
-:LU_LE: 2026-10-10T19:16:50+00:00
+:LU_LE: 2026-10-10T19:29:29+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38079593546
+:END:
+Projection HTTPS réelle précise sources_indisponibles, après22artefacts/401/cookies/issuer/admin/DCR validés ; retour indépendant/nouvelleSSH/six services/25sites finaux passent. Correction d’offre AGPL distincte, aucun enregistrement.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Conserver l’offre publique AGPL sur l’identité commune lors de la reprise Vision
+:PROPERTIES:
+:ID: 20261010-vision-8eaa1e69f9ec
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T19:29:29+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La reprise8c7d29e/PR95, CI exacte38079213697 (418tests/quatre jobs), signal38079584560 et Actions38079593546/job114293600143, réussit toute la préparation, credentials natifs, transfert courant, essai/services/sauvegarde, nouvelleSSH et25HTTP/TLS. Le contrôle supplémentaire passe les22fichiers exacts, lecture/mutation anonymes et cookies réel/historique falsifiés, issuer/clés/master/admin/DCR, puis refuse uniquement sources_indisponibles sur l'offre AGPL log.mrj.am/code-source/services-mrjam.tar.gz. Aucune finalisation. Retour indépendant effectif19:26:42Z, nouvelleSSH/six services/25sites finaux réussis. Reçu operations/vision-reprise-sources-retour-reel.json.
+
+La configuration d'amorçage proposait cette route, mais modules/identite.nix ne la déclarait plus après désactivation de l'amorçage ; vision-gestion la proposait seulement sur Vision. Rétablir l'emplacement EXACT déjà public sur l'hôte d'identité, alias vers le même sources-services-mrjam du store que Vision, application/gzip/no-store. Archive filtrée des seuls codes/modules/templates/configuration modèle publique ; aucun credential, import réel, dump ou données. Aucun changement master/admin/DCR, ports, certificats ou politique d'authentification. Parseur Nginx teste quatre offres avant/après et évaluation NixOS exige alias du store égal entre identité et Vision.
+
+Reprise automatique distincte après CI exacte/main/provenance. Les autres parties de la recette restent conservées :copies actuellesSQL25/association, lecteur ACL individuel qualifié, retour9ef quatre fichiers inchangés, armement avantSQL, contrôleslocaux/services/backup/nouvelleSSH/25sites/22artefacts/refus et offreAGPL avant boot. Sinon retourcourant/ACL et contrôlesfinaux. Aucune ancienne base Vision restaurée ni migration/identité effacée. Inscriptions tierces fermées ; DPA/mineurs/rétention et copie Linux distincts. Autres projets prennent connaissance sans modification de leur code/données. Vision publiera résultat réel et limites.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 9c89ea7060a064da3eaf71f24e83984f029cb4348b5b9281648f8cab235c3f4a
+:LU_LE: 2026-10-10T19:29:57+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
 :PREUVE: -
 :END:
-Lu : projection publique limitée, cookies falsifiés réel/historique et reprise429 bornée ; critères exacts conservés avant boot, retour courant et aucune admission.
+Lu : offre AGPL existante rétablie sur log via le même store public que Vision ; aucune route admin ouverte ni donnée/secret ajouté. Reprise qualifiée avec retour inchangé.
 
 ** TODO vps
 :PROPERTIES:
