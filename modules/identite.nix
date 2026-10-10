@@ -3,6 +3,7 @@ let
   cfg = config.infrastructure.identite;
   keycloak = import ../services/keycloak-mrjam/paquet.nix { inherit pkgs; };
   extension = import ../services/keycloak-mrjam { inherit pkgs; };
+  sources = import ../services/sources-mrjam.nix { inherit pkgs; };
   theme = pkgs.runCommand "mrjam-theme-identite" {} ''
     mkdir -p "$out"
     cp -R ${../services/keycloak-mrjam/theme}/. "$out/"
@@ -88,6 +89,14 @@ in {
           '';
         };
         "/resources/".proxyPass = "http://127.0.0.1:8085";
+        "= /code-source/services-mrjam.tar.gz" = {
+          alias = "${sources}/services-mrjam.tar.gz";
+          extraConfig = ''
+            types {}
+            default_type application/gzip;
+            add_header Cache-Control "no-store" always;
+          '';
+        };
         # Console maître, API admin et métriques accessibles en maintenance
         # par Actions, jamais par un administrateur d'application.
         "/".return = "404";

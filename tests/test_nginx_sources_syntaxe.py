@@ -1,4 +1,4 @@
-"""Le parseur Nginx vérifie les directives réelles des trois téléchargements."""
+"""Le parseur Nginx vérifie les offres de sources avant et après bascule."""
 from pathlib import Path
 import re
 import shutil
@@ -13,10 +13,10 @@ class Syntaxe(unittest.TestCase):
     @unittest.skipUnless(shutil.which('nginx'),'Nginx requis dans la qualification complète et la CI')
     def test_blocs_reels_et_regression_point_virgule(self):
         blocs=[]
-        for nom in ('identite-amorcage.nix','vision-gestion.nix'):
+        for nom in ('identite-amorcage.nix','identite.nix','vision-gestion.nix'):
             source=(ROOT/'modules'/nom).read_text()
             blocs+=re.findall(r'"= /code-source/[^"\n]+"\s*=\s*\{.*?extraConfig\s*=\s*\'\'(.*?)\'\';',source,re.S)
-        self.assertEqual(len(blocs),3)
+        self.assertEqual(len(blocs),4)
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp);(d/'logs').mkdir()
             def tester(bloc):
