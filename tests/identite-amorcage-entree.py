@@ -23,4 +23,18 @@ with tempfile.TemporaryDirectory() as tmp:
     entry=Path(tmp)/'entree.nix'
     entry.write_text(m.entree_nix(original,ROOT/'modules/identite-amorcage.nix',None))
     assert evaluer('vision-identite-amorcage-systeme.nix',entry)==attendu
-    print(json.dumps({'entree_persistante_identique': True, 'activation': False}))
+    # Reproduire le remplacement d'une entrée régulière par le lien persistant.
+    courante = Path(tmp)/'configuration.nix'
+    copie = Path(tmp)/'configuration-avant.nix'
+    texte = '{ imports = [ '+json.dumps(str(original))+' ]; }\n'
+    courante.write_text(texte); copie.write_text(texte)
+    ancienne_constante = m.entree_configuration.COURANTE
+    try:
+        m.entree_configuration.COURANTE = courante
+        stable = m.entree_configuration.reference_originale(courante.resolve(),copie)
+        entry.write_text(m.entree_nix(stable,ROOT/'modules/identite-amorcage.nix',None))
+        assert evaluer('vision-identite-amorcage-systeme.nix',entry)==attendu
+        courante.unlink(); courante.symlink_to(entry)
+        assert evaluer('vision-identite-amorcage-systeme.nix',courante)==attendu
+    finally: m.entree_configuration.COURANTE = ancienne_constante
+    print(json.dumps({'entree_persistante_identique': True, 'remplacement_regulier_sans_cycle':True, 'activation': False}))

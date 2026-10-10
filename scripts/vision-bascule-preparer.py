@@ -18,6 +18,7 @@ import traceback
 ROOT = Path(__file__).resolve().parents[1]
 ETAPE = 'demarrage'
 DIAGNOSTIC = None
+REPARATION = None
 OBSERVER_HASH = '61ba89f8551a95a026293fca6ff3e79a6e5a9b6ed34c96255aa9828986ec2c2e'
 
 
@@ -49,6 +50,12 @@ def commande(*args, input=None, env=None, timeout=180, sortie=None):
     r = subprocess.run([str(a) for a in args], input=input, env=env,
         stdout=sortie if sortie is not None else subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout)
     if r.returncode:
+        print(json.dumps(dict(commande_refusee=True,etape_bascule=ETAPE,
+            code=r.returncode if -64 <= r.returncode <= 255 else None)),flush=True)
+        try:
+            lecteur = charger('categories_commande_bascule',ROOT/'scripts/vision-bascule-diagnostiquer.py')
+            print(json.dumps(dict(categories_commande=lecteur.classer(r.stderr.decode(errors='replace'),{})['categories'])),flush=True)
+        except Exception: pass
         diagnostic(r.stderr); exiger(False)
     return r.stdout.decode() if r.stdout is not None else ''
 
@@ -86,7 +93,7 @@ def empreintes(requete, tables, acl):
 
 
 def preparer(revision):
-    global DIAGNOSTIC
+    global DIAGNOSTIC, REPARATION
     exiger(os.geteuid() == 0 and re.fullmatch('[a-f0-9]{40}', revision))
     os.umask(0o077)
     d = Path('/root/vision-bascule-preparations')/revision
@@ -133,6 +140,11 @@ def preparer(revision):
         try: prive.ecrire(fd,nom,json.dumps(valeur))
         finally: os.close(fd)
     sauver('commence',dict(version=1))
+    etape('reference_configuration')
+    disponible = next(int(l.split()[1]) for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:'))
+    exiger(disponible >= 3*1024*1024)
+    REPARATION = charger('reparation_configuration_bascule',ROOT/'scripts/vision-configuration-reparer.py')
+    REPARATION.reparer(ROOT,d,activation,qualification,candidat,prive,construction,commande)
     etape('source_candidate')
     source = d/'vision'; source.mkdir(mode=0o700)
     preparation.extraire(ROOT/'vendor/vision-multiutilisateur-source.tar.gz',source,candidat['source_sha256'],candidat['vision'])
@@ -177,7 +189,8 @@ def preparer(revision):
             commande(age,'-r',config['recipient_age'],'-o',d/(nom+'.dump.age'),dump,timeout=120)
             os.chown(dump,postgres.pw_uid,postgres.pw_gid)
         etape('restauration_isolee')
-        preparation.initialiser_cluster(isole,b); actif = True
+        # Une réponse ambiguë du démarrage n'autorise pas à effacer un serveur.
+        actif = True; preparation.initialiser_cluster(isole,b)
         def sql(base,texte):
             return commande(runuser,'-u','postgres','--',b/'psql','-XAtq','-v','ON_ERROR_STOP=1',
                 '-h',isole,'-U','postgres','-d',base,'-f','-',env=environnement(),
@@ -232,7 +245,9 @@ def preparer(revision):
     rapport = dict(version=1,infrastructure=revision,observation=association.OBSERVATION,vision=candidat['vision'],style=candidat['style'],
         restauration_vision_reelle=True,restauration_identite_reelle=True,sujet_identite_conserve=True,credentials_identite_conserves=True,
         migrations_isolees_sans_perte=True,association_et_admin_isoles=True,retour_acl_rejoue=True,composants_construits=True,
-        garde_activation=True,cle_personnelle_verifiee=False,copie_exterieure_verifiee=False,production_modifiee=False,activation=False,inscriptions=False)
+        garde_activation=True,cle_personnelle_verifiee=False,copie_exterieure_verifiee=False,
+        source_configuration_reparee=True,production_modifiee=REPARATION.SOURCE_MODIFIEE,
+        donnees_production_modifiees=False,generation_active_modifiee=False,activation=False,inscriptions=False)
     sauver('preparation.json',rapport); print(json.dumps(rapport),flush=True)
 
 
@@ -242,7 +257,18 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(); p.add_argument('revision'); a = p.parse_args()
     try: preparer(a.revision)
     except Exception:
-        try: diagnostic(traceback.format_exc().encode())
+        trace = traceback.format_exc()
+        try: diagnostic(trace.encode())
         except Exception: pass
-        print(json.dumps(dict(preparation_bascule_refusee=True,etape=ETAPE,production_modifiee=False,activation=False,inscriptions=False)),flush=True)
+        try:
+            lecteur = charger('projection_refus_bascule',ROOT/'scripts/vision-bascule-diagnostiquer.py')
+            noms = ('vision-bascule-preparer.py','vision-multiutilisateur-preparer.py',
+                'vision-configuration-reparer.py','vision-entree-configuration.py','vision-acl.py',
+                'vision-proprietaire.py','vision-bascule-principaux.py')
+            projection = lecteur.classer(trace,{n:(ROOT/'scripts'/n).read_text() for n in noms},ROOT.parent)
+            print(json.dumps(dict(refus_bascule=projection)),flush=True)
+        except Exception: pass
+        print(json.dumps(dict(preparation_bascule_refusee=True,etape=ETAPE,
+            production_modifiee=bool(REPARATION and REPARATION.SOURCE_MODIFIEE),donnees_production_modifiees=False,
+            activation=False,inscriptions=False)),flush=True)
         raise SystemExit(1)

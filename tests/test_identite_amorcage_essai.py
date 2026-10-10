@@ -166,6 +166,12 @@ class Retour(unittest.TestCase):
             with self.assertRaises(RuntimeError): essai.preuve_valide(change,change,candidat)
         with self.assertRaises(RuntimeError): essai.entree_nix('/tmp/${injection}.nix','/tmp/module.nix',None)
 
+    def test_recette_reparation_identique_au_generateur_connu(self):
+        original='/etc/nixos/configuration.nix';module='/root/source/modules/identite-amorcage.nix'
+        fournisseur='/nix/store/'+'a'*32+'-fournisseur'
+        self.assertEqual(essai.entree_nix(original,module,fournisseur),
+            essai.entree_configuration.entree(original,module,fournisseur))
+
 
 class Public(unittest.TestCase):
     def test_issuer_refus_et_redirect_sont_verifies_sur_http_de_fixture(self):

@@ -59,5 +59,11 @@ class Diagnostic(unittest.TestCase):
                       '{ imports = [ "/etc/nixos/ailleurs.nix" ]; }'):
             self.assertFalse(m.importe_entree_courante(texte))
 
+    def test_projection_du_nouvel_operateur_sans_afficher_son_dossier(self):
+        dossier = Path('/root/vision-bascule-preparations')/('b'*40)
+        trace = '  File "'+str(dossier/'source/scripts/vision-bascule-preparer.py')+'", line 2, in preparer\nValueError: contenu secret\n'
+        r = m.classer(trace,{'vision-bascule-preparer.py':'def preparer():\n    return 1\n'},dossier)
+        self.assertEqual(len(r['cadres']),1); self.assertNotIn(str(dossier),str(r))
+
 
 if __name__ == '__main__': unittest.main()

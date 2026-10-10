@@ -298,6 +298,18 @@ la vérification du compte réel reste à exécuter après CI exacte.
 ## Préparation de la bascule depuis le compte initial vérifié
 
 La phase `vision-preparer` ne réutilise pas les gardes de l'ancien audity1.
+Depuis le diagnostic4cb942c/38040462649, elle répare d'abord le seul cycle
+de référence attesté. L'ancienne configuration régulière est vérifiée contre
+`entree_empreinte` du plan privé initial ; l'entrée doit être exactement celle
+du générateur connu. L'entrée prospective importe cette copie stable et doit
+reproduirek4 avant le remplacement atomique. Le lien courant reste à son
+emplacement, la source défectueuse et l'intention sont archivées en privé ;
+réévaluation identiquek4 et six PID inchangés exigés ensuite. Aucun switch,
+boot, test NixOS ou SQL n'est exécuté par cette réparation. Le rapport distingue
+la modification de source des données de production et de la génération active.
+Le générateur traite désormais une configuration régulière par sa copie stable.
+Les futurs refus projettent directement leurs classes/cadres validés par AST
+et code retour borné, sans argument, message ou traceback privé.
 Elle appelle uniquement l'observateur déjà qualifié0fbce8d, depuis sa source
 root protégée et dont le SHA256 exact est contrôlé, pour constater le soclek4
 et le compte actuel. Le reçu privé de connexion doit correspondre au sujet
