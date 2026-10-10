@@ -33,5 +33,24 @@ class Https(unittest.TestCase):
             with self.subTest(variante=variante),patch.object(m.h,'demander',side_effect=repondre),patch.object(m.h,'verifier'):
                 with self.assertRaises(ValueError):m.verifier(None,self.manifeste)
 
+    def test_projection_exacte_sans_corps_ni_cookies(self):
+        def repondre(*a,**k):
+            if a[2]=='/assets/0':return 200,{},b'contenu prive qui ne doit pas sortir'
+            return self.repondre(*a,**k)
+        with patch.object(m.h,'demander',side_effect=repondre),self.assertRaises(m.RefusPublic) as erreur:
+            m.verifier(None,self.manifeste)
+        self.assertEqual(erreur.exception.projection,dict(controle_https_refuse=True,
+            phase='artefact',route='/assets/0',statut=200,raison='empreinte_differente'))
+
+    def test_cookie_reel_et_historique_falsifies(self):
+        cookies=[]
+        def repondre(*a,**k):
+            if k.get('headers',{}).get('Cookie'):cookies.append(k['headers']['Cookie'])
+            return self.repondre(*a,**k)
+        with patch.object(m.h,'demander',side_effect=repondre),patch.object(m.h,'verifier'):
+            m.verifier(None,self.manifeste)
+        self.assertTrue(cookies)
+        self.assertTrue(all('__Host-mrj_session=invalide' in c and '__Secure-mrj_session=invalide' in c for c in cookies))
+
 
 if __name__=='__main__':unittest.main()

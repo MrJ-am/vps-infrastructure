@@ -685,3 +685,19 @@ client/hook utilisent ce même contrôle. Des lectures natives sous deux UID
 qualifient accès/refus ; ACL supplémentaire ou accès de groupe restent refusés.
 Le même programme sous DynamicUser/LoadCredential doit réussir sur le VPS
 avant armement et reprise. Cela ne prouve pas encore une activation.
+
+La reprise767fabd/PR94 réussit préparation complète et qualification native
+DynamicUser/LoadCredential sur le VPS : CI38078111643 (416tests/quatre jobs),
+Actions38078498366/job114290393339. Transfert/essai et contrôles locaux,
+services/sauvegarde commune et25HTTP/TLS en essai passent. Le contrôle HTTPS
+supplémentaire refuse avant enregistrement. Retour indépendant effectif
+19:10:10Z ; nouvelleSSH/six services/25sites finaux passent, SQL25 conservé.
+Reçu : `operations/vision-reprise-http-retour-reel.json`.
+
+Le contrôle garde les empreintes22artefacts et401 anon/falsifiés. Il projette
+désormais seulement phase, route publique prédéfinie, statut et raison constante,
+jamais réponse ou exception privée. Il teste les cookies OIDC réel et historique
+invalides. Dans ce seul essai, les contrôles d'identité bénéficient du même
+traitement429 borné que les autres requêtes ; comportement par défaut des
+anciens appelants conservé. La nouvelle exécution doit qualifier ces contrôles
+avant boot ; aucune cause du refus précédent n'est inventée.
