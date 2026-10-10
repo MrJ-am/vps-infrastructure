@@ -6,12 +6,13 @@ import json
 import os
 from pathlib import Path
 import re
+import traceback
 
 ROOT=Path(__file__).resolve().parents[1]
 REFUS='1760809584d4a9e59264cb8761bdb3d69aaef445'
 ETAPE='demarrage'
 ETAPES=frozenset(('demarrage','racines_privees','sources_exactes','simulation_privee',
-    'trace_exacte','absence_essai','observateur_exact','socle_avant','generation',
+    'trace_exacte','absence_essai','observateur_exact','observateur_import','socle_avant','generation',
     'repertoires','socle_apres','rapport'))
 HASHES={'vision-essai-qualification.py':'9194ffb03db0a2a74e812078d1e23d3e29a23a3bb31a7deae67006b83377f5d2',
     'vision-bascule-preparer.py':'a8232533a434f1914aa97a1458908498f61b3af774c4e9d6bbfb7fe559354cc3'}
@@ -21,7 +22,9 @@ CONNUS=frozenset(('sshd','nginx','nginx-config-reload','postgresql','postgresql-
     'postgresqlBackup-vision','postgresqlBackup-matheval','vision-gestion','vision-cycle','vision-purge',
     'mrjam-admission','mrjam-fermeture','mrjam-courriel','mrjam-sauvegarde',
     'systemd-tmpfiles-resetup','systemd-journald','systemd-journald@identite','systemd-networkd',
-    'systemd-journald-varlink@identite','systemd-sysctl','nix-daemon','acme-log.mrj.am'))
+    'systemd-journald-varlink@identite','systemd-sysctl','nix-daemon','acme-log.mrj.am',
+    'sysinit-reactivation','acme-finished-log.mrj.am','systemd-sysusers','userborn',
+    'systemd-random-seed'))
 
 
 def exiger(c):
@@ -72,13 +75,25 @@ def classer(texte):
     actions=[];inconnues=0
     for action,noms in re.findall(r'would (stop|restart|reload|start) the following units: ([^\n]+)',texte):
         for u in {u.strip() for u in noms.split(',')}:
-            suffixe=next((s for s in ('.service','.timer','.socket') if u.endswith(s)),None)
+            suffixe=next((s for s in ('.service','.timer','.socket','.target') if u.endswith(s)),None)
             if suffixe and u[:-len(suffixe)] in CONNUS:actions.append(dict(action=action,unite=u))
             else:inconnues+=1
     return dict(activation_simulee='would activate the configuration' in texte,
         redemarrage_systemd_annonce=bool(re.search(r'would restart systemd',texte)),
         arret_swap_annonce=bool(re.search(r'would stop swap',texte)),
         actions_connues=sorted(actions,key=lambda a:(a['action'],a['unite']))[:64],unites_inconnues=inconnues)
+
+
+def refus_ferme(exception):
+    """Localiser le seul lecteur public ; jamais le message privé d'exception."""
+    classes={'ValueError','KeyError','TypeError','OSError','FileNotFoundError',
+        'PermissionError','ModuleNotFoundError','ImportError','ConstructionRefusee'}
+    noms={'main','exiger','lire','charger','comparer_repertoires','configs','unite'}
+    cadres=[dict(ligne=c.lineno,fonction=c.name) for c in traceback.extract_tb(exception.__traceback__)
+        if c.filename==__file__ and c.name in noms][:16]
+    return dict(diagnostic_essai_refuse=True,etape=ETAPE if ETAPE in ETAPES else 'demarrage',
+        exception_connue=type(exception).__name__ if type(exception).__name__ in classes else None,
+        cadres_lecteur=cadres,production_modifiee=False,activation=False)
 
 
 def main(revision):
@@ -107,19 +122,26 @@ def main(revision):
     etape('absence_essai')
     exiger(not (d/'essai-preparation.json').exists() and not (d/'entree.nix').exists() and
         not (Path('/var/lib/postgresql')/('vision-bascule-'+REFUS[:12])).exists())
+    etape('generation')
+    generation=str((d/'generation-essai').resolve(strict=True));construction.store(generation)
+    exiger((Path(generation)/'bin/switch-to-configuration').is_file())
+    courant=str(Path('/run/current-system').resolve(strict=True))
+    activation=json.loads((ROOT/'operations/vision-identite-amorcage-activation.json').read_text())
+    exiger(courant==activation['systeme_amorcage'] and
+        str(Path('/nix/var/nix/profiles/system').resolve(strict=True))==courant)
+    etape('repertoires')
+    repertoires=comparer_repertoires(courant,generation)
+    print(json.dumps(dict(generation_construite_presente=True,socle_generation_identique=True,
+        observateur_complet=False,**repertoires)),flush=True)
     etape('observateur_exact')
     association=charger('association_diagnostic_essai',ROOT/'scripts/vision-bascule-principaux.py')
     old=Path('/root/vision-proprietaire-operations')/association.OBSERVATION/'source'
     exiger(hashlib.sha256(lire(old/'scripts','vision-proprietaire-enroler.py')).hexdigest()==
         '61ba89f8551a95a026293fca6ff3e79a6e5a9b6ed34c96255aa9828986ec2c2e')
+    etape('observateur_import')
     observateur=charger('observateur_diagnostic_essai',old/'scripts/vision-proprietaire-enroler.py')
     etape('socle_avant')
     observateur.main(association.OBSERVATION,observer=True,activation_seule=True)
-    etape('generation')
-    generation=str((d/'generation-essai').resolve(strict=True));construction.store(generation)
-    exiger((Path(generation)/'bin/switch-to-configuration').is_file())
-    etape('repertoires')
-    repertoires=comparer_repertoires(str(Path('/run/current-system').resolve()),generation)
     rapport=dict(version=1,infrastructure=revision,refus=REFUS,sources_exactes=True,
         generation_construite_presente=True,cluster_retire=True,socle_conserve=True,
         **repertoires,**resultat,production_modifiee=False,activation=False,inscriptions=False)
@@ -132,7 +154,6 @@ def main(revision):
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('revision');a=p.parse_args()
     try:main(a.revision)
-    except Exception:
-        print(json.dumps(dict(diagnostic_essai_refuse=True,etape=ETAPE if ETAPE in ETAPES else 'demarrage',
-            production_modifiee=False,activation=False)),flush=True)
+    except Exception as e:
+        print(json.dumps(refus_ferme(e)),flush=True)
         raise SystemExit(1)

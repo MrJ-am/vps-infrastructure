@@ -460,3 +460,14 @@ complète de ses autres preuves reste distincte. Les règles tmpfiles sont
 comparées sans publier leurs textes : mêmes fichiers, mêmes règles hors
 périmètre, comptages avant/après pour les trois seules règles réservées.
 Aucun changement système ni élargissement de verifier_dry dans ce diagnostic.
+
+Le diagnostic6097fa2/38062136739 projette effectivement la simulation après
+sources exactes, puis refuse `observateur_exact`. Une unité n'est pas encore
+reconnue ; les règles tmpfiles n'ont pas été projetées. La nouvelle lecture
+sépare lecture/import de l'observateur et émet uniquement classe d'exception
+connue et cadres du lecteur public, sans messages ni cadres externes privés.
+La comparaison des répertoires publics intervient après sources/trace/absence
+d'essai et générations active/enregistrée vérifiées, avant l'observation du
+compte. Chaque projection partielle indique ses limites ; tous les gardes
+restent nécessaires à un rapport complet. Les unités connues de sysinit
+sont classées, sans autorisation de les activer par ce seul diagnostic.

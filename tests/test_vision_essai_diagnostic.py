@@ -47,3 +47,20 @@ class Diagnostic(unittest.TestCase):
     def test_etape_arbitraire_refusee(self):
         with self.assertRaises(ValueError):m.etape('secret@example.test')
         self.assertIn(m.ETAPE,m.ETAPES)
+
+    def test_reactivation_sysinit_connue_sans_nom_arbitraire(self):
+        r=m.classer('would start the following units: sysinit-reactivation.target, userborn.service, secret.target')
+        self.assertEqual(r['actions_connues'],[dict(action='start',unite='sysinit-reactivation.target'),
+            dict(action='start',unite='userborn.service')])
+        self.assertEqual(r['unites_inconnues'],1)
+        self.assertNotIn('secret',json.dumps(r))
+
+    def test_refus_ne_publie_ni_exception_privee_ni_cadre_externe(self):
+        try:raise FileNotFoundError('/root/secret@example.test')
+        except Exception as e:r=m.refus_ferme(e)
+        self.assertEqual(r['exception_connue'],'FileNotFoundError')
+        self.assertEqual(r['cadres_lecteur'],[])
+        self.assertNotIn('secret',json.dumps(r));self.assertNotIn('/root',json.dumps(r))
+        try:m.exiger(False)
+        except Exception as e:r=m.refus_ferme(e)
+        self.assertEqual(r['cadres_lecteur'],[dict(ligne=m.exiger.__code__.co_firstlineno+1,fonction='exiger')])
