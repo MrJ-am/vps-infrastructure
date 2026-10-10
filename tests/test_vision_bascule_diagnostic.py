@@ -52,5 +52,12 @@ class Diagnostic(unittest.TestCase):
         r = m.classer('\x1b[31merror:\x1b[0m cannot coerce a set to a string avec un secret',{})
         self.assertEqual(r['categories'],['nix_type']); self.assertNotIn('secret',json.dumps(r))
 
+    def test_import_de_sa_propre_entree_reconnu_sans_chemin_prive(self):
+        self.assertTrue(m.importe_entree_courante('{ imports = [ "/etc/nixos/configuration.nix" "/root/module.nix" ]; }'))
+        for texte in ('{ imports = [ "/root/configuration.nix" ]; }',
+                      '{ imports = [ "/etc/nixos/configuration.nix.before" ]; }',
+                      '{ imports = [ "/etc/nixos/ailleurs.nix" ]; }'):
+            self.assertFalse(m.importe_entree_courante(texte))
+
 
 if __name__ == '__main__': unittest.main()

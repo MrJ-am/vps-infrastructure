@@ -85,6 +85,11 @@ def classer_oom(lignes):
     return dict(nix_instantiate_oom=len(dates),dates_oom_microsecondes=sorted(dates)[:8])
 
 
+def importe_entree_courante(texte):
+    # Forme exacte produite par entree_nix, sans émettre les chemins importés.
+    return bool(re.search(r'\bimports = \[\s*"/etc/nixos/configuration\.nix"\s',texte))
+
+
 def main(revision):
     exiger(os.geteuid() == 0 and re.fullmatch('[a-f0-9]{40}',revision))
     d = Path('/root/vision-bascule-diagnostics')/revision
@@ -104,6 +109,12 @@ def main(revision):
     exiger(bool(projection['cadres']))
     candidat = json.loads((ROOT/'operations/vision-multiutilisateur-candidat.json').read_text())
     activation = json.loads((ROOT/'operations/vision-identite-amorcage-activation.json').read_text())
+    essai = Path('/root/vision-identite-amorcage-essais')/activation['infrastructure']
+    construction.dossier_prive(essai)
+    entree = lire(essai,'entree.nix',16384)
+    cycle = importe_entree_courante(entree) and Path('/etc/nixos/configuration.nix').resolve() == essai/'entree.nix'
+    avant = essai/'configuration-avant.nix'
+    sauvegarde_reguliere = avant.is_file() and not avant.is_symlink()
     qual = json.loads((ROOT/'operations/vision-identite-amorcage-qualification.json').read_text())
     exiger(re.fullmatch('[a-f0-9]{40}',qual['infrastructure']))
     resume = json.loads(lire(Path('/root/vision-identite-amorcage-operations')/qual['infrastructure'],'evaluation-privee.json'))
@@ -111,12 +122,13 @@ def main(revision):
     # l’évaluation : retirer cet attribut paresseusement, avant --strict.
     expression = 'builtins.removeAttrs ((import '+str(ROOT/'scripts/vision-multiutilisateur-config.nix')+') {'+ \
         'configuration="/etc/nixos/configuration.nix"; fournisseur='+json.dumps(candidat['audit']['fournisseur'])+';}) ["systeme"]'
-    r = subprocess.run(['nix-instantiate','--eval','--strict','--json','--expr',expression,
+    # Refuser l'évaluation d'un cycle déjà visible au niveau des fichiers.
+    r = None if cycle else subprocess.run(['nix-instantiate','--eval','--strict','--json','--expr',expression,
         '-I','nixpkgs='+candidat['audit']['nixpkgs']],capture_output=True,timeout=180)
-    evaluation = r.returncode == 0 and len(r.stdout) < 16384 and len(r.stderr) < 262144
+    evaluation = r is not None and r.returncode == 0 and len(r.stdout) < 16384 and len(r.stderr) < 262144
     controles = invariants(json.loads(r.stdout),activation,resume,candidat) if evaluation else {}
     controles.pop('generation_identique',None)
-    nix = classer(r.stderr.decode(errors='replace'),{})['categories']
+    nix = classer(r.stderr.decode(errors='replace'),{})['categories'] if r is not None else []
     journal = subprocess.run(['journalctl','-k','--since=2026-10-10 08:30:00 UTC','--until=2026-10-10 08:53:30 UTC',
         '--lines=400','--output=json','--no-pager'],capture_output=True,timeout=10)
     journal_disponible = journal.returncode == 0 and len(journal.stdout) <= 1048576
@@ -133,7 +145,9 @@ def main(revision):
     espace = os.statvfs('/var/lib/postgresql')
     rapport = dict(version=1,infrastructure=revision,refus=REFUS,sources_exactes=True,**projection,
         evaluation_legere_reussie=evaluation,invariants=controles,categories_nix=nix,
-        evaluation_code=r.returncode if -64 <= r.returncode <= 255 else None,
+        evaluation_code=r.returncode if r is not None and -64 <= r.returncode <= 255 else None,
+        entree_importe_son_lien_courant=cycle,sauvegarde_configuration_reguliere=sauvegarde_reguliere,
+        evaluation_ignoree_pour_cycle=cycle,
         journal_kernel_disponible=journal_disponible,**oom,
         style_extrait_conforme=style_conforme,configuration_sauvee=(DOSSIER/'systeme-actif.json').exists(),
         memoire_3gio=disponible >= 3*1024*1024,disque_2gio=espace.f_bavail*espace.f_frsize >= 2*1024**3,

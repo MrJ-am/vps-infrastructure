@@ -19,6 +19,9 @@ Un affinage lit seulement les événements kernel OOM du processus Nix dans
 la fenêtre de l'essai et réévalue les attributs PostgreSQL/fournisseur, sans
 forcer la génération complète ni exécuter de SQL. Ce constat doit précéder
 toute correction ; aucun manque de mémoire ou bug d'expression n'est présumé.
+Le lecteur vérifie aussi si l'entrée privée importe son propre lien courant.
+Si ce cycle précis est constaté, il ignore toute nouvelle évaluation Nix et
+projette seulement le booléen et la présence d'une sauvegarde régulière.
 
 L’[observation38002451652](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38002451652),
 0fbce8dbad7534b007d5f127d55f4071962f9ccb/PR72, job114063522619, est réussie.
