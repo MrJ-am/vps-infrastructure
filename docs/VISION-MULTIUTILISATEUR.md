@@ -1,8 +1,27 @@
-# Préparation de Vision multi-utilisateur
+# Vision multi-utilisateur : activation et qualifications
 
-Cette opération est distincte des anciennes publications de présentation et de
-la migration sémantique. Les modules sont **désactivés par défaut**. Ce dossier
-ne revendique ni une activation NixOS ni une conformité globale en production.
+Vision multi-utilisateur est activé et enregistré sur ce VPS depuis le
+10 octobre 2026 à 19:39 UTC :008671e/PR96,
+[Actions38080453548](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38080453548),
+job114296135430, après CI exacte 38080099599 (418 tests/quatre jobs).
+Schéma 25, données historiques et association existante conservés, identité
+courante transférée vers log.mrj.am, compte commun JC@MrJ.am et administrateur
+applicatif sans accès aux contenus d'autrui vérifiés. Interface figéea9c51ac,
+22 fichiers exacts, refus publics, offre AGPL, sauvegarde commune chiffrée,
+nouvelle SSH et25 HTTP/TLS passent avant l'enregistrement et après l'opération.
+[Reçu réel](../operations/vision-multiutilisateur-activation-reelle.json).
+
+Les modules restent désactivés par défaut pour les autres installations.
+Les inscriptions de tiers sont fermées et la connexion humaine à Vision
+reste à confirmer. La conformité juridique générale n'est pas certifiée :
+contrats de sous-traitance applicables, procédure parentale et rétention
+requièrent encore une vérification avant ouverture. Le quota par défaut
+est 10 Mo décimaux de données logiques ; ce compteur ne représente pas
+l'espace physique total des index, WAL et sauvegardes PostgreSQL.
+
+## Historique des qualifications antérieures
+
+Les états inchangés et refus ci-dessous décrivent les opérations à leur date.
 
 La qualification réelle du 9 octobre
 [37909401754](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37909401754),
