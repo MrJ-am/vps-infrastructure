@@ -90,5 +90,15 @@ class Activation(unittest.TestCase):
             r=subprocess.run(['/bin/cat',str(fichier)],capture_output=True,preexec_fn=sans_privilege)
             self.assertNotEqual(r.returncode,0)
 
+    def test_cadre_refus_ne_publie_ni_exception_ni_valeur_privee(self):
+        try:m.exiger(False)
+        except Exception as error:
+            error.args=('contenu privé interdit au journal',)
+            r=m.cadres_refus(error,'worker')
+            self.assertEqual(r['phase'],'worker')
+            self.assertTrue(r['cadres'])
+            self.assertNotIn('privé',json.dumps(r))
+            self.assertEqual(set(r['cadres'][0]),{'fichier','ligne'})
+
 
 if __name__=='__main__':unittest.main()

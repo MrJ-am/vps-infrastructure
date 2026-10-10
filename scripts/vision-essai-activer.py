@@ -94,6 +94,17 @@ def preparer_parent_backend(parent,groupe):
     os.chown(parent,0,groupe);parent.chmod(0o750)
 
 
+def cadres_refus(error,phase):
+    noms={'vision-essai-activer.py','vision-reprise-reservee.py'}
+    cadres=[];trace=error.__traceback__
+    while trace:
+        fichier=Path(trace.tb_frame.f_code.co_filename)
+        if fichier.parent==ROOT/'scripts' and fichier.name in noms:
+            cadres.append(dict(fichier=fichier.name,ligne=trace.tb_lineno))
+        trace=trace.tb_next
+    return dict(essai_refuse=True,phase=phase,cadres=cadres[-8:])
+
+
 class Essai:
     def __init__(self,revision):
         exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision))
@@ -105,7 +116,13 @@ class Essai:
         for p in (self.d.parent,self.d,ROOT):self.construction.dossier_prive(p)
         self.prepare=Path('/root/vision-bascule-preparations')/revision
         self.construction.dossier_prive(self.prepare)
-        verifier_preparation(self.lire('essai-preparation.json',self.prepare),revision)
+        rapport=self.lire('essai-preparation.json',self.prepare)
+        verifier_preparation(rapport,revision)
+        self.resumption=charger('resumption_essai','vision-reprise-reservee.py') if rapport.get('reprise_essai') else None
+        if self.resumption:
+            exiger(rapport['reprise_essai']==self.resumption.ESSAI and rapport['schema_initial']==25 and
+                rapport['association_existante_verifiee'] is True)
+            self.resumption.verifier_precedent(ROOT,self.prive,self.construction)
         self.evaluation=self.lire('evaluation-essai.json',self.prepare)
         self.ancien=self.evaluation['systeme_actif'];self.nouveau=self.evaluation['systeme_candidat']
         for n in ('systeme_actif','systeme_candidat','postgres_paquet','backend_paquet','interface_store'):
@@ -243,11 +260,16 @@ class Essai:
         association=self.lire('association-privee.json')
         source=self.prepare/'vision'
         self.marquer('sql-engage')
-        self.sql('postgres',"CREATE ROLE keycloak LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT; CREATE DATABASE mrjam_identite OWNER keycloak;")
+        if self.resumption:
+            self.resumption.verifier_association(lambda q:self.sql('vision',q),association['identite'],association['historique'])
+            exiger(self.sql('postgres',"SELECT count(*)=1 AND bool_and(rolcanlogin AND NOT(rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls)) FROM pg_roles WHERE rolname='keycloak';")=='t')
+            exiger(self.sql('postgres',"SELECT count(*)=1 AND bool_and(pg_get_userbyid(datdba)='keycloak') FROM pg_database WHERE datname='mrjam_identite';")=='t')
+            exiger(self.sql('postgres',"SELECT NOT EXISTS(SELECT FROM pg_auth_members WHERE member=(SELECT oid FROM pg_roles WHERE rolname='keycloak'));")=='t')
+        else:self.sql('postgres',"CREATE ROLE keycloak LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT; CREATE DATABASE mrjam_identite OWNER keycloak;")
         self.sql('postgres','REVOKE ALL ON DATABASE mrjam_identite FROM PUBLIC; GRANT CONNECT ON DATABASE mrjam_identite TO keycloak;')
         self.commande(self.runuser,'-u','postgres','--',self.pg/'pg_restore','--single-transaction',
             '--exit-on-error','--no-owner','--no-privileges','--role=keycloak','-h','/run/postgresql',
-            '-U','postgres','-d','mrjam_identite',entree=transfert.read_bytes())
+            '-U','postgres','-d','mrjam_identite',*(['--clean','--if-exists'] if self.resumption else []),entree=transfert.read_bytes())
         exiger(self.empreintes('mrjam_identite',idp['tables'])==idp['empreintes'])
         # Aucun Keycloak nouveau ne peut écrire avant cette preuve durable.
         self.marquer('identite-migree')
@@ -259,9 +281,10 @@ class Essai:
             fichiers=list((source/'migrations').glob(f'{numero:03d}_*.sql'))
             exiger(len(fichiers)==1 and fichiers[0].is_file() and not fichiers[0].is_symlink())
             migrations.append(fichiers[0].read_text())
-        self.sql('vision','\n'.join(migrations))
+        if not self.resumption:self.sql('vision','\n'.join(migrations))
         self.sql('vision',(source/'scripts/roles.sql').read_text())
-        self.sql('vision',self.association.association_sql(association['identite'],association['historique'],self.acl.litteral))
+        if self.resumption:self.resumption.verifier_association(lambda q:self.sql('vision',q),association['identite'],association['historique'])
+        else:self.sql('vision',self.association.association_sql(association['identite'],association['historique'],self.acl.litteral))
         exiger(self.empreintes('vision',donnees['tables'])==donnees['empreintes'])
         self.verifier_comptes()
 
@@ -286,7 +309,8 @@ class Essai:
         exiger(Path('/run/current-system').resolve()==Path(self.nouveau))
         exiger(Path('/nix/var/nix/profiles/system').resolve()==Path(self.nouveau if enregistre else self.ancien))
         self.commande(self.outils/'systemctl','is-active','sshd','nginx','postgresql','vision','matheval','mrj-auth',
-            'keycloak','vision-gestion','vision-cycle','mrjam-admission','mrjam-fermeture','mrjam-courriel')
+            'keycloak','vision-gestion','vision-cycle','mrjam-admission','mrjam-fermeture','mrjam-courriel.timer')
+        exiger(self.commande(self.outils/'systemctl','show','mrjam-courriel.service','--property=Result','--value')=='success')
         exiger(self.sql('postgres',"SELECT current_setting('listen_addresses')='' AND current_setting('unix_socket_directories')='/run/postgresql' AND current_setting('data_directory')='/var/lib/postgresql/17' AND current_setting('server_version_num')::int/10000=17;")=='t')
         environment=self.commande(self.outils/'systemctl','show','mrj-auth.service','--property=Environment','--value')
         exiger('MRJ_AUTH_MODE=oidc' in environment and 'MRJ_OIDC_ISSUER=https://log.mrj.am/realms/mrjam' in environment)
@@ -308,6 +332,7 @@ class Essai:
             exiger(not temp.exists() and not temp.is_symlink());temp.symlink_to(plan['backend']);os.replace(temp,'/srv/vision/current')
             self.commande(self.outils/'sync','-f','/srv/vision')
             self.commande(Path(self.nouveau)/'bin/switch-to-configuration','test',timeout=360)
+            self.commande(self.outils/'systemctl','start','mrjam-courriel.service',timeout=120)
             self.verifier_local()
             self.commande(self.outils/'systemctl','start','mrjam-sauvegarde.service',timeout=120)
             exiger(self.commande(self.outils/'systemctl','show','mrjam-sauvegarde.service','--property=Result','--value')=='success')
@@ -325,7 +350,8 @@ class Essai:
                 if (self.d/'retour-commence').exists():exiger(False)
                 time.sleep(2)
             exiger(False)
-        except Exception:
+        except Exception as error:
+            if not (self.d/'echec-qualification.json').exists():self.sauver('echec-qualification.json',cadres_refus(error,'worker'))
             if not (self.d/'echec').exists():self.marquer('echec')
             raise
         finally:os.close(verrou)
@@ -369,9 +395,15 @@ class Essai:
     def preparer(self):
         exiger(not (self.d/'plan.json').exists() and not (self.d/'commence').exists())
         self.verifier_socle()
-        exiger(self.sql('vision','SELECT count(*)=18 AND max(version)=18 FROM vision_schema_migrations;')=='t')
-        exiger(self.sql('postgres',"SELECT count(*)=0 FROM pg_database WHERE datname='mrjam_identite';")=='t')
-        exiger(self.sql('postgres',"SELECT count(*)=0 FROM pg_roles WHERE rolname='keycloak';")=='t')
+        if self.resumption:
+            self.resumption.verifier_precedent(ROOT,self.prive,self.construction)
+            attendu=self.lire('association-privee.json',Path('/root/vision-essais')/self.resumption.ESSAI)
+            self.resumption.verifier_association(lambda q:self.sql('vision',q),attendu['identite'],attendu['historique'])
+        else:
+            exiger(self.sql('vision','SELECT count(*)=18 AND max(version)=18 FROM vision_schema_migrations;')=='t')
+            exiger(self.sql('postgres',"SELECT count(*)=0 FROM pg_database WHERE datname='mrjam_identite';")=='t')
+            exiger(self.sql('postgres',"SELECT count(*)=0 FROM pg_roles WHERE rolname='keycloak';")=='t')
+        self.qualifier_credentials()
         recherche=self.commande(self.outils/'systemd-path','systemd-search-system-generator')
         exiger('/usr/local/lib/systemd/system-generators' in recherche.split(':'))
         configuration=Path('/etc/nixos/configuration.nix')
@@ -433,6 +465,8 @@ class Essai:
     def attendre(self):
         limite=time.monotonic()+480
         while time.monotonic()<limite:
+            if (self.d/'echec-qualification.json').exists():
+                print(json.dumps(self.lire('echec-qualification.json')),flush=True)
             exiger(not any((self.d/n).exists() for n in ('echec','retour-commence','retour-termine','enregistre')))
             if (self.d/'teste').exists():
                 self.commande(self.outils/'systemctl','is-active',self.worker,self.unite_retour+'.timer')
@@ -441,6 +475,45 @@ class Essai:
                 return
             time.sleep(2)
         exiger(False)
+
+    def qualifier_credentials(self):
+        destination=Path('/var/lib/mrjam-identite')
+        self.construction.dossier_prive(destination)
+        fd=os.open(destination,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+        config=dict(adresse_exploitant='JC@mrj.am',recipient_age=self.qual.RECIPIENT)
+        try:
+            try:actuelle=json.loads(self.prive.lire(fd,'cycle.json'))
+            except FileNotFoundError:
+                self.prive.ecrire(fd,'cycle.json',json.dumps(config));actuelle=config
+            exiger(actuelle==config)
+        finally:os.close(fd)
+        source=self.commande(self.outils/'nix-store','--add',ROOT/'services/mrjam-courriel/courriel.py')
+        self.construction.store(source)
+        # Même lecteur/validation que les services, sous un uid sans privilège
+        # et le mécanisme LoadCredential natif ; ni SMTP, ni SQL, ni état métier.
+        code="""import importlib.util,json,os,pathlib,re,stat,sys
+s=importlib.util.spec_from_file_location('courriel',sys.argv[1]);m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+assert os.geteuid()!=0
+d=pathlib.Path(os.environ['CREDENTIALS_DIRECTORY'])
+m.verifier_smtp(m.lire_prive(d/'smtp'))
+c=m.lire_prive(d/'config');m.adresse(c['adresse_exploitant']);assert re.fullmatch('age1[0-9a-z]{58}',c['recipient_age'])
+for n in ('client','hook'):
+ p=d/n;f=os.open(p,os.O_RDONLY|os.O_NOFOLLOW);i=os.fstat(f)
+ assert stat.S_ISREG(i.st_mode) and not i.st_mode&0o077 and i.st_uid in (0,os.geteuid())
+ with os.fdopen(f) as r:assert re.fullmatch('[A-Za-z0-9_-]{43}',r.read(128).strip())
+print(json.dumps(dict(credentials_natifs_prives_valides=True,smtp_contacte=False)))
+"""
+        self.commande(self.outils/'systemd-run','--unit=vision-credentials-'+self.revision[:12],
+            '--wait','--collect','--pipe','--property=Type=oneshot','--property=DynamicUser=yes',
+            '--property=ProtectSystem=strict','--property=ProtectHome=yes','--property=PrivateTmp=yes',
+            '--property=RestrictAddressFamilies=AF_UNIX','--property=IPAddressDeny=any',
+            '--property=UMask=0077',
+            '--property=LoadCredential=smtp:'+str(destination/'proton-smtp.json'),
+            '--property=LoadCredential=config:'+str(destination/'cycle.json'),
+            '--property=LoadCredential=client:'+str(destination/'cycle-client.secret'),
+            '--property=LoadCredential=hook:'+str(destination/'fermeture-hook.secret'),
+            str(Path(sys.executable).resolve()),'-c',code,source)
+        print(json.dumps(dict(credentials_natifs_prives_valides=True,smtp_contacte=False)),flush=True)
 
     def finaliser(self):
         lock=os.open(self.d/'finalisation.lock',os.O_RDWR|os.O_CREAT|os.O_NOFOLLOW,0o600)
@@ -501,7 +574,8 @@ def main():
         essai=Essai(a.revision)
         try:getattr(essai,'worker_execute' if a.phase=='worker' else a.phase)()
         finally:os.close(essai.fd)
-    except Exception:
+    except Exception as error:
+        print(json.dumps(cadres_refus(error,a.phase)),flush=True)
         sys.exit('Essai Vision refusé ; diagnostic privé et retour indépendant conservés.')
 
 

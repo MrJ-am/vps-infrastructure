@@ -95,7 +95,7 @@ def empreintes(requete, tables, acl):
     return {t:requete("SELECT md5(coalesce(string_agg(md5(to_jsonb(t)::text),' ' ORDER BY md5(to_jsonb(t)::text)),'')) FROM public."+acl.identifiant(t)+' t') for t in tables}
 
 
-def preparer(revision, sauvegarde_telephone=False, essai=False):
+def preparer(revision, sauvegarde_telephone=False, essai=False, reprise_essai=False):
     global DIAGNOSTIC, REPARATION
     exiger(os.geteuid() == 0 and re.fullmatch('[a-f0-9]{40}', revision))
     os.umask(0o077)
@@ -116,6 +116,10 @@ def preparer(revision, sauvegarde_telephone=False, essai=False):
     preparation = charger('extraction_bascule', ROOT/'scripts/vision-multiutilisateur-preparer.py')
     acl = preparation.acl
     for p in (d.parent,d,ROOT): construction.dossier_prive(p)
+    reprise=charger('reprise_bascule',ROOT/'scripts/vision-reprise-reservee.py') if reprise_essai else None
+    exiger(not reprise_essai or (essai and not sauvegarde_telephone))
+    if reprise:reprise.verifier_precedent(ROOT,prive,construction)
+    schema_initial=25 if reprise else 18
     DIAGNOSTIC = d/'diagnostic-prive.log'
     exiger(not (d/'commence').exists() and not (d/'preparation.json').exists())
     public = json.loads((ROOT/'operations/vision-proprietaire-observation.json').read_text())
@@ -212,12 +216,13 @@ def preparer(revision, sauvegarde_telephone=False, essai=False):
         parametres = json.loads(sql('postgres',"SELECT json_build_object('tcp',current_setting('listen_addresses'),'socket',current_setting('unix_socket_directories'),'data',current_setting('data_directory'),'encodage',current_setting('server_encoding'),'majeure',current_setting('server_version_num')::int/10000);"))
         association.verifier_isole(str(isole),parametres)
         sql('postgres','CREATE ROLE vision LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS; CREATE DATABASE vision OWNER vision; CREATE ROLE keycloak LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS NOINHERIT; CREATE DATABASE mrjam_identite OWNER keycloak;')
+        if reprise:sql('postgres',reprise.roles_fixture())
         commande(runuser,'-u','postgres','--',b/'pg_restore','--exit-on-error','-h',isole,'-U','postgres','-d','vision',isole/'vision.dump',env=environnement(),timeout=600)
         commande(runuser,'-u','postgres','--',b/'pg_restore','--exit-on-error','--no-owner','--no-privileges','--role=keycloak',
             '-h',isole,'-U','postgres','-d','mrjam_identite',isole/'identite.dump',env=environnement(),timeout=600)
         exiger(empreintes(lambda q:sql('vision',q),tables,acl) == avant and
             empreintes(lambda q:sql('mrjam_identite',q),tables_idp,acl) == idp_avant)
-        exiger(sql('vision','SELECT count(*)=18 AND max(version)=18 FROM vision_schema_migrations;') == 't')
+        exiger(sql('vision',f'SELECT count(*)={schema_initial} AND max(version)={schema_initial} FROM vision_schema_migrations;') == 't')
         if sauvegarde_telephone:
             etape('sauvegarde_restauree')
             commande(runuser,'-u','postgres','--',b/'pg_ctl','-D',isole/'data','-m','fast','-w','stop')
@@ -236,7 +241,8 @@ def preparer(revision, sauvegarde_telephone=False, essai=False):
             'PATH':str(b)+':'+os.environ['PATH']}
         commande('sh',source/'scripts/migrate.sh',env=env,timeout=600)
         sql('vision',(source/'scripts/roles.sql').read_text())
-        sql('vision',association.association_sql(identite,historique,acl.litteral))
+        if reprise:reprise.verifier_association(lambda q:sql('vision',q),identite,historique)
+        else:sql('vision',association.association_sql(identite,historique,acl.litteral))
         attendu = dict(comptes=1,administrateurs=1,identites=1,issuer=identite['issuer'],sujet=identite['sujet'],utilisateur=historique['utilisateur_historique'],inscriptions=False)
         obtenu = json.loads(sql('vision',"SELECT json_build_object('comptes',(SELECT count(*) FROM vision_gestion.comptes),'administrateurs',(SELECT count(*) FROM vision_gestion.comptes WHERE administrateur),'identites',(SELECT count(*) FROM vision_gestion.identites),'issuer',emetteur,'sujet',sujet,'utilisateur',utilisateur,'inscriptions',(SELECT inscriptions_ouvertes FROM vision_gestion.configuration)) FROM vision_gestion.identites;"))
         exiger(obtenu == attendu)
@@ -267,6 +273,7 @@ def preparer(revision, sauvegarde_telephone=False, essai=False):
             restauration_vision_reelle=True,restauration_identite_reelle=True,
             migrations_isolees_sans_perte=True,association_et_admin_isoles=True,
             retour_acl_rejoue=True,**qualifie)
+        if reprise:rapport.update(reprise_essai=reprise.ESSAI,schema_initial=25,association_existante_verifiee=True)
         sauver('essai-preparation.json',rapport); print(json.dumps(rapport),flush=True)
         return
     etape('composants_garde_ferme')
@@ -294,8 +301,8 @@ def preparer(revision, sauvegarde_telephone=False, essai=False):
 if __name__ == '__main__':
     def interruption(*_): raise InterruptedError('Préparation interrompue')
     for sig in (signal.SIGTERM,signal.SIGHUP,signal.SIGINT): signal.signal(sig,interruption)
-    p = argparse.ArgumentParser(); p.add_argument('revision'); p.add_argument('--sauvegarde-telephone',action='store_true'); p.add_argument('--essai',action='store_true'); a = p.parse_args()
-    try: preparer(a.revision, sauvegarde_telephone=a.sauvegarde_telephone, essai=a.essai)
+    p = argparse.ArgumentParser(); p.add_argument('revision'); p.add_argument('--sauvegarde-telephone',action='store_true'); p.add_argument('--essai',action='store_true'); p.add_argument('--reprise-essai',action='store_true'); a = p.parse_args()
+    try: preparer(a.revision, sauvegarde_telephone=a.sauvegarde_telephone, essai=a.essai,reprise_essai=a.reprise_essai)
     except Exception:
         trace = traceback.format_exc()
         try: diagnostic(trace.encode())

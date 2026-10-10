@@ -6677,14 +6677,82 @@ La recette de copie corrige préventivement le parent dédié root:vision0750 : 
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: bc4a607a049c71e6fc32a1fb0628e80a3db187f5fff12e756a42fce0fccc0ed1
-:LU_LE: 2026-10-10T17:52:25+00:00
+:LU_LE: 2026-10-10T18:01:11+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Reçu du retour d757 et recette de diagnostic sans mutation
+:PREUVE: Actions38073926822/job114276864557, operations/vision-activation-diagnostic-reel.json
 :END:
-Lu : garder le schéma et les données, confirmer état et permissions avant reprise ; aucun nouveau Run workflow utilisateur.
+Diagnostic réel confirme parent0700 non traversable par Vision et CHDIR, SQL25, association initiale conservée et identité courante rendue. Socle/compte, nouvelleSSH/six services/25sites passent. Lecture sans mutation ; reprise distincte sans supprimer migrations ni restaurer vieux dump.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Reprendre Vision réservé depuis le schéma25 et l’identité conservés
+:PROPERTIES:
+:ID: 20261010-vision-0ce0023f51bd
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T18:15:14+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic f729c5a/PR91, CI exacte38073538058 (406tests/quatre jobs), signal de demande puis Actions38073926822/job114276864557, réussit. Le seul essai d757 retourné est observé : ancien socle/compte vérifiés, SQL25 effectivement appliqué, base d'identité commune présente, association initiale conservée, copie courante d'identité rendue à l'ancien cluster. Parent backend root0700 non traversable par Vision et refus CHDIR confirmés ; quatre noms de services en échec projetés, aucun journal brut. NouvelleSSH/six services/25HTTP/TLS avant/après passent ; diagnostic sans mutation. Reçu operations/vision-activation-diagnostic-reel.json.
+
+Préparer et exécuter une phase distincte vision-essai-reprendre après CI exacte/main/provenance, automatiquement sans intervention utilisateur. Reprise exclusivement du précédent d757 terminé et non enregistré, marqueurs privés exacts ; aucune suppression de migrations/identités ni restauration de vieux dump Vision. Nouvelle copie ACTUELLE SQL25 restaurée en UTF8 dans le cluster isolé avec les six rôles non privilégiés nécessaires avant pg_restore. migrate.sh saute les migrations déjà inscrites ; rôles remis en mode multi-utilisateur, association existante exacte constatée plutôt que réinsérée. Refuser comptes tiers/fermés, effacement ou admission en cours. NativePG17 teste cette restauration25 avec titre modifié après migration, deux validations sans insertion et refus de compte fermé sans réactivation.
+
+Même génération complète, Nginx/dry/entrée et retour qualifié9ef inchangé. Parent dédié root:vision0750 explicite malgré umask0077, lecture native non privilégiée testée. Transférer l'identité actuelle de l'ancien cluster vers la base commune existante par pg_restore --clean --single-transaction, après vérification propriétaire/rôle/membres ; ancienne identité jamais supprimée. Snapshots chiffrés avec la seule clé téléphone Vision/identité ; Matheval et ses clés/ports/socket/PG17 conservés. Timer15min et générateur persistant avec marque volatile restent armés avant SQL/essai ; worker tient le verrou applicatif pendant contrôles.
+
+Préparer cycle.json root0600 s'il manque, vérifier exactement contact exploitant JC@mrj.am et destinataire public téléphone déjà autorisés ; aucun remplacement d'une configuration différente. Qualifier réellement LoadCredential et le lecteur utilisé par le courrier sous uid dynamique non privilégié, isolé sans réseau/SMTP/SQL, quatre credentials privés ; projection booléenne seulement. Le courrier périodique est un oneshot : vérifier son timer actif et Result=success après exécution, jamais exiger que ce processus terminé reste actif. Contrôles services, sauvegarde commune, nouvelleSSH/25HTTP/TLS/22artefacts et refus anonymes/falsifiés avant boot et marque finale. Sur refus, même retour indépendant courant/ACL et contrôle final ; cadres fichier/ligne constants exportés sans exception/valeur privée pour éviter de nouvelles phases de diagnostic aveugles.
+
+La phase réservé ne vaut ni ouverture tierce ni certification RGPD/reprise après coupure physique. Préconditions juridiques/DPA/mineurs et rétention des archives opérateur restent distinctes avant admission ; sauvegarde mensuelle Linux/disque et clé indépendante ultérieures. Connexion humaine Vision mot de passe/OTP après activation, sans demander ces secrets. Autres projets prennent connaissance sans action sur leur code/données ; aucune reconstruction par les consommateurs. Vision publiera résultat réel et limites.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 8557f2fd884116e8fdbe57be6a763aacdaa942ca679a5a9d457a06bfbb0e5cbb
+:LU_LE: 2026-10-10T18:19:18+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: 409tests locaux et PostgreSQL17 natif de restauration25 sans réinsertion
+:END:
+Lu : reprise du seul précédent retourné, copies courantes/association constatée, credentials natifs et courrier oneshot qualifiés avant enregistrement ; aucun ancien dump Vision ni effacement de migrations.
 
 ** TODO vps
 :PROPERTIES:

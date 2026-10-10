@@ -119,3 +119,10 @@ jobs:
     if: needs.demande.outputs.action == 'vision-activation-diagnostiquer'
     uses: ./.github/workflows/vision-activation-diagnostiquer.yml
     secrets: inherit
+  vision-essai-reprendre:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-essai-reprendre'
+    uses: ./.github/workflows/vision-essai-activer.yml
+    with:
+      reprise: true
+    secrets: inherit

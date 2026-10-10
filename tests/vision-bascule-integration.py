@@ -15,6 +15,42 @@ def charger(nom):
     m = importlib.util.module_from_spec(s); s.loader.exec_module(m); return m
 
 
+def qualifier_reprise(conteneur,base,vision,identite,historique,donnees):
+    reprise=charger('vision-reprise-reservee')
+    d=Path('/tmp')/('vision_reprise_'+uuid.uuid4().hex[:12]);b=Path('/usr/lib/postgresql/17/bin')
+    def executer(*args,entree=None):
+        r=subprocess.run(['docker','--host=unix:///var/run/docker.sock','exec','-i','-u','postgres',conteneur,*map(str,args)],
+            input=entree,capture_output=True,timeout=120)
+        assert r.returncode==0,'Commande de reprise synthétique refusée : '+Path(str(args[0])).name
+        return r.stdout
+    def sql(q,db=base):
+        return executer(b/'psql','-XAtq','-v','ON_ERROR_STOP=1','-h',d,'-U','postgres','-d',db,'-f','-',
+            entree=("SET TIME ZONE 'UTC'; SET DateStyle='ISO';\n"+q).encode()).decode().strip()
+    dump=executer(b/'pg_dump','-Fc','-U','postgres',base)
+    executer('mkdir','-m','700',d);actif=False
+    try:
+        executer(b/'initdb','-D',d/'data','--auth-local=trust','--auth-host=reject','--no-locale','--encoding=UTF8')
+        actif=True
+        executer(b/'pg_ctl','-D',d/'data','-l',d/'serveur.log','-w','-o',"-c listen_addresses='' -c unix_socket_directories="+str(d),'start')
+        sql('CREATE ROLE vision LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOBYPASSRLS; CREATE DATABASE '+base+' OWNER vision;'+reprise.roles_fixture(),db='postgres')
+        executer(b/'pg_restore','--exit-on-error','-h',d,'-U','postgres','-d',base,entree=dump)
+        assert sql('SHOW server_encoding;')=='UTF8'
+        assert sql('SHOW listen_addresses;')==''
+        assert sql('SELECT to_jsonb(t) FROM vision_fiches t ORDER BY id;')==donnees
+        for _ in range(2):
+            sql((vision/'scripts/roles.sql').read_text())
+            reprise.verifier_association(sql,identite,historique)
+            assert sql('SELECT to_jsonb(t) FROM vision_fiches t ORDER BY id;')==donnees
+        sql("UPDATE vision_gestion.comptes SET actif=false WHERE utilisateur='owner-synthetique';")
+        try:reprise.verifier_association(sql,identite,historique)
+        except ValueError:pass
+        else:raise AssertionError('Reprise d’un compte fermé acceptée')
+        assert sql("SELECT NOT actif FROM vision_gestion.comptes WHERE utilisateur='owner-synthetique';")=='t'
+    finally:
+        if actif:executer(b/'pg_ctl','-D',d/'data','-m','fast','-w','stop')
+        executer('rm','-rf',d)
+
+
 def verifier(conteneur, vision):
     assert re.fullmatch(r'[A-Za-z0-9_.-]{1,80}', conteneur)
     base = 'vision_bascule_qualification_'+uuid.uuid4().hex[:12]
@@ -66,13 +102,16 @@ def verifier(conteneur, vision):
             assert [o for o in apres['objets'] if (o['type'],o['nom']) in objets] == avant['objets']
             assert apres['role'] == avant['role']
             assert sql('SELECT to_jsonb(t) FROM vision_fiches t ORDER BY id;') == donnees
+        qualifier_reprise(conteneur,base,vision,identite,historique,donnees)
         # Refuser une réactivation du propriétaire après sa suppression.
         sql('DELETE FROM vision_gestion.identites; DELETE FROM vision_gestion.comptes;')
         sql(retour,ok=False)
         print(json.dumps(dict(donnees_synthetiques=True,association_expresse=True,administrateur_applicatif_unique=True,
             admin_sans_contenu=True,rejeu_association_refuse=True,retour_avec_tiers_refuse=True,
             retour_partiel_sans_admissions=True,retour_apres_effacement_refuse=True,
-            retour_rejoue_deux_fois=True,donnees_ajoutees_pendant_essai_conservees=True,donnees_conservees=True)))
+            retour_rejoue_deux_fois=True,donnees_ajoutees_pendant_essai_conservees=True,donnees_conservees=True,
+            copie_courante_schema25_restauree=True,association_existante_rejouee_sans_insertion=True,
+            reprise_compte_ferme_refusee=True)))
     finally: sql('DROP DATABASE '+base+';',db='postgres')
 
 
