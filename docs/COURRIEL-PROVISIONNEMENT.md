@@ -35,3 +35,33 @@ Ce contrôle n'achève pas la migration multi-utilisateur. L'import privé,
 l'identité initiale avec MFA, la restauration des bases, le retour des owners,
 ACL et RLS, les contrats applicables et la réception du registre d'effacement
 restent les conditions distinctes du dossier d'activation.
+
+## Témoin sur téléphone du 10 octobre 2026
+
+Le propriétaire a créé une clé AGE localement dans Nix-on-Droid, puis partagé
+uniquement sa clé publique :
+`age1p95t4z0aafq7j4fl7cc9f0cjz8j03dtlmz56kec4lj6vwxrvzpqqnc53cc`.
+Le chiffrement AGE valide sa somme de contrôle. La clé privée reste sur le téléphone,
+dans `~/.local/share/mrjam-recovery/cle-privee.age` ; sa possession et le déchiffrement
+réel restent à confirmer. Aucun accès au PC Linux n'est nécessaire pour ce témoin.
+
+La phase fermée `vision-telephone` du point d'entrée automatisé utilise le relais
+déjà installé, après vérification de demande et CI exacte, sans nouvelle saisie
+de secret ni clic Run workflow. Elle envoie uniquement au compte expéditeur
+existant la pièce `vision-test-telephone-20261010.json.age`. Le message et le témoin
+sont distincts du premier test SMTP. Le contenu est un JSON synthétique avec
+`qualification_telephone: true`, la référence `vision-telephone-20261010` et
+l'empreinte publique de la clé ; aucune donnée de compte, fiche, item ou identité.
+
+Une intention root0600/fsync précède la remise SMTP et un reçu est écrit seulement
+après acceptation du relais. Un rejeu de ce même opérateur terminé ne renvoie
+aucun mail ; une remise ambiguë bloque pour diagnostic sans relance automatique.
+Les exceptions SMTP ne sont jamais publiées. Les générations active/enregistrée
+sont contrôlées avant/après, puis six services, nouvelle SSH et25sites.
+
+La réception et le déchiffrement exigent encore une manipulation du propriétaire.
+Ce test ne restaure aucune base et n'atteste aucune copie extérieure complète.
+Il ne modifie pas la configuration des sauvegardes, les clés précédentes ou les
+copies existantes ; Matheval reste inchangé. La nouvelle clé ne déchiffre pas les
+anciens fichiers. Les nouvelles sauvegardes Vision/identité nécessiteront leur
+préparation propre et leur vérification avant toute bascule.
