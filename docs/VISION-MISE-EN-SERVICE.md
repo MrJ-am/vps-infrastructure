@@ -632,3 +632,29 @@ du parent backend. Aucun contenu ou journal brut publié ; aucune mutation.
 La recette corrige préventivement le parent root:vision0750 : le umask0077
 retire sinon le droit de traversée au groupe. Le test exécuté en compte non
 privilégié couvre cette cause possible ; seul le diagnostic VPS la confirmera.
+
+Le diagnostic `f729c5a2b9ffe46a06a022e0cb481a9f4134817b` a réussi :
+Actions `38073926822`, job `114276864557`, CI `38073538058` (406tests).
+Parent0700 non traversable et CHDIR confirmés, schéma25 et association
+initiale conservés, identité courante rendue. Ancien socle/compte et
+nouvelleSSH/six services/25HTTP/TLS avant/après passent ; lecture sans mutation.
+Reçu : `operations/vision-activation-diagnostic-reel.json`.
+
+La phase distincte `vision-essai-reprendre` exige ce précédent terminé et
+non enregistré, puis des copies actuelles restaurées au schéma25 en UTF8.
+Les rôles non privilégiés sont créés dans le seul cluster isolé avant
+pg_restore ; les migrations déjà appliquées sont conservées. Association
+existante exacte constatée sans réinsertion, compte fermé/tiers/effacement
+ou admission en cours refusés. PostgreSQL17 natif répète la copie25,
+la conservation d'un titre ajouté pendant l'essai et le refus de réactivation.
+
+Le parent backend est root:vision0750 ; `cycle.json` root0600 est préparé
+uniquement s'il manque et toute configuration différente est refusée.
+Son contact est JC@mrj.am et son destinataire de chiffrement la clé publique
+téléphone déjà confirmée. LoadCredential et le lecteur réel sont qualifiés
+sous uid dynamique non privilégié, sans réseau/SMTP/SQL. Le courrier est un
+oneshot : son timer reste actif et son résultat doit être success après
+exécution ; son processus n'est pas censé rester actif. Même armement15min,
+générateur/retour qualifiés, sauvegarde et contrôles indépendants avant boot.
+Une projection de cadres fichier/ligne constants facilite les refus sans
+publier exception, valeur privée ou journal brut. Admission tierce fermée.

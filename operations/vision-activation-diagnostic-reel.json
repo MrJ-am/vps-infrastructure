@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "infrastructure": "f729c5a2b9ffe46a06a022e0cb481a9f4134817b",
+  "essai": "d757002ff826431dce2a6401407f55ced5ed2e66",
+  "retour_effectif": true,
+  "socle_ancien_et_compte_verifies": true,
+  "schema": {
+    "nombre": 25,
+    "maximum": 25
+  },
+  "identite_commune_presente": true,
+  "association_initiale_preservee": true,
+  "sql_engage": true,
+  "identite_migree": true,
+  "identite_courante_retablie": true,
+  "parent_backend_mode": "0o700",
+  "parent_backend_traversable_par_vision": false,
+  "changement_repertoire_refuse": true,
+  "services_en_echec_dans_diagnostic": [
+    "vision-migrate.service",
+    "vision-cycle.service",
+    "mrjam-fermeture.service",
+    "mrjam-courriel.service"
+  ],
+  "activation": false,
+  "inscriptions": false,
+  "donnees_production_modifiees": false,
+  "pr": 91,
+  "ci_exacte": 38073538058,
+  "tests": 406,
+  "signal": 38073920197,
+  "execution": 38073926822,
+  "job": 114276864557,
+  "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38073926822",
+  "nouvelle_ssh_verifiee": true,
+  "six_services_verifies": true,
+  "sites_verifies": 25,
+  "actualise_le": "2026-10-10T17:59:57Z"
+}
