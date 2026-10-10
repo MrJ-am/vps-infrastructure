@@ -512,3 +512,36 @@ partiels sont conservés avant le garde, sans marqueur de préparation achevée.
 Nouvelles restaurations isolées et retour ACL restent nécessaires à chaque
 opérateur, puis entrée exactement reproductible et répétition du timer. Le
 retour effectif et la bascule sur production demeurent des opérations distinctes.
+
+Le 10 octobre à16:02:53 UTC, la préparation complète a2509f5/PR87,
+[38065842787](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38065842787),
+job114253227210, réussit après CI exacte38065328757 (389tests/quatre jobs).
+Restaurations réelles isolées, migrations/association/admin sans contenu,
+deux retours ACL, génération complète, Nginx natif et simulation passent.
+Bus conservé et seules différences tmpfiles qualifiées ; entrée persistante
+identique et timer de test réellement répété. Nouvelle SSH/six services/25sites
+passent ; aucune activation, SQL de production ou inscription. Voir
+[le reçu](../operations/vision-essai-preparation-reelle.json).
+
+Le retour est ensuite renforcé et éprouvé hors production : marques atomiques
+avec synchronisation, fermeture des clients par conditions systemd natives,
+copie de l'identité courante après arrêt de Keycloak, restauration inverse
+en une transaction et comparaison des données. Une inversion achevée n'est
+jamais répétée après une mise à jour de l'ancien cluster. Aucun ancien dump
+Vision ne sert au retour ; droits ciblés seulement. Refus SQL/identité garde
+Vision et l'identité fermés, en remettant les autres sites en service.
+Les fichiers de copie restent privés jusqu'à la reprise puis sont retirés
+après la marque durable de fin. Aucun corps d'erreur privé dans Actions.
+
+Le shell réel est exécuté avec SIGKILL pendant copie, inversion et SQL, puis
+reprise/rejeu ; PostgreSQL17 vérifie séparément l'annulation d'un retour
+partiellement exécuté et la conservation du sujet/mot de passe/OTP courants.
+La phase automatique `vision-retour-qualifier` relit le reçu privé exact et
+observe l'ancien socle/compte avant et après. Elle vérifie trois démarrages
+refusés sans erreur par une condition native sur une seule unité jetable,
+puis conserve le nouveau script syntaxiquement valide. Aucun service
+applicatif existant n'est arrêté. Nouvelle SSH/six services/25sites finaux.
+Cette qualification ne teste pas encore un retour de production ni une
+reprise après redémarrage de la machine ; aucun retour effectif n'est armé.
+L'essai d'activation, son dispositif de reprise au démarrage et sa finalisation
+restent à préparer distinctement. Les invitations tierces restent fermées.

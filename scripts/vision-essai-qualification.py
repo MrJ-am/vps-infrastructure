@@ -101,63 +101,23 @@ def verifier_dry(texte,repertoires_valides=False):
     return sorted(modifies)
 
 
-def script_retour(d, ancien, outils, postgres, runuser, worker):
-    """Retour sans réseau/Python : droits ciblés et identité courante, jamais ancien dump."""
-    q=shlex.quote
-    a=lambda n:q(str(outils/n))
-    pg=lambda n:q(str(postgres/'bin'/n))
-    ru=q(str(runuser))
-    return f'''#!{outils}/bash
-set -euo pipefail
-umask 077
-export PATH={q(str(outils)+':/run/wrappers/bin')}
-unset PGHOST PGPORT PGDATABASE PGUSER PGPASSWORD PGOPTIONS PGSERVICE PGSERVICEFILE PGPASSFILE
-exec 9>{q(str(d/'finalisation.lock'))}
-{a('flock')} 9
-test ! -e {q(str(d/'enregistre'))} || exit 0
-test ! -e {q(str(d/'retour-termine'))} || exit 0
-{a('touch')} {q(str(d/'retour-commence'))}
-{a('systemctl')} stop {q(worker)} || true
-# Empêcher les clients de rouvrir les bases pendant leur retour.
-{a('systemctl')} mask --runtime vision.service mrj-auth.service nginx.service
-{a('systemctl')} stop nginx.service vision.service mrj-auth.service keycloak.service mrjam-amorcage-identite.service || true
-{a('systemctl')} stop vision-cycle.service mrjam-admission.service mrjam-fermeture.service mrjam-courriel.service vision-gestion.service || true
-# La seule copie inverse éventuelle contient l'identité à la fin de l'essai,
-# y compris ses dernières modifications. Aucune restauration d'un ancien dump.
-if test -e {q(str(d/'identite-migree'))}; then
-  if ! test -e {q(str(d/'identite-retour-copie'))}; then
-    {ru} -u postgres -- {pg('pg_dump')} -Fc -h /run/postgresql -U postgres mrjam_identite > {q(str(d/'identite-courante-retour.dump.tmp'))}
-    {a('mv')} -f {q(str(d/'identite-courante-retour.dump.tmp'))} {q(str(d/'identite-courante-retour.dump'))}
-    {a('touch')} {q(str(d/'identite-retour-copie'))}
-  fi
-fi
-{a('cp')} -a --no-dereference {q(str(d/'configuration-avant.nix'))} /etc/nixos/configuration.nix.vision-retour
-{a('mv')} -Tf /etc/nixos/configuration.nix.vision-retour /etc/nixos/configuration.nix
-{a('nix-env')} --profile /nix/var/nix/profiles/system --set {q(ancien)}
-{q(ancien+'/bin/switch-to-configuration')} boot
-{q(ancien+'/bin/switch-to-configuration')} test
-{a('systemctl')} stop mrjam-amorcage-identite.service || true
-if test -e {q(str(d/'identite-migree'))}; then
-  {a('systemctl')} start mrjam-amorcage-postgresql.service
-  {ru} -u postgres -- {pg('pg_restore')} --exit-on-error --clean --if-exists --no-owner --no-privileges --role=keycloak \\
-    -h /run/mrjam-amorcage-postgresql -U postgres -d mrjam_identite < {q(str(d/'identite-courante-retour.dump'))}
-fi
-# Le SQL reste une entrée root600, jamais un script de la release déployeur.
-if test -e {q(str(d/'sql-engage'))}; then
-  {ru} -u postgres -- {pg('psql')} -Xq -v ON_ERROR_STOP=1 -h /run/postgresql -U postgres -d vision -f - < {q(str(d/'retour-acl.sql'))}
-fi
-# backend-avant est un lien privé ; utiliser sa cible publique réelle.
-cible=$({a('readlink')} -f {q(str(d/'backend-avant'))})
-{a('ln')} -sfn "$cible" /srv/vision/vision-retour
-{a('mv')} -Tf /srv/vision/vision-retour /srv/vision/current
-{a('systemctl')} unmask --runtime vision.service mrj-auth.service nginx.service
-{a('systemctl')} start mrjam-amorcage-identite.service vision.service mrj-auth.service nginx.service
-{a('systemctl')} is-active sshd nginx postgresql vision matheval mrj-auth mrjam-amorcage-identite
-test "$({a('readlink')} -f /run/current-system)" = {q(ancien)}
-test "$({a('readlink')} -f /nix/var/nix/profiles/system)" = {q(ancien)}
-{a('touch')} {q(str(d/'retour-termine'))}
-{a('rm')} -f {q(str(d/'identite-courante-retour.dump'))}
-'''
+def script_retour(d, ancien, outils, postgres, runuser, worker, *,
+        configuration='/etc/nixos/configuration.nix', profil='/nix/var/nix/profiles/system',
+        courant='/run/current-system', backend='/srv/vision/current',
+        verrou_deploiement='/srv/vision/deploy.lock', unites='/run/systemd/system',
+        socket_nouveau='/run/postgresql', socket_ancien='/run/mrjam-amorcage-postgresql'):
+    """Opérateur autonome : état durable, fermeture des clients et identité courante.
+
+    Les chemins alternatifs servent aux essais synthétiques ; la préparation
+    de production ne les prend jamais depuis une requête ni un environnement.
+    """
+    valeurs=dict(d=str(d),ancien=str(ancien),outils=str(outils),postgres=str(postgres),
+        runuser=str(runuser),worker=worker,configuration=configuration,profil=profil,
+        courant=courant,backend=backend,verrou_deploiement=verrou_deploiement,
+        unites=unites,socket_nouveau=socket_nouveau,socket_ancien=socket_ancien,
+        gate='90-vision-retour-'+d.name[:12]+'.conf')
+    corps=(Path(__file__).with_name('vision-essai-retour.sh')).read_text()
+    return '#!'+str(outils/'bash')+'\n'+''.join(k+'='+shlex.quote(v)+'\n' for k,v in valeurs.items())+corps
 
 
 def preparer(d, source, root, config, resume, revision, charger, commande, sauver):

@@ -245,3 +245,5 @@ jobs:
           python3 tests/vision-preparation-utf8.py --conteneur '${{ job.services.postgres.id }}' --vision source-vision-isolee
       - name: Qualifier le rattachement explicite et le retour sans contenu administratif
         run: python3 tests/vision-bascule-integration.py --conteneur '${{ job.services.postgres.id }}' --vision source-vision-isolee
+      - name: Qualifier le transfert inverse courant et son échec atomique
+        run: python3 tests/vision-identite-retour-integration.py --conteneur '${{ job.services.postgres.id }}'

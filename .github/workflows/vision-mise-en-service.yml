@@ -97,3 +97,8 @@ jobs:
     with:
       essai: true
     secrets: inherit
+  vision-retour-qualifier:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-retour-qualifier'
+    uses: ./.github/workflows/vision-retour-qualifier.yml
+    secrets: inherit
