@@ -90,3 +90,10 @@ jobs:
     with:
       preparer-essai: true
     secrets: inherit
+  vision-essai-diagnostic:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-essai-diagnostic'
+    uses: ./.github/workflows/vision-bascule-diagnostiquer.yml
+    with:
+      essai: true
+    secrets: inherit

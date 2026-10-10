@@ -6153,14 +6153,78 @@ Les autres projets prennent connaissance sans action sur leur code/données ; au
 :PREUVE: -
 :END:
 
-** LU vision
+** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: 54f92173f74b88527bc5e02fa8602355b674108adb21b09fd596c78d2b7b902c
-:LU_LE: 2026-10-10T14:19:54+00:00
+:LU_LE: 2026-10-10T14:36:39+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Qualification locale :377tests, PG17 synthétique avec modifications pendant essai/retour partiel/refus effacement ; Nix générations ancien/actuel et gardes fermés.
+:PREUVE: 1760809/PR82, CI38059310193/377tests ; Actions38059719721/job114235349085 ; operations/vision-essai-preparation-refus.json
 :END:
-Préparation complète sans activation : interface figée, nouvelle clé Vision/identité prospective, génération complète/Nginx/dry-activate/entrée persistante/timer de test. Résultat réel Actions encore attendu ; aucun retour effectif armé ou essai de production.
+Restaurations/association/admin/ACL isolés puis génération complète/Nginx natif réussis. Garde de simulation refusé ; unité réelle à identifier avant correction. Ancien socle et nouvelle SSH/six services/25sites conservés, aucune production/activation. Entrée persistante et timer de test non atteints ; retour non armé.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Identifier les unités de la simulation Vision refusée avant tout élargissement
+:PROPERTIES:
+:ID: 20261010-vision-27cbee49594b
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T14:36:40+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Préparation réelle1760809/PR82 après CI push38059310193 (377tests/quatre jobs) ; signal38059712312 puis Actions38059719721/job114235349085. Socle/compte/référence corrigée et copies réelles passent, migrations/association/admin et deux retours ACL isolés réussissent, cluster retiré. Génération complète construite et Nginx natif vérifié ; refus du garde verifier_dry (helper ligne179/81). NouvelleSSH/six services/25HTTP/TLS finaux conservés. Aucun changement de source active, données, génération ou inscriptions.
+
+Ajouter uniquement une phase fermée vision-essai-diagnostic au point d’entrée automatique. Lire la seule simulation et le traceback root0600 de cette tentative exacte, vérifier les deux sources par SHA256 et le cadre AST attesté, confirmer absence de cluster/préparation/entrée achevées et présence du candidat construit. Le même observateur immuable contrôle le soclek4 et le compte avant/après. Projeter seulement actions/noms d’unités d’une liste fermée, nombres d’inconnus et booléens. Aucun journal brut, chemin privé, identité, secret, compte ou contenu. Comparer l’unité tmpfiles-resetup ancienne/candidate en retirant uniquement X-Restart-Triggers ; aucune règle native ni donnée privée publiée.
+
+Aucun nouvel essai, construction, SQL ou configuration de production ; aucune reprise de l’ancienne intention, élargissement du garde ou lancement utilisateur. Après cause réelle, qualifier seulement la règle nécessaire et les invariants de sa portée, puis préparer à nouveau sous un opérateur distinct. Vision consignera résultat réel et limites ; autres projets prennent connaissance sans action sur leurs services/données. Copie extérieure téléphone confirmée, copie mensuelle Linux/disque et conservation indépendante de la clé toujours distinctes. Conditions juridiques tierces non déduites ; inscriptions fermées. Références : operations/vision-essai-preparation-refus.json et scripts/vision-essai-diagnostiquer.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 9c09d96231723582f4bcc81d9d312e391a4508b3f80c4ea3668b74585fa81cb3
+:LU_LE: 2026-10-10T14:37:56+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Lecteur fermé qualifié localement ;379tests. Cible1760809/38059719721 ; deux SHA et cadre AST fixes.
+:END:
+Diagnostic en lecture seule préparé, garde de simulation inchangé ; résultat réel encore attendu après CI exacte. Aucun SQL/construction/activation ou inscription.
 
 ** TODO vps
 :PROPERTIES:

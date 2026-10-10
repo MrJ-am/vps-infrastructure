@@ -438,3 +438,15 @@ final vérifie l'ancien socle puis nouvelle SSH/six services/25sites. Aucun
 envoi SMTP supplémentaire, activation ou inscription tierce ici. La copie
 mensuelle Linux/disque et la conservation indépendante de la clé privée
 restent à réaliser ; les conditions juridiques tierces restent distinctes.
+
+La première exécution1760809/PR82,
+[38059719721](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38059719721),
+job114235349085, passe les restaurations/migrations/association/retours ACL,
+construit la génération complète et valide Nginx natif. Le garde de simulation
+refuse ensuite une unité ; entrée persistante et timer ne sont pas encore
+qualifiés. Ancienne génération/six services et25sites conservés ; aucun SQL
+ou activation de production. [Projection du refus](../operations/vision-essai-preparation-refus.json).
+La phase fermée `vision-essai-diagnostic` lit uniquement cette simulation et
+ses sources/trace exactes, sans journal brut, nouvelle construction ou essai.
+Les noms d'unités exportés appartiennent à une liste technique fermée ; les
+inconnus ne sont que comptés. Toute correction attend cette cause réelle.
