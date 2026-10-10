@@ -6745,14 +6745,78 @@ La phase réservé ne vaut ni ouverture tierce ni certification RGPD/reprise apr
 :PREUVE: -
 :END:
 
-** LU vision
+** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: 8557f2fd884116e8fdbe57be6a763aacdaa942ca679a5a9d457a06bfbb0e5cbb
-:LU_LE: 2026-10-10T18:19:18+00:00
+:LU_LE: 2026-10-10T18:45:21+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: 409tests locaux et PostgreSQL17 natif de restauration25 sans réinsertion
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38076566268
 :END:
-Lu : reprise du seul précédent retourné, copies courantes/association constatée, credentials natifs et courrier oneshot qualifiés avant enregistrement ; aucun ancien dump Vision ni effacement de migrations.
+Préparation complète réelle25 réussie ; credentials natifs refusés avant armement ou mutation SQL. NouvelleSSH/six services/25sites finaux passent. Diagnostic limité préparé, aucune activation.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Diagnostiquer le refus des credentials avant reprise Vision
+:PROPERTIES:
+:ID: 20261010-vision-6a6e10399819
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T18:45:22+00:00
+:CONSOLIDATION: sans-objet
+:END:
+La reprise réservée d85c11a/PR92, après CI exacte38076175287 (410tests/quatre jobs), signal38076558220 et Actions38076566268/job114284697101, réussit la préparation complète réelle : copie ACTUELLE schéma25 restaurée en UTF8, identité, association existante, ACL/retour isolés, génération complète/Nginx/dry/entrée exacte. L'opérateur refuse ensuite preparer à qualifier_credentials/systemd-run, avant armement, transfert SQL, copie backend ou activation. NouvelleSSH/six services/25HTTP/TLS finaux passent. Reçu operations/vision-reprise-credentials-refus.json.
+
+Étendre la phase fermée vision-activation-diagnostiquer au seul dossier privé d85 terminé et jamais commencé. Exiger absence des marqueurs de mutation/enregistrement, dossier root privé et journal borné sans lien. Lire ses seules catégories constantes de refus et les métadonnées (existence, root, mode, unicité) des quatre fichiers connus, jamais leurs valeurs ni journal brut. Aucun service lancé/arrêté, SQL de mutation, SMTP ou permissions modifiées. Le socle/compte d757 retourné, schéma25, association initiale et six services/nouvelleSSH/25sites sont revérifiés avant/après. Après CI/main/provenance exacts, exécuter automatiquement sans relance utilisateur.
+
+Les autres projets prennent connaissance sans action sur leur code/données. Aucun élargissement d'accès, ouverture tierce ou certification RGPD ; anciennes générations/identité/copies conservées. Vision publiera la projection réelle et la correction distincte avant toute reprise.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: c6fd273478a4c9fd735e3597b2a626c3eb79d5ddf58592eed46702b2f56c7b9c
+:LU_LE: 2026-10-10T18:45:57+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: -
+:END:
+Lu : diagnostic du seul test natif refusé avant armement ; journal borné projeté en booléens et permissions de fichiers sans lire les secrets. Aucun service lancé ou mutation.
 
 ** TODO vps
 :PROPERTIES:

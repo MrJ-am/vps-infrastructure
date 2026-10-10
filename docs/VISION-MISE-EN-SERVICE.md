@@ -658,3 +658,12 @@ exécution ; son processus n'est pas censé rester actif. Même armement15min,
 générateur/retour qualifiés, sauvegarde et contrôles indépendants avant boot.
 Une projection de cadres fichier/ligne constants facilite les refus sans
 publier exception, valeur privée ou journal brut. Admission tierce fermée.
+
+La reprise d85c11a/PR92 a réellement réussi toute la préparation au schéma25,
+puis refusé la qualification native des credentials avant armement et mutation :
+Actions38076566268/job114284697101, CI38076175287 (410tests/quatre jobs).
+NouvelleSSH/six services/25HTTP/TLS finaux passent ; aucune activation.
+Reçu : `operations/vision-reprise-credentials-refus.json`. La phase de
+diagnostic lit seulement les catégories fermées de ce journal privé borné et
+les permissions des quatre fichiers connus. Elle ne lit pas les secrets,
+ne lance pas de service et ne modifie ni SQL ni permissions.
