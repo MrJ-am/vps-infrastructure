@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "infrastructure": "0fbce8dbad7534b007d5f127d55f4071962f9ccb",
+  "execution": 38002451652,
+  "job": 114063522619,
+  "debut": "2026-10-09T23:03:05Z",
+  "fin": "2026-10-09T23:08:42Z",
+  "compte_initial_verifie": true,
+  "courriel_verifie": true,
+  "mot_de_passe_configure": true,
+  "second_facteur_configure": true,
+  "pwd_otp_frais_au_controle": true,
+  "recu_prive_ecrit": true,
+  "privilege_administrateur_identite": false,
+  "creation_courriel_ignores": true,
+  "services_conserves": true,
+  "controles_http_tls": 25,
+  "mode_vision_oidc": false,
+  "inscriptions": false
+}

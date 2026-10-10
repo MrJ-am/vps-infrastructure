@@ -5704,12 +5704,73 @@ L'automatisation existante choisira cette phase dans l'énumération fermée apr
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: b471f0800d4bc9908d656182bb3cc1ed1d4959a39869c08ab4eeb5251b2106aa
-:LU_LE: 2026-10-09T22:50:55+00:00
+:LU_LE: 2026-10-10T08:07:05+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Lecture effective ; phase dédiée en préparation. Aucun constat technique déduit du Fait humain et aucun rattachement/migration engagé.
+:PREUVE: 0fbce8d/PR72/343tests/CI38001736173 tentative2. Réel38002451652/job114063522619 : activation/email/password/OTP confirmés ; pwd+otp frais attestés le2026-10-09T23:08:27Z, reçu root privé écrit. Création/courriel ignorés, six services/SSH/25sondes finaux réussis. Aucun SQL Vision/rattachement/admin applicatif/OIDC Vision/inscription.
+:END:
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Préparer la bascule Vision depuis l’identité initiale vérifiée
+:PROPERTIES:
+:ID: 20261010-vision-b624f3867553
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T08:07:05+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Après observation réelle0fbce8d/38002451652/job114063522619, le compte initial/email/password/OTP et une connexion pwd+otp réellement fraîche ont été confirmés ; six services/SSH et25sondes finaux réussis. L'activation initiale ne vaut pas encore bascule Vision.
+Préparer une phase vision-preparer dans le point d'entrée automatique : nouveau relevé du socle réellement enregistrék4, vérification du reçu privé de possession et du sujet durable exact, nouvel inventaire transactionnel du propriétaire historique unique, snapshots et dumps privés chiffrés Vision/IdP. Restaurer dans un cluster indépendant sans TCP ; appliquer019–025/roles.sql, rattacher explicitement (issuer,sub) au seul identifiant historique et promouvoir uniquement l'administrateur applicatif dans ce staging, sans privilège IdP humain. Vérifier données historiques inchangées, compteurs/isolation et retour ACL/owners/RLS rejoué. Qualifier la copie IdP sans recréer le sujet ni changer de credential.
+Préparer la génération prospective depuis l'entrée active avec sources/paquets fixes et invariants hors Vision/identité préservés. Construction, copie isolée et association préparatoire ne sont pas une activation ni une permission juridique ; la possession de la clé de restauration personnelle et la copie extérieure restent non établies, inscriptions tierces fermées. Aucun DDL de production, nouveau compte, courriel, rotation, mise à jour NixOS ou activation dans cette phase. Les anciennes recettes sur l'audity1 ne sont pas rejouées ni leurs gardes relâchées. Vision consignera preuves réelles et blocages avant une opération d'essai distincte avec retour SQL/NixOS autonome. Les autres projets prennent connaissance sans opération sur leurs données ou comptes.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 60548f0524e5c5f501da38b737bf77148d4fd00d7514db90d1e9ca4ec54256aa
+:LU_LE: 2026-10-10T08:07:49+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Identité initiale réellement vérifiée ; préparation distincte sur socle enregistré, sans DDL de production. Clé personnelle/copie extérieure toujours non établies.
 :END:
 
 ** TODO vps

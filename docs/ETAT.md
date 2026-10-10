@@ -1,4 +1,22 @@
-# État attesté au 9 octobre 2026
+# État attesté au 10 octobre 2026
+
+L’[observation38002451652](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38002451652),
+0fbce8dbad7534b007d5f127d55f4071962f9ccb/PR72, job114063522619, est réussie.
+Email vérifié, mot de passe et OTP configurés sur le seul sujet durable exact,
+sans rôle d’administration d’identité. À23:08:27UTC le9octobre, une connexion
+pwd ET otp exécutée depuis≤300secondes est attestée ; le reçu privé root0600
+est écrit. Création et courriel ignorés ; nouvelle SSH/six services et25sites
+finaux réussis. CI complète38001736173 tentative2 après un timeout navigateur
+et relance du seul job concerné ;343tests et qualification native complète
+réussis. [Reçu sans identité](../operations/vision-proprietaire-observation.json).
+Cette preuve durable porte sur la connexion au moment du contrôle ; elle
+ne prétend pas que cette session est encore fraîche aujourd’hui. Le statut
+d’administrateur Vision, le rattachement historique et la migration019–025
+restent à qualifier/exécuter dans une phase distincte. OIDC Vision et
+inscriptions tierces restent fermés ; aucune intervention humaine technique
+pour relancer les workflows. Clé privée personnelle et copie extérieure
+restent non établies et ne sont pas déduites de l’activation du compte.
+
 
 L'[enrôlement37999358368](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37999358368),
 69e0d1dc8193865693b55fc2485a459d71529a7b/PR71, job114053418862,
