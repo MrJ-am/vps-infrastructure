@@ -66,3 +66,8 @@ jobs:
     if: needs.demande.outputs.action == 'vision-preparer'
     uses: ./.github/workflows/vision-bascule-preparer.yml
     secrets: inherit
+  vision-diagnostic:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-diagnostic'
+    uses: ./.github/workflows/vision-bascule-diagnostiquer.yml
+    secrets: inherit
