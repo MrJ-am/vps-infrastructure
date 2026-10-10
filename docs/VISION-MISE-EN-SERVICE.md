@@ -616,3 +616,19 @@ mot de passe/OTP reste à vérifier après activation. Une conformité RGPD
 générale n'est pas déduite de ces contrôles ; DPA, procédure mineurs et
 rétention des archives d'exploitation restent à finaliser avant admission.
 Copie mensuelle Linux/disque et copie indépendante de clé ultérieures.
+
+L'essai réservé `d757002ff826431dce2a6401407f55ced5ed2e66` a effectivement
+été lancé : CI `38072410901` (405tests/quatre jobs), signal `38072795119`,
+Actions `38072802388`, job `114273564123`. Préparation complète et armement
+réussis, puis refus du worker avant finalisation. Le retour indépendant a
+réussi à17:45:50Z ; nouvelleSSH/six services/25HTTP/TLS finaux passent.
+Reçu : `operations/vision-activation-retour-reel.json`. Aucun enregistrement
+ou admission. L'état SQL exact et la cause doivent être constatés avant reprise.
+Le retour n'est jamais présenté comme une remise à zéro des migrations.
+
+Le diagnostic fermé lit uniquement cet essai terminé, ses marqueurs, la
+version de schéma, les métadonnées d'association connues et les permissions
+du parent backend. Aucun contenu ou journal brut publié ; aucune mutation.
+La recette corrige préventivement le parent root:vision0750 : le umask0077
+retire sinon le droit de traversée au groupe. Le test exécuté en compte non
+privilégié couvre cette cause possible ; seul le diagnostic VPS la confirmera.

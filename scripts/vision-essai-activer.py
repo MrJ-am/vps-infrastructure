@@ -85,6 +85,15 @@ fi
 '''
 
 
+def preparer_parent_backend(parent,groupe):
+    # Le umask privé0077 retire g+rx même à mkdir(mode=0750).
+    # Fixer les droits effectifs avant toute copie ou bascule du lien.
+    if not parent.exists() and not parent.is_symlink():parent.mkdir(mode=0o750)
+    info=parent.lstat()
+    exiger(stat.S_ISDIR(info.st_mode) and info.st_uid==0 and not info.st_mode&0o022)
+    os.chown(parent,0,groupe);parent.chmod(0o750)
+
+
 class Essai:
     def __init__(self,revision):
         exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision))
@@ -336,16 +345,14 @@ class Essai:
         src=Path(self.evaluation['backend_paquet'])/'app'
         exiger((src/'RELEASE').read_text().strip()==VISION)
         parent=Path('/srv/vision-essais')
-        if not parent.exists() and not parent.is_symlink():parent.mkdir(mode=0o755)
-        info=parent.lstat()
-        exiger(stat.S_ISDIR(info.st_mode) and info.st_uid==0 and not info.st_mode&0o022)
+        import grp
+        groupe=grp.getgrnam('vision').gr_gid
+        preparer_parent_backend(parent,groupe)
         nouveau=parent/(VISION+'-root-'+self.revision[:12])
         exiger(not nouveau.exists() and not nouveau.is_symlink())
         paths=list(src.rglob('*'));exiger(len(paths)<2048 and all(not p.is_symlink() for p in paths))
         exiger(sum(p.stat().st_size for p in paths if p.is_file())<512*1024**2)
         shutil.copytree(src,nouveau)
-        import grp
-        groupe=grp.getgrnam('vision').gr_gid
         empreintes={}
         for p in [nouveau,*nouveau.rglob('*')]:
             os.chown(p,0,groupe)

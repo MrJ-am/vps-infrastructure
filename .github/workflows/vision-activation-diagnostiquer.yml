@@ -1,0 +1,47 @@
+name: Vision — contrôle du seul essai retourné
+on:
+  workflow_call:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  diagnostiquer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: main
+          persist-credentials: false
+      - name: Vérifier la demande et la CI exactes
+        run: |
+          python3 scripts/vision-demande-verifier.py
+          python3 scripts/ci-exacte.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Préparer la connexion existante
+        env:
+          CLE: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          test -n "$CLE"
+          umask 077
+          printf '%s\n' "$CLE" > "$RUNNER_TEMP/vision-diagnostic-admin"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vision-diagnostic-admin" >> "$GITHUB_ENV"
+      - name: Vérifier les sites avant lecture
+        id: sites
+        run: |
+          python3 scripts/probe.py --output "$RUNNER_TEMP/http-before.json"
+          python3 scripts/identite-amorcage-https.py
+      - name: Copier et lire le seul opérateur exact
+        run: |
+          git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-activation-diagnostics/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-activation-diagnostics/$GITHUB_SHA/source"
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-activation-diagnostics/$GITHUB_SHA/source/scripts/vision-activation-diagnostiquer.py $GITHUB_SHA'"
+      - name: Vérifier la nouvelle connexion et les sites après lecture
+        if: ${{ always() && steps.sites.outcome == 'success' }}
+        run: |
+          sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
+          python3 scripts/probe.py --baseline "$RUNNER_TEMP/http-before.json"
+      - name: Effacer la clé du runner
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vision-diagnostic-admin"

@@ -6613,14 +6613,78 @@ Cette activation réservée ne prétend ni conformité juridique générale ni r
 :PREUVE: -
 :END:
 
-** LU vision
+** BLOQUE vision
 :PROPERTIES:
 :LU_SHA256: 69a38858bca45e9bf6c810f9c84ea3901012ab52fc9c629f12dc32afa999b6f7
-:LU_LE: 2026-10-10T17:30:58+00:00
+:LU_LE: 2026-10-10T17:51:18+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Recette revue, tests locaux et publication dédiés avant exécution
+:PREUVE: Actions38072802388/job114273564123, operations/vision-activation-retour-reel.json
 :END:
-Lu : nouvelle phase effective distincte, retour natif qualifié9ef inchangé, CI et état réel exacts exigés ; admission tierce fermée.
+Préparation complète d757 et armement réussis ; essai refusé avant finalisation. Retour indépendant effectif, nouvelleSSH/six services/25HTTP/TLS finaux passent. Cause et état SQL doivent être audités avant reprise, sans ancien dump Vision ni effacement de migrations.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Contrôler l’essai Vision retourné avant une reprise sans perte
+:PROPERTIES:
+:ID: 20261010-vision-1ef1ecaf4693
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T17:51:18+00:00
+:CONSOLIDATION: sans-objet
+:END:
+L'essai réservé d757002/PR90 a été exécuté automatiquement après CI exacte38072410901 (405tests/quatre jobs), signal38072795119, Actions38072802388/job114273564123. Restaurations/migrations/association/ACL isolés, génération complète, dry et entrée exacte, opérateur privé passent ; retour armé avant worker. Worker refuse avant finalisation. Retour indépendant réel réussit17:45:50Z ; nouvelleSSH/six services/25HTTP/TLS finaux passent. Aucun enregistrement ou admission. Reçu operations/vision-activation-retour-reel.json ; état SQL exact et cause restent à constater, aucune déduction de retour de schéma18.
+
+Préparer une phase fermée vision-activation-diagnostiquer, sans nouvelle relance utilisateur. Après CI/main/provenance exacts, lire uniquement l'ancien opérateur privé d757 terminé, observer socle/compte, constater les marqueurs, nombre/maximum de migrations et présence de la base d'identité commune. Si25, vérifier uniquement association initiale connue, compte actif/admin unique et admission fermée ; aucun contenu, sujet ou contact exporté. Projeter seulement permissions du parent backend, traversabilité par le groupe Vision, catégories connues de refus de changement de dossier et noms constants de services échoués ; jamais journal brut/secret. Aucune SQL de mutation, activation, service arrêté, SMTP ou modification de permissions dans ce diagnostic. NouvelleSSH/six services/25sites avant/après.
+
+La recette de copie corrige préventivement le parent dédié root:vision0750 : le umask privé0077 retire sinon g+rx à mkdir. Un test root sous ce umask exécute réellement une lecture en uid/gid non privilégiés puis vérifie son refus avec0700. La cause réelle ne sera dite confirmée qu'après le diagnostic VPS. La reprise ultérieure gardera19–25 s'ils sont appliqués, transférera l'identité courante et prouvera l'association existante plutôt que réinsérer ou supprimer ; recette/audit distincts avant toute nouvelle activation. Ancien dump Vision jamais restauré. Les autres projets prennent connaissance sans action sur leur code/données ; état serveur confirmé par Actions seulement. Inscriptions tierces, garanties juridiques, copie mensuelle Linux/disque et clé indépendante restent distincts.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: bc4a607a049c71e6fc32a1fb0628e80a3db187f5fff12e756a42fce0fccc0ed1
+:LU_LE: 2026-10-10T17:52:25+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: Reçu du retour d757 et recette de diagnostic sans mutation
+:END:
+Lu : garder le schéma et les données, confirmer état et permissions avant reprise ; aucun nouveau Run workflow utilisateur.
 
 ** TODO vps
 :PROPERTIES:
