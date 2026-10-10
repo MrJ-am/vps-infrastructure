@@ -125,3 +125,14 @@ restent dans l'inventaire de conservation ; le timer ordinaire ne les purge pas.
 Ni configuration de sauvegarde active ni ancienne copie ni Matheval modifié ;
 les sauvegardes futures Vision/identité devront cibler la nouvelle clé lors de
 l'opération d'activation distincte, sans toucher aux autres clés de projets.
+
+Exécution réelle réussie le10octobre2026 à13:50 Europe/Paris :
+[Actions38049744292](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38049744292),
+job114206319683, opérateur6f0d38c/PR81, CI exacte38049451451/373tests.
+Deux restaurations comparées et intégrité SQLite passent ; copie chiffrée
+473596octets et vérificateur remis au relais. Cluster/clair retirés avant
+SMTP, garde/inscriptions fermées, aucune réparation/migration/activation.
+Nouvelle SSH/six services/25sites finaux réussis.
+[Reçu public](../operations/vision-recuperation-resultat.json) : SHA256 du
+cryptogramme, du vérificateur et du défi, sans données privées. La réception
+et la vérification complète sur téléphone restent à confirmer par le propriétaire.
