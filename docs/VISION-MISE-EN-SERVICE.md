@@ -361,3 +361,10 @@ garde fermée et contrôles finaux SSH/six services/25sites réussis.
 Voir [le rapport réel](../operations/vision-bascule-preparation-reelle.json).
 Clé personnelle et copie extérieure restent non vérifiées ; aucune activation
 ou migration de production, aucune invitation ouverte.
+
+La phase suivante `vision-telephone` ne rejoue pas la préparation complète.
+Elle remet par le relais existant un témoin synthétique chiffré vers la nouvelle
+clé publique générée sur le téléphone du propriétaire. Aucune rotation de la
+configuration des sauvegardes, copie réelle, migration ou activation. L'envoi
+est idempotent pour le même opérateur et une remise ambiguë exige diagnostic.
+Voir [la procédure et ses limites](COURRIEL-PROVISIONNEMENT.md).

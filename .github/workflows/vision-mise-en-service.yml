@@ -71,3 +71,8 @@ jobs:
     if: needs.demande.outputs.action == 'vision-diagnostic'
     uses: ./.github/workflows/vision-bascule-diagnostiquer.yml
     secrets: inherit
+  vision-telephone:
+    needs: demande
+    if: needs.demande.outputs.action == 'vision-telephone'
+    uses: ./.github/workflows/vision-telephone.yml
+    secrets: inherit

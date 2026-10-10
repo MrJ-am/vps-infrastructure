@@ -5974,3 +5974,65 @@ Cause réelle : archive non reconnue, source Vision hors store ; composants conn
 :PREUVE: -
 :END:
 
+* Qualifier la nouvelle clé de récupération du téléphone sans rotation
+:PROPERTIES:
+:ID: 20261010-vision-bb4e1cf00d87
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T11:09:06+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le propriétaire ne dispose pas du PC Linux et ne peut établir la possession de l’ancienne clé de sauvegarde. Il a généré une nouvelle clé localement dans Nix-on-Droid et fourni seulement sa clé publique, validée par AGE. Ajouter une phase fermée vision-telephone au point d’entrée automatique : CI exacte avant credentials, opérateur exact, envoi par le relais Proton existant au seul expéditeur déjà reçu, témoin synthétique sans données personnelles ni dumps et nom distinct du premier test SMTP. Intention/reçu root600 durables, aucun rejeu après remise ambiguë, aucune réponse SMTP privée publiée. Génération active/enregistrée contrôlée avant/après puis nouvelle SSH, six services et25sites.
+
+Aucune rotation de configuration de sauvegarde, aucun changement Matheval, aucune suppression de copie ancienne, aucun SQL, compte, migration ou activation. La nouvelle clé ne déchiffre pas les anciennes copies. Le déchiffrement par le propriétaire reste à confirmer ; le témoin ne constitue pas une restauration réelle ni une copie extérieure complète. Préparer ultérieurement les nouvelles copies Vision/identité et leur conservation dans une opération distincte, après cette vérification. Les autres projets prennent connaissance sans action sur leur code/données. Vision consignera commit, preuves réelles de remise et limites ; inscriptions tierces fermées. Détails : docs/COURRIEL-PROVISIONNEMENT.md et scripts/vision-telephone.py.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: 24761379e7149d8ce1aafc3ff1ef17563426c95bc53c949bb76171dd3d43c278
+:LU_LE: 2026-10-10T11:09:29+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: AGE public validé et 369 tests locaux réussis ; recette prête, remise réelle à exécuter après CI exacte.
+:END:
+La clé privée reste sur le téléphone ; ni possession ni déchiffrement réel encore prouvés.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
