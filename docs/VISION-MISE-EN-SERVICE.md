@@ -378,3 +378,18 @@ manifeste chiffré. La réception/vérification extérieure ne sont pas déduite
 du SMTP ou de la CI. Aucun Run workflow ou accès au PC Linux n'est nécessaire
 pour préparer cette copie. Les anciennes clés/copies et autres projets restent
 conservés ; les conditions de bascule et d'admission demeurent séparées.
+
+## Copie réelle déchiffrée sur le téléphone
+
+Le propriétaire a retourné le résultat complet du lecteur pour
+`vision-recuperation-20261010` : empreinte chiffrée exacte, tous les fichiers
+identiques aux copies testées, déchiffrement complet, aucune écriture en clair.
+Le SHA256 du défi aléatoire retourné correspond exactement au reçu
+[38049744292](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38049744292).
+La [confirmation séparée](../operations/vision-recuperation-confirmation.json)
+consigne cette preuve sans réécrire l’événement SMTP antérieur, ni publier
+le défi ou la clé privée. Clé personnelle correspondante et copie réelle
+extérieure sur téléphone sont validées ; copie mensuelle sur disque Linux
+et conservation indépendante de la clé restent à réaliser. La préparation
+d’un essai protégé reste distincte, ainsi que les conditions juridiques
+d’admission tierce. Aucun Run workflow n’est demandé au propriétaire.

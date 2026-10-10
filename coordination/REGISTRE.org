@@ -6085,14 +6085,14 @@ Pas de rotation de configuration active, purge de copies anciennes, modification
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 741bf48f0b6e66beb5378bdaa0b2bb20bb766a570f6df9c2828de0646cb0bb5b
-:LU_LE: 2026-10-10T11:52:33+00:00
+:LU_LE: 2026-10-10T14:01:53+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: Opérateur6f0d38cddaabb6d685efcefc9b7b5036b0ef9950/PR81, CI38049451451/373tests ; Actions38049744292/job114206319683, operations/vision-recuperation-resultat.json.
+:PREUVE: Opérateur6f0d38/PR81, Actions38049744292/job114206319683 ; operations/vision-recuperation-resultat.json et operations/vision-recuperation-confirmation.json ; défi256bits/SHA256 vérifié sur retour propriétaire.
 :END:
-Deux restaurations comparées, SQLite intègre, archive AGE473596octets et lecteur remis au relais ; cluster/clair retirés, socle et nouvelle SSH/six services/25sites finaux conservés. Aucune rotation/migration/activation. Réception et vérification complète par le propriétaire encore attendues ; elles ne sont pas déduites du SMTP.
+Copie réelle reçue et déchiffrée complètement sur Nix-on-Droid : empreinte chiffrée exacte, manifeste/tous fichiers identiques aux copies restaurées, preuve aléatoire rapprochée, aucune écriture en clair ni clé privée transmise. Copie extérieure récupérable et clé correspondante confirmées ; sauvegarde mensuelle disque Linux et copie indépendante de clé non prouvées. Aucun changement production/activation/inscription.
 
 ** TODO vps
 :PROPERTIES:

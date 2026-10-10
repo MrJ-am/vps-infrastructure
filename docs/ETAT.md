@@ -1,5 +1,19 @@
 # État attesté au 10 octobre 2026
 
+Le propriétaire a vérifié sur Nix-on-Droid la copie réelle
+`vision-recuperation-20261010.tar.gz.age` préparée par
+[Actions38049744292](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38049744292).
+Le SHA256 chiffré, le manifeste et tous les fichiers correspondent aux copies
+restaurées sur le VPS ; AGE a été consommé complètement avec sortie0, sans
+écriture de données en clair sur le téléphone. Le défi aléatoire256bits
+retourné correspond exactement à l’empreinte du reçu opérateur. Réception,
+clé personnelle correspondante et copie extérieure récupérable sont ainsi
+confirmées par l’exploitant, sans transmission de sa clé privée.
+[Confirmation](../operations/vision-recuperation-confirmation.json).
+Cela ne prouve ni sauvegarde du VPS entier, ni copie mensuelle sur disque
+Linux, ni copie indépendante de la clé. Aucune migration/activation ou
+ouverture des inscriptions n’est effectuée par cette confirmation.
+
 La préparation complète [38045641408](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38045641408)
 réussit sur464c81f/PR79, job114194522693, après CI exacte38045367821
 (365tests Python et quatre jobs réussis). La génération k4 et les six PID
@@ -17,8 +31,10 @@ nouvelle SSH/six services et25sites réussit.
 Cette qualification ne migre aucune donnée de production et n'active ni OIDC
 Vision ni administrateur applicatif en production. La génération complète
 reste impossible avec le garde fermé et les inscriptions restent fermées.
-La possession de la clé personnelle et la copie extérieure récupérable sur le
-PC Linux ne sont toujours pas prouvées. Elles conditionnent la bascule ;
+La possession de la nouvelle clé personnelle du téléphone et le déchiffrement
+complet d’une copie réelle extérieure sont maintenant confirmés ci-dessous.
+La copie mensuelle sur disque Linux et une copie indépendante de la clé privée
+restent à effectuer. La bascule est une opération distincte ;
 l'essai futur nécessitera son retour SQL/NixOS autonome et sa publication
 d'interface figée, sans réutiliser l'ancien audit périmé. Les préconditions
 juridiques d'une admission tierce restent distinctes.
