@@ -1,5 +1,14 @@
 # État attesté au 10 octobre 2026
 
+La préparation isolée [38038255811](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38038255811),
+be738f9/PR73, job114173166880, a validé socle/compte/reçu privé puis refusé
+`source_candidate`, avant `snapshots_prives`. Nouvelle SSH/six services et
+25sites finaux réussis. Aucune restauration, association ou migration de
+production ; la cause exacte reste à constater par un diagnostic réservé.
+La CI complète38037961529 et349tests réussis qualifient le code,
+pas l'exécution isolée arrêtée. Le lecteur dédié ne publie que des cadres
+de source vérifiée, classes d'exception, catégories constantes et booléens.
+
 L’[observation38002451652](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38002451652),
 0fbce8dbad7534b007d5f127d55f4071962f9ccb/PR72, job114063522619, est réussie.
 Email vérifié, mot de passe et OTP configurés sur le seul sujet durable exact,

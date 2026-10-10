@@ -72,6 +72,7 @@ class Principaux(unittest.TestCase):
 
     def test_plan_dedie_ferme_sans_commande_libre(self):
         self.assertEqual(plan.verifier(dict(version=1,action='vision-preparer')), 'vision-preparer')
+        self.assertEqual(plan.verifier(dict(version=1,action='vision-diagnostic')), 'vision-diagnostic')
         with self.assertRaises(ValueError): plan.verifier(dict(version=1,action='vision-preparer',commande='inconnue'))
 
 
