@@ -1,5 +1,18 @@
 # État attesté au 10 octobre 2026
 
+Le diagnostic affiné [38040462649](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38040462649),
+4cb942c/PR75, job114179522422, constate la cause : l'entrée privée importe
+`/etc/nixos/configuration.nix`, qui est devenu son propre lien. Récursion Nix
+confirmée, sauvegarde originale régulière présente. Le contrôle ignore une
+nouvelle évaluation du cycle ; zéro événement OOM Nix dans la fenêtre relevée.
+La génération active/enregistréek4 reste saine, six services/SSH/25sites
+finaux conservés ; aucune copie/cluster/production modifiée.
+[Projection](../operations/vision-bascule-diagnostic-affine.json).
+La réparation est une opération de source distincte : original sauvegardé
+vérifié par empreinte, candidate reproduisant exactementk4 avant remplacement
+atomique, puis réévaluation et PID/services contrôlés. Elle ne constitue ni
+une activation NixOS ni une migration de données ; préparation isolée ensuite.
+
 La préparation isolée [38038255811](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38038255811),
 be738f9/PR73, job114173166880, a validé socle/compte/reçu privé puis refusé
 `source_candidate`, avant `snapshots_prives`. Nouvelle SSH/six services et
