@@ -39,7 +39,7 @@ restent deux actions distinctes.
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
 | Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
 | Compte commun du propriétaire | Compte/email/password/OTP et connexion pwd+otp fraîche vérifiés :0fbce8d/38002451652 | Étape humaine validée ; préparer association historique et bascule, sans considérer la session historique comme fraîche aujourd’hui |
-| Rattachement historique et bascule Vision | Préparation isolée38038255811 refusée avant snapshots ; production conservée | Diagnostiquer la condition technique refusée puis qualifier une nouvelle préparation |
+| Rattachement historique et bascule Vision | Référence réparée et restaurations/association/retour ACL isolés validés38041573468 ; construction des composants encore refusée | Charger les modules récents sur le socle ancien, construire avec garde fermée, puis qualifier une bascule distincte |
 | Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
 
 Le premier enchaînement appelle la recette réservée déjà préparée : lecture

@@ -4,12 +4,33 @@ let
   pkgs = import <nixpkgs> { system = "x86_64-linux"; };
   lib = pkgs.lib;
   modules = [ (builtins.toPath configuration) ];
-  base = (import <nixpkgs/nixos/lib/eval-config.nix> {
+  evaluationBase = import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux"; inherit modules;
-  }).config;
+  };
+  base = evaluationBase.config;
+  # Les modules de l'entrée enregistrée appartiennent à une ancienne copie.
+  # Remplacer leurs déclarations, sans redéclarer les mêmes options deux fois.
+  gateway = evaluationBase.options.infrastructure.gateway.projects.declarations;
+  postgres = evaluationBase.options.infrastructure.postgresql.projects.declarations;
+  passerelleActuelle = toString ../modules/gateway.nix;
+  postgresActuel = toString ../modules/postgresql.nix;
+  anciennePasserelle = toString (builtins.head gateway);
+  ancienPostgres = toString (builtins.head postgres);
+  remplacerPasserelle = anciennePasserelle != passerelleActuelle;
+  remplacerPostgres = ancienPostgres != postgresActuel;
+  locaux = [ "gateway.nix" "mrj-auth.nix" "journal-http.nix" "identite.nix"
+    "vision-gestion.nix" "courriel.nix" "vision-cycle.nix" "admission.nix" "fermeture.nix" ];
   c = (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux";
     modules = modules ++ [ ({ lib, ... }: {
+      disabledModules = lib.optionals remplacerPasserelle
+        (map (nom: builtins.dirOf anciennePasserelle + "/" + nom) locaux)
+        ++ lib.optional remplacerPostgres ancienPostgres;
+      imports = lib.optional remplacerPasserelle ../modules/gateway.nix
+        ++ lib.optional remplacerPostgres ../modules/postgresql.nix;
+      # Les registres effectifs du VPS sont conservés, pas leurs défauts récents.
+      infrastructure.gateway.projects = lib.mkForce base.infrastructure.gateway.projects;
+      infrastructure.postgresql.projects = lib.mkForce base.infrastructure.postgresql.projects;
       infrastructure.amorcageIdentite.enable = lib.mkForce false;
       infrastructure.identite.enable = true;
       infrastructure.identite.preconditionsValidees = lib.mkForce false;
@@ -49,6 +70,9 @@ let
     else if builtins.isList valeur then map normaliser valeur else valeur;
   hote = cfg: normaliser (builtins.removeAttrs cfg.services.nginx.virtualHosts [ "log.mrj.am" "vision.mrj.am" ]);
 in
+assert builtins.length gateway == 1 && builtins.length postgres == 1;
+assert lib.hasSuffix "/gateway.nix" anciennePasserelle;
+assert lib.hasSuffix "/postgresql.nix" ancienPostgres;
 assert builtins.length refus == 1 && (builtins.head refus).message == "Identité : fournir la preuve de migration/restauration avant activation.";
 assert !generation.success;
 assert builtins.toJSON (hote base) == builtins.toJSON (hote c);
@@ -68,5 +92,7 @@ assert c.systemd.services.mrj-auth.environment.MRJ_AUTH_MODE == "oidc";
     preconditions_validees = false; garde_activation = true;
     generation_constructible = generation.success;
     hors_vision_identite_conserve = true; inscriptions = false; activation = false;
+    modules_passerelle_actualises = remplacerPasserelle;
+    module_postgresql_actualise = remplacerPostgres;
   };
 }
