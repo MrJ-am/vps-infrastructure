@@ -76,12 +76,15 @@ marquer retour-commence
 if test -n "$worker"; then arreter "$worker"; fi
 exec 8>"$verrou_deploiement"
 "$outils/flock" 8
-for unite in nginx.service vision.service mrj-auth.service keycloak.service mrjam-amorcage-identite.service; do
+for unite in nginx.service vision.service mrj-auth.service keycloak.service mrjam-amorcage-identite.service \
+  vision-bootstrap.service vision-migrate.service vision-gestion.service vision-cycle.service \
+  mrjam-admission.service mrjam-fermeture.service mrjam-courriel.service vision-purge.service mrjam-sauvegarde.service; do
   gater "$unite"
 done
 "$outils/systemctl" daemon-reload
 for unite in nginx.service vision.service mrj-auth.service keycloak.service mrjam-amorcage-identite.service \
   vision-purge.timer mrjam-sauvegarde.timer mrjam-amorcage-sauvegarde.timer \
+  vision-bootstrap.service vision-migrate.service \
   vision-cycle.service mrjam-admission.service mrjam-fermeture.service mrjam-courriel.service \
   vision-gestion.service vision-purge.service mrjam-sauvegarde.service; do
   arreter "$unite"
@@ -142,7 +145,11 @@ test "$("$outils/readlink" -f "$courant")" = "$ancien"
 test "$("$outils/readlink" -f "$profil")" = "$ancien"
 "$outils/systemctl" is-active sshd nginx postgresql matheval >/dev/null || \
   "$outils/systemctl" is-active sshd postgresql matheval >/dev/null
-for unite in vision.service mrj-auth.service mrjam-amorcage-identite.service nginx.service; do degater "$unite"; done
+for unite in nginx.service vision.service mrj-auth.service keycloak.service mrjam-amorcage-identite.service \
+  vision-bootstrap.service vision-migrate.service vision-gestion.service vision-cycle.service \
+  mrjam-admission.service mrjam-fermeture.service mrjam-courriel.service vision-purge.service mrjam-sauvegarde.service; do
+  degater "$unite"
+done
 "$outils/systemctl" daemon-reload
 "$outils/systemctl" start mrjam-amorcage-identite.service vision.service mrj-auth.service nginx.service
 "$outils/systemctl" is-active sshd nginx postgresql vision matheval mrj-auth mrjam-amorcage-identite >/dev/null

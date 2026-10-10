@@ -1,6 +1,10 @@
 name: Vision — qualification du retour sans activation
 on:
   workflow_call:
+    inputs:
+      reprise:
+        type: boolean
+        default: false
 permissions:
   contents: read
   actions: read
@@ -37,7 +41,14 @@ jobs:
       - name: Extraire le seul opérateur exact puis qualifier une unité jetable
         run: |
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-retour-qualifications/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-retour-qualifications/$GITHUB_SHA/source"
+      - name: Qualifier les conditions natives sans reprise
+        if: ${{ !inputs.reprise }}
+        run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-retour-qualifications/$GITHUB_SHA/source/scripts/vision-retour-qualifier.py $GITHUB_SHA'"
+      - name: Répéter la reprise et l'ordre de fermeture sur deux unités jetables
+        if: ${{ inputs.reprise }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-retour-qualifications/$GITHUB_SHA/source/scripts/vision-retour-qualifier.py $GITHUB_SHA --reprise'"
       - name: Vérifier une nouvelle connexion et les six services
         if: ${{ always() && steps.sites.outcome == 'success' }}
         run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth

@@ -28,7 +28,7 @@ def charger(nom,fichier):
     m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 
 
-def qualifier(revision):
+def qualifier(revision,reprise=False):
     exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision))
     os.umask(0o077)
     d=Path('/root/vision-retour-qualifications')/revision
@@ -113,6 +113,11 @@ def qualifier(revision):
     finally:os.close(fd)
     (d/'retour.sh').chmod(0o700)
     commande(outils/'bash','-n',d/'retour.sh')
+    retour_reprise={}
+    if reprise:
+        etape('reprise_isolee')
+        module=charger('reprise_retour',ROOT/'scripts/vision-essai-reprise.py')
+        retour_reprise=module.qualifier(d,outils,revision,commande,prive)
     etape('socle_apres')
     observateur.main(association.OBSERVATION,observer=True,activation_seule=True)
     exiger(Path('/run/current-system').resolve()==Path(e['systeme_actif']))
@@ -122,7 +127,7 @@ def qualifier(revision):
         script_retour_sha256=hashlib.sha256(retour.encode()).hexdigest(),
         recette_retour_syntaxe=True,retour_production_execute=False,
         reprise_apres_redemarrage_machine_qualifiee=False,
-        retour_autonome_arme=False,production_modifiee=False,activation=False,inscriptions=False)
+        retour_autonome_arme=False,production_modifiee=False,activation=False,inscriptions=False,**retour_reprise)
     fd=os.open(d,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
     try:prive.ecrire(fd,'qualification.json',json.dumps(rapport))
     finally:os.close(fd)
@@ -130,8 +135,8 @@ def qualifier(revision):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('revision');a=p.parse_args()
-    try:qualifier(a.revision)
+    p=argparse.ArgumentParser();p.add_argument('revision');p.add_argument('--reprise',action='store_true');a=p.parse_args()
+    try:qualifier(a.revision,reprise=a.reprise)
     except Exception as erreur:
         classe=type(erreur).__name__
         if classe not in ('ValueError','FileNotFoundError','PermissionError','KeyError','TimeoutExpired'):

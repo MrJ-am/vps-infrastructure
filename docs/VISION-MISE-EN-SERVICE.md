@@ -545,3 +545,30 @@ Cette qualification ne teste pas encore un retour de production ni une
 reprise après redémarrage de la machine ; aucun retour effectif n'est armé.
 L'essai d'activation, son dispositif de reprise au démarrage et sa finalisation
 restent à préparer distinctement. Les invitations tierces restent fermées.
+
+La qualification9048968/PR88,
+[38067754633](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38067754633),
+job114258793747, réussit réellement après les394tests/quatre jobs CI38067361145.
+Reçu privé exact et socle/compte avant/après passent. Trois démarrages de la
+condition native sont bloqués sans erreur ; nouvelle SSH/six services/25sites
+passent. [Reçu](../operations/vision-retour-qualification-reelle.json).
+
+Le dispositif de reprise suivant conserve un générateur systemd sur le disque
+pendant l'essai, un timer indépendant et les scripts/outils de l'ancien socle.
+Au démarrage, le générateur republie le service si l'essai n'est ni finalisé
+ni déjà retourné. Son ExecStartPre prend le verrou de finalisation et écrit
+la marque durable de retour avant toute condition de fermeture. Type=exec
+permet ensuite au retour de relancer les clients après transfert sans bloquer
+leurs jobs sur la fin du service de reprise. Les clients et migrations restent
+fermés pendant le transfert. Le shell retire toutes ses propres conditions
+à la fin, y compris celles des services désactivés dans l'ancien profil.
+
+La phase `vision-reprise-qualifier` exécute ce générateur dans des répertoires
+jetables, vérifie son unité/lien de démarrage et l'absence de sortie après les
+deux marques terminales. Deux seules unités natives jetables répètent ensuite
+l'ordre ExecStartPre/Type=exec/consommateur : la fermeture et sa marque doivent
+précéder le client, le retour simulé s'exécute, le client reste fermé. Aucun
+service métier, SQL de production, générateur persistant ou timer de retour
+réel n'est installé ici. La machine n'est pas redémarrée ; il s'agit d'une
+qualification de reconstruction et d'ordonnancement sur son systemd réel.
+Une installation et une activation protégées resteront une opération distincte.
