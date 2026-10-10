@@ -7067,14 +7067,14 @@ Inscription native IdP reste désactivée ; invitations/plafonds/expiration/noti
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: 382d0b6960a3b771a2f3eb1ffb983cf2f003cf5a0d872b8dfa7dacf258ddce2a
-:LU_LE: 2026-10-10T21:24:18+00:00
+:LU_LE: 2026-10-10T21:34:43+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
-:PREUVE: https://proton.me/legal/terms
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38087925818
 :END:
-Contrats publics vérifiés, ouverture explicitement demandée. Lecture publique réelle : OIDC actif/inscriptions fermées, coordonnées et version de notice vides ; renseigner les seuls champs publics confirmés avec ouverture atomique, refuser toute valeur contradictoire. Tests réels de réservation annulée sans consommation, expiration/révocation/plafonds préservés ; CI exacte avant exécution.
+Ouverture réellead8123c/PR97 réussie après CI exacte38087565641 (422tests/quatre jobs), signal38087916660, job114318255509. Notice renseignée/HTTPS relue depuis runner et Work, réservation réelle annulée sans consommation/compte/courrier, génération conservée, services/ACL/PG17/schema25/refusprivés/22artefacts/25TLS/nouvelleSSH finaux réussis. Invitations obligatoires ; mineurs et autres pays en contrôle manuel. Aucun certificat général, achat ou nouvelle signature exigé par les textes consultés.
 
 ** TODO vps
 :PROPERTIES:

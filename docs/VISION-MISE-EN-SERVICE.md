@@ -9,8 +9,13 @@ sont conservées/vérifiées ; admin applicatif sans contenu d'autrui,
 22 fichiers exacts, refus publics, sources AGPL, nouvelle SSH et25 HTTP/TLS
 passent avant enregistrement puis contrôles finaux réussis.
 [Preuve](../operations/vision-multiutilisateur-activation-reelle.json).
-La connexion humaine à Vision reste à confirmer. Les inscriptions de tiers
-restent fermées ; les préconditions juridiques sont distinctes.
+La connexion humaine est confirmée par l'exploitant, qui a créé une invitation.
+Les inscriptions par invitation sont ouvertes par l'opération distincte ad8123c,
+[Actions38087925818](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38087925818),
+après 422 tests/quatre jobs de CI exacte 38087565641. Notice publique renseignée,
+invitation réelle non consommée, génération inchangée et contrôles finaux passés.
+[Contrats et procédure](VISION-OUVERTURE-INVITATIONS.md),
+[preuve](../operations/vision-inscriptions-ouverture-reelle.json).
 
 Depuis le 9 octobre 2026, le propriétaire ne sert plus de relais entre chaque
 contrôle technique. L'agent prépare, teste, demande et suit les opérations avec
@@ -49,11 +54,11 @@ restent deux actions distinctes.
 | Phase | Situation actuelle | Suite |
 |---|---|---|
 | Courriels, restauration isolée, paquet et composants | Qualifications VPS réussies, références dans les documents correspondants | Réutiliser les preuves et vérifier les préconditions |
-| Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
+| Génération réservée | Génération réservée enregistrée par Actions `37994597242`, après contrôles natifs/SSH/25 HTTP/TLS | Génération enregistrée, service et compte initial vérifiés ; préparer la bascule distincte |
 | Compte commun du propriétaire | Compte/email/password/OTP et connexion pwd+otp fraîche vérifiés :0fbce8d/38002451652 | Étape humaine validée ; préparer association historique et bascule, sans considérer la session historique comme fraîche aujourd’hui |
 | Récupération extérieure | Déchiffrement complet sur téléphone confirmé, sans écriture en clair | Copie mensuelle Linux et clé indépendante ultérieures |
-| Rattachement historique et bascule Vision | Activés et enregistrés008671e/38080453548, données/association conservées, identité courante transférée, admin sans accès aux contenus, sauvegarde commune exécutée | Confirmer la connexion humaine à Vision et l'accès au menu Administration |
-| Invitations à des tiers | Fermées | Vérifier séparément les préconditions juridiques et de sauvegarde avant ouverture |
+| Rattachement historique et bascule Vision | Activés et enregistrés008671e/38080453548, données/association conservées, identité courante transférée, admin sans accès aux contenus, sauvegarde commune exécutée | Fonctionnement et création d'une invitation confirmés par l'exploitant |
+| Invitations à des tiers | Ouvertes ad8123c/38087925818 après vérification fournisseurs et notice renseignée, lien réel non consommé | Réouvrir le lien existant ; examen manuel des mineurs et autres pays |
 
 Le premier enchaînement appelle la recette réservée déjà préparée : lecture
 des preuves privées et du socle, copie locale chiffrée, simulation, répétition
@@ -63,7 +68,7 @@ Les qualifications de construction précédentes ne sont pas refaites.
 
 La phase vient uniquement de `operations/vision-mise-en-service.json`
 sur le main qualifié : valeurs fermées, sans paramètre libre. La dernière
-opération réelle est `vision-essai-reprendre`, désormais terminée ; ne pas
+opération réelle est `vision-inscriptions-ouvrir`, désormais terminée ; ne pas
 avancer la branche d'opérations lors d'une simple publication de preuves.
 Le diagnostic lit seulement les journaux privés de la tentative identifiée,
 classe les refus et revérifie le socle. Il ne modifie ni génération ni base.
