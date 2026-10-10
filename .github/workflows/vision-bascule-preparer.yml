@@ -5,6 +5,9 @@ on:
       sauvegarde-telephone:
         type: boolean
         default: false
+      preparer-essai:
+        type: boolean
+        default: false
 permissions:
   contents: read
   actions: read
@@ -42,13 +45,17 @@ jobs:
         run: |
           git archive --format=tar "$GITHUB_SHA" | sh scripts/connect.sh "umask 077; mkdir -p /root/vision-bascule-preparations/$GITHUB_SHA/source; tar --no-same-permissions -xf - -C /root/vision-bascule-preparations/$GITHUB_SHA/source"
       - name: Réparer la seule référence qualifiée puis vérifier les restaurations et l’association isolées
-        if: ${{ !inputs.sauvegarde-telephone }}
+        if: ${{ !inputs.sauvegarde-telephone && !inputs.preparer-essai }}
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-bascule-preparations/$GITHUB_SHA/source/scripts/vision-bascule-preparer.py $GITHUB_SHA'"
       - name: Restaurer les copies, chiffrer pour le téléphone et remettre au relais existant
         if: ${{ inputs.sauvegarde-telephone }}
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-bascule-preparations/$GITHUB_SHA/source/scripts/vision-bascule-preparer.py $GITHUB_SHA --sauvegarde-telephone'"
+      - name: Qualifier la génération complète et préparer son retour sans activer
+        if: ${{ inputs.preparer-essai && !inputs.sauvegarde-telephone }}
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 /root/vision-bascule-preparations/$GITHUB_SHA/source/scripts/vision-bascule-preparer.py $GITHUB_SHA --essai'"
       - name: Vérifier une nouvelle connexion et les six services
         if: ${{ always() && steps.sites.outcome == 'success' }}
         run: sh scripts/connect.sh systemctl is-active sshd nginx postgresql vision matheval mrj-auth
