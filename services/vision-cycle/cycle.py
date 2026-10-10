@@ -18,7 +18,7 @@ from urllib.parse import quote
 import psycopg
 import requests
 import subprocess
-from courriel import FileCourriel, lire_prive, verifier_smtp, archiver_effacement, adresse
+from courriel import FileCourriel, lire_prive, lire_secret_prive, verifier_smtp, archiver_effacement, adresse
 
 
 class Cycle:
@@ -193,7 +193,7 @@ if __name__ == '__main__':
     os.umask(0o077)
     cycle = Cycle(os.environ['VISION_CYCLE_DSN'], '/var/lib/vision-cycle',
                   lire_prive(os.environ['MRJ_SMTP_SECRET']), lire_prive(os.environ['VISION_CYCLE_CONFIG']),
-                  Path(os.environ['VISION_CYCLE_CLIENT_SECRET']).read_text().strip(), os.environ.get('AGE','age'))
+                  lire_secret_prive(os.environ['VISION_CYCLE_CLIENT_SECRET']), os.environ.get('AGE','age'))
     def reprises():
         while True:
             try: cycle.traiter()

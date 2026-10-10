@@ -19,20 +19,14 @@ import time
 
 import psycopg
 import requests
-from courriel import FileCourriel, adresse, lire_prive, verifier_smtp
+from courriel import FileCourriel, adresse, lire_prive, lire_secret_prive, verifier_smtp
 
 ISSUER = 'https://log.mrj.am/realms/mrjam'
 BACKEND = 'http://127.0.0.1:8085/realms/mrjam'
 ADMIN = 'http://127.0.0.1:8085/admin/realms/mrjam'
 
 def secret_prive(chemin):
-    fd=os.open(chemin,os.O_RDONLY|os.O_NOFOLLOW)
-    with os.fdopen(fd) as f:
-        s=os.fstat(f.fileno())
-        if not stat.S_ISREG(s.st_mode) or s.st_mode&0o077 or s.st_uid not in (0,os.geteuid()):raise ValueError('secret_non_prive')
-        valeur=f.read(128).strip()
-    if not re.fullmatch(r'[A-Za-z0-9_-]{43}',valeur):raise ValueError('secret_invalide')
-    return valeur
+    return lire_secret_prive(chemin)
 
 
 def verifier_registre(p):

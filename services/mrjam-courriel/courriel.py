@@ -8,6 +8,7 @@ from email.message import EmailMessage
 from email.policy import SMTP
 from email.utils import formatdate
 import fcntl
+import errno
 import hashlib
 import json
 import os
@@ -16,16 +17,50 @@ import re
 import smtplib
 import sqlite3
 import ssl
+import stat
+import struct
 import subprocess
 import time
 
 
-def lire_prive(chemin):
-    fd = os.open(chemin, os.O_RDONLY | os.O_NOFOLLOW)
+def acl_lecture_individuelle(acl,uid):
+    # systemd260 ajoute ACL_READ au seul uid du service. Le masque ACL rend
+    # st_mode=0440 sans accorder de lecture au groupe propriétaire.
+    if len(acl)!=44 or struct.unpack('<I',acl[:4])[0]!=2:return False
+    attendu=[(1,4,0xffffffff),(2,4,uid),(4,0,0xffffffff),
+        (16,4,0xffffffff),(32,0,0xffffffff)]
+    return [struct.unpack('<HHI',acl[n:n+8]) for n in range(4,len(acl),8)]==attendu
+
+
+def ouvrir_prive(chemin,maximum=65536):
+    fd=os.open(chemin,os.O_RDONLY|os.O_NOFOLLOW|os.O_NONBLOCK)
     try:
-        stat = os.fstat(fd)
-        if stat.st_mode & 0o077 or stat.st_uid not in (0, os.geteuid()):
+        s=os.fstat(fd)
+        if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1 or s.st_size>maximum or s.st_uid not in (0,os.geteuid()):
             raise ValueError('Fichier de secret non privé')
+        try:acl=os.getxattr(fd,'system.posix_acl_access')
+        except OSError as erreur:
+            if erreur.errno not in (errno.ENODATA,errno.ENOTSUP):raise
+            acl=None
+        if acl is None:
+            prive=not s.st_mode&0o077
+        else:
+            prive=stat.S_IMODE(s.st_mode)==0o440 and acl_lecture_individuelle(acl,os.geteuid())
+        if not prive:raise ValueError('Fichier de secret non privé')
+        return fd
+    except Exception:
+        os.close(fd);raise
+
+
+def lire_secret_prive(chemin):
+    with os.fdopen(ouvrir_prive(chemin,128)) as f:valeur=f.read(128).strip()
+    if not re.fullmatch(r'[A-Za-z0-9_-]{43}',valeur):raise ValueError('secret_invalide')
+    return valeur
+
+
+def lire_prive(chemin):
+    fd = ouvrir_prive(chemin)
+    try:
         with os.fdopen(fd, 'r') as fichier:
             fd = None
             return json.load(fichier)

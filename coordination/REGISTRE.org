@@ -6809,14 +6809,80 @@ Les autres projets prennent connaissance sans action sur leur code/données. Auc
 :PREUVE: -
 :END:
 
-** LU vision
+** DONE vision
 :PROPERTIES:
 :LU_SHA256: c6fd273478a4c9fd735e3597b2a626c3eb79d5ddf58592eed46702b2f56c7b9c
-:LU_LE: 2026-10-10T18:45:57+00:00
+:LU_LE: 2026-10-10T18:59:54+00:00
+:CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
+:PREUVE: https://github.com/MrJ-am/vps-infrastructure/actions/runs/38077543270
+:END:
+Diagnostic réel réussi tentative2 : refus du lecteur de credential, source root0600 sans lien/partage. Socle/SQL25/association/nouvelleSSH/six services/25sites avant/après passent. Aucun secret, SMTP ou mutation.
+
+** TODO vps
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+* Lire les credentials systemd par leur ACL individuelle avant reprise Vision
+:PROPERTIES:
+:ID: 20261010-vision-4f484759cbdd
+:EMETTEUR: vision
+:PORTEE: globale
+:DESTINATAIRES: logique memoire signature style vision vps
+:CREE_LE: 2026-10-10T18:59:54+00:00
+:CONSOLIDATION: sans-objet
+:END:
+Le diagnostic réel57ecc60/PR93, CI exacte38077186889 (413tests/quatre jobs), signal38077534152, Actions38077543270/job114287854614 tentative2, réussit. Premier essai réseau expiré avant SSH ; reprise du seul job via outil GitHub, sans utilisateur. D85 jamais armé, fichiers source root0600/réguliers/uniques, lecteur SMTP refusé pour permission privée au programme public ligne5 ; aucune autre catégorie. Socle, SQL25, identité courante, association initiale et nouvelleSSH/six services/25sites avant/après vérifiés. Reçu operations/vision-credentials-diagnostic-reel.json.
+
+Corriger le lecteur commun pour l'ACL de lecture individuelle de LoadCredential systemd260 : owner root ou uid courant, régulier/unique/borné/sans lien. Sans ACL, garder mode privé077=0. Avec ACL, accepter uniquement mode0440 et les cinq entrées Linux exactes owner:r, user UIDcourant:r, group:aucun, mask:r, other:aucun ; version2, aucun utilisateur/groupe supplémentaire, aucun droit d'écriture. Aucun chmod de secret, copie supplémentaire ou rotation. Même lecteur pour SMTP/config JSON et client/hook43 des services admission/cycle/fermeture. Programme natif pré-activation appelle ces mêmes lecteurs pour les quatre credentials sous DynamicUser isolé sans réseau.
+
+Tests réels Linux : fichier root0400 avec ACL du seul UID65534 devient0440 ; lecture par cet UID fonctionne, UID65533 est réellement refusé. Lecteur refuse lecture de groupe sans ACL, ACL d'un second utilisateur, hardlink, taille excessive, autre UID ou permissions. Nouveau candidat construit/isolé/dry, retour9ef quatre fichiers strictement inchangés, copie courante/association existante constatée, timer/générateur avant SQL, services/backup/nouvelleSSH/25sites/22artefacts/refus anonymes avant boot. Reprise fermée automatique après CI exacte/main/provenance, aucune relance humaine. Aucun vieux dump Vision ni effacement de migrations/identités.
+
+Autres projets prennent connaissance sans action ; identité commune et confidentialité applicative inchangées. Inscriptions tierces fermées, examen juridique/DPA/mineurs/rétention distinct avant ouverture. Vision publiera résultat réel ; copie mensuelle Linux et clé indépendante ultérieures.
+
+** TODO logique
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO memoire
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO signature
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** TODO style
+:PROPERTIES:
+:LU_SHA256: -
+:LU_LE: -
+:CONTEXTE: -
+:PREUVE: -
+:END:
+
+** LU vision
+:PROPERTIES:
+:LU_SHA256: b1350a05210041d69448a2970f8c587881b53e6115026cbd11131c458e78171a
+:LU_LE: 2026-10-10T19:00:12+00:00
 :CONTEXTE: MrJ-am/vision@a9c51acac81510d7dc896f5daf4e6fb28a36b979
 :PREUVE: -
 :END:
-Lu : diagnostic du seul test natif refusé avant armement ; journal borné projeté en booléens et permissions de fichiers sans lire les secrets. Aucun service lancé ou mutation.
+Lu : lecture privée par ACL exacte du seul UID, mêmes lecteurs JSON/client/hook et qualification native avant armement ; aucun secret élargi ou roté.
 
 ** TODO vps
 :PROPERTIES:
