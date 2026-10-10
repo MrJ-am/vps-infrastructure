@@ -41,6 +41,11 @@ def etape(nom):
     ETAPE=nom
 
 
+def verifier_observateur(texte):
+    exiger(hashlib.sha256(texte.encode('utf-8')).hexdigest()==
+        '61ba89f8551a95a026293fca6ff3e79a6e5a9b6ed34c96255aa9828986ec2c2e')
+
+
 def comparer_repertoires(ancien,nouveau,racine_store=Path('/nix/store')):
     """Projection fermée des règles ; aucun chemin ni ligne arbitraire émis."""
     regles={
@@ -136,8 +141,7 @@ def main(revision):
     etape('observateur_exact')
     association=charger('association_diagnostic_essai',ROOT/'scripts/vision-bascule-principaux.py')
     old=Path('/root/vision-proprietaire-operations')/association.OBSERVATION/'source'
-    exiger(hashlib.sha256(lire(old/'scripts','vision-proprietaire-enroler.py')).hexdigest()==
-        '61ba89f8551a95a026293fca6ff3e79a6e5a9b6ed34c96255aa9828986ec2c2e')
+    verifier_observateur(lire(old/'scripts','vision-proprietaire-enroler.py'))
     etape('observateur_import')
     observateur=charger('observateur_diagnostic_essai',old/'scripts/vision-proprietaire-enroler.py')
     etape('socle_avant')
