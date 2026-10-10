@@ -136,3 +136,18 @@ Nouvelle SSH/six services/25sites finaux réussis.
 [Reçu public](../operations/vision-recuperation-resultat.json) : SHA256 du
 cryptogramme, du vérificateur et du défi, sans données privées. La réception
 et la vérification complète sur téléphone restent à confirmer par le propriétaire.
+
+## Copie réelle déchiffrée sur le téléphone
+
+Le propriétaire a retourné le résultat complet du lecteur pour
+`vision-recuperation-20261010` : empreinte chiffrée exacte, tous les fichiers
+identiques aux copies testées, déchiffrement complet, aucune écriture en clair.
+Le SHA256 du défi aléatoire retourné correspond exactement au reçu
+[38049744292](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38049744292).
+La [confirmation séparée](../operations/vision-recuperation-confirmation.json)
+consigne cette preuve sans réécrire l’événement SMTP antérieur, ni publier
+le défi ou la clé privée. Clé personnelle correspondante et copie réelle
+extérieure sur téléphone sont validées ; copie mensuelle sur disque Linux
+et conservation indépendante de la clé restent à réaliser. La préparation
+d’un essai protégé reste distincte, ainsi que les conditions juridiques
+d’admission tierce. Aucun Run workflow n’est demandé au propriétaire.
