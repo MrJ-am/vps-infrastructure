@@ -15,7 +15,10 @@ def verifier():
         p=racine/profile['fichier']
         if not p.resolve().is_relative_to(racine/'assemblage/python') or p.is_symlink() or empreinte(p.read_bytes())!=profile['sha256']:
             raise ValueError('Lock Python central différent de son inventaire')
-        attendu={v['nom']+'=='+v['version']+' --hash=sha256:'+v['sha256'] for v in profile['paquets']}
+        for v in profile['paquets']:
+            if 'url' in v and not (v['nom']=='torch' and re.fullmatch(r'https://download\.pytorch\.org/whl/cpu/torch-2\.6\.0(?:%2B|\+)cpu-cp312-cp312-linux_x86_64\.whl',v['url'])):
+                raise ValueError('URL de dépendance hors du composant CPU déjà approuvé')
+        attendu={(v['nom']+' @ '+v['url'] if 'url' in v else v['nom']+'=='+v['version'])+' --hash=sha256:'+v['sha256'] for v in profile['paquets']}
         reels={l for l in p.read_text().splitlines() if l and not l.startswith('#')}
         if reels!=attendu:raise ValueError('Paquets Python centraux différents de leur inventaire')
     for entre in inventory['npm_verrouille']:

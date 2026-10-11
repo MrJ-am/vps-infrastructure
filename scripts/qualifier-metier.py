@@ -22,6 +22,8 @@ def qualifier(destination, sans_cache=False):
                      ASDF_SOURCE_REGISTRY='(:source-registry :ignore-inherited-configuration)')
     env=dict(os.environ)
     with tempfile.TemporaryDirectory(prefix='mrjam-fasl-reference-') as cache:
+        metadata=Path(cache)/'construction.json'
+        build_env['MRJAM_BUILD_METADATA']=str(metadata)
         if sans_cache:
             build_env['ASDF_OUTPUT_TRANSLATIONS']=f'(:output-translations (t "{cache}/") :ignore-inherited-configuration)'
         debut=time.monotonic()
@@ -36,6 +38,7 @@ def qualifier(destination, sans_cache=False):
                   'taille_octets':destination.stat().st_size,'construction_secondes':round(construction,4),
                   'tests_secondes':round(time.monotonic()-debut,4),'fasl_reference_sans_cache':sans_cache,
                   'fasl_reference_crees':fasl_count,
+                  'compilation':json.loads(metadata.read_text()),
                   'source_revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
                   'sources_lisp_sha256':inputs,
                   'qualification':'locale HTTP/transactions/redemarrage, assemblage complet non qualifie',

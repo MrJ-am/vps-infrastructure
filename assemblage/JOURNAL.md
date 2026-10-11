@@ -180,3 +180,42 @@
 - Qualification style interrompue : le candidat Pages seul omettait la galerie et
   l'atelier nécessaires aux tests. Condition analysée, conservation des trois sorties
   ajoutée et nouveau candidat demandé ; pas de relance inchangée jusqu'au vert.
+
+- CI infrastructure 38107422877 sur 520cf53 : cinq jobs réussis. Module Matheval
+  central et archive exacte qualifiés ; aucun binaire SBCL 2.6.4 construit/activé.
+  CI assemblage 38107422889 : cadre réussi, secret de lecture privé toujours absent.
+- REPL conservé : chargement du nouveau chargeur, ASDF incrémental puis contrôle
+  court. Cache privé 0700, refus des liens/propriétaires étrangers, namespace sur
+  runtime/core/ASDF, architecture/ABI et options speed1/safety3/debug1/space1.
+  Régression : les package.fasl de composants différents doivent être distincts.
+  Huit changements de descriptor invalident le cache ; répertoire public refusé.
+- Même graphe compilé dans une image propre : candidat f205c50b0e1b2537f903cb08f432aedaed4ec1d0d97f27548e6a1c2c6983803f,
+  cache valide, construction 1,958 s / 40 parcours 6,565 s. Référence sans cache :
+  39 FASL, 4,470 s / 40 parcours 9,345 s, e480624fd63e9eb5f98b2da6b32bd94cda06222be005e4c7077d95d6cba43760.
+  Le dernier temps a été mesuré pendant d'autres tests navigateur ; pas une
+  mesure comparable de gain de latence. API/MCP Alice/Bob et auxiliaires toujours
+  réussis sur le candidat ; aucun accès de production dans ces expériences.
+- Frontends : candidats existants réutilisés, construction non répétée pour les
+  campagnes. Style : 82 tests Elm, 21 références, géométries, 92 parcours navigateur
+  réussis / 4 ignorés prévus, rasters réussis. Signature : fontes/CSS/HTML identiques
+  après régénération, géométrie JSON sémantiquement identique (entiers rendus en
+  floats par fontTools), sélection/copier-coller réussis. Aucun changement graphique.
+- Vision historique porté vers l'entrée de fixture du vrai serveur commun :
+  17+7+6+12 tests HTTP métier, migrations/formules, dix tests comptes/quotas et
+  mesures SQL réussis. Rôles non propriétaires ; sujets synthétiques explicitement
+  admis par la fixture. Navigateur 320/375/768/1280 et parcours mutation/reprise
+  réussis. Cette entrée loopback de test ne qualifie pas Nginx/OIDC de production.
+- Matheval navigateur : 55/56 réussis. Un scénario Firefox n'a pas fermé le lecteur
+  après clic ; première trace perdue par nettoyage du worktree, conservation des
+  diagnostics corrigée. Cas isolé puis vingt répétitions instrumentées réussis,
+  sans reproduire le défaut. Cause non établie ; campagne complète non qualifiée.
+  Traces privées : state/rapports-frontends/matheval-diagnostic-6c454d496fe7.
+- Catalogue et CI centrale étendus aux interfaces, atelier, Signature, PostgreSQL
+  historique et navigateur commun. Diff des pins Git disponible après checkout :
+  prose seule ne déclenche pas l'arithmétique ; macro JSON/toolchain élargissent.
+  Dix-sept tests du sélecteur réussis. CI rejoue les suites affectées, sans croire
+  les reçus Codex ; une construction par candidat, aucune publication acquise.
+- Outils sémantiques existants : torch 2.6.0 CPU (ancien workflow Vision) et les
+  requirements existants résolus en 35 roues verrouillées SHA256, profil séparé.
+  Installation autorisée de cet outillage déjà utilisé, sans nouveau service ni
+  runtime. Qualification du modèle réel à poursuivre avant retrait du déclencheur.

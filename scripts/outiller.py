@@ -13,7 +13,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('operation',choices=['npm','python'])
     p.add_argument('--composant',choices=['vision','matheval','logique','style'])
-    p.add_argument('--profil',choices=['navigateur','signature','logo'])
+    p.add_argument('--profil',choices=['navigateur','signature','logo','embeddings'])
     args=p.parse_args()
     subprocess.run([sys.executable,str(RACINE/'scripts/verifier-dependances.py')],check=True)
     d=json.loads((RACINE/'assemblage/dependances.json').read_text())

@@ -26,7 +26,7 @@ Permissions GitHub constatées : sources lecture/écriture, lancement Actions.
 APIs protections de branche, secrets et deploy keys : 403. Leur inspection/nettoyage
 distant ne sont pas acquis ; ce refus ne bloque pas les travaux indépendants.
 
-Restent à réaliser avant le jalon 1 : qualification de chiffrement age/restauration, configuration du cycle de vie
+Restent à réaliser avant le jalon 1 : configuration du cycle de vie
 commun et listener/routage central avec rôles SQL en production, compilation propre Nix,
 transfert complet CI/frontends/sauvegardes puis retrait satellites, qualification
 multi-comptes Vision/OIDC/MCP, restauration isolée, bascule réelle et redémarrage.
@@ -38,9 +38,9 @@ Anciens essais/publications satellites/acquittements remplacés par la mission ;
 faits conservés dans l'archive exacte. Copies mensuelles Linux et clé personnelle
 mentionnées dans ETAT.md restent personnelles, sans blocage technique artificiel.
 
-Dernière preuve CI : 38104435924 sur cd90f2a, quatre jobs infrastructure réussis,
+Dernière preuve CI : 38107422877 sur 520cf53, cinq jobs infrastructure réussis,
 dont évaluation Nix du module commun (paquet factice, pas un binaire qualifié).
-38104435933 : cadre réussi, arrêt avant checkout privé (COMPONENTS_READ_TOKEN absent).
+38107422889 : cadre réussi, arrêt avant checkout privé (COMPONENTS_READ_TOKEN absent).
 Qualification locale : 40 parcours, reconstruction propre sans cache 39 FASL,
 HTTP AF_UNIX réel et redémarrage SQL. Sources nouvelles : Vision aa7f10d ;
 Matheval 2a82250. Le manifeste porte les SHA
@@ -61,6 +61,17 @@ contrôlées. Générateurs dans des worktrees temporaires ; candidats privés s
 construits localement. Qualifications de cette tranche en cours ; transfert CI
 complet et retrait des YAML satellites restent à achever. Nouveaux profils Python
 3.12/Linux/x86_64 : navigateur, logo, Signature ; transitives verrouillées par SHA.
+
+Cache FASL maintenant privé et séparé par compiler/core/ASDF/options/ABI ; chemins
+des composants préservés. Référence sans cache : 39 FASL, 40 parcours réussis.
+Les campagnes Vision historiques et navigateur passent sur le binaire commun.
+Atelier complet et Signature passent. Matheval navigateur : 55/56, un clic Firefox
+non reproduit sur vingt essais ciblés ; cause encore inconnue, pas de faux succès.
+Diagnostics privés conservés. CI centrale contient désormais ces commandes ;
+catalogue/sélecteur des pins Git (17 tests). Reçus Codex jamais attestés par la CI.
+Profil embeddings CPU existant : 35 roues SHA256 ; vrai modèle restant à qualifier.
+Workflows satellites encore présents : transférer cette dernière fonction, puis
+archiver les recettes exactes et retirer les YAML. Production toujours inchangée.
 
 Sauvegarde/restauration réelle réussie : workflow central `monolithe-reference.yml`,
 run 38105867103 sur eff80b8, `operation=sauvegarde-restauration`. Copie chiffrée des

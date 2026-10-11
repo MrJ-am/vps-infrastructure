@@ -76,9 +76,10 @@ def reutiliser_candidat(cle, sources, m):
     return rapport
 
 
-def tester_frontend(cle,sources,caches):
+def tester_frontend(cle,sources,caches,campagne='base'):
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME',
-        'PLAYWRIGHT_BROWSERS_PATH','CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI')}
+        'PLAYWRIGHT_BROWSERS_PATH','CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI',
+        'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT')}
     env['STYLE_MRJAM_SOURCE']=str(caches.get(cle,sources['style']))
     commandes={
         'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test'],
@@ -88,12 +89,37 @@ def tester_frontend(cle,sources,caches):
                     ['python3','-m','unittest','discover','-s','docs/tests','-p','test_published_site.py'],
                     ['node','docs/scripts/test-survey.cjs'],['npm','--prefix','docs','run','test:construction'],
                     ['npm','--prefix','docs','run','test:logic']],
-        'logique':[['npm','test'],['node_modules/.bin/elm-format','src','tests/Check.elm','tests/AtelierCheck.elm','tests/AtelierRegles.elm','--validate'],
-                   ['npm','run','test:interface'],['npm','run','test:atelier:interface'],['npm','run','test:typographie']],
+        'logique':[['npm','run','test:interface'],['npm','run','test:atelier:interface'],['npm','run','test:typographie']],
         'style':[['node_modules/.bin/elm-format','src','exemples','--validate'],['python3','scripts/verifier-identite.py'],
                  ['python3','-m','unittest','discover','-s','tests','-p','test_architecture.py'],
                  ['python3','tests/navigation.py'],['python3','tests/documentaire.py'],['python3','tests/blocs.py']]
     }
+    if campagne=='unitaire':
+        if cle!='logique':raise ValueError('Campagne unitaire définie uniquement pour Logique')
+        commandes[cle]=[['npm','test'],['node_modules/.bin/elm-format','src','tests/Check.elm','tests/AtelierCheck.elm','tests/AtelierRegles.elm','--validate']]
+    if campagne=='complement':
+        commandes={
+            'matheval':[['python3',str(RACINE/'tests/matheval-navigateur.py'),'--sources',str(sources['matheval'])]],
+            'style':[['npm','--prefix','ateliers/logo','run','format:check'],
+                *[['python3','ateliers/logo/scripts/'+p+'.py'] for p in ('analyser-y','analyser-z','construire-z','generate-data')],
+                ['ateliers/logo/node_modules/.bin/elm-format','ateliers/logo/src/Echo/ReferenceData.elm','--yes'],
+                ['git','diff','--exit-code','--','ateliers/logo/donnees','ateliers/logo/dessins','ateliers/logo/references/Z-reference.svg','ateliers/logo/src/Echo/ReferenceData.elm'],
+                ['npm','--prefix','ateliers/logo','test','--','--seed','20261007'],
+                ['npm','--prefix','ateliers/logo','run','test:reference'],
+                ['npm','--prefix','ateliers/logo','run','test:geometry'],
+                ['npm','--prefix','ateliers/logo','run','test:browser'],
+                ['npm','--prefix','ateliers/logo','run','test:raster']]
+        }
+        if cle not in commandes:raise ValueError('Aucune campagne complémentaire pour ce composant')
+        if cle=='style':
+            env['PATH']=str(RACINE/'state/outils-python/logo/bin')+os.pathsep+env['PATH']
+            # Les analyseurs d'origine attendent le dossier de l'atelier.
+            for commande in commandes[cle]:
+                if commande[0]=='python3' and commande[1].startswith('ateliers/logo/scripts/'):
+                    commande[1]=commande[1].removeprefix('ateliers/logo/')
+                    subprocess.run(commande,cwd=sources[cle]/'ateliers/logo',env=env,check=True)
+                else:subprocess.run(commande,cwd=sources[cle],env=env,check=True)
+            return
     for commande in commandes[cle]:subprocess.run(commande,cwd=sources[cle],env=env,check=True)
 
 
@@ -168,7 +194,7 @@ def preparer(sources, m):
 
 
 def construire_dans_atelier(cle, sources, m, caches):
-    env = dict(os.environ)
+    env = {k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME','CI')}
     env['GITHUB_SHA'] = m['sources'][cle]['revision']
     env['STYLE_MRJAM_SOURCE'] = str(caches.get(cle, sources['style']))
     commandes = {
@@ -182,7 +208,7 @@ def construire_dans_atelier(cle, sources, m, caches):
     return enregistrer_candidat(cle,sources,m)
 
 
-def construire(cle, sources, m,qualification=False):
+def construire(cle, sources, m,qualification=False,campagne='base'):
     # Les générateurs écrivent parfois dans des fichiers suivis. Ils travaillent
     # sur un checkout temporaire propre, pas dans la bibliothèque partagée.
     parent = RACINE / 'state/ateliers-frontends'
@@ -194,7 +220,7 @@ def construire(cle, sources, m,qualification=False):
                         '--detach', str(atelier), m['sources'][cle]['revision']], check=True)
         try:
             locaux = dict(sources); locaux[cle] = atelier
-            caches = preparer(locaux, m)
+            caches = {} if cle=='signature' else preparer(locaux, m)
             for dossier in ['node_modules', 'docs/node_modules', 'interface/node_modules', 'ateliers/logo/node_modules']:
                 outils = sources[cle] / dossier
                 if outils.is_dir():
@@ -202,12 +228,42 @@ def construire(cle, sources, m,qualification=False):
                     dest.parent.mkdir(parents=True, exist_ok=True)
                     dest.symlink_to(outils.resolve(), target_is_directory=True)
             if qualification:
+                if cle=='signature':
+                    env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH')}
+                    geometrie=json.loads((atelier/'web/geometry.json').read_text())
+                    subprocess.run([RACINE/'state/outils-python/signature/bin/python','tools/build-web.py'],cwd=atelier,env=env,check=True)
+                    # Certaines roues fontTools rendent des coordonnées entières
+                    # en float. L'objet JSON doit rester identique ; tous les
+                    # glyphes, fontes, CSS et HTML restent vérifiés octet par octet.
+                    if json.loads((atelier/'web/geometry.json').read_text())!=geometrie:
+                        raise ValueError('Géométrie Signature modifiée par la génération')
+                    subprocess.run(['git','diff','--exit-code','--','.',':(exclude)web/geometry.json'],cwd=atelier,check=True)
+                    subprocess.run([RACINE/'state/outils-python/navigateur/bin/python','tests/browser-copy.py'],cwd=atelier,env=env,check=True)
+                    print(json.dumps({'composant':cle,'revision':m['sources'][cle]['revision'],'tests':'reussis','publication':False}))
+                    return
                 rapport=reutiliser_candidat(cle,locaux,m)
-                tester_frontend(cle,locaux,caches)
+                tester_frontend(cle,locaux,caches,campagne)
                 print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'],
-                    'tests':'reussis','construction_reutilisee':True,'publication':False},ensure_ascii=False))
+                    'tests':'reussis','campagne':campagne,
+                    'diagnostic_specifique':bool(os.environ.get('MRJAM_TEST_FILTER')),
+                    'construction_reutilisee':True,'publication':False},ensure_ascii=False))
             else:construire_dans_atelier(cle, locaux, m, caches)
+        except Exception:
+            # Captures et traces de fixtures restent privées et disponibles
+            # après la suppression du worktree temporaire de cet appel.
+            rapports=RACINE/'state/rapports-frontends'/(cle+'-'+uuid.uuid4().hex[:12])
+            for relatif in ('docs/test-results','interface/rapports','ateliers/logo/test-results','ateliers/logo/verification'):
+                dossier=atelier/relatif
+                if dossier.is_dir():
+                    rapports.mkdir(parents=True,exist_ok=True)
+                    shutil.copytree(dossier,rapports/relatif)
+            if rapports.exists():print('Diagnostics privés conservés : '+str(rapports.relative_to(RACINE)),flush=True)
+            raise
         finally:
+            if os.environ.get('MRJAM_TEST_FILTER') and (atelier/'docs/test-results').is_dir():
+                rapports=RACINE/'state/rapports-frontends'/(cle+'-diagnostic-'+uuid.uuid4().hex[:12])
+                shutil.copytree(atelier/'docs/test-results',rapports)
+                print('Trace ciblée conservée : '+str(rapports.relative_to(RACINE)),flush=True)
             # Uniquement le worktree créé dans ce TemporaryDirectory, jamais
             # un checkout de l'utilisateur ou une source concurrente.
             subprocess.run(['git', '-C', str(sources[cle]), 'worktree', 'remove', '--force', str(atelier)], check=True)
@@ -216,12 +272,14 @@ def construire(cle, sources, m,qualification=False):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('operation', choices=['preparer', 'construire','qualifier'])
-    p.add_argument('--composant', choices=['vision', 'matheval', 'logique', 'style'])
+    p.add_argument('--composant', choices=['vision', 'matheval', 'logique', 'style','signature'])
+    p.add_argument('--campagne',choices=['base','complement','unitaire'],default='base')
     args = p.parse_args()
     if args.operation != 'preparer' and not args.composant: p.error('--composant requis')
+    if args.composant=='signature' and args.operation!='qualifier':p.error('Signature est qualifiée sans nouvelle construction de site')
     sources = chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     m = manifeste()
-    if args.operation != 'preparer': construire(args.composant,sources,m,args.operation=='qualifier')
+    if args.operation != 'preparer': construire(args.composant,sources,m,args.operation=='qualifier',args.campagne)
     else:
         preparer(sources, m)
         print('Trois révisions de style et les ressources Signature contrôlées, sans fetch ni publication.')
