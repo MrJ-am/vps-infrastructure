@@ -317,3 +317,10 @@ frontend Matheval seule. Bibliothèques système Playwright préparées par son
 install --with-deps comme les anciennes CI, sans nouvelle dépendance directe.
 Sonde lecture seule 38118876078 : succès, génération r6s7ags3 inchangée ; compte
 Vision unique et rattachement cohérent, trois participations Matheval ouvertes.
+
+
+38119057570 sur 27bf244 : build Nix et Matheval frontend réussis. Arrêt au contrôle
+byte pour byte de Palette-Y.svg dans Style, avant toute publication. Central CI
+utilisait Node22.23.2 partout, alors que l'ancien atelier Style utilise Node24 et
+la qualification locale Node24.19.0. Aucun SVG ni palette modifié pour contourner
+le contrôle ; alignement du runtime de construction/test sur Node24.19.0.
