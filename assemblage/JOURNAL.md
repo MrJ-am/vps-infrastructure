@@ -293,3 +293,8 @@ Le cadre borne maintenant ses tests par impact. Pilote CLI testé sur trois
 commits Git synthétiques : prose uniquement → aucun composant/test inchangé ;
 sélecteur → sa suite seulement ; classification SQL → garde-fou et composants.
 18 tests du sélecteur/pilote/reçus réussis. Aucun nouveau réseau, outil ou service.
+
+Cadre 38113070010 sur eb94866 réussi : seule la suite du pilote/sélecteur est
+rejouée ; sauvegarde, garde-fou SQL et composants sont skipped. Ce vert incrémental
+ne qualifie aucun artefact métier. Le workflow infrastructure exclut désormais
+tous les tests test_assemblage*.py pour laisser leur exécution à ce cadre.
