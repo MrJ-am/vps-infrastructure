@@ -67,6 +67,16 @@ Un opérateur indépendant est armé avant la bascule. Les sondes vérifient not
 l'exécutable servi, les ressources publiques, le refus anonyme/MCP et une identité
 falsifiée, les invariants et le redémarrage ; elles ne créent aucun contenu réel.
 
+## Soumission qualifiée actuelle
+
+Sources/opérateurs `b0140de44c761f202271a436882cd05195b18fd3`, construction
+`158e4a52e012e5e46cf83afa05d2e36cfe0f4e49`, image `296b7c89` inchangée.
+Les35suites ont des preuves locales exactes, et les consommateurs frontend sont
+qualifiés à leurs révisions du manifeste. Archive chiffrée109011960octets,
+transport Git`1d64b9ac20af91cdcb61b11b01b2a7d59e8ce5db`, trois parties de40Mio
+maximum. Descripteur central actuel seul utilisé ; aucune activation prouvée
+par cette soumission. Préparation/restauration/bascule restent à constater.
+
 ## Historique de la première soumission — remplacée avant activation
 
 État antérieur du 11 octobre : protocole et opérateurs écrits, qualification locale en cours.

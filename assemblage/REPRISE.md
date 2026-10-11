@@ -1,6 +1,17 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — scellement de l’assemblage local
+## Point de reprise actif — préparation de production
+
+Sources qualifiées publiées b0140de44c761f202271a436882cd05195b18fd3.
+Scellement réussi vers state/candidats-scelles/b0140de-transport :109011960octets,
+chiffré8f338e0f2cd166aab2e56a8ccfb4c41f46f408b8df2fe5a83d1ba12f3f3611f2.
+Transport publié1d64b9ac20af91cdcb61b11b01b2a7d59e8ce5db, trois parties40Mio,
+branche artefacts/monolithe-b0140de44c76. Descripteur central lié aux sources et
+qualification d’amendement réussie. Première tentative locale de scellement :
+Nix absent du PATH, dossier vide conservé ; reprise réussie avec le Nix existant
+/home/agent/.nix-profile/bin, aucune installation ni reconstruction.
+Prochaine opération fermée : préparation centrale sans activation, puis
+restauration fraîche/retour/bascule et sondes réelles. Production toujours ancienne.
 
 Même tâche et architecture C ; image interactive saine conservée, aucun nouveau
 qualifier MCP synthétique, aucune reconnexion. Production encore ancienne,
