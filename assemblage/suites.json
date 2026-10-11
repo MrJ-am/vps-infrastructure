@@ -496,7 +496,8 @@
         "package-lock.json",
         "elm.json",
         "identite.json",
-        "tests/exports.py"
+        "tests/exports.py",
+        "public/assets/mrjam/*"
       ],
       "signature": [
         "web/*",
@@ -506,7 +507,6 @@
         "scripts/frontends.py",
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
-        "scripts/provenance-outils.py",
         "scripts/provenance-outils.py",
         "scripts/revoir-frontends.py",
         "assemblage/elm-review/elm.json",
@@ -566,6 +566,9 @@
     "npm_installations": {
       "style": [
         "node_modules"
+      ],
+      "logique": [
+        "node_modules/katex"
       ]
     },
     "navigateurs_python": true
@@ -769,7 +772,13 @@
         "cours/parcours.org",
         "scripts/build_data.py",
         "scripts/test*.mjs",
-        "package-lock.json"
+        "package-lock.json",
+        "tests/*.py",
+        "tests/*.json",
+        "elm.json",
+        "package.json",
+        "style-mrjam.json",
+        "scripts/preparer-style.mjs"
       ],
       "vps": [
         "scripts/frontends.py",
@@ -805,12 +814,12 @@
         "--version"
       ]
     },
-    "candidat_frontend": "logique",
     "npm_installations": {
       "logique": [
         "node_modules"
       ]
-    }
+    },
+    "style_consomme_par": "logique"
   },
   "logique-interface": {
     "niveau": 5,
@@ -835,7 +844,6 @@
         "scripts/frontends.py",
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
-        "scripts/provenance-outils.py",
         "scripts/provenance-outils.py",
         "scripts/revoir-frontends.py",
         "assemblage/elm-review/elm.json",
@@ -898,7 +906,8 @@
         "node_modules"
       ]
     },
-    "navigateurs_python": true
+    "navigateurs_python": true,
+    "style_consomme_par": "logique"
   },
   "navigateur-mcp": {
     "niveau": 5,

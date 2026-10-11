@@ -77,6 +77,26 @@
         ],
         "role": "Téléchargement personnel Blob détaché ; formats existants produits par ExportsVision, aucune présentation."
       }
+    ],
+    "logique/public/atelier.js": [
+      {
+        "fonction": "exporter",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "a"
+        ],
+        "role": "Téléchargement Blob JSON existant détaché ; certificats produits par Elm, aucune interface."
+      },
+      {
+        "fonction": "importer",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "input"
+        ],
+        "role": "Sélecteur natif JSON détaché, limite 2Mo existante, aucun affichage applicatif."
+      }
     ]
   }
 }
