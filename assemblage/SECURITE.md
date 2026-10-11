@@ -39,7 +39,7 @@ isolé, jamais sur les données réelles.
 Preuves locales Matheval : `tests/matheval-composant.mjs` exécute le serveur Node
 de référence et le composant Lisp sur deux bases indépendantes PostgreSQL 17.
 Le rôle applicatif est non propriétaire, NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS.
-39 parcours comparent les contrats et les empreintes ; le test Lisp ajoute une
+40 parcours comparent les contrats et les empreintes ; le test Lisp ajoute une
 course de révision, huit retransmissions concurrentes et un secret étranger.
 `tests/native-differentiel.mjs` compare SHA-256/scrypt et 8003 cas JSON binaire64 à
 Node. Ces preuves ne qualifient ni l'isolation Vision ni le déploiement complet.

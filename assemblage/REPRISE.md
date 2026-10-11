@@ -36,3 +36,9 @@ récupération chiffrée, MCP minimisé, interfaces réellement servies, sauvega
 Anciens essais/publications satellites/acquittements remplacés par la mission ;
 faits conservés dans l'archive exacte. Copies mensuelles Linux et clé personnelle
 mentionnées dans ETAT.md restent personnelles, sans blocage technique artificiel.
+
+Dernière preuve CI : 38101080554 sur 82161d8, cadre réussi, arrêt avant checkout
+privé (COMPONENTS_READ_TOKEN absent). Qualification locale : 40 parcours,
+reconstruction propre sans cache 24 FASL, HTTP AF_UNIX réel et redémarrage SQL.
+Sources nouvelles : Vision d9d5450 ; Matheval 2a82250. Le manifeste porte les SHA
+complets ; la révision infrastructure est celle du commit qui le contient.
