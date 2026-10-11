@@ -73,7 +73,14 @@ Un opérateur indépendant est armé avant la bascule. Les sondes vérifient not
 l'exécutable servi, les ressources publiques, le refus anonyme/MCP et une identité
 falsifiée, les invariants et le redémarrage ; elles ne créent aucun contenu réel.
 
-## Soumission qualifiée actuelle
+## Référence active
+
+Le descripteur [monolithe-candidat.json](../operations/monolithe-candidat.json)
+porte les révisions et empreintes actives. Le résumé local actuel est dans
+[qualification-locale.json](qualification-locale.json) ; stage.json contient les
+reçus exacts du bundle. Les soumissions précédentes ci-dessous sont historiques.
+
+## Première soumission frontend qualifiée — historique
 
 Sources/opérateurs `b0140de44c761f202271a436882cd05195b18fd3`, construction
 `158e4a52e012e5e46cf83afa05d2e36cfe0f4e49`, image `296b7c89` inchangée.

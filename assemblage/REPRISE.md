@@ -2,6 +2,16 @@
 
 ## Point de reprise actif — préparation de production
 
+Préparation38183623725/8b9d7be échoue avant activation sur l’ordre IdentMap.
+Diagnostic fermé38183852193/563c0ed réussi : assertions Nix vraies, aucun invariant
+préservé modifié, seuls les7ajouts attendus ; lignes existantes2/après9, aucune
+activation. PostgreSQL officiel ajoute sa ligne native à mkAfter1500 ; nos
+7entrées étaient intercalées avant celle-ci. Module métier passe à mkOrder1600,
+ancien préfixe exact et refus des autres accès conservés. Régression de cet ordre
+ajoutée ; module Nix inclus dans entrées/impact de la suite sécurité. Pas de
+modification des données, du binaire ou des interfaces. Nouvelle préparation
+après qualification/scellement des opérateurs corrigés ; ne pas rejouer l’ancienne.
+
 Opérateurs qualifiés56b6ef7be73acaf90d7fe2ece3335100873f6ff0.
 Scellement et verifier_bundle COMPLET réussis localement, mêmes35reçus/sources
 et même image296b7. Archive109013762octets, chiffré80ee4b46c3866150213f8a3265edf9a53e57ac1a3212b1f0e4491e896fff62da.

@@ -42,7 +42,9 @@ in {
     users.users.nginx.extraGroups = [ "mrjam-ingress" ];
     # Ces comptes historiques ne sont pas créés par bibliothèque : leur maintien
     # préserve les propriétaires Unix, sauvegardes et possibilités de retour.
-    services.postgresql.identMap = lib.mkAfter (lib.concatStringsSep "\n"
+    # PostgreSQL ajoute sa ligne native à mkAfter (1500). Les accès métier
+    # viennent ensuite, sans déplacer aucune entrée de la configuration active.
+    services.postgresql.identMap = lib.mkOrder 1600 (lib.concatStringsSep "\n"
       (map (role: "mrjam_metier mrjam-metier ${role}")
         [ "vision" "vision_administration" "vision_cycle" "vision_admission" "vision_fermeture" "vision_entretien" "matheval_app" ]));
     systemd.services = lib.genAttrs
