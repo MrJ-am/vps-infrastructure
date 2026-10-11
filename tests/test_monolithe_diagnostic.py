@@ -41,5 +41,12 @@ class Diagnostic(unittest.TestCase):
         self.assertNotIn('secret',json.dumps(r))
         self.assertNotIn('prive',json.dumps(r))
 
+    def test_seul_champ_de_contrat_de_table_versionnee_est_emis(self):
+        t='ValueError: Contrat SQL divergent : public.vision_items force_rls'
+        r=m.diagnostic_erreur(t,{'public.vision_items'})
+        self.assertEqual(r['contrat_sql'],{'table':'public.vision_items','champ':'force_rls'})
+        self.assertNotIn('contrat_sql',m.diagnostic_erreur(t,{'public.autre'}))
+        self.assertNotIn('contrat_sql',m.diagnostic_erreur(t+' contenu_prive',{'public.vision_items'}))
+
 
 if __name__=='__main__':unittest.main()
