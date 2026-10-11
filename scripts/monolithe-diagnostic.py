@@ -1,5 +1,6 @@
 """Diagnostic fermé de préparation : empreintes et clés, jamais les valeurs."""
 import hashlib
+from collections import Counter
 import json
 from pathlib import Path
 import re
@@ -24,6 +25,21 @@ def differences(a,b,chemin=''):
     return [r]
 
 
+def diagnostic_identmap(avant,apres):
+    def lignes(t):return [l.split() for l in t.splitlines() if l.strip() and not l.lstrip().startswith('#')]
+    a=lignes(avant);b=lignes(apres)
+    roles=('vision','vision_administration','vision_cycle','vision_admission',
+           'vision_fermeture','vision_entretien','matheval_app')
+    ajouts=[['mrjam_metier','mrjam-metier',r] for r in roles]
+    # N’émettre aucune valeur inconnue provenant de la configuration.
+    return {'lignes_avant':len(a),'lignes_apres':len(b),
+            'nombre_colonnes_apres':[len(l) for l in b],
+            'ancien_prefixe_preserve':b[:len(a)]==a,
+            'seuls_ajouts_attendus':Counter(map(tuple,b))==Counter(map(tuple,a+ajouts)),
+            'positions_ajouts':{r:[i for i,l in enumerate(b) if l==ajout]
+                               for r,ajout in zip(roles,ajouts)}}
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -32,6 +48,9 @@ def main(revision):
          'invariants_modifies':differences(r['invariantAvant'],r['invariantApres']),
          'preparation_presente':(d/'preparation.json').exists(),
          'activation_presente':(d/'activation.json').exists()}
+    if 'postgresAccesAvant' in r and 'postgresAccesApres' in r:
+        out['identMap']=diagnostic_identmap(r['postgresAccesAvant']['identMap'],
+                                          r['postgresAccesApres']['identMap'])
     # Messages statiques des assertions Nix ; pas les configurations ni les
     # unités, credentials, clés, contenu métier ou sorties SQL.
     if not r['assertions']:
