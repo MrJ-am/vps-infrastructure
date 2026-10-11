@@ -125,7 +125,11 @@ in {
         index = "index.html";
         extraConfig = lib.mkForce ''
           add_header X-Content-Type-Options "nosniff" always;
+          add_header X-Frame-Options "DENY" always;
           add_header Referrer-Policy "no-referrer" always;
+          add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+          add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'" always;
+          add_header Cache-Control $mrjam_matheval_cache always;
         '';
       };
       "^~ /matheval/api/" = {
@@ -133,6 +137,7 @@ in {
         extraConfig = ''
           client_max_body_size 5m;
           proxy_set_header X-Mrjam-Service "matheval";
+          proxy_set_header X-Mrjam-Remote-Addr $remote_addr;
           proxy_set_header X-Mrj-User "";
           proxy_set_header X-Vision-Authenticated "";
           proxy_set_header X-Vision-Browser "";
@@ -144,6 +149,12 @@ in {
         '';
       };
     };
+    services.nginx.appendHttpConfig = lib.mkAfter ''
+      map $uri $mrjam_matheval_cache {
+        default "no-cache";
+        ~^/matheval/admin(/|$) "no-store";
+      }
+    '';
     # Le hook provisoire Keycloak exige en plus son secret constant-time.
     # Aucun domaine public ni écoute autre que le loopback pour ce chemin.
     services.nginx.virtualHosts."mrjam-fermeture-interne" = {

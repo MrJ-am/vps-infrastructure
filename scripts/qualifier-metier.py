@@ -48,6 +48,28 @@ def qualifier(destination, sans_cache=False):
         print(json.dumps({k:v for k,v in resultat.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
 
 
+def qualifier_existant(destination,preparation):
+    "Exercer le candidat Nix construit une fois, sans refaire son image."
+    destination=Path(destination).resolve();preparation=json.loads(Path(preparation).read_text())
+    sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
+    inputs=compilation_entrees(sources)
+    if inputs!=preparation['sources_lisp_sha256']:raise ValueError('Sources différentes du build Nix')
+    if hashlib.sha256(destination.read_bytes()).hexdigest()!=preparation['artefact_sha256']:raise ValueError('Artefact Nix différent')
+    if not preparation['compilation']['sbcl'].startswith('2.6.4'):raise ValueError('Compilateur cible différent')
+    debut=time.monotonic()
+    subprocess.run(['node','tests/matheval-composant.mjs'],cwd=ROOT,
+                   env=dict(os.environ,MRJAM_TEST_EXECUTABLE=str(destination)),check=True)
+    if compilation_entrees(sources)!=inputs:raise ValueError('Sources modifiées pendant la qualification Nix')
+    resultat=dict(preparation,tests_secondes=round(time.monotonic()-debut,4),
+                  qualification='CI candidat Nix HTTP/transactions/redemarrage, pas production',publication_autorisee=False)
+    destination.with_suffix('.qualification.json').write_text(json.dumps(resultat,ensure_ascii=False,indent=2)+'\n')
+    print(json.dumps({k:v for k,v in resultat.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser();p.add_argument('--destination',default='state/artefacts/mrjam-metier');p.add_argument('--sans-cache',action='store_true')
-    a=p.parse_args();qualifier(a.destination,a.sans_cache)
+    p.add_argument('--construction-nix',default=os.environ.get('MRJAM_CONSTRUCTION_NIX'))
+    a=p.parse_args()
+    if a.construction_nix:
+        qualifier_existant(a.destination,a.construction_nix)
+    else:qualifier(a.destination,a.sans_cache)

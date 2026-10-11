@@ -9,5 +9,6 @@
                (:file "lisp/serveur/vision-gestion")
                (:file "lisp/serveur/vision-cycle")
                (:file "lisp/serveur/admission-http")
+               (:file "lisp/serveur/quotas")
                (:file "lisp/serveur/http")
                (:file "lisp/serveur/main")))

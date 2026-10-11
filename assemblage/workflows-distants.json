@@ -1,0 +1,140 @@
+{
+  "constate_utc": "2026-10-11T04:08:16.852246+00:00",
+  "workflows": [
+    {
+      "depot": "MrJ-am/vision",
+      "id": 367014106,
+      "chemin": ".github/workflows/assembler-refonte.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/vision",
+      "id": 363387569,
+      "chemin": ".github/workflows/atelier-style.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/vision",
+      "id": 362226826,
+      "chemin": ".github/workflows/check.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/vision",
+      "id": 374261532,
+      "chemin": ".github/workflows/creation-semantique.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/vision",
+      "id": 363502455,
+      "chemin": ".github/workflows/interface.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/M-moire",
+      "id": 363387201,
+      "chemin": ".github/workflows/atelier-style.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/M-moire",
+      "id": 359999421,
+      "chemin": ".github/workflows/backup.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/M-moire",
+      "id": 352997680,
+      "chemin": ".github/workflows/compile-test.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/M-moire",
+      "id": 363495112,
+      "chemin": ".github/workflows/verifier-style.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/M-moire",
+      "id": 233616020,
+      "chemin": "dynamic/pages/pages-build-deployment",
+      "etat_avant": "active",
+      "resultat": "refus",
+      "raison": "gh: Unable to disable this workflow. (HTTP 422)\n"
+    },
+    {
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "id": 363496270,
+      "chemin": ".github/workflows/appliquer-portage.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "id": 363385772,
+      "chemin": ".github/workflows/atelier-style.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "id": 358617936,
+      "chemin": ".github/workflows/verification.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/style-mrjam",
+      "id": 363506244,
+      "chemin": ".github/workflows/donnees.yml",
+      "etat_avant": "disabled_manually",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/style-mrjam",
+      "id": 377262887,
+      "chemin": ".github/workflows/pages.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/style-mrjam",
+      "id": 363435572,
+      "chemin": ".github/workflows/verification.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/Signature",
+      "id": 363759971,
+      "chemin": ".github/workflows/valider-logique.yml",
+      "etat_avant": "active",
+      "etat_constate": "disabled_manually"
+    }
+  ],
+  "secrets_et_protections": "APIs 403 ; non inspectes/modifies",
+  "coordinateurs_infrastructure_retires": [
+    {
+      "depot": "MrJ-am/vps-infrastructure",
+      "id": 379772835,
+      "path": ".github/workflows/vision-demande.yml",
+      "state": "disabled_manually"
+    },
+    {
+      "depot": "MrJ-am/vps-infrastructure",
+      "id": 379772836,
+      "path": ".github/workflows/vision-mise-en-service.yml",
+      "state": "disabled_manually"
+    }
+  ]
+}

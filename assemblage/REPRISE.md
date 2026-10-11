@@ -1,84 +1,91 @@
 # Reprise — mission du 11 octobre 2026
 
-État : inventaire réel terminé ; collecte et administration Matheval portées et
-qualifiées localement ; auxiliaires Vision portés et qualifiés sur fixtures ;
-production inchangée, assemblage complet non qualifié.
+Production : ancienne architecture toujours active. Étape 1 non terminée ;
+Kanidm n’est pas commencé. Aucun apprentissage, compte ou participation réelle
+n’a été créé, fermé ou effacé pendant les qualifications.
 
-1. Constater sources et VPS, dépendances/données/mesures ; commandes et bibliothèques.
-2. Porter Matheval et auxiliaires, qualifier HTTP/MCP/isolation/concurrence.
-   Transférer les fonctions des workflows avant leur retrait.
-3. Sauvegarder/restaurer en isolation, construire proprement, promouvoir, vérifier
-   invariants/redémarrage. Consigner le jalon réel de production étape 1.
-4. Après ce jalon : qualifier/basculer Kanidm ; nouvelle identité associée
-   explicitement au propriétaire métier. Retirer Keycloak après accès sûr.
+1. Inventaire réel, sources, cadre et graphe ASDF : réalisés.
+2. Portage Matheval et auxiliaires Vision, interfaces et orchestration centrale :
+   réalisés et qualifiés localement ; qualification Nix/IdP réelle restante.
+3. Candidat Nix exact, restauration/ACL/retour, bascule et contrôles de production :
+   à achever. Le jalon exige invariants, accès/MCP et persistance au redémarrage.
+4. Après ce constat uniquement : Kanidm réel, nouvelle identité liée explicitement
+   au propriétaire métier ; retrait Keycloak après accès et récupération sûrs.
 
-Critères : mission utilisateur, dont aucun Node métier Matheval, une image métier,
-aucune CI satellite, données préservées, retour utilisable. Kanidm inclut OIDC/MCP
-réels et accès personnel ; ne pas inventer l'enrôlement.
+Le [manifeste](manifest.json) porte les six branches effectives et révisions
+complètes publiées : Vision fcb35f8, Matheval/master d64f235, Logique 586ae18,
+Style 1132afe, Signature c4a2067. La révision assembleur est le commit qui contient
+le manifeste ; les reçus portent aussi les empreintes pertinentes.
 
-OpenSSL existant réutilisé via SB-ALIEN ; aucune dépendance Ironclad ajoutée.
-Blocage extérieur constaté : le GITHUB_TOKEN du runner infrastructure ne lit pas
-Vision privé (run 38098700592, checkout code 128). Le credential de la session lit
-les sources mais l'API des secrets est interdite (403). Secret Actions
-`COMPONENTS_READ_TOKEN`, lecture contenu limitée à Vision et Signature, demandé
-au propriétaire ; ne jamais fournir sa valeur en conversation.
-Permissions GitHub constatées : sources lecture/écriture, lancement Actions.
-APIs protections de branche, secrets et deploy keys : 403. Leur inspection/nettoyage
-distant ne sont pas acquis ; ce refus ne bloque pas les travaux indépendants.
+Bibliothèques : Vision cœur/HTTP/administration/cycle/admission/fermeture,
+Matheval calculs/collecte/statistiques/administration ; adaptateurs natifs libpq,
+OpenSSL et SQLite, courriel durable/SMTP, client Keycloak provisoire. Le serveur
+commun possède transport Unix, routage, connexions et tâches. Logique statique.
+Aucune bibliothèque ne démarre de daemon ni ne migre une base au chargement.
 
-Restent à réaliser avant le jalon 1 : configuration du cycle de vie
-commun et listener/routage central avec rôles SQL en production, compilation propre Nix,
-transfert complet CI/frontends/sauvegardes puis retrait satellites, qualification
-multi-comptes Vision/OIDC/MCP, restauration isolée, bascule réelle et redémarrage.
-Ne pas déclencher Kanidm avant ces preuves de production.
+Qualifications locales : 116 cas Matheval purs, 8000 tirages, 8003 cas natifs
+JSON/OpenSSL, 40 parcours différentiels PostgreSQL/HTTP et concurrence ; 644 cas
+administration et 141 admission, SQLite/MIME/SMTP STARTTLS, cycle et fermeture.
+Même binaire : API/MCP Vision avec 40 parcours Alice/Bob concurrents et refus
+croisés. 30/6 tables classées avec RLS/ACL et rôles effectifs vérifiés. Identité
+synthétique : ces succès ne qualifient pas la chaîne Nginx/OIDC de production.
 
-Demandes historiques pertinentes : données/corpus, invitations/consentement,
-récupération chiffrée, MCP minimisé, interfaces réellement servies, sauvegardes.
-Anciens essais/publications satellites/acquittements remplacés par la mission ;
-faits conservés dans l'archive exacte. Copies mensuelles Linux et clé personnelle
-mentionnées dans ETAT.md restent personnelles, sans blocage technique artificiel.
+Dernier binaire local 22655808 : SBCL 2.5.2/ASDF 3.3.1, 40 FASL sans cache,
+3,559 s de construction et 8,3669 s pour le différentiel/HTTP/redémarrage.
+Les quatre documents Vision lus au chargement sont déclarés au graphe ASDF
+et aux empreintes ; modification/rechargement dans une même image testés.
+La CI prépare maintenant le Nixpkgs exact c5c4a43 et SBCL 2.6.4 du VPS, sans
+mise à jour générale. Ce build Nix commun n’est pas encore exécuté/qualifié.
 
-Dernière preuve CI : 38107422877 sur 520cf53, cinq jobs infrastructure réussis,
-dont évaluation Nix du module commun (paquet factice, pas un binaire qualifié).
-38107422889 : cadre réussi, arrêt avant checkout privé (COMPONENTS_READ_TOKEN absent).
-Qualification locale : 40 parcours, reconstruction propre sans cache 39 FASL,
-HTTP AF_UNIX réel et redémarrage SQL. Sources nouvelles : Vision aa7f10d ;
-Matheval 2a82250. Le manifeste porte les SHA
-complets ; la révision infrastructure est celle du commit qui le contient.
+Frontends : commandes centrales construire/qualifier, worktrees temporaires,
+quatre candidats privés et métadonnées adjacentes. Les trois versions de style
+historiques restent verrouillées. Les derniers changements de pins ne changent
+que quatre manifestes/reçus de révision ; ressources fonctionnelles identiques.
+Vision historique/navigateur, Matheval données/construction et 56 parcours
+navigateur réels sur le serveur commun, Logique correcteur/interface, atelier
+Style complet et ressources/copie Signature passent. Un premier échec de clic
+Firefox reste consigné, non reproduit sur vingt essais ciblés et deux campagnes
+complètes ; cause inconnue. Les diagnostics restent privés. La dernière campagne
+56/56 porte 5dd18de2 ; les corrections suivantes de quotas HTTP portent 22655808
+et ont leur contrôle transport ciblé, sans prétendre réutiliser son reçu navigateur.
 
-Auxiliaires ASDF locaux : administration/cycle/admission/fermeture, file courriel
-durable et client provisoire Keycloak ; 644+141 cas différentiels, isolation
-PostgreSQL, ancien SQLite/MIME et SMTP STARTTLS qualifiés. IdP synthétique uniquement.
-Dernier binaire local propre : 39 FASL, 40 parcours Matheval, redémarrage SQL réussi.
-Le même artefact exerce API/MCP Vision et 40 parcours Alice/Bob concurrents,
-avec PostgreSQL 17 et rôles réels ; entrée d'identité synthétique, pas preuve OIDC.
+Recherche réelle : même modèle multilingual-MiniLM-L12-v2, révision e8f8c211,
+onze fichiers verrouillés, profil CPU existant de 35 roues SHA256. Six paraphrases
+rang 1, rappel 1 ; archives/modifications/alias/isolation vérifiés. Aucun changement
+de stratégie de recherche. Les fixtures synthétiques restent hors production.
+Reçus locaux non attestés : jamais une autorisation de publication CI.
 
-Frontends : `scripts/outiller.py`, puis `scripts/frontends.py preparer/construire/qualifier`.
-Trois anciennes révisions de style déclarées dans le manifeste pour préserver le
-rendu. Caches exacts issus du même dépôt, aucun fetch implicite, fontes Signature
-contrôlées. Générateurs dans des worktrees temporaires ; candidats privés sous
-`state/frontends-candidats`, métadonnées adjacentes. Vision/Matheval/Logique/style
-construits localement. Qualifications de cette tranche en cours ; transfert CI
-complet et retrait des YAML satellites restent à achever. Nouveaux profils Python
-3.12/Linux/x86_64 : navigateur, logo, Signature ; transitives verrouillées par SHA.
+CI satellite : treize recettes archivées exactement dans leurs composants,
+aucun YAML actif/relais sur les cinq branches intégrées. GitHub a confirmé la
+désactivation des workflows personnalisés, y compris ceux des anciennes branches.
+Son workflow intégré Pages Matheval refuse PUT disable (422) ; build_type workflow,
+dernière publication du 12 septembre, aucun déclencheur personnalisé conservé.
+Ne pas annoncer sa désactivation distante. Le contenu existant est conservé.
+L’ancien signal operations/vision et son coordinateur workflow_run sont archivés ;
+plus d’attente de message, acquittement ou confirmation technique intermédiaire.
 
-Cache FASL maintenant privé et séparé par compiler/core/ASDF/options/ABI ; chemins
-des composants préservés. Référence sans cache : 39 FASL, 40 parcours réussis.
-Les campagnes Vision historiques et navigateur passent sur le binaire commun.
-Atelier complet et Signature passent. Matheval navigateur : 55/56, un clic Firefox
-non reproduit sur vingt essais ciblés ; cause encore inconnue, pas de faux succès.
-Diagnostics privés conservés. CI centrale contient désormais ces commandes ;
-catalogue/sélecteur des pins Git (17 tests). Reçus Codex jamais attestés par la CI.
-Profil embeddings CPU existant : 35 roues SHA256 ; vrai modèle restant à qualifier.
-Workflows satellites encore présents : transférer cette dernière fonction, puis
-archiver les recettes exactes et retirer les YAML. Production toujours inchangée.
+Référence VPS : run 38098717899, fichier reference-production.json. Génération
+r6s7ags3 inchangée, SBCL 2.6.4/PG17.11/Keycloak26.7.3. Un compte Vision actif,
+propriétaire cohérent, aucune relation étrangère/orpheline ; trois participations
+Matheval ouvertes, conservées. RSS et latences mesurés séparément des plafonds.
+CI infrastructure 38109779946 : réussie, évaluation Nix du module sur paquet factice ;
+les suites d’identité inchangées sont réutilisées depuis 38107422877, non rejouées.
 
-Sauvegarde/restauration réelle réussie : workflow central `monolithe-reference.yml`,
-run 38105867103 sur eff80b8, `operation=sauvegarde-restauration`. Copie chiffrée des
-trois bases et états SQLite/JSONL ; restauration PostgreSQL dans un cluster Unix
-privé, sans arrêt ni écriture SQL de production. La clé éphémère a été enveloppée
-pour le destinataire personnel existant puis détruite. 30/6/100 tables restaurées,
-empreintes identiques ; `sauvegarde-transition.json`. ACL/rôles et qualification
-du retour applicatif restent à réaliser. Avant une bascule : vérifier actualité
-du snapshot, registre d'effacements récent et préconditions, pas restaurer une
-ancienne base pour revenir sur du code.
+Sauvegarde/restauration réelle : 38105867103 sur eff80b8, copie chiffrée des trois
+bases et états durables, restauration cluster Unix privé, empreintes 30/6/100 tables
+identiques. Clé éphémère enveloppée pour le destinataire existant puis détruite,
+sans utiliser sa clé personnelle. Aucun arrêt ni écriture SQL de production.
+[sauvegarde-transition.json](sauvegarde-transition.json) distingue données, ACL/rôles
+et retour applicatif : les deux derniers restent à qualifier. Une nouvelle bascule
+exige données et registre récents ; le retour du code ne restaure jamais une base
+ancienne sur des écritures récentes. Conserver générations/archives et services tiers.
+
+Blocage effectif : COMPONENTS_READ_TOKEN manque aux Actions de l’infrastructure
+(run 38109779900, arrêt avant checkout privé). Le credential de session lit/pousse
+les sources ; l’API secrets répond 403. Secret de lecture contenu limité à Vision
+et Signature demandé au propriétaire ; ne jamais fournir sa valeur en conversation.
+APIs protections/environments/deploy keys non accessibles : ne pas prétendre leur
+nettoyage distant terminé. Ces permissions ne bloquent pas les travaux locaux.
+Restent aussi l’installation des rôles/migration 026, transfert arrêté des états
+SQLite/JSONL, qualification Nix/identité/MCP réels, ACL/restauration/retour ciblé,
+bascule, invariants, probes et redémarrage de l’artefact réellement servi.

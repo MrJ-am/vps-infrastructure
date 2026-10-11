@@ -11,10 +11,13 @@ visuelle, Nginx, PostgreSQL, Nextcloud et moteur d'embeddings existants sont con
 Toutes les exécutions CI/CD doivent être centralisées ici. Aucune CI de bibliothèque
 ou attente de réponse d'une autre conversation ne qualifie l'assemblage.
 
-La migration est **en cours**, sans bascule métier. Le premier lot expose le graphe
-ASDF Vision et porte les calculs/validations Matheval. Les workflows satellites
-restent à transférer après qualification des fonctions centrales ; leurs sauvegardes
-ne sont pas supprimées. Aucun monolithe ni Kanidm n'est annoncé comme déployé.
+La migration est **en cours**, sans bascule métier. Vision et Matheval sont des
+composants ASDF assemblés et qualifiés localement. Les treize recettes CI satellites
+sont archivées et leurs YAML retirés ; leurs fonctions utiles sont orchestrées ici.
+La recherche utilise toujours le même modèle réel verrouillé. La sauvegarde chiffrée
+et une restauration isolée des données réelles sont vérifiées. L’accès de lecture
+aux sources privées manque encore au runner central ; ni le monolithe ni Kanidm
+ne sont annoncés comme déployés. [Limites et preuves exactes](assemblage/REPRISE.md).
 
 La production antérieure est décrite dans [ETAT.md](docs/ETAT.md). L'audit réel
 [38097638053](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38097638053)

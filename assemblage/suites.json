@@ -11,7 +11,8 @@
         "scripts/assemblage.py",
         "assemblage/dependances.json",
         "scripts/verifier-dependances.py",
-        "assemblage/python/*.txt"
+        "assemblage/python/*.txt",
+        "scripts/verifier-ci.py"
       ]
     },
     "impact": [
@@ -25,7 +26,8 @@
       "vps/assemblage/qualification-locale.json",
       "matheval/lisp/CONTRAT.md",
       "vps/assemblage/*.json",
-      "vps/scripts/verifier-dependances.py"
+      "vps/scripts/verifier-dependances.py",
+      "vps/scripts/verifier-ci.py"
     ],
     "commandes": [
       [
@@ -36,6 +38,10 @@
       [
         "python3",
         "scripts/verifier-dependances.py"
+      ],
+      [
+        "python3",
+        "scripts/verifier-ci.py"
       ]
     ],
     "dependances": [],
@@ -149,61 +155,79 @@
   },
   "json-commun": {
     "niveau": 2,
-    "repertoire": "vision",
+    "repertoire": "vps",
     "entrees": {
       "vision": [
         "vision.asd",
         "src/package.lisp",
         "src/json.lisp"
+      ],
+      "vps": [
+        "assemblage/charger.lisp",
+        "tests/json-commun.lisp"
       ]
     },
     "impact": [
       "vision/src/json.lisp",
       "vision/src/package.lisp",
-      "vision/vision.asd"
+      "vision/vision.asd",
+      "vps/tests/json-commun.lisp"
     ],
     "commandes": [
       [
-        "python3",
-        "tests/check_documents.py"
+        "sbcl",
+        "--script",
+        "tests/json-commun.lisp"
       ]
     ],
     "dependances": [],
     "outils": {
-      "python": [
-        "python3",
+      "sbcl": [
+        "sbcl",
         "--version"
       ]
     }
   },
   "vision-contrats": {
     "niveau": 2,
-    "repertoire": "vision",
+    "repertoire": "vps",
     "entrees": {
       "vision": [
         "src/*.lisp",
         "docs/*.json",
         "tests/check_documents.py",
         "tests/check_openapi.py",
-        "interface/src/*.elm"
+        "interface/src/*.elm",
+        "scripts/contrats.py",
+        "tests/test_client_catalog.py",
+        "tests/test_contrat_tutoriel.py",
+        "tests/check_client_catalog.py",
+        "docs/CONTRAT-SEANCE.md"
+      ],
+      "vps": [
+        "scripts/vision-contrats.py"
       ]
     },
     "impact": [
       "vision/src/*.lisp",
-      "vision/docs/*.json"
+      "vision/docs/*.json",
+      "vps/scripts/vision-contrats.py",
+      "vision/scripts/contrats.py",
+      "vision/tests/test_client_catalog.py",
+      "vision/tests/test_contrat_tutoriel.py",
+      "vision/docs/CONTRAT-SEANCE.md",
+      "vision/docs/MCP.md",
+      "vision/docs/tutoriel.json"
     ],
     "commandes": [
       [
         "python3",
-        "tests/check_documents.py"
-      ],
-      [
-        "python3",
-        "tests/check_openapi.py"
+        "scripts/vision-contrats.py"
       ]
     ],
     "dependances": [
-      "json-commun"
+      "json-commun",
+      "cache-documents"
     ],
     "outils": {
       "python": [
@@ -232,14 +256,16 @@
         "tests/vision-reference.py",
         "tests/http_fixture.py",
         "scripts/assemblage.py",
-        "scripts/frontends.py"
+        "scripts/frontends.py",
+        "tests/vision-documents-commun.py"
       ]
     },
     "impact": [
       "vision/migrations/*.sql",
       "vision/scripts/roles.sql",
       "vps/tests/vision-reference.py",
-      "vps/tests/http_fixture.py"
+      "vps/tests/http_fixture.py",
+      "vps/tests/vision-documents-commun.py"
     ],
     "commandes": [
       [
@@ -284,7 +310,11 @@
         "mrjam-courriel.asd",
         "mrjam-identite.asd",
         "lisp/courriel/*.lisp",
-        "lisp/identite/*.lisp"
+        "lisp/identite/*.lisp",
+        "scripts/provenance-outils.py",
+        "scripts/construire-metier-nix.py",
+        "assemblage/metier.nix",
+        "assemblage/outils.nix"
       ],
       "matheval": [
         "matheval.asd",
@@ -309,7 +339,10 @@
       "vps/tests/matheval-composant.*",
       "vps/scripts/qualifier-metier.py",
       "vps/assemblage/construire.lisp",
-      "vps/tests/serveur-artefact.py"
+      "vps/tests/serveur-artefact.py",
+      "vps/scripts/construire-metier-nix.py",
+      "vps/assemblage/metier.nix",
+      "vps/assemblage/outils.nix"
     ],
     "commandes": [
       [
@@ -321,7 +354,8 @@
     "dependances": [
       "matheval-pures",
       "native-contrats",
-      "courriel-composant"
+      "courriel-composant",
+      "quotas-http"
     ],
     "outils": {
       "sbcl": [
@@ -341,6 +375,11 @@
       "postgresql": "mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3",
       "roles": "non-proprietaire/NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS",
       "donnees": "synthetiques, deux bases independantes"
+    },
+    "npm_installations": {
+      "matheval": [
+        "server/node_modules"
+      ]
     }
   },
   "integration-securite": {
@@ -413,7 +452,9 @@
       "vps": [
         "scripts/frontends.py",
         "scripts/outiller.py",
-        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -456,8 +497,15 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
-    ]
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "style": [
+        "node_modules"
+      ]
+    },
+    "navigateurs_python": true
   },
   "vision-interface": {
     "niveau": 5,
@@ -480,7 +528,9 @@
       "vps": [
         "scripts/frontends.py",
         "scripts/outiller.py",
-        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -523,8 +573,15 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
-    ]
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "vision": [
+        "interface/node_modules"
+      ]
+    },
+    "navigateurs_python": true
   },
   "matheval-interface": {
     "niveau": 5,
@@ -549,7 +606,8 @@
       "vps": [
         "scripts/frontends.py",
         "scripts/outiller.py",
-        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -593,8 +651,14 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
-    ]
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "matheval": [
+        "docs/node_modules"
+      ]
+    }
   },
   "logique-correcteur": {
     "niveau": 2,
@@ -610,7 +674,8 @@
         "package-lock.json"
       ],
       "vps": [
-        "scripts/frontends.py"
+        "scripts/frontends.py",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -642,7 +707,12 @@
         "--version"
       ]
     },
-    "candidat_frontend": "logique"
+    "candidat_frontend": "logique",
+    "npm_installations": {
+      "logique": [
+        "node_modules"
+      ]
+    }
   },
   "logique-interface": {
     "niveau": 5,
@@ -666,7 +736,9 @@
       "vps": [
         "scripts/frontends.py",
         "scripts/outiller.py",
-        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -711,8 +783,15 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
-    ]
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "logique": [
+        "node_modules"
+      ]
+    },
+    "navigateurs_python": true
   },
   "navigateur-mcp": {
     "niveau": 5,
@@ -727,7 +806,8 @@
         "services/mrj-auth/*.py",
         "tests/vision-reference.py",
         "tests/http_fixture.py",
-        "scripts/frontends.py"
+        "scripts/frontends.py",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -759,7 +839,8 @@
       "navigateur"
     ],
     "qualification": "Navigateur et contrats MCP sur artefact commun et identité de fixture ; OIDC/Nginx réels qualifiés séparément.",
-    "candidat_metier": true
+    "candidat_metier": true,
+    "navigateurs_python": true
   },
   "migration": {
     "niveau": 6,
@@ -873,7 +954,9 @@
         "tests/vision-http-commun.py",
         "tests/serveur-artefact.py",
         "scripts/qualifier-metier.py",
-        "scripts/assemblage.py"
+        "scripts/assemblage.py",
+        "scripts/verifier-tables.py",
+        "assemblage/tables-privees.json"
       ],
       "vision": [
         "vision.asd",
@@ -912,7 +995,8 @@
       "gestion-validation",
       "courriel-composant",
       "identite-client",
-      "admission-validation"
+      "admission-validation",
+      "schema-prive"
     ],
     "outils": {
       "python": [
@@ -1201,7 +1285,8 @@
       ],
       "vps": [
         "scripts/frontends.py",
-        "assemblage/python/logo-cp312-linux-x86_64.txt"
+        "assemblage/python/logo-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -1236,7 +1321,23 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "style": [
+        "ateliers/logo/node_modules",
+        "node_modules"
+      ]
+    },
+    "navigateurs_npm": {
+      "style": "ateliers/logo/node_modules"
+    },
+    "navigateurs": [
+      "chromium",
+      "chromium-headless-shell",
+      "firefox",
+      "ffmpeg"
     ]
   },
   "signature-web": {
@@ -1260,7 +1361,8 @@
       "vps": [
         "scripts/frontends.py",
         "assemblage/python/signature-cp312-linux-x86_64.txt",
-        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -1287,8 +1389,10 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
-    ]
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "navigateurs_python": true
   },
   "matheval-navigateur": {
     "niveau": 5,
@@ -1310,7 +1414,8 @@
         "tests/matheval-navigateur.py",
         "tests/http_fixture.py",
         "scripts/frontends.py",
-        "assemblage/roles-metier.sql"
+        "assemblage/roles-metier.sql",
+        "scripts/provenance-outils.py"
       ]
     },
     "impact": [
@@ -1350,7 +1455,22 @@
     "configuration": [
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
-      "MRJAM_TEST_REPEAT"
+      "MRJAM_TEST_REPEAT",
+      "MRJAM_TEST_DIAGNOSTIC"
+    ],
+    "npm_installations": {
+      "matheval": [
+        "docs/node_modules"
+      ]
+    },
+    "navigateurs_npm": {
+      "matheval": "docs/node_modules"
+    },
+    "navigateurs": [
+      "chromium",
+      "chromium-headless-shell",
+      "firefox",
+      "ffmpeg"
     ]
   },
   "cache-fasl": {
@@ -1364,7 +1484,8 @@
     },
     "impact": [
       "vps/assemblage/charger.lisp",
-      "vps/tests/cache-fasl.py"
+      "vps/tests/cache-fasl.py",
+      "vps/assemblage/metier.nix"
     ],
     "commandes": [
       [
@@ -1380,6 +1501,238 @@
       ],
       "sbcl": [
         "sbcl",
+        "--version"
+      ]
+    }
+  },
+  "vision-semantique": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "candidat_metier": true,
+    "modele_vision": true,
+    "python_profils": [
+      "navigateur",
+      "embeddings"
+    ],
+    "entrees": {
+      "vision": [
+        "tests/qualite_creation.py",
+        "tests/check_creation.py",
+        "tests/corpus_creation.json",
+        "tests/telecharger_modele.py",
+        "scripts/embeddings.py",
+        "scripts/backfill_embeddings.py",
+        "src/*.lisp",
+        "migrations/*.sql"
+      ],
+      "vps": [
+        "tests/vision-reference.py",
+        "tests/http_fixture.py",
+        "scripts/modele-vision.py",
+        "assemblage/modele-vision.json",
+        "assemblage/python/embeddings-cp312-linux-x86_64.txt"
+      ]
+    },
+    "impact": [
+      "vision/scripts/*embedding*",
+      "vision/tests/*creation*",
+      "vision/tests/telecharger_modele.py",
+      "vision/tests/corpus_creation.json",
+      "vps/scripts/modele-vision.py",
+      "vps/assemblage/modele-vision.json",
+      "vps/assemblage/python/embeddings-cp312-linux-x86_64.txt"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/vision-reference.py",
+        "--modele"
+      ]
+    ],
+    "dependances": [
+      "vision-postgresql"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "fixture": {
+      "image": "mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87",
+      "reseau": "loopback",
+      "modele": "revision et onze fichiers dans modele-vision.json",
+      "donnees": "corpus synthetique ; entree identite de fixture, pas OIDC"
+    }
+  },
+  "quotas-http": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-metier.asd",
+        "lisp/serveur/quotas.lisp",
+        "lisp/serveur/http.lisp",
+        "tests/quotas-http.lisp",
+        "assemblage/charger.lisp"
+      ]
+    },
+    "impact": [
+      "vps/lisp/serveur/quotas.lisp",
+      "vps/tests/quotas-http.lisp"
+    ],
+    "commandes": [
+      [
+        "sbcl",
+        "--script",
+        "tests/quotas-http.lisp"
+      ]
+    ],
+    "dependances": [
+      "json-commun"
+    ],
+    "outils": {
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    }
+  },
+  "matheval-reference": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "matheval": [
+        "server/src/*.mjs",
+        "server/tests/*.mjs",
+        "server/migrations/*.sql",
+        "server/package-lock.json",
+        "docs/site/session.js",
+        "research/bank.json",
+        "research/codebook.json"
+      ],
+      "vps": [
+        "tests/matheval-reference.py",
+        "scripts/provenance-outils.py"
+      ]
+    },
+    "impact": [
+      "matheval/server/src/*.mjs",
+      "matheval/server/tests/*.mjs",
+      "vps/tests/matheval-reference.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/matheval-reference.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "npm_installations": {
+      "matheval": [
+        "server/node_modules"
+      ]
+    },
+    "fixture": {
+      "image": "mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3",
+      "reseau": "loopback",
+      "donnees": "independantes du Lisp, jamais production"
+    }
+  },
+  "cache-documents": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vision": [
+        "vision.asd",
+        "src/contenus.lisp",
+        "src/modele.lisp",
+        "docs/CONTRAT-SEANCE.md",
+        "docs/tutoriel.json",
+        "docs/outils.json",
+        "docs/MCP.md"
+      ],
+      "vps": [
+        "tests/cache-documents.py"
+      ]
+    },
+    "impact": [
+      "vision/vision.asd",
+      "vision/docs/CONTRAT-SEANCE.md",
+      "vision/docs/tutoriel.json",
+      "vision/docs/outils.json",
+      "vision/docs/MCP.md",
+      "vps/tests/cache-documents.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/cache-documents.py"
+      ]
+    ],
+    "dependances": [
+      "json-commun"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    }
+  },
+  "schema-prive": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/verifier-tables.py",
+        "assemblage/tables-privees.json",
+        "tests/test_tables_privees.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/verifier-tables.py",
+      "vps/assemblage/tables-privees.json",
+      "vps/tests/test_tables_privees.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_tables_privees.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
         "--version"
       ]
     }

@@ -9,6 +9,9 @@ import tempfile
 import time
 import uuid
 import importlib.util
+import sys
+
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'scripts'))
 
 ROOT=Path(__file__).resolve().parents[1]
 IMAGE='mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87'
@@ -51,6 +54,11 @@ INSERT INTO vision_gestion.identites(emetteur,sujet,utilisateur) VALUES('https:/
         # Les noms seulement changent pour la fixture Vision ; même fichier ACL.
         acls=(ROOT/'assemblage/roles-metier.sql').read_text().replace('\\connect vision\n','\\connect vision_native_test\n').replace('ON DATABASE vision ', 'ON DATABASE vision_native_test ')
         docker('exec','-i',nom,'psql','-X','-U','postgres','--set=ON_ERROR_STOP=1','--file=-',input=acls)
+        spec=importlib.util.spec_from_file_location('verifier_tables',ROOT/'scripts/verifier-tables.py')
+        contrats=importlib.util.module_from_spec(spec);spec.loader.exec_module(contrats)
+        for composant,base in [('vision','vision_native_test'),('matheval','matheval')]:
+            contrats.verifier(composant,lambda sql,base=base:docker('exec',nom,'psql','-X','-At','-U','postgres','-d',base,
+                              '--set=ON_ERROR_STOP=1','--command',sql).stdout)
         docker('exec','-i',nom,'psql','-X','-U','postgres','-d','matheval','--set=ON_ERROR_STOP=1','--file=-',input="""
 INSERT INTO corpus(version,digest,bank,codebook) VALUES('fixture','synthetique','{}','{}');
 SET ROLE matheval_app;

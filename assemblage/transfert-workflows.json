@@ -1,0 +1,40 @@
+{
+  "date_utc": "2026-10-11T04:09:52.744662+00:00",
+  "composants": [
+    {
+      "composant": "vision",
+      "depot": "MrJ-am/vision",
+      "avant": "aa7f10d9cfd1974fe20017dd8ba3134c03863369",
+      "revision": "fcb35f835cec8e338de1a336a7e0240e5073ffbd",
+      "workflows_archives": 5
+    },
+    {
+      "composant": "matheval",
+      "depot": "MrJ-am/M-moire",
+      "avant": "2a822502329e1bce35f6e49ecbac00a135ab235e",
+      "revision": "d64f2358e224ac99c004ae92972a9bdc02242606",
+      "workflows_archives": 4
+    },
+    {
+      "composant": "logique",
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "avant": "e8478fc42d5a9bf5c6a50809ae2ec4e1e658d35c",
+      "revision": "586ae182f66e43de9e9ca09107ab22e3d340a568",
+      "workflows_archives": 2
+    },
+    {
+      "composant": "style",
+      "depot": "MrJ-am/style-mrjam",
+      "avant": "508f964812ec3316248646ccf0e92492653f82f0",
+      "revision": "1132afea89b3fa8b4a8f7fba7f7bb7e8eb803de3",
+      "workflows_archives": 2
+    },
+    {
+      "composant": "signature",
+      "depot": "MrJ-am/Signature",
+      "avant": "c4a20679030a56126e91648b697cd5a9ccd7c6d5",
+      "revision": "c4a20679030a56126e91648b697cd5a9ccd7c6d5",
+      "workflows_archives": 0
+    }
+  ]
+}

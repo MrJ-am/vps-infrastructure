@@ -1,0 +1,13 @@
+(load (merge-pathnames "../assemblage/charger.lisp" *load-truename*))
+(asdf:load-system "vision/json")
+;; Contrats indépendants du transport et sans connexion PostgreSQL.
+(let* ((j (vision:parse-json "{\"zéro\":0,\"absent\":null,\"non\":false,\"liste\":[1,\"é\",true]}"))
+       (r (vision:parse-json (vision:json-encode j))))
+  (assert (= 0 (vision:json-object-get r "zéro")))
+  (assert (eq :null (vision:json-object-get r "absent")))
+  (assert (eq :false (vision:json-object-get r "non")))
+  (assert (null (vision:json-object-get r "inexistant")))
+  (assert (= 3 (length (vision:json-array-items (vision:json-object-get r "liste"))))))
+(dolist (texte '("{\"a\":1,\"a\":2}" "[1,]" "{\"a\":}" "01" "true false" "\"\\uD800\""))
+  (assert (handler-case (progn (vision:parse-json texte) nil) (vision::json-error () t))))
+(format t "JSON commun : zéro/null/absence, Unicode et syntaxes ambiguës refusées.~%")

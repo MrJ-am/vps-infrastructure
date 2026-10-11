@@ -49,6 +49,9 @@ assert lib.hasInfix "auth_request /_mrj_session" vh."vision.mrj.am".locations."/
 assert lib.hasInfix ''proxy_set_header X-Mrjam-Service "vision"'' vh."vision.mrj.am".locations."/api/web/".extraConfig;
 assert vh."principiipetit.io".locations."/matheval/".proxyPass == null;
 assert vh."principiipetit.io".locations."^~ /matheval/api/".proxyPass == "http://unix:/run/mrjam-metier/http.sock:";
+assert lib.hasInfix "proxy_set_header X-Mrjam-Remote-Addr $remote_addr" vh."principiipetit.io".locations."^~ /matheval/api/".extraConfig;
+assert lib.hasInfix "frame-ancestors 'none'" vh."principiipetit.io".locations."/matheval/".extraConfig;
+assert lib.hasInfix ''~^/matheval/admin(/|$) "no-store"'' cible.services.nginx.appendHttpConfig;
 assert builtins.length vh."mrjam-fermeture-interne".listen == 1;
 assert (builtins.head vh."mrjam-fermeture-interne".listen).addr == "127.0.0.1";
 assert (builtins.head vh."mrjam-fermeture-interne".listen).port == 3028;

@@ -70,3 +70,26 @@ administrative ; SQL revalide actif/administrateur et conserve le verrou jusqu'�
 l'écriture SQLite. La file courriel ne constitue pas une autorisation. Les calculs
 scrypt sont limités à deux simultanés pour borner les allocations ; HTTP 503 si
 le budget est épuisé. Cette borne n'est pas une mesure RSS de production.
+
+`tables-privees.json` classe les 30 tables Vision et les 6 tables Matheval.
+`scripts/verifier-tables.py` compare la liste effective, les propriétaires, RLS
+forcée/politiques, droits de tables et colonnes et appartenances aux rôles élevés.
+Toute table nouvelle est refusée sans classification. Les anciennes tables Vision
+sans `utilisateur` n'ont aucun droit direct applicatif ; les métadonnées d'identité,
+d'admission et de cycle passent par les fonctions bornées. Le compte courant
+utilise RLS. Matheval conserve le schéma pseudonyme : autorisation par secret de
+reprise et session scientifique, sans assimilation au propriétaire Log. Son rôle
+SQL dispose des droits de collecte nécessaires ; une compromission de ce rôle
+ne permet pas de promettre une isolation de participations par RLS inexistante.
+Cette limite est distincte de l'isolation contrôlée par les parcours HTTP.
+La fixture réelle PostgreSQL vérifie l'inventaire et les parcours Alice/Bob ;
+six régressions refusent les omissions de table, RLS, politique, classe ou rôle,
+les droits supplémentaires et l'héritage privilégié.
+
+Les limites Matheval gardent les fenêtres historiques 30/h, 300/min et 8/15 min
+(activation et connexion partagées), en-têtes draft-8 et Retry-After. L'adresse
+est imposée par Nginx sur l'entrée Unix vérifiée ; IPv6 est regroupé par /56,
+comme le middleware Node verrouillé. Origine et JSON sont contrôlés avant le
+budget. Table bornée à 4096 entrées, verrou par serveur, horloge monotone et
+HTTP 503 à saturation ; un redémarrage réinitialise ces seuls budgets en mémoire.
+Les sessions et apprentissages restent durables en SQL/SQLite.

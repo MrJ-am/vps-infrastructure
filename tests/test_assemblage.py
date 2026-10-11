@@ -43,6 +43,8 @@ class Selection(unittest.TestCase):
     def test_documentation_seule(self):
         self.assertEqual(['editorial'], a.selection(['vps/docs/ETAT.md'], self.c))
         self.assertEqual(['editorial'], a.selection(['matheval/research/memoire.org'], self.c))
+        self.assertEqual(['editorial'], a.selection(['style/coordination/archive/workflows-20261011/pages.yml.archive'], self.c))
+        self.assertEqual(['editorial'], a.selection(['vision/.github/workflows/inattendu.yml'], self.c))
 
     def test_chemin_inconnu_elargit(self):
         self.assertEqual(sorted(self.c), a.selection(['vision/nouveau-generateur.bin'], self.c))

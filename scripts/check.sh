@@ -12,7 +12,7 @@ if ! command -v nix-instantiate >/dev/null 2>&1; then
     echo "Contrôles Python réussis ; Nix absent, validation Nix non exécutée." >&2
     exit 2
 fi
-for module in hosts/hostinger/*.nix modules/*.nix apps/*.nix lib/*.nix vendor/*/*.nix tests/*.nix scripts/*.nix; do
+for module in hosts/hostinger/*.nix modules/*.nix apps/*.nix lib/*.nix vendor/*/*.nix tests/*.nix scripts/*.nix assemblage/*.nix; do
     nix-instantiate --parse "$module" >/dev/null
 done
 nix-instantiate --eval --strict --json tests/routing.nix

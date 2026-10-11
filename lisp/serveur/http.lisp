@@ -5,7 +5,8 @@
 (defun erreur-http (status) (error 'http-error :status status))
 
 (defstruct (configuration (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket (workers 32))))
-  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket workers)
+  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket workers
+  (quotas (faire-quotas)))
 
 (defun ligne-http (s maximum)
   (let ((out (make-array maximum :element-type '(unsigned-byte 8))) (n 0))
@@ -34,7 +35,7 @@
         (push (cons (string-downcase (subseq line 0 colon)) (string-trim '(#\Space #\Tab) (subseq line (1+ colon)))) headers)))
     (setf headers (nreverse headers))
     (dolist (nom '("content-length" "host" "origin" "content-type" "cookie" "authorization" "x-session-token" "x-mrjam-service" "x-mrj-user"
-                   "x-vision-authenticated" "x-vision-browser" "x-vision-administration" "x-matheval-request"))
+                   "x-vision-authenticated" "x-vision-browser" "x-vision-administration" "x-matheval-request" "x-mrjam-remote-addr"))
       (when (> (count nom headers :key #'car :test #'equal) 1) (erreur-http 400)))
     (when (assoc "transfer-encoding" headers :test #'equal) (erreur-http 400))
     (let* ((len (or (entete headers "content-length") "0"))
@@ -82,6 +83,11 @@
     (write-sequence (sb-ext:string-to-octets entetes :external-format :utf-8) s)
     (unless head (write-sequence bytes s)) (finish-output s)))
 
+(defun entetes-securite-matheval ()
+  '(("X-Content-Type-Options" . "nosniff") ("X-Frame-Options" . "DENY") ("Referrer-Policy" . "no-referrer")
+    ("Permissions-Policy" . "camera=(), microphone=(), geolocation=()")
+    ("Content-Security-Policy" . "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'")))
+
 (defun router (cfg s method target headers body)
   (let* ((service (entete headers "x-mrjam-service")) (q (position #\? target)) (path (subseq target 0 q)))
     ;; En production, ce champ provient exclusivement du Nginx autorisé sur le
@@ -94,14 +100,26 @@
            (repondre-http s status (mrjam-native:json-js value) '(("Cache-Control" . "no-store"))))))
       ((equal service "matheval")
        (unless (uiop:string-prefix-p "/matheval/api/" path) (erreur-http 404))
+       (let ((quota (quota-route method path)) (entetes-quota nil))
        (multiple-value-bind (status value retour)
            (traiter-matheval (configuration-matheval cfg) method (subseq path 14) headers
-                            (decode-query (and q (subseq target (1+ q)))) body :origine (configuration-origine cfg))
+                            (decode-query (and q (subseq target (1+ q)))) body :origine (configuration-origine cfg)
+             :avant-operation
+             (lambda ()
+               (when quota
+                 (multiple-value-bind (accepte attente restant raison)
+                     (quota-prendre (configuration-quotas cfg) quota (entete headers "x-mrjam-remote-addr"))
+                   (when (or accepte (eq raison :limite))
+                     (setf entetes-quota (quota-entetes quota (entete headers "x-mrjam-remote-addr") attente restant)))
+                   (unless accepte
+                     (repondre-http s (case raison (:adresse 400) (:capacite 503) (t 429))
+                       "{\"error\":\"Trop de tentatives. Réessayez dans quelques minutes.\"}"
+                       (append entetes-quota (entetes-securite-matheval)
+                               (list '("Cache-Control" . "no-store") (cons "Retry-After" (write-to-string attente)))))
+                     (return-from router))))))
          (repondre-http s status (if (stringp value) value (mrjam-native:json-js value))
-           (append retour '(("X-Content-Type-Options" . "nosniff") ("X-Frame-Options" . "DENY") ("Referrer-Policy" . "no-referrer")
-                            ("Permissions-Policy" . "camera=(), microphone=(), geolocation=()")
-                            ("Content-Security-Policy" . "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; form-action 'self'")))
-           :head (equal method "HEAD"))))
+           (append entetes-quota retour (entetes-securite-matheval))
+           :head (equal method "HEAD")))))
       ((equal service "vision")
        (when q (erreur-http 400))
        (when (uiop:string-prefix-p "/auth/admission" path)
