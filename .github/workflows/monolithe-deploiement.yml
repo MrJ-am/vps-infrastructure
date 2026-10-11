@@ -5,7 +5,7 @@ on:
       operation:
         type: choice
         options: [preparer, restaurer, deployer, retour]
-        default: preparer
+        default: deployer
         description: Opération sur le candidat chiffré verrouillé dans main
 permissions:
   contents: read

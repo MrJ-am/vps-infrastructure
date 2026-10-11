@@ -62,6 +62,17 @@ class Retour(unittest.TestCase):
         self.plan['phase']='anciens-arretes';self.lancer()
         with sqlite3.connect(self.target) as c:self.assertEqual(c.execute('SELECT message FROM courriels').fetchone(),(b'ancien',))
 
+    def test_retour_avant_creation_de_l_unite_commune(self):
+        self.plan['phase']='anciens-arretes'
+        def commande(a,d):
+            self.appels.append([str(v) for v in a])
+            return b'not-found\n' if 'LoadState' in a else b''
+        with patch.object(m.stage,'commande',side_effect=commande),patch.object(m.stage,'etat',return_value=self.before),\
+             patch.object(m,'changer_configuration'),patch.object(m,'PORTE',self.r/'porte'):
+            m.retour(self.d,self.prepare,self.plan)
+        self.assertNotIn(['systemctl','stop','mrjam-metier'],self.appels)
+        self.assertTrue((self.d/'retour.json').exists())
+
     def test_retour_reste_utilisable_apres_validation(self):
         (self.d/'termine.json').write_text('{"validation":true}')
         self.lancer();self.assertTrue((self.d/'retour.json').exists());self.assertTrue((self.d/'termine.json').exists())

@@ -414,3 +414,11 @@ JSON/quotas réussis (0,268/1,764/0,176/0,212 s), FASL incrémentaux réutilisé
 Promotion : dix refus/provenances synthétiques, retour : cinq contrôles avec
 écriture après bascule et reprise idempotente, sauvegarde SQLite/JSONL : quatre,
 sélecteur : dix-huit contrôles réussis. Aucune attestation CI ou production.
+
+Promotion : uploads.github.com refuse le credential (401), release non publiée.
+Repli par push Git autorisé : branche isolée contenant seulement le chiffré,
+commit/chemin et SHA verrouillés depuis main. NAR limité aux sorties propres ;
+dépendances officielles de la même closure par substitution Nix signée existante.
+Aucune reconstruction du binaire296b7c89, aucun nouveau fournisseur ou secret.
+Préparation reprenable avec bundle/état vérifiés ; retour avant création de
+l’unité commune et migration déjà26 traités explicitement.
