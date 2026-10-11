@@ -2,8 +2,8 @@
 
 ## Point de reprise actif — Matheval après Vision et Logique
 
-Infra publiée9bc8e48 ; changements centraux du présent jalon à publier.
-Stylefbdb9dbb0c723ecd6a16e492e47af085c6033531 et
+Infra publiée7cda555 ; nouveau lecteur scientifique central à publier.
+Style816b663 (révision complète dans le manifeste) et
 Logiqued76f007 (révision complète dans le manifeste) publiés.
 Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Math/master78137b0 et
 Signaturee9d9d34 conservés. Production inchangée : étape1 non déployée,
@@ -48,12 +48,49 @@ Pas de suppressions/exclusions ni seuils abaissés. Reçus privés machine dans
 state/recus, confiance locale non attestée, jamais autorisation de publication.
 Stade exploratoire Logique et captures conservés dans state ; pas candidat.
 
-Suite immédiate : renderer scientifique commun (Markdown/TeX/portées en ch,
-HTML littéral échappé), administration puis Survey/Main/DemoCard Matheval,
-curseurs/projection et dialogues/compagnons. Aucun portage frontend Matheval
-encore réalisé ; sources scientifiques/32bits/pseudonymat inchangés.
-Publier socle avant verrous/manifeste. Qualification réelle de toutes entrées,
-frontières et ContinuousUI ; qualification exacte finale/propre Lisp distincte.
+Matheval en cours, non commité : lecteur scientifique commun Style48cb06a,
+142tests AST11,9332s, qualification centrale Style91,9703s sur candidat
+style-48cb06aaa08f-befceaca / ensemble
+2514d258c02f6ae10da64f98153d67b7491596fef15f28c8e6aab55858b75ad9.
+Huit cas scientifiques aux3largeurs320/390/1363 réussis, retraits comparés à
+l'ancien rich-text, TeX réel/HTML échappé/Markdown/soumission bornée. Le reçu
+Style-logo précédent reste historique ; additions hors logo pas encore finalisées.
+Administration : Math.document, métadonnées publiques, soumission INPUT et
+contexte Matheval, CSS locale retirée, compile incrémentale22puis2modules.
+Trois parcours Chromium réussis8,4s sur binaire Nix296b7c89/PG jetable : accès,
+activation/Entrée, corpus/statistiques/réponses avec zéro/absence et déconnexion.
+Première fixture incomplète (assets absents) et environnement DSO distribution
+au lieu de Nix : démarrage refusé avant parcours ; fixture préservée. Avec DSO
+Nix, démarrage réussi mais instrumentation répétée dans la fixture réutilisée :
+refus de tests. Nouvelle fixture neuve depuis sources canoniques, trois succès.
+Aucune répétition d'effets production, aucun backend Node. Config Playwright
+locale n'en lance plus ; la commande centrale possède le serveur SBCL isolé.
+Prototype et DemoCard en cours, non commité : Main elm-ui/TableSpatiale/T.Transition,
+mêmes BoardLogic/positions/miniscale/dimensions. Nouveau socle Spatial publié816b663,
+167tests AST+6ressources+3fixtures11,3080s ; review intégral Style réussi.
+Premier prototype5/7 : boîtes non peintes recouvraient les voisines en tactile,
+ancrage transparent et surface transformée active corrigés ;2mobiles ciblés9,6s
+réussis. Test long injecte le JSON scientifique avant chargement (aucune mutation
+du vieux custom element retiré). Main et DemoCard compilés séparément, comme le
+constructeur canonique ; bundle exploratoire combiné refusé à cause des ports
+homonymes, conservé sans usage. Huit nouveaux parcours de continuité Firefox/
+Chromium390/1280 normal/réduit passent1,2min : interruptions/inversions, Entrée/
+Espace/Échap, nœud/focus préservés, préférence live et frames arrêtées au repos.
+Le Demo recentre désormais une carte dans sa boîte elm-ui plutôt que le coin
+absolu de l'ancien div ; aucune donnée scientifique concernée. Hauteurs explicites
+compactes240desktop/360mobile, bornées par92% du viewport ; à vérifier avec le
+reste des parcours avant qualification finale. test.html construit DemoCard actuel,
+ancien bundle test.js retiré (histoire Git intacte). Survey encore ancien.
+Math verrou Style816b663 local (SHA256 exact de tous modules/ressources utilisées),
+Animator2/time existant/bezier2 transitif ; pas de mise à niveau d'outil.
+Stage incrémental state/matheval-developpement-jbgia3ck (sources absolues canoniques),
+pointeur matheval-developpement-courant.txt ; jamais candidat. Toutes opérations
+citées locales ; rapport MCP/Image persistante et production conservés.
+
+Suite immédiate : qualifier le prototype, mutualiser avec DemoCard ; terminer
+Survey (curseurs/projection et dialogues/compagnons), tous les contextes/verrous
+et l'orchestration. Publier socle avant verrous/manifeste. Qualification réelle
+de toutes entrées, frontières/ContinuousUI et qualification exacte finale.
 Puis Nix/HBA/préconditions actuelles, backup/restauration/retour et étape1 réelle,
 avant Kanidm. Promotion toujours refusée tant que l'ensemble reste incomplet.
 

@@ -213,3 +213,26 @@ styles, classes ou RAF applicatif. Le pont corrige la réorientation tactile de
 Chromium au point réellement peint ; les taps/scrolls natifs ordinaires restent
 qualifiés. Export/import : seuls a/input détachés dans deux fonctions nommées.
 Les applications utilisent les façades publiques, pas les adaptateurs privés.
+
+Le document scientifique commun `Mathematiques.document` conserve titres/listes,
+code/gras, TeX et portées initiales, sans interpréter HTML. Les unités ch ne sont
+pas disponibles dans elm-ui1.1.8 : `Adaptateurs.Texte.portee` autorise seulement
+padding-left calculé par `String.fromInt (Basics.max 0 espaces) ++ "ch"`, avec
+un unique argument et sans let/lambda. Les métadonnées document/portée sont
+nommées et littérales. La source scientifique n'est pas réécrite. Cas navigateur
+positifs/hostiles, ratios de portée et repli sont intégrés à la qualification
+locale Style ; le test de développement compare aussi l'ancien rendu Matheval.
+`Saisie.soumettreChamps` borne keydown aux INPUT ; Entrée sur un bouton conserve
+son action. Aucune animation n'est ajoutée au document statique.
+
+Les cartes 2D Main/DemoCard passent par `TableSpatiale`, en elm-ui/Element.Keyed,
+avec T.Transition et la préférence initiale/live commune. L'application fournit
+coordonnées/dimensions/contenu et intentions ; le socle possède présentation et
+entrées. `Adaptateurs.Spatial.taille` ne permet que scale numérique0.1–1.5, borné
+par l'AST ; aucune chaîne transform libre. Les boîtes de placement non peintes
+sont transparentes aux pointeurs (ancrage), la carte transformée seule les reçoit
+(surface). Ce réglage fixe évite qu'une boîte non réduite capture une voisine.
+Événements mousedown/touchstart/touchmove/touchend/touchcancel/click/keydown nommés
+par fonction, rôle button fixe ; aucune vue HTML. Les sources Main/DemoCard sont
+compilées séparément, comme dans le constructeur canonique : leurs ports de
+même nom ne peuvent être regroupés dans un fichier Elm unique de développement.
