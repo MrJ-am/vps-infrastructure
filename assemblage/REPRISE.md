@@ -6,9 +6,9 @@ Production : génération r6s7ags3, ancienne architecture, Keycloak provisoire ;
 fictif créé, fermé ou effacé en production. Dernière référence38118876078 : un
 compte Vision/une identité, liens cohérents, trois participations Matheval ouvertes.
 
-État constaté après amendement : main infrastructure 5e8342d ; branche locale
+État constaté après amendement : main infrastructure e1f0bdf ; branche locale
 reorganisation/assemblage-central-20261011. Vision 1ef7174, Matheval/master 5e234c0,
-Logique 032b4f5, Style 0ea000d (chronologie commune publiée ; autres vues encore à porter), Signature e9d9d34. Consignes/guides des cinq composants
+Logique 032b4f5, Style c9663ce (chronologie et adaptateur accessibles publiés ; autres vues encore à porter), Signature e9d9d34. Consignes/guides des cinq composants
 publiés avec archives exactes ; root intègre les corrections Nix/préparateur et
 le refus de promotion avant qualification de l’amendement. Aucun AGENTS imbriqué/override trouvé dans les sources
 actives ciblées ; relecture des six fichiers effectuée. Aucun run de promotion
@@ -96,3 +96,22 @@ Complément HTML/CSS/JS avec HTMLParser/Babel déjà dans Playwright1.58.2 : 3te
 (9casJS dont alias/calculé/optionnel) passent. Garde canonique branché sur build
 et qualification ; rapports actuels restent en échec, dont atelier logo690
 violations avant déplacement. Pas de promotion, pas de Kanidm commencé.
+
+Style6f1a8eb publié : libellés accessibles portés vers Element.Region.description
+et lienExterne vers Element.newTabLink (noopener/noreferrer natifs), galerie
+compile incrémentalement. Travail suivant non commité : adaptateur DOM ID/ARIA
+controls-expanded-describedby/tabindex strict et adopteurs, sans CSS. Classement
+font/SVG/dialogue et portage Theme/CSS restent à poursuivre ; couleurs de marques
+doit conserver leur sens avec contexte explicite, pas par CSS variables globales.
+Raccordement MCP toujours sain PID83928/poolNIL/métierT ; aucun déploiement.
+
+Progression conservée : Style c9663ce publie Accessibilite (ID, relations ARIA et
+tabindex -1/0). Cinq tests DOM réussis247ms, aucune classe/style/nom arbitraire.
+Règles AST26cas + fixtures canoniques + complément ressources3tests qualifiés
+localement8,4137s ; assertions de test strictement bornées, renderers Animator
+HTML/CSS interdits. Atelier/socle encore625violations, aucune conformité déclarée.
+Image saine83928/poolNIL/métierT confirmée ; tentative de lecture d'un nom de
+package incorrect refusée avant toute évaluation, corrigée à partir de la source.
+Suite à poursuivre : contexte explicite de palette pour préserver les marques
+sans cascade CSS, présentation elm-ui et adaptateurs manquants ; consommateurs
+toujours verrouillés aux anciennes révisions, preuves frontend à renouveler.

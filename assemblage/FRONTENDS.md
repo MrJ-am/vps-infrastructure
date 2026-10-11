@@ -29,6 +29,20 @@ changements d’état, apparitions/disparitions/déplacements, interruptions rap
 inversions, état/focus/navigation clavier, reduced-motion, arrêt du rafraîchissement
 inutile. Aucune interaction métier ne dépend d’une animation décorative.
 
+Adaptateur `MrJam.Adaptateurs.Accessibilite` : uniquement ID, relations
+aria-controls/aria-describedby, état aria-expanded et tabindex borné à -1/0.
+Ces capacités manquent dans l'API publique elm-ui1.1.8 ; les libellés utilisent
+Element.Region.description et les liens externes Element.newTabLink. Cinq tests
+exercent les attributs réellement rendus. Les exceptions AST lient le module
+commun, la fonction, le symbole et le nom littéral d'attribut.
+
+Les assertions synthétiques de Test.Html.Selector.attribute dans tests/ peuvent
+référencer directement les mêmes attributs ARIA ou tabindex pour vérifier le DOM.
+Cette exception ne permet ni construction HTML, ni classe/style, ni nom dynamique,
+ni utilisation dans les sources applicatives. Cinq cas AST couvrent cette frontière.
+Les renderers HTML/CSS d'Animator restent interdits, même dans le socle : seules
+ses valeurs numériques et timelines raccordent les attributs elm-ui.
+
 Conserver fonctionnalités, accessibilité, ressources, domaines/chemins et identité
 visuelle. Les projets statiques restent statiques, interfaces tierces exclues.
 Les anciennes interfaces sont des références fonctionnelles, pas une preuve de
