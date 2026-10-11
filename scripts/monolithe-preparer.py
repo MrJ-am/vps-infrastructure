@@ -49,7 +49,7 @@ def commande(args,d,*,input=None,timeout=1800):
                      stderr=subprocess.PIPE,timeout=timeout)
     if p.returncode:
         (d/'erreur-commande-privee.log').write_bytes(p.stderr)
-        raise RuntimeError('Commande refusée ; journal privé sur le VPS')
+        raise RuntimeError('Commande refusée : '+Path(str(args[0])).name+', code '+str(p.returncode))
     return p.stdout
 
 
@@ -124,7 +124,12 @@ def preparer(revision):
     exiger(d.is_dir() and not d.is_symlink() and stat.S_IMODE(d.stat().st_mode)==0o700,'Stage non privé')
     root=d/'payload';cert=verifier_bundle(root)
     exiger(cert['revision']==revision,'Bundle d’une autre révision')
-    exiger(not (d/'preparation.json').exists(),'Préparation déjà réalisée')
+    if (d/'preparation.json').exists():
+        preuve=json.loads((d/'preparation.json').read_text())
+        exiger(preuve['revision']==revision and preuve['artefact_sha256']==cert['qualification']['artefact_sha256']
+               and etat(d)==preuve['avant'],'Préparation enregistrée ou état actif différents')
+        print(json.dumps({'revision':revision,'preparation_reutilisee':True,'activation':False}))
+        return
     avant=etat(d)
     exiger(avant['generation']==avant['demarrage'],'Bascule concurrente')
     exiger(commande(['nix-instantiate','--find-file','nixpkgs'],d).decode().strip()==NIXPKGS,'Nixpkgs installé différent')
@@ -134,11 +139,15 @@ def preparer(revision):
     bank=json.loads((root/'matheval/research/bank.json').read_text())
     version=bank['version'];exiger(re.fullmatch('[A-Za-z0-9._-]+',version),'Version corpus invalide')
     public=Path('/srv/mrjam-assemblages')/revision
-    exiger(not public.exists(),'Ressources déjà préparées ; vérifier la reprise')
-    public.parent.mkdir(mode=0o755,exist_ok=True)
-    public.mkdir(mode=0o755)
-    for nom in cert['frontends']:
-        shutil.copytree(root/'frontends'/nom,public/nom)
+    if public.exists():
+        exiger(not public.is_symlink(),'Ressources redirigées')
+        for nom,front in cert['frontends'].items():
+            fichiers={str(p.relative_to(public/nom)):sha(p) for p in (public/nom).rglob('*') if p.is_file()}
+            exiger(fichiers==front['fichiers'],'Ressources présentes différentes')
+    else:
+        public.parent.mkdir(mode=0o755,exist_ok=True)
+        public.mkdir(mode=0o755)
+        for nom in cert['frontends']:shutil.copytree(root/'frontends'/nom,public/nom)
     for p in (public,*public.rglob('*')):
         exiger(not p.is_symlink(),'Lien dans les ressources')
         p.chmod(0o755 if p.is_dir() else 0o644)
@@ -156,9 +165,12 @@ def preparer(revision):
     expression='(import '+str(root/'vps/scripts/monolithe-evaluation.nix')+' { '+''.join(k+'='+json.dumps(v)+'; ' for k,v in params.items())+'}).moduleCandidate'
     candidate=d/'configuration-candidate.nix'
     candidate.write_text('{ imports = [ '+json.dumps(avant['configuration_cible'])+' '+expression+' ]; }\n')
-    racines=Path('/nix/var/nix/gcroots/mrjam-metier')/revision;racines.mkdir(parents=True,exist_ok=False)
+    racines=Path('/nix/var/nix/gcroots/mrjam-metier')/revision;racines.mkdir(parents=True,exist_ok=True)
     for n,p in {'avant':avant['generation'],'nixpkgs':NIXPKGS,'image':params['paquet'],
-                'outils':cert['qualification']['sorties_nix']['outils']}.items():(racines/n).symlink_to(p)
+                'outils':cert['qualification']['sorties_nix']['outils']}.items():
+        lien=racines/n
+        if lien.is_symlink():exiger(str(lien.resolve())==str(Path(p).resolve()),'Racine Nix différente')
+        else:exiger(not lien.exists(),'Racine concurrente');lien.symlink_to(p)
     construit=commande(['nix-build','<nixpkgs/nixos>','-A','system','-I','nixpkgs='+NIXPKGS,
         '-I','nixos-config='+str(candidate),'--out-link',racines/'candidat','--max-jobs','1','--cores','2'],d).decode().strip()
     exiger(construit==r['apres'],'Construction différente de l’évaluation')
@@ -183,10 +195,14 @@ if __name__=='__main__':
     try:
         with open('/root/mrjam-assemblage.lock','a') as f:
             fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);preparer(sys.argv[1])
-    except Exception:
+    except Exception as erreur:
         if len(sys.argv)==2 and re.fullmatch('[a-f0-9]{40}',sys.argv[1]):
             d=Path('/root/mrjam-assemblages')/sys.argv[1]
             if d.is_dir() and not d.is_symlink():
                 (d/'erreur-preparation-privee.log').write_text(traceback.format_exc())
-        print('Préparation refusée ; aucun système activé, diagnostic privé sur le VPS.',file=sys.stderr)
+        frames=[{'fichier':Path(f.filename).name,'ligne':f.lineno} for f in traceback.extract_tb(erreur.__traceback__)]
+        # Nos ValueError/RuntimeError contiennent des règles fixes ou un nom de
+        # commande/code, jamais une sortie de processus ou des données métier.
+        print(json.dumps({'preparation':'refusee','exception':type(erreur).__name__,'pile':frames,
+            'regle':str(erreur) if type(erreur) in (ValueError,RuntimeError) else 'Diagnostic privé requis'},ensure_ascii=False),file=sys.stderr)
         sys.exit(1)

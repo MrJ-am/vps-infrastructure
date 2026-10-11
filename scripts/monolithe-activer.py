@@ -128,7 +128,10 @@ def retour(d,prepare,plan):
     if (d/'retour.json').exists():
         stage.exiger(stage.etat(d)==prepare['avant'],'État différent après le retour enregistré')
         return
-    stage.commande(['systemctl','stop','mrjam-metier'],d)
+    # Avant la génération candidate, cette unité peut ne pas exister. Un arrêt
+    # refusé d'une unité présente reste une erreur ; on ne masque pas son code.
+    charge=stage.commande(['systemctl','show','mrjam-metier','-p','LoadState','--value'],d).decode().strip()
+    if charge!='not-found':stage.commande(['systemctl','stop','mrjam-metier'],d)
     # Le nouveau serveur arrêté a pu ajouter des lignes : copier ses dernières
     # données vers les chemins historiques, jamais les copies d'avant bascule.
     if plan.get('phase') in ('etats-transferes','service-demarre','qualification'):

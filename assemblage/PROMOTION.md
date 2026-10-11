@@ -12,14 +12,17 @@ du propriétaire dans son dépôt d'infrastructure :
 
 1. `monolithe-candidat.py` exige sources commitées, les six révisions verrouillées,
    tous les reçus réussis avec les empreintes actuelles et le même binaire Nix.
-   L'archive contient les sources exactes, ressources, reçus et export NAR de sa
-   closure. L'image a été construite séparément de l'image de développement.
+   L'archive contient les sources exactes, ressources, reçus et export NAR de ses
+   deux sorties propres. Les chemins des dépendances officielles sont verrouillés
+   et substitués par Nix avec le cache signé déjà utilisé par le VPS. L'image a été construite séparément de l'image de développement.
 2. L'archive est chiffrée par age officiel vers la clé publique SSH du VPS déjà
    verrouillée dans `scripts/ssh-known-hosts`. Seul `candidat.tar.gz.age` est
-   téléversable comme asset GitHub ; aucun source privé ou binaire en clair dans
+   transportable sur GitHub ; aucun source privé ou binaire en clair dans
    le dépôt public ou les artefacts Actions. Aucun credential supplémentaire.
 3. Le descripteur `operations/monolithe-candidat.json`, commité sur main, verrouille
-   l'asset numérique, ses octets, son producteur GitHub MrJ-am/id12571490,
+   l'asset numérique et son producteur GitHub MrJ-am/id12571490 ou, lorsque cet
+   endpoint n'est pas accessible, le commit exact d'une branche d'artefact isolée
+   du même dépôt et le seul chemin `candidat.tar.gz.age`. Il verrouille les octets,
    les empreintes du chiffré, de l'archive, du manifeste interne et du binaire.
    `soumission_autorisee_par_proprietaire` consigne l'autorisation de cette
    mission ; ce n'est pas une signature ni une confirmation personnelle nouvelle.
@@ -35,7 +38,7 @@ du propriétaire dans son dépôt d'infrastructure :
 
 age assure la confidentialité et l'intégrité du chiffré, **pas l'identité de
 l'expéditeur**. Celle-ci repose ici sur l'accès de publication du propriétaire,
-le descripteur immuable dans la révision déployée et l'asset vérifié. Un cache
+le descripteur immuable dans la révision déployée et les octets vérifiés. Un cache
 externe anonyme ou un reçu soumis par un tiers ne peut pas satisfaire cette chaîne.
 Une compromission de l'atelier autorisé ou du compte GitHub propriétaire demeure
 une limite de ce modèle ; aucune attestation indépendante n'est revendiquée.
@@ -55,5 +58,7 @@ l'exécutable servi, les ressources publiques, le refus anonyme/MCP et une ident
 falsifiée, les invariants et le redémarrage ; elles ne créent aucun contenu réel.
 
 État au 11 octobre : protocole et opérateurs écrits, qualification locale en cours.
-Aucun asset soumis, aucun transfert ni activation effectués à ce stade. Les preuves
+Envoi de l'asset refusé par uploads.github.com (401) ; release non publiée.
+Transport Git chiffré préparé sans credential supplémentaire ni binaire dans main.
+Aucun transfert ni activation effectués à ce stade. Les preuves
 de restauration et d'accès réellement obtenues primeront sur cette description.

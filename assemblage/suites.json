@@ -408,7 +408,8 @@
         "tests/test_gestion.py",
         "tests/test_monolithe_stage.py",
         "scripts/monolithe-operation.py",
-        ".github/workflows/monolithe-deploiement.yml"
+        ".github/workflows/monolithe-deploiement.yml",
+        "tests/test_monolithe_transport.py"
       ],
       "vision": [
         "migrations/*.sql",
@@ -446,6 +447,16 @@
         "tests",
         "-p",
         "test_monolithe_stage.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_transport.py"
       ]
     ],
     "dependances": [

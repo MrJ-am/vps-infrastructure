@@ -51,7 +51,9 @@ def main(revision):
         def sql(base,texte):return backup.sql(bin,isole,base,texte)
         avant={b:backup.schema(lambda q,b=b:sql(b,q)) for b in ('vision','matheval')}
         # Migration sur la copie exclusivement, propriétaire cible NOLOGIN.
-        sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
+        version=sql('vision','SELECT max(version) FROM vision_schema_migrations')
+        backup.exiger(version in ('25','26'))
+        if version=='25':sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
         sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
         backup.commande(['runuser','-u','postgres','--',bin/'psql','-Xq','--set=ON_ERROR_STOP=1',
             '--host='+str(isole),'--dbname=vision','--file=-'],input=(ROOT/'assemblage/roles-metier.sql').read_bytes())

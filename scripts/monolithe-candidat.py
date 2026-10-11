@@ -77,12 +77,17 @@ def sceller(executable,destination):
         (root/'qualification.json').write_text(json.dumps(q,ensure_ascii=False,indent=2)+'\n')
         fermeture=sorted(set(subprocess.check_output(['nix-store','-qR',*q['sorties_nix'].values()],text=True).splitlines()))
         exiger(all(re.fullmatch(r'/nix/store/[a-z0-9]{32}-[^/\s]+',p) for p in fermeture),'Closure invalide')
-        with (root/'closure.nar').open('xb') as f:subprocess.run(['nix-store','--export',*fermeture],stdout=f,check=True)
+        # Les sorties propres sont promues, jamais reconstruites. Les autres
+        # chemins sont les paquets officiels déjà qualifiés : substitution Nix
+        # avec signatures du cache existant, pas 568 Mo de doublons transportés.
+        sorties=sorted(q['sorties_nix'].values())
+        cache=[p for p in fermeture if p not in sorties]
+        with (root/'closure.nar').open('xb') as f:subprocess.run(['nix-store','--export',*sorties],stdout=f,check=True)
         exiger((root/'closure.nar').stat().st_size<1024**3,'Closure hors limite')
         cert={'format':2,'revision':rev,'revision_construction':q['source_revision'],
               'origine_preuves':'codex-local-non-attestee','manifest':m,
               'recus_locaux_sha256':recus,'qualification':q,'frontends':fronts,
-              'closure':fermeture,'fichiers':contenus(root),'activation':False}
+              'closure':fermeture,'closure_cache':cache,'fichiers':contenus(root),'activation':False}
         (root/'stage.json').write_text(json.dumps(cert,ensure_ascii=False,indent=2)+'\n')
         archive=tmp/'candidat.tar.gz'
         with tarfile.open(archive,'w:gz',compresslevel=1) as t:t.add(root,arcname='payload',recursive=True)
