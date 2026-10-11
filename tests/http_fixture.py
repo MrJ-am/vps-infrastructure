@@ -36,8 +36,9 @@ def entree(socket_path, statique, prefix='/matheval', service='matheval', prepar
             corps=self.rfile.read(taille)
             if preparer:preparer(self.headers)
             headers={k:v for k,v in self.headers.items() if k.lower() not in
-                     ('connection','transfer-encoding','content-length','x-mrjam-service')}
+                     ('connection','transfer-encoding','content-length','x-mrjam-service','x-mrjam-remote-addr','x-fixture-ip')}
             headers['X-Mrjam-Service']=service
+            headers['X-Mrjam-Remote-Addr']=self.headers.get('X-Fixture-IP','127.0.0.1')
             c=Unix('localhost',timeout=15)
             try:
                 c.request(self.command,self.path,body=corps,headers=headers)

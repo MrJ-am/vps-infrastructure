@@ -12,25 +12,25 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "aa7f10d9cfd1974fe20017dd8ba3134c03863369",
+      "revision": "fcb35f835cec8e338de1a336a7e0240e5073ffbd",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "2a822502329e1bce35f6e49ecbac00a135ab235e",
+      "revision": "d64f2358e224ac99c004ae92972a9bdc02242606",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
       "depot": "MrJ-am/apprendre-a-demontrer",
       "branche": "main",
-      "revision": "e8478fc42d5a9bf5c6a50809ae2ec4e1e658d35c",
+      "revision": "586ae182f66e43de9e9ca09107ab22e3d340a568",
       "role": "frontend-statique"
     },
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "508f964812ec3316248646ccf0e92492653f82f0",
+      "revision": "1132afea89b3fa8b4a8f7fba7f7bb7e8eb803de3",
       "role": "elm-ui"
     },
     "signature": {
@@ -51,7 +51,10 @@
       "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
       "sbcl": "2.6.4",
       "asdf": null,
-      "etat": "closure-constatee-build-commun-a-qualifier"
+      "etat": "closure-constatee-build-commun-a-qualifier",
+      "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+      "source_url": "https://api.github.com/repos/NixOS/nixpkgs/tarball/c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+      "source_archive_sha256": "53c2d41b0e5ab001e97d4478985287a82870e7c044f5185a250d98627b253fc0"
     },
     "compilation": {
       "speed": 1,

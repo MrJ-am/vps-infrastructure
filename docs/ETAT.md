@@ -1,5 +1,9 @@
 # État attesté au 10 octobre 2026
 
+> Historique antérieur à la mission du 11 octobre 2026. Les anciennes phases,
+> confirmations et déclencheurs ne gouvernent plus le travail actuel. Voir
+> [l’état de reprise central](../assemblage/REPRISE.md). Les faits ci-dessous sont conservés.
+
 Les inscriptions Vision sont désormais **ouvertes exclusivement par invitation**,
 après demande explicite du propriétaire et vérification des contrats fournisseurs.
 L'opération ad8123c/PR97,

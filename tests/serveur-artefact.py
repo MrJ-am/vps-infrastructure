@@ -30,7 +30,7 @@ def requete(chemin, texte):
 
 def http(method, path, *, service='matheval', corps=b'', extra=b''):
     return (f'{method} {path} HTTP/1.1\r\nHost: localhost\r\nX-Mrjam-Service: {service}\r\n'.encode()
-            + b'Content-Type: application/json\r\nOrigin: http://127.0.0.1:4173\r\nX-Matheval-Request: 1\r\n'
+            + b'Content-Type: application/json\r\nOrigin: http://127.0.0.1:4173\r\nX-Matheval-Request: 1\r\nX-Mrjam-Remote-Addr: 127.0.0.1\r\n'
             + f'Content-Length: {len(corps)}\r\n'.encode() + extra + b'\r\n' + corps)
 
 
@@ -75,6 +75,7 @@ def qualifier(executable, fixture):
                 (http('GET','/matheval/api/health',extra=b'Content-Length: 0\r\n'),400),
                 (http('GET','/matheval/api/health',extra=b'Transfer-Encoding: chunked\r\n'),400),
                 (http('GET','/matheval/api/health',extra=b'X-Mrjam-Service: vision\r\n'),400),
+                (http('GET','/matheval/api/health',extra=b'X-Mrjam-Remote-Addr: 192.0.2.1\r\n'),400),
                 (http('GET','/matheval/api/health',corps=b'{}'),400),
                 (http('GET','/matheval/api/health',service='autre'),400),
                 (b'GET /matheval/api/health HTTP/1.1\n\n',400),
@@ -95,10 +96,29 @@ def qualifier(executable, fixture):
             assert json.loads(avant)['snapshot']==sauvegarde['snapshot']
             assert requete(chemin,http('GET','/matheval/api/sessions/'+c['id'],extra=('X-Session-Token: '+'b'*64+'\r\n').encode()))[0]==401
             admin=next(x['data'] for x in c['cases'] if x['setCookie']=='admin1')
+            # Origine refusée et JSON illisible interviennent avant le budget,
+            # conformément au middleware de référence.
+            for _ in range(9):
+                mauvais=http('POST','/matheval/api/admin/login',corps=b'{}').replace(b'Origin: http://127.0.0.1:4173',b'Origin: https://autre.test')
+                assert requete(chemin,mauvais)[0]==403
+                assert requete(chemin,http('POST','/matheval/api/admin/login',corps=b'{'))[0]==400
+                assert requete(chemin,http('POST','/matheval/api/admin/login',corps=b'true'))[0]==400
             status,h,b=requete(chemin,http('POST','/matheval/api/admin/setup',corps=json.dumps(admin).encode()))
             assert status==200
+            assert b'RateLimit: "8-in-15min"; r=7;' in h
+            assert b'RateLimit-Policy: "8-in-15min"; q=8; w=900; pk=:' in h
             cookie=next(x.split(b': ',1)[1].split(b';',1)[0] for x in h.split(b'\r\n') if x.lower().startswith(b'set-cookie:'))
             admin_read=http('GET','/matheval/api/admin/me',extra=b'Cookie: '+cookie+b'\r\n')
+            assert requete(chemin,admin_read)[0]==200
+            # L'activation a consommé un des huit essais de connexion. La
+            # validation JSON échoue vite ; elle ne contourne pas le budget.
+            for _ in range(7):
+                assert requete(chemin,http('POST','/matheval/api/admin/login',corps=b'{}'))[0]==400
+            code,h,b=requete(chemin,http('POST','/matheval/api/admin/login',corps=b'{}'))
+            assert code==429 and b'Retry-After:' in h
+            assert b'RateLimit: "8-in-15min"; r=0;' in h
+            assert b'X-Content-Type-Options: nosniff' in h and b'Content-Security-Policy:' in h
+            assert json.loads(b)['error']=='Trop de tentatives. Réessayez dans quelques minutes.'
             assert requete(chemin,admin_read)[0]==200
         finally: arreter(p)
         env['MRJAM_INGRESS_UID']=str(os.geteuid()+1)

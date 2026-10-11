@@ -1,5 +1,9 @@
 # Mise en service Vision : un seul point d'entrée
 
+> Historique antérieur à la mission du 11 octobre 2026. Les anciennes phases,
+> confirmations et déclencheurs ne gouvernent plus le travail actuel. Voir
+> [l’état de reprise central](../assemblage/REPRISE.md). Les faits ci-dessous sont conservés.
+
 **État actuel,10 octobre 2026 à 19:39 UTC : Vision multi-utilisateur activé et
 enregistré.** La reprise008671e/PR96 réussit dans
 [Actions38080453548](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38080453548),

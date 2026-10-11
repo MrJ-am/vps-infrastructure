@@ -78,6 +78,11 @@ def selection(changements, suites):
     """
     choisis = set()
     for chemin in changements:
+        if chemin.split('/',1)[0] in DEPOTS and chemin.split('/',1)[0]!='vps' and (
+                '/coordination/' in chemin or '/.github/workflows/' in chemin or chemin.endswith('/AGENTS.md')):
+            # Le garde-fou éditorial refuse une nouvelle CI, sans rejouer les
+            # navigateurs pour le seul archivage d'une recette historique.
+            choisis.add('editorial');continue
         if chemin == 'vps/assemblage/manifest.json':
             # Tant que les différences entre anciennes/nouvelles révisions des
             # composants ne sont pas disponibles, élargir plutôt que sous-tester.
@@ -139,7 +144,7 @@ def compilation_entrees(chemins):
     "Sources du graphe métier, indépendantes des corrections de prose/tests."
     return entrees({'entrees': {
         'vps': ['mrjam-*.asd', 'lisp/**/*.lisp', 'assemblage/charger.lisp', 'assemblage/construire.lisp'],
-        'vision': ['vision.asd', 'src/*.lisp'],
+        'vision': ['vision.asd', 'src/*.lisp', 'docs/CONTRAT-SEANCE.md', 'docs/tutoriel.json', 'docs/outils.json', 'docs/MCP.md'],
         'matheval': ['matheval.asd', 'lisp/*.lisp']}}, chemins)
 
 
@@ -210,6 +215,17 @@ def identifiant_suite(nom, suite, chemins):
         profiles[cle]={'python_sha256':empreinte(python.resolve().read_bytes()),
                        'paquets_sha256':empreinte(modules)}
     if profiles:result['python_profils']=profiles
+    if suite.get('npm_installations') or suite.get('navigateurs_python') or suite.get('navigateurs_npm'):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('provenance_outils',RACINE/'scripts/provenance-outils.py')
+        outils=importlib.util.module_from_spec(spec);spec.loader.exec_module(outils)
+        result['npm_installations']=outils.npm(suite,chemins)
+        result['navigateurs']=outils.navigateurs(suite,chemins)
+    if suite.get('modele_vision'):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('modele_vision',RACINE/'scripts/modele-vision.py')
+        model=importlib.util.module_from_spec(spec);spec.loader.exec_module(model)
+        result['modele_vision']=model.verifier(model.chemin())
     return result
 
 

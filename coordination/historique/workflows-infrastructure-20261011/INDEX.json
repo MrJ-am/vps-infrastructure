@@ -1,0 +1,17 @@
+{
+  "source_revision": "12b7a1d8d62c1f8be23d3cf9374d52f57ca7234a",
+  "workflows": [
+    {
+      "source": ".github/workflows/vision-demande.yml",
+      "archive": "coordination/historique/workflows-infrastructure-20261011/vision-demande.yml.archive",
+      "sha256": "e1e33339707c1172efdfe94eebb872f4671d25060ba917ad8d79f071ee56009f",
+      "remplacement": "assemblage.yml : manifeste et qualification centrale ; monolithe-reference.yml : référence/sauvegarde/restauration"
+    },
+    {
+      "source": ".github/workflows/vision-mise-en-service.yml",
+      "archive": "coordination/historique/workflows-infrastructure-20261011/vision-mise-en-service.yml.archive",
+      "sha256": "1679b31f70bb082d7b4ba611318d0a658c616e63cf3a677ac0fe825f42e4d902",
+      "remplacement": "assemblage.yml : manifeste et qualification centrale ; monolithe-reference.yml : référence/sauvegarde/restauration"
+    }
+  ]
+}

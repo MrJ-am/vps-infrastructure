@@ -1,5 +1,9 @@
 # Essai réservé de l'identité
 
+> Historique antérieur à la mission du 11 octobre 2026. Les anciennes phases,
+> confirmations et déclencheurs ne gouvernent plus le travail actuel. Voir
+> [l’état de reprise central](../assemblage/REPRISE.md). Les faits ci-dessous sont conservés.
+
 La génération est réellement construite :
 [Actions 37941066602](https://github.com/MrJ-am/vps-infrastructure/actions/runs/37941066602),
 opérateur `765ce372ccd61ad623e33bf8bb476a5c3be21fba`, job `113855262092`.

@@ -58,6 +58,7 @@ class Telephone(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)/'operation'
             root.mkdir(mode=0o755)
+            root.chmod(0o755) # La fixture ne dépend pas de l'umask du runner.
             with self.assertRaises(ValueError): m.envoyer(root, Path('/existant'))
             root.chmod(0o700)
             with patch.object(m.courriel, 'lire_prive', return_value=dict(CONFIG, username='tiers@example.test', from_address='tiers@example.test')), patch.object(m.courriel, 'transmettre') as smtp:

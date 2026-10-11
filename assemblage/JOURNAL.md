@@ -219,3 +219,64 @@
   requirements existants résolus en 35 roues verrouillées SHA256, profil séparé.
   Installation autorisée de cet outillage déjà utilisé, sans nouveau service ni
   runtime. Qualification du modèle réel à poursuivre avant retrait du déclencheur.
+# 11 octobre — centralisation, modèle réel et inventaire SQL
+
+Sources publiées avant mise à jour du manifeste : Vision fcb35f8, Matheval/master
+d64f235, Logique 586ae18, Style 1132afe ; Signature c4a2067 inchangé.
+Treize YAML satellites déplacés dans leurs archives exactes avec index SHA256.
+Workflows personnalisés GitHub désactivés, y compris les restes d’anciennes
+branches ; builtin Pages Matheval PUT disable refuse 422, état distinct consigné.
+L’ancien signal operations/vision et workflow_run central sont archivés sans
+modifier leurs faits historiques. Sauvegardes serveur/timers conservés.
+
+`scripts/modele-vision.py --preparer`, puis suite vision-semantique : modèle officiel
+e8f8c211, onze fichiers SHA256, fournisseur contenu-fenetres-1 inchangé. Six
+paraphrases rang 1/rappel 1, archives/modifications/alias/isolation réussis.
+35 roues du profil CPU déjà utilisé verrouillées ; aucun fournisseur ajouté.
+Suite vision-postgresql avec documents HTTP du serveur commun : 95,7303 s ;
+modèle réel : 36,174 s. Reçus locaux, aucune attestation CI/production.
+
+`tester --suite matheval-navigateur` : 56/56 en 300,2492 s sur 5dd18de2,
+participations synthétiques/PG17 isolé, frontend 36013c2e. L’échec Firefox initial
+55/56 n’est pas effacé : vingt diagnostics ciblés puis deux campagnes complètes
+réussissent sans changement UI, cause non établie. Les changements des quatre
+pins frontend ne touchent que leurs manifestes/reçus ; ressources fonctionnelles
+byte-identiques aux candidats qualifiés. Signature et atelier complet inchangés.
+
+REPL conservé : reload ASDF et `load tests/quotas-http.lisp`. Fenêtres Matheval
+historiques, budget activation/connexion commun, horloge monotone, capacité 4096,
+vingt threads/huit succès. IPv6 /56, IPv4 mappé et adresses malformées contrôlés ;
+en-têtes draft-8 conservés, origine/JSON avant quota. Une vérification ajoutée a
+d’abord traité à tort les objets JSON comme hash-tables : le GET health l’a
+refusée ; correction utilisant les prédicats publics Vision avant nouveau test.
+`qualifier-metier.py --sans-cache` ensuite : 40 FASL dans une image neuve,
+22655808c3fe9941417e13da231b4ae2c310b9d3eaa64a46295ee2ce1b6ddfa8,
+10457800 octets, 3,559 s build/8,3669 s qualification. 40 cas différentiels,
+transport hostile, quotas/en-têtes, origine et JSON invalides, sessions SQL au
+redémarrage réussis. Aucun artefact de la tentative refusée n’est qualifié.
+
+`verifier-tables.py` lit uniquement metadata PG : 30/6 tables, propriétaires,
+RLS forcée/politiques, ACL tables/colonnes et héritage de rôles. Anciennes tables
+Vision privées sans RLS interdites au runtime ; Matheval pseudonyme/scientifique
+classé séparément. Tests Alice/Bob et cycle/admission/fermeture passent. Six
+régressions du garde-fou et 17 du sélecteur passent. Les documents chargés dans
+Vision/core sont désormais static-file ASDF et entrées de compilation ; test
+modification/rechargement de MCP.md dans la même image réussi.
+
+Référence Nix du VPS : commit complet c5c4a43b0e8056328ec4529f735cabdb8f1942bb,
+archive officielle SHA256 53c2d41b0e5ab001e97d4478985287a82870e7c044f5185a250d98627b253fc0.
+Circuit CI ajouté : compilateur/outils exacts seulement selon impact, une image
+Nix propre, qualification de ce même candidat sans reconstruction. Nix absent
+localement : pas d’installation opportuniste ; build cible encore non exécuté.
+La CI reste bloquée avant lecture privée par COMPONENTS_READ_TOKEN absent.
+
+Campagne Python historique élargie localement : 401 tests, 20 skips, dix erreurs
+d’environnement (psycopg/passlib/Authlib et age-keygen absents, plus fixture de
+droits dépendant de l’umask). La dernière fixture fixe désormais explicitement
+0755 ; ses quatre tests passent. Les autres modules restent qualifiés par leur
+CI existante et les campagnes différentielles portées, sans prétendre que cette
+tentative globale était verte ni installer des outils par opportunité.
+
+Production inchangée. Sauvegarde/restauration réelle 38105867103 reste une preuve
+de données, sans qualification ACL/retour applicatif. Aucun jalon production ni
+Kanidm annoncé ; état compact et préconditions restantes dans REPRISE.md.

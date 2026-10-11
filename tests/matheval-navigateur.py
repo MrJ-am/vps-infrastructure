@@ -54,15 +54,21 @@ def qualifier(sources, executable):
             tmp=Path(tmp);socket=tmp/'metier.sock'
             activation=tmp/'activation';activation.write_text(hashlib.sha256(('a'*64).encode()).hexdigest());activation.chmod(0o600)
             config=sources/'docs/.central-playwright.cjs'
+            # Un contexte navigateur représente un client synthétique distinct.
+            # L'adresse est imposée par cette entrée de fixture, jamais utilisable
+            # sur Nginx de production. Aucun mode test ne désactive les quotas Lisp.
             config.write_text("const c=require('./playwright.config.cjs');delete c.webServer;module.exports=c;\n")
-            if os.environ.get('MRJAM_TEST_FILTER'):
+            for test in (sources/'docs/tests/e2e').glob('*.spec.js'):
+                test.write_text("const centralQuotaTest=require('@playwright/test').test;\ncentralQuotaTest.beforeEach(async({page})=>{const h=require('node:crypto').randomBytes(6).toString('hex');await page.setExtraHTTPHeaders({'X-Fixture-IP':'fd00:'+h.match(/.{4}/g).join(':')+'::1'});});\n"+test.read_text())
+            diagnostic=bool(os.environ.get('MRJAM_TEST_FILTER') or os.environ.get('MRJAM_TEST_DIAGNOSTIC'))
+            if diagnostic:
                 # Instrumentation de fixture bornée : événements d'entrée et
                 # état du dialogue, sans corps réseau, cookie ou contenu.
                 test=sources/'docs/tests/e2e/survey.spec.js'
                 instrumentation='''const centralTest=require('@playwright/test').test;
 centralTest.beforeEach(async({page})=>{await page.addInitScript(()=>{
-window.__MRJAM_EVENEMENTS=[];for(const type of ['pointerdown','pointerup','click'])document.addEventListener(type,e=>{
-const out=window.__MRJAM_EVENEMENTS;if(out.length>=200)out.shift();out.push({type,temps:performance.now(),cible:e.target.id||e.target.closest('button')?.id||e.target.tagName,x:e.clientX,y:e.clientY,lecteur:!!document.querySelector('reading-card'),fermetureDesactivee:document.querySelector('#validate-reading')?.disabled});},true);});});
+window.__MRJAM_EVENEMENTS=[];for(const type of ['pointerdown','pointerup','click','read'])document.addEventListener(type,e=>{
+const out=window.__MRJAM_EVENEMENTS;if(out.length>=200)out.shift();const b=document.querySelector('#validate-reading'),r=b?.getBoundingClientRect();out.push({type,temps:performance.now(),cible:e.target.id||e.target.closest('button')?.id||e.target.tagName,x:e.clientX,y:e.clientY,detail:typeof e.detail==='number'?e.detail:undefined,lecteur:!!document.querySelector('reading-card'),fermetureDesactivee:b?.disabled,fermetureRect:r?{x:r.x,y:r.y,width:r.width,height:r.height}:null,actif:document.activeElement?.id});},true);});});
 centralTest.afterEach(async({page},info)=>{await info.attach('evenements-dialogue',{body:JSON.stringify(await page.evaluate(()=>window.__MRJAM_EVENEMENTS||[])),contentType:'application/json'});});
 '''
                 test.write_text(instrumentation+test.read_text())
@@ -82,7 +88,8 @@ centralTest.afterEach(async({page},info)=>{await info.attach('evenements-dialogu
                         time.sleep(.05)
                     else:raise AssertionError('Socket navigateur absent')
                     commande=['node_modules/.bin/playwright','test','--config=.central-playwright.cjs']
-                    if os.environ.get('MRJAM_TEST_FILTER'):commande+=['--grep',os.environ['MRJAM_TEST_FILTER'],'--trace=on']
+                    if diagnostic:commande+=['--trace=on']
+                    if os.environ.get('MRJAM_TEST_FILTER'):commande+=['--grep',os.environ['MRJAM_TEST_FILTER']]
                     if os.environ.get('MRJAM_TEST_PROJECT'):commande+=['--project',os.environ['MRJAM_TEST_PROJECT']]
                     if os.environ.get('MRJAM_TEST_REPEAT'):
                         nombre=int(os.environ['MRJAM_TEST_REPEAT'])

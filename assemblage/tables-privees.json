@@ -1,0 +1,655 @@
+{
+  "format": 1,
+  "vision": {
+    "public.vision_contextes": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_embeddings": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_episodes": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_fiches": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_items": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_journal": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_liens": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_memory_observations": {
+      "classe": "historique-personnel-inaccessible-au-runtime",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_memory_sheets": {
+      "classe": "historique-personnel-inaccessible-au-runtime",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_migrations_metier": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_observation_corrections": {
+      "classe": "historique-personnel-inaccessible-au-runtime",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_observations": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_preparations_items": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_profils": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_recherches": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_requetes": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_scheduler_settings": {
+      "classe": "historique-personnel-inaccessible-au-runtime",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_schema_migrations": {
+      "classe": "schema-sans-contenu-personnel",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_seances": {
+      "classe": "contenu-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "public.vision_sheet_edits": {
+      "classe": "historique-personnel-inaccessible-au-runtime",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.admissions": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.comptes": {
+      "classe": "compte-personnel",
+      "rls": true,
+      "force_rls": true,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [
+          "SELECT"
+        ],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.configuration": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.effacements": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.evenements": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.fermetures_identite": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.historique_proprietaire": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.identites": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.invitations": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    },
+    "vision_gestion.preavis": {
+      "classe": "metadonnees-identite-admission-cycle-par-fonctions-bornees",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": true,
+      "proprietaire": "vision_migration",
+      "droits_directs": {
+        "vision": [],
+        "vision_administration": [],
+        "vision_identite": [],
+        "vision_cycle": [],
+        "vision_admission": [],
+        "vision_fermeture": [],
+        "vision_entretien": []
+      }
+    }
+  },
+  "matheval": {
+    "public.corpus": {
+      "classe": "corpus-scientifique-public",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT"
+        ]
+      }
+    },
+    "public.participations": {
+      "classe": "participation-pseudonyme-secret-de-reprise",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT",
+          "INSERT",
+          "UPDATE"
+        ]
+      }
+    },
+    "public.answers": {
+      "classe": "resultat-scientifique-pseudonyme",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT",
+          "INSERT",
+          "DELETE"
+        ]
+      }
+    },
+    "public.interaction_events": {
+      "classe": "journal-scientifique-pseudonyme",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT",
+          "INSERT"
+        ]
+      }
+    },
+    "public.administrators": {
+      "classe": "authentificateur-scientifique-prive",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT",
+          "INSERT",
+          "UPDATE"
+        ]
+      }
+    },
+    "public.administrator_sessions": {
+      "classe": "session-scientifique-privee",
+      "rls": false,
+      "force_rls": false,
+      "colonne_utilisateur": false,
+      "proprietaire_interdit": [
+        "matheval_app"
+      ],
+      "droits_directs": {
+        "matheval_app": [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE"
+        ]
+      }
+    }
+  }
+}

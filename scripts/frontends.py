@@ -21,11 +21,11 @@ from assemblage import RACINE, chemins_sources, manifeste, verifier_sources
 def sha(data): return hashlib.sha256(data).hexdigest()
 
 
-def contenus(root):
+def contenus(root,provenance_cache=False):
     result = {}
     for p in sorted(root.rglob('*')):
         if p.is_symlink(): raise ValueError('Lien interdit dans un cache de sources')
-        if p.is_file() and p.name != '.provenance-centrale.json':
+        if p.is_file() and not (provenance_cache and p==root/'.provenance-centrale.json'):
             result[str(p.relative_to(root))] = sha(p.read_bytes())
     return result
 
@@ -79,7 +79,7 @@ def reutiliser_candidat(cle, sources, m):
 def tester_frontend(cle,sources,caches,campagne='base'):
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME',
         'PLAYWRIGHT_BROWSERS_PATH','CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI',
-        'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT')}
+        'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')}
     env['STYLE_MRJAM_SOURCE']=str(caches.get(cle,sources['style']))
     commandes={
         'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test'],
@@ -145,7 +145,7 @@ def cache_style(source, revision):
             tar.extractall(stage, filter='data')
         attendu = contenus(stage)
         if cible.exists():
-            if cible.is_symlink() or contenus(cible) != attendu:
+            if cible.is_symlink() or contenus(cible,provenance_cache=True) != attendu:
                 raise ValueError('Cache de style modifié ; préserver et examiner le travail concurrent')
         else:
             shutil.copytree(stage, cible)
@@ -157,7 +157,7 @@ def cache_style(source, revision):
 
 def copier_cache(source, cible):
     if cible.exists():
-        if cible.is_symlink() or contenus(cible) != contenus(source):
+        if cible.is_symlink() or contenus(cible,provenance_cache=True) != contenus(source,provenance_cache=True):
             raise ValueError('Cache consommateur différent ; aucun nettoyage automatique')
     else:
         cible.parent.mkdir(parents=True, exist_ok=True)
@@ -245,7 +245,7 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                 tester_frontend(cle,locaux,caches,campagne)
                 print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'],
                     'tests':'reussis','campagne':campagne,
-                    'diagnostic_specifique':bool(os.environ.get('MRJAM_TEST_FILTER')),
+                    'diagnostic_specifique':any(os.environ.get(k) for k in ('MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')),
                     'construction_reutilisee':True,'publication':False},ensure_ascii=False))
             else:construire_dans_atelier(cle, locaux, m, caches)
         except Exception:
@@ -260,7 +260,7 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
             if rapports.exists():print('Diagnostics privés conservés : '+str(rapports.relative_to(RACINE)),flush=True)
             raise
         finally:
-            if os.environ.get('MRJAM_TEST_FILTER') and (atelier/'docs/test-results').is_dir():
+            if (os.environ.get('MRJAM_TEST_FILTER') or os.environ.get('MRJAM_TEST_DIAGNOSTIC')) and (atelier/'docs/test-results').is_dir():
                 rapports=RACINE/'state/rapports-frontends'/(cle+'-diagnostic-'+uuid.uuid4().hex[:12])
                 shutil.copytree(atelier/'docs/test-results',rapports)
                 print('Trace ciblée conservée : '+str(rapports.relative_to(RACINE)),flush=True)

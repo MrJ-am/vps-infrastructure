@@ -12,6 +12,7 @@ on:
       - scripts/ci-impact.py
       - scripts/coordination.py
       - scripts/qualifier-metier.py
+      - scripts/construire-metier-nix.py
       - scripts/verifier-dependances.py
       - tests/test_assemblage.py
       - tests/test_assemblage_revisions.py
@@ -30,10 +31,21 @@ on:
       - scripts/frontends.py
       - scripts/outiller.py
       - scripts/ci-qualifier.py
+      - scripts/modele-vision.py
+      - scripts/provenance-outils.py
+      - scripts/verifier-ci.py
+      - scripts/verifier-tables.py
+      - scripts/vision-contrats.py
       - tests/cache-fasl.py
       - tests/http_fixture.py
       - tests/matheval-navigateur.py
       - tests/vision-reference.py
+      - tests/vision-documents-commun.py
+      - tests/matheval-reference.py
+      - tests/json-commun.lisp
+      - tests/quotas-http.lisp
+      - tests/cache-documents.py
+      - tests/test_tables_privees.py
       - tests/test_monolithe_sauvegarde.py
       - scripts/monolithe-sauvegarde.py
       - .github/workflows/assemblage.yml
@@ -62,6 +74,7 @@ jobs:
         run: |
           python3 -m unittest discover -s tests -p 'test_assemblage*.py'
           python3 -m unittest discover -s tests -p test_monolithe_sauvegarde.py
+          python3 -m unittest discover -s tests -p test_tables_privees.py
           python3 scripts/coordination.py verifier
   composants:
     needs: cadre
@@ -144,18 +157,44 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Utiliser SBCL et ASDF verrouillés sans installer de nouveau runtime métier
-        run: |
-          curl --fail --location --silent --show-error https://deb.debian.org/debian/pool/main/s/sbcl/sbcl_2.5.2-1_amd64.deb -o "$RUNNER_TEMP/sbcl.deb"
-          printf '%s  %s\n' c4153abbe1def77e5e2bd62d2f25295d60df80333ea1a13c44b53209d179ef67 "$RUNNER_TEMP/sbcl.deb" | sha256sum --check
-          dpkg-deb -x "$RUNNER_TEMP/sbcl.deb" "$RUNNER_TEMP/sbcl"
-          printf '%s\n' "$RUNNER_TEMP/sbcl/usr/bin" >> "$GITHUB_PATH"
-          printf 'SBCL_HOME=%s\n' "$RUNNER_TEMP/sbcl/usr/lib/sbcl" >> "$GITHUB_ENV"
       - name: Vérifier toutes les dépendances directes et leurs locks
         env:
           MRJAM_ATELIER: ${{ github.workspace }}/.sources/
         run: |
           python3 scripts/verifier-dependances.py
+          python3 scripts/verifier-ci.py
+      - name: Sélectionner le compilateur et le candidat Nix nécessaires
+        id: besoin_nix
+        env:
+          MRJAM_ATELIER: ${{ github.workspace }}/.sources/
+          MRJAM_COMMIT_AVANT: ${{ github.event.before }}
+        run: |
+          PYTHONPATH=scripts python3 - <<'PY'
+          import os
+          from assemblage import catalogue,selection,changements_assemblage,chemins_sources
+          suites=catalogue()
+          noms=selection(changements_assemblage(os.environ.get('MRJAM_COMMIT_AVANT'),chemins_sources(atelier=os.environ['MRJAM_ATELIER'])),suites)
+          metier=any(suites[n].get('candidat_metier') or n=='matheval-postgresql' for n in noms)
+          sbcl=metier or any('sbcl' in suites[n].get('outils',{}) for n in noms)
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              f.write('sbcl='+str(sbcl).lower()+'\nmetier='+str(metier).lower()+'\n')
+          PY
+      - name: Fournir Nix par le même mécanisme que les tests infrastructure existants
+        if: steps.besoin_nix.outputs.sbcl == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nix-bin
+      - name: Construire une fois avec SBCL 2.6.4 et le Nixpkgs exact du VPS
+        if: steps.besoin_nix.outputs.sbcl == 'true'
+        env:
+          MRJAM_ATELIER: ${{ github.workspace }}/.sources/
+          BESOIN_METIER: ${{ steps.besoin_nix.outputs.metier }}
+        run: |
+          if [ "$BESOIN_METIER" = true ]; then
+            python3 scripts/construire-metier-nix.py
+          else
+            python3 scripts/construire-metier-nix.py --outils-seulement
+          fi
       - name: Qualifier les sources exactes et les contrats différentiels
         env:
           MRJAM_ATELIER: ${{ github.workspace }}/.sources/

@@ -67,4 +67,5 @@ Conserver générations de retour/services tiers. Mécanismes d'exploitation exi
 Journal minimisé : ni corps, cookie, Authorization, URL ou identifiant métier ;
 rétention actuelle 14 jours. Garanties Vision conservées : items communs du même
 propriétaire, observations immuables, rectifications ajoutées, dates, versions,
-épisodes, conflits, clôtures atomiques, recherche. SQL initial : 7, création 1, schéma 25.
+épisodes, conflits, clôtures atomiques, recherche. SQL métier : 7, création 1 ;
+schéma assemblé 26, schéma constaté en production 25 jusqu'à la bascule.

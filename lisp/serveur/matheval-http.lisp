@@ -6,7 +6,7 @@
         for p = (string-trim '(#\Space #\Tab) part)
         when (uiop:string-prefix-p "matheval_admin=" p) return (subseq p 15)))
 
-(defun traiter-matheval (contexte methode chemin headers query corps &key origine)
+(defun traiter-matheval (contexte methode chemin headers query corps &key origine avant-operation)
   "Adaptateur sans listener : le serveur commun possède transport et cycle de vie.
 Retour status, valeur JSON/CSV, en-têtes. Pas d'état utilisateur global."
   (let ((cookie (cookie-admin headers)) (result-headers (list (cons "Cache-Control" "no-store"))))
@@ -27,7 +27,12 @@ Retour status, valeur JSON/CSV, en-têtes. Pas d'état utilisateur global."
             (when (stringp corps)
               (when (> (length (sb-ext:string-to-octets corps :external-format :utf-8)) (* 5 1024 1024))
                 (refuser 413 "Requête trop volumineuse."))
-              (setf corps (if (zerop (length corps)) (vision:jobject) (vision:parse-json corps))))
+              (setf corps (if (zerop (length corps)) (vision:jobject) (vision:parse-json corps)))
+              (unless (or (vision:json-object-p corps) (vision:json-array-p corps))
+                (refuser 400 "JSON structuré requis.")))
+            ;; Le serveur possède les budgets HTTP. Comme le middleware de
+            ;; référence, ils interviennent après origine et décodage JSON.
+            (when avant-operation (funcall avant-operation))
             (let ((parts (uiop:split-string (string-trim "/" chemin) :separator "/")))
               (cond
                 ((and (member methode '("GET" "HEAD") :test #'equal) (equal parts '("health")))
