@@ -65,5 +65,38 @@ retour et sondes réelles, SSH central existant. Aucun ancienworkflow réactivé
 Journal synthétique sans secrets/données dans JOURNAL.md ; reprise compacte dans
 REPRISE.md. Ancien guide exact archivé dans coordination/historique/.
 
-État : image persistante83928 conservée et saine ; intégration des deux outils
-encore à auditer/installer/qualifier. Aucune connexion MCP agent revendiquée.
+Raccordement qualifié dans cette session : cl-mcp4106 et Swank4105 dans le PID
+applicatif83928 ; Tron4107 dans un processus d’outillage séparé, ciblant ce Swank.
+Les ports sont exclusivement loopback. Sources/licences/35 transitives/limites et
+patch de raccordement : `outils/mcp.lock.json`, `outils/audit-mcp.md`, `outils/mcp.nix`.
+Le scénario réel est exécuté par `python3 scripts/qualifier-mcp.py` ; il refuse de
+réinitialiser la fixture si un débogage est suspendu. Un échec exige inspection,
+pas une répétition aveugle de l’opération ayant déjà incrémenté son compteur.
+
+Depuis cet agent hébergé, utiliser le transport existant avec le pont HTTP :
+
+```sh
+python3 scripts/mcp-appel.py cl-mcp tools/list
+python3 scripts/mcp-appel.py tron tools/list
+python3 scripts/mcp-appel.py cl-mcp load-system <<'JSON'
+{"system":"mrjam-metier","force":false,"clear_fasls":false}
+JSON
+python3 scripts/mcp-appel.py tron repl_eval <<'JSON'
+{"code":"(mrjam-developpement:verifier \"quotas\")"}
+JSON
+```
+
+Le pont sérialise les appels aux deux outils ; un seul rédacteur de l’image.
+Pour une nouvelle image seulement : installer les sources avec l’expression Nix
+`outils/mcp.nix` et le Nixpkgs verrouillé, enregistrer le résultat dans
+state/outils-sources/mcp-store.txt, charger `outils/application.lisp` une fois après
+`developper.lisp`, puis lancer le processus d’outillage SBCL avec `outils/tron.lisp`.
+Employer les DSO de state/outils-nix.json. Ne pas relancer cette installation ou
+les serveurs à chaque commande. Le catalogue MCP natif hébergé n’est pas modifié ;
+la connexion par le pont ci-dessus est la connexion réellement vérifiée.
+
+Pour la pile suspendue, lire les FRAMES de l’événement DEBUG initial et appeler
+repl_frame_locals. Le backtrace RPC amont n’est pas la pile suspendue. Garder cet
+événement jusqu’au restart ; ne pas prendre un HTTP200 ou le compteur ASDF inconnu
+pour un résultat fonctionnel. Qualification finale propre distincte, avec reprise
+consignée ; l’image persistante saine reste utilisée pendant cette tâche.

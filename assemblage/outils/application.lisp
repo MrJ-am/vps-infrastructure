@@ -1,0 +1,15 @@
+;;; À charger une fois dans l'image de développement déjà saine, jamais en production.
+(load (merge-pathnames "registre.lisp" *load-truename*))
+(mrjam-outils-mcp:initialiser)
+(load (merge-pathnames "natif.lisp" *load-truename*))
+(let ((*compile-verbose* nil) (*compile-print* nil) (*load-verbose* nil))
+  (asdf:load-system "swank")
+  (asdf:load-system "cl-mcp"))
+(assert (not cl-mcp:*use-worker-pool*))
+(unless (find "Swank 4105" (sb-thread:list-all-threads)
+              :key #'sb-thread:thread-name :test #'equal)
+  (swank:create-server :port 4105 :interface "127.0.0.1" :dont-close t :style :spawn))
+(unless (cl-mcp:http-server-running-p)
+  (cl-mcp:start-http-server :host "127.0.0.1" :port 4106 :worker-pool nil))
+(format t "~&Outils application : PID ~D, pool ~S, Swank4105/MCP4106 local.~%"
+        (sb-posix:getpid) cl-mcp:*use-worker-pool*)

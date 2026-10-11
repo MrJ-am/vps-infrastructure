@@ -6,7 +6,7 @@ Production : génération r6s7ags3, ancienne architecture, Keycloak provisoire ;
 fictif créé, fermé ou effacé en production. Dernière référence38118876078 : un
 compte Vision/une identité, liens cohérents, trois participations Matheval ouvertes.
 
-État constaté après amendement : main infrastructure a209c00 ; branche locale
+État constaté après amendement : main infrastructure c6ecf2d ; branche locale
 reorganisation/assemblage-central-20261011. Vision 1ef7174, Matheval/master 5e234c0,
 Logique 032b4f5, Style b2da638, Signature e9d9d34. Consignes/guides des cinq composants
 publiés avec archives exactes ; root intègre les corrections Nix/préparateur et
@@ -16,8 +16,13 @@ actif, ni build/migration locale en cours au constat.
 
 Image de tâche SBCL2.6.4 PID83928/session27658 conservée et saine, métier chargé ;
 contrôle de reprise court réussi. L’ancien PID79777/SBCL2.5 reste séparé et idle :
-ne pas le présenter comme la session commune. Pas de cl-mcp/Tron/Swank actif.
-Raccordement agent hébergé non qualifié ; ne pas supposer une config CLI utilisable.
+ne pas le présenter comme la session commune. Swank4105/cl-mcp4106 dans ce PID ; Tron4107/PID129399, processus outil seulement.
+Sources officielles/35 bibliothèques Nix auditées/verrouillées. Connexion réelle
+agent→pont HTTP local qualifiée : marqueur/PID/objet11→12, condition/pile/locaux40/2,
+correction enregistrée compilée/restart42, effet1 avant/après. Scénario canonique
+0,8729s ; trois assertions ASDF confirmées par marqueur, compte générique amont inconnu.
+Ports loopback, aucun catalogue natif hébergé prétendu modifié. Limites backtrace
+RPC et installation de skills documentées dans outils/audit-mcp.md.
 
 Travail conservé : bibliothèques ASDF Matheval/Vision/auxiliaires, serveur commun,
 contrats/isolation/SQL/états durables, catalogue/sélecteur/reçus, absence de CI
@@ -33,8 +38,7 @@ réussi : toutes assertions et autres invariants identiques, seuls chemins gén�
 PG hba_file/ident_file changent pour le peer du compte commun. Correction locale :
 comparer toutes autres propriétés et contrôler les seuls ajouts HBA/IdentMap exacts
 sans modifier les règles antérieures ; 13 régressions passent, incluant le refus
-d’un candidat antérieur/en attente avant transfert. Pas encore publié
-ni requalifié sur VPS. Stage privé /root/mrjam-assemblages/e522c2a… ; aucune
+d’un candidat antérieur/en attente avant transfert. Correction publiée c6ecf2d ; pas encore requalifiée sur VPS. Stage privé /root/mrjam-assemblages/e522c2a… ; aucune
 preparation.json ou activation.json. Aucune opération à effets de bord incertaine.
 
 Plan actualisé et critères de passage :
@@ -63,3 +67,9 @@ SECURITE.md, JOURNAL.md, reference-production.json et sauvegarde-transition.json
 Ancien protocole/registres/résultats gardés historiques sans faux acquittements.
 APIs protections/environments/deploy keys403 ; Pages intégré Matheval disable422.
 Ne pas prétendre leur nettoyage distant achevé. Sauvegardes/tiers conservés.
+
+Travail affecté en cours : elm-review Nix installé (paquet2.13.5, CLI annonce2.13.4),
+règles/fixtures/contrôle de qualification à intégrer ; elm-animator1.1.1 existant
+retenu pour éviter une mise à jour arbitraire. Présentation CSS/HTML existante dans
+Matheval/Style et adaptateurs applicatifs à corriger ; aucune conformité annoncée.
+Image métier296b7c89 et suites backend inchangées restent conservées.
