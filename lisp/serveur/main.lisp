@@ -31,6 +31,23 @@
                       (mrjam-courriel:lire-prive (obligatoire "MRJ_SMTP_SECRET")) (mrjam-courriel:lire-prive (obligatoire "MRJ_FERMETURE_CONFIG"))
                       (client-identite "mrjam-fermeture" "MRJ_FERMETURE_CLIENT") admission (obligatoire "AGE")))))
 
+(defun periodique (secondes fonction)
+  (let ((prochaine 0))
+    (lambda () (when (<= prochaine (get-universal-time))
+                 (funcall fonction) (setf prochaine (+ (get-universal-time) secondes))))))
+(defun tache-courriel ()
+  (when (uiop:getenv "MRJ_COURRIEL_FILE")
+    (mrjam-native:initialiser-sqlite (obligatoire "MRJAM_LIBSQLITE"))
+    (let* ((smtp (mrjam-courriel:verifier-smtp (mrjam-courriel:lire-prive (obligatoire "MRJ_SMTP_SECRET"))))
+           (file (mrjam-courriel:faire-file (obligatoire "MRJ_COURRIEL_FILE") (vision:json-object-get smtp "from_address"))))
+      (cons "courriel" (lambda () (mrjam-courriel:traiter file smtp) (mrjam-courriel:purger file))))))
+(defun tache-entretien ()
+  (when (uiop:getenv "VISION_ENTRETIEN_DSN")
+    (let ((dsn (obligatoire "VISION_ENTRETIEN_DSN")))
+      (cons "purge-vision" (periodique 86400 (lambda ()
+        (mrjam-native:avec-connexion dsn (lambda (c) (mrjam-native:transaction c (lambda (c)
+          (mrjam-native:requete c "SELECT vision_gestion.purger(),vision_gestion.purger_admissions()")))))))))))
+
 (defun main ()
   (handler-case
       (progn
@@ -51,7 +68,9 @@
                   :cycle cycle :admission admission :fermeture fermeture
                   :taches (append (when cycle (list (cons "cycle-vision" (lambda () (vision-cycle:traiter cycle)))))
                                   (when admission (list (cons "admission" (lambda () (vision-admission:traiter admission)))))
-                                  (when fermeture (list (cons "fermeture" (lambda () (vision-fermeture:traiter (getf fermeture :contexte)))))))
+                                  (when fermeture (list (cons "fermeture" (lambda () (vision-fermeture:traiter (getf fermeture :contexte))))))
+                                  (let ((f (tache-courriel))) (when f (list f)))
+                                  (let ((f (tache-entretien))) (when f (list f))))
                   :socket (obligatoire "MRJAM_SOCKET")))))
     (error ()
       ;; Ni formulaire, ni conditions contenant paramètres/chemins secrets.

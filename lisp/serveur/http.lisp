@@ -137,11 +137,26 @@
                     (ignore-errors (repondre-http s 500 "{\"error\":\"internal_error\"}" '(("Cache-Control" . "no-store"))))))
       (ignore-errors (close s)))))
 
+;; SO_PEERCRED Linux : l'émetteur réel du socket, jamais un en-tête HTTP.
+(sb-alien:define-alien-type cred-pair
+  (sb-alien:struct cred-pair (pid sb-alien:int) (uid sb-alien:unsigned-int) (gid sb-alien:unsigned-int)))
+(sb-alien:define-alien-routine ("getsockopt" %peer-credential) sb-alien:int
+  (fd sb-alien:int) (niveau sb-alien:int) (option sb-alien:int)
+  (valeur (* cred-pair)) (taille (* sb-alien:unsigned-int)))
+(defun emetteur-autorise-p (socket uid)
+  (sb-alien:with-alien ((cred cred-pair) (taille sb-alien:unsigned-int 12))
+    (and (zerop (%peer-credential (sb-bsd-sockets:socket-file-descriptor socket) 1 17
+                                (sb-alien:addr cred) (sb-alien:addr taille)))
+         (= taille 12) (= (sb-alien:slot cred 'uid) uid))))
+
 (defun servir (cfg)
   "Un seul listener AF_UNIX. Pas de REPL, pas d'accès TCP au backend métier."
   (let ((chemin (configuration-socket cfg)) (listener (make-instance 'sb-bsd-sockets:local-socket :type :stream))
         (slots (sb-thread:make-semaphore :count (configuration-workers cfg)))
-        (arreter (list nil)) (taches nil))
+        (arreter (list nil)) (taches nil)
+        (uid (let ((v (uiop:getenv "MRJAM_INGRESS_UID")))
+               (if v (parse-integer v :junk-allowed nil) (sb-posix:geteuid)))))
+    (unless (<= 0 uid 4294967295) (erreur-http 500))
     ;; Ne supprimer aucun chemin préexistant : le répertoire RuntimeDirectory
     ;; appartient à systemd ; un fichier inattendu fait échouer le démarrage.
     (when (probe-file chemin) (erreur-http 500))
@@ -160,7 +175,7 @@
                             (error () (format *error-output* "Tâche ~A temporairement indisponible.~%" n)))
                           (loop repeat 60 until (car arreter) do (sleep 1)))) :name n))))
           (loop for client = (sb-bsd-sockets:socket-accept listener) do
-            (if (sb-thread:try-semaphore slots)
+            (if (and (emetteur-autorise-p client uid) (sb-thread:try-semaphore slots))
                 (handler-case
                     (let ((c client))
                       (sb-thread:make-thread (lambda () (unwind-protect (traiter-client cfg c) (sb-thread:signal-semaphore slots))) :name "metier-http"))

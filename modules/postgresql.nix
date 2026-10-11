@@ -4,6 +4,7 @@ let
   layout = import ../lib/databases.nix projects;
   multi = config.infrastructure.visionMultiutilisateur.enable or false;
   identite = config.infrastructure.identite.enable or false;
+  metier = config.infrastructure.metier.enable or false;
   permissions = pkgs.writeText "vps-postgresql-permissions.sql"
     (if multi then lib.replaceStrings
       [ ''GRANT USAGE, CREATE ON SCHEMA public TO "vision";'' ''GRANT CONNECT, TEMPORARY ON DATABASE "vision" TO "vision";'' ]
@@ -40,6 +41,7 @@ in {
         unix_socket_directories = "/run/postgresql";
       };
       authentication = lib.mkForce (
+        lib.optionalString metier "local vision vision,vision_administration,vision_cycle,vision_admission,vision_fermeture,vision_entretien peer map=mrjam_metier\nlocal matheval matheval_app peer map=mrjam_metier\n" +
         lib.optionalString identite "local mrjam_identite keycloak peer\n" +
         lib.optionalString multi "local vision vision_identite peer map=mrj_identite\nlocal vision vision_administration peer\nlocal vision vision_cycle peer\nlocal vision vision_admission peer\nlocal vision vision_fermeture peer\n" +
         layout.authentication);

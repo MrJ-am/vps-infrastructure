@@ -48,7 +48,7 @@ def qualifier(executable, fixture):
                    MATHEVAL_DSN=c['connexion'],MATHEVAL_BANK_VERSION=c['version'],
                    MATHEVAL_ORIGIN='http://127.0.0.1:4173',MATHEVAL_SETUP_HASH_FILE=str(activation),
                    VISION_DSN=c['connexion'],
-                   VISION_DOCUMENT_ROOT=str(Path(d)/'sans-document'),MRJAM_SOCKET=str(chemin))
+                   VISION_DOCUMENT_ROOT=str(Path(d)/'sans-document'),MRJAM_SOCKET=str(chemin),MRJAM_INGRESS_UID=str(os.geteuid()))
         def demarrer():
             p = subprocess.Popen([str(Path(executable).resolve())], env=env, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
             for _ in range(100):
@@ -101,6 +101,15 @@ def qualifier(executable, fixture):
             admin_read=http('GET','/matheval/api/admin/me',extra=b'Cookie: '+cookie+b'\r\n')
             assert requete(chemin,admin_read)[0]==200
         finally: arreter(p)
+        env['MRJAM_INGRESS_UID']=str(os.geteuid()+1)
+        p=demarrer()
+        try:
+            try:
+                requete(chemin,http('GET','/healthz',service='vision',extra=b'X-Vision-Authenticated: 1\r\nX-Mrj-User: alice\r\n'))
+            except (ConnectionResetError,ValueError,BrokenPipeError): pass
+            else: raise AssertionError('UID pair non autorisé accepté')
+        finally: arreter(p)
+        env['MRJAM_INGRESS_UID']=str(os.geteuid())
         p=demarrer()
         try:
             status,_,apres=requete(chemin,lecture)
