@@ -643,5 +643,27 @@
     "cadre": "success",
     "composants": "failure",
     "cause": "COMPONENTS_READ_TOKEN absent, arret avant checkout prive"
+  },
+  "auxiliaires": {
+    "vision": "dc8fffed65c37755331d679a60714b41f3c37654",
+    "validation_administration_cas": 644,
+    "validation_admission_cas": 141,
+    "sqlite_historique": "blobs MIME inchangés ; reprise et idempotence concurrente",
+    "smtp": "curl STARTTLS réel loopback ; CA/hostname refus avant AUTH",
+    "postgresql": "25 migrations/rôles ; isolation Alice/Bob et cycle/admission/fermeture",
+    "identite": "client Keycloak provisoire simulé ; aucun IdP réel",
+    "age": "non qualifié localement ; archives synthétiques préexistantes",
+    "artefact": {
+      "format": 1,
+      "artefact_sha256": "bfda1fa3a7fc1b1be8531d7ce809b42fc8e1ffafffb2428256c96e30ffcd1a5a",
+      "taille_octets": 10425056,
+      "construction_secondes": 3.4124,
+      "tests_secondes": 7.0487,
+      "fasl_reference_sans_cache": true,
+      "fasl_reference_crees": 39,
+      "source_revision": "0b155626fe0aa3417f329f8df5b75154630875f6",
+      "qualification": "locale HTTP/transactions/redemarrage, assemblage complet non qualifie",
+      "publication_autorisee": false
+    }
   }
 }

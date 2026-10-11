@@ -28,7 +28,9 @@
   (taille-sortie sb-alien:unsigned-long))
 
 (defun octets (texte)
-  (sb-ext:string-to-octets texte :external-format :utf-8 :null-terminate nil))
+  (etypecase texte
+    (string (sb-ext:string-to-octets texte :external-format :utf-8 :null-terminate nil))
+    ((simple-array (unsigned-byte 8) (*)) texte)))
 
 (defun hex (donnees)
   (let ((alphabet "0123456789abcdef"))
@@ -74,6 +76,29 @@
   ;; Même contrat que sameSecret Node : comparaison de SHA256 de longueur fixe.
   (and (stringp a) (stringp b)
        (octets-egaux-p (digest-octets (octets a)) (digest-octets (octets b)))))
+
+(defun base64 (bytes &key url sans-remplissage)
+  "Encodage RFC4648 ; l'aléa provient uniquement de RAND_bytes."
+  (let ((alphabet (if url "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+                         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")))
+    (with-output-to-string (s)
+      (loop for i from 0 below (length bytes) by 3
+            for reste = (- (length bytes) i)
+            for x = (logior (ash (aref bytes i) 16)
+                            (if (> reste 1) (ash (aref bytes (1+ i)) 8) 0)
+                            (if (> reste 2) (aref bytes (+ i 2)) 0)) do
+        (loop for n below 4 do
+          (cond ((< n (1+ (min 3 reste))) (write-char (char alphabet (ldb (byte 6 (- 18 (* 6 n))) x)) s))
+                ((not sans-remplissage) (write-char #\= s))))))))
+
+(defun aleatoire-url ()
+  (let ((bytes (dehex (aleatoire-hex 32))))
+    (unwind-protect (base64 bytes :url t :sans-remplissage t) (fill bytes 0))))
+
+(defun uuid ()
+  (let ((s (aleatoire-hex 16)))
+    (setf (char s 12) #\4 (char s 16) (char "89ab" (logand 3 (digit-char-p (char s 16) 16))))
+    (format nil "~A-~A-~A-~A-~A" (subseq s 0 8) (subseq s 8 12) (subseq s 12 16) (subseq s 16 20) (subseq s 20))))
 
 (defun scrypt (mot sel)
   "Paramètres historiques Matheval : sel UTF-8 (hex textuel), N=131072/r=8/p=1."

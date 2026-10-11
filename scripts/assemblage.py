@@ -121,11 +121,11 @@ def environnement(suite):
     if any(re.search('SECRET|TOKEN|PASSWORD|KEY|CREDENTIAL', k, re.I) for k in valeurs):
         raise ValueError('Configuration secrète interdite dans un reçu')
     natifs = {}
-    motifs = ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1', '/lib/*/libcrypto.so.3', '/lib/*/libpq.so.5') if 'sbcl' in versions else ()
+    motifs = ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1', '/lib/*/libcrypto.so.3', '/lib/*/libpq.so.5', '/lib/*/libsqlite3.so.0') if 'sbcl' in versions else ()
     for motif in motifs:
         for chemin in Path('/').glob(motif.lstrip('/')):
             natifs[str(chemin)] = empreinte(chemin.resolve().read_bytes())
-    for cle in ('MRJAM_LIBCRYPTO', 'MRJAM_LIBPQ'):
+    for cle in ('MRJAM_LIBCRYPTO', 'MRJAM_LIBPQ', 'MRJAM_LIBSQLITE'):
         chemin = os.environ.get(cle)
         if chemin:
             p = Path(chemin).resolve(strict=True)

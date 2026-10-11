@@ -5,6 +5,8 @@ on:
       - assemblage/**
       - mrjam-metier.asd
       - mrjam-native.asd
+      - mrjam-courriel.asd
+      - mrjam-identite.asd
       - lisp/**
       - scripts/assemblage.py
       - scripts/ci-impact.py
@@ -17,6 +19,12 @@ on:
       - tests/native-differentiel.*
       - tests/serveur-artefact.py
       - tests/vision-sql-native.*
+      - tests/vision-cycle.lisp
+      - tests/gestion-differentiel.*
+      - tests/courriel-*
+      - tests/identite-client.py
+      - tests/admission*
+      - tests/fermeture-composant.lisp
       - .github/workflows/assemblage.yml
   workflow_dispatch:
 permissions:
@@ -133,7 +141,7 @@ jobs:
           MRJAM_ATELIER: ${{ github.workspace }}/.sources/
         run: |
           python3 scripts/assemblage.py verifier --atelier "$MRJAM_ATELIER" --exact
-          python3 scripts/assemblage.py tester --atelier "$MRJAM_ATELIER" --exact --ci --suite native-contrats --suite matheval-pures --suite matheval-postgresql --suite vision-sql-native
+          python3 scripts/assemblage.py tester --atelier "$MRJAM_ATELIER" --exact --ci --suite native-contrats --suite matheval-pures --suite matheval-postgresql --suite vision-sql-native --suite gestion-validation --suite courriel-composant --suite identite-client --suite admission-validation
       - uses: actions/upload-artifact@v4
         if: always()
         with:
