@@ -31,6 +31,12 @@ inutile. Aucune interaction métier ne dépend d’une animation décorative.
 
 Les exceptions AST lient les sources communes, le module, la fonction, les
 symboles autorisés et les valeurs constantes pertinentes. Aucun module exempté.
+
+La liste de polices ordinaires est définie une fois dans `MrJam.Theme.typographie`
+et utilisée par les racines, lecteurs et contenus de dialogue ElmUI. Les polices
+d'identité conservent leurs composants dédiés. Les tests comparent les styles des
+textes et contrôles réellement peints, pas ceux du conteneur `dialog` sans texte.
+
 Les capacités ci-dessous manquent dans l'API publique elm-ui1.1.8 ; les libellés
 ordinaires restent Element.Region.description, les liens Element.newTabLink.
 

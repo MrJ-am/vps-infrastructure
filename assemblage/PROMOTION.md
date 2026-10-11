@@ -67,7 +67,9 @@ Un opérateur indépendant est armé avant la bascule. Les sondes vérifient not
 l'exécutable servi, les ressources publiques, le refus anonyme/MCP et une identité
 falsifiée, les invariants et le redémarrage ; elles ne créent aucun contenu réel.
 
-État au 11 octobre : protocole et opérateurs écrits, qualification locale en cours.
+## Historique de la première soumission — remplacée avant activation
+
+État antérieur du 11 octobre : protocole et opérateurs écrits, qualification locale en cours.
 Envoi de l'asset refusé par uploads.github.com (401) ; release non publiée.
 Transport Git chiffré préparé sans credential supplémentaire ni binaire dans main.
 Aucun transfert ni activation effectués à ce stade. Les preuves

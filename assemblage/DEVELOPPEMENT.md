@@ -108,6 +108,17 @@ référence différentielle Matheval sur base indépendante sont les usages appr
 aucun Node métier cible. Les campagnes PG/navigateur/MCP/recherche restent locales.
 Les outils et caches cibles sont décrits dans `state/outils-nix.json`.
 
+`qualifier-metier.py` utilise le fichier `.construction-nix.json` adjacent au
+candidat lorsqu'il existe : il exerce cette image sans reconstruction. Un appel
+direct de construction sur cette destination est refusé. Une reconstruction de
+référence sans cache doit utiliser une destination distincte ; ses résultats ne
+qualifient pas implicitement l'image Nix à promouvoir.
+
+Dans l'atelier Codex actuel, exécuter les campagnes navigateur lourdes une après
+l'autre. L'orchestrateur borne l'atelier logo à `--workers=1` : la trace
+`4a43b577abaa` montre deux démarrages simultanés absorbant le délai initial.
+Cette borne ne modifie ni les assertions ni les délais des tests.
+
 Qualification finale dans une image propre ; production construite dans un autre
 processus propre depuis sources/FASL qualifiés, jamais sauvegarde de l’exploration.
 Promouvoir le même artefact : protocole [PROMOTION.md](PROMOTION.md), backup/restauration/

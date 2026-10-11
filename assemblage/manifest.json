@@ -1,7 +1,7 @@
 {
   "format": 1,
   "responsable": "MrJ-am/vps-infrastructure",
-  "etat": "amendement-outillage-et-frontends-en-cours",
+  "etat": "etape-1-qualifiee-localement-avant-production",
   "sources": {
     "vps": {
       "depot": "MrJ-am/vps-infrastructure",
@@ -12,13 +12,13 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "2d9f31bff90eed0dd330e4a568afaae92ce761f2",
+      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "0b277f02800ee73718dc6ca45b65e10e081f825b",
+      "revision": "68df529042609561329e757145a187ca079a5cea",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
@@ -30,7 +30,7 @@
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "30c6087e6975d41d221fe6b31279ee1530f917c6",
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
       "role": "elm-ui"
     },
     "signature": {
@@ -51,7 +51,7 @@
       "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
       "sbcl": "2.6.4",
       "asdf": "3.3.1",
-      "etat": "build-Nix-reussi-qualification-complete-restante",
+      "etat": "candidat-Nix-qualifie-localement-promotion-restante",
       "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
       "source_url": "https://api.github.com/repos/NixOS/nixpkgs/tarball/c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
       "source_archive_sha256": "53c2d41b0e5ab001e97d4478985287a82870e7c044f5185a250d98627b253fc0"
@@ -90,7 +90,7 @@
     "donnees": "bases et proprietaires historiques conserves"
   },
   "qualification": {
-    "etat": "qualification-anterieure-conservee-amendement-a-qualifier",
+    "etat": "qualification-locale-exacte-production-restante",
     "production": "inchangee",
     "reference_production": {
       "run": 38097638053,
@@ -112,17 +112,17 @@
   "frontends": {
     "vision": {
       "verrou_style": "interface/style.lock.json",
-      "sha256": "7b1708cbb1f8f7fb88478b88b1d8cabec52eb981a083cddcb87dec184afd1cb1",
-      "revision_style": "196ab468a0dc0ee39bd9209efef234b5f56861fc",
+      "sha256": "ca5bc4fc4bf317d19715062a656c3fabed98311a76a6eee3b23d86f13c9437c9",
+      "revision_style": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
       "origine_style": "MrJ-am/style-mrjam",
-      "raison": "Contextes Vision explicites et confirmation MCP elm-animator ; candidature locale qualifiée avant promotion."
+      "raison": "Typographie commune des racines et dialogues ; qualification locale du consommateur exact avant promotion."
     },
     "matheval": {
       "verrou_style": "docs/style-mrjam.json",
-      "sha256": "067cefbd56152361d313b947dac26094260c163c7f43e7a4b1fd2b2020828246",
-      "revision_style": "30c6087e6975d41d221fe6b31279ee1530f917c6",
+      "sha256": "ba4c2438dc6cfa4c65912b7d8fce99ff4f9684af9aed090e26cf0772a263e9b9",
+      "revision_style": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
       "origine_style": "MrJ-am/style-mrjam",
-      "raison": "Quatre interfaces ElmUI et transitions communes ; lecteur, notation, axes et espace scientifiques au verrou exact. Qualification locale en cours, aucune promotion."
+      "raison": "Typographie commune des racines et dialogues ; qualification locale du consommateur exact avant promotion."
     },
     "logique": {
       "verrou_style": "style-mrjam.json",
@@ -138,6 +138,6 @@
     "developpement": "cl-mcp et cl-tron-mcp/Swank dans la meme image SBCL",
     "reference_frontend": "assemblage/FRONTENDS.md",
     "reference_developpement": "assemblage/DEVELOPPEMENT.md",
-    "etat": "non-qualifie"
+    "etat": "qualifie-localement"
   }
 }

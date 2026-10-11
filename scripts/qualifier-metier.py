@@ -14,6 +14,8 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def qualifier(destination, sans_cache=False):
     destination=Path(destination).resolve();destination.parent.mkdir(parents=True,exist_ok=True)
+    if destination.with_suffix('.construction-nix.json').exists():
+        raise ValueError('Candidat Nix verrouillé : qualifier le même artefact, sans reconstruction')
     sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     inputs=compilation_entrees(sources)
     # Le compilateur ne reçoit ni secrets CI, ni configuration de production.
@@ -66,10 +68,17 @@ def qualifier_existant(destination,preparation):
     print(json.dumps({k:v for k,v in resultat.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
 
 
-if __name__=='__main__':
+def main(argv=None):
     p=argparse.ArgumentParser();p.add_argument('--destination',default=os.environ.get('MRJAM_TEST_EXECUTABLE','state/artefacts/mrjam-metier'));p.add_argument('--sans-cache',action='store_true')
     p.add_argument('--construction-nix',default=os.environ.get('MRJAM_CONSTRUCTION_NIX'))
-    a=p.parse_args()
-    if a.construction_nix:
-        qualifier_existant(a.destination,a.construction_nix)
+    a=p.parse_args(argv)
+    preparation=a.construction_nix
+    if not preparation:
+        sidecar=Path(a.destination).resolve().with_suffix('.construction-nix.json')
+        if sidecar.exists():preparation=str(sidecar)
+    if preparation:
+        qualifier_existant(a.destination,preparation)
     else:qualifier(a.destination,a.sans_cache)
+
+
+if __name__=='__main__':main()
