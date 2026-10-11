@@ -93,6 +93,32 @@ def selection(changements, suites):
         choisis = suivant
 
 
+def changements_assemblage(avant, chemins):
+    "Diff des révisions de bibliothèques ; inconnu/toolchain élargit sans fetch."
+    if not re.fullmatch(r'[a-f0-9]{40}',avant or '') or set(avant)=={'0'}:
+        return ['vps/assemblage/manifest.json']
+    fichiers=subprocess.check_output(['git','diff','--name-only',avant,'HEAD'],cwd=chemins['vps'],text=True).splitlines()
+    changes=['vps/'+p for p in fichiers if p!='assemblage/manifest.json']
+    if 'assemblage/manifest.json' not in fichiers:return changes
+    try:
+        ancien=json.loads(subprocess.check_output(['git','show',avant+':assemblage/manifest.json'],cwd=chemins['vps']))
+        actuel=manifeste(chemins['vps'])
+        a=json.loads(json.dumps(ancien));b=json.loads(json.dumps(actuel))
+        for nom in DEPOTS:
+            a['sources'][nom]['revision']=b['sources'][nom]['revision']='comparee'
+        if a!=b:return changes+['vps/assemblage/manifest.json']
+        for nom in DEPOTS:
+            if nom=='vps':continue
+            precedent=ancien['sources'][nom]['revision'];suivant=actuel['sources'][nom]['revision']
+            if precedent==suivant:continue
+            if not re.fullmatch('[a-f0-9]{40}',precedent):raise ValueError('Ancienne révision inconnue')
+            diff=subprocess.check_output(['git','diff','--name-only','-z',precedent,suivant],cwd=chemins[nom]).decode().split('\0')
+            changes.extend(nom+'/'+p for p in diff if p)
+    except (KeyError,ValueError,subprocess.CalledProcessError):
+        return changes+['vps/assemblage/manifest.json']
+    return changes or ['vps/assemblage/qualification-locale.json']
+
+
 def entrees(suite, chemins):
     result = {}
     for cle, motifs in suite['entrees'].items():
@@ -129,7 +155,7 @@ def environnement(suite):
     if any(re.search('SECRET|TOKEN|PASSWORD|KEY|CREDENTIAL', k, re.I) for k in valeurs):
         raise ValueError('Configuration secrète interdite dans un reçu')
     natifs = {}
-    motifs = ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1', '/lib/*/libcrypto.so.3', '/lib/*/libpq.so.5', '/lib/*/libsqlite3.so.0') if 'sbcl' in versions else ()
+    motifs = ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1', '/lib/*/libcrypto.so.3', '/lib/*/libpq.so.5', '/lib/*/libsqlite3.so.0') if 'sbcl' in versions or suite.get('candidat_metier') else ()
     for motif in motifs:
         for chemin in Path('/').glob(motif.lstrip('/')):
             natifs[str(chemin)] = empreinte(chemin.resolve().read_bytes())
@@ -152,8 +178,39 @@ def environnement(suite):
 
 
 def identifiant_suite(nom, suite, chemins):
-    return {'suite': nom, 'definition': empreinte(json.dumps(suite, sort_keys=True).encode()),
+    result={'suite': nom, 'definition': empreinte(json.dumps(suite, sort_keys=True).encode()),
             'entrees': entrees(suite, chemins), 'environnement': environnement(suite)}
+    if suite.get('candidat_frontend'):
+        cle=suite['candidat_frontend']
+        r=lire(RACINE/'state/frontends-candidats'/('dernier-'+cle+'.json'))
+        p=RACINE/r['candidat']
+        if p.is_symlink() or not p.resolve().is_relative_to(RACINE/'state/frontends-candidats'):
+            raise ValueError('Candidat frontend extérieur')
+        from frontends import contenus
+        if contenus(p)!=r['fichiers']:raise ValueError('Candidat frontend modifié')
+        result['candidat_frontend']={'fichiers':r['fichiers'],'revision':r['revision']}
+    if suite.get('candidat_metier'):
+        p=Path(os.environ.get('MRJAM_TEST_EXECUTABLE',RACINE/'state/artefacts/mrjam-metier'))
+        r=lire(p.with_suffix('.qualification.json'))
+        if empreinte(p.read_bytes())!=r['artefact_sha256'] or compilation_entrees(chemins)!=r['sources_lisp_sha256']:
+            raise ValueError('Candidat métier différent des sources qualifiées')
+        result['candidat_metier']={'sha256':r['artefact_sha256'],'sources':r['sources_lisp_sha256'],'compilation':r['compilation']}
+    profiles={}
+    for cle in suite.get('python_profils',[]):
+        venv=RACINE/'state/outils-python'/cle
+        python=venv/'bin/python'
+        # RECORD décrit les modules effectivement installés, pas seulement pip
+        # ou la phrase d'un agent. Aucun credential ni environnement complet.
+        commande="import importlib.metadata as m,json,hashlib;print(json.dumps({d.metadata['Name']:{'version':d.version,'fichiers':{str(f):hashlib.sha256(d.locate_file(f).read_bytes()).hexdigest() for f in d.files or [] if d.locate_file(f).is_file()}} for d in m.distributions()},sort_keys=True))"
+        modules=subprocess.check_output([python,'-c',commande])
+        versions={re.sub(r'[-_.]+','-',n).lower():v['version'] for n,v in json.loads(modules).items()}
+        attendus=lire(RACINE/'assemblage/dependances.json')['python_profils'][cle]['paquets']
+        if any(versions.get(re.sub(r'[-_.]+','-',v['nom']).lower())!=v['version'] for v in attendus):
+            raise ValueError('Versions Python différentes du profil verrouillé : '+cle)
+        profiles[cle]={'python_sha256':empreinte(python.resolve().read_bytes()),
+                       'paquets_sha256':empreinte(modules)}
+    if profiles:result['python_profils']=profiles
+    return result
 
 
 def reutilisable(recu, identite):

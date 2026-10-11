@@ -54,14 +54,18 @@
         "scripts/assemblage.py",
         "assemblage/suites.json",
         "tests/test_assemblage.py",
-        "scripts/ci-impact.py"
+        "scripts/ci-impact.py",
+        "scripts/ci-qualifier.py",
+        "tests/test_assemblage_revisions.py"
       ]
     },
     "impact": [
       "vps/scripts/assemblage.py",
       "vps/assemblage/suites.json",
       "vps/tests/test_assemblage.py",
-      "vps/scripts/ci-impact.py"
+      "vps/scripts/ci-impact.py",
+      "vps/scripts/ci-qualifier.py",
+      "vps/tests/test_assemblage_revisions.py"
     ],
     "commandes": [
       [
@@ -72,7 +76,7 @@
         "-s",
         "tests",
         "-p",
-        "test_assemblage.py"
+        "test_assemblage*.py"
       ]
     ],
     "dependances": [],
@@ -210,35 +214,57 @@
   },
   "vision-postgresql": {
     "niveau": 3,
-    "repertoire": "vision",
+    "repertoire": "vps",
     "entrees": {
       "vision": [
         "migrations/*.sql",
         "scripts/roles.sql",
         "tests/refonte.sh",
         "tests/*.py",
-        "src/*.lisp"
+        "src/*.lisp",
+        "scripts/migrate.sh",
+        "scripts/refonte.py",
+        "scripts/backfill_embeddings.py",
+        "scripts/embeddings.py",
+        "vision.asd"
+      ],
+      "vps": [
+        "tests/vision-reference.py",
+        "tests/http_fixture.py",
+        "scripts/assemblage.py",
+        "scripts/frontends.py"
       ]
     },
     "impact": [
       "vision/migrations/*.sql",
-      "vision/scripts/roles.sql"
+      "vision/scripts/roles.sql",
+      "vps/tests/vision-reference.py",
+      "vps/tests/http_fixture.py"
     ],
     "commandes": [
       [
-        "sh",
-        "tests/refonte.sh"
+        "python3",
+        "tests/vision-reference.py"
       ]
     ],
     "dependances": [
-      "vision-contrats"
+      "vision-contrats",
+      "matheval-postgresql"
     ],
     "outils": {
       "python": [
         "python3",
         "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
       ]
-    }
+    },
+    "python_profils": [
+      "navigateur"
+    ],
+    "candidat_metier": true
   },
   "matheval-postgresql": {
     "niveau": 4,
@@ -369,30 +395,43 @@
     }
   },
   "style": {
-    "niveau": 2,
-    "repertoire": "style",
+    "niveau": 5,
+    "repertoire": "vps",
     "entrees": {
       "style": [
         "src/**/*.elm",
-        "elm.json",
+        "exemples/*.elm",
+        "scripts/*",
+        "tests/*.py",
         "package-lock.json",
-        "tests/test_architecture.py"
+        "elm.json",
+        "identite.json"
       ],
       "signature": [
         "web/*"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "scripts/outiller.py",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
       ]
     },
     "impact": [
       "style/*",
       "style/**/*",
       "signature/*",
-      "signature/**/*"
+      "signature/**/*",
+      "vps/scripts/frontends.py",
+      "vps/scripts/outiller.py",
+      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt"
     ],
     "commandes": [
       [
-        "npm",
-        "run",
-        "verifier"
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "style"
       ]
     ],
     "dependances": [],
@@ -404,43 +443,60 @@
       "npm": [
         "npm",
         "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
       ]
-    }
+    },
+    "candidat_frontend": "style",
+    "python_profils": [
+      "navigateur"
+    ],
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
   },
   "vision-interface": {
     "niveau": 5,
-    "repertoire": "vision",
+    "repertoire": "vps",
     "entrees": {
       "vision": [
-        "interface/src/*.elm",
         "interface/src/**/*.elm",
+        "interface/tests/*.py",
+        "interface/tests/*.elm",
         "interface/package-lock.json",
-        "interface/compiler.py"
+        "interface/compiler.py",
+        "interface/style.lock.json"
       ],
       "style": [
         "src/**/*.elm"
       ],
       "signature": [
         "web/*"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "scripts/outiller.py",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
       ]
     },
     "impact": [
       "vision/interface/*",
-      "vision/interface/**/*"
+      "vision/interface/**/*",
+      "vps/scripts/frontends.py",
+      "vps/scripts/outiller.py",
+      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt"
     ],
     "commandes": [
       [
-        "npm",
-        "--prefix",
-        "interface",
-        "run",
-        "verifier"
-      ],
-      [
-        "npm",
-        "--prefix",
-        "interface",
-        "test"
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "vision"
       ]
     ],
     "dependances": [
@@ -454,52 +510,63 @@
       "npm": [
         "npm",
         "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
       ]
-    }
+    },
+    "candidat_frontend": "vision",
+    "python_profils": [
+      "navigateur"
+    ],
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
   },
   "matheval-interface": {
     "niveau": 5,
-    "repertoire": "matheval",
+    "repertoire": "vps",
     "entrees": {
       "matheval": [
-        "docs/src/*.elm",
-        "docs/scripts/*.cjs",
-        "docs/tests/e2e/*.js",
-        "docs/package-lock.json"
+        "docs/src/**/*.elm",
+        "docs/scripts/*",
+        "docs/tests/**/*.js",
+        "docs/tests/**/*.cjs",
+        "docs/tests/*.py",
+        "docs/package-lock.json",
+        "docs/playwright.config.cjs",
+        "docs/style-mrjam.json"
       ],
       "style": [
         "src/**/*.elm"
       ],
       "signature": [
         "web/*"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "scripts/outiller.py",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
       ]
     },
     "impact": [
       "matheval/docs/*",
       "matheval/docs/**/*",
-      "matheval/research/*.json"
+      "matheval/research/*.json",
+      "vps/scripts/frontends.py",
+      "vps/scripts/outiller.py",
+      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt"
     ],
     "commandes": [
       [
-        "npm",
-        "--prefix",
-        "docs",
-        "run",
-        "check:data"
-      ],
-      [
-        "npm",
-        "--prefix",
-        "docs",
-        "run",
-        "test:data"
-      ],
-      [
-        "npm",
-        "--prefix",
-        "docs",
-        "run",
-        "test:e2e"
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "matheval"
       ]
     ],
     "dependances": [
@@ -513,12 +580,25 @@
       "npm": [
         "npm",
         "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
       ]
-    }
+    },
+    "candidat_frontend": "matheval",
+    "python_profils": [
+      "navigateur"
+    ],
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
   },
   "logique-correcteur": {
     "niveau": 2,
-    "repertoire": "logique",
+    "repertoire": "vps",
     "entrees": {
       "logique": [
         "src/*.elm",
@@ -528,6 +608,9 @@
         "scripts/build_data.py",
         "scripts/test*.mjs",
         "package-lock.json"
+      ],
+      "vps": [
+        "scripts/frontends.py"
       ]
     },
     "impact": [
@@ -539,8 +622,13 @@
     ],
     "commandes": [
       [
-        "npm",
-        "test"
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "logique",
+        "--campagne",
+        "unitaire"
       ]
     ],
     "dependances": [],
@@ -553,41 +641,49 @@
         "npm",
         "--version"
       ]
-    }
+    },
+    "candidat_frontend": "logique"
   },
   "logique-interface": {
     "niveau": 5,
-    "repertoire": "logique",
+    "repertoire": "vps",
     "entrees": {
       "logique": [
-        "src/*.elm",
         "src/**/*.elm",
         "public/*",
+        "scripts/*",
         "tests/*.py",
-        "package-lock.json"
+        "tests/*.elm",
+        "package-lock.json",
+        "style-mrjam.json"
       ],
       "style": [
         "src/**/*.elm"
       ],
       "signature": [
         "web/*"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "scripts/outiller.py",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
       ]
     },
     "impact": [
       "logique/public/*",
       "logique/package*",
-      "logique/elm.json"
+      "logique/elm.json",
+      "vps/scripts/frontends.py",
+      "vps/scripts/outiller.py",
+      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt"
     ],
     "commandes": [
       [
-        "npm",
-        "run",
-        "test:interface"
-      ],
-      [
-        "npm",
-        "run",
-        "test:atelier:interface"
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "logique"
       ]
     ],
     "dependances": [
@@ -602,12 +698,25 @@
       "npm": [
         "npm",
         "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
       ]
-    }
+    },
+    "candidat_frontend": "logique",
+    "python_profils": [
+      "navigateur"
+    ],
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
   },
   "navigateur-mcp": {
     "niveau": 5,
-    "repertoire": "vision",
+    "repertoire": "vps",
     "entrees": {
       "vision": [
         "src/*.lisp",
@@ -615,7 +724,10 @@
         "tests/check_mcp_database.py"
       ],
       "vps": [
-        "services/mrj-auth/*.py"
+        "services/mrj-auth/*.py",
+        "tests/vision-reference.py",
+        "tests/http_fixture.py",
+        "scripts/frontends.py"
       ]
     },
     "impact": [
@@ -623,8 +735,9 @@
     ],
     "commandes": [
       [
-        "sh",
-        "tests/refonte.sh"
+        "python3",
+        "tests/vision-reference.py",
+        "--navigateur"
       ]
     ],
     "dependances": [
@@ -635,8 +748,18 @@
       "python": [
         "python3",
         "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
       ]
-    }
+    },
+    "candidat_frontend": "vision",
+    "python_profils": [
+      "navigateur"
+    ],
+    "qualification": "Navigateur et contrats MCP sur artefact commun et identité de fixture ; OIDC/Nginx réels qualifiés séparément.",
+    "candidat_metier": true
   },
   "migration": {
     "niveau": 6,
@@ -708,7 +831,8 @@
       ]
     ],
     "dependances": [
-      "json-commun"
+      "json-commun",
+      "cache-fasl"
     ],
     "outils": {
       "sbcl": [
@@ -812,7 +936,8 @@
       "image": "mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87",
       "reseau": "loopback",
       "roles": "scripts/roles.sql exact"
-    }
+    },
+    "candidat_metier": true
   },
   "gestion-validation": {
     "niveau": 2,
@@ -1053,6 +1178,210 @@
     },
     "fixture": {
       "donnees": "SQLite et JSONL synthétiques ; le chiffrement/restauration PostgreSQL est qualifié séparément par la CI sur cluster privé"
+    }
+  },
+  "style-logo": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "candidat_frontend": "style",
+    "python_profils": [
+      "logo"
+    ],
+    "entrees": {
+      "style": [
+        "ateliers/logo/src/**/*.elm",
+        "ateliers/logo/tests/*.elm",
+        "ateliers/logo/scripts/*",
+        "ateliers/logo/browser-tests/*",
+        "ateliers/logo/donnees/*",
+        "ateliers/logo/dessins/*",
+        "ateliers/logo/references/**/*",
+        "ateliers/logo/package-lock.json",
+        "ateliers/logo/playwright.config.cjs"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "assemblage/python/logo-cp312-linux-x86_64.txt"
+      ]
+    },
+    "impact": [
+      "style/ateliers/logo/*",
+      "style/ateliers/logo/**/*",
+      "vps/assemblage/python/logo-cp312-linux-x86_64.txt"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "style",
+        "--campagne",
+        "complement"
+      ]
+    ],
+    "dependances": [
+      "style"
+    ],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
+  },
+  "signature-web": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "python_profils": [
+      "signature",
+      "navigateur"
+    ],
+    "entrees": {
+      "signature": [
+        "tools/*.py",
+        "tools/requirements.txt",
+        "web/*",
+        "fonts/*",
+        "artwork/*",
+        "*.sty",
+        "signature-autonome.html",
+        "tests/browser-copy.py"
+      ],
+      "vps": [
+        "scripts/frontends.py",
+        "assemblage/python/signature-cp312-linux-x86_64.txt",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt"
+      ]
+    },
+    "impact": [
+      "signature/*",
+      "signature/**/*",
+      "vps/assemblage/python/signature-cp312-linux-x86_64.txt"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "signature"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
+  },
+  "matheval-navigateur": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "candidat_frontend": "matheval",
+    "python_profils": [
+      "navigateur"
+    ],
+    "entrees": {
+      "matheval": [
+        "docs/tests/e2e/*",
+        "docs/playwright.config.cjs",
+        "docs/package-lock.json",
+        "server/migrations/*.sql",
+        "research/bank.json",
+        "research/codebook.json"
+      ],
+      "vps": [
+        "tests/matheval-navigateur.py",
+        "tests/http_fixture.py",
+        "scripts/frontends.py",
+        "assemblage/roles-metier.sql"
+      ]
+    },
+    "impact": [
+      "vps/tests/matheval-navigateur.py",
+      "vps/tests/http_fixture.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "matheval",
+        "--campagne",
+        "complement"
+      ]
+    ],
+    "dependances": [
+      "matheval-interface",
+      "matheval-postgresql"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "candidat_metier": true,
+    "configuration": [
+      "MRJAM_TEST_FILTER",
+      "MRJAM_TEST_PROJECT",
+      "MRJAM_TEST_REPEAT"
+    ]
+  },
+  "cache-fasl": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "assemblage/charger.lisp",
+        "tests/cache-fasl.py"
+      ]
+    },
+    "impact": [
+      "vps/assemblage/charger.lisp",
+      "vps/tests/cache-fasl.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/cache-fasl.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
     }
   }
 }

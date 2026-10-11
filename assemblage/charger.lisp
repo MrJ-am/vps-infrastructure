@@ -1,12 +1,70 @@
 ;;; Point d'entrée local/CI commun. Aucun secret ou accès de production.
 (require :asdf)
+(declaim (optimize (speed 1) (safety 3) (debug 1) (space 1) (compilation-speed 1)))
+(defpackage #:mrjam-assemblage (:use #:cl)
+  (:export #:*cache-identite* #:*cache-repertoire* #:identite-cache))
+(in-package #:mrjam-assemblage)
+(defvar *cache-identite* nil)
+(defvar *cache-repertoire* nil)
+
+(defun sha256-texte (texte)
+  (let ((s (uiop:run-program '("sha256sum") :input (make-string-input-stream texte)
+                             :output :string)))
+    (unless (and (>= (length s) 64) (every (lambda (c) (find c "0123456789abcdef")) (subseq s 0 64)))
+      (error "Empreinte de cache invalide."))
+    (subseq s 0 64)))
+
+(defun identite-cache (description)
+  (sha256-texte (with-standard-io-syntax (write-to-string description))))
+
+(defun repertoire-prive (chemin)
+  ;; Un cache partagé, public ou redirigé par un lien ne devient jamais du code
+  ;; approuvé. Coreutils est déjà présent dans l'atelier et le build Nix.
+  (let ((nom (directory-namestring chemin)))
+    (unless (probe-file chemin)
+      (uiop:run-program (list "mkdir" "--mode=700" "--" nom)))
+    (unless (string= (string-right-trim "/" nom)
+                     (string-trim '(#\Newline #\Return)
+                       (uiop:run-program (list "realpath" "--canonicalize-existing" "--" nom) :output :string)))
+      (error "Lien dans le chemin du cache FASL."))
+    (unless (string= (string-trim '(#\Newline #\Return)
+                                (uiop:run-program (list "env" "LC_ALL=C" "stat" "-c" "%a:%u:%F" "--" nom) :output :string))
+                     (format nil "700:~D:directory" (sb-unix:unix-getuid)))
+      (error "Cache FASL non privé ou d'un autre propriétaire."))))
+
 (let* ((racine (uiop:pathname-directory-pathname *load-truename*))
        (infra (uiop:pathname-parent-directory-pathname racine))
        (atelier (or (uiop:getenv "MRJAM_ATELIER")
                     (uiop:native-namestring (uiop:pathname-parent-directory-pathname infra)))))
+  (unless (uiop:getenv "ASDF_OUTPUT_TRANSLATIONS")
+    (let* ((home (uiop:ensure-directory-pathname (or (uiop:getenv "SBCL_HOME")
+                                                   (directory-namestring sb-ext:*core-pathname*))))
+           (compilateur (uiop:run-program
+                         (list "sha256sum" "--" (uiop:native-namestring sb-ext:*runtime-pathname*)
+                               (uiop:native-namestring sb-ext:*core-pathname*)
+                               (uiop:native-namestring (truename (merge-pathnames "contrib/asdf.fasl" home))))
+                         :output :string))
+           (description (list :format 1 :sbcl (lisp-implementation-version)
+                              :asdf (asdf:asdf-version) :compilateur compilateur
+                              :machine (machine-type) :systeme (software-type)
+                              :features (sort (mapcar #'symbol-name *features*) #'string<)
+                              :optimisation '(speed 1 safety 3 debug 1 space 1 compilation-speed 1)
+                              :abi '(linux-x86-64 libc libcrypto-3 libpq-5 libsqlite3-0)))
+           (etat (merge-pathnames "state/" infra))
+           (base (merge-pathnames "fasl/" etat)))
+      (unless (uiop:directory-exists-p etat) (uiop:run-program (list "mkdir" "--mode=700" "--" (namestring etat))))
+      (repertoire-prive base)
+      (setf *cache-identite* description
+            *cache-repertoire* (merge-pathnames (format nil "~A/" (identite-cache description)) base))
+      (repertoire-prive *cache-repertoire*)
+      (asdf:initialize-output-translations
+        ;; ASDF complète une chaîne avec **/*.*.*, mais pas un pathname nu :
+        ;; celui-ci écraserait les différents package.fasl dans un seul fichier.
+        `(:output-translations (t ,(namestring *cache-repertoire*)) :ignore-inherited-configuration))))
   (asdf:load-asd (truename (merge-pathnames "vision/vision.asd" atelier)))
   (asdf:load-asd (truename (merge-pathnames "M-moire/matheval.asd" atelier)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-native.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-courriel.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-identite.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-metier.asd" infra))))
+(in-package #:cl-user)
