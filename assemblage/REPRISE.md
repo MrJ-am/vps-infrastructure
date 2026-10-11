@@ -35,7 +35,7 @@ Dernier binaire local 22655808 : SBCL 2.5.2/ASDF 3.3.1, 40 FASL sans cache,
 Les quatre documents Vision lus au chargement sont déclarés au graphe ASDF
 et aux empreintes ; modification/rechargement dans une même image testés.
 La CI prépare maintenant le Nixpkgs exact c5c4a43 et SBCL 2.6.4 du VPS, sans
-mise à jour générale. Ce build Nix commun n’est pas encore exécuté/qualifié.
+mise à jour générale. Build Nix exécuté avec succès ; campagne complète restante.
 
 Frontends : commandes centrales construire/qualifier, worktrees temporaires,
 quatre candidats privés et métadonnées adjacentes. Les trois versions de style

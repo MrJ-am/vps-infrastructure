@@ -33,7 +33,7 @@ def qualifier(destination, sans_cache=False):
         if sans_cache and not fasl_count:raise AssertionError('Cache de référence non utilisé')
         env['MRJAM_TEST_EXECUTABLE']=str(destination)
         debut=time.monotonic()
-        subprocess.run(['node','tests/matheval-composant.mjs'],cwd=ROOT,env=env,check=True)
+        subprocess.run(['python3','tests/matheval-composant.py'],cwd=ROOT,env=env,check=True)
         resultat={'format':1,'artefact_sha256':hashlib.sha256(destination.read_bytes()).hexdigest(),
                   'taille_octets':destination.stat().st_size,'construction_secondes':round(construction,4),
                   'tests_secondes':round(time.monotonic()-debut,4),'fasl_reference_sans_cache':sans_cache,
@@ -57,7 +57,7 @@ def qualifier_existant(destination,preparation):
     if hashlib.sha256(destination.read_bytes()).hexdigest()!=preparation['artefact_sha256']:raise ValueError('Artefact Nix différent')
     if not preparation['compilation']['sbcl'].startswith('2.6.4'):raise ValueError('Compilateur cible différent')
     debut=time.monotonic()
-    subprocess.run(['node','tests/matheval-composant.mjs'],cwd=ROOT,
+    subprocess.run(['python3','tests/matheval-composant.py'],cwd=ROOT,
                    env=dict(os.environ,MRJAM_TEST_EXECUTABLE=str(destination)),check=True)
     if compilation_entrees(sources)!=inputs:raise ValueError('Sources modifiées pendant la qualification Nix')
     resultat=dict(preparation,tests_secondes=round(time.monotonic()-debut,4),
