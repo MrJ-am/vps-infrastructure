@@ -113,7 +113,7 @@
            (repondre-http s status (mrjam-native:json-js value) '(("Cache-Control" . "no-store") ("X-Content-Type-Options" . "nosniff"))))
          (return-from router))
        (when (uiop:string-prefix-p "/api/gestion/" path)
-         (multiple-value-bind (status value) (traiter-gestion (configuration-gestion-dsn cfg) method path headers body)
+         (multiple-value-bind (status value) (traiter-gestion (configuration-gestion-dsn cfg) method path headers body (configuration-admission cfg))
            (repondre-http s status (mrjam-native:json-js value)
                          '(("Cache-Control" . "no-store") ("X-Content-Type-Options" . "nosniff") ("Referrer-Policy" . "no-referrer"))))
          (return-from router))

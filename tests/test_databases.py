@@ -42,13 +42,13 @@ class DatabaseChecks(unittest.TestCase):
         validate({})
 
     def test_local_patch_recovers_exact_upstream_module(self):
-        source = json.loads((ROOT / "vendor/matheval/source.json").read_text())
+        source = json.loads((ROOT / "coordination/archive/matheval-deploiement-20261011/source.json").read_text())
         adaptation = source.get("historical_adaptation", source)
         self.assertEqual(source["sha256"], adaptation["sha256"])
         with tempfile.TemporaryDirectory() as directory:
             recovered = Path(directory) / "upstream.nix"
             subprocess.run(["patch", "--batch", "--silent", "--reverse", "--output", str(recovered),
-                            str(ROOT / "vendor/matheval/matheval.nix"), str(ROOT / adaptation["patch"])], check=True)
+                            str(ROOT / "coordination/archive/matheval-deploiement-20261011/matheval.nix"), str(ROOT / adaptation["patch"])], check=True)
             self.assertEqual(hashlib.sha256(recovered.read_bytes()).hexdigest(), adaptation["upstream_sha256"])
 
 

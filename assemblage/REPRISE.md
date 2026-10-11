@@ -42,7 +42,7 @@ Dernière preuve CI : 38104435924 sur cd90f2a, quatre jobs infrastructure réuss
 dont évaluation Nix du module commun (paquet factice, pas un binaire qualifié).
 38104435933 : cadre réussi, arrêt avant checkout privé (COMPONENTS_READ_TOKEN absent).
 Qualification locale : 40 parcours, reconstruction propre sans cache 39 FASL,
-HTTP AF_UNIX réel et redémarrage SQL. Sources nouvelles : Vision dc8fffe ;
+HTTP AF_UNIX réel et redémarrage SQL. Sources nouvelles : Vision aa7f10d ;
 Matheval 2a82250. Le manifeste porte les SHA
 complets ; la révision infrastructure est celle du commit qui le contient.
 
@@ -50,11 +50,24 @@ Auxiliaires ASDF locaux : administration/cycle/admission/fermeture, file courrie
 durable et client provisoire Keycloak ; 644+141 cas différentiels, isolation
 PostgreSQL, ancien SQLite/MIME et SMTP STARTTLS qualifiés. IdP synthétique uniquement.
 Dernier binaire local propre : 39 FASL, 40 parcours Matheval, redémarrage SQL réussi.
+Le même artefact exerce API/MCP Vision et 40 parcours Alice/Bob concurrents,
+avec PostgreSQL 17 et rôles réels ; entrée d'identité synthétique, pas preuve OIDC.
 
-Opération indépendante suivante : workflow central `monolithe-reference.yml`,
-`operation=sauvegarde-restauration`. Préconditions : génération de production
-constatée identique ; destinataire age déjà configuré. Copie chiffrée des trois
-bases et états SQLite/JSONL ; restauration PostgreSQL dans un cluster Unix privé,
-sans arrêt ni écriture SQL de production. La clé éphémère est enveloppée pour le
-destinataire personnel existant puis détruite. Le rapport distingue restauration
-des données, ACL/rôles et qualification du retour applicatif, encore à réaliser.
+Frontends : `scripts/outiller.py`, puis `scripts/frontends.py preparer/construire/qualifier`.
+Trois anciennes révisions de style déclarées dans le manifeste pour préserver le
+rendu. Caches exacts issus du même dépôt, aucun fetch implicite, fontes Signature
+contrôlées. Générateurs dans des worktrees temporaires ; candidats privés sous
+`state/frontends-candidats`, métadonnées adjacentes. Vision/Matheval/Logique/style
+construits localement. Qualifications de cette tranche en cours ; transfert CI
+complet et retrait des YAML satellites restent à achever. Nouveaux profils Python
+3.12/Linux/x86_64 : navigateur, logo, Signature ; transitives verrouillées par SHA.
+
+Sauvegarde/restauration réelle réussie : workflow central `monolithe-reference.yml`,
+run 38105867103 sur eff80b8, `operation=sauvegarde-restauration`. Copie chiffrée des
+trois bases et états SQLite/JSONL ; restauration PostgreSQL dans un cluster Unix
+privé, sans arrêt ni écriture SQL de production. La clé éphémère a été enveloppée
+pour le destinataire personnel existant puis détruite. 30/6/100 tables restaurées,
+empreintes identiques ; `sauvegarde-transition.json`. ACL/rôles et qualification
+du retour applicatif restent à réaliser. Avant une bascule : vérifier actualité
+du snapshot, registre d'effacements récent et préconditions, pas restaurer une
+ancienne base pour revenir sur du code.

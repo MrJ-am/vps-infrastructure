@@ -46,8 +46,8 @@ class RegistryChecks(unittest.TestCase):
 
     def test_pinned_module_matches_provenance(self):
         root = Path(__file__).resolve().parents[1]
-        source = json.loads((root / "vendor/matheval/source.json").read_text())
-        content = (root / "vendor/matheval/matheval.nix").read_bytes()
+        source = json.loads((root / "coordination/archive/matheval-deploiement-20261011/source.json").read_text())
+        content = (root / "coordination/archive/matheval-deploiement-20261011/matheval.nix").read_bytes()
         self.assertEqual(hashlib.sha256(content).hexdigest(), source["sha256"])
 
 

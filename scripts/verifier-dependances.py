@@ -3,13 +3,21 @@ import json
 from pathlib import Path
 import re
 import sys
+import os
 from assemblage import chemins_sources,manifeste,empreinte
 
 
 def verifier():
     racine=Path(__file__).resolve().parents[1]
     inventory=json.loads((racine/'assemblage/dependances.json').read_text())
-    sources=chemins_sources()
+    sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
+    for profile in inventory.get('python_profils',{}).values():
+        p=racine/profile['fichier']
+        if not p.resolve().is_relative_to(racine/'assemblage/python') or p.is_symlink() or empreinte(p.read_bytes())!=profile['sha256']:
+            raise ValueError('Lock Python central différent de son inventaire')
+        attendu={v['nom']+'=='+v['version']+' --hash=sha256:'+v['sha256'] for v in profile['paquets']}
+        reels={l for l in p.read_text().splitlines() if l and not l.startswith('#')}
+        if reels!=attendu:raise ValueError('Paquets Python centraux différents de leur inventaire')
     for entre in inventory['npm_verrouille']:
         base=sources[entre['composant']]
         lock=base/entre['lock']
@@ -47,7 +55,7 @@ def verifier():
             dependencies=re.findall(r'"([^"]+)"',contenu)
             if re.sub(r'"[^"]+"','',contenu).strip():raise ValueError('Déclaration ASDF non analysable : '+p.name)
             if any(d not in declared for d in dependencies):raise ValueError('Bibliothèque tierce ASDF non autorisée : '+p.name)
-    print('Dépendances directes npm et graphe interne ASDF conformes à l’inventaire verrouillé.')
+    print('Npm, requirements Python, profils transitifs, Elm et graphe interne ASDF conformes à l’inventaire verrouillé.')
 
 
 if __name__=='__main__':

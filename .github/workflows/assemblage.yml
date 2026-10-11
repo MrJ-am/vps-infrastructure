@@ -25,6 +25,9 @@ on:
       - tests/identite-client.py
       - tests/admission*
       - tests/fermeture-composant.lisp
+      - tests/vision-http-commun.py
+      - scripts/frontends.py
+      - scripts/outiller.py
       - tests/test_monolithe_sauvegarde.py
       - scripts/monolithe-sauvegarde.py
       - .github/workflows/assemblage.yml

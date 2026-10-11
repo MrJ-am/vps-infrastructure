@@ -2,7 +2,7 @@
 let
   site = (builtins.fromJSON (builtins.readFile ../projects.json)).matheval;
 in {
-  imports = [ ../vendor/matheval/matheval.nix ];
+  imports = [ ../modules/matheval.nix ];
   assertions = [{
     assertion = site.port == 3000 && site.prefix == "/matheval" &&
       site.domain == "principiipetit.io" && site.service == "matheval" &&

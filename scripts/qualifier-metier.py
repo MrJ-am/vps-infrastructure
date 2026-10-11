@@ -7,12 +7,15 @@ from pathlib import Path
 import subprocess
 import tempfile
 import time
+from assemblage import chemins_sources, compilation_entrees
 
 ROOT=Path(__file__).resolve().parents[1]
 
 
 def qualifier(destination, sans_cache=False):
     destination=Path(destination).resolve();destination.parent.mkdir(parents=True,exist_ok=True)
+    sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
+    inputs=compilation_entrees(sources)
     # Le compilateur ne reçoit ni secrets CI, ni configuration de production.
     build_env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','SBCL_HOME','LANG','LC_ALL','MRJAM_ATELIER')}
     build_env.update(MRJAM_EXECUTABLE=str(destination),
@@ -34,10 +37,12 @@ def qualifier(destination, sans_cache=False):
                   'tests_secondes':round(time.monotonic()-debut,4),'fasl_reference_sans_cache':sans_cache,
                   'fasl_reference_crees':fasl_count,
                   'source_revision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
+                  'sources_lisp_sha256':inputs,
                   'qualification':'locale HTTP/transactions/redemarrage, assemblage complet non qualifie',
                   'publication_autorisee':False}
+        if compilation_entrees(sources)!=inputs:raise ValueError('Sources Lisp modifiées pendant la construction/qualification')
         destination.with_suffix('.qualification.json').write_text(json.dumps(resultat,ensure_ascii=False,indent=2)+'\n')
-        print(json.dumps(resultat,ensure_ascii=False))
+        print(json.dumps({k:v for k,v in resultat.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
 
 
 if __name__=='__main__':

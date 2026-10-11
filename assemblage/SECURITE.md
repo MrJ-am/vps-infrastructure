@@ -30,11 +30,14 @@ compromission. Les droits SQL limités et les contraintes protègent les parcour
 normaux et réduisent les capacités, sans promettre une isolation des bibliothèques
 compromises entre elles. Le monolithe ne reçoit jamais l'administration globale IdP.
 
-L'interface locale actuelle par en-têtes Nginx doit être qualifiée et remplacée
-par une entrée effectivement bornée (socket Unix avec accès restreint ou preuve
-authentifiée) avant le passage du monolithe. Aucun simple en-tête falsifiable ne
-sera assimilé à une vérification. Les campagnes hostiles restent en environnement
-isolé, jamais sur les données réelles.
+L'entrée cible utilise un socket Unix 0660, répertoire 0750 et SO_PEERCRED :
+seul l'UID Nginx configuré peut envoyer une requête. Nginx impose les en-têtes de
+service et d'identité après `auth_request`, sans reprendre ceux du navigateur.
+`tests/serveur-artefact.py` refuse un autre UID portant des en-têtes forgés.
+L'évaluation Nix vérifie le routage et les permissions de la configuration cible ;
+la chaîne Nginx/IdP réellement activée reste à qualifier. Un Nginx compromis fait
+partie de cette frontière de confiance, comme le monolithe compromis. Les
+campagnes hostiles restent en environnement isolé, jamais sur les données réelles.
 
 Preuves locales Matheval : `tests/matheval-composant.mjs` exécute le serveur Node
 de référence et le composant Lisp sur deux bases indépendantes PostgreSQL 17.
@@ -55,4 +58,15 @@ Les suppressions attendent le registre accepté ; retirer une identité IdP pour
 la migration reste distinct de ces fonctions de fermeture personnelle.
 `tests/courriel-smtp.py` vérifie STARTTLS/CA/hostname avant AUTH ; aucune
 localisation certaine ni garantie de livraison finale ne découle d'un relais SMTP.
-Le chiffrement age et la restauration n'ont pas encore de preuve nouvelle.
+Age et restauration : run central 38105867103 sur eff80b8, données de production
+copiées en READ ONLY puis restaurées dans un cluster Unix privé. Empreintes
+sémantiques identiques ; mauvaise clé refusée, clé éphémère enveloppée pour le
+destinataire déjà configuré, aucune clé personnelle utilisée. Le rapport
+`sauvegarde-transition.json` distingue données, ACL/rôles et retour applicatif.
+Les deux derniers restent à qualifier pour l'assemblage commun.
+
+L'approbation manuelle utilise la migration Vision 026 et la même entrée
+administrative ; SQL revalide actif/administrateur et conserve le verrou jusqu'à
+l'écriture SQLite. La file courriel ne constitue pas une autorisation. Les calculs
+scrypt sont limités à deux simultanés pour borner les allocations ; HTTP 503 si
+le budget est épuisé. Cette borne n'est pas une mesure RSS de production.

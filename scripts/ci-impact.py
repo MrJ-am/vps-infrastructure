@@ -10,7 +10,7 @@ if avant and re.fullmatch('[a-f0-9]{40}',avant) and set(avant)!={'0'}:
     fichiers=subprocess.check_output(['git','diff','--name-only',avant,'HEAD'],text=True).splitlines()
     suites=selection(['vps/'+f for f in fichiers],catalogue())
 else:suites=sorted(catalogue())
-besoin=bool(set(suites)-{'editorial','selection'})
+besoin=bool(set(suites)-{'editorial','selection','sauvegarde-copies'})
 with open(os.environ['GITHUB_OUTPUT'],'a') as f:
     f.write('composants='+str(besoin).lower()+'\n')
 print(json.dumps({'suites_concernees':suites,'composants_requis':besoin},ensure_ascii=False))
