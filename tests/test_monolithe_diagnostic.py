@@ -34,5 +34,12 @@ class Diagnostic(unittest.TestCase):
         self.assertFalse(r['ancien_prefixe_preserve'])
         self.assertEqual(r['positions_ajouts']['vision'],[1])
 
+    def test_condition_privee_ne_revele_ni_message_ni_ligne_source(self):
+        t='Traceback (most recent call last):\n  File "/root/prive/script.py", line 42, in qualifier\n    contenu_personnel = secret\nValueError: contenu_personnel et secret'
+        r=m.diagnostic_erreur(t)
+        self.assertEqual(r,{'exception':'ValueError','pile':[{'fichier':'script.py','ligne':42}]})
+        self.assertNotIn('secret',json.dumps(r))
+        self.assertNotIn('prive',json.dumps(r))
+
 
 if __name__=='__main__':unittest.main()
