@@ -843,4 +843,197 @@ tests =
                     "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = let clamp a b x = x in A.style \"zoom\" (String.fromFloat (toFloat (clamp 50 150 pourcentage) / 100))"
                     "Présentation ou échappatoire technique non autorisée."
                     "A.style"
+        , test "portée scientifique numérique en ch" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (portee)\nimport Html.Attributes as A\nportee espaces = A.style \"padding-left\" (String.fromInt (Basics.max 0 espaces) ++ \"ch\")"
+                    |> Review.Test.expectNoErrors
+        , test "portée sans borne refusée" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte"
+                    "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (portee)\nimport Html.Attributes as A\nportee espaces = A.style \"padding-left\" (String.fromInt espaces ++ \"ch\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "portée ne donne pas du CSS libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte"
+                    "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (portee)\nimport Html.Attributes as A\nportee espaces = A.style \"color\" (String.fromInt (Basics.max 0 espaces) ++ \"ch\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "paramètre supplémentaire interdit dans portée" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte"
+                    "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (portee)\nimport Html.Attributes as A\nportee max espaces = A.style \"padding-left\" (String.fromInt (Basics.max 0 espaces) ++ \"ch\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "soumission bornée aux champs" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (soumettreChamps)\nimport Html.Events as E\nsoumettreChamps message = E.preventDefaultOn \"keydown\" message"
+                    |> Review.Test.expectNoErrors
+        , test "soumission des champs sans événement libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (soumettreChamps)\nimport Html.Events as E\nsoumettreChamps message = E.preventDefaultOn \"click\" message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.preventDefaultOn"
+        , test "scale numérique canonique" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"transform\" (\"scale(\" ++ String.fromFloat (Basics.clamp 0.1 1.5 facteur) ++ \")\")"
+                    |> Review.Test.expectNoErrors
+        , test "scale libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"transform\" (\"scale(\" ++ facteur ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "scale sans borne" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"transform\" (\"scale(\" ++ String.fromFloat facteur ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "scale propriété couleur" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"color\" (\"scale(\" ++ String.fromFloat (Basics.clamp 0.1 1.5 facteur) ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "scale autre fonction" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"transform\" (\"rotate(\" ++ String.fromFloat (Basics.clamp 0.1 1.5 facteur) ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "scale borne différente" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille facteur = A.style \"transform\" (\"scale(\" ++ String.fromFloat (Basics.clamp 0.1 99.0 facteur) ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "scale paramètre en plus" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Attributes as A\ntaille String facteur = A.style \"transform\" (\"scale(\" ++ String.fromFloat (Basics.clamp 0.1 1.5 facteur) ++ \")\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "entrée spatiale prise mousedown" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nprise message = E.preventDefaultOn \"mousedown\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre prise mousedown" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nprise nom message = E.preventDefaultOn nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.preventDefaultOn"
+        , test "entrée spatiale prise touchstart" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nprise message = E.on \"touchstart\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre prise touchstart" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nprise nom message = E.on nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.on"
+        , test "entrée spatiale clic click" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nclic message = E.stopPropagationOn \"click\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre clic click" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nclic nom message = E.stopPropagationOn nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.stopPropagationOn"
+        , test "entrée spatiale clic keydown" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nclic message = E.preventDefaultOn \"keydown\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre clic keydown" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nclic nom message = E.preventDefaultOn nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.preventDefaultOn"
+        , test "entrée spatiale toucher touchmove" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\ntoucher message = E.preventDefaultOn \"touchmove\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre toucher touchmove" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\ntoucher nom message = E.preventDefaultOn nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.preventDefaultOn"
+        , test "entrée spatiale fin touchcancel" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nfin message = E.on \"touchcancel\" message"
+                    |> Review.Test.expectNoErrors
+        , test "entrée spatiale refuse événement libre fin touchcancel" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (..)\nimport Html.Events as E\nfin nom message = E.on nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.on"
+        , test "ancrage transparent aux pointeurs" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (ancrage)\nimport Html.Attributes as A\nancrage = A.style \"pointer-events\" \"none\""
+                    |> Review.Test.expectNoErrors
+        , test "ancrage ne capture pas une autre carte" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (ancrage)\nimport Html.Attributes as A\nancrage = A.style \"pointer-events\" \"auto\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "surface vise sa géométrie transformée" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (surface)\nimport Html.Attributes as A\nsurface = A.style \"pointer-events\" \"auto\""
+                    |> Review.Test.expectNoErrors
+        , test "surface ne devient pas du CSS libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (surface)\nimport Html.Attributes as A\nsurface valeur = A.style \"color\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "rôle fixe de carte exposé via alias" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (etat)\nimport Html.Attributes exposing (attribute)\netat = attribute \"role\" \"button\""
+                    |> Review.Test.expectNoErrors
+        , test "rôle de carte ne devient pas un rôle libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Spatial"
+                    "commun/MrJam/Adaptateurs/Spatial.elm"
+                    "module MrJam.Adaptateurs.Spatial exposing (etat)\nimport Html.Attributes as A\netat = A.attribute \"role\" \"img\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
         ]

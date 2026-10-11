@@ -102,7 +102,8 @@ def tester_frontend(cle,sources,caches,campagne='base'):
                  ['python3','tests/navigation.py'],['python3','tests/documentaire.py'],['python3','tests/blocs.py'],
                  ['python3','tests/contextes.py','--signature',str(sources['signature'])],
                  ['python3','tests/exports.py'],
-                 ['python3','tests/medias.py','--katex',str(sources['logique']/'node_modules/katex/dist')]]
+                 ['python3','tests/medias.py','--katex',str(sources['logique']/'node_modules/katex/dist')],
+                 ['python3','tests/scientifique.py','--katex',str(sources['logique']/'node_modules/katex/dist')]]
     }
     if campagne=='unitaire':
         if cle!='logique':raise ValueError('Campagne unitaire définie uniquement pour Logique')
