@@ -1,0 +1,18 @@
+{
+  "format": 1,
+  "revision_operateurs": "e522c2afde3a1593ffa32860e9999a526ff339bc",
+  "revision_construction": "158e4a52e012e5e46cf83afa05d2e36cfe0f4e49",
+  "artefact_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+  "cipher_sha256": "e0c4ee032026d1c498cd43bd9514e6e034015b5831dc6d97a2de47882287ced2",
+  "archive_sha256": "6e55ed45360b4be636d1c73e9432cf43146b7664d27b88951d76056b0e9d925e",
+  "stage_sha256": "466e41f117ebf0b8f26902934c3575f8897f7b14028424edb174395bddae608d",
+  "cipher_octets": 108401335,
+  "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
+  "origine_preuves": "codex-local-non-attestee",
+  "soumission_autorisee_par_proprietaire": false,
+  "parties_transport": [
+    "candidat.tar.gz.age.part-000",
+    "candidat.tar.gz.age.part-001",
+    "candidat.tar.gz.age.part-002"
+  ]
+}
