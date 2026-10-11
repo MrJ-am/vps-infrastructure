@@ -1,7 +1,7 @@
 {
   "format": 1,
   "responsable": "MrJ-am/vps-infrastructure",
-  "etat": "inventaire",
+  "etat": "portage-local-matheval",
   "sources": {
     "vps": {
       "depot": "MrJ-am/vps-infrastructure",
@@ -12,13 +12,13 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "d65cba53f76f7dba42a9fe8d54f7dc1aece5305d",
+      "revision": "d9d5450ef5eb00cb5436a122e0deff4f8cddadec",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "633588b0da1cb4f4d94d4add1bfad3fa15c34ad9",
+      "revision": "62e66673d174009f2cc609f5addb8d6a24a7793e",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
@@ -49,9 +49,18 @@
     },
     "production": {
       "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
-      "sbcl": null,
+      "sbcl": "2.6.4",
       "asdf": null,
-      "etat": "a-constater"
+      "etat": "closure-constatee-build-commun-a-qualifier"
+    },
+    "compilation": {
+      "speed": 1,
+      "safety": 3,
+      "debug": 1,
+      "space": 1,
+      "compilation-speed": 1,
+      "asdf": "graphe declare, pas de cache par fonction",
+      "build": "processus SBCL neuf, aucun chargement de DSO ou de donnees"
     }
   },
   "contrats": {
@@ -86,7 +95,13 @@
       "conclusion": "success",
       "generation": "/nix/store/r6s7ags3dir21gxph8y32rpk8w6lghsb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
       "memoire_machine_utilisee_Mio": 2529,
-      "mesure": "free -m, machine entiere ; pas RSS des services"
+      "mesure": "free -m, machine entiere ; pas RSS des services",
+      "sonde_detaillee": {
+        "run": 38098717899,
+        "commit": "1abe1f589a7f167182a2702548078bdf3255dd49",
+        "fichier": "assemblage/reference-production.json",
+        "resultat": "success"
+      }
     },
     "assembleur_commit": null,
     "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste."

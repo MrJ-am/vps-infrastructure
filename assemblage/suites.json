@@ -8,7 +8,9 @@
         "coordination/CONTRATS.org",
         "coordination/REGISTRE.org",
         "assemblage/manifest.json",
-        "scripts/assemblage.py"
+        "scripts/assemblage.py",
+        "assemblage/dependances.json",
+        "scripts/verifier-dependances.py"
       ]
     },
     "impact": [
@@ -17,13 +19,22 @@
       "*/README*",
       "*/research/*.org",
       "vps/coordination/*",
-      "vps/assemblage/*.md"
+      "vps/assemblage/*.md",
+      "vps/assemblage/reference-production.json",
+      "vps/assemblage/qualification-locale.json",
+      "matheval/lisp/CONTRAT.md",
+      "vps/assemblage/*.json",
+      "vps/scripts/verifier-dependances.py"
     ],
     "commandes": [
       [
         "python3",
         "scripts/coordination.py",
         "verifier"
+      ],
+      [
+        "python3",
+        "scripts/verifier-dependances.py"
       ]
     ],
     "dependances": [],
@@ -41,13 +52,15 @@
       "vps": [
         "scripts/assemblage.py",
         "assemblage/suites.json",
-        "tests/test_assemblage.py"
+        "tests/test_assemblage.py",
+        "scripts/ci-impact.py"
       ]
     },
     "impact": [
       "vps/scripts/assemblage.py",
       "vps/assemblage/suites.json",
-      "vps/tests/test_assemblage.py"
+      "vps/tests/test_assemblage.py",
+      "vps/scripts/ci-impact.py"
     ],
     "commandes": [
       [
@@ -79,7 +92,9 @@
         "docs/site/session.js",
         "server/src/statistics.mjs",
         "research/bank.json",
-        "server/package-lock.json"
+        "server/package-lock.json",
+        "server/src/validation.mjs",
+        "research/codebook.json"
       ],
       "vision": [
         "vision.asd",
@@ -92,7 +107,11 @@
         "assemblage/test-pures.lisp",
         "tests/matheval-differentiel.mjs",
         "tests/matheval-differentiel.lisp",
-        "mrjam-metier.asd"
+        "mrjam-metier.asd",
+        "mrjam-native.asd",
+        "lisp/native/*.lisp",
+        "lisp/serveur/*.lisp",
+        "assemblage/construire.lisp"
       ]
     },
     "impact": [
@@ -109,7 +128,8 @@
       ]
     ],
     "dependances": [
-      "json-commun"
+      "json-commun",
+      "native-contrats"
     ],
     "outils": {
       "sbcl": [
@@ -220,45 +240,75 @@
     }
   },
   "matheval-postgresql": {
-    "niveau": 3,
-    "repertoire": "matheval",
+    "niveau": 4,
+    "repertoire": "vps",
     "entrees": {
+      "vps": [
+        "mrjam-native.asd",
+        "lisp/native/*.lisp",
+        "mrjam-metier.asd",
+        "lisp/serveur/*.lisp",
+        "assemblage/charger.lisp",
+        "tests/matheval-composant.mjs",
+        "tests/matheval-composant.lisp",
+        "assemblage/construire.lisp",
+        "scripts/qualifier-metier.py",
+        "tests/serveur-artefact.py"
+      ],
       "matheval": [
+        "matheval.asd",
+        "lisp/**/*.lisp",
         "server/src/*.mjs",
-        "server/migrations/*.sql",
-        "server/tests/*.mjs",
         "server/package-lock.json",
-        "lisp/**/*.lisp"
+        "server/migrations/*.sql",
+        "docs/site/session.js",
+        "research/bank.json",
+        "research/codebook.json"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/*.lisp"
       ]
     },
     "impact": [
-      "matheval/server/*",
-      "matheval/server/**/*"
+      "matheval/server/migrations/*",
+      "matheval/lisp/collecte.lisp",
+      "matheval/lisp/administration.lisp",
+      "vps/lisp/serveur/*",
+      "vps/tests/matheval-composant.*",
+      "vps/scripts/qualifier-metier.py",
+      "vps/assemblage/construire.lisp",
+      "vps/tests/serveur-artefact.py"
     ],
     "commandes": [
       [
-        "npm",
-        "--prefix",
-        "server",
-        "test"
+        "python3",
+        "scripts/qualifier-metier.py",
+        "--sans-cache"
       ]
     ],
     "dependances": [
-      "matheval-pures"
+      "matheval-pures",
+      "native-contrats"
     ],
     "outils": {
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
       "node": [
         "node",
         "--version"
       ],
-      "npm": [
-        "npm",
-        "--version"
-      ],
-      "postgres": [
-        "psql",
+      "python": [
+        "python3",
         "--version"
       ]
+    },
+    "fixture": {
+      "postgresql": "mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3",
+      "roles": "non-proprietaire/NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS",
+      "donnees": "synthetiques, deux bases independantes"
     }
   },
   "integration-securite": {
@@ -621,6 +671,107 @@
         "python3",
         "--version"
       ]
+    }
+  },
+  "native-contrats": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-native.asd",
+        "lisp/native/*.lisp",
+        "assemblage/charger.lisp",
+        "tests/native-differentiel.mjs",
+        "tests/native-differentiel.lisp"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp"
+      ]
+    },
+    "impact": [
+      "vps/lisp/native/*",
+      "vps/mrjam-native.asd",
+      "vps/tests/native-differentiel.*"
+    ],
+    "commandes": [
+      [
+        "node",
+        "tests/native-differentiel.mjs"
+      ]
+    ],
+    "dependances": [
+      "json-commun"
+    ],
+    "outils": {
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    }
+  },
+  "vision-sql-native": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-native.asd",
+        "mrjam-metier.asd",
+        "lisp/native/*.lisp",
+        "lisp/serveur/*.lisp",
+        "assemblage/charger.lisp",
+        "tests/vision-sql-native.py",
+        "tests/vision-sql-native.lisp"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/*.lisp",
+        "migrations/*.sql",
+        "scripts/roles.sql"
+      ]
+    },
+    "impact": [
+      "vision/src/database.lisp",
+      "vps/lisp/serveur/vision-sql.lisp",
+      "vps/tests/vision-sql-native.*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/vision-sql-native.py"
+      ]
+    ],
+    "dependances": [
+      "native-contrats",
+      "vision-postgresql"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "fixture": {
+      "image": "mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87",
+      "reseau": "loopback",
+      "roles": "scripts/roles.sql exact"
     }
   }
 }

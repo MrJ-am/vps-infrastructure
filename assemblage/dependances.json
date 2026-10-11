@@ -20,11 +20,13 @@
       "Nextcloud et composants natifs"
     ]
   },
-  "bibliotheques_lisp_actuelles": [],
-  "bibliotheque_lisp_proposee": {
-    "nom": "Ironclad",
-    "etat": "autorisation explicite demandee, non ajoutee"
-  },
+  "bibliotheques_lisp_actuelles": [
+    "vision/json",
+    "vision/core",
+    "vision/http",
+    "matheval",
+    "mrjam-native (interne infrastructure)"
+  ],
   "kanidm": {
     "autorise": true,
     "version": "a selectionner apres etape 1",
@@ -2045,5 +2047,23 @@
     "Inventaire systeme complet et versions des auxiliaires a relever par sonde ciblee",
     "Required checks, environments secrets et deploy keys non tous lisibles avec le token integration (403)",
     "Aucune nouvelle bibliotheque tierce installee"
-  ]
+  ],
+  "bibliotheques_natives_existantes": {
+    "OpenSSL": {
+      "local": "3.5.7",
+      "production": [
+        "3.6.3",
+        "4.0.1"
+      ],
+      "usage": "API officielle libcrypto via SB-ALIEN : SHA256, scrypt, RAND_bytes, comparaison",
+      "nouvelle_dependance": false
+    },
+    "libpq": {
+      "local": "17",
+      "production": "17.11",
+      "usage": "parametres lies PQexecParams, transactions bornees",
+      "nouvelle_dependance": false
+    },
+    "verrouillage": "closure Nix de production a conserver ; empreintes des DSO effectives dans les recus locaux, toolchain finale pas encore construite"
+  }
 }
