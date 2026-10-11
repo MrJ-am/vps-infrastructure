@@ -4,7 +4,7 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, restaurer, deployer, retour]
+        options: [preparer, restaurer, deployer, retour, diagnostic]
         default: deployer
         description: Opération sur le candidat chiffré verrouillé dans main
 permissions:
