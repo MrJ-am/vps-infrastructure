@@ -185,6 +185,9 @@ adapterAllows context symbol =
                 ( "MrJam.Adaptateurs.Dialogue", "natif" ) ->
                     List.member symbol [ "Html.node", "Html.Attributes.id", "Html.Attributes.attribute", "Html.Attributes.style", "Html.Events.preventDefaultOn" ]
 
+                ( "MrJam.Adaptateurs.Dialogue", "natifLecture" ) ->
+                    symbol == "Html.Attributes.attribute"
+
                 ( "MrJam.Adaptateurs.Dialogue", "natifAvec" ) ->
                     symbol == "Html.node"
 
@@ -222,6 +225,18 @@ adapterAllows context symbol =
 
                 ( "MrJam.Adaptateurs.Mathematiques", "expression" ) ->
                     List.member symbol [ "Element.html", "Html.node", "Html.Attributes.attribute" ]
+
+                ( "MrJam.Adaptateurs.GraphiqueSpatial", fonction ) ->
+                    List.member fonction [ "scene", "sphere", "liens", "ligne" ]
+                        && List.member symbol [ "Element.html", "Svg.svg", "Svg.defs", "Svg.radialGradient", "Svg.stop", "Svg.circle", "Svg.line", "Svg.polygon", "Svg.g", "Svg.Attributes.width", "Svg.Attributes.height", "Svg.Attributes.viewBox", "Svg.Attributes.id", "Svg.Attributes.cx", "Svg.Attributes.cy", "Svg.Attributes.r", "Svg.Attributes.offset", "Svg.Attributes.stopColor", "Svg.Attributes.stopOpacity", "Svg.Attributes.fill", "Svg.Attributes.fillOpacity", "Svg.Attributes.stroke", "Svg.Attributes.strokeWidth", "Svg.Attributes.strokeLinecap", "Svg.Attributes.strokeDasharray", "Svg.Attributes.x1", "Svg.Attributes.y1", "Svg.Attributes.x2", "Svg.Attributes.y2", "Svg.Attributes.points", "Svg.Attributes.opacity" ]
+
+                ( "MrJam.Adaptateurs.Espace", fonction ) ->
+                    List.member fonction [ "cadre", "bille", "evenements", "clavier" ]
+                        && List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute", "Html.Attributes.style", "Html.Events.on", "Html.Events.preventDefaultOn" ]
+
+                ( "MrJam.Adaptateurs.Axes", fonction ) ->
+                    List.member fonction [ "cadre", "poignee", "rail", "evenements", "clavier" ]
+                        && List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute", "Html.Attributes.style", "Html.Events.on", "Html.Events.preventDefaultOn" ]
 
                 ( "MrJam.Adaptateurs.Spatial", "ancrage" ) ->
                     List.member symbol [ "Element.htmlAttribute", "Html.Attributes.style" ]
@@ -269,7 +284,10 @@ adapterAllows context symbol =
                     List.member symbol [ "Element.html", "Html.input", "Html.Attributes.type_", "Html.Attributes.id", "Html.Attributes.min", "Html.Attributes.max", "Html.Attributes.step", "Html.Attributes.value", "Html.Attributes.attribute", "Html.Attributes.style", "Html.Events.onInput", "Html.Events.on" ]
 
                 ( "MrJam.Adaptateurs.Curseur", "noteRelative" ) ->
-                    List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute" ]
+                    List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute", "Html.Attributes.style" ]
+
+                ( "MrJam.Adaptateurs.Tableau", "defilement" ) ->
+                    List.member symbol [ "Element.htmlAttribute", "Html.Attributes.style" ]
 
                 ( "MrJam.Adaptateurs.Dessin", fonction ) ->
                     List.member symbol (dessinSymboles fonction)
@@ -421,6 +439,34 @@ accessibiliteAttributs context =
 
             "noteRelative" ->
                 [ ( "data-mrjam-note-relative", Just "" ) ]
+
+            _ ->
+                []
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Dialogue" ] && context.function == "natifLecture" then
+        [ ( "production-id", Nothing ) ]
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Espace" ] then
+        case context.function of
+            "cadre" ->
+                [ ( "data-mrjam-espace", Just "" ), ( "data-inactif", Nothing ) ]
+
+            "bille" ->
+                [ ( "data-mrjam-bille", Nothing ), ( "data-id", Nothing ), ( "data-attente", Nothing ), ( "data-x", Nothing ), ( "data-y", Nothing ), ( "data-z", Nothing ) ]
+
+            _ ->
+                []
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Axes" ] then
+        case context.function of
+            "cadre" ->
+                [ ( "data-mrjam-axe", Just "" ), ( "data-inactif", Nothing ) ]
+
+            "rail" ->
+                [ ( "data-mrjam-rail", Just "" ) ]
+
+            "poignee" ->
+                [ ( "data-mrjam-poignee", Nothing ), ( "data-value", Nothing ), ( "data-anchor", Nothing ), ( "data-lift", Nothing ), ( "data-position", Nothing ), ( "role", Just "slider" ), ( "aria-valuemin", Just "-10" ), ( "aria-valuemax", Just "10" ), ( "aria-valuenow", Nothing ), ( "aria-valuetext", Nothing ), ( "aria-orientation", Just "horizontal" ), ( "aria-keyshortcuts", Just "Enter ArrowLeft ArrowRight Home End" ) ]
 
             _ ->
                 []
@@ -674,7 +720,7 @@ expressionVisitor node context =
                                 || (List.member symbol [ "Html.div", "Html.node", "Html.iframe", "Html.details", "Html.summary", "Html.em" ] && not (List.member (Node.range node) context.nodes))
                                 || (List.member symbol [ "Html.Events.preventDefaultOn", "Html.Events.stopPropagationOn" ] && not (List.member (Node.range node) context.events))
                                 || (context.moduleName == [ "MrJam", "Adaptateurs", "Spatial" ] && origin == "Html.Events" && not (List.member (Node.range node) context.events))
-                                || (context.moduleName == [ "MrJam", "Adaptateurs", "Curseur" ] && symbol == "Html.Events.on" && not (List.member (Node.range node) context.events))
+                                || (List.member context.moduleName [ [ "MrJam", "Adaptateurs", "Curseur" ], [ "MrJam", "Adaptateurs", "Espace" ], [ "MrJam", "Adaptateurs", "Axes" ] ] && symbol == "Html.Events.on" && not (List.member (Node.range node) context.events))
                                 || (context.moduleName
                                         == [ "MrJam", "Adaptateurs", "Saisie" ]
                                         && ((origin == "Html.Attributes" && not (List.member (Node.range node) (context.attributes ++ context.resets)))
@@ -777,6 +823,15 @@ nativeReset context node =
                 ( [ "MrJam", "Adaptateurs", "Spatial" ], "ancrage" ) ->
                     [ ( "pointer-events", "none" ) ]
 
+                ( [ "MrJam", "Adaptateurs", "Espace" ], "cadre" ) ->
+                    [ ( "touch-action", "none" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Axes" ], "cadre" ) ->
+                    [ ( "touch-action", "pan-y" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Axes" ], "poignee" ) ->
+                    [ ( "touch-action", "none" ) ]
+
                 ( [ "MrJam", "Adaptateurs", "Spatial" ], "surface" ) ->
                     [ ( "pointer-events", "auto" ) ]
 
@@ -811,7 +866,13 @@ nativeReset context node =
                     [ ( "background", "transparent" ), ( "border", "0" ), ( "padding", "0" ) ]
 
                 ( [ "MrJam", "Adaptateurs", "Curseur" ], "note" ) ->
-                    [ ( "width", "100%" ), ( "height", "44px" ), ( "opacity", "0" ) ]
+                    [ ( "width", "100%" ), ( "height", "44px" ), ( "opacity", "0" ), ( "pointer-events", "none" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Curseur" ], "noteRelative" ) ->
+                    [ ( "touch-action", "none" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Tableau" ], "defilement" ) ->
+                    [ ( "flex-basis", "auto" ) ]
 
                 ( [ "MrJam", "Adaptateurs", "Texte" ], "litteral" ) ->
                     [ ( "white-space", "pre-wrap" ), ( "overflow-wrap", "anywhere" ) ]
@@ -976,6 +1037,18 @@ nativeCancel context node =
                     Lookup.moduleNameFor context.lookup callee
                         == Just [ "Html", "Events" ]
                         && (case ( ( context.moduleName, context.function ), Node.value callee, Node.value event ) of
+                                ( ( [ "MrJam", "Adaptateurs", "Espace" ], "evenements" ), Expression.FunctionOrValue _ "on", Expression.Literal nom ) ->
+                                    List.member nom [ "mrjam-espace-mesure", "mrjam-espace-prise", "mrjam-espace-mouvement", "mrjam-espace-fin" ]
+
+                                ( ( [ "MrJam", "Adaptateurs", "Axes" ], "evenements" ), Expression.FunctionOrValue _ "on", Expression.Literal nom ) ->
+                                    List.member nom [ "mrjam-axe-mesure", "mrjam-axe-prise", "mrjam-axe-mouvement", "mrjam-axe-fin" ]
+
+                                ( ( [ "MrJam", "Adaptateurs", "Espace" ], "clavier" ), Expression.FunctionOrValue _ "preventDefaultOn", Expression.Literal "keydown" ) ->
+                                    True
+
+                                ( ( [ "MrJam", "Adaptateurs", "Axes" ], "clavier" ), Expression.FunctionOrValue _ "preventDefaultOn", Expression.Literal "keydown" ) ->
+                                    True
+
                                 ( ( [ "MrJam", "Adaptateurs", "Spatial" ], "prise" ), Expression.FunctionOrValue _ evenement, Expression.Literal nom ) ->
                                     List.member ( evenement, nom ) [ ( "preventDefaultOn", "mousedown" ), ( "on", "touchstart" ) ]
 
@@ -1355,28 +1428,42 @@ Aucun style configurable ; le contenu du lecteur est construit en elm-ui.
 nativeMarge : Context -> Node Expression -> Bool
 nativeMarge context node =
     shared context
-        && context.moduleName == [ "MrJam", "Adaptateurs", "Dialogue" ]
-        && context.function == "margeLecture"
+        && context.moduleName
+        == [ "MrJam", "Adaptateurs", "Dialogue" ]
+        && context.function
+        == "margeLecture"
         && context.margeArgumentUnique
         && (case Node.value node of
                 Expression.Application [ callee, key, value ] ->
-                    Lookup.moduleNameFor context.lookup callee == Just [ "Html", "Attributes" ]
+                    Lookup.moduleNameFor context.lookup callee
+                        == Just [ "Html", "Attributes" ]
                         && (case Node.value callee of
-                                Expression.FunctionOrValue _ "style" -> True
-                                _ -> False
+                                Expression.FunctionOrValue _ "style" ->
+                                    True
+
+                                _ ->
+                                    False
                            )
-                        && Node.value key == Expression.Literal "margin-top"
+                        && Node.value key
+                        == Expression.Literal "margin-top"
                         && (case List.map (unparenthesize >> Node.value) (concatExpressions value) of
                                 [ Expression.Application [ convert, bound ], Expression.Literal "px" ] ->
-                                    Lookup.moduleNameFor context.lookup convert == Just [ "String" ]
-                                        && Node.value convert == Expression.FunctionOrValue [ "String" ] "fromInt"
+                                    Lookup.moduleNameFor context.lookup convert
+                                        == Just [ "String" ]
+                                        && Node.value convert
+                                        == Expression.FunctionOrValue [ "String" ] "fromInt"
                                         && (case Node.value (unparenthesize bound) of
                                                 Expression.Application [ limit, lower, upper, argument ] ->
-                                                    Lookup.moduleNameFor context.lookup limit == Just [ "Basics" ]
-                                                        && Node.value limit == Expression.FunctionOrValue [ "Basics" ] "clamp"
-                                                        && Node.value lower == Expression.Integer 12
-                                                        && Node.value upper == Expression.Integer 800
-                                                        && Node.value argument == Expression.FunctionOrValue [] "hauteur"
+                                                    Lookup.moduleNameFor context.lookup limit
+                                                        == Just [ "Basics" ]
+                                                        && Node.value limit
+                                                        == Expression.FunctionOrValue [ "Basics" ] "clamp"
+                                                        && Node.value lower
+                                                        == Expression.Integer 12
+                                                        && Node.value upper
+                                                        == Expression.Integer 800
+                                                        && Node.value argument
+                                                        == Expression.FunctionOrValue [] "hauteur"
 
                                                 _ ->
                                                     False

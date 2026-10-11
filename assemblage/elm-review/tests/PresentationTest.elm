@@ -57,7 +57,7 @@ svgDependency =
         Ok elmJson ->
             Dependency.create "elm/svg"
                 elmJson
-                (List.map documenter [ ( "Svg", [ "svg", "path", "circle", "image", "mask", "foreignObject" ] ), ( "Svg.Attributes", [ "d", "style", "viewBox", "fill", "opacity", "maskUnits" ] ) ])
+                (List.map documenter [ ( "Svg", [ "svg", "path", "circle", "image", "mask", "foreignObject", "line", "polygon", "g", "defs", "radialGradient", "stop" ] ), ( "Svg.Attributes", [ "d", "style", "viewBox", "fill", "opacity", "maskUnits", "x1", "y1", "x2", "y2", "stroke", "strokeWidth" ] ) ])
 
         Err erreur ->
             Debug.todo (Decode.errorToString erreur)
@@ -87,7 +87,47 @@ rejectedAt moduleName path source under range =
 tests : Test
 tests =
     describe "Frontières et symboles résolus"
-        [ test "type Html nécessaire permis" <|
+        [ test "lecteur identité de production bornée" <|
+            \() -> review "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (natifLecture)\nimport Html.Attributes as A\nnatifLecture = A.attribute \"production-id\" \"a\"" |> Review.Test.expectNoErrors
+        , test "lecteur refuse attribut voisin" <|
+            \() -> rejected "MrJam.Adaptateurs.Dialogue" "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (natifLecture)\nimport Html.Attributes as A\nnatifLecture = A.attribute \"class\" \"a\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "Espace marqueur fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (cadre)\nimport Html.Attributes as A\ncadre = A.attribute \"data-mrjam-espace\" \"\"" |> Review.Test.expectNoErrors
+        , test "Espace marqueur au mauvais endroit" <|
+            \() -> rejected "MrJam.Adaptateurs.Espace" "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (autre)\nimport Html.Attributes as A\nautre = A.attribute \"data-mrjam-espace\" \"\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "Espace clavier keydown fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (clavier)\nimport Html.Events as E\nclavier = E.preventDefaultOn \"keydown\" 1" |> Review.Test.expectNoErrors
+        , test "Espace refuse événement variable" <|
+            \() -> rejected "MrJam.Adaptateurs.Espace" "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (clavier)\nimport Html.Events as E\nclavier = E.preventDefaultOn \"click\" 1" "Présentation ou échappatoire technique non autorisée." "E.preventDefaultOn"
+        , test "Espace touch-action fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (cadre)\nimport Html.Attributes as A\ncadre = A.style \"touch-action\" \"none\"" |> Review.Test.expectNoErrors
+        , test "Espace refuse CSS parallèle" <|
+            \() -> rejected "MrJam.Adaptateurs.Espace" "commun/MrJam/Adaptateurs/Espace.elm" "module MrJam.Adaptateurs.Espace exposing (cadre)\nimport Html.Attributes as A\ncadre = A.style \"background\" \"red\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "Axes marqueur fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (cadre)\nimport Html.Attributes as A\ncadre = A.attribute \"data-mrjam-axe\" \"\"" |> Review.Test.expectNoErrors
+        , test "Axes marqueur au mauvais endroit" <|
+            \() -> rejected "MrJam.Adaptateurs.Axes" "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (autre)\nimport Html.Attributes as A\nautre = A.attribute \"data-mrjam-axe\" \"\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "Axes clavier keydown fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (clavier)\nimport Html.Events as E\nclavier = E.preventDefaultOn \"keydown\" 1" |> Review.Test.expectNoErrors
+        , test "Axes refuse événement variable" <|
+            \() -> rejected "MrJam.Adaptateurs.Axes" "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (clavier)\nimport Html.Events as E\nclavier = E.preventDefaultOn \"click\" 1" "Présentation ou échappatoire technique non autorisée." "E.preventDefaultOn"
+        , test "Axes touch-action fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (cadre)\nimport Html.Attributes as A\ncadre = A.style \"touch-action\" \"pan-y\"" |> Review.Test.expectNoErrors
+        , test "Axes refuse CSS parallèle" <|
+            \() -> rejected "MrJam.Adaptateurs.Axes" "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (cadre)\nimport Html.Attributes as A\ncadre = A.style \"background\" \"red\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "poignée rôle slider fixe" <|
+            \() -> review "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (poignee)\nimport Html.Attributes exposing (attribute)\npoignee = attribute \"role\" \"slider\"" |> Review.Test.expectNoErrors
+        , test "poignée refuse rôle libre" <|
+            \() -> rejected "MrJam.Adaptateurs.Axes" "commun/MrJam/Adaptateurs/Axes.elm" "module MrJam.Adaptateurs.Axes exposing (poignee)\nimport Html.Attributes as A\npoignee = A.attribute \"role\" \"button\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "graphique spatial ligne technique" <|
+            \() -> review "commun/MrJam/Adaptateurs/GraphiqueSpatial.elm" "module MrJam.Adaptateurs.GraphiqueSpatial exposing (ligne)\nimport Svg as V\nligne = V.line [] []" |> Review.Test.expectNoErrors
+        , test "graphique spatial fonction inconnue" <|
+            \() -> rejected "MrJam.Adaptateurs.GraphiqueSpatial" "commun/MrJam/Adaptateurs/GraphiqueSpatial.elm" "module MrJam.Adaptateurs.GraphiqueSpatial exposing (autre)\nimport Svg as V\nautre = V.line [] []" "Présentation ou échappatoire technique non autorisée." "V.line"
+        , test "graphique spatial refuse foreignObject" <|
+            \() -> rejected "MrJam.Adaptateurs.GraphiqueSpatial" "commun/MrJam/Adaptateurs/GraphiqueSpatial.elm" "module MrJam.Adaptateurs.GraphiqueSpatial exposing (scene)\nimport Svg as V\nscene = V.foreignObject [] []" "Présentation ou échappatoire technique non autorisée." "V.foreignObject"
+        , test "graphique spatial refuse CSS même avec exposing" <|
+            \() -> rejectedAt "MrJam.Adaptateurs.GraphiqueSpatial" "commun/MrJam/Adaptateurs/GraphiqueSpatial.elm" "module MrJam.Adaptateurs.GraphiqueSpatial exposing (scene)\nimport Svg.Attributes exposing (style)\nscene = style \"color\" \"red\"" "style" { start = { row = 3, column = 9 }, end = { row = 3, column = 14 } }
+        , test "type Html nécessaire permis" <|
             \() ->
                 review "application/Main.elm" "module Main exposing (main)\nimport Html exposing (Html)\nmain : Html msg\nmain = Debug.todo \"amorçage\""
                     |> Review.Test.expectNoErrors
@@ -1041,6 +1081,49 @@ tests =
                 review "commun/MrJam/Adaptateurs/Curseur.elm"
                     "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.style \"width\" \"100%\""
                     |> Review.Test.expectNoErrors
+        , test "note proxy clavier sans pointeurs natifs" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes exposing (style)\nnote valeur = style \"pointer-events\" \"none\""
+                    |> Review.Test.expectNoErrors
+        , test "note proxy refuse de reprendre les pointeurs natifs" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nnote valeur = A.style \"pointer-events\" \"auto\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "prise note tactile fixe" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Element as E\nnoteRelative = E.htmlAttribute (A.style \"touch-action\" \"none\")"
+                    |> Review.Test.expectNoErrors
+        , test "tableau défilant garde sa hauteur intrinsèque" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Tableau.elm"
+                    "module MrJam.Adaptateurs.Tableau exposing (defilement)\nimport Element as E\nimport Html.Attributes as A\ndefilement = E.htmlAttribute (A.style \"flex-basis\" \"auto\")"
+                    |> Review.Test.expectNoErrors
+        , test "tableau sans flex-basis configurable" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Tableau"
+                    "commun/MrJam/Adaptateurs/Tableau.elm"
+                    "module MrJam.Adaptateurs.Tableau exposing (defilement)\nimport Html.Attributes as A\ndefilement valeur = A.style \"flex-basis\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "tableau sans style supplémentaire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Tableau"
+                    "commun/MrJam/Adaptateurs/Tableau.elm"
+                    "module MrJam.Adaptateurs.Tableau exposing (defilement)\nimport Html.Attributes as A\ndefilement = A.style \"height\" \"100px\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "prise note sans politique tactile libre" <|
+            \() ->
+                rejectedAt "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes exposing (style)\nnoteRelative valeur = style \"touch-action\" valeur"
+                    "style"
+                    { start = { row = 3, column = 23 }, end = { row = 3, column = 28 } }
         , test "note proxy refuse dimension libre" <|
             \() ->
                 rejected "MrJam.Adaptateurs.Curseur"

@@ -1,5 +1,8 @@
 """Garde de routage du pont : aucun serveur Lisp ni calcul applicatif requis."""
 import importlib.util
+import copy
+import hashlib
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -13,6 +16,34 @@ qualification=importlib.util.module_from_spec(qualification_spec);qualification_
 
 
 class Routage(unittest.TestCase):
+    def reference_synthetique(self):
+        trace=[{'outil':outil,'nom':nom,'arguments':{}} for outil,noms in
+               [('cl-mcp',['load-system','run-tests','repl-eval']),
+                ('tron',['repl_eval','repl_compile','repl_frame_locals','repl_get_restarts','repl_invoke_restart'])]
+               for nom in noms]
+        preuve={'format':1,'resultat':'succes','confiance':'locale-non-attestee','autorise_publication':False,
+            'mutation_cl_mcp':11,'mutation_tron':12,'locaux':{'base':40,'facteur':2},
+            'effets_avant_erreur':1,'effets_apres_restart':1,'resultat_calcul':42,
+            'sources':{n:hashlib.sha256((ROOT/n).read_bytes()).hexdigest() for n in qualification.ENTREES_REFERENCE},
+            'trace_sha256':hashlib.sha256(json.dumps(trace,sort_keys=True).encode()).hexdigest()}
+        return preuve,trace
+
+    def test_validation_reference_sans_appel_ni_reinitialisation(self):
+        preuve,trace=self.reference_synthetique()
+        with patch.object(qualification.pont,'envoyer') as envoyer:
+            r=qualification.verifier_reference(preuve,trace)
+            self.assertFalse(r['scenario_reexecute'])
+            self.assertFalse(r['connexion_actuelle_verifiee'])
+            envoyer.assert_not_called()
+
+    def test_preuve_alteree_ou_entrees_modifiees_refusees(self):
+        preuve,trace=self.reference_synthetique()
+        for cle,valeur in [('resultat','echec'),('effets_apres_restart',2),('trace_sha256','0'*64)]:
+            modifiee=copy.deepcopy(preuve);modifiee[cle]=valeur
+            with self.subTest(cle=cle),self.assertRaises(ValueError):qualification.verifier_reference(modifiee,trace)
+        modifiee=copy.deepcopy(preuve);modifiee['sources']['tests/outils-mcp/scenario.lisp']='0'*64
+        with self.assertRaises(ValueError):qualification.verifier_reference(modifiee,trace)
+
     def test_locaux_fallbacks_et_commande_inconnue_refuses_avant_transport(self):
         for nom in ('inspect_object','inspect_package','runtime_stats','thread_list',
                     'reload_system','code_compile_string','swank_launch','inconnu'):

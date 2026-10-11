@@ -18,7 +18,7 @@
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "78137b0a0e9e3977e038aa9448350377e9b93798",
+      "revision": "0b277f02800ee73718dc6ca45b65e10e081f825b",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
@@ -30,7 +30,7 @@
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "113169d422c11f3d1f878055092005e8d1b7b117",
+      "revision": "30c6087e6975d41d221fe6b31279ee1530f917c6",
       "role": "elm-ui"
     },
     "signature": {
@@ -119,10 +119,10 @@
     },
     "matheval": {
       "verrou_style": "docs/style-mrjam.json",
-      "sha256": "c7b829b50ecc74bc0c9038a3cd495ebc3d9a22fd53d9c940c4922375edb44785",
-      "revision_style": "3aab7233465ac0abe49464fa26a360765ccb4004",
+      "sha256": "067cefbd56152361d313b947dac26094260c163c7f43e7a4b1fd2b2020828246",
+      "revision_style": "30c6087e6975d41d221fe6b31279ee1530f917c6",
       "origine_style": "MrJ-am/style-mrjam",
-      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+      "raison": "Quatre interfaces ElmUI et transitions communes ; lecteur, notation, axes et espace scientifiques au verrou exact. Qualification locale en cours, aucune promotion."
     },
     "logique": {
       "verrou_style": "style-mrjam.json",

@@ -1,133 +1,83 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — Matheval après Vision et Logique
+## Point de reprise actif — qualification des candidats finaux
 
-Infra publiée d9e7d9c ; lecteurs/notes communs complémentaires en cours de publication.
-Style113169d (révision complète dans le manifeste) et
-Logiqued76f007 (révision complète dans le manifeste) publiés.
-Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Math/master78137b0 et
-Signaturee9d9d34 conservés. Production inchangée : étape1 non déployée,
-Kanidm non commencé. Aucune CI ni opération de données déclenchée.
-Rapport MCP historique non commité préservé. ArchitectureC et image saine
-conservées (processus constatés83928/129399), sans reconnexion ni qualifier.
+Infra publiée15496df, changements centraux durables en attente de commit ;
+Style30c6087e6975d41d221fe6b31279ee1530f917c6, Math0b277f02800ee73718dc6ca45b65e10e081f825b,
+Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Logiqued76f0074efa066098ec95c89cbf6d14da8c296cd,
+Signaturee9d9d34d353422c2993cd1bc7c3c626f503bb5e0 publiés ; six branches effectives
+constatées, manifeste exact actualisé mais amendement NON qualifié. Production
+inchangée, étape1 non déployée, Kanidm non commencé. Aucun CI/SQLproduction déclenché.
 
-Style : socle/contextes/TeX/vidéo/gestes publiés ; iframe stable, générations,
-façades publiques, frontière des adaptateurs privés. Candidat
-state/frontends-candidats/style-fbdb9dbb0c72-78eef4b9,
-ensemble59108d807326d74d1b58fa3e1c8d4d3b5d431ce2ab8a70d33b7e176d0db33a82.
-Qualification base81,0367s, complément201,1529s :98tests Elm,
-94parcours Chromium/Firefox,16comparaisons raster, géométrie/exports identiques.
-Médias320/768/1440 : KaTeX réel, SDK synthétique, délai réel15s, focus/reprise,
-source refusée et génération obsolète. Vidéo bornée à un lecteur visible par page.
+C et image saine conservées : SBCL83928/Tron129399 constatés, jamais constantes
+routées ; ancien79777 distinct/idle préservé. Aucun chargement/reconnexion/debug
+nouveau pour le frontend. Contrôleurs MCP ciblés et usages documentés ; aucune
+refonte du pont. Preuve historique réelle0,8033s/22appels vérifiée offline sans
+réinitialiser fixture ; noyau/bibliothèques/lanceurs/trace inchangés, effets1,
+resultat42. Nouveau routage/parser testé séparément8cas. Empreinte preuve dans
+reçu, références privées copiées au bundle/préparateur ; aucune nouvelle connexion
+ou scénario exécuté prétendu. Rapport MCP historique non commité préservé.
 
-Vision : candidat2d9f31bff90e-29425f7e / ensemble
-a8e9f4e8186b194b09d7318aaea0cb94cb2f79b7d157680e4b041fda95a20198,
-qualification48,3092s conservée, Style196ab46 effectivement consommé inchangé.
-Les outils d'orchestration modifiés sont requalifiés au jalon final selon impact.
+Socle/consommateurs portés : ElmUI/Animator/contextes, lecteur/note/scène/axes,
+quatre entrées Math. Corpus/graines/Survey.Model/backend inchangés. Espace/Axes/
+GraphiqueSpatial et événements ont des adaptateurs privés bornés ; Tableaux
+flex-basis:auto constant corrige hauteur0Firefox (AST/doc/tests). Références
+JSgéométriques déplacées verbatim dans docs/tests/references, hors produit.
 
-Logique : vues et atelier elm-ui, indice Animator mesuré, réductions initiale/live,
-focus/historique/MCP et actions indépendants des animations. Geste hors Document,
-fantôme commun inerte sans identifiants, horloge active seulement pendant geste.
-JS limité aux pointeurs/hit-test/scroll/fichiers/reprise ; aucune CSS applicative.
-Retarget tactile Chromium corrigé par prise géométrique ; scroll natif conservé.
-Candidat7137ff286284-c36463f0 / ensemble
-c604bd4d54cc35e9d0ff2574b1dc2adef262af61b437125fabad14ad0f6f1294,
-qualification navigateur132,2951s :58exercices303TeX12bilans12vidéos,
-3contrats WebMCP,4largeurs ;6ContinuousUI ;13atelier+2tactiles ;polices originales.
-Deux tests historiques exigeaient CSS retirée/ancien hash du pont ; corrigés sans
-changer corpus/correcteur. Autre ancien contrôle visait video.js supprimé : vise
-maintenant les lecteurs communs et atelier.js. La révisiond76f007 ne change que
-ce script ; unité centrale12,3742s réussie (190correcteur/299TeX/14Python/97atelier,
-format), sans site navigateur artificiellement requis. Le reçu navigateur reste
-celui de7137ff2 ; aucune qualification navigateur revendiquée pourd76f007.
-Aligner candidat exact au jalon final avant promotion.
+Candidats propres construits une fois par révision :
+Style30c6087e6975-16136a76 ensemble02f4216d, base138,5239s réussie ;
+Logiqued76f0074efa0-cd66ef05 ensemble42954783, base139,1341s/correcteur12,8117s réussis ;
+Vision2d9f31b existant conservé ; Math0b277f02800e-73b22d87 ensemble093fc670.
+Math0b et8f02 assets identiques, seul interface.json change (révision identifiée).
+Math8f base16,4047s ; qualification base0b en cours avec navigateur exact.
 
-Contrôles centraux :136tests AST+6ressources+3fixtures réellement refusées,
-10,5718s ;6tests de sources0,6622s ;18tests de sélection0,8401s.
-Pas de suppressions/exclusions ni seuils abaissés. Reçus privés machine dans
-state/recus, confiance locale non attestée, jamais autorisation de publication.
-Stade exploratoire Logique et captures conservés dans state ; pas candidat.
+Campagnes Math :96pass mais garde sources refuse le harnais534,0746s ; correction
+vers copie privée .central-tests-*/e2e,3tests source intacte/chemins/no-overwrite.
+Surcharge4CPU/16Gio par3campagnes simultanées : timeouts clavier/Yatelier, seuls
+runners arrêtés proprement ; tracesd27518040481/03933b67e84b conservées. Pas de hausse
+des timeouts. Cible4scénarios passe63,4647s après sérialisation. Campagne seule8f :
+95pass/1échec497,7386s : helper tactile retournait avant retrait aide/rerenduaxes ;
+trace72a69aad4d47. Fix canonique helper attend count0 (état, aucun délai fixe),
+publié0b277f0. Régression réelle CDPtouch3répétitions passe43,99s, traceafab2d0ebc7f.
+Tous anciens résultats restent datés, aucun reçu de réussite fabriqué.
 
-Matheval en cours, non commité : lecteur scientifique commun Style48cb06a,
-142tests AST11,9332s, qualification centrale Style91,9703s sur candidat
-style-48cb06aaa08f-befceaca / ensemble
-2514d258c02f6ae10da64f98153d67b7491596fef15f28c8e6aab55858b75ad9.
-Huit cas scientifiques aux3largeurs320/390/1363 réussis, retraits comparés à
-l'ancien rich-text, TeX réel/HTML échappé/Markdown/soumission bornée. Le reçu
-Style-logo précédent reste historique ; additions hors logo pas encore finalisées.
-Administration : Math.document, métadonnées publiques, soumission INPUT et
-contexte Matheval, CSS locale retirée, compile incrémentale22puis2modules.
-Trois parcours Chromium réussis8,4s sur binaire Nix296b7c89/PG jetable : accès,
-activation/Entrée, corpus/statistiques/réponses avec zéro/absence et déconnexion.
-Première fixture incomplète (assets absents) et environnement DSO distribution
-au lieu de Nix : démarrage refusé avant parcours ; fixture préservée. Avec DSO
-Nix, démarrage réussi mais instrumentation répétée dans la fixture réutilisée :
-refus de tests. Nouvelle fixture neuve depuis sources canoniques, trois succès.
-Aucune répétition d'effets production, aucun backend Node. Config Playwright
-locale n'en lance plus ; la commande centrale possède le serveur SBCL isolé.
-Prototype et DemoCard en cours, non commité : Main elm-ui/TableSpatiale/T.Transition,
-mêmes BoardLogic/positions/miniscale/dimensions. Nouveau socle Spatial publié816b663,
-167tests AST+6ressources+3fixtures11,3080s ; review intégral Style réussi.
-Premier prototype5/7 : boîtes non peintes recouvraient les voisines en tactile,
-ancrage transparent et surface transformée active corrigés ;2mobiles ciblés9,6s
-réussis. Test long injecte le JSON scientifique avant chargement (aucune mutation
-du vieux custom element retiré). Main et DemoCard compilés séparément, comme le
-constructeur canonique ; bundle exploratoire combiné refusé à cause des ports
-homonymes, conservé sans usage. Huit nouveaux parcours de continuité Firefox/
-Chromium390/1280 normal/réduit passent1,2min : interruptions/inversions, Entrée/
-Espace/Échap, nœud/focus préservés, préférence live et frames arrêtées au repos.
-Le Demo recentre désormais une carte dans sa boîte elm-ui plutôt que le coin
-absolu de l'ancien div ; aucune donnée scientifique concernée. Hauteurs explicites
-compactes240desktop/360mobile, bornées par92% du viewport ; à vérifier avec le
-reste des parcours avant qualification finale. test.html construit DemoCard actuel,
-ancien bundle test.js retiré (histoire Git intacte). Survey encore ancien.
-Math verrou Style816b663 local (SHA256 exact de tous modules/ressources utilisées),
-Animator2/time existant/bezier2 transitif ; pas de mise à niveau d'outil.
-Stage incrémental state/matheval-developpement-jbgia3ck (sources absolues canoniques),
-pointeur matheval-developpement-courant.txt ; jamais candidat. Toutes opérations
-citées locales ; rapport MCP/Image persistante et production conservés.
+Exécutions suivantes STRICTEMENT séquentielles, shellset-e, session12668 à constater
+(non constante script) : Mathbase+96 → Stylelogo → Vision/Signature → MCP métier.
+Logs matheval-qualification-0b277f0.txt, style-logo-final-serialise.txt,
+vision-signature-final-serialise.txt, mcp-metier-final.txt. Si échec, analyser la
+cause ; ne pas relancer aveuglément. Aucune autre campagne navigateur en parallèle.
 
-Avancement complémentaire : Survey lecteur elm-ui/Math.document, timeline commune,
-notes facultatives avec aperçu distinct de la réponse, fermeture immédiate sans
-WebAnimations ou attente "closed". Les aperçus/frames/mesures/préférences n'émettent
-pas de checkpoints scientifiques. Question mesurée, lecteur placé sous l'énoncé
-(cap32% viewport), commandes à droite en paysage compact. Aides à contenu défilant
-borné pour conserver fermeture disponible. Stage même chemin ci-dessus, survey.js
-incrémental ; Math non commité. Corpus, tirages, Model.point/S.move et serveur Lisp
-inchangés. Bootstrap index/enquete identiques ; erreur de chargement rendue Elm.
+Autres preuves :208AST/6ressources/3fixtures18,7958s, géométrie336cas40,2ms ;
+sélection20/source9/transport/isolation/migration/classification privés passent.
+VisionPostgreSQL289,8156s réussie ; SQLnative reçu réutilisé exact. Psycopg3.2.5
+venv navigateur existant (même Python3.12.14/binaire), pas installation. Référence
+historique Node sur base indépendante16,2075s après correction empreinteenv ;
+aucun Nodebackend cible/production. Nativepures/Lisp inchangés à réutiliser exact.
 
-Qualifications locales ciblées :181tests AST+6ressources+3fixtures12,0871s,
-review Style intégral réussi. Notes : souris/clavier320/390/1363 dans Chromium143
-et Firefox146 existants, un tactile Chromium réel (diagonale/annulation), sept
-cas réussis depuis fixture actuelle (notes-ciblées-finales.txt).
-Lecteur commun : huit formats normal/réduit, focus/défilement/changement de texte
-et arrêt des frames réussis depuis sources finales (lecture-ciblee-finale.txt).
-Style113169d publié : sources/correctifs/assets et tests conservés, aucune nouvelle
-construction ou qualification globale Style revendiquée. Math verrou local113169d
-avec tous modules et fenetres.js/notes.js supplémentaires ; manifeste Math garde
-encore le verrou historique de78137b0, jusqu'au commit composant réellement publié.
-Tests ajoutés à orchestration Style centrale, pas de CI déclenchée ni qualification
-complète du nouveau Style revendiquée. Scénarios Math sur Nix SBCL/PG jetable :
-fixture3 quatre succès17,9s avant nouveau placement ; fixture4 ciblée placement/aide
-portrait un succès6,1s ; fixture5 deux portraits réussis, deux paysages échoués
-(aide dépassait439px pour viewport390px), correction de hauteur de texte commune.
-Fixture6 quatre succès15,0s : source exacte, zéro/absence/relecture, focus/clavier,
-placement sous énoncé, aide accessible portrait/paysage, frames au repos.
-Premières fixtures1/2 échouées avant lecteur : ressources puis index d'entrée ancien.
-Leur trace est préservée ; index/enquete sources corrigés ensemble. Native DSOs Nix
-exactes, aucune fixture instrumentée réutilisée ; copie suivante doit être neuve.
-Logs/captures dans state/rapports-frontends et stage/lecteur-fixture-1..6.
+Changements centraux : orchestration scientifique/lecture/note/géométrie, AST et
+ressources ; dépendances inventoriées déjà autorisées (aucun ajout opportuniste).
+Empreintes DSOs seulement suites natives,2régressions ; reçus frontend inchangés
+réutilisables sous env Nix. Préparateur utilise Style réellement consommé par
+Vision/Logique, archives immuables privées/3régressions ; garde sources conservée.
+Sondes VPS vérifient les4ElmMath +interop, pas seulement enquete.js. Historique
+qualification-locale.json non réécrit ; archiver exactement avant résumé actuel.
 
-Suite immédiate : publier lecteur/note communs et verrous exacts après résultats
-ciblés, terminer Survey axes/scène/contextes/compagnons et JS de mesure/pointeurs.
-L'ancienne projection/sliders/rich-text restent seulement à porter, pas qualifiés.
-Les quatre entrées Math, règles/ressources et ContinuousUI doivent passer sur
-sources/candidat exacts ; ne pas présenter les tests des règles comme conformité
-Math. Ensuite qualification finale assemblage, Nix/HBA/préconditions actuelles,
-backup/restauration/retour et étape1 réelle avant Kanidm. Promotion refusée tant
-que l'ensemble reste incomplet. Image SBCL de tâche saine conservée ; aucun
-rechargement/reconnexion/MCP artificiel pour ce travail Elm.
+Après jobs : comparer35reçus dans env final (SBCLNix/navvenv/DSOs existants, PDF
+actuels ; ne pas remplacer par popplerNix). Pas de lecture empreinteFirefox quand
+il tourne : son verrou transitoire est refusé, attendre fin des campagnes.
+Qualifier processus Lisp propre à étape pertinente, préserver imageinteractive.
+Commiter/pousser composants avant manifeste, sceller mêmeNix296b7c89 déjà propre,
+transportchiffré central puispréparer/restaurer/basculer/sondes/redémarrage/invariants.
+Backup ancien02:40 doit être réévalué, pas restauré sur SQLrécent pour retour.
 
+Remote relu : maininfra15496df ; PagesMath workflow/dynamicbuiltinactive mais aucun
+run depuis28septembre, malgré pushesOct11 ; workflowsStyle/Logique historiques
+manuellementdisabled. Protectionsmain/master403 «Resource not accessible by
+integration» ; environmentvps-production lisible/branchpolicy seulement. Pages
+PUTdisable422 historique concerne builtin, ne pas le confondre avec suppression
+site. Vérifier mécanisme autorisé après publicationcentrale sans réactivation
+satellite. Ne prétendre aucun nettoyage inaccessible accompli. Ensuite étape1
+réellement constatée avant Kanidm automatique. Références/histoire ci-dessous.
 
 ## Références et résultats historiques conservés
 
@@ -398,3 +348,238 @@ bloquant. Consignes/pont publiés infra9801479 ; aucun déploiement. Prochaine �
 concrète : Vitrine (dimensions explicites et compléments contrôlés elm-ui), ses
 consommateurs Galerie/Vision, puis dialogues/constructions/atelier. Préserver tous
 les diffs Style ; publier composants avant le manifeste exact, promotion en attente.
+
+## Chronologie frontend antérieure — historique, remplacée par le point actif
+
+Infra publiée15496df ; lecteurs/notes communs publiés, géométrie pure en cours.
+Style113169d (révision complète dans le manifeste) et
+Logiqued76f007 (révision complète dans le manifeste) publiés.
+Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Math/master78137b0 et
+Signaturee9d9d34 conservés. Production inchangée : étape1 non déployée,
+Kanidm non commencé. Aucune CI ni opération de données déclenchée.
+Rapport MCP historique non commité préservé. ArchitectureC et image saine
+conservées (processus constatés83928/129399), sans reconnexion ni qualifier.
+
+Style : socle/contextes/TeX/vidéo/gestes publiés ; iframe stable, générations,
+façades publiques, frontière des adaptateurs privés. Candidat
+state/frontends-candidats/style-fbdb9dbb0c72-78eef4b9,
+ensemble59108d807326d74d1b58fa3e1c8d4d3b5d431ce2ab8a70d33b7e176d0db33a82.
+Qualification base81,0367s, complément201,1529s :98tests Elm,
+94parcours Chromium/Firefox,16comparaisons raster, géométrie/exports identiques.
+Médias320/768/1440 : KaTeX réel, SDK synthétique, délai réel15s, focus/reprise,
+source refusée et génération obsolète. Vidéo bornée à un lecteur visible par page.
+
+Vision : candidat2d9f31bff90e-29425f7e / ensemble
+a8e9f4e8186b194b09d7318aaea0cb94cb2f79b7d157680e4b041fda95a20198,
+qualification48,3092s conservée, Style196ab46 effectivement consommé inchangé.
+Les outils d'orchestration modifiés sont requalifiés au jalon final selon impact.
+
+Logique : vues et atelier elm-ui, indice Animator mesuré, réductions initiale/live,
+focus/historique/MCP et actions indépendants des animations. Geste hors Document,
+fantôme commun inerte sans identifiants, horloge active seulement pendant geste.
+JS limité aux pointeurs/hit-test/scroll/fichiers/reprise ; aucune CSS applicative.
+Retarget tactile Chromium corrigé par prise géométrique ; scroll natif conservé.
+Candidat7137ff286284-c36463f0 / ensemble
+c604bd4d54cc35e9d0ff2574b1dc2adef262af61b437125fabad14ad0f6f1294,
+qualification navigateur132,2951s :58exercices303TeX12bilans12vidéos,
+3contrats WebMCP,4largeurs ;6ContinuousUI ;13atelier+2tactiles ;polices originales.
+Deux tests historiques exigeaient CSS retirée/ancien hash du pont ; corrigés sans
+changer corpus/correcteur. Autre ancien contrôle visait video.js supprimé : vise
+maintenant les lecteurs communs et atelier.js. La révisiond76f007 ne change que
+ce script ; unité centrale12,3742s réussie (190correcteur/299TeX/14Python/97atelier,
+format), sans site navigateur artificiellement requis. Le reçu navigateur reste
+celui de7137ff2 ; aucune qualification navigateur revendiquée pourd76f007.
+Aligner candidat exact au jalon final avant promotion.
+
+Contrôles centraux :136tests AST+6ressources+3fixtures réellement refusées,
+10,5718s ;6tests de sources0,6622s ;18tests de sélection0,8401s.
+Pas de suppressions/exclusions ni seuils abaissés. Reçus privés machine dans
+state/recus, confiance locale non attestée, jamais autorisation de publication.
+Stade exploratoire Logique et captures conservés dans state ; pas candidat.
+
+Matheval en cours, non commité : lecteur scientifique commun Style48cb06a,
+142tests AST11,9332s, qualification centrale Style91,9703s sur candidat
+style-48cb06aaa08f-befceaca / ensemble
+2514d258c02f6ae10da64f98153d67b7491596fef15f28c8e6aab55858b75ad9.
+Huit cas scientifiques aux3largeurs320/390/1363 réussis, retraits comparés à
+l'ancien rich-text, TeX réel/HTML échappé/Markdown/soumission bornée. Le reçu
+Style-logo précédent reste historique ; additions hors logo pas encore finalisées.
+Administration : Math.document, métadonnées publiques, soumission INPUT et
+contexte Matheval, CSS locale retirée, compile incrémentale22puis2modules.
+Trois parcours Chromium réussis8,4s sur binaire Nix296b7c89/PG jetable : accès,
+activation/Entrée, corpus/statistiques/réponses avec zéro/absence et déconnexion.
+Première fixture incomplète (assets absents) et environnement DSO distribution
+au lieu de Nix : démarrage refusé avant parcours ; fixture préservée. Avec DSO
+Nix, démarrage réussi mais instrumentation répétée dans la fixture réutilisée :
+refus de tests. Nouvelle fixture neuve depuis sources canoniques, trois succès.
+Aucune répétition d'effets production, aucun backend Node. Config Playwright
+locale n'en lance plus ; la commande centrale possède le serveur SBCL isolé.
+Prototype et DemoCard en cours, non commité : Main elm-ui/TableSpatiale/T.Transition,
+mêmes BoardLogic/positions/miniscale/dimensions. Nouveau socle Spatial publié816b663,
+167tests AST+6ressources+3fixtures11,3080s ; review intégral Style réussi.
+Premier prototype5/7 : boîtes non peintes recouvraient les voisines en tactile,
+ancrage transparent et surface transformée active corrigés ;2mobiles ciblés9,6s
+réussis. Test long injecte le JSON scientifique avant chargement (aucune mutation
+du vieux custom element retiré). Main et DemoCard compilés séparément, comme le
+constructeur canonique ; bundle exploratoire combiné refusé à cause des ports
+homonymes, conservé sans usage. Huit nouveaux parcours de continuité Firefox/
+Chromium390/1280 normal/réduit passent1,2min : interruptions/inversions, Entrée/
+Espace/Échap, nœud/focus préservés, préférence live et frames arrêtées au repos.
+Le Demo recentre désormais une carte dans sa boîte elm-ui plutôt que le coin
+absolu de l'ancien div ; aucune donnée scientifique concernée. Hauteurs explicites
+compactes240desktop/360mobile, bornées par92% du viewport ; à vérifier avec le
+reste des parcours avant qualification finale. test.html construit DemoCard actuel,
+ancien bundle test.js retiré (histoire Git intacte). Survey encore ancien.
+Math verrou Style816b663 local (SHA256 exact de tous modules/ressources utilisées),
+Animator2/time existant/bezier2 transitif ; pas de mise à niveau d'outil.
+Stage incrémental state/matheval-developpement-jbgia3ck (sources absolues canoniques),
+pointeur matheval-developpement-courant.txt ; jamais candidat. Toutes opérations
+citées locales ; rapport MCP/Image persistante et production conservés.
+
+Avancement complémentaire : Survey lecteur elm-ui/Math.document, timeline commune,
+notes facultatives avec aperçu distinct de la réponse, fermeture immédiate sans
+WebAnimations ou attente "closed". Les aperçus/frames/mesures/préférences n'émettent
+pas de checkpoints scientifiques. Question mesurée, lecteur placé sous l'énoncé
+(cap32% viewport), commandes à droite en paysage compact. Aides à contenu défilant
+borné pour conserver fermeture disponible. Stage même chemin ci-dessus, survey.js
+incrémental ; Math non commité. Corpus, tirages, Model.point/S.move et serveur Lisp
+inchangés. Bootstrap index/enquete identiques ; erreur de chargement rendue Elm.
+
+Qualifications locales ciblées :181tests AST+6ressources+3fixtures12,0871s,
+review Style intégral réussi. Notes : souris/clavier320/390/1363 dans Chromium143
+et Firefox146 existants, un tactile Chromium réel (diagonale/annulation), sept
+cas réussis depuis fixture actuelle (notes-ciblées-finales.txt).
+Lecteur commun : huit formats normal/réduit, focus/défilement/changement de texte
+et arrêt des frames réussis depuis sources finales (lecture-ciblee-finale.txt).
+Style113169d publié : sources/correctifs/assets et tests conservés, aucune nouvelle
+construction ou qualification globale Style revendiquée. Math verrou local113169d
+avec tous modules et fenetres.js/notes.js supplémentaires ; manifeste Math garde
+encore le verrou historique de78137b0, jusqu'au commit composant réellement publié.
+Tests ajoutés à orchestration Style centrale, pas de CI déclenchée ni qualification
+complète du nouveau Style revendiquée. Scénarios Math sur Nix SBCL/PG jetable :
+fixture3 quatre succès17,9s avant nouveau placement ; fixture4 ciblée placement/aide
+portrait un succès6,1s ; fixture5 deux portraits réussis, deux paysages échoués
+(aide dépassait439px pour viewport390px), correction de hauteur de texte commune.
+Fixture6 quatre succès15,0s : source exacte, zéro/absence/relecture, focus/clavier,
+placement sous énoncé, aide accessible portrait/paysage, frames au repos.
+Premières fixtures1/2 échouées avant lecteur : ressources puis index d'entrée ancien.
+Leur trace est préservée ; index/enquete sources corrigés ensemble. Native DSOs Nix
+exactes, aucune fixture instrumentée réutilisée ; copie suivante doit être neuve.
+Logs/captures dans state/rapports-frontends et stage/lecteur-fixture-1..6.
+
+Géométrie pure en cours, non publiée : Style src/MrJam/GeometrieSpatiale.elm,
+exemples/Geometrie.elm et tests/geometrie.cjs. Programme Elm sans navigateur pour
+comparaison avec les références frontend historiques M-moire/docs/site/space-layout.js
+et slider-layout.js.323cas (12séparations3D,30poignées dont10prises surélevées,
+280déplacements relatifs et projection de référence caméra0) réussis46,5ms,
+compile incrémentale2modules. Comparaison de toutes positions/ordres/valeurs ;
+seul cout de tri interne historique, inutilisé par la vue, absent du nouveau DTO.
+Deux défauts de fixture corrigés : champ cout inclus par spread JS ; poignée
+surélevée pas nécessaire dans toutes les largeurs. Aucune assertion de position
+relâchée. Coordonnées originales immuables. Nouvelle entrée compilateur et test
+raccordés localement dans infrastructure, empreintes des deux références dans
+suite Style. Sélection18cas0,9974s et review intégral Style réussis. Geometrie
+n'est pas encore consommée par Survey ; aucune conformité de sa scène revendiquée.
+Logs dans state/rapports-frontends/geometrie-differentielle-*.txt ; js exploratoire
+state/geometrie-developpement.js. Publier seulement après raccordement utile ou
+jalon ciblé, puis verrou exact ; dernier Style publié reste113169d.
+
+Suite immédiate : publier lecteur/note communs et verrous exacts après résultats
+ciblés, terminer Survey axes/scène/contextes/compagnons et JS de mesure/pointeurs.
+L'ancienne projection/sliders/rich-text restent seulement à porter, pas qualifiés.
+Les quatre entrées Math, règles/ressources et ContinuousUI doivent passer sur
+sources/candidat exacts ; ne pas présenter les tests des règles comme conformité
+Math. Ensuite qualification finale assemblage, Nix/HBA/préconditions actuelles,
+backup/restauration/retour et étape1 réelle avant Kanidm. Promotion refusée tant
+que l'ensemble reste incomplet. Image SBCL de tâche saine conservée ; aucun
+rechargement/reconnexion/MCP artificiel pour ce travail Elm.
+
+## Point frontend précédent — historique, remplacé par le point actif
+
+### Observation antérieure des candidats frontend
+
+Infrastructure publiée15496df ; Style30c6087 publié après03a7b7f ;
+Matheval8f02f64 publié avec corrections finales et verrou Style30c6087 ;
+Vision2d9f31b, Logiqued76f007, Signaturee9d9d34 inchangés. Révisions complètes
+assemblées dans manifest.json. Production inchangée : étape1 non déployée,
+Kanidm non commencé. Aucun déclenchement CI ni opération de données pendant
+cette reprise. Rapport MCP historique non commité préservé.
+
+ArchitectureC et image saine conservées, aucun chargement/reconnexion artificiel,
+aucun qualifier synthétique. Processus83928/129399 constatés, non fixés dans les
+scripts ; aucun débogage ouvert connu. Outillage hors graphe produit. Les consignes
+centrales et renvois C sont en vigueur ; aucune refonte du pont nécessaire.
+
+Conservés : socle ElmUI/Animator scientifique (lecteur, note, scène, axes), quatre
+entrées Matheval, contextes, contrôles AST/ressources et géométrie différentielle.
+Corpus/graines/Survey.Model/backend inchangés. Références géométriques historiques
+moved verbatim vers docs/tests/references, hors site. Les résultats frontend
+antérieurs restent historiques : aucune conformité déduite des seuls tests AST.
+
+Qualification ciblée :208cas AST,6ressources et3fixtures conformes/interdites
+vérifiées par commande canonique,18,7958s ; review Style intégral réussi. Sélecteur
+18cas et sources6cas passent1,1624s/1,2019s. Géométrie336cas (323différentiels,
+13séquences des machines Elm),40,2ms. Tableaux encadrés/actions/état/focus/Tab et
+transitions/reduced-motion passent aux320/768/1440px dans Contextes actuel.
+
+Campagnes globales exactes03a7b7f/8814b8e analysées, PAS qualifiées :
+Style49,6087s échoue sur Tab (corrigé) ; Matheval343,6956s :49pass/5échecs/42non
+exécutés sur96. Défauts réels corrigés : Firefox tableau réduit à0 (adaptateur
+flex-basis:auto constant, AST strict/documenté), restitution de focus sans
+interférer avec Tab, note tactile proxy clavier seulement, proportions des axes
+et scène. Assertions de sauvegarde adaptées au texte visible, renforcées par un
+vrai PUT200 portant la note2, sans masquer erreurs/conflicts. Fixture19 :8pass/
+2échecs proportions ; fixture20 :2passFirefox/Chromium19,8s après hauteur scène450.
+Fixtures17/18 : annulation tactile note et axes confirmée, aucune note commitée
+par pointercancel ; capture native/prévisualisation séparées. Diagnostics privés
+state/rapports-frontends, fixtures exécutées jamais réinstrumentées.
+
+Matheval base exacte8814b8e passe15,297s. Candidats antérieurs conservés mais
+supplantés par les fixes : Style03a7b7fac2fe-4efc0ce2, Math8814b8eb9ef3-68b51f4d.
+Stade incrémental privé state/matheval-developpement-jbgia3ck, pointeur courant,
+quatre sorties compilées séparément. Binaire métier Nix296b7c89/DSOs store audités,
+PG17 jetable, aucun backend Node, aucune donnée production.
+
+
+Qualification exacte conservée : Style30c6087 base138,5239s,
+Math8f02f64 base16,4047s ; Logique candidat42954783 base139,1341s et correcteur
+12,8117s. Nouveaux candidats : Style30c6087e6975-16136a76/02f4216d ;
+Math8f02f64b578d-5c98bd2e/1916a502 ; Logiqued76f0074efa0-cd66ef05/42954783.
+Math96parcours ont tous réussi534,0746s mais qualification refusée par garde
+sources (harnais ajoutait quota aux tests suivis) : diagnosticmatheval-0a410bb62774,
+aucun reçu vert fabriqué. Harnais corrigé vers copie privée .central-tests-*/e2e,
+profondeurs/imports identiques,3tests : source intacte, chemins, refus réutilisation.
+Frontend-sources9cas passent0,7902s.
+
+Trois campagnes lourdes simultanées ont saturé4cœurs/16Gio : pression mémoire,
+timeouts Matheval clavier13/14/15 et atelierY Chromium34. Arrêt SIGINT des seuls
+runners265998/268010 constatés ; cleanupPG/SBCL/worktrees par harnais normal,
+tracesmatheval-d27518040481/style-03933b67e84b conservées. Aucune hausse de timeout
+ni affaiblissement d'assertion. Cible Math4scénarios sérialisés passent63,4647s,
+source intacte et trace6e2c8a2048ab. Jobs suivants EXCLUSIVEMENT séquentiels :
+Math96 → Stylelogo → Vision/Signature → MCP métier, shellset-e, session à constater
+par processus/logs (pas PID constant). Logs *final-serialise.txt / mcp-metier-final.txt.
+
+Visionpostgresql passe289,8156s sous contention, SQLnative reçu réutilisé exact.
+L'absence psycopg Python global a été corrigée en utilisant le venv navigateur
+existant3.2.5, même binairePython3.12.14/empreinte, aucune installation. Bibliothèques
+Nix/runtime existants, pas popplerNix à la place des outils PDF déjà qualifiés.
+
+Contrôles centraux source6+harnais3, sélection20, sauvegarde/migration/classes
+privées, transport et isolation passent. Préparateur teste désormais Style
+réellement consommé plutôt que HEAD,3cas acceptation/revision/fichier altéré ;
+bundle privé inclut sources verrouillées immuables. Le scénario MCP historique
+0,8033s/22appels reste intact : vérification offline sourcescoeur/trace/effet1/
+resultat42. Contrôleurs Python amendés qualifiés séparément par8cas routage,
+aucune condition ou nouvelle connexion prétendue. Reçu inclut empreinte preuve,
+tracecopiée dans bundle privé, préparateur vérifie. Manifeste reste nonqualifié.
+
+Suite immédiate : manifeste/empreinte actualisés ; construire UNE fois les
+nouveaux candidats propres,
+qualifier Style base et Math base/navigateur96parcours. Rejouer seulement suites
+affectées, réutiliser reçus inchangés avec provenance exacte. Ne pas confondre
+AST, parcours fonctionnels et production. Ensuite aligner toutes preuves requises,
+validation Lisp propre distincte sans détruire image saine, Nix/HBA actuel,
+backup/restauration isolée/retour, bascule réelleAPI/MCP/invariants/redémarrage.
+Kanidm seulement après constat réel étape1. Accès GitHubsettings403/Pagesdisable422
+historiques, aucun nettoyage distant prétendu réussi. Références ci-dessous.

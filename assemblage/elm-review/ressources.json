@@ -97,6 +97,17 @@
         ],
         "role": "Sélecteur natif JSON détaché, limite 2Mo existante, aucun affichage applicatif."
       }
+    ],
+    "matheval/docs/site/enquete.js": [
+      {
+        "fonction": "telechargerReponses",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "a"
+        ],
+        "role": "Export personnel JSON par lien Blob détaché ; aucune interface ni donnée réidentifiée."
+      }
     ]
   }
 }

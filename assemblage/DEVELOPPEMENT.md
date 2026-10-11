@@ -31,6 +31,16 @@ aucun script ne les fixe. Deux connexions ou mêmes fichiers ne prouvent pas la
 même image. Le qualifier synthétique provoque une condition/réinitialise une
 fixture : réservé à sa qualification explicite, jamais contrôle de santé.
 
+La suite centrale `outils-mcp` utilise `qualifier-mcp.py --reutiliser` : elle
+vérifie la trace du scénario déjà exécuté et les empreintes inchangées des
+bibliothèques, lanceurs et sources de fixture. Elle ne réinitialise aucun objet,
+ne provoque aucune condition et ne prouve pas une nouvelle connexion. La preuve
+et sa trace sont incluses dans le bundle privé et l'identité du reçu. Les deux
+contrôleurs Python amendés ont leurs propres tests de routage/parser dans
+`outils-routage` ; leurs changements ne sont pas présentés comme un nouveau
+débogage réel. Modifier une entrée du scénario invalide sa réutilisation et
+exige une qualification explicite, hors contrôle de santé.
+
 Le routage opérationnel est le suivant ; cible établie et comportement testé
 restent deux propriétés différentes :
 

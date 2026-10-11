@@ -104,7 +104,9 @@ def tester_frontend(cle,sources,caches,campagne='base'):
                  ['python3','tests/exports.py'],
                  ['python3','tests/medias.py','--katex',str(sources['logique']/'node_modules/katex/dist')],
                  ['python3','tests/scientifique.py','--katex',str(sources['logique']/'node_modules/katex/dist')],
-                 ['python3','tests/notes.py'],['python3','tests/lecture.py']]
+                 ['python3','tests/notes.py'],['python3','tests/lecture.py'],
+                 ['node_modules/.bin/elm','make','exemples/Geometrie.elm','--output=.cache/geometrie.js'],
+                 ['node','tests/geometrie.cjs','--javascript','.cache/geometrie.js','--reference',str(sources['matheval']/'docs/tests/references')]]
     }
     if campagne=='unitaire':
         if cle!='logique':raise ValueError('Campagne unitaire définie uniquement pour Logique')

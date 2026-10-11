@@ -16,7 +16,7 @@ import tarfile
 import tempfile
 from assemblage import (RACINE, manifeste, chemins_sources, verifier_sources,
                        catalogue, identifiant_suite, compilation_entrees)
-from frontends import contenus
+from frontends import contenus, cache_style
 
 
 def exiger(v,message):
@@ -65,6 +65,20 @@ def sceller(executable,destination):
             with tarfile.open(fileobj=io.BytesIO(data)) as t:
                 exiger(all(a.isdir() or a.isfile() for a in t.getmembers()),'Lien dans les sources')
                 t.extractall(cible,filter='data')
+        # Les reçus des consommateurs portent sur leur Style réellement
+        # verrouillé, qui peut différer de sa tête actuelle. Sources immuables
+        # de qualification dans le bundle privé, sans copie entretenue en dépôt.
+        styles={}
+        for nom in sorted({s['style_consomme_par'] for s in catalogue().values() if s.get('style_consomme_par')}):
+            edge=m['frontends'][nom]
+            cache=cache_style(sources['style'],edge['revision_style'])
+            cible=root/'styles-consommes'/nom
+            shutil.copytree(cache,cible)
+            (cible/'.provenance-centrale.json').unlink(missing_ok=True)
+            styles[nom]={'revision':edge['revision_style'],'fichiers':contenus(cible)}
+        reference=root/'reference-mcp';reference.mkdir()
+        for nom in ('qualification.json','qualification-trace-synthetique.json'):
+            shutil.copy2(RACINE/'state/outils-mcp'/nom,reference/nom)
         fronts={}
         for nom in ('vision','matheval','logique','style'):
             r=json.loads((RACINE/'state/frontends-candidats'/('dernier-'+nom+'.json')).read_text())
@@ -86,7 +100,7 @@ def sceller(executable,destination):
         exiger((root/'closure.nar').stat().st_size<1024**3,'Closure hors limite')
         cert={'format':2,'revision':rev,'revision_construction':q['source_revision'],
               'origine_preuves':'codex-local-non-attestee','manifest':m,
-              'recus_locaux_sha256':recus,'qualification':q,'frontends':fronts,
+              'recus_locaux_sha256':recus,'qualification':q,'frontends':fronts,'styles_consommes':styles,
               'closure':fermeture,'closure_cache':cache,'fichiers':contenus(root),'activation':False}
         (root/'stage.json').write_text(json.dumps(cert,ensure_ascii=False,indent=2)+'\n')
         archive=tmp/'candidat.tar.gz'

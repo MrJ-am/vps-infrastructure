@@ -85,8 +85,30 @@ def verifier_bundle(root):
                and r['autorise_publication'] is False and all(c==0 for c in r['codes']),
                'Reçu local refusé : '+nom)
         i=r['identite']
+        entrees_sources=sources
+        if suite.get('style_consomme_par'):
+            composant=suite['style_consomme_par'];edge=cert['manifest']['frontends'][composant]
+            style=root/'styles-consommes'/composant
+            exiger(cert.get('styles_consommes',{}).get(composant,{}).get('revision')==edge['revision_style'],
+                   'Révision Style consommée différente : '+composant)
+            verrou=root/composant/edge['verrou_style']
+            exiger(sha(verrou)==edge['sha256'],'Verrou Style différent : '+composant)
+            for fichier,empreinte in json.loads(verrou.read_text())['fichiers'].items():
+                exiger(not Path(fichier).is_absolute() and '..' not in Path(fichier).parts,
+                       'Chemin de verrou Style non borné')
+                exiger(sha(style/fichier)==empreinte,'Source Style différente : '+composant)
+            entrees_sources=dict(sources,style=style)
+        if suite.get('preuve_mcp'):
+            import importlib.util
+            spec=importlib.util.spec_from_file_location('preuve_mcp',root/'vps/scripts/qualifier-mcp.py')
+            preuve=importlib.util.module_from_spec(spec);spec.loader.exec_module(preuve)
+            reference=root/'reference-mcp'
+            exiger(i.get('preuve_mcp')==preuve.verifier_reference(
+                json.loads((reference/'qualification.json').read_text()),
+                json.loads((reference/'qualification-trace-synthetique.json').read_text()),root/'vps'),
+                'Preuve MCP conservée différente')
         exiger(i['definition']==hashlib.sha256(json.dumps(suite,sort_keys=True).encode()).hexdigest()
-               and i['entrees']==entrees(suite,sources),'Entrées de qualification différentes : '+nom)
+               and i['entrees']==entrees(suite,entrees_sources),'Entrées de qualification différentes : '+nom)
         if suite.get('candidat_metier'):
             exiger(i['candidat_metier']['sha256']==q['artefact_sha256'],'Suite sur une autre image : '+nom)
         if suite.get('candidat_frontend'):
