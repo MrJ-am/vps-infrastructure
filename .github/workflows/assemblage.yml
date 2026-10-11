@@ -13,6 +13,10 @@ on:
       - scripts/coordination.py
       - scripts/qualifier-metier.py
       - scripts/construire-metier-nix.py
+      - scripts/monolithe-stage.py
+      - scripts/monolithe-preparer.py
+      - scripts/monolithe-config.nix
+      - scripts/monolithe-evaluation.nix
       - scripts/verifier-dependances.py
       - tests/test_assemblage.py
       - tests/test_assemblage_revisions.py
@@ -50,6 +54,11 @@ on:
       - scripts/monolithe-sauvegarde.py
       - .github/workflows/assemblage.yml
   workflow_dispatch:
+    inputs:
+      preparer_vps:
+        type: boolean
+        default: false
+        description: Après campagne de référence, transférer le même candidat et préparer le système sans activation
 permissions:
   contents: read
 concurrency:
@@ -86,16 +95,7 @@ jobs:
     if: needs.cadre.outputs.composants == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    services:
-      postgres:
-        image: mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3
-        env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: postgres
-        ports: ['55432:5432']
-        options: >-
-          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
-          --health-interval 2s --health-timeout 5s --health-retries 10
+    environment: vps-production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
@@ -210,6 +210,23 @@ jobs:
         run: |
           python3 scripts/assemblage.py verifier --atelier "$MRJAM_ATELIER" --exact
           python3 scripts/ci-qualifier.py
+      - name: Préparer la clé administrative existante pour le transfert privé
+        if: inputs.preparer_vps == true && github.ref == 'refs/heads/main'
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/monolithe-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/monolithe-ssh/admin"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/monolithe-ssh/admin" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/monolithe-ssh/admin" >> "$GITHUB_ENV"
+      - name: Transférer le même artefact qualifié et préparer sans activer
+        if: inputs.preparer_vps == true && github.ref == 'refs/heads/main'
+        env:
+          MRJAM_ATELIER: ${{ github.workspace }}/.sources/
+        run: python3 scripts/monolithe-stage.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -217,3 +234,6 @@ jobs:
           path: state/recus/*.json
           retention-days: 14
           if-no-files-found: ignore
+      - name: Retirer la clé temporaire
+        if: always() && inputs.preparer_vps == true
+        run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"

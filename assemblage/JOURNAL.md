@@ -324,3 +324,23 @@ byte pour byte de Palette-Y.svg dans Style, avant toute publication. Central CI
 utilisait Node22.23.2 partout, alors que l'ancien atelier Style utilise Node24 et
 la qualification locale Node24.19.0. Aucun SVG ni palette modifié pour contourner
 le contrôle ; alignement du runtime de construction/test sur Node24.19.0.
+
+
+38119274041 sur add6c26 : quatre frontends construits, égalité des exports Style
+réussie avec Node24.19.0. Cache/documents ASDF, contrats Vision, Matheval purs et
+quotas réussis. Différentiel arrêté sur ECONNREFUSED localhost55432 malgré le
+healthcheck initial du service Actions. Conteneur encore actif selon son journal,
+pas de preuve d'accès à son port publié au moment du test ; cause du mapping
+non établie. Remplacement du service partagé par une fixture PG dédiée au test,
+port loopback dynamique vérifié depuis l'hôte juste avant le différentiel,
+nettoyage du seul conteneur créé. Pas de nouvelle image ni dépendance.
+
+
+Fixture dédiée qualifiée localement sur le même binaire 22655808 : quarante
+parcours Node/Lisp, concurrence/idempotence, transport Unix et redémarrage réussis.
+Journal borné scratch/differentiel-fixture-dediee.log, données synthétiques seules.
+Préparation VPS écrite : bundle des six révisions/artefacts, vérification des reçus
+de ce runner, transfert SSH/NAR de la même image, hashes revérifiés sur VPS,
+remplacement des seules déclarations Nix actuelles gateway/PG/Matheval, invariants
+services tiers, build système et dry-activate. Aucune activation/migration SQL dans
+ce chemin. Six tests négatifs de bundle réussis. Le chemin distant reste à exercer.

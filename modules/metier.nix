@@ -117,7 +117,9 @@ in {
     };
     systemd.timers.vision-purge.enable = lib.mkForce false;
     systemd.timers.mrjam-courriel.enable = lib.mkForce false;
-    services.nginx.virtualHosts."vision.mrj.am".locations = visionLocations;
+    services.nginx.virtualHosts."vision.mrj.am".locations = visionLocations //
+      lib.genAttrs [ "= /" "= /app.js" "= /app.css" "= /interface-manifest.json" "^~ /assets/mrjam/" ]
+        (_: { root = lib.mkOverride 40 cfg.documentVision; });
     services.nginx.virtualHosts."principiipetit.io".locations = {
       "/matheval/" = {
         proxyPass = lib.mkForce null;
