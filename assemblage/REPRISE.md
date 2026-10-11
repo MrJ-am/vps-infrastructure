@@ -38,13 +38,23 @@ Anciens essais/publications satellites/acquittements remplacés par la mission ;
 faits conservés dans l'archive exacte. Copies mensuelles Linux et clé personnelle
 mentionnées dans ETAT.md restent personnelles, sans blocage technique artificiel.
 
-Dernière preuve CI : 38101080554 sur 82161d8, cadre réussi, arrêt avant checkout
-privé (COMPONENTS_READ_TOKEN absent). Qualification locale : 40 parcours,
-reconstruction propre sans cache 24 FASL, HTTP AF_UNIX réel et redémarrage SQL.
-Sources nouvelles : Vision d9d5450 ; Matheval 2a82250. Le manifeste porte les SHA
+Dernière preuve CI : 38104435924 sur cd90f2a, quatre jobs infrastructure réussis,
+dont évaluation Nix du module commun (paquet factice, pas un binaire qualifié).
+38104435933 : cadre réussi, arrêt avant checkout privé (COMPONENTS_READ_TOKEN absent).
+Qualification locale : 40 parcours, reconstruction propre sans cache 39 FASL,
+HTTP AF_UNIX réel et redémarrage SQL. Sources nouvelles : Vision dc8fffe ;
+Matheval 2a82250. Le manifeste porte les SHA
 complets ; la révision infrastructure est celle du commit qui le contient.
 
 Auxiliaires ASDF locaux : administration/cycle/admission/fermeture, file courriel
 durable et client provisoire Keycloak ; 644+141 cas différentiels, isolation
 PostgreSQL, ancien SQLite/MIME et SMTP STARTTLS qualifiés. IdP synthétique uniquement.
 Dernier binaire local propre : 39 FASL, 40 parcours Matheval, redémarrage SQL réussi.
+
+Opération indépendante suivante : workflow central `monolithe-reference.yml`,
+`operation=sauvegarde-restauration`. Préconditions : génération de production
+constatée identique ; destinataire age déjà configuré. Copie chiffrée des trois
+bases et états SQLite/JSONL ; restauration PostgreSQL dans un cluster Unix privé,
+sans arrêt ni écriture SQL de production. La clé éphémère est enveloppée pour le
+destinataire personnel existant puis détruite. Le rapport distingue restauration
+des données, ACL/rôles et qualification du retour applicatif, encore à réaliser.

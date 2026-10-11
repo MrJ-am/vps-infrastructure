@@ -30,6 +30,10 @@ assert builtins.all (n: !cible.systemd.services.${n}.enable)
 assert !cible.systemd.timers.vision-purge.enable && !cible.systemd.timers.mrjam-courriel.enable;
 assert cible.systemd.services.mrj-auth.enable && cible.services.keycloak.enable;
 assert cible.systemd.timers.mrjam-sauvegarde.enable;
+assert lib.hasInfix "vision mrjam_identite matheval" cible.systemd.services.mrjam-sauvegarde.script;
+assert lib.hasInfix "/var/lib/mrjam-metier/admission/admissions.sqlite" cible.systemd.services.mrjam-sauvegarde.script;
+assert !(lib.hasInfix "/var/lib/mrjam-admission/admissions.sqlite" cible.systemd.services.mrjam-sauvegarde.script);
+assert lib.all (p: (p.pname or "") != "nodejs") cible.environment.systemPackages;
 assert cible.services.postgresql.dataDir == base.services.postgresql.dataDir;
 assert !cible.services.postgresql.enableTCPIP;
 assert lib.hasInfix "peer map=mrjam_metier" cible.services.postgresql.authentication;

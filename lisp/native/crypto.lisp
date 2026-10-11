@@ -100,7 +100,14 @@
     (setf (char s 12) #\4 (char s 16) (char "89ab" (logand 3 (digit-char-p (char s 16) 16))))
     (format nil "~A-~A-~A-~A-~A" (subseq s 0 8) (subseq s 8 12) (subseq s 12 16) (subseq s 16 20) (subseq s 20))))
 
+(defvar *places-scrypt* (sb-thread:make-semaphore :count 2))
 (defun scrypt (mot sel)
+  ;; Budget commun explicite : N=131072 demande environ 128 Mio par dérivation.
+  ;; Une rafale anonyme ne doit pas multiplier ce coût par les 32 workers HTTP.
+  (unless (sb-thread:try-semaphore *places-scrypt*) (echec-natif :capacite-scrypt))
+  (unwind-protect (deriver-scrypt mot sel) (sb-thread:signal-semaphore *places-scrypt*)))
+
+(defun deriver-scrypt (mot sel)
   "Paramètres historiques Matheval : sel UTF-8 (hex textuel), N=131072/r=8/p=1."
   (let ((mot-octets (octets mot)) (sel-octets (octets sel))
         (out (make-array 64 :element-type '(unsigned-byte 8))))

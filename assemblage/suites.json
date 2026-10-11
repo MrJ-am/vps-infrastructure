@@ -743,13 +743,17 @@
         "tests/vision-cycle.lisp",
         "tests/admission-composant.lisp",
         "tests/admission_idp_fixture.py",
-        "tests/fermeture-composant.lisp"
+        "tests/fermeture-composant.lisp",
+        "assemblage/roles-metier.sql"
       ],
       "vision": [
         "vision.asd",
         "src/*.lisp",
         "migrations/*.sql",
         "scripts/roles.sql"
+      ],
+      "matheval": [
+        "server/migrations/*.sql"
       ]
     },
     "impact": [
@@ -763,7 +767,8 @@
       "vision/src/fermeture.lisp",
       "vps/tests/admission-composant.lisp",
       "vps/tests/admission_idp_fixture.py",
-      "vps/tests/fermeture-composant.lisp"
+      "vps/tests/fermeture-composant.lisp",
+      "vps/assemblage/roles-metier.sql"
     ],
     "commandes": [
       [
@@ -1006,6 +1011,42 @@
         "sbcl",
         "--version"
       ]
+    }
+  },
+  "sauvegarde-copies": {
+    "niveau": 6,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/monolithe-sauvegarde.py",
+        "tests/test_monolithe_sauvegarde.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/monolithe-sauvegarde.py",
+      "vps/tests/test_monolithe_sauvegarde.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_sauvegarde.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    },
+    "fixture": {
+      "donnees": "SQLite et JSONL synthétiques ; le chiffrement/restauration PostgreSQL est qualifié séparément par la CI sur cluster privé"
     }
   }
 }

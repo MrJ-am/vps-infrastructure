@@ -115,3 +115,26 @@
   bfda1fa3a7fc1b1be8531d7ce809b42fc8e1ffafffb2428256c96e30ffcd1a5a.
   40 parcours Matheval et HTTP/redémarrage SQL : 7,049 s, réussis. Production
   inchangée ; cette preuve locale ne qualifie pas l'IdP, MCP ni la cible Nix.
+
+- CI 38104435924 sur cd90f2a : quatre jobs réussis, évaluation Nix du serveur
+  commun incluse. Paquet de test factice : aucune activation ni qualification
+  du binaire cible SBCL 2.6.4. CI composants 38104435933 arrêtée au secret absent.
+- SO_PEERCRED vérifie l'UID Unix Nginx avant lecture HTTP ; un émetteur d'un autre
+  UID avec en-têtes forgés est refusé. Scrypt limité à deux calculs simultanés
+  (~128 Mio chacun) ; dépassement refusé par condition typée/HTTP 503.
+- ACL centrales vérifiées sur PostgreSQL 17 : entretien peut exécuter les deux
+  purges bornées mais ne peut lire les contenus ; Matheval non propriétaire peut
+  gérer réponses/journal/sessions mais pas créer un corpus. Le schéma réel est
+  `answers`/`interaction_events`, pas l'ancien nom hypothétique `interactions`.
+- Sauvegardes Nix adaptées aux chemins durables communs et à Matheval ; ancien
+  lanceur Node exclu de la configuration cible. Les générations de retour restent
+  conservées. Inventaire étendu aux requirements Python et manifests Elm déjà
+  présents ; verrouillage des transitives Python restant à établir avant installation.
+- Script de sauvegarde/restauration via CI existante préparé, pas encore exécuté
+  sur le VPS : age officiel, clé éphémère enveloppée, snapshots SQL READ ONLY,
+  restauration dans un cluster Unix propre. Quatre contrôles sur fixtures locales
+  vérifient blobs SQLite/zero/null/UTF-8 et registres exacts ; liens, corruption et
+  fichiers publics refusés. Ces contrôles ne prouvent pas encore le chiffrement.
+- Le hook Keycloak de fermeture est une RequiredAction personnelle avec confirmation,
+  pas un listener de suppression administrative. Le retrait d'une ancienne identité
+  reste distinct d'une fermeture métier ; aucune identité supprimée pendant la mission.

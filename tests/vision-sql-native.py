@@ -44,6 +44,28 @@ UPDATE vision_gestion.comptes SET administrateur=true WHERE utilisateur='alice';
 INSERT INTO vision_gestion.identites(emetteur,sujet,utilisateur) VALUES('https://log.mrj.am/realms/mrjam','sujet-alice','alice'),('https://log.mrj.am/realms/mrjam','sujet-bob','bob');
 """
         docker('exec','-i',nom,'psql','-X','-U','postgres','-d','vision_native_test','--set=ON_ERROR_STOP=1','--file=-',input=sql)
+        docker('exec',nom,'createdb','-U','postgres','matheval')
+        schema=''.join(p.read_text()+'\n' for p in sorted((atelier/'M-moire/server/migrations').glob('*.sql')))
+        docker('exec','-i',nom,'psql','-X','-U','postgres','-d','matheval','--set=ON_ERROR_STOP=1','--file=-',input=schema)
+        # Les noms seulement changent pour la fixture Vision ; même fichier ACL.
+        acls=(ROOT/'assemblage/roles-metier.sql').read_text().replace('\\connect vision\n','\\connect vision_native_test\n').replace('ON DATABASE vision ', 'ON DATABASE vision_native_test ')
+        docker('exec','-i',nom,'psql','-X','-U','postgres','--set=ON_ERROR_STOP=1','--file=-',input=acls)
+        docker('exec','-i',nom,'psql','-X','-U','postgres','-d','matheval','--set=ON_ERROR_STOP=1','--file=-',input="""
+INSERT INTO corpus(version,digest,bank,codebook) VALUES('fixture','synthetique','{}','{}');
+SET ROLE matheval_app;
+INSERT INTO participations(id,token_hash,bank_version,levels,seed,question_order,production_order)
+ VALUES('00000000-0000-4000-8000-000000000001','synthetique','fixture',ARRAY['fixture'],0,ARRAY[]::text[],'{}');
+INSERT INTO answers(participation_id,question_id,production_id,note,initial_note,x,y,z,evaluated_axes)
+ VALUES('00000000-0000-4000-8000-000000000001','q','p',0,NULL,0,0,0,ARRAY[]::text[]);
+DELETE FROM answers WHERE participation_id='00000000-0000-4000-8000-000000000001';
+INSERT INTO interaction_events VALUES('00000000-0000-4000-8000-000000000001',0,'fixture',now(),0,'{}');
+INSERT INTO administrators(username,password_hash) VALUES('synthetique','synthetique');
+INSERT INTO administrator_sessions(token_hash,administrator_id,expires_at) SELECT 'synthetique',id,now()+interval '1 hour' FROM administrators;
+DELETE FROM administrator_sessions;
+""")
+        try:docker('exec',nom,'psql','-X','-U','postgres','-d','matheval','--set=ON_ERROR_STOP=1','--command',"SET ROLE matheval_app; INSERT INTO corpus VALUES('interdit','interdit','{}','{}',now())")
+        except subprocess.CalledProcessError:pass
+        else:raise AssertionError('Le runtime peut modifier le corpus')
         def literal(s):return '"'+str(s).replace('\\','\\\\').replace('"','\\"')+'"'
         dsn=f"host=127.0.0.1 port={bind['HostPort']} user=vision dbname=vision_native_test"
         with tempfile.TemporaryDirectory(prefix='vision-native-sbcl-') as d, IdP() as idp:

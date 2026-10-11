@@ -19,6 +19,24 @@ def verifier():
         for cle,inventaire in [('dependencies','bibliotheques'),('devDependencies','developpement_test')]:
             if package.get(cle,{})!=entre['directes'][inventaire]:
                 raise ValueError('Dépendance directe npm différente : '+entre['composant']+'/'+cle)
+    # Un nouveau manifeste ne doit pas échapper au contrôle parce qu'il n'a
+    # simplement pas été ajouté à la liste. Les entrées sont exclusivement Git.
+    import subprocess
+    declares={(e['composant'],e['lock']) for e in inventory['npm_verrouille']}
+    declarations_python={(e['composant'],e['fichier']):e for e in inventory.get('python_requirements',[])}
+    declarations_elm={(e['composant'],e['fichier']):e for e in inventory.get('elm_verrouille',[])}
+    for nom,base in sources.items():
+        fichiers=subprocess.check_output(['git','ls-files'],cwd=base,text=True).splitlines()
+        for relatif in fichiers:
+            p=base/relatif
+            if p.name=='package-lock.json' and (nom,relatif) not in declares:
+                raise ValueError('Lock npm hors inventaire : '+nom+'/'+relatif)
+            if p.name=='package.json' and not p.with_name('package-lock.json').is_file():
+                raise ValueError('Manifeste npm sans lock : '+nom+'/'+relatif)
+            declaration=(declarations_python.get((nom,relatif)) if p.name.startswith('requirements') and p.suffix=='.txt'
+                         else declarations_elm.get((nom,relatif)) if p.name=='elm.json' else False)
+            if declaration is None or declaration and empreinte(p.read_bytes())!=declaration['sha256']:
+                raise ValueError('Dépendance Python/Elm hors inventaire : '+nom+'/'+relatif)
     asds=[p for base in sources.values() for p in base.glob('*.asd')]
     declared=set()
     for p in asds:
