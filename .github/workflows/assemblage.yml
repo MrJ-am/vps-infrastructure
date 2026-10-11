@@ -70,12 +70,17 @@ jobs:
         env:
           MRJAM_COMMIT_AVANT: ${{ github.event.before }}
         run: python3 scripts/ci-impact.py
-      - name: Vérifier le sélecteur, les reçus et le contrat
-        run: |
-          python3 -m unittest discover -s tests -p 'test_assemblage*.py'
-          python3 -m unittest discover -s tests -p test_monolithe_sauvegarde.py
-          python3 -m unittest discover -s tests -p test_tables_privees.py
-          python3 scripts/coordination.py verifier
+      - name: Vérifier le contrat et l’archive historique
+        run: python3 scripts/coordination.py verifier
+      - name: Vérifier le sélecteur et les reçus affectés
+        if: steps.impact.outputs.test_selection == 'true'
+        run: python3 -m unittest discover -s tests -p 'test_assemblage*.py'
+      - name: Vérifier les copies de sauvegarde affectées
+        if: steps.impact.outputs.test_sauvegarde == 'true'
+        run: python3 -m unittest discover -s tests -p test_monolithe_sauvegarde.py
+      - name: Vérifier le garde-fou SQL affecté
+        if: steps.impact.outputs.test_schema == 'true'
+        run: python3 -m unittest discover -s tests -p test_tables_privees.py
   composants:
     needs: cadre
     if: needs.cadre.outputs.composants == 'true'

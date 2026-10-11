@@ -229,5 +229,20 @@
     "ACL/retour applicatif sur restauration puis production/redémarrage restants",
     "Candidat navigateur Matheval qualifié sur 5dd18de2 avant corrections ciblées de quotas",
     "Pas de déploiement commun ou Kanidm"
-  ]
+  ],
+  "ci_distincte": {
+    "infrastructure": {
+      "run": 38112469913,
+      "commit": "2cd93cecd6fe195e727c21a995719b46143da07f",
+      "resultat": "success",
+      "limite": "module évalué avec paquet factice ; pas de build commun qualifié"
+    },
+    "assemblage": {
+      "run": 38112469897,
+      "commit": "2cd93cecd6fe195e727c21a995719b46143da07f",
+      "cadre": "success",
+      "composants": "failure",
+      "raison": "COMPONENTS_READ_TOKEN absent, aucune source privée lue, build Nix/tests composants skipped"
+    }
+  }
 }
