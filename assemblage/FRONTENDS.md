@@ -236,3 +236,22 @@ sont transparentes aux pointeurs (ancrage), la carte transformée seule les reç
 par fonction, rôle button fixe ; aucune vue HTML. Les sources Main/DemoCard sont
 compilées séparément, comme dans le constructeur canonique : leurs ports de
 même nom ne peuvent être regroupés dans un fichier Elm unique de développement.
+
+
+Lecteur et note : `MrJam.Lectures` compose le dialogue/document/commandes et
+mesure la référence pour maintenir l'énoncé visible (cap32% de hauteur). Adaptateur
+Dialogue : attributsBase garde les trois resets/ARIA/cancel ; natifAvec compose
+le porteur dialog sans API publique d'attribut libre. margeLecture ne permet que
+margin-top, argument unique en pixels borné12..800 ; l'AST refuse autre propriété,
+bornes, source locale masquée ou deuxième argument. Le contenu reste elm-ui.
+
+Curseur.note a un proxy range fixe0..3/pas0,25, id/nom/aide constants ; trois
+resets width100%/height44px/opacity0, événements change et mrjam-note-apercu fixes.
+noteRelative ne donne qu'un marqueur fixe. La réponse Maybe Float reste distincte
+de l'aperçu, aucune note validée par un geste annulé. notes.js ne peint rien et
+ne crée aucun DOM : valeur native, capture, focus et événements seulement.
+Le test local notes.py réutilise les navigateurs existants ; Firefox est optionnel
+et exige une cible explicitement fournie, sans téléchargement/fallback. lecture.py
+vérifie les commandes immédiates, document défilant, focus/réinitialisation, formats
+et frames arrêtées. Les deux sont branchés dans la qualification locale Style ;
+les parcours réels Matheval restent nécessaires et sa projection encore à porter.

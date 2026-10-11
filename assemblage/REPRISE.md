@@ -2,8 +2,8 @@
 
 ## Point de reprise actif — Matheval après Vision et Logique
 
-Infra publiée7cda555 ; nouveau lecteur scientifique central à publier.
-Style816b663 (révision complète dans le manifeste) et
+Infra publiée d9e7d9c ; lecteurs/notes communs complémentaires en cours de publication.
+Style113169d (révision complète dans le manifeste) et
 Logiqued76f007 (révision complète dans le manifeste) publiés.
 Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Math/master78137b0 et
 Signaturee9d9d34 conservés. Production inchangée : étape1 non déployée,
@@ -87,12 +87,47 @@ Stage incrémental state/matheval-developpement-jbgia3ck (sources absolues canon
 pointeur matheval-developpement-courant.txt ; jamais candidat. Toutes opérations
 citées locales ; rapport MCP/Image persistante et production conservés.
 
-Suite immédiate : qualifier le prototype, mutualiser avec DemoCard ; terminer
-Survey (curseurs/projection et dialogues/compagnons), tous les contextes/verrous
-et l'orchestration. Publier socle avant verrous/manifeste. Qualification réelle
-de toutes entrées, frontières/ContinuousUI et qualification exacte finale.
-Puis Nix/HBA/préconditions actuelles, backup/restauration/retour et étape1 réelle,
-avant Kanidm. Promotion toujours refusée tant que l'ensemble reste incomplet.
+Avancement complémentaire : Survey lecteur elm-ui/Math.document, timeline commune,
+notes facultatives avec aperçu distinct de la réponse, fermeture immédiate sans
+WebAnimations ou attente "closed". Les aperçus/frames/mesures/préférences n'émettent
+pas de checkpoints scientifiques. Question mesurée, lecteur placé sous l'énoncé
+(cap32% viewport), commandes à droite en paysage compact. Aides à contenu défilant
+borné pour conserver fermeture disponible. Stage même chemin ci-dessus, survey.js
+incrémental ; Math non commité. Corpus, tirages, Model.point/S.move et serveur Lisp
+inchangés. Bootstrap index/enquete identiques ; erreur de chargement rendue Elm.
+
+Qualifications locales ciblées :181tests AST+6ressources+3fixtures12,0871s,
+review Style intégral réussi. Notes : souris/clavier320/390/1363 dans Chromium143
+et Firefox146 existants, un tactile Chromium réel (diagonale/annulation), sept
+cas réussis depuis fixture actuelle (notes-ciblées-finales.txt).
+Lecteur commun : huit formats normal/réduit, focus/défilement/changement de texte
+et arrêt des frames réussis depuis sources finales (lecture-ciblee-finale.txt).
+Style113169d publié : sources/correctifs/assets et tests conservés, aucune nouvelle
+construction ou qualification globale Style revendiquée. Math verrou local113169d
+avec tous modules et fenetres.js/notes.js supplémentaires ; manifeste Math garde
+encore le verrou historique de78137b0, jusqu'au commit composant réellement publié.
+Tests ajoutés à orchestration Style centrale, pas de CI déclenchée ni qualification
+complète du nouveau Style revendiquée. Scénarios Math sur Nix SBCL/PG jetable :
+fixture3 quatre succès17,9s avant nouveau placement ; fixture4 ciblée placement/aide
+portrait un succès6,1s ; fixture5 deux portraits réussis, deux paysages échoués
+(aide dépassait439px pour viewport390px), correction de hauteur de texte commune.
+Fixture6 quatre succès15,0s : source exacte, zéro/absence/relecture, focus/clavier,
+placement sous énoncé, aide accessible portrait/paysage, frames au repos.
+Premières fixtures1/2 échouées avant lecteur : ressources puis index d'entrée ancien.
+Leur trace est préservée ; index/enquete sources corrigés ensemble. Native DSOs Nix
+exactes, aucune fixture instrumentée réutilisée ; copie suivante doit être neuve.
+Logs/captures dans state/rapports-frontends et stage/lecteur-fixture-1..6.
+
+Suite immédiate : publier lecteur/note communs et verrous exacts après résultats
+ciblés, terminer Survey axes/scène/contextes/compagnons et JS de mesure/pointeurs.
+L'ancienne projection/sliders/rich-text restent seulement à porter, pas qualifiés.
+Les quatre entrées Math, règles/ressources et ContinuousUI doivent passer sur
+sources/candidat exacts ; ne pas présenter les tests des règles comme conformité
+Math. Ensuite qualification finale assemblage, Nix/HBA/préconditions actuelles,
+backup/restauration/retour et étape1 réelle avant Kanidm. Promotion refusée tant
+que l'ensemble reste incomplet. Image SBCL de tâche saine conservée ; aucun
+rechargement/reconnexion/MCP artificiel pour ce travail Elm.
+
 
 ## Références et résultats historiques conservés
 

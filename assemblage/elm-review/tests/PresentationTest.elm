@@ -1036,4 +1036,92 @@ tests =
                     "module MrJam.Adaptateurs.Spatial exposing (etat)\nimport Html.Attributes as A\netat = A.attribute \"role\" \"img\""
                     "Présentation ou échappatoire technique non autorisée."
                     "A.attribute"
+        , test "note proxy fixe conforme" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.style \"width\" \"100%\""
+                    |> Review.Test.expectNoErrors
+        , test "note proxy refuse dimension libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.style \"width\" largeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "note zéro à trois conforme" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.max \"3\""
+                    |> Review.Test.expectNoErrors
+        , test "note refuse changer barème" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.max \"20\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.max"
+        , test "note événement preview conforme" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = E.on \"mrjam-note-apercu\" message"
+                    |> Review.Test.expectNoErrors
+        , test "note refuse événement dynamique" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = E.on nom message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.on"
+        , test "note label fixe conforme" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.attribute \"aria-label\" \"Note sur 3\""
+                    |> Review.Test.expectNoErrors
+        , test "note refuse libellé arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur"
+                    "commun/MrJam/Adaptateurs/Curseur.elm"
+                    "module MrJam.Adaptateurs.Curseur exposing (..)\nimport Html.Attributes as A\nimport Html.Events as E\nnote valeur message = A.attribute \"aria-label\" texte"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "marge lecture bornée via exposing" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes exposing (style)\nmargeLecture hauteur = style \"margin-top\" (String.fromInt (Basics.clamp 12 800 hauteur) ++ \"px\")"
+                    |> Review.Test.expectNoErrors
+        , test "marge refuse valeur directe" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes as A\nmargeLecture hauteur = A.style \"margin-top\" hauteur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "marge refuse autre propriété" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes as A\nmargeLecture hauteur = A.style \"left\" (String.fromInt (Basics.clamp 12 800 hauteur) ++ \"px\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "marge refuse borne différente" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes as A\nmargeLecture hauteur = A.style \"margin-top\" (String.fromInt (Basics.clamp 0 800 hauteur) ++ \"px\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "marge refuse variable locale masquée" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes as A\nmargeLecture hauteur = let hauteur = 14 in A.style \"margin-top\" (String.fromInt (Basics.clamp 12 800 hauteur) ++ \"px\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "marge refuse plusieurs arguments" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (..)\nimport Html.Attributes as A\nmargeLecture hauteur autre = A.style \"margin-top\" (String.fromInt (Basics.clamp 12 800 hauteur) ++ \"px\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
         ]
