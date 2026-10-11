@@ -17,13 +17,53 @@ Utiliser conjointement les bibliothèques officielles :
   pile/variables locales en cas de condition ; inspecter l’exécution suspendue,
   corriger le fichier, compiler, puis invoquer un restart approprié.
 
-Les deux doivent agir dans la même image applicative. Désactiver le pool cl-mcp,
-notamment MCP_NO_WORKER_POOL=1 si confirmé dans la révision auditée ; connecter
-Tron au Swank de cette image. Prouver PID, marqueur et mutation d’objet observés
-par les deux outils. Deux connexions réussies ne suffisent pas. Sérialiser les
-mutations/rechargements ; aucune redéfinition concurrente pendant un débogage.
-Une erreur peut avoir produit des effets : inspecter avant répétition/restart.
-Un rapport cl-mcp dont la pile a été dépilée ne devient pas une session Tron.
+Architecture C conservée après le rapport MCP : métier, cl-mcp sans pool et Swank
+dans l’image de tâche ; Tron dans un processus d’outillage distinct, connecté à
+ce Swank ; accès agent par le pont HTTP existant. MCP_NO_WORKER_POOL=1 et
+:worker-pool nil dans le lanceur actuel. Ce choix concerne le développement,
+pas la production ni une interdiction définitive du mode workers. Ni A/B,
+troisième bibliothèque, mise à niveau ou campagne de crash pour cette reprise.
+
+Après reconnexion/reconstruction, lire PID/marqueur/état partagé depuis les deux
+chemins. Invalider les anciens objets, threads, restarts et références de session,
+sans effacer les preuves historiques. Les PID du rapport sont des observations,
+aucun script ne les fixe. Deux connexions ou mêmes fichiers ne prouvent pas la
+même image. Le qualifier synthétique provoque une condition/réinitialise une
+fixture : réservé à sa qualification explicite, jamais contrôle de santé.
+
+Le routage opérationnel est le suivant ; cible établie et comportement testé
+restent deux propriétés différentes :
+
+| Chemin | Cible | Comportement qualifié / limites |
+| --- | --- | --- |
+| CL-MCP direct sans pool | Image applicative | repl-eval, load-system, test-op ASDF de fixture et lectures d’état exercés ; catalogue/édition structurelle ne sont pas tous testés |
+| Tron repl_eval/repl_compile/repl_frame_locals/repl_get_restarts/repl_invoke_restart | Swank applicatif connecté | Condition/pile/locaux, compilation et restart contrôlé exercés ; restart applicatif choisi à nouveau par sens/index courant |
+| Tron repl_status/swank_status/swank_debugger_state | État de connexion/débogage tenu par Tron | Sondes lues ; ne prouvent pas seules l’identité du tas applicatif |
+| Tron inspect_object/inspect_package/runtime_stats/thread_list et autres inspecteurs locaux | Processus Tron | Cible établie par lecture du code, comportement non qualifié sur l’application ; ne pas les utiliser comme observations métier |
+| Tron code_compile_string/reload_system | Distant si connecté, fallback local sinon | Non employés en usage applicatif ; choisir les chemins explicitement distants |
+| Autres outils annoncés | À établir avant usage | Ajout seulement pour besoin concret, vérification de cible puis contrôle proportionné ; pas de qualification globale des 91 outils |
+
+Le pont refuse les commandes Tron locales/à fallback/inconnues avant transport.
+Pour les cinq commandes distantes ci-dessus, il exige un statut connecté à
+Swank127.0.0.1:4105 avant d’envoyer l’opération. repl_connect exige cette cible
+explicitement. Le catalogue et les trois sondes restent disponibles. La liste
+opérationnelle est dans scripts/mcp-appel.py, testée par tests/test_pont_mcp.py.
+C’est un garde-fou de routage, pas un sandbox ni une preuve de PID : le constat
+croisé reste obligatoire après toute reconnexion. Un échec ne bascule pas localement.
+
+Édition structurelle disponible, facultative : utiliser lisp-edit-form/patch-form
+si cela rend la modification plus précise/sûre ; patch textuel ou fichier complet
+autorisé. Aucun appel MCP artificiel pour Elm, Nix, Python ou documentation.
+
+Pendant une suspension, conserver l’événement DEBUG et son thread/niveau ; lire
+sa pile et les locaux ciblés, jamais la pile du RPC d’inspection comme celle du
+calcul. Pas d’opération métier concurrente sans lien avec la résolution. Le verrou
+par appel n’arrête pas les threads et ne couvre pas toute une réparation.
+Limiter les modifications à celle-ci ; identifier le restart par son sens et sa
+position actuelle, pas par l’index0 de la fixture. Vérifier résultat et effets
+métier indépendamment de l’enveloppe protocolaire. Un timeout ne prouve ni annulation
+ni absence d’effets ; ne pas rejouer une opération pour obtenir une meilleure trace.
+Après dépilage CL-MCP : diagnostic et effets persistants, aucune pile vivante à reprendre.
 
 Corrections durables dans les sources avant chargement. ASDF/COMPILE-FILE pour
 FASL ; COMPILE pour correction de fonction dans l’image. Tests ciblés et
@@ -65,13 +105,19 @@ retour et sondes réelles, SSH central existant. Aucun ancienworkflow réactivé
 Journal synthétique sans secrets/données dans JOURNAL.md ; reprise compacte dans
 REPRISE.md. Ancien guide exact archivé dans coordination/historique/.
 
-Raccordement qualifié dans cette session : cl-mcp4106 et Swank4105 dans le PID
-applicatif83928 ; Tron4107 dans un processus d’outillage séparé, ciblant ce Swank.
+Raccordement qualifié dans cette tâche : cl-mcp4106 et Swank4105 dans l’image
+applicative ; Tron4107 dans un processus d’outillage séparé, ciblant ce Swank.
 Les ports sont exclusivement loopback. Sources/licences/35 transitives/limites et
 patch de raccordement : `outils/mcp.lock.json`, `outils/audit-mcp.md`, `outils/mcp.nix`.
 Le scénario réel est exécuté par `python3 scripts/qualifier-mcp.py` ; il refuse de
 réinitialiser la fixture si un débogage est suspendu. Un échec exige inspection,
 pas une répétition aveugle de l’opération ayant déjà incrémenté son compteur.
+Les résultats du rapport MCP sont historiques, rattachés à leurs empreintes.
+Le garde de routage actuel est testé isolément par outils-routage ; il ne transforme
+pas cette preuve en nouveau succès du scénario suspendu, qui n'est pas rejoué
+comme sonde. Le qualifier vérifie maintenant le nom, le sens, la position et la
+cible actuels du restart de fixture, puis les relit après compilation. Un ordre
+ou format inattendu impose une inspection ; aucune supposition d'index conservé.
 
 Depuis cet agent hébergé, utiliser le transport existant avec le pont HTTP :
 

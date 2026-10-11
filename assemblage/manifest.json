@@ -12,13 +12,13 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "1ef717460f9c600d908de66ebb8bdf25943669e8",
+      "revision": "9cb1fb145d6a3525b69ac75b35060120adc38e94",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "5e234c0be0ef49efe632bb001811e0eb73f42045",
+      "revision": "78137b0a0e9e3977e038aa9448350377e9b93798",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {

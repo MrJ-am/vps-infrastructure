@@ -478,3 +478,22 @@ puis 8ciblés réussis102ms après ajout même-cible/durée0, géométrie inchan
 Publication Style0ea000d avant source centrale ; autres pins de consommateurs
 restent historiques pendant leur portage. Backend296b7c89 inchangé, pas de tests
 Node serveur relancés, pas de déploiement ni données réelles modifiées.
+
+Reprise ciblée après audit : architecture C préservée ; cibles/édition facultative/
+DEBUG/restarts/timeouts clarifiés et relus, pont HTTP limité aux chemins distants
+qualifiés. Statut distant avant appel, refus local/fallback et connexion implicite.
+Six tests purs, reçu outils-routage0,3246s ;33 suites évitées pour le pont seul.
+Qualifier non lancé comme sonde ; choix de restart de fixture contrôlé avant/après
+compilation par nom/sens/cible actuelle. AGENTS Vision/Math publiés avant manifeste.
+
+Frontend local : contexte immuable dans les façades, ARIA bornée, SVG original,
+champs natifs/texte littéral testés. Le parent pre-wrap ne suffisait pas : .t force
+normal dans elm-ui ; raw Html.text échappé, aucun élément HTML ajouté. Déploiement
+animé : minimum de contenu92px empêchait le repli, corrigé par Element.minimum0.
+Préférence : Playwright.evaluate invoquait le disposer retourné par le raccord ;
+corps de callback sans retour corrige le test, écouteur natif inchangé. 56 cas AST
+et parcours Contextes320/768/1440 passent, réduire en mouvement/au chargement,
+frames réellement arrêtées, saisie/focus disponibles. Sources et JS synthétiques,
+aucune donnée réelle, aucune suite métier Node ou campagne distante. Analyse
+réelle421 violations encore bloquantes ; ces unités ne prouvent pas la conformité
+frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise.

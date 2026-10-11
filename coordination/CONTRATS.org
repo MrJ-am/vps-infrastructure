@@ -1,4 +1,4 @@
-#+TITLE: Contrat d'assemblage central — version 3
+#+TITLE: Contrat d'assemblage central — version 4
 #+OPTIONS: toc:nil
 
 * Autorité et sources
@@ -64,9 +64,17 @@ des consommateurs affectés. Aucune refonte gratuite ni publication satellite.
 Catalogue et sélection selon dépendances effectives, exécutés localement dans Codex.
 Une image SBCL persistante par tâche : cl-mcp (structure/introspection/ASDF/tests)
 et cl-tron-mcp via Swank (évaluation initiale débogable/pile/locaux/correction/restart)
-visent la même image, pool désactivé et identité PID/marqueur/objet prouvée.
-Mutations sérialisées, effets examinés avant reprise ; sources canoniques et ASDF
-incrémental, validation finale en image neuve. Voir assemblage/DEVELOPPEMENT.md.
+visent la même image selon architecture C actuelle : cl-mcp sans pool/Swank dans
+l'application, Tron séparé, pont HTTP existant. Ce choix de développement ne
+s'applique pas au produit. Cibles locales/distantes/fallback et comportements
+testés distingués dans assemblage/DEVELOPPEMENT.md ; aucune action applicative
+sur cible incertaine. PID/marqueur/état partagé vérifiés après reconnexion,
+références à l'ancienne image invalidées, pas de PID fixe ni qualifier comme sonde.
+Édition structurelle facultative, aucune opération métier concurrente sans lien
+avec un débogage ouvert ; pile DEBUG/thread/niveau et sens/index courant du
+restart conservés. Effets examinés avant/après reprise, timeout sans garantie
+d'annulation. Sources canoniques/ASDF incrémental ; validation propre distincte
+permise sans détruire l'image saine. Voir assemblage/DEVELOPPEMENT.md.
 Outils de développement sans production/public ; MCP métier distinct.
 Pas de cl-harness, fusion, serveur MCP ou débogueur réécrit.
 Ne pas relancer une campagne distante pour diagnostiquer un échec local.
