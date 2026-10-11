@@ -9,6 +9,7 @@ import json
 import os
 from pathlib import Path
 import subprocess
+import shutil
 import tempfile
 import time
 import uuid
@@ -21,6 +22,15 @@ from http_fixture import entree
 IMAGE='mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3'
 
 
+def copier_tests(sources, destination):
+    """Instrumentation privée ; sources et profondeurs relatives préservées."""
+    tests=destination/'e2e'
+    shutil.copytree(sources/'docs/tests/e2e',tests)
+    for test in tests.glob('*.spec.js'):
+        test.write_text("const centralQuotaTest=require('@playwright/test').test;\ncentralQuotaTest.beforeEach(async({page})=>{const h=require('node:crypto').randomBytes(6).toString('hex');await page.setExtraHTTPHeaders({'X-Fixture-IP':'fd00:'+h.match(/.{4}/g).join(':')+'::1'});});\n"+test.read_text())
+    return tests
+
+
 def qualifier(sources, executable):
     sources=Path(sources).resolve();executable=Path(executable).resolve()
     r=json.loads(executable.with_suffix('.qualification.json').read_text())
@@ -28,6 +38,7 @@ def qualifier(sources, executable):
     assert r['sources_lisp_sha256']==compilation_entrees(chemins_sources(atelier=os.environ.get('MRJAM_ATELIER')))
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI')}
     nom='mrjam-matheval-browser-'+uuid.uuid4().hex[:12]
+    copies=None
     def docker(*args,input=None):
         return subprocess.run(['docker',*args],input=input,env=env,text=True,capture_output=True,check=True).stdout
     docker('run','--detach','--name',nom,'--publish','127.0.0.1::5432','--env','POSTGRES_HOST_AUTH_METHOD=trust',
@@ -57,14 +68,15 @@ def qualifier(sources, executable):
             # Un contexte navigateur représente un client synthétique distinct.
             # L'adresse est imposée par cette entrée de fixture, jamais utilisable
             # sur Nginx de production. Aucun mode test ne désactive les quotas Lisp.
-            config.write_text("const c=require('./playwright.config.cjs');delete c.webServer;module.exports=c;\n")
-            for test in (sources/'docs/tests/e2e').glob('*.spec.js'):
-                test.write_text("const centralQuotaTest=require('@playwright/test').test;\ncentralQuotaTest.beforeEach(async({page})=>{const h=require('node:crypto').randomBytes(6).toString('hex');await page.setExtraHTTPHeaders({'X-Fixture-IP':'fd00:'+h.match(/.{4}/g).join(':')+'::1'});});\n"+test.read_text())
+            copies=Path(tempfile.mkdtemp(prefix='.central-tests-',dir=sources/'docs'))
+            tests=copier_tests(sources,copies)
+            config.write_text("const c=require('./playwright.config.cjs');delete c.webServer;c.testDir="+
+                              json.dumps('./'+copies.name+'/e2e')+";module.exports=c;\n")
             diagnostic=bool(os.environ.get('MRJAM_TEST_FILTER') or os.environ.get('MRJAM_TEST_DIAGNOSTIC'))
             if diagnostic:
                 # Instrumentation de fixture bornée : événements d'entrée et
                 # état du dialogue, sans corps réseau, cookie ou contenu.
-                test=sources/'docs/tests/e2e/survey.spec.js'
+                test=tests/'survey.spec.js'
                 instrumentation='''const centralTest=require('@playwright/test').test;
 centralTest.beforeEach(async({page})=>{await page.addInitScript(()=>{
 window.__MRJAM_EVENEMENTS=[];for(const type of ['pointerdown','pointerup','click','read'])document.addEventListener(type,e=>{
@@ -103,7 +115,9 @@ centralTest.afterEach(async({page},info)=>{await info.attach('evenements-dialogu
                     except subprocess.TimeoutExpired:p.kill();p.wait();raise AssertionError('Arrêt navigateur non borné')
                     config.unlink(missing_ok=True)
         print('Matheval : campagne navigateur sur le binaire SBCL commun, base et participations synthétiques uniquement.')
-    finally:docker('rm','--force',nom)
+    finally:
+        if copies is not None:shutil.rmtree(copies)
+        docker('rm','--force',nom)
 
 
 if __name__=='__main__':

@@ -497,7 +497,8 @@
         "elm.json",
         "identite.json",
         "tests/exports.py",
-        "public/assets/mrjam/*"
+        "public/assets/mrjam/*",
+        "tests/geometrie.cjs"
       ],
       "signature": [
         "web/*",
@@ -515,6 +516,10 @@
         "scripts/revoir-ressources.py",
         "scripts/revoir-interop.cjs",
         "assemblage/elm-review/ressources.json"
+      ],
+      "matheval": [
+        "docs/tests/references/space-layout.js",
+        "docs/tests/references/slider-layout.js"
       ]
     },
     "impact": [
@@ -1919,16 +1924,20 @@
       ],
       [
         "python3",
-        "scripts/qualifier-mcp.py"
+        "scripts/qualifier-mcp.py",
+        "--reutiliser"
       ]
     ],
-    "dependances": [],
+    "dependances": [
+      "outils-routage"
+    ],
     "outils": {
       "python": [
         "python3",
         "--version"
       ]
-    }
+    },
+    "preuve_mcp": true
   },
   "frontend-regles": {
     "niveau": 2,
@@ -2028,7 +2037,9 @@
       "vps": [
         "scripts/frontends.py",
         "tests/test_frontends_sources.py",
-        "scripts/assemblage.py"
+        "scripts/assemblage.py",
+        "tests/matheval-navigateur.py",
+        "tests/test_matheval_harnais.py"
       ]
     },
     "impact": [
@@ -2045,6 +2056,16 @@
         "tests",
         "-p",
         "test_frontends_sources.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_matheval_harnais.py"
       ]
     ],
     "dependances": [],

@@ -1,5 +1,13 @@
 # Promotion du candidat qualifié localement
 
+Les sources Style effectivement consommées à chaque verrou sont incluses dans
+le bundle privé de qualification, séparées de sa tête courante. Le préparateur
+vérifie le verrou, ses fichiers et les entrées du reçu sur cette révision, sans
+fetch distant ni copie divergente maintenue dans un dépôt. La preuve historique
+MCP et sa trace sont vérifiées hors ligne : aucune nouvelle condition synthétique
+ni connexion actuelle n'est prétendue. Les contrôles Python de routage sont
+qualifiés séparément ; ces outils restent hors du graphe produit.
+
 Le développement et les campagnes de qualification se font dans Codex. Le
 workflow `monolithe-deploiement.yml` vérifie la soumission, prépare le système,
 qualifie une restauration récente, active et sonde le VPS. Aucun déclenchement

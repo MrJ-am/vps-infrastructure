@@ -165,7 +165,7 @@ def environnement(suite):
     for motif in motifs:
         for chemin in Path('/').glob(motif.lstrip('/')):
             natifs[str(chemin)] = empreinte(chemin.resolve().read_bytes())
-    for cle in ('MRJAM_LIBCRYPTO', 'MRJAM_LIBPQ', 'MRJAM_LIBSQLITE'):
+    for cle in (('MRJAM_LIBCRYPTO', 'MRJAM_LIBPQ', 'MRJAM_LIBSQLITE') if motifs else ()):
         chemin = os.environ.get(cle)
         if chemin:
             p = Path(chemin).resolve(strict=True)
@@ -215,6 +215,11 @@ def identifiant_suite(nom, suite, chemins):
         if empreinte(p.read_bytes())!=r['artefact_sha256'] or compilation_entrees(chemins)!=r['sources_lisp_sha256']:
             raise ValueError('Candidat métier différent des sources qualifiées')
         result['candidat_metier']={'sha256':r['artefact_sha256'],'sources':r['sources_lisp_sha256'],'compilation':r['compilation']}
+    if suite.get('preuve_mcp'):
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('preuve_mcp',RACINE/'scripts/qualifier-mcp.py')
+        preuve=importlib.util.module_from_spec(spec);spec.loader.exec_module(preuve)
+        result['preuve_mcp']=preuve.reference()
     profiles={}
     for cle in suite.get('python_profils',[]):
         venv=RACINE/'state/outils-python'/cle

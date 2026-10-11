@@ -38,6 +38,7 @@ ordinaires restent Element.Region.description, les liens Element.newTabLink.
 | --- | --- | --- |
 | Accessibilite | ID/relations ARIA, états, rôles constants, nom du radiogroup, tabindex -1/0, progression bornée, marqueurs fixes du pont de dialogue | Tests DOM ; tableaux, nom de groupe et focus au navigateur ; noms/valeurs de rôles contrôlés par AST |
 | Selection.native | select/option natifs ; sept resets fixes de cadre, police et dimensions | Choix String/Int, clavier, focus, valeur et police aux trois largeurs |
+| Tableau.defilement | flex-basis:auto constant, uniquement dans le conteneur du tableau commun ; aucun style ou dimension libre | Lignes et actions visibles dans une section encadrée aux trois largeurs ; administration réelle Firefox/Chromium |
 | Dialogue.natif/assembler | dialog, événement cancel, racines sœurs sans présentation ; trois resets constants | Fond inerte, Tab/Shift-Tab, Échap, réouverture et focus restitué |
 | Saisie | number/date/datetime-local + step any ; champ identifié, placeholder/maxlength ; keydown Entrée/Échap ; trois constantes de dimensions intrinsèques absentes de Length | Zéro/vide, dates, soumission unique, focus du menu ; densité des boutons courts et repli réel des libellés longs |
 | Texte | Deux styles fixes pre-wrap/overflow-wrap ; nœud Html.text échappé ; emphase sémantique em sans attribut | Espaces et retours, mot long replié ; DOM em original et choix au clavier |
@@ -68,9 +69,9 @@ création indirecte ou animation. Cas positifs/négatifs dans le complément AST
 La préférence de mouvement est raccordée par animations.js ; l'atelier la lit
 dans ses flags et ne répète pas l'émission initiale, pour préserver le p de l'URL.
 Les mutations de focus et entrées du plan sont regroupées par microtask, sans
-horloge de présentation. Les anciens curseurs géométriques restent à porter
-avec leur consommateur Matheval, toujours sur son ancien verrou. Leur CSS est
-retiré du nouveau Style ; cette rupture empêche une adoption Matheval sans portage.
+horloge de présentation. Le portage géométrique Matheval utilise Espace/AxesSpatiaux ci-dessous. Les anciens
+curseurs/CSS sont retirés ; l’adoption exige le verrou exact et les parcours du
+consommateur, sans déduire sa qualification de celle des règles.
 L'export CSS de palette est une donnée scientifique produite par Elm, sans
 import d'interface ; empreintes du fichier et de ses producteurs contrôlées,
 reproduction CSS/JSON testée contre les sorties du constructeur existant.
@@ -135,11 +136,11 @@ les accès calculés sont exercés ; le JS dynamique et les générateurs ne son
 pas une preuve statique complète. Contrôler également les artefacts et les
 parcours de navigateur, les styles/actions/focus effectivement rendus.
 
-État : outils/règles locaux qualifiés ; interfaces encore refusées, sans exclusion
-ni suppression. Première mutualisation Animator réelle dans MrJam.Transitions
-et lecteur logo ; API numérique pour attributs elm-ui, arrêt au repos/réduction.
-Les autres vues, adaptateurs et ressources restent à porter/requalifier. Production
-inchangée ; aucun reçu ancien utilisé pour qualifier ces nouvelles interfaces.
+État : contrôles AST/ressources bloquants et interfaces assemblées portées, sans
+exclusion ni suppression. MrJam.Transitions encapsule Animator et son lecteur ;
+API numérique pour elm-ui, arrêt au repos/réduction. Les candidats propres sont
+qualifiés individuellement ; résultats datés dans REPRISE.md, sans déduire leur
+conformité des seuls tests de règles. Production inchangée jusqu'à promotion.
 
 Contextes immuables : utiliser le même MrJam.Contexte avec les façades `pour`
 de MrJam, Documents, Donnees, Tableaux, Disposition, Pictogrammes et modalePour.
@@ -245,13 +246,37 @@ le porteur dialog sans API publique d'attribut libre. margeLecture ne permet que
 margin-top, argument unique en pixels borné12..800 ; l'AST refuse autre propriété,
 bornes, source locale masquée ou deuxième argument. Le contenu reste elm-ui.
 
-Curseur.note a un proxy range fixe0..3/pas0,25, id/nom/aide constants ; trois
-resets width100%/height44px/opacity0, événements change et mrjam-note-apercu fixes.
-noteRelative ne donne qu'un marqueur fixe. La réponse Maybe Float reste distincte
+Curseur.note a un proxy range fixe0..3/pas0,25, id/nom/aide constants ; quatre
+resets width100%/height44px/opacity0/pointer-events:none, événements change et
+mrjam-note-apercu fixes. noteRelative borne touch-action:none sur la surface
+capturée : le proxy conserve le clavier sans saisie native concurrente au geste.
+Le marqueur noteRelative reste fixe. La réponse Maybe Float reste distincte
 de l'aperçu, aucune note validée par un geste annulé. notes.js ne peint rien et
 ne crée aucun DOM : valeur native, capture, focus et événements seulement.
 Le test local notes.py réutilise les navigateurs existants ; Firefox est optionnel
 et exige une cible explicitement fournie, sans téléchargement/fallback. lecture.py
 vérifie les commandes immédiates, document défilant, focus/réinitialisation, formats
 et frames arrêtées. Les deux sont branchés dans la qualification locale Style ;
-les parcours réels Matheval restent nécessaires et sa projection encore à porter.
+les parcours réels Matheval restent nécessaires sur le candidat exact.
+
+Espace/axes : `MrJam.Espace` et `AxesSpatiaux` possèdent projection/placement et
+machines de gestes ; Survey porte réponses et intentions autorisées. Les aperçus
+annulés ne valident aucun axe, une ouverture interrompt et restaure le geste avant
+checkpoint. DOM stable identifié par production ; la caméra ne change jamais XYZ.
+`Adaptateurs.GraphiqueSpatial` ne peut appeler que les primitives SVG listées dans
+scene/sphere/liens/ligne : plans, traits, guides et gradient radial absents d’elm-ui.
+Aucun foreignObject, texte/contrôle SVG, CSS libre ou import applicatif autorisé.
+Espace/Axes : seuls touch-action none/pan-y fixes, événements mrjam-* et clavier,
+métadonnées/ARIA nommées ; les autres fonctions et attributs restent refusés.
+Les ponts communs mesurent/capturent/focalisent ; zéro DOM/style/RAF produit. SVG1.0.1
+est réutilisé à version identique, déjà approuvé dans Style, sans nouvelle toolchain.
+Les références purement géométriques historiques sont dans docs/tests/references,
+hors arbre de publication. Leur contenu entre dans l’empreinte de suite Style.
+Le programme différentiel Elm est compilé pour test dans .cache, hors galerie.js.
+
+Lorsqu’un contrôle d’aide disparaît, Firefox peut perdre le focus après les
+mutations. fenetres.js vérifie la restitution à la fin de focusout (microtask),
+uniquement si le dialogue modal au sommet n’a plus de focus intérieur valide.
+Le fond reste nativement inerte ; aucun timer, RAF ou décision métier. Les tests
+consommateurs vérifient le focus initial, une tentative de focus dans le fond,
+Tab/Shift-Tab et la restitution après fermeture dans les deux moteurs.

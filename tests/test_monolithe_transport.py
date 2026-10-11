@@ -21,6 +21,7 @@ class Transport(unittest.TestCase):
         (self.root/'operations').mkdir();(self.root/'scripts').mkdir()
         (self.root/'scripts/ssh-known-hosts').write_text('187.77.95.158 ssh-ed25519 CLE-PUBLIQUE-SYNTHETIQUE\n')
         self.d={'format':1,'soumission_autorisee_par_proprietaire':True,
+            'qualification_amendement_20261011':'qualifiee',
             'origine_preuves':'codex-local-non-attestee','depot':'MrJ-am/vps-infrastructure',
             'transport':'git-chiffre','revision_transport':'a'*40,'chemin_transport':'candidat.tar.gz.age',
             'revision_operateurs':'b'*40,'revision_construction':'c'*40,
@@ -33,6 +34,12 @@ class Transport(unittest.TestCase):
         with patch.object(m,'RACINE',self.root):return m.descriptor()
 
     def test_git_chiffre_exact(self):self.assertEqual(self.lire(),self.d)
+
+    def test_qualification_absente_ou_en_attente_refusee(self):
+        for statut in (None, 'requise', 'non-qualifie'):
+            if statut is None:self.d.pop('qualification_amendement_20261011',None)
+            else:self.d['qualification_amendement_20261011']=statut
+            with self.assertRaisesRegex(ValueError,'non qualifié'):self.lire()
 
     def test_parties_ordonnees_et_sans_chemin_libre(self):
         self.d['parties_transport']=['candidat.tar.gz.age.part-000','candidat.tar.gz.age.part-001']

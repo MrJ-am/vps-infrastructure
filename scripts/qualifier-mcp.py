@@ -4,12 +4,16 @@ import importlib.util
 import json
 from pathlib import Path
 import re
+import sys
 import time
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('pont_mcp',ROOT/'scripts/mcp-appel.py')
 pont=importlib.util.module_from_spec(spec);spec.loader.exec_module(pont)
 ETAT=ROOT/'state/outils-mcp'
+ENTREES_REFERENCE=['assemblage/outils/'+n for n in ('application.lisp','natif.lisp','registre.lisp',
+    'tron.lisp','mcp.lock.json','mcp.nix','audit-mcp.md')]+['tests/outils-mcp/'+n for n in
+    ('correction.lisp','scenario.lisp','mrjam-outils-qualification.asd')]
 
 
 def texte(res):return '\n'.join(c.get('text','') for c in res.get('content',[]) if c['type']=='text')
@@ -27,6 +31,43 @@ def restart_fixture(reponse):
     if not compact.startswith(entete) or not cible:
         raise ValueError('Restart de fixture non établi : inspecter nom, sens, ordre et cible actuels')
     return {'index':0,'thread':int(cible[1]),'niveau':int(cible[2])}
+
+
+def verifier_reference(preuve, trace, racine=ROOT):
+    """Réutilisation du scénario réellement exécuté, sans toucher à l'image.
+
+    La preuve porte sur bibliothèques, lanceurs et fixture inchangés. Les deux
+    contrôleurs Python ont été amendés : leurs chemins de routage/parser sont
+    testés séparément, pas présentés comme un nouveau débogage exécuté.
+    """
+    if not (preuve.get('format')==1 and preuve.get('resultat')=='succes'
+            and preuve.get('confiance')=='locale-non-attestee'
+            and preuve.get('autorise_publication') is False):
+        raise ValueError('Preuve MCP absente, échouée ou origine inconnue')
+    attendus={'mutation_cl_mcp':11,'mutation_tron':12,'locaux':{'base':40,'facteur':2},
+              'effets_avant_erreur':1,'effets_apres_restart':1,'resultat_calcul':42}
+    if any(preuve.get(k)!=v for k,v in attendus.items()):
+        raise ValueError('Scénario MCP incomplet ou effets répétés')
+    if hashlib.sha256(json.dumps(trace,sort_keys=True).encode()).hexdigest()!=preuve.get('trace_sha256'):
+        raise ValueError('Trace MCP différente de la preuve conservée')
+    for nom in ENTREES_REFERENCE:
+        if hashlib.sha256((racine/nom).read_bytes()).hexdigest()!=preuve.get('sources',{}).get(nom):
+            raise ValueError('Entrée du scénario MCP modifiée : '+nom)
+    appels={(a['outil'],a['nom']) for a in trace}
+    requis={('cl-mcp','load-system'),('cl-mcp','run-tests'),('cl-mcp','repl-eval'),
+             ('tron','repl_eval'),('tron','repl_compile'),('tron','repl_frame_locals'),
+             ('tron','repl_get_restarts'),('tron','repl_invoke_restart')}
+    if not requis<=appels:raise ValueError('Appels MCP de qualification incomplets')
+    for a in trace:
+        pont.verifier_commande(a['outil'],'tools/call',{'name':a['nom'],'arguments':a['arguments']})
+    return {'preuve_sha256':hashlib.sha256(json.dumps(preuve,sort_keys=True).encode()).hexdigest(),
+            'trace_sha256':preuve['trace_sha256'],'scenario_reexecute':False,
+            'connexion_actuelle_verifiee':False}
+
+
+def reference():
+    return verifier_reference(json.loads((ETAT/'qualification.json').read_text()),
+                              json.loads((ETAT/'qualification-trace-synthetique.json').read_text()))
 
 
 def main():
@@ -97,4 +138,8 @@ def main():
         (ETAT/'qualification-trace-synthetique.json').write_text(json.dumps(trace,ensure_ascii=False,indent=2)+'\n')
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    if sys.argv[1:]==['--reutiliser']:
+        print(json.dumps(reference(),ensure_ascii=False))
+    elif sys.argv[1:]:raise SystemExit('Usage : qualifier-mcp.py [--reutiliser]')
+    else:main()

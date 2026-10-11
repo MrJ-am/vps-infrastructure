@@ -115,7 +115,8 @@ def controle(d,prepare,cert,*,redemarrer=False):
         else:raise ValueError('Redémarrage refusé')
         controle(d,prepare,cert)
     for n,url,p in [('vision','https://vision.mrj.am/app.js','app.js'),
-                    ('matheval','https://principiipetit.io/matheval/enquete.js','enquete.js'),
+                    *[('matheval','https://principiipetit.io/matheval/'+p,p) for p in
+                      ('main.js','demo-card.js','survey.js','admin/administration.js','enquete.js')],
                     ('logique','https://logique.echos.systems/app.js','app.js')]:
         with urllib.request.urlopen(url,timeout=20) as r:
             stage.exiger(r.status==200,'Ressource publique indisponible')

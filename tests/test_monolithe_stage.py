@@ -67,6 +67,40 @@ class BundleTest(unittest.TestCase):
 
     def test_bundle_exact_operateurs_sans_reconstruction(self):self.assertEqual(self.verifier()['revision'],'c'*40)
 
+    def style_verrouille(self):
+        # La révision consommée diffère de la tête Style de l'assemblage.
+        self.suite['style_consomme_par']='vision'
+        self.suite['entrees']['style']=['src/Style.elm']
+        self.cert['manifest']['sources'].update({'vision':{},'style':{}})
+        courant=self.root/'style/src/Style.elm';courant.parent.mkdir(parents=True)
+        courant.write_text('Source nouvelle, non consommée.')
+        consomme=self.root/'styles-consommes/vision/src/Style.elm';consomme.parent.mkdir(parents=True)
+        consomme.write_text('Source verrouillée effectivement qualifiée.')
+        empreinte=preparer.sha(consomme)
+        verrou=self.root/'vision/style.lock.json';verrou.parent.mkdir()
+        verrou.write_text(json.dumps({'revision':'b'*40,'fichiers':{'src/Style.elm':empreinte}}))
+        self.cert['manifest']['frontends']={'vision':{'revision_style':'b'*40,
+            'verrou_style':'style.lock.json','sha256':preparer.sha(verrou)}}
+        self.cert['styles_consommes']={'vision':{'revision':'b'*40}}
+        self.receipt['identite']['entrees']['style/src/Style.elm']=empreinte
+        self.receipt['identite']['definition']=hashlib.sha256(json.dumps(self.suite,sort_keys=True).encode()).hexdigest()
+        self.actualiser()
+        return consomme
+
+    def test_style_reellement_consomme_et_non_sa_tete(self):
+        self.style_verrouille()
+        self.assertEqual(self.verifier()['revision'],'c'*40)
+
+    def test_style_consomme_altere_meme_si_enveloppe_recalculee(self):
+        self.style_verrouille().write_text('Autre source, qualification invalide.')
+        self.actualiser()
+        with self.assertRaisesRegex(ValueError,'Source Style différente'):self.verifier()
+
+    def test_revision_style_consomme_non_verrouillee(self):
+        self.style_verrouille();self.cert['styles_consommes']['vision']['revision']='d'*40
+        self.actualiser()
+        with self.assertRaisesRegex(ValueError,'Révision Style'):self.verifier()
+
     def test_graphe_incompatible(self):
         self.cert['qualification']['sources_lisp_sha256']={}
         with self.assertRaisesRegex(ValueError,'Graphe'):self.verifier()

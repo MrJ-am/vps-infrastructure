@@ -1,9 +1,11 @@
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 spec = importlib.util.spec_from_file_location('assemblage', Path(__file__).resolve().parents[1] / 'scripts/assemblage.py')
 a = importlib.util.module_from_spec(spec)
@@ -63,6 +65,21 @@ class Selection(unittest.TestCase):
 
 
 class Recus(unittest.TestCase):
+    def test_bibliotheque_serveur_sans_effet_sur_suite_frontend(self):
+        with patch.dict(os.environ, {'MRJAM_LIBPQ': '/absent/bibliotheque-serveur'}):
+            self.assertEqual(a.environnement({})['bibliotheques_natives'], {})
+
+    def test_bibliotheque_native_effective_invalide_sa_suite(self):
+        with tempfile.TemporaryDirectory() as t:
+            p = Path(t) / 'libpq.so'
+            p.write_bytes(b'premiere version synthetique')
+            with patch.dict(os.environ, {'MRJAM_LIBPQ': str(p)}):
+                premier = a.environnement({'candidat_metier': True})
+                p.write_bytes(b'seconde version synthetique')
+                second = a.environnement({'candidat_metier': True})
+            self.assertNotEqual(premier, second)
+            self.assertEqual(second['bibliotheques_natives']['MRJAM_LIBPQ']['sha256'], a.empreinte(p.read_bytes()))
+
     def test_aucun_fichier_ok_ne_vaut_recu(self):
         self.assertFalse(a.reutilisable({}, {'a': 1}))
 
