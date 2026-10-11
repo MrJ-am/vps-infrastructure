@@ -50,8 +50,8 @@
     "production": {
       "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
       "sbcl": "2.6.4",
-      "asdf": null,
-      "etat": "closure-constatee-build-commun-a-qualifier",
+      "asdf": "3.3.1",
+      "etat": "build-Nix-reussi-qualification-complete-restante",
       "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
       "source_url": "https://api.github.com/repos/NixOS/nixpkgs/tarball/c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
       "source_archive_sha256": "53c2d41b0e5ab001e97d4478985287a82870e7c044f5185a250d98627b253fc0"

@@ -81,10 +81,14 @@ et retour applicatif : les deux derniers restent à qualifier. Une nouvelle basc
 exige données et registre récents ; le retour du code ne restaure jamais une base
 ancienne sur des écritures récentes. Conserver générations/archives et services tiers.
 
-Blocage effectif : COMPONENTS_READ_TOKEN manque aux Actions de l’infrastructure
-(run 38112469897 sur 2cd93ce, arrêt avant checkout privé). Le credential de session lit/pousse
-les sources ; l’API secrets répond 403. Secret de lecture contenu limité à Vision
-et Signature demandé au propriétaire ; ne jamais fournir sa valeur en conversation.
+Accès privé confirmé : secret créé par le propriétaire ; run 38118779445 sur
+c11d342 a récupéré les cinq composants. Build Nix réussi : SBCL 2.6.4/ASDF 3.3.1,
+binaire e32ee43e, 12 453 272 octets, 9,3644 s (image + outillage). Qualification
+interrompue avant les suites sur pdfinfo absent. Poppler était déjà utilisé par
+les trois anciennes CI Matheval ; sa préparation centrale est corrigée avec le
+Nixpkgs verrouillé. Ce candidat non qualifié n’a pas été publié sur le VPS.
+Sonde 38118876078 réussie : génération inchangée, toujours un compte Vision et
+une identité, aucun lien croisé, trois participations Matheval ouvertes.
 APIs protections/environments/deploy keys non accessibles : ne pas prétendre leur
 nettoyage distant terminé. Ces permissions ne bloquent pas les travaux locaux.
 Restent aussi l’installation des rôles/migration 026, transfert arrêté des états

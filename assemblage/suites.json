@@ -644,6 +644,14 @@
       "python": [
         "python3",
         "--version"
+      ],
+      "pdfinfo": [
+        "pdfinfo",
+        "-v"
+      ],
+      "pdftotext": [
+        "pdftotext",
+        "-v"
       ]
     },
     "candidat_frontend": "matheval",

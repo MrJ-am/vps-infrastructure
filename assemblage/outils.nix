@@ -9,4 +9,6 @@ pkgs.linkFarm "mrjam-outils-qualification" [
   { name = "sqlite"; path = pkgs.lib.getLib pkgs.sqlite; }
   { name = "curl"; path = pkgs.curl; }
   { name = "age"; path = pkgs.age; }
+  # Déjà utilisé par les trois anciens workflows Matheval : pdfinfo/pdftotext.
+  { name = "poppler"; path = pkgs.poppler-utils; }
 ]

@@ -182,15 +182,16 @@ jobs:
           metier=any(suites[n].get('candidat_metier') or n=='matheval-postgresql' for n in noms)
           sbcl=metier or any('sbcl' in suites[n].get('outils',{}) for n in noms)
           with open(os.environ['GITHUB_OUTPUT'],'a') as f:
-              f.write('sbcl='+str(sbcl).lower()+'\nmetier='+str(metier).lower()+'\n')
+              outils=sbcl or 'matheval-interface' in noms
+              f.write('sbcl='+str(sbcl).lower()+'\noutils='+str(outils).lower()+'\nmetier='+str(metier).lower()+'\n')
           PY
       - name: Fournir Nix par le même mécanisme que les tests infrastructure existants
-        if: steps.besoin_nix.outputs.sbcl == 'true'
+        if: steps.besoin_nix.outputs.outils == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y nix-bin
       - name: Construire une fois avec SBCL 2.6.4 et le Nixpkgs exact du VPS
-        if: steps.besoin_nix.outputs.sbcl == 'true'
+        if: steps.besoin_nix.outputs.outils == 'true'
         env:
           MRJAM_ATELIER: ${{ github.workspace }}/.sources/
           BESOIN_METIER: ${{ steps.besoin_nix.outputs.metier }}

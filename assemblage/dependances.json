@@ -47,7 +47,8 @@
     "Nix",
     "Docker/PostgreSQL17 isole",
     "Playwright",
-    "outillage typographique Signature"
+    "outillage typographique Signature",
+    "Poppler/pdfinfo/pdftotext : anciens compile-test, atelier-style et verifier-style Matheval ; paquet poppler-utils du Nixpkgs production verrouillé"
   ],
   "npm_verrouille": [
     {
@@ -2610,5 +2611,19 @@
       ],
       "origine_directes": "Vision tests/requirements-embeddings.txt et ancien workflow creation-semantique.yml : torch 2.6.0 CPU. Aucun nouveau service."
     }
+  },
+  "outils_nix": {
+    "revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+    "expression": "assemblage/outils.nix",
+    "paquets": [
+      "sbcl",
+      "postgresql_17 (lib)",
+      "openssl (lib)",
+      "sqlite (lib)",
+      "curl",
+      "age",
+      "poppler-utils"
+    ],
+    "transitives": "closure Nix exacte ; reçus SHA256 des exécutables employés"
   }
 }
