@@ -5,12 +5,12 @@ recherche textuelle d'un alias. La commande centrale place les sources partagée
 verrouillées dans commun/, les applications dans application/.
 -}
 
+import Dict exposing (Dict)
 import Elm.Syntax.Declaration as Declaration exposing (Declaration)
 import Elm.Syntax.Expression as Expression exposing (Expression)
 import Elm.Syntax.Import exposing (Import)
 import Elm.Syntax.Node as Node exposing (Node)
 import Elm.Syntax.Range exposing (Range)
-import Dict exposing (Dict)
 import Review.ModuleNameLookupTable as Lookup exposing (ModuleNameLookupTable)
 import Review.Project.Dependency as Dependency exposing (Dependency)
 import Review.Rule as Rule exposing (Error, Rule)
@@ -24,6 +24,7 @@ type alias Context =
     , sharedUsed : Bool
     , presentation : Maybe Range
     , attributes : List Range
+    , assertions : List Range
     , dependencyModules : List String
     }
 
@@ -61,6 +62,7 @@ initialContext =
             , sharedUsed = False
             , presentation = Nothing
             , attributes = []
+            , assertions = []
             , dependencyModules = dependencyModules
             }
         )
@@ -97,9 +99,11 @@ importVisitor node context =
             Node.value node |> .moduleName |> Node.value |> String.join "."
 
         forbidden =
-            origin == "Html.Styled"
+            origin
+                == "Html.Styled"
                 || String.startsWith "Html.Styled." origin
-                || origin == "Css"
+                || origin
+                == "Css"
                 || String.startsWith "Css." origin
                 || ((origin == "Animator" || String.startsWith "Animator." origin)
                         && not (shared context && context.moduleName == [ "MrJam", "Transitions" ])
@@ -123,15 +127,15 @@ declarationVisitor : Node Declaration -> Context -> ( List (Error {}), Context )
 declarationVisitor node context =
     case Node.value node of
         Declaration.FunctionDeclaration { declaration } ->
-            ( [], { context | function = Node.value declaration |> .name |> Node.value, attributes = [] } )
+            ( [], { context | function = Node.value declaration |> .name |> Node.value, attributes = [], assertions = [] } )
 
         _ ->
-            ( [], { context | function = "", attributes = [] } )
+            ( [], { context | function = "", attributes = [], assertions = [] } )
 
 
 {-| Chaque exception est un couple module/fonction, et un ensemble de symboles
 appelables. Aucun module entier exempté, aucun nom d'attribut arbitraire exposé.+La présence dans commun/ est également nécessaire : impossible de nommer un
-module applicatif MrJam.Adaptateurs.* pour obtenir cette capacité.
+module applicatif MrJam.Adaptateurs.\* pour obtenir cette capacité.
 -}
 adapterAllows : Context -> String -> Bool
 adapterAllows context symbol =
@@ -161,31 +165,37 @@ expressionVisitor : Node Expression -> Context -> ( List (Error {}), Context )
 expressionVisitor node context =
     case Node.value node of
         Expression.Application (callee :: attribute :: _) ->
-            case ( Node.value callee, Node.value attribute ) of
-                ( Expression.FunctionOrValue _ "attribute", Expression.Literal literal ) ->
-                    let
-                        expected =
-                            case context.function of
-                                "decritPar" ->
-                                    "aria-describedby"
+            if String.startsWith "tests/" context.path && Lookup.moduleNameFor context.lookup callee == Just [ "Test", "Html", "Selector" ] && isAttribute callee then
+                -- Oracle synthétique, pas un attribut transmis à une vue : seul
+                -- l'argument direct d'une assertion de l'API de test est permis.
+                ( [], { context | assertions = assertionAttribute context attribute ++ context.assertions } )
 
-                                "controle" ->
-                                    "aria-controls"
+            else
+                case ( Node.value callee, Node.value attribute ) of
+                    ( Expression.FunctionOrValue _ "attribute", Expression.Literal literal ) ->
+                        let
+                            expected =
+                                case context.function of
+                                    "decritPar" ->
+                                        "aria-describedby"
 
-                                "depliement" ->
-                                    "aria-expanded"
+                                    "controle" ->
+                                        "aria-controls"
 
-                                _ ->
-                                    ""
-                    in
-                    if Lookup.moduleNameFor context.lookup callee == Just [ "Html", "Attributes" ] && expected /= "" && expected == literal then
-                        ( [], { context | attributes = Node.range callee :: context.attributes } )
+                                    "depliement" ->
+                                        "aria-expanded"
 
-                    else
+                                    _ ->
+                                        ""
+                        in
+                        if Lookup.moduleNameFor context.lookup callee == Just [ "Html", "Attributes" ] && expected /= "" && expected == literal then
+                            ( [], { context | attributes = Node.range callee :: context.attributes } )
+
+                        else
+                            ( [], context )
+
+                    _ ->
                         ( [], context )
-
-                _ ->
-                    ( [], context )
 
         Expression.FunctionOrValue _ name ->
             case Lookup.moduleNameFor context.lookup node of
@@ -198,16 +208,20 @@ expressionVisitor node context =
                             origin ++ "." ++ name
 
                         restricted =
-                            origin == "Html"
+                            origin
+                                == "Html"
                                 || String.startsWith "Html." origin
-                                || origin == "VirtualDom"
-                                || origin == "Svg"
+                                || origin
+                                == "VirtualDom"
+                                || origin
+                                == "Svg"
                                 || String.startsWith "Svg." origin
                                 || List.member symbol [ "Element.html", "Element.htmlAttribute" ]
 
                         alwaysForbidden =
                             List.member symbol [ "Html.Attributes.style", "Html.Attributes.class", "Html.Attributes.classList", "Html.Attributes.property" ]
-                                || (symbol == "Html.Attributes.attribute" && not (List.member (Node.range node) context.attributes))
+                                || (origin == "Animator" && List.member name [ "div", "node", "css", "toCss" ])
+                                || (symbol == "Html.Attributes.attribute" && not (List.member (Node.range node) (context.attributes ++ context.assertions)))
                                 || (String.startsWith "Svg.Attributes." symbol && List.member name [ "style", "class", "classList" ])
                                 || (origin == "Element.Input" && not (shared context))
 
@@ -229,7 +243,7 @@ expressionVisitor node context =
                                         context.presentation
                             }
                     in
-                    if alwaysForbidden || animation || (restricted && not (adapterAllows context symbol)) then
+                    if alwaysForbidden || animation || (restricted && not (adapterAllows context symbol || List.member (Node.range node) context.assertions)) then
                         ( [ diagnostic "Présentation ou échappatoire technique non autorisée." (Node.range node) ], next )
 
                     else
@@ -240,6 +254,45 @@ expressionVisitor node context =
 
         _ ->
             ( [], context )
+
+
+assertionAttribute : Context -> Node Expression -> List Range
+assertionAttribute context node =
+    case Node.value node of
+        Expression.ParenthesizedExpression inner ->
+            assertionAttribute context inner
+
+        Expression.Application (callee :: argument :: _) ->
+            if Lookup.moduleNameFor context.lookup callee /= Just [ "Html", "Attributes" ] then
+                []
+
+            else
+                case ( Node.value callee, Node.value argument ) of
+                    ( Expression.FunctionOrValue _ "attribute", Expression.Literal name ) ->
+                        if List.member name [ "aria-controls", "aria-expanded", "aria-describedby" ] then
+                            [ Node.range callee ]
+
+                        else
+                            []
+
+                    ( Expression.FunctionOrValue _ "tabindex", _ ) ->
+                        [ Node.range callee ]
+
+                    _ ->
+                        []
+
+        _ ->
+            []
+
+
+isAttribute : Node Expression -> Bool
+isAttribute node =
+    case Node.value node of
+        Expression.FunctionOrValue _ "attribute" ->
+            True
+
+        _ ->
+            False
 
 
 finalVisitor : Context -> List (Error {})
