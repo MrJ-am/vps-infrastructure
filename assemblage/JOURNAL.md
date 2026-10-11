@@ -280,3 +280,16 @@ tentative globale était verte ni installer des outils par opportunité.
 Production inchangée. Sauvegarde/restauration réelle 38105867103 reste une preuve
 de données, sans qualification ACL/retour applicatif. Aucun jalon production ni
 Kanidm annoncé ; état compact et préconditions restantes dans REPRISE.md.
+
+## Constat CI de ce lot
+
+2cd93ce publié : infrastructure 38112469913 réussie (Python et Nix, paquet métier
+factice) ; assemblage 38112469897 cadre réussi, arrêt explicite avant lecture
+privée, COMPONENTS_READ_TOKEN absent. Aucun build Nix métier ou déploiement dans
+ces runs. Deux anciens coordinateurs distants lus après désactivation :
+disabled_manually, IDs 379772835/379772836.
+
+Le cadre borne maintenant ses tests par impact. Pilote CLI testé sur trois
+commits Git synthétiques : prose uniquement → aucun composant/test inchangé ;
+sélecteur → sa suite seulement ; classification SQL → garde-fou et composants.
+18 tests du sélecteur/pilote/reçus réussis. Aucun nouveau réseau, outil ou service.

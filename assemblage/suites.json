@@ -62,7 +62,8 @@
         "tests/test_assemblage.py",
         "scripts/ci-impact.py",
         "scripts/ci-qualifier.py",
-        "tests/test_assemblage_revisions.py"
+        "tests/test_assemblage_revisions.py",
+        "tests/test_assemblage_ci.py"
       ]
     },
     "impact": [
@@ -71,7 +72,8 @@
       "vps/tests/test_assemblage.py",
       "vps/scripts/ci-impact.py",
       "vps/scripts/ci-qualifier.py",
-      "vps/tests/test_assemblage_revisions.py"
+      "vps/tests/test_assemblage_revisions.py",
+      "vps/tests/test_assemblage_ci.py"
     ],
     "commandes": [
       [
