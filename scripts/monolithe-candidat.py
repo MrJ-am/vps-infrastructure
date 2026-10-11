@@ -5,6 +5,7 @@ est publiable. Aucun reçu local n'est converti en attestation CI.
 """
 import argparse
 import hashlib
+import importlib.util
 import io
 import json
 import os
@@ -103,6 +104,11 @@ def sceller(executable,destination):
               'recus_locaux_sha256':recus,'qualification':q,'frontends':fronts,'styles_consommes':styles,
               'closure':fermeture,'closure_cache':cache,'fichiers':contenus(root),'activation':False}
         (root/'stage.json').write_text(json.dumps(cert,ensure_ascii=False,indent=2)+'\n')
+        # Le même vérificateur fermé doit accepter le bundle complet localement,
+        # avant transport. Cette fonction ne prépare ni système ni données.
+        spec=importlib.util.spec_from_file_location('verification_stage_locale',root/'vps/scripts/monolithe-preparer.py')
+        controle=importlib.util.module_from_spec(spec);spec.loader.exec_module(controle)
+        controle.verifier_bundle(root)
         archive=tmp/'candidat.tar.gz'
         with tarfile.open(archive,'w:gz',compresslevel=1) as t:t.add(root,arcname='payload',recursive=True)
         exiger(archive.stat().st_size<1024**3,'Archive hors limite')

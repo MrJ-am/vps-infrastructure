@@ -119,12 +119,12 @@
     },
     "editorial": {
       "resultat": "succes",
-      "duree_secondes": 0.3133,
+      "duree_secondes": 0.289,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "fb25d10699b8abd63e906649c76abdc33f51aa4e31f0e5c23782ffa4f2f3bfee",
+      "sha256": "35caf8196b9253b015eb09e8314115cc4f262948d5942a4e20fa50bd3b28fc71",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
     "frontend-regles": {
       "resultat": "succes",
@@ -164,12 +164,12 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 1.4409,
+      "duree_secondes": 0.7504,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "f4fc3a2430dfbc7238a6c693bec1a378dd293e8ce5a83b6b5aeae43b3f9e33db",
+      "sha256": "aa149d8a4204151621e19cecc034a62114eafc391a35d00d778e4bc9dc0cc99d",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
     "json-commun": {
       "resultat": "succes",
@@ -406,7 +406,8 @@
       "raison": "égalité des empreintes exactes, campagnes nouvelles déjà exécutées sur leurs candidats"
     },
     "ajustement_final": "matheval-postgresql lié explicitement à l’image296b7 ; suite et sélection requalifiées après changement du catalogue",
-    "preuve_production": false
+    "preuve_production": false,
+    "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

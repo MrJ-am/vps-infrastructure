@@ -93,10 +93,17 @@ def verifier_bundle(root):
                    'Révision Style consommée différente : '+composant)
             verrou=root/composant/edge['verrou_style']
             exiger(sha(verrou)==edge['sha256'],'Verrou Style différent : '+composant)
+            format_empreintes=edge.get('format_empreintes','sha256')
+            exiger(format_empreintes in ('sha256','git-blob-sha1'),
+                   'Format de verrou Style inconnu : '+composant)
             for fichier,empreinte in json.loads(verrou.read_text())['fichiers'].items():
                 exiger(not Path(fichier).is_absolute() and '..' not in Path(fichier).parts,
                        'Chemin de verrou Style non borné')
-                exiger(sha(style/fichier)==empreinte,'Source Style différente : '+composant)
+                if format_empreintes=='git-blob-sha1':
+                    contenu=(style/fichier).read_bytes()
+                    actuel=hashlib.sha1(b'blob '+str(len(contenu)).encode()+b'\0'+contenu).hexdigest()
+                else:actuel=sha(style/fichier)
+                exiger(actuel==empreinte,'Source Style différente : '+composant)
             entrees_sources=dict(sources,style=style)
         if suite.get('preuve_mcp'):
             import importlib.util
