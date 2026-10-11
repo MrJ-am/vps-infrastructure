@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Sources exactes, sélection conservative et reçus locaux non attestés.
 
-Aucune publication n'est autorisée par un reçu local. Les tests de qualification
-distants devront être rejoués par la CI tant qu'une attestation n'est pas disponible.
+Aucune publication n'est autorisée par un reçu local seul. La promotion doit
+établir la provenance du candidat et des preuves ; les campagnes de développement
+s'exécutent localement et ne sont pas rejouées automatiquement dans la CI.
 """
 import argparse
 import hashlib

@@ -6,9 +6,14 @@ application. Lire `assemblage/manifest.json`, `coordination/CONTRATS.org`,
 `docs/ETAT.md` restent historiques ; constater le VPS avant une bascule.
 
 - Périmètre : uniquement les six dépôts du manifeste ; aucune modification tiers.
-- L'infrastructure possède assemblage, commandes locales, toutes les exécutions
-  CI/CD, frontend, NixOS, routage, bases et exploitation. Les bibliothèques
+- L'infrastructure possède assemblage, commandes locales, déploiement distant,
+  frontend, NixOS, routage, bases et exploitation. Les bibliothèques
   conservent sources, contrats et tests. Aucun acquittement ni validation réciproque.
+- Développement et qualification dans Codex : REPL SBCL persistant, ASDF
+  incrémental et suites locales selon impact. Aucun test automatique au push,
+  aucune campagne distante pour explorer une panne locale. La CI/CD sert au
+  déploiement du candidat qualifié, à ses préconditions et aux sondes réelles ;
+  sauvegardes et mécanismes d'exploitation existants restent conservés.
 - Publier les commits des composants avant leur référencement central. Promouvoir
   le même artefact qualifié, construit depuis les sources/FASL dans une image propre.
   Aucun secret, connexion ou donnée dans le store ou l'exécutable.
@@ -19,9 +24,17 @@ application. Lire `assemblage/manifest.json`, `coordination/CONTRATS.org`,
   cette image pendant la tâche, écrire les corrections avant chargement. Validation
   finale dans une image neuve. Aucun REPL public ou lié aux données de production.
   Journal technique synthétique sans secrets ni contenus dans assemblage/JOURNAL.md.
-- Aucune nouvelle dépendance tierce directe sans autorisation, sauf Kanidm/outils
-  officiels autorisés. Inventorier/verrouiller les transitives. Aucune installation
-  opportuniste due à l'absence d'un outil.
+- Bibliothèques Common Lisp tierces autorisées après audit consigné : provenance,
+  révision, licence, dépendances, effets au chargement et risques pour leur usage.
+  Verrouiller sources et transitives avant intégration ; pas de cryptographie maison.
+  Kanidm et ses outils officiels sont autorisés. Tout autre langage, runtime,
+  bibliothèque ou service nouveau dans le produit exige une autorisation explicite.
+  Python est autorisé pour l'outillage propre de l'agent ; préférer les commandes
+  existantes et efficaces, sans installation opportuniste ni nouveau service.
+- Serveur métier uniquement Common Lisp. Node reste limité aux constructions/tests
+  frontend déjà approuvés et à la référence différentielle temporaire Matheval,
+  jamais à un auxiliaire de production. Les contrôles Lisp courants s'exécutent
+  dans l'image de tâche ; le différentiel historique ne se rejoue que sur impact.
 - Préserver données, observations, dates, politiques, liens et séances ouvertes.
   Vérifier tous les comptes avant destruction. Supprimer une identité ne supprime
   jamais implicitement un compte métier. Aucun contenu fictif en production.

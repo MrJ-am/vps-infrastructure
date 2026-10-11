@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 from assemblage import chemins_sources,manifeste,verifier_sources
@@ -30,7 +31,14 @@ def verifier():
     verifier_archive(base,base/'coordination/historique/workflows-infrastructure-20261011/INDEX.json')
     for p in ('vision-demande.yml','vision-mise-en-service.yml'):
         if (base/'.github/workflows'/p).exists():raise ValueError('Ancien coordinateur de publication actif')
-    print('Cinq composants sans YAML CI ni relais ; treize recettes satellites et deux coordinateurs historiques exacts conservés.')
+    verifier_archive(base,base/'coordination/historique/qualification-ci-20261011/INDEX.json')
+    for p in ('assemblage.yml','check.yml','vision-autonomie-controles.yml'):
+        if (base/'.github/workflows'/p).exists():
+            raise ValueError('Campagne de développement distante archivée réactivée : '+p)
+    for p in (base/'.github/workflows').glob('*'):
+        if p.suffix in ('.yml','.yaml') and re.search(r'\b(?:ci-qualifier\.py|assemblage\.py[ \t]+tester)\b',p.read_text()):
+            raise ValueError('Campagne de développement dans un workflow : '+p.name)
+    print('Cinq composants sans CI satellite ; archives exactes conservées ; anciennes campagnes CI de développement absentes.')
 
 
 if __name__=='__main__':verifier()
