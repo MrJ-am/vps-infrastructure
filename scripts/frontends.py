@@ -79,7 +79,12 @@ def reutiliser_candidat(cle, sources, m):
 def tester_frontend(cle,sources,caches,campagne='base'):
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME',
         'PLAYWRIGHT_BROWSERS_PATH','CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI',
-        'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')}
+        'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC',
+        'MRJAM_TEST_EXECUTABLE','MRJAM_LIBCRYPTO','MRJAM_LIBPQ','MRJAM_LIBSQLITE')}
+    # Le profil audité décrit aussi le pilote réellement utilisé, pas seulement
+    # un venv présent à côté d'un Python global de version différente.
+    if campagne != 'unitaire':
+        env['PATH']=str(RACINE/'state/outils-python/navigateur/bin')+os.pathsep+env['PATH']
     env['STYLE_MRJAM_SOURCE']=str(caches.get(cle,sources['style']))
     commandes={
         'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test'],

@@ -111,3 +111,15 @@ nettoyage distant terminé. Ces permissions ne bloquent pas les travaux locaux.
 Restent aussi l’installation des rôles/migration 026, transfert arrêté des états
 SQLite/JSONL, qualification Nix/identité/MCP réels, ACL/restauration/retour ciblé,
 bascule, invariants, probes et redémarrage de l’artefact réellement servi.
+
+
+Reprise locale suivante : Nix2.31.2 disponible dans Codex, compilateur cible2.6.4
+et graphe source158e4a5 qualifiés dans l'image propre296b7c89 (12486040 octets).
+Le différentiel PostgreSQL et les contrôles Vision natifs passent. Le wrapper
+elm-format a été initialisé avant empreintes ; le décalage Playwright global a été
+corrigé. Régressions pures ordinaires en Lisp sur fixtures figées, sans Node.
+Matheval7438ce6 corrige une animation persistante après réouverture ; huit essais
+ciblés passent, interface seule reconstruite, campagne finale en cours.
+PROMOTION.md définit la confiance dans une soumission chiffrée du propriétaire ;
+les reçus restent locaux non attestés. Opérateurs écrits, pas exécutés sur le VPS.
+Le jalon de production et Kanidm restent à réaliser.

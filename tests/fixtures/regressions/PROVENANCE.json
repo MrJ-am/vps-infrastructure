@@ -1,0 +1,25 @@
+{
+  "format": 1,
+  "donnees": "exclusivement synthétiques et identifiants du corpus public",
+  "origine": "références JavaScript historiques, régénérées une fois et identiques aux fixtures déjà qualifiées",
+  "node": {
+    "version": "v24.19.0",
+    "executable_sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12"
+  },
+  "revision_matheval": "d64f2358e224ac99c004ae92972a9bdc02242606",
+  "fichiers": {
+    "matheval.json": "ceaa84781bd6ac4384bf88b2a320bf35cb35edea48e7a910e0488e56a3cf6ed1",
+    "native.json": "612e9d9808905d32f37b9d2436b12ece1af598d7a391ace0cc38b9d9d26e33f3"
+  },
+  "references": {
+    "vps/tests/matheval-differentiel.mjs": "498fa6f5a37232c612de3c14731229ce693a87361b0bd21e797a8d8795909814",
+    "vps/tests/native-differentiel.mjs": "b0d542455f1ee4c805e33b4800a5d6a9a9df6424dcd49567b2d5d0c9ac0b3616",
+    "matheval/docs/site/session.js": "44fc617998f1806d09c3b14ffbe2f27c72cf996fc9937ac91753ec8be7ad95a6",
+    "matheval/server/src/statistics.mjs": "6cf3363d052180f2ca7e6c68d7eef8cb67b83d8f3e4917b72da75b3c10c6587d",
+    "matheval/server/src/validation.mjs": "59f57b50c06f31ec986a75cd12b477fbf8480d4b81af9888b4afda3f9a64b0ee",
+    "matheval/server/package-lock.json": "21a9ee19e4180c2ad19b4d98f27561f79a27651988555cf102a4fbeaea1a6eb4",
+    "matheval/research/bank.json": "bb7fb8be7ba839a4dbece6155e6753a38faf0933d6b5d6999b21d7964371c9f4",
+    "matheval/research/codebook.json": "90812acc76497d77ef82c99499799649b82cfc721c8fc2e6c277316c2dfa12b2"
+  },
+  "autorise_publication": false
+}

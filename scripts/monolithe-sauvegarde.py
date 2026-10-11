@@ -112,7 +112,7 @@ def copie_registre(source,cible):
     for ligne in contenu.decode('utf-8').splitlines():exiger(isinstance(json.loads(ligne),dict))
     with cible.open('xb') as f:f.write(contenu);f.flush();os.fsync(f.fileno())
 
-def main(revision):
+def main(revision,qualifier=None):
     global ETAPE
     exiger(os.geteuid()==0 and re.fullmatch('[0-9a-f]{40}',revision))
     os.umask(0o077)
@@ -173,10 +173,12 @@ def main(revision):
                 'sessions':'/var/lib/mrj-auth/sessions.sqlite','cycle':'/var/lib/vision-cycle/courriels.sqlite',
                 'admissions':'/var/lib/mrjam-admission/admissions.sqlite','admission-courriel':'/var/lib/mrjam-admission/courriels.sqlite',
                 'fermetures':'/var/lib/mrjam-fermeture/courriels.sqlite','courriel':'/var/lib/mrjam-courriel/file.sqlite'}
+            copies_etats={}
             for nom,path in sqlite.items():
                 source=Path(path)
                 if source.exists():
-                    copie=tmp/(nom+'.sqlite');copie_sqlite(source,copie);proteger(copie,nom+'.sqlite')
+                    copie=tmp/(nom+'.sqlite');copie_sqlite(source,copie)
+                    copies_etats[nom]=proteger(copie,nom+'.sqlite')
             for nom,path in {'effacements':'/var/lib/vision-effacements/demandes.jsonl','effacements-cycle':'/var/lib/vision-cycle/effacements.jsonl','effacements-communs':'/var/lib/mrjam-fermeture/effacements.jsonl'}.items():
                 source=Path(path)
                 if source.exists():
@@ -188,15 +190,24 @@ def main(revision):
                 sql(bin,isole,'postgres','CREATE DATABASE '+identifiant(base))
                 commande(['runuser','-u','postgres','--',bin/'pg_restore','--exit-on-error','--no-owner','--no-acl','--host='+str(isole),'--dbname='+base,isole/(base+'.dump')])
                 exiger(schema(lambda q:sql(bin,isole,base,q))==empreintes[base])
+            applicatif=None
+            if qualifier is not None:
+                ETAPE='qualification-applicative-isolee'
+                # Le callback ne reçoit que le cluster restauré ; aucune DSN
+                # ou clé de production. Exécuté avant destruction de la clé.
+                applicatif=qualifier(bin,isole,copies_etats)
             ETAPE='invariants-finaux'
             exiger(services()==avant_services and str(Path('/run/current-system').resolve())==GENERATION)
             rapport={'format':1,'infrastructure':revision,'generation':GENERATION,'sauvegarde':tag,'bases':list(BASES),
                      'tables_restaurees':{b:len(v) for b,v in empreintes.items()},'empreintes_semantiques_identiques':True,
                      'age_dechiffrement_verifie':True,'cle_ephemere_enveloppee_pour_destinataire_existant':True,
                      'cle_personnelle_non_utilisee':True,'sqlite_copie_et_integrite':True,
-                     'registre_externe_recent_requis':True,'retour_applicatif_qualifie':False,
+                     'registre_externe_recent_requis':True,'retour_applicatif_qualifie':bool(applicatif and applicatif.get('retour_lecture_qualifie')),
                      'roles_restaures':False,'acl_qualification_separee_requise':True,
                      'production_sql_ecriture':False,'production_services_interrompus':False,'fichiers_chiffres':fichiers}
+            if applicatif:
+                rapport['qualification_applicative']=applicatif
+                rapport['acl_qualification_separee_requise']=not applicatif.get('acl_vision_30_matheval_6',False)
             # Preuve privée : les empreintes par table ne sont pas publiées.
             (destination/'empreintes-privees.json').write_text(json.dumps(empreintes,indent=2)+'\n')
             (destination/'qualification.json').write_text(json.dumps(rapport,indent=2)+'\n')
@@ -204,6 +215,7 @@ def main(revision):
             try:os.fsync(fd)
             finally:os.close(fd)
             print(json.dumps({k:v for k,v in rapport.items() if k!='fichiers_chiffres'}),flush=True)
+            return rapport
     finally:
         if actif:
             try:commande(['runuser','-u','postgres','--',bin/'pg_ctl','-D',isole/'data','-m','fast','-w','-t','20','stop'])

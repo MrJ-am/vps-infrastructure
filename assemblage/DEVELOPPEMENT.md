@@ -17,12 +17,14 @@ puis utiliser le graphe ASDF dans cette même image :
 
 ```lisp
 (mrjam-developpement:recharger)
-(mrjam-developpement:verifier "matheval")
+(mrjam-developpement:verifier "matheval" "native")
 (mrjam-developpement:verifier "json" "quotas")
 ```
 
-Les contrôles Matheval ici sont les vecteurs/stats du système `matheval/tests`,
-pas les 116 cas différentiels historiques. Les sorties mesurent durée et
+Les contrôles Matheval couvrent les vecteurs/stats et 116 cas avec 8000 tirages.
+Le contrôle `native` couvre 8003 vecteurs JSON/OpenSSL. Les fixtures synthétiques
+figées portent les empreintes de leurs références historiques ; leur exécution
+ordinaire est entièrement Lisp et ne relance aucun générateur Node. Les sorties mesurent durée et
 allocations ; elles ne constituent pas des attestations de publication.
 Une condition reste dans le débogueur : inspecter la pile, tracer les fonctions
 concernées, corriger les sources et recharger. Utiliser `COMPILE` pour une fonction
@@ -54,9 +56,8 @@ rejouer pour chaque correction de prose ou de déploiement.
 Avant livraison : validation courte des changements dans une image neuve.
 Aux jalons du portage : campagne de référence locale selon le catalogue, sans
 cache ni sélection, et construction de production dans un processus propre.
-L'atelier actuel SBCL 2.5.2 ne prouve pas la qualification du SBCL 2.6.4 cible :
-préparer une fois localement la toolchain Nix verrouillée avant le prochain
-candidat, au lieu d'utiliser des runs CI pour découvrir ses écarts.
+Le SBCL 2.6.4 cible et Nixpkgs c5c4a43 sont désormais disponibles localement.
+La qualification cible utilise `state/outils-nix.json`, sans campagne distante.
 
 Le déploiement doit vérifier la provenance et les empreintes du candidat et des
 preuves, transférer et promouvoir le même artefact sans refaire les campagnes,

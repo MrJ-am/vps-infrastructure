@@ -1,0 +1,50 @@
+name: Promotion du monolithe qualifié localement
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [preparer, restaurer, deployer, retour]
+        default: preparer
+        description: Opération sur le candidat chiffré verrouillé dans main
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  promotion:
+    if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé existante
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/monolithe-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/monolithe-ssh/admin"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/monolithe-ssh/admin" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/monolithe-ssh/admin" >> "$GITHUB_ENV"
+      - name: Recevoir et préparer le même artefact sans activation
+        if: inputs.operation == 'preparer' || inputs.operation == 'deployer'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/monolithe-stage.py
+      - name: Préconditions et activation ou retour
+        if: inputs.operation != 'preparer'
+        env:
+          MRJAM_OPERATION: ${{ inputs.operation }}
+        run: python3 scripts/monolithe-operation.py
+      - name: Sonder les services existants
+        run: python3 scripts/probe.py
+      - name: Retirer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"

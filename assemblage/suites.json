@@ -131,7 +131,9 @@
         "mrjam-native.asd",
         "lisp/native/*.lisp",
         "lisp/serveur/*.lisp",
-        "assemblage/construire.lisp"
+        "assemblage/construire.lisp",
+        "tests/provenance-regressions.lisp",
+        "tests/fixtures/regressions/*.json"
       ]
     },
     "impact": [
@@ -139,12 +141,16 @@
       "matheval/lisp/**/*",
       "matheval/matheval.asd",
       "matheval/docs/site/session.js",
-      "matheval/server/src/statistics.mjs"
+      "matheval/server/src/statistics.mjs",
+      "vps/assemblage/test-pures.lisp",
+      "vps/tests/provenance-regressions.lisp",
+      "vps/tests/fixtures/regressions/*"
     ],
     "commandes": [
       [
-        "node",
-        "tests/matheval-differentiel.mjs"
+        "sbcl",
+        "--script",
+        "assemblage/test-pures.lisp"
       ]
     ],
     "dependances": [
@@ -154,10 +160,6 @@
     "outils": {
       "sbcl": [
         "sbcl",
-        "--version"
-      ],
-      "node": [
-        "node",
         "--version"
       ]
     }
@@ -398,12 +400,15 @@
     "repertoire": "vps",
     "entrees": {
       "vps": [
-        "services/mrj-auth/*.py",
-        "services/vision-gestion/*.py",
-        "services/vision-cycle/*.py",
-        "modules/*.nix",
+        "scripts/monolithe-candidat.py",
+        "scripts/monolithe-stage.py",
+        "scripts/monolithe-preparer.py",
+        "scripts/identite-preparer.py",
+        "operations/identite/realm.json",
         "tests/test_gestion.py",
-        "tests/test_vision_retour.py"
+        "tests/test_monolithe_stage.py",
+        "scripts/monolithe-operation.py",
+        ".github/workflows/monolithe-deploiement.yml"
       ],
       "vision": [
         "migrations/*.sql",
@@ -431,10 +436,21 @@
         "tests",
         "-p",
         "test_gestion.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_stage.py"
       ]
     ],
     "dependances": [
-      "vision-postgresql",
+      "gestion-validation",
+      "vision-sql-native",
       "matheval-postgresql"
     ],
     "outils": {
@@ -866,9 +882,14 @@
     "repertoire": "vps",
     "entrees": {
       "vps": [
-        "tests/test_vision_retour.py",
         "tests/test_migration.py",
-        "scripts/vision-essai-reprise.py"
+        "scripts/migration-activate.py",
+        "scripts/monolithe-sauvegarde.py",
+        "tests/test_monolithe_sauvegarde.py",
+        "scripts/monolithe-activer.py",
+        "scripts/monolithe-restaurer.py",
+        "tests/test_monolithe_activer.py",
+        "tests/restauration-etats.lisp"
       ],
       "vision": [
         "migrations/*.sql"
@@ -888,7 +909,27 @@
         "-s",
         "tests",
         "-p",
-        "test_vision_retour.py"
+        "test_migration.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_sauvegarde.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_activer.py"
       ]
     ],
     "dependances": [
@@ -911,7 +952,10 @@
         "lisp/native/*.lisp",
         "assemblage/charger.lisp",
         "tests/native-differentiel.mjs",
-        "tests/native-differentiel.lisp"
+        "tests/native-differentiel.lisp",
+        "tests/provenance-regressions.lisp",
+        "tests/fixtures/regressions/*.json",
+        "tests/native-regressions.lisp"
       ],
       "vision": [
         "vision.asd",
@@ -922,12 +966,16 @@
     "impact": [
       "vps/lisp/native/*",
       "vps/mrjam-native.asd",
-      "vps/tests/native-differentiel.*"
+      "vps/tests/native-differentiel.*",
+      "vps/tests/native-regressions.lisp",
+      "vps/tests/provenance-regressions.lisp",
+      "vps/tests/fixtures/regressions/*"
     ],
     "commandes": [
       [
-        "node",
-        "tests/native-differentiel.mjs"
+        "sbcl",
+        "--script",
+        "tests/native-regressions.lisp"
       ]
     ],
     "dependances": [
@@ -937,10 +985,6 @@
     "outils": {
       "sbcl": [
         "sbcl",
-        "--version"
-      ],
-      "node": [
-        "node",
         "--version"
       ],
       "openssl": [

@@ -107,5 +107,5 @@ centralTest.afterEach(async({page},info)=>{await info.attach('evenements-dialogu
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--sources',required=True);p.add_argument('--executable',default=ROOT/'state/artefacts/mrjam-metier')
+    p=argparse.ArgumentParser();p.add_argument('--sources',required=True);p.add_argument('--executable',default=os.environ.get('MRJAM_TEST_EXECUTABLE',ROOT/'state/artefacts/mrjam-metier'))
     a=p.parse_args();qualifier(a.sources,a.executable)

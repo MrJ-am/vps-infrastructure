@@ -18,7 +18,7 @@
 Les durées et allocations sont des diagnostics, pas des reçus de publication.
 Une condition d'échec reste inspectable dans le débogueur de cette image."
   (dolist (nom controles)
-    (unless (member nom '("matheval" "json" "quotas") :test #'equal)
+    (unless (member nom '("matheval" "native" "json" "quotas") :test #'equal)
       (error "Contrôle Lisp inconnu : ~A." nom)))
   (unless controles (error "Indiquer au moins un contrôle ciblé."))
   (recharger)
@@ -27,9 +27,8 @@ Une condition d'échec reste inspectable dans le débogueur de cette image."
           (allocations (sb-ext:get-bytes-consed)))
       (cond
         ((equal nom "matheval")
-         (asdf:load-system "matheval/tests")
-         (unless (uiop:symbol-call :matheval-tests :verifier)
-           (error "Échec Matheval.")))
+         (load (merge-pathnames "assemblage/test-pures.lisp" *racine*)))
+        ((equal nom "native") (load (merge-pathnames "tests/native-regressions.lisp" *racine*)))
         ((equal nom "json") (load (merge-pathnames "tests/json-commun.lisp" *racine*)))
         ((equal nom "quotas") (load (merge-pathnames "tests/quotas-http.lisp" *racine*))))
       (format t "~&~A : ~,4F s, ~D octets alloués ; contrôle local dans cette image.~%"

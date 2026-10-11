@@ -24,6 +24,16 @@ def main():
             if lock['composant']!=args.composant:continue
             dossier=(sources[args.composant]/lock['lock']).parent
             subprocess.run(['npm','ci','--ignore-scripts','--no-audit','--no-fund'],cwd=dossier,check=True)
+            # Ces deux wrappers remplacent leur fichier par un hardlink vers le
+            # binaire natif verrouillé au premier appel. Initialiser AVANT les
+            # empreintes de qualification, jamais pendant la suite.
+            for nom,option,version in [('elm','--version','0.19.1'),('elm-format','--help','elm-format 0.8.8')]:
+                if args.composant=='style' and dossier==sources['style']/'ateliers/logo' and nom=='elm':
+                    continue # ancien downloader : remplacé par @lydell ci-dessous
+                outil=dossier/'node_modules/.bin'/nom
+                if outil.exists():
+                    texte=subprocess.check_output([outil,option],text=True)
+                    if not texte.strip().startswith(version):raise ValueError('Outil Elm différent du verrou : '+nom)
         # Un seul compilateur Elm 0.19.1 déjà autorisé. Le paquet historique elm
         # de l'atelier téléchargeait un exécutable hors du lock npm ; réutiliser
         # l'archive native @lydell verrouillée plutôt que relancer ce downloader.
