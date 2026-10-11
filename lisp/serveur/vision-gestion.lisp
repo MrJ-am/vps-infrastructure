@@ -1,6 +1,6 @@
 (in-package #:mrjam-metier)
 
-(defun traiter-gestion (dsn methode chemin headers corps)
+(defun traiter-gestion (dsn methode chemin headers corps &optional admission)
   (labels ((reply (status code) (values status (vision:jobject "erreur" code))))
     (handler-case
         (progn
@@ -13,7 +13,19 @@
           (unless (and (uiop:string-prefix-p "/api/gestion/" chemin) (<= 1 (length (sb-ext:string-to-octets corps :external-format :utf-8)) 8192))
             (return-from traiter-gestion (reply 400 "parametres_invalides")))
           (unless dsn (return-from traiter-gestion (reply 503 "base_indisponible")))
-          (values 200 (vision-administration:administrer dsn (entete headers "x-mrj-user") (subseq chemin 13) (vision:parse-json corps))))
+          (let ((p (vision:parse-json corps)) (acteur (entete headers "x-mrj-user")))
+            (if (equal chemin "/api/gestion/approuver_admission")
+                (progn
+                  (unless admission (return-from traiter-gestion (reply 503 "admission_indisponible")))
+                  (unless (and (mrjam-courriel::champs-p p '("id" "methode" "reference" "source_pays"))
+                               (vision-administration::uuid-p (vision:json-object-get p "id")))
+                    (return-from traiter-gestion (reply 400 "parametres_invalides")))
+                  (vision-admission:approuver-authentifie admission dsn acteur
+                    (vision:json-object-get p "id") (vision:json-object-get p "methode")
+                    (vision:json-object-get p "reference") (vision:json-object-get p "source_pays"))
+                  (values 200 (vision:jobject "approuvee" :true)))
+                (values 200 (vision-administration:administrer dsn acteur (subseq chemin 13) p)))))
+      (vision-admission:admission-error () (reply 400 "demande_invalide_ou_indisponible"))
       (vision-administration:parametres-invalides () (reply 400 "parametres_invalides"))
       (vision::json-error () (reply 400 "parametres_invalides"))
       (mrjam-native:database-error (e)

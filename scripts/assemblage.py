@@ -109,6 +109,14 @@ def entrees(suite, chemins):
     return result
 
 
+def compilation_entrees(chemins):
+    "Sources du graphe métier, indépendantes des corrections de prose/tests."
+    return entrees({'entrees': {
+        'vps': ['mrjam-*.asd', 'lisp/**/*.lisp', 'assemblage/charger.lisp', 'assemblage/construire.lisp'],
+        'vision': ['vision.asd', 'src/*.lisp'],
+        'matheval': ['matheval.asd', 'lisp/*.lisp']}}, chemins)
+
+
 def environnement(suite):
     versions = {}
     for nom, commande in suite.get('outils', {}).items():

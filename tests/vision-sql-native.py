@@ -8,6 +8,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+import importlib.util
 
 ROOT=Path(__file__).resolve().parents[1]
 IMAGE='mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87'
@@ -68,6 +69,10 @@ DELETE FROM administrator_sessions;
         else:raise AssertionError('Le runtime peut modifier le corpus')
         def literal(s):return '"'+str(s).replace('\\','\\\\').replace('"','\\"')+'"'
         dsn=f"host=127.0.0.1 port={bind['HostPort']} user=vision dbname=vision_native_test"
+        # Le même binaire qualifié que Matheval exerce le transport Vision/MCP.
+        spec=importlib.util.spec_from_file_location('vision_http_commun',ROOT/'tests/vision-http-commun.py')
+        transport=importlib.util.module_from_spec(spec);spec.loader.exec_module(transport)
+        transport.verifier(os.environ.get('MRJAM_TEST_EXECUTABLE',ROOT/'state/artefacts/mrjam-metier'),dsn,atelier/'vision/docs')
         with tempfile.TemporaryDirectory(prefix='vision-native-sbcl-') as d, IdP() as idp:
             runner=Path(d)/'verifier.lisp'
             runner.write_text(f"""(load {literal(ROOT/'assemblage/charger.lisp')})

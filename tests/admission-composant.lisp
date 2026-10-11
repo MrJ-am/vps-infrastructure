@@ -41,7 +41,19 @@
         (vision-admission:confirmer ctx p :true)
         (vision-admission:traiter ctx) (assert (equal "attente" (vision-admission::j (row "child@example.test") "etat")))
         (assert (handler-case (progn (vision-admission:approuver ctx id "controle_pays" "Contrôle synthétique" "https://official.example.test") nil) (vision-admission:admission-error () t)))
-        (vision-admission:approuver ctx id "verification_relation" "Contrôle synthétique" "https://official.example.test"))
+        (let* ((body (mrjam-native:json-js (vision:jobject "id" id "methode" "verification_relation"
+                             "reference" "Contrôle synthétique" "source_pays" "https://official.example.test")))
+               (headers '(("content-type" . "application/json") ("x-vision-administration" . "1"))))
+          (assert (= 401 (mrjam-metier::traiter-gestion admin "POST" "/api/gestion/approuver_admission" headers body ctx)))
+          (assert (= 403 (mrjam-metier::traiter-gestion admin "POST" "/api/gestion/approuver_admission"
+                           (acons "x-mrj-user" "bob" headers) body ctx)))
+          (assert (eq :null (vision-admission::j (row "child@example.test") "controle_a")))
+          (assert (= 400 (mrjam-metier::traiter-gestion admin "POST" "/api/gestion/approuver_admission"
+                           (acons "x-mrj-user" "alice" headers)
+                           (mrjam-native:json-js (vision:jobject "id" id "methode" "verification_relation"
+                              "reference" "Contrôle synthétique" "source_pays" "https://official.example.test" "acteur" "alice")) ctx)))
+          (assert (= 200 (mrjam-metier::traiter-gestion admin "POST" "/api/gestion/approuver_admission"
+                           (acons "x-mrj-user" "alice" headers) body ctx)))))
       (vision-admission:traiter ctx) (assert (equal "admise" (vision-admission::j (row "child@example.test") "etat")))
       (demander "unverified@example.test" "majeur")
       (vision-admission:confirmer ctx (token (vision-admission::j (row "unverified@example.test") "id") "admission:") :true)

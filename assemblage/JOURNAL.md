@@ -138,3 +138,45 @@
 - Le hook Keycloak de fermeture est une RequiredAction personnelle avec confirmation,
   pas un listener de suppression administrative. Le retrait d'une ancienne identité
   reste distinct d'une fermeture métier ; aucune identité supprimée pendant la mission.
+
+- Sauvegarde/restauration réelle CI 38105867103 sur eff80b8 : réussite en cluster
+  Unix isolé PostgreSQL 17. 30 tables Vision, 6 Matheval, 100 identité ; empreintes
+  sémantiques identiques. Age : chiffrement/déchiffrement vérifiés, mauvaise clé
+  refusée ; clé de transition enveloppée pour le destinataire existant, clé
+  personnelle non utilisée. Aucun arrêt de service ni écriture SQL de production.
+  Preuve publique minimale : `sauvegarde-transition.json`. ACL/rôles et retour
+  applicatif restent des qualifications distinctes, explicitement non acquises.
+- Contrôle CI eff80b8 échoué : le module Matheval modifié contredisait la provenance
+  « copie amont exacte ». Module actif transféré à `modules/matheval.nix`, ancienne
+  copie exacte archivée ; contrôles d'empreinte/patch historique conservés et réussis.
+
+- Approbation manuelle d'admission transférée au serveur commun ; l'ancien CLI
+  Python n'est plus nécessaire à cette fonction. Migration 026 ajoutée sans table
+  ni modification des contenus : autorisation SQL active gardée pendant l'écriture
+  SQLite, ordre des verrous admission puis SQL pour éviter un blocage du worker.
+  Même REPL conservé, chargement ASDF incrémental réussi. Tests natifs réexécutés
+  sur fixtures : refus anonyme/Bob/acteur injecté, Alice autorisée après accord,
+  644+141 cas différentiels toujours réussis. Aucun contrôle humain fabriqué.
+
+- Artefact propre local : SHA256 601decf0db101eb2012bb8559e71e29f201b3f0a65171a78aaef022e874df385,
+  10 425 040 octets, 39 FASL de référence, 4,748 s construction/7,703 s tests.
+  Métadonnées de construction complétées par les empreintes exactes du graphe
+  Lisp ; refus si les sources changent pendant la qualification. Cache FASL valide
+  utilisé pour produire le candidat correspondant à ces nouvelles métadonnées.
+- Le même binaire exerce API/MCP Vision sur PostgreSQL isolé, 40 parcours Alice/Bob
+  concurrents et écriture d'observation MCP, refus des objets/écritures étrangers,
+  du corps portant un utilisateur et du transport navigateur sans marque d'entrée.
+  UID et identités synthétiques : aucune prétention à une vérification OIDC réelle.
+- Frontends construits centralement sur leurs révisions exactes, sans modifier les
+  sources partagées. Les trois anciennes versions de style restent des entrées
+  verrouillées explicites, sans refonte graphique. Signature : mêmes fontes contrôlées
+  depuis le dépôt autorisé, sans miroir externe nouveau. Quatre candidats conservés,
+  empreintes et sources associées ; publication non acquise.
+- Python navigateur/typo/logo : résolution des requirements déjà présents via pip,
+  roues Python 3.12/Linux/x86_64 verrouillées par SHA256, transitives identifiées.
+  Pillow 11.3 et 12.3 isolés ; aucune nouvelle dépendance directe ni mise à jour pip.
+  Le compilateur Elm 0.19.1 de l'atelier est celui du paquet @lydell déjà verrouillé,
+  sans downloader binaire hors lock du paquet elm historique.
+- Qualification style interrompue : le candidat Pages seul omettait la galerie et
+  l'atelier nécessaires aux tests. Condition analysée, conservation des trois sorties
+  ajoutée et nouveau candidat demandé ; pas de relance inchangée jusqu'au vert.

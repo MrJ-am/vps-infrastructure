@@ -1,3 +1,5 @@
+# Exploitation detenue par vps-infrastructure depuis la mission du 11 octobre.
+# Ancien module/provenance exacts : coordination/archive/matheval-deploiement-20261011.
 { config, lib, pkgs, ... }:
 let
   cfg = config.services.matheval;

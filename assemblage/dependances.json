@@ -2021,12 +2021,7 @@
         "passlib",
         "authlib",
         "requests",
-        "psycopg",
-        "html",
-        "html",
-        "js",
-        "js",
-        "service"
+        "psycopg"
       ]
     },
     {
@@ -2088,7 +2083,7 @@
         "Pillow==11.3.0"
       ],
       "categorie": "outils de test/construction existants",
-      "transitives": "verrouillage complet requis avant installation centrale"
+      "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
     },
     {
       "composant": "vision",
@@ -2110,7 +2105,7 @@
         "playwright==1.57.0"
       ],
       "categorie": "outils de test/construction existants",
-      "transitives": "verrouillage complet requis avant installation centrale"
+      "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
     },
     {
       "composant": "style",
@@ -2120,7 +2115,7 @@
         "Pillow==12.3.0"
       ],
       "categorie": "outils de test/construction existants",
-      "transitives": "verrouillage complet requis avant installation centrale"
+      "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
     },
     {
       "composant": "style",
@@ -2130,7 +2125,7 @@
         "playwright==1.57.0"
       ],
       "categorie": "outils de test/construction existants",
-      "transitives": "verrouillage complet requis avant installation centrale"
+      "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
     },
     {
       "composant": "signature",
@@ -2143,7 +2138,7 @@
         "brotli==1.2.0"
       ],
       "categorie": "outils de test/construction existants",
-      "transitives": "verrouillage complet requis avant installation centrale"
+      "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
     }
   ],
   "elm_verrouille": [
@@ -2290,5 +2285,112 @@
         "indirect": {}
       }
     }
-  ]
+  ],
+  "python_profils": {
+    "navigateur": {
+      "fichier": "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+      "python": "3.12",
+      "architecture": "linux-x86_64",
+      "paquets": [
+        {
+          "nom": "greenlet",
+          "version": "3.5.6",
+          "sha256": "975736b002ed080d124cf81a79cb7e05cb26d6b3f5c7a7b651c0fcce70353aa1",
+          "directe": false
+        },
+        {
+          "nom": "pillow",
+          "version": "11.3.0",
+          "sha256": "676b2815362456b5b3216b4fd5bd89d362100dc6f4945154ff172e206a22c024",
+          "directe": true
+        },
+        {
+          "nom": "playwright",
+          "version": "1.57.0",
+          "sha256": "284ed5a706b7c389a06caa431b2f0ba9ac4130113c3a779767dda758c2497bb1",
+          "directe": true
+        },
+        {
+          "nom": "psycopg",
+          "version": "3.2.5",
+          "sha256": "b782130983e5b3de30b4c529623d3687033b4dafa05bb661fc6bf45837ca5879",
+          "directe": true
+        },
+        {
+          "nom": "psycopg-binary",
+          "version": "3.2.5",
+          "sha256": "473f6827cf1faf3924eb77146d1e85126a1b5e48a88053b8d8b78dd29e971d78",
+          "directe": false
+        },
+        {
+          "nom": "pyee",
+          "version": "13.0.1",
+          "sha256": "af2f8fede4171ef667dfded53f96e2ed0d6e6bd7ee3bb46437f77e3b57689228",
+          "directe": false
+        },
+        {
+          "nom": "typing_extensions",
+          "version": "4.16.0",
+          "sha256": "481caa481374e813c1b176ada14e97f1f67a4539ce9cfeb3f350d78d6370c2e8",
+          "directe": false
+        }
+      ],
+      "origine": "requirements déjà présents ; dépendances transitives normales, aucune nouvelle directe",
+      "sha256": "3c07d9f4be9cc67ee59ac0ca35dedf53e9677e8a86647371cbfe96849d807266"
+    },
+    "signature": {
+      "fichier": "assemblage/python/signature-cp312-linux-x86_64.txt",
+      "python": "3.12",
+      "architecture": "linux-x86_64",
+      "paquets": [
+        {
+          "nom": "brotli",
+          "version": "1.2.0",
+          "sha256": "072e7624b1fc4d601036ab3f4f27942ef772887e876beff0301d261210bca97f",
+          "directe": true
+        },
+        {
+          "nom": "fonttools",
+          "version": "4.61.1",
+          "sha256": "10d88e55330e092940584774ee5e8a6971b01fc2f4d3466a1d6c158230880796",
+          "directe": true
+        },
+        {
+          "nom": "skia-pathops",
+          "version": "0.9.2",
+          "sha256": "d94c18a60b1e56910240a65dcc841cca37067f6432a4881d20baff17b6d77915",
+          "directe": true
+        },
+        {
+          "nom": "uharfbuzz",
+          "version": "0.56.1",
+          "sha256": "9ee214044c2023fb1f8f2ab56fd0d4a3db3b5dbd335ce3e4bdbabc3cb19f205d",
+          "directe": true
+        },
+        {
+          "nom": "zopfli",
+          "version": "0.4.3",
+          "sha256": "769875152d0625c46707bcca57d4b2233fe653482067acd55fbf6ec525cb9bdc",
+          "directe": false
+        }
+      ],
+      "origine": "requirements déjà présents ; dépendances transitives normales, aucune nouvelle directe",
+      "sha256": "ab53dc401a6bca58829622d8b94a41390d79f43fa11d34ae5f04c8f47d169adc"
+    },
+    "logo": {
+      "fichier": "assemblage/python/logo-cp312-linux-x86_64.txt",
+      "python": "3.12",
+      "architecture": "linux-x86_64",
+      "paquets": [
+        {
+          "nom": "pillow",
+          "version": "12.3.0",
+          "sha256": "78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91",
+          "directe": true
+        }
+      ],
+      "origine": "requirements déjà présents ; dépendances transitives normales, aucune nouvelle directe",
+      "sha256": "8ba3de6fe8b70878eb04ee0fddbd261cf7d0ee6e60392fd9d4860a1e56bed5f9"
+    }
+  }
 }

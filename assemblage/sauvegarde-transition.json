@@ -1,0 +1,30 @@
+{
+  "format": 1,
+  "infrastructure": "eff80b8034d3dee46fcc620baaf3e11c18d8db05",
+  "generation": "/nix/store/r6s7ags3dir21gxph8y32rpk8w6lghsb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "sauvegarde": "eff80b8034d3-20261011T024007Z-a56f8b94",
+  "bases": [
+    "vision",
+    "matheval",
+    "mrjam_identite"
+  ],
+  "tables_restaurees": {
+    "vision": 30,
+    "matheval": 6,
+    "mrjam_identite": 100
+  },
+  "empreintes_semantiques_identiques": true,
+  "age_dechiffrement_verifie": true,
+  "cle_ephemere_enveloppee_pour_destinataire_existant": true,
+  "cle_personnelle_non_utilisee": true,
+  "sqlite_copie_et_integrite": true,
+  "registre_externe_recent_requis": true,
+  "retour_applicatif_qualifie": false,
+  "roles_restaures": false,
+  "acl_qualification_separee_requise": true,
+  "production_sql_ecriture": false,
+  "production_services_interrompus": false,
+  "ci_run": 38105867103,
+  "ci_job": 114371161135,
+  "ci_url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38105867103"
+}

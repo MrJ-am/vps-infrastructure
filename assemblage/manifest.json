@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "dc8fffed65c37755331d679a60714b41f3c37654",
+      "revision": "aa7f10d9cfd1974fe20017dd8ba3134c03863369",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -67,7 +67,7 @@
     "vision": {
       "revision_sql": 7,
       "creation_sql": 1,
-      "schema": 25
+      "schema": 26
     },
     "matheval": {
       "prefixe": "/matheval",
@@ -105,5 +105,28 @@
     },
     "assembleur_commit": null,
     "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste."
+  },
+  "frontends": {
+    "vision": {
+      "verrou_style": "interface/style.lock.json",
+      "sha256": "458869a42a61eabb66c63b6d74f99c2860fa46241d4c6bcaa914b98b94bad436",
+      "revision_style": "96fa28ac564b9492768837d4087608e83acc721b",
+      "origine_style": "MrJ-am/style-mrjam",
+      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+    },
+    "matheval": {
+      "verrou_style": "docs/style-mrjam.json",
+      "sha256": "c7b829b50ecc74bc0c9038a3cd495ebc3d9a22fd53d9c940c4922375edb44785",
+      "revision_style": "3aab7233465ac0abe49464fa26a360765ccb4004",
+      "origine_style": "MrJ-am/style-mrjam",
+      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+    },
+    "logique": {
+      "verrou_style": "style-mrjam.json",
+      "sha256": "0dfca0bbd1a57407f8e924dda1bbb472ad218624720536eeaaf0b5ec44ef2b5f",
+      "revision_style": "eaee86024ac2d158f507bfe798cee3af3a923930",
+      "origine_style": "MrJ-am/style-mrjam",
+      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+    }
   }
 }

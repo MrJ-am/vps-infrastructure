@@ -35,7 +35,25 @@ on:
 permissions:
   contents: read
 jobs:
+  impact:
+    runs-on: ubuntu-latest
+    outputs:
+      keycloak: ${{ steps.selection.outputs.keycloak }}
+      keycloak-unix-optimise: ${{ steps.selection.outputs.keycloak-unix-optimise }}
+      migration-vision: ${{ steps.selection.outputs.migration-vision }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - id: selection
+        env:
+          MRJAM_COMMIT_AVANT: ${{ github.event.before }}
+          MRJAM_REFERENCE: ${{ github.event_name != 'push' }}
+        run: python3 scripts/ci-infrastructure-impact.py
   keycloak-unix-optimise:
+    needs: impact
+    if: needs.impact.outputs.keycloak-unix-optimise == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -82,6 +100,8 @@ jobs:
             --attr composants --out-link "$RUNNER_TEMP/amorcage-composants" --max-jobs 1 --cores 2
           python3 tests/identite-amorcage-integration.py --resume "$RUNNER_TEMP/amorcage.json" --image-outils qualification-keycloak-outils
   keycloak:
+    needs: impact
+    if: needs.impact.outputs.keycloak == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -234,6 +254,8 @@ jobs:
           docker tag mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3 postgres:17
           python3 tests/postgresql-integration.py "$RUNNER_TEMP/postgresql-fixture.json"
   migration-vision:
+    needs: impact
+    if: needs.impact.outputs.migration-vision == 'true'
     runs-on: ubuntu-latest
     services:
       postgres:

@@ -10,7 +10,8 @@
         "assemblage/manifest.json",
         "scripts/assemblage.py",
         "assemblage/dependances.json",
-        "scripts/verifier-dependances.py"
+        "scripts/verifier-dependances.py",
+        "assemblage/python/*.txt"
       ]
     },
     "impact": [
@@ -744,7 +745,11 @@
         "tests/admission-composant.lisp",
         "tests/admission_idp_fixture.py",
         "tests/fermeture-composant.lisp",
-        "assemblage/roles-metier.sql"
+        "assemblage/roles-metier.sql",
+        "tests/vision-http-commun.py",
+        "tests/serveur-artefact.py",
+        "scripts/qualifier-metier.py",
+        "scripts/assemblage.py"
       ],
       "vision": [
         "vision.asd",
@@ -768,7 +773,8 @@
       "vps/tests/admission-composant.lisp",
       "vps/tests/admission_idp_fixture.py",
       "vps/tests/fermeture-composant.lisp",
-      "vps/assemblage/roles-metier.sql"
+      "vps/assemblage/roles-metier.sql",
+      "vps/tests/vision-http-commun.py"
     ],
     "commandes": [
       [
