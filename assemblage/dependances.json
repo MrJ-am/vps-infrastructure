@@ -17,7 +17,8 @@
       "age",
       "sqlite",
       "fournisseur local embeddings",
-      "Nextcloud et composants natifs"
+      "Nextcloud et composants natifs",
+      "curl : déjà dans Vision/embeddings et Matheval, réutilisé pour HTTP IdP/SMTP STARTTLS"
     ]
   },
   "bibliotheques_lisp_actuelles": [
@@ -25,7 +26,13 @@
     "vision/core",
     "vision/http",
     "matheval",
-    "mrjam-native (interne infrastructure)"
+    "mrjam-native (interne infrastructure)",
+    "vision/administration",
+    "vision/cycle",
+    "mrjam-courriel (interne infrastructure)",
+    "mrjam-identite (client provisoire interne)",
+    "vision/admission",
+    "vision/fermeture"
   ],
   "kanidm": {
     "autorise": true,
@@ -2064,6 +2071,11 @@
       "usage": "parametres lies PQexecParams, transactions bornees",
       "nouvelle_dependance": false
     },
-    "verrouillage": "closure Nix de production a conserver ; empreintes des DSO effectives dans les recus locaux, toolchain finale pas encore construite"
+    "verrouillage": "closure Nix de production a conserver ; empreintes des DSO effectives dans les recus locaux, toolchain finale pas encore construite",
+    "sqlite": {
+      "usage": "API SQLite3 officielle, anciennes files privées inchangées, NOFOLLOW/FULLMUTEX, valeurs liées",
+      "production": "sqlite 3.51.2 constaté ; DSO exact à verrouiller dans construction Nix",
+      "nouvelle_dependance": false
+    }
   }
 }

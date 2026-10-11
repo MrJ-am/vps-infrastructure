@@ -82,3 +82,36 @@
   contrôle COMPONENTS_READ_TOKEN absent. Aucun checkout privé ni publication.
   Trois contrôles satellites Vision sur d9d5450 réussis ; ils ne qualifient pas
   l'assemblage complet et restent à transférer. Production toujours inchangée.
+
+- Auxiliaires Vision portés en ASDF : administration, cycle, admission et fermeture.
+  Contexte explicite, anciennes files SQLite/intentions JSONL conservées, aucun I/O
+  au chargement ; HTTP et tâches périodiques détenus par le serveur commun.
+  Client Keycloak provisoire borné aux clients de service existants, sans secret
+  administrateur global. Courriel SMTP par curl existant, STARTTLS obligatoire et
+  vérification CA/hostname ; secrets sur stdin, messages temporaires privés.
+- Même REPL sain conservé : chargement incrémental ASDF après écriture des sources.
+  SHA/scrypt/SQLite/libpq via API natives déjà présentes. SQLite NOFOLLOW, paramètres
+  liés et transactions ; ancienne file/MIME relue sans modifier les blobs existants.
+  Correction du décodeur RFC2231 pour les boundaries longs du MIME Python ; test
+  indépendant email Python et idempotence concurrente. Les registres utilisent dup
+  avant le fd-stream afin de garder le verrou/fsync jusqu'au terme de l'opération.
+- 644 cas différentiels du validateur administratif et 141 du validateur admission.
+  Fixture PostgreSQL 17 avec toutes les migrations et vrais rôles limités : Alice/Bob,
+  contenu inaccessible au rôle d'administration, préavis futur inchangé, conservation
+  avant acceptation du registre, reprise, invitations, confirmation unique, consentement
+  parental/contrôle manuel, sujet existant vérifié et fermeture ciblée idempotente.
+  Un offset erroné d'extraction du token dans la fixture a été corrigé, pas le validateur.
+- IdP simulé : dix échanges du client plus scénarios d'admission/fermeture. SMTP réel
+  curl sur fixture STARTTLS locale : CA valide acceptée, certificat non fiable et
+  mauvais hostname refusés avant AUTH. Aucun IdP/relai réel ni courriel envoyé.
+  Age non disponible localement : archives synthétiques préexistantes pour tester
+  l'ordre d'effacement ; chiffrement/restauration officielle reste à qualifier.
+- Reçus de cette tranche : sélecteur 14 tests 0,152 s ; natifs 8003 cas 2,089 s ;
+  administration 0,438 s ; courriel/SMTP 1,581 s ; client IdP 1,072 s ; admission
+  0,457 s ; PostgreSQL/cycle/admission/fermeture 10,547 s. Empreintes par entrées,
+  outils et DSO ; confiance locale uniquement. Nouveaux tests ajoutés au catalogue.
+- Reconstruction de qualification SBCL neuf sans cache : 39 FASL, 3,412 s,
+  exécutable 10 425 056 octets SHA256
+  bfda1fa3a7fc1b1be8531d7ce809b42fc8e1ffafffb2428256c96e30ffcd1a5a.
+  40 parcours Matheval et HTTP/redémarrage SQL : 7,049 s, réussis. Production
+  inchangée ; cette preuve locale ne qualifie pas l'IdP, MCP ni la cible Nix.

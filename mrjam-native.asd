@@ -6,4 +6,5 @@
   :components ((:file "lisp/native/package")
                (:file "lisp/native/crypto")
                (:file "lisp/native/json-js")
-               (:file "lisp/native/postgresql")))
+               (:file "lisp/native/postgresql")
+               (:file "lisp/native/sqlite")))

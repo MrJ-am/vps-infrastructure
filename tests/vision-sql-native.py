@@ -1,6 +1,8 @@
 """Fixture Docker/PG17 isolée, sources SQL réelles, un SBCL neuf de qualification."""
 import json
 import os
+import shutil
+from admission_idp_fixture import IdP
 from pathlib import Path
 import subprocess
 import tempfile
@@ -32,24 +34,38 @@ def verifier():
         sql='CREATE EXTENSION vector;\n'+''.join(p.read_text()+'\n' for p in sorted((atelier/'vision/migrations').glob('*.sql')))
         sql+=(atelier/'vision/scripts/roles.sql').read_text()
         sql+="""
+UPDATE vision_gestion.configuration SET inscriptions_ouvertes=true,responsable='Qualification',contact='operator@example.test',pays_hebergement='Test',notice_version='notice-test';
 INSERT INTO vision_gestion.comptes(utilisateur,affichage) VALUES('alice','Alice synthétique'),('bob','Bob synthétique');
 INSERT INTO vision_profils(utilisateur) VALUES('alice'),('bob');
 INSERT INTO vision_fiches(utilisateur,titre,contenu) VALUES('alice','Privé Alice','Texte Alice'),('bob','Privé Bob','Texte Bob');
 INSERT INTO vision_items(utilisateur,titre,contenu,objectifs,sens) VALUES('alice','Item Alice','Texte Alice',ARRAY['definition'],ARRAY['rappel']),('bob','Item Bob','Texte Bob',ARRAY['definition'],ARRAY['rappel']);
 INSERT INTO vision_liens(utilisateur,fiche_id,item_id) VALUES('alice',1,1),('bob',2,2);
+UPDATE vision_gestion.comptes SET administrateur=true WHERE utilisateur='alice';
+INSERT INTO vision_gestion.identites(emetteur,sujet,utilisateur) VALUES('https://log.mrj.am/realms/mrjam','sujet-alice','alice'),('https://log.mrj.am/realms/mrjam','sujet-bob','bob');
 """
         docker('exec','-i',nom,'psql','-X','-U','postgres','-d','vision_native_test','--set=ON_ERROR_STOP=1','--file=-',input=sql)
         def literal(s):return '"'+str(s).replace('\\','\\\\').replace('"','\\"')+'"'
         dsn=f"host=127.0.0.1 port={bind['HostPort']} user=vision dbname=vision_native_test"
-        with tempfile.TemporaryDirectory(prefix='vision-native-sbcl-') as d:
+        with tempfile.TemporaryDirectory(prefix='vision-native-sbcl-') as d, IdP() as idp:
             runner=Path(d)/'verifier.lisp'
             runner.write_text(f"""(load {literal(ROOT/'assemblage/charger.lisp')})
 (asdf:load-system "mrjam-metier")
 (mrjam-native:initialiser-postgresql {literal(os.environ.get('MRJAM_LIBPQ','/lib/x86_64-linux-gnu/libpq.so.5'))})
+(mrjam-native:initialiser-crypto {literal(os.environ.get('MRJAM_LIBCRYPTO','/lib/x86_64-linux-gnu/libcrypto.so.3'))})
+(mrjam-native:initialiser-sqlite {literal(os.environ.get('MRJAM_LIBSQLITE','/lib/x86_64-linux-gnu/libsqlite3.so.0'))})
 (load {literal(ROOT/'tests/vision-sql-native.lisp')})
 (vision-sql-native:verifier {literal(dsn)})
+(asdf:load-system "vision/cycle")
+(load {literal(ROOT/'tests/vision-cycle.lisp')})
+(vision-cycle-test:verifier {literal(dsn)} {literal(d)})
+(load {literal(ROOT/'tests/admission-composant.lisp')})
+(load {literal(ROOT/'tests/fermeture-composant.lisp')})
+(multiple-value-bind (admission sujet)
+    (admission-composant:verifier {literal(dsn)} {literal(d)} "http://127.0.0.1:{idp.server.server_port}" {literal(shutil.which('curl'))})
+  (fermeture-composant:verifier {literal(dsn)} {literal(d)} "http://127.0.0.1:{idp.server.server_port}" {literal(shutil.which('curl'))} admission sujet))
 """)
             subprocess.run([os.environ.get('SBCL','sbcl'),'--script',str(runner)],check=True)
+            assert idp.creations==2 and len(idp.reset)==2
     finally:docker('rm','--force',nom)
 
 

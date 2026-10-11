@@ -4,8 +4,8 @@
   ((status :initarg :status :reader http-status)))
 (defun erreur-http (status) (error 'http-error :status status))
 
-(defstruct (configuration (:constructor faire-configuration (&key matheval origine document-vision executeur-vision socket (workers 32))))
-  matheval origine document-vision executeur-vision socket workers)
+(defstruct (configuration (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket (workers 32))))
+  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket workers)
 
 (defun ligne-http (s maximum)
   (let ((out (make-array maximum :element-type '(unsigned-byte 8))) (n 0))
@@ -33,7 +33,7 @@
                                            (char<= #\a (char-downcase c) #\z) (char<= #\0 c #\9))) (subseq line 0 colon))) (erreur-http 400))
         (push (cons (string-downcase (subseq line 0 colon)) (string-trim '(#\Space #\Tab) (subseq line (1+ colon)))) headers)))
     (setf headers (nreverse headers))
-    (dolist (nom '("content-length" "host" "origin" "content-type" "cookie" "x-session-token" "x-mrjam-service" "x-mrj-user"
+    (dolist (nom '("content-length" "host" "origin" "content-type" "cookie" "authorization" "x-session-token" "x-mrjam-service" "x-mrj-user"
                    "x-vision-authenticated" "x-vision-browser" "x-vision-administration" "x-matheval-request"))
       (when (> (count nom headers :key #'car :test #'equal) 1) (erreur-http 400)))
     (when (assoc "transfer-encoding" headers :test #'equal) (erreur-http 400))
@@ -87,6 +87,11 @@
     ;; En production, ce champ provient exclusivement du Nginx autorisé sur le
     ;; socket Unix privé. Il ne vérifie aucune identité par lui-même.
     (cond
+      ((equal service "fermeture-interne")
+       (when q (erreur-http 400))
+       (let ((p (configuration-fermeture cfg)))
+         (multiple-value-bind (status value) (traiter-fermeture (getf p :contexte) (getf p :secret) method path headers body)
+           (repondre-http s status (mrjam-native:json-js value) '(("Cache-Control" . "no-store"))))))
       ((equal service "matheval")
        (unless (uiop:string-prefix-p "/matheval/api/" path) (erreur-http 404))
        (multiple-value-bind (status value retour)
@@ -99,6 +104,19 @@
            :head (equal method "HEAD"))))
       ((equal service "vision")
        (when q (erreur-http 400))
+       (when (uiop:string-prefix-p "/auth/admission" path)
+         (multiple-value-bind (status value) (traiter-admission (configuration-admission cfg) method path headers body)
+           (repondre-http s status (mrjam-native:json-js value) '(("Cache-Control" . "no-store") ("Referrer-Policy" . "no-referrer") ("X-Content-Type-Options" . "nosniff"))))
+         (return-from router))
+       (when (equal path "/api/web/effacer_compte")
+         (multiple-value-bind (status value) (traiter-effacement (configuration-cycle cfg) method headers body)
+           (repondre-http s status (mrjam-native:json-js value) '(("Cache-Control" . "no-store") ("X-Content-Type-Options" . "nosniff"))))
+         (return-from router))
+       (when (uiop:string-prefix-p "/api/gestion/" path)
+         (multiple-value-bind (status value) (traiter-gestion (configuration-gestion-dsn cfg) method path headers body)
+           (repondre-http s status (mrjam-native:json-js value)
+                         '(("Cache-Control" . "no-store") ("X-Content-Type-Options" . "nosniff") ("Referrer-Policy" . "no-referrer"))))
+         (return-from router))
        (when (> (length (sb-ext:string-to-octets body :external-format :utf-8)) 65536) (erreur-http 413))
        (unless (member method '("GET" "POST") :test #'equal) (erreur-http 405))
        (let* ((vision::*document-root* (configuration-document-vision cfg))
@@ -122,7 +140,8 @@
 (defun servir (cfg)
   "Un seul listener AF_UNIX. Pas de REPL, pas d'accès TCP au backend métier."
   (let ((chemin (configuration-socket cfg)) (listener (make-instance 'sb-bsd-sockets:local-socket :type :stream))
-        (slots (sb-thread:make-semaphore :count (configuration-workers cfg))))
+        (slots (sb-thread:make-semaphore :count (configuration-workers cfg)))
+        (arreter (list nil)) (taches nil))
     ;; Ne supprimer aucun chemin préexistant : le répertoire RuntimeDirectory
     ;; appartient à systemd ; un fichier inattendu fait échouer le démarrage.
     (when (probe-file chemin) (erreur-http 500))
@@ -130,6 +149,16 @@
         (progn
           (sb-bsd-sockets:socket-bind listener chemin) (sb-posix:chmod chemin #o660)
           (sb-bsd-sockets:socket-listen listener 128)
+          ;; Threads bornés dans cette image, intentions et reprises hors du tas.
+          (setf taches
+                (loop for (nom . fonction) in (configuration-taches cfg) collect
+                  (let ((n nom) (f fonction))
+                    (sb-thread:make-thread
+                      (lambda ()
+                        (loop until (car arreter) do
+                          (handler-case (funcall f)
+                            (error () (format *error-output* "Tâche ~A temporairement indisponible.~%" n)))
+                          (loop repeat 60 until (car arreter) do (sleep 1)))) :name n))))
           (loop for client = (sb-bsd-sockets:socket-accept listener) do
             (if (sb-thread:try-semaphore slots)
                 (handler-case
@@ -137,5 +166,7 @@
                       (sb-thread:make-thread (lambda () (unwind-protect (traiter-client cfg c) (sb-thread:signal-semaphore slots))) :name "metier-http"))
                   (error () (sb-thread:signal-semaphore slots) (sb-bsd-sockets:socket-close client)))
                 (sb-bsd-sockets:socket-close client))))
+      (setf (car arreter) t)
+      (dolist (task taches) (ignore-errors (sb-thread:terminate-thread task)))
       (sb-bsd-sockets:socket-close listener)
       (when (probe-file chemin) (delete-file chemin)))))

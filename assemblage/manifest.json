@@ -1,7 +1,7 @@
 {
   "format": 1,
   "responsable": "MrJ-am/vps-infrastructure",
-  "etat": "portage-local-matheval",
+  "etat": "portage-local-matheval-et-auxiliaires",
   "sources": {
     "vps": {
       "depot": "MrJ-am/vps-infrastructure",
@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "d9d5450ef5eb00cb5436a122e0deff4f8cddadec",
+      "revision": "dc8fffed65c37755331d679a60714b41f3c37654",
       "role": "bibliotheque-asdf"
     },
     "matheval": {

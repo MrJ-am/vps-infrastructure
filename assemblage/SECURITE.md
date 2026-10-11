@@ -42,7 +42,17 @@ Le rôle applicatif est non propriétaire, NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS.
 40 parcours comparent les contrats et les empreintes ; le test Lisp ajoute une
 course de révision, huit retransmissions concurrentes et un secret étranger.
 `tests/native-differentiel.mjs` compare SHA-256/scrypt et 8003 cas JSON binaire64 à
-Node. Ces preuves ne qualifient ni l'isolation Vision ni le déploiement complet.
+Node. Elles sont complétées par `tests/vision-sql-native.py` : RLS Alice/Bob, liens
+croisés, contexte transactionnel et rôles auxiliaires réels sur PostgreSQL isolé.
+Le déploiement complet et la chaîne réelle d'identité restent à qualifier.
 Les buffers de paramètres SQL et de scrypt sont effacés avant libération ; les
 chaînes Lisp d'entrée peuvent demeurer jusqu'au GC. Aucune promesse de purge
 générale du tas ou de résistance à une compromission du processus n'en découle.
+
+Auxiliaires : tokens de consentement à usage unique et durées bornées, refus de
+rattachement à un profil IdP non vérifié, contrôle parental/manual conservé.
+Les suppressions attendent le registre accepté ; retirer une identité IdP pour
+la migration reste distinct de ces fonctions de fermeture personnelle.
+`tests/courriel-smtp.py` vérifie STARTTLS/CA/hostname avant AUTH ; aucune
+localisation certaine ni garantie de livraison finale ne découle d'un relais SMTP.
+Le chiffrement age et la restauration n'ont pas encore de preuve nouvelle.

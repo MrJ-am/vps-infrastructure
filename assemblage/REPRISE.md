@@ -1,7 +1,8 @@
 # Reprise — mission du 11 octobre 2026
 
 État : inventaire réel terminé ; collecte et administration Matheval portées et
-qualifiées localement ; production inchangée, assemblage complet non qualifié.
+qualifiées localement ; auxiliaires Vision portés et qualifiés sur fixtures ;
+production inchangée, assemblage complet non qualifié.
 
 1. Constater sources et VPS, dépendances/données/mesures ; commandes et bibliothèques.
 2. Porter Matheval et auxiliaires, qualifier HTTP/MCP/isolation/concurrence.
@@ -25,8 +26,8 @@ Permissions GitHub constatées : sources lecture/écriture, lancement Actions.
 APIs protections de branche, secrets et deploy keys : 403. Leur inspection/nettoyage
 distant ne sont pas acquis ; ce refus ne bloque pas les travaux indépendants.
 
-Restent à réaliser avant le jalon 1 : cycle de vie et auxiliaires métier dans
-l'image commune, listener/routage central et rôles SQL, compilation propre Nix,
+Restent à réaliser avant le jalon 1 : qualification de chiffrement age/restauration, configuration du cycle de vie
+commun et listener/routage central avec rôles SQL en production, compilation propre Nix,
 transfert complet CI/frontends/sauvegardes puis retrait satellites, qualification
 multi-comptes Vision/OIDC/MCP, restauration isolée, bascule réelle et redémarrage.
 Ne pas déclencher Kanidm avant ces preuves de production.
@@ -42,3 +43,8 @@ privé (COMPONENTS_READ_TOKEN absent). Qualification locale : 40 parcours,
 reconstruction propre sans cache 24 FASL, HTTP AF_UNIX réel et redémarrage SQL.
 Sources nouvelles : Vision d9d5450 ; Matheval 2a82250. Le manifeste porte les SHA
 complets ; la révision infrastructure est celle du commit qui le contient.
+
+Auxiliaires ASDF locaux : administration/cycle/admission/fermeture, file courriel
+durable et client provisoire Keycloak ; 644+141 cas différentiels, isolation
+PostgreSQL, ancien SQLite/MIME et SMTP STARTTLS qualifiés. IdP synthétique uniquement.
+Dernier binaire local propre : 39 FASL, 40 parcours Matheval, redémarrage SQL réussi.

@@ -7,4 +7,6 @@
   (asdf:load-asd (truename (merge-pathnames "vision/vision.asd" atelier)))
   (asdf:load-asd (truename (merge-pathnames "M-moire/matheval.asd" atelier)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-native.asd" infra)))
+  (asdf:load-asd (truename (merge-pathnames "mrjam-courriel.asd" infra)))
+  (asdf:load-asd (truename (merge-pathnames "mrjam-identite.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-metier.asd" infra))))
