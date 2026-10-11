@@ -1,6 +1,7 @@
-"""Exécuter les suites centrales affectées, une construction par candidat.
+"""Ancien pilote de campagne, conservé pour référence et usage local explicite.
 
-Les reçus Codex restent locaux : le runner rejoue les seules suites sélectionnées.
+Le développement ordinaire suit assemblage/DEVELOPPEMENT.md dans le REPL SBCL.
+Ce script ne doit plus être appelé par un workflow CI/CD.
 Ni ce script ni un reçu ne déclenchent une publication ou n'attestent la production.
 """
 import json
@@ -8,6 +9,9 @@ import os
 from pathlib import Path
 import subprocess
 from assemblage import RACINE, catalogue, chemins_sources, changements_assemblage,selection,manifeste,verifier_sources
+
+if os.environ.get('GITHUB_ACTIONS')=='true':
+    raise ValueError('Campagne de développement réservée à Codex ; CI/CD de déploiement uniquement')
 
 sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
 if any(os.environ.get(k) for k in ('MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')):

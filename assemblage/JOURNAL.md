@@ -344,3 +344,30 @@ de ce runner, transfert SSH/NAR de la même image, hashes revérifiés sur VPS,
 remplacement des seules déclarations Nix actuelles gateway/PG/Matheval, invariants
 services tiers, build système et dry-activate. Aucune activation/migration SQL dans
 ce chemin. Six tests négatifs de bundle réussis. Le chemin distant reste à exercer.
+
+## Réorganisation du rythme de travail
+
+Instruction complémentaire du propriétaire : audit préalable suffisant pour les
+bibliothèques Common Lisp ; développement interactif local, CI/CD réservée au
+déploiement. Causes des répétitions constatées : workflows push concurrents et
+dispatch choisissant les 31 suites, sans réutilisation de reçus locaux.
+Run 38119666775/d57b08c : build Nix et différentiel réussis ; tests du correcteur
+Logique réussis, reçu refusé pour entrées modifiées pendant l'exécution. Diagnostic
+de provenance à traiter localement, aucun transfert ni activation de production.
+
+Actions : trois workflows désactivés par API, état disabled_manually relu ; aucune
+exécution encore active au constat. YAML archivés byte pour byte avec révision
+d57b08c et SHA256, sans effacement de sauvegarde ou modification des services.
+AGENTS/contrat mis à jour et commandes REPL `recharger`/`verifier` ajoutées : mêmes
+image et cache ASDF, durées/allocations locales sans attestation de publication.
+Pas de nouvelle dépendance ni de lancement Node pour vérifier cette correction.
+La toolchain cible locale et le transfert de confiance vers la promotion restent
+à achever avant un nouveau déploiement ; aucune production annoncée à ce stade.
+
+Vérification dans le REPL de tâche conservé : load developper.lisp, puis verifier
+Matheval/JSON/quotas ; 0,040/0,092/0,140 s, un seul thread vivant après le contrôle
+concurrent. Validation finale en image neuve SBCL2.5.2/ASDF3.3.1 : trois contrôles
+réussis, sortie en 0,578 s avec cache valide. Aucun Node ni campagne navigateur.
+Contrat/archives/dépendances : succès local 0,310 s ; 18 tests du sélecteur et
+reçus : succès 0,637 s (pilote 0,791 s). Reçus machine locaux non attestés conservés.
+Ces contrôles qualifient le changement de workflow, pas le candidat de production.

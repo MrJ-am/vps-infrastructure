@@ -12,7 +12,11 @@
         "assemblage/dependances.json",
         "scripts/verifier-dependances.py",
         "assemblage/python/*.txt",
-        "scripts/verifier-ci.py"
+        "scripts/verifier-ci.py",
+        "coordination/historique/workflows-infrastructure-20261011/INDEX.json",
+        "coordination/historique/workflows-infrastructure-20261011/*.archive",
+        "coordination/historique/qualification-ci-20261011/INDEX.json",
+        "coordination/historique/qualification-ci-20261011/*.archive"
       ]
     },
     "impact": [
@@ -27,7 +31,10 @@
       "matheval/lisp/CONTRAT.md",
       "vps/assemblage/*.json",
       "vps/scripts/verifier-dependances.py",
-      "vps/scripts/verifier-ci.py"
+      "vps/scripts/verifier-ci.py",
+      "vps/.github/workflows/assemblage.yml",
+      "vps/.github/workflows/check.yml",
+      "vps/.github/workflows/vision-autonomie-controles.yml"
     ],
     "commandes": [
       [

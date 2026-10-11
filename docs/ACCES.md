@@ -19,8 +19,10 @@ ni accès serveur ni déploiement. Le terminal hPanel reste le secours indépend
 
 Les sources privées Vision et Signature sont accessibles à l'acteur de cette
 session. Le token GITHUB_TOKEN d'un runner est normalement limité à son dépôt.
-assemblage.yml accepte le credential de lecture COMPONENTS_READ_TOKEN si configuré,
-sans le recopier dans les sources ou journaux ; sa disponibilité doit être constatée.
+Le credential de lecture COMPONENTS_READ_TOKEN a été créé et sa disponibilité
+constatée par le run 38118779445. Ne pas le recopier dans les sources ou journaux.
+L'ancien assemblage.yml de qualification automatique est maintenant désactivé et
+archivé ; son remplacement de promotion doit respecter DEVELOPPEMENT.md.
 Aucune nouvelle visibilité publique ou copie source divergente n'est utilisée.
 
 Les APIs de protections de branche, secrets et deploy keys ont répondu 403 à

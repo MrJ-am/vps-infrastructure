@@ -4,6 +4,15 @@ Production : ancienne architecture toujours active. Étape 1 non terminée ;
 Kanidm n’est pas commencé. Aucun apprentissage, compte ou participation réelle
 n’a été créé, fermé ou effacé pendant les qualifications.
 
+Instruction complémentaire du propriétaire : développement/qualification locaux,
+REPL SBCL persistant et CI/CD réservée au déploiement et à ses contrôles.
+[Commandes et rythme](DEVELOPPEMENT.md). Les trois workflows de test `assemblage`,
+`check`, `vision-autonomie-controles` sont désactivés sur GitHub et archivés exactement
+dans coordination/historique/qualification-ci-20261011. Aucun run n'est actif au
+constat ; aucune nouvelle campagne distante n'est lancée pour cette réorganisation.
+Bibliothèques Common Lisp tierces autorisées après audit et verrouillage ; aucune
+n'est ajoutée ici. Python est permis pour l'outillage propre de l'agent.
+
 1. Inventaire réel, sources, cadre et graphe ASDF : réalisés.
 2. Portage Matheval et auxiliaires Vision, interfaces et orchestration centrale :
    réalisés et qualifiés localement ; qualification Nix/IdP réelle restante.
@@ -64,7 +73,7 @@ Ne pas annoncer sa désactivation distante. Le contenu existant est conservé.
 L’ancien signal operations/vision et son coordinateur workflow_run sont archivés ;
 plus d’attente de message, acquittement ou confirmation technique intermédiaire.
 
-Référence VPS : run 38098717899, fichier reference-production.json. Génération
+Référence VPS : run 38118876078, fichier reference-production.json. Génération
 r6s7ags3 inchangée, SBCL 2.6.4/PG17.11/Keycloak26.7.3. Un compte Vision actif,
 propriétaire cohérent, aucune relation étrangère/orpheline ; trois participations
 Matheval ouvertes, conservées. RSS et latences mesurés séparément des plafonds.
@@ -89,6 +98,14 @@ les trois anciennes CI Matheval ; sa préparation centrale est corrigée avec le
 Nixpkgs verrouillé. Ce candidat non qualifié n’a pas été publié sur le VPS.
 Sonde 38118876078 réussie : génération inchangée, toujours un compte Vision et
 une identité, aucun lien croisé, trois participations Matheval ouvertes.
+Après réparation des outils existants, run 38119666775 sur d57b08c : build Nix,
+frontends et différentiel Matheval réussis ; contrôles Logique réussis puis rejet
+du reçu `logique-correcteur` pour entrées modifiées pendant le test. Écart à
+reproduire et résoudre localement. Aucun transfert du candidat ni déploiement.
+La publication Nix privée et le préparateur système sont écrits, pas qualifiés
+sur le VPS. Leurs reçus issus du runner étaient requis par l'ancien chemin ;
+la provenance des preuves locales jusqu'à la promotion reste à établir sans
+réactiver la campagne distante ou prétendre attester les reçus actuels.
 APIs protections/environments/deploy keys non accessibles : ne pas prétendre leur
 nettoyage distant terminé. Ces permissions ne bloquent pas les travaux locaux.
 Restent aussi l’installation des rôles/migration 026, transfert arrêté des états

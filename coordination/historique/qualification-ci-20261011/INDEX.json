@@ -1,0 +1,30 @@
+{
+  "source_revision": "d57b08ca848ee73641821fbc40ab408e5c9a759f",
+  "motif": "Instruction du propriétaire : développement interactif local, CI/CD réservée au déploiement et à ses contrôles.",
+  "workflows": [
+    {
+      "source": ".github/workflows/assemblage.yml",
+      "archive": "coordination/historique/qualification-ci-20261011/assemblage.yml.archive",
+      "sha256": "7725221ba14cda3c0ec29d7879c0615dc38df1cc96dda1d190dde0d089ecc003",
+      "workflow_id": 380915369,
+      "etat_distant_constate": "disabled_manually",
+      "remplacement": "Qualification locale selon assemblage/DEVELOPPEMENT.md ; promotion du candidat à achever."
+    },
+    {
+      "source": ".github/workflows/check.yml",
+      "archive": "coordination/historique/qualification-ci-20261011/check.yml.archive",
+      "sha256": "c597f5845fdcd526543b32beabf238897b8e9b1f2635465090b973eaf343f923",
+      "workflow_id": 360876841,
+      "etat_distant_constate": "disabled_manually",
+      "remplacement": "Qualification locale selon assemblage/DEVELOPPEMENT.md ; promotion du candidat à achever."
+    },
+    {
+      "source": ".github/workflows/vision-autonomie-controles.yml",
+      "archive": "coordination/historique/qualification-ci-20261011/vision-autonomie-controles.yml.archive",
+      "sha256": "a16f4916ba40b3e1bd5f493e5dbb921bd42c65f0a69798fd4aac71703006dd7a",
+      "workflow_id": 376134592,
+      "etat_distant_constate": "disabled_manually",
+      "remplacement": "Qualification locale selon assemblage/DEVELOPPEMENT.md ; promotion du candidat à achever."
+    }
+  ]
+}

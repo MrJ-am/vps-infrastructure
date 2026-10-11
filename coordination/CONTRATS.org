@@ -23,7 +23,9 @@ explicites ou bornés à la requête. Chargement sans daemon, connexion ni migra
 Log distinct : Keycloak pendant étape 1, Kanidm après sa qualification réelle.
 Logique statique, Elm/ElmUI et interops conservés ; aucun backend artificiel.
 Nginx/PostgreSQL/Nextcloud/embeddings conservés.
-Toutes exécutions CI/CD centrales, sans workflow relais. Commits exacts et artefact
+Commandes de développement et qualification locales centrales, sans workflow relais.
+CI/CD réservée au déploiement et à ses contrôles, aucun test déclenché par un push.
+Commits exacts et artefact
 qualifié construit proprement, promu sans reconstruction. Secrets acquis au démarrage.
 
 * Données et sécurité
@@ -52,13 +54,26 @@ des consommateurs affectés. Aucune refonte gratuite ni publication satellite.
 :PROPERTIES:
 :CUSTOM_ID: qualification
 :END:
-Catalogue et sélection selon dépendances effectives ; mêmes commandes locales/CI.
+Catalogue et sélection selon dépendances effectives, exécutés localement dans Codex.
+Une image SBCL par tâche, ASDF incrémental, redéfinitions et tests ciblés dans cette
+image ; validation finale en image neuve. Voir assemblage/DEVELOPPEMENT.md.
+Ne pas relancer une campagne distante pour diagnostiquer un échec local.
 Reçus avec empreintes entrées/outils ; aucun reçu local non attesté ni cache externe
 inconnu n'autorise la publication. Intégration/concurrence/identité/sécurité réelles.
+La promotion doit définir la provenance du candidat et des preuves locales avant
+son emploi ; elle ne remplace pas cette chaîne de confiance par un fichier .ok.
 Mesurer mémoire consommée, latences et coûts, distincts des plafonds systemd.
 Sauvegarde récupérable, restauration isolée, retour ciblé avant bascule. Constater
 artefact, services, accès, données et persistance après redémarrage en production.
 Conserver générations de retour/services tiers. Mécanismes d'exploitation existants.
+
+* Dépendances autorisées
+Bibliothèques Common Lisp tierces admises après audit documenté et verrouillage :
+provenance, version, licence, dépendances, effets au chargement et risques d'usage.
+Kanidm et ses outils officiels autorisés ; pas de nouveau runtime, langage ou
+service produit sans autorisation explicite. Python autorisé pour l'outillage de
+l'agent. Node/frontend et référence différentielle historique restent des usages
+déjà approuvés, distincts du serveur métier exclusivement Common Lisp.
 
 * Journal et métier Vision
 :PROPERTIES:
