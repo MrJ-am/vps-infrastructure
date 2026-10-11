@@ -1,7 +1,11 @@
 module PresentationTest exposing (tests)
 
+import Elm.Project
+import Elm.Type
+import Json.Decode as Decode
 import MrJam.Presentation
 import Review.Project as Project
+import Review.Project.Dependency as Dependency
 import Review.Test
 import Review.Test.Dependencies as Dependencies
 import Test exposing (Test, describe, test)
@@ -15,6 +19,7 @@ details =
 review path source =
     Dependencies.projectWithElmCore
         |> Project.addDependency Dependencies.elmHtml
+        |> Project.addDependency svgDependency
         |> Project.addModule
             { path = "dependencies/Element.elm"
             , source = "module Element exposing (html, htmlAttribute, row)\nhtml value = value\nhtmlAttribute value = value\nrow attrs children = children"
@@ -29,6 +34,33 @@ review path source =
             , source = "module Test.Html.Selector exposing (attribute)\nattribute value = value"
             }
         |> (\project -> Review.Test.runOnModulesWithProjectData project MrJam.Presentation.rule [])
+
+
+{-| Métadonnées de fixture, sans runtime SVG : les noms et exports nécessaires
+à la résolution sont ceux d'elm/svg1.0.1, déjà consommé par les interfaces.
+-}
+svgDependency =
+    let
+        metadata =
+            Decode.decodeString Elm.Project.decoder "{\"type\":\"package\",\"name\":\"elm/svg\",\"summary\":\"Fixture de résolution des symboles SVG\",\"license\":\"BSD-3-Clause\",\"version\":\"1.0.1\",\"exposed-modules\":[\"Svg\",\"Svg.Attributes\"],\"elm-version\":\"0.19.0 <= v < 0.20.0\",\"dependencies\":{\"elm/core\":\"1.0.0 <= v < 2.0.0\"},\"test-dependencies\":{}}"
+
+        documenter ( nom, exports ) =
+            { name = nom
+            , comment = ""
+            , unions = []
+            , aliases = []
+            , binops = []
+            , values = List.map (\export -> { name = export, comment = "", tipe = Elm.Type.Var "a" }) exports
+            }
+    in
+    case metadata of
+        Ok elmJson ->
+            Dependency.create "elm/svg"
+                elmJson
+                (List.map documenter [ ( "Svg", [ "svg", "path", "circle", "image", "mask", "foreignObject" ] ), ( "Svg.Attributes", [ "d", "style", "viewBox", "fill", "opacity", "maskUnits" ] ) ])
+
+        Err erreur ->
+            Debug.todo (Decode.errorToString erreur)
 
 
 rejected moduleName path source message under =
@@ -59,6 +91,273 @@ tests =
             \() ->
                 review "application/Main.elm" "module Main exposing (main)\nimport Html exposing (Html)\nmain : Html msg\nmain = Debug.todo \"amorçage\""
                     |> Review.Test.expectNoErrors
+        , test "SVG graphique dans son adaptateur exact" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (definition)\nimport Svg as V\nimport Svg.Attributes as G\ndefinition chemin = V.path [ G.d chemin ] []"
+                    |> Review.Test.expectNoErrors
+        , test "masque vectoriel autorisé sans HTML" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (masque)\nimport Svg as V\nimport Svg.Attributes as G\nmasque = V.mask [ G.maskUnits \"userSpaceOnUse\" ] []"
+                    |> Review.Test.expectNoErrors
+        , test "rendu SVG refuse foreignObject" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dessin" "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (vue)\nimport Svg as V\nvue = V.foreignObject [] []" "Présentation ou échappatoire technique non autorisée." "V.foreignObject"
+        , test "rendu SVG refuse un attribut arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dessin" "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (vue)\nimport Html.Attributes as A\nvue = A.attribute \"onclick\" \"commande()\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "comparaison vectorielle admet son seul style littéral" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (vue)\nimport Html.Attributes as A\nvue = A.style \"mix-blend-mode\" \"difference\""
+                    |> Review.Test.expectNoErrors
+        , test "comparaison vectorielle refuse un autre style" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dessin" "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (vue)\nimport Html.Attributes as A\nvue = A.style \"background\" \"red\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "fonction SVG inconnue refuse les capacités voisines" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dessin" "commun/MrJam/Adaptateurs/Dessin.elm" "module MrJam.Adaptateurs.Dessin exposing (autre)\nimport Svg as V\nautre = V.image [] []" "Présentation ou échappatoire technique non autorisée." "V.image"
+        , test "diagramme scientifique autorisé au bon endroit" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Diagrammes.elm" "module MrJam.Adaptateurs.Diagrammes exposing (courbe)\nimport Svg as V\nimport Svg.Attributes as G\ncourbe chemin = V.path [ G.d chemin ] []"
+                    |> Review.Test.expectNoErrors
+        , test "diagramme interdit dans une application malgré exposing" <|
+            \() ->
+                rejectedAt "Graphique" "application/Graphique.elm" "module Graphique exposing (vue)\nimport Svg exposing (path)\nvue = path [] []" "path" { start = { row = 3, column = 7 }, end = { row = 3, column = 11 } }
+        , test "diagramme refuse une feuille CSS de présentation" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Diagrammes" "commun/MrJam/Adaptateurs/Diagrammes.elm" "module MrJam.Adaptateurs.Diagrammes exposing (plan)\nimport Html.Attributes as A\nplan = A.style \"color\" \"red\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "curseur range natif sans annonce" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Curseur.elm" "module MrJam.Adaptateurs.Curseur exposing (natif)\nimport Html as H\nimport Html.Attributes as A\nnatif = H.input [ A.type_ \"range\", A.attribute \"aria-label\" \"Progression\" ] []"
+                    |> Review.Test.expectNoErrors
+        , test "curseur refuse une saisie parallèle différente" <|
+            \() ->
+                rejectedAt "MrJam.Adaptateurs.Curseur" "commun/MrJam/Adaptateurs/Curseur.elm" "module MrJam.Adaptateurs.Curseur exposing (natif)\nimport Html.Attributes exposing (type_)\nnatif = type_ \"text\"" "type_" { start = { row = 3, column = 9 }, end = { row = 3, column = 14 } }
+        , test "curseur refuse style et classe libres" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Curseur" "commun/MrJam/Adaptateurs/Curseur.elm" "module MrJam.Adaptateurs.Curseur exposing (natif)\nimport Html.Attributes as A\nnatif = A.class \"vue\"" "Présentation ou échappatoire technique non autorisée." "A.class"
+        , test "suivi lecteur admet son marqueur fixe" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Atelier.elm" "module MrJam.Adaptateurs.Atelier exposing (suivi)\nimport Html.Attributes as A\nsuivi = A.attribute \"data-progress\" \"0\""
+                    |> Review.Test.expectNoErrors
+        , test "suivi lecteur refuse attribut non borné" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Atelier" "commun/MrJam/Adaptateurs/Atelier.elm" "module MrJam.Adaptateurs.Atelier exposing (suivi)\nimport Html.Attributes as A\nsuivi nom = A.attribute nom \"0\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "complément natif sans présentation ni attributs" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Complement.elm" "module MrJam.Adaptateurs.Complement exposing (natif)\nimport Html as H\nimport Element as E\nnatif resume corps = E.html (H.details [] [ H.summary [] [ resume ], corps ])"
+                    |> Review.Test.expectNoErrors
+        , test "complément sans liste arbitraire d'attributs" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Complement"
+                    "commun/MrJam/Adaptateurs/Complement.elm"
+                    "module MrJam.Adaptateurs.Complement exposing (natif)\nimport Html as H\nnatif attrs resume = H.summary attrs [ resume ]"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.summary"
+        , test "complément n'autorise pas une construction parallèle" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Complement"
+                    "commun/MrJam/Adaptateurs/Complement.elm"
+                    "module MrJam.Adaptateurs.Complement exposing (natif)\nimport Html as H\nnatif = H.div [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.div"
+        , test "complément applicatif homonyme refusé" <|
+            \() ->
+                review "application/MrJam/Adaptateurs/Complement.elm"
+                    "module MrJam.Adaptateurs.Complement exposing (natif)\nimport Html as H\nnatif = H.details [] []"
+                    |> Review.Test.expectErrorsForModules
+                        [ ( "MrJam.Adaptateurs.Complement"
+                          , [ Review.Test.error { message = "Le namespace MrJam appartient aux sources communes verrouillées.", details = details, under = "module" }
+                            , Review.Test.error { message = "Présentation ou échappatoire technique non autorisée.", details = details, under = "H.details" }
+                            ]
+                          )
+                        ]
+        , test "interligne original du titre de vitrine" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Typographie.elm" "module MrJam.Adaptateurs.Typographie exposing (titreVitrine)\nimport Html.Attributes as A\ntitreVitrine = A.style \"line-height\" \"1.06\""
+                    |> Review.Test.expectNoErrors
+        , test "titre sans CSS supplémentaire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Typographie"
+                    "commun/MrJam/Adaptateurs/Typographie.elm"
+                    "module MrJam.Adaptateurs.Typographie exposing (titreVitrine)\nimport Html.Attributes as A\ntitreVitrine = A.style \"font-size\" \"58px\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "dialogue intégré dans la même racine Element" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (integrer)\nimport Element as E\nintegrer = E.html"
+                    |> Review.Test.expectNoErrors
+        , test "emphase sémantique sans attribut HTML" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Texte.elm" "module MrJam.Adaptateurs.Texte exposing (emphase)\nimport Element as E\nimport Html as H\nemphase texte = E.html (H.em [] [H.text texte])"
+                    |> Review.Test.expectNoErrors
+        , test "emphase sans attribut libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte" "commun/MrJam/Adaptateurs/Texte.elm" "module MrJam.Adaptateurs.Texte exposing (emphase)\nimport Html as H\nemphase attrs texte = H.em attrs [H.text texte]" "Présentation ou échappatoire technique non autorisée." "H.em"
+        , test "encoche originale littérale" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (encocheEntete)\nimport Html.Attributes as A\nencocheEntete = A.style \"clip-path\" \"polygon(0 0,15px 0,21px 5px,38px 5px,44px 0,100% 0,100% 100%,0 100%)\""
+                    |> Review.Test.expectNoErrors
+        , test "aucun contour arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (encocheEntete)\nimport Html.Attributes as A\nencocheEntete valeur = A.style \"clip-path\" forme" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "pas de couleur de présentation par l’adaptateur" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (encocheEntete)\nimport Html.Attributes as A\nencocheEntete valeur = A.style \"color\" \"yellow\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "aucun filtre arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (selectionne)\nimport Html.Attributes as A\nselectionne valeur = A.style \"filter\" valeur" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "fonction de raccord précisément nommée" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (autre)\nimport Html.Attributes as A\nautre valeur = A.style \"clip-path\" \"polygon(0 0,15px 0,21px 5px,38px 5px,44px 0,100% 0,100% 100%,0 100%)\"" "Présentation ou échappatoire technique non autorisée." "A.style"
+        , test "pas de classe de présentation" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (repere)\nimport Html.Attributes as A\nrepere valeur = A.class \"bloc\"" "Présentation ou échappatoire technique non autorisée." "A.class"
+        , test "marqueur sans nom arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Constructions" "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (repere)\nimport Html.Attributes as A\nrepere valeur = A.attribute nom \"bloc\"" "Présentation ou échappatoire technique non autorisée." "A.attribute"
+        , test "marqueur technique de construction borné" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Constructions.elm" "module MrJam.Adaptateurs.Constructions exposing (repere)\nimport Html.Attributes as A\nrepere = A.attribute \"data-mrjam-construction\" \"bloc\""
+                    |> Review.Test.expectNoErrors
+        , test "dimensions intrinsèques bornées du bouton" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Saisie.elm" "module MrJam.Adaptateurs.Saisie exposing (intrinseque)\nimport Html.Attributes as A\nintrinseque = [ A.style \"width\" \"max-content\", A.style \"max-width\" \"100%\", A.style \"flex-basis\" \"auto\" ]"
+                    |> Review.Test.expectNoErrors
+        , test "dimensions sans largeur configurable" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (intrinseque)\nimport Html.Attributes as A\nintrinseque valeur = A.style \"width\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "dimensions sans présentation arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (intrinseque)\nimport Html.Attributes as A\nintrinseque = A.style \"background\" \"red\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "nom du radiogroup transmis par attribut borné" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Accessibilite.elm"
+                    "module MrJam.Adaptateurs.Accessibilite exposing (nomGroupe)\nimport Html.Attributes as A\nnomGroupe libelle = A.attribute \"aria-label\" libelle"
+                    |> Review.Test.expectNoErrors
+        , test "nom de groupe sans attribut arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Accessibilite"
+                    "commun/MrJam/Adaptateurs/Accessibilite.elm"
+                    "module MrJam.Adaptateurs.Accessibilite exposing (nomGroupe)\nimport Html.Attributes as A\nnomGroupe valeur = A.attribute \"onclick\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "type natif date borné permis par alias" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Saisie.elm" "module MrJam.Adaptateurs.Saisie exposing (date)\nimport Html.Attributes as A\ndate = A.type_ \"date\""
+                    |> Review.Test.expectNoErrors
+        , test "un type natif ne devient pas une échappatoire arbitraire" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (date)\nimport Html.Attributes as A\ndate = A.type_ \"password\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.type_"
+        , test "step natif fixe seulement" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (nombre)\nimport Html.Attributes as A\nnombre valeur = A.step valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.step"
+        , test "Entrée utilise uniquement keydown" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Saisie.elm" "module MrJam.Adaptateurs.Saisie exposing (soumettre)\nimport Html.Events as E\nsoumettre message = E.preventDefaultOn \"keydown\" message"
+                    |> Review.Test.expectNoErrors
+        , test "soumission ne gagne pas un événement libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Saisie"
+                    "commun/MrJam/Adaptateurs/Saisie.elm"
+                    "module MrJam.Adaptateurs.Saisie exposing (soumettre)\nimport Html.Events as E\nsoumettre message = E.preventDefaultOn \"click\" message"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.preventDefaultOn"
+        , test "espaces littéraux bornés permis" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Texte.elm" "module MrJam.Adaptateurs.Texte exposing (litteral)\nimport Html.Attributes as A\nlitteral = A.style \"white-space\" \"pre-wrap\""
+                    |> Review.Test.expectNoErrors
+        , test "adaptateur littéral ne donne pas du CSS libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte"
+                    "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (litteral)\nimport Html.Attributes as A\nlitteral = A.style \"color\" \"red\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "nœud texte échappé sans élément HTML permis" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Texte.elm" "module MrJam.Adaptateurs.Texte exposing (texte)\nimport Html as H\nimport Element as E\ntexte = E.html << H.text"
+                    |> Review.Test.expectNoErrors
+        , test "adaptateur texte ne devient pas constructeur HTML" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Texte"
+                    "commun/MrJam/Adaptateurs/Texte.elm"
+                    "module MrJam.Adaptateurs.Texte exposing (texte)\nimport Html as H\ntexte = H.span [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.span"
+        , test "pictogramme décoratif non focalisable borné" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Pictogramme.elm" "module MrJam.Adaptateurs.Pictogramme exposing (traits)\nimport Html.Attributes as A\ntraits = A.attribute \"focusable\" \"false\""
+                    |> Review.Test.expectNoErrors
+        , test "un pictogramme décoratif ne devient pas focalisable" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Pictogramme"
+                    "commun/MrJam/Adaptateurs/Pictogramme.elm"
+                    "module MrJam.Adaptateurs.Pictogramme exposing (traits)\nimport Html.Attributes as A\ntraits = A.attribute \"focusable\" \"true\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "pictogramme ne permet pas un élément HTML" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Pictogramme"
+                    "commun/MrJam/Adaptateurs/Pictogramme.elm"
+                    "module MrJam.Adaptateurs.Pictogramme exposing (traits)\nimport Html as H\ntraits = H.div [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.div"
+        , test "tracé SVG résolu par alias dans son adaptateur" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Pictogramme.elm" "module MrJam.Adaptateurs.Pictogramme exposing (traits)\nimport Svg as S\nimport Svg.Attributes as G\ntraits chemin = S.path [ G.d chemin ] []"
+                    |> Review.Test.expectNoErrors
+        , test "tracé SVG applicatif exposé interdit" <|
+            \() ->
+                rejectedAt "Main"
+                    "application/Main.elm"
+                    "module Main exposing (x)\nimport Svg exposing (path)\nx = path [] []"
+                    "path"
+                    { start = { row = 3, column = 5 }, end = { row = 3, column = 9 } }
+        , test "adaptateur de tracés ne gagne pas foreignObject" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Pictogramme"
+                    "commun/MrJam/Adaptateurs/Pictogramme.elm"
+                    "module MrJam.Adaptateurs.Pictogramme exposing (traits)\nimport Svg as S\ntraits = S.foreignObject [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "S.foreignObject"
+        , test "classe littérale de la fonte générée permise seulement dans signature" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Typographie.elm" "module MrJam.Adaptateurs.Typographie exposing (signature)\nimport Html.Attributes as A\nsignature = A.class \"mrjam\""
+                    |> Review.Test.expectNoErrors
+        , test "même adaptateur ne gagne pas une classe de présentation" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Typographie"
+                    "commun/MrJam/Adaptateurs/Typographie.elm"
+                    "module MrJam.Adaptateurs.Typographie exposing (signature)\nimport Html.Attributes as A\nsignature = A.class \"carte\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.class"
+        , test "métrique fractionnaire précise permise" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Typographie.elm" "module MrJam.Adaptateurs.Typographie exposing (signature)\nimport Html.Attributes as A\nsignature = A.style \"line-height\" \"1.183\""
+                    |> Review.Test.expectNoErrors
+        , test "métrique typographique ne devient pas réglage libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Typographie"
+                    "commun/MrJam/Adaptateurs/Typographie.elm"
+                    "module MrJam.Adaptateurs.Typographie exposing (signature)\nimport Html.Attributes as A\nsignature h = A.style \"line-height\" h"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
         , test "Html.div par alias rejeté" <|
             \() ->
                 rejected "Main"
@@ -211,6 +510,96 @@ tests =
                 rejected "AccessibiliteTest"
                     "tests/AccessibiliteTest.elm"
                     "module AccessibiliteTest exposing (x)\nimport Test.Html.Selector as S\nimport Html.Attributes as A\nx name = S.attribute (A.attribute name \"true\")"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "le select natif hérite du cadre elm-ui sans couleur CSS" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Selection.elm" "module MrJam.Adaptateurs.Selection exposing (native)\nimport Html.Attributes as A\nnative = A.style \"font\" \"inherit\""
+                    |> Review.Test.expectNoErrors
+        , test "le select natif ne peut définir une couleur CSS" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Selection"
+                    "commun/MrJam/Adaptateurs/Selection.elm"
+                    "module MrJam.Adaptateurs.Selection exposing (native)\nimport Html.Attributes as A\nnative = A.style \"color\" \"red\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "un reset natif ne peut recevoir un réglage dynamique" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Selection"
+                    "commun/MrJam/Adaptateurs/Selection.elm"
+                    "module MrJam.Adaptateurs.Selection exposing (native)\nimport Html.Attributes as A\nnative valeur = A.style \"font\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "la fonction d'adaptation n'autorise pas une autre construction HTML" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Selection"
+                    "commun/MrJam/Adaptateurs/Selection.elm"
+                    "module MrJam.Adaptateurs.Selection exposing (native)\nimport Html as H\nnative = H.div [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.div"
+        , test "un autre composant ne peut hériter de ces resets" <|
+            \() ->
+                rejected "MrJam.Test"
+                    "commun/MrJam/Test.elm"
+                    "module MrJam.Test exposing (native)\nimport Html.Attributes as A\nnative = A.style \"font\" \"inherit\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "dialog natif littéral autorisé" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html as H\nnatif = H.node \"dialog\" [] []"
+                    |> Review.Test.expectNoErrors
+        , test "un autre élément natif refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html as H\nnatif = H.node \"style\" [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "pas de tag dynamique dans le dialogue" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html as H\nnatif tag = H.node tag [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "racines sœurs sans présentation autorisées" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html as H\nassembler = H.div [] []"
+                    |> Review.Test.expectNoErrors
+        , test "un reset du dialogue ne peut fixer une dimension" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Dialogue"
+                    "commun/MrJam/Adaptateurs/Dialogue.elm"
+                    "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html.Attributes as A\nnatif = A.style \"width\" \"680px\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "cancel natif borné autorisé" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Dialogue.elm" "module MrJam.Adaptateurs.Dialogue exposing (natif, assembler)\nimport Html.Events as E\nnatif = E.preventDefaultOn \"cancel\" x"
+                    |> Review.Test.expectNoErrors
+        , test "rôle table constant dans l'adaptateur autorisé avec alias" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Accessibilite.elm" "module MrJam.Adaptateurs.Accessibilite exposing (tableau)\nimport Html.Attributes as A\ntableau = A.attribute \"role\" \"table\""
+                    |> Review.Test.expectNoErrors
+        , test "rôle d'un autre composant refusé malgré le bon nom de fonction" <|
+            \() ->
+                rejectedAt "MrJam.Adaptateurs.Accessibilite"
+                    "commun/MrJam/Adaptateurs/Accessibilite.elm"
+                    "module MrJam.Adaptateurs.Accessibilite exposing (tableau)\nimport Html.Attributes exposing (attribute)\ntableau = attribute \"role\" \"button\""
+                    "attribute"
+                    { start = { row = 3, column = 11 }, end = { row = 3, column = 20 } }
+        , test "rôle dynamique refusé dans le socle" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Accessibilite"
+                    "commun/MrJam/Adaptateurs/Accessibilite.elm"
+                    "module MrJam.Adaptateurs.Accessibilite exposing (tableau)\nimport Html.Attributes as A\ntableau valeur = A.attribute \"role\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "attribut d'une progression ne peut changer son maximum" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Accessibilite"
+                    "commun/MrJam/Adaptateurs/Accessibilite.elm"
+                    "module MrJam.Adaptateurs.Accessibilite exposing (progression)\nimport Html.Attributes as A\nprogression = A.attribute \"aria-valuemax\" \"200\""
                     "Présentation ou échappatoire technique non autorisée."
                     "A.attribute"
         ]

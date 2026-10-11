@@ -86,8 +86,10 @@ def tester_frontend(cle,sources,caches,campagne='base'):
     if campagne != 'unitaire':
         env['PATH']=str(RACINE/'state/outils-python/navigateur/bin')+os.pathsep+env['PATH']
     env['STYLE_MRJAM_SOURCE']=str(caches.get(cle,sources['style']))
+    env.setdefault('ELM_HOME',str(RACINE/'state/elm-home'))
+    env['PYTHONDONTWRITEBYTECODE']='1'
     commandes={
-        'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test'],
+        'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test','--','--seed','20261011'],
                   ['python3','interface/tests/graphisme.py'],['python3','interface/tests/vitrine.py'],
                   ['python3','interface/tests/multiutilisateur.py']],
         'matheval':[['npm','--prefix','docs','run','check:data'],['npm','--prefix','docs','run','test:data'],
@@ -97,7 +99,9 @@ def tester_frontend(cle,sources,caches,campagne='base'):
         'logique':[['npm','run','test:interface'],['npm','run','test:atelier:interface'],['npm','run','test:typographie']],
         'style':[['node_modules/.bin/elm-format','src','exemples','--validate'],['python3','scripts/verifier-identite.py'],
                  ['python3','-m','unittest','discover','-s','tests','-p','test_architecture.py'],
-                 ['python3','tests/navigation.py'],['python3','tests/documentaire.py'],['python3','tests/blocs.py']]
+                 ['python3','tests/navigation.py'],['python3','tests/documentaire.py'],['python3','tests/blocs.py'],
+                 ['python3','tests/contextes.py','--signature',str(sources['signature'])],
+                 ['python3','tests/exports.py']]
     }
     if campagne=='unitaire':
         if cle!='logique':raise ValueError('Campagne unitaire définie uniquement pour Logique')
@@ -132,8 +136,14 @@ def cache_style(source, revision):
     if len(revision) != 40 or any(c not in '0123456789abcdef' for c in revision):
         raise ValueError('Révision de style non verrouillée')
     # Aucun fetch implicite : le checkout central lit les révisions nécessaires.
-    archive = subprocess.check_output(['git', '-C', str(source), 'archive', revision,
-                                       'src', 'public', 'identite.json', 'elm.json'])
+    chemins=['src', 'public', 'identite.json', 'elm.json']
+    # Les validateurs typographiques sont mutualisés avec les fontes, mais
+    # restent hors produit. Leur révision est celle de ce cache exact. Les
+    # anciens verrous n'en disposent pas ; leurs anciens tests sont inchangés.
+    commun_test='tests/typographie.py'
+    if subprocess.check_output(['git','-C',str(source),'ls-tree','--name-only',revision,'--',commun_test],text=True).strip():
+        chemins.append(commun_test)
+    archive = subprocess.check_output(['git', '-C', str(source), 'archive', revision, *chemins])
     parent = RACINE / 'state/sources-style'
     parent.mkdir(parents=True, exist_ok=True)
     cible = parent / revision
@@ -169,32 +179,43 @@ def copier_cache(source, cible):
         shutil.copytree(source, cible)
 
 
-def preparer(sources, m):
-    verifier_sources(sources, m, exact=True)
+def sources_frontend(cle):
+    # Le périmètre global reste validé par manifeste(). Pour une construction
+    # indépendante, seuls ses producteurs sont des entrées ; ne pas lire/écrire
+    # les autres checkouts, qui peuvent porter un travail concurrent.
+    return {cle} if cle=='signature' else {cle,'style','signature'}
+
+
+def preparer(sources, m, composant=None):
+    requis=sources_frontend(composant) if composant else set(sources)
+    verifier_sources({cle:sources[cle] for cle in requis}, m, exact=True)
     caches = {}
     for cle, edge in m['frontends'].items():
+        if composant and cle!=composant:continue
         raw = (sources[cle] / edge['verrou_style']).read_bytes()
         lock = json.loads(raw)
         if sha(raw) != edge['sha256'] or lock['revision'] != edge['revision_style'] or edge['origine_style'] != 'MrJ-am/style-mrjam':
             raise ValueError('Contrat de style différent du manifeste central')
         caches[cle] = cache_style(sources['style'], edge['revision_style'])
-    # Le cache Logique est déjà prévu par le composant. Aucun miroir externe.
-    copier_cache(caches['logique'], sources['logique'] / '.cache/style-mrjam')
-    police = sources['logique'] / '.cache/signature/web'
-    identite = json.loads((caches['logique'] / 'identite.json').read_text())
-    for nom, attendu in identite['ressources_externes'].items():
-        if nom not in ('web/EchoPoint.woff2', 'web/MrJamSignature.woff2'):
-            raise ValueError('Nouvelle ressource d’identité non déclarée')
-        data = (sources['signature'] / nom).read_bytes()
-        if hashlib.sha1(('blob '+str(len(data))+'\0').encode()+data).hexdigest() != attendu:
-            raise ValueError('Police Signature différente du contrat existant')
-        police.mkdir(parents=True, exist_ok=True)
-        cible = police / Path(nom).name
-        if cible.exists():
-            if cible.is_symlink() or cible.read_bytes() != data: raise ValueError('Cache typographique modifié')
-        else: cible.write_bytes(data)
-    dependance = sources['vision'] / 'interface/.dependances/style-mrjam'
-    copier_cache(caches['vision'], dependance)
+    if 'logique' in caches:
+        # Le cache Logique est déjà prévu par le composant. Aucun miroir externe.
+        copier_cache(caches['logique'], sources['logique'] / '.cache/style-mrjam')
+        police = sources['logique'] / '.cache/signature/web'
+        identite = json.loads((caches['logique'] / 'identite.json').read_text())
+        for nom, attendu in identite['ressources_externes'].items():
+            if nom not in ('web/EchoPoint.woff2', 'web/MrJamSignature.woff2'):
+                raise ValueError('Nouvelle ressource d’identité non déclarée')
+            data = (sources['signature'] / nom).read_bytes()
+            if hashlib.sha1(('blob '+str(len(data))+'\0').encode()+data).hexdigest() != attendu:
+                raise ValueError('Police Signature différente du contrat existant')
+            police.mkdir(parents=True, exist_ok=True)
+            cible = police / Path(nom).name
+            if cible.exists():
+                if cible.is_symlink() or cible.read_bytes() != data: raise ValueError('Cache typographique modifié')
+            else: cible.write_bytes(data)
+    if 'vision' in caches:
+        dependance = sources['vision'] / 'interface/.dependances/style-mrjam'
+        copier_cache(caches['vision'], dependance)
     return caches
 
 
@@ -204,16 +225,18 @@ def construire_dans_atelier(cle, sources, m, caches):
     controle=module_from_spec(spec);spec.loader.exec_module(controle)
     controle.verifier(cle,sources,m)
     env = {k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME','CI')}
+    env.setdefault('ELM_HOME',str(RACINE/'state/elm-home'))
     env['GITHUB_SHA'] = m['sources'][cle]['revision']
     env['STYLE_MRJAM_SOURCE'] = str(caches.get(cle, sources['style']))
     commandes = {
-        'vision': [['python3', 'interface/compiler.py', '--style', str(caches['vision'])]],
+        'vision': [['python3', 'interface/compiler.py', '--style', str(caches['vision'])]] if cle=='vision' else [],
         'matheval': [['npm', '--prefix', 'docs', 'run', 'build:main']],
         'logique': [['npm', 'run', 'build'], ['npm', 'run', 'preparer:identite']],
         'style': [['npm', 'run', 'compiler'], ['npm', '--prefix', 'ateliers/logo', 'run', 'build'],
                   ['node', 'scripts/construire-pages.mjs']]
     }
     for commande in commandes[cle]: subprocess.run(commande, cwd=sources[cle], env=env, check=True)
+    verifier_sources({nom:sources[nom] for nom in sources_frontend(cle)}, m, exact=True)
     return enregistrer_candidat(cle,sources,m)
 
 
@@ -222,20 +245,24 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
     # sur un checkout temporaire propre, pas dans la bibliothèque partagée.
     parent = RACINE / 'state/ateliers-frontends'
     parent.mkdir(parents=True, exist_ok=True)
-    verifier_sources(sources, m, exact=True)
+    verifier_sources({nom:sources[nom] for nom in sources_frontend(cle)}, m, exact=True)
     with tempfile.TemporaryDirectory(prefix=cle+'-', dir=parent) as tmp:
         atelier = Path(tmp) / 'source'
         subprocess.run(['git', '-C', str(sources[cle]), 'worktree', 'add', '--quiet',
                         '--detach', str(atelier), m['sources'][cle]['revision']], check=True)
         try:
             locaux = dict(sources); locaux[cle] = atelier
-            caches = {} if cle=='signature' else preparer(locaux, m)
+            caches = {} if cle=='signature' else preparer(locaux, m, cle)
             for dossier in ['node_modules', 'docs/node_modules', 'interface/node_modules', 'ateliers/logo/node_modules']:
                 outils = sources[cle] / dossier
                 if outils.is_dir():
                     dest = atelier / dossier
                     dest.parent.mkdir(parents=True, exist_ok=True)
-                    dest.symlink_to(outils.resolve(), target_is_directory=True)
+                    # Un lien racine « node_modules » n'est pas couvert par
+                    # l'ignore Git « node_modules/ ». Conserver un vrai dossier
+                    # privé avec les mêmes outils, sans installation ni source
+                    # supplémentaire, pour vérifier ensuite tout le checkout.
+                    shutil.copytree(outils, dest, symlinks=True)
             if qualification:
                 if cle=='signature':
                     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH')}
@@ -256,6 +283,7 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                 controle.verifier(cle,locaux,m)
                 rapport=reutiliser_candidat(cle,locaux,m)
                 tester_frontend(cle,locaux,caches,campagne)
+                verifier_sources({nom:locaux[nom] for nom in sources_frontend(cle)}, m, exact=True)
                 print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'],
                     'tests':'reussis','campagne':campagne,
                     'diagnostic_specifique':any(os.environ.get(k) for k in ('MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')),
@@ -265,6 +293,11 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
             # Captures et traces de fixtures restent privées et disponibles
             # après la suppression du worktree temporaire de cet appel.
             rapports=RACINE/'state/rapports-frontends'/(cle+'-'+uuid.uuid4().hex[:12])
+            rapports.mkdir(parents=True,exist_ok=True)
+            # Chemins seulement : conserver la cause d'un refus de provenance,
+            # sans publier les sources ni le contenu des traces privées.
+            etat=subprocess.check_output(['git','-C',str(atelier),'status','--porcelain'],text=True)
+            (rapports/'sources-modifiees.txt').write_text(etat[:16384])
             for relatif in ('docs/test-results','interface/rapports','ateliers/logo/test-results','ateliers/logo/verification'):
                 dossier=atelier/relatif
                 if dossier.is_dir():

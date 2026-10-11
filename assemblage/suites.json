@@ -495,10 +495,12 @@
         "package.json",
         "package-lock.json",
         "elm.json",
-        "identite.json"
+        "identite.json",
+        "tests/exports.py"
       ],
       "signature": [
-        "web/*"
+        "web/*",
+        "fonts/Parisienne-Regular.ttf"
       ],
       "vps": [
         "scripts/frontends.py",
@@ -534,7 +536,8 @@
       ]
     ],
     "dependances": [
-      "frontend-regles"
+      "frontend-regles",
+      "frontend-sources"
     ],
     "outils": {
       "node": [
@@ -577,10 +580,17 @@
         "interface/tests/*.elm",
         "interface/package-lock.json",
         "interface/compiler.py",
-        "interface/style.lock.json"
+        "interface/style.lock.json",
+        "interface/elm.json",
+        "interface/app.html",
+        "interface/exports.js",
+        "interface/pont.js",
+        "interface/visuels/*",
+        "interface/identite/*"
       ],
       "style": [
-        "src/**/*.elm"
+        "src/**/*.elm",
+        "tests/typographie.py"
       ],
       "signature": [
         "web/*"
@@ -590,14 +600,14 @@
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
         "scripts/provenance-outils.py",
-        "scripts/provenance-outils.py",
         "scripts/revoir-frontends.py",
         "assemblage/elm-review/elm.json",
         "assemblage/elm-review/outils.lock.json",
         "assemblage/elm-review/src/**/*.elm",
         "scripts/revoir-ressources.py",
         "scripts/revoir-interop.cjs",
-        "assemblage/elm-review/ressources.json"
+        "assemblage/elm-review/ressources.json",
+        "scripts/assemblage.py"
       ]
     },
     "impact": [
@@ -605,7 +615,8 @@
       "vision/interface/**/*",
       "vps/scripts/frontends.py",
       "vps/scripts/outiller.py",
-      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt"
+      "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt",
+      "style/tests/typographie.py"
     ],
     "commandes": [
       [
@@ -618,7 +629,8 @@
     ],
     "dependances": [
       "style",
-      "frontend-regles"
+      "frontend-regles",
+      "frontend-sources"
     ],
     "outils": {
       "node": [
@@ -649,7 +661,8 @@
         "interface/node_modules"
       ]
     },
-    "navigateurs_python": true
+    "navigateurs_python": true,
+    "style_consomme_par": "vision"
   },
   "matheval-interface": {
     "niveau": 5,
@@ -704,7 +717,8 @@
     ],
     "dependances": [
       "style",
-      "frontend-regles"
+      "frontend-regles",
+      "frontend-sources"
     ],
     "outils": {
       "node": [
@@ -852,7 +866,8 @@
     "dependances": [
       "style",
       "logique-correcteur",
-      "frontend-regles"
+      "frontend-regles",
+      "frontend-sources"
     ],
     "outils": {
       "node": [
@@ -900,10 +915,14 @@
         "tests/http_fixture.py",
         "scripts/frontends.py",
         "scripts/provenance-outils.py"
+      ],
+      "style": [
+        "tests/typographie.py"
       ]
     },
     "impact": [
-      "vps/services/mrj-auth/*"
+      "vps/services/mrj-auth/*",
+      "style/tests/typographie.py"
     ],
     "commandes": [
       [
@@ -1989,6 +2008,44 @@
     "outils": {
       "python": [
         "python3",
+        "--version"
+      ]
+    }
+  },
+  "frontend-sources": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/frontends.py",
+        "tests/test_frontends_sources.py",
+        "scripts/assemblage.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/frontends.py",
+      "vps/tests/test_frontends_sources.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_frontends_sources.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "git": [
+        "git",
         "--version"
       ]
     }

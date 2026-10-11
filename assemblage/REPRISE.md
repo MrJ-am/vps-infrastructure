@@ -1,5 +1,86 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+
+## Point de reprise actif — adoption de Vision, puis Logique et Matheval
+
+Infra publiée9801479 ; Style196ab468a0dc0ee39bd9209efef234b5f56861fc publié.
+Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2 publié et référencé localement.
+Math/master78137b0, Logique032b4f5 et Signaturee9d9d34 inchangés. Production et
+accès métier inchangés ; étape1 non déployée, Kanidm non commencé. Aucun run
+ni opération de données déclenché par cette reprise. ArchitectureC et image
+SBCL saine conservées, sans reconnexion ni qualifier synthétique. Rapport
+historique MCP préservé non commité.
+
+Style : socle terminé et publié, contextes immuables, Vitrine.pour largeur,
+Ecran, elm-ui/typographie/compléments/dialogues natifs, constructions et atelier.
+Dessin/Diagrammes consomment les résultats scientifiques neutres inchangés ;
+Shared.Ui délègue le socle, curseurs natifs sans annonce à chaque frame.
+Candidat exact state/frontends-candidats/style-196ab468a0dc-71a32b25,
+ensembleea331903e1b0504f5540cb556ee4d50bbd5214b5d6943fbf13e4856313ea114f.
+Socle JS e23cb402be3a590f86f5024522274a38e4b4569f0e2432689a2502cefa267fc8 :
+parcours navigation/documentaire/blocs/contextes réussis. Complément central
+style-logo193,0077s :98tests Elm, références/géométries,94parcours Chromium/Firefox,
+16comparaisons raster réussis, exports et sources inchangés. Deux cas délégués à
+un moteur : file: refusé par Chromium géré (réussi Firefox), geste tactile CDP
+Chromium (souris/clavier aussi Firefox). L'ancienne assertion de sérialisation
+CSS échouait sur un espace ; elle vérifie maintenant mix-blend-mode effectivement
+calculé dans les deux moteurs. Aucun seuil graphique abaissé.
+
+Contrôles : frontend-regles97tests AST+6ressources+3fixtures canoniques,
+11,6238s ; frontend-sources6régressions0,9709s ; sélection18tests0,9648s. Cache de chaque producteur exact,
+autres consommateurs ignorés par les commandes spécifiques. Les outils npm
+existants sont copiés dans le worktree privé : les liens racine échappaient au
+pattern Git node_modules/ et faisaient refuser la nouvelle vérification finale.
+Les sources sont contrôlées après construction/tests ; un générateur modifiant
+une source suivie ne peut pas enregistrer de candidat. Diagnostics privés des
+chemins conservés. Import typographique Python sans bytecode : seule addition
+constatée dans le cache196ab46 était notre typographie.cpython-312.pyc, aucun
+fichier source modifié ; bytecode préservé dans state/rapports-frontends/cache-style-bytecode-70c82c250f6c.
+Cache intégral de nouveau conforme. Derniers ajustements de l'orchestrateur
+(bytecode/seed explicite Vision) postérieurs au reçu Style : requalification
+centrale finale affectée à faire avant promotion, sans reconstruire le candidat.
+
+Vision local : pin Style196ab46, dépendances autorisées Animator2.0.0/time1.0.0
+et transitives verrouillées, Signature17495b13 inchangée. Presentation.elm exprime
+seulement l'intention Vision et les façades communes ; marques/couleurs dans les
+contrôles, tableaux, lecture et modales. Informations/Vitrine largeur réelle,
+Main conserve auth/flags/brouillons et largeur/préférence après401. Le focus
+attend Browser.Dom.getElement puis le raccord existant, sans RAF JS.
+Animations de confirmation de copie MCP réelles, initial/live reduced-motion,
+inversion sans délai métier. Les types des façades et le contrôle final complet sont validés.
+
+Résultats locaux Vision : compilation34modules réussie, elm-review complet
+et ressources réussis ; architecture2checks et4tests Elm réussis. Vitrine4formats
++6parcours ContinuousUI320/768/1440 (normal/réduit, clipboard réel, focus, inversion,
+arrêt des frames), graphisme4formats (densité, liens, menus, clavier/tactile,
+brouillons), compte/admin/invitation/exports JSON/XML/Markdown2largeurs réussis.
+Contrastes aux mêmes seuils, couleurs peintes du contexte/contrôles/destruction
+contre oracle Canvas OKLCH indépendant, tolérance de quantification1niveau8bits.
+Ce sont des données synthétiques ; pas une preuve nouvelle de sécurité SQL ni
+une publication en production. Cache applicatif historique préservé ; constructeur
+utilise le cache exact dans son espace temporaire.
+
+Qualification centrale Vision48,3092s réussie sur le candidat réutilisé
+state/frontends-candidats/vision-2d9f31bff90e-29425f7e,
+ensemblea8e9f4e8186b194b09d7318aaea0cb94cb2f79b7d157680e4b041fda95a20198.
+Le premier passage central avait révélé une assertion DOM trop précoce après le
+message de copie en réduction ; barrière bornée à deux paints Elm, sans attente
+d'animation ni assouplissement du repli. Six parcours ciblés puis qualification
+complète réussis. Le reçu couvre le Style réellement consommé, les fichiers
+frontend/configurations, le candidat et les installations/navigateurs/profils ;
+changer une tête Style non consommée n'invalide pas son code, changer le verrou
+l'invalide (test réel Git synthétique).
+
+Suite immédiate : publier l'infrastructure centrale, puis adapter Logique (B.espace {largeur,hauteur}, profondeur,
+miniatures, marqueurs/gestes) puis Matheval (curseurs géométriques, dialogues,
+compagnons et autres violations). Anciennes révisions intactes ; retrait du CSS
+curseurs/Vitrine du nouveau Style impose l'adaptation avant adoption. Garder le
+refus de promotion de l'amendement non qualifié. Reprendre Nix/HBA/préconditions,
+restauration isolée/retour, étape1 réelle, puis Kanidm automatiquement. Données,
+séances ouvertes et reçus métier valides restent préservés.
+
+## Références et résultats historiques conservés
+
 Même tâche, état conservé. Aucun reset/nettoyage, ni nouvelle bascule.
 Production : génération r6s7ags3, ancienne architecture, Keycloak provisoire ;
 étape 1 non terminée, Kanidm non commencé. Aucun contenu/compte/séance/participation
@@ -45,10 +126,10 @@ Plan actualisé et critères de passage :
 
 1. Consolider les consignes/guides/manifestes/reprise selon l’amendement ; relire
    explicitement, verrouiller la promotion en attente de nouvelle qualification.
-2. Auditer/verrouiller/installer cl-mcp et cl-tron-mcp/Swank. Vérifier séparément
-   installation, serveurs, connexion agent, même PID/marqueur/mutation d’objet.
-   Scénario réel : condition/pile/locaux/correction enregistrée compilée/restart,
-   effet déjà exécuté compté une seule fois. Continuer dans la même image.
+2. MCP installé/verrouillé et scénario réel conservé dans le rapport historique.
+   Maintenir C, contrôler la cible après reconnexion, borner les chemins distants.
+   Ne pas rejouer le qualifier synthétique en contrôle de santé. Continuer dans
+   l'image saine ; test final propre distinct lorsque pertinent.
 3. Auditer/verrouiller elm-animator/elm-review ; règles mutualisées/testées,
    alias/exposing/frontières/adaptateurs, fixture interdite qui fait échouer
    la commande canonique, contrôles HTML/CSS/JS complémentaires.
@@ -243,3 +324,27 @@ Vitrine/Blocs, atelier ; adopter ensuite les nouvelles sources exactes, vérifie
 les parcours existants et ressources, puis reprendre l'étape1 réelle et Kanidm.
 Image Lisp persistante conservée, aucun DEBUG ouvert au constat, aucune cible
 ni objet ancien réinventé. Production inchangée depuis les preuves précédentes.
+
+Typographie ajoutée au socle après le reçu précédent : Typographie ne permet
+que les classes littérales de la bibliothèque générée Signature et ses métriques
+absentes de l'API elm-ui (1,183/baseline-.005em/synthèse/sélection). Les marqueurs
+applicatifs deviennent data-mrjam-marque. Signature en ligne ne force pas une
+seconde boîte d'interligne : cause du surplus42,621px trouvée en mode standards
+(la sonde sans doctype en mode quirks ne reproduisait pas ce défaut). Variante
+signatureEnLigne conserve la ligne commune. Fonte/contours/blobs inchangés.
+Les validateurs peints précédents de Vision sont déplacés sans duplication dans
+Style/tests/typographie.py ; Vision les importe depuis STYLE_MRJAM_SOURCE et
+refuse une source verrouillée dépourvue du helper. Ce diff Vision est encore
+non commité, pin Style non adopté : ne pas prétendre Vision qualifiée.
+Contextes utilise Signature/web + Parisienne.ttf en FontFace, ressources originales
+non copiées dans le bundle ; argument --signature central, entrées fonts/ttf et
+helper commun ajoutées aux reçus. Nouveau navigateur complet réussi sur JS SHA
+76f5d76e3694b92dd991212c92d2dccac2e8ff433778a6d1bef8eb3a4acb8dc5,
+320/768/1440px, capitales et motifs de points agrandis identiques/interligne borné.
+Reçu central frontend-regles9,8957s :60 tests AST +3 tests ressources et fixtures
+conforme/interdite/inutilisée avec noms de règles vérifiés. Dernière analyse réelle
+405 violations/exit1, Identite désormais conforme à cette règle ; reste du portage
+bloquant. Consignes/pont publiés infra9801479 ; aucun déploiement. Prochaine étape
+concrète : Vitrine (dimensions explicites et compléments contrôlés elm-ui), ses
+consommateurs Galerie/Vision, puis dialogues/constructions/atelier. Préserver tous
+les diffs Style ; publier composants avant le manifeste exact, promotion en attente.

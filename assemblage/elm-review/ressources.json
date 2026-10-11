@@ -35,7 +35,48 @@
     "matheval/docs/site/vendor/drag-drop-touch/drag-drop-touch.esm.min.js": {
       "sha256": "119fba63ae4cb989a6cff4dd291d2937a93fbbcdaf2714f9ec02ff85c08f001c",
       "role": "interop tactiles existante"
+    },
+    "style/public/assets/mrjam/palette/palette.css": {
+      "sha256": "331d5080022278ce313562ab5cacfd80daf5cb531ef86d6ea2b8a1c8c23a4228",
+      "role": "Export scientifique de la palette commune produit par Elm, sans import dans une interface ; reproduction identique dans dist/exports/palette.css.",
+      "producteurs": {
+        "ateliers/logo/src/Palette/Exports.elm": "0b6d4bb50655e4fbe2ec17459d920fdd55207d11eb712c4116dc916deea92309",
+        "ateliers/logo/src/Palette/Couleurs.elm": "ce2e144b0a63196d97f563cf85e677a3c941ecceb8e93e620b1bd3bc97499043",
+        "src/MrJam/OKLab.elm": "f1cb4ec549cd301c2a7cfb9bcc97d15c8ee494947d8f3713a8e3b5dcfcbccc1a"
+      }
     }
   },
-  "adaptateurs_js": {}
+  "adaptateurs_js": {
+    "style/ateliers/logo/web/boot.js": [
+      {
+        "fonction": "telecharger",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "a"
+        ],
+        "role": "Téléchargement Blob détaché, sans présentation ; SVG/JSON produits par Elm."
+      },
+      {
+        "fonction": "choisirReglages",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "input"
+        ],
+        "role": "Sélecteur natif JSON détaché, taille limitée à64K ; réglages de mouvement seulement."
+      }
+    ],
+    "vision/interface/pont.js": [
+      {
+        "fonction": "exporter",
+        "capacite": "presentation-dom",
+        "operation": "createElement",
+        "balises": [
+          "a"
+        ],
+        "role": "Téléchargement personnel Blob détaché ; formats existants produits par ExportsVision, aucune présentation."
+      }
+    ]
+  }
 }

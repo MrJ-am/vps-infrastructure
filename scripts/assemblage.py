@@ -184,11 +184,25 @@ def environnement(suite):
 
 
 def identifiant_suite(nom, suite, chemins):
+    entrees_reelles=chemins
+    if suite.get('style_consomme_par'):
+        # Une application teste son verrou, pas la tête actuelle de Style.
+        # Les installations d'outils restent celles des checkouts d'origine.
+        from frontends import cache_style
+        composant=suite['style_consomme_par']
+        m=manifeste()
+        edge=m['frontends'][composant]
+        raw=(chemins[composant]/edge['verrou_style']).read_bytes()
+        if empreinte(raw)!=edge['sha256'] or lire(chemins[composant]/edge['verrou_style'])['revision']!=edge['revision_style']:
+            raise ValueError('Style consommé différent du manifeste : '+composant)
+        entrees_reelles=dict(chemins,style=cache_style(chemins['style'],edge['revision_style']))
     result={'suite': nom, 'definition': empreinte(json.dumps(suite, sort_keys=True).encode()),
-            'entrees': entrees(suite, chemins), 'environnement': environnement(suite)}
+            'entrees': entrees(suite, entrees_reelles), 'environnement': environnement(suite)}
     if suite.get('candidat_frontend'):
         cle=suite['candidat_frontend']
         r=lire(RACINE/'state/frontends-candidats'/('dernier-'+cle+'.json'))
+        if r['revision']!=manifeste()['sources'][cle]['revision']:
+            raise ValueError('Candidat frontend différent du manifeste : '+cle)
         p=RACINE/r['candidat']
         if p.is_symlink() or not p.resolve().is_relative_to(RACINE/'state/frontends-candidats'):
             raise ValueError('Candidat frontend extérieur')
