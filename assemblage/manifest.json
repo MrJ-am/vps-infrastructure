@@ -18,7 +18,7 @@
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "d64f2358e224ac99c004ae92972a9bdc02242606",
+      "revision": "7438ce68925290a3233bea0ab171d91b465d0597",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
@@ -42,10 +42,10 @@
   },
   "toolchain": {
     "qualification_locale": {
-      "sbcl": "2.5.2.debian",
+      "sbcl": "2.6.4",
       "asdf": "3.3.1",
       "architecture": "x86_64-linux",
-      "paquet_sha256": "c4153abbe1def77e5e2bd62d2f25295d60df80333ea1a13c44b53209d179ef67"
+      "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb"
     },
     "production": {
       "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",

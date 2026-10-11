@@ -1,4 +1,4 @@
-"""Préparer un système Nix depuis le candidat CI reçu, sans activation.
+"""Préparer un système Nix depuis le candidat local reçu, sans activation.
 
 Le bundle est privé. Erreurs détaillées restent sur le VPS ; seuls agrégats et
 révisions sont imprimés. Aucune migration SQL, tâche métier, IdP ou SMTP ici.
@@ -15,6 +15,8 @@ import stat
 import subprocess
 import sys
 import traceback
+
+sys.dont_write_bytecode=True # Le bundle scellé reste immuable entre opérations.
 
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
 TIERS=('sshd','mrj-auth','keycloak','vision-embeddings','phpfpm-nextcloud',
@@ -35,7 +37,11 @@ def exiger(v,message):
     if not v:raise ValueError(message)
 
 
-def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+def sha(p):
+    h=hashlib.sha256()
+    with p.open('rb') as f:
+        for b in iter(lambda:f.read(1024*1024),b''):h.update(b)
+    return h.hexdigest()
 
 
 def commande(args,d,*,input=None,timeout=1800):
@@ -49,7 +55,8 @@ def commande(args,d,*,input=None,timeout=1800):
 
 def verifier_bundle(root):
     cert=json.loads((root/'stage.json').read_text())
-    exiger(cert['format']==1 and cert['activation'] is False,'Format de stage refusé')
+    exiger(cert['format']==2 and cert['activation'] is False
+           and cert['origine_preuves']=='codex-local-non-attestee','Format de stage refusé')
     files={}
     for p in root.rglob('*'):
         s=p.lstat();exiger(stat.S_ISDIR(s.st_mode) or stat.S_ISREG(s.st_mode),'Fichier non régulier dans le bundle')
@@ -59,7 +66,32 @@ def verifier_bundle(root):
     q=cert['qualification'];paquet=Path(q['sorties_nix']['metier'])
     exiger(re.fullmatch(r'/nix/store/[a-z0-9]{32}-mrjam-metier-[a-f0-9]{12}',str(paquet)), 'Paquet Nix non reconnu')
     exiger(sha(paquet/'bin/mrjam-metier')==q['artefact_sha256'],'Binaire différent de la qualification')
-    exiger(q['source_revision']==cert['revision'],'Révision incohérente')
+    exiger(q['source_revision']==cert['revision_construction'],'Révision de construction incohérente')
+    exiger(paquet.name.endswith(q['source_revision'][:12]),'Nom du paquet incohérent')
+    # La révision des opérateurs peut évoluer sans reconstruire le même graphe
+    # Lisp. Aucune confiance dans le seul nom de révision ou dans un fichier .ok.
+    sys.path.insert(0,str(root/'vps/scripts'))
+    from assemblage import compilation_entrees, catalogue, entrees
+    sources={n:root/n for n in cert['manifest']['sources']}
+    sources['vps']=root/'vps'
+    exiger(compilation_entrees(sources)==q['sources_lisp_sha256'],'Graphe Lisp différent de l’image')
+    exiger(json.loads((root/'vps/assemblage/manifest.json').read_text())==cert['manifest'],'Manifeste différent')
+    suites=catalogue()
+    exiger(set(cert['recus_locaux_sha256'])==set(suites),'Catalogue incomplet')
+    for nom,suite in suites.items():
+        p=root/'recus'/(nom+'.json');r=json.loads(p.read_text())
+        exiger(sha(p)==cert['recus_locaux_sha256'][nom] and r['format']==1
+               and r['resultat']=='succes' and r['confiance']=='locale-non-attestee'
+               and r['autorise_publication'] is False and all(c==0 for c in r['codes']),
+               'Reçu local refusé : '+nom)
+        i=r['identite']
+        exiger(i['definition']==hashlib.sha256(json.dumps(suite,sort_keys=True).encode()).hexdigest()
+               and i['entrees']==entrees(suite,sources),'Entrées de qualification différentes : '+nom)
+        if suite.get('candidat_metier'):
+            exiger(i['candidat_metier']['sha256']==q['artefact_sha256'],'Suite sur une autre image : '+nom)
+        if suite.get('candidat_frontend'):
+            front=cert['frontends'][suite['candidat_frontend']]
+            exiger(i['candidat_frontend']=={k:front[k] for k in ('revision','fichiers')},'Suite sur un autre frontend : '+nom)
     return cert
 
 
@@ -137,7 +169,8 @@ def preparer(revision):
         if 'stopping the following units:' in ligne or 'restarting the following units:' in ligne:
             exiger(not any(n.replace('.timer','')+'.service' in ligne for n in TIERS), 'Redémarrage tiers imprévu')
     exiger(etat(d)==avant,'État modifié pendant préparation')
-    preuve={'format':1,'revision':revision,'run_ci':cert['run'],'avant':avant,'candidat':construit,
+    promotion=json.loads((d/'promotion.json').read_text())
+    preuve={'format':1,'revision':revision,'run_ci':promotion['run_ci'],'avant':avant,'candidat':construit,
             'configuration':str(candidate),'parametres':params,'etats_durables':inventaire_etats(),
             'artefact_sha256':cert['qualification']['artefact_sha256'],
             'systeme_construit':True,'activation':False,'sauvegarde_actuelle_requise':True,

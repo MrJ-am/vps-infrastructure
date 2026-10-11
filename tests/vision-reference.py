@@ -139,7 +139,7 @@ def qualifier(sources,executable,navigateur=False,modele=None):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--sources',default=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))['vision']);p.add_argument('--executable',default=ROOT/'state/artefacts/mrjam-metier');p.add_argument('--navigateur',action='store_true');p.add_argument('--modele',nargs='?',const='verrouille')
+    p=argparse.ArgumentParser();p.add_argument('--sources',default=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))['vision']);p.add_argument('--executable',default=os.environ.get('MRJAM_TEST_EXECUTABLE',ROOT/'state/artefacts/mrjam-metier'));p.add_argument('--navigateur',action='store_true');p.add_argument('--modele',nargs='?',const='verrouille')
     a=p.parse_args();source=Path(a.sources).resolve()
     parent=ROOT/'state/ateliers-vision';parent.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='reference-',dir=parent) as tmp:

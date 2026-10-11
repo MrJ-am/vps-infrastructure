@@ -61,13 +61,13 @@ def qualifier_existant(destination,preparation):
                    env=dict(os.environ,MRJAM_TEST_EXECUTABLE=str(destination)),check=True)
     if compilation_entrees(sources)!=inputs:raise ValueError('Sources modifiées pendant la qualification Nix')
     resultat=dict(preparation,tests_secondes=round(time.monotonic()-debut,4),
-                  qualification='CI candidat Nix HTTP/transactions/redemarrage, pas production',publication_autorisee=False)
+                  qualification='candidat Nix local HTTP/transactions/redemarrage, pas production',publication_autorisee=False)
     destination.with_suffix('.qualification.json').write_text(json.dumps(resultat,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:v for k,v in resultat.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--destination',default='state/artefacts/mrjam-metier');p.add_argument('--sans-cache',action='store_true')
+    p=argparse.ArgumentParser();p.add_argument('--destination',default=os.environ.get('MRJAM_TEST_EXECUTABLE','state/artefacts/mrjam-metier'));p.add_argument('--sans-cache',action='store_true')
     p.add_argument('--construction-nix',default=os.environ.get('MRJAM_CONSTRUCTION_NIX'))
     a=p.parse_args()
     if a.construction_nix:

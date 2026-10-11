@@ -371,3 +371,46 @@ réussis, sortie en 0,578 s avec cache valide. Aucun Node ni campagne navigateur
 Contrat/archives/dépendances : succès local 0,310 s ; 18 tests du sélecteur et
 reçus : succès 0,637 s (pilote 0,791 s). Reçus machine locaux non attestés conservés.
 Ces contrôles qualifient le changement de workflow, pas le candidat de production.
+
+
+## Reprise locale — SBCL cible et fixtures figées, 11 octobre 2026
+
+Nix officiel 2.31.2 préparé uniquement dans Codex ; archive et SHA officiels,
+store vérifié. Nixpkgs c5c4a43 exact ; image propre
+/nix/store/nq8729macji666smhhddvf9i4xqzkdy4-mrjam-metier-158e4a52e012,
+SHA 296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c,
+12486040 octets, SBCL2.6.4/ASDF3.3.1. Construction non chronométrée.
+Image de tâche alignée une fois sur ce compilateur, conservée ensuite.
+
+Formulaires : recharger le helper source puis verifier matheval/native.
+116 cas et 8000 tirages / 8003 vecteurs synthétiques JSON/OpenSSL passent.
+Initialiser MRJAM_LIBCRYPTO au chemin Nix dans le REPL : son absence avait
+sélectionné le DSO hôte incompatible ; condition inspectée, environnement corrigé,
+sans redémarrage. Dernières mesures 0,324 s/17,1 Mo et 1,724 s/226,5 Mo alloués.
+Références générées une fois par Node, identiques aux fixtures précédentes ;
+PROVENANCE.json lie chaque référence et corpus. Les suites ordinaires sont Lisp.
+
+40 cas Matheval/PG et concurrence, transport Unix et redémarrage réussis sur le
+même artefact : 16,5902 s. Vision SQL natif/multi-comptes : 16,3945 s.
+elm-format remplaçait son wrapper au premier appel : initialisation avant les
+empreintes, aucun ajout de paquet. Les interfaces Python utilisaient Playwright
+1.62 global au lieu du profil verrouillé1.57 ; commande centrale corrigée, aucun
+nouveau navigateur téléchargé. Vision/Logique/Style passent sur le profil prévu.
+
+Matheval : 55/56 parcours, trace synthétique montrant un lecteur réduit à une
+bille après fermeture/réouverture ; animation fill:forwards conservée. Libérer
+l'animation au frame suivant : huit répétitions ciblées réussies, régression
+ajoutée, commit composant7438ce6 publié. Seule interface Matheval reconstruite ;
+Lisp/RNG/corpus inchangés et même image Nix. Campagne finale en cours.
+
+Initialisation des copies SQLite dans le REPL avec SMTP et recipient synthétiques :
+réussie, aucune tâche ni connexion SMTP/IdP. Opérateurs de promotion/retour écrits,
+qualification restante ; aucune intervention de production ni run Actions ici.
+
+
+Campagne Matheval finale : 56/56, 371,337 s, candidat frontend5b0108d9,
+image296b7c89. Validation finale des helpers dans SBCL2.6.4 neuf : Matheval/native/
+JSON/quotas réussis (0,268/1,764/0,176/0,212 s), FASL incrémentaux réutilisés.
+Promotion : dix refus/provenances synthétiques, retour : cinq contrôles avec
+écriture après bascule et reprise idempotente, sauvegarde SQLite/JSONL : quatre,
+sélecteur : dix-huit contrôles réussis. Aucune attestation CI ou production.
