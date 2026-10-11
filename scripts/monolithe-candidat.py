@@ -5,7 +5,6 @@ est publiable. Aucun reçu local n'est converti en attestation CI.
 """
 import argparse
 import hashlib
-import importlib.util
 import io
 import json
 import os
@@ -13,6 +12,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 from assemblage import (RACINE, manifeste, chemins_sources, verifier_sources,
@@ -106,9 +106,15 @@ def sceller(executable,destination):
         (root/'stage.json').write_text(json.dumps(cert,ensure_ascii=False,indent=2)+'\n')
         # Le même vérificateur fermé doit accepter le bundle complet localement,
         # avant transport. Cette fonction ne prépare ni système ni données.
-        spec=importlib.util.spec_from_file_location('verification_stage_locale',root/'vps/scripts/monolithe-preparer.py')
-        controle=importlib.util.module_from_spec(spec);spec.loader.exec_module(controle)
-        controle.verifier_bundle(root)
+        # Processus de lecture distinct, sans .pyc ajouté au payload scellé.
+        verification="""import importlib.util,sys
+from pathlib import Path
+s=importlib.util.spec_from_file_location('verification_stage_locale',sys.argv[1])
+m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+m.verifier_bundle(Path(sys.argv[2]))
+"""
+        subprocess.run([sys.executable,'-B','-c',verification,
+                        str(root/'vps/scripts/monolithe-preparer.py'),str(root)],check=True)
         archive=tmp/'candidat.tar.gz'
         with tarfile.open(archive,'w:gz',compresslevel=1) as t:t.add(root,arcname='payload',recursive=True)
         exiger(archive.stat().st_size<1024**3,'Archive hors limite')
