@@ -23,16 +23,16 @@ if any(suites[n].get('python_profils') for n in choisis):
     browser=RACINE/'state/outils-python/navigateur/bin'
     if browser.exists():
         os.environ['PATH']=str(browser)+os.pathsep+os.environ['PATH']
-        subprocess.run(['python3','-m','playwright','install','chromium'],check=True)
+        subprocess.run(['python3','-m','playwright','install','--with-deps','chromium'],check=True)
 for cle in sorted(fronts):
     subprocess.run(['python3','scripts/outiller.py','npm','--composant',cle],check=True)
     subprocess.run(['python3','scripts/frontends.py','construire','--composant',cle],check=True)
 if 'matheval' not in fronts and set(choisis)&{'matheval-reference','matheval-pures','matheval-postgresql','vision-postgresql','vision-sql-native','navigateur-mcp'}:
     subprocess.run(['npm','--prefix',sources['matheval']/'server','ci','--ignore-scripts','--no-audit','--no-fund'],check=True)
 if 'matheval-navigateur' in choisis:
-    subprocess.run([sources['matheval']/'docs/node_modules/.bin/playwright','install','chromium','firefox'],check=True)
+    subprocess.run([sources['matheval']/'docs/node_modules/.bin/playwright','install','--with-deps','chromium','firefox'],check=True)
 if 'style-logo' in choisis:
-    subprocess.run([sources['style']/'ateliers/logo/node_modules/.bin/playwright','install','chromium','firefox'],check=True)
+    subprocess.run([sources['style']/'ateliers/logo/node_modules/.bin/playwright','install','--with-deps','chromium','firefox'],check=True)
 # Les suites HTTP Vision exercent ce même artefact ; sa construction qualifie
 # Matheval une fois. La fermeture transitive ordonne les suites, sans les doubler.
 if 'vision-semantique' in choisis:

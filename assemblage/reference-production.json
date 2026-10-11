@@ -7,36 +7,36 @@
       "codes": [
         200
       ],
-      "mediane_ms": 16.92,
+      "mediane_ms": 18.823,
       "n": 10,
-      "p90_ms": 30.305,
+      "p90_ms": 24.246,
       "type": "GET public, dix lectures, sans authentification"
     },
     "matheval_sante": {
       "codes": [
         200
       ],
-      "mediane_ms": 8.426,
+      "mediane_ms": 8.942,
       "n": 10,
-      "p90_ms": 13.211,
+      "p90_ms": 16.314,
       "type": "GET public, dix lectures, sans authentification"
     },
     "mcp_refus": {
       "codes": [
         401
       ],
-      "mediane_ms": 5.899,
+      "mediane_ms": 5.792,
       "n": 10,
-      "p90_ms": 8.606,
+      "p90_ms": 9.787,
       "type": "GET public, dix lectures, sans authentification"
     },
     "vision_vitrine": {
       "codes": [
         200
       ],
-      "mediane_ms": 5.185,
+      "mediane_ms": 4.906,
       "n": 10,
-      "p90_ms": 6.421,
+      "p90_ms": 5.52,
       "type": "GET public, dix lectures, sans authentification"
     }
   },
@@ -90,18 +90,18 @@
   ],
   "services": {
     "keycloak": {
-      "cgroup_octets_avec_cache": 600293376,
+      "cgroup_octets_avec_cache": 625418240,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "2147483648",
       "rss_processus_principal_octets": 3788800
     },
     "matheval": {
-      "cgroup_octets_avec_cache": 36659200,
+      "cgroup_octets_avec_cache": 32153600,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "infinity",
-      "rss_processus_principal_octets": 87425024
+      "rss_processus_principal_octets": 82980864
     },
     "mrj-auth": {
       "cgroup_octets_avec_cache": 38932480,
@@ -111,11 +111,11 @@
       "rss_processus_principal_octets": 60551168
     },
     "mrjam-admission": {
-      "cgroup_octets_avec_cache": 54501376,
+      "cgroup_octets_avec_cache": 54530048,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "201326592",
-      "rss_processus_principal_octets": 73191424
+      "rss_processus_principal_octets": 73216000
     },
     "mrjam-courriel": {
       "cgroup_octets_avec_cache": null,
@@ -125,46 +125,46 @@
       "rss_processus_principal_octets": null
     },
     "mrjam-fermeture": {
-      "cgroup_octets_avec_cache": 52285440,
+      "cgroup_octets_avec_cache": 53657600,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "201326592",
-      "rss_processus_principal_octets": 70971392
+      "rss_processus_principal_octets": 72347648
     },
     "nginx": {
-      "cgroup_octets_avec_cache": 8241152,
+      "cgroup_octets_avec_cache": 8249344,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "infinity",
       "rss_processus_principal_octets": 17743872
     },
     "phpfpm-nextcloud": {
-      "cgroup_octets_avec_cache": 87138304,
+      "cgroup_octets_avec_cache": 84635648,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "infinity",
       "rss_processus_principal_octets": 55635968
     },
     "postgresql": {
-      "cgroup_octets_avec_cache": 98242560,
+      "cgroup_octets_avec_cache": 110297088,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "infinity",
       "rss_processus_principal_octets": 32194560
     },
     "vision": {
-      "cgroup_octets_avec_cache": 51539968,
+      "cgroup_octets_avec_cache": 58793984,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "268435456",
-      "rss_processus_principal_octets": 83578880
+      "rss_processus_principal_octets": 90398720
     },
     "vision-cycle": {
-      "cgroup_octets_avec_cache": 52940800,
+      "cgroup_octets_avec_cache": 52953088,
       "etat": "active",
       "pid_present": true,
       "plafond_octets": "201326592",
-      "rss_processus_principal_octets": 72130560
+      "rss_processus_principal_octets": 72134656
     },
     "vision-embeddings": {
       "cgroup_octets_avec_cache": 962129920,

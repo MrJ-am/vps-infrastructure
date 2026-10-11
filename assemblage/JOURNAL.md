@@ -298,3 +298,22 @@ Cadre 38113070010 sur eb94866 réussi : seule la suite du pilote/sélecteur est
 rejouée ; sauvegarde, garde-fou SQL et composants sont skipped. Ce vert incrémental
 ne qualifie aucun artefact métier. Le workflow infrastructure exclut désormais
 tous les tests test_assemblage*.py pour laisser leur exécution à ce cadre.
+
+
+## Reprise après création du secret de lecture
+
+Nouvelle image SBCL interactive 2.5.2/ASDF3.3.1 ; load-system mrjam-metier depuis
+cache incrémental, quota IPv6 2001:db8:12:ff::1 → 2001:db8:12::/56, contrôle réussi.
+Image gardée pendant cette tâche ; aucune connexion de production.
+
+Actions 38118779445 sur c11d342 : lecture des cinq composants réussie. Nixpkgs
+c5c4a43 verrouillé, build image propre réussi avec SBCL2.6.4/ASDF3.3.1, artefact
+e32ee43ef552c1d95982e3785a89960486ce0d27b58fa404c8651dbf3216a03e,
+12 453 272 octets, 9,3644 s image et outils. Qualification arrêtée sur pdfinfo
+absent lors du build Matheval, avant les suites ; aucun déploiement. Cause précise :
+préparation centrale omettait Poppler, présent dans trois anciennes recettes.
+Réparation : poppler-utils/age dans PATH Nix et besoin d’outils pour une sélection
+frontend Matheval seule. Bibliothèques système Playwright préparées par son
+install --with-deps comme les anciennes CI, sans nouvelle dépendance directe.
+Sonde lecture seule 38118876078 : succès, génération r6s7ags3 inchangée ; compte
+Vision unique et rattachement cohérent, trois participations Matheval ouvertes.

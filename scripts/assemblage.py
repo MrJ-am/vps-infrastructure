@@ -153,7 +153,7 @@ def environnement(suite):
     for nom, commande in suite.get('outils', {}).items():
         p = subprocess.run(commande, capture_output=True, text=True, check=True)
         binaire = shutil.which(commande[0])
-        versions[nom] = {'version': p.stdout.strip(),
+        versions[nom] = {'version': (p.stdout or p.stderr).strip(),
                          'executable_sha256': empreinte(Path(binaire).resolve().read_bytes())}
     # Seules configurations explicitement non secrètes ; ne jamais dumper env.
     valeurs = {k: os.environ.get(k, '') for k in suite.get('configuration', [])}

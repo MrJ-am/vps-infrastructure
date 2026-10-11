@@ -62,7 +62,7 @@ def construire(outils_seulement=False):
               sources_lisp_sha256=inputs)
             preparation=destination.with_suffix('.construction-nix.json');preparation.write_text(json.dumps(p,ensure_ascii=False,indent=2)+'\n')
         outils=Path(sorties['outils'])
-        configuration={'PATH':str(outils/'sbcl/bin')+os.pathsep+os.environ['PATH'],
+        configuration={'PATH':os.pathsep.join(str(outils/nom/'bin') for nom in ('sbcl','age','poppler'))+os.pathsep+os.environ['PATH'],
           'SBCL':str(outils/'sbcl/bin/sbcl'),
           'SBCL_HOME':str(outils/'sbcl/lib/sbcl'),
           'MRJAM_LIBCRYPTO':str(outils/'openssl/lib/libcrypto.so.3'),
