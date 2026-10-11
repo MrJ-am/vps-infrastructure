@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.infrastructure.identite;
+  metier = config.infrastructure.metier.enable or false;
+  racineCycle = if metier then "/var/lib/mrjam-metier/cycle" else "/var/lib/vision-cycle";
+  racineAdmission = if metier then "/var/lib/mrjam-metier/admission" else "/var/lib/mrjam-admission";
+  racineFermeture = if metier then "/var/lib/mrjam-metier/fermeture" else "/var/lib/mrjam-fermeture";
+  racineEffacements = if metier then "/var/lib/mrjam-metier/effacements" else "/var/lib/vision-effacements";
   keycloak = import ../services/keycloak-mrjam/paquet.nix { inherit pkgs; };
   extension = import ../services/keycloak-mrjam { inherit pkgs; };
   sources = import ../services/sources-mrjam.nix { inherit pkgs; };
@@ -131,7 +136,7 @@ in {
         temporaire=$(${pkgs.coreutils}/bin/mktemp -d)
         trap '${pkgs.coreutils}/bin/rm -rf "$temporaire"' EXIT
         recipient='${config.services.vision.backupRecipient}'
-        for base in vision mrjam_identite; do
+        for base in vision mrjam_identite ${lib.optionalString metier "matheval"}; do
           ${pkgs.util-linux}/bin/runuser -u postgres -- ${config.services.postgresql.package}/bin/pg_dump --format=custom "$base" | \
             ${pkgs.age}/bin/age -r "$recipient" > "$destination/$base-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/$base-$jour.age.tmp" "$destination/$base-$jour.age"
@@ -139,36 +144,43 @@ in {
         ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrj-auth/sessions.sqlite ".backup '$temporaire/sessions.sqlite'"
         ${pkgs.age}/bin/age -r "$recipient" "$temporaire/sessions.sqlite" > "$destination/sessions-$jour.age.tmp"
         ${pkgs.coreutils}/bin/mv "$destination/sessions-$jour.age.tmp" "$destination/sessions-$jour.age"
-        if test -f /var/lib/vision-effacements/demandes.jsonl; then
-          ${pkgs.age}/bin/age -r "$recipient" /var/lib/vision-effacements/demandes.jsonl > "$destination/effacements-$jour.age.tmp"
+        if test -f ${racineEffacements}/demandes.jsonl; then
+          ${pkgs.age}/bin/age -r "$recipient" ${racineEffacements}/demandes.jsonl > "$destination/effacements-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/effacements-$jour.age.tmp" "$destination/effacements-$jour.age"
         fi
-        if test -f /var/lib/vision-cycle/courriels.sqlite; then
-          ${pkgs.sqlite}/bin/sqlite3 /var/lib/vision-cycle/courriels.sqlite ".backup '$temporaire/cycle.sqlite'"
+        if test -f ${racineCycle}/courriels.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 ${racineCycle}/courriels.sqlite ".backup '$temporaire/cycle.sqlite'"
           ${pkgs.age}/bin/age -r "$recipient" "$temporaire/cycle.sqlite" > "$destination/cycle-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/cycle-$jour.age.tmp" "$destination/cycle-$jour.age"
         fi
-        if test -f /var/lib/vision-cycle/effacements.jsonl; then
-          ${pkgs.age}/bin/age -r "$recipient" /var/lib/vision-cycle/effacements.jsonl > "$destination/effacements-cycle-$jour.age.tmp"
+        if test -f ${racineCycle}/effacements.jsonl; then
+          ${pkgs.age}/bin/age -r "$recipient" ${racineCycle}/effacements.jsonl > "$destination/effacements-cycle-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/effacements-cycle-$jour.age.tmp" "$destination/effacements-cycle-$jour.age"
         fi
-        if test -f /var/lib/mrjam-admission/admissions.sqlite; then
-          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-admission/admissions.sqlite ".backup '$temporaire/admissions.sqlite'"
+        if test -f ${racineAdmission}/admissions.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 ${racineAdmission}/admissions.sqlite ".backup '$temporaire/admissions.sqlite'"
           ${pkgs.age}/bin/age -r "$recipient" "$temporaire/admissions.sqlite" > "$destination/admissions-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/admissions-$jour.age.tmp" "$destination/admissions-$jour.age"
-          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-admission/courriels.sqlite ".backup '$temporaire/admissions-courriels.sqlite'"
+          ${pkgs.sqlite}/bin/sqlite3 ${racineAdmission}/courriels.sqlite ".backup '$temporaire/admissions-courriels.sqlite'"
           ${pkgs.age}/bin/age -r "$recipient" "$temporaire/admissions-courriels.sqlite" > "$destination/admissions-courriels-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/admissions-courriels-$jour.age.tmp" "$destination/admissions-courriels-$jour.age"
         fi
-        if test -f /var/lib/mrjam-fermeture/courriels.sqlite; then
-          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-fermeture/courriels.sqlite ".backup '$temporaire/fermetures.sqlite'"
+        if test -f ${racineFermeture}/courriels.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 ${racineFermeture}/courriels.sqlite ".backup '$temporaire/fermetures.sqlite'"
           ${pkgs.age}/bin/age -r "$recipient" "$temporaire/fermetures.sqlite" > "$destination/fermetures-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/fermetures-$jour.age.tmp" "$destination/fermetures-$jour.age"
         fi
-        if test -f /var/lib/mrjam-fermeture/effacements.jsonl; then
-          ${pkgs.age}/bin/age -r "$recipient" /var/lib/mrjam-fermeture/effacements.jsonl > "$destination/effacements-communs-$jour.age.tmp"
+        if test -f ${racineFermeture}/effacements.jsonl; then
+          ${pkgs.age}/bin/age -r "$recipient" ${racineFermeture}/effacements.jsonl > "$destination/effacements-communs-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/effacements-communs-$jour.age.tmp" "$destination/effacements-communs-$jour.age"
         fi
+        ${lib.optionalString metier ''
+        if test -f /var/lib/mrjam-metier/courriel/file.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-metier/courriel/file.sqlite ".backup '$temporaire/courriel.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/courriel.sqlite" > "$destination/courriel-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/courriel-$jour.age.tmp" "$destination/courriel-$jour.age"
+        fi
+        ''}
         ${pkgs.python3}/bin/python3 ${../scripts/sauvegarde-externe.py} manifeste --repertoire "$destination" --date "$jour"
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name 'mrjam-*.json' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name '*.age' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete

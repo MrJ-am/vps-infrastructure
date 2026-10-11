@@ -13,4 +13,8 @@
     (assert (not (mrjam-native:secret-egal-p "abc" "abd")))
     (assert (not (mrjam-native:mot-de-passe-verifier "synthétique" "scrypt:malformé")))
     (assert (= 64 (length (mrjam-native:aleatoire-hex))))
+    (let ((mrjam-native::*places-scrypt* (sb-thread:make-semaphore :count 0)))
+      (assert (handler-case (progn (mrjam-native:scrypt "synthétique" "sel-synthétique") nil)
+                (mrjam-native:native-error (e) (eq :capacite-scrypt (mrjam-native::native-operation e))))))
+    (assert (= 2 (sb-thread:semaphore-count mrjam-native::*places-scrypt*)))
     (format t "~D cas différentiels OpenSSL/JSON binaire64 vérifiés.~%" n)))

@@ -25,6 +25,8 @@ on:
       - tests/identite-client.py
       - tests/admission*
       - tests/fermeture-composant.lisp
+      - tests/test_monolithe_sauvegarde.py
+      - scripts/monolithe-sauvegarde.py
       - .github/workflows/assemblage.yml
   workflow_dispatch:
 permissions:
@@ -50,6 +52,7 @@ jobs:
       - name: Vérifier le sélecteur, les reçus et le contrat
         run: |
           python3 -m unittest discover -s tests -p test_assemblage.py
+          python3 -m unittest discover -s tests -p test_monolithe_sauvegarde.py
           python3 scripts/coordination.py verifier
   composants:
     needs: cadre

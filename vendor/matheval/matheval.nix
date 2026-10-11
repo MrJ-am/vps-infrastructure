@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.services.matheval;
+  metier = config.infrastructure.metier.enable or false;
   release = pkgs.writeShellApplication {
     name = "matheval-release";
     runtimeInputs = [ pkgs.coreutils pkgs.gnutar pkgs.gzip pkgs.nodejs_22 pkgs.curl pkgs.util-linux ];
@@ -75,10 +76,10 @@ in {
       "d /srv/matheval/incoming 0700 matheval-deploy matheval -"
       "d /var/lib/matheval 0700 matheval matheval -"
     ];
-    environment.systemPackages = [ pkgs.nodejs_22 pkgs.rsync release ] ++ lib.optional (cfg.backupRecipient != "") backup;
+    environment.systemPackages = [ pkgs.rsync ] ++ lib.optionals (!metier) [ pkgs.nodejs_22 release ] ++ lib.optional (cfg.backupRecipient != "") backup;
     security.sudo.extraRules = [{
       users = [ "matheval-deploy" ];
-      commands = [
+      commands = lib.optionals (!metier) [
         { command = "${pkgs.systemd}/bin/systemctl restart matheval.service"; options = [ "NOPASSWD" ]; }
       ] ++ lib.optional (cfg.backupRecipient != "") { command = "${backup}/bin/matheval-backup"; options = [ "NOPASSWD" ]; };
     }];

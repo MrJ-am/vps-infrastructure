@@ -1,4 +1,6 @@
-# Contrat : une base, un rôle et un compte système de même nom par projet.
+# Registre des bases historiques et de leurs propriétaires.
+# Les bibliothèques ASDF utilisent les rôles limités via le compte métier commun ;
+# ce registre ne prescrit aucun compte Unix ou processus par bibliothèque.
 # Fonction pure, également évaluée par les contrôles hors du VPS.
 projects:
 let

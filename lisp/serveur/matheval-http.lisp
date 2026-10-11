@@ -79,5 +79,7 @@ Retour status, valeur JSON/CSV, en-têtes. Pas d'état utilisateur global."
                                                (matheval:validation-message e))) (matheval:validation-status e)))
         (vision::json-error ()
           (repondre (vision:jobject "error" "Données invalides. Vérifiez les champs et réessayez.") 400))
+        (mrjam-native:native-error ()
+          (repondre (vision:jobject "error" "Service temporairement occupé. Réessayez dans quelques instants.") 503))
         (mrjam-native:database-error ()
           (repondre (vision:jobject "error" "Enregistrement temporairement indisponible. Vos réponses sont conservées sur cet appareil.") 500))))))

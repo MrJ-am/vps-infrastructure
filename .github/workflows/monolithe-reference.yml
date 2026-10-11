@@ -1,6 +1,12 @@
-name: Référence réelle du monolithe — lecture seule
+name: Référence et sauvegarde isolée du monolithe
 on:
   workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [reference, sauvegarde-restauration]
+        default: reference
+        description: Lecture de référence ou copie chiffrée/restauration dans un cluster privé
 permissions:
   contents: read
 concurrency:
@@ -28,8 +34,14 @@ jobs:
           ssh-keygen -y -P '' -f "$RUNNER_TEMP/monolithe-ssh/admin" >/dev/null
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/monolithe-ssh/admin" >> "$GITHUB_ENV"
       - name: Lire mémoire réelle, comptes agrégés, rattachements et latences
+        if: inputs.operation == 'reference'
         run: |
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/monolithe-reference.py > reference.json
+          python3 -m json.tool reference.json
+      - name: Sauvegarder et restaurer sans écriture SQL ni arrêt de production
+        if: inputs.operation == 'sauvegarde-restauration'
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 - $GITHUB_SHA'" < scripts/monolithe-sauvegarde.py > reference.json
           python3 -m json.tool reference.json
       - name: Contrôler les autres services existants
         run: python3 scripts/probe.py

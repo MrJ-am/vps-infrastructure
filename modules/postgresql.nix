@@ -17,7 +17,7 @@ in {
     type = lib.types.attrsOf (lib.types.submodule {
       options.name = lib.mkOption {
         type = lib.types.str;
-        description = "Nom commun de la base, du rôle et du compte système applicatif.";
+        description = "Nom historique de base et propriétaire ; identité Unix et rôles applicatifs gérés séparément.";
       };
     });
     default = builtins.fromJSON (builtins.readFile ../databases.json);

@@ -2077,5 +2077,218 @@
       "production": "sqlite 3.51.2 constaté ; DSO exact à verrouiller dans construction Nix",
       "nouvelle_dependance": false
     }
-  }
+  },
+  "python_requirements": [
+    {
+      "composant": "vision",
+      "fichier": "interface/tests/requirements.txt",
+      "sha256": "49ff58307703c3b8807dc0c4a80918a9d0b2fe79851b76038e25097e7e59b060",
+      "directes": [
+        "playwright==1.57.0",
+        "Pillow==11.3.0"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    },
+    {
+      "composant": "vision",
+      "fichier": "tests/requirements-embeddings.txt",
+      "sha256": "61bfeb5299b09cc67235b45d6b8945f52a5a757621193227ed87daafc7201606",
+      "directes": [
+        "sentence-transformers==3.4.1",
+        "numpy==2.2.3",
+        "psycopg[binary]==3.2.5"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    },
+    {
+      "composant": "logique",
+      "fichier": "tests/requirements.txt",
+      "sha256": "df7696acf1e200684a962c8b7cb25363273b8239093235e68bb3f60231a9799f",
+      "directes": [
+        "playwright==1.57.0"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    },
+    {
+      "composant": "style",
+      "fichier": "ateliers/logo/requirements-verification.txt",
+      "sha256": "41b54a6fb2918667ca47a61d73b522629d84490f3d78f0f20b21135faba10d35",
+      "directes": [
+        "Pillow==12.3.0"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    },
+    {
+      "composant": "style",
+      "fichier": "tests/requirements.txt",
+      "sha256": "df7696acf1e200684a962c8b7cb25363273b8239093235e68bb3f60231a9799f",
+      "directes": [
+        "playwright==1.57.0"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    },
+    {
+      "composant": "signature",
+      "fichier": "tools/requirements.txt",
+      "sha256": "6abaae468dde6d25382d8f41777242593cdffae66ddffbda26b40bdf01d3fea5",
+      "directes": [
+        "fonttools[woff]==4.61.1",
+        "skia-pathops==0.9.2",
+        "uharfbuzz==0.56.1",
+        "brotli==1.2.0"
+      ],
+      "categorie": "outils de test/construction existants",
+      "transitives": "verrouillage complet requis avant installation centrale"
+    }
+  ],
+  "elm_verrouille": [
+    {
+      "composant": "vision",
+      "fichier": "interface/elm.json",
+      "sha256": "c13286032f45e52878a57451550538a389d3bdc8c5447e3f3345f67cdb4a0611",
+      "dependances": {
+        "direct": {
+          "elm/browser": "1.0.2",
+          "elm/core": "1.0.5",
+          "elm/html": "1.0.0",
+          "mdgriffith/elm-ui": "1.1.8",
+          "elm/json": "1.1.3",
+          "elm/svg": "1.0.1"
+        },
+        "indirect": {
+          "elm/time": "1.0.0",
+          "elm/url": "1.0.0",
+          "elm/virtual-dom": "1.0.3"
+        }
+      },
+      "test_dependances": {
+        "direct": {
+          "elm-explorations/test": "2.2.1"
+        },
+        "indirect": {
+          "elm/random": "1.0.0",
+          "elm/bytes": "1.0.8"
+        }
+      }
+    },
+    {
+      "composant": "matheval",
+      "fichier": "docs/elm.json",
+      "sha256": "c0c794e1684c69f1a36e66445dd73649fb007b7971fb3c46a3aa21dac19ef13e",
+      "dependances": {
+        "direct": {
+          "elm/browser": "1.0.2",
+          "elm/core": "1.0.5",
+          "elm/html": "1.0.0",
+          "elm/http": "2.0.0",
+          "elm/json": "1.1.3",
+          "elm/time": "1.0.0",
+          "mdgriffith/elm-animator": "1.1.1",
+          "mdgriffith/elm-ui": "1.1.8",
+          "elm/url": "1.0.0"
+        },
+        "indirect": {
+          "avh4/elm-color": "1.0.0",
+          "elm/bytes": "1.0.8",
+          "elm/file": "1.0.5",
+          "elm/virtual-dom": "1.0.3",
+          "ianmackenzie/elm-units": "2.10.0"
+        }
+      },
+      "test_dependances": {
+        "direct": {
+          "elm-explorations/test": "2.2.1"
+        },
+        "indirect": {
+          "elm/random": "1.0.0"
+        }
+      }
+    },
+    {
+      "composant": "logique",
+      "fichier": "elm.json",
+      "sha256": "d6fefffbd319cdd3c4656d1e02072a2d8237d69c1558d0292ddbfe5d5c4a8b59",
+      "dependances": {
+        "direct": {
+          "elm/browser": "1.0.2",
+          "elm/core": "1.0.5",
+          "elm/html": "1.0.0",
+          "elm/json": "1.1.3",
+          "elm/parser": "1.1.0",
+          "elm/url": "1.0.0",
+          "mdgriffith/elm-ui": "1.1.8",
+          "elm/svg": "1.0.1"
+        },
+        "indirect": {
+          "elm/time": "1.0.0",
+          "elm/virtual-dom": "1.0.3"
+        }
+      },
+      "test_dependances": {
+        "direct": {},
+        "indirect": {}
+      }
+    },
+    {
+      "composant": "style",
+      "fichier": "ateliers/logo/elm.json",
+      "sha256": "4579e7b79073670a805c54012be78aa847b696a50f50bb5d5674bcfa4b760f8c",
+      "dependances": {
+        "direct": {
+          "elm/browser": "1.0.2",
+          "elm/core": "1.0.5",
+          "elm/html": "1.0.0",
+          "elm/json": "1.1.3",
+          "elm/svg": "1.0.1",
+          "elm/time": "1.0.0",
+          "mdgriffith/elm-animator": "2.0.0",
+          "mdgriffith/elm-ui": "1.1.8"
+        },
+        "indirect": {
+          "avh4/elm-color": "1.0.0",
+          "elm/url": "1.0.0",
+          "elm/virtual-dom": "1.0.3",
+          "mdgriffith/elm-bezier": "2.0.0"
+        }
+      },
+      "test_dependances": {
+        "direct": {
+          "elm-explorations/test": "2.2.1"
+        },
+        "indirect": {
+          "elm/bytes": "1.0.8",
+          "elm/random": "1.0.0"
+        }
+      }
+    },
+    {
+      "composant": "style",
+      "fichier": "elm.json",
+      "sha256": "acdf8ecfeab224a90869bea38263f07e0d93a3f5461dc0c846e20bda3a16b4ee",
+      "dependances": {
+        "direct": {
+          "elm/browser": "1.0.2",
+          "elm/core": "1.0.5",
+          "elm/html": "1.0.0",
+          "mdgriffith/elm-ui": "1.1.8",
+          "elm/json": "1.1.3",
+          "elm/svg": "1.0.1"
+        },
+        "indirect": {
+          "elm/time": "1.0.0",
+          "elm/url": "1.0.0",
+          "elm/virtual-dom": "1.0.3"
+        }
+      },
+      "test_dependances": {
+        "direct": {},
+        "indirect": {}
+      }
+    }
+  ]
 }
