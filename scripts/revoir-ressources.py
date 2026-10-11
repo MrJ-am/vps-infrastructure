@@ -47,15 +47,22 @@ def verifier(composant,sources=None):
     inventory=json.loads((RACINE/'assemblage/elm-review/ressources.json').read_text())
     base=sources[composant];errors=[];js=[]
     prefixes=inventory['racines'][composant]
-    fichiers=subprocess.check_output(['git','ls-files','-z'],cwd=base).decode().split('\0')
+    fichiers=subprocess.check_output(['git','ls-files','-z','--cached','--others','--exclude-standard'],cwd=base).decode().split('\0')
+    retraits=set(subprocess.check_output(['git','ls-files','-z','--deleted'],cwd=base).decode().split('\0'))
     for rel in fichiers:
         if not rel or not any(rel.startswith(root) for root in prefixes):continue
         p=base/rel
+        if rel in retraits:continue  # retrait effectif local ; absent du checkout après commit
+        if p.is_symlink():raise ValueError('Ressource source liée symboliquement : '+composant+'/'+rel)
         if p.suffix not in ('.html','.css','.js','.mjs'):continue
         key=composant+'/'+rel
         declared=inventory['bibliotheques_generees'].get(key)
         if declared:
             if sha(p)!=declared['sha256']:errors.append({'fichier':key,'erreur':'bibliothèque générée différente de sa provenance'})
+            for rel_source,empreinte in declared.get('producteurs',{}).items():
+                source=base/rel_source
+                if not source.resolve().is_relative_to(base.resolve()) or source.is_symlink() or not source.is_file() or sha(source)!=empreinte:
+                    errors.append({'fichier':key,'erreur':'producteur différent de sa provenance : '+rel_source})
             continue
         if p.suffix=='.css':
             errors.append({'fichier':key,'erreur':'feuille CSS de présentation non autorisée'})

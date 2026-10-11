@@ -16,7 +16,20 @@ for (const source of sources) {
     function reject(path, capability) {
       const fn = path.getFunctionParent();
       const name = fn?.node.id?.name || (fn?.parentPath.node.type === 'VariableDeclarator' ? fn.parentPath.node.id.name : null);
-      if (!source.exceptions.some(e => e.fonction === name && e.capacite === capability)) {
+      // Seule la création de balises techniques littérales et détachées est
+      // déléguée. Le même adaptateur ne gagne aucun droit style/HTML/animation.
+      const node = path.node;
+      const call = path.parentPath?.node;
+      const tag = call?.arguments?.[0];
+      const allowed = capability === 'presentation-dom'
+        && property(node) === 'createElement'
+        && node.object?.type === 'Identifier' && node.object.name === 'document'
+        && call?.type === 'CallExpression' && call.callee === node
+        && tag?.type === 'StringLiteral'
+        && source.exceptions.some(e => e.fonction === name
+          && e.capacite === capability && e.operation === 'createElement'
+          && e.balises?.includes(tag.value));
+      if (!allowed) {
         errors.push({ fichier: source.path, ligne: path.node.loc?.start.line, capacite: capability, fonction: name });
       }
     }

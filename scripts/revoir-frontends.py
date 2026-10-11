@@ -74,7 +74,7 @@ def verifier(composant,sources=None,m=None,*,fixture=None,projet_elm=None):
             projet(composant,sources or chemins_sources(),m or manifeste(),stage,projet_elm)
         r=subprocess.run(cmd,cwd=stage,env=env,capture_output=True,text=True)
         # Rapport complet local et borné ; pas de dump CI ou contenu métier.
-        nom=fixture.name if fixture else composant+('-logo' if projet_elm else '')
+        nom=fixture.name if fixture else composant+('-logo' if projet_elm=='ateliers/logo/elm.json' else '')
         report=parent/(nom+'.json');report.write_text(r.stdout)
         if r.returncode:
             try:

@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "9cb1fb145d6a3525b69ac75b35060120adc38e94",
+      "revision": "2d9f31bff90eed0dd330e4a568afaae92ce761f2",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -30,7 +30,7 @@
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "c9663ce7e53dc9cbd61b7f980d651bdae31357df",
+      "revision": "196ab468a0dc0ee39bd9209efef234b5f56861fc",
       "role": "elm-ui"
     },
     "signature": {
@@ -112,10 +112,10 @@
   "frontends": {
     "vision": {
       "verrou_style": "interface/style.lock.json",
-      "sha256": "458869a42a61eabb66c63b6d74f99c2860fa46241d4c6bcaa914b98b94bad436",
-      "revision_style": "96fa28ac564b9492768837d4087608e83acc721b",
+      "sha256": "7b1708cbb1f8f7fb88478b88b1d8cabec52eb981a083cddcb87dec184afd1cb1",
+      "revision_style": "196ab468a0dc0ee39bd9209efef234b5f56861fc",
       "origine_style": "MrJ-am/style-mrjam",
-      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+      "raison": "Contextes Vision explicites et confirmation MCP elm-animator ; candidature locale qualifiée avant promotion."
     },
     "matheval": {
       "verrou_style": "docs/style-mrjam.json",
