@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.8748,
+      "duree_secondes": 0.7554,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "070020a101f2885964a782844b8c1b70ce8a15e28504549b61dcfbcf5514bcd4",
+      "sha256": "88e07bb598fe77458c1de0d8ac38b30b3cfa1484f193b9f82133303ffab18c0e",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -317,10 +317,10 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 1.1115,
+      "duree_secondes": 1.1708,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "283fa28a4e275b854da3fc5ad9bad95467bf6400e37b330cd154faa44e1067cb",
+      "sha256": "6cb178bd957cf6ef11015edac8f141d1bc7c48abea0a57cca7a103600a76f80f",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -409,8 +409,10 @@
     "preuve_production": false,
     "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement",
     "revision_operateurs": "56b6ef7be73acaf90d7fe2ece3335100873f6ff0",
-    "bundle_complet_verifie_localement": true,
-    "stage_sha256": "35390ab398478e76af82c2b974819d105d9cebbe275ff889b717f7ad293b0088"
+    "bundle_complet_verifie_localement": false,
+    "stage_sha256": "35390ab398478e76af82c2b974819d105d9cebbe275ff889b717f7ad293b0088",
+    "correctif_identMap": "Ajouts après la ligne native PostgreSQL ; priorité1600 ; ancien préfixe exact conservé ; test de régression passé. Configuration effective à requalifier sur VPS avant activation.",
+    "raison": "Nouveaux opérateurs Nix à sceller ; les sources métier/frontend sont inchangées."
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

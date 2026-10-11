@@ -424,7 +424,8 @@
         ".github/workflows/monolithe-deploiement.yml",
         "tests/test_monolithe_transport.py",
         "scripts/monolithe-diagnostic.py",
-        "tests/test_monolithe_diagnostic.py"
+        "tests/test_monolithe_diagnostic.py",
+        "modules/metier.nix"
       ],
       "vision": [
         "migrations/*.sql",
@@ -440,7 +441,8 @@
       "vps/hosts/*",
       "vps/hosts/**/*",
       "vps/databases.json",
-      "vps/projects.json"
+      "vps/projects.json",
+      "vps/modules/metier.nix"
     ],
     "commandes": [
       [

@@ -183,6 +183,16 @@ class AccesPostgres(unittest.TestCase):
     def test_ajouts_exacts_et_regles_existantes_preservees(self):
         preparer.verifier_acces_postgresql(self.avant,self.apres)
 
+    def test_ligne_native_postgres_conservee_avant_les_ajouts(self):
+        native='postgres postgres postgres\n'
+        avant=dict(self.avant,identMap=self.avant['identMap']+native)
+        intercale=dict(self.apres,identMap=self.apres['identMap']+native)
+        with self.assertRaisesRegex(ValueError,'IdentMap'):
+            preparer.verifier_acces_postgresql(avant,intercale)
+        ajouts=self.apres['identMap'][len(self.avant['identMap']):]
+        apres=dict(self.apres,identMap=avant['identMap']+ajouts)
+        preparer.verifier_acces_postgresql(avant,apres)
+
     def test_autre_service_authentification_proprietaire_ordre_refuses(self):
         for avant,apres in [(self.avant,dict(self.apres,authentication=self.apres['authentication'].replace('local nextcloud nextcloud peer','local nextcloud nextcloud trust'))),
                             (self.avant,dict(self.apres,authentication=self.avant['authentication']+self.apres['authentication'])),
