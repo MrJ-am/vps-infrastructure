@@ -51,7 +51,9 @@ let
     postgres = {
       package = toString cfg.services.postgresql.finalPackage;
       dataDir = cfg.services.postgresql.dataDir;
-      settings = cfg.services.postgresql.settings;
+      # Seuls ces deux chemins générés changent pour le peer du compte commun.
+      # Leur contenu est contrôlé séparément, avec ajouts exacts et ancien ordre.
+      settings = builtins.removeAttrs cfg.services.postgresql.settings [ "hba_file" "ident_file" ];
       databases = cfg.services.postgresql.ensureDatabases;
       backups = cfg.services.postgresqlBackup.databases;
     };
@@ -71,5 +73,9 @@ let
     nginx = c.systemd.services.nginx.serviceConfig.ExecStart;
     paquet = toString c.infrastructure.metier.paquet;
     backupRecipient = c.services.vision.backupRecipient;
+    postgresAccesAvant = { authentication = base.services.postgresql.authentication;
+      identMap = base.services.postgresql.identMap; };
+    postgresAccesApres = { authentication = c.services.postgresql.authentication;
+      identMap = c.services.postgresql.identMap; };
   };
 in { inherit base c moduleCandidate rapport; }

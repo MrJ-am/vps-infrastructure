@@ -7,7 +7,7 @@ Les précédentes archives restent intactes.
 
 * Sources et responsable
 Responsable : MrJ-am/vps-infrastructure.
-[[file:../assemblage/manifest.json][Manifeste]], [[file:CONTRATS.org][contrat v2]],
+[[file:../assemblage/manifest.json][Manifeste]], [[file:CONTRATS.org][contrat v3]],
 [[file:../AGENTS.md][consignes]].
 
 * Migration et reprise
@@ -17,6 +17,9 @@ Tests pertinents et intégration centrale valident chaque changement.
 
 * Production
 Dernière preuve antérieure : [[file:../docs/ETAT.md][10 octobre 2026]].
-Audit actuel : Actions 38097638053, résultat final à constater.
+Référence actuelle : Actions 38118876078. Préparation 38126827329 refusée avant
+activation ; diagnostic 38127124960 réussi, écart limité aux chemins générés
+HBA/IdentMap. Correction locale en cours ; aucun monolithe activé.
+Amendement frontend/outillage en cours, non qualifié ; ancien candidat bloqué.
 Une CI réussie ne prouve pas la version servie.
 

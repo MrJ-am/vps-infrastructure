@@ -27,6 +27,8 @@ def sha(p):
 
 def descriptor():
     d=json.loads((RACINE/'operations/monolithe-candidat.json').read_text())
+    exiger(d.get('qualification_amendement_20261011')=='qualifiee',
+           'Amendement du 11 octobre non qualifié : promotion bloquée')
     exiger(d['format']==1 and d['soumission_autorisee_par_proprietaire'] is True,'Soumission non scellée')
     exiger(d['origine_preuves']=='codex-local-non-attestee','Origine inconnue')
     for k in ('revision_operateurs','revision_construction'):exiger(re.fullmatch('[a-f0-9]{40}',d[k]),'Révision invalide')

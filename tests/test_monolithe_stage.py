@@ -13,6 +13,19 @@ sys.path.insert(0,str(ROOT/'scripts'))
 import assemblage
 spec=importlib.util.spec_from_file_location('preparer',ROOT/'scripts/monolithe-preparer.py')
 preparer=importlib.util.module_from_spec(spec);spec.loader.exec_module(preparer)
+spec_stage=importlib.util.spec_from_file_location('stage',ROOT/'scripts/monolithe-stage.py')
+stage=importlib.util.module_from_spec(spec_stage);spec_stage.loader.exec_module(stage)
+
+
+class PromotionAmendement(unittest.TestCase):
+    def test_candidat_anterieur_ou_en_attente_refuse_avant_transport(self):
+        for statut in (None,'requise','non-qualifie'):
+            with self.subTest(statut=statut):
+                contenu={} if statut is None else {'qualification_amendement_20261011':statut}
+                with patch.object(Path,'read_text',return_value=json.dumps(contenu)):
+                    with self.assertRaisesRegex(ValueError,'promotion bloquée'):
+                        stage.descriptor()
+
 
 
 class BundleTest(unittest.TestCase):
@@ -100,6 +113,25 @@ class BundleTest(unittest.TestCase):
         self.cert['qualification']['sorties_nix']['metier']='/nix/store/'+'a'*32+'-mrjam-metier-'+'a'*12
         self.cert['qualification']['source_revision']='d'*40
         with self.assertRaisesRegex(ValueError,'Révision'):self.verifier()
+
+
+class AccesPostgres(unittest.TestCase):
+    def setUp(self):
+        self.avant={'authentication':'local all postgres peer\nlocal vision vision_identite peer map=mrj_identite\nlocal nextcloud nextcloud peer\n',
+                    'identMap':'mrj_identite mrj-auth vision_identite\n'}
+        self.apres={'authentication':'local vision vision,vision_administration,vision_cycle,vision_admission,vision_fermeture,vision_entretien peer map=mrjam_metier\nlocal matheval matheval_app peer map=mrjam_metier\n'+self.avant['authentication'],
+                    'identMap':self.avant['identMap']+'\n'+'\n'.join('mrjam_metier mrjam-metier '+r for r in ('vision','vision_administration','vision_cycle','vision_admission','vision_fermeture','vision_entretien','matheval_app'))+'\n'}
+
+    def test_ajouts_exacts_et_regles_existantes_preservees(self):
+        preparer.verifier_acces_postgresql(self.avant,self.apres)
+
+    def test_autre_service_authentification_proprietaire_ordre_refuses(self):
+        for avant,apres in [(self.avant,dict(self.apres,authentication=self.apres['authentication'].replace('local nextcloud nextcloud peer','local nextcloud nextcloud trust'))),
+                            (self.avant,dict(self.apres,authentication=self.avant['authentication']+self.apres['authentication'])),
+                            (self.avant,dict(self.apres,identMap=self.apres['identMap']+'mrjam_metier mrjam-metier postgres\n')),
+                            (self.avant,dict(self.apres,identMap=self.apres['identMap'].replace('mrj_identite mrj-auth vision_identite','mrj_identite mrjam-metier vision_identite')))]:
+            with self.subTest(apres=apres):
+                with self.assertRaises(ValueError):preparer.verifier_acces_postgresql(avant,apres)
 
 
 if __name__=='__main__':unittest.main()

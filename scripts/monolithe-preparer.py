@@ -117,6 +117,19 @@ def inventaire_etats():
     return result
 
 
+def verifier_acces_postgresql(avant,apres):
+    def lignes(s):return [l.strip() for l in s.splitlines() if l.strip() and not l.lstrip().startswith('#')]
+    roles=('vision','vision_administration','vision_cycle','vision_admission',
+           'vision_fermeture','vision_entretien','matheval_app')
+    hba=['local vision '+','.join(roles[:-1])+' peer map=mrjam_metier',
+         'local matheval matheval_app peer map=mrjam_metier']
+    maps=['mrjam_metier mrjam-metier '+r for r in roles]
+    exiger(lignes(apres['authentication'])==hba+lignes(avant['authentication']),
+           'HBA : seuls les deux accès peer métier sont autorisés avant les règles préservées')
+    exiger(lignes(apres['identMap'])==lignes(avant['identMap'])+maps,
+           'IdentMap : seuls les sept rôles métier limités sont autorisés')
+
+
 def preparer(revision):
     exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision),'Opérateur/révision refusés')
     os.umask(0o077)
@@ -161,6 +174,7 @@ def preparer(revision):
     r=json.loads(commande(args,d))
     (d/'evaluation-privee.json').write_text(json.dumps(r,ensure_ascii=False,indent=2)+'\n')
     exiger(r['avant']==avant['generation'],'Les sources actives ne reproduisent pas le système')
+    verifier_acces_postgresql(r['postgresAccesAvant'],r['postgresAccesApres'])
     exiger(r['assertions'] and r['invariantAvant']==r['invariantApres'],'Un service préservé changerait')
     expression='(import '+str(root/'vps/scripts/monolithe-evaluation.nix')+' { '+''.join(k+'='+json.dumps(v)+'; ' for k,v in params.items())+'}).moduleCandidate'
     candidate=d/'configuration-candidate.nix'

@@ -1,11 +1,12 @@
-#+TITLE: Contrat d'assemblage central — version 2
+#+TITLE: Contrat d'assemblage central — version 3
 #+OPTIONS: toc:nil
 
 * Autorité et sources
 :PROPERTIES:
 :CUSTOM_ID: coordination
 :END:
-La mission du propriétaire du 11 octobre 2026 remplace le protocole v1.
+La mission et son amendement du 11 octobre2026 remplacent le protocole v1.
+Le périmètre reste les six dépôts ; ETP Vie Amoureuse totalement exclu.
 MrJ-am/vps-infrastructure est responsable de l'assemblage. Le manifeste
 assemblage/manifest.json identifie les six sources, révisions et contrats.
 Publier les composants avant référencement. Aucun accusé de lecture,
@@ -46,7 +47,13 @@ Retrait IdP sans effacement métier implicite. Enrôlement personnel jamais inve
 :PROPERTIES:
 :CUSTOM_ID: style
 :END:
-style-mrjam fournit ElmUI, Signature les ressources réservées ; révisions exactes,
+style-mrjam fournit elm-ui/elm-animator, composants et politique de transitions.
+Elm-review obligatoire sur sources assemblées et composants verrouillés : symboles,
+alias/exposing, frontières et adaptateurs bornés. Aucune présentation HTML/CSS
+applicative parallèle, ni animation ad hoc ; voir assemblage/FRONTENDS.md.
+Tests conformes/non conformes et fixture effectivement refusée, puis navigateur
+Continuous UI (interruptions/focus/clavier/reduced-motion/rafraîchissement borné).
+Signature fournit les ressources réservées ; révisions exactes,
 texte sélectionnable MrJ.am, domaines et chemins conservés. Qualification centrale
 des consommateurs affectés. Aucune refonte gratuite ni publication satellite.
 
@@ -55,8 +62,13 @@ des consommateurs affectés. Aucune refonte gratuite ni publication satellite.
 :CUSTOM_ID: qualification
 :END:
 Catalogue et sélection selon dépendances effectives, exécutés localement dans Codex.
-Une image SBCL par tâche, ASDF incrémental, redéfinitions et tests ciblés dans cette
-image ; validation finale en image neuve. Voir assemblage/DEVELOPPEMENT.md.
+Une image SBCL persistante par tâche : cl-mcp (structure/introspection/ASDF/tests)
+et cl-tron-mcp via Swank (évaluation initiale débogable/pile/locaux/correction/restart)
+visent la même image, pool désactivé et identité PID/marqueur/objet prouvée.
+Mutations sérialisées, effets examinés avant reprise ; sources canoniques et ASDF
+incrémental, validation finale en image neuve. Voir assemblage/DEVELOPPEMENT.md.
+Outils de développement sans production/public ; MCP métier distinct.
+Pas de cl-harness, fusion, serveur MCP ou débogueur réécrit.
 Ne pas relancer une campagne distante pour diagnostiquer un échec local.
 Reçus avec empreintes entrées/outils ; aucun reçu local non attesté ni cache externe
 inconnu n'autorise la publication. Intégration/concurrence/identité/sécurité réelles.
@@ -70,7 +82,9 @@ Conserver générations de retour/services tiers. Mécanismes d'exploitation exi
 * Dépendances autorisées
 Bibliothèques Common Lisp tierces admises après audit documenté et verrouillage :
 provenance, version, licence, dépendances, effets au chargement et risques d'usage.
-Kanidm et ses outils officiels autorisés ; pas de nouveau runtime, langage ou
+Kanidm/outils officiels et outils nommés par l’amendement avec leurs nécessaires
+transitives autorisés après audit/verrouillage (elm-animator, elm-review, cl-mcp,
+cl-tron-mcp/Swank) ; pas de nouveau runtime, langage ou
 service produit sans autorisation explicite. Python autorisé pour l'outillage de
 l'agent. Node/frontend et référence différentielle historique restent des usages
 déjà approuvés, distincts du serveur métier exclusivement Common Lisp.
