@@ -34,6 +34,13 @@ class Transport(unittest.TestCase):
 
     def test_git_chiffre_exact(self):self.assertEqual(self.lire(),self.d)
 
+    def test_parties_ordonnees_et_sans_chemin_libre(self):
+        self.d['parties_transport']=['candidat.tar.gz.age.part-000','candidat.tar.gz.age.part-001']
+        self.assertEqual(self.lire(),self.d)
+        for parts in [[],list(reversed(self.d['parties_transport'])),['../../secret'],['candidat.tar.gz.age.part-001']]:
+            self.d['parties_transport']=parts
+            with self.assertRaises(ValueError):self.lire()
+
     def test_revision_chemin_depot_non_verrouilles(self):
         for champ,valeur in [('revision_transport','main'),('chemin_transport','../secret'),
                              ('depot','tiers/depot'),('cipher_sha256','faux')]:

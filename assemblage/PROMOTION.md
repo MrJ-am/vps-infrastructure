@@ -22,7 +22,9 @@ du propriétaire dans son dépôt d'infrastructure :
 3. Le descripteur `operations/monolithe-candidat.json`, commité sur main, verrouille
    l'asset numérique et son producteur GitHub MrJ-am/id12571490 ou, lorsque cet
    endpoint n'est pas accessible, le commit exact d'une branche d'artefact isolée
-   du même dépôt et le seul chemin `candidat.tar.gz.age`. Il verrouille les octets,
+   du même dépôt et le chemin `candidat.tar.gz.age` ou ses parties numérotées
+   dans l’ordre ; aucun chemin libre. La branche contient seulement le chiffré
+   et ses métadonnées publiques. Il verrouille les octets,
    les empreintes du chiffré, de l'archive, du manifeste interne et du binaire.
    `soumission_autorisee_par_proprietaire` consigne l'autorisation de cette
    mission ; ce n'est pas une signature ni une confirmation personnelle nouvelle.
@@ -62,3 +64,9 @@ Envoi de l'asset refusé par uploads.github.com (401) ; release non publiée.
 Transport Git chiffré préparé sans credential supplémentaire ni binaire dans main.
 Aucun transfert ni activation effectués à ce stade. Les preuves
 de restauration et d'accès réellement obtenues primeront sur cette description.
+
+Soumission du candidat e522c2a : 108401335 octets chiffrés, trois parties de
+40 Mio maximum dans le commit de transport29cde31. Le binaire296b7c89 et
+sa construction158e4a5 sont inchangés. La médiation CI actuelle est liée au
+commit Actions ; les opérateurs privés serveur restent ceux du bundlee522c2a.
+Aucun code privé en clair ni binaire ajouté à main.

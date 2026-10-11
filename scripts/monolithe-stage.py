@@ -38,6 +38,10 @@ def descriptor():
     if d.get('transport')=='git-chiffre':
         exiger(re.fullmatch('[a-f0-9]{40}',d['revision_transport']) and
                d['chemin_transport']=='candidat.tar.gz.age','Transport Git non verrouillé')
+        parts=d.get('parties_transport',[d['chemin_transport']])
+        exiger(isinstance(parts,list) and 0<len(parts)<=20 and
+            (parts==[d['chemin_transport']] or parts==['candidat.tar.gz.age.part-'+str(i).zfill(3)
+                                                      for i in range(len(parts))]),'Parties Git non verrouillées')
     else:
         exiger(d['uploader_id']==12571490,'Producteur inconnu')
         exiger(isinstance(d['asset_id'],int) and d['asset_id']>0,'Asset invalide')
@@ -60,8 +64,11 @@ def main():
             subprocess.run(['git','init','--bare','--quiet',depot],check=True)
             subprocess.run(['git','--git-dir='+str(depot),'fetch','--quiet','--no-tags','--depth=1',
                 'https://github.com/MrJ-am/vps-infrastructure.git',d['revision_transport']],check=True)
-            with cipher.open('xb') as f:subprocess.run(['git','--git-dir='+str(depot),'show',
-                d['revision_transport']+':'+d['chemin_transport']],stdout=f,check=True)
+            with cipher.open('xb') as f:
+                for partie in d.get('parties_transport',[d['chemin_transport']]):
+                    subprocess.run(['git','--git-dir='+str(depot),'show',
+                        d['revision_transport']+':'+partie],stdout=f,check=True)
+                    exiger(f.tell()<=d['cipher_octets'],'Transport hors limite')
         else:
             endpoint='repos/MrJ-am/vps-infrastructure/releases/assets/'+str(d['asset_id'])
             meta=json.loads(subprocess.check_output(['gh','api',endpoint]))
