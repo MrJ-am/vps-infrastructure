@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.7504,
+      "duree_secondes": 0.8748,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "aa149d8a4204151621e19cecc034a62114eafc391a35d00d778e4bc9dc0cc99d",
+      "sha256": "070020a101f2885964a782844b8c1b70ce8a15e28504549b61dcfbcf5514bcd4",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -407,7 +407,10 @@
     },
     "ajustement_final": "matheval-postgresql lié explicitement à l’image296b7 ; suite et sélection requalifiées après changement du catalogue",
     "preuve_production": false,
-    "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement"
+    "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement",
+    "revision_operateurs": "56b6ef7be73acaf90d7fe2ece3335100873f6ff0",
+    "bundle_complet_verifie_localement": true,
+    "stage_sha256": "35390ab398478e76af82c2b974819d105d9cebbe275ff889b717f7ad293b0088"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

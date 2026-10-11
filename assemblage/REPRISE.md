@@ -2,6 +2,14 @@
 
 ## Point de reprise actif — préparation de production
 
+Opérateurs qualifiés56b6ef7be73acaf90d7fe2ece3335100873f6ff0.
+Scellement et verifier_bundle COMPLET réussis localement, mêmes35reçus/sources
+et même image296b7. Archive109013762octets, chiffré80ee4b46c3866150213f8a3265edf9a53e57ac1a3212b1f0e4491e896fff62da.
+Transport publiébbc2aee495fbe1982884dfefaba1600a503b1fba, brancheartefacts/monolithe-56b6ef7be73a.
+Descripteur central actualisé. Nouvelle préparation fermée à lancer ; production
+ancienne conservée, aucune activation/restauration de données effectuée.
+Les préparations précédentes ci-dessous sont historiques, sans effet applicatif.
+
 Préparation38183043781/c7da012 terminée en échec avant toute activation :
 verifier_bundle refusait le verrou historique Logique (objets Git SHA-1 comparés
 à SHA-256).75fichiers vérifiés réellement avec leur format historique ; aucun
