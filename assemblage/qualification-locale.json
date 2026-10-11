@@ -408,11 +408,11 @@
     "ajustement_final": "matheval-postgresql lié explicitement à l’image296b7 ; suite et sélection requalifiées après changement du catalogue",
     "preuve_production": false,
     "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement",
-    "revision_operateurs": "56b6ef7be73acaf90d7fe2ece3335100873f6ff0",
-    "bundle_complet_verifie_localement": false,
-    "stage_sha256": "35390ab398478e76af82c2b974819d105d9cebbe275ff889b717f7ad293b0088",
+    "revision_operateurs": "c5548b354839db1f8875ec28a3ce7a8c810c42a4",
+    "bundle_complet_verifie_localement": true,
+    "stage_sha256": "b0bb6d7c35b18d263a6d9edd4f10fe1fcd88eb0f5ae4d407254b323ea57187e2",
     "correctif_identMap": "Ajouts après la ligne native PostgreSQL ; priorité1600 ; ancien préfixe exact conservé ; test de régression passé. Configuration effective à requalifier sur VPS avant activation.",
-    "raison": "Nouveaux opérateurs Nix à sceller ; les sources métier/frontend sont inchangées."
+    "raison": "Nouveaux opérateurs vérifiés localement ; préparation réelle encore requise ; même binaire et frontends"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
