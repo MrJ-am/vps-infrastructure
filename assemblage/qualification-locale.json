@@ -1,6 +1,6 @@
 {
-  "format": 2,
-  "nature": "qualifications locales, aucune attestation CI/production",
+  "format": 3,
+  "nature": "qualification locale exacte ; aucune attestation CI ni production",
   "publication_autorisee": false,
   "sources_composants": {
     "vps": {
@@ -12,237 +12,411 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "fcb35f835cec8e338de1a336a7e0240e5073ffbd",
+      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "d64f2358e224ac99c004ae92972a9bdc02242606",
+      "revision": "68df529042609561329e757145a187ca079a5cea",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
       "depot": "MrJ-am/apprendre-a-demontrer",
       "branche": "main",
-      "revision": "586ae182f66e43de9e9ca09107ab22e3d340a568",
+      "revision": "d76f0074efa066098ec95c89cbf6d14da8c296cd",
       "role": "frontend-statique"
     },
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "1132afea89b3fa8b4a8f7fba7f7bb7e8eb803de3",
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
       "role": "elm-ui"
     },
     "signature": {
       "depot": "MrJ-am/Signature",
       "branche": "main",
-      "revision": "c4a20679030a56126e91648b697cd5a9ccd7c6d5",
+      "revision": "e9d9d34d353422c2993cd1bc7c3c626f503bb5e0",
       "role": "ressources-identite"
     }
   },
   "artefact_local": {
     "format": 1,
-    "artefact_sha256": "22655808c3fe9941417e13da231b4ae2c310b9d3eaa64a46295ee2ce1b6ddfa8",
-    "taille_octets": 10457800,
-    "construction_secondes": 3.559,
-    "tests_secondes": 8.3669,
-    "fasl_reference_sans_cache": true,
-    "fasl_reference_crees": 40,
+    "source_revision": "158e4a52e012e5e46cf83afa05d2e36cfe0f4e49",
+    "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+    "sorties_nix": {
+      "metier": "/nix/store/nq8729macji666smhhddvf9i4xqzkdy4-mrjam-metier-158e4a52e012",
+      "outils": "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification"
+    },
+    "artefact_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+    "taille_octets": 12486040,
     "compilation": {
-      "sbcl": "2.5.2.debian",
+      "sbcl": "2.6.4",
       "asdf": "3.3.1",
       "optimisation": "speed=1 safety=3 debug=1 space=1 compilation-speed=1",
       "cache": "isole-explicite"
     },
-    "source_revision": "12b7a1d8d62c1f8be23d3cf9374d52f57ca7234a",
-    "qualification": "locale HTTP/transactions/redemarrage, assemblage complet non qualifie",
-    "publication_autorisee": false
+    "publication_autorisee": false,
+    "construction_secondes": null,
+    "mesure_construction": "non chronométrée ; build propre Nix local",
+    "qualification": "candidat Nix local HTTP/transactions/redemarrage, pas production",
+    "tests_secondes": 21.765
   },
-  "graphe_sources_sha256": "3eb44583a564930a377d28f5980b4de05d97f0f4b4d82682e1baf6d78b3e5588",
+  "frontends": {
+    "vision": {
+      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
+      "ensemble_sha256": "87c5bda677407aa4b91b329d51a6a1c9b3e1115ed00c3141599e36906d8fdc6f"
+    },
+    "matheval": {
+      "revision": "68df529042609561329e757145a187ca079a5cea",
+      "ensemble_sha256": "53e0fb3dfafcc9ba8791c7fa3510244be08a5d1fad1c450b5b3ebb4a45d38a01"
+    },
+    "logique": {
+      "revision": "d76f0074efa066098ec95c89cbf6d14da8c296cd",
+      "ensemble_sha256": "429547831e36be6ec13174f5764bd816c5090b6922d1bc5a7032a7e1bd0b3b82"
+    },
+    "style": {
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+      "ensemble_sha256": "61685ec587064bbc793cc6743f6a7478c9c24d346862bff9a6d68454e6fb830e"
+    }
+  },
   "recus_locaux": {
     "admission-validation": {
-      "sha256": "9ad682623d602e71c4044763dafb30c68411dc2ecb80210e43ab9cd9fe720bc3",
       "resultat": "succes",
-      "duree_secondes": 0.4863,
+      "duree_secondes": 1.2718,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "5fd9deab671bcfcb69ca7f9db4832534d673b8bb96be7357c255481d30838800",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "cache-documents": {
-      "sha256": "9c458a48f2afd4fe2ce37907b6d95dff997979360339ea1e2e9920fc8245fe96",
       "resultat": "succes",
-      "duree_secondes": 0.9362,
+      "duree_secondes": 1.2667,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "5bd8862625a81953d2ba75766fc8bee4558da1dd8433ff5d079aa5d8fa8621bc",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "cache-fasl": {
+      "resultat": "succes",
+      "duree_secondes": 1.3338,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "7280d6be097c7ef774517f0a5e2eb33586111f412b4dd300078f34a8b60217d7",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "courriel-composant": {
-      "sha256": "b1693e738aa1941b3b020f2b493668101d01014aa91a6d3c95dcd73bcb5a6a32",
       "resultat": "succes",
-      "duree_secondes": 1.5807,
+      "duree_secondes": 2.6714,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "856d0ebfda9957a0b84150764279e160770866e896f6f231fa0b3544bc05dd86",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "editorial": {
-      "sha256": "81e73a948693ba46f674f22db4edfe59ddbd8bd0b01557fe608bf1e19b89c091",
       "resultat": "succes",
-      "duree_secondes": 0.2483,
+      "duree_secondes": 0.3133,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "fb25d10699b8abd63e906649c76abdc33f51aa4e31f0e5c23782ffa4f2f3bfee",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "frontend-regles": {
+      "resultat": "succes",
+      "duree_secondes": 18.7958,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "204e58d8ce6dde89a8f65839923264b1ebd3f6e807d2ac468563401dc783d32b",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "frontend-sources": {
+      "resultat": "succes",
+      "duree_secondes": 1.0166,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "8c26afab771bd0badda083937e6cb7f5bbfa96a54f60193a71229598a10b3074",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "gestion-validation": {
-      "sha256": "6f202ebde3e181a72ee1cd7a706f67e38a960d47cdd30779cd383f8393a9af11",
       "resultat": "succes",
-      "duree_secondes": 0.4634,
+      "duree_secondes": 1.3117,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "21f530dd2fabc4462ea1b0b5376bb65be3a7d831c37c2ef13299eeb6bd5cd10e",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "identite-client": {
-      "sha256": "aa89beae1e1cff152da9112b70890960272ad2792e44bc038a7e381d67aa063a",
       "resultat": "succes",
-      "duree_secondes": 1.0719,
+      "duree_secondes": 2.0552,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "32645e58625299c8d1c7a9d88dd939d92fb219004c77ef6986b7f80274eb1921",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "integration-securite": {
+      "resultat": "succes",
+      "duree_secondes": 1.4409,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "f4fc3a2430dfbc7238a6c693bec1a378dd293e8ce5a83b6b5aeae43b3f9e33db",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "json-commun": {
-      "sha256": "cfb744fe26164467c7bbe1c439fda1ec2c6c30b3b61d1196bc0ee81717c362fc",
       "resultat": "succes",
-      "duree_secondes": 0.4611,
+      "duree_secondes": 1.1408,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "f2f528aea1af78218845ec73f7ef2026a2f935f32fd72d81ce9e89c6da5e5971",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "logique-correcteur": {
+      "resultat": "succes",
+      "duree_secondes": 14.6842,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "3384736d5c48593ec76d1f7213436669de8d3842afde57a34967fd13a5ad303a",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "logique-interface": {
+      "resultat": "succes",
+      "duree_secondes": 119.9275,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "394aef6c53c18387a7dad50a2290c1f04906a050885029360487b05dffe25de1",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "matheval-interface": {
+      "resultat": "succes",
+      "duree_secondes": 14.7407,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "872611d5bfbfa4cdc148bb394bae14513408fcc7e5ccd19b31446c1b8021efae",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "matheval-navigateur": {
-      "sha256": "adf1338b7314d00dce8c0838d84c3d1fe1d5400e4d55baaeb7cf8d7ffaf22824",
       "resultat": "succes",
-      "duree_secondes": 300.2492,
+      "duree_secondes": 477.2098,
       "confiance": "locale-non-attestee",
-      "artefact": "5dd18de2100147af0e7f0777f8e6233a0b8d734ebe08ba69bfa2f843d69fb4f6",
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "a1618eccd36b57d24d99766eac80105dabda8be95ba94be474f3ce6eb069d616",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "matheval-postgresql": {
-      "sha256": "f07adabab92ae6b22cacee105657ee47b4ad9015e3ac5564f4b57283e046481a",
       "resultat": "succes",
-      "duree_secondes": 10.8192,
+      "duree_secondes": 23.9254,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "c5ba11b64db8216725e4c1f8e3fcc6386f1e2e31c25ef07feb2f86fd856a3f6d",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "matheval-pures": {
-      "sha256": "12fe2bb811925b8fa7cf96e90eba212a5238d8032cbcef59528001a9a9fdd81a",
       "resultat": "succes",
-      "duree_secondes": 0.7757,
+      "duree_secondes": 1.271,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "25c6876821a3d07436c627e55ae0a105a189f43d2d3db44f1872592fe6d53641",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "matheval-reference": {
-      "sha256": "c86bfd2f47c4d5e7b031a124200540c4be58df56e337ec01658d5b115f92fc47",
       "resultat": "succes",
-      "duree_secondes": 16.9029,
+      "duree_secondes": 17.8539,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "52d5975b1f63eee5ace0294a288a17245a7150294e80834e5cb7f979c6ada0fd",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "migration": {
+      "resultat": "succes",
+      "duree_secondes": 0.4909,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "d5be931416d508cddf39304693effe3ece88f080533e9d9344eb41d4b4a417d9",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "native-contrats": {
-      "sha256": "cdffd575f700054452abb215e27aff181e0f832cd654f4714835818e87836a5d",
       "resultat": "succes",
-      "duree_secondes": 2.3326,
+      "duree_secondes": 4.0664,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "12a0e62f156dfe3491383ee00324b5becee090a1fd10e215b746abbd3ef63319",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "navigateur-mcp": {
+      "resultat": "succes",
+      "duree_secondes": 23.7191,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "7d72afa608f0bd30b92bd037365847a5e9b0bb80f6ca13f7468a4e755e9e324f",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "outils-mcp": {
+      "resultat": "succes",
+      "duree_secondes": 0.2992,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "002632756c05be9337586fbcab2bd5cd0536d69df1cf1a2dd8941bba1b68fe89",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "outils-routage": {
+      "resultat": "succes",
+      "duree_secondes": 0.5077,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "cfddc8152c37541833a3908961672e4f6f0816962a34881f6fa062bf9a0b0c3c",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "quotas-http": {
-      "sha256": "fd9a9ce672dd9a2f7bf64302dc2ae68f856d6f6fadd4e60ace7623b05d28da38",
       "resultat": "succes",
-      "duree_secondes": 1.0175,
+      "duree_secondes": 1.2622,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "c1c39a59900d765b332eb814fc787d47ed328dc3aea1446fea8863549e8762bf",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "sauvegarde-copies": {
-      "sha256": "5d4c8c608b87699fbd50acebf9a5cab81872085e177f5a03fdcb08c8944eb541",
       "resultat": "succes",
-      "duree_secondes": 0.1378,
+      "duree_secondes": 0.2916,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "bb5b177bece8f768d75327982f651ebac7d2582f74469d42523e9da4650f90fd",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "schema-prive": {
-      "sha256": "a714944f8803f1a55dd299b20b0eac47fa7cf41e791373561086bcc2c6d8786d",
       "resultat": "succes",
-      "duree_secondes": 0.1457,
+      "duree_secondes": 0.2325,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "11ec95dc064fbe2937e2d01c9ffaa4737c7ea45bb9236e798dc8d3fb72af0698",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "selection": {
-      "sha256": "f80b1b4a61615454596660df03ef53fd9e169dbf33bc4df5e0d998b33e6828a3",
       "resultat": "succes",
-      "duree_secondes": 0.5081,
+      "duree_secondes": 1.1115,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "283fa28a4e275b854da3fc5ad9bad95467bf6400e37b330cd154faa44e1067cb",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "signature-web": {
+      "resultat": "succes",
+      "duree_secondes": 3.9372,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "830f4983f8fe0ed157d74761bbff2d961d4e3ce7d386d71733b41cb89249c792",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "style-logo": {
+      "resultat": "succes",
+      "duree_secondes": 264.5806,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "4a2827d4654e16046d7aaa8a5b801a17ceb08622095d0f232d29af83bfd586cc",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "style": {
+      "resultat": "succes",
+      "duree_secondes": 131.6359,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "064d6b82a5e0eda1f7b14e3f2f2cb073d528aa2133f3bba1f83f1744b3a91d83",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-contrats": {
-      "sha256": "721ae964af176c476adfba47b5c3df22d3983535f203ed7926f8d42d650b863d",
       "resultat": "succes",
-      "duree_secondes": 0.5118,
+      "duree_secondes": 0.9059,
       "confiance": "locale-non-attestee",
-      "artefact": null,
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "d269354bcc797a94591abaf4599661859ed9d452183f1f432dc12d58fdeabd7f",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+    },
+    "vision-interface": {
+      "resultat": "succes",
+      "duree_secondes": 62.7724,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "10ad8d32e23a43216b40f2c0b2b996c0f8a6195a85d8dde1c331367d30be67b3",
+      "artefact_metier_sha256": null,
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-postgresql": {
-      "sha256": "f86e32b7f64a539264749d766858c86479625bb932103a82ec94934516b0dca6",
       "resultat": "succes",
-      "duree_secondes": 95.7303,
+      "duree_secondes": 117.2998,
       "confiance": "locale-non-attestee",
-      "artefact": "5dd18de2100147af0e7f0777f8e6233a0b8d734ebe08ba69bfa2f843d69fb4f6",
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "12a2bb48b9caf59ed50117b04b672c6c02b5596df0c8604407219ec2d687c959",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-semantique": {
-      "sha256": "bf0ad2ecff4ca995339e4c5acc6aa135b85326bb05d37ee04d0a8dfb8c825215",
       "resultat": "succes",
-      "duree_secondes": 36.174,
+      "duree_secondes": 36.7386,
       "confiance": "locale-non-attestee",
-      "artefact": "5dd18de2100147af0e7f0777f8e6233a0b8d734ebe08ba69bfa2f843d69fb4f6",
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "2d79ddf9f3f9f97c134816cced9191a20608f5b4b266c19c3fa22911b7b6491e",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-sql-native": {
-      "sha256": "3b4f21e2b41e5393dbf6a9e830551ac1e93ad301dc4ad5916740fc41a1999dfd",
       "resultat": "succes",
-      "duree_secondes": 12.5966,
+      "duree_secondes": 16.8229,
       "confiance": "locale-non-attestee",
-      "artefact": "22655808c3fe9941417e13da231b4ae2c310b9d3eaa64a46295ee2ce1b6ddfa8",
-      "nature": "historique local ; réutilisation uniquement après égalité exacte des entrées par le sélecteur"
+      "autorise_publication": false,
+      "sha256": "96d80cbecc2648c54ecfaa1dba929673d2188c09c8b1a253656489d1c2e4cdd4",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     }
   },
-  "mesures_reference": "reference-production.json",
-  "sauvegarde_restaures_donnees": "sauvegarde-transition.json",
-  "limitations": [
-    "Build Nix/SBCL 2.6.4 pas encore exécuté",
-    "Identité entrée synthétique de tests, OIDC/Nginx réel commun non qualifié",
-    "ACL/retour applicatif sur restauration puis production/redémarrage restants",
-    "Candidat navigateur Matheval qualifié sur 5dd18de2 avant corrections ciblées de quotas",
-    "Pas de déploiement commun ou Kanidm"
-  ],
-  "ci_distincte": {
-    "infrastructure": {
-      "run": 38112469913,
-      "commit": "2cd93cecd6fe195e727c21a995719b46143da07f",
-      "resultat": "success",
-      "limite": "module évalué avec paquet factice ; pas de build commun qualifié"
+  "controle_final": {
+    "suites": 35,
+    "resultat": "succes",
+    "reutilisation_finale": {
+      "suites_reutilisees": 34,
+      "suite_reexecutee": "editorial",
+      "raison": "égalité des empreintes exactes, campagnes nouvelles déjà exécutées sur leurs candidats"
     },
-    "assemblage": {
-      "run": 38112469897,
-      "commit": "2cd93cecd6fe195e727c21a995719b46143da07f",
-      "cadre": "success",
-      "composants": "failure",
-      "raison": "COMPONENTS_READ_TOKEN absent, aucune source privée lue, build Nix/tests composants skipped"
-    }
-  }
+    "ajustement_final": "matheval-postgresql lié explicitement à l’image296b7 ; suite et sélection requalifiées après changement du catalogue",
+    "preuve_production": false
+  },
+  "historique_exact": {
+    "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
+    "sha256": "4ab3c371823cd356630ec2622b7a83b2476d0dd8dec73ef9a4301fbda1094848"
+  },
+  "limites": [
+    "L’environnement local est empreinté et distinct du runner ; aucune attestation indépendante.",
+    "La preuve MCP de développement historique est vérifiée hors ligne, sans nouveau scénario ni reconnexion.",
+    "Les tests navigateur et multi-comptes sont synthétiques hors production.",
+    "Préparation, restauration récente, retour et contrôles de la version servie encore requis.",
+    "Protections/secrets/clés GitHub : inspection distante refusée 403, aucun nettoyage prétendu."
+  ]
 }

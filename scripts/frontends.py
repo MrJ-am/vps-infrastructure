@@ -121,7 +121,10 @@ def tester_frontend(cle,sources,caches,campagne='base'):
                 ['npm','--prefix','ateliers/logo','test','--','--seed','20261007'],
                 ['npm','--prefix','ateliers/logo','run','test:reference'],
                 ['npm','--prefix','ateliers/logo','run','test:geometry'],
-                ['npm','--prefix','ateliers/logo','run','test:browser'],
+                # Deux démarrages Chromium simultanés ont consommé le délai
+                # des premiers tests dans l'atelier Codex (trace 4a43b577abaa).
+                # Borne de ressources, sans changement des assertions/délais.
+                ['npm','--prefix','ateliers/logo','run','test:browser','--','--workers=1'],
                 ['npm','--prefix','ateliers/logo','run','test:raster']]
         }
         if cle not in commandes:raise ValueError('Aucune campagne complémentaire pour ce composant')

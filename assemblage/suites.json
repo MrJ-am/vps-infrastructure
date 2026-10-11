@@ -326,7 +326,8 @@
         "scripts/construire-metier-nix.py",
         "assemblage/metier.nix",
         "assemblage/outils.nix",
-        "tests/matheval-composant.py"
+        "tests/matheval-composant.py",
+        "tests/test_qualifier_metier.py"
       ],
       "matheval": [
         "matheval.asd",
@@ -354,9 +355,20 @@
       "vps/tests/serveur-artefact.py",
       "vps/scripts/construire-metier-nix.py",
       "vps/assemblage/metier.nix",
-      "vps/assemblage/outils.nix"
+      "vps/assemblage/outils.nix",
+      "vps/tests/test_qualifier_metier.py"
     ],
     "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_qualifier_metier.py"
+      ],
       [
         "python3",
         "scripts/qualifier-metier.py",
@@ -393,7 +405,8 @@
       "matheval": [
         "server/node_modules"
       ]
-    }
+    },
+    "candidat_metier": true
   },
   "integration-securite": {
     "niveau": 4,

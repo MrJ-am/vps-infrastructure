@@ -12,7 +12,7 @@ import time
 import urllib.request
 import urllib.error
 
-SERVICES = ('vision', 'matheval', 'mrj-auth', 'vision-gestion', 'vision-cycle',
+SERVICES = ('vision', 'matheval', 'mrjam-metier', 'mrj-auth', 'vision-gestion', 'vision-cycle',
             'mrjam-admission', 'mrjam-fermeture', 'mrjam-courriel', 'keycloak',
             'nginx', 'postgresql', 'vision-embeddings', 'phpfpm-nextcloud')
 
@@ -90,7 +90,7 @@ SELECT json_build_object('administrateurs',(SELECT count(*) FROM administrators)
 SELECT coalesce(json_agg(json_build_object('role',rolname,'superuser',rolsuper,
  'bypassrls',rolbypassrls,'createrole',rolcreaterole,'createdb',rolcreatedb)), '[]'::json)
 FROM pg_roles WHERE rolname IN ('vision','vision_migration','vision_identite',
- 'vision_administration','vision_cycle','vision_admission','vision_fermeture','matheval');
+ 'vision_administration','vision_cycle','vision_admission','vision_fermeture','matheval','matheval_app');
 COMMIT;""")
     closure = commande(['nix-store', '-qR', '/run/current-system']).splitlines()
     resultat['paquets_executables'] = [Path(p).name for p in closure if any(x in Path(p).name

@@ -14,6 +14,13 @@ import assemblage
 
 
 class SourcesFrontend(unittest.TestCase):
+    def test_atelier_logo_borne_les_demarrages_navigateur(self):
+        # Vérifie la commande réelle, sans lancer de navigateur dans cette unité.
+        with patch.object(frontends.subprocess,'run') as executions:
+            frontends.tester_frontend('style',self.sources,{},'complement')
+        browsers=[a.args[0] for a in executions.call_args_list if 'test:browser' in a.args[0]]
+        self.assertEqual([['npm','--prefix','ateliers/logo','run','test:browser','--','--workers=1']],browsers)
+
     def setUp(self):
         self.temp=tempfile.TemporaryDirectory(prefix='frontends-sources-',dir=ROOT/'state')
         self.addCleanup(self.temp.cleanup)

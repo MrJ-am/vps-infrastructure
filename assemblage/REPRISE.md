@@ -1,13 +1,88 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — qualification des candidats finaux
+## Point de reprise actif — scellement de l’assemblage local
 
-Infra publiée15496df, changements centraux durables en attente de commit ;
-Style30c6087e6975d41d221fe6b31279ee1530f917c6, Math0b277f02800ee73718dc6ca45b65e10e081f825b,
-Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Logiqued76f0074efa066098ec95c89cbf6d14da8c296cd,
-Signaturee9d9d34d353422c2993cd1bc7c3c626f503bb5e0 publiés ; six branches effectives
-constatées, manifeste exact actualisé mais amendement NON qualifié. Production
-inchangée, étape1 non déployée, Kanidm non commencé. Aucun CI/SQLproduction déclenché.
+Même tâche et architecture C ; image interactive saine conservée, aucun nouveau
+qualifier MCP synthétique, aucune reconnexion. Production encore ancienne,
+Keycloak conservé ; étape 1 non déployée, Kanidm non commencé.
+
+Révisions publiées : Vision649122b, Math68df529 (master), Style27111a9,
+Logiqued76f007, Signaturee9d9d34 ; hashes complets dans manifest.json.
+Vision/Math consomment Style271 ; Logique conserve son verrou fbdb qualifié.
+Les interfaces exactes passent : Math base14,7407s et96/96477,2098s ; Vision
+interface62,7724s/navigateur-MCP23,7191s ; Stylebase131,6359s/logo264,5806s
+(94parcours,2cas spécifiques à l’autre moteur) ; Logique119,9275s/correcteur14,6842s ;
+Signature3,9372s. Typographie réellement peinte et contextes aux trois tailles,
+contrôles AST208 et fixtures négatives exécutés. Anciennes traces conservées.
+
+Session67854 terminée0. Elle a cependant reconstruit le fichier candidat local
+au début de matheval-postgresql, faute de MRJAM_CONSTRUCTION_NIX. Reconstruction
+d7c4cb1 conservée séparément dans state/artefacts, sans promotion. L’original Nix
+296b7c89 reste intact dans son store ; sources Lisp inchangées. Fichier local
+rétabli depuis ce store, puis qualifier_existant exécuté (21,1274s) avec provenance
+originale. Qualificateur corrigé : sidecar Nix détecté, reconstruction directe
+refusée ;2régressions passent. Aucun résultat d7c4 présenté comme preuve296b7.
+Session56680 terminée0 : MathevalPostgreSQL22,565s/VisionPostgreSQL117,2998s/
+sélection1,0666s réussis. SQLnative original16,8229s passe (session83150 terminée0).
+Les35suites finales passent :34réutilisations exactes/éditorial seul rejoué.
+Puis reçu MathevalPostgreSQL explicitement lié à296b7 et sélection requalifiés.
+Scelleur : dernier contrôle exact avant soumission ; aucune preuve de production.
+Ancien résumé archivé exactement, nouveau résumé local sans attestation CI.
+
+Environnement exact non secret : state/qualification-env.sh ; SBCL_HOME et trois
+DSOs Nix, venv navigateur existant, outils PDF inchangés. Aucun navigateur en
+parallèle ni empreinte Firefox pendant son exécution. Rapport MCP non commité
+préservé. Ancien résumé archivé exactement, état local consolidé ; publier les sources
+centrales puis sceller le
+même binaire296b7 et les quatre candidats frontend ; soumission chiffrée par Git,
+préparation centrale sans activation puis restauration fraîche/retour et bascule.
+Référence VPS récente38178534125 ; accès MCP réel lecture politique/séances obtenu
+avant bascule, aucune écriture production. Comparer après déploiement.
+
+## Qualification intermédiaire conservée — avant contrôle final des reçus
+
+Infra publiée7ad2dbe (main vérifié) ; sources centrales complémentaires non
+commitées préservées. Sources actuelles publiées :
+Style27111a95d0222c634e55fb2e3ff8e45041b40b16,
+Vision649122bb45eeaf558caa626c85b8a52b35fe8c73,
+Math68df529042609561329e757145a187ca079a5cea,
+Logiqued76f0074efa066098ec95c89cbf6d14da8c296cd,
+Signaturee9d9d34d353422c2993cd1bc7c3c626f503bb5e0. Manifeste exact actualisé,
+amendement NON qualifié. Production inchangée, étape1 non déployée, Kanidm non
+commencé. Seule référence VPS en lecture seule38178534125 déclenchée ; pas SQL
+mutant ni activation.
+
+Session88512 terminée : Style271 base131,6359s ; Vision649 navigateur23,7191s
+et interface62,7724s réussis. Construction Mathd817 refusée par le garde sources
+(tracea98d9f111d69) : cinq amorçages suivis avaient des empreintes Elm anciennes.
+Générateur existant build:main exécuté depuis l’atelier central, diff uniquement
+cinq références ?v= (ni corpus ni autre source), publié68df529.
+
+Session67854 à constater (observation, aucun PID constant) : Math68df construit,
+candidat matheval-68df52904260-d69249b0/ensemble53e0fb3dfafcc9ba8791c7fa3510244be08a5d1fad1c450b5b3ebb4a45d38a01.
+Caméra : 6/6 réussis (trois répétitions par moteur),51,5s ; trace ciblée privée
+matheval-diagnostic-359dd4dfa881, ne remplace pas campagne complète. Base/96 en
+cours puis Stylelogo271 puis12suites SBCL natives/VisionPostgreSQL/référence
+historique indépendante. Tous les anciens shells12668/8233/64118/38282/88512 ont
+terminé ; aucune reprise aveugle. STRICTEMENT séquentiel/set-e. Logs
+state/rapports-frontends/{matheval-qualification-68df529,
+style-logo-qualification-27111a9,qualification-native-nix-finale}.txt.
+Environnement final : SBCL_HOME explicite vers outilsNix/sbcl/lib/sbcl et PATH
+navvenv/SBCLNix/original ; trois MRJAM_LIB* Nix explicites. Les anciens reçus SBCL
+empreintaient le SBCL_HOME exploratoire : contrôle natif final assumé sur la
+toolchain Nix. Ne remplacer ni les PDF actuels ni l'image interactive saine.
+
+Nouvelle correction justifiée : le test Vision visait .mrjam-ecran puis la
+police du conteneur natif non peint ; il mesure maintenant texte/commande réels.
+Le socle avait deux listes de polices différentes entre racines/lecteur/dialogue.
+Theme.typographie mutualise la liste historique Inter/Aptos/SegoeUI/sansSerif,
+police principale et fontes d'identité inchangées ; régression clavier/champ
+modale aux trois tailles. Vision/Math consomment exactement271 ; Logique reste à
+son verrou qualifiéfbdb, sans adoption non nécessaire. Aucun corpus/métier/modèle
+ni bibliothèque tierce/toolchain modifié. Ces nouveaux candidats sont à qualifier.
+
+Les essais intermédiaires ci-dessous sont conservés avec leurs anciennes entrées ;
+ils ne sont pas des preuves de la nouvelle typographie.
 
 C et image saine conservées : SBCL83928/Tron129399 constatés, jamais constantes
 routées ; ancien79777 distinct/idle préservé. Aucun chargement/reconnexion/debug
@@ -29,7 +104,8 @@ Style30c6087e6975-16136a76 ensemble02f4216d, base138,5239s réussie ;
 Logiqued76f0074efa0-cd66ef05 ensemble42954783, base139,1341s/correcteur12,8117s réussis ;
 Vision2d9f31b existant conservé ; Math0b277f02800e-73b22d87 ensemble093fc670.
 Math0b et8f02 assets identiques, seul interface.json change (révision identifiée).
-Math8f base16,4047s ; qualification base0b en cours avec navigateur exact.
+Math8f base16,4047s ; Math0b base14,9149s et 96/96 navigateur477,8515s réussis.
+Aucune source canonique modifiée par le harnais corrigé.
 
 Campagnes Math :96pass mais garde sources refuse le harnais534,0746s ; correction
 vers copie privée .central-tests-*/e2e,3tests source intacte/chemins/no-overwrite.
@@ -41,11 +117,28 @@ trace72a69aad4d47. Fix canonique helper attend count0 (état, aucun délai fixe)
 publié0b277f0. Régression réelle CDPtouch3répétitions passe43,99s, traceafab2d0ebc7f.
 Tous anciens résultats restent datés, aucun reçu de réussite fabriqué.
 
-Exécutions suivantes STRICTEMENT séquentielles, shellset-e, session12668 à constater
-(non constante script) : Mathbase+96 → Stylelogo → Vision/Signature → MCP métier.
-Logs matheval-qualification-0b277f0.txt, style-logo-final-serialise.txt,
-vision-signature-final-serialise.txt, mcp-metier-final.txt. Si échec, analyser la
-cause ; ne pas relancer aveuglément. Aucune autre campagne navigateur en parallèle.
+Session12668 terminée : Math0b réussit ; Stylelogo échoue sur les deux premiers
+démarrages Chromium simultanés (92pass/2fail/2skip,230,6843s, trace4a43b577abaa).
+Traces : création/navigation prennent le budget initial, pas erreur de géométrie.
+Le harnais central limite désormais l'atelier à --workers=1 ; délais/assertions
+inchangés, régression de commande ajoutée. Dix tests frontend-sources réussis.
+Session8233 terminée : Stylelogo94pass/2skip303,5335s, Stylebase137,6476s,
+Visioninterface69,1729s, Signature3,9372s passent. Mathbase17,0834s ; navigateur
+95pass/1fail478,4127s (tracec9b1b0cee044). La trace prouve __playwright_scroll_top_=3
+après la première ArrowRight : la focalisation native défile la page entre les
+mesures. Test canonique focalise la scène avant mesure initiale ; précision4 et
+assertions inchangées, publié53c1cfa. Aucun produit/corpus/métier modifié.
+Reprise séquentielle : construire le candidat Math53 exact → Logique/MCP métier
+→ régression caméra trois répétitions → campagne Math entière → qualification
+native avec SBCL/contrib/DSOs Nix explicites. Même image interactive conservée.
+Aucun autre navigateur en parallèle ; échec analysé avant toute reprise.
+Session64118 arrêtée normalement sur échec navigateur Vision49,2026s : ancien
+sélecteur .mrjam-ecran absent, trace6f52d8bb6f7a ; pas erreur métier/SQL. Test utilise
+le repère accessible main, assertions de police page/dialogue conservées ;
+publié068a9c6. Logique119,9275s/correcteur14,6842s réussis avant cet arrêt.
+Math53 construit (b294a025), seul interface.json différent de0b. La régression
+caméra et campagne complète n'ont PAS encore été exécutées pour53.
+
 
 Autres preuves :208AST/6ressources/3fixtures18,7958s, géométrie336cas40,2ms ;
 sélection20/source9/transport/isolation/migration/classification privés passent.
@@ -69,6 +162,15 @@ Qualifier processus Lisp propre à étape pertinente, préserver imageinteractiv
 Commiter/pousser composants avant manifeste, sceller mêmeNix296b7c89 déjà propre,
 transportchiffré central puispréparer/restaurer/basculer/sondes/redémarrage/invariants.
 Backup ancien02:40 doit être réévalué, pas restauré sur SQLrécent pour retour.
+Référence centrale fraîche38178534125/7ad2dbe réussie en lecture seule21:58UTC :
+générationr6s7ags3 inchangée ; Vision1compteactif/admin,1identité,0orphelin/0liencroisé,
+0séanceouverte ; Math1admin/1corpus/3participations toutes ouvertes. Mémoire/latences
+agrégées dans state/reference-38178534125/reference.json. Téléchargement artefact
+refusé403 ; même JSON complet extrait du log du run, sans nouveau dispatch.
+Connecteur Vision de cet agent réellement appelé : lire_politique et lister_seances
+réussis/total0, aucune écriture ni contenu personnel journalisé. À comparer après
+bascule ; cette lecture ne qualifie pas encore la nouvelle image en production.
+
 
 Remote relu : maininfra15496df ; PagesMath workflow/dynamicbuiltinactive mais aucun
 run depuis28septembre, malgré pushesOct11 ; workflowsStyle/Logique historiques
