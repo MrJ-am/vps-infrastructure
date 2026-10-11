@@ -48,6 +48,8 @@ ordinaires restent Element.Region.description, les liens Element.newTabLink.
 | Curseur.natif | input range, ID/nom/valeur/min/max/pas et onInput ; aucune annonce automatique, classe ou style | Clavier et tactile de l'atelier, valeur et absence d'ancêtre aria-live |
 | Dessin | SVG spécialisé : contours, matrices, masques, références et quadrillage ; capacités par fonction, deux styles littéraux de comparaison | 94 parcours Chromium/Firefox, page autonome Firefox, définitions originales, quatre formats et16 comparaisons raster réussis |
 | Diagrammes | Courbes/coordonnées scientifiques neutres, sélection SVG à deux axes, flèches/Maj ; quatre styles techniques littéraux | Saisies françaises/clavier, précision/URL, gestes souris dans les deux moteurs et tactiles Chromium réussis |
+| Mathematiques.expression | Balise math-tex fixe, sans enfant ; seuls formula et display-mode=true, chaîne TeX échappée | KaTeX0.18.7 existant réel : MathML, texte échappé, formule hostile sans lien, trois formats ; pont avec trust=false |
+| Video.lecteur/format | Conteneur course-video avec un seul iframe vide, événement video-etat, URL/titre et attributs fixes ; quatre styles constants de surface et ratio16/9 du cadre | SDK simulé, iframe réel intercepté : activation clavier, focus, reprise/arrêt, erreur, ancien lecteur détruit et promesse obsolète ignorée, hôtes invalides et SDK absent refusés aux trois formats |
 | Atelier | Marqueurs data-progress/data-running/data-selected fixes, sans présentation ni identité métier | État de lecture et inspection de l'atelier |
 
 Input.slider1.1.8 place Region.announce sur le parent produit par applyLabel,
@@ -190,3 +192,24 @@ entrent dans son empreinte. Une tête Style non consommée ne remplace pas cette
 preuve ; changer le verrou invalide les entrées affectées. La régression utilise
 deux vrais commits Git synthétiques et vérifie les deux cas, sans modifier les
 bibliothèques ni fabriquer d'attestation de publication.
+
+Le lecteur commun ne contacte pas le fournisseur avant une action explicite.
+Ses positions sont dans le modèle Elm, bornées à0..86400s ; chaque activation
+a une génération, invalidée au changement de vue/arrêt. videos.js conserve
+seulement le cycle de vie du SDK déjà fourni et le focus de l’iframe : aucun
+DOM ordinaire créé, style ou animation. Les tests isolés emploient KaTeX réel
+verrouillé de Logique et un double du SDK : ils ne prouvent pas la disponibilité
+du fournisseur Vimeo. L’API0.18.7 déjà approuvée est mesurée comme outil de test
+du socle ; aucune nouvelle dépendance du produit ni installation automatique.
+
+`MrJam.Manipulation` porte seulement l'état transitoire du geste, les repères
+nommés et le fantôme elm-ui (inert, sans identifiants métier dupliqués). Les
+preuves, leurs historiques/certificats et le stockage restent dans Logique.
+L'adaptateur privé borne les attributs de raccord, touch-action/prise, inert et
+zoom50–150% : contrôle AST de la valeur canonique, tests de paramètres/let
+qui masqueraient clamp. `Transitions.abonnementGeste` fournit un delta uniquement
+pendant le déplacement ; JS effectue hit-test/PointerEvents/scroll, sans clone,
+styles, classes ou RAF applicatif. Le pont corrige la réorientation tactile de
+Chromium au point réellement peint ; les taps/scrolls natifs ordinaires restent
+qualifiés. Export/import : seuls a/input détachés dans deux fonctions nommées.
+Les applications utilisent les façades publiques, pas les adaptateurs privés.

@@ -358,6 +358,157 @@ tests =
                     "module MrJam.Adaptateurs.Typographie exposing (signature)\nimport Html.Attributes as A\nsignature h = A.style \"line-height\" h"
                     "Présentation ou échappatoire technique non autorisée."
                     "A.style"
+        , test "TeX partagé avec alias et attribut échappé" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Mathematiques.elm" "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html as H\nimport Html.Attributes as A\nexpression s = H.node \"math-tex\" [ A.attribute \"formula\" s, A.attribute \"display-mode\" \"true\" ] []"
+                    |> Review.Test.expectNoErrors
+        , test "TeX partagé avec symbole exposé" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Mathematiques.elm" "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html exposing (node)\nexpression = node \"math-tex\" [] []"
+                    |> Review.Test.expectNoErrors
+        , test "TeX ne reçoit pas une autre balise" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html as H\nexpression = H.node \"div\" [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "TeX ne reçoit pas une balise dynamique" <|
+            \() ->
+                rejectedAt "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html exposing (node)\nexpression tag = node tag [] []"
+                    "node"
+                    { start = { row = 3, column = 18 }, end = { row = 3, column = 22 } }
+        , test "TeX ne reçoit pas des enfants dynamiques" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html as H\nexpression children = H.node \"math-tex\" [] children"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "TeX refuse des attributs de présentation exposés" <|
+            \() ->
+                rejectedAt "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html.Attributes exposing (attribute)\nexpression = attribute \"class\" \"carte\""
+                    "attribute"
+                    { start = { row = 3, column = 14 }, end = { row = 3, column = 23 } }
+        , test "TeX borne le mode bloc" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html.Attributes as A\nexpression mode = A.attribute \"display-mode\" mode"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "TeX refuse un nom attribut dynamique" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Mathematiques"
+                    "commun/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html.Attributes as A\nexpression name s = A.attribute name s"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "un faux raccord TeX applicatif est refusé" <|
+            \() ->
+                review "application/MrJam/Adaptateurs/Mathematiques.elm"
+                    "module MrJam.Adaptateurs.Mathematiques exposing (expression)\nimport Html as H\nexpression = H.node \"math-tex\" [] []"
+                    |> Review.Test.expectErrorsForModules
+                        [ ( "MrJam.Adaptateurs.Mathematiques"
+                          , [ Review.Test.error { message = "Présentation ou échappatoire technique non autorisée.", details = details, under = "H.node" }
+                            , Review.Test.error { message = "Le namespace MrJam appartient aux sources communes verrouillées.", details = details, under = "module" }
+                            ]
+                          )
+                        ]
+        , test "iframe partagée bornée par sa surface" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Video.elm" "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html as H\nimport Html.Attributes as A\nlecteur url = H.node \"course-video\" [] [ H.iframe [ A.src url, A.style \"aspect-ratio\" \"16/9\", A.attribute \"referrerpolicy\" \"strict-origin-when-cross-origin\" ] [] ]"
+                    |> Review.Test.expectNoErrors
+        , test "iframe avec import exposé" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Video.elm" "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html exposing (node, iframe)\nlecteur = node \"course-video\" [] [ iframe [] [] ]"
+                    |> Review.Test.expectNoErrors
+        , test "iframe sans contenu interprété" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html as H\nlecteur children = H.iframe [] children"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.iframe"
+        , test "conteneur vidéo ne reçoit pas des enfants arbitraires" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html as H\nlecteur children = H.node \"course-video\" [] children"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "conteneur vidéo ne devient pas une div" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html as H\nlecteur = H.node \"div\" [] []"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "H.node"
+        , test "SDK écoute seulement son événement déclaré" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Video.elm" "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html.Events as E\nlecteur decode = E.on \"video-etat\" decode"
+                    |> Review.Test.expectNoErrors
+        , test "SDK ne gagne pas des événements arbitraires" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html.Events as E\nlecteur nom decode = E.on nom decode"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "E.on"
+        , test "SDK ne gagne pas un style dynamique" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html.Attributes as A\nlecteur largeur = A.style \"width\" largeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "SDK garde sa politique de référent" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html.Attributes as A\nlecteur = A.attribute \"referrerpolicy\" \"unsafe-url\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "SDK ne reçoit pas de srcdoc" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (lecteur)\nimport Html.Attributes as A\nlecteur code = A.attribute \"srcdoc\" code"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "le ratio technique vidéo reste constant" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Video.elm" "module MrJam.Adaptateurs.Video exposing (format)\nimport Html.Attributes as A\nformat = A.style \"aspect-ratio\" \"16/9\""
+                    |> Review.Test.expectNoErrors
+        , test "le ratio vidéo ne devient pas une capacité CSS libre" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Video"
+                    "commun/MrJam/Adaptateurs/Video.elm"
+                    "module MrJam.Adaptateurs.Video exposing (format)\nimport Html.Attributes as A\nformat valeur = A.style \"aspect-ratio\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "adaptateur privé ne devient pas une API applicative" <|
+            \() ->
+                rejected "Main"
+                    "application/Main.elm"
+                    "module Main exposing (x)\nimport MrJam.Adaptateurs.Video as V\nx = 1"
+                    "Frontière du socle partagé contournée."
+                    "import MrJam.Adaptateurs.Video as V"
+        , test "import exposé ne contourne pas la façade" <|
+            \() ->
+                rejected "Main"
+                    "application/Main.elm"
+                    "module Main exposing (x)\nimport MrJam.Adaptateurs.Mathematiques exposing (expression)\nx = 1"
+                    "Frontière du socle partagé contournée."
+                    "import MrJam.Adaptateurs.Mathematiques exposing (expression)"
+        , test "façade publique accessible à l'application" <|
+            \() ->
+                review "application/Main.elm" "module Main exposing (x)\nimport MrJam.Mathematiques as Math\nx = 1"
+                    |> Review.Test.expectNoErrors
         , test "Html.div par alias rejeté" <|
             \() ->
                 rejected "Main"
@@ -602,4 +753,94 @@ tests =
                     "module MrJam.Adaptateurs.Accessibilite exposing (progression)\nimport Html.Attributes as A\nprogression = A.attribute \"aria-valuemax\" \"200\""
                     "Présentation ou échappatoire technique non autorisée."
                     "A.attribute"
+        , test "méta source fixe" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Manipulation.elm" "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nsource valeur = A.attribute \"data-atelier-source\" valeur"
+                    |> Review.Test.expectNoErrors
+        , test "fantôme inerte" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Manipulation.elm" "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nfantome = A.attribute \"inert\" \"\""
+                    |> Review.Test.expectNoErrors
+        , test "prise tactile native" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Manipulation.elm" "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nprise = A.style \"touch-action\" \"none\""
+                    |> Review.Test.expectNoErrors
+        , test "pointeur fantôme transparent" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Manipulation.elm" "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nfantome = A.style \"pointer-events\" \"none\""
+                    |> Review.Test.expectNoErrors
+        , test "zoom borné" <|
+            \() ->
+                review "commun/MrJam/Adaptateurs/Manipulation.elm" "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = A.style \"zoom\" (String.fromFloat (toFloat (clamp 50 150 pourcentage) / 100))"
+                    |> Review.Test.expectNoErrors
+        , test "nom d’attribut libre refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nsource nom valeur = A.attribute nom valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.attribute"
+        , test "style applicatif déguisé refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nprise = A.style \"background\" \"red\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "prise dynamique refusée" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nprise valeur = A.style \"touch-action\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "fantôme peut seulement ignorer le pointeur" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nfantome = A.style \"pointer-events\" \"auto\""
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "zoom sans limite refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = A.style \"zoom\" (String.fromFloat (toFloat pourcentage / 100))"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "zoom bornes différentes refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = A.style \"zoom\" (String.fromFloat (toFloat (clamp 1 999 pourcentage) / 100))"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "zoom chaîne libre refusé" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom valeur = A.style \"zoom\" valeur"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "zoom ne change pas une couleur" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = A.style \"color\" (String.fromFloat (toFloat (clamp 50 150 pourcentage) / 100))"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "clamp local ne contourne pas la borne" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom clamp pourcentage = A.style \"zoom\" (String.fromFloat (toFloat (clamp 50 150 pourcentage) / 100))"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
+        , test "clamp dans un let ne contourne pas la borne" <|
+            \() ->
+                rejected "MrJam.Adaptateurs.Manipulation"
+                    "commun/MrJam/Adaptateurs/Manipulation.elm"
+                    "module MrJam.Adaptateurs.Manipulation exposing (..)\nimport Html.Attributes as A\nzoom pourcentage = let clamp a b x = x in A.style \"zoom\" (String.fromFloat (toFloat (clamp 50 150 pourcentage) / 100))"
+                    "Présentation ou échappatoire technique non autorisée."
+                    "A.style"
         ]

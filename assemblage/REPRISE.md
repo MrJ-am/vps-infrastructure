@@ -1,83 +1,61 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Point de reprise actif — Matheval après Vision et Logique
 
-## Point de reprise actif — adoption de Vision, puis Logique et Matheval
+Infra publiée9bc8e48 ; changements centraux du présent jalon à publier.
+Stylefbdb9dbb0c723ecd6a16e492e47af085c6033531 et
+Logiqued76f007 (révision complète dans le manifeste) publiés.
+Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2, Math/master78137b0 et
+Signaturee9d9d34 conservés. Production inchangée : étape1 non déployée,
+Kanidm non commencé. Aucune CI ni opération de données déclenchée.
+Rapport MCP historique non commité préservé. ArchitectureC et image saine
+conservées (processus constatés83928/129399), sans reconnexion ni qualifier.
 
-Infra publiée9801479 ; Style196ab468a0dc0ee39bd9209efef234b5f56861fc publié.
-Vision2d9f31bff90eed0dd330e4a568afaae92ce761f2 publié et référencé localement.
-Math/master78137b0, Logique032b4f5 et Signaturee9d9d34 inchangés. Production et
-accès métier inchangés ; étape1 non déployée, Kanidm non commencé. Aucun run
-ni opération de données déclenché par cette reprise. ArchitectureC et image
-SBCL saine conservées, sans reconnexion ni qualifier synthétique. Rapport
-historique MCP préservé non commité.
+Style : socle/contextes/TeX/vidéo/gestes publiés ; iframe stable, générations,
+façades publiques, frontière des adaptateurs privés. Candidat
+state/frontends-candidats/style-fbdb9dbb0c72-78eef4b9,
+ensemble59108d807326d74d1b58fa3e1c8d4d3b5d431ce2ab8a70d33b7e176d0db33a82.
+Qualification base81,0367s, complément201,1529s :98tests Elm,
+94parcours Chromium/Firefox,16comparaisons raster, géométrie/exports identiques.
+Médias320/768/1440 : KaTeX réel, SDK synthétique, délai réel15s, focus/reprise,
+source refusée et génération obsolète. Vidéo bornée à un lecteur visible par page.
 
-Style : socle terminé et publié, contextes immuables, Vitrine.pour largeur,
-Ecran, elm-ui/typographie/compléments/dialogues natifs, constructions et atelier.
-Dessin/Diagrammes consomment les résultats scientifiques neutres inchangés ;
-Shared.Ui délègue le socle, curseurs natifs sans annonce à chaque frame.
-Candidat exact state/frontends-candidats/style-196ab468a0dc-71a32b25,
-ensembleea331903e1b0504f5540cb556ee4d50bbd5214b5d6943fbf13e4856313ea114f.
-Socle JS e23cb402be3a590f86f5024522274a38e4b4569f0e2432689a2502cefa267fc8 :
-parcours navigation/documentaire/blocs/contextes réussis. Complément central
-style-logo193,0077s :98tests Elm, références/géométries,94parcours Chromium/Firefox,
-16comparaisons raster réussis, exports et sources inchangés. Deux cas délégués à
-un moteur : file: refusé par Chromium géré (réussi Firefox), geste tactile CDP
-Chromium (souris/clavier aussi Firefox). L'ancienne assertion de sérialisation
-CSS échouait sur un espace ; elle vérifie maintenant mix-blend-mode effectivement
-calculé dans les deux moteurs. Aucun seuil graphique abaissé.
+Vision : candidat2d9f31bff90e-29425f7e / ensemble
+a8e9f4e8186b194b09d7318aaea0cb94cb2f79b7d157680e4b041fda95a20198,
+qualification48,3092s conservée, Style196ab46 effectivement consommé inchangé.
+Les outils d'orchestration modifiés sont requalifiés au jalon final selon impact.
 
-Contrôles : frontend-regles97tests AST+6ressources+3fixtures canoniques,
-11,6238s ; frontend-sources6régressions0,9709s ; sélection18tests0,9648s. Cache de chaque producteur exact,
-autres consommateurs ignorés par les commandes spécifiques. Les outils npm
-existants sont copiés dans le worktree privé : les liens racine échappaient au
-pattern Git node_modules/ et faisaient refuser la nouvelle vérification finale.
-Les sources sont contrôlées après construction/tests ; un générateur modifiant
-une source suivie ne peut pas enregistrer de candidat. Diagnostics privés des
-chemins conservés. Import typographique Python sans bytecode : seule addition
-constatée dans le cache196ab46 était notre typographie.cpython-312.pyc, aucun
-fichier source modifié ; bytecode préservé dans state/rapports-frontends/cache-style-bytecode-70c82c250f6c.
-Cache intégral de nouveau conforme. Derniers ajustements de l'orchestrateur
-(bytecode/seed explicite Vision) postérieurs au reçu Style : requalification
-centrale finale affectée à faire avant promotion, sans reconstruire le candidat.
+Logique : vues et atelier elm-ui, indice Animator mesuré, réductions initiale/live,
+focus/historique/MCP et actions indépendants des animations. Geste hors Document,
+fantôme commun inerte sans identifiants, horloge active seulement pendant geste.
+JS limité aux pointeurs/hit-test/scroll/fichiers/reprise ; aucune CSS applicative.
+Retarget tactile Chromium corrigé par prise géométrique ; scroll natif conservé.
+Candidat7137ff286284-c36463f0 / ensemble
+c604bd4d54cc35e9d0ff2574b1dc2adef262af61b437125fabad14ad0f6f1294,
+qualification navigateur132,2951s :58exercices303TeX12bilans12vidéos,
+3contrats WebMCP,4largeurs ;6ContinuousUI ;13atelier+2tactiles ;polices originales.
+Deux tests historiques exigeaient CSS retirée/ancien hash du pont ; corrigés sans
+changer corpus/correcteur. Autre ancien contrôle visait video.js supprimé : vise
+maintenant les lecteurs communs et atelier.js. La révisiond76f007 ne change que
+ce script ; unité centrale12,3742s réussie (190correcteur/299TeX/14Python/97atelier,
+format), sans site navigateur artificiellement requis. Le reçu navigateur reste
+celui de7137ff2 ; aucune qualification navigateur revendiquée pourd76f007.
+Aligner candidat exact au jalon final avant promotion.
 
-Vision local : pin Style196ab46, dépendances autorisées Animator2.0.0/time1.0.0
-et transitives verrouillées, Signature17495b13 inchangée. Presentation.elm exprime
-seulement l'intention Vision et les façades communes ; marques/couleurs dans les
-contrôles, tableaux, lecture et modales. Informations/Vitrine largeur réelle,
-Main conserve auth/flags/brouillons et largeur/préférence après401. Le focus
-attend Browser.Dom.getElement puis le raccord existant, sans RAF JS.
-Animations de confirmation de copie MCP réelles, initial/live reduced-motion,
-inversion sans délai métier. Les types des façades et le contrôle final complet sont validés.
+Contrôles centraux :136tests AST+6ressources+3fixtures réellement refusées,
+10,5718s ;6tests de sources0,6622s ;18tests de sélection0,8401s.
+Pas de suppressions/exclusions ni seuils abaissés. Reçus privés machine dans
+state/recus, confiance locale non attestée, jamais autorisation de publication.
+Stade exploratoire Logique et captures conservés dans state ; pas candidat.
 
-Résultats locaux Vision : compilation34modules réussie, elm-review complet
-et ressources réussis ; architecture2checks et4tests Elm réussis. Vitrine4formats
-+6parcours ContinuousUI320/768/1440 (normal/réduit, clipboard réel, focus, inversion,
-arrêt des frames), graphisme4formats (densité, liens, menus, clavier/tactile,
-brouillons), compte/admin/invitation/exports JSON/XML/Markdown2largeurs réussis.
-Contrastes aux mêmes seuils, couleurs peintes du contexte/contrôles/destruction
-contre oracle Canvas OKLCH indépendant, tolérance de quantification1niveau8bits.
-Ce sont des données synthétiques ; pas une preuve nouvelle de sécurité SQL ni
-une publication en production. Cache applicatif historique préservé ; constructeur
-utilise le cache exact dans son espace temporaire.
-
-Qualification centrale Vision48,3092s réussie sur le candidat réutilisé
-state/frontends-candidats/vision-2d9f31bff90e-29425f7e,
-ensemblea8e9f4e8186b194b09d7318aaea0cb94cb2f79b7d157680e4b041fda95a20198.
-Le premier passage central avait révélé une assertion DOM trop précoce après le
-message de copie en réduction ; barrière bornée à deux paints Elm, sans attente
-d'animation ni assouplissement du repli. Six parcours ciblés puis qualification
-complète réussis. Le reçu couvre le Style réellement consommé, les fichiers
-frontend/configurations, le candidat et les installations/navigateurs/profils ;
-changer une tête Style non consommée n'invalide pas son code, changer le verrou
-l'invalide (test réel Git synthétique).
-
-Suite immédiate : publier l'infrastructure centrale, puis adapter Logique (B.espace {largeur,hauteur}, profondeur,
-miniatures, marqueurs/gestes) puis Matheval (curseurs géométriques, dialogues,
-compagnons et autres violations). Anciennes révisions intactes ; retrait du CSS
-curseurs/Vitrine du nouveau Style impose l'adaptation avant adoption. Garder le
-refus de promotion de l'amendement non qualifié. Reprendre Nix/HBA/préconditions,
-restauration isolée/retour, étape1 réelle, puis Kanidm automatiquement. Données,
-séances ouvertes et reçus métier valides restent préservés.
+Suite immédiate : renderer scientifique commun (Markdown/TeX/portées en ch,
+HTML littéral échappé), administration puis Survey/Main/DemoCard Matheval,
+curseurs/projection et dialogues/compagnons. Aucun portage frontend Matheval
+encore réalisé ; sources scientifiques/32bits/pseudonymat inchangés.
+Publier socle avant verrous/manifeste. Qualification réelle de toutes entrées,
+frontières et ContinuousUI ; qualification exacte finale/propre Lisp distincte.
+Puis Nix/HBA/préconditions actuelles, backup/restauration/retour et étape1 réelle,
+avant Kanidm. Promotion toujours refusée tant que l'ensemble reste incomplet.
 
 ## Références et résultats historiques conservés
 

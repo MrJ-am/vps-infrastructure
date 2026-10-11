@@ -24,13 +24,13 @@
     "logique": {
       "depot": "MrJ-am/apprendre-a-demontrer",
       "branche": "main",
-      "revision": "032b4f587c5970f09e1eb75107abdb4f6523b1f2",
+      "revision": "d76f0074efa066098ec95c89cbf6d14da8c296cd",
       "role": "frontend-statique"
     },
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "196ab468a0dc0ee39bd9209efef234b5f56861fc",
+      "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
       "role": "elm-ui"
     },
     "signature": {
@@ -126,8 +126,8 @@
     },
     "logique": {
       "verrou_style": "style-mrjam.json",
-      "sha256": "0dfca0bbd1a57407f8e924dda1bbb472ad218624720536eeaaf0b5ec44ef2b5f",
-      "revision_style": "eaee86024ac2d158f507bfe798cee3af3a923930",
+      "sha256": "6f053408fdaba307f55b5dd25034cc12dfe6825e75f15fd277da29b02fdc0d8f",
+      "revision_style": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
       "origine_style": "MrJ-am/style-mrjam",
       "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
     }

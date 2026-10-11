@@ -96,12 +96,13 @@ def tester_frontend(cle,sources,caches,campagne='base'):
                     ['python3','-m','unittest','discover','-s','docs/tests','-p','test_published_site.py'],
                     ['node','docs/scripts/test-survey.cjs'],['npm','--prefix','docs','run','test:construction'],
                     ['npm','--prefix','docs','run','test:logic']],
-        'logique':[['npm','run','test:interface'],['npm','run','test:atelier:interface'],['npm','run','test:typographie']],
+        'logique':[['npm','run','test:interface'],['python3','tests/continuite.py'],['npm','run','test:atelier:interface'],['npm','run','test:typographie']],
         'style':[['node_modules/.bin/elm-format','src','exemples','--validate'],['python3','scripts/verifier-identite.py'],
                  ['python3','-m','unittest','discover','-s','tests','-p','test_architecture.py'],
                  ['python3','tests/navigation.py'],['python3','tests/documentaire.py'],['python3','tests/blocs.py'],
                  ['python3','tests/contextes.py','--signature',str(sources['signature'])],
-                 ['python3','tests/exports.py']]
+                 ['python3','tests/exports.py'],
+                 ['python3','tests/medias.py','--katex',str(sources['logique']/'node_modules/katex/dist')]]
     }
     if campagne=='unitaire':
         if cle!='logique':raise ValueError('Campagne unitaire définie uniquement pour Logique')
@@ -281,13 +282,15 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                 spec=spec_from_file_location('revoir_frontends',RACINE/'scripts/revoir-frontends.py')
                 controle=module_from_spec(spec);spec.loader.exec_module(controle)
                 controle.verifier(cle,locaux,m)
-                rapport=reutiliser_candidat(cle,locaux,m)
+                # Les tests unitaires chargent leurs propres fixtures Elm depuis
+                # les sources. Aucun site ni artefact navigateur n'est leur entrée.
+                rapport=None if campagne=='unitaire' else reutiliser_candidat(cle,locaux,m)
                 tester_frontend(cle,locaux,caches,campagne)
                 verifier_sources({nom:locaux[nom] for nom in sources_frontend(cle)}, m, exact=True)
-                print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'],
+                print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'] if rapport else None,
                     'tests':'reussis','campagne':campagne,
                     'diagnostic_specifique':any(os.environ.get(k) for k in ('MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC')),
-                    'construction_reutilisee':True,'publication':False},ensure_ascii=False))
+                    'construction_reutilisee':rapport is not None,'publication':False},ensure_ascii=False))
             else:construire_dans_atelier(cle, locaux, m, caches)
         except Exception:
             # Captures et traces de fixtures restent privées et disponibles

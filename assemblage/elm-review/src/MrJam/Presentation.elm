@@ -10,6 +10,7 @@ import Elm.Syntax.Declaration as Declaration exposing (Declaration)
 import Elm.Syntax.Expression as Expression exposing (Expression)
 import Elm.Syntax.Import exposing (Import)
 import Elm.Syntax.Node as Node exposing (Node)
+import Elm.Syntax.Pattern as Pattern
 import Elm.Syntax.Range exposing (Range)
 import Review.ModuleNameLookupTable as Lookup exposing (ModuleNameLookupTable)
 import Review.Project.Dependency as Dependency exposing (Dependency)
@@ -21,6 +22,7 @@ type alias Context =
     , moduleName : List String
     , path : String
     , function : String
+    , zoomArgumentUnique : Bool
     , sharedUsed : Bool
     , presentation : Maybe Range
     , attributes : List Range
@@ -62,6 +64,7 @@ initialContext =
             , moduleName = moduleName
             , path = path
             , function = ""
+            , zoomArgumentUnique = False
             , sharedUsed = False
             , presentation = Nothing
             , attributes = []
@@ -115,6 +118,7 @@ importVisitor node context =
                         && not (shared context && context.moduleName == [ "MrJam", "Transitions" ])
                    )
                 || (origin == "MrJam.Theme" && not (shared context))
+                || (String.startsWith "MrJam.Adaptateurs." origin && not (shared context))
                 || (shared context
                         && not (origin == "MrJam" || String.startsWith "MrJam." origin)
                         && not (List.member origin context.dependencyModules)
@@ -133,10 +137,10 @@ declarationVisitor : Node Declaration -> Context -> ( List (Error {}), Context )
 declarationVisitor node context =
     case Node.value node of
         Declaration.FunctionDeclaration { declaration } ->
-            ( [], { context | function = Node.value declaration |> .name |> Node.value, attributes = [], assertions = [], resets = [], nodes = [], events = [] } )
+            ( [], { context | function = Node.value declaration |> .name |> Node.value, zoomArgumentUnique = (Node.value declaration |> .arguments |> List.map Node.value) == [ Pattern.VarPattern "pourcentage" ], attributes = [], assertions = [], resets = [], nodes = [], events = [] } )
 
         _ ->
-            ( [], { context | function = "", attributes = [], assertions = [], resets = [], nodes = [], events = [] } )
+            ( [], { context | function = "", zoomArgumentUnique = False, attributes = [], assertions = [], resets = [], nodes = [], events = [] } )
 
 
 {-| Chaque exception est un couple module/fonction, et un ensemble de symboles
@@ -181,6 +185,10 @@ adapterAllows context symbol =
                 ( "MrJam.Adaptateurs.Dialogue", "integrer" ) ->
                     symbol == "Element.html"
 
+                ( "MrJam.Adaptateurs.Manipulation", fonction ) ->
+                    List.member fonction [ "source", "cible", "piece", "bloc", "test", "sousFormule", "formule", "chemin", "defilement", "fond", "depot", "fantome", "prise", "zoom" ]
+                        && List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute", "Html.Attributes.style" ]
+
                 ( "MrJam.Adaptateurs.Constructions", "repere" ) ->
                     List.member symbol [ "Element.htmlAttribute", "Html.Attributes.attribute" ]
 
@@ -190,6 +198,15 @@ adapterAllows context symbol =
 
                 ( "MrJam.Adaptateurs.Complement", "natif" ) ->
                     List.member symbol [ "Element.html", "Html.details", "Html.summary" ]
+
+                ( "MrJam.Adaptateurs.Video", "format" ) ->
+                    List.member symbol [ "Element.htmlAttribute", "Html.Attributes.style" ]
+
+                ( "MrJam.Adaptateurs.Video", "lecteur" ) ->
+                    List.member symbol [ "Element.html", "Html.node", "Html.iframe", "Html.Attributes.src", "Html.Attributes.title", "Html.Attributes.attribute", "Html.Attributes.style", "Html.Events.on" ]
+
+                ( "MrJam.Adaptateurs.Mathematiques", "expression" ) ->
+                    List.member symbol [ "Element.html", "Html.node", "Html.Attributes.attribute" ]
 
                 ( "MrJam.Adaptateurs.Texte", "litteral" ) ->
                     List.member symbol [ "Element.htmlAttribute", "Html.Attributes.style" ]
@@ -291,7 +308,13 @@ diagrammeSymboles fonction =
 
 accessibiliteAttributs : Context -> List ( String, Maybe String )
 accessibiliteAttributs context =
-    if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Diagrammes" ] then
+    if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Mathematiques" ] && context.function == "expression" then
+        [ ( "formula", Nothing ), ( "display-mode", Just "true" ) ]
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Video" ] && context.function == "lecteur" then
+        [ ( "generation", Nothing ), ( "allow", Just "autoplay; encrypted-media; picture-in-picture; fullscreen" ), ( "allowfullscreen", Just "" ), ( "referrerpolicy", Just "strict-origin-when-cross-origin" ) ]
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Diagrammes" ] then
         case context.function of
             "courbe" ->
                 [ ( "vector-effect", Just "non-scaling-stroke" ), ( "data-frontiere-role", Nothing ), ( "data-h", Nothing ) ]
@@ -344,6 +367,47 @@ accessibiliteAttributs context =
 
     else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Curseur" ] && context.function == "natif" then
         [ ( "aria-label", Nothing ), ( "aria-valuetext", Nothing ) ]
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Manipulation" ] then
+        case context.function of
+            "source" ->
+                [ ( "data-atelier-source", Nothing ) ]
+
+            "cible" ->
+                [ ( "data-atelier-cible", Nothing ) ]
+
+            "piece" ->
+                [ ( "data-atelier-piece", Nothing ) ]
+
+            "bloc" ->
+                [ ( "data-bloc", Nothing ) ]
+
+            "test" ->
+                [ ( "data-testid", Nothing ) ]
+
+            "sousFormule" ->
+                [ ( "data-sous-formule", Nothing ) ]
+
+            "formule" ->
+                [ ( "data-formule", Nothing ) ]
+
+            "chemin" ->
+                [ ( "data-chemin", Nothing ) ]
+
+            "fond" ->
+                [ ( "data-atelier-fond", Nothing ) ]
+
+            "defilement" ->
+                [ ( "data-atelier-defile", Just "canevas" ) ]
+
+            "depot" ->
+                [ ( "data-depot-actif", Just "true" ) ]
+
+            "fantome" ->
+                [ ( "data-mrjam-fantome", Just "" ), ( "inert", Just "" ) ]
+
+            _ ->
+                []
 
     else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Constructions" ] && context.function == "repere" then
         [ ( "data-mrjam-construction", Nothing ) ]
@@ -450,8 +514,14 @@ valeurAccessibilite context nom node =
 expressionVisitor : Node Expression -> Context -> ( List (Error {}), Context )
 expressionVisitor node context =
     case Node.value node of
+        Expression.LetExpression _ ->
+            ( [], { context | zoomArgumentUnique = False } )
+
+        Expression.LambdaExpression _ ->
+            ( [], { context | zoomArgumentUnique = False } )
+
         Expression.Application (callee :: attribute :: _) ->
-            if nativeReset context node then
+            if nativeReset context node || nativeZoom context node then
                 ( [], { context | resets = Node.range callee :: context.resets } )
 
             else if nativeNode context node then
@@ -535,7 +605,7 @@ expressionVisitor node context =
                                 || (symbol == "Html.Attributes.class" && not (List.member (Node.range node) context.attributes))
                                 || (symbol == "Html.Attributes.style" && not (List.member (Node.range node) context.resets))
                                 || (origin == "Animator" && List.member name [ "div", "node", "css", "toCss" ])
-                                || (List.member symbol [ "Html.div", "Html.node", "Html.details", "Html.summary", "Html.em" ] && not (List.member (Node.range node) context.nodes))
+                                || (List.member symbol [ "Html.div", "Html.node", "Html.iframe", "Html.details", "Html.summary", "Html.em" ] && not (List.member (Node.range node) context.nodes))
                                 || (symbol == "Html.Events.preventDefaultOn" && not (List.member (Node.range node) context.events))
                                 || (context.moduleName
                                         == [ "MrJam", "Adaptateurs", "Saisie" ]
@@ -550,6 +620,12 @@ expressionVisitor node context =
                                         && name
                                         /= "attribute"
                                         && not (List.member (Node.range node) context.attributes)
+                                   )
+                                || (context.moduleName
+                                        == [ "MrJam", "Adaptateurs", "Video" ]
+                                        && ((origin == "Html.Attributes" && not (List.member (Node.range node) (context.attributes ++ context.resets)))
+                                                || (origin == "Html.Events" && not (List.member (Node.range node) context.events))
+                                           )
                                    )
                                 || (symbol == "Html.Attributes.attribute" && not (List.member (Node.range node) (context.attributes ++ context.assertions)))
                                 || (String.startsWith "Svg.Attributes." symbol && List.member name [ "style", "class", "classList" ])
@@ -636,6 +712,18 @@ nativeReset context node =
                 ( [ "MrJam", "Adaptateurs", "Dessin" ], "vue" ) ->
                     [ ( "pointer-events", "none" ), ( "mix-blend-mode", "difference" ) ]
 
+                ( [ "MrJam", "Adaptateurs", "Manipulation" ], "prise" ) ->
+                    [ ( "touch-action", "none" ), ( "cursor", "grab" ), ( "user-select", "none" ), ( "-webkit-user-select", "none" ), ( "-webkit-touch-callout", "none" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Manipulation" ], "fantome" ) ->
+                    [ ( "pointer-events", "none" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Video" ], "format" ) ->
+                    [ ( "aspect-ratio", "16/9" ) ]
+
+                ( [ "MrJam", "Adaptateurs", "Video" ], "lecteur" ) ->
+                    [ ( "display", "block" ), ( "width", "100%" ), ( "aspect-ratio", "16/9" ), ( "border", "0" ) ]
+
                 ( [ "MrJam", "Adaptateurs", "Selection" ], "native" ) ->
                     [ ( "font", "inherit" ), ( "color", "inherit" ), ( "background", "transparent" ), ( "border", "0" ), ( "padding", "0" ), ( "width", "100%" ), ( "box-sizing", "border-box" ) ]
 
@@ -713,6 +801,50 @@ nativeNode context node =
                                 ( ( [ "MrJam", "Adaptateurs", "Dialogue" ], "natif" ), Expression.FunctionOrValue _ "node", Expression.Literal "dialog" ) ->
                                     True
 
+                                ( ( [ "MrJam", "Adaptateurs", "Mathematiques" ], "expression" ), Expression.FunctionOrValue _ "node", Expression.Literal "math-tex" ) ->
+                                    case Node.value node of
+                                        Expression.Application [ _, _, _, children ] ->
+                                            Node.value children == Expression.ListExpr []
+
+                                        _ ->
+                                            False
+
+                                ( ( [ "MrJam", "Adaptateurs", "Video" ], "lecteur" ), Expression.FunctionOrValue _ "node", Expression.Literal "course-video" ) ->
+                                    case Node.value node of
+                                        Expression.Application [ _, _, _, children ] ->
+                                            case Node.value children of
+                                                Expression.ListExpr [ child ] ->
+                                                    case Node.value child of
+                                                        Expression.Application [ frame, _, empty ] ->
+                                                            Lookup.moduleNameFor context.lookup frame
+                                                                == Just [ "Html" ]
+                                                                && (case Node.value frame of
+                                                                        Expression.FunctionOrValue _ "iframe" ->
+                                                                            True
+
+                                                                        _ ->
+                                                                            False
+                                                                   )
+                                                                && Node.value empty
+                                                                == Expression.ListExpr []
+
+                                                        _ ->
+                                                            False
+
+                                                _ ->
+                                                    False
+
+                                        _ ->
+                                            False
+
+                                ( ( [ "MrJam", "Adaptateurs", "Video" ], "lecteur" ), Expression.FunctionOrValue _ "iframe", _ ) ->
+                                    case Node.value node of
+                                        Expression.Application [ _, _, children ] ->
+                                            Node.value children == Expression.ListExpr []
+
+                                        _ ->
+                                            False
+
                                 ( ( [ "MrJam", "Adaptateurs", "Dialogue" ], "assembler" ), Expression.FunctionOrValue _ "div", Expression.ListExpr [] ) ->
                                     True
 
@@ -773,6 +905,9 @@ nativeCancel context node =
                                 ( ( [ "MrJam", "Adaptateurs", "Saisie" ], "soumettre" ), Expression.FunctionOrValue _ "preventDefaultOn", Expression.Literal "keydown" ) ->
                                     True
 
+                                ( ( [ "MrJam", "Adaptateurs", "Video" ], "lecteur" ), Expression.FunctionOrValue _ "on", Expression.Literal "video-etat" ) ->
+                                    True
+
                                 ( ( [ "MrJam", "Adaptateurs", "Saisie" ], "echap" ), Expression.FunctionOrValue _ "on", Expression.Literal "keydown" ) ->
                                     True
 
@@ -798,6 +933,22 @@ nativeInput context node =
 
                             ( Expression.FunctionOrValue _ nom, [ _ ] ) ->
                                 List.member nom [ "id", "min", "max", "step", "value" ]
+
+                            _ ->
+                                False
+                       )
+
+            _ ->
+                False
+
+    else if shared context && context.moduleName == [ "MrJam", "Adaptateurs", "Video" ] && context.function == "lecteur" then
+        case Node.value node of
+            Expression.Application [ callee, _ ] ->
+                Lookup.moduleNameFor context.lookup callee
+                    == Just [ "Html", "Attributes" ]
+                    && (case Node.value callee of
+                            Expression.FunctionOrValue _ name ->
+                                List.member name [ "src", "title" ]
 
                             _ ->
                                 False
@@ -861,3 +1012,86 @@ finalVisitor context =
 
             Nothing ->
                 []
+
+
+{-| Une seule propriété dynamique : zoom, valeur canonique bornée 50–150%.
+L'AST impose le clamp et les conversions, aucune chaîne CSS libre.
+-}
+nativeZoom : Context -> Node Expression -> Bool
+nativeZoom context node =
+    shared context
+        && context.moduleName
+        == [ "MrJam", "Adaptateurs", "Manipulation" ]
+        && context.function
+        == "zoom"
+        && context.zoomArgumentUnique
+        && (case Node.value node of
+                Expression.Application [ callee, key, value ] ->
+                    Lookup.moduleNameFor context.lookup callee
+                        == Just [ "Html", "Attributes" ]
+                        && Node.value key
+                        == Expression.Literal "zoom"
+                        && (case Node.value callee of
+                                Expression.FunctionOrValue _ "style" ->
+                                    zoomString context (unparenthesize value)
+
+                                _ ->
+                                    False
+                           )
+
+                _ ->
+                    False
+           )
+
+
+unparenthesize : Node Expression -> Node Expression
+unparenthesize node =
+    case Node.value node of
+        Expression.ParenthesizedExpression inner ->
+            unparenthesize inner
+
+        _ ->
+            node
+
+
+zoomString : Context -> Node Expression -> Bool
+zoomString context node =
+    case Node.value node of
+        Expression.Application [ convert, argument ] ->
+            Lookup.moduleNameFor context.lookup convert
+                == Just [ "String" ]
+                && Node.value convert
+                == Expression.FunctionOrValue [ "String" ] "fromFloat"
+                && (case Node.value (unparenthesize argument) of
+                        Expression.OperatorApplication "/" _ numerator denominator ->
+                            Node.value denominator
+                                == Expression.Integer 100
+                                && (case Node.value numerator of
+                                        Expression.Application [ conversion, range ] ->
+                                            Node.value conversion
+                                                == Expression.FunctionOrValue [] "toFloat"
+                                                && (case Node.value (unparenthesize range) of
+                                                        Expression.Application [ bound, lower, upper, input ] ->
+                                                            Node.value bound
+                                                                == Expression.FunctionOrValue [] "clamp"
+                                                                && Node.value lower
+                                                                == Expression.Integer 50
+                                                                && Node.value upper
+                                                                == Expression.Integer 150
+                                                                && Node.value input
+                                                                == Expression.FunctionOrValue [] "pourcentage"
+
+                                                        _ ->
+                                                            False
+                                                   )
+
+                                        _ ->
+                                            False
+                                   )
+
+                        _ ->
+                            False
+                   )
+
+        _ ->
+            False
