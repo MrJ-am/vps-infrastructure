@@ -43,7 +43,7 @@
   sur condition SBCL, CONTINUE standard invalidant l'ancien layout, rechargement
   des sources et recompilation des consommateurs ; aucune instance active concernée.
   Aucune utilisation de RECKLESSLY-CONTINUE. Image exploratoire jamais sauvegardée.
-- Matheval : 39 parcours différentiels sur deux bases isolées PostgreSQL 17,
+- Matheval : 40 parcours différentiels sur deux bases isolées PostgreSQL 17,
   rôle non propriétaire/NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS, empreintes Node exactes,
   zéro/null, révisions, journal et clôture explicite de fixtures. Concurrence : un
   gagnant/un conflit, huit retransmissions identiques. Aucune clôture en production.
@@ -65,7 +65,7 @@
   Les CI satellites et auxiliaires Python restent actifs jusqu'à leur transfert
   complet ; cette tranche ne constitue pas le jalon 1 et Kanidm n'est pas démarré.
 
-- Dernière qualification : 39 parcours, ajout du refus anonyme avant toute
+- Dernière qualification : 40 parcours, ajout du refus anonyme avant toute
   validation du détail scientifique ; Matheval publié au commit 62e6667,
   Vision au commit d9d5450. Exécutable local 10 261 112 octets, SHA256
   6e11db00faf61289493159900b7c69ccf20d5592a380787ada272fba6dc8757b,
@@ -73,3 +73,12 @@
   portée par cette preuve précède ses changements non commités ; les empreintes
   de chaque entrée du reçu identifient les sources testées, pas ce seul commit.
   Les reçus déjà valides sont réutilisés lorsque ces entrées restent identiques.
+
+- UUID historiques : lecture limitée à la syntaxe SQL canonique, sans exiger
+  les bits version/variant du schéma de création. Régression différentielle
+  ajoutée ; 40 parcours et reconstruction sans cache réussis (24 FASL,
+  3,209 s construction, 7,207 s tests). Matheval 2a82250 publié avant le manifeste.
+- CI 38101080554 sur 82161d8 : cadre success, composants arrêtés code 2 au
+  contrôle COMPONENTS_READ_TOKEN absent. Aucun checkout privé ni publication.
+  Trois contrôles satellites Vision sur d9d5450 réussis ; ils ne qualifient pas
+  l'assemblage complet et restent à transférer. Production toujours inchangée.

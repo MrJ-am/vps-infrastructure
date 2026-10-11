@@ -56,6 +56,7 @@ try {
  await request('/sessions',{method:'POST',data:{...create,secret:'b'.repeat(64)}});
  await request('/sessions',{method:'POST',data:{...create,seed:1}});
  await request('/sessions/'+id,{secret:'b'.repeat(64)});await request('/sessions/'+id,{secret});
+ await request('/sessions/11111111-1111-0111-0111-111111111111',{secret});
  await request('/sessions/------------------------------------',{secret,correction:{ancien:500,nouveau:404,message:'Participation introuvable.'}});
  await request('/sessions/'+id,{method:'PUT',data:checkpoint,secret});
  await request('/sessions/'+id,{method:'PUT',data:checkpoint,secret});

@@ -18,7 +18,7 @@
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "62e66673d174009f2cc609f5addb8d6a24a7793e",
+      "revision": "2a822502329e1bce35f6e49ecbac00a135ab235e",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
@@ -44,20 +44,20 @@
     "pures_metheval": 116,
     "tirages_bruts": 8000,
     "natifs_json_openssl": 8003,
-    "parcours_composant": 39,
+    "parcours_composant": 40,
     "concurrence": "un gagnant/un conflit, huit retransmissions identiques",
     "vision": "RLS Alice/Bob, liens prives, valeurs liees, contexte transactionnel",
     "artefact": "HTTP AF_UNIX réel, sauvegarde et session SQL persistantes après redémarrage"
   },
   "artefact_local": {
     "format": 1,
-    "artefact_sha256": "6e11db00faf61289493159900b7c69ccf20d5592a380787ada272fba6dc8757b",
-    "taille_octets": 10261112,
-    "construction_secondes": 2.7347,
-    "tests_secondes": 6.6934,
+    "artefact_sha256": "2b19d2a8eb0b326b6920de75522a2b242256a0b82b1cce0dec1d659f59dc9da9",
+    "taille_octets": 10261080,
+    "construction_secondes": 3.2087,
+    "tests_secondes": 7.2066,
     "fasl_reference_sans_cache": true,
     "fasl_reference_crees": 24,
-    "source_revision": "1abe1f589a7f167182a2702548078bdf3255dd49",
+    "source_revision": "82161d822d32be66b25c2db449413120c0c64c1b",
     "qualification": "locale HTTP/transactions/redemarrage, assemblage complet non qualifie",
     "publication_autorisee": false
   },
@@ -104,7 +104,7 @@
           "vps/AGENTS.md": "fa56a21166bbfb7f4718acaa0dbef89c2637fd87e089717aced2c2bc2fb13390",
           "vps/coordination/CONTRATS.org": "8863f2e6f9cd837a760171cbf92a129e2bc232a3aed7a968353818d510bc30a4",
           "vps/coordination/REGISTRE.org": "226261c4a3f95ebbc099056263f3f34e2dcf30624087abf3bba6f3f972385fae",
-          "vps/assemblage/manifest.json": "8a2ea789efb6cc2ed4ca2c5b8d9ff62c8f7acafcc9eee4284ac1dbcec79134f1",
+          "vps/assemblage/manifest.json": "d219be69e8de0921a98f27774ce25e7f58686f65f3a030604b427401a1f0f378",
           "vps/scripts/assemblage.py": "81a86602e3859ab8dd98f1514e9f48f8e8e2508e3965b04cda32cdbc850d70c4",
           "vps/assemblage/dependances.json": "fa0679b63f86967c8c5e4eb78c0a294b735bb8fd03d5aa9f8e76cbb758977bc3",
           "vps/scripts/verifier-dependances.py": "13bbc27f918ec3c9c47f1eb59acecea1313fbdf9b8d515efbe181eea88f7bdad"
@@ -130,7 +130,7 @@
         0,
         0
       ],
-      "duree_secondes": 0.139
+      "duree_secondes": 0.1547
     },
     "native-contrats": {
       "format": 1,
@@ -240,12 +240,12 @@
         "entrees": {
           "matheval/matheval.asd": "c45e640f31c8852ff03412cd6df78d599dd79045f043b5c2ad0013c604300478",
           "matheval/lisp/administration.lisp": "3939b2abf4cb7fe32f6fe4098dad984e7100d6596e00423ff1ec14807f5a558e",
-          "matheval/lisp/collecte.lisp": "252b0ccee980e1c6f94a2421ac7f4b424297aa60cd6a5c09d0a2be511c0e2a81",
+          "matheval/lisp/collecte.lisp": "72dc5cfd959461c4f54069a08b2c7b09a174d35a0b69b675e6f37fd0e672c86f",
           "matheval/lisp/package.lisp": "1753ce0c8a682f888be4cf5a625f9600f04df23b0083f862ada75e6d3771c669",
           "matheval/lisp/statistiques.lisp": "8f1e3c504d99802f8367ad1f51fc23cefeba9494f41e3220407b0f31dc2d399e",
           "matheval/lisp/tests/pures.lisp": "bb9939c4c21c5483b8686ef6b7ba7131aaa4ec6a0907f445e30132fad0a90f3a",
           "matheval/lisp/tirages.lisp": "935816e07b6d15e758a988ee310dd3c05cada51c63c34e03a26a7cdaa10274eb",
-          "matheval/lisp/validation.lisp": "e066eef4d332e27ffa789d7f5803d0d06749863b9763cf1e336136a279581835",
+          "matheval/lisp/validation.lisp": "5f87e729ddfbb5ea98873e5186cc3730be0bcb4ff6b119057ca17d695d9d29d1",
           "matheval/docs/site/session.js": "44fc617998f1806d09c3b14ffbe2f27c72cf996fc9937ac91753ec8be7ad95a6",
           "matheval/server/src/statistics.mjs": "6cf3363d052180f2ca7e6c68d7eef8cb67b83d8f3e4917b72da75b3c10c6587d",
           "matheval/research/bank.json": "bb7fb8be7ba839a4dbece6155e6753a38faf0933d6b5d6999b21d7964371c9f4",
@@ -356,7 +356,7 @@
       "codes": [
         0
       ],
-      "duree_secondes": 0.7174
+      "duree_secondes": 0.7757
     },
     "matheval-postgresql": {
       "format": 1,
@@ -376,19 +376,19 @@
           "vps/lisp/serveur/package.lisp": "8c7831b3269e0b6a85f8df79f6ded0746511ce20148354638ca68480218560e5",
           "vps/lisp/serveur/vision-sql.lisp": "01c78d9cc4bbbb98c4c08a2e578647ad6380cf1c7c499af8015a255471eb5691",
           "vps/assemblage/charger.lisp": "71776ab210b9e3153afb77633df03d820efed8236281340d9c5bfc2171cebfb4",
-          "vps/tests/matheval-composant.mjs": "13e952a9c244a792abc79a362cbb4f26af76eecc530b2efcdd720b35da2d53a2",
+          "vps/tests/matheval-composant.mjs": "281a160a62a814543ce64e5992b6db840a4e919f9a8cbd202e0397868e5e6815",
           "vps/tests/matheval-composant.lisp": "a60ae777275a7f9c1edb0892689cd78520adff0ca37da47aa06d248273b955fb",
           "vps/assemblage/construire.lisp": "28e0b2e60a8bec5da817cecca7516bdb11ce5fa8cc14f7da6e5f532a48ab0b8f",
           "vps/scripts/qualifier-metier.py": "aedb50171f9f6d40d5b7a3262c69af8176754646856487310870f197826a7ab8",
           "vps/tests/serveur-artefact.py": "4637eb92dc36f02d87d7e18b1b52f89f1a3c201666e9341c9822b45fa61fd0dd",
           "matheval/matheval.asd": "c45e640f31c8852ff03412cd6df78d599dd79045f043b5c2ad0013c604300478",
           "matheval/lisp/administration.lisp": "3939b2abf4cb7fe32f6fe4098dad984e7100d6596e00423ff1ec14807f5a558e",
-          "matheval/lisp/collecte.lisp": "252b0ccee980e1c6f94a2421ac7f4b424297aa60cd6a5c09d0a2be511c0e2a81",
+          "matheval/lisp/collecte.lisp": "72dc5cfd959461c4f54069a08b2c7b09a174d35a0b69b675e6f37fd0e672c86f",
           "matheval/lisp/package.lisp": "1753ce0c8a682f888be4cf5a625f9600f04df23b0083f862ada75e6d3771c669",
           "matheval/lisp/statistiques.lisp": "8f1e3c504d99802f8367ad1f51fc23cefeba9494f41e3220407b0f31dc2d399e",
           "matheval/lisp/tests/pures.lisp": "bb9939c4c21c5483b8686ef6b7ba7131aaa4ec6a0907f445e30132fad0a90f3a",
           "matheval/lisp/tirages.lisp": "935816e07b6d15e758a988ee310dd3c05cada51c63c34e03a26a7cdaa10274eb",
-          "matheval/lisp/validation.lisp": "e066eef4d332e27ffa789d7f5803d0d06749863b9763cf1e336136a279581835",
+          "matheval/lisp/validation.lisp": "5f87e729ddfbb5ea98873e5186cc3730be0bcb4ff6b119057ca17d695d9d29d1",
           "matheval/server/src/app.mjs": "0bcc25be604e40420e358207dc50e1b921416476c8103dfd3b30af11cea52bf1",
           "matheval/server/src/database.mjs": "30ee67f46a752f26852f86c2b982c6af099bcfd35b36d6e8e2258529ba627ca7",
           "matheval/server/src/index.mjs": "eed5cfc9208d2f96392a63999d2a26f7773b244d19231bc400dbd4b7a0ead44d",
@@ -494,7 +494,7 @@
       "codes": [
         0
       ],
-      "duree_secondes": 9.798
+      "duree_secondes": 10.8192
     },
     "vision-sql-native": {
       "format": 1,
@@ -636,5 +636,12 @@
       ],
       "duree_secondes": 4.6346
     }
+  },
+  "ci": {
+    "run": 38101080554,
+    "revision": "82161d822d32be66b25c2db449413120c0c64c1b",
+    "cadre": "success",
+    "composants": "failure",
+    "cause": "COMPONENTS_READ_TOKEN absent, arret avant checkout prive"
   }
 }
