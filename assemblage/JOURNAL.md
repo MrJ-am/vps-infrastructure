@@ -422,3 +422,19 @@ dépendances officielles de la même closure par substitution Nix signée exista
 Aucune reconstruction du binaire296b7c89, aucun nouveau fournisseur ou secret.
 Préparation reprenable avec bundle/état vérifiés ; retour avant création de
 l’unité commune et migration déjà26 traités explicitement.
+
+VPS : préparation38126827329 refusée avant activation ; diagnostic38127124960
+réussi. Seuls postgres.settings.hba_file et ident_file changent, comme attendu
+pour le compte Unix commun ; toutes assertions et autres invariants identiques.
+Ces chemins générés sont sortis du comparateur général, remplacés par un contrôle
+strict du contenu : deux lignes HBA en tête, sept mappings bornés en fin, ancien
+ordre/règles intacts. Régressions refusent trust, rôle postgres, nouveau mapping
+d’identité et changement d’ordre. Aucun processus tiers ou donnée modifié.
+
+Amendement 11octobre — reprise réelle : PID83928/SBCL2.6.4 sain, aucune promotion
+active ni activation/migration incertaine. Six AGENTS et guides actifs remplacés,
+archives exactes conservées ; relecture explicite. Composants publiés avant pins
+centraux, documentation seule : pas de recompilation métier. Ancien candidat
+refusé avant transport par le descripteur tant que l’amendement n’est pas qualifié.
+`python3 -m unittest discover -s tests -p test_monolithe_stage.py` : 13 succès.
+Outils officiels récupérés pour audit seulement ; pas de raccordement revendiqué.

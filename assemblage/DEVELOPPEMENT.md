@@ -1,77 +1,69 @@
-# Développement local, déploiement distant
+# Développement local et image commune
 
-L'instruction du propriétaire du 11 octobre 2026 précise le rythme de travail :
-qualification dans Codex, chaîne CI/CD réservée au déploiement et à ses contrôles.
-Un push ne déclenche aucune campagne de développement. Les anciens workflows
-`assemblage`, `check` et `vision-autonomie-controles` sont désactivés et archivés ;
-les sauvegardes et opérateurs distants existants sont conservés.
+Mission/amendement du 11 octobre 2026 : qualification dans Codex ; CI/CD centrale
+réservée aux déploiements, préconditions et sondes. Aucun test automatique au push,
+workflow composant ou campagne distante de développement. Frontends : voir
+[FRONTENDS.md](FRONTENDS.md), elm-review bloquant et suites selon impact.
 
-Depuis la racine de l'infrastructure, avec le SBCL de l'atelier dans `PATH` :
+Une image SBCL persistante par tâche. Pendant la même tâche ou une compaction,
+conserver l’image saine ; si elle disparaît, reconstruire depuis sources/journal.
+Bootstrap d’une nouvelle image : SBCL cible2.6.4, ASDF incrémental et
+`assemblage/developper.lisp`. Ce bootstrap n’est pas la boucle normale de travail.
 
-```sh
-sbcl --noinform --load assemblage/developper.lisp
-```
+Utiliser conjointement les bibliothèques officielles :
 
-Garder ce processus pendant la tâche. Écrire les modifications dans les sources,
-puis utiliser le graphe ASDF dans cette même image :
+- cl-mcp : sources/définitions/références, introspection courante, ASDF et tests ciblés.
+- cl-tron-mcp via Swank : choisir dès l’évaluation initiale quand on veut conserver
+  pile/variables locales en cas de condition ; inspecter l’exécution suspendue,
+  corriger le fichier, compiler, puis invoquer un restart approprié.
 
-```lisp
-(mrjam-developpement:recharger)
-(mrjam-developpement:verifier "matheval" "native")
-(mrjam-developpement:verifier "json" "quotas")
-```
+Les deux doivent agir dans la même image applicative. Désactiver le pool cl-mcp,
+notamment MCP_NO_WORKER_POOL=1 si confirmé dans la révision auditée ; connecter
+Tron au Swank de cette image. Prouver PID, marqueur et mutation d’objet observés
+par les deux outils. Deux connexions réussies ne suffisent pas. Sérialiser les
+mutations/rechargements ; aucune redéfinition concurrente pendant un débogage.
+Une erreur peut avoir produit des effets : inspecter avant répétition/restart.
+Un rapport cl-mcp dont la pile a été dépilée ne devient pas une session Tron.
 
-Les contrôles Matheval couvrent les vecteurs/stats et 116 cas avec 8000 tirages.
-Le contrôle `native` couvre 8003 vecteurs JSON/OpenSSL. Les fixtures synthétiques
-figées portent les empreintes de leurs références historiques ; leur exécution
-ordinaire est entièrement Lisp et ne relance aucun générateur Node. Les sorties mesurent durée et
-allocations ; elles ne constituent pas des attestations de publication.
-Une condition reste dans le débogueur : inspecter la pile, tracer les fonctions
-concernées, corriger les sources et recharger. Utiliser `COMPILE` pour une fonction
-exploratoire ; ASDF/`COMPILE-FILE` produisent les FASL durables. Aucun REPL public,
-aucune connexion de cette image à la production.
+Corrections durables dans les sources avant chargement. ASDF/COMPILE-FILE pour
+FASL ; COMPILE pour correction de fonction dans l’image. Tests ciblés et
+introspection avant changements risqués. Scénario réel de qualification des
+outils : condition volontaire, pile/locaux, correction enregistrée/compilée,
+restart et reprise avec comptage des effets. Aucun scénario ignoré ou simulé
+n’est un succès. Installation, serveurs, connexion de l’agent hébergé et bonne
+image sont quatre résultats séparés ; une config Codex CLI ne prouve rien ici.
 
-Choisir les campagnes supplémentaires avant de les exécuter :
+Outils de développement séparés des systèmes métier : aucun chargement implicite
+par l’ASDF produit, endpoint public, secret ou connexion de production. MCP Vision
+et ses contrats restent distincts. Bibliothèques/dépendances nécessaires nommées
+sont autorisées après audit et verrouillage ; pas de cl-harness, fusion ou nouveau
+MCP/débogueur. Limitation amont constatée avant toute adaptation étroite.
+
+Commandes centrales existantes de sélection et campagnes isolées :
 
 ```sh
 python3 scripts/assemblage.py selection --changement vps/lisp/serveur/quotas.lisp
 python3 scripts/assemblage.py tester --suite selection
 ```
 
-La première commande décrit l'impact, sans exécuter de test. La seconde montre
-le lancement d'une suite indépendante du REPL : choisir la suite réellement
-affectée. Le pilote réutilise un reçu local réussi seulement si ses entrées,
-outils, configuration, fixtures et tests ont des empreintes identiques.
-Les tests de PostgreSQL, navigateur, MCP, identité, transactions et concurrence
-restent locaux et isolés, avec les outils déjà approuvés, sur les parcours affectés.
-Ne pas reconstruire les quatre interfaces pour une correction SQL isolée.
+La sélection décrit l’impact sans lancer de test. Reçus locaux non attestés avec
+empreintes des entrées, dépendances/outils/configuration/fixtures/tests. Réutiliser
+uniquement le périmètre inchangé ; intégration/identité/concurrence ne sont pas
+remplacées par unités. Frontend modifié ou nouvelles règles : requalifier les
+contrôles affectés, sans reconstruction/rejeu global opportuniste.
 
-Node sert aux interfaces Elm/interopérabilité et, temporairement, à comparer le
-portage au backend Matheval historique sur une base indépendante. Ce différentiel
-était demandé par la mission ; il ne fait pas de Node une dépendance du serveur
-cible. Lancer les régressions Lisp ordinaires dans le REPL ; conserver le vieux
-serveur comme référence de qualification du portage, sans le promouvoir ni le
-rejouer pour chaque correction de prose ou de déploiement.
+Les contrôles Lisp existants116/8000Matheval et8003JSON/OpenSSL restent utiles et
+leurs fixtures historiques figées/provenance conservées. Node/frontend et ancienne
+référence différentielle Matheval sur base indépendante sont les usages approuvés ;
+aucun Node métier cible. Les campagnes PG/navigateur/MCP/recherche restent locales.
+Les outils et caches cibles sont décrits dans `state/outils-nix.json`.
 
-Avant livraison : validation courte des changements dans une image neuve.
-Aux jalons du portage : campagne de référence locale selon le catalogue, sans
-cache ni sélection, et construction de production dans un processus propre.
-Le SBCL 2.6.4 cible et Nixpkgs c5c4a43 sont désormais disponibles localement.
-La qualification cible utilise `state/outils-nix.json`, sans campagne distante.
+Qualification finale dans une image propre ; production construite dans un autre
+processus propre depuis sources/FASL qualifiés, jamais sauvegarde de l’exploration.
+Promouvoir le même artefact : protocole [PROMOTION.md](PROMOTION.md), backup/restauration/
+retour et sondes réelles, SSH central existant. Aucun ancienworkflow réactivé.
+Journal synthétique sans secrets/données dans JOURNAL.md ; reprise compacte dans
+REPRISE.md. Ancien guide exact archivé dans coordination/historique/.
 
-Le déploiement doit vérifier la provenance et les empreintes du candidat et des
-preuves, transférer et promouvoir le même artefact sans refaire les campagnes,
-vérifier sauvegarde/restauration/retour, puis sonder l'état réel du VPS. Les reçus
-locaux actuels restent non attestés : le transfert de confiance vers la promotion
-reste à terminer. L'ancien workflow de qualification archivé n'est pas une voie
-de publication à réactiver pour contourner ce travail. Aucun nouveau canal SSH.
-Plusieurs opérateurs historiques Vision demandent encore `check.yml` via
-`ci-exacte.py` ; ils ne constituent pas le circuit du monolithe. Leur remplacement
-se fait dans la promotion centrale, sans réactiver cette CI de développement.
-
-Bibliothèques Common Lisp tierces : audit documenté avant intégration, sources et
-transitives verrouillées dans l'inventaire. Aucun ajout tiers Lisp n'est nécessaire
-pour cette réorganisation du workflow. Tout autre nouveau langage/runtime/service
-produit exige une autorisation explicite ; Python est permis pour les outils de
-l'agent. Préférer `rg`, Git, ASDF et les outils SBCL aux scripts jetables lorsque
-ces commandes suffisent.
+État : image persistante83928 conservée et saine ; intégration des deux outils
+encore à auditer/installer/qualifier. Aucune connexion MCP agent revendiquée.

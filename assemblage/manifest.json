@@ -1,7 +1,7 @@
 {
   "format": 1,
   "responsable": "MrJ-am/vps-infrastructure",
-  "etat": "portage-local-matheval-et-auxiliaires",
+  "etat": "amendement-outillage-et-frontends-en-cours",
   "sources": {
     "vps": {
       "depot": "MrJ-am/vps-infrastructure",
@@ -12,31 +12,31 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "fcb35f835cec8e338de1a336a7e0240e5073ffbd",
+      "revision": "1ef717460f9c600d908de66ebb8bdf25943669e8",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "7438ce68925290a3233bea0ab171d91b465d0597",
+      "revision": "5e234c0be0ef49efe632bb001811e0eb73f42045",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
       "depot": "MrJ-am/apprendre-a-demontrer",
       "branche": "main",
-      "revision": "586ae182f66e43de9e9ca09107ab22e3d340a568",
+      "revision": "032b4f587c5970f09e1eb75107abdb4f6523b1f2",
       "role": "frontend-statique"
     },
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "1132afea89b3fa8b4a8f7fba7f7bb7e8eb803de3",
+      "revision": "b2da6388b491359d76992e41fd975023499ee964",
       "role": "elm-ui"
     },
     "signature": {
       "depot": "MrJ-am/Signature",
       "branche": "main",
-      "revision": "c4a20679030a56126e91648b697cd5a9ccd7c6d5",
+      "revision": "e9d9d34d353422c2993cd1bc7c3c626f503bb5e0",
       "role": "ressources-identite"
     }
   },
@@ -90,7 +90,7 @@
     "donnees": "bases et proprietaires historiques conserves"
   },
   "qualification": {
-    "etat": "non-qualifie",
+    "etat": "qualification-anterieure-conservee-amendement-a-qualifier",
     "production": "inchangee",
     "reference_production": {
       "run": 38097638053,
@@ -131,5 +131,13 @@
       "origine_style": "MrJ-am/style-mrjam",
       "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
     }
+  },
+  "amendement": {
+    "date": "2026-10-11",
+    "frontends": "elm-ui/elm-animator + elm-review bloquant",
+    "developpement": "cl-mcp et cl-tron-mcp/Swank dans la meme image SBCL",
+    "reference_frontend": "assemblage/FRONTENDS.md",
+    "reference_developpement": "assemblage/DEVELOPPEMENT.md",
+    "etat": "non-qualifie"
   }
 }
