@@ -1,6 +1,20 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — préparation de production
+## Point de reprise actif — restauration isolée à corriger
+
+Run38184424703 terminé en échec pendant restauration isolée (message générique),
+avant tout appel activer. Préparation réutilisée, ancien service non basculé.
+Erreur détaillée conservée privée sur VPS ; diagnostic fermé étendu aux seules
+classes/lignes, sans message de condition/source/SQL. Constat exact à lire avant
+nouvelle restauration ; aucun re-déclenchement aveugle de l’opération.
+
+Préparation réelle38184214522/afbe6f6 réussie : paquet296b7, candidatNix
+r4czzy6icdfc14jiqs93kk6jc83cc1p1, dry-activate/Nginx/invariants/IdentMap validés,
+sondes des services existants réussies ; aucune activation à cette étape.
+Déploiement38184424703/afbe6f6 déclenché23:28:45UTC, état à constater avant toute
+nouvelle opération. Il réutilise la préparation, restaure une sauvegarde fraîche
+isolément avec ACL/retour puis active seulement si tout passe. Ne pas supposer
+qu’une interruption arrête ce run ni redéclencher sans voir son issue.
 
 Candidat actif c5548b354839db1f8875ec28a3ce7a8c810c42a4, bundle complet vérifié
 localement. Transport8c57d52d0a54f0fe0aa1d2ee320483ddc4523edb, trois parties,109014944octets,

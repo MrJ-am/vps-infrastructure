@@ -40,6 +40,16 @@ def diagnostic_identmap(avant,apres):
                                for r,ajout in zip(roles,ajouts)}}
 
 
+def diagnostic_erreur(texte):
+    # Pas de message de condition, requête SQL, ligne de source ni valeur locale.
+    pile=[{'fichier':Path(n).name,'ligne':int(l)}
+          for n,l in re.findall(r'File "([^"]+)", line (\d+)',texte)]
+    dernier=texte.rstrip().splitlines()[-1] if texte.strip() else ''
+    classe=dernier.split(':',1)[0]
+    return {'exception':classe if re.fullmatch('[A-Za-z_][A-Za-z0-9_.]{0,80}',classe) else 'inconnue',
+            'pile':pile[-12:]}
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -48,6 +58,10 @@ def main(revision):
          'invariants_modifies':differences(r['invariantAvant'],r['invariantApres']),
          'preparation_presente':(d/'preparation.json').exists(),
          'activation_presente':(d/'activation.json').exists()}
+    out['restauration_presente']=(d/'restauration.json').exists()
+    for nom in ('restauration','activation'):
+        p=d/('erreur-'+nom+'-privee.log')
+        if p.is_file():out['erreur_'+nom]=diagnostic_erreur(p.read_text())
     if 'postgresAccesAvant' in r and 'postgresAccesApres' in r:
         out['identMap']=diagnostic_identmap(r['postgresAccesAvant']['identMap'],
                                           r['postgresAccesApres']['identMap'])
