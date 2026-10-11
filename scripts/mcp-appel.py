@@ -14,6 +14,37 @@ import urllib.request
 ETAT=Path(__file__).resolve().parents[1]/'state/outils-mcp'
 URLS={'cl-mcp':'http://127.0.0.1:4106/mcp','tron':'http://127.0.0.1:4107/mcp'}
 
+# Chemins distants retenus à cette révision. Un ajout répond à un besoin concret,
+# avec cible inspectée et contrôle proportionné ; ceci n'est pas un sandbox.
+TRON_DISTANTS=frozenset({'repl_eval','repl_compile','repl_frame_locals',
+    'repl_get_restarts','repl_invoke_restart'})
+TRON_CONSTATS=frozenset({'repl_status','swank_status','swank_debugger_state'})
+
+
+def texte(resultat):
+    return '\n'.join(c.get('text','') for c in resultat.get('content',[]) if c.get('type')=='text')
+
+
+def verifier_commande(outil,methode,params):
+    if outil=='tron' and methode=='tools/call':
+        nom=params.get('name')
+        if nom not in TRON_DISTANTS | TRON_CONSTATS | {'repl_connect'}:
+            raise ValueError('Commande Tron non admise pour cette image applicative : '+str(nom))
+        if nom=='repl_connect':
+            args=params.get('arguments',{})
+            if args!={'type':'swank','host':'127.0.0.1','port':4105}:
+                raise ValueError('Connexion Tron : fournir explicitement Swank, 127.0.0.1 et port 4105')
+
+
+def verifier_connexion(url,session):
+    res,_=envoyer(url,{'jsonrpc':'2.0','id':3,'method':'tools/call',
+                     'params':{'name':'repl_status','arguments':{}}},session)
+    if not res or 'error' in res:
+        raise ValueError('Cible Tron non établie ; aucune opération applicative envoyée')
+    statut=' '.join(texte(res.get('result',{})).split())
+    if statut!='(CONNECTED T TYPE SWANK HOST 127.0.0.1 PORT 4105)':
+        raise ValueError('Tron déconnecté ou cible incertaine ; aucune opération applicative envoyée')
+
 
 def envoyer(url,message,session=None):
     headers={'Content-Type':'application/json','Accept':'application/json, text/event-stream',
@@ -31,6 +62,7 @@ def envoyer(url,message,session=None):
 
 
 def requete(outil,methode,params):
+    verifier_commande(outil,methode,params)
     ETAT.mkdir(mode=0o700,parents=True,exist_ok=True)
     with (ETAT/'image.lock').open('a') as verrou:
         fcntl.flock(verrou,fcntl.LOCK_EX)
@@ -44,6 +76,8 @@ def requete(outil,methode,params):
             p.write_text(json.dumps({'session':session,'serveur':init['result']['serverInfo']})+'\n')
             os.chmod(p,0o600)
             envoyer(URLS[outil],{'jsonrpc':'2.0','method':'notifications/initialized'},session)
+        if outil=='tron' and methode=='tools/call' and params.get('name') in TRON_DISTANTS:
+            verifier_connexion(URLS[outil],session)
         result,_=envoyer(URLS[outil],{'jsonrpc':'2.0','id':2,'method':methode,'params':params},session)
         if result is None or 'error' in result:raise ValueError(result)
         return result['result']

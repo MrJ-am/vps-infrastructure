@@ -492,6 +492,7 @@
         "exemples/*.elm",
         "scripts/*",
         "tests/*.py",
+        "package.json",
         "package-lock.json",
         "elm.json",
         "identite.json"
@@ -1873,7 +1874,6 @@
     },
     "impact": [
       "vps/assemblage/outils/*",
-      "vps/scripts/mcp-appel.py",
       "vps/scripts/qualifier-mcp.py",
       "vps/tests/outils-mcp/*",
       "vps/tests/test_outils_mcp.py"
@@ -1955,6 +1955,40 @@
       ],
       "node": [
         "node",
+        "--version"
+      ]
+    }
+  },
+  "outils-routage": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/mcp-appel.py",
+        "tests/test_pont_mcp.py",
+        "scripts/qualifier-mcp.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/mcp-appel.py",
+      "vps/tests/test_pont_mcp.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_pont_mcp.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
         "--version"
       ]
     }

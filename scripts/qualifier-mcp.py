@@ -15,6 +15,20 @@ ETAT=ROOT/'state/outils-mcp'
 def texte(res):return '\n'.join(c.get('text','') for c in res.get('content',[]) if c['type']=='text')
 
 
+def restart_fixture(reponse):
+    """Reconnaître le premier restart actuel par nom ET sens, pas par habitude.
+
+    Contrat étroit de cette fixture et révision Tron ; aucune interprétation
+    générale du Lisp imprimé. Un ordre/format inattendu impose une inspection.
+    """
+    compact=' '.join(reponse.split())
+    entete='(RESTARTS ((RECALCULER Recalculer seulement, sans répéter l’effet déjà exécuté.)'
+    cible=re.search(r'\bTHREAD (\d+) LEVEL (\d+)\)$',compact)
+    if not compact.startswith(entete) or not cible:
+        raise ValueError('Restart de fixture non établi : inspecter nom, sens, ordre et cible actuels')
+    return {'index':0,'thread':int(cible[1]),'niveau':int(cible[2])}
+
+
 def main():
     debut=time.monotonic();trace=[]
     def appel(outil,nom,args=None,*,condition=False):
@@ -53,11 +67,14 @@ def main():
             locaux=appel('tron','repl_frame_locals',{'frame':frame})
             assert 'NAME BASE' in locaux and 'VALUE 40' in locaux and 'NAME FACTEUR' in locaux and 'VALUE 2' in locaux
         assert ':effets 1 :resultat nil' in cl('(list :effets mrjam-qualification-mcp:*effets* :resultat mrjam-qualification-mcp:*resultat*)')
-        assert '(RECALCULER ' in appel('tron','repl_get_restarts')
+        cible_restart=restart_fixture(appel('tron','repl_get_restarts'))
         correction=ROOT/'tests/outils-mcp/correction.lisp'
         compilation=appel('tron','repl_compile',{'code':correction.read_text(),'filename':str(correction),'package':'CL-USER'})
         assert 'COMPILATION-RESULT' in compilation
-        appel('tron','repl_invoke_restart',{'restart_index':0})
+        # La compilation peut modifier le contexte : relire avant l'invocation.
+        if restart_fixture(appel('tron','repl_get_restarts'))!=cible_restart:
+            raise ValueError('Débogage changé pendant la correction ; aucune invocation automatique')
+        appel('tron','repl_invoke_restart',{'restart_index':cible_restart['index']})
         cible=f'REPRISE:{pid}:EFFECTS=1:RESULTAT=42:OBJET=12'
         expression='(format nil "REPRISE:~D:EFFECTS=~D:RESULTAT=~D:OBJET=~D" (sb-posix:getpid) mrjam-qualification-mcp:*effets* mrjam-qualification-mcp:*resultat* (aref mrjam-qualification-mcp:*objet* 1))'
         assert cible in cl(expression) and cible in tron(expression)

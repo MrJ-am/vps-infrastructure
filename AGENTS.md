@@ -16,12 +16,19 @@ restent historiques ; constater l’état installé avant une opération.
 - Bibliothèques métier ASDF sans daemon/connexion/migration au chargement ; une
   image SBCL métier active. Cycle de vie/transport/tâches dans le serveur commun.
   Log distinct, Logique statique ; Nginx/PG/Nextcloud/embeddings conservés.
-- Même tâche : conserver l’image SBCL persistante saine. Nouvelle tâche : image
-  neuve et ASDF incrémental. cl-mcp pour structure/introspection/ASDF/tests ;
-  cl-tron-mcp via Swank dès l’évaluation destinée au débogage suspendu.
-  Les deux ciblent la même image, workers cl-mcp désactivés lorsque supporté.
-  Prouver PID/marqueur/objet croisés ; sérialiser les mutations, vérifier les
-  effets avant reprise/restart. Aucun REPL jetable comme boucle normale.
+- Même tâche : conserver l’image SBCL persistante saine. Architecture actuelle C :
+  métier/cl-mcp sans pool/Swank dans l’image, Tron séparé, pont HTTP existant.
+  CL-MCP ordinaire pour évaluations/ASDF/tests/sources ; Tron via Swank dès
+  l’appel qui doit conserver pile/restarts. Cibles et comportements testés
+  distincts : voir DEVELOPPEMENT.md. Inspecteurs locaux/fallbacks Tron ne sont
+  pas l’application distante. Après reconnexion, vérifier PID/marqueur/état
+  partagé et invalider les références anciennes ; aucun PID constant en script.
+  Pendant une suspension : aucune opération métier concurrente sans lien avec
+  la réparation, pile DEBUG/thread/niveau conservés, restart choisi par sens et
+  position actuelle, effets vérifiés après reprise. Timeout n’annule pas les effets.
+  Édition structurelle facultative, aucun appel MCP artificiel pour Elm/Nix/prose.
+  ASDF incrémental ; contrôle de santé sans qualifier synthétique. Processus
+  de test propre distinct permis pour reproduction, sans détruire l’image saine.
 - Écrire les corrections durables dans les sources avant chargement/compilation.
   Qualification finale en image propre. Outils MCP/Swank uniquement de
   développement, sans production ni endpoint public ; MCP métier distinct.

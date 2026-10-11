@@ -6,7 +6,7 @@ Production : génération r6s7ags3, ancienne architecture, Keycloak provisoire ;
 fictif créé, fermé ou effacé en production. Dernière référence38118876078 : un
 compte Vision/une identité, liens cohérents, trois participations Matheval ouvertes.
 
-État constaté après amendement : main infrastructure e1f0bdf ; branche locale
+État avant la publication de cette reprise : infrastructure ad98feb ; branche locale
 reorganisation/assemblage-central-20261011. Vision 1ef7174, Matheval/master 5e234c0,
 Logique 032b4f5, Style c9663ce (chronologie et adaptateur accessibles publiés ; autres vues encore à porter), Signature e9d9d34. Consignes/guides des cinq composants
 publiés avec archives exactes ; root intègre les corrections Nix/préparateur et
@@ -115,3 +115,131 @@ package incorrect refusée avant toute évaluation, corrigée à partir de la so
 Suite à poursuivre : contexte explicite de palette pour préserver les marques
 sans cascade CSS, présentation elm-ui et adaptateurs manquants ; consommateurs
 toujours verrouillés aux anciennes révisions, preuves frontend à renouveler.
+
+## Interruption pour audit MCP — état historique du 11 octobre 2026, 11:55 UTC
+
+**État historique : chantier suspendu pendant l’audit. Interruption close par
+l’amendement ciblé de reprise ; voir l’état actuel ci-dessous.** Aucune consigne,
+architecture, dépendance ou production modifiée par l’audit ; aucun commit,
+nouvelle condition, compilation, restart ou suite de tests. Rapport autonome :
+[RAPPORT-EXPERIENCE-MCP-20261011.md](RAPPORT-EXPERIENCE-MCP-20261011.md), onze
+sections, preuves et plan exact de reprise. Constats privés et empreintes :
+state/outils-mcp/audit-20261011.json ; état Actions dans audit-actions-20261011.json.
+
+HEAD infra ad98feb812017391621a3533ca696b6137c456ee, branche locale
+reorganisation/assemblage-central-20261011. Autres HEADs inchangés : Vision
+1ef7174/main, Math 5e234c0/master, Logique 032b4f5/main, Style c9663ce/main,
+Signature e9d9d34/main. Ces quatre composants hors Style sont propres.
+
+Travail interrompu non commité, conservé :
+- Infra : assemblage/elm-review/src/MrJam/Presentation.elm et
+  assemblage/elm-review/tests/PresentationTest.elm.
+- Style : src/MrJam.elm ; src/MrJam/{Theme,Controles,Disposition,Documents,
+  Fenetres,Identite}.elm ; src/MrJam/Adaptateurs/Accessibilite.elm.
+- Nouveaux fichiers Style : exemples/Contextes.elm, src/MrJam/Contexte.elm,
+  src/MrJam/Adaptateurs/{Dialogue,Selection}.elm et tests/contextes.py.
+
+Palette immuable explicite Theme.Contexte/MrJam.Contexte et MrJam.pour,
+composants elm-ui colorés sans cascade, select/dialog natifs étroits,
+focus explicitement rétabli après déplacement keyed. Tests ciblés Contextes
+passés320/768/1440px (4,117659s), JS state/contextes.js SHA2b8e1951a4683953684a40f4d6b68c2ec7faca67948c456f2bb5b18ebab49bf7.
+Nouveau test pas encore raccordé à la commande centrale, autres contextes/vues,
+typographie et consommateurs à terminer. Règle AST37cas passent ; reçu canonique
+frontend-regles9,5305s valide ces contrôles, pas la conformité des applications.
+Dernière analyse réelle socle/atelier541violations/exit1. Aucun nouveau candidat
+frontend qualifié ni changement des trois pins Style consommés. Les ajouts ARIA
+suivants et les autres composants de contexte étaient prévus, pas encore écrits.
+
+État Lisp lu sans mutation applicative : PID83928 SBCL2.6.4/ASDF3.3.1, métierT,
+cl-mcp4106/Swank4105, poolNIL, pool-status0workers/0sessions affectées.
+MCP_NO_WORKER_POOL="1" ; MCP_WORKER_SWANK/INIT_SYSTEM/INIT_ENTRY non définies.
+TronPID129399/4107 connecté au Swank83928 ; ancienne image79777 séparée et
+préservée. Objet12, effets1, résultat42 et même marqueur lus des deux côtés.
+Aucun débogage suspendu : THREADNIL/LEVEL0. Les outils REPL/Swank visent
+l’application ; les inspecteurs/mesures locaux Tron ne sont pas cette image
+(frontière constatée dans le code, détaillée au rapport). Les outils natifs
+ne sont pas enregistrés dans le catalogue hébergé ; pont HTTP réellement utilisé.
+
+Trace synthétique antérieure22appels, empreinte canonique cd79880769a83adab908b5e25dc80040c8e0e159aff6dc821873d22b015eae9a
+recalculée conforme ; toutes sources du reçu actuel inchangées. Ne pas en déduire
+un total d’appels de session. Ne pas lancer qualifier-mcp.py comme simple sonde :
+il réinitialise la fixture et provoque une condition. Aucune opération locale
+de build/test/migration en cours ; API GitHub de l’assembleur0in_progress,
+0queued,0waiting. Production non resondée pendant l’audit, dernière preuve
+38118876078/ancienne générationr6s7ags3 ; aucune bascule/activation achevée.
+
+Reprise après instructions seulement : constater mutations concurrentes/PID/
+débogage ; conserver image saine ou reconstruire le seul environnement absent ;
+appliquer les nouveaux choix explicitement, puis terminer le portage frontend et
+ses commandes bloquantes. Publier composants avant manifeste, requalifier selon
+impact ; reprendre Nix/HBA/promotion/backup/restauration/retour et sondes réelles.
+Étape1 non terminée, Kanidm non commencé. Aucun reset ni répétition d’opération
+à effets de bord incertaine nécessaire pour cet audit.
+
+## Reprise actuelle après audit — architecture C conservée
+
+Interruption levée par instruction explicite, même tâche reprise sans reset.
+Image saine conservée, trois listeners loopback et identité croisée relus :
+CL-MCP/Tron même PID83928, marqueur/objet12/effets1/résultat42 ; pool arrêté,
+aucun débogage suspendu. Ces PID restent des observations, jamais paramètres fixes.
+Les fichiers de chantier sont inchangés au constat ; aucune commande interrompue
+encore active hormis les images. Aucune production modifiée ou campagne relancée.
+
+Consignes centrales/AGENTS Lisp actualisés : architecture C, cibles distinctes,
+édition structurelle facultative, sources canoniques, discipline DEBUG/restarts/
+effets, revalidation après reconnexion et test propre distinct permis.
+Pont HTTP borné aux cinq chemins Tron distants qualifiés, trois sondes et connexion
+Swank explicitement locale ; locaux/fallbacks/inconnus refusés avant transport,
+statut distant obligatoire avant opération. Garde de routage sans sandbox.
+Cinq tests ciblés du pont passent0,012s, sans serveur Lisp ni mutation du calcul.
+Ancienne qualification synthétique conservée historiquement ; son empreinte du
+pont ne qualifie pas la modification actuelle, aucun scénario réinitialisé.
+
+Plan actif : terminer le socle/contextes ElmUI et intégrer Contextes aux commandes
+centrales ; corriger les violations réelles puis adopter les révisions dans les
+consommateurs et qualifier les parcours affectés. Ensuite reprendre qualification
+Nix/HBA/préconditions, promotion/sondes de l’étape1, puis Kanidm après constat réel.
+Aucune nouvelle validation manuelle requise pour les décisions déjà arrêtées.
+
+## Progression de la reprise ciblée — 11 octobre 2026
+
+Consignes MCP publiées : Vision 9cb1fb145d6a, Math 78137b0a0e9e. Aucun code métier
+modifié dans ces deux commits. Manifeste actualisé après leurs push, protection
+amendement-en-cours conservée ; aucune promotion ni campagne distante lancée.
+Pont : six tests isolés et reçu central outils-routage réussis0,3246s ; un diff
+limité au pont sélectionne cette suite,33 évitées. Le qualifier vérifie le restart
+actuel par nom/sens/position/thread/niveau et le relit après compilation ; contrôle
+pur testé, scénario suspendu non rejoué. Rapport d'audit inchangé, preuve historique.
+
+Socle frontend en sources, non encore publié/adopté : contextes explicites pour
+MrJam, Documents, Donnees, Tableaux, Disposition et Pictogrammes ; rôles/états ARIA
+bornés. Adaptateurs Saisie/Texte/Pictogramme sans nouvelle dépendance. Le nœud
+texte échappé corrige le white-space normal imposé aux .t d'elm-ui. Le composant
+Animations.deploiement impose minimum0, nécessaire au repli réel de sa hauteur.
+Le raccord animations.js transmet uniquement matchMedia au port, sans animation
+JS ni horloge ; corps de callback Playwright explicite pour éviter l'invocation
+immédiate du disposer retourné (cause du second échec du test, pas bug du raccord).
+
+56 cas AST passent459ms ; huit tests DOM d'accessibilité précédents conservés.
+Contextes compile avec Galerie/Bibliotheque ; navigateur320/768/1440 réussi sur
+JS SHA b3537d128fb954467baf10fb4ea3e96bfcd376b64765f2b48167d74007babce3 :
+couleurs OKLCH de trois marques, isolation après réordonnancement/focus, select,
+String/Int, tableau et palette, limite/Entrée unique, zéro/vide, dates, menu Échap/
+focus, espaces/retours/mot long, SVG original, cibles44px, progression bornée,
+inversions/interactions rapides/saisie pendant mouvement/arrêt des frames,
+réduction pendant mouvement et au chargement, modale inerte/clavier/focus/deux
+fermetures exactes. Nouveau test raccordé à la qualification centrale Style ;
+package.json compile Contextes et fait partie des entrées de reçus.
+
+Dernier contrôle réel complet de l'atelier+socle :421 violations, exit1 ; le
+contrôle n'a pas atteint le second projet Style. Répartition : Echo.Render121,
+Main23, Palette183, Philosophie7, Shared.Licorne2, Shared.Ui19, Blocs11,
+Disposition26, Identite16, Vitrine13. Aucun écart dans les adaptateurs nouvellement
+bornés, MrJam/Controles/Documents/Donnees/Lecture/Tableaux ; aucune suppression.
+Cette analyse précède le nouveau composant Animations, à recontrôler ensuite.
+Les pins Style des consommateurs restent historiques, aucune interface globale
+qualifiée. À reprendre : typographie réservée, dialogues composés/companions,
+Vitrine/Blocs, atelier ; adopter ensuite les nouvelles sources exactes, vérifier
+les parcours existants et ressources, puis reprendre l'étape1 réelle et Kanidm.
+Image Lisp persistante conservée, aucun DEBUG ouvert au constat, aucune cible
+ni objet ancien réinventé. Production inchangée depuis les preuves précédentes.
