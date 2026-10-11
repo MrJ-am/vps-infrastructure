@@ -47,6 +47,14 @@ class Selection(unittest.TestCase):
     def test_chemin_inconnu_elargit(self):
         self.assertEqual(sorted(self.c), a.selection(['vision/nouveau-generateur.bin'], self.c))
 
+    def test_revision_ou_toolchain_du_manifeste_elargit(self):
+        self.assertEqual(sorted(self.c), a.selection(['vps/assemblage/manifest.json'], self.c))
+
+    def test_primitives_natives_invalident_les_consommateurs(self):
+        s = a.selection(['vps/lisp/native/crypto.lisp'], self.c)
+        for nom in ('native-contrats','matheval-pures','matheval-postgresql','vision-sql-native'):
+            self.assertIn(nom,s)
+
     def test_selection_et_definition_sont_des_entrees(self):
         s = a.selection(['vps/scripts/assemblage.py'], self.c)
         self.assertIn('selection', s)

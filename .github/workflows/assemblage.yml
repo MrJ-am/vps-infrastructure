@@ -4,10 +4,19 @@ on:
     paths:
       - assemblage/**
       - mrjam-metier.asd
+      - mrjam-native.asd
+      - lisp/**
       - scripts/assemblage.py
+      - scripts/ci-impact.py
       - scripts/coordination.py
+      - scripts/qualifier-metier.py
+      - scripts/verifier-dependances.py
       - tests/test_assemblage.py
       - tests/matheval-differentiel.*
+      - tests/matheval-composant.*
+      - tests/native-differentiel.*
+      - tests/serveur-artefact.py
+      - tests/vision-sql-native.*
       - .github/workflows/assemblage.yml
   workflow_dispatch:
 permissions:
@@ -18,21 +27,49 @@ concurrency:
 jobs:
   cadre:
     runs-on: ubuntu-latest
+    outputs:
+      composants: ${{ steps.impact.outputs.composants }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+          fetch-depth: 0
+      - name: Sélectionner le travail réellement concerné
+        id: impact
+        env:
+          MRJAM_COMMIT_AVANT: ${{ github.event.before }}
+        run: python3 scripts/ci-impact.py
       - name: Vérifier le sélecteur, les reçus et le contrat
         run: |
           python3 -m unittest discover -s tests -p test_assemblage.py
           python3 scripts/coordination.py verifier
   composants:
+    needs: cadre
+    if: needs.cadre.outputs.composants == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      postgres:
+        image: mirror.gcr.io/library/postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: postgres
+        ports: ['55432:5432']
+        options: >-
+          --health-cmd "pg_isready -h 127.0.0.1 -U postgres"
+          --health-interval 2s --health-timeout 5s --health-retries 10
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+      - name: Exiger l’accès de lecture aux deux sources privées
+        env:
+          COMPONENTS_READ_TOKEN: ${{ secrets.COMPONENTS_READ_TOKEN }}
+        run: |
+          if [ -z "$COMPONENTS_READ_TOKEN" ]; then
+            printf '%s\n' '::error::COMPONENTS_READ_TOKEN absent : la CI ne lit pas Vision/Signature privés. Aucun candidat ne peut être publié.'
+            exit 2
+          fi
       - name: Lire exclusivement les six révisions autorisées
         id: sources
         run: |
@@ -86,13 +123,17 @@ jobs:
           printf '%s\n' "$RUNNER_TEMP/sbcl/usr/bin" >> "$GITHUB_PATH"
           printf 'SBCL_HOME=%s\n' "$RUNNER_TEMP/sbcl/usr/lib/sbcl" >> "$GITHUB_ENV"
       - name: Préparer la référence JavaScript verrouillée
-        run: npm --prefix .sources/M-moire/server ci --ignore-scripts
+        env:
+          MRJAM_ATELIER: ${{ github.workspace }}/.sources/
+        run: |
+          python3 scripts/verifier-dependances.py
+          npm --prefix .sources/M-moire/server ci --ignore-scripts
       - name: Qualifier les sources exactes et les contrats différentiels
         env:
           MRJAM_ATELIER: ${{ github.workspace }}/.sources/
         run: |
           python3 scripts/assemblage.py verifier --atelier "$MRJAM_ATELIER" --exact
-          python3 scripts/assemblage.py tester --atelier "$MRJAM_ATELIER" --exact --ci --suite matheval-pures
+          python3 scripts/assemblage.py tester --atelier "$MRJAM_ATELIER" --exact --ci --suite native-contrats --suite matheval-pures --suite matheval-postgresql --suite vision-sql-native
       - uses: actions/upload-artifact@v4
         if: always()
         with:

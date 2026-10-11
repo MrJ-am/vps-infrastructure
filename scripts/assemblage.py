@@ -78,6 +78,10 @@ def selection(changements, suites):
     """
     choisis = set()
     for chemin in changements:
+        if chemin == 'vps/assemblage/manifest.json':
+            # Tant que les différences entre anciennes/nouvelles révisions des
+            # composants ne sont pas disponibles, élargir plutôt que sous-tester.
+            return sorted(suites)
         matches = {nom for nom, s in suites.items() if correspond(chemin, s['impact'])}
         if not matches:
             return sorted(suites)
@@ -117,12 +121,20 @@ def environnement(suite):
     if any(re.search('SECRET|TOKEN|PASSWORD|KEY|CREDENTIAL', k, re.I) for k in valeurs):
         raise ValueError('Configuration secrète interdite dans un reçu')
     natifs = {}
-    for motif in ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1'):
+    motifs = ('/lib/*/libc.so.6', '/lib/*/libzstd.so.1', '/lib/*/libcrypto.so.3', '/lib/*/libpq.so.5') if 'sbcl' in versions else ()
+    for motif in motifs:
         for chemin in Path('/').glob(motif.lstrip('/')):
             natifs[str(chemin)] = empreinte(chemin.resolve().read_bytes())
+    for cle in ('MRJAM_LIBCRYPTO', 'MRJAM_LIBPQ'):
+        chemin = os.environ.get(cle)
+        if chemin:
+            p = Path(chemin).resolve(strict=True)
+            natifs[cle] = {'chemin': str(p), 'sha256': empreinte(p.read_bytes())}
     # SBCL_HOME est un chemin d'outillage, jamais un credential.
     sbcl_home = os.environ.get('SBCL_HOME')
-    if sbcl_home:
+    if sbcl_home and 'sbcl' in versions:
+        runtime = Path(sbcl_home).parent.parent / 'bin/sbcl'
+        if runtime.is_file():natifs['sbcl/runtime'] = empreinte(runtime.resolve().read_bytes())
         for chemin in sorted(Path(sbcl_home).rglob('*')):
             if chemin.is_file():
                 natifs['sbcl/' + str(chemin.relative_to(sbcl_home))] = empreinte(chemin.read_bytes())

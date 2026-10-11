@@ -1,0 +1,27 @@
+(defpackage #:vision-sql-native (:use #:cl) (:export #:verifier))
+(in-package #:vision-sql-native)
+
+(defun verifier (dsn)
+  (assert (and (search "host=127.0.0.1 " dsn) (search "dbname=vision_native_test" dsn) (search "user=vision" dsn)))
+  (let ((run (mrjam-metier::executeur-vision dsn)))
+    (flet ((sql (u text &optional autres)
+             (funcall run "qualification" text (append (and u (list (cons "utilisateur" u))) autres))))
+      (assert (= 1 (sql "alice" "SELECT to_jsonb(count(*)) FROM vision_fiches")))
+      (assert (= 1 (sql "bob" "SELECT to_jsonb(count(*)) FROM vision_fiches")))
+      (assert (= 0 (sql nil "SELECT to_jsonb(count(*)) FROM vision_fiches")))
+      (assert (= 0 (sql "alice" "SELECT to_jsonb(count(*)) FROM vision_fiches WHERE utilisateur='bob'")))
+      (assert (= 0 (sql "alice" "WITH t AS (UPDATE vision_fiches SET contenu='Intrusion synthétique' WHERE utilisateur='bob' RETURNING id) SELECT to_jsonb(count(*)) FROM t")))
+      (assert (equal "Texte Bob" (sql "bob" "SELECT to_jsonb(contenu) FROM vision_fiches")))
+      (assert (handler-case
+                  (progn (sql "alice" "WITH t AS (INSERT INTO vision_liens(utilisateur,fiche_id,item_id) VALUES('alice',1,2) RETURNING item_id) SELECT to_jsonb(count(*)) FROM t") nil)
+                (vision::database-error () t)))
+      ;; Citation, UTF-8 et fragments SQL sont des valeurs, jamais du code.
+      (assert (equal "é'); SELECT 'Bob" (sql "alice" "SELECT to_jsonb(:'entree'::text)" (list (cons "entree" "é'); SELECT 'Bob"))))))
+    (mrjam-native:avec-connexion dsn
+      (lambda (c)
+        (flet ((n () (parse-integer (cdar (first (mrjam-native:requete c "SELECT count(*) FROM vision_fiches"))))))
+          (assert (= 0 (n)))
+          (dolist (u '("alice" "bob" "alice"))
+            (mrjam-native:transaction c (lambda (c) (mrjam-native:requete c "SELECT set_config('vision.utilisateur',$1,true)" (list u)) (assert (= 1 (n)))))
+            (assert (= 0 (n)))))))
+    (format t "Vision/libpq : Alice/Bob lecture, écriture et lien étrangers refusés ; contexte effacé ; paramètres liés.~%")))

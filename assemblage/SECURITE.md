@@ -35,3 +35,14 @@ par une entrée effectivement bornée (socket Unix avec accès restreint ou preu
 authentifiée) avant le passage du monolithe. Aucun simple en-tête falsifiable ne
 sera assimilé à une vérification. Les campagnes hostiles restent en environnement
 isolé, jamais sur les données réelles.
+
+Preuves locales Matheval : `tests/matheval-composant.mjs` exécute le serveur Node
+de référence et le composant Lisp sur deux bases indépendantes PostgreSQL 17.
+Le rôle applicatif est non propriétaire, NOSUPERUSER/NOCREATEROLE/NOBYPASSRLS.
+39 parcours comparent les contrats et les empreintes ; le test Lisp ajoute une
+course de révision, huit retransmissions concurrentes et un secret étranger.
+`tests/native-differentiel.mjs` compare SHA-256/scrypt et 8003 cas JSON binaire64 à
+Node. Ces preuves ne qualifient ni l'isolation Vision ni le déploiement complet.
+Les buffers de paramètres SQL et de scrypt sont effacés avant libération ; les
+chaînes Lisp d'entrée peuvent demeurer jusqu'au GC. Aucune promesse de purge
+générale du tas ou de résistance à une compromission du processus n'en découle.

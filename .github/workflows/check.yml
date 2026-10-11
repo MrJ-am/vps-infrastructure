@@ -2,6 +2,28 @@ name: Vérifier l'infrastructure sans déployer
 on:
   push:
     branches-ignore: [operations/vision]
+    paths:
+      - apps/**
+      - modules/**
+      - hosts/**
+      - lib/**
+      - services/**
+      - vendor/**
+      - scripts/**
+      - tests/**
+      - databases.json
+      - projects.json
+      - '!scripts/assemblage.py'
+      - '!scripts/ci-impact.py'
+      - '!scripts/coordination.py'
+      - '!scripts/qualifier-metier.py'
+      - '!scripts/verifier-dependances.py'
+      - '!tests/test_assemblage.py'
+      - '!tests/matheval-differentiel.*'
+      - '!tests/matheval-composant.*'
+      - '!tests/native-differentiel.*'
+      - '!tests/serveur-artefact.py'
+      - '!tests/vision-sql-native.*'
   pull_request:
   workflow_dispatch:
 permissions:
