@@ -1,0 +1,1905 @@
+{
+  "format": 1,
+  "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "classe": "developpement-test-frontend uniquement",
+  "cli": {
+    "drv": "/nix/store/57xdp9qgwhcvcw7j5ax572valw8x1dr9-elm-review-2.13.5.drv",
+    "npmHash": "sha256-eY9U9mLVL9tizN8touWQfLqFAJJ8pHaSHVD//cvNdhE=",
+    "src": "/nix/store/qk1bn5gyl0xfpnajyvf5k3vvs43k9x6i-source",
+    "url": "https://github.com/jfmengels/node-elm-review/archive/v2.13.5.tar.gz",
+    "version": "2.13.5",
+    "version_effective": "2.13.4",
+    "licence": "BSD-3-Clause",
+    "archive_nix_sha256": "sha256-IjaPJ9ic/5Z8pdtziNwLqzXfnSmgkurjC6afmNIX4LU=",
+    "store": "/nix/store/56as87pc10g9whgxjsnwb8zlp5x29bwp-elm-review-2.13.5"
+  },
+  "elm": [
+    {
+      "package": "elm/core",
+      "version": "1.0.5",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {},
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "db814e9f01c211e63d3b86e2546e924aaba8be2ee2b12299ab81456e9a268993",
+        "src/Array.elm": "1f60be42ecfeaae7dab6e5f6887c49ecdc4089e4348b6f9694e095bd0f434eac",
+        "src/Basics.elm": "649e41513480066f951eef04931a1caea463d3b052cb4a86182c6fcd87e980f2",
+        "src/Bitwise.elm": "0b3c9aef28504672f08209b26e24390aa65ee8a7ae97e71ba84770ff56d25978",
+        "src/Char.elm": "90db4547054916b2e71b364e3253f50f551e03627ce7e8ae53d1fb1ae667e387",
+        "src/Debug.elm": "1407cfff0d9882dc4b6557c7b99f8bbb6f19dbf345ae919c87daf0ca979fd4fe",
+        "src/Dict.elm": "2afc5fcbc080b98903d9b05a98eb0efbf65265eb42ed076b2d442d9e4aca14e5",
+        "src/Elm/JsArray.elm": "bfa0bc6ae1b5b5786f1224b9c0eb476380e9818af53523fdda4b0c30eb60a0d2",
+        "src/List.elm": "79e513a52ab45ab98f3a5ad9c87779c2cb29519c5adcf91ab3b70fb5de234f41",
+        "src/Maybe.elm": "35aa285d930a4da6d918717209f230667ab127d357f69d6ea3dbab31e567f5aa",
+        "src/Platform/Cmd.elm": "015c3c2469abeb1cfcf757017d4448c0e453da972fb846f93a91768488e7dfd5",
+        "src/Platform/Sub.elm": "fdb296916f45f3ed0096959e5d727b32a05e7459ef5cc95f00e76951221499dd",
+        "src/Platform.elm": "71d83575a51451379e81fc2712e925a5fc242286c5c971259ff1740274f7e527",
+        "src/Process.elm": "a6af86afca70423a8ec9092c34f5b4b4247cb25dc67074864cdcab8c895d0455",
+        "src/Result.elm": "1efa7ed54dfcfc31c35ffae770afc6b9b095e063b325d80f5e5550600ded746b",
+        "src/Set.elm": "765ce399f1ed4c92bb47fe0af07808875a2377fdc89f951d513b6f55e5744f85",
+        "src/String.elm": "e7300d71211211e5e0b8b1b3bcd0d6407416a498bcfb682b26a8642fa965e4a0",
+        "src/Task.elm": "f546ccb07a58b26fcf791ed45a6236e80e45aaed00c29cbaeced5dcd6da034fa",
+        "src/Tuple.elm": "b970211ee185cf3184634702aa54f6ec33e2aafb8930caead713ee7929236b46"
+      }
+    },
+    {
+      "package": "elm/json",
+      "version": "1.1.3",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "b6c2ce9de7bd7ed70de7a111e87c449ec3aa7819bf6c48953ce7221e776f7a3e",
+        "src/Json/Decode.elm": "f68189c7da6b1fb23c08878296b0e55575480ac0632adfc6d7ba76f8617672ea",
+        "src/Json/Encode.elm": "9cdf3d660f182aed97117205e72388e2bb0d0ad795b4749975fa2c639b808a2a"
+      }
+    },
+    {
+      "package": "elm/parser",
+      "version": "1.1.0",
+      "url": "https://github.com/elm/parser/zipball/1.1.0/",
+      "sha1_officiel": "8d2110746c0c85c019e71fd776f848ebb15ba430",
+      "archive_sha256": "20e32077e54c8bb546ba36742814e6410681e94244bafa946a7674529cbaa448",
+      "nix_sha256": "06xx29rmagc5r45qfpvrd393lz83ylngidfp08432f1qc8y6r3lh",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "961ecd0de117b0928cf4f76faa3b1910324e3334eef087f12e963c87bc33baa2",
+        "src/Parser/Advanced.elm": "ca653aa79db42cd6d26db8d23682d80a77bcf55ffde925e3fe02297ade486a5a",
+        "src/Parser.elm": "70634dfc528ec45617b52ecded7a8f0a5d339211db4c8d159b94ffd878557f4e"
+      }
+    },
+    {
+      "package": "elm/project-metadata-utils",
+      "version": "1.0.2",
+      "url": "https://github.com/elm/project-metadata-utils/zipball/1.0.2/",
+      "sha1_officiel": "4f28c93cad6686c1820cf8b207723eac6efcb6c4",
+      "archive_sha256": "ad7d5020175720040fafa2f918e79e3ac432414dc14cd0f8376ccbf897a1d7ea",
+      "nix_sha256": "1wj7chfy4knwwyc3k0hy431c80hs7hc686qsr34ayn8gip73x2jj",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/parser": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "b8dd62266475cbd48a20503be2741dcbe44b0f90b22c990225e26a2a88dee5a1",
+        "src/Elm/Constraint.elm": "9c6d841cd6c0eecad912ed432daa88de1908c4e2e7e181e157eea085abf63bc1",
+        "src/Elm/Docs.elm": "d8580d6be769ddb597c08df96a2681cfe5cbc0fc278bc1d0c68ae6a5936662d5",
+        "src/Elm/Error.elm": "c825fa67e0832505fb080b901225a8b0a494a423b1cbc91bba790c37b7cf36cb",
+        "src/Elm/License.elm": "4eb9581728a60e16f74215caed33bb034eed8f49b357f4f4cd910f660f3d176c",
+        "src/Elm/Module.elm": "17496ecba80caa8abfcd1fe0d3212666c112994af0aca0a7d4cb1d97e0393d18",
+        "src/Elm/Package.elm": "8d1c5fc1e20efe77e6b0f12df4a8749c0e35d93eeb786365f4dd5757e1160aef",
+        "src/Elm/Project.elm": "d3ba339e9878659b6cc5d138f1c0eabeb6590079b31f6121fd9de957783962b9",
+        "src/Elm/Type.elm": "bc80d72663e2ff69d7f402a6442b237d5a75f84bc84283173dccaa35d0b7974b",
+        "src/Elm/Version.elm": "7ac00c052ad2e1e98271b977dbf42d20e13fa9d5c2c88ff83b47857a13c254ba"
+      }
+    },
+    {
+      "package": "jfmengels/elm-review",
+      "version": "2.15.0",
+      "url": "https://github.com/jfmengels/elm-review/zipball/2.15.0/",
+      "sha1_officiel": "d2176f224f5896384aa961d164528ff4fdd018ba",
+      "archive_sha256": "56a9943c9fbf57cdd711866221e2fe382325c93e029b0f8ab11046655f90153c",
+      "nix_sha256": "1r5zxkp2al4cw0v8y4khglr1if88ijaiwgnwgn8hf3q4ss2jcb72",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.2 <= v < 2.0.0",
+        "elm/json": "1.1.3 <= v < 2.0.0",
+        "elm/parser": "1.1.0 <= v < 2.0.0",
+        "elm/project-metadata-utils": "1.0.0 <= v < 2.0.0",
+        "elm/regex": "1.0.0 <= v < 2.0.0",
+        "elm-explorations/test": "2.0.1 <= v < 3.0.0",
+        "stil4m/elm-syntax": "7.3.8 <= v < 8.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "79e40728106c1917c86c052ade0b1059840e5ee04565c4f62ef66827d16ec2e8",
+        "src/Ansi.elm": "c02469973909f22bf8ab1a2706ae207abb3df14102451217c4e8f40d1418a1c0",
+        "src/Glob.elm": "f4f2e35e2bf5616f51eb8e1e05be9aafe292fa263959b92b5619f446478790f8",
+        "src/NonEmpty.elm": "f13d13fe45bb1edaa1ec55d408d4da825b62d72f4924201da9f9e08a5efa9046",
+        "src/Path.elm": "2bef84098001675e739ef97fd7d5896e334fca41ef188a93f7a4f1348d36f818",
+        "src/Review/Cache/ContentHash.elm": "d3b4f0ab20454ac78424377a938324cdb6b4add40953db10c2ec3a7d70fa485b",
+        "src/Review/Cache/ContextHash.elm": "10f1217b1d43c861a8e89f0d7f884ceef820e912830420c06d7f1e157db273ad",
+        "src/Review/Cache/EndAnalysis.elm": "743cee93a41cf9d8ae36be44737162aaccca6dbeb1956f4b2a52e7ec79fef5d4",
+        "src/Review/Cache/ExtraFile.elm": "e3a5a81f20049657da96e125f039c93a9aa8f9fec57bca566c31b6377e6ede15",
+        "src/Review/Cache/Module.elm": "04fd00e8f01f9c141c079271e567d761976721b574145424408b64db973fbf49",
+        "src/Review/Cache/ProjectFile.elm": "01ccf5820507e8ebcd96d27b72635e7c461a98317d4fd47f8d849cf4dc1c0336",
+        "src/Review/ElmProjectEncoder.elm": "155dc764d702809c477cd347cd39a4b919a9fdb68cc860ad42c4ab010569b752",
+        "src/Review/Error/FileTarget.elm": "2d93ee3b289b793a8593d304a8f72eafb54c71a28b62111ba153b9975fb2d9cd",
+        "src/Review/Error/Fixes.elm": "d73fe8548e5dfa0ce012ff4e98c4dfb133369ba78fba44f6b14fd9c50666d544",
+        "src/Review/Error/ReviewError.elm": "55fdb1d620d8c2f5cf1d9694a5b25140975271f89bfe97f897058d3d46eb6473",
+        "src/Review/Error/Target.elm": "0d8f52089580306a21ca22a2d80ccf727c3f175811ce0ee57d5787d0be26bd89",
+        "src/Review/Error.elm": "8d6c3e80b247cfcee7874e7863b406cefa6cdabfc32b5b7af914bcf4459fa91e",
+        "src/Review/Exceptions.elm": "f503900afef54ce60651030fecb48ce735ac36de1ceee90956bac02ce7b0e3fa",
+        "src/Review/FileParser.elm": "fa6ce9788bc5a7a5f01bb400a3013c7009736e7e8283cf3fde41f193cf665cb0",
+        "src/Review/FilePath.elm": "c8c3e79918278f32b9ac21e11dd2bfa7a6686b9d2177c6f8b1dab001b98798e9",
+        "src/Review/FilePattern.elm": "178d6ccbab528f99db76ba176b547b3553cec6b2ec029554d29e6d64ccc1e5c1",
+        "src/Review/Fix/Edit.elm": "e65aa28786b039ac2b418c17629e6784e4cda966e88e40a8adb7bfbd75e678af",
+        "src/Review/Fix/FixProblem.elm": "33cbe7f0a0757987139a42088a6d75989cbcae80256a492d4e0e64d7e0aa99d0",
+        "src/Review/Fix/FixedErrors.elm": "24b51ed83739af59f313a382ccfc469bf14683ab952ac8c24fecb1016213970b",
+        "src/Review/Fix/Internal.elm": "37f6c9bbf6df8f82a6a2fda886abf5baf0cd1cf3469e2fbbd996842e1c4466de",
+        "src/Review/Fix.elm": "2a1d6730ac211e1a799a15565ae29484f9ea769c3855d7e5a7ed1b846948f4eb",
+        "src/Review/ImportCycle.elm": "dacf462e60f67e23d1a5debbdd4e95915c73c48867e6c488403fcb06be7404f5",
+        "src/Review/Logger.elm": "66f1dce5d8d43d7521385c529a0aee6c4d23f3391e4a00a3372e75e2ac49d6c4",
+        "src/Review/ModuleNameLookupTable/Compute.elm": "c11a749ca3ab29bd750e5e95deac0b6c80083e6213df141049eca5d165fc8129",
+        "src/Review/ModuleNameLookupTable/Internal.elm": "e02896ba7ebd7fb9425e36ec98d59cb4eed76c0e24a2f0ba3b6f9423d5032fb7",
+        "src/Review/ModuleNameLookupTable.elm": "5a85b81ec53e41c77703b8700afaf2275a951a283daccdcaa028d270db906406",
+        "src/Review/Options/Internal.elm": "fb536e86307892142690c9f98d4ce6908fc57ab74a80b07e712f83016a367858",
+        "src/Review/Options.elm": "5c9e777ee36cb7fc9f40e0d3534b4ea23eb597dc861f6ce3b910f0cebf878ec1",
+        "src/Review/Project/Dependency.elm": "d6d88b69327825e4c5037c3a7acb2235a574f1314a6450787682b44f17e91978",
+        "src/Review/Project/Internal.elm": "b47790433a5b94e4badcefa916f55e87e54697046901003ad81472a838a43c9d",
+        "src/Review/Project/InvalidProjectError.elm": "c666288267a9c9ed4464bfe51962c577aecb980a12a9e15c708060077175eb6c",
+        "src/Review/Project/ProjectCache.elm": "c982f79206dc2127f20ab777dc46d7c053882c36fe1ceb1a64f069e8a788a690",
+        "src/Review/Project/ProjectModule.elm": "f9deba722614145a2a89366cf975a7e9703aaa1c740d34f92fc8d23705173d35",
+        "src/Review/Project/Valid.elm": "48315d8c1e6859203b8b120a6f7aaad92ac7f46c1385d7ac1d473d62e97ca8ea",
+        "src/Review/Project.elm": "2b4c9a45d52e62847f17888f1147c643da6f5dfd1ebc47793ae1681d67eddf59",
+        "src/Review/RequestedData.elm": "5e987d183c5fcabd5a81dfdc3628ea5ed171bc4d4ba2a4f9b8c090e85900fc7d",
+        "src/Review/Rule.elm": "4facf8ff90081ba94e1bc0dc945210b4f45184d456ccc78be6f3a182de842f8c",
+        "src/Review/Test/Dependencies/ElmCore.elm": "23c45c5e14aa11198ca13f06cc7b03cd78a88e09e7f111a770ff65177819789d",
+        "src/Review/Test/Dependencies/ElmHtml.elm": "a6a5825b23b03cb37ebc078fcd290d67e134996c0cfbd6c2dbdc86754108dd93",
+        "src/Review/Test/Dependencies/ElmParser.elm": "ca5dbf413cd699cd98fcac9cc252cb460ce033c172d5e4703b9cfdd1a85174d6",
+        "src/Review/Test/Dependencies/ElmUrl.elm": "843327fb690196afcd836a91b1904c1af41625edc95a93e56ae19214bfdbc628",
+        "src/Review/Test/Dependencies/Unsafe.elm": "463ffec405d5048745ba91602af99ce2bcf4707ffa0bdb6d80f28841614ea0cc",
+        "src/Review/Test/Dependencies.elm": "4becef77d69474af057bb438b677d18f5a785b0e56ec87a9a0b9385808158bfc",
+        "src/Review/Test/ExpectationExtra.elm": "fd77ffc31eed66d2457f37db73c27684f47c5d7b7ba8da5694b3bfb01536cfa8",
+        "src/Review/Test/ExpectedFix.elm": "12aebff06733e8b0dee258878db18ba96d286275dbae0dc418fb9bf51b2fb9f1",
+        "src/Review/Test/FailureMessage.elm": "9b954bcc275bf3ed67ac154dfe925730f3e05ce47b72a4dc9d7b04def8998eb5",
+        "src/Review/Test.elm": "e9561e68a0a0e931135fb64b520ee6437a47f3a81c9e19410bc63a7effe2d86e",
+        "src/SimpleAssocList.elm": "469f949a19940268497f84513ad692c579d74b699ad9cf6f62017d9fbcd65c2b",
+        "src/Unicode.elm": "115add7f05a718a9fd0941715c5f510a346605075ef52a97143767a785e13c5b",
+        "src/Vendor/Diff.elm": "b2a03ec12dd99ff02636efacdcb6207c8e74f06c629297c96f63e7ff16a87fd7",
+        "src/Vendor/Fifo.elm": "9e820c2b36b5a550976d4a089ade85b417b136c7ce0a0efdc736e9221ae2f552",
+        "src/Vendor/Graph/Tree.elm": "f402529e7d547d74d8495664985fa97bde3e58429238cafc74f3ab5c4fbca0d7",
+        "src/Vendor/Graph.elm": "361bdb165f98eb1763a15f03c768ef294d8cd7e6f5ce19f34eb05553388a51c0",
+        "src/Vendor/IntDict/Safe.elm": "77dd59ea4acd08102ea7813f86cbd4dac90b93c36bb98a976bff99dde9093aba",
+        "src/Vendor/IntDict.elm": "13672fac490611b5420d0955bd2dbff3309a96a502e3f609181db999098a574b",
+        "src/Vendor/ListExtra.elm": "cad695413eb1c871320b4aed17cb57d0de543176148409e53dde004a6f7ad2a3",
+        "src/Vendor/Murmur3.elm": "994bf6aa09f3eb378e7830288281c7188eb5487f94da099fc1f306c1c183db2d",
+        "src/Vendor/NonEmpty.elm": "fe9717e2b0e14e4c2b0f14f55ed509d27eced0f2ac3075e64e80ce4cc49b41ef",
+        "src/Vendor/Zipper.elm": "a82cbe5cf15fcba64c14eb9625c828ccfef4f5fa2eb2f2a0f3c761f9c1f33f63"
+      }
+    },
+    {
+      "package": "stil4m/elm-syntax",
+      "version": "7.3.8",
+      "url": "https://github.com/stil4m/elm-syntax/zipball/7.3.8/",
+      "sha1_officiel": "517c579701b1e532367256743a47655bff07c34c",
+      "archive_sha256": "86cad225460ea3441178029d53ad2d7e3347c156631b22fc621ecfa9dd21e657",
+      "nix_sha256": "1n76naq0bwr9iy371igjzs4gdq53f9jvirzk7dkb3lf03ypxsqkh",
+      "licence": "MIT",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/parser": "1.0.0 <= v < 2.0.0",
+        "rtfeldman/elm-hex": "1.0.0 <= v < 2.0.0",
+        "stil4m/structured-writer": "1.0.1 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "cc656595dbcb66a874b7ff0debb1b914f00ec2eb68d3055849e8bc28fd7da92b",
+        "src/Char/Extra.elm": "56605a112b162ef62b42fb04902423be3c8c284489096cb2ab8ebb49adac3957",
+        "src/Elm/Dependency.elm": "f422a0b17b5131e8d2c022c19d7a3b34e26bc46a63ef6b8ad45c58fb03e31967",
+        "src/Elm/Interface.elm": "24997077ec58c07b65da06b8b6ea08e5970278571331f8378379c53e2d361683",
+        "src/Elm/Internal/RawFile.elm": "85ab4026988ea5569e4204b0a226ea9c79a9315de28038e121e57c7e5376aed0",
+        "src/Elm/Json/Util.elm": "f8412bfed802d396f8a137dc709ca1dc5c8c3459f67c38adfaa446702c14919f",
+        "src/Elm/Parser/Base.elm": "6b5259942da6788bb70dfcad099e7de09ceeb0d44aaa0d2b426cab76b7504733",
+        "src/Elm/Parser/Comments.elm": "6c8a18523b7cdfd0f7c98f3762176bbd782a65ea2b2f0696f9323bfdd4652a35",
+        "src/Elm/Parser/Declarations.elm": "31f007ccbb20cf45af44dd743a9e5b4c21215bebce01da07034c388d4abd319b",
+        "src/Elm/Parser/Expose.elm": "71fc6b91bc51d68ad429fd9bfe447523e9043a7c07b1d6fe62682bcaba4bd276",
+        "src/Elm/Parser/Expression.elm": "c3d2f4053eb206c01045291d4136d2835503429447b215a382f868fb45c513fd",
+        "src/Elm/Parser/File.elm": "be0499526438505383a1159a420bba07e0482b936bb62cb9090f0717b7169763",
+        "src/Elm/Parser/Imports.elm": "c6a836592d92ec8b2fbf4453fdffaf85ab45225454998d9e28786504d95ce19b",
+        "src/Elm/Parser/Layout.elm": "d34e7a7b2e8eadf6689ed813375d4816552bbd4f554aa492b48aecc942cd55f9",
+        "src/Elm/Parser/Modules.elm": "307bd7316632c28aed30e0413642c77327c43ed9b7e465d19bf1ef142a4a093f",
+        "src/Elm/Parser/Patterns.elm": "d36e80df48c8639730bf08642232148e98664d12f550d8ace52cfafe27722553",
+        "src/Elm/Parser/Tokens.elm": "7961720860682810415691ed6d27400965b4defc09805e32060aed4bb30b84b1",
+        "src/Elm/Parser/TypeAnnotation.elm": "f5cee49948165bbadc19b675a740813f57c8d1c78e4229756105947204f8bffb",
+        "src/Elm/Parser.elm": "48a10f0380bfca746613044f8c688bc4fcad1295655100abd123440c497407d4",
+        "src/Elm/Processing.elm": "4e3853bb16788634a1fdc188c7bf7b8dbf134afa8611cbb593122fcd180885bf",
+        "src/Elm/RawFile.elm": "872f17b3405c4a3e50990ac80e701fa72b88742aee77fc161a8cb3aa891e1278",
+        "src/Elm/Syntax/Comments.elm": "0774255d02bbaffd803c2130dc96d9361542325dbc0b85cf3939164a1b3057aa",
+        "src/Elm/Syntax/Declaration.elm": "831132d54834c2531f0017c6064b85b2785dcf43149f59a7820b0a6ba0b66c75",
+        "src/Elm/Syntax/Documentation.elm": "d31bc0a2bbd4f70579b0953092e920f2dcdf1aa7ee37afc6e105421b0e0c694c",
+        "src/Elm/Syntax/Exposing.elm": "ade38581e4c08bf157889a81ad6efe264a5cebfefba2cf79ab5c3dca4b2b957c",
+        "src/Elm/Syntax/Expression.elm": "8de12e17766f943b98e3d59636a8708d79d08a38185a80d20082e0e224432887",
+        "src/Elm/Syntax/File.elm": "47c24f8cdb0f12cd0473f821e59750707683faf81a52698e30ee09e1fb47a504",
+        "src/Elm/Syntax/Import.elm": "ea40298055bf3bf92c3e41b2308d6befbe619fe595da3abe43e7e6d603dd468f",
+        "src/Elm/Syntax/Infix.elm": "2f365278a065a94bdb5463c67eb56d6e6b726add90182f0d7f9c00417c0d7689",
+        "src/Elm/Syntax/Module.elm": "f2a9393bf3d09545493a81f3345648142376eee91843afe1a32702194ac8883d",
+        "src/Elm/Syntax/ModuleName.elm": "ae96dad9ca64bbea5072ae1cccaae2bfdbf5db5edd83139e33661adbfc9e6c93",
+        "src/Elm/Syntax/Node.elm": "7b7c14d5b962e4b6fd97c734ca6f32ceeef3e15696a4cfa61089af1bd47bc2cd",
+        "src/Elm/Syntax/Pattern.elm": "e526faf6fa60061ff48b3d65dd3c9ce7da8d46b4643659e5f7340e3326d4ea0c",
+        "src/Elm/Syntax/Range.elm": "ad5815011a29cdd34d955acfcc524d49a4e1ee8b6478d330eb202f4bab819d85",
+        "src/Elm/Syntax/Signature.elm": "13d71f3900f7f90b6978bf49b0d332500f6fd68935fb13281b82c8de5cfbe1f3",
+        "src/Elm/Syntax/Type.elm": "5ad33fdd74a15d3c380cdf48b431845c0918910cef3e4009110807ff4bf0b96c",
+        "src/Elm/Syntax/TypeAlias.elm": "affd7932d404d60d0e6658df4efc4a753424fc15ae2de341aeb1e46b40394cd3",
+        "src/Elm/Syntax/TypeAnnotation.elm": "ca123353c704555261d2afa08f0d22289e46976f933761e75b8827f93cb30741",
+        "src/Elm/Writer.elm": "84505a148b81d7267d8dc96a57a23fb2ffbc65d20b8562376e4724c327fccefb",
+        "src/List/Extra.elm": "cb705b5c2b9770772dd30b52adb3aa7af2c3981bae5b56b728958bd649c84af8",
+        "src/ParserFast.elm": "62ea6627375c84c0667599f5169c91081c49e471ede6ad5c83e4782bd3d40dd8",
+        "src/ParserWithComments.elm": "8424ed188e6157ab295768265575ae44293604c3d4d8ad9fb11a0a66ec8cd3c1",
+        "src/Rope.elm": "8c52ace1efcbab750532a0b6edd1a84559d0524f6bd4001399ab80c10092be3e"
+      }
+    },
+    {
+      "package": "jfmengels/elm-review-unused",
+      "version": "1.2.3",
+      "url": "https://github.com/jfmengels/elm-review-unused/zipball/1.2.3/",
+      "sha1_officiel": "e93e156a188e51cce90f640a189887b17cba1204",
+      "archive_sha256": "e7ac95ec05fb481c3c2f0f1f43cbda2419bcf34a80abc48f01e6c2cfc5650e87",
+      "nix_sha256": "1bvbfkh8fa7wicyk5y6wiavpas6vdyca2x287jdjy6w7ag92rv90",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.5 <= v < 2.0.0",
+        "elm/project-metadata-utils": "1.0.1 <= v < 2.0.0",
+        "jfmengels/elm-review": "2.10.0 <= v < 3.0.0",
+        "stil4m/elm-syntax": "7.3.2 <= v < 8.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "4250d919fc301ab18e3b6420182d8b7a25044381cf2a20c9d27d8d7ec5f96064",
+        "src/List/Extra.elm": "c39a7fda96d96264107d50b0a70f8bb3af90d82ef2ec1e6e75c37e49df916e9f",
+        "src/NoUnused/CustomTypeConstructorArgs.elm": "140ea9a7ebdf3b94831e2c6780b3cbd5a903187859a35bf0d034eb1b064a0089",
+        "src/NoUnused/CustomTypeConstructors.elm": "1998b609ed2326d4791fbea5398614070ba6e2ada4ba5728213ad09873bed67f",
+        "src/NoUnused/Dependencies.elm": "cd0e54b8e05e2deb089b8392564a16869cafbbde5756215c53369509f07cef7e",
+        "src/NoUnused/Exports.elm": "b0ac14f0b50074e88b5ee80e30d8f0ba90bdb1805d666ff7129fd9653c538cca",
+        "src/NoUnused/LamderaSupport.elm": "20fbaf97a76cc0436cb274660307dc154633ba8e85547b61235d44ce899243e8",
+        "src/NoUnused/Modules.elm": "1e3d515af5779b45e67d2d7e5e99238dd6fc5bb8f02fd01f96e65b57f8d2c5c7",
+        "src/NoUnused/NonemptyList.elm": "c6eb66a1f4aed9ccf886dea9a423a64a0a952daeced6860a2d4e85b8ef912c24",
+        "src/NoUnused/Parameters.elm": "337f105001fbf1d667727f54e7945444dc1ce73c06966043412a1f2b367fd276",
+        "src/NoUnused/Patterns/NameVisitor.elm": "5a6b0c1afeb2b00745f2dd3b1fe3b7a84ff97be23b0f0d98e690a9516f3b693b",
+        "src/NoUnused/Patterns.elm": "e3b213e04baa3fc1cbbcc3dedef3ba2cd33dc5caf3daa22b15a57b0e26f99239",
+        "src/NoUnused/Variables.elm": "412968162d7908aee936273a9c49334cc3a14311dd8fcbf757aa672886d8005b",
+        "src/String/Extra.elm": "3a95bfeaacfe412ffe6910048474f09a4803ef7a8888338852d342f942a972ed"
+      }
+    },
+    {
+      "package": "elm/bytes",
+      "version": "1.0.8",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.1 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "3e1ed5a8d9f91a44d273a84900258d637c63ba90a4662c4603d75f2cedb266c9",
+        "src/Bytes/Decode.elm": "0081a9ec6a859589b689aad1cd1cb401d8f89f6b71f7dd26a243bcf6cc1a6a4d",
+        "src/Bytes/Encode.elm": "fbad353e50263bc3e8d0a563fad68ab919df0bfd249bf66697031dca033a8607",
+        "src/Bytes.elm": "3a40eb753082a46a555d8169cb87c551f1a10e48876592c69a25a5e5ccf3bd41"
+      }
+    },
+    {
+      "package": "elm/html",
+      "version": "1.0.0",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "84dbb28e88ffbaf32e0e7ce11b8d14ccc97c0798b2d0945ed94668c12a0b9e25",
+        "src/Html/Attributes.elm": "b4ff344168f9199de2bfee5f8e3c1441c621692ddc99a5ce7e380f3014e6d367",
+        "src/Html/Events.elm": "d633d86ecee6195d6bea6f7c8b49a5df3befecd8e9589745055dc5f30b0cef9e",
+        "src/Html/Keyed.elm": "346e9fe65945ccedc250e5d5cc739fe3505dc9be37bcb93fd311527964b55ff7",
+        "src/Html/Lazy.elm": "e6ec7de40a8c6318a055898a144e8cc56b2c9b32f7694be1bf223e98db6cd031",
+        "src/Html.elm": "2e567c415bfeb2a743b0c6fee980383b3e378785247b3e930f77aa98e1dbb4d9"
+      }
+    },
+    {
+      "package": "elm/random",
+      "version": "1.0.0",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/time": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "783ce1a6372ea08b75386982dc50384d4bbbc2387902f0b1f1886e467f057aa3",
+        "src/Random.elm": "62bc5496b27a6bebfe5ad208f4b10e4d41a849a50e7bc17c7686d238e80eb98c"
+      }
+    },
+    {
+      "package": "elm/regex",
+      "version": "1.0.0",
+      "url": "https://github.com/elm/regex/zipball/1.0.0/",
+      "sha1_officiel": "82c352510ce4da707ad0d11f6dc6254bfdceacbe",
+      "archive_sha256": "baf867ebab88530005533ef1ccba9ad657ed4fa15b41047b47d09beb6fb2b02a",
+      "nix_sha256": "1hghzjbf479qn5aynyaqr0966sy5x2dz4zb9sw31hf6m9f8x4gb7",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "5d94a8d626a3ced5140166bcf5207700d1478b16b323cb00cd4b457064b13ff7",
+        "src/Regex.elm": "748c81050fa699ae4692d2af3b514fab286392728a637585b7175878cc446f34"
+      }
+    },
+    {
+      "package": "elm/time",
+      "version": "1.0.0",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "03445516f62e4a779b7267e25f053732f57bda580b871f99a3e53a7979b2dfa4",
+        "src/Time.elm": "e4c55a925c664c25b8ffcd1510c827793d670ec159dc18af3ebd7f642ee4e638"
+      }
+    },
+    {
+      "package": "elm/virtual-dom",
+      "version": "1.0.3",
+      "origine": "cache existant et sources officielles Elm déjà approuvées",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "f00299c02b546533702cacd34ed0eef09bf2bbba138585bb86a79e6b0fd11a83",
+        "src/VirtualDom.elm": "85f06afbc5f418f69c424ecc9b61969cc460444f97987054fb14d2a944d3bba8"
+      }
+    },
+    {
+      "package": "elm-explorations/test",
+      "version": "2.2.0",
+      "url": "https://github.com/elm-explorations/test/zipball/2.2.0/",
+      "sha1_officiel": "4da54e40958a5e0acb6753b403618ee93923bacf",
+      "archive_sha256": "1199c723c5efa761c5b101608f9930e74e9f40a8ac42a7eb589e526143dd21cd",
+      "nix_sha256": "0g781y2j4jz94qv3mvaay2zmlzqi0ag13v1k2q111iypfv0kyx8c",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/bytes": "1.0.8 <= v < 2.0.0",
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/random": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "9de556c9b0be4b4db2e32508d5160c6e29da0b310e61d76f90b918d34f7daad6",
+        "src/AsciiTable.elm": "11359463fa63e6e8c5b0494bc9ada2262a067aff7e2a7a4d15370d07330691bf",
+        "src/Expect.elm": "32965a7d2580b8e24d0ae3e4074ef193f2820686fc169a7b72608315dbec5512",
+        "src/Fuzz/Float.elm": "f3d4e964a769fa964e9472a02a96c5aa086350fab7bfe8efcd2a3e399ec84e87",
+        "src/Fuzz/Internal.elm": "b8f5e02d4ede79d29b1880a03851dd0848a2002da70409d30ed404548b237685",
+        "src/Fuzz.elm": "57190bcbf241046cedc22ce75d36193d06e2617cd4b9260d6b5cc8b85991d590",
+        "src/GenResult.elm": "5ea27678e1da9adde28079081040b95ab18816462a63505040ff00461f30a23d",
+        "src/MicroBitwiseExtra.elm": "ceca4d0f816e2f9eb4b8b28a219a30b9d44419268bc890ba24fcedec340d0d07",
+        "src/MicroDictExtra.elm": "715f19e1467807e6e560eaebff8e3e2051343ee6f03ea1d0f9dc573d54788bf4",
+        "src/MicroListExtra.elm": "d6649570fad121b7747d3a9005786ca9b1fd49e0ebdb42aed2cf89eaa6a2c46e",
+        "src/MicroMaybeExtra.elm": "74888329abd1558d6c0c123f3a933973c2c69192299e420ffbe6363c8dcd56bc",
+        "src/PRNG.elm": "086feed0832f14bc09bf841638d88e8486b1530e8bc2ab2cbe9233c217aad602",
+        "src/Queue.elm": "ae01d4c1ba50198f10e35b46681360a8df1407058ce016c8155c165190f8b05d",
+        "src/RandomRun.elm": "0b9a905394fd741dec206fc3b84303e333ae6b49df7a9f59473ae70b87b7166c",
+        "src/Simplify/Cmd.elm": "ce61733a706da785599bf947e1bdad3c8a00532f885802497bfd3fc83a2e274e",
+        "src/Simplify.elm": "510dce8abe49de56c425515358454f456b78a812df4141c0bc9949b28afdd71e",
+        "src/Test/Distribution/Internal.elm": "1ba0fea8483ef4a8372f9617022b840d31de55b9420af0d2e353353188df3b56",
+        "src/Test/Distribution.elm": "815027e48f1ae723333aa8b263dd1aa2ee743ce73e611ada9bbd04d2d7f1bf6a",
+        "src/Test/Expectation.elm": "438654516acbaace5926cc136d794c9a1772e217a2fef83968e906738ae202c7",
+        "src/Test/Fuzz.elm": "7f151a8e3169b85884fde2d4e92a1e4528697d5993bc915134ed6354b659138a",
+        "src/Test/Html/Descendant.elm": "5655faa4afbb5f9d353b86c689e3ef86c27ee8855ef5b243e7709e8310643b98",
+        "src/Test/Html/Event.elm": "50ffa824aea795305de7be60beeb49a46dc86029aa3659a7e2c6269a5ea2a068",
+        "src/Test/Html/Internal/ElmHtml/Constants.elm": "8929e96da7572ef8c27832767a3a05321e4ac0b2b8616680f39b72d47ed2c45b",
+        "src/Test/Html/Internal/ElmHtml/Helpers.elm": "def271351e166332684779934bf99a40c69c3bb6ba2db5569f480655b1f4da35",
+        "src/Test/Html/Internal/ElmHtml/InternalTypes.elm": "39b846df9ab8ab870da80693ec4f1eb0e5c9409fddae4d54ee1e92d7e5943dd0",
+        "src/Test/Html/Internal/ElmHtml/Markdown.elm": "0be4170ac91d6915d951def87b7e7a67959f3201c10f0779898978e181e68e8a",
+        "src/Test/Html/Internal/ElmHtml/Query.elm": "7751bd05706782613ad50c6cd23da96261ceef37af730d1221290168e2653277",
+        "src/Test/Html/Internal/ElmHtml/ToString.elm": "1e3677826d74a588dc4983b133e5fae824e4a572879efa28d6c95dc297403e6b",
+        "src/Test/Html/Internal/Inert.elm": "a982f20c6dcbf64ed61cb9c55f0dc2510780600abaf72c543331e51fbfdb5c27",
+        "src/Test/Html/Query/Internal.elm": "ef53e936d8bf058f589fd575aaead59a2dcced8d1d0a78cb8fff2322171581b0",
+        "src/Test/Html/Query.elm": "45c4fcd767840c502af35f74af419ed05b3a0db92edad47c0a22c79c638ee669",
+        "src/Test/Html/Selector/Internal.elm": "85dcff2118fbbed28d2d0cc9c5cb5a9b69b99c083b7166a5c8080054fe0ec2ca",
+        "src/Test/Html/Selector.elm": "f0cefd876fc17e5d4ce0a78f9171719f37f0a3e1928b68a453b0f636ee8e83d2",
+        "src/Test/Internal/KernelConstants.elm": "037695cd96d876274c999a2404bb57dcfb1ec9f7b4c13ad8a8bdada4a75ddaf1",
+        "src/Test/Internal.elm": "8dbfde1292b02b7722bb442daf1b271ba4e55bfa893e5b6e186ba66ea2906fe7",
+        "src/Test/Runner/Distribution.elm": "e2fd49a6f7a3e9a16b854f8488431c4abde36913688c6ebbfd0c6eeb4197ff4a",
+        "src/Test/Runner/Failure.elm": "c1b16477b83c17b97d346d1f692f7805ab6202eb50a35d6d2038da1267edda38",
+        "src/Test/Runner.elm": "70fad476dfc3b394ea02800bd953a0ce498ef9538ebf362da76c2168cc50cdfb",
+        "src/Test.elm": "89537ee1f3cb9a3e0782a1979687f3457fba37510877bb2c68b0f58ea29109b1"
+      }
+    },
+    {
+      "package": "rtfeldman/elm-hex",
+      "version": "1.0.0",
+      "url": "https://github.com/rtfeldman/elm-hex/zipball/1.0.0/",
+      "sha1_officiel": "02f218a4df33964ac9c2ad92ff6018b8dc07fa4d",
+      "archive_sha256": "a07ff7e6d692beb785432440fb042b14de60623b246d842c27c8ae10d99fd2fa",
+      "nix_sha256": "0aa3fb1d9h6w6s22hpsxv197g8mb4ki16h0c0rnf324m6b9x8by6",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "ecef5c57135447373f3e8af2c86ff300f4326ae5a3687ece80f3998ce5170222",
+        "src/Hex.elm": "3cb6192357870de305afbf9240cca28ad377d94dfc47672bbc7986a16d973ed1"
+      }
+    },
+    {
+      "package": "stil4m/structured-writer",
+      "version": "1.0.3",
+      "url": "https://github.com/stil4m/structured-writer/zipball/1.0.3/",
+      "sha1_officiel": "fbf02289be464e750f8c08aed757a2da38341283",
+      "archive_sha256": "dbc84f0151fe668b08c32141365950e2201c7df23e618506e5948d20023b7112",
+      "nix_sha256": "1dx5cdzdsb1gji13jxrqh7z4j0xpivyy31kf3ji9ax801rjs8lp3",
+      "licence": "MIT",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "définitions Elm compilées ; aucune connexion/runtime produit ajouté",
+      "fichiers_source_sha256": {
+        "elm.json": "77b9f1a8cd3b7ee410b86bddad15ef7ed94c5fc499c5cd6426174d2521e80bb9",
+        "src/StructuredWriter.elm": "0dc44788fdbbc42ab671cce6da1e22ba77a43ab1398eafbf65bf0828cad84489"
+      }
+    },
+    {
+      "package": "mdgriffith/elm-animator",
+      "version": "1.1.1",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "avh4/elm-color": "1.0.0 <= v < 2.0.0",
+        "elm/browser": "1.0.0 <= v < 2.0.0",
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/time": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0",
+        "ianmackenzie/elm-units": "2.2.0 <= v < 3.0.0"
+      },
+      "origine": "cache Matheval existant / sources officielles Elm",
+      "effets": "calculs purs ; Animator branche Browser.Events seulement via subscriptions et pendant une transition",
+      "fichiers_source_sha256": {
+        "elm.json": "f074b1420465c94dc8e90cf7213f47a0ee9a7cb4e0fb9f95365a3cca249469a3",
+        "src/Animator/Css.elm": "b5a8d35318e514111bbc46fd7e32681e3d3aceb378bc8f9e8fb11b144c651312",
+        "src/Animator/Inline.elm": "8263fb4703bdb5e1d51f489bfc023129957c4bce87d775d54a0d4534b0904c1e",
+        "src/Animator.elm": "a2e76d0bf013f01b23a0503ae00ce5ab26b55c8a66a9e2b2989926df54c8b984",
+        "src/Internal/Estimation.elm": "3adc1ee6a3f0468ae1484542054ebc5a25b16b6d861494736f5983acf803e15d",
+        "src/Internal/Force.elm": "bf650128f09a1c91096ca085b47ffe0022f64b0677e4888364bc7a848ed118e3",
+        "src/Internal/Interpolate.elm": "76d8e1a99fd18eab72a5da8c2336dcc716c202f69b916fd8f725c409b0cb02c9",
+        "src/Internal/Random.elm": "c1f363a11ef2a94ceafd6bb63d512447f49fe2fa2746e6764946d26086de3ce3",
+        "src/Internal/Spring.elm": "471c2e03ebec23ca64440166a212f5badb132ae1d57858b27cb6c91831ccea67",
+        "src/Internal/Time.elm": "4277623b88ce1312b966d8ec6281c971994a44b3356e1731d9c81531e052a1b4",
+        "src/Internal/Timeline.elm": "da5f968d0aa635961f3e6794b9693a109e1b89df0167611e1f8b978d7b86886a"
+      }
+    },
+    {
+      "package": "avh4/elm-color",
+      "version": "1.0.0",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "origine": "cache Matheval existant / sources officielles Elm",
+      "effets": "calculs purs ; Animator branche Browser.Events seulement via subscriptions et pendant une transition",
+      "fichiers_source_sha256": {
+        "elm.json": "2ed787bc9b42ee8f75fcd1a2c2857f3474fd280ad375f28a0fb82fe01c5ff6ae",
+        "src/Color.elm": "557499a8fda931acd45f96fd62a765b5876632792c2ee3727c3b7249b1195251"
+      }
+    },
+    {
+      "package": "ianmackenzie/elm-units",
+      "version": "2.10.0",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/time": "1.0.0 <= v < 2.0.0"
+      },
+      "origine": "cache Matheval existant / sources officielles Elm",
+      "effets": "calculs purs ; Animator branche Browser.Events seulement via subscriptions et pendant une transition",
+      "fichiers_source_sha256": {
+        "elm.json": "9569b6acc5ae4e6f9e6ebe6b493b4fe932994a812b13365e8bd14051969847b4",
+        "src/Acceleration.elm": "730eafa9aa353595fedac00628ba24175fda9c68f05cc83ccd4768305f766471",
+        "src/Angle.elm": "fb81f2bd81cd290ae800c77fb35d26a4ced6748fbb44e35667e03156c6598e4e",
+        "src/AngularAcceleration.elm": "14b1d430cc34fa784917a9256d41fc78daab42a036349d70a02dc5d7bc62c0cd",
+        "src/AngularSpeed.elm": "1f9eaf79bc55a5d8fef3c804d61b71cd4ef48e846933472ad8a1835b9f8e0e8c",
+        "src/Area.elm": "227002c555c55993ee3213e2dfddfcc3ff880b7e9da11423e953b6732f4672fd",
+        "src/Capacitance.elm": "daac984701229bf1339dfc29a9fb77b2dcdf7fb8d1a6738f20b83debd59c50f4",
+        "src/Charge.elm": "14911d8973eafc52a24f180eef1c93ec6cc9aa78daaf4c57e5c9ad4ecb29ef81",
+        "src/Constants.elm": "323b66f0d99a40b5ce72891645e358cbde7c5f8501c1c83b6f739246b65f5b4b",
+        "src/Current.elm": "e60e486d35eacd7541d73de13cf43493eb7f4ab5e0cd2cd5ac6b231198cd4128",
+        "src/Density.elm": "69f497eeffd945c0dc5ad9c18dbf3566d394529f2d67c20558b3605bf1be1bf2",
+        "src/Duration.elm": "064320ea0a9793c60226cb1f987fb657738c93ecab2fadfe4c0b0c07b0fd5a82",
+        "src/Energy.elm": "e96d950f8a38c020a56a9dd8da8d9a34e87635bdb84130ca62061121ca8ce149",
+        "src/Force.elm": "dc3d2f6de0c9574c834652fb75169ac29a002e55426a7900a71e828e6c4f1ea1",
+        "src/Illuminance.elm": "1bdbb09a9d45cfde632149178c57c3858237f13b22ca717497b79fe44f44e52c",
+        "src/Inductance.elm": "69aa164241b981751d8ce575c00518d64f35f36ff25ab459015cb56b38df6828",
+        "src/Length.elm": "e0fb4bec618815151882f05af90d7f5f1f513dfb9849fb76ad1111ab8037d936",
+        "src/Luminance.elm": "fc39733a2d8d5ddca97d6a65862684ed2764a7fa283636b8a0522c93ecda533e",
+        "src/LuminousFlux.elm": "cfdf061a719c9895a9927a8a1f4f147d969b0c8bb4adde64532a31d92beea8fd",
+        "src/LuminousIntensity.elm": "34e80ff1386ae5707886c1dc407b618d2e174d3979292f683519cf644dee6167",
+        "src/Mass.elm": "2545d564c29a901daa8eb0642273c9d883c9b468d57bf84c10cb0f0a007450ac",
+        "src/Molarity.elm": "2b586c190cb4a725e696cc1770894e4f6b8a43cc4551cd128dee44625ff144e8",
+        "src/Pixels.elm": "c2a4ebba3377ff892793a091a9045662dd9117287be6b65f27b3cb4f0d4ee792",
+        "src/Power.elm": "7d864f96d29bc232a65b63837bfbd1ef224536be3d377c03763857d790eb07ff",
+        "src/Pressure.elm": "4de254e8eb28bfd63d7b4b84ca5e600a647793e82fe2196620bc200bd4410915",
+        "src/Quantity.elm": "e1ce4cc92025b4e0b81703d3dd1c7eb7decc30855005461b79ab99e65e747a3c",
+        "src/Resistance.elm": "82bc4b88c8e45a638e2d3ef6b0bb6e12ff6dde6e08c2aaa35f8d0a6c643d92aa",
+        "src/SolidAngle.elm": "755c6fb641222794b059c1378a72cbed4e5cc8f8db4d5fa1d9c49e38d7037bb4",
+        "src/Speed.elm": "3d665bba186c6124a0f08ca26ee3e2fb203a2374b7a71820761f89c34ff45c48",
+        "src/SubstanceAmount.elm": "fbe5eeac57e6a58789b0acbc5888986f6a5d8996b56af2ef93043ea4f99a48af",
+        "src/Temperature.elm": "d4dfa4624b71471551bacf0f97f3267e927dff9c718cd53b1bc4980af8473480",
+        "src/Torque.elm": "085955b2db8fd58f81f218373f865a67081cee16e8c291101f0a21cce23d725e",
+        "src/Voltage.elm": "04ba4103d3e36347ded09b0db67360efd0d50cd1045ca056f658e2bc65e7ba47",
+        "src/Volume.elm": "e6b1bd5637926d38176af1064a1f2f13df338852aba782b13bdf21263bf80fff"
+      }
+    },
+    {
+      "package": "mdgriffith/elm-animator",
+      "version": "2.0.0",
+      "url": "https://github.com/mdgriffith/elm-animator/zipball/2.0.0/",
+      "sha1_officiel": "62e334ae5d8d1b9dbd212ccf83f0505511e0a568",
+      "archive_sha256": "114c17fc7b0feb6a0501ff57486b2382ec5f8cd2fb39d86154afaab331c2b19e",
+      "nix_sha256": "1265rf4r4y0jp6vywhb43mmc6g55zk9mjhw4697hzk9f93iqcfzv",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "avh4/elm-color": "1.0.0 <= v < 2.0.0",
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/time": "1.0.0 <= v < 2.0.0",
+        "mdgriffith/elm-bezier": "2.0.0 <= v < 3.0.0"
+      },
+      "effets": "calculs timeline/interpolation purs ; usage UI via le socle partage seulement",
+      "fichiers_source_sha256": {
+        "elm.json": "10306e4cd306766eb373ff3d470b0a25b2b2694e9f5f17fb8a00d531a556043e",
+        "src/Animator/Timeline.elm": "5371f9ad2263e0258e2fa435a30e02238ff77314219fbfd491f94b9af78253ad",
+        "src/Animator/Transition.elm": "1860a6e36005ee638cbdec1d1e68cd841df9237a41e5c9e2bfaadb6671fdf3ed",
+        "src/Animator/Value.elm": "78ef13f2daf7dc0ec578553099502acbbca70c1bc20b1f91596cf53be2605714",
+        "src/Animator.elm": "86c5efddf9de94ad1017ed7977eb841341c70943bbc3b92e532453ddbf4eb8ab",
+        "src/InternalAnim/Css/Props.elm": "857a863ce9fd6c0d160975db26438f8683cbe0261a3f09efec7f41040b6890c7",
+        "src/InternalAnim/Duration.elm": "3b353ff917d3c6efdedc05eba4140ce0beceab2423b66b74c337e1fae907c1bd",
+        "src/InternalAnim/Move.elm": "cd8ca7e5a8e76dedf8cd086fc2e174598dcc7bd8a10fbb3e8ddb60d2050b4c6a",
+        "src/InternalAnim/Property.elm": "3cb69060acb04f87bd29be53a526490d72aceba22c54514bc89397d107240d66",
+        "src/InternalAnim/Quantity.elm": "fe429f1e309abb9fcd9c51c37a5dfecbec75a6a7a220b4d9d0fb9726dca76a3d",
+        "src/InternalAnim/Random.elm": "484d2cbd4ae897fd5d5c6c4a6e166d572666a48adbe5747cee1fbcc19da57d82",
+        "src/InternalAnim/Render/Css.elm": "18526c7ee105d891a9aaaa18266a4e661e7bf58fa000bc476dd98ef11f7df880",
+        "src/InternalAnim/Render.elm": "492db1046da075ed58248467748d847d37d5da9c2e1971a6569109597b9a9858",
+        "src/InternalAnim/Time.elm": "c7b948d6a2f4c38802f42f1d7d23ba6eb22645ea261ca4f461970887cd5ebd49",
+        "src/InternalAnim/Timeline.elm": "cab39bdd37608c491f1ed0e1af829b8afc1cbc11267b9815ef256423ffdfd304",
+        "src/InternalAnim/Transition.elm": "206552e8f06b4e5070235a61ef3e4f935814ecfbb4cdf8e91014dd3d8fdd044c",
+        "src/InternalAnim/Units.elm": "6364397c13569ccaf511e0e8f636cf0cbf3a1e23c20bb5e263f81e28fa1d681f"
+      }
+    },
+    {
+      "package": "mdgriffith/elm-bezier",
+      "version": "2.0.0",
+      "url": "https://github.com/mdgriffith/elm-bezier/zipball/2.0.0/",
+      "sha1_officiel": "efa70c9f436534d5a166c8cf8ab87554e2980862",
+      "archive_sha256": "650f8bd15a09765a0f54dcbcb2d3ba2cb508036664a2a0c947ffcfc7a8e4cfd3",
+      "nix_sha256": "0zj4c543y6yyyg7yz2jxdbk41237xkibn34lkqxdi8fafnkzr3yf",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "calculs timeline/interpolation purs ; usage UI via le socle partage seulement",
+      "fichiers_source_sha256": {
+        "elm.json": "7b1813c26f5de31f301092893adb9c46a3b52b5bdc1aa73b6ae16b2f56ca987a",
+        "src/Bezier/Spring.elm": "dfbc9dd78e8ba50cece5d3a7f698700b819d0f6e7fd79fb2ce4bf90e44c2f96d",
+        "src/Bezier.elm": "78872ae81cba8b6637153212af58eb2553f6d768bf7430b44a4da7b8b063af40"
+      }
+    },
+    {
+      "package": "elm/browser",
+      "version": "1.0.2",
+      "origine": "bibliotheque existante des interfaces verouillees",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/time": "1.0.0 <= v < 2.0.0",
+        "elm/url": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.2 <= v < 2.0.0"
+      },
+      "effets": "fonctions pures ; subscriptions et DOM navigateur explicites",
+      "fichiers_source_sha256": {
+        "elm.json": "f50e12cb6b89a97ef18dde0c64fa92aa78469c412c19d64ca1c56931a1fbc52f",
+        "src/Browser/AnimationManager.elm": "b5eec62b6f9e2e94f5f1b573228e332784580fddc5898c732c4f5c48f4a5a854",
+        "src/Browser/Dom.elm": "03bee2960770cea5b6ee2a208f33622432b8a1ae12e77412cf84b67a453ac2a7",
+        "src/Browser/Events.elm": "b72f8970ee085dab3c7e5504f661e21ed6cefaea21890899d9cd32ebc7f2bd4f",
+        "src/Browser/Navigation.elm": "329085431ef02615190706903d090364097ed3ddaf466370918af69379354706",
+        "src/Browser.elm": "2722873214de2d381a02e037dd56f764c522c0b4ccbbfb3edccce69e0c3c32a5",
+        "src/Debugger/Expando.elm": "c93b00af7bf99c8929db06cdfaf7c6b26b955ac576e62ee4fe2c0be6e4f01a6b",
+        "src/Debugger/History.elm": "4ef4701403e4b960a902a12f20f5feb3ac8881850ba7a71ca6c50f363c60caa9",
+        "src/Debugger/Main.elm": "4513896c62d0ba2f3f27bae3cf39145af8e5ccf428abde16db782ed1c7db3b6a",
+        "src/Debugger/Metadata.elm": "733be27ac5b7651c55b62161f24c508c9a62cf69a481672f17a0c58068591cd8",
+        "src/Debugger/Overlay.elm": "cbb5380cc49af503a462d4e1c0112fe6d46653fc34d8948243f5782591094b47",
+        "src/Debugger/Report.elm": "2323bbd81acaaf3b6077d66fda4fd12a15b1d9c21e9571ab21f0b7c069a5d096"
+      }
+    },
+    {
+      "package": "elm/url",
+      "version": "1.0.0",
+      "origine": "bibliotheque existante des interfaces verouillees",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "fonctions pures ; subscriptions et DOM navigateur explicites",
+      "fichiers_source_sha256": {
+        "elm.json": "b2c089bbe199a8431fd53635a55fdc10e7ee4bb4a993064688f74812dc94dc5e",
+        "src/Url/Builder.elm": "e4922467375bcedd187bbd811b5dfd49b7f9b6a08063b7ef411f2ad0aa6e8dad",
+        "src/Url/Parser/Internal.elm": "91cec106bc5eb47ae5b1ff86ac1589989785080805bc4e38dd187ec22dbbfc26",
+        "src/Url/Parser/Query.elm": "2b14aab77b663bef2b9434fccc3ca6c102990b9cf87dea650ae8341a9325bf4e",
+        "src/Url/Parser.elm": "0a42ac79944c28778c0e32510cd089e7d80e6d202937238f829d4de2d942d028",
+        "src/Url.elm": "c1dad01869f5a4fe29406b3409508ec4754bf8125cc01ef5106b2e369c5c647c"
+      }
+    },
+    {
+      "package": "mdgriffith/elm-ui",
+      "version": "1.1.8",
+      "origine": "bibliotheque existante des interfaces verouillees",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "fonctions pures ; subscriptions et DOM navigateur explicites",
+      "fichiers_source_sha256": {
+        "elm.json": "4d4486fd3afe94d769c31a63b995d2a6fda9ae9daed659cbfd47c8537540f883",
+        "src/Element/Background.elm": "78a96f16c743961e0dfec4915873cf915a4f9b6382ff287e3c7b9e307c7ae513",
+        "src/Element/Border.elm": "1cbea164b59ab5fc93a501761ca3e973489923e5e77ab2cc8d004ac2e7d7b12a",
+        "src/Element/Events.elm": "1f8050dc9bd572366187980dca6bc0b48300b5521b60ff536afa168dd263e4b3",
+        "src/Element/Font.elm": "31d5566e1257ff62532c47b5f3f2dcb4ae826693c6ab678780c0b13a7a083638",
+        "src/Element/Input.elm": "2ef63faa892478055d7bc2b906eb24c50f0f5711b04d51091af3af19eec635e5",
+        "src/Element/Keyed.elm": "101e6089636d2a028b5597305815b150cd44d1c3941fdd91716a7f2c22216550",
+        "src/Element/Lazy.elm": "4ec07fde711f818f79c8f7d4d01554c72e43980c8cc7399232be46ab47a7a13f",
+        "src/Element/Region.elm": "53b98fc578bd63e70efd1101e7d1dcc0097326d45ecc3465d48ffe52927be9a3",
+        "src/Element.elm": "6f797b99dd3d1d6ff1f8498850bb4b8b960de2499672cbf7f86c2c40f6768e75",
+        "src/Internal/Flag.elm": "81e633801ab2f0feb781038a3c644f7c1df993e17ebdf136b39ad966bc592bda",
+        "src/Internal/Grid.elm": "50279400d5a76f3e24e0cbb965828645b3045a31d4dde90b533c9ef9ea243c30",
+        "src/Internal/Model.elm": "7e5da5dfaa70f63be1213ece514d6aab01ebbbb1199ff7d7931bb488567543ad",
+        "src/Internal/Style.elm": "13040599cd8f913e685c9fb85d90a7f4f16f2e2164cb1d462b289900e5e71c17"
+      }
+    },
+    {
+      "package": "elm/svg",
+      "version": "1.0.1",
+      "origine": "bibliotheque existante des interfaces verouillees",
+      "licence": "BSD-3-Clause",
+      "dependances": {
+        "elm/core": "1.0.0 <= v < 2.0.0",
+        "elm/html": "1.0.0 <= v < 2.0.0",
+        "elm/json": "1.0.0 <= v < 2.0.0",
+        "elm/virtual-dom": "1.0.0 <= v < 2.0.0"
+      },
+      "effets": "fonctions pures ; subscriptions et DOM navigateur explicites",
+      "fichiers_source_sha256": {
+        "elm.json": "4d3aa46f79c1f0f7d4117e827edb6791f8bd8ee59c3c23d23fdc3d7aeaa20cc7",
+        "src/Svg/Attributes.elm": "45ebba3826dbcd28909b8297c46f87e47f6da9adc1224e4647abe8b82049cc01",
+        "src/Svg/Events.elm": "612b0ed785cfabb6ca63786063a59f02861283c4a6b2d626b8d1b3e5c2f97458",
+        "src/Svg/Keyed.elm": "01f8ab6cdc8b614b06bf2f1f61b5efc92e41a25f965f7cd690c55f2cfb342e9c",
+        "src/Svg/Lazy.elm": "b44c83642f82153fa19711b937c4cf88b652c09d388348df4a94acdc9033f4ab",
+        "src/Svg.elm": "181ecb9c536a31b309069651243868faddf2485d50dd0e108a012746cb54207c"
+      }
+    }
+  ],
+  "npm_transitives_installees": [
+    {
+      "nom": "@sindresorhus/is",
+      "version": "4.6.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@sindresorhus/is/-/is-4.6.0.tgz",
+      "integrity": "sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@szmarczak/http-timer",
+      "version": "4.0.6",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@szmarczak/http-timer/-/http-timer-4.0.6.tgz",
+      "integrity": "sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==",
+      "dependances": {
+        "defer-to-connect": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@types/cacheable-request",
+      "version": "6.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@types/cacheable-request/-/cacheable-request-6.0.3.tgz",
+      "integrity": "sha512-IQ3EbTzGxIigb1I3qPZc1rWJnH0BmSKv5QYTalEwweFvyBDLSAe24zP0le/hyi7ecGfZVlIVAg4BZqb8WBwKqw==",
+      "dependances": {
+        "@types/http-cache-semantics": "*",
+        "@types/keyv": "^3.1.4",
+        "@types/node": "*",
+        "@types/responselike": "^1.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@types/http-cache-semantics",
+      "version": "4.0.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@types/http-cache-semantics/-/http-cache-semantics-4.0.4.tgz",
+      "integrity": "sha512-1m0bIFVc7eJWyve9S0RnuRgcQqF/Xd5QsUZAZeQFr1Q3/p9JWoQQEqmVy+DPTNpGXwhgIetAoYF8JSc33q29QA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@types/keyv",
+      "version": "3.1.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@types/keyv/-/keyv-3.1.4.tgz",
+      "integrity": "sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==",
+      "dependances": {
+        "@types/node": "*"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@types/node",
+      "version": "14.18.63",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@types/node/-/node-14.18.63.tgz",
+      "integrity": "sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "@types/responselike",
+      "version": "1.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/@types/responselike/-/responselike-1.0.3.tgz",
+      "integrity": "sha512-H/+L+UkTV33uf49PH5pCAUBVPNj2nDBXTN+qS1dOwyyg24l3CcicicCA7ca+HMvJBZcFgl5r8e+RR6elsb4Lyw==",
+      "dependances": {
+        "@types/node": "*"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ansi-escapes",
+      "version": "4.3.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-4.3.2.tgz",
+      "integrity": "sha512-gKXj5ALrKWQLsYG9jlTRmR/xKluxHV+Z9QEwNIgCfM1/uwPMCuzVVnh5mwTd+OuBZcwSIMbqssNWRm1lE51QaQ==",
+      "dependances": {
+        "type-fest": "^0.21.3"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ansi-regex",
+      "version": "5.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ansi-styles",
+      "version": "4.3.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-4.3.0.tgz",
+      "integrity": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+      "dependances": {
+        "color-convert": "^2.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "anymatch",
+      "version": "3.1.3",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
+      "integrity": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
+      "dependances": {
+        "normalize-path": "^3.0.0",
+        "picomatch": "^2.0.4"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "balanced-match",
+      "version": "1.0.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "base64-js",
+      "version": "1.5.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+      "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "binary-extensions",
+      "version": "2.3.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.3.0.tgz",
+      "integrity": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "bl",
+      "version": "4.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz",
+      "integrity": "sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==",
+      "dependances": {
+        "buffer": "^5.5.0",
+        "inherits": "^2.0.4",
+        "readable-stream": "^3.4.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "brace-expansion",
+      "version": "1.1.12",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.12.tgz",
+      "integrity": "sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==",
+      "dependances": {
+        "balanced-match": "^1.0.0",
+        "concat-map": "0.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "braces",
+      "version": "3.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/braces/-/braces-3.0.3.tgz",
+      "integrity": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+      "dependances": {
+        "fill-range": "^7.1.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "buffer",
+      "version": "5.7.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz",
+      "integrity": "sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==",
+      "dependances": {
+        "base64-js": "^1.3.1",
+        "ieee754": "^1.1.13"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "cacheable-lookup",
+      "version": "5.0.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/cacheable-lookup/-/cacheable-lookup-5.0.4.tgz",
+      "integrity": "sha512-2/kNscPhpcxrOigMZzbiWF7dz8ilhb/nIHU3EyZiXWXpeq/au8qJ8VhdftMkty3n7Gj6HIGalQG8oiBNB3AJgA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "cacheable-request",
+      "version": "7.0.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/cacheable-request/-/cacheable-request-7.0.4.tgz",
+      "integrity": "sha512-v+p6ongsrp0yTGbJXjgxPow2+DL93DASP4kXCDKb8/bwRtt9OEF3whggkkDkGNzgcWy2XaF4a8nZglC7uElscg==",
+      "dependances": {
+        "clone-response": "^1.0.2",
+        "get-stream": "^5.1.0",
+        "http-cache-semantics": "^4.0.0",
+        "keyv": "^4.0.0",
+        "lowercase-keys": "^2.0.0",
+        "normalize-url": "^6.0.1",
+        "responselike": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "chalk",
+      "version": "4.1.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz",
+      "integrity": "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==",
+      "dependances": {
+        "ansi-styles": "^4.1.0",
+        "supports-color": "^7.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "chokidar",
+      "version": "3.6.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/chokidar/-/chokidar-3.6.0.tgz",
+      "integrity": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+      "dependances": {
+        "anymatch": "~3.1.2",
+        "braces": "~3.0.2",
+        "glob-parent": "~5.1.2",
+        "is-binary-path": "~2.1.0",
+        "is-glob": "~4.0.1",
+        "normalize-path": "~3.0.0",
+        "readdirp": "~3.6.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "cli-cursor",
+      "version": "3.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz",
+      "integrity": "sha512-I/zHAwsKf9FqGoXM4WWRACob9+SNukZTd94DWF57E4toouRulbCxcUh6RKUEOQlYTHJnzkPMySvPNaaSLNfLZw==",
+      "dependances": {
+        "restore-cursor": "^3.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "cli-spinners",
+      "version": "2.9.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/cli-spinners/-/cli-spinners-2.9.2.tgz",
+      "integrity": "sha512-ywqV+5MmyL4E7ybXgKys4DugZbX0FC6LnwrhjuykIjnK9k8OQacQ7axGKnjDXWNhns0xot3bZI5h55H8yo9cJg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "clone",
+      "version": "1.0.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/clone/-/clone-1.0.4.tgz",
+      "integrity": "sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "clone-response",
+      "version": "1.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/clone-response/-/clone-response-1.0.3.tgz",
+      "integrity": "sha512-ROoL94jJH2dUVML2Y/5PEDNaSHgeOdSDicUyS7izcF63G6sTc/FTjLub4b8Il9S8S0beOfYt0TaA5qvFK+w0wA==",
+      "dependances": {
+        "mimic-response": "^1.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "color-convert",
+      "version": "2.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+      "integrity": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+      "dependances": {
+        "color-name": "~1.1.4"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "color-name",
+      "version": "1.1.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/color-name/-/color-name-1.1.4.tgz",
+      "integrity": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "concat-map",
+      "version": "0.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
+      "integrity": "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "cross-spawn",
+      "version": "7.0.6",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/cross-spawn/-/cross-spawn-7.0.6.tgz",
+      "integrity": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+      "dependances": {
+        "path-key": "^3.1.0",
+        "shebang-command": "^2.0.0",
+        "which": "^2.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "debug",
+      "version": "4.3.7",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz",
+      "integrity": "sha512-Er2nc/H7RrMXZBFCEim6TCmMk02Z8vLC2Rbi1KEBggpo0fS6l0S1nnapwmIi3yW/+GOJap1Krg4w0Hg80oCqgQ==",
+      "dependances": {
+        "ms": "^2.1.3"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "decompress-response",
+      "version": "6.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/decompress-response/-/decompress-response-6.0.0.tgz",
+      "integrity": "sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==",
+      "dependances": {
+        "mimic-response": "^3.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "defaults",
+      "version": "1.0.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/defaults/-/defaults-1.0.4.tgz",
+      "integrity": "sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==",
+      "dependances": {
+        "clone": "^1.0.2"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "defer-to-connect",
+      "version": "2.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/defer-to-connect/-/defer-to-connect-2.0.1.tgz",
+      "integrity": "sha512-4tvttepXG1VaYGrRibk5EwJd1t4udunSOVMdLSAL6mId1ix438oPwPZMALY41FCijukO1L0twNcGsdzS7dHgDg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "elm-solve-deps-wasm",
+      "version": "2.0.0",
+      "licence": "MPL-2.0",
+      "url": "https://registry.npmjs.org/elm-solve-deps-wasm/-/elm-solve-deps-wasm-2.0.0.tgz",
+      "integrity": "sha512-11OV8FgB9qsth/F94q2SJjb1MoEgbworSyNM1L+YlxVoaxp7wtWPyA8cNcPEkSoIKG1B8Tqg68ED1P6dVamHSg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "emoji-regex",
+      "version": "8.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "end-of-stream",
+      "version": "1.4.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/end-of-stream/-/end-of-stream-1.4.4.tgz",
+      "integrity": "sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==",
+      "dependances": {
+        "once": "^1.4.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "fastest-levenshtein",
+      "version": "1.0.16",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/fastest-levenshtein/-/fastest-levenshtein-1.0.16.tgz",
+      "integrity": "sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "fdir",
+      "version": "6.4.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/fdir/-/fdir-6.4.4.tgz",
+      "integrity": "sha512-1NZP+GK4GfuAv3PqKvxQRDMjdSRZjnkq7KfhlNrCNNlZ0ygQFpebfrnfnq/W7fpUnAv9aGWmY1zKx7FYL3gwhg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "fill-range",
+      "version": "7.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/fill-range/-/fill-range-7.1.1.tgz",
+      "integrity": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
+      "dependances": {
+        "to-regex-range": "^5.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "find-up",
+      "version": "5.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/find-up/-/find-up-5.0.0.tgz",
+      "integrity": "sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==",
+      "dependances": {
+        "locate-path": "^6.0.0",
+        "path-exists": "^4.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "folder-hash",
+      "version": "3.3.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/folder-hash/-/folder-hash-3.3.3.tgz",
+      "integrity": "sha512-SDgHBgV+RCjrYs8aUwCb9rTgbTVuSdzvFmLaChsLre1yf+D64khCW++VYciaByZ8Rm0uKF8R/XEpXuTRSGUM1A==",
+      "dependances": {
+        "debug": "^4.1.1",
+        "graceful-fs": "~4.2.0",
+        "minimatch": "~3.0.4"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "get-stream",
+      "version": "5.2.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/get-stream/-/get-stream-5.2.0.tgz",
+      "integrity": "sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA==",
+      "dependances": {
+        "pump": "^3.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "glob-parent",
+      "version": "5.1.2",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+      "integrity": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+      "dependances": {
+        "is-glob": "^4.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "got",
+      "version": "11.8.6",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/got/-/got-11.8.6.tgz",
+      "integrity": "sha512-6tfZ91bOr7bOXnK7PRDCGBLa1H4U080YHNaAQ2KsMGlLEzRbk44nsZF2E1IeRc3vtJHPVbKCYgdFbaGO2ljd8g==",
+      "dependances": {
+        "@sindresorhus/is": "^4.0.0",
+        "@szmarczak/http-timer": "^4.0.5",
+        "@types/cacheable-request": "^6.0.1",
+        "@types/responselike": "^1.0.0",
+        "cacheable-lookup": "^5.0.3",
+        "cacheable-request": "^7.0.2",
+        "decompress-response": "^6.0.0",
+        "http2-wrapper": "^1.0.0-beta.5.2",
+        "lowercase-keys": "^2.0.0",
+        "p-cancelable": "^2.0.0",
+        "responselike": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "graceful-fs",
+      "version": "4.2.11",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.11.tgz",
+      "integrity": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "has-flag",
+      "version": "4.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/has-flag/-/has-flag-4.0.0.tgz",
+      "integrity": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "http-cache-semantics",
+      "version": "4.1.1",
+      "licence": "BSD-2-Clause",
+      "url": "https://registry.npmjs.org/http-cache-semantics/-/http-cache-semantics-4.1.1.tgz",
+      "integrity": "sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "http2-wrapper",
+      "version": "1.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/http2-wrapper/-/http2-wrapper-1.0.3.tgz",
+      "integrity": "sha512-V+23sDMr12Wnz7iTcDeJr3O6AIxlnvT/bmaAAAP/Xda35C90p9599p0F1eHR/N1KILWSoWVAiOMFjBBXaXSMxg==",
+      "dependances": {
+        "quick-lru": "^5.1.1",
+        "resolve-alpn": "^1.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ieee754",
+      "version": "1.2.1",
+      "licence": "BSD-3-Clause",
+      "url": "https://registry.npmjs.org/ieee754/-/ieee754-1.2.1.tgz",
+      "integrity": "sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "inherits",
+      "version": "2.0.4",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "integrity": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-binary-path",
+      "version": "2.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-binary-path/-/is-binary-path-2.1.0.tgz",
+      "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
+      "dependances": {
+        "binary-extensions": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-extglob",
+      "version": "2.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-extglob/-/is-extglob-2.1.1.tgz",
+      "integrity": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-fullwidth-code-point",
+      "version": "3.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
+      "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-glob",
+      "version": "4.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+      "integrity": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+      "dependances": {
+        "is-extglob": "^2.1.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-interactive",
+      "version": "1.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-interactive/-/is-interactive-1.0.0.tgz",
+      "integrity": "sha512-2HvIEKRoqS62guEC+qBjpvRubdX910WCMuJTZ+I9yvqKU2/12eSL549HMwtabb4oupdj2sMP50k+XJfB/8JE6w==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-number",
+      "version": "7.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-number/-/is-number-7.0.0.tgz",
+      "integrity": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "is-unicode-supported",
+      "version": "0.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz",
+      "integrity": "sha512-knxG2q4UC3u8stRGyAVJCOdxFmv5DZiRcdlIaAQXAbSfJya+OhopNotLQrstBhququ4ZpuKbDc/8S6mgXgPFPw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "isexe",
+      "version": "2.0.0",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/isexe/-/isexe-2.0.0.tgz",
+      "integrity": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "json-buffer",
+      "version": "3.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/json-buffer/-/json-buffer-3.0.1.tgz",
+      "integrity": "sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "keyv",
+      "version": "4.5.4",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/keyv/-/keyv-4.5.4.tgz",
+      "integrity": "sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==",
+      "dependances": {
+        "json-buffer": "3.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "kleur",
+      "version": "3.0.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz",
+      "integrity": "sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "locate-path",
+      "version": "6.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/locate-path/-/locate-path-6.0.0.tgz",
+      "integrity": "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==",
+      "dependances": {
+        "p-locate": "^5.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "log-symbols",
+      "version": "4.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/log-symbols/-/log-symbols-4.1.0.tgz",
+      "integrity": "sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==",
+      "dependances": {
+        "chalk": "^4.1.0",
+        "is-unicode-supported": "^0.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "lowercase-keys",
+      "version": "2.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/lowercase-keys/-/lowercase-keys-2.0.0.tgz",
+      "integrity": "sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "mimic-fn",
+      "version": "2.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/mimic-fn/-/mimic-fn-2.1.0.tgz",
+      "integrity": "sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "mimic-response",
+      "version": "1.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/mimic-response/-/mimic-response-1.0.1.tgz",
+      "integrity": "sha512-j5EctnkH7amfV/q5Hgmoal1g2QHFJRraOtmx0JpIqkxhBhI/lJSl1nMpQ45hVarwNETOoWEimndZ4QK0RHxuxQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "mimic-response",
+      "version": "3.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/mimic-response/-/mimic-response-3.1.0.tgz",
+      "integrity": "sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "minimatch",
+      "version": "3.0.8",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.8.tgz",
+      "integrity": "sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==",
+      "dependances": {
+        "brace-expansion": "^1.1.7"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "minimist",
+      "version": "1.2.8",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
+      "integrity": "sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ms",
+      "version": "2.1.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "normalize-path",
+      "version": "3.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
+      "integrity": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "normalize-url",
+      "version": "6.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/normalize-url/-/normalize-url-6.1.0.tgz",
+      "integrity": "sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "once",
+      "version": "1.4.0",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+      "dependances": {
+        "wrappy": "1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "onetime",
+      "version": "5.1.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/onetime/-/onetime-5.1.2.tgz",
+      "integrity": "sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==",
+      "dependances": {
+        "mimic-fn": "^2.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "ora",
+      "version": "5.4.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/ora/-/ora-5.4.1.tgz",
+      "integrity": "sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==",
+      "dependances": {
+        "bl": "^4.1.0",
+        "chalk": "^4.1.0",
+        "cli-cursor": "^3.1.0",
+        "cli-spinners": "^2.5.0",
+        "is-interactive": "^1.0.0",
+        "is-unicode-supported": "^0.1.0",
+        "log-symbols": "^4.1.0",
+        "strip-ansi": "^6.0.0",
+        "wcwidth": "^1.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "p-cancelable",
+      "version": "2.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/p-cancelable/-/p-cancelable-2.1.1.tgz",
+      "integrity": "sha512-BZOr3nRQHOntUjTrH8+Lh54smKHoHyur8We1V8DSMVrl5A2malOOwuJRnKRDjSnkoeBh4at6BwEnb5I7Jl31wg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "p-limit",
+      "version": "3.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/p-limit/-/p-limit-3.1.0.tgz",
+      "integrity": "sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==",
+      "dependances": {
+        "yocto-queue": "^0.1.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "p-locate",
+      "version": "5.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/p-locate/-/p-locate-5.0.0.tgz",
+      "integrity": "sha512-LaNjtRWUBY++zB5nE/NwcaoMylSPk+S+ZHNB1TzdbMJMny6dynpAGt7X/tl/QYq3TIeE6nxHppbo2LGymrG5Pw==",
+      "dependances": {
+        "p-limit": "^3.0.2"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "path-exists",
+      "version": "4.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/path-exists/-/path-exists-4.0.0.tgz",
+      "integrity": "sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "path-key",
+      "version": "3.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/path-key/-/path-key-3.1.1.tgz",
+      "integrity": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "picomatch",
+      "version": "2.3.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz",
+      "integrity": "sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "picomatch",
+      "version": "4.0.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.2.tgz",
+      "integrity": "sha512-M7BAV6Rlcy5u+m6oPhAPFgJTzAioX/6B0DxyvDlo9l8+T3nLKbrczg2WLUyzd45L8RqfUMyGPzekbMvX2Ldkwg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "prompts",
+      "version": "2.4.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/prompts/-/prompts-2.4.2.tgz",
+      "integrity": "sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==",
+      "dependances": {
+        "kleur": "^3.0.3",
+        "sisteransi": "^1.0.5"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "pump",
+      "version": "3.0.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/pump/-/pump-3.0.2.tgz",
+      "integrity": "sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==",
+      "dependances": {
+        "end-of-stream": "^1.1.0",
+        "once": "^1.3.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "quick-lru",
+      "version": "5.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz",
+      "integrity": "sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "readable-stream",
+      "version": "3.6.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz",
+      "integrity": "sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==",
+      "dependances": {
+        "inherits": "^2.0.3",
+        "string_decoder": "^1.1.1",
+        "util-deprecate": "^1.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "readdirp",
+      "version": "3.6.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
+      "integrity": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
+      "dependances": {
+        "picomatch": "^2.2.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "resolve-alpn",
+      "version": "1.2.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/resolve-alpn/-/resolve-alpn-1.2.1.tgz",
+      "integrity": "sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "responselike",
+      "version": "2.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/responselike/-/responselike-2.0.1.tgz",
+      "integrity": "sha512-4gl03wn3hj1HP3yzgdI7d3lCkF95F21Pz4BPGvKHinyQzALR5CapwC8yIi0Rh58DEMQ/SguC03wFj2k0M/mHhw==",
+      "dependances": {
+        "lowercase-keys": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "restore-cursor",
+      "version": "3.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/restore-cursor/-/restore-cursor-3.1.0.tgz",
+      "integrity": "sha512-l+sSefzHpj5qimhFSE5a8nufZYAM3sBSVMAPtYkmC+4EH2anSGaEMXSD0izRQbu9nfyQ9y5JrVmp7E8oZrUjvA==",
+      "dependances": {
+        "onetime": "^5.1.0",
+        "signal-exit": "^3.0.2"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "safe-buffer",
+      "version": "5.2.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+      "integrity": "sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "shebang-command",
+      "version": "2.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/shebang-command/-/shebang-command-2.0.0.tgz",
+      "integrity": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+      "dependances": {
+        "shebang-regex": "^3.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "shebang-regex",
+      "version": "3.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/shebang-regex/-/shebang-regex-3.0.0.tgz",
+      "integrity": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "signal-exit",
+      "version": "3.0.7",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz",
+      "integrity": "sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "sisteransi",
+      "version": "1.0.5",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/sisteransi/-/sisteransi-1.0.5.tgz",
+      "integrity": "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "string-width",
+      "version": "4.2.3",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
+      "dependances": {
+        "emoji-regex": "^8.0.0",
+        "is-fullwidth-code-point": "^3.0.0",
+        "strip-ansi": "^6.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "string_decoder",
+      "version": "1.3.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.3.0.tgz",
+      "integrity": "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+      "dependances": {
+        "safe-buffer": "~5.2.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "strip-ansi",
+      "version": "6.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
+      "dependances": {
+        "ansi-regex": "^5.0.1"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "supports-color",
+      "version": "7.2.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz",
+      "integrity": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
+      "dependances": {
+        "has-flag": "^4.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "supports-hyperlinks",
+      "version": "2.3.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/supports-hyperlinks/-/supports-hyperlinks-2.3.0.tgz",
+      "integrity": "sha512-RpsAZlpWcDwOPQA22aCH4J0t7L8JmAvsCxfOSEwm7cQs3LshN36QaTkwd70DnBOXDWGssw2eUoc8CaRWT0XunA==",
+      "dependances": {
+        "has-flag": "^4.0.0",
+        "supports-color": "^7.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "terminal-link",
+      "version": "2.1.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/terminal-link/-/terminal-link-2.1.1.tgz",
+      "integrity": "sha512-un0FmiRUQNr5PJqy9kP7c40F5BOfpGlYTrxonDChEZB7pzZxRNp/bt+ymiy9/npwXya9KH99nJ/GXFIiUkYGFQ==",
+      "dependances": {
+        "ansi-escapes": "^4.2.1",
+        "supports-hyperlinks": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "tinyglobby",
+      "version": "0.2.13",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.13.tgz",
+      "integrity": "sha512-mEwzpUgrLySlveBwEVDMKk5B57bhLPYovRfPAXD5gA/98Opn0rCDj3GtLwFvCvH5RK9uPCExUROW5NjDwvqkxw==",
+      "dependances": {
+        "fdir": "^6.4.4",
+        "picomatch": "^4.0.2"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "to-regex-range",
+      "version": "5.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
+      "integrity": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
+      "dependances": {
+        "is-number": "^7.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "type-fest",
+      "version": "0.21.3",
+      "licence": "(MIT OR CC0-1.0)",
+      "url": "https://registry.npmjs.org/type-fest/-/type-fest-0.21.3.tgz",
+      "integrity": "sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "util-deprecate",
+      "version": "1.0.2",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
+      "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "wcwidth",
+      "version": "1.0.1",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/wcwidth/-/wcwidth-1.0.1.tgz",
+      "integrity": "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg==",
+      "dependances": {
+        "defaults": "^1.0.3"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "which",
+      "version": "2.0.2",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/which/-/which-2.0.2.tgz",
+      "integrity": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+      "dependances": {
+        "isexe": "^2.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "wrap-ansi",
+      "version": "7.0.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
+      "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
+      "dependances": {
+        "ansi-styles": "^4.0.0",
+        "string-width": "^4.1.0",
+        "strip-ansi": "^6.0.0"
+      },
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "wrappy",
+      "version": "1.0.2",
+      "licence": "ISC",
+      "url": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    },
+    {
+      "nom": "yocto-queue",
+      "version": "0.1.0",
+      "licence": "MIT",
+      "url": "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz",
+      "integrity": "sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==",
+      "dependances": {},
+      "effets": "outil frontend seulement ; exécuté sans scripts installation/fix/watch/publication"
+    }
+  ],
+  "socle_animation_cible": "mdgriffith/elm-animator@2.0.0 ; deja employe par atelier logo, migration explicite de Matheval@1.1.1",
+  "parseur_js_existant": {
+    "composant": "matheval",
+    "fichier": "docs/node_modules/playwright/lib/transform/babelBundle.js",
+    "implementation": "docs/node_modules/playwright/lib/transform/babelBundleImpl.js",
+    "sha256": "a982f980c34b5d468ac89a8cccfe173e8d8e6385f7a7c764b307d6de35118804",
+    "implementation_sha256": "ef13b6ad8a95605c899fc4f39dda8a286bc3dc548c520ad4f4d7bef8254c0daf",
+    "package": "playwright@1.58.2 (outillage deja present)",
+    "licence": "Apache-2.0 pour Playwright ; Babel embarque MIT",
+    "provenance": "docs/package-lock.json deja inventorie ; aucune installation/ajout de paquet",
+    "effets": "babelParse avec filename JS et options internes babelrc:false/configFile:false ; parsing seulement, aucun JS inspecte execute"
+  }
+}

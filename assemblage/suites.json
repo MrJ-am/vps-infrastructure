@@ -504,7 +504,14 @@
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
         "scripts/provenance-outils.py",
-        "scripts/provenance-outils.py"
+        "scripts/provenance-outils.py",
+        "scripts/revoir-frontends.py",
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs",
+        "assemblage/elm-review/ressources.json"
       ]
     },
     "impact": [
@@ -525,7 +532,9 @@
         "style"
       ]
     ],
-    "dependances": [],
+    "dependances": [
+      "frontend-regles"
+    ],
     "outils": {
       "node": [
         "node",
@@ -580,7 +589,14 @@
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
         "scripts/provenance-outils.py",
-        "scripts/provenance-outils.py"
+        "scripts/provenance-outils.py",
+        "scripts/revoir-frontends.py",
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs",
+        "assemblage/elm-review/ressources.json"
       ]
     },
     "impact": [
@@ -600,7 +616,8 @@
       ]
     ],
     "dependances": [
-      "style"
+      "style",
+      "frontend-regles"
     ],
     "outils": {
       "node": [
@@ -657,7 +674,14 @@
         "scripts/frontends.py",
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
-        "scripts/provenance-outils.py"
+        "scripts/provenance-outils.py",
+        "scripts/revoir-frontends.py",
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs",
+        "assemblage/elm-review/ressources.json"
       ]
     },
     "impact": [
@@ -678,7 +702,8 @@
       ]
     ],
     "dependances": [
-      "style"
+      "style",
+      "frontend-regles"
     ],
     "outils": {
       "node": [
@@ -796,7 +821,14 @@
         "scripts/outiller.py",
         "assemblage/python/navigateur-cp312-linux-x86_64.txt",
         "scripts/provenance-outils.py",
-        "scripts/provenance-outils.py"
+        "scripts/provenance-outils.py",
+        "scripts/revoir-frontends.py",
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs",
+        "assemblage/elm-review/ressources.json"
       ]
     },
     "impact": [
@@ -818,7 +850,8 @@
     ],
     "dependances": [
       "style",
-      "logique-correcteur"
+      "logique-correcteur",
+      "frontend-regles"
     ],
     "outils": {
       "node": [
@@ -1865,6 +1898,63 @@
     "outils": {
       "python": [
         "python3",
+        "--version"
+      ]
+    }
+  },
+  "frontend-regles": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "assemblage/elm-review/tests/*.elm",
+        "scripts/revoir-frontends.py",
+        "scripts/qualifier-regles-frontend.py",
+        "tests/fixtures/review-*/**/*",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs",
+        "assemblage/elm-review/ressources.json",
+        "tests/test_ressources_frontend.py",
+        "assemblage/elm-review/outils.nix"
+      ]
+    },
+    "impact": [
+      "vps/assemblage/elm-review/*",
+      "vps/scripts/revoir-frontends.py",
+      "vps/scripts/qualifier-regles-frontend.py",
+      "vps/tests/fixtures/review-*/*",
+      "vps/scripts/revoir-ressources.py",
+      "vps/scripts/revoir-interop.cjs",
+      "vps/assemblage/elm-review/ressources.json",
+      "vps/tests/test_ressources_frontend.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/qualifier-regles-frontend.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_ressources_frontend.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "node": [
+        "node",
         "--version"
       ]
     }

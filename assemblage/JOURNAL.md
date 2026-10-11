@@ -454,3 +454,27 @@ pas catalogue natif prétendu modifié. Refus provenance/patch/toolchain :5 test
 sélecteur14, coordination/absence CI satellite/inventaire passent. Aucun métier
 ni production touché. elm-review construit depuis Nixpkgs retenu, paquet2.13.5
 mais annonce2.13.4 ; règles Elm2.15.0/unused1.2.3 audit en cours, pas conformité UI.
+
+Amendement frontend : elm-review Nix2.13.5/CLI2.13.4, APIElm2.15.0,
+NoUnused.Dependencies1.2.3 ; 111transitives npm +25 bibliothèques Elm auditées et
+verrouillées, nouveaux packages extraits dans Nix. Règle AST résout alias/exposing
+et refuse CSS/HTML/échappatoires/frontières ; ARIA pris en charge par ElmUI.Region
+reste ElmUI (pas d'adaptateur aria-label inutile). 21cas Review.Test passent ;
+commande canonique accepte type Html et rejette H.div/dépendance inutilisée par
+nom de règle. Suite locale frontend-regles12,3342s. Complément HTML/CSS/JS :
+parseur déjà embarqué dans Playwright, parsing sans exécution/config externe ;
+3tests passent. Pas de CI au push, pas de nouvelle lib JS/parser installée.
+Les interfaces sont réellement refusées : anciennes échappatoires communes et
+applicatives, Style339/Vision330/Math466/Logique406/logo690 avant premier portage.
+Ces chiffres sont une référence datée, aucune conformité prétendue.
+
+Socle Animator : atelier logo déjà2.0.0 officiel, Matheval1.1.1 ; API différente
+constatée. Cible2.0.0/elm-bezier2.0.0 officielle vérifiée. Lecteur170lignes déplacé
+vers MrJam.Transitions, sans toucher calculs de géométrie ; Main l'utilise.
+82anciens tests passent929ms ; nouvelles propriétés : 2échecs init/durée0 dus à
+Timeline.isRunning vrai à init. Correctif enregistré : enMouvement explicite,
+aucune frame sans changement demandé, cible immédiate/réduction/repos. 88tests
+puis 8ciblés réussis102ms après ajout même-cible/durée0, géométrie inchangée.
+Publication Style0ea000d avant source centrale ; autres pins de consommateurs
+restent historiques pendant leur portage. Backend296b7c89 inchangé, pas de tests
+Node serveur relancés, pas de déploiement ni données réelles modifiées.
