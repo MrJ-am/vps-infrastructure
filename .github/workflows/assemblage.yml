@@ -158,7 +158,9 @@ jobs:
           persist-credentials: false
       - uses: actions/setup-node@v4
         with:
-          node-version: '22.23.2'
+          # Même V8 que l'ancien atelier Style et la qualification locale.
+          # Node sert uniquement aux constructions/tests et à la référence.
+          node-version: '24.19.0'
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
