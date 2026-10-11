@@ -2,6 +2,8 @@ import importlib.util
 from pathlib import Path
 import unittest
 import json
+from unittest.mock import patch
+from types import SimpleNamespace
 
 s=importlib.util.spec_from_file_location('diagnostic',Path(__file__).resolve().parents[1]/'scripts/monolithe-diagnostic.py')
 m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
@@ -47,6 +49,16 @@ class Diagnostic(unittest.TestCase):
         self.assertEqual(r['contrat_sql'],{'table':'public.vision_items','champ':'force_rls'})
         self.assertNotIn('contrat_sql',m.diagnostic_erreur(t,{'public.autre'}))
         self.assertNotIn('contrat_sql',m.diagnostic_erreur(t+' contenu_prive',{'public.vision_items'}))
+
+    def test_metadonnees_uniquement_et_tables_versionnees(self):
+        rows=[{'table':t,'rls':True,'force_rls':True,'colonne_utilisateur':True,'politiques':1}
+              for t in ('public.vision_contextes','public.inconnue_privee')]
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stdout=json.dumps(rows))) as run:
+            r=m.metadonnees_rls('/nix/store/postgres','vision',{'public.vision_contextes'})
+        self.assertEqual(set(r),{'public.vision_contextes'})
+        self.assertIn('BEGIN READ ONLY',run.call_args.kwargs['input'])
+        self.assertNotIn('FROM public.',run.call_args.kwargs['input'])
+        with self.assertRaises(ValueError):m.metadonnees_rls('/nix/store/postgres','autre',{})
 
 
 if __name__=='__main__':unittest.main()

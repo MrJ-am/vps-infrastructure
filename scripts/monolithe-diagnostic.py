@@ -54,6 +54,25 @@ def diagnostic_erreur(texte,tables_autorisees=()):
     return out
 
 
+def metadonnees_rls(postgres,base,attendus):
+    if base not in ('vision','matheval'):raise ValueError('Base hors périmètre')
+    # Métadonnées uniquement, transaction en lecture seule ; aucune ligne métier.
+    q="""BEGIN READ ONLY;
+SELECT coalesce(json_agg(json_build_object('table',n.nspname||'.'||c.relname,
+ 'rls',c.relrowsecurity,'force_rls',c.relforcerowsecurity,
+ 'colonne_utilisateur',EXISTS(SELECT FROM pg_attribute WHERE attrelid=c.oid AND attname='utilisateur' AND NOT attisdropped),
+ 'politiques',(SELECT count(*) FROM pg_policy WHERE polrelid=c.oid))),'[]')
+FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+WHERE c.relkind IN ('r','p') AND n.nspname IN ('public','vision_gestion');
+COMMIT;"""
+    p=subprocess.run(['runuser','-u','postgres','--',str(Path(postgres)/'bin/psql'),
+        '-XAtq','--set=ON_ERROR_STOP=1','--host=/run/postgresql','--dbname='+base,'--file=-'],
+        input=q,text=True,capture_output=True,timeout=30,check=True)
+    rows=json.loads(p.stdout)
+    return {r['table']:{k:r[k] for k in ('rls','force_rls','colonne_utilisateur','politiques')}
+            for r in rows if r['table'] in attendus}
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -65,6 +84,7 @@ def main(revision):
     out['restauration_presente']=(d/'restauration.json').exists()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])
+    out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
     for nom in ('restauration','activation'):
         p=d/('erreur-'+nom+'-privee.log')
         if p.is_file():out['erreur_'+nom]=diagnostic_erreur(p.read_text(),tables_autorisees)
