@@ -18,7 +18,8 @@ on:
       - '!scripts/coordination.py'
       - '!scripts/qualifier-metier.py'
       - '!scripts/verifier-dependances.py'
-      - '!tests/test_assemblage.py'
+      # Ces tests appartiennent au cadre central et à son sélecteur d'impact.
+      - '!tests/test_assemblage*.py'
       - '!tests/matheval-differentiel.*'
       - '!tests/matheval-composant.*'
       - '!tests/native-differentiel.*'
