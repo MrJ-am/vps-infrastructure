@@ -2,6 +2,13 @@
 
 ## Point de reprise actif — préparation de production
 
+Candidat actif c5548b354839db1f8875ec28a3ce7a8c810c42a4, bundle complet vérifié
+localement. Transport8c57d52d0a54f0fe0aa1d2ee320483ddc4523edb, trois parties,109014944octets,
+chiffrée710a430e8dbb6e62d7506ed05cd40949e6b201f496ccd292bfa1d4cffd09475.
+Ordre Nix corrigé, ancien préfixe IdentMap conservé ; candidats métier/frontend
+inchangés. Nouvelle préparation fermée à constater avant restauration/bascule.
+Production ancienne, étape1 non déployée, Kanidm non commencé.
+
 Préparation38183623725/8b9d7be échoue avant activation sur l’ordre IdentMap.
 Diagnostic fermé38183852193/563c0ed réussi : assertions Nix vraies, aucun invariant
 préservé modifié, seuls les7ajouts attendus ; lignes existantes2/après9, aucune
