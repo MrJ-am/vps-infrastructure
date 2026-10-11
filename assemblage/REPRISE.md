@@ -9,7 +9,10 @@ fichier consommé différent. Format déclaré dans le manifeste, contrôleur co
 quatre régressions (acceptation, altération, format absent/inconnu) ajoutées ;
 integration-securite et editorial passent. SHA-256 du bundle/reçus inchangé.
 Scelleur applique désormais le même verifier_bundle complet localement avant
-transport. Nouveau sceau/opérateurs à publier ; anciens stages/chiffrés conservés,
+transport. Contrôle complet local05d1ade a refusé le .pyc créé par son import après scellement ;
+aucun transport effectué. Contrôle déplacé dans un processus Python-B de lecture,
+sans bytecode et avec ses modules propres. Nouveau sceau/opérateurs à publier ;
+anciens stages/chiffrés conservés,
 aucune tentative aveugle ni modification des données. Interfaces/binaire inchangés.
 
 Sources qualifiées publiées b0140de44c761f202271a436882cd05195b18fd3.
