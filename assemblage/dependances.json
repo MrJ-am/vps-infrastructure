@@ -2625,5 +2625,20 @@
       "poppler-utils"
     ],
     "transitives": "closure Nix exacte ; reçus SHA256 des exécutables employés"
+  },
+  "outillage_mcp_autorise": {
+    "fichier": "assemblage/outils/mcp.lock.json",
+    "classe": "developpement uniquement",
+    "directes": [
+      "cl-mcp",
+      "cl-tron-mcp"
+    ],
+    "necessaires": [
+      "Swank",
+      "Quicklisp client et bibliotheques du Nixpkgs verrouille"
+    ],
+    "autorisation": "amendement du11octobre2026",
+    "audit": "assemblage/outils/audit-mcp.md",
+    "controle": "sources Nix/commits/empreintes et absence du graphe ASDF produit"
   }
 }

@@ -1822,5 +1822,51 @@
         "--version"
       ]
     }
+  },
+  "outils-mcp": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "assemblage/outils/*.json",
+        "assemblage/outils/*.lisp",
+        "assemblage/outils/*.nix",
+        "assemblage/outils/patches/*.patch",
+        "scripts/mcp-appel.py",
+        "scripts/qualifier-mcp.py",
+        "tests/outils-mcp/*",
+        "tests/test_outils_mcp.py"
+      ]
+    },
+    "impact": [
+      "vps/assemblage/outils/*",
+      "vps/scripts/mcp-appel.py",
+      "vps/scripts/qualifier-mcp.py",
+      "vps/tests/outils-mcp/*",
+      "vps/tests/test_outils_mcp.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_outils_mcp.py"
+      ],
+      [
+        "python3",
+        "scripts/qualifier-mcp.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
   }
 }

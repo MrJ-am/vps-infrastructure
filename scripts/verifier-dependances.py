@@ -7,9 +7,45 @@ import os
 from assemblage import chemins_sources,manifeste,empreinte
 
 
+def verifier_outils_mcp(racine, inventory):
+    declaration=inventory['outillage_mcp_autorise']
+    p=racine/declaration['fichier']
+    if p.is_symlink() or not p.resolve().is_relative_to(racine/'assemblage/outils'):
+        raise ValueError('Lock MCP extérieur')
+    lock=json.loads(p.read_text())
+    toolchain=manifeste(racine)['toolchain']['qualification_locale']
+    for cle in ('sbcl','asdf','nixpkgs_revision'):
+        if lock[cle]!=toolchain[cle]:raise ValueError('Toolchain MCP différente : '+cle)
+    attendus={'cl-mcp':'cl-ai-project/cl-mcp','cl-tron-mcp':'Alba-Intelligence/cl-tron-mcp',
+              'quicklisp-client':'quicklisp/quicklisp-client'}
+    if {o['nom']:o['depot'] for o in lock['outils']}!=attendus:
+        raise ValueError('Projet MCP hors autorisation')
+    for outil in lock['outils']:
+        if (not re.fullmatch('[a-f0-9]{40}',outil['revision'])
+            or outil['url']!='https://api.github.com/repos/'+outil['depot']+'/tarball/'+outil['revision']
+            or not re.fullmatch('[a-z0-9]{52}',outil['nix_sha256'])):
+            raise ValueError('Source MCP non verrouillée')
+    noms={b['name'] for b in lock['bibliotheques']}
+    if len(noms)!=len(lock['bibliotheques']) or 'cl-harness' in noms:
+        raise ValueError('Graphe MCP invalide')
+    for b in lock['bibliotheques']:
+        source_nix_patchee=(b['name']=='swank' and b['version']=='2.29.1'
+                           and b['url'] is None and b['src'].endswith('-sbcl-swank-2.29.1-build-patched'))
+        if (not b['version'] or not (source_nix_patchee or (b['url'] or '').startswith('https://'))
+            or not re.fullmatch(r'/nix/store/[a-z0-9]{32}-[^/]+',b['src'])
+            or not b['nar_sha256'].startswith('sha256:')
+            or not b['licences_asd'] or not set(b['deps']).issubset(noms)):
+            raise ValueError('Transitive MCP non inventoriée : '+b['name'])
+    for patch in lock.get('adaptations',[]):
+        fichier=racine/patch['fichier']
+        if fichier.is_symlink() or empreinte(fichier.read_bytes())!=patch['sha256']:
+            raise ValueError('Patch MCP différent de son audit')
+
+
 def verifier():
     racine=Path(__file__).resolve().parents[1]
     inventory=json.loads((racine/'assemblage/dependances.json').read_text())
+    verifier_outils_mcp(racine,inventory)
     sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     for profile in inventory.get('python_profils',{}).values():
         p=racine/profile['fichier']

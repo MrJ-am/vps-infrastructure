@@ -10,3 +10,4 @@ state/
 *.dump
 *.env
 *.zip
+reports/http-startup.log

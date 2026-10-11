@@ -438,3 +438,19 @@ centraux, documentation seule : pas de recompilation métier. Ancien candidat
 refusé avant transport par le descripteur tant que l’amendement n’est pas qualifié.
 `python3 -m unittest discover -s tests -p test_monolithe_stage.py` : 13 succès.
 Outils officiels récupérés pour audit seulement ; pas de raccordement revendiqué.
+
+Outils de développement : cl-mcp197f5e8 + Tron39d00b4 + Swank2.29.1/35 sources
+Nix. Raccordements amont de breakpoints incompatibles constatés à compilation :
+patch local Nix6 lignes ; sous-système officiel core, installation de skills
+facultative défectueuse exclue et non qualifiée. Registre ASDF récursif MGL, DSO
+OpenSSL existants, Quicklisp privé/dists vide, aucun téléchargement implicite.
+`python3 scripts/qualifier-mcp.py` : condition réelle et pile DEBUG, locaux40/2,
+correction source compilée, restart42, effets1→1, objet11→12 vu des deux outils
+dans PID83928 ; 0,8729s. Compteur ASDF amont inconnu : marqueur explicitement
+requis après les3 assertions réussies. Backtrace RPC amont différent de pile
+suspendue : cause examinée, première exécution reprise sans répéter son effet,
+puis qualification complète corrigée. Agent connecté via pont HTTP existant,
+pas catalogue natif prétendu modifié. Refus provenance/patch/toolchain :5 tests ;
+sélecteur14, coordination/absence CI satellite/inventaire passent. Aucun métier
+ni production touché. elm-review construit depuis Nixpkgs retenu, paquet2.13.5
+mais annonce2.13.4 ; règles Elm2.15.0/unused1.2.3 audit en cours, pas conformité UI.
