@@ -13,4 +13,6 @@ else:suites=sorted(catalogue())
 besoin=bool(set(suites)-{'editorial','selection','sauvegarde-copies'})
 with open(os.environ['GITHUB_OUTPUT'],'a') as f:
     f.write('composants='+str(besoin).lower()+'\n')
+    for sortie,suite in [('test_selection','selection'),('test_sauvegarde','sauvegarde-copies'),('test_schema','schema-prive')]:
+        f.write(sortie+'='+str(suite in suites).lower()+'\n')
 print(json.dumps({'suites_concernees':suites,'composants_requis':besoin},ensure_ascii=False))

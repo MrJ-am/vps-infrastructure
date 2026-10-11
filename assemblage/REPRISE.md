@@ -68,7 +68,8 @@ Référence VPS : run 38098717899, fichier reference-production.json. Générati
 r6s7ags3 inchangée, SBCL 2.6.4/PG17.11/Keycloak26.7.3. Un compte Vision actif,
 propriétaire cohérent, aucune relation étrangère/orpheline ; trois participations
 Matheval ouvertes, conservées. RSS et latences mesurés séparément des plafonds.
-CI infrastructure 38109779946 : réussie, évaluation Nix du module sur paquet factice ;
+CI infrastructure 38112469913 sur 2cd93ce : réussie, Python et Nix du module
+sur paquet factice, syntaxe du build Nix vérifiée ;
 les suites d’identité inchangées sont réutilisées depuis 38107422877, non rejouées.
 
 Sauvegarde/restauration réelle : 38105867103 sur eff80b8, copie chiffrée des trois
@@ -81,7 +82,7 @@ exige données et registre récents ; le retour du code ne restaure jamais une b
 ancienne sur des écritures récentes. Conserver générations/archives et services tiers.
 
 Blocage effectif : COMPONENTS_READ_TOKEN manque aux Actions de l’infrastructure
-(run 38109779900, arrêt avant checkout privé). Le credential de session lit/pousse
+(run 38112469897 sur 2cd93ce, arrêt avant checkout privé). Le credential de session lit/pousse
 les sources ; l’API secrets répond 403. Secret de lecture contenu limité à Vision
 et Signature demandé au propriétaire ; ne jamais fournir sa valeur en conversation.
 APIs protections/environments/deploy keys non accessibles : ne pas prétendre leur
