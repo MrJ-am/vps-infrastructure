@@ -3,7 +3,13 @@
 Les sources Style effectivement consommées à chaque verrou sont incluses dans
 le bundle privé de qualification, séparées de sa tête courante. Le préparateur
 vérifie le verrou, ses fichiers et les entrées du reçu sur cette révision, sans
-fetch distant ni copie divergente maintenue dans un dépôt. La preuve historique
+fetch distant ni copie divergente maintenue dans un dépôt. Le verrou historique
+Logique utilise les identifiants Git blob SHA-1, déclarés explicitement dans
+le manifeste ; Vision/Matheval utilisent SHA-256. La vérification SHA-1 conserve
+ce contrat historique : elle n’authentifie pas seule la soumission. Le bundle,
+les entrées de tous les reçus et la soumission restent vérifiés par SHA-256.
+Le scelleur applique localement verifier_bundle au payload complet avant chiffrement,
+sans préparation du système ou accès aux données. La preuve historique
 MCP et sa trace sont vérifiées hors ligne : aucune nouvelle condition synthétique
 ni connexion actuelle n'est prétendue. Les contrôles Python de routage sont
 qualifiés séparément ; ces outils restent hors du graphe produit.

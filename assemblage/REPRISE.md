@@ -2,6 +2,16 @@
 
 ## Point de reprise actif — préparation de production
 
+Préparation38183043781/c7da012 terminée en échec avant toute activation :
+verifier_bundle refusait le verrou historique Logique (objets Git SHA-1 comparés
+à SHA-256).75fichiers vérifiés réellement avec leur format historique ; aucun
+fichier consommé différent. Format déclaré dans le manifeste, contrôleur corrigé,
+quatre régressions (acceptation, altération, format absent/inconnu) ajoutées ;
+integration-securite et editorial passent. SHA-256 du bundle/reçus inchangé.
+Scelleur applique désormais le même verifier_bundle complet localement avant
+transport. Nouveau sceau/opérateurs à publier ; anciens stages/chiffrés conservés,
+aucune tentative aveugle ni modification des données. Interfaces/binaire inchangés.
+
 Sources qualifiées publiées b0140de44c761f202271a436882cd05195b18fd3.
 Scellement réussi vers state/candidats-scelles/b0140de-transport :109011960octets,
 chiffré8f338e0f2cd166aab2e56a8ccfb4c41f46f408b8df2fe5a83d1ba12f3f3611f2.

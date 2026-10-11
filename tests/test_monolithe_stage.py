@@ -67,7 +67,7 @@ class BundleTest(unittest.TestCase):
 
     def test_bundle_exact_operateurs_sans_reconstruction(self):self.assertEqual(self.verifier()['revision'],'c'*40)
 
-    def style_verrouille(self):
+    def style_verrouille(self,format_empreintes='sha256'):
         # La révision consommée diffère de la tête Style de l'assemblage.
         self.suite['style_consomme_par']='vision'
         self.suite['entrees']['style']=['src/Style.elm']
@@ -78,9 +78,13 @@ class BundleTest(unittest.TestCase):
         consomme.write_text('Source verrouillée effectivement qualifiée.')
         empreinte=preparer.sha(consomme)
         verrou=self.root/'vision/style.lock.json';verrou.parent.mkdir()
-        verrou.write_text(json.dumps({'revision':'b'*40,'fichiers':{'src/Style.elm':empreinte}}))
+        contenu=consomme.read_bytes()
+        verrou_empreinte=(hashlib.sha1(b'blob '+str(len(contenu)).encode()+b'\0'+contenu).hexdigest()
+                         if format_empreintes=='git-blob-sha1' else empreinte)
+        verrou.write_text(json.dumps({'revision':'b'*40,'fichiers':{'src/Style.elm':verrou_empreinte}}))
         self.cert['manifest']['frontends']={'vision':{'revision_style':'b'*40,
-            'verrou_style':'style.lock.json','sha256':preparer.sha(verrou)}}
+            'verrou_style':'style.lock.json','sha256':preparer.sha(verrou),
+            'format_empreintes':format_empreintes}}
         self.cert['styles_consommes']={'vision':{'revision':'b'*40}}
         self.receipt['identite']['entrees']['style/src/Style.elm']=empreinte
         self.receipt['identite']['definition']=hashlib.sha256(json.dumps(self.suite,sort_keys=True).encode()).hexdigest()
@@ -90,6 +94,26 @@ class BundleTest(unittest.TestCase):
     def test_style_reellement_consomme_et_non_sa_tete(self):
         self.style_verrouille()
         self.assertEqual(self.verifier()['revision'],'c'*40)
+
+    def test_verrou_git_blob_historique_et_recu_sha256(self):
+        source=self.style_verrouille('git-blob-sha1')
+        self.assertEqual(self.receipt['identite']['entrees']['style/src/Style.elm'],preparer.sha(source))
+        self.assertEqual(self.verifier()['revision'],'c'*40)
+
+    def test_verrou_git_blob_altere_refuse_meme_si_enveloppe_recalculee(self):
+        self.style_verrouille('git-blob-sha1').write_text('Autre source, qualification invalide.')
+        self.actualiser()
+        with self.assertRaisesRegex(ValueError,'Source Style différente'):self.verifier()
+
+    def test_verrou_git_blob_sans_format_declare_refuse(self):
+        self.style_verrouille('git-blob-sha1')
+        self.cert['manifest']['frontends']['vision'].pop('format_empreintes')
+        self.actualiser()
+        with self.assertRaisesRegex(ValueError,'Source Style différente'):self.verifier()
+
+    def test_format_de_verrou_inconnu_refuse(self):
+        self.style_verrouille('inconnu')
+        with self.assertRaisesRegex(ValueError,'Format de verrou Style inconnu'):self.verifier()
 
     def test_style_consomme_altere_meme_si_enveloppe_recalculee(self):
         self.style_verrouille().write_text('Autre source, qualification invalide.')

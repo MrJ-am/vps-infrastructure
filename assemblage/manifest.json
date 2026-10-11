@@ -129,7 +129,8 @@
       "sha256": "6f053408fdaba307f55b5dd25034cc12dfe6825e75f15fd277da29b02fdc0d8f",
       "revision_style": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
       "origine_style": "MrJ-am/style-mrjam",
-      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification."
+      "raison": "Conserver le rendu qualifié existant ; anciennes révisions verrouillées, caches de construction sans modification.",
+      "format_empreintes": "git-blob-sha1"
     }
   },
   "amendement": {
