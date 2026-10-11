@@ -1,0 +1,41 @@
+{
+  "format": 1,
+  "racines": {
+    "vision": [
+      "interface/"
+    ],
+    "matheval": [
+      "docs/site/"
+    ],
+    "logique": [
+      "public/"
+    ],
+    "style": [
+      "public/",
+      "ateliers/logo/web/"
+    ]
+  },
+  "bibliotheques_generees": {
+    "style/public/assets/mrjam/signature.css": {
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830",
+      "role": "typographie generee par Signature, conservee sans modification"
+    },
+    "matheval/docs/site/vendor/katex/katex.min.css": {
+      "sha256": "717bc9ae7853b61f0f76455dddf0ecd4f527a783f42de2ac24684899c1c46258",
+      "role": "bibliotheque KaTeX existante"
+    },
+    "matheval/docs/site/vendor/katex/katex.min.js": {
+      "sha256": "e6bfe5deebd4c7ccd272055bab63bd3ab2c73b907b6e6a22d352740a81381fd4",
+      "role": "bibliotheque KaTeX existante"
+    },
+    "matheval/docs/site/vendor/katex/auto-render.min.js": {
+      "sha256": "7b57d427ac6270677daf8d8380ded2cc73336f9149a167b8e1fe0d6ef66604ae",
+      "role": "bibliotheque KaTeX existante"
+    },
+    "matheval/docs/site/vendor/drag-drop-touch/drag-drop-touch.esm.min.js": {
+      "sha256": "119fba63ae4cb989a6cff4dd291d2937a93fbbcdaf2714f9ec02ff85c08f001c",
+      "role": "interop tactiles existante"
+    }
+  },
+  "adaptateurs_js": {}
+}

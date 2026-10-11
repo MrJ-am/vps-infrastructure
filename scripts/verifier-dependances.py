@@ -42,10 +42,34 @@ def verifier_outils_mcp(racine, inventory):
             raise ValueError('Patch MCP différent de son audit')
 
 
+def verifier_outils_frontend(racine,inventory):
+    lock=json.loads((racine/inventory['outillage_frontend_autorise']['fichier']).read_text())
+    if lock['nixpkgs_revision']!=manifeste(racine)['toolchain']['qualification_locale']['nixpkgs_revision']:
+        raise ValueError('Nixpkgs frontend différent')
+    cli=lock['cli']
+    if cli['url']!='https://github.com/jfmengels/node-elm-review/archive/v'+cli['version']+'.tar.gz' or not cli['npmHash'].startswith('sha256-'):
+        raise ValueError('CLI frontend non verrouillé')
+    if not re.fullmatch('/nix/store/[a-z0-9]{32}-elm-review-'+re.escape(cli['version']),cli['store']):
+        raise ValueError('Paquet frontend non verrouillé')
+    noms={(p['package'],p['version']) for p in lock['elm']}
+    if len(noms)!=len(lock['elm']):raise ValueError('Bibliothèque Elm dupliquée')
+    for p in lock['elm']:
+        if not p['licence'] or not p['fichiers_source_sha256'] or not all(re.fullmatch('[a-f0-9]{64}',s) for s in p['fichiers_source_sha256'].values()):
+            raise ValueError('Sources/licence Elm non inventoriées')
+        if 'url' in p and (not p['url'].startswith('https://github.com/') or not re.fullmatch('[a-z0-9]{52}',p['nix_sha256'])):
+            raise ValueError('Archive Elm non verrouillée')
+        if any(not any(name==n for n,v in noms) for name in p['dependances']):
+            raise ValueError('Transitive Elm non inventoriée')
+    for p in lock['npm_transitives_installees']:
+        if not p['url'].startswith('https://registry.npmjs.org/') or not p['integrity'].startswith('sha512-'):
+            raise ValueError('Source npm frontend non verrouillée')
+
+
 def verifier():
     racine=Path(__file__).resolve().parents[1]
     inventory=json.loads((racine/'assemblage/dependances.json').read_text())
     verifier_outils_mcp(racine,inventory)
+    verifier_outils_frontend(racine,inventory)
     sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     for profile in inventory.get('python_profils',{}).values():
         p=racine/profile['fichier']

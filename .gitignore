@@ -11,3 +11,4 @@ state/
 *.env
 *.zip
 reports/http-startup.log
+elm-stuff/

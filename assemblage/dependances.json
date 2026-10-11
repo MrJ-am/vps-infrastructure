@@ -2265,7 +2265,7 @@
     {
       "composant": "style",
       "fichier": "elm.json",
-      "sha256": "acdf8ecfeab224a90869bea38263f07e0d93a3f5461dc0c846e20bda3a16b4ee",
+      "sha256": "60c4acefdd1a27572f7a94f1f4ffd33fb48c7c32ef883c6577bb6ed701241e23",
       "dependances": {
         "direct": {
           "elm/browser": "1.0.2",
@@ -2285,6 +2285,30 @@
         "direct": {},
         "indirect": {}
       }
+    },
+    {
+      "composant": "vps",
+      "fichier": "assemblage/elm-review/elm.json",
+      "sha256": "fd704f50d7052ed10bebb7a4912296196c21ff1fecfc28a1180b8749290fe5ed",
+      "origine": "amendement elm-review ; regles centrales uniquement developpement/test"
+    },
+    {
+      "composant": "vps",
+      "fichier": "tests/fixtures/review-conforme/elm.json",
+      "sha256": "73a478c7d5f2e5041ba229189bbf69e3284f7f215054b22068d60ebe857fd70f",
+      "origine": "fixture synthetique du controle frontend obligatoire"
+    },
+    {
+      "composant": "vps",
+      "fichier": "tests/fixtures/review-interdit/elm.json",
+      "sha256": "73a478c7d5f2e5041ba229189bbf69e3284f7f215054b22068d60ebe857fd70f",
+      "origine": "fixture synthetique du controle frontend obligatoire"
+    },
+    {
+      "composant": "vps",
+      "fichier": "tests/fixtures/review-inutilise/elm.json",
+      "sha256": "88736fa417a5ea5b853efa9adaf1f8d04a5d6d4e30be00cb9886f6de48188cca",
+      "origine": "fixture synthetique du controle frontend obligatoire"
     }
   ],
   "python_profils": {
@@ -2640,5 +2664,12 @@
     "autorisation": "amendement du11octobre2026",
     "audit": "assemblage/outils/audit-mcp.md",
     "controle": "sources Nix/commits/empreintes et absence du graphe ASDF produit"
+  },
+  "outillage_frontend_autorise": {
+    "fichier": "assemblage/elm-review/outils.lock.json",
+    "audit": "assemblage/elm-review/AUDIT.md",
+    "classe": "developpement/test interfaces seulement",
+    "autorisation": "amendement elm-review/elm-animator ; outils Node de construction/test existants conserves",
+    "controle": "sources versions Nix npmDepsHash et paquets Elm exacts"
   }
 }

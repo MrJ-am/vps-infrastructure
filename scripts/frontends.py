@@ -199,6 +199,10 @@ def preparer(sources, m):
 
 
 def construire_dans_atelier(cle, sources, m, caches):
+    from importlib.util import spec_from_file_location, module_from_spec
+    spec=spec_from_file_location('revoir_frontends',RACINE/'scripts/revoir-frontends.py')
+    controle=module_from_spec(spec);spec.loader.exec_module(controle)
+    controle.verifier(cle,sources,m)
     env = {k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME','CI')}
     env['GITHUB_SHA'] = m['sources'][cle]['revision']
     env['STYLE_MRJAM_SOURCE'] = str(caches.get(cle, sources['style']))
@@ -246,6 +250,10 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                     subprocess.run([RACINE/'state/outils-python/navigateur/bin/python','tests/browser-copy.py'],cwd=atelier,env=env,check=True)
                     print(json.dumps({'composant':cle,'revision':m['sources'][cle]['revision'],'tests':'reussis','publication':False}))
                     return
+                from importlib.util import spec_from_file_location, module_from_spec
+                spec=spec_from_file_location('revoir_frontends',RACINE/'scripts/revoir-frontends.py')
+                controle=module_from_spec(spec);spec.loader.exec_module(controle)
+                controle.verifier(cle,locaux,m)
                 rapport=reutiliser_candidat(cle,locaux,m)
                 tester_frontend(cle,locaux,caches,campagne)
                 print(json.dumps({'composant':cle,'candidat_sha256':rapport['ensemble_sha256'],

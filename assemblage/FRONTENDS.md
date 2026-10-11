@@ -35,4 +35,33 @@ Les anciennes interfaces sont des références fonctionnelles, pas une preuve de
 conformité à ce contrat. Les nouveaux artefacts et parcours affectés doivent être
 qualifiés avant promotion ; ne pas rejouer les suites Lisp arithmétiques pour du style.
 
-État : dépendances/règles/intégration en cours, aucune conformité nouvelle revendiquée.
+Commandes canoniques :
+
+```sh
+python3 scripts/assemblage.py tester --suite frontend-regles
+python3 scripts/revoir-frontends.py --composant matheval
+python3 scripts/frontends.py construire --composant matheval
+```
+
+Configuration/règles/tests uniques dans elm-review/. Le constructeur et la
+qualification d'un candidat déjà construit appellent le contrôle, sur chaque
+projet Elm et le src/ commun réellement verrouillé ; Style inclut son atelier
+logo. Le sélecteur propage une modification des règles aux interfaces/navigateurs
+sans rejouer les unités Lisp. Reçus locaux non attestés, aucune permission de
+publication accordée par eux. Les fixtures utilisent la même commande ; le
+contrôle vérifie les noms de règles, pas seulement un code de sortie non nul.
+
+Le complément ressources analyse le document d'amorçage avec HTMLParser et le
+JS avec le parseur Babel déjà embarqué dans Playwright de Matheval : aucune
+installation supplémentaire, aucun JS inspecté exécuté. CSS applicatif refusé ;
+ressources générées de bibliothèques/typographie conservées à empreinte exacte,
+interopérabilité bornée par fonction/capacité. Les alias simples de sinks DOM et
+les accès calculés sont exercés ; le JS dynamique et les générateurs ne sont
+pas une preuve statique complète. Contrôler également les artefacts et les
+parcours de navigateur, les styles/actions/focus effectivement rendus.
+
+État : outils/règles locaux qualifiés ; interfaces encore refusées, sans exclusion
+ni suppression. Première mutualisation Animator réelle dans MrJam.Transitions
+et lecteur logo ; API numérique pour attributs elm-ui, arrêt au repos/réduction.
+Les autres vues, adaptateurs et ressources restent à porter/requalifier. Production
+inchangée ; aucun reçu ancien utilisé pour qualifier ces nouvelles interfaces.

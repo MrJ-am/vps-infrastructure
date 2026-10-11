@@ -6,9 +6,9 @@ Production : génération r6s7ags3, ancienne architecture, Keycloak provisoire ;
 fictif créé, fermé ou effacé en production. Dernière référence38118876078 : un
 compte Vision/une identité, liens cohérents, trois participations Matheval ouvertes.
 
-État constaté après amendement : main infrastructure c6ecf2d ; branche locale
+État constaté après amendement : main infrastructure 5e8342d ; branche locale
 reorganisation/assemblage-central-20261011. Vision 1ef7174, Matheval/master 5e234c0,
-Logique 032b4f5, Style b2da638, Signature e9d9d34. Consignes/guides des cinq composants
+Logique 032b4f5, Style 0ea000d (chronologie commune publiée ; autres vues encore à porter), Signature e9d9d34. Consignes/guides des cinq composants
 publiés avec archives exactes ; root intègre les corrections Nix/préparateur et
 le refus de promotion avant qualification de l’amendement. Aucun AGENTS imbriqué/override trouvé dans les sources
 actives ciblées ; relecture des six fichiers effectuée. Aucun run de promotion
@@ -70,6 +70,29 @@ Ne pas prétendre leur nettoyage distant achevé. Sauvegardes/tiers conservés.
 
 Travail affecté en cours : elm-review Nix installé (paquet2.13.5, CLI annonce2.13.4),
 règles/fixtures/contrôle de qualification à intégrer ; elm-animator1.1.1 existant
-retenu pour éviter une mise à jour arbitraire. Présentation CSS/HTML existante dans
+référence de Matheval. L’atelier logo emploie déjà2.0.0, confirmé officiel ;
+API incompatible, cible commune2.0.0 après portage explicite et qualification. Présentation CSS/HTML existante dans
 Matheval/Style et adaptateurs applicatifs à corriger ; aucune conformité annoncée.
 Image métier296b7c89 et suites backend inchangées restent conservées.
+
+elm-review : configuration unique2.15.0 + règle existante unused1.2.3 + règle
+AST MrJam.Presentation. 21 cas réussis et commande canonique : fixture conforme
+acceptée, H.div rejeté, dépendance inutilisée rejetée (noms de règles contrôlés).
+Guards sur construction et qualification de candidats existants, aucune suppression.
+Sources partagées effectivement consommées : 339 violations Style/330 Vision/
+466 Matheval/406 Logique, principalement les mêmes échappatoires du socle à
+corriger une fois puis adopter à révision exacte. Ces échecs bloquent la promotion.
+L’atelier logo est un second projet Elm dans Style : étendre le contrôle à son
+elm.json, conserver la géométrie et mutualiser son lecteur/horloge Animator.
+
+Socle de transitions publié0ea000d : lecteur Echo.Player déplacé sans doublon
+vers MrJam.Transitions, utilisé par Main/abonnementLecteur. 82 anciens tests
+passent ; 8 nouvelles propriétés ciblées passent (102ms), après constat que
+Timeline.isRunning est vrai à init dans2.0.0 : le socle borne explicitement les
+frames aux changements demandés. Réduction/inversion/continuité/cible immédiate
+et durée nulle qualifiées en unités, navigateur encore requis. Consommateurs
+Vision/Math/Logique restent sur leurs pins de style antérieurs jusqu'au portage.
+Complément HTML/CSS/JS avec HTMLParser/Babel déjà dans Playwright1.58.2 : 3tests
+(9casJS dont alias/calculé/optionnel) passent. Garde canonique branché sur build
+et qualification ; rapports actuels restent en échec, dont atelier logo690
+violations avant déplacement. Pas de promotion, pas de Kanidm commencé.
