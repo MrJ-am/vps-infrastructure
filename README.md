@@ -1,105 +1,45 @@
-# Infrastructure VPS
+# Infrastructure et assemblage MrJ.am
 
-Coordination entre projets : [registre partagé](coordination/REGISTRE.org),
-[synthèse des contrats](coordination/CONTRATS.org) et [mode d’emploi](docs/COORDINATION.md).
+Ce dépôt est le point d'entrée de la réorganisation autorisée le 11 octobre 2026.
+[Manifeste des six sources](assemblage/manifest.json), [contrat central](coordination/CONTRATS.org),
+[reprise](assemblage/REPRISE.md), [dépendances](assemblage/dependances.json),
+[contrat de sécurité](assemblage/SECURITE.md).
 
-Configuration commune du VPS NixOS Hostinger `187.77.95.158` pour héberger
-plusieurs applications derrière une seule instance Nginx et partager une
-instance PostgreSQL 17 entre les projets qui en ont besoin.
+La cible est un exécutable métier SBCL assemblant Vision et Matheval en bibliothèques
+ASDF. Log reste indépendant ; Logique reste statique. Interfaces Elm/ElmUI, identité
+visuelle, Nginx, PostgreSQL, Nextcloud et moteur d'embeddings existants sont conservés.
+Toutes les exécutions CI/CD doivent être centralisées ici. Aucune CI de bibliothèque
+ou attente de réponse d'une autre conversation ne qualifie l'assemblage.
 
-**État actuel : l'interface ElmUI de Vision est publiée depuis le 21 septembre 2026 à 22:32 UTC.**
-Voir [la publication vérifiée](docs/VISION-INTERFACE.md) et [l'état du VPS](docs/ETAT.md).
+La migration est **en cours**, sans bascule métier. Le premier lot expose le graphe
+ASDF Vision et porte les calculs/validations Matheval. Les workflows satellites
+restent à transférer après qualification des fonctions centrales ; leurs sauvegardes
+ne sont pas supprimées. Aucun monolithe ni Kanidm n'est annoncé comme déployé.
 
-**Migration initiale : migration activée et enregistrée le 18 septembre 2026 à 21:10 UTC.**
-La [bascule vérifiée](https://github.com/MrJ-am/vps-infrastructure/actions/runs/35395320446)
-confirme les services, les données, les accès et les sauvegardes. Les sources
-installées correspondent à `fa059d61acfc8cf5c5bd7f3f9c83600787f2c6eb`.
-Le relais côté Mémoire est fusionné dans la [PR nº 8](https://github.com/MrJ-am/M-moire/pull/8).
-Lire [l'état attesté](docs/ETAT.md) pour les générations et les preuves.
+La production antérieure est décrite dans [ETAT.md](docs/ETAT.md). L'audit réel
+[38097638053](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38097638053)
+a confirmé le 11 octobre la génération et les services sans mutation métier.
+Ne pas confondre la source main avec les versions effectivement servies.
 
-**Accès depuis ChatGPT Work : GitHub Actions.** Work prépare les changements
-et consulte les résultats ; les runners GitHub ouvrent les connexions SSH au
-VPS. Ne pas chercher à rétablir un accès SSH direct depuis Work. Le workflow
-manuel [Auditer le VPS](.github/workflows/audit.yml) utilise les scripts de
-lecture seule ; sa configuration initiale est détaillée dans
-[ACCES.md](docs/ACCES.md). Il n'active pas la migration.
-
-Pour la mise en service multi-utilisateur de Vision, utiliser désormais
-[le point d'entrée unique](docs/VISION-MISE-EN-SERVICE.md). L'agent peut
-déposer et suivre les demandes techniques sans demander au propriétaire
-de lancer séparément chaque contrôle.
-
-| Ce dépôt | Chaque projet applicatif |
-|---|---|
-| NixOS, démarrage, réseau, SSH, pare-feu | Code, tests et contenu |
-| Nginx sur 80/443, certificats HTTPS | Service HTTP sur une adresse locale |
-| Attribution des domaines, alias et ports | Publications avec son compte dédié |
-| Intégration des modules applicatifs revus | Proposition d'évolution de son module |
-| PostgreSQL, création des bases et rôles, contrôle des accès | Schéma, données et migrations applicatives |
-| Sauvegardes locales PostgreSQL et contrôles collectifs | Exports chiffrés hors VPS existants et validation des restaurations |
-
-`projects.json` attribue chaque domaine et chaque port à un seul projet.
-`modules/gateway.nix` et `lib/virtual-hosts.nix` construisent le routage.
-`apps/` active les services avec leurs paramètres d'instance. `vendor/`
-contient les modules applicatifs revus et leur provenance exacte.
-`hosts/hostinger/` conserve les réglages du VPS relevés dans Matheval.
-
-`databases.json` réserve les bases indépendamment du routage HTTP.
-`modules/postgresql.nix` possède l'instance, les accès par socket Unix et les
-sauvegardes quotidiennes. Une application ne peut se connecter qu'à sa base
-avec son compte système dédié. Le port PostgreSQL n'écoute pas en TCP.
-Lire [le contrat PostgreSQL](docs/POSTGRESQL.md) et
-[le message de reprise pour Mémoire](docs/MESSAGE-MEMOIRE.md).
-
-La copie Matheval correspond exactement au module amont du commit
-`0bcdaf101cbdacb85694ca217fd21ab3f2eac828` de Mémoire. L'adaptation PostgreSQL
-a été reprise dans ce module : ne plus lui appliquer
-`patches/matheval-postgresql.patch`. Ce patch et ses empreintes antérieures
-restent conservés comme historique réversible. Vision et sa base sont activés ; son interface ElmUI est servie par le module
-`apps/vision-interface.nix`. Lire [l'état courant](docs/ETAT.md).
-
-Le raccordement initial reste `https://principiipetit.io/matheval/` vers
-`http://127.0.0.1:3000`, sans retirer le préfixe. `www` et les redirections
-existantes sont conservés. Les deux certificats et leurs emplacements restent
-gérés par les mêmes options NixOS. Aucun changement de DNS n'est nécessaire
-pour cette séparation.
-
-La configuration issue de Mémoire a été comparée au VPS réel et construite avec
-son Nixpkgs installé, sans mise à jour. Lire [la procédure de migration](docs/MIGRATION.md).
-`check.yml` et `audit.yml` contrôlent ; `migration.yml` prépare sans activer ;
-`activate-migration.yml` effectue le plan, l'essai protégé et l'enregistrement
-sur demande explicite. Ces scripts de migration sont dédiés à la bascule initiale.
+Commandes de l'atelier (six clones frères, outillage déjà autorisé) :
 
 ```sh
-sh scripts/check.sh
-python3 scripts/probe.py --output /chemin/prive/avant.json
-python3 scripts/probe.py --baseline /chemin/prive/avant.json
+python3 scripts/assemblage.py verifier
+python3 scripts/assemblage.py selection --changement vision/src/json.lisp
+python3 scripts/assemblage.py tester --suite selection --suite editorial --suite matheval-pures
 ```
 
-La première commande exige Python 3 et Nix. Les deux suivantes utilisent
-seulement la bibliothèque standard Python et vérifient les certificats TLS.
-Elles effectuent exclusivement des GET publics : aucune participation ou
-connexion administrateur n'est créée. Le relevé contient des codes HTTP,
-redirections et empreintes de fichiers publics, jamais les réponses privées.
+Le catalogue candidat est dans assemblage/suites.json. Les reçus locaux contiennent
+les empreintes des entrées, outils et bibliothèques natives ; ils n'autorisent pas
+une publication. La CI rejoue les suites concernées tant qu'une attestation de
+confiance n'existe pas. Le mode --reference sélectionne toutes les suites, sans cache.
+Les préconditions des suites PostgreSQL/navigateur doivent être fournies par le
+futur orchestrateur complet ; aucune réussite globale n'est revendiquée.
 
-La CI vérifie les registres, le routage, l'évaluation NixOS complète avec et
-sans une seconde base, puis les accès et les restaurations dans un PostgreSQL
-17 jetable. Son Nixpkgs de validation est identifié dans `tests/nixpkgs.json` ;
-il ne remplace pas celui du VPS. Le workflow `check.yml` ne reçoit aucune clé
-root et ne déploie pas automatiquement. L'accès administratif du workflow
-manuel `audit.yml` est distinct, dans l'environnement `vps-production`.
-La migration initiale a également été construite et vérifiée sur le VPS réel.
-Toute nouvelle évolution du système exige un nouvel audit et son propre plan.
+Le chargement interactif utilise assemblage/charger.lisp et ASDF. L'image de travail
+est conservée par tâche ; la validation finale utilise une image neuve, distincte
+de l'artefact de production. Les secrets et connexions n'entrent pas dans les builds.
 
-Pour ajouter une application, suivre [le contrat d'intégration](docs/AJOUTER-UN-PROJET.md).
-Pour les accès, lire [ACCES.md](docs/ACCES.md).
-Pour le raccordement statique préparé de `logique.echos.systems`, lire
-[LOGIQUE.md](docs/LOGIQUE.md). Les candidats ACME/HTTPS sont distincts de la
-configuration courante ; leur présence ne signifie pas qu'ils sont activés.
-
-Une passerelle unique reste un point commun à tous les sites. Les validations,
-les comptes distincts et le retour arrière réduisent les risques ; ils ne
-garantissent pas une absence absolue d'interruption ou de saturation du VPS.
-
-Références techniques : [activation de NixOS](https://nixos.org/manual/nixos/stable/#sec-changing-config),
-[contrôle et rechargement de Nginx](https://nginx.org/en/docs/control.html).
+[Accès administratifs existants](docs/ACCES.md), [PostgreSQL](docs/POSTGRESQL.md),
+[méthode de sauvegarde/retour](docs/MIGRATION.md). Les anciennes procédures restent
+historiques ; les garde-fous utiles sont conservés et adaptés à l'état réel.

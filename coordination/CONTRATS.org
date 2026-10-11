@@ -1,131 +1,70 @@
-#+TITLE: Contrats communs en vigueur
+#+TITLE: Contrat d'assemblage central — version 2
 #+OPTIONS: toc:nil
 
-Synthèse durable : lire à chaque reprise ; les preuves détaillées restent dans
-les documents liés. Responsabilités seulement ; état serveur dans les preuves.
-Tout changement de fond exige un message dans REGISTRE.org.
-
-* Coordination
+* Autorité et sources
 :PROPERTIES:
 :CUSTOM_ID: coordination
 :END:
-- Source unique : MrJ-am/vps-infrastructure, branche main, coordination/REGISTRE.org.
-- Chaque projet lit les nouveautés à la reprise, après interruption ou compaction,
-  avant de modifier un contrat partagé, avant publication et à la clôture du travail.
-- Informer avant tout changement ayant un impact extérieur ; après exécution,
-  publier le résultat avec révision et preuves. Les demandes ne sont pas des faits.
-- Une lecture n'est ni une validation technique ni une autorisation de déployer.
-- Accusés par destinataire et par contenu exact ; ne jamais acquitter pour un autre
-  projet. Un agent qui installe les consignes ne prouve pas que les autres les ont lues.
-- Le registre privé reste accessible par les outils GitHub autorisés. Ne pas le
-  recopier dans les dépôts publics ; aucun secret ou contenu métier dans les messages.
+La mission du propriétaire du 11 octobre 2026 remplace le protocole v1.
+MrJ-am/vps-infrastructure est responsable de l'assemblage. Le manifeste
+assemblage/manifest.json identifie les six sources, révisions et contrats.
+Publier les composants avant référencement. Aucun accusé de lecture,
+échange entre conversations ou attente de validation d'un autre projet.
+Ancien registre archivé sans modification dans coordination/historique/.
+Ses TODO/LU/DONE historiques ne deviennent pas des critères de passage.
 
-* Infrastructure et applications
+* Architecture et publication
 :PROPERTIES:
 :CUSTOM_ID: infrastructure
 :END:
-- VPS possède NixOS, Nginx, HTTPS, domaines/ports, comptes système administratifs,
-  instance PostgreSQL, bases/rôles/accès et sauvegardes locales.
-- Les applications possèdent leur code, données, schéma, migrations applicatives,
-  publications et exports chiffrés. Un module proposé est intégré par VPS à une
-  révision et une empreinte explicites ; aucune reconstruction système applicative.
-- Depuis Work, les opérations distantes passent exclusivement par GitHub Actions.
-  Ne pas tenter SSH depuis Work ni demander une clé pour contourner cette limite.
-- Contrats détaillés : [[file:../docs/ACCES.md][accès]], [[file:../docs/POSTGRESQL.md][PostgreSQL]],
-  [[file:../docs/AJOUTER-UN-PROJET.md][intégration]]. État daté et preuves : [[file:../docs/ETAT.md][état VPS]].
-- Un nouveau changement système exige l'état réellement actif, ses contrôles et
-  son retour arrière. Une ancienne préparation peut être périmée après une autre bascule.
+Bibliothèques métier ASDF sans exécutable/processus de production. Serveur commun
+possède cycle de vie, transport, connexions, journalisation et tâches. Contextes
+explicites ou bornés à la requête. Chargement sans daemon, connexion ni migration.
+Log distinct : Keycloak pendant étape 1, Kanidm après sa qualification réelle.
+Logique statique, Elm/ElmUI et interops conservés ; aucun backend artificiel.
+Nginx/PostgreSQL/Nextcloud/embeddings conservés.
+Toutes exécutions CI/CD centrales, sans workflow relais. Commits exacts et artefact
+qualifié construit proprement, promu sans reconstruction. Secrets acquis au démarrage.
 
-* Style et signature
-:PROPERTIES:
-:CUSTOM_ID: style
-:END:
-- style-mrjam fournit les composants ElmUI communs à API française compacte.
-  Les variantes sont sémantiques ; préserver l'identité existante.
-- Chaque consommateur fige une révision complète à la compilation. Une mise à jour
-  coordonnée reconstruit les consommateurs concernés, valide leurs artefacts avant
-  activation et conserve un retour applicatif ; elle ne restaure pas les bases.
-- Signature est la source du logo et des fontes, à révision exacte. Leur utilisation
-  est strictement réservée ; conserver le texte sélectionnable « MrJ.am ».
-- Les états de déploiement sont propres à chaque application. Une CI réussie ou un
-  commit sur main ne prouve pas une publication sur le VPS.
-
-* Authentification et confidentialité
+* Données et sécurité
 :PROPERTIES:
 :CUSTOM_ID: authentification
 :END:
-- Ne stocker ni journaliser les mots de passe en clair. Pour un nouveau stockage,
-  préférer Argon2id ou scrypt avec sel aléatoire et paramètres explicites.
-- État audité le 22 septembre : Matheval utilise scrypt ; Vision conserve
-  SHA-512-crypt partagé avec Nginx Basic. Sa modernisation doit traiter ensemble
-  API et navigateur, préserver les accès et être notifiée avant activation.
-- Les sessions navigateur utilisent des jetons aléatoires distincts des mots de
-  passe, un condensat côté serveur, expiration absolue, inactivité limitée à deux
-  heures et révocation au logout. Les durées absolues sont documentées par projet.
-- Les domaines différents ne partagent pas directement un cookie. Le cookie
-  mrj.am reste limité au périmètre de confiance autorisé ; aucun élargissement implicite.
-- Distinguer compte utilisateur et secret de reprise de participation. Documenter
-  stockage local, durée, données, information et suppression avant une nouvelle collecte.
-- Depuis le 22 septembre 2026, `/mcp` de Vision accepte Basic ou un token Bearer
-  aléatoire de 256 bits, stocké uniquement sous forme de SHA-256 par mrj-auth,
-  valable un an et révocable. Plusieurs tokens indépendants peuvent coexister ;
-  historique, création et révocation individuelle depuis `/auth/mcp` avec session,
-  origine et CSRF. L’ancien `/auth/mcp-token` cible uniquement le token Mistral. Le token n’authentifie ni REST
-  ni le navigateur ; le logout ne le révoque pas. La rotation du fichier
-  des comptes l’invalide. Voir docs/VISION-MCP-TOKEN.md et docs/ETAT.md.
-- Depuis le 23 septembre 2026, Vision ajoute OAuth pour le seul endpoint /mcp :
-  découverte de la ressource et du serveur d'autorisation, enregistrement de
-  client public, code d'autorisation PKCE S256, consentement du compte Vision,
-  jeton d'accès d'une heure et renouvellement rotatif jusqu'à trente jours.
-  Les applications autorisées se révoquent individuellement sur /auth/mcp.
-  Les jetons OAuth et les tokens Bearer historiques conservent la séparation
-  REST/navigateur et sont invalidés par la rotation des identifiants Vision.
-  Preuves : docs/VISION-OAUTH.md.
-- Depuis le 25 septembre 2026, Nginx transmet à Vision X-Mrj-User uniquement
-  depuis Basic ou le vérificateur MCP authentifié ; l’en-tête client est écrasé.
-  Sessions, tokens et OAuth conservés ; preuves dans docs/VISION-REFONTE.md.
-- Un cookie nécessaire n'impose pas seul une bannière ; vérifier tiers et traceurs.
-  HttpOnly, SameSite et dnt ne prouvent pas une conformité générale.
-- Rapport de référence : docs/AUDIT-AUTHENTIFICATION-20260922.md. Les écarts connus
-  et les preuves de déploiement y sont distingués des recommandations.
+Identité vérifiée, refus par défaut, autorisation de toute opération/ressource,
+SQL non propriétaire/non superutilisateur, contraintes et RLS. Isolation des
+liens, recherche, caches, exports, statistiques privées et tâches.
+Un paramètre SQL d'identité n'authentifie pas contre du SQL arbitraire.
+Préserver propriétaires métier, observations, dates, politiques et séances ouvertes.
+Contenus lisibles côté serveur, HTTPS, sauvegardes chiffrées/restaurations isolées.
+Pas de données synthétiques en production. Secret Matheval pseudonyme distinct de Log.
+Permissions scientifiques de résultats sans droit général sur les contenus Vision.
+Retrait IdP sans effacement métier implicite. Enrôlement personnel jamais inventé.
 
+* Style et identité visuelle
+:PROPERTIES:
+:CUSTOM_ID: style
+:END:
+style-mrjam fournit ElmUI, Signature les ressources réservées ; révisions exactes,
+texte sélectionnable MrJ.am, domaines et chemins conservés. Qualification centrale
+des consommateurs affectés. Aucune refonte gratuite ni publication satellite.
 
-* Journal HTTP
+* Qualification et exploitation
+:PROPERTIES:
+:CUSTOM_ID: qualification
+:END:
+Catalogue et sélection selon dépendances effectives ; mêmes commandes locales/CI.
+Reçus avec empreintes entrées/outils ; aucun reçu local non attesté ni cache externe
+inconnu n'autorise la publication. Intégration/concurrence/identité/sécurité réelles.
+Mesurer mémoire consommée, latences et coûts, distincts des plafonds systemd.
+Sauvegarde récupérable, restauration isolée, retour ciblé avant bascule. Constater
+artefact, services, accès, données et persistance après redémarrage en production.
+Conserver générations de retour/services tiers. Mécanismes d'exploitation existants.
+
+* Journal et métier Vision
 :PROPERTIES:
 :CUSTOM_ID: journal-http
 :END:
-- Depuis le 22 septembre 2026, Nginx journalise les métadonnées HTTP dans
-  journald namespace http, tag http_acces. Ni corps, cookie, Authorization,
-  paramètres URL ni identifiants métier ; catégories de routes constantes.
-- Budget nominal persistant 128 Mio, rétention maximale 14 jours, rotation,
-  compression et pertes possibles sous saturation. Ce n'est ni un historique
-  garanti ni une protection DDoS complète, ni un journal des erreurs JSON-RPC.
-- Conserver le module journal-http.nix et l'entrée active précisée dans ETAT.md.
-  Les IP restent sur le VPS ; pas de copie brute dans Git ou Actions.
-  Paramètres, limites natives et preuves : docs/JOURNAL-HTTP.md.
-
-* Vision fiches et items
-:PROPERTIES:
-:CUSTOM_ID: vision
-:END:
-- Vision 2.6.1 : vingt outils REST/MCP ; tools/list fait foi. Anciens noms :
-  contrat_retire, sans conversion FSRS.
-- Création : contenu complet, hybride global/archives, dix candidats, LLM sans
-  fusion. Preuve 30 min à usage unique/examen déclaré. PG17/pgvector et
-  fournisseur/GC conservés ; docs/VISION-CREATION-SEMANTIQUE.md.
-- Item partagé : stabilité/observations communes. Fiche : contexte/consignes.
-  Observations immuables, rectification par ajout, doublons audités/dédupliqués.
-- Révision : fenêtres fermantes prioritaires, nouveaux en complément ; ajout
-  confirmé. Contrat démarrage/reprise : sens, faux/incomplet signalé, aides
-  graduées, autonomie distincte. LLM prescrit, non garanti.
-- Clôture atomique, versions/épisodes serveur, sens libre, rejeu sans double gain,
-  rectification aux dates historiques. Sous le seuil personnel (60 min) :
-  approximation à la clôture. Dès la borne : dates résolues, trace non datée
-  ou clôture incertaine explicitement acceptée. Dates hors bornes refusées.
-- Politique partielle/versionnée, liens privés, rapports/Markdown paginés.
-  Migrations 017/018, SQL 7/1. Basic/Bearer/OAuth, sessions/CSRF, isolation et
-  données conservés ; retour sans restauration de base.
-- Code Vision : AGPL-3.0-or-later ; identité réservée.
-- Vitrine : cinq visuels, style opt-in, autres apps épinglées.
-  Tutoriel web/MCP : onze chapitres ; adresses configurées sans secret ni
-  en-tête client. SQL inchangé. Preuves : operations/vision-*-publication.json.
+Journal minimisé : ni corps, cookie, Authorization, URL ou identifiant métier ;
+rétention actuelle 14 jours. Garanties Vision conservées : items communs du même
+propriétaire, observations immuables, rectifications ajoutées, dates, versions,
+épisodes, conflits, clôtures atomiques, recherche. SQL initial : 7, création 1, schéma 25.

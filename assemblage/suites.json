@@ -1,0 +1,626 @@
+{
+  "editorial": {
+    "niveau": 1,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "AGENTS.md",
+        "coordination/CONTRATS.org",
+        "coordination/REGISTRE.org",
+        "assemblage/manifest.json",
+        "scripts/assemblage.py"
+      ]
+    },
+    "impact": [
+      "*/docs/*.md",
+      "*/AGENTS.md",
+      "*/README*",
+      "*/research/*.org",
+      "vps/coordination/*",
+      "vps/assemblage/*.md"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/coordination.py",
+        "verifier"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "selection": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/assemblage.py",
+        "assemblage/suites.json",
+        "tests/test_assemblage.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/assemblage.py",
+      "vps/assemblage/suites.json",
+      "vps/tests/test_assemblage.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_assemblage.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "matheval-pures": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "matheval": [
+        "matheval.asd",
+        "lisp/**/*.lisp",
+        "docs/site/session.js",
+        "server/src/statistics.mjs",
+        "research/bank.json",
+        "server/package-lock.json"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp",
+        "src/*.lisp"
+      ],
+      "vps": [
+        "assemblage/charger.lisp",
+        "assemblage/test-pures.lisp",
+        "tests/matheval-differentiel.mjs",
+        "tests/matheval-differentiel.lisp",
+        "mrjam-metier.asd"
+      ]
+    },
+    "impact": [
+      "matheval/lisp/*",
+      "matheval/lisp/**/*",
+      "matheval/matheval.asd",
+      "matheval/docs/site/session.js",
+      "matheval/server/src/statistics.mjs"
+    ],
+    "commandes": [
+      [
+        "node",
+        "tests/matheval-differentiel.mjs"
+      ]
+    ],
+    "dependances": [
+      "json-commun"
+    ],
+    "outils": {
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ]
+    }
+  },
+  "json-commun": {
+    "niveau": 2,
+    "repertoire": "vision",
+    "entrees": {
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp"
+      ]
+    },
+    "impact": [
+      "vision/src/json.lisp",
+      "vision/src/package.lisp",
+      "vision/vision.asd"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/check_documents.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "vision-contrats": {
+    "niveau": 2,
+    "repertoire": "vision",
+    "entrees": {
+      "vision": [
+        "src/*.lisp",
+        "docs/*.json",
+        "tests/check_documents.py",
+        "tests/check_openapi.py",
+        "interface/src/*.elm"
+      ]
+    },
+    "impact": [
+      "vision/src/*.lisp",
+      "vision/docs/*.json"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/check_documents.py"
+      ],
+      [
+        "python3",
+        "tests/check_openapi.py"
+      ]
+    ],
+    "dependances": [
+      "json-commun"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "vision-postgresql": {
+    "niveau": 3,
+    "repertoire": "vision",
+    "entrees": {
+      "vision": [
+        "migrations/*.sql",
+        "scripts/roles.sql",
+        "tests/refonte.sh",
+        "tests/*.py",
+        "src/*.lisp"
+      ]
+    },
+    "impact": [
+      "vision/migrations/*.sql",
+      "vision/scripts/roles.sql"
+    ],
+    "commandes": [
+      [
+        "sh",
+        "tests/refonte.sh"
+      ]
+    ],
+    "dependances": [
+      "vision-contrats"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "matheval-postgresql": {
+    "niveau": 3,
+    "repertoire": "matheval",
+    "entrees": {
+      "matheval": [
+        "server/src/*.mjs",
+        "server/migrations/*.sql",
+        "server/tests/*.mjs",
+        "server/package-lock.json",
+        "lisp/**/*.lisp"
+      ]
+    },
+    "impact": [
+      "matheval/server/*",
+      "matheval/server/**/*"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "--prefix",
+        "server",
+        "test"
+      ]
+    ],
+    "dependances": [
+      "matheval-pures"
+    ],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ],
+      "postgres": [
+        "psql",
+        "--version"
+      ]
+    }
+  },
+  "integration-securite": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "services/mrj-auth/*.py",
+        "services/vision-gestion/*.py",
+        "services/vision-cycle/*.py",
+        "modules/*.nix",
+        "tests/test_gestion.py",
+        "tests/test_vision_retour.py"
+      ],
+      "vision": [
+        "migrations/*.sql",
+        "src/*.lisp"
+      ]
+    },
+    "impact": [
+      "vps/services/*",
+      "vps/services/**/*",
+      "vps/modules/*",
+      "vps/lib/*",
+      "vps/apps/*",
+      "vps/hosts/*",
+      "vps/hosts/**/*",
+      "vps/databases.json",
+      "vps/projects.json"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_gestion.py"
+      ]
+    ],
+    "dependances": [
+      "vision-postgresql",
+      "matheval-postgresql"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "style": {
+    "niveau": 2,
+    "repertoire": "style",
+    "entrees": {
+      "style": [
+        "src/**/*.elm",
+        "elm.json",
+        "package-lock.json",
+        "tests/test_architecture.py"
+      ],
+      "signature": [
+        "web/*"
+      ]
+    },
+    "impact": [
+      "style/*",
+      "style/**/*",
+      "signature/*",
+      "signature/**/*"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "run",
+        "verifier"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ]
+    }
+  },
+  "vision-interface": {
+    "niveau": 5,
+    "repertoire": "vision",
+    "entrees": {
+      "vision": [
+        "interface/src/*.elm",
+        "interface/src/**/*.elm",
+        "interface/package-lock.json",
+        "interface/compiler.py"
+      ],
+      "style": [
+        "src/**/*.elm"
+      ],
+      "signature": [
+        "web/*"
+      ]
+    },
+    "impact": [
+      "vision/interface/*",
+      "vision/interface/**/*"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "--prefix",
+        "interface",
+        "run",
+        "verifier"
+      ],
+      [
+        "npm",
+        "--prefix",
+        "interface",
+        "test"
+      ]
+    ],
+    "dependances": [
+      "style"
+    ],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ]
+    }
+  },
+  "matheval-interface": {
+    "niveau": 5,
+    "repertoire": "matheval",
+    "entrees": {
+      "matheval": [
+        "docs/src/*.elm",
+        "docs/scripts/*.cjs",
+        "docs/tests/e2e/*.js",
+        "docs/package-lock.json"
+      ],
+      "style": [
+        "src/**/*.elm"
+      ],
+      "signature": [
+        "web/*"
+      ]
+    },
+    "impact": [
+      "matheval/docs/*",
+      "matheval/docs/**/*",
+      "matheval/research/*.json"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "--prefix",
+        "docs",
+        "run",
+        "check:data"
+      ],
+      [
+        "npm",
+        "--prefix",
+        "docs",
+        "run",
+        "test:data"
+      ],
+      [
+        "npm",
+        "--prefix",
+        "docs",
+        "run",
+        "test:e2e"
+      ]
+    ],
+    "dependances": [
+      "style"
+    ],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ]
+    }
+  },
+  "logique-correcteur": {
+    "niveau": 2,
+    "repertoire": "logique",
+    "entrees": {
+      "logique": [
+        "src/*.elm",
+        "src/**/*.elm",
+        "tests/*.elm",
+        "cours/parcours.org",
+        "scripts/build_data.py",
+        "scripts/test*.mjs",
+        "package-lock.json"
+      ]
+    },
+    "impact": [
+      "logique/src/*",
+      "logique/src/**/*",
+      "logique/tests/*",
+      "logique/cours/*",
+      "logique/scripts/*"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "test"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ]
+    }
+  },
+  "logique-interface": {
+    "niveau": 5,
+    "repertoire": "logique",
+    "entrees": {
+      "logique": [
+        "src/*.elm",
+        "src/**/*.elm",
+        "public/*",
+        "tests/*.py",
+        "package-lock.json"
+      ],
+      "style": [
+        "src/**/*.elm"
+      ],
+      "signature": [
+        "web/*"
+      ]
+    },
+    "impact": [
+      "logique/public/*",
+      "logique/package*",
+      "logique/elm.json"
+    ],
+    "commandes": [
+      [
+        "npm",
+        "run",
+        "test:interface"
+      ],
+      [
+        "npm",
+        "run",
+        "test:atelier:interface"
+      ]
+    ],
+    "dependances": [
+      "style",
+      "logique-correcteur"
+    ],
+    "outils": {
+      "node": [
+        "node",
+        "--version"
+      ],
+      "npm": [
+        "npm",
+        "--version"
+      ]
+    }
+  },
+  "navigateur-mcp": {
+    "niveau": 5,
+    "repertoire": "vision",
+    "entrees": {
+      "vision": [
+        "src/*.lisp",
+        "interface/tests/*.py",
+        "tests/check_mcp_database.py"
+      ],
+      "vps": [
+        "services/mrj-auth/*.py"
+      ]
+    },
+    "impact": [
+      "vps/services/mrj-auth/*"
+    ],
+    "commandes": [
+      [
+        "sh",
+        "tests/refonte.sh"
+      ]
+    ],
+    "dependances": [
+      "integration-securite",
+      "vision-interface"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  },
+  "migration": {
+    "niveau": 6,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "tests/test_vision_retour.py",
+        "tests/test_migration.py",
+        "scripts/vision-essai-reprise.py"
+      ],
+      "vision": [
+        "migrations/*.sql"
+      ]
+    },
+    "impact": [
+      "vps/scripts/*migration*",
+      "vps/scripts/*retour*",
+      "vps/scripts/*reprise*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_vision_retour.py"
+      ]
+    ],
+    "dependances": [
+      "vision-postgresql",
+      "matheval-postgresql"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    }
+  }
+}
