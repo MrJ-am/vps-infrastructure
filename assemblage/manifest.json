@@ -1,0 +1,94 @@
+{
+  "format": 1,
+  "responsable": "MrJ-am/vps-infrastructure",
+  "etat": "inventaire",
+  "sources": {
+    "vps": {
+      "depot": "MrJ-am/vps-infrastructure",
+      "branche": "main",
+      "revision": "self",
+      "role": "assembleur"
+    },
+    "vision": {
+      "depot": "MrJ-am/vision",
+      "branche": "main",
+      "revision": "d65cba53f76f7dba42a9fe8d54f7dc1aece5305d",
+      "role": "bibliotheque-asdf"
+    },
+    "matheval": {
+      "depot": "MrJ-am/M-moire",
+      "branche": "master",
+      "revision": "633588b0da1cb4f4d94d4add1bfad3fa15c34ad9",
+      "role": "bibliotheque-asdf-et-interface"
+    },
+    "logique": {
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "branche": "main",
+      "revision": "e8478fc42d5a9bf5c6a50809ae2ec4e1e658d35c",
+      "role": "frontend-statique"
+    },
+    "style": {
+      "depot": "MrJ-am/style-mrjam",
+      "branche": "main",
+      "revision": "508f964812ec3316248646ccf0e92492653f82f0",
+      "role": "elm-ui"
+    },
+    "signature": {
+      "depot": "MrJ-am/Signature",
+      "branche": "main",
+      "revision": "c4a20679030a56126e91648b697cd5a9ccd7c6d5",
+      "role": "ressources-identite"
+    }
+  },
+  "toolchain": {
+    "qualification_locale": {
+      "sbcl": "2.5.2.debian",
+      "asdf": "3.3.1",
+      "architecture": "x86_64-linux",
+      "paquet_sha256": "c4153abbe1def77e5e2bd62d2f25295d60df80333ea1a13c44b53209d179ef67"
+    },
+    "production": {
+      "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
+      "sbcl": null,
+      "asdf": null,
+      "etat": "a-constater"
+    }
+  },
+  "contrats": {
+    "vision": {
+      "revision_sql": 7,
+      "creation_sql": 1,
+      "schema": 25
+    },
+    "matheval": {
+      "prefixe": "/matheval",
+      "schema": 2,
+      "reference": "server/src de M-moire"
+    },
+    "identite": {
+      "domaine": "log.mrj.am",
+      "etape_1": "Keycloak existant",
+      "etape_2": "Kanidm apres qualification de production de etape_1"
+    }
+  },
+  "cible": {
+    "executable": "mrjam-metier",
+    "processus_metier": 1,
+    "frontend_logique": "statique",
+    "donnees": "bases et proprietaires historiques conserves"
+  },
+  "qualification": {
+    "etat": "non-qualifie",
+    "production": "inchangee",
+    "reference_production": {
+      "run": 38097638053,
+      "commit": "dac2505258fdbb8536d44fb23b9aec4ad755033e",
+      "conclusion": "success",
+      "generation": "/nix/store/r6s7ags3dir21gxph8y32rpk8w6lghsb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "memoire_machine_utilisee_Mio": 2529,
+      "mesure": "free -m, machine entiere ; pas RSS des services"
+    },
+    "assembleur_commit": null,
+    "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste."
+  }
+}

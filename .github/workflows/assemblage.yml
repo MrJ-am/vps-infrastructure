@@ -1,0 +1,102 @@
+name: Qualifier l’assemblage central
+on:
+  push:
+    paths:
+      - assemblage/**
+      - mrjam-metier.asd
+      - scripts/assemblage.py
+      - scripts/coordination.py
+      - tests/test_assemblage.py
+      - tests/matheval-differentiel.*
+      - .github/workflows/assemblage.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: assemblage-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  cadre:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Vérifier le sélecteur, les reçus et le contrat
+        run: |
+          python3 -m unittest discover -s tests -p test_assemblage.py
+          python3 scripts/coordination.py verifier
+  composants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Lire exclusivement les six révisions autorisées
+        id: sources
+        run: |
+          PYTHONPATH=scripts python3 - <<'PY'
+          import os
+          from assemblage import manifeste
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:
+              for nom,source in manifeste()['sources'].items():
+                  if nom!='vps': f.write(nom+'='+source['revision']+'\n')
+          PY
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: MrJ-am/vision
+          ref: ${{ steps.sources.outputs.vision }}
+          path: .sources/vision
+          token: ${{ secrets.COMPONENTS_READ_TOKEN || github.token }}
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: MrJ-am/M-moire
+          ref: ${{ steps.sources.outputs.matheval }}
+          path: .sources/M-moire
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: MrJ-am/apprendre-a-demontrer
+          ref: ${{ steps.sources.outputs.logique }}
+          path: .sources/apprendre-a-demontrer
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: MrJ-am/style-mrjam
+          ref: ${{ steps.sources.outputs.style }}
+          path: .sources/style-mrjam
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          repository: MrJ-am/Signature
+          ref: ${{ steps.sources.outputs.signature }}
+          path: .sources/Signature
+          token: ${{ secrets.COMPONENTS_READ_TOKEN || github.token }}
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Utiliser SBCL et ASDF verrouillés sans installer de nouveau runtime métier
+        run: |
+          curl --fail --location --silent --show-error https://deb.debian.org/debian/pool/main/s/sbcl/sbcl_2.5.2-1_amd64.deb -o "$RUNNER_TEMP/sbcl.deb"
+          printf '%s  %s\n' c4153abbe1def77e5e2bd62d2f25295d60df80333ea1a13c44b53209d179ef67 "$RUNNER_TEMP/sbcl.deb" | sha256sum --check
+          dpkg-deb -x "$RUNNER_TEMP/sbcl.deb" "$RUNNER_TEMP/sbcl"
+          printf '%s\n' "$RUNNER_TEMP/sbcl/usr/bin" >> "$GITHUB_PATH"
+          printf 'SBCL_HOME=%s\n' "$RUNNER_TEMP/sbcl/usr/lib/sbcl" >> "$GITHUB_ENV"
+      - name: Préparer la référence JavaScript verrouillée
+        run: npm --prefix .sources/M-moire/server ci --ignore-scripts
+      - name: Qualifier les sources exactes et les contrats différentiels
+        env:
+          MRJAM_ATELIER: ${{ github.workspace }}/.sources/
+        run: |
+          python3 scripts/assemblage.py verifier --atelier "$MRJAM_ATELIER" --exact
+          python3 scripts/assemblage.py tester --atelier "$MRJAM_ATELIER" --exact --ci --suite matheval-pures
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: recus-${{ github.sha }}
+          path: state/recus/*.json
+          retention-days: 14
+          if-no-files-found: ignore

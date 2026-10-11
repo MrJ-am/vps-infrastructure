@@ -1,0 +1,43 @@
+name: Référence réelle du monolithe — lecture seule
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  reference:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé existante sans journaliser sa valeur
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/monolithe-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/monolithe-ssh/admin"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/monolithe-ssh/admin" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/monolithe-ssh/admin" >> "$GITHUB_ENV"
+      - name: Lire mémoire réelle, comptes agrégés, rattachements et latences
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/monolithe-reference.py > reference.json
+          python3 -m json.tool reference.json
+      - name: Contrôler les autres services existants
+        run: python3 scripts/probe.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reference-${{ github.sha }}
+          path: reference.json
+          retention-days: 14
+      - name: Retirer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"

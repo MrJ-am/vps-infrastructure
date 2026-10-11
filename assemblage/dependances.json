@@ -1,0 +1,2049 @@
+{
+  "format": 1,
+  "execution_existante": {
+    "metier": [
+      "SBCL/Vision",
+      "Node/Matheval a retirer",
+      "Python/auxiliaires metier a integrer"
+    ],
+    "identite": [
+      "Keycloak 26.7.3/JVM a retirer apres etape 2",
+      "mrj-auth Python/Authlib provisoire etape 1"
+    ],
+    "infrastructure_conservee": [
+      "NixOS installe sans upgrade",
+      "Nginx",
+      "PostgreSQL 17 et pgvector 0.8.0",
+      "age",
+      "sqlite",
+      "fournisseur local embeddings",
+      "Nextcloud et composants natifs"
+    ]
+  },
+  "bibliotheques_lisp_actuelles": [],
+  "bibliotheque_lisp_proposee": {
+    "nom": "Ironclad",
+    "etat": "autorisation explicite demandee, non ajoutee"
+  },
+  "kanidm": {
+    "autorise": true,
+    "version": "a selectionner apres etape 1",
+    "outils": "officiels uniquement"
+  },
+  "developpement_test_existants": [
+    "Git/GitHub Actions",
+    "Node/npm pour Elm et reference differentielle",
+    "Python pour tests/scripts existants",
+    "SBCL/ASDF",
+    "Nix",
+    "Docker/PostgreSQL17 isole",
+    "Playwright",
+    "outillage typographique Signature"
+  ],
+  "npm_verrouille": [
+    {
+      "composant": "vision",
+      "lock": "interface/package-lock.json",
+      "sha256": "f9b9e64c1d137c6e4b305e742a48a6575ff5946e6e0e14b8177226f46c217dd4",
+      "directes": {
+        "bibliotheques": {},
+        "developpement_test": {
+          "@lydell/elm": "0.19.1-14",
+          "elm-format": "0.8.8",
+          "elm-test": "0.19.1-revision17"
+        }
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VDu3CRajhB/Sax+CEU4PhIzErBZv8vVxbk9Sk8seUHa1ngfICa3Ejoq3PhnoOFKYF1v1sSxNOC2RnUzvd/9bUw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-9NAzi3HUBSHEIx3Nje+a6wFcv6RDKv2PO0OUNcV/XlS4Sou3r89xsYAVAXS8mi4+CKTdscyfSSkgGd8qiCCxAw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VNuXYphgxtnk7Gw+VBgWBeA9k8wKSo9r/O2F7udgurokYLO8S+RGhLHgD9mb6Yecv/veWz4v9n/O0IggH/BOCQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-IvtmUTDw/V5mBeglLgtQMzWZPc0QvmqUmoJ+vipxYii3DJ/1KV2drtpvlLuFdBlFrehUivtrh4HhOTsdGXxyXQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-win32-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-qGYZM2oJFSVQ80Tayk1v15ba7PWCU3B89EkA3Fy4YQasvtA+UrYYR5Bv7MRF4kn6Zp7oSDk4FhknURFsZWZ7kg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm",
+          "version": "0.19.1-14",
+          "integrite": "sha512-otpGlYiNRvL7F9k6MJOTcuyIgHr+XWy/1NtHpGUgQi8lHrnuyCjwKFPPiimKpr3bcZTwpD4nebHuYR0bmPIKuA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_arm64",
+          "version": "0.19.1-3",
+          "integrite": "sha512-RuKTz5ck+RBx4urj1EL/r0xWZZqBMPEXzNBQTEBCAMWLSi4Ck3TVz5pkhBaK+cRZXI+cCgytm/1bIttbp2fFIg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_x64",
+          "version": "0.19.1-2",
+          "integrite": "sha512-MXfQwxdQfmuQ22iDCFlcXu5YTA0w6/ASzbxmWc+8DkgUkHTynjViGBVkQljAbYe4ZWgrYGWinZQQyhVnp/5oZw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm",
+          "version": "0.19.1-0",
+          "integrite": "sha512-crKrLzuT6jn4OOS7PWKZGYFw6vHwPu3iNP7lg8rFkOog/HxlkRwX4S695aILBG8SGTLhEdfP9tg28SQ7vR4Lpg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm64",
+          "version": "0.19.1-4",
+          "integrite": "sha512-JuUkkVBtJjUajtTriQFFANHDmwA14NhqNqgIcq5LCJ6vUQv5/LVd6NUOkl/Rdq7Ju/VN/XwBD1/vm7MGIMOTqA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-1Y8UAb+GfUqlSjUTX9CaaZhJqvhVcfNbYC0N9AEutlXf1CzFMvF4VsDeZdxzhNI4allPRWBD1IqtdlLhBTFacA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_win32_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-3LMiJ+uUxDFLNnCd6HBmvVWSjSWjs/Z9dMXZWCMOcw3vrW9iOkRrsNGNxohRXun2YRd8wXOX8/DwVn8i2SJ3KA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/ansi-styles",
+          "version": "4.3.0",
+          "integrite": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/anymatch",
+          "version": "3.1.3",
+          "integrite": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/binary-extensions",
+          "version": "2.3.0",
+          "integrite": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/braces",
+          "version": "3.0.3",
+          "integrite": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chalk",
+          "version": "4.1.2",
+          "integrite": "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chokidar",
+          "version": "3.6.0",
+          "integrite": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-convert",
+          "version": "2.0.1",
+          "integrite": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-name",
+          "version": "1.1.4",
+          "integrite": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/commander",
+          "version": "9.5.0",
+          "integrite": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/cross-spawn",
+          "version": "7.0.6",
+          "integrite": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-format",
+          "version": "0.8.8",
+          "integrite": "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-solve-deps-wasm",
+          "version": "2.0.0",
+          "integrite": "sha512-11OV8FgB9qsth/F94q2SJjb1MoEgbworSyNM1L+YlxVoaxp7wtWPyA8cNcPEkSoIKG1B8Tqg68ED1P6dVamHSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-test",
+          "version": "0.19.1-revision17",
+          "integrite": "sha512-P9J8tXdLXmqgIMlSozfcb/KCORq4GuxfwBbzqFLMss8KlGmUKonOJwseRX6xVkdU5xgGVA/mz9rfMTNomIbwng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fill-range",
+          "version": "7.1.1",
+          "integrite": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fsevents",
+          "version": "2.3.3",
+          "integrite": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/glob-parent",
+          "version": "5.1.2",
+          "integrite": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/graceful-fs",
+          "version": "4.2.11",
+          "integrite": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/has-flag",
+          "version": "4.0.0",
+          "integrite": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-binary-path",
+          "version": "2.1.0",
+          "integrite": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-extglob",
+          "version": "2.1.1",
+          "integrite": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-glob",
+          "version": "4.0.3",
+          "integrite": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-number",
+          "version": "7.0.0",
+          "integrite": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/isexe",
+          "version": "2.0.0",
+          "integrite": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/normalize-path",
+          "version": "3.0.0",
+          "integrite": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/path-key",
+          "version": "3.1.1",
+          "integrite": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/picomatch",
+          "version": "2.3.2",
+          "integrite": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/readdirp",
+          "version": "3.6.0",
+          "integrite": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-command",
+          "version": "2.0.0",
+          "integrite": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-regex",
+          "version": "3.0.0",
+          "integrite": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/split",
+          "version": "1.0.1",
+          "integrite": "sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/supports-color",
+          "version": "7.2.0",
+          "integrite": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/through",
+          "version": "2.3.8",
+          "integrite": "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby",
+          "version": "0.2.17",
+          "integrite": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/fdir",
+          "version": "6.5.0",
+          "integrite": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/picomatch",
+          "version": "4.0.7",
+          "integrite": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/to-regex-range",
+          "version": "5.0.1",
+          "integrite": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/which",
+          "version": "2.0.2",
+          "integrite": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/xmlbuilder",
+          "version": "15.1.1",
+          "integrite": "sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==",
+          "dev": true
+        }
+      ]
+    },
+    {
+      "composant": "matheval",
+      "lock": "docs/package-lock.json",
+      "sha256": "acb1e7544e7eb1da3146aeada68ba1fb051e6b3523aac50ffd013915e69851b8",
+      "directes": {
+        "bibliotheques": {},
+        "developpement_test": {
+          "@lydell/elm": "0.19.1-14",
+          "@playwright/test": "^1.52.0",
+          "elm-format": "^0.8.8",
+          "elm-test": "^0.19.1-revision16",
+          "vite": "^8.3.0"
+        }
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VDu3CRajhB/Sax+CEU4PhIzErBZv8vVxbk9Sk8seUHa1ngfICa3Ejoq3PhnoOFKYF1v1sSxNOC2RnUzvd/9bUw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-9NAzi3HUBSHEIx3Nje+a6wFcv6RDKv2PO0OUNcV/XlS4Sou3r89xsYAVAXS8mi4+CKTdscyfSSkgGd8qiCCxAw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VNuXYphgxtnk7Gw+VBgWBeA9k8wKSo9r/O2F7udgurokYLO8S+RGhLHgD9mb6Yecv/veWz4v9n/O0IggH/BOCQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-IvtmUTDw/V5mBeglLgtQMzWZPc0QvmqUmoJ+vipxYii3DJ/1KV2drtpvlLuFdBlFrehUivtrh4HhOTsdGXxyXQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-win32-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-qGYZM2oJFSVQ80Tayk1v15ba7PWCU3B89EkA3Fy4YQasvtA+UrYYR5Bv7MRF4kn6Zp7oSDk4FhknURFsZWZ7kg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm",
+          "version": "0.19.1-14",
+          "integrite": "sha512-otpGlYiNRvL7F9k6MJOTcuyIgHr+XWy/1NtHpGUgQi8lHrnuyCjwKFPPiimKpr3bcZTwpD4nebHuYR0bmPIKuA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_arm64",
+          "version": "0.19.1-3",
+          "integrite": "sha512-RuKTz5ck+RBx4urj1EL/r0xWZZqBMPEXzNBQTEBCAMWLSi4Ck3TVz5pkhBaK+cRZXI+cCgytm/1bIttbp2fFIg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_x64",
+          "version": "0.19.1-2",
+          "integrite": "sha512-MXfQwxdQfmuQ22iDCFlcXu5YTA0w6/ASzbxmWc+8DkgUkHTynjViGBVkQljAbYe4ZWgrYGWinZQQyhVnp/5oZw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm",
+          "version": "0.19.1-0",
+          "integrite": "sha512-crKrLzuT6jn4OOS7PWKZGYFw6vHwPu3iNP7lg8rFkOog/HxlkRwX4S695aILBG8SGTLhEdfP9tg28SQ7vR4Lpg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm64",
+          "version": "0.19.1-4",
+          "integrite": "sha512-JuUkkVBtJjUajtTriQFFANHDmwA14NhqNqgIcq5LCJ6vUQv5/LVd6NUOkl/Rdq7Ju/VN/XwBD1/vm7MGIMOTqA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-1Y8UAb+GfUqlSjUTX9CaaZhJqvhVcfNbYC0N9AEutlXf1CzFMvF4VsDeZdxzhNI4allPRWBD1IqtdlLhBTFacA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_win32_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-3LMiJ+uUxDFLNnCd6HBmvVWSjSWjs/Z9dMXZWCMOcw3vrW9iOkRrsNGNxohRXun2YRd8wXOX8/DwVn8i2SJ3KA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@oxc-project/types",
+          "version": "0.149.0",
+          "integrite": "sha512-Efcc+iF0j3Bf67YjEqIqWXbX5XddXoK/Mw4K1/JuXwRCZ8N16VR7iT23nlCc9XrveFVh/E5Rqs2StT0V8v9LdA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@playwright/test",
+          "version": "1.58.2",
+          "integrite": "sha512-akea+6bHYBBfA9uQqSYmlJXn61cTa+jbO87xVLCWbTqbWadRVmhxlXATaOjOgcBaWU4ePo0wB41KMFv3o35IXA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-android-arm-eabi",
+          "version": "1.2.8",
+          "integrite": "sha512-tN5aztYkKCte4i5SIrrz5yK/HMjEuCqCSCJa418jOV8tZ1cBY3YF2otxB1ktPxzsLA1BeTqwapK0bfjxNvHJVw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-android-arm64",
+          "version": "1.2.8",
+          "integrite": "sha512-dIYTWl9XprMUiQFoc55KUyk/oS8SKYH3zFl0LTR7RT0Xj4hgSVyuJcroH8JUu8RcpF8fTB6E0aOwCkZoYPcDSQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-darwin-arm64",
+          "version": "1.2.8",
+          "integrite": "sha512-PCSDQGXD2IyTEFrcgPyBM8jJuGmrbCMuoIOXdbEGVemruKACXoLQJrb+A45Z0L5t1RQkdfJprAYPkikbh7dzdA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-darwin-x64",
+          "version": "1.2.8",
+          "integrite": "sha512-Uk7lRsGhPFHVX/sAUC6D5H9Ol30dFHd6iquokll2th3LpdJ3F5CzQB+7DHn0Ri2mG+U7k2zXiPHDrwZenXhwSA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-freebsd-x64",
+          "version": "1.2.8",
+          "integrite": "sha512-DjszaTEVogPqA5bYzsEeqDCQxbcp2fexQwKcRspYji2yzR68fCf+e4fx6kBSRDwX5/brZaHw/hWS9+A/+/w9sQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-arm-gnueabihf",
+          "version": "1.2.8",
+          "integrite": "sha512-zmwa7FTmdzB6aaEEuuls18H6Ap5JmJPSoPTuXixeJZV6tG40SyLkApQtz1g8ptZtiEKqj9OM0oNLPh1AgvE31Q==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-arm64-gnu",
+          "version": "1.2.8",
+          "integrite": "sha512-KdYQDPHwJVnbFwdTGMgxsI9SqblBlz6STGM+w1We/d5B8OWWidYH0MwkU/uA1wM5fIpO2MkOVxXrNzzuZhw9ew==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-arm64-musl",
+          "version": "1.2.8",
+          "integrite": "sha512-jFJTifHnNPY+yzOoNZQfSIysrVyXzEQPhPnOUjmD1bcQGHH6s7c8cViKWar8YplQImE5N9JRqMCLrM2CdxOrZA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-ppc64-gnu",
+          "version": "1.2.8",
+          "integrite": "sha512-FhiOziBDWPBjbcmRzfLyIJnaP7AVMFXT7YCXPjXxj7wKU3vx24RjrCNN/zjvVa+N2vVoHJwCoUBvsrN/DG3zIA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-s390x-gnu",
+          "version": "1.2.8",
+          "integrite": "sha512-WnHfADMzOV2Y55wlx1hzzQnar/wDt/VdvWSD99r18Mz9ylNieIGOkRx3UV21h7m/eJvjySYJkO26VvGNFkwsIQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-x64-gnu",
+          "version": "1.2.8",
+          "integrite": "sha512-H9tRr5ibfXFVLxbPOseVewewFpl28zcEdjRDt2FTUZU7odxP0gEv1ki4/kGmcGOh78oRwZuuQllGLZ9zTJp84g==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-linux-x64-musl",
+          "version": "1.2.8",
+          "integrite": "sha512-UefiqfM3D6IVNlZ8tSGs9+Ejjud2T+oxO0IHADU45Y+lyEjD2dVFyZHbkfX0LUb5Zugo/oIv1eCO/KVYhgYJYA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-openharmony-arm64",
+          "version": "1.2.8",
+          "integrite": "sha512-637Ke4kWSy6rp9cxQ9gMOXlxPgIw/c1beASV4M//3+9I4uwBVOOl74G+e3zyU3u19U7RkRl/HuewixZ/Z6+Rjg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-win32-arm64-msvc",
+          "version": "1.2.8",
+          "integrite": "sha512-xWBkPOF1Q9k/Gv1nQXnVdLxKu74jXppuOM4Z3mnypVUJJJwLsMl7hNJGRAUJoG8A5MgOI1ACKM+wBFxSJzKy4A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/binding-win32-x64-msvc",
+          "version": "1.2.8",
+          "integrite": "sha512-uz2ZvfgXbxqNwijjjbxrnvALwpyODDcgc1T1N8N3rf/DXKQmaFwmB4LX4yyjggpwN2obdQLb2rgirX5ffCWYng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@rolldown/pluginutils",
+          "version": "1.0.1",
+          "integrite": "sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/ansi-styles",
+          "version": "4.3.0",
+          "integrite": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/anymatch",
+          "version": "3.1.3",
+          "integrite": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/binary-extensions",
+          "version": "2.3.0",
+          "integrite": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/braces",
+          "version": "3.0.3",
+          "integrite": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chalk",
+          "version": "4.1.2",
+          "integrite": "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chokidar",
+          "version": "3.6.0",
+          "integrite": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-convert",
+          "version": "2.0.1",
+          "integrite": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-name",
+          "version": "1.1.4",
+          "integrite": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/commander",
+          "version": "9.5.0",
+          "integrite": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/cross-spawn",
+          "version": "7.0.6",
+          "integrite": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/detect-libc",
+          "version": "2.1.2",
+          "integrite": "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-format",
+          "version": "0.8.8",
+          "integrite": "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-solve-deps-wasm",
+          "version": "2.0.0",
+          "integrite": "sha512-11OV8FgB9qsth/F94q2SJjb1MoEgbworSyNM1L+YlxVoaxp7wtWPyA8cNcPEkSoIKG1B8Tqg68ED1P6dVamHSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-test",
+          "version": "0.19.1-revision17",
+          "integrite": "sha512-P9J8tXdLXmqgIMlSozfcb/KCORq4GuxfwBbzqFLMss8KlGmUKonOJwseRX6xVkdU5xgGVA/mz9rfMTNomIbwng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fill-range",
+          "version": "7.1.1",
+          "integrite": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fsevents",
+          "version": "2.3.3",
+          "integrite": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/glob-parent",
+          "version": "5.1.2",
+          "integrite": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/graceful-fs",
+          "version": "4.2.11",
+          "integrite": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/has-flag",
+          "version": "4.0.0",
+          "integrite": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-binary-path",
+          "version": "2.1.0",
+          "integrite": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-extglob",
+          "version": "2.1.1",
+          "integrite": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-glob",
+          "version": "4.0.3",
+          "integrite": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-number",
+          "version": "7.0.0",
+          "integrite": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/isexe",
+          "version": "2.0.0",
+          "integrite": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss",
+          "version": "1.33.0",
+          "integrite": "sha512-WkUDrojuJs0xkgGf2udWxa3yGBRxPtxUkB79i6aCZLRgc7PM8fZe9TosfPDcvEpQZbuFASnHYmRLBLUbmLOIIA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-android-arm64",
+          "version": "1.33.0",
+          "integrite": "sha512-gEpRTalKdosp4Bb8qWtc2iOgE5SeIHlpS1up9bFq2wAyYhl1UdTObYiHe98zEM9SQvSoqQZ1IQD0JNpg3Ml5pg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-darwin-arm64",
+          "version": "1.33.0",
+          "integrite": "sha512-Sciaz8eenNTKn9b3t7+xr0ipTp9YxKQY4npwQ3mrRuL0BAVHBLyZxofhaKBAVtzmtRZ/zTyo0/to4B1uWG/Djg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-darwin-x64",
+          "version": "1.33.0",
+          "integrite": "sha512-Z5UPAxzrjlWNNyGy6i65cJzzvgJ5D3T6wMvs+gWpY9d7qRhANrxqAp6LhxIgZhWEw18RfJTGcRxjuLIBr+m8XQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-freebsd-x64",
+          "version": "1.33.0",
+          "integrite": "sha512-QQM/Ti/hQajJwCY+RiWuCZ9sdtI/XQk7nDK5vC8kkdwixezOlDgvDx7+RT+QjK6FcFT4MpsuoBnHIo/O3StRRg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-linux-arm-gnueabihf",
+          "version": "1.33.0",
+          "integrite": "sha512-N7FVBe6iS24MlM6R/4RBTxGhQheZGs7tiQ9U32UtF75NzP5Q7xWPRqLBCKxlRQRk3rY1jCIPLzx7WzOhuUIRLQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-linux-arm64-gnu",
+          "version": "1.33.0",
+          "integrite": "sha512-j2v/itmy4HlNxlc6voKXYgBqNi0Ng2LShg4z7GufpEgs05P+2suBVyi9I6YHq5uoVFx9ETin3eCEhLVyXGQnKg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-linux-arm64-musl",
+          "version": "1.33.0",
+          "integrite": "sha512-yiO5ROMuYQgXbC60yjZU5CYSFZGKXL0HFATXt9mHJn1+zW55oCtMI9NfcVhYLMFDL7gV7oBPon/EmMMGg2OvtQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-linux-x64-gnu",
+          "version": "1.33.0",
+          "integrite": "sha512-ar+Ju7LmcN0Jo4FpL4hpFybwNG9/3A/Br5KW2n2jyODg3MEZXaDYADdemoNS+BDNfMgKvylJLj4S5tyRActuAg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-linux-x64-musl",
+          "version": "1.33.0",
+          "integrite": "sha512-RYiYbkokw0trfKqqzfF55lginwEPrD3OJDfTuJzFs1MK6iFnDenaz1fqLLtX4ITG3OktJQXOeTaw1awrBAlZPw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-win32-arm64-msvc",
+          "version": "1.33.0",
+          "integrite": "sha512-1K+MPfLSFVpphzpdbfkhlWk6wBrTObBzS2T6db10PNOZgR9GoVsAWzwNyuhUYYbTp23j+4RrncfujZ4uAzXvwA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/lightningcss-win32-x64-msvc",
+          "version": "1.33.0",
+          "integrite": "sha512-OlEICDx/Xl0FqSp4bry8zFnCvGpig3Gl4gCquvYwHuqJKEC1+n9NgDniFvqHGmMv1ZkqDJrDqKKSykTDX+ehuA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/nanoid",
+          "version": "3.3.19",
+          "integrite": "sha512-Y2tUNy4ouw6tq5oDSKeQYGOyhkUBhNOcGV/02KC+6kd9eDGqdZd++mjMiIDilrBYvjEnCYvVtsuHCuP+okSfug==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/normalize-path",
+          "version": "3.0.0",
+          "integrite": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/path-key",
+          "version": "3.1.1",
+          "integrite": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/picocolors",
+          "version": "1.1.1",
+          "integrite": "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/picomatch",
+          "version": "2.3.2",
+          "integrite": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright",
+          "version": "1.58.2",
+          "integrite": "sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright-core",
+          "version": "1.58.2",
+          "integrite": "sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright/node_modules/fsevents",
+          "version": "2.3.2",
+          "integrite": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/postcss",
+          "version": "8.5.28",
+          "integrite": "sha512-RRuzqDtt5Y9h3quz5hWhK+TPnsmVs6WwSU6LkJMeY4HstUEDuYTG8UJSdawMRzmzAtV+KEoG8N3Qg2qLy5vM/A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/readdirp",
+          "version": "3.6.0",
+          "integrite": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/rolldown",
+          "version": "1.2.8",
+          "integrite": "sha512-Z67nTmhZe7anqnM/EjI392w5i/ANUinjip7QYsOyN37oayduxt3ksdX0hf5OOamkAd53BiIHfbfSzfUmzKFQqQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-command",
+          "version": "2.0.0",
+          "integrite": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-regex",
+          "version": "3.0.0",
+          "integrite": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/source-map-js",
+          "version": "1.2.1",
+          "integrite": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/split",
+          "version": "1.0.1",
+          "integrite": "sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/supports-color",
+          "version": "7.2.0",
+          "integrite": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/through",
+          "version": "2.3.8",
+          "integrite": "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby",
+          "version": "0.2.17",
+          "integrite": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/fdir",
+          "version": "6.5.0",
+          "integrite": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/picomatch",
+          "version": "4.0.7",
+          "integrite": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/to-regex-range",
+          "version": "5.0.1",
+          "integrite": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/vite",
+          "version": "8.3.0",
+          "integrite": "sha512-lhZBVvEHefgE+HQZC9O7EBJgCU/nVzFNl7vkS4RE0APtWLP02/8QVIkQtzBxPquh7lq5/78NHipTj7ODQ6XuyQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/vite/node_modules/picomatch",
+          "version": "4.0.7",
+          "integrite": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/which",
+          "version": "2.0.2",
+          "integrite": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/xmlbuilder",
+          "version": "15.1.1",
+          "integrite": "sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==",
+          "dev": true
+        }
+      ]
+    },
+    {
+      "composant": "matheval",
+      "lock": "server/package-lock.json",
+      "sha256": "21a9ee19e4180c2ad19b4d98f27561f79a27651988555cf102a4fbeaea1a6eb4",
+      "directes": {
+        "bibliotheques": {
+          "express": "^5.1.0",
+          "express-rate-limit": "^8.1.0",
+          "pg": "^8.16.0",
+          "zod": "^4.1.0"
+        },
+        "developpement_test": {}
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/accepts",
+          "version": "2.0.0",
+          "integrite": "sha512-5cvg6CtKwfgdmVqY1WIiXKc3Q1bkRqGLi+2W/6ao+6Y7gu/RCwRuAhGEzh5B4KlszSuTLgZYuqFqo5bImjNKng==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/body-parser",
+          "version": "2.3.0",
+          "integrite": "sha512-2cGmJupaNgg+QUwVLAucDuWuoMZ6EX9iHDRswZ5lsNYEmwPaRknMPCLZz07yTzVq/83p4o/wzbDZbBrTvGGTIw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/body-parser/node_modules/content-type",
+          "version": "2.1.0",
+          "integrite": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/bytes",
+          "version": "3.1.2",
+          "integrite": "sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/call-bind-apply-helpers",
+          "version": "1.0.2",
+          "integrite": "sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/call-bound",
+          "version": "1.0.4",
+          "integrite": "sha512-+ys997U96po4Kx/ABpBCqhA9EuxJaQWDQg7295H4hBphv3IZg0boBKuwYpt4YXp6MZ5AmZQnU/tyMTlRpaSejg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/content-disposition",
+          "version": "1.1.0",
+          "integrite": "sha512-5jRCH9Z/+DRP7rkvY83B+yGIGX96OYdJmzngqnw2SBSxqCFPd0w2km3s5iawpGX8krnwSGmF0FW5Nhr0Hfai3g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/content-type",
+          "version": "1.0.5",
+          "integrite": "sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/cookie",
+          "version": "0.7.2",
+          "integrite": "sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/cookie-signature",
+          "version": "1.2.2",
+          "integrite": "sha512-D76uU73ulSXrD1UXF4KE2TMxVVwhsnCgfAyTg9k8P6KGZjlXKrOLe4dJQKI3Bxi5wjesZoFXJWElNWBjPZMbhg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/debug",
+          "version": "4.4.3",
+          "integrite": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/depd",
+          "version": "2.0.0",
+          "integrite": "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/dunder-proto",
+          "version": "1.0.1",
+          "integrite": "sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/ee-first",
+          "version": "1.1.1",
+          "integrite": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/encodeurl",
+          "version": "2.0.0",
+          "integrite": "sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/es-define-property",
+          "version": "1.0.1",
+          "integrite": "sha512-e3nRfgfUZ4rNGL232gUgX06QNyyez04KdjFrF+LTRoOXmrOgFKDg4BCdsjW8EnT69eqdYGmRpJwiPVYNrCaW3g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/es-errors",
+          "version": "1.3.0",
+          "integrite": "sha512-Zf5H2Kxt2xjTvbJvP2ZWLEICxA6j+hAmMzIlypy4xcBg1vKVnx89Wy0GbS+kf5cwCVFFzdCFh2XSCFNULS6csw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/es-object-atoms",
+          "version": "1.1.2",
+          "integrite": "sha512-HWcBoN6NileqtSydK2FqHbS/LoDd2pqrnQHLyJzBj4kOp/ky2MWMN694xOfkK8/SnUsW2DH7EfyVlydKCsm1Zw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/escape-html",
+          "version": "1.0.3",
+          "integrite": "sha512-NiSupZ4OeuGwr68lGIeym/ksIZMJodUGOSCZ/FSnTxcrekbvqrgdUxlJOMpijaKZVjAJrWrGs/6Jy8OMuyj9ow==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/etag",
+          "version": "1.8.1",
+          "integrite": "sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/express",
+          "version": "5.2.1",
+          "integrite": "sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/express-rate-limit",
+          "version": "8.7.0",
+          "integrite": "sha512-hOwV7WOxXfjRpAM1DSJWZDXx3GhplwD8IfwuwvogD8i1Qnkgosw/H45s4ZnFAUHDAhPjlY9hLBvJhKmGMyY26g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/finalhandler",
+          "version": "2.1.1",
+          "integrite": "sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/forwarded",
+          "version": "0.2.0",
+          "integrite": "sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/fresh",
+          "version": "2.0.0",
+          "integrite": "sha512-Rx/WycZ60HOaqLKAi6cHRKKI7zxWbJ31MhntmtwMoaTeF7XFH9hhBp8vITaMidfljRQ6eYWCKkaTK+ykVJHP2A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/function-bind",
+          "version": "1.1.2",
+          "integrite": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/get-intrinsic",
+          "version": "1.3.0",
+          "integrite": "sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/get-proto",
+          "version": "1.0.1",
+          "integrite": "sha512-sTSfBjoXBp89JvIKIefqw7U2CCebsc74kiY6awiGogKtoSGbgjYE/G/+l9sF3MWFPNc9IcoOC4ODfKHfxFmp0g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/gopd",
+          "version": "1.2.0",
+          "integrite": "sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/has-symbols",
+          "version": "1.1.0",
+          "integrite": "sha512-1cDNdwJ2Jaohmb3sg4OmKaMBwuC48sYni5HUw2DvsC8LjGTLK9h+eb1X6RyuOHe4hT0ULCW68iomhjUoKUqlPQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/hasown",
+          "version": "2.0.4",
+          "integrite": "sha512-T2UbfbBEF32wiepXIsMlTW9+dDYC6wMh/t/vYA4tuOMKqWz/n3vr1NFSxQiyP+zk2mXsoMA/i/7qV6LKut1t1A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/http-errors",
+          "version": "2.0.1",
+          "integrite": "sha512-4FbRdAX+bSdmo4AUFuS0WNiPz8NgFt+r8ThgNWmlrjQjt1Q7ZR9+zTlce2859x4KSXrwIsaeTqDoKQmtP8pLmQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/iconv-lite",
+          "version": "0.7.3",
+          "integrite": "sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/inherits",
+          "version": "2.0.4",
+          "integrite": "sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/ip-address",
+          "version": "10.7.2",
+          "integrite": "sha512-7H/2gFSIitxc0hG3nOI1glS8QLo/EHBFFLk8vEUjXY/xu0AdL8jZ9U1IzO2PUm0d2D/ofQcAifb0g6OBkt8U7w==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/ipaddr.js",
+          "version": "1.9.1",
+          "integrite": "sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/is-promise",
+          "version": "4.0.0",
+          "integrite": "sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/math-intrinsics",
+          "version": "1.1.0",
+          "integrite": "sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/media-typer",
+          "version": "1.1.1",
+          "integrite": "sha512-yz3xRaG20c6/BOzvYoDaGtPmGscs7YivItZEEqe6GbwNfHuxu9YNmvnEkMzKldAGY4/80pRcQRZSEnhquk9XuQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/merge-descriptors",
+          "version": "2.0.0",
+          "integrite": "sha512-Snk314V5ayFLhp3fkUREub6WtjBfPdCPY1Ln8/8munuLuiYhsABgBVWsozAG+MWMbVEvcdcpbi9R7ww22l9Q3g==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/mime-db",
+          "version": "1.54.0",
+          "integrite": "sha512-aU5EJuIN2WDemCcAp2vFBfp/m4EAhWJnUNSSw0ixs7/kXbd6Pg64EmwJkNdFhB8aWt1sH2CTXrLxo/iAGV3oPQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/mime-types",
+          "version": "3.0.2",
+          "integrite": "sha512-Lbgzdk0h4juoQ9fCKXW4by0UJqj+nOOrI9MJ1sSj4nI8aI2eo1qmvQEie4VD1glsS250n15LsWsYtCugiStS5A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/ms",
+          "version": "2.1.3",
+          "integrite": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/negotiator",
+          "version": "1.1.0",
+          "integrite": "sha512-NMPBRMJgiQHjbd8phG3Vebdx4kZ1H121rbl5IkMqeOsahptB9BKo/d7oJ3zTXqTgagn2bWlNSXkh0QUGM31RYg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/negotiator/node_modules/content-type",
+          "version": "2.1.0",
+          "integrite": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/object-inspect",
+          "version": "1.13.4",
+          "integrite": "sha512-W67iLl4J2EXEGTbfeHCffrjDfitvLANg0UlX3wFUUSTx92KXRFegMHUVgSqE+wvhAbi4WqjGg9czysTV2Epbew==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/on-finished",
+          "version": "2.4.1",
+          "integrite": "sha512-oVlzkg3ENAhCk2zdv7IJwd/QUD4z2RxRwpkcGY8psCVcCYZNq4wYnVWALHM+brtuJjePWiYF/ClmuDr8Ch5+kg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/once",
+          "version": "1.4.0",
+          "integrite": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/parseurl",
+          "version": "1.3.3",
+          "integrite": "sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/path-to-regexp",
+          "version": "8.4.2",
+          "integrite": "sha512-qRcuIdP69NPm4qbACK+aDogI5CBDMi1jKe0ry5rSQJz8JVLsC7jV8XpiJjGRLLol3N+R5ihGYcrPLTno6pAdBA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg",
+          "version": "8.23.0",
+          "integrite": "sha512-Ip2EQCngowJLGOfCwkFhPXU7/ljlhn6Rxlmy4XYfL2Y+vyRM59+8uR2xqRWKdYmbXmxCFOAmKxBuSUCdF34qLg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-cloudflare",
+          "version": "1.4.0",
+          "integrite": "sha512-Vo7z/6rrQYxpNRylp4Tlob2elzbh+N/MOQbxFVWCxS7oEx6jF53GTJFxK2WWpKuBRkmiin4Mt+xofFDjx09R0A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-connection-string",
+          "version": "2.14.0",
+          "integrite": "sha512-XwWDGcLRGCXAR8F/AM5bG7Q+A3Wm2s6QeEjlOKZLlH3UYcguiqCWKyWXVag5TLTIjR7oOJUY8kcADaZgWPyLeg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-int8",
+          "version": "1.0.1",
+          "integrite": "sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-pool",
+          "version": "3.14.0",
+          "integrite": "sha512-gKtPkFdQPU3DksooVLi9LsjZxrsBUZIpa+7aVx+LV5pNh0KzP4Zleud2po+ConrxbuXGBJ6Hfer6hdgpIBpBaw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-protocol",
+          "version": "1.16.0",
+          "integrite": "sha512-sILXutLVjCLjcDuOmvhX5e2Z4cS5qG/6Bu3VkpFwdf/633ElGLpEh9bgmuI5I4sqKqkifQiGyiCcx1HdtrK7tg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pg-types",
+          "version": "2.2.0",
+          "integrite": "sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/pgpass",
+          "version": "1.0.5",
+          "integrite": "sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/postgres-array",
+          "version": "2.0.0",
+          "integrite": "sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/postgres-bytea",
+          "version": "1.0.1",
+          "integrite": "sha512-5+5HqXnsZPE65IJZSMkZtURARZelel2oXUEO8rH83VS/hxH5vv1uHquPg5wZs8yMAfdv971IU+kcPUczi7NVBQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/postgres-date",
+          "version": "1.0.7",
+          "integrite": "sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/postgres-interval",
+          "version": "1.2.0",
+          "integrite": "sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/proxy-addr",
+          "version": "2.0.8",
+          "integrite": "sha512-5nnx0yGyVUcY6t9RnWcARWtwT9F1D8O9rt08htPvnd49W1IgZtmLkhu9WfMzQj1cFxjHIO6connUNVW5k7AVyQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/qs",
+          "version": "6.16.0",
+          "integrite": "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/range-parser",
+          "version": "1.3.0",
+          "integrite": "sha512-hek2mFQpPuI4E1BBKrSto+BU3e3x4xuarsbiwr3+lf7p44juvFMV0XFWQAP3xUyqXA4RrXLIoaSUGbSt056ZMw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/raw-body",
+          "version": "3.0.2",
+          "integrite": "sha512-K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/router",
+          "version": "2.2.0",
+          "integrite": "sha512-nLTrUKm2UyiL7rlhapu/Zl45FwNgkZGaCpZbIHajDYgwlJCOzLSk+cIPAnsEqV955GjILJnKbdQC1nVPz+gAYQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/safer-buffer",
+          "version": "2.1.2",
+          "integrite": "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/send",
+          "version": "1.2.1",
+          "integrite": "sha512-1gnZf7DFcoIcajTjTwjwuDjzuz4PPcY2StKPlsGAQ1+YH20IRVrBaXSWmdjowTJ6u8Rc01PoYOGHXfP1mYcZNQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/serve-static",
+          "version": "2.2.1",
+          "integrite": "sha512-xRXBn0pPqQTVQiC8wyQrKs2MOlX24zQ0POGaj0kultvoOCstBQM5yvOhAVSUwOMjQtTvsPWoNCHfPGwaaQJhTw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/setprototypeof",
+          "version": "1.2.0",
+          "integrite": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/side-channel",
+          "version": "1.1.1",
+          "integrite": "sha512-6x6dK6zJdpTzF4sQeNYxwtvBzf6Eg4GtlesS94HOvTudUeyK2WXAaIfmDgsyslYrRBeFIlsi54AYsFGUuhmvrQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/side-channel-list",
+          "version": "1.0.1",
+          "integrite": "sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/side-channel-map",
+          "version": "1.0.1",
+          "integrite": "sha512-VCjCNfgMsby3tTdo02nbjtM/ewra6jPHmpThenkTYh8pG9ucZ/1P8So4u4FGBek/BjpOVsDCMoLA/iuBKIFXRA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/side-channel-weakmap",
+          "version": "1.0.2",
+          "integrite": "sha512-WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/split2",
+          "version": "4.2.0",
+          "integrite": "sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/statuses",
+          "version": "2.0.2",
+          "integrite": "sha512-DvEy55V3DB7uknRo+4iOGT5fP1slR8wQohVdknigZPMpMstaKJQWhwiYBACJE3Ul2pTnATihhBYnRhZQHGBiRw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/toidentifier",
+          "version": "1.0.1",
+          "integrite": "sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/type-is",
+          "version": "2.1.0",
+          "integrite": "sha512-faYHw0anBbc/kWF3zFTEnxSFOAGUX9GFbOBthvDdLsIlEoWOFOtS0zgCiQYwIskL9iGXZL3kAXD8OoZ4GmMATA==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/type-is/node_modules/content-type",
+          "version": "2.1.0",
+          "integrite": "sha512-mj7UPXE0jaqaOsukNZRUEfEi2AcL7C/vwmwcHV0O97eO1E1pxBZuyjlZrx5seTaNBg1U6+o35wpa35Qfcc+7ag==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/unpipe",
+          "version": "1.0.0",
+          "integrite": "sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/vary",
+          "version": "1.1.2",
+          "integrite": "sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/wrappy",
+          "version": "1.0.2",
+          "integrite": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/xtend",
+          "version": "4.0.2",
+          "integrite": "sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/zod",
+          "version": "4.6.5",
+          "integrite": "sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==",
+          "dev": false
+        }
+      ]
+    },
+    {
+      "composant": "logique",
+      "lock": "package-lock.json",
+      "sha256": "97a71d1e2d54ad134ef960ea3af120b12156e1465c970644f4e9c1916e09119d",
+      "directes": {
+        "bibliotheques": {
+          "@vimeo/player": "2.30.4",
+          "katex": "0.18.7"
+        },
+        "developpement_test": {
+          "@lydell/elm": "0.19.1-14",
+          "elm-format": "0.8.8",
+          "prettier": "3.6.2"
+        }
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VDu3CRajhB/Sax+CEU4PhIzErBZv8vVxbk9Sk8seUHa1ngfICa3Ejoq3PhnoOFKYF1v1sSxNOC2RnUzvd/9bUw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-9NAzi3HUBSHEIx3Nje+a6wFcv6RDKv2PO0OUNcV/XlS4Sou3r89xsYAVAXS8mi4+CKTdscyfSSkgGd8qiCCxAw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VNuXYphgxtnk7Gw+VBgWBeA9k8wKSo9r/O2F7udgurokYLO8S+RGhLHgD9mb6Yecv/veWz4v9n/O0IggH/BOCQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-IvtmUTDw/V5mBeglLgtQMzWZPc0QvmqUmoJ+vipxYii3DJ/1KV2drtpvlLuFdBlFrehUivtrh4HhOTsdGXxyXQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-win32-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-qGYZM2oJFSVQ80Tayk1v15ba7PWCU3B89EkA3Fy4YQasvtA+UrYYR5Bv7MRF4kn6Zp7oSDk4FhknURFsZWZ7kg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm",
+          "version": "0.19.1-14",
+          "integrite": "sha512-otpGlYiNRvL7F9k6MJOTcuyIgHr+XWy/1NtHpGUgQi8lHrnuyCjwKFPPiimKpr3bcZTwpD4nebHuYR0bmPIKuA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_arm64",
+          "version": "0.19.1-3",
+          "integrite": "sha512-RuKTz5ck+RBx4urj1EL/r0xWZZqBMPEXzNBQTEBCAMWLSi4Ck3TVz5pkhBaK+cRZXI+cCgytm/1bIttbp2fFIg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_x64",
+          "version": "0.19.1-2",
+          "integrite": "sha512-MXfQwxdQfmuQ22iDCFlcXu5YTA0w6/ASzbxmWc+8DkgUkHTynjViGBVkQljAbYe4ZWgrYGWinZQQyhVnp/5oZw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm",
+          "version": "0.19.1-0",
+          "integrite": "sha512-crKrLzuT6jn4OOS7PWKZGYFw6vHwPu3iNP7lg8rFkOog/HxlkRwX4S695aILBG8SGTLhEdfP9tg28SQ7vR4Lpg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm64",
+          "version": "0.19.1-4",
+          "integrite": "sha512-JuUkkVBtJjUajtTriQFFANHDmwA14NhqNqgIcq5LCJ6vUQv5/LVd6NUOkl/Rdq7Ju/VN/XwBD1/vm7MGIMOTqA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-1Y8UAb+GfUqlSjUTX9CaaZhJqvhVcfNbYC0N9AEutlXf1CzFMvF4VsDeZdxzhNI4allPRWBD1IqtdlLhBTFacA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_win32_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-3LMiJ+uUxDFLNnCd6HBmvVWSjSWjs/Z9dMXZWCMOcw3vrW9iOkRrsNGNxohRXun2YRd8wXOX8/DwVn8i2SJ3KA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@vimeo/player",
+          "version": "2.30.4",
+          "integrite": "sha512-M8m1UAhJSb+KCWuXDLWHViwj+3YY/0ogwFquRfMHs9e9LYjXT9iB7n+sOCKwUusbiXuU2HKmXx+FEGHtYZfUSg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/commander",
+          "version": "15.0.0",
+          "integrite": "sha512-z67u4ZhzCL/Tydu1lJARtEZYWbWaN7oYLHbsuzocr6y4N6WZAagG3RQ4FW61V1/0+jImpj293XfrcYnd1qxtPg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/elm-format",
+          "version": "0.8.8",
+          "integrite": "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/katex",
+          "version": "0.18.7",
+          "integrite": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/native-promise-only",
+          "version": "0.8.1",
+          "integrite": "sha512-zkVhZUA3y8mbz652WrL5x0fB0ehrBkulWT3TomAQ9iDtyXZvzKeEA6GPxAItBYeNYl5yngKRX612qHOhvMkDeg==",
+          "dev": false
+        },
+        {
+          "chemin": "node_modules/prettier",
+          "version": "3.6.2",
+          "integrite": "sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/weakmap-polyfill",
+          "version": "2.0.4",
+          "integrite": "sha512-ZzxBf288iALJseijWelmECm/1x7ZwQn3sMYIkDr2VvZp7r6SEKuT8D0O9Wiq6L9Nl5mazrOMcmiZE/2NCenaxw==",
+          "dev": false
+        }
+      ]
+    },
+    {
+      "composant": "style",
+      "lock": "ateliers/logo/package-lock.json",
+      "sha256": "97b4298afab35cbd9f023a91615b3dc1a7a53a156c5795d26e396be64bb2d364",
+      "directes": {
+        "bibliotheques": {},
+        "developpement_test": {
+          "@playwright/test": "1.61.0",
+          "elm": "0.19.1-6",
+          "elm-format": "0.8.8",
+          "elm-test": "0.19.1-revision17"
+        }
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VDu3CRajhB/Sax+CEU4PhIzErBZv8vVxbk9Sk8seUHa1ngfICa3Ejoq3PhnoOFKYF1v1sSxNOC2RnUzvd/9bUw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-9NAzi3HUBSHEIx3Nje+a6wFcv6RDKv2PO0OUNcV/XlS4Sou3r89xsYAVAXS8mi4+CKTdscyfSSkgGd8qiCCxAw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VNuXYphgxtnk7Gw+VBgWBeA9k8wKSo9r/O2F7udgurokYLO8S+RGhLHgD9mb6Yecv/veWz4v9n/O0IggH/BOCQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-IvtmUTDw/V5mBeglLgtQMzWZPc0QvmqUmoJ+vipxYii3DJ/1KV2drtpvlLuFdBlFrehUivtrh4HhOTsdGXxyXQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-win32-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-qGYZM2oJFSVQ80Tayk1v15ba7PWCU3B89EkA3Fy4YQasvtA+UrYYR5Bv7MRF4kn6Zp7oSDk4FhknURFsZWZ7kg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@elm_binaries/darwin_arm64",
+          "version": "0.19.1-0",
+          "integrite": "sha512-mjbsH7BNHEAmoE2SCJFcfk5fIHwFIpxtSgnEAqMsVLpBUFoEtAeX+LQ+N0vSFJB3WAh73+QYx/xSluxxLcL6dA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@elm_binaries/darwin_x64",
+          "version": "0.19.1-0",
+          "integrite": "sha512-QGUtrZTPBzaxgi9al6nr+9313wrnUVHuijzUK39UsPS+pa+n6CmWyV/69sHZeX9qy6UfeugE0PzF3qcUiy2GDQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@elm_binaries/linux_x64",
+          "version": "0.19.1-0",
+          "integrite": "sha512-T1ZrWVhg2kKAsi8caOd3vp/1A3e21VuCpSG63x8rDie50fHbCytTway9B8WHEdnBFv4mYWiA68dzGxYCiFmU2w==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@elm_binaries/win32_x64",
+          "version": "0.19.1-0",
+          "integrite": "sha512-yDleiXqSE9EcqKtd9SkC/4RIW8I71YsXzMPL79ub2bBPHjWTcoyyeBbYjoOB9SxSlArJ74HaoBApzT6hY7Zobg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@playwright/test",
+          "version": "1.61.0",
+          "integrite": "sha512-cKA5B6lpFEMyMGjxF54QihfYpB4FkEGH+qZhtArDEG+wezQAJY8Pq6C7T1SjWz+FFzt3TbyoXBQYk/0292TdJA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/ansi-styles",
+          "version": "4.3.0",
+          "integrite": "sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/anymatch",
+          "version": "3.1.3",
+          "integrite": "sha512-KMReFUr0B4t+D+OBkjR3KYqvocp2XaSzO55UcB6mgQMd3KbcE+mWTyvVV7D/zsdEbNnV6acZUutkiHQXvTr1Rw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/binary-extensions",
+          "version": "2.3.0",
+          "integrite": "sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/braces",
+          "version": "3.0.3",
+          "integrite": "sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chalk",
+          "version": "4.1.2",
+          "integrite": "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/chokidar",
+          "version": "3.6.0",
+          "integrite": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-convert",
+          "version": "2.0.1",
+          "integrite": "sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/color-name",
+          "version": "1.1.4",
+          "integrite": "sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/commander",
+          "version": "9.5.0",
+          "integrite": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/cross-spawn",
+          "version": "7.0.6",
+          "integrite": "sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm",
+          "version": "0.19.1-6",
+          "integrite": "sha512-mKYyierHICPdMx/vhiIacdPmTPnh889gjHOZ75ZAoCxo3lZmSWbGP8HMw78wyctJH0HwvTmeKhlYSWboQNYPeQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-format",
+          "version": "0.8.8",
+          "integrite": "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-solve-deps-wasm",
+          "version": "2.0.0",
+          "integrite": "sha512-11OV8FgB9qsth/F94q2SJjb1MoEgbworSyNM1L+YlxVoaxp7wtWPyA8cNcPEkSoIKG1B8Tqg68ED1P6dVamHSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-test",
+          "version": "0.19.1-revision17",
+          "integrite": "sha512-P9J8tXdLXmqgIMlSozfcb/KCORq4GuxfwBbzqFLMss8KlGmUKonOJwseRX6xVkdU5xgGVA/mz9rfMTNomIbwng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fill-range",
+          "version": "7.1.1",
+          "integrite": "sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/fsevents",
+          "version": "2.3.3",
+          "integrite": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/glob-parent",
+          "version": "5.1.2",
+          "integrite": "sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/graceful-fs",
+          "version": "4.2.11",
+          "integrite": "sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/has-flag",
+          "version": "4.0.0",
+          "integrite": "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-binary-path",
+          "version": "2.1.0",
+          "integrite": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-extglob",
+          "version": "2.1.1",
+          "integrite": "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-glob",
+          "version": "4.0.3",
+          "integrite": "sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/is-number",
+          "version": "7.0.0",
+          "integrite": "sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/isexe",
+          "version": "2.0.0",
+          "integrite": "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/normalize-path",
+          "version": "3.0.0",
+          "integrite": "sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/path-key",
+          "version": "3.1.1",
+          "integrite": "sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/picomatch",
+          "version": "2.3.2",
+          "integrite": "sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright",
+          "version": "1.61.0",
+          "integrite": "sha512-Z+7BeeqQPRRzklHsVFP4KTGIyMxKUmfeRA4WisM6G3/XW6nwGeX6fX9qYaDa+CiUqpOkb2f6X3nar05R3kSuJQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright-core",
+          "version": "1.61.0",
+          "integrite": "sha512-caX7TrY3Ml6egyDX0WUcTHDxodl/b51y5wJOdCEA36QviK/s2g081hvmGs8eaE3DWb6NYZQ6BjO/QkNRPenoPA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/playwright/node_modules/fsevents",
+          "version": "2.3.2",
+          "integrite": "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/readdirp",
+          "version": "3.6.0",
+          "integrite": "sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-command",
+          "version": "2.0.0",
+          "integrite": "sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/shebang-regex",
+          "version": "3.0.0",
+          "integrite": "sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/split",
+          "version": "1.0.1",
+          "integrite": "sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/supports-color",
+          "version": "7.2.0",
+          "integrite": "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/through",
+          "version": "2.3.8",
+          "integrite": "sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby",
+          "version": "0.2.17",
+          "integrite": "sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/fdir",
+          "version": "6.5.0",
+          "integrite": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/tinyglobby/node_modules/picomatch",
+          "version": "4.0.7",
+          "integrite": "sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/to-regex-range",
+          "version": "5.0.1",
+          "integrite": "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/which",
+          "version": "2.0.2",
+          "integrite": "sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/xmlbuilder",
+          "version": "15.1.1",
+          "integrite": "sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==",
+          "dev": true
+        }
+      ]
+    },
+    {
+      "composant": "style",
+      "lock": "package-lock.json",
+      "sha256": "5728f02af9adc05ce9454ab9361dccc37a35282c4fb1476581132fb76d15ccb9",
+      "directes": {
+        "bibliotheques": {},
+        "developpement_test": {
+          "@lydell/elm": "0.19.1-14",
+          "elm-format": "0.8.8"
+        }
+      },
+      "transitives": [
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VDu3CRajhB/Sax+CEU4PhIzErBZv8vVxbk9Sk8seUHa1ngfICa3Ejoq3PhnoOFKYF1v1sSxNOC2RnUzvd/9bUw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-darwin-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-9NAzi3HUBSHEIx3Nje+a6wFcv6RDKv2PO0OUNcV/XlS4Sou3r89xsYAVAXS8mi4+CKTdscyfSSkgGd8qiCCxAw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-arm64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-VNuXYphgxtnk7Gw+VBgWBeA9k8wKSo9r/O2F7udgurokYLO8S+RGhLHgD9mb6Yecv/veWz4v9n/O0IggH/BOCQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-linux-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-IvtmUTDw/V5mBeglLgtQMzWZPc0QvmqUmoJ+vipxYii3DJ/1KV2drtpvlLuFdBlFrehUivtrh4HhOTsdGXxyXQ==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@avh4/elm-format-win32-x64",
+          "version": "0.8.8-1",
+          "integrite": "sha512-qGYZM2oJFSVQ80Tayk1v15ba7PWCU3B89EkA3Fy4YQasvtA+UrYYR5Bv7MRF4kn6Zp7oSDk4FhknURFsZWZ7kg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm",
+          "version": "0.19.1-14",
+          "integrite": "sha512-otpGlYiNRvL7F9k6MJOTcuyIgHr+XWy/1NtHpGUgQi8lHrnuyCjwKFPPiimKpr3bcZTwpD4nebHuYR0bmPIKuA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_arm64",
+          "version": "0.19.1-3",
+          "integrite": "sha512-RuKTz5ck+RBx4urj1EL/r0xWZZqBMPEXzNBQTEBCAMWLSi4Ck3TVz5pkhBaK+cRZXI+cCgytm/1bIttbp2fFIg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_darwin_x64",
+          "version": "0.19.1-2",
+          "integrite": "sha512-MXfQwxdQfmuQ22iDCFlcXu5YTA0w6/ASzbxmWc+8DkgUkHTynjViGBVkQljAbYe4ZWgrYGWinZQQyhVnp/5oZw==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm",
+          "version": "0.19.1-0",
+          "integrite": "sha512-crKrLzuT6jn4OOS7PWKZGYFw6vHwPu3iNP7lg8rFkOog/HxlkRwX4S695aILBG8SGTLhEdfP9tg28SQ7vR4Lpg==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_arm64",
+          "version": "0.19.1-4",
+          "integrite": "sha512-JuUkkVBtJjUajtTriQFFANHDmwA14NhqNqgIcq5LCJ6vUQv5/LVd6NUOkl/Rdq7Ju/VN/XwBD1/vm7MGIMOTqA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_linux_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-1Y8UAb+GfUqlSjUTX9CaaZhJqvhVcfNbYC0N9AEutlXf1CzFMvF4VsDeZdxzhNI4allPRWBD1IqtdlLhBTFacA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/@lydell/elm_win32_x64",
+          "version": "0.19.1-1",
+          "integrite": "sha512-3LMiJ+uUxDFLNnCd6HBmvVWSjSWjs/Z9dMXZWCMOcw3vrW9iOkRrsNGNxohRXun2YRd8wXOX8/DwVn8i2SJ3KA==",
+          "dev": true
+        },
+        {
+          "chemin": "node_modules/elm-format",
+          "version": "0.8.8",
+          "integrite": "sha512-OJYUtVnepuy8UZdnL5OCjSxUY5+dIGP2NdWTB6icxVVOOH0b8MpJIijTPsGW+ztnv9yzSoTK0dhCuVDh+AGhNQ==",
+          "dev": true
+        }
+      ]
+    }
+  ],
+  "python_declarations": [
+    {
+      "module": "modules/vision-cycle.nix",
+      "declarations": [
+        "psycopg",
+        "requests"
+      ]
+    },
+    {
+      "module": "modules/mrj-auth.nix",
+      "declarations": [
+        "passlib",
+        "authlib",
+        "requests",
+        "psycopg",
+        "html",
+        "html",
+        "js",
+        "js",
+        "service"
+      ]
+    },
+    {
+      "module": "modules/vision-gestion.nix",
+      "declarations": [
+        "psycopg"
+      ]
+    },
+    {
+      "module": "modules/fermeture.nix",
+      "declarations": [
+        "psycopg",
+        "requests"
+      ]
+    },
+    {
+      "module": "modules/admission.nix",
+      "declarations": [
+        "psycopg",
+        "requests"
+      ]
+    }
+  ],
+  "limites": [
+    "Inventaire systeme complet et versions des auxiliaires a relever par sonde ciblee",
+    "Required checks, environments secrets et deploy keys non tous lisibles avec le token integration (403)",
+    "Aucune nouvelle bibliotheque tierce installee"
+  ]
+}

@@ -1,0 +1,9 @@
+;;; Point d'entrée local/CI commun. Aucun secret ou accès de production.
+(require :asdf)
+(let* ((racine (uiop:pathname-directory-pathname *load-truename*))
+       (infra (uiop:pathname-parent-directory-pathname racine))
+       (atelier (or (uiop:getenv "MRJAM_ATELIER")
+                    (uiop:native-namestring (uiop:pathname-parent-directory-pathname infra)))))
+  (asdf:load-asd (truename (merge-pathnames "vision/vision.asd" atelier)))
+  (asdf:load-asd (truename (merge-pathnames "M-moire/matheval.asd" atelier)))
+  (asdf:load-asd (truename (merge-pathnames "mrjam-metier.asd" infra))))
