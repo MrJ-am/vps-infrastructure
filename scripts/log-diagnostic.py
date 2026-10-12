@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess
+import importlib.util,json,os,re,sys,subprocess,ast
 from pathlib import Path
 
 def classifier(texte,ancien):
@@ -15,6 +15,16 @@ def classifier(texte,ancien):
         r'(?:services|infrastructure|systemd|security|boot|users|environment|networking)\.[A-Za-z0-9_."/ =~-]{1,280}',o)))
     return r
 
+def raison_statique(texte,source):
+    # Seuls les messages littéraux d'exiger du code scellé. Aucune valeur
+    # d'exception libre, identifiant, requête, credential ou ligne métier.
+    a=ast.parse(source.read_text());messages={n.args[1].value for n in ast.walk(a)
+        if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='exiger'
+        and len(n.args)>1 and isinstance(n.args[1],ast.Constant) and isinstance(n.args[1].value,str)}
+    dernier=texte.rstrip().splitlines()[-1] if texte.strip() else ''
+    valeur=dernier.removeprefix('ValueError: ')
+    return valeur if dernier.startswith('ValueError: ') and valeur in messages else None
+
 def main(revision):
     if os.geteuid()!=0 or not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Cible refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -29,6 +39,7 @@ def main(revision):
         f=d/('erreur-log-'+nom+'-privee.log')
         if f.is_file():
             texte=f.read_text();out['erreur_'+nom]=m.diagnostic_erreur(texte)
+            if nom=='operation':out['erreur_'+nom]['regle']=raison_statique(texte,d/'payload/vps/scripts/log-activer.py')
             cmd=re.search(r'RuntimeError: Commande refusée : (nix-instantiate|nix-build|systemctl), code ([0-9]+)',texte)
             if cmd:out['erreur_'+nom]['commande']={'outil':cmd[1],'code':int(cmd[2])}
     f=d/'erreur-restauration-privee.log'
