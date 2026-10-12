@@ -92,7 +92,7 @@ def main(revision):
          'preparation_presente':(d/'preparation.json').exists(),
          'activation_presente':(d/'activation.json').exists()}
     out['restauration_presente']=(d/'restauration.json').exists()
-    out['parent_restauration_traversable_par_vision']=acces_parent_restauration()
+    out['parent_postgresql_traversable_par_vision']=acces_parent_restauration()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])

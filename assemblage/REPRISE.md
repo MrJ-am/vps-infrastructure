@@ -28,9 +28,15 @@ Descripteur central publié23aa0d14edf5f7e15a957f642988095dce77b694.
 Préparation38186573658 réussie : binaire296b7, générationNix9rsmp9wrp9vid4dk85cn30fckjszywwp,
 activationfalse, sondes des services existants réussies. Preuve dans
 state/preparation-38186573658.json. Déployer est la prochaine opération fermée :
-restauration fraîche/ACL/retour avant activation. Déploiement38186728742 sur23aa0d14 arrêté en restauration isolée avant activation,
-message générique ; diagnostic privé conservé sur VPS. Prochaine action : diagnostic
-fermé pour sa cause exacte, aucune répétition aveugle et production ancienne conservée.
+restauration fraîche/ACL/retour avant activation. Déploiement38186728742 sur23aa0d14 arrêté en restauration isolée avant activation.
+RLS/ACL passent ; diagnostic38186824686 situe le refus au lancement SBCL128.
+Diagnostic38187150992 : Vision ne peut pas traverser /var/lib/postgresql.
+Le sous-répertoire ouvert au groupe Vision reste inaccessible sous ce parent.
+Démarrage local avec env vidé réussi. Correction qualifiée localement : répertoire
+éphémère sous /var/lib, permissions privées inchangées, aucun droit élargi sur
+PostgreSQL. Régression Docker/Nix sans réseau sous un autre UID, cas parent
+interdit et démarrage réel depuis le parent accessible. Migration et régression Unix passent29,4132s ; autres entrées inchangées. Contrôler les reçus avant un
+nouveau scellement ; ne pas rejouer9a063b8. Production ancienne conservée.
 
 Le candidat c5548b3 reste historique et ne doit pas être redéployé : préparer un
 nouvel assemblage après qualification/publication des sources corrigées. Conserver

@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.8142,
+      "duree_secondes": 0.9649,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "3fcb1a7b1bbeb05e4ce935a1c6b323ce6b1f58451e7ce43647d59dcf1adc106d",
+      "sha256": "07cdede126e59018c8a0f65aa76e85ad1068281e5f033460e7fc35bcbc6f33e1",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -245,11 +245,11 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 13.4831,
+      "duree_secondes": 29.4132,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "e10c534d615cd70db646da756a7e288deac6fc9e7f103a82266d09c9f73e56e4",
-      "artefact_metier_sha256": null,
+      "sha256": "86445eb0b5dcc3da8e2f604024c79c2bbda14016121dda54b6c5a151ab5df3be",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "native-contrats": {
@@ -317,10 +317,10 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 1.0072,
+      "duree_secondes": 0.991,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "043711d482223955f9c3ec606be734423cb91f2acd633824d516061ee53fbe92",
+      "sha256": "06ae94a09b14bc35ac7d7d72a62007875e20f8cf6f82efb46184b3ce85fc3baf",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -406,7 +406,7 @@
       "suites_reexecutees": [
         "editorial"
       ],
-      "raison": "Les suites affectées par la migration 27 et le candidat Vision exact ont été requalifiées ; comparaison des entrées/outils/configurations inchangées pour les autres."
+      "raison": "Suites affectées requalifiées ; le scelleur compare à nouveau les 35 reçus aux entrées/outils/configurations exactes avant transport."
     },
     "correction_rls": {
       "schema": 27,
@@ -415,7 +415,15 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "à effectuer pour le commit des opérateurs ; aucun succès de production déduit"
+    "scellement": "à effectuer pour le commit des opérateurs ; aucun succès de production déduit",
+    "correction_parent_restauration": {
+      "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
+      "diagnostic_ci": 38187150992,
+      "correction": "cluster éphémère privé sous /var/lib ; aucun droit PG élargi",
+      "regression": "SBCL neuf/autre UID, fichier existant inaccessible puis ASDF/FASL et quatre états SQLite initialisés sans réseau",
+      "migration_secondes": 29.4132,
+      "production": "ancienne conservée ; nouvelle restauration/bascule nécessaires"
+    }
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
