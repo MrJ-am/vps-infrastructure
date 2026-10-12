@@ -1,0 +1,13 @@
+{
+  "format": 1,
+  "revision_operateurs": "77c7f82e8125ca081bc88d54bcf6a04bcf425b84",
+  "revision_construction": "158e4a52e012e5e46cf83afa05d2e36cfe0f4e49",
+  "artefact_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+  "cipher_sha256": "5e4436ee75d40558a5649e4e4e8da74836e720b8e0d806d62ef8275ebf4ebf9a",
+  "archive_sha256": "946ce642cfb1e731faa634a9b883bfb4d02305ca8588578f1788c7861a794a30",
+  "stage_sha256": "18f6d91e7c33781689db1dcdb5b89b62aa7f999d8111e65dea4e953ded894349",
+  "cipher_octets": 109128533,
+  "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
+  "origine_preuves": "codex-local-non-attestee",
+  "soumission_autorisee_par_proprietaire": false
+}
