@@ -77,6 +77,17 @@ Nouveau scellement de ces opérateurs requis, ELF métier toujoursbc70c822.
 Contrôles affectés exécutés : sélection25cas/1,6134s, routage Nix38,7329s,
 opérations12+23cas/0,5466s ; 48reçus inchangés conservés. Image de travail
 toujours présente, aucune opération de déploiement encore relancée.
+Descripteur f9917ed publié ; run38322963139 lancé (deployer, main). Constater
+son issue et éventuel retour avant toute répétition ; aucun envoi encore constaté.
+Run38322963139 : Nginx syntaxe réussie, Native réutilisé puis retour automatique
+réussi après HTTP502 sur découverte OIDC ; aucune restauration métier ni courriel.
+Diagnostic38324014469 : certificat public et CA exacte du proxy vérifiés par
+OpenSSL officiel existant ; profondeur1 refusée(code2), profondeurs2/3 réussies.
+Correction profondeur2 avec hostname/CA/vérification maintenus ; vérification de
+cette chaîne avant activation ajoutée au préparateur. Scellement à renouveler
+uniquement pour les opérateurs/configurations, binaire métier inchangé.
+Qualification ciblée réussie : routage38,7426s, opérations12+23cas/0,504s ;
+49reçus identiques réutilisés, aucune campagne navigateur ou Lisp relancée.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation
