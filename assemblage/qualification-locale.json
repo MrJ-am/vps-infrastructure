@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "nouveau scellement requis après correctifs de bascule",
+    "scellement": "réussi ; 35 reçus exacts dans bundle8d44379",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -431,7 +431,10 @@
       "postgresql",
       "keycloak"
     ],
-    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés"
+    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés",
+    "revision_operateurs": "8d4437953a3a27959f28e2b7659098c7e8dc2f61",
+    "stage_sha256": "947d792a6be01b31e52bed39fa06a7183bd7a960e22c8a862d047106a46640ba",
+    "bundle_complet_verifie_localement": true
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

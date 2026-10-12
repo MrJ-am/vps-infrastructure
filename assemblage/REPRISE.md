@@ -31,7 +31,9 @@ SQL privé, reprise/retour partiel et PG17 réel. Nouveau scellement des35reçus
 encore nécessaire après publication des sources. Ancien reçu en échec de l'essai
 rechargement n'est pas utilisé ; historique dans coordination/historique/essai-*
 
-Prochaine séquence : publier opérateurs puis sceller le même binaire296b7 (graphe
+Opérateurs8d4437953a3a27959f28e2b7659098c7e8dc2f61 publiés, scellement
+complet35reçus réussi. Transport chiffré 0d99db6f4b566a9c915324d5f96737edda74a833
+publié. Prochaine séquence : publier descripteur du même binaire296b7 (graphe
 Lisp inchangé) et les mêmes interfaces, transporter chiffré, publier descripteur,
 un déploiement central avec sauvegarde/restauration/bascule/retour. Constater son
 issue avant toute répétition ; puis MCP réel, données, restart/mesures/services.
