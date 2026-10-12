@@ -1,6 +1,6 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — candidat Log scellé, transport corrigé avant activation
+## Point de reprise actif — retour vérifié, correction OAuth et reprise native qualifiées
 
 Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
 Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
@@ -60,6 +60,21 @@ métier identiques/SQLite/retour qualifiés ; stoppé en inventaire AVANT activa
 Diagnostic38318975785 : ApiPrivee historique refusait GET/admin/realms localement,
 avant HTTP. Lecture seule ajoutée exactement, POST/PUT/DELETE et autre realm
 toujours refusés (11tests opérateur). Nouveau scellement exploitation requis.
+
+Run38319589466 : Native démarré/préparé, propriétaire lié puis configuration
+candidate refusée au démarrageNginx. Retour réellement réussi : diagnostic
+38320290444/38321508105 actif/démarrage9qv, anciennes identités et tous services
+rétablis, empreintes conservées, aucune base métier restaurée, aucun mail engagé.
+Cause précise duplicate location/oauth : /oauth/ ajouté face à ^~/oauth/ historique.
+Remplacer la même clé, contrôle de syntaxe Nginx avant toute nouvelle bascule.
+Reprise bornée operations/log-reprise-native.json vers7892 : réutiliser personne
+Native/secret/intent privés après retour qualifié, pas de seconde identité ; vérifier
+propriétaire actuel/secret live/politique SQLite identiques, aucun email précédent.
+Lien préparé24h : date réelle d’expiration affichée, pas promesse24h après envoi.
+Nouveau scellement de ces opérateurs requis, ELF métier toujoursbc70c822.
+Contrôles affectés exécutés : sélection25cas/1,6134s, routage Nix38,7329s,
+opérations12+23cas/0,5466s ; 48reçus inchangés conservés. Image de travail
+toujours présente, aucune opération de déploiement encore relancée.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation

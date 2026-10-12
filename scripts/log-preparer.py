@@ -59,6 +59,11 @@ def preparer(revision):
                     '-I','nixos-config='+str(p),'--out-link',racines/nom,'--max-jobs','1','--cores','2'],d).decode().strip()
         s.exiger(construit == r['amorcage' if nom == 'amorcage' else 'apres'], 'Construction différente')
         sources[nom] = str(p)
+    # Vérifier réellement le Nginx généré avant toute bascule/identité.
+    nginx=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+/bin/nginx',r['nginx'])
+    configs=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+\.conf',r['nginx'])
+    s.exiger(len(nginx)==len(configs)==1,'Configuration Nginx candidate ambiguë')
+    s.commande([nginx[0],'-t','-c',configs[0]],d)
     s.exiger(s.etat(d) == avant, 'Activation concurrente')
     p = dict(format=1, revision=revision, avant=avant, candidat=r['apres'], amorcage=r['amorcage'],
              configurations=sources, parametres=params, artefact_sha256=cert['qualification']['artefact_sha256'],

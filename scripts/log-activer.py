@@ -139,9 +139,27 @@ def amorcer(d,p,cert):
                 else:
                     exiger(c.execute('SELECT count(*) FROM fermetures WHERE terminee IS NULL').fetchone()[0]==0,
                            'Fermetures en cours à préserver')
+    precedent=None
+    ref=ROOT/'operations/log-reprise-native.json'
+    if ref.exists():
+        revision=json.loads(ref.read_text())['revision']
+        exiger(re.fullmatch('[a-f0-9]{40}',revision) and revision!=d.name,'Reprise native invalide')
+        avant=d.parent/revision
+        retour=json.loads((avant/'retour-log.json').read_text())
+        precedent=json.loads((avant/'activation-log-privee.json').read_text())
+        exiger(retour.get('retour_code_identite') and retour.get('donnees_preservees') and
+               not retour.get('restauration_base_metier'),'Retour natif préalable non qualifié')
+        exiger(not (avant/'courriel-log.json').exists(),'Courriel antérieur engagé : ne pas recommencer')
+        exiger(precedent['ancien_compte']==comptes[0] and precedent['ancien_lien']==liens[0] and
+               precedent['ancien_idp']==personne['id'] and precedent['mail']==personne['email'],
+               'Propriétaire concurrent pendant reprise native')
+        exiger(time.time()-precedent['qualified_after']<22*3600,'Invitation préparée trop ancienne')
     plan=dict(format=1,revision=d.name,phase='inventaire',ancien_compte=comptes[0],ancien_lien=liens[0],
               ancien_idp=personne['id'],mail=personne['email'],name='proprietaire-'+secrets.token_hex(8),
               qualified_after=int(time.time()),donnees=donnees())
+    if precedent:
+        for k in ('name','qualified_after','subject','intent'):plan[k]=precedent[k]
+        plan['native_reutilisee']=True
     ecrire(d/'activation-log-privee.json',plan)
     PHASE='sauvegarde-identites'
     dump=subprocess.run(['runuser','-u','postgres','--','pg_dump','--format=custom','mrjam_identite'],
@@ -160,16 +178,29 @@ def amorcer(d,p,cert):
     api=native.KanidmPrive(paquet,config_native(d,p),outils/'curl/bin/curl')
     PHASE='nouvelle-identite'
     plan['phase']='provisionnement-native-engage';ecrire(d/'activation-log-privee.json',plan)
-    result=api.configurer_proprietaire(plan,d)
+    if precedent:
+        op=api.login('idm_admin',api.recuperer('idm_admin'),d)
+        try:
+            attrs=api.http('/v1/person/'+plan['subject'],token=op)['attrs']
+            exiger(attrs['uuid']==[plan['subject']] and attrs['mail']==[plan['mail']],'Identité native différente')
+            secret_live=api.http('/v1/oauth2/mrjam-vision/_basic_secret',token=op)
+            exiger(secret_live==lire_prive('/var/lib/mrjam-identite/kanidm-vision.secret',512).decode().strip(),
+                   'Secret client natif concurrent')
+            lire_prive('/var/lib/mrjam-identite/kanidm-admission.token',16384)
+            result={'subject':plan['subject'],'intent':plan['intent']}
+        finally:api.commande('disable-account','idm_admin')
+    else:result=api.configurer_proprietaire(plan,d)
     uuid.UUID(result['subject'])
     secret=Path('/var/lib/mrjam-identite/kanidm-vision.secret')
-    exiger(not secret.exists(),'Credential client natif déjà présent : reprise à constater')
-    with secret.open('x') as f: f.write(result['client_secret']+'\n')
-    secret.chmod(0o600)
+    if not precedent:
+        exiger(not secret.exists(),'Credential client natif déjà présent : reprise à constater')
+        with secret.open('x') as f: f.write(result['client_secret']+'\n')
+        secret.chmod(0o600)
     admission=Path('/var/lib/mrjam-identite/kanidm-admission.token')
-    exiger(not admission.exists(),'Capacité admission native déjà présente : reprise à constater')
-    with admission.open('x') as f: f.write(result['admission_token']+'\n')
-    admission.chmod(0o600)
+    if not precedent:
+        exiger(not admission.exists(),'Capacité admission native déjà présente : reprise à constater')
+        with admission.open('x') as f: f.write(result['admission_token']+'\n')
+        admission.chmod(0o600)
     plan.update(subject=result['subject'],intent=result['intent'],phase='native-prepare')
     ecrire(d/'activation-log-privee.json',plan)
     # Restaurer réellement le backup natif dans une base indépendante, sans
@@ -185,11 +216,21 @@ def amorcer(d,p,cert):
     plan['restauration_native']=True;ecrire(d/'activation-log-privee.json',plan)
     return plan
 
+def verifier_politique_reprise(f,plan):
+    exiger(plan.get('native_reutilisee'),'État Log existant : reprise à constater')
+    with sqlite3.connect(f.as_uri()+'?mode=ro',uri=True) as c:
+        rows=c.execute('SELECT subject,mail,duration,minimum,qualified_after FROM log_principaux').fetchall()
+        exiger(rows==[(plan['subject'],plan['mail'].lower(),604800,'mfa',plan['qualified_after'])],
+               'Politique Log concurrente pendant reprise')
+    return True
+
 def seed_log(d,plan):
     p=Path('/var/lib/mrjam-metier/log');p.mkdir(mode=0o700,exist_ok=True)
     uid=pwd.getpwnam('mrjam-metier');os.chown(p,uid.pw_uid,uid.pw_gid)
     f=p/'sessions.sqlite'
-    exiger(not f.exists(),'État Log existant : reprise à constater')
+    if f.exists():
+        verifier_politique_reprise(f,plan)
+        return
     with sqlite3.connect(f) as c:
         c.execute("CREATE TABLE log_principaux(subject TEXT PRIMARY KEY,mail TEXT UNIQUE NOT NULL,duration INTEGER NOT NULL CHECK(duration IN (604800,2592000,7776000)),minimum TEXT NOT NULL CHECK(minimum IN ('any','mfa')),qualified_after INTEGER NOT NULL)")
         c.execute('INSERT INTO log_principaux VALUES(?,?,?,?,?)',(plan['subject'],plan['mail'].lower(),604800,'mfa',plan['qualified_after']))
@@ -256,10 +297,11 @@ def envoyer(d,p,cert,plan):
     message=EmailMessage();message['From']=smtp['from_address'];message['To']=plan['mail']
     message['Subject']='MrJ.am — créez votre compte Log et retrouvez Vision'
     message['Message-ID']='<log-'+d.name+'@mrj.am>'
+    expiration=datetime.datetime.fromtimestamp(plan['qualified_after']+86400,datetime.timezone.utc).strftime('%d/%m/%Y à %H:%M UTC')
     message.set_content('Votre nouveau compte commun est prêt. Vos données Vision restent rattachées à leur propriétaire historique.\n\n'
       'Choisissez votre phrase de passe et un TOTP, ou une passkey :\n'
       'https://log.mrj.am/ui/reset?token='+encode(plan['intent'])+'\n\n'
-      'Ce lien personnel expire après 24 heures. Ne le transférez pas. Le compte administrateur exige le second facteur. '
+      'Ce lien personnel, préparé pour 24 heures, expire le '+expiration+'. Ne le transférez pas. Le compte administrateur exige le second facteur. '
       'Les espaces et Unicode sont acceptés ; la phrase de passe peut atteindre 128 caractères. '
       'Votre adresse sert à la connexion et à la récupération ; le pseudo est facultatif et affiche cette adresse par défaut.\n\n'
       'Après enregistrement, ouvrez https://vision.mrj.am/auth/connexion. Vos données sont conservées. '

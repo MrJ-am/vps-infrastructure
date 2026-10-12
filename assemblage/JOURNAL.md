@@ -872,3 +872,14 @@ actuels (20261012T224807), empreintes identiques, retour et RLS36qualifiés sans
 historique n'admettait pas GET/admin/realms. Extension uniquement lecture exacte,
 11tests avec vraies constructions Request/mock transport ; écritures et autre
 realm refusés avant transport. Aucun compte supprimé/courriel envoyé.
+
+12octobre —38319589466 : sauvegarde/restore qualifiés, Native créé et restauration
+native isolée réussie avant quiescence ; cutoverNginx refusé, code4. Retour exécuté
+réussi, confirmé38320290444 :9qv actif/démarrage, metier/KC/auth/nginx/PGactifs,
+Nativeinactive, données identiques, aucune restauration métier. Identification
+filtrée progressive : duplicate location/oauth, dû aux clés /oauth/ et ^~/oauth/.
+Même clé remplacée, test absence d’autreclé ; nginx -t candidat ajouté AVANT
+activation. Personne native existante conservée/reprise explicite par ancienop7892,
+retour/mailnonengagé/propriétaire/secret/politique exacts vérifiés ; aucun nouveau
+compte, aucun envoi jusqu’à réussite réelle.12tests dont SQLite reprise sans
+écriture/concurrence refusée. Date réelle de fin du lien dans futur courrier.
