@@ -154,6 +154,14 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
 (defun politique (c subject)
   (base c (lambda (db) (first (mrjam-native:sqlite-requete db
      "SELECT * FROM log_principaux WHERE subject=?" (list subject))))))
+(defun enregistrer-principal (c subject mail)
+  "Admission vérifiée, identité native explicite ; aucune fusion par mail."
+  (unless (and (mrjam-oidc::texte-borne-p subject 36 36) (stringp mail)) (refuser 400))
+  (principal c (mrjam-oidc:issuer-client "mrjam-vision") subject)
+  (base c (lambda (db) (mrjam-native:sqlite-requete db
+    "INSERT INTO log_principaux(subject,mail,duration,minimum,qualified_after) VALUES(?,?,604800,'any',?)
+     ON CONFLICT(subject) DO UPDATE SET mail=excluded.mail"
+    (list subject (string-downcase mail) (temps))))) t)
 (defun duree-session (c subject)
   (or (champ (politique c subject) "duration") 604800))
 (defun verification-renforcee-p (c session &optional (maintenant (temps)))

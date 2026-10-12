@@ -808,3 +808,16 @@ Restauration native : ancien nom restore invalide (avant tout effet), corrigé e
 database restore ; format gzip du backup en ligne nécessitait décompression privée.
 Restore réel puis verify et lecture d'UUID/client/groupe réussis. Aucun IdP de
 production créé, aucun mail envoyé. Catalogue/opérateurs en cours de qualification.
+
+12octobre — Finalisation admission Kanidm : le constat d’ouverture réelle de
+Vision remplace l’hypothèse de fermeture. Port Lisp avec capability officielle
+onboarding/mail, aucun admin IdP général dans le produit. Vrai PG17 isolé :
+confirmation mail, consentement, création, rattachement, reprise, file SMTP
+synthétique réussis chaud puis froid. Refus réel sur propriétaire protégé,
+politique et groupe admin ; Native retourne500/notauthorised pour le premier,
+aucun500 générique accepté. Schéma SQLite enrolement additive au démarrage.
+Provisionnement exact avec idm_high_privilege : vraie connexion MFA et durée
+604800s confirmées. Signature servie par fixtureHTTP loopback car politique du
+Chromium commun interditfile:// ; ressources et assertions conservées.
+GC normal90chemins inutilisés :2920,56Mio récupérés, racines produit/outillage
+conservées. Image C saine toujours552402 (observation, aucun PID script fixe).

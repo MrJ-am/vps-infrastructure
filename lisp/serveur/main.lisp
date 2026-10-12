@@ -50,11 +50,19 @@
             (let ((r (first (mrjam-native:requete c
                              "SELECT vision_gestion.identifier($1,$2)::text AS compte" (list issuer subject)))))
               (vision:parse-json (cdr (assoc "compte" r :test #'equal)))))))))))))
-(defun configurer-admission ()
+(defun configurer-admission (&optional log)
   (when (uiop:getenv "MRJ_ADMISSION_DSN")
     (mrjam-native:initialiser-sqlite (obligatoire "MRJAM_LIBSQLITE"))
     (vision-admission:faire-admission (obligatoire "MRJ_ADMISSION_DSN") (obligatoire "MRJ_ADMISSION_ETAT")
-      (mrjam-courriel:lire-prive (obligatoire "MRJ_SMTP_SECRET")) (client-identite "mrjam-admission" "MRJ_ADMISSION_SECRET"))))
+      (mrjam-courriel:lire-prive (obligatoire "MRJ_SMTP_SECRET"))
+      (if log
+          (mrjam-identite:faire-client-kanidm
+            (string-trim '(#\Newline #\Return)
+              (sb-ext:octets-to-string (mrjam-courriel::lire-octets-prives (obligatoire "MRJ_ADMISSION_SECRET") 16384)
+                                      :external-format :utf-8))
+            (obligatoire "MRJAM_CURL") (obligatoire "MRJAM_CA_FILE")
+            :enregistrer (lambda (subject mail) (mrjam-log::enregistrer-principal log subject mail)))
+          (client-identite "mrjam-admission" "MRJ_ADMISSION_SECRET")))))
 (defun configurer-fermeture (admission)
   (when (uiop:getenv "MRJ_FERMETURE_DSN")
     (list :secret (mrjam-courriel:lire-secret-prive (obligatoire "MRJ_FERMETURE_HOOK"))
@@ -88,8 +96,11 @@
         (mrjam-native:initialiser-postgresql (obligatoire "MRJAM_LIBPQ"))
         (sb-sys:enable-interrupt sb-posix:sigterm
           (lambda (&rest ignores) (declare (ignore ignores)) (sb-ext:exit :code 0 :abort nil)))
-        (let* ((log (configurer-log)) (cycle (configurer-cycle log))
-               (admission (configurer-admission)) (fermeture (configurer-fermeture admission)))
+        (let* ((log (configurer-log))
+               (issuer (when log (setf mrjam-identite:issuer (mrjam-oidc:issuer-client "mrjam-vision"))))
+               (cycle (configurer-cycle log))
+               (admission (configurer-admission log)) (fermeture (configurer-fermeture admission)))
+          (declare (ignore issuer))
           (servir (faire-configuration
                   :matheval (matheval:faire-contexte :connexion (obligatoire "MATHEVAL_DSN")
                               :version (obligatoire "MATHEVAL_BANK_VERSION") :activation (secret-fichier "MATHEVAL_SETUP_HASH_FILE"))

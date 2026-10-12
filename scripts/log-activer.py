@@ -163,6 +163,10 @@ def amorcer(d,p,cert):
     exiger(not secret.exists(),'Credential client natif déjà présent : reprise à constater')
     with secret.open('x') as f: f.write(result['client_secret']+'\n')
     secret.chmod(0o600)
+    admission=Path('/var/lib/mrjam-identite/kanidm-admission.token')
+    exiger(not admission.exists(),'Capacité admission native déjà présente : reprise à constater')
+    with admission.open('x') as f: f.write(result['admission_token']+'\n')
+    admission.chmod(0o600)
     plan.update(subject=result['subject'],intent=result['intent'],phase='native-prepare')
     ecrire(d/'activation-log-privee.json',plan)
     # Restaurer réellement le backup natif dans une base indépendante, sans
@@ -304,7 +308,7 @@ def activer(d,p,cert):
           rattachement_explicite=True,anciennes_identites_retirees=True,donnees_preservees=True,
           redemarrage_verifie=True,restauration_native_isolee=True,mail=preuve_mail,services=mesures,
           etape2_complete=False,qualification_personnelle='en attente',
-          limites=['Admissions fermées ; portage de leur provisionnement natif et des fermetures communes non terminé.',
+          limites=['Fermetures communes définitives IdP à terminer ; admission native conservée, secret borné90jours à renouveler par exploitation.',
                    'Préférences individuelles et panneau commun complet restent à qualifier ; rôle propriétaire limité à sept jours.',
                    'Connexion et autorisation MCP personnelles restent à effectuer.'])
         ecrire(d/'qualification-log-production.json',preuve);print(json.dumps(preuve,ensure_ascii=False))

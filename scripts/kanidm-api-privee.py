@@ -81,6 +81,7 @@ class KanidmPrive:
         jamais de ce processus et n'est pas placée dans le monolithe.
         """
         op=self.login('idm_admin',self.recuperer('idm_admin'),dossier)
+        sys=self.login('admin',self.recuperer('admin'),dossier)
         nom=plan['name']; mail=plan['mail']
         for group in ('idm_all_accounts','idm_all_persons'):
             self.http('/v1/group/'+group+'/_attr/authsession_expiry',['7776000'],token=op,method='PUT')
@@ -94,6 +95,15 @@ class KanidmPrive:
         person=self.http('/v1/person/'+nom,token=op)['attrs']
         subject=person['uuid'][0]
         self.http('/v1/group/mrjam-proprietaire-policy/_attr/member',[subject],token=op)
+        self.http('/v1/group/idm_high_privilege/_attr/member',[subject],token=sys)
+        # Capacité standard strictement inférieure à idm_admin : admission et
+        # métadonnées mail. Le propriétaire protégé n'est pas réinitialisable.
+        self.http('/v1/service_account',{'attrs':{'name':['mrjam-admission'],
+            'displayname':['Admission pédagogique'],'entry_managed_by':['idm_admin']}},token=op)
+        self.http('/v1/group/idm_people_on_boarding/_attr/member',['mrjam-admission'],token=op)
+        self.http('/v1/group/idm_account_mail_read/_attr/member',['mrjam-admission'],token=sys)
+        admission=self.http('/v1/service_account/mrjam-admission/_api_token',
+            {'label':'admission-qualifiee','expiry':int(__import__('time').time())+90*86400,'read_write':True},token=op)
         self.http('/v1/oauth2/_basic',{'attrs':{'name':['mrjam-vision'],'displayname':['Vision MrJ.am'],
                     'oauth2_rs_origin_landing':['https://vision.mrj.am'],'oauth2_strict_redirect_uri':['true']}},token=op)
         self.http('/v1/oauth2/mrjam-vision/_attr/oauth2_rs_origin',['https://vision.mrj.am/auth/retour'],token=op)
@@ -105,7 +115,8 @@ class KanidmPrive:
         # Compte technique de bootstrap, pas une méthode faible de connexion
         # permanente. La récupération future reste réservée au socket privé/root.
         self.commande('disable-account','idm_admin')
-        return {'subject':subject,'client_secret':secret,'intent':intent['token']}
+        self.commande('disable-account','admin')
+        return {'subject':subject,'client_secret':secret,'intent':intent['token'],'admission_token':admission}
 
     def restaurer_verifier(self, backup, dossier, subject):
         """Restaurer hors ligne puis lire vraiment les entrées restaurées."""

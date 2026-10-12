@@ -27,6 +27,7 @@ in {
     enable = lib.mkEnableOption "Kanidm séparé et client Log Common Lisp qualifiés";
     paquet = lib.mkOption { type = lib.types.nullOr lib.types.package; default = null; };
     secretClient = lib.mkOption { type = lib.types.str; default = "/var/lib/mrjam-identite/kanidm-vision.secret"; };
+    secretAdmission = lib.mkOption { type = lib.types.str; default = "/var/lib/mrjam-identite/kanidm-admission.token"; };
   };
   imports = [ (import ../assemblage/kanidm/service.nix {
     tlsChainFile = "/var/lib/acme/log.mrj.am/fullchain.pem";
@@ -63,17 +64,18 @@ in {
         MRJ_LOG_DATABASE = "/var/lib/mrjam-metier/log/sessions.sqlite";
         MRJ_LOG_IDENTITES_DSN = "host=/run/postgresql dbname=vision user=vision_identite options='-c statement_timeout=5000'";
         MRJ_LOG_CLIENT_SECRET = "/run/credentials/mrjam-metier.service/log-client";
+        MRJ_ADMISSION_SECRET = lib.mkForce "/run/credentials/mrjam-metier.service/native-admission";
       };
       serviceConfig.LoadCredential = lib.mkForce [
         "smtp:${config.infrastructure.courriel.secret}"
         "cycle-config:${config.infrastructure.visionCycle.configPrivee}"
         "matheval-setup:${config.infrastructure.metier.setupHash}"
+        "native-admission:${cfg.secretAdmission}"
         "log-client:${cfg.secretClient}" ];
-      # Les anciennes chaînes d'admission/fermeture ne doivent pas s'exécuter
-      # avec des capacités Keycloak. Précondition : inscriptions fermées et
-      # aucune demande en attente, contrôlées par l'opérateur de bascule.
-      serviceConfig.UnsetEnvironment = [ "MRJ_ADMISSION_DSN" "MRJ_FERMETURE_DSN"
-        "VISION_CYCLE_CLIENT_SECRET" "MRJ_ADMISSION_SECRET" "MRJ_FERMETURE_CLIENT" "MRJ_FERMETURE_HOOK" ];
+      # L'admission conserve ses contrôles/états avec une capacité native
+      # onboarding, pas un credential administrateur IdP général.
+      serviceConfig.UnsetEnvironment = [ "MRJ_FERMETURE_DSN"
+        "VISION_CYCLE_CLIENT_SECRET" "MRJ_FERMETURE_CLIENT" "MRJ_FERMETURE_HOOK" ];
     };
     services.nginx.virtualHosts."vision.mrj.am".locations = {
       "/auth/" = auth "" ''limit_req zone=protected_api_per_ip burst=5 nodelay; limit_req_status 429;'';

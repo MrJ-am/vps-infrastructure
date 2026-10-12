@@ -138,11 +138,26 @@ Kanidm transmis tels quels ; cet adaptateur n'est pas une vue HTML/CSS applicati
 Nginx fixe cible/service/hôte et vérifie TLS du Kanidm loopback. Répertoires
 identité/admin0700 et credentials séparés ; pas de debugger dans le produit.
 
-La bascule d'invitation conserve admissions FERMÉES et exige zéro demande en
-cours ; leur provisionnement natif/fermeture commune et le panneau complet
-restent non qualifiés. Ce jalon n'est pas la clôture de toute l'étape2. Ne pas
-fermer une admission active pour faire réussir un opérateur. Le contrôle doit
-refuser la promotion dans ce cas. L'intent personnel n'est jamais consommé par
-une sonde : `/ui/reset` sans token seulement. EnvoiSMTP marqué avant appel,
-aucun nouvel envoi automatique après résultat incertain. Les backups natifs
+La bascule conserve le réglage d'inscription existant. L'admission native crée une
+personne après vérification de son adresse et des consentements existants, puis
+rattache explicitement son UUID au compte métier. Une colonne SQLite privée
+`demandes.enrolement` conserve l'intent pour reprendre sans nouvel envoi : même
+protection que la file SMTP, nettoyage à trente jours. Ajout de schéma au démarrage
+seulement, jamais au chargement ASDF. Tests : admission-kanidm.lisp, vrai PostgreSQL
+et Kanidm isolés, scénario chaud et reproduction froide.
+
+La capacité native d'onboarding et de lecture mail expire après90jours. Elle ne
+permet ni modification de politique globale ni élévation administrateur ; le
+propriétaire placé dans idm_high_privilege ne peut être réinitialisé ou suspendu
+par cette capacité. Ces refus sont exercés sur Kanidm réel. Limite : cette capacité
+peut agir sur les personnes ordinaires ; une compromission complète du monolithe
+atteint ce niveau de confiance. Elle ne sert pas à modifier les préférences
+individuelles. Rotation officielle du token par l'exploitation avant expiration,
+sans credential idm_admin permanent dans le produit.
+
+Zéro demande d'admission ou fermeture en cours exigé avant changement de sujets
+IdP. Les fermetures communes définitives et le panneau complet restent à terminer.
+Ce jalon n'est pas la clôture de toute l'étape2. L'intent personnel n'est jamais
+consommé par une sonde : `/ui/reset` sans token seulement. EnvoiSMTP marqué avant
+appel, aucun nouvel envoi automatique après résultat incertain. Les backups natifs
 et SQLite Log rejoignent le timer chiffré existant avant manifeste/copie froide.
