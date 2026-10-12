@@ -84,6 +84,7 @@ def main(revision):
             out['nginx_categories_precises']=[v for v in ('duplicate upstream','duplicate location','already bound',
                 'shared memory zone','duplicate directive','directive is duplicate','already declared') if v in texte.lower()]
             out['nginx_upstreams_dupliques']=re.findall(r'duplicate upstream "([a-zA-Z][a-zA-Z0-9_-]{0,80})"',texte)
+            out['nginx_locations_dupliquees']=re.findall(r'duplicate location "([=/~^ @A-Za-z0-9_./-]{1,120})"',texte)
             out['nginx_zones']=sorted(set(z for z in ('protected_api_per_ip','mrjam_metier','vision_api','log_auth') if z in texte))
             out['nginx_erreur_categories']=[v for k,v in {'unknown directive':'directive_inconnue',
                 'duplicate':'directive_dupliquee','invalid':'invalide','permission denied':'permission_refusee',
