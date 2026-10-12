@@ -2,6 +2,36 @@
 
 ## Point de reprise actif — ménage terminé, versions d’outils harmonisées
 
+Reprise12octobre : imageC saine conservée, même PID/marqueur/objet depuis CL-MCP
+et Tron, mutations0/debuggerNIL. Six HEAD/branches conformes au manifeste ; seul
+rapport MCP historique non suivi avant nouvelles modifications. Précollecte
+native achevée avec succès ; vendor officiel vérifié et protégé. Compilation
+native en cours, une seule commande, dans `/tmp/mrjam-kanidm-builds` (tmpfs).
+Le premier build sur overlay a échoué ENOSPC : TMPDIR ne change pas le build-dir
+Nix. Ne pas répéter la compilation active ; constater processus et journal
+`state/kanidm-compilation-tmpfs-20261012.log`. Aucun changement production.
+
+Amendement propriétaire : préférer promotion du compte Vision vers le seul compte
+Log, email ajouté et mot de passe gardé si import officiel simple. Nouvel
+enrôlement/reconnexion autorisés sinon ; aucune double identité à maintenir.
+SHA512-crypt historique et import `{crypt}$6$` reconnu dans le code officiel,
+réhachage Argon2id prévu ; format installé et essai réel restent à qualifier.
+Données/propriétaire métier préservés, aucun import d'authentificateur Keycloak.
+
+Travail local en cours : transport HTTPS Common Lisp (TLS/SNI Log, cible loopback
+fermée, secrets sur pipe, pas de redirect ni répétition de POST), URI/config-curl
+mutualisées dans mrjam-native ; domaine Matheval réel ajouté aux transactions.
+32contrôles passent dans l'image persistante contre une fixture HTTPS synthétique,
+11requêtes réellement reçues, TLS/hostname/limites/secret/timeout sans POST répété.
+Cela ne qualifie pas Kanidm réel. Sources écrites puis ASDF incrémental ; un premier
+appel lu avant nouveaux exports a échoué avant toute évaluation, corrigé par
+résolution des symboles après chargement. Qualification froide sans cache passée ;
+orchestration centrale locale : OIDC681, transactions40, transport32/11requêtes,
+courriel réel STARTTLS et contrôles de sélection22 passent. Les échecs TLS sont
+refusés avant toute requête HTTP. Curl effectivement configuré est exécuté et
+empreinté, testé par remplacement synthétique à version constante. Sources non
+commitées préservées ; aucun résultat synthétique présenté comme Kanidm réel.
+
 Le disque ne peut pas être augmenté. Nettoyage local effectué avant tout déport :
 4,82Go nets récupérés, disponibles passés de1,10 à5,92Go (unités décimales).
 Mesure exacte/opérations/reconstruction : `assemblage/nettoyage-20261012.json`.
@@ -52,13 +82,17 @@ avant toute seconde promotion. Passkey/OTP personnels restent à préparer sans
 inventer l’enrôlement. Aucun retour à l’ancien déploiement ni nouvelle demande
 d’extension disque. Les documents ci-dessous constituent l’historique.
 
-Précollecte native effectivement relancée après ménage (12octobre, phase encore
-observée en cours au relevé). `nix-build --no-out-link --cores 2 --max-jobs 1`
+Précollecte native relancée après ménage (12octobre), achevée code0.
+`nix-build --no-out-link --cores 2 --max-jobs 1`
 avec le paquet exact ci-dessus, cible cargoDeps seulement, TMPDIR=/tmp.
 Journal : `state/kanidm-precollecte-native-20261012.log` ; état daté et commande
 complète : `state/kanidm-precollecte-native-20261012.json`. Prévision Nix :60paths,
-943,12MiB téléchargés/2866,63MiB décompressés ; téléchargement Rust encore en cours,
-aucun résultat vendor réussi, aucune compilation/service Kanidm prétendus.
+943,12MiB téléchargés/2866,63MiB décompressés. Vendor741crates du registre et
+Cargo.lock exact, licences déclarées présentes ; intégrité Nix vérifiée du
+staging fixe et du vendor dérivé, preuve `kanidm/vendor-qualification.json`.
+Le cargoHash officiel porte sur le staging compact, pas le vendor décompressé.
+Compilation native non terminée au relevé : environ3,7Gio tmpfs et1,7Gio overlay
+libre ; cache de fichiers sous pression mais zéro OOM. Aucun service démarré.
 La marge5,92Go documente l’issue du ménage AVANT ces nouveaux téléchargements ;
 relever la marge actuelle au prochain contrôle. Constater l’issue de cette commande
 avant toute répétition et protéger le vendor validé avant une autre GC. Pas de

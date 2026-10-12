@@ -12,7 +12,8 @@
 
 (defun hote-applicatif-p (hote)
   (and (stringp hote) (<= 1 (length hote) 253)
-       (uiop:string-suffix-p hote ".mrj.am")
+       (or (uiop:string-suffix-p hote ".mrj.am")
+           (member hote '("principiipetit.io" "www.principiipetit.io") :test #'equal))
        (every (lambda (c) (or (char<= #\a c #\z) (char<= #\0 c #\9)
                              (find c ".-"))) hote)
        (not (search ".." hote)) (not (char= #\. (char hote 0)))))

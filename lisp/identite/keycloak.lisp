@@ -17,10 +17,7 @@
   (%faire-client :id id :secret secret :base base :curl curl))
 (defun parametre-url (s)
   (unless (stringp s) (refuse))
-  (with-output-to-string (o)
-    (loop for b across (sb-ext:string-to-octets s :external-format :utf-8) do
-      (if (or (<= 65 b 90) (<= 97 b 122) (<= 48 b 57) (member b '(45 46 95 126)))
-          (write-char (code-char b) o) (format o "%~2,'0X" b)))))
+  (mrjam-native:parametre-url s))
 
 (defun lire-reponse (s)
   (let* ((v (make-array (* 2 1024 1024) :element-type 'character)) (n (read-sequence v s))

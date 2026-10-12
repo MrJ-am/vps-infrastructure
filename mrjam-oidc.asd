@@ -28,3 +28,20 @@
              (declare (ignore operation system))
              (unless (uiop:symbol-call :mrjam-oidc-transactions-tests :verifier)
                (error "Échec des transactions OIDC."))))
+
+(asdf:defsystem "mrjam-oidc/transport"
+  :description "Client HTTPS Kanidm explicite ; secrets sur pipe, aucune connexion au chargement."
+  :depends-on ("mrjam-oidc/transactions")
+  :components ((:file "lisp/identite/oidc-transport"))
+  :in-order-to ((asdf:test-op (asdf:test-op "mrjam-oidc/transport-tests"))))
+
+(asdf:defsystem "mrjam-oidc/transport-tests"
+  :depends-on ("mrjam-oidc/transport")
+  :components ((:file "tests/oidc-transport"))
+  :perform (asdf:test-op (operation system)
+             (declare (ignore operation system))
+             (let ((nombre (uiop:symbol-call :mrjam-oidc-transport-tests :verifier
+                            (or (uiop:getenv "MRJAM_OIDC_FIXTURE")
+                                (error "Fixture HTTPS synthétique requise.")))))
+               (assert (and (integerp nombre) (>= nombre 25)))
+               (format t "~&OIDC transport : ~D contrôles HTTPS réels terminés.~%" nombre))))

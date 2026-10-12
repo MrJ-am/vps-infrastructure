@@ -8,6 +8,9 @@
 
 (defun refuser (raison) (error 'oidc-error :raison raison))
 (defstruct (identite (:constructor %identite)) issuer sujet expiration auth-time claims)
+(defmethod print-object ((objet identite) stream)
+  (print-unreadable-object (objet stream :type t)
+    (write-string "claims personnels masqués" stream)))
 
 (defun texte-borne-p (valeur minimum maximum)
   (and (stringp valeur) (<= minimum (length valeur) maximum)

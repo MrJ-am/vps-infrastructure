@@ -74,6 +74,19 @@ class Selection(unittest.TestCase):
 
 
 class Recus(unittest.TestCase):
+    def test_curl_configure_est_execute_et_empreinte(self):
+        with tempfile.TemporaryDirectory() as t:
+            executable = Path(t) / 'curl-fixture'
+            executable.write_text('#!/bin/sh\nprintf "%s\\n" "curl fixture"\n')
+            executable.chmod(0o700)
+            with patch.dict(os.environ, {'MRJAM_CURL': str(executable)}):
+                suite = {'outils': {'curl': ['curl', '--version']}, 'configuration': ['MRJAM_CURL']}
+                premier = a.environnement(suite)
+                self.assertEqual(premier['outils']['curl']['version'], 'curl fixture')
+                self.assertEqual(premier['outils']['curl']['executable_sha256'], a.empreinte(executable.read_bytes()))
+                executable.write_text(executable.read_text()+'# autre installation, même version affichée\n')
+                self.assertNotEqual(premier, a.environnement(suite))
+
     def test_bibliotheque_serveur_sans_effet_sur_suite_frontend(self):
         with patch.dict(os.environ, {'MRJAM_LIBPQ': '/absent/bibliotheque-serveur'}):
             self.assertEqual(a.environnement({})['bibliotheques_natives'], {})

@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "etat": "sources/lock/hash vendor officiel inspectés ; récupération effective, licences transitives, démarrage et qualification encore requis",
+  "etat": "Source/lock et précollecte native vérifiés ; licences registre inventoriées, compilation active, aucun serveur qualifié",
   "usage": "IdP indépendant ; serveur et CLI officiels, pas de daemon Unix/PAM/LDAP/RADIUS ajouté",
   "version": "1.11.2",
   "revision": "547933867e87da737e79d26942dc9261adaa5ee9",
@@ -4602,7 +4602,6 @@
     "Paquet Nix amont doCheck=false ; installation ne prouvera pas OIDC, politiques ni reprises.",
     "Services et stockage de test exclusivement locaux, sans branchement production."
   ],
-  "cargo_vendor_nar_sha256": "sha256-pn1g0sesG9YtFf/qUvrSHW/m+2rHEyeZGzW1V5XRT+Y=",
   "provenance_hashes_nix": {
     "depot": "NixOS/nixpkgs",
     "revision": "c79f17227ea6bed328437e4d38827bc0b22f7f33",
@@ -4610,5 +4609,7 @@
     "sha256": "5797f6b092e90fbfbdc59b3a91defda4afcc144ac0397bb3d9f787df1c4d8300",
     "texte": "import ./generic.nix {\n  version = \"1.11.2\";\n  hash = \"sha256-W7LkbHu2jS5pB63eTvmKsypOzL/bzm/5ssnzlpME6jc=\";\n  cargoHash = \"sha256-pn1g0sesG9YtFf/qUvrSHW/m+2rHEyeZGzW1V5XRT+Y=\";\n}\n",
     "date_commit": "2026-09-11T12:40:03Z"
-  }
+  },
+  "cargo_hash_sha256": "sha256-pn1g0sesG9YtFf/qUvrSHW/m+2rHEyeZGzW1V5XRT+Y=",
+  "cargo_hash_portee": "Hash NAR du staging compact fixe de fetchCargoVendor, pas du vendor décompressé dérivé ; preuve effective dans vendor-qualification.json."
 }
