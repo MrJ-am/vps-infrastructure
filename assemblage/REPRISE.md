@@ -18,8 +18,10 @@ loopback du serveur final ; serveur initdb temporaire Unix ensuite arrêté
 conservé dans le journal ; aucun nouveau comportement métier.
 Fusion Nginx qualifiée conservée, même binaire296b7/frontends/image interactive C.
 
-Prochaine action après résultat : publier sources, sceller36reçus exacts,
-promotion centrale unique. Puis MCP réel/données/redémarrage/services/mesures.
+Candidat185f931 scellé/36reçus exacts vérifiés, transport2022c223 publié :
+109153068octets chiffrés, SHA256
+fb274659509d08ac0748602f227dc95b5ad6420295fa3d743295d3119ece0b46.
+Prochaine action : promotion centrale unique. Puis MCP réel/données/redémarrage/services/mesures.
 Ne pas redéployer0e3f999. Kanidm non commencé ; rapport MCP non commité conservé.
 
 ## État précédent — historique conservé
