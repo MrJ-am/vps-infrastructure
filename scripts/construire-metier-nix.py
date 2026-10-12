@@ -27,11 +27,17 @@ def construire(outils_seulement=False):
     if cible['source_url']!='https://api.github.com/repos/NixOS/nixpkgs/tarball/'+cible['nixpkgs_revision']:
         raise ValueError('Source officielle Nixpkgs requise')
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','NIX_REMOTE','NIX_SSL_CERT_FILE','SSL_CERT_FILE')}
-    # Pas de token GitHub, credentials Actions, proxy personnalisé ou .netrc.
+    # Pas de token GitHub, credentials Actions ni .netrc dans le build.
+    # Le téléchargement public doit conserver le proxy de l'environnement
+    # hébergé : l'accès direct n'y est pas disponible. Ces variables ne passent
+    # pas au processus Nix/compilateur ; l'intégrité SHA256 reste obligatoire.
+    env_telechargement = dict(env)
+    for nom in ('HTTP_PROXY','HTTPS_PROXY','NO_PROXY','http_proxy','https_proxy','no_proxy'):
+        if nom in os.environ: env_telechargement[nom] = os.environ[nom]
     with tempfile.TemporaryDirectory(prefix='mrjam-nix-verrouille-') as d:
         d=Path(d);archive=d/'nixpkgs.tar.gz'
         subprocess.run(['curl','--disable','--fail','--location','--silent','--show-error','--max-time','180',
-                        cible['source_url'],'--output',str(archive)],env=env,check=True)
+                        cible['source_url'],'--output',str(archive)],env=env_telechargement,check=True)
         if hashlib.sha256(archive.read_bytes()).hexdigest()!=cible['source_archive_sha256']:
             raise ValueError('Archive Nixpkgs différente du verrou ; ne pas poursuivre')
         with tarfile.open(archive) as t:t.extractall(d,filter='data')
