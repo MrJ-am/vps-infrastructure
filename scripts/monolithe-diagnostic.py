@@ -69,6 +69,21 @@ def metadonnees_roles(postgres,base,attendus,controleur):
     return {r['nom']:{k:r[k] for k in champs} for r in json.loads(p.stdout) if r['nom'] in attendus}
 
 
+def proprietes_vue_historique(postgres):
+    q="""BEGIN READ ONLY;
+SELECT json_build_object('existe',count(*)=1,
+ 'proprietaire_vision',coalesce(bool_or(c.relowner=(SELECT oid FROM pg_roles WHERE rolname='vision')),false),
+ 'proprietaire_migration',coalesce(bool_or(c.relowner=(SELECT oid FROM pg_roles WHERE rolname='vision_migration')),false))
+FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+WHERE n.nspname='public' AND c.relname='vision_browser_sheets' AND c.relkind='v';
+COMMIT;"""
+    p=subprocess.run(['runuser','-u','postgres','--',str(Path(postgres)/'bin/psql'),
+        '-XAtq','--set=ON_ERROR_STOP=1','--host=/run/postgresql','--dbname=vision','--file=-'],
+        input=q,text=True,capture_output=True,timeout=30,check=True)
+    r=json.loads(p.stdout)
+    return {k:r[k] for k in ('existe','proprietaire_vision','proprietaire_migration')}
+
+
 def metadonnees_rls(postgres,base,attendus):
     if base not in ('vision','matheval'):raise ValueError('Base hors périmètre')
     # Métadonnées uniquement, transaction en lecture seule ; aucune ligne métier.
@@ -135,6 +150,7 @@ def main(revision):
     spec=importlib.util.spec_from_file_location('tables_diagnostic',d/'payload/vps/scripts/verifier-tables.py')
     controleur=importlib.util.module_from_spec(spec);spec.loader.exec_module(controleur)
     out['roles_sql_actuels']={b:metadonnees_roles(r['postgres'],b,roles[b],controleur) for b in roles}
+    out['vue_historique']=proprietes_vue_historique(r['postgres'])
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
     for nom in ('restauration','activation'):
         p=d/('erreur-'+nom+'-privee.log')
