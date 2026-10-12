@@ -61,6 +61,8 @@ class Reprise(unittest.TestCase):
         out=diag.classifier("error: attribute 'version' missing\n at /fixture/log.nix:12:5\n services.kanidm.package\n value: "+secret,ancien)
         self.assertEqual(out['attributs_absents'],['version'])
         self.assertNotIn(secret,json.dumps(out))
+        self.assertEqual(diag.statut_http('urllib.error.HTTPError: HTTP Error 502: '+secret),502)
+        self.assertIsNone(diag.statut_http('ValueError: '+secret))
     def plan(self):
         return dict(ancien_compte={'utilisateur':'alice'},ancien_lien={'emetteur':'ancien','sujet':'avant'},subject='nouveau')
     def test_commit_apres_timeout_est_constate_et_retourne(self):
