@@ -601,3 +601,13 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   réutilisé localement depuis sourceNixc5 vérifiée/cache signé, audit/closure notés.
   Nouveau contrôle bloquant routage-nginx1,7222s ; sécurité9,8278s et migration
   50,7521s. Paquet actif VPS encore à comparer, aucun succès de production annoncé.
+
+- Préparation38197714319 refusée avant restauration/activation : assertion Nix
+  root/alias. Diagnostic38198619771 : root et tryFiles hérités sur les deux
+  locations exactes Vision, valeurs non exposées. Correction explicite limitée
+  aux options incompatibles ; test fusion avec options NixOS officielles et
+  anciennes valeurs mkForce. Vrai Nginx/SBCL : accueil/CSP/no-store, six chemins,
+  manifeste exact, MCP401 et absence404. Routage1,6523s, sécurité10,095s réussis ;
+  autres reçus préservés. Nginx actif identique au paquet local selon38197483752.
+  Ancien prototype index/404 ne prouve pas la cause précise de l’ancien tryFiles.
+  Pas de changement de binaire/frontend, ni succès de production annoncé.
