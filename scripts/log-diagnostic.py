@@ -80,9 +80,7 @@ def main(revision):
             test=subprocess.run([binaries[0],'-t','-c',configs[0]],capture_output=True,text=True,timeout=20)
             texte=test.stderr
             out['nginx_candidat_code']=test.returncode
-            out['nginx_directives_dupliquees']=[v for v in ('proxy_ssl_server_name','proxy_ssl_name','proxy_ssl_verify',
-                'client_max_body_size','access_log','proxy_pass','proxy_http_version','proxy_set_header')
-                if re.search(re.escape('"'+v+'"')+r'.*duplicate',texte)]
+            out['nginx_directives_dupliquees']=sorted(set(re.findall(r'"([a-z][a-z0-9_]{1,60})" directive is duplicate',texte)))
             out['nginx_erreur_categories']=[v for k,v in {'unknown directive':'directive_inconnue',
                 'duplicate':'directive_dupliquee','invalid':'invalide','permission denied':'permission_refusee',
                 'cannot load certificate':'certificat_indisponible','bind()':'port_indisponible'}.items()
