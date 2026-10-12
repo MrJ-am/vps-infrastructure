@@ -1,6 +1,58 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — étape1 acceptée, client OIDC qualifié, installation Kanidm bloquée
+## Point de reprise actif — ménage terminé, versions d’outils harmonisées
+
+Le disque ne peut pas être augmenté. Nettoyage local effectué avant tout déport :
+4,82Go nets récupérés, disponibles passés de1,10 à5,92Go (unités décimales).
+Mesure exacte/opérations/reconstruction : `assemblage/nettoyage-20261012.json`.
+161objets Nix collectés normalement après protection de40racines : sources
+ASDF auditées, outils actifs et artefact qualifié. Pip/npm nettoyés, sept caches
+navigateurs retirés. Neuf copies locales de candidats chiffrés supprimées APRÈS
+vérification SHA256/taille des blobs Git et présence des transports distants.
+Sources/preuves/transports et candidats185f931 actif/77c7f82 retour conservés.
+Atelier Matheval temporaire reconstructible retiré ; sources et fixtures canoniques
+gardées. Git/modèles/embeddings et seules copies de candidats non publiés préservés.
+Aucun cache Cargo/Rustup dans le compte agent ; /root inaccessible, non nettoyé.
+
+Ancien processus SBCL2.5 sans socket arrêté, runtime/cache FASL obsolètes retirés.
+ArchitectureC conservée : même image depuis CL-MCP et Tron, marqueur/objet inchangés,
+mutations0, aucun debugger ouvert. Aucun restart/reconnexion/qualifier synthétique.
+Pointeur `state/outils-sources/mcp-store.txt` corrigé vers l’agrégat actuel protégé,
+verrou byte-identique ; image et sources auditées inchangées.
+
+SDK Playwright Python/npm alignés1.61.0, Pillow12.3.0 commun aux profils concernés ;
+transitives hachées/verrouillées. Playwright Python raccordé au Node24.19.0 de
+PATH, option officielle ; Node embarqué non exécuté, intégrité de la roue conservée.
+Elm/SBCL/Nixpkgs produit inchangés. Chromium système
+154.0.8037.57 unique conservé, Firefox1532/151.0 et ffmpeg1011 conservés. Lanceurs
+Style/Logique adaptés au Chromium central ; script Guix Matheval résout Firefox
+par son SDK verrouillé, sans téléchargement. Règle même paquet/même niveau/même
+version dans DEVELOPPEMENT.md et contrôle bloquant : divergences Python normalisées,
+outils npm même imbriqués, absence/mauvais moteur et fallback de provenance refusés.
+
+Contrôles effectivement exécutés :7tests provenance/versions, éditorial, sélection
+21tests, frontend-sources7+3tests. Pilotes Python ET npm : Chromium/Firefox réels,
+saisie0 et focus Tab ; Style lecture8contextes/notes7, atelier Logique complet et
+prises tactiles390/768 réussis. Premier test Logique servait dist absent : délai
+constaté, candidat exact choisi puis réussite ; assertions et timeouts inchangés.
+Les campagnes produit antérieures restent historiques avec leurs anciennes entrées :
+aucune nouvelle qualification globale ni preuve Kanidm réel fabriquée.
+
+Quatre commits composants publiés AVANT leur référencement dans le manifeste ;
+Style consommé par les interfaces reste à ses révisions exactes qualifiées puisque
+ses sources Elm n’ont pas changé. Aucun déclenchement CI/déploiement/changement de
+production. Étape1 reste acceptée, artefact296b7 inchangé et retours disponibles.
+
+Suite autorisée : reprendre la préparation Kanidm1.11.2 verrouillée, mesurer la
+précollecte/compilation locale dans la marge disponible avant d’envisager un déport.
+Ne pas réinstaller les anciens moteurs ni mélanger un cache Cargo tmpfs avec une
+capacité persistante disponible. Respecter RAM16Gio et sérialiser les campagnes
+lourdes. Qualifier installation/démarrage/IdP réel et nouvelles politiques/client
+avant toute seconde promotion. Passkey/OTP personnels restent à préparer sans
+inventer l’enrôlement. Aucun retour à l’ancien déploiement ni nouvelle demande
+d’extension disque. Les documents ci-dessous constituent l’historique.
+
+## État précédent — étape1 acceptée, préparation OIDC, blocage disque avant nettoyage
 
 Déploiement38200204066/29c3f39 réussi ; opérateurs185f931 et binaire296b7.
 Génération active ET défaut9qv8n9gd ; une image métier, Node Matheval et anciens

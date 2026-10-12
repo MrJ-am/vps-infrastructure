@@ -5,6 +5,39 @@ réservée aux déploiements, préconditions et sondes. Aucun test automatique a
 workflow composant ou campagne distante de développement. Frontends : voir
 [FRONTENDS.md](FRONTENDS.md), elm-review bloquant et suites selon impact.
 
+Outillage commun : un paquet au même niveau utilise une seule version dans les
+six dépôts. `assemblage/dependances.json` fixe les versions Python et npm ;
+`scripts/verifier-dependances.py` refuse les divergences, y compris transitives
+Python et copies imbriquées des outils npm communs. Les profils Python restent
+séparés par usage (navigateur, logo, embeddings), avec les mêmes versions de leurs
+paquets communs. Elm0.19.1, SBCL2.6.4 et la révision Nixpkgs du manifeste restent
+inchangés. Les bibliothèques communes Lisp sont verrouillées par sources exactes.
+
+Playwright Python/npm1.61.0 partage le Firefox1532 conservé. Les commandes
+canoniques utilisent le Chromium système154.0.8037.57 existant : fournir
+`CHROMIUM`, `CHROMIUM_PATH` et `PLAYWRIGHT_CHROMIUM_EXECUTABLE` vers le même
+exécutable. Les reçus empreintent aussi son moteur `/usr/lib/chromium`, pas
+seulement le lanceur. Aucun téléchargement automatique ni fallback dans ce
+profil de qualification ; l'absence d'un moteur requis refuse la qualification.
+Le pilote est verrouillé séparément du moteur externe ; une nouvelle version
+de ce moteur invalide les reçus concernés. Les parcours réels doivent passer.
+`PLAYWRIGHT_NODEJS_PATH` désigne le même Node que `PATH` (24.19.0 ici), option
+officielle du SDK Python. Sa provenance est vérifiée avant les suites navigateur ;
+aucun repli sur le Node24.17.0 embarqué. Ce fichier reste dans la roue auditée
+pour conserver son intégrité, mais n’est pas exécuté dans ce profil.
+
+Exceptions de niveau conservées : Nix bootstrap2.31.2 fourni par l'environnement
+et outils Nix/build/runtime issus de la révision produit, bibliothèques natives
+liées à leurs ABI, ancien serveur Matheval uniquement comme référence de test.
+La transitive npm commander9.5.0 appartient au CLI elm-test, commander15.0.0 au
+CLI KaTeX de Logique : deux contrats majeurs distincts imposés par leurs parents
+verrouillés, pas deux versions d’un outil choisi par application. Aucune
+substitution forcée d’API transitive ni mise à niveau du rendu mathématique.
+Ces closures ne sont pas interchangeables par liens ou suppressions forcées.
+Collecte Nix normale après protection des sources auditées, outils actifs et
+retours ; retirer seulement les caches reconstructibles vérifiés. Les versions
+historisées des artefacts de retour restent conservées sans être exécutées.
+
 Une image SBCL persistante par tâche. Pendant la même tâche ou une compaction,
 conserver l’image saine ; si elle disparaît, reconstruire depuis sources/journal.
 Bootstrap d’une nouvelle image : SBCL cible2.6.4, ASDF incrémental et

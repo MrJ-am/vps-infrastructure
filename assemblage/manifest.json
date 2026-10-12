@@ -12,25 +12,25 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "cd05b702b97469375a2d6aac88053fcc52852027",
+      "revision": "dd86673e07f5954b47096dd47d2166639d39638d",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
       "depot": "MrJ-am/M-moire",
       "branche": "master",
-      "revision": "68df529042609561329e757145a187ca079a5cea",
+      "revision": "2afce3aae14af13ef6dbda960cf5a4716924dc72",
       "role": "bibliotheque-asdf-et-interface"
     },
     "logique": {
       "depot": "MrJ-am/apprendre-a-demontrer",
       "branche": "main",
-      "revision": "d76f0074efa066098ec95c89cbf6d14da8c296cd",
+      "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
       "role": "frontend-statique"
     },
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+      "revision": "cc32742fd4ff554decfeca133fec7bc0f7e74fc7",
       "role": "elm-ui"
     },
     "signature": {

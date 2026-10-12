@@ -628,7 +628,11 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
     ],
     "npm_installations": {
       "style": [
@@ -638,7 +642,8 @@
         "node_modules/katex"
       ]
     },
-    "navigateurs_python": true
+    "navigateurs_python": true,
+    "chromium_externe": true
   },
   "vision-interface": {
     "niveau": 5,
@@ -724,7 +729,11 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
     ],
     "npm_installations": {
       "vision": [
@@ -732,7 +741,8 @@
       ]
     },
     "navigateurs_python": true,
-    "style_consomme_par": "vision"
+    "style_consomme_par": "vision",
+    "chromium_externe": true
   },
   "matheval-interface": {
     "niveau": 5,
@@ -966,7 +976,11 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
     ],
     "npm_installations": {
       "logique": [
@@ -974,7 +988,8 @@
       ]
     },
     "navigateurs_python": true,
-    "style_consomme_par": "logique"
+    "style_consomme_par": "logique",
+    "chromium_externe": true
   },
   "navigateur-mcp": {
     "niveau": 5,
@@ -1029,7 +1044,14 @@
     ],
     "qualification": "Navigateur et contrats MCP sur artefact commun et identité de fixture ; OIDC/Nginx réels qualifiés séparément.",
     "candidat_metier": true,
-    "navigateurs_python": true
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "configuration": [
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ]
   },
   "migration": {
     "niveau": 6,
@@ -1580,7 +1602,10 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE"
     ],
     "npm_installations": {
       "style": [
@@ -1596,7 +1621,8 @@
       "chromium-headless-shell",
       "firefox",
       "ffmpeg"
-    ]
+    ],
+    "chromium_externe": true
   },
   "signature-web": {
     "niveau": 5,
@@ -1648,9 +1674,14 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
     ],
-    "navigateurs_python": true
+    "navigateurs_python": true,
+    "chromium_externe": true
   },
   "matheval-navigateur": {
     "niveau": 5,
@@ -1714,7 +1745,10 @@
       "MRJAM_TEST_FILTER",
       "MRJAM_TEST_PROJECT",
       "MRJAM_TEST_REPEAT",
-      "MRJAM_TEST_DIAGNOSTIC"
+      "MRJAM_TEST_DIAGNOSTIC",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE"
     ],
     "npm_installations": {
       "matheval": [
@@ -1729,7 +1763,8 @@
       "chromium-headless-shell",
       "firefox",
       "ffmpeg"
-    ]
+    ],
+    "chromium_externe": true
   },
   "cache-fasl": {
     "niveau": 2,
@@ -2387,6 +2422,55 @@
       ],
       "nix": [
         "nix-instantiate",
+        "--version"
+      ]
+    }
+  },
+  "provenance-navigateurs": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/provenance-outils.py",
+        "tests/test_provenance_navigateurs.py",
+        "scripts/verifier-dependances.py",
+        "assemblage/dependances.json",
+        "tests/test_versions_outillage.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/provenance-outils.py",
+      "vps/tests/test_provenance_navigateurs.py",
+      "vps/scripts/verifier-dependances.py",
+      "vps/assemblage/dependances.json",
+      "vps/tests/test_versions_outillage.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_provenance_navigateurs.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_versions_outillage.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
         "--version"
       ]
     }
