@@ -147,9 +147,39 @@ def sondes_publiques(d):
     return out
 
 
+def erreur_nix(texte):
+    out={'positions':[{'fichier':Path(p).name,'ligne':int(l),'colonne':int(c)}
+        for p,l,c in re.findall(r'at ([^\s:]+\.nix):(\d+):(\d+)',texte)][-12:]}
+    categories={'conflicting definition values':'definitions_conflictuelles',
+                'does not exist':'option_inexistante','attribute':'attribut',
+                'undefined variable':'variable_inconnue','Failed assertions':'assertions',
+                'syntax error':'syntaxe','cannot coerce':'conversion'}
+    out['categories']=[v for k,v in categories.items() if k in texte]
+    # Noms fixes de propriétés de routage, jamais les valeurs de définition.
+    out['proprietes_nginx']=[k for k in ('root','alias','proxyPass','tryFiles','index','extraConfig')
+        if re.search(r'\b'+k+r'\b',texte)]
+    erreurs=[]
+    for ligne in texte.splitlines():
+        # L'en-tête de diagnostic contient le nom de l'option, les valeurs
+        # privées éventuelles se trouvent dans les lignes de définition exclues.
+        if not re.search(r'\b(?:error:|The option)',ligne):continue
+        for marque in ('`',"'"):
+            for option in re.findall(re.escape(marque)+r'([^`\']+)'+re.escape(marque),ligne):
+                if re.fullmatch(r'services\.nginx\.virtualHosts\.(?:"vision\.mrj\.am"|"principiipetit\.io")\.locations\."[=/^~ A-Za-z0-9._/-]+"\.(?:root|alias|proxyPass|tryFiles|index|extraConfig)',option):
+                    erreurs.append(option)
+    out['options_routage']=sorted(set(erreurs))
+    return out
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
+    if not (d/'evaluation-privee.json').is_file():
+        p=d/'erreur-commande-privee.log'
+        print(json.dumps({'revision':revision,'preparation_presente':False,
+            'activation_presente':(d/'activation.json').exists(),
+            'evaluation_nix_incomplete':True,'erreur_nix':erreur_nix(p.read_text()) if p.is_file() else {}},ensure_ascii=False))
+        return
     r=json.loads((d/'evaluation-privee.json').read_text())
     out={'revision':revision,'assertions':r['assertions'],
          'invariants_modifies':differences(r['invariantAvant'],r['invariantApres']),
