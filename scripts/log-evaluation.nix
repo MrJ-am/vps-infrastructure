@@ -2,13 +2,14 @@
 let
   pkgs = import <nixpkgs> { system = "x86_64-linux"; };
   lib = pkgs.lib;
+  paquetKanidm = import ../assemblage/kanidm/artefact.nix { inherit pkgs; artefact = kanidm; };
   commun = import ./monolithe-evaluation.nix {
     inherit configuration paquet documentVision ressourcesMatheval bankVersion;
   };
   base = commun.base;
   moduleLog = { lib, ... }: {
     imports = [ commun.moduleCandidate ];
-    infrastructure.log = { enable = true; paquet = builtins.storePath kanidm; };
+    infrastructure.log = { enable = true; paquet = paquetKanidm; };
   };
   moduleAmorcage = { lib, ... }: {
     imports = [ commun.moduleCandidate ];
@@ -18,7 +19,7 @@ let
     infrastructure.metier.documentVision = lib.mkForce base.infrastructure.metier.documentVision;
     infrastructure.metier.ressourcesMatheval = lib.mkForce base.infrastructure.metier.ressourcesMatheval;
     services.kanidm.server.enable = lib.mkOverride 20 true;
-    services.kanidm.package = lib.mkOverride 20 (builtins.storePath kanidm);
+    services.kanidm.package = lib.mkOverride 20 paquetKanidm;
     services.kanidm.server.settings.adminbindpath = "/run/kanidmd/admin.sock";
     services.kanidm.server.settings.online_backup.versions = lib.mkOverride 20 0;
     systemd.services.kanidm.enable = lib.mkOverride 20 true;
