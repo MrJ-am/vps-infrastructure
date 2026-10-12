@@ -148,5 +148,13 @@ OIDC natif15assertions effectivement réussies en image persistante et froide :
 signature/S256/nonce/at_hash/UUID, refresh, révocation activefalse et refresh400.
 Cela ne qualifie pas encore la connexion personnelle, le navigateur ou le MCP.
 
+Qualification navigateur/enrôlement supplémentaire : commandes centrales
+`kanidm-politiques` (23assertions, TOTP256/commit/mécanismeMFA/restart et7/30/90j)
+et `kanidm-passkey` (Chromium système/authentificateur virtuel, UVrequired,
+connexion après restart, assertion sansUV rejetée côté serveur). Le certificat
+synthétique est ignoré uniquement dans ce navigateur de test, entièrement routé
+vers loopback ; la chaîneTLS/SNI stricte est qualifiée séparément parCurl.
+Il s'agit de comptes de test ; aucun OTP/passkey/enrôlement personnels réalisés.
+
 Aucune opération personnelle n'a été simulée. Les seules exceptions autorisées
 restent l'abandon du lien magique et de la connexion perpétuelle.
