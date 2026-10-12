@@ -25,6 +25,11 @@ def raison_statique(texte,source):
     valeur=dernier.removeprefix('ValueError: ')
     return valeur if dernier.startswith('ValueError: ') and valeur in messages else None
 
+def statut_http(texte):
+    # Code numérique seulement : ni URL, en-tête, corps ni message libre.
+    m=re.search(r'^urllib\.error\.HTTPError: HTTP Error ([1-5][0-9]{2}):',texte,re.MULTILINE)
+    return int(m[1]) if m else None
+
 def main(revision):
     if os.geteuid()!=0 or not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Cible refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -39,7 +44,9 @@ def main(revision):
         f=d/('erreur-log-'+nom+'-privee.log')
         if f.is_file():
             texte=f.read_text();out['erreur_'+nom]=m.diagnostic_erreur(texte)
-            if nom=='operation':out['erreur_'+nom]['regle']=raison_statique(texte,d/'payload/vps/scripts/log-activer.py')
+            if nom=='operation':
+                out['erreur_'+nom]['regle']=raison_statique(texte,d/'payload/vps/scripts/log-activer.py')
+                out['erreur_'+nom]['statut_http']=statut_http(texte)
             cmd=re.search(r'RuntimeError: Commande refusée : (nix-instantiate|nix-build|systemctl|switch-to-configuration), code ([0-9]+)',texte)
             if cmd:out['erreur_'+nom]['commande']={'outil':cmd[1],'code':int(cmd[2])}
     f=d/'erreur-restauration-privee.log'
