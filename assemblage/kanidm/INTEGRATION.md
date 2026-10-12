@@ -13,11 +13,14 @@ L'abaissement MSRV1.96→1.95 provient de cette recette existante : il n'est pas
 une preuve que la compilation réussira. Le paquet amont désactive ses tests ;
 une substitution ou compilation réussie ne qualifierait donc pas le service.
 
-Le disque Codex32Go n'offre plus qu'environ1,1Go. La tentative précédente a
-échoué avant compilation ; une extension d'au moins20Go est demandée. Les
-narinfo du paquet et du vendor évalués renvoient404. Ne relancer ni téléchargement
-volumineux ni CI de développement pour contourner cette limite. Source, image
-Lisp, preuves et candidat actif sont conservés ; voir [REPRISE.md](../REPRISE.md).
+Le disque Codex32Go ne peut pas être augmenté. La tentative précédente a échoué
+avant compilation avec1,1Go libre. Le nettoyage du12octobre a récupéré4,82Go nets,
+soit5,92Go disponibles au relevé : voir [mesures et opérations](../nettoyage-20261012.json).
+Source, image Lisp, preuves et candidats actif/retour sont conservés. Les narinfo
+du paquet et du vendor précédemment évalués renvoyaient404. Reprendre localement
+la précollecte et mesurer sa consommation avant compilation, sans remplir le
+disque ni confondre tmpfs et espace persistant. Aucun déport effectué, aucune CI
+de développement : voir [REPRISE.md](../REPRISE.md).
 
 Commandes centrales disponibles, dans l'environnement de qualification existant :
 
