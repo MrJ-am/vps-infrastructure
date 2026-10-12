@@ -79,9 +79,13 @@ class Fixture:
                 fixture.calls[code or self.path] += 1
                 try:
                     authorization = self.headers.get('Authorization', '')
-                    assert authorization.startswith('Basic ')
-                    name, secret = base64.b64decode(authorization[6:], validate=True).decode().split(':', 1)
-                    assert unquote(name) == 'mrjam-vision' and unquote(secret) == SECRET
+                    if self.path == '/oauth2/token':
+                        assert authorization.startswith('Basic ')
+                        name, secret = base64.b64decode(authorization[6:], validate=True).decode().split(':', 1)
+                        assert unquote(name) == 'mrjam-vision' and unquote(secret) == SECRET
+                    else:
+                        assert self.path in ('/oauth2/token/introspect', '/oauth2/token/revoke')
+                        assert not authorization  # Contrat officiel Kanidm, aucun secret inutile.
                     assert self.headers['Content-Type'] == 'application/x-www-form-urlencoded'
                     # Le vrai processus curl a reçu les paramètres par pipe.
                     args = subprocess.check_output(['ps', '-C', 'curl', '-o', 'args='], text=True)

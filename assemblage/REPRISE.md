@@ -1,102 +1,83 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — ménage terminé, versions d’outils harmonisées
+## Point de reprise actif — Kanidm local installé, import propriétaire qualifié
 
-Reprise12octobre : imageC saine conservée, même PID/marqueur/objet depuis CL-MCP
-et Tron, mutations0/debuggerNIL. Six HEAD/branches conformes au manifeste ; seul
-rapport MCP historique non suivi avant nouvelles modifications. Précollecte
-native achevée avec succès ; vendor officiel vérifié et protégé. Compilation
-native en cours, une seule commande, dans `/tmp/mrjam-kanidm-builds` (tmpfs).
-Le premier build sur overlay a échoué ENOSPC : TMPDIR ne change pas le build-dir
-Nix. Ne pas répéter la compilation active ; constater processus et journal
-`state/kanidm-compilation-tmpfs-20261012.log`. Aucun changement production.
+Mission poursuivie, étape1 toujours acceptée en production : génération9qv8n9gd,
+artefact296b7, opérateurs185f931. Aucune deuxième promotion. Vision, Matheval,
+Logique et leurs données préservés ; Keycloak/Python mrj-auth encore provisoires.
+Six sources exactes du manifeste, composants propres. Infrastructure publiée
+4f94882 puis354ceb0 ; compléments actuels encore à publier. Rapport MCP historique
+non suivi préservé, ne pas l'inclure dans un commit fonctionnel.
 
-Amendement propriétaire : préférer promotion du compte Vision vers le seul compte
-Log, email ajouté et mot de passe gardé si import officiel simple. Nouvel
-enrôlement/reconnexion autorisés sinon ; aucune double identité à maintenir.
-SHA512-crypt historique et import `{crypt}$6$` reconnu dans le code officiel,
-réhachage Argon2id prévu ; format installé et essai réel restent à qualifier.
-Données/propriétaire métier préservés, aucun import d'authentificateur Keycloak.
+Préférence propriétaire amendée : conserver un seul compte commun issu de Vision,
+email ajouté et mot de passe gardé ; nouvelle inscription/reconnexion acceptable
+sinon, aucun double mécanisme permanent. Référence réelle38237108531/354ceb0
+réussie : un compte métier actif/administrateur/propriétaire/identité, zéro
+orphelin/lien croisé ; un compte historique éligible SHA512-crypt reconnu, zéro
+doublon/format inconnu. Trois participations Matheval toujours ouvertes. Preuve
+agrégée kanidm/reference-proprietaire-20261012.json, aucun hash/nom exporté.
+Téléchargement artifact gh refusé403 ; journal obtenu via connecteur GitHub
+existant, JSON réellement émis extrait, aucun second workflow ni mutation métier.
 
-Travail local en cours : transport HTTPS Common Lisp (TLS/SNI Log, cible loopback
-fermée, secrets sur pipe, pas de redirect ni répétition de POST), URI/config-curl
-mutualisées dans mrjam-native ; domaine Matheval réel ajouté aux transactions.
-32contrôles passent dans l'image persistante contre une fixture HTTPS synthétique,
-11requêtes réellement reçues, TLS/hostname/limites/secret/timeout sans POST répété.
-Cela ne qualifie pas Kanidm réel. Sources écrites puis ASDF incrémental ; un premier
-appel lu avant nouveaux exports a échoué avant toute évaluation, corrigé par
-résolution des symboles après chargement. Qualification froide sans cache passée ;
-orchestration centrale locale : OIDC681, transactions40, transport32/11requêtes,
-courriel réel STARTTLS et contrôles de sélection22 passent. Les échecs TLS sont
-refusés avant toute requête HTTP. Curl effectivement configuré est exécuté et
-empreinté, testé par remplacement synthétique à version constante. Sources non
-commitées préservées ; aucun résultat synthétique présenté comme Kanidm réel.
+Import simple réellement qualifié sur Kanidm1.11.2 local : `{crypt}$6$`, rounds
+implicites5000 ET explicites656000, UUID/email conservés, bon password accepté,
+mauvais refusé, stockage réhaché Argon2id après connexion. Session native existante
+et password conservés au redémarrage. Le fichier de migration ordinaire refuse
+PasswordImport par AccessDenied : constat, sans correctif amont ni ACL élargie.
+API officielle ponctuelle sync_account/token/Sync/_finalise utilisée ; capacité
+ensuite401/403, parent de sync absent. Aucun `_terminate`, aucun service de sync
+permanent. Les bases/clefs/comptes sont entièrement synthétiques et supprimés en
+fin de test. Cela ne migre pas encore le propriétaire réel ni ne qualifie OIDC/MCP.
+Vision comptes.id UUID/utilisateur textuel restent stables ; remplacer le seul
+rattachement identites, sans fusion email ni effacer_identite_cycle destructif.
 
-Le disque ne peut pas être augmenté. Nettoyage local effectué avant tout déport :
-4,82Go nets récupérés, disponibles passés de1,10 à5,92Go (unités décimales).
-Mesure exacte/opérations/reconstruction : `assemblage/nettoyage-20261012.json`.
-161objets Nix collectés normalement après protection de40racines : sources
-ASDF auditées, outils actifs et artefact qualifié. Pip/npm nettoyés, sept caches
-navigateurs retirés. Neuf copies locales de candidats chiffrés supprimées APRÈS
-vérification SHA256/taille des blobs Git et présence des transports distants.
-Sources/preuves/transports et candidats185f931 actif/77c7f82 retour conservés.
-Atelier Matheval temporaire reconstructible retiré ; sources et fixtures canoniques
-gardées. Git/modèles/embeddings et seules copies de candidats non publiés préservés.
-Aucun cache Cargo/Rustup dans le compte agent ; /root inaccessible, non nettoyé.
+Kanidm officiel5479338, Nixpkgs c5, vendor741crates conformes au lock et licences
+déclarées inventoriées. Intégrité staging fixe ET vendor dérivé vérifiée ; cargoHash
+porte sur staging, pas vendor décompressé. Source/compiler/options inchangés,
+provisioning tiers désactivé. Paquet store0aqnq3k2 installé/vérifié/protégé :
+kanidm/installation-locale.json, NAR175497328octets. Build release93m27s à un cœur,
+Cargo offline. MSRV1.96→1.95 de la recette existante effectivement compatible.
+Nix doCheck=false : scénarios réels sont des preuves séparées, limitées.
+Premier build overlay ENOSPC : TMPDIR ne change pas build-dir Nix ; build-dir
+explicite vers tmpfs existant corrigé. Compilation terminée code0, plus aucun
+processus build ; tmpfs35Mio, overlay environ1,5Gio libre, zéro OOM observé.
+Ne pas répéter précollecte/build. Aucun déport, aucun nouveau disque disponible.
 
-Ancien processus SBCL2.5 sans socket arrêté, runtime/cache FASL obsolètes retirés.
-ArchitectureC conservée : même image depuis CL-MCP et Tron, marqueur/objet inchangés,
-mutations0, aucun debugger ouvert. Aucun restart/reconnexion/qualifier synthétique.
-Pointeur `state/outils-sources/mcp-store.txt` corrigé vers l’agrégat actuel protégé,
-verrou byte-identique ; image et sources auditées inchangées.
+Image C saine conservée depuis CL-MCP et Tron : même PID/marqueur/objet, mutations0,
+debuggerNIL. Pool désactivé, aucune reconnexion ni qualifier synthétique de santé.
+Transport OIDC Lisp écrit puis ASDF incrémental et tests ciblés, secrets sur pipe,
+TLS/SNI Log/loopback fermés, aucune redirection/répétition de POST. Basic seulement
+sur/token ; introspection/révocation par possession du jeton opaque selon API
+native.32assertions/11requêtes passent dans image persistante et image propre.
+Erreur de lecteur avant nouveaux exports corrigée par résolution de symboles
+après LOAD ; mauvais nom ASDF transport/tests corrigé en transport-tests avant
+requêtes. Aucun dépilage CL-MCP présenté comme restart encore disponible.
 
-SDK Playwright Python/npm alignés1.61.0, Pillow12.3.0 commun aux profils concernés ;
-transitives hachées/verrouillées. Playwright Python raccordé au Node24.19.0 de
-PATH, option officielle ; Node embarqué non exécuté, intégrité de la roue conservée.
-Elm/SBCL/Nixpkgs produit inchangés. Chromium système
-154.0.8037.57 unique conservé, Firefox1532/151.0 et ffmpeg1011 conservés. Lanceurs
-Style/Logique adaptés au Chromium central ; script Guix Matheval résout Firefox
-par son SDK verrouillé, sans téléchargement. Règle même paquet/même niveau/même
-version dans DEVELOPPEMENT.md et contrôle bloquant : divergences Python normalisées,
-outils npm même imbriqués, absence/mauvais moteur et fallback de provenance refusés.
+Commandes centrales : OIDC681, transactions40, transport32 ; STARTTLS courriel
+réel, intégration-sécurité60tests, sélection25 et éditorial passent. Import natif
+avec deux formats rounds passé4,4618s ; transport final13,9169s. Catalogue42suites.
+Les suites aux clés/états éphémères ne réutilisent pas automatiquement leurs reçus :
+garde-fou testé par un compteur réellement exécuté, cache déterministe conservé,
+valeur non booléenne refusée. Provenance exécute/empreinte Curl et Kanidm réellement
+configurés. Reçus complets privés, résumés/empreintes publics, aucune attestation
+CI fabriquée. Anciennes preuves restent historiques et ne qualifient pas Kanidm.
 
-Contrôles effectivement exécutés :7tests provenance/versions, éditorial, sélection
-21tests, frontend-sources7+3tests. Pilotes Python ET npm : Chromium/Firefox réels,
-saisie0 et focus Tab ; Style lecture8contextes/notes7, atelier Logique complet et
-prises tactiles390/768 réussis. Premier test Logique servait dist absent : délai
-constaté, candidat exact choisi puis réussite ; assertions et timeouts inchangés.
-Les campagnes produit antérieures restent historiques avec leurs anciennes entrées :
-aucune nouvelle qualification globale ni preuve Kanidm réel fabriquée.
+Ménage antérieur achevé :4,82Go nets récupérés,1,10→5,92Go avant téléchargements
+Rust/Kanidm ; assemblage/nettoyage-20261012.json. GC normal161objets avec40racines
+utiles protégées, caches navigateurs/npm/pip/candidats redondants vérifiés retirés.
+Sources, imageC, Git, modèles/embeddings, candidat actif et retour gardés. Ancien
+SBCL2.5 retiré ; SDK Playwright Python/npm1.61.0/Pillow12.3/Node24.19 communs,
+Chromium154 système et Firefox151 uniques qualifiés. Quatre composants publiés
+avant manifeste, aucun backend Node réactivé et aucun CI de développement.
 
-Quatre commits composants publiés AVANT leur référencement dans le manifeste ;
-Style consommé par les interfaces reste à ses révisions exactes qualifiées puisque
-ses sources Elm n’ont pas changé. Aucun déclenchement CI/déploiement/changement de
-production. Étape1 reste acceptée, artefact296b7 inchangé et retours disponibles.
-
-Suite autorisée : reprendre la préparation Kanidm1.11.2 verrouillée, mesurer la
-précollecte/compilation locale dans la marge disponible avant d’envisager un déport.
-Ne pas réinstaller les anciens moteurs ni mélanger un cache Cargo tmpfs avec une
-capacité persistante disponible. Respecter RAM16Gio et sérialiser les campagnes
-lourdes. Qualifier installation/démarrage/IdP réel et nouvelles politiques/client
-avant toute seconde promotion. Passkey/OTP personnels restent à préparer sans
-inventer l’enrôlement. Aucun retour à l’ancien déploiement ni nouvelle demande
-d’extension disque. Les documents ci-dessous constituent l’historique.
-
-Précollecte native relancée après ménage (12octobre), achevée code0.
-`nix-build --no-out-link --cores 2 --max-jobs 1`
-avec le paquet exact ci-dessus, cible cargoDeps seulement, TMPDIR=/tmp.
-Journal : `state/kanidm-precollecte-native-20261012.log` ; état daté et commande
-complète : `state/kanidm-precollecte-native-20261012.json`. Prévision Nix :60paths,
-943,12MiB téléchargés/2866,63MiB décompressés. Vendor741crates du registre et
-Cargo.lock exact, licences déclarées présentes ; intégrité Nix vérifiée du
-staging fixe et du vendor dérivé, preuve `kanidm/vendor-qualification.json`.
-Le cargoHash officiel porte sur le staging compact, pas le vendor décompressé.
-Compilation native non terminée au relevé : environ3,7Gio tmpfs et1,7Gio overlay
-libre ; cache de fichiers sous pression mais zéro OOM. Aucun service démarré.
-La marge5,92Go documente l’issue du ménage AVANT ces nouveaux téléchargements ;
-relever la marge actuelle au prochain contrôle. Constater l’issue de cette commande
-avant toute répétition et protéger le vendor validé avant une autre GC. Pas de
-CI ni déport. Le rapport du ménage et ses mesures historiques restent exacts.
+Suite immédiate : publier preuves natives/commandes et conserver cette image.
+Exercer les clients OIDC sur le vrai Kanidm local (discovery/JWK/signatures/PKCE,
+state/nonce/audiences/expiration/révocation), puis politiques/invitations/durées/
+email et parcours MCP. Porter seulement raccordement/session/OAuth provisoires
+dans Lisp ; aucun credential admin global dans le monolithe. Préparer propriétaire
+réel/enrôlement/récupération, qualification propre, sauvegarde/retour avant promotion.
+Passkey/OTP personnels ne peuvent être simulés. Aucun accord architectural demandé.
+Les documents ci-dessous sont l'historique, pas des blocages actifs de stockage.
 
 ## État précédent — étape1 acceptée, préparation OIDC, blocage disque avant nettoyage
 

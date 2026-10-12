@@ -2529,6 +2529,59 @@
       "SBCL_HOME",
       "MRJAM_LIBCRYPTO",
       "MRJAM_CURL"
-    ]
+    ],
+    "reutilisable": false
+  },
+  "kanidm-proprietaire": {
+    "niveau": 6,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/kanidm-qualifier.py",
+        "tests/kanidm_reel.py",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/paquet.nix",
+        "assemblage/kanidm/installation-locale.json"
+      ]
+    },
+    "impact": [
+      "vps/assemblage/kanidm/*",
+      "vps/scripts/kanidm-qualifier.py",
+      "vps/tests/kanidm_reel.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL"
+    ],
+    "reutilisable": false
   }
 }

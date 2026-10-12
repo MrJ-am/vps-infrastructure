@@ -74,6 +74,38 @@ class Selection(unittest.TestCase):
 
 
 class Recus(unittest.TestCase):
+    def test_kanidm_configure_est_celui_execute(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            paquet=Path(tmp); (paquet/'bin').mkdir()
+            for nom in ('kanidm','kanidmd'):
+                p=paquet/'bin'/nom; p.write_text('#!/bin/sh\nprintf "%s\\n" "native fixture"\n'); p.chmod(0o700)
+            with patch.dict(os.environ,{'MRJAM_KANIDM':str(paquet)}):
+                result=a.environnement({'outils':{n:[n,'version'] for n in ('kanidm','kanidmd')},'configuration':['MRJAM_KANIDM']})
+            for nom in ('kanidm','kanidmd'):
+                self.assertEqual(result['outils'][nom]['version'],'native fixture')
+                self.assertEqual(result['outils'][nom]['executable_sha256'],a.empreinte((paquet/'bin'/nom).read_bytes()))
+
+    def test_fixture_ephemere_rejouee_et_suite_deterministe_reutilisee(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            racine=Path(tmp); compteur=racine/'compteur'
+            commande=['python3','-c','from pathlib import Path; import sys; p=Path(sys.argv[1]); p.write_text(p.read_text()+"x" if p.exists() else "x")',str(compteur)]
+            suite={'repertoire':'vps','commandes':[commande],'reutilisable':False}
+            with patch.object(a,'identifiant_suite',side_effect=lambda n,s,c:{'reutilisable':s['reutilisable']}):
+                self.assertTrue(a.executer('fixture',suite,{'vps':racine},racine/'recus'))
+                self.assertTrue(a.executer('fixture',suite,{'vps':racine},racine/'recus'))
+                self.assertEqual(compteur.read_text(),'xx')
+                recu=a.lire(racine/'recus/fixture.json')
+                self.assertFalse(a.reutilisable(recu,recu['identite']))
+                suite['reutilisable']=True
+                self.assertTrue(a.executer('fixture',suite,{'vps':racine},racine/'recus'))
+                self.assertTrue(a.executer('fixture',suite,{'vps':racine},racine/'recus'))
+                self.assertEqual(compteur.read_text(),'xxx')
+
+    def test_politique_cache_invalide_refusee(self):
+        suite=copy.deepcopy(a.catalogue()['oidc-transport']); suite['reutilisable']='false'
+        with patch.object(a,'lire',return_value={'fixture':suite}),self.assertRaisesRegex(ValueError,'non booléenne'):
+            a.catalogue()
+
     def test_curl_configure_est_execute_et_empreinte(self):
         with tempfile.TemporaryDirectory() as t:
             executable = Path(t) / 'curl-fixture'

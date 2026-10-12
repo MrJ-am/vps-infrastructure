@@ -66,14 +66,17 @@ administrateur ici. PORT change la connexion locale, jamais l'issuer ni le SNI."
               (when parametres
                 (option "request" "POST")
                 (option "header" "Content-Type: application/x-www-form-urlencoded")
-                ;; Le secret n'apparaît ni dans argv, ni dans un fichier/artefact.
-                (option "header"
-                  (concatenate 'string "Authorization: Basic "
-                    (mrjam-native:base64
-                      (sb-ext:string-to-octets
-                        (concatenate 'string (mrjam-native:parametre-url (client-oidc-id client)) ":"
-                                            (mrjam-native:parametre-url (client-oidc-secret client)))
-                        :external-format :utf-8))))
+                ;; Kanidm authentifie /token par Basic. Introspection/révocation
+                ;; reçoivent le jeton opaque, sans secret client (métadonnées none).
+                (when (equal chemin "/oauth2/token")
+                  ;; Le secret n'apparaît ni dans argv, ni dans un fichier/artefact.
+                  (option "header"
+                    (concatenate 'string "Authorization: Basic "
+                      (mrjam-native:base64
+                        (sb-ext:string-to-octets
+                          (concatenate 'string (mrjam-native:parametre-url (client-oidc-id client)) ":"
+                                              (mrjam-native:parametre-url (client-oidc-secret client)))
+                          :external-format :utf-8)))))
                 (option "data" (formulaire-oidc parametres)))
               ;; Le statut n'est pas extrait d'un préambule HTTP/proxy ambigu.
               (format sortie "write-out = \"\\n%{response_code}\"~%")))))
