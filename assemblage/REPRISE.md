@@ -20,8 +20,10 @@ comme en restauration ; socket/base explicites. Aucun droit de /root élargi.
 Tests réels PostgreSQL/autre UID : fichier privé refusé, mêmes méta-commandes et
 transaction réussissent via stdin, accès au parent toujours refusé. Migration
 29,7892s et sécurité 0,9461s réussissent. Diagnostic fermé précise phase/retour/
-qualification finale sans exposer le plan privé. Nouvelle source à publier puis
-sceller ; aucun rejeu du candidat dad8482 ayant déjà engagé une activation.
+qualification finale sans exposer le plan privé. Opérateurs dbd5b19814b88b6ddc4e033134fc5b9e595de90d publiés et scellés ;
+transport 6eaa929fb433966043dfc6363c6e9dfc34124bb4 publié. Aucun rejeu de
+dad8482 ayant déjà engagé une activation. Nouveau déploiement central à lancer
+après publication du descripteur ; constater son issue réelle.
 
 Composants exacts du manifeste inchangés, Vision 18c52cdd. Même binaire Nix
 296b7c89, graphe Lisp inchangé, mêmes interfaces qualifiées. Reçus affectés seuls
