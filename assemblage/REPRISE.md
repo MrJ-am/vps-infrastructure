@@ -1,5 +1,32 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Point de reprise actif — routage Vision qualifié localement
+
+Production ancienne r6s7ags3 après retour38196244219 enregistré/timer arrêté.
+Préparation/restauration/RLS-ACL passent ; sonde précise Matheval200 puis Vision404.
+Nginx index de la location exacte /= redirigeait vers /index.html, qui partait au
+routeur métier. Cause reproduite avec vrai Nginx verrouillé et même binaireSBCL,
+sans SQL/SMTP/IdP. Accueil conservé dans routeVision / : mêmes octets qualifiés,
+CSP et no-store conservés ; aucun nouveau parcours ou changement de présentation.
+Manifeste public /interface-manifest.json raccordé au fichier qualifié manifest.json.
+
+Nouvelle suite centrale routage-nginx1,7222s, sécurité9,8278s,
+migration50,7521s, sélection1,2065s passent. Catalogue36suites.
+Nginx existant autorisé réutilisé pour test local, sourceofficiellec5c4a43 vérifiée,
+paquet/closure verrouillés dans assemblage/nginx-qualification.json ; aucun profil
+système ni produit modifié. Correspondance exacte au binaire VPS encore à lire.
+Même image de travail C et mêmes sources métier/frontends ; outil de test froid
+Nginx/SBCL arrêté proprement après fixtures, aucun qualifier synthétique.
+
+Prochain : publier sources qualifiées et lire métadonnées fermées Nginx du VPS.
+Puis scellement36reçus exacts, transport/descripteur et une bascule. Constater
+issue avant répétition ; MCP réel/référence après activation avant jalon1/Kanidm.
+Kanidm non commencé ; rapport MCP non commité conservé.
+
+## État précédent — historique conservé
+
+# Reprise — mission et amendement du 11 octobre 2026
+
 ## Point de reprise actif — sondes cadencées qualifiées
 
 Production ancienne r6s7ags3, retour38195473395 enregistré/timer arrêté, données
@@ -21,11 +48,13 @@ Visioncd05b702/frontend3c00e4fd, image interactive C préservée.
 
 Candidatb3a552f scellé et transport chiffré publié,109135992octets, SHA256
 deb7fb67eed0695b1c1370e7d51a1bd81826477d724f69d2fa18d9a3f4c2cf0a.
-Bundle complet vérifié. Prochain : une bascule centrale. Constater issue, puis MCP réel et référence mémoire/comptes/
+Bundle complet vérifié. Déploiement38196244219/23845c1 déclenché02:33:20UTC ;
+issue à constater avant toute répétition. Constater issue, puis MCP réel et référence mémoire/comptes/
 latences/services avant jalon1 et Kanidm automatique. Kanidm non commencé.
 Rapport MCP non commité conservé. Aucun qualifier synthétique ni reconnexion.
 
-## État précédent — historique conservé
+
+
 
 # Reprise — mission et amendement du 11 octobre 2026
 

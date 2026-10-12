@@ -2184,5 +2184,43 @@
         "--version"
       ]
     }
+  },
+  "routage-nginx": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "modules/metier.nix",
+        "tests/routage-nginx.py",
+        "assemblage/nginx-qualification.json"
+      ]
+    },
+    "impact": [
+      "vps/modules/metier.nix",
+      "vps/tests/routage-nginx.py",
+      "vps/assemblage/nginx-qualification.json"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/routage-nginx.py"
+      ]
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ],
+      "nginx": [
+        "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx",
+        "-v"
+      ]
+    },
+    "candidat_metier": true,
+    "candidat_frontend": "vision"
   }
 }

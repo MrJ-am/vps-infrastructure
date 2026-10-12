@@ -120,8 +120,12 @@ in {
     systemd.timers.vision-purge.enable = lib.mkForce false;
     systemd.timers.mrjam-courriel.enable = lib.mkForce false;
     services.nginx.virtualHosts."vision.mrj.am".locations = visionLocations //
-      lib.genAttrs [ "= /" "= /app.js" "= /app.css" "= /interface-manifest.json" "^~ /assets/mrjam/" ]
-        (_: { root = lib.mkOverride 40 cfg.documentVision; });
+      # L'accueil reste la route Vision / : même document qualifié et mêmes
+      # en-têtes CSP/no-store, sans redirection interne Nginx vers /index.html.
+      lib.genAttrs [ "= /app.js" "= /app.css" "^~ /assets/mrjam/" ]
+        (_: { root = lib.mkOverride 40 cfg.documentVision; }) // {
+          "= /interface-manifest.json".alias = "${cfg.documentVision}/manifest.json";
+        };
     services.nginx.virtualHosts."principiipetit.io".locations = {
       "/matheval/" = {
         proxyPass = lib.mkForce null;

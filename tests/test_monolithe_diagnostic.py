@@ -11,6 +11,17 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_nginx_binaire_fixe_sans_executer_la_configuration(self):
+        b='/nix/store/'+'a'*32+'-nginx-1.30.4/bin/nginx'
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stderr='nginx version: nginx/1.30.4\n')) as run,\
+             patch.object(m.Path,'read_bytes',return_value=b'code'):
+            r=m.version_nginx(b+' -c /configuration-privee')
+        self.assertEqual(run.call_args.args[0],[b,'-v']);self.assertEqual(r['version'],'1.30.4')
+        self.assertNotIn('privee',json.dumps(r))
+        with self.assertRaises(ValueError):m.version_nginx('/usr/bin/nginx -c secret')
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stderr='secret')):
+            with self.assertRaisesRegex(ValueError,'hors format'):m.version_nginx(b)
+
     def test_sondes_fermees_sans_url_corps_ou_champ_libre(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp);self.assertEqual(m.sondes_publiques(d),{})
