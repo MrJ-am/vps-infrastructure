@@ -5,12 +5,25 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+from unittest.mock import MagicMock
 from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('operation_log',ROOT/'scripts/log-activer.py')
 m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 class Reprise(unittest.TestCase):
+    def test_inventaire_realm_lecture_seule_admis_et_ecriture_refusee(self):
+        spec=importlib.util.spec_from_file_location('api_kc_inventaire_test',ROOT/'scripts/vision-proprietaire-enroler.py')
+        api_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(api_module)
+        api=api_module.ApiPrivee('synthetique')
+        api.opener=MagicMock();response=api.opener.open.return_value.__enter__.return_value
+        response.status=200;response.read.return_value=b'[{"realm":"master"},{"realm":"mrjam"}]'
+        self.assertEqual(len(api('/admin/realms')),2)
+        api.opener.open.reset_mock()
+        for method in ('POST','PUT','DELETE'):
+            with self.assertRaises(ValueError):api('/admin/realms',method=method)
+        with self.assertRaises(ValueError):api('/admin/realms/tiers/users')
+        api.opener.open.assert_not_called()
     def test_monolithe_actif_emploie_etats_actuels_et_refuse_autre_artefact(self):
         spec=importlib.util.spec_from_file_location('restauration_active_test',ROOT/'scripts/monolithe-restaurer.py')
         r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
