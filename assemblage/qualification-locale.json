@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "à effectuer sur nouveaux opérateurs ; même graphe Lisp/artefact/interfaces",
+    "scellement": "réussi ; mêmes35 reçus exacts dans le bundle dad8482",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -424,7 +424,10 @@
       "migration_secondes": 29.4132,
       "production": "ancienne conservée ; nouvelle restauration/bascule nécessaires"
     },
-    "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés."
+    "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
+    "revision_operateurs": "dad8482b0bc01c4b8fb3d522fb19d99b952051ba",
+    "bundle_complet_verifie_localement": true,
+    "stage_sha256": "d2c6a1ca28aa6115ec3624726034e25c7f4dcba010726dfef0525b21bec2eec8"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
