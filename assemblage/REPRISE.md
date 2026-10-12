@@ -22,8 +22,9 @@ transaction réussissent via stdin, accès au parent toujours refusé. Migration
 29,7892s et sécurité 0,9461s réussissent. Diagnostic fermé précise phase/retour/
 qualification finale sans exposer le plan privé. Opérateurs dbd5b19814b88b6ddc4e033134fc5b9e595de90d publiés et scellés ;
 transport 6eaa929fb433966043dfc6363c6e9dfc34124bb4 publié. Aucun rejeu de
-dad8482 ayant déjà engagé une activation. Nouveau déploiement central à lancer
-après publication du descripteur ; constater son issue réelle.
+dad8482 ayant déjà engagé une activation. Descripteur publié d1ce2f1f9969d642a519bc365b01363e585d954f. Déploiement
+38189849220 en cours ; constater son issue réelle et son éventuel retour avant
+toute répétition. Une interruption de conversation ne l’arrête pas.
 
 Composants exacts du manifeste inchangés, Vision 18c52cdd. Même binaire Nix
 296b7c89, graphe Lisp inchangé, mêmes interfaces qualifiées. Reçus affectés seuls

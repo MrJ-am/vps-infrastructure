@@ -1,5 +1,6 @@
 """Diagnostic fermé de préparation : empreintes et clés, jamais les valeurs."""
 import hashlib
+import importlib.util
 from collections import Counter
 import json
 from pathlib import Path
@@ -102,6 +103,17 @@ def main(revision):
          'activation_presente':(d/'activation.json').exists()}
     out['restauration_presente']=(d/'restauration.json').exists()
     out.update(etat_bascule(d))
+    # Lire l'état courant, pas seulement la présence du plan historique. Les
+    # différences ne publient que noms de champs et empreintes, aucun PID tiers
+    # ni contenu de configuration.
+    sys.dont_write_bytecode=True
+    spec=importlib.util.spec_from_file_location('mrjam_stage_diagnostic',d/'payload/vps/scripts/monolithe-preparer.py')
+    stage=importlib.util.module_from_spec(spec);spec.loader.exec_module(stage)
+    actuel=stage.etat(d);prepare=json.loads((d/'preparation.json').read_text())
+    out['etat_actuel_identique_reference']=actuel==prepare['avant']
+    out['ecarts_retour']=differences(prepare['avant'],actuel)
+    out['generation_actuelle']=actuel['generation']
+    out['generation_demarrage']=actuel['demarrage']
     out['parent_postgresql_traversable_par_vision']=acces_parent_restauration()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])
