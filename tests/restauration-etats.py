@@ -9,6 +9,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+import time
 import uuid
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -20,12 +21,32 @@ def verifier():
     q=json.loads(executable.with_suffix('.qualification.json').read_text())
     outils=Path(q['sorties_nix']['outils'])
     nom='mrjam-restauration-uid-'+uuid.uuid4().hex[:12]
-    def docker(*args,check=True):
-        return subprocess.run(['docker',*map(str,args)],text=True,capture_output=True,check=check)
+    def docker(*args,check=True,input=None):
+        return subprocess.run(['docker',*map(str,args)],text=True,input=input,capture_output=True,check=check)
     docker('run','--detach','--name',nom,'--network','none','--env','POSTGRES_HOST_AUTH_METHOD=trust',
            '--mount','type=bind,src=/nix/store,dst=/nix/store,readonly',IMAGE)
     try:
+        for _ in range(100):
+            if docker('exec',nom,'pg_isready','-U','postgres',check=False).returncode==0:break
+            time.sleep(.1)
+        else:raise AssertionError('PostgreSQL isolé indisponible')
         with tempfile.TemporaryDirectory(prefix='restauration-sources-',dir=ROOT/'state') as tmp:
+            # Reproduire le fichier privé de l'opérateur : son propriétaire
+            # peut le lire, postgres ne peut pas traverser son parent. La
+            # transmission stdin conserve les méta-commandes psql et la
+            # transaction sans modifier ces permissions.
+            sql=Path(tmp)/'roles-fixture.sql'
+            sql.write_text('\\connect postgres\nBEGIN; SELECT current_user; COMMIT;\n')
+            docker('exec',nom,'mkdir','-p','/root/mrjam-operateur')
+            docker('exec',nom,'chmod','700','/root/mrjam-operateur')
+            docker('cp',sql,nom+':/root/mrjam-operateur/roles-fixture.sql')
+            refuse=docker('exec',nom,'runuser','-u','postgres','--','psql','-XAtq',
+                '--set=ON_ERROR_STOP=1','--file=/root/mrjam-operateur/roles-fixture.sql',check=False)
+            assert refuse.returncode!=0 and 'Permission denied' in refuse.stderr
+            transmis=docker('exec','-i',nom,'runuser','-u','postgres','--','psql','-XAtq',
+                '--set=ON_ERROR_STOP=1','--file=-',input=sql.read_text())
+            assert transmis.stdout.strip()=='postgres'
+            assert docker('exec',nom,'runuser','-u','postgres','--','test','-x','/root/mrjam-operateur',check=False).returncode==1
             source=Path(tmp)/'sources';atelier=Path(os.environ.get('MRJAM_ATELIER',ROOT.parent))
             chemins={'vps':ROOT,'vision':atelier/'vision','matheval':atelier/'M-moire'}
             noms={'vps':'vps','vision':'vision','matheval':'M-moire'}
@@ -61,6 +82,7 @@ def verifier():
             if bon.returncode:raise AssertionError(bon.stderr[-6000:]) # fixture synthétique uniquement
             assert 'Copies SQLite initialisées ; aucun transport ni traitement exécuté.' in bon.stdout
             print('SBCL propre/autre UID : parent privé refusé ; sources/FASL et quatre états SQLite privés initialisés via parent accessible, sans SMTP/IdP ni réseau.')
+            print('PostgreSQL/autre UID : fichier opérateur privé refusé ; mêmes méta-commandes/transaction exécutées par stdin, permissions inchangées.')
     finally:docker('rm','--force','--volumes',nom)
 
 

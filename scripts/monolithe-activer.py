@@ -84,6 +84,15 @@ def changer_publication(p,cible,attendu):
     tmp.symlink_to(cible);os.replace(tmp,p)
 
 
+def appliquer_roles(pg,d):
+    # Le bundle privé reste sous /root. Le compte PostgreSQL reçoit le SQL
+    # canonique par stdin, comme lors de la restauration isolée ; aucun droit
+    # de traversée du répertoire administratif n'est ajouté.
+    stage.commande(['runuser','-u','postgres','--',pg/'psql','-Xq','--set=ON_ERROR_STOP=1',
+        '--host=/run/postgresql','--dbname=vision','--file=-'],
+        d,input=(ROOT/'assemblage/roles-metier.sql').read_bytes())
+
+
 def controle(d,prepare,cert,*,redemarrer=False):
     stage.commande(['systemctl','is-active','mrjam-metier','nginx','postgresql',*stage.TIERS],d)
     pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
@@ -198,7 +207,7 @@ def activer(d,prepare,cert):
         if v=='25':sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
         sql('vision',(d/'payload/vision/migrations/027_retablir_rls.sql').read_text())
         sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
-        stage.commande(['runuser','-u','postgres','--',pg/'psql','-Xq','--set=ON_ERROR_STOP=1','--file',ROOT/'assemblage/roles-metier.sql'],d)
+        appliquer_roles(pg,d)
         gate=PORTE
         gate.parent.mkdir(parents=True,exist_ok=True)
         stage.exiger(not gate.exists(),'Porte de démarrage concurrente')

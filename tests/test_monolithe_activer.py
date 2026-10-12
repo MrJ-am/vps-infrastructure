@@ -38,6 +38,18 @@ class Retour(unittest.TestCase):
              patch.object(m.stage,'etat',return_value=self.before),patch.object(m,'changer_configuration'):
             m.retour(self.d,self.prepare,self.plan)
 
+    def test_roles_transmis_par_stdin_sans_ouvrir_le_bundle_a_postgres(self):
+        with patch.object(m.stage,'commande') as commande:
+            m.appliquer_roles(Path('/nix/store/postgresql/bin'),self.d)
+        args=commande.call_args.args[0]
+        self.assertEqual(args[:4],['runuser','-u','postgres','--'])
+        self.assertIn('--file=-',args)
+        self.assertIn('--host=/run/postgresql',args)
+        self.assertIn('--dbname=vision',args)
+        self.assertNotIn(ROOT/'assemblage/roles-metier.sql',args)
+        self.assertEqual(commande.call_args.kwargs['input'],(ROOT/'assemblage/roles-metier.sql').read_bytes())
+        self.assertTrue(commande.call_args.kwargs['input'].startswith(b'-- Installation explicite'))
+
     def test_retour_conserve_ecritures_posterieures_et_ne_restaure_pas_sql(self):
         self.lancer()
         with sqlite3.connect(self.target) as c:

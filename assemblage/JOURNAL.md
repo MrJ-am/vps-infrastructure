@@ -548,3 +548,11 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   aucune répétition/activation après échec). Test Python initial importait le
   namespace assemblage sans scripts dans sys.path ; chemin du test corrigé.
   Aucune modification du modèle/SQL métier ni donnée en production.
+- Run38189157223 : restauration/retour applicatif entièrement réussis ; activation
+  arrêtée à201 avant transfert, psql lit un chemin sous /root avec UIDpostgres.
+  Référence38189544447 réussie : ancienne génération/profil r6s7ags3, anciens
+  processus actifs, monolithe inactif, trois participations toujours ouvertes.
+  Correction canonique : SQL par stdin, socket/base explicites, aucun droit élargi.
+  Régression PostgreSQL réelle/autre UID : fichier privé refusé, stdin conserve
+  méta-commandes/transaction, parent toujours privé. Migration29,7892s et
+  sécurité0,9461s passent ; aucune modification du graphe Lisp ou des interfaces.
