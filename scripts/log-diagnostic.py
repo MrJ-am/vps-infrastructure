@@ -9,6 +9,10 @@ def classifier(texte,ancien):
     r['conversions']=[t for t in ('string','set','path','function','list')
         if re.search(r'(?:expected|is not|cannot coerce|cannot be coerced).*\b'+t+r'\b',texte)]
     r['options_kanidm']=sorted(set(re.findall(r'(?:services\.kanidm|infrastructure\.log)\.[A-Za-z0-9_.]+',texte)))
+    # En-têtes d'options uniquement ; jamais les lignes Definition values.
+    options=re.findall(r'The option [`\']([^`\']+)[`\']',texte)
+    r['options']=sorted(set(o for o in options if re.fullmatch(
+        r'(?:services|infrastructure|systemd|security|boot|users|environment|networking)\.[A-Za-z0-9_."/ =~-]{1,280}',o)))
     return r
 
 def main(revision):
@@ -43,11 +47,15 @@ def main(revision):
             ressourcesMatheval='/srv/mrjam-assemblages/'+revision+'/matheval',
             bankVersion=bank['version'],kanidm=cert['qualification']['sorties_nix']['kanidm'])
         expr='(import '+str(base/'log-evaluation.nix')+' {'+''.join(k+'='+json.dumps(v)+';' for k,v in params.items())+'}).rapport'
-        r=subprocess.run(['nix-instantiate','-I','nixpkgs='+stage.NIXPKGS,'--eval','--strict','--show-trace','--json','--expr',expr],
-            capture_output=True,text=True,timeout=90)
-        f=d/'diagnostic-nix-trace-privee.log';f.write_text(r.stderr);f.chmod(0o600)
-        out['trace_nix']=classifier(r.stderr,m)
-        out['evaluation_code']=r.returncode
+        f=d/'diagnostic-nix-trace-privee.log'
+        if f.is_file():
+            out['trace_nix']=classifier(f.read_text(),m)
+        else:
+            r=subprocess.run(['nix-instantiate','-I','nixpkgs='+stage.NIXPKGS,'--eval','--strict','--show-trace','--json','--expr',expr],
+                capture_output=True,text=True,timeout=90)
+            f.write_text(r.stderr);f.chmod(0o600)
+            out['trace_nix']=classifier(r.stderr,m)
+            out['evaluation_code']=r.returncode
     print(json.dumps(out,ensure_ascii=False))
 
 if __name__=='__main__':main(sys.argv[1])
