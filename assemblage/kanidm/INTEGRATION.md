@@ -1,8 +1,10 @@
-# Kanidm — point opérationnel avant installation
+# Kanidm — installation locale et intégration en cours
 
 Le jalon1 est actif et qualifié, avec Keycloak provisoire. Ce dossier prépare
 le jalon2 ; son module n'est pas importé dans la configuration active. Aucun
-serveur Kanidm, nouveau compte ou rattachement n'a encore été créé.
+serveur Kanidm, nouveau compte ou rattachement de production n'a encore été créé.
+Paquet officiel1.11.2 installé/vérifié localement ; scénarios natifs ci-dessous
+réussis, sans constituer la deuxième bascule.
 
 Préférence propriétaire du12octobre : un seul compte de connexion final, issu
 autant que possible de Vision, adresse électronique ajoutée et mot de passe
@@ -11,16 +13,36 @@ cela exige une migration complexe. Ne maintenir ni double compte ni ancien
 mécanisme d'authentification permanent. Le propriétaire SQL stable et ses données
 restent préservés ; leur conservation ne crée pas une seconde connexion.
 
-Voie simple à qualifier : le serveur historique Vision vérifie SHA512-crypt
+Voie simple qualifiée localement : le serveur historique Vision vérifie SHA512-crypt
 (`services/mrj-auth/server.py`). Le parseur officiel Kanidm1.11.2 accepte
 `{crypt}` suivi de l'empreinte `$6$`, et marque celle-ci à mettre à niveau vers
 Argon2id (`libs/crypto/src/lib.rs`, parse_crypt/TryFrom/requires_upgrade ;
 `server/lib/src/plugins/cred_import.rs`). Aucun calcul cryptographique réécrit,
-aucun mot de passe en clair demandé. Le format effectivement installé et un vrai
-import/login synthétique restent à constater avant usage. Acheminer l'empreinte
+aucun mot de passe en clair demandé. Format installé constaté et import/login
+synthétiques réellement réussis, rounds implicites5000 et explicites656000.
+Le fichier de migration ordinaire refuse PasswordImport par AccessDenied : aucun
+correctif amont ni ACL élargie. API officielle ponctuelle sync_account/token/Sync/
+_finalise utilisée ; capacité ensuite401/403, parent de sync absent. Jamais
+_terminate, qui effacerait les comptes importés. Aucun service ni passerelle
+permanents ajoutés. UUID/email/password, mauvais password refusé, Argon2id et
+session après restart vérifiés dans tests/kanidm_reel.py. Acheminer l'empreinte
 uniquement entre stockages privés, jamais par argv/log/source/artefact public.
 Ne pas importer l'utilisateur ou les authentificateurs Keycloak. L'ancien accès
 est retiré après accès/récupération qualifiés ; compte métier et séances intacts.
+
+Constat réel du12octobre : [référence38237108531](reference-proprietaire-20261012.json)
+à la révision354ceb0, même génération active. Un compte métier actif/administrateur,
+un propriétaire d'items et une identité ; zéro orphelin/lien croisé. Un compte
+historique éligible, SHA512-crypt reconnu, aucun doublon/format inconnu. Aucun
+identifiant ou hash individuel exporté. Cela vérifie le format installé, pas encore
+l'import personnel Kanidm. Les trois participations Matheval restent ouvertes.
+
+Propriété : `vision_gestion.comptes` possède déjà un `id` UUID stable et un
+`utilisateur` historique. Ne pas remplacer ce propriétaire textuel dans les
+contenus. `vision_gestion.identites` impose un seul rattachement par utilisateur
+(Vision migrations019/020) : remplacer explicitement le rattachement, pas ajouter
+une seconde identité. La fonction `effacer_identite_cycle` de migration025 efface
+les contenus : ne jamais l'employer pour retirer l'ancien fournisseur.
 
 Le paquet1.11.2 est verrouillé sur la source officielle5479338 et le vendor
 publié par NixOS/nixpkgs c79f172. La recette et la toolchain Nixpkgs c5 sont
@@ -30,16 +52,17 @@ compilation restent distinctes de l'inventaire effectivement récupéré :741cra
 du registre conformes au lock, licences déclarées inventoriées et intégrité Nix
 vérifiée dans `vendor-qualification.json`. Le cargoHash officiel s'applique au
 staging compact ; le vendor décompressé a son empreinte dérivée propre.
-L'abaissement MSRV1.96→1.95 provient de cette recette existante : il n'est pas
-une preuve que la compilation réussira. Le paquet amont désactive ses tests ;
-une substitution ou compilation réussie ne qualifierait donc pas le service.
+L'abaissement MSRV1.96→1.95 de la recette existante est effectivement compatible :
+compilation release93m27s à un cœur et démarrage réussis, Rust officiel inchangé.
+Le paquet amont désactive ses tests ; scénarios natifs réels séparés et limités.
+Paquet/NAR/références : installation-locale.json ; aucune conformité globale.
 
 Le disque Codex32Go ne peut pas être augmenté. La tentative précédente a échoué
 avant compilation avec1,1Go libre. Le nettoyage du12octobre a récupéré4,82Go nets,
 soit5,92Go disponibles au relevé : voir [mesures et opérations](../nettoyage-20261012.json).
 Source, image Lisp, preuves et candidats actif/retour sont conservés. Les narinfo
 du paquet et du vendor précédemment évalués renvoyaient404. Reprendre localement
-la compilation native déjà active, sans la répéter. Après ENOSPC du premier build,
+le paquet natif déjà construit, sans répéter le build. Après ENOSPC du premier build,
 le build-dir Nix explicite utilise le tmpfs existant ; TMPDIR seul ne suffisait
 pas. Relever RAM/tmpfs et espace persistant séparément. Aucun déport effectué, aucune CI
 de développement : voir [REPRISE.md](../REPRISE.md).
@@ -49,26 +72,32 @@ Commandes centrales disponibles, dans l'environnement de qualification existant 
 ```sh
 source state/qualification-env.sh
 export PATH="$PATH:/home/agent/.nix-profile/bin"
+export MRJAM_KANIDM=/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2
+export MRJAM_CURL=/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification/curl/bin/curl
 python3 scripts/assemblage.py tester --suite oidc-es256
 python3 scripts/assemblage.py tester --suite oidc-transactions
 python3 scripts/assemblage.py tester --suite oidc-transport
 python3 scripts/assemblage.py tester --suite kanidm-configuration
+python3 scripts/assemblage.py tester --suite kanidm-proprietaire
 ```
 
 Les trois premières exercent le client, avec signatures OpenSSL indépendantes,
 claims, transactions SQLite et fixture HTTPS synthétique (32contrôles/11requêtes).
-Elles ne prouvent pas des échanges avec Kanidm. La dernière évalue le module officiel Nix :
+Elles ne prouvent pas des échanges avec Kanidm. La quatrième évalue le module officiel Nix :
 UIDkanidm, état0700, TLSLoadCredential, loopback8443, Unix/LDAP/provisioning désactivés,
 trois fixtures de credential refusées. Ce sont des contrôles locaux, pas des
-connexions à l'IdP. Pour une reproduction sans cache, utiliser
+connexions à l'IdP. La dernière connecte un IdP local réel isolé, importe les hashes,
+finalise/révoque la capacité et vérifie les reprises. Suites aux clés/états
+éphémères non réutilisables automatiquement ; candidat exact qualifié séparément.
+Pour une reproduction sans cache, utiliser
 `python3 scripts/oidc-qualifier.py --sans-cache`, puis `--transactions --sans-cache`.
 La bibliothèque reste hors du service actuellement servi.
 
-Reprise après résolution du stockage, sans nouvelle décision d'architecture :
+Reprise sans nouvelle décision d'architecture :
 
 1. Relever les processus et l'espace ; vérifier la cible/marqueur de l'image C.
-   Installer le paquet verrouillé, relever effectivement les licences vendor,
-   puis démarrer Kanidm localement sur données et TLS synthétiques privés.
+   Réutiliser le paquet verrouillé construit et ses preuves ; serveurs synthétiques
+   arrêtés en fin de suite, image Lisp C conservée.
 2. Exercer discovery/JWKS/ES256, clients distincts, code+S256/state/nonce et
    révocation sur ce serveur. Porter le raccordement et les sessions/OAuth/MCP
    provisoires Python dans le serveur commun, sans reconstruire un IdP.

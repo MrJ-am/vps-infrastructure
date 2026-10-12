@@ -1,0 +1,74 @@
+{
+  "format": 1,
+  "portee": "IdP réel synthétique, import ponctuel propriétaire uniquement",
+  "confiance": "locale-non-attestee",
+  "autorise_publication_production": false,
+  "production": false,
+  "paquet": "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2",
+  "resultats": {
+    "argon2id_verifie": true,
+    "capacite_import_revoquee": true,
+    "email_conserve": true,
+    "import_ponctuel_finalise": true,
+    "mauvais_password_refuse": true,
+    "production": false,
+    "restart_sans_fichier_import": true,
+    "serveur_reel": true,
+    "session_conservee_au_restart": true,
+    "sha512_crypt_login": true,
+    "sha512_crypt_rounds_qualifies": [
+      5000,
+      656000
+    ],
+    "tls_verifie": true,
+    "uuid_conserve": true
+  },
+  "duree_secondes": 5.3719,
+  "recu_sha256": "2023d6411ac155d35cdd0656a0c534ef4a50bc2a1276f13aecc3384b6973e405",
+  "definition_sha256": "ce59d4de13ac4b1937f8b9d8537bd88a0d4dcad6df1d896beddc9387bea29c15",
+  "entrees_sha256": {
+    "vps/scripts/kanidm-qualifier.py": "6b5e29d2bfd4629c8aee2c902747ecfe5eef2bc9b46f507a5fedcd820684b043",
+    "vps/tests/kanidm_reel.py": "d3f5dcbd7584060d8aac8b7d2fbc5179cf819612712728134048f019c37f352f",
+    "vps/assemblage/kanidm/dependances.json": "669ecc58c33e7ca446e73bb0cf6705c4ba599a8c9fe24943b1fe1968593826c1",
+    "vps/assemblage/kanidm/paquet.nix": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+    "vps/assemblage/kanidm/installation-locale.json": "5edd76f8b22413651a0df66e437de8913ada7cf5feda2191851fb877e9ef5ee2"
+  },
+  "environnement": {
+    "architecture": "x86_64",
+    "systeme": "Linux",
+    "outils": {
+      "python": {
+        "version": "Python 3.12.14",
+        "executable_sha256": "fa67443527ed9647f760d807e2a38f26340757123e643c4639cf273ed15d5ea7"
+      },
+      "kanidmd": {
+        "version": "kanidmd 1.11.2",
+        "executable_sha256": "3c0978fbe7d8747da9522fdb65ed081ff54519a460380d03df9e428792e96380"
+      },
+      "kanidm": {
+        "version": "kanidm 1.11.2",
+        "executable_sha256": "5a7514e8c93f13ecd8591f85dad7448186565253d05efe9cd094bd9e7921b4ee"
+      },
+      "curl": {
+        "version": "curl 8.21.0 (x86_64-pc-linux-gnu) libcurl/8.21.0 OpenSSL/3.6.3 zlib/1.3.2 brotli/1.2.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.5 libssh2/1.11.1 nghttp2/1.69.0 ngtcp2/1.22.1 nghttp3/1.15.0 mit-krb5/1.22.2\nRelease-Date: 2026-06-24\nProtocols: dict file ftp ftps gopher gophers http https imap imaps ipfs ipns mqtt mqtts pop3 pop3s rtsp scp sftp smtp smtps telnet tftp\nFeatures: alt-svc AsynchDNS brotli GSS-API HSTS HTTP2 HTTP3 HTTPS-proxy IDN IPv6 Kerberos Largefile libz PSL SPNEGO SSL threadsafe TLS-SRP UnixSockets zstd",
+        "executable_sha256": "1adbd6d5d42f859557845ee42b592a858c0ba5c2f1d5d6ff593946f7c9f84913"
+      },
+      "openssl": {
+        "version": "OpenSSL 3.5.7 9 Jun 2026 (Library: OpenSSL 3.5.7 9 Jun 2026)",
+        "executable_sha256": "f4aa15f2822f670af7b5c1043d7aa6ebbbc64229fd2fae382edfc6a4524749c1"
+      }
+    },
+    "bibliotheques_natives": {},
+    "os_sha256": "14c430da04c2d571793fc68a8f5e17fce3d7a746e316c3f23192590861b18bd7",
+    "configuration": {
+      "MRJAM_KANIDM": "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2",
+      "MRJAM_CURL": "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification/curl/bin/curl"
+    }
+  },
+  "reutilisable": false,
+  "limites": [
+    "Aucun compte personnel migré ; compte Keycloak conservé temporairement en production.",
+    "Règles OIDC/politiques multi-comptes/MCP métier et enrôlement personnel non qualifiés par ce scénario.",
+    "Import par fichier ordinaire testé et refusé : API officielle SCIM finalisée, aucun élargissement ACL ni synchronisation permanente."
+  ]
+}

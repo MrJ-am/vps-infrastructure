@@ -230,8 +230,8 @@
       },
       "oidc-transport": {
         "resultat": "succes",
-        "duree_secondes": 14.2037,
-        "recu_sha256": "5d9b4f971ccde52876ec42e57b5bc9aed0fbd8ad95c5a1350a721a42484b60f6",
+        "duree_secondes": 15.428,
+        "recu_sha256": "79251522f15fedd8df50bf9346697d65dad73bd7fb0efd5f9a3bfea021b9055d",
         "definition_sha256": "54c55edff3f8038a31c7c6cfdbb75c1a9879ff97e135b2b653f38e74f83b9a72",
         "entrees_sha256": {
           "vps/mrjam-native.asd": "b73187784dccb230c07929f9c1eeb5594b1a2ec35b308392df3a5f8a2dababc9",
@@ -245,17 +245,17 @@
           "vps/lisp/identite/oidc-package.lisp": "41753a8015e99fbfe732ffe94bb97d2bf9a7b25711d3e87d342544cd5d97e8ff",
           "vps/lisp/identite/oidc-token.lisp": "de5c9e60bf39251048f7c779d3958148d99a59a1093a9db5e938dc7d937b3c85",
           "vps/lisp/identite/oidc-transactions.lisp": "abf21eb416c22df0bb0819b7b54cac82140d803cee44f2033d18029b51e4ee19",
-          "vps/lisp/identite/oidc-transport.lisp": "baabe19c600f059bcb9b36a90ae178785f1fb3181222e725b0398363dc41de4f",
+          "vps/lisp/identite/oidc-transport.lisp": "8d12c5fada20f5ecf2ecd79b4f0aab071d372d07a044446c86df1d5c8ed3c84d",
           "vps/tests/oidc-transport-froid.lisp": "3e8e7a51b2745eb6965cff6ec333c0ec8ed146b16030bff96308fb4fe666e90b",
           "vps/tests/oidc-transport.lisp": "5f10e674f75b760d69876a3cc5874fd4637a0efeb4fc663ea2ddd01c8953e428",
-          "vps/tests/oidc_transport_fixture.py": "0be4c054d17816f324d3c107456513546cdfbc33abf320efcd8a2b558451fc90",
+          "vps/tests/oidc_transport_fixture.py": "c0fb0db53ea2e3c47a4560d1edd4a30ebb1af6a1af011579b1a5e3805041a034",
           "vps/scripts/oidc-qualifier.py": "1ad6b876096a631801749f01d62bd0d653c7c3f51f2a4b8e5c05db920af6e1c2",
           "vps/scripts/oidc-verifier-sources.py": "de81edffb507e8cdb63fc8ceaea1f058a613deb921654921cea89db5c58cdfac",
           "vps/assemblage/oidc/AUDIT.md": "ee201af76e68c8336de3ae7f5d6c618b0ceec6db84653443e7254b467b641ee3",
           "vps/assemblage/oidc/charger-dependances.lisp": "238115e7e1ec5d6302baf65120bb8c04456b9f195a9b89d3f90a03d508c9fa76",
           "vps/assemblage/oidc/dependances.lock.json": "ff8ccb3cfe8aa411ef8d181f9d0e0af6f17d9b4da0bfb2a5abbf9716ad036e37",
           "vps/assemblage/oidc/dependances.nix": "3383d74306b70df3ff0d1405b7ff36f45731319151c751bdd364ace40a92e5af",
-          "vps/assemblage/oidc/qualification-locale.json": "406b8e814f131eefb62f25ec28a1ee5d8dbc6ff32ef4252fe1bbc74724a66c25",
+          "vps/assemblage/oidc/qualification-locale.json": "0206e5a28ca9fe133aaba0d3f15d56eb13ec47e27d580c2ed568ec2ae01276b1",
           "vps/assemblage/oidc/tables-privees.json": "f8d18d46c96f120546c4bd5b6e0227099410d4ac908efc8e27406319d9a0ce7e"
         },
         "environnement_sha256": "db8b1cfe41758ae622eb0b8fa777ce7e3476eb220bc5bc50472068ef2e30290e",
@@ -348,6 +348,7 @@
           }
         }
       }
-    }
+    },
+    "contrat_transport": "Basic sur échange/renouvellement uniquement ; introspection et révocation par possession du jeton opaque, selon code officiel Kanidm.32assertions/11requêtes, images persistante et propre réussies."
   }
 }

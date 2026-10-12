@@ -719,3 +719,20 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   reçus complets privés conservés ; anciennes qualifications laissées historiques.
   Qualification native propriétaire préparée dans tests/kanidm_reel.py et
   scripts/kanidm-qualifier.py, non exécutée tant que le paquet n'est pas construit.
+
+  Paquet natif1.11.2 terminé/vérifié/protégé : NAR175497328octets, release93m27s
+  à un cœur, Cargo offline et tmpfs existant. Overlay environ1,5Gio libre, tmpfs
+  libéré35Mio, zéro OOM observé. CLI et serveur réellement1.11.2. IdP synthétique
+  démarré, import par fichier ordinaire refusé AccessDenied (PasswordImport).
+  API SCIM officielle ponctuelle/finalise réussie, token import ensuite401/403,
+  parent de sync absent. HashSHA512-crypt implicite5000 et explicite656000 :
+  bon password accepté, mauvais refusé, stockageArgon2id, UUID/email et session
+  existante après restart conservés. Aucun propriétaire réel migré ni Keycloak
+  retiré. Suite centrale native4,4618s ; transport32/11requêtes13,9169s après
+  restriction Basic à/token. Erreur nom ASDF transport/tests corrigée en
+  transport-tests, aucun effet HTTP avant cet échec. Sélection25tests réussis :
+  configurations Curl/Kanidm effectivement exécutées/empreintées, pas cache
+  automatique de suites aux clés/états éphémères, compteur réel et booléen strict.
+  Référence production38237108531 unique, format réel SHA512-crypt confirmé,
+  génération/données inchangées ; téléchargement gh refusé403, journal récupéré
+  par connecteur existant. Suite : OIDC réel, politiques, parcours et MCP.

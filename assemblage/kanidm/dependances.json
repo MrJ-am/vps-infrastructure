@@ -1,6 +1,5 @@
 {
   "format": 1,
-  "etat": "Source/lock et précollecte native vérifiés ; licences registre inventoriées, compilation active, aucun serveur qualifié",
   "usage": "IdP indépendant ; serveur et CLI officiels, pas de daemon Unix/PAM/LDAP/RADIUS ajouté",
   "version": "1.11.2",
   "revision": "547933867e87da737e79d26942dc9261adaa5ee9",
@@ -4611,5 +4610,6 @@
     "date_commit": "2026-09-11T12:40:03Z"
   },
   "cargo_hash_sha256": "sha256-pn1g0sesG9YtFf/qUvrSHW/m+2rHEyeZGzW1V5XRT+Y=",
-  "cargo_hash_portee": "Hash NAR du staging compact fixe de fetchCargoVendor, pas du vendor décompressé dérivé ; preuve effective dans vendor-qualification.json."
+  "cargo_hash_portee": "Hash NAR du staging compact fixe de fetchCargoVendor, pas du vendor décompressé dérivé ; preuve effective dans vendor-qualification.json.",
+  "portee_inventaire": "Sources/version/licences/dépendances verrouillées ; résultats évolutifs dans installation-locale.json et qualification-locale.json."
 }

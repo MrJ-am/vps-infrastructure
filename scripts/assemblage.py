@@ -62,6 +62,8 @@ def catalogue(racine=RACINE):
     for nom, suite in c.items():
         if not suite.get('entrees') or not suite.get('commandes') or suite['niveau'] not in range(1, 8):
             raise ValueError('Suite incomplète : ' + nom)
+        if 'reutilisable' in suite and not isinstance(suite['reutilisable'], bool):
+            raise ValueError('Politique de réutilisation non booléenne : ' + nom)
         for besoin in suite.get('dependances', []):
             if besoin not in c:
                 raise ValueError('Dépendance de suite inconnue : ' + besoin)
@@ -155,6 +157,8 @@ def environnement(suite):
         commande = list(commande)
         if nom == 'curl' and 'MRJAM_CURL' in suite.get('configuration', []) and os.environ.get('MRJAM_CURL'):
             commande[0] = os.environ['MRJAM_CURL']
+        if nom in ('kanidm', 'kanidmd') and 'MRJAM_KANIDM' in suite.get('configuration', []) and os.environ.get('MRJAM_KANIDM'):
+            commande[0] = str(Path(os.environ['MRJAM_KANIDM']) / 'bin' / nom)
         p = subprocess.run(commande, capture_output=True, text=True, check=True)
         binaire = shutil.which(commande[0])
         versions[nom] = {'version': (p.stdout or p.stderr).strip(),
@@ -254,13 +258,14 @@ def identifiant_suite(nom, suite, chemins):
 
 def reutilisable(recu, identite):
     return (recu.get('format') == 1 and recu.get('resultat') == 'succes'
-            and recu.get('identite') == identite and recu.get('confiance') == 'locale-non-attestee')
+            and recu.get('identite') == identite and recu.get('confiance') == 'locale-non-attestee'
+            and recu.get('reutilisable', True) is True)
 
 
 def executer(nom, suite, chemins, dossier, reference=False, ci=False):
     identite = identifiant_suite(nom, suite, chemins)
     recu_path = dossier / (nom + '.json')
-    if not reference and not ci and recu_path.exists() and reutilisable(lire(recu_path), identite):
+    if suite.get('reutilisable', True) and not reference and not ci and recu_path.exists() and reutilisable(lire(recu_path), identite):
         print(json.dumps({'suite': nom, 'reutilise': True, 'confiance': 'locale-non-attestee'}))
         return True
     debut = time.monotonic()
@@ -276,6 +281,7 @@ def executer(nom, suite, chemins, dossier, reference=False, ci=False):
     if identifiant_suite(nom, suite, chemins) != identite:
         raise ValueError('Entrées modifiées pendant la qualification : ' + nom)
     recu = {'format': 1, 'identite': identite, 'confiance': 'locale-non-attestee',
+            'reutilisable': suite.get('reutilisable', True),
             'autorise_publication': False, 'resultat': 'succes' if ok else 'echec',
             'codes': codes, 'duree_secondes': round(time.monotonic() - debut, 4)}
     dossier.mkdir(parents=True, exist_ok=True)
