@@ -39,6 +39,21 @@ rattachement/SMTPprivés, qualification globale exacte/sauvegarde/retour puis ba
 Les sources Nix de build incluent les sept dépendances Lisp déjà auditées ;
 nouvelle construction propre encore à exécuter avant tout candidat promouvable.
 
+Complément de reprise : Vision94f3c6d8f5e99827654e55021fa0c7baa59005ef publié ;
+campagne centrale base complète réussie (4testsElm,4formatsgraphisme/vitrine,
+6parcoursContinuousUI,2largeurscomptes et4parcoursconsentementMCP clavier/CSRF).
+Candidat frontend364b9f44531edc66f64a816cd3f855afe4476bfeab4d6722c9efed4982e39c89.
+Construction Nix propre1551a8f47ebacf888de2186c3e1dc7dabd6b59d9 réussie15,0213s,
+SBCL2.6.4/ASDF3.3.1 ; SHA2565e7e2a49b5cd0d7f0b6d6d773c10c4b153559b9d53e475cfc3daa9b1a44d56c4,
+13404520octets, paquet/nix/store/f278amsdl3rf2k69mxv4aj323j8i5bib-mrjam-metier-1551a8f47eba.
+Deux échecs avant compilation analysés : clientCurl puis clientNix perdaient le
+proxy hébergé dans l'environnement filtré. Proxy conservé pour téléchargement/
+cache, sans devenir un attribut de dérivation/credential de compilation ; archive
+SHA256 et toolchain restent verrouillées. Diagnostic finalprivé construction-log-
+avec-proxy-nix.log. Ce nouveau binaire n'est PAS promouvable : qualification
+d'assemblage complète/configurationNative/retour et opérations personnelles
+encore à réaliser. Descripteur actif inchangé ; aucun email réel ni suppression.
+
 Amendement propriétaire du12octobre : suppression des deux anciennes identités
 autorisée, remplacement Keycloak par Kanidm confirmé. Préserver le compte métier
 et ses données ; ne jamais déclencher effacer_identite_cycle. Récupérer l'adresse
