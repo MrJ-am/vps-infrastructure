@@ -421,7 +421,12 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "Requis pour sondes cadencées et disponibilité explicite",
+    "scellement": {
+      "revision_operateurs": "b3a552fa6f744e8585fc101d4fa4f36c8f5095aa",
+      "stage_sha256": "8d3d0e38536ab513481cac3dfee80c6807f49e8dd65439fad6a0e4c7bbd96a5d",
+      "bundle_complet_verifie_localement": true,
+      "publication_effectuee": false
+    },
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
