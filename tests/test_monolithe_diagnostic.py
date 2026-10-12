@@ -82,6 +82,14 @@ class Diagnostic(unittest.TestCase):
         with self.assertRaises(ValueError):m.metadonnees_roles('/nix/store/postgres','autre',{'vision'},None)
         with self.assertRaises(ValueError):m.metadonnees_roles('/nix/store/postgres','vision',{'secret;'},None)
 
+    def test_vue_historique_metadonnees_seules(self):
+        r={'existe':True,'proprietaire_vision':True,'proprietaire_migration':False,'secret':'prive'}
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stdout=json.dumps(r))) as run:
+            v=m.proprietes_vue_historique('/nix/store/postgres')
+        self.assertNotIn('secret',v)
+        self.assertIn('BEGIN READ ONLY',run.call_args.kwargs['input'])
+        self.assertNotIn('FROM vision_browser_sheets',run.call_args.kwargs['input'])
+
     def test_seul_champ_de_contrat_de_table_versionnee_est_emis(self):
         t='ValueError: Contrat SQL divergent : public.vision_items force_rls'
         r=m.diagnostic_erreur(t,{'public.vision_items'})
