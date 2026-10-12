@@ -158,3 +158,20 @@ Il s'agit de comptes de test ; aucun OTP/passkey/enrôlement personnels réalis�
 
 Aucune opération personnelle n'a été simulée. Les seules exceptions autorisées
 restent l'abandon du lien magique et de la connexion perpétuelle.
+# Parcours propriétaire — amendement du 12 octobre 2026
+
+Une seule nouvelle identité Log, invitation envoyée à l'adresse du compte
+Keycloak par canal privé, rattachée explicitement au propriétaire métier stable.
+Suppression des deux anciennes identités autorisée après qualification de l'accès
+et récupération ; aucune suppression du compte métier ni appel de son hook d'effacement.
+Le mail est nécessaire à la récupération ; pseudo facultatif, mail affiché par
+défaut. Unicode/espaces dans le nom affiché, distinct du `name` technique Kanidm.
+Libellé « Phrase de passe », Unicode/espaces et longueur élevée requis.
+La version verrouillée vérifie zxcvbn score4 et blacklist sans composition imposée,
+mais conserve minimum15 sansMFA/10avecMFA et plafond128 : limites natives explicites.
+L'indicateur de force pendant la saisie reste à intégrer/qualifier ; les retours
+de validation ne constituent pas à eux seuls une jauge live. Ne pas envoyer chaque
+frappe à une API ni introduire un estimateur tiers sans audit/autorisation applicable.
+Test réel `tests/kanidm_politiques.py` : nom Unicode avec espaces lu intact,
+phrase100caractères Unicode/espaces acceptée, authentification conservée au restart.
+Courriel personnel non envoyé et compte réel non modifié à ce stade.

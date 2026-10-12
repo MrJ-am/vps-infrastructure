@@ -2615,7 +2615,12 @@
       "vps/assemblage/kanidm/*",
       "vps/scripts/oidc-kanidm-qualifier.py",
       "vps/tests/kanidm_reel.py",
-      "vps/tests/oidc-kanidm*"
+      "vps/tests/oidc-kanidm*",
+      "vps/mrjam-log.asd",
+      "vps/lisp/identite/log-*",
+      "vps/lisp/serveur/log-http.lisp",
+      "vps/tests/log-*",
+      "vps/scripts/log-kanidm-qualifier.py"
     ],
     "commandes": [
       [
@@ -2654,7 +2659,8 @@
       "SBCL_HOME",
       "MRJAM_LIBCRYPTO",
       "MRJAM_KANIDM",
-      "MRJAM_CURL"
+      "MRJAM_CURL",
+      "MRJAM_LIBSQLITE"
     ],
     "reutilisable": false
   },
@@ -2736,6 +2742,168 @@
       [
         "python3",
         "scripts/kanidm-passkey-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ],
+    "reutilisable": false,
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ]
+  },
+  "log-sessions-kanidm": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-oidc.asd",
+        "mrjam-native.asd",
+        "lisp/identite/oidc-*.lisp",
+        "lisp/native/*.lisp",
+        "assemblage/oidc/dependances.lock.json",
+        "assemblage/oidc/charger-dependances.lisp",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json",
+        "scripts/oidc-kanidm-qualifier.py",
+        "tests/kanidm_reel.py",
+        "tests/oidc-kanidm.lisp",
+        "tests/oidc-kanidm-froid.lisp",
+        "assemblage/charger.lisp",
+        "mrjam-log.asd",
+        "mrjam-metier.asd",
+        "lisp/identite/log-*.lisp",
+        "lisp/serveur/*.lisp",
+        "scripts/log-kanidm-qualifier.py",
+        "tests/log-*.lisp"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp",
+        "src/*.lisp",
+        "docs/CONTRAT-SEANCE.md"
+      ],
+      "matheval": [
+        "matheval.asd",
+        "lisp/*.lisp"
+      ]
+    },
+    "impact": [
+      "vps/lisp/identite/oidc-*",
+      "vps/assemblage/oidc/*",
+      "vps/assemblage/kanidm/*",
+      "vps/scripts/oidc-kanidm-qualifier.py",
+      "vps/tests/kanidm_reel.py",
+      "vps/tests/oidc-kanidm*",
+      "vps/mrjam-log.asd",
+      "vps/lisp/identite/log-*",
+      "vps/lisp/serveur/log-http.lisp",
+      "vps/tests/log-*",
+      "vps/scripts/log-kanidm-qualifier.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/log-kanidm-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "SBCL_HOME",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "MRJAM_LIBSQLITE"
+    ],
+    "reutilisable": false
+  },
+  "kanidm-invitation": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "tests/kanidm_reel.py",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json",
+        "scripts/provenance-outils.py",
+        "assemblage/dependances.json",
+        "assemblage/python/*.txt",
+        "tests/kanidm_invitation.py",
+        "scripts/kanidm-invitation-qualifier.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/kanidm-passkey-qualifier.py",
+      "vps/tests/kanidm_passkey.py",
+      "vps/tests/kanidm_reel.py",
+      "vps/assemblage/kanidm/*",
+      "vps/tests/kanidm_invitation.py",
+      "vps/scripts/kanidm-invitation-qualifier.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-invitation-qualifier.py"
       ]
     ],
     "dependances": [],

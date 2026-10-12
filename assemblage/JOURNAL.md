@@ -766,3 +766,25 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   reçu browser sur cache Chromium supprimé : déclarer moteur externe réellement
   lancé, ni réinstallation ni affaiblissement de provenance.45suites. Aucun accès
   personnel/migration/production affirmé ; reste raccordement Common Lisp/MCP.
+# 12 octobre — raccordement Log en cours, aucune deuxième promotion
+
+- Image C reconstruite depuis sources ; CL-MCP/Swank mêmePID/marqueur observés
+  depuis les deux chemins, nouvelles sessionsHTTP, aucun replay synthétique.
+- `scripts/log-kanidm-qualifier.py --persistante` puis commande froide : vrais
+  échangesNative, sessions privées, cookiehôte, suspension métier, étatIdP après
+  restart, logout ; adaptateurOAuthMCP avec consommation et rotation/rejeu de
+  famille refusé. `assemblage.py tester --suite log-sessions-kanidm`4,551s réussi.
+- `kanidm-invitation`8,8297s : personne neuve, intent natif, formulaire réel,
+  feedback pendant saisie etUnicode/espaces. Aucun SMTPpersonnel invoqué.
+- Visionc484e8e : écran consentement partagé, interopretour exactement lié à
+  l'URI validée, elm-review/compilation37modules réussis, navigateur restant.
+- VerrouParserPlaywright1.58 ancien devenu incompatible avecSDKcommun1.61 :
+  archive officielle vérifiéeSHA512 et fichiers/licences comparés ; bundle
+  unique actuel verrouillé, aucune réinstallation ni exception de contrôle.
+- Modificationlayout : erreur compilation sousTron, pileDEBUG etlocaux examinés,
+  sources corrigées, RETRY recompilation choisi ; résultat évalué séparément par
+  étatduDebugger et fonctions/classes. Aucun effet métier/prod à rejouer.
+- DélégationNative limitée : essais refusés, nonqualifiés et exclus de promotion.
+  Ne pas transformer ces échecs en succès ni élargir le credential du monolithe.
+- RéférenceVPS38262126595/aefeeed réussie : génération précédente et invariants
+  comptes/rattachements préservés. Aucune activation/suppression de compte réelle.

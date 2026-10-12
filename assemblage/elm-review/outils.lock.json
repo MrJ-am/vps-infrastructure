@@ -1894,12 +1894,18 @@
   "parseur_js_existant": {
     "composant": "matheval",
     "fichier": "docs/node_modules/playwright/lib/transform/babelBundle.js",
-    "implementation": "docs/node_modules/playwright/lib/transform/babelBundleImpl.js",
-    "sha256": "a982f980c34b5d468ac89a8cccfe173e8d8e6385f7a7c764b307d6de35118804",
-    "implementation_sha256": "ef13b6ad8a95605c899fc4f39dda8a286bc3dc548c520ad4f4d7bef8254c0daf",
-    "package": "playwright@1.58.2 (outillage deja present)",
+    "implementation": "docs/node_modules/playwright/lib/transform/babelBundle.js",
+    "sha256": "9201df11ae9c9ee1febd587c5013c4f862aa7e9981b92b86ccbbbd37e71f9124",
+    "implementation_sha256": "9201df11ae9c9ee1febd587c5013c4f862aa7e9981b92b86ccbbbd37e71f9124",
+    "package": "playwright@1.61.0 (version commune déjà verrouillée)",
     "licence": "Apache-2.0 pour Playwright ; Babel embarque MIT",
-    "provenance": "docs/package-lock.json deja inventorie ; aucune installation/ajout de paquet",
-    "effets": "babelParse avec filename JS et options internes babelrc:false/configFile:false ; parsing seulement, aucun JS inspecte execute"
+    "provenance": "archive officielle npm1.61.0 vérifiée par intégrité SHA512 du package-lock et comparaison des fichiers, wrapper/impl réunis dans le bundle1.61",
+    "effets": "babelParse avec filename JS et options internes babelrc:false/configFile:false ; parsing seulement, aucun JS inspecte execute",
+    "integrite_archive": "sha512-Z+7BeeqQPRRzklHsVFP4KTGIyMxKUmfeRA4WisM6G3/XW6nwGeX6fX9qYaDa+CiUqpOkb2f6X3nar05R3kSuJQ==",
+    "licences_sha256": {
+      "lib/transform/babelBundle.js.LICENSE": "676fa240edb9d844720e8e42e61be5457a4ced8dae0c6e63efb4b85e95d2d276",
+      "lib/transform/babelBundle.js.txt": "4f8cd1987142f0cac537e30835b45c6fc18953451d74aa3bd9d82729fd0fdf1d",
+      "LICENSE": "45873d00a0dd243596deb4aa23b2493b3d1f0671921bf2538ea431d7380220eb"
+    }
   }
 }

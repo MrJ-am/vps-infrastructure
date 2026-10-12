@@ -66,5 +66,8 @@
   (asdf:load-asd (truename (merge-pathnames "mrjam-native.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-courriel.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-identite.asd" infra)))
+  (load (merge-pathnames "oidc/charger-dependances.lisp" racine))
+  (asdf:load-asd (truename (merge-pathnames "mrjam-oidc.asd" infra)))
+  (asdf:load-asd (truename (merge-pathnames "mrjam-log.asd" infra)))
   (asdf:load-asd (truename (merge-pathnames "mrjam-metier.asd" infra))))
 (in-package #:cl-user)

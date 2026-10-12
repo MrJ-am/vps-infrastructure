@@ -1,0 +1,18 @@
+;;; Processus de qualification, sans serveur MCP/Swank ni connexion de production.
+(load (merge-pathnames "../assemblage/charger.lisp" *load-truename*))
+(load (merge-pathnames "../assemblage/oidc/charger-dependances.lisp" *load-truename*))
+(asdf:load-asd (merge-pathnames "../mrjam-oidc.asd" *load-truename*))
+(asdf:load-asd (merge-pathnames "../mrjam-log.asd" *load-truename*))
+(asdf:load-system "mrjam-log/kanidm-tests")
+(mrjam-native:initialiser-crypto (uiop:getenv "MRJAM_LIBCRYPTO"))
+(mrjam-native:initialiser-sqlite (uiop:getenv "MRJAM_LIBSQLITE"))
+(assert (uiop:symbol-call :mrjam-log-tests :verifier))
+(loop for commande = (read-line *standard-input* nil nil) while commande do
+  (cond
+    ((equal commande "preparer") (uiop:symbol-call :mrjam-log-kanidm-tests :preparer (uiop:getenv "MRJAM_LOG_FIXTURE")))
+    ((equal commande "terminer") (uiop:symbol-call :mrjam-log-kanidm-tests :terminer (uiop:getenv "MRJAM_LOG_FIXTURE")))
+    ((equal commande "reprendre")
+     (uiop:symbol-call :mrjam-log-kanidm-tests :reprendre (uiop:getenv "MRJAM_LOG_FIXTURE"))
+     (uiop:symbol-call :mrjam-log-kanidm-tests :logout))
+    (t (error "Commande de qualification inconnue.")))
+  (format t "~&LOG-TERMINE~%") (finish-output))
