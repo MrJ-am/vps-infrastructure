@@ -11,6 +11,15 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_erreur_nix_ne_revele_pas_les_definitions_privees(self):
+        t='error: The option `services.nginx.virtualHosts."vision.mrj.am".locations."= /".root` has conflicting definition values:\n- In /configuration-privee.nix: SECRET\nat /root/private/module.nix:34:5\n'
+        r=m.erreur_nix(t)
+        self.assertEqual(r['categories'],['definitions_conflictuelles'])
+        self.assertEqual(r['options_routage'],['services.nginx.virtualHosts."vision.mrj.am".locations."= /".root'])
+        self.assertEqual(r['positions'],[{'fichier':'module.nix','ligne':34,'colonne':5}])
+        self.assertNotIn('SECRET',json.dumps(r));self.assertNotIn('private',json.dumps(r));self.assertNotIn('privee',json.dumps(r))
+        self.assertNotIn('SECRET',json.dumps(m.erreur_nix('error: valeur `SECRET` non valide')))
+
     def test_nginx_binaire_fixe_sans_executer_la_configuration(self):
         b='/nix/store/'+'a'*32+'-nginx-1.30.4/bin/nginx'
         with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stderr='nginx version: nginx/1.30.4\n')) as run,\
