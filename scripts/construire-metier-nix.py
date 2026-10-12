@@ -30,7 +30,8 @@ def construire(outils_seulement=False):
     # Pas de token GitHub, credentials Actions ni .netrc dans le build.
     # Le téléchargement public doit conserver le proxy de l'environnement
     # hébergé : l'accès direct n'y est pas disponible. Ces variables ne passent
-    # pas au processus Nix/compilateur ; l'intégrité SHA256 reste obligatoire.
+    # au client Nix pour son cache HTTPS ; elles ne deviennent pas des attributs
+    # de dérivation ni l'environnement du compilateur. SHA256 reste obligatoire.
     env_telechargement = dict(env)
     for nom in ('HTTP_PROXY','HTTPS_PROXY','NO_PROXY','http_proxy','https_proxy','no_proxy'):
         if nom in os.environ: env_telechargement[nom] = os.environ[nom]
@@ -54,7 +55,7 @@ def construire(outils_seulement=False):
         for nom in (('outils',) if outils_seulement else ('metier','outils')):
             prefixe=['sudo','env','NIX_REMOTE=local'] if os.environ.get('GITHUB_ACTIONS')=='true' else []
             sorties[nom]=subprocess.check_output([*prefixe,'nix-build',str(expression),'--attr',nom,'--no-out-link',
-              '--max-jobs','1','--cores','2'],env=env,text=True).strip()
+              '--max-jobs','1','--cores','2'],env=env_telechargement,text=True).strip()
             if not sorties[nom].startswith('/nix/store/') or '\n' in sorties[nom]:raise ValueError('Sortie Nix ambiguë')
         if compilation_entrees(sources)!=inputs:raise ValueError('Sources modifiées pendant le build Nix')
         p={'format':1,'source_revision':revision,'nixpkgs_revision':cible['nixpkgs_revision'],
