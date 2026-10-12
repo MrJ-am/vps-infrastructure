@@ -19,8 +19,9 @@ réels conservés. Sécurité10,065s, migration38,057s, sélection0,9849s passen
 Autres reçus inchangés ; ne rejouer ni interface ni calcul métier. Même binaire296b7,
 Visioncd05b702/frontend3c00e4fd, image interactive C préservée.
 
-Prochain : publication/scellement exact35reçus/transport chiffré/descripteur puis
-une bascule centrale. Constater issue, puis MCP réel et référence mémoire/comptes/
+Candidatb3a552f scellé et transport chiffré publié,109135992octets, SHA256
+deb7fb67eed0695b1c1370e7d51a1bd81826477d724f69d2fa18d9a3f4c2cf0a.
+Bundle complet vérifié. Prochain : une bascule centrale. Constater issue, puis MCP réel et référence mémoire/comptes/
 latences/services avant jalon1 et Kanidm automatique. Kanidm non commencé.
 Rapport MCP non commité conservé. Aucun qualifier synthétique ni reconnexion.
 
