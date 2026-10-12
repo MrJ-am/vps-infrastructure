@@ -24,7 +24,7 @@ def main():
                   ' -p python3 --run '+shlex.quote(cmd),input=(ROOT/'scripts/log-diagnostic.py').read_bytes())
         return
     commandes=[]
-    if op=='deployer': commandes.append('python3 -B '+str(root/'monolithe-restaurer.py')+' '+rev)
+    if op=='deployer': commandes.append('python3 -B '+str(root/'monolithe-restaurer.py')+' '+rev+' --metier-actif')
     commandes.append('python3 -B '+str(root/'log-activer.py')+' '+{'deployer':'activer','retour':'retour','courriel':'courriel'}[op]+' '+rev)
     for cmd in commandes:
         stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+

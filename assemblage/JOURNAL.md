@@ -853,3 +853,15 @@ Deux générations complètes, assertions et services protégés désormais éva
 ensemble sur installation déjà active. Paquet shell de fixture n'est pas serveur
 Lisp ni artefact livré ; aucune empreinte d'un ancien commit dans ce contrôle.
 Aucun compte réel modifié et aucun courriel envoyé à ce point.
+
+12octobre —38316938816 : préparation des générations finali6dlml4k/bootstraphrxww
+réussie, services protégés identiques. Restauration bloquée avant backup/activation
+par reprise_certifiee historique77c ; monolithe déjà actif9qv/296b7. Mode explicite
+--metier-actif ajoute constat SHA du processus + génération/démarrage et sélection
+exclusive des états communs actuels, aucune restauration métier en production.
+10tests opérateur dont artefact différent refusé ; modes antérieurs inchangés.
+Env138 redémarré : processus Lisp précédents absents, image C reconstruite ASDF
+incrémental/contrôle initial, sessions MCP anciennes archivées (404 observé),
+Tron reconnexion explicite typeSwank. CL-MCP/Tron même652901/marqueur/objet1,
+poolNIL/debuggerNIL, aucun qualifier synthétique. Transports locaux9fc/b1 déjà
+publiés vérifiés puis supprimés (729730205octets), chiffrés et preuves conservés.
