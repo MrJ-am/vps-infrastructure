@@ -19,6 +19,15 @@ Image C saine conservée (marqueur reprise-20261012-552402 observé, pas PID fix
 CL-MCP sans pool/Swank, Tron distinct ; aucun qualifier synthétique de santé.
 Aucun REPL connecté à des données de production.
 
+Diagnostic38312804717 confirme génération active/démarrage9qv8n9gd, aucune
+préparation ni activation engagée. Second run38312427457 arrêté en évaluation :
+module officiel attend .eolMessage/.version sur paquet, pas chemin brut.
+Régression reproduite localement en génération complète, ancien contrôle
+insuffisant. Dérivation de liens + métadonnées héritées de recette verrouillée :
+mêmes ELF serveur/CLI, aucune recompilationRust, positif et chemin brut refusé.
+Nouveau scellement des seuls opérateurs/configurations requis ; binaire métier
+bc70c822 et preuves indépendantes conservés. Ne pas reconstruire le métier.
+
 Premier run38312028922/ef672f4 arrêté APRÈS réception/import/vérification, AVANT
 appel du préparateur : Path+str dans le bootstrap principal. Aucun changement
 de génération, compte ou données ; courriel non envoyé. Correction principale

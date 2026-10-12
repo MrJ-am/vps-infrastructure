@@ -16,7 +16,8 @@
         "coordination/historique/workflows-infrastructure-20261011/INDEX.json",
         "coordination/historique/workflows-infrastructure-20261011/*.archive",
         "coordination/historique/qualification-ci-20261011/INDEX.json",
-        "coordination/historique/qualification-ci-20261011/*.archive"
+        "coordination/historique/qualification-ci-20261011/*.archive",
+        ".github/workflows/*.yml"
       ]
     },
     "impact": [
@@ -3019,13 +3020,15 @@
         "modules/gateway.nix",
         "tests/log-nix.nix",
         "scripts/log-nix-qualifier.py",
-        "scripts/log-evaluation.nix"
+        "scripts/log-evaluation.nix",
+        "assemblage/kanidm/artefact.nix"
       ]
     },
     "impact": [
       "vps/modules/log.nix",
       "vps/scripts/log-evaluation.nix",
-      "vps/tests/log-nix.nix"
+      "vps/tests/log-nix.nix",
+      "vps/assemblage/kanidm/artefact.nix"
     ],
     "commandes": [
       [
@@ -3056,7 +3059,11 @@
         "scripts/kanidm-api-privee.py",
         "scripts/monolithe-stage.py",
         "scripts/vision-proprietaire-enroler.py",
-        "tests/test_log_operation.py"
+        "tests/test_log_operation.py",
+        "scripts/log-diagnostic.py",
+        "scripts/monolithe-diagnostic.py",
+        "tests/test_monolithe_stage.py",
+        "scripts/monolithe-preparer.py"
       ]
     },
     "impact": [
@@ -3069,6 +3076,16 @@
       [
         "python3",
         "tests/test_log_operation.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_stage.py"
       ]
     ],
     "dependances": [],

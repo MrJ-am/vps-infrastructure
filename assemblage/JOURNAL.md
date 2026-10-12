@@ -832,3 +832,14 @@ Contextes exacte employée. Chromium supprimé encore cherché par fixture Visio
 Restauration froide : copier le chargeur OIDC manquant ; autre UID réussit,
 parent privé reste refusé. Sept sources OIDC hashées et disponibles cache signé
 (7réponsesnarinfo200), incluses en closure de la restauration, pas nouvel outil.
+
+12octobre — Promotion38312028922 : transport reçu/importé, bootstrap Path+str
+refusé avant préparateur ; correction testée par exécution du handover extrait
+pour Log/monolithe (23cas). Promotion38312427457 : Nix refusé avant préparation.
+Diagnostic central38312804717 sans valeurs privées confirme actif/démarrage9qv,
+aucune activation. Reproduction locale toplevel --show-trace : module officiel
+kanidm.nix731 lit package.eolMessage ; chemin brut pas un set. Métadonnées
+héritées et liens vers même0aq : build court, ELF serveur/CLI identiques, aucun
+Rust recompilé. Qualification force génération complète et refuse chemin brut.
+Workflowdiagnostic manuel fermé et testé ; aucune campagne de développement
+distante, aucun changement de compte/courriel à ce point.

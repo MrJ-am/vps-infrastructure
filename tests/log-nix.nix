@@ -1,3 +1,4 @@
+{ cheminBrut ? false }:
 let
   lib = import <nixpkgs/lib>;
   c = (import <nixpkgs/nixos/lib/eval-config.nix> {
@@ -12,11 +13,14 @@ let
       infrastructure.metier = { enable = true; bankVersion = "fixture";
         paquet = pkgs.writeShellScriptBin "mrjam-metier" "exit 125"; };
       infrastructure.log = { enable = true;
-        paquet = builtins.storePath "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2"; };
+        paquet = if cheminBrut then builtins.storePath "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2"
+          else import ../assemblage/kanidm/artefact.nix { inherit pkgs;
+            artefact = "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2"; }; };
     }) ];
   }).config;
   v = c.services.nginx.virtualHosts;
 in
+assert builtins.stringLength (toString c.system.build.toplevel) > 32;
 assert builtins.all (a: a.assertion) c.assertions;
 assert !c.services.keycloak.enable && !c.systemd.services.keycloak.enable;
 assert !c.systemd.services.mrj-auth.enable;
@@ -34,5 +38,5 @@ assert v."log.mrj.am".locations."^~ /realms/".return == "410";
 assert lib.all (n: !(lib.hasInfix "3002" (v."vision.mrj.am".locations.${n}.proxyPass or "")))
   [ "/auth/" "/oauth/" "= /_mrj_session" "= /_vision_administration" "= /_vision_mcp_token"
     "= /.well-known/oauth-authorization-server" "= /.well-known/oauth-protected-resource/mcp" ];
-{ kanidmSepare = true; clientLisp = true; keycloakActif = false;
+{ generationEvaluee = true; kanidmSepare = true; clientLisp = true; keycloakActif = false;
   tlsVerifie = true; processusMetier = 1; production = false; }

@@ -8,9 +8,12 @@ if __name__=='__main__':
     if not base.is_dir(): raise ValueError('Nixpkgs verrouillé requis')
     nix='/home/agent/.nix-profile/bin/nix-instantiate'
     if not Path(nix).is_file(): nix='nix-instantiate'
-    r=subprocess.run([nix,'--eval','--strict','--json','-I','nixpkgs='+str(base),
-                      'tests/log-nix.nix'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=60)
+    cmd=[nix,'--eval','--strict','--json','-I','nixpkgs='+str(base),'--expr']
+    r=subprocess.run(cmd+['import ./tests/log-nix.nix {}'],cwd=ROOT,capture_output=True,text=True,check=True,timeout=90)
     d=json.loads(r.stdout)
-    if d!={'kanidmSepare':True,'clientLisp':True,'keycloakActif':False,'tlsVerifie':True,'processusMetier':1,'production':False}:
+    if d!={'generationEvaluee':True,'kanidmSepare':True,'clientLisp':True,'keycloakActif':False,'tlsVerifie':True,'processusMetier':1,'production':False}:
         raise ValueError('Configuration Log non conforme')
+    negatif=subprocess.run(cmd+['import ./tests/log-nix.nix { cheminBrut=true; }'],cwd=ROOT,capture_output=True,text=True,timeout=90)
+    if not negatif.returncode or 'expected a set' not in negatif.stderr:
+        raise ValueError('Régression chemin brut Native non détectée')
     print(r.stdout.strip())
