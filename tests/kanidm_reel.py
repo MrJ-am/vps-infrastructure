@@ -5,6 +5,8 @@ répertoire privé éphémère. Aucun accès réseau autre que loopback.
 """
 from contextlib import AbstractContextManager
 import gzip
+import base64
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,6 +16,7 @@ import subprocess
 import tempfile
 import time
 import uuid
+from urllib.parse import urlencode, urlsplit, parse_qs
 
 
 class EchecQualification(RuntimeError):
@@ -100,7 +103,7 @@ class KanidmLocal(AbstractContextManager):
             except subprocess.TimeoutExpired:
                 self.processus.kill(); self.processus.wait(timeout=5)
 
-    def http(self, chemin, document=None, *, token=None, cookies=None):
+    def http(self, chemin, document=None, *, token=None, cookies=None, method=None, headers=False):
         if not chemin.startswith('/') or any(c in chemin for c in '\r\n"\\'):
             raise EchecQualification('chemin fixture invalide')
         # Toute donnée sensible passe par stdin, jamais argv ou environnement.
@@ -117,8 +120,17 @@ class KanidmLocal(AbstractContextManager):
             options += ['cookie = ' + quoted(str(cookies)), 'cookie-jar = ' + quoted(str(cookies))]
         if token:
             options += ['header = ' + quoted('Authorization: Bearer ' + token)]
+        if method:
+            if method not in ('GET', 'POST', 'PUT', 'PATCH', 'DELETE'):
+                raise EchecQualification('méthode fixture inconnue')
+            options += ['request = ' + quoted(method)]
+        headerfile = None
+        if headers:
+            headerfile = self.root/('headers-' + secrets.token_hex(8))
+            headerfile.touch(mode=0o600)
+            options += ['dump-header = ' + quoted(str(headerfile))]
         if document is not None:
-            options += ['header = "Content-Type: application/json"', 'request = "POST"',
+            options += ['header = "Content-Type: application/json"', 'request = ' + quoted(method or 'POST'),
                         'data = ' + quoted(json.dumps(document))]
         result = subprocess.run([str(self.curl), '--disable', '--config', '-'],
                                 input='\n'.join(options)+'\n', capture_output=True, text=True,
@@ -127,7 +139,17 @@ class KanidmLocal(AbstractContextManager):
             raise EchecQualification('transport HTTPS natif refusé')
         try:
             body, status = result.stdout.rsplit('\n', 1)
-            return int(status), json.loads(body) if body else None
+            result = (int(status), json.loads(body) if body else None)
+            if headerfile:
+                hs = {}
+                for line in headerfile.read_text().splitlines():
+                    if ':' in line:
+                        name, value = line.split(':', 1); name = name.lower()
+                        if name == 'location' and name in hs:
+                            raise EchecQualification('retour natif ambigu')
+                        hs[name] = value.strip()
+                return (*result, hs)
+            return result
         except (ValueError, json.JSONDecodeError):
             raise EchecQualification('réponse native non JSON') from None
 
@@ -142,6 +164,7 @@ class KanidmLocal(AbstractContextManager):
     def importer_une_fois(self):
         """API officielle de migration, finalisée immédiatement, sans passerelle."""
         admin = self.login('admin', self.recuperer('admin'), privilegie=True)
+        self.admin = admin  # Uniquement fixture opérateur ; jamais transmis au client Lisp.
         nom = 'fixture-import-vision'
         status, _ = self.http('/v1/sync_account', {'attrs': {'name': [nom]}}, token=admin)
         if status != 200: raise EchecQualification(f'création import ponctuel refusée (HTTP{status})')
@@ -164,6 +187,39 @@ class KanidmLocal(AbstractContextManager):
         status, _ = self.http('/scim/v1/Sync', token=jeton)
         if status not in (401, 403):
             raise EchecQualification('capacité import toujours active après finalisation')
+
+    def creer_client_oidc(self, client='mrjam-vision', hote='vision.mrj.am'):
+        operateur = self.login('idm_admin', self.recuperer('idm_admin'), privilegie=True)
+        status, _ = self.http('/v1/oauth2/_basic', {'attrs': {
+            'name': [client], 'displayname': ['Fixture OIDC'],
+            'oauth2_rs_origin_landing': ['https://' + hote], 'oauth2_strict_redirect_uri': ['true'],
+        }}, token=operateur)
+        if status != 200: raise EchecQualification(f'client OIDC natif refusé (HTTP{status})')
+        for chemin, document in (
+            ('/v1/oauth2/'+client+'/_attr/oauth2_rs_origin', ['https://'+hote+'/auth/retour']),
+            ('/v1/oauth2/'+client+'/_scopemap/idm_all_persons', ['openid', 'profile', 'email']),
+        ):
+            status, _ = self.http(chemin, document, token=operateur)
+            if status != 200: raise EchecQualification(f'contrat client OIDC refusé (HTTP{status})')
+        status, secret = self.http('/v1/oauth2/'+client+'/_basic_secret', token=operateur)
+        if status != 200 or not isinstance(secret, str):
+            raise EchecQualification('secret client natif absent')
+        return secret
+
+    def autoriser_code(self, token, client, hote, state, nonce, challenge):
+        params = {'client_id': client, 'response_type': 'code', 'redirect_uri': 'https://'+hote+'/auth/retour',
+                  'scope': 'openid profile email', 'state': state, 'nonce': nonce,
+                  'code_challenge': challenge, 'code_challenge_method': 'S256'}
+        status, response, hs = self.http('/oauth2/authorise?'+urlencode(params), token=token, headers=True)
+        if status == 200 and isinstance(response, dict) and 'ConsentRequested' in response:
+            consent = response['ConsentRequested']['consent_token']
+            status, _, hs = self.http('/oauth2/authorise/permit', consent, token=token, headers=True)
+        if status not in (200, 302) or 'location' not in hs:
+            raise EchecQualification(f'autorisation OIDC native non aboutie (HTTP{status})')
+        uri = urlsplit(hs['location']); query = parse_qs(uri.query, strict_parsing=True)
+        if uri.scheme != 'https' or uri.netloc != hote or uri.path != '/auth/retour' or query.get('state') != [state] or len(query.get('code', [])) != 1:
+            raise EchecQualification('retour ou state OIDC natif divergent')
+        return query['code'][0]
 
     def algorithme_password(self):
         backup = self.root/('backup-' + secrets.token_hex(8))
@@ -250,3 +306,44 @@ def qualifier_import(paquet, curl, rounds=5000):
                 'argon2id_verifie': True, 'restart_sans_fichier_import': True,
                 'session_conservee_au_restart': True, 'import_ponctuel_finalise': True,
                 'capacite_import_revoquee': True, 'production': False}
+
+
+def constater_limite_import(paquet, curl):
+    """Régression amont observée : rechargement avant premier login, sans patch."""
+    with KanidmLocal(paquet, curl) as natif:
+        natif.importer_une_fois()
+        if natif.algorithme_password() != 'CRYPT_SHA512':
+            raise EchecQualification('fixture de régression import non établie')
+        natif.arreter(); natif.demarrer()
+        if natif.algorithme_password() != 'CRYPT_SHA512':
+            raise EchecQualification('stockage importé modifié au restart')
+        # L'auth accepte le mécanisme Password mais refuse le bon mot de passe.
+        # Ce résultat est une limite bloquante pour l'import, jamais une migration réussie.
+        natif.login(natif.nom, natif.password, refus=True)
+        return {'defaut_reload_sha512_crypt_observe': True,
+                'import_password_retenu_production': False,
+                'choix_proprietaire': 'nouvelle_identite_avec_donnees_Vision_preservees'}
+
+
+class FixtureOIDC(KanidmLocal):
+    def __enter__(self):
+        super().__enter__()
+        try:
+            self.importer_une_fois()
+            secret = self.creer_client_oidc()
+            user = self.login(self.nom, self.password)
+            verifier = secrets.token_urlsafe(32)
+            state = secrets.token_urlsafe(32); nonce = secrets.token_urlsafe(32)
+            challenge = base64.urlsafe_b64encode(hashlib.sha256(verifier.encode()).digest()).decode().rstrip('=')
+            code = self.autoriser_code(user, 'mrjam-vision', 'vision.mrj.am', state, nonce, challenge)
+            response = self.root/'reponse-jetons.json'; response.touch(mode=0o600)
+            self.path = self.root/'oidc-fixture.json'
+            self.path.write_text(json.dumps({'secret': secret, 'port': self.port, 'ca': str(self.ca),
+                                            'code': code, 'verifier': verifier, 'nonce': nonce,
+                                            'uuid': self.uuid, 'maintenant': int(time.time()),
+                                            'curl': str(self.curl), 'reponse': str(response)}))
+            self.path.chmod(0o600)
+            return self
+        except BaseException:
+            self.__exit__(True, None, None)
+            raise

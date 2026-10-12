@@ -2583,5 +2583,79 @@
       "MRJAM_CURL"
     ],
     "reutilisable": false
+  },
+  "oidc-kanidm": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-oidc.asd",
+        "mrjam-native.asd",
+        "lisp/identite/oidc-*.lisp",
+        "lisp/native/*.lisp",
+        "assemblage/oidc/dependances.lock.json",
+        "assemblage/oidc/charger-dependances.lisp",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json",
+        "scripts/oidc-kanidm-qualifier.py",
+        "tests/kanidm_reel.py",
+        "tests/oidc-kanidm.lisp",
+        "tests/oidc-kanidm-froid.lisp",
+        "assemblage/charger.lisp"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp"
+      ]
+    },
+    "impact": [
+      "vps/lisp/identite/oidc-*",
+      "vps/assemblage/oidc/*",
+      "vps/assemblage/kanidm/*",
+      "vps/scripts/oidc-kanidm-qualifier.py",
+      "vps/tests/kanidm_reel.py",
+      "vps/tests/oidc-kanidm*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/oidc-kanidm-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "SBCL_HOME",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_KANIDM",
+      "MRJAM_CURL"
+    ],
+    "reutilisable": false
   }
 }

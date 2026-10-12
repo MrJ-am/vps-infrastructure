@@ -1,6 +1,6 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — Kanidm local installé, import propriétaire qualifié
+## Point de reprise actif — IdP local qualifié, compte Log neuf retenu
 
 Mission poursuivie, étape1 toujours acceptée en production : génération9qv8n9gd,
 artefact296b7, opérateurs185f931. Aucune deuxième promotion. Vision, Matheval,
@@ -30,6 +30,32 @@ permanent. Les bases/clefs/comptes sont entièrement synthétiques et supprimés
 fin de test. Cela ne migre pas encore le propriétaire réel ni ne qualifie OIDC/MCP.
 Vision comptes.id UUID/utilisateur textuel restent stables ; remplacer le seul
 rattachement identites, sans fusion email ni effacer_identite_cycle destructif.
+
+Correction déterminante après contrôle supplémentaire : restart AVANT premier
+login refuse le BON password importé, pour5000 et656000rounds. Source officielle
+libs/crypto/src/lib.rs487 convertit DbPasswordV1::CRYPT_SHA512 en Kdf::CRYPT_SHA256
+au rechargement. Aucun patch/fork Rust ni maintien conditionnel de deux logins.
+Choix de repli expressément autorisé par l'utilisateur : compte Log neuf unique,
+rattaché explicitement aux données Vision existantes ; password saisi/enrôlé
+personnellement, ancien password éventuellement choisi si sa politique l'accepte.
+Qualification contient cette régression observée et import_password_retenu=false.
+Les succès précédents après réhachage restent exacts, mais ne qualifient plus
+l'import pour la production. Aucun compte réel n'a été migré/supprimé.
+
+OIDC réel supplémentaire :15assertions passent viaCL-MCP dans image C et en image
+froide, puis commande centrale. Discovery/JWK/ES256/S256/consentement, échange,
+issuer/audience/nonce/at_hash/UUID, introspection, refresh signé, révocation→active
+false et nouveau refresh400. Données/secrets uniquement synthétiques, diagnostics
+privés0600, aucune credential admin dans Lisp. Catalogue43suites, raccordement
+serveur métier et MCP utilisateur encore à réaliser. Un nom de renderer JSON
+incorrect a échoué à la lecture avant échange ; export réel json-encode utilisé.
+
+Politiques natives sondées sur bases indépendantes : les DEUX défauts
+idm_all_accounts/idm_all_persons contraignent les durées. Tous deux90j + profil
+7j donnent réellement604800s ; un seul défaut modifié laissait86400s, même après
+restart. CredentialTypeMinimum concerne l'enrôlement, ne prouve pas l'usage MFA :
+password seul encore accepté sous minimummfa, confirmé parTODO authsession/mod.rs.
+Ne pas accorder de privilège métier administratif sur ce seul paramètre.
 
 Kanidm officiel5479338, Nixpkgs c5, vendor741crates conformes au lock et licences
 déclarées inventoriées. Intégrité staging fixe ET vendor dérivé vérifiée ; cargoHash

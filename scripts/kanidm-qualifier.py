@@ -10,7 +10,7 @@ import sys
 
 RACINE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RACINE/'tests'))
-from kanidm_reel import EchecQualification, qualifier_import
+from kanidm_reel import EchecQualification, qualifier_import, constater_limite_import
 
 
 def main():
@@ -39,6 +39,7 @@ def main():
     if resultat != explicite:
         raise EchecQualification('résultats divergents avec rounds explicites')
     resultat['sha512_crypt_rounds_qualifies'] = [5000, 656000]
+    resultat.update(constater_limite_import(paquet, curl))
     print(json.dumps(resultat, sort_keys=True))
 
 
