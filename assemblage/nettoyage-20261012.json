@@ -1,0 +1,398 @@
+{
+  "format": 1,
+  "date_utc": "2026-10-12T07:08:56.736256+00:00",
+  "disque_avant": {
+    "taille_octets": 33770192896,
+    "libres_utilisables": 1102061568,
+    "occupes_octets": 30933368832
+  },
+  "operations": [
+    {
+      "type": "nix_gc",
+      "gain_disque_octets": 764383232,
+      "rapport_nix": "161 store paths deleted, 680.16 MiB freed",
+      "objets_supprimes": 161
+    },
+    {
+      "type": "cache_telechargement",
+      "chemin": "/home/agent/.cache/pip/http-v2",
+      "taille_mesuree_octets": 360038400,
+      "gain_disque_octets": 360038400
+    },
+    {
+      "type": "cache_telechargement",
+      "chemin": "/home/agent/.cache/pip/selfcheck",
+      "taille_mesuree_octets": 24576,
+      "gain_disque_octets": 24576
+    },
+    {
+      "type": "cache_telechargement",
+      "chemin": "/home/agent/.npm/_cacache",
+      "taille_mesuree_octets": 56164352,
+      "gain_disque_octets": 56164352
+    },
+    {
+      "type": "reference_bootstrap_mcp",
+      "correction": "agrégat actuel protégé et strictement identique au lock ; image saine conservée",
+      "gain_disque_octets": 0
+    },
+    {
+      "type": "processus_obsolete",
+      "pid_observe": 79777,
+      "version": "2.5.0",
+      "gain_disque_octets": 0,
+      "motif": "ancien contrôle initial sans socket ; imageC2.6.4 et Tron préservés"
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium-1200",
+      "taille_mesuree_octets": 374300672,
+      "gain_disque_octets": 374300672
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium-1208",
+      "taille_mesuree_octets": 380882944,
+      "gain_disque_octets": 380882944
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium-1228",
+      "taille_mesuree_octets": 397389824,
+      "gain_disque_octets": 397389824
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium_headless_shell-1200",
+      "taille_mesuree_octets": 262725632,
+      "gain_disque_octets": 262725632
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium_headless_shell-1208",
+      "taille_mesuree_octets": 266018816,
+      "gain_disque_octets": 266018816
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/chromium_headless_shell-1228",
+      "taille_mesuree_octets": 273952768,
+      "gain_disque_octets": 273952768
+    },
+    {
+      "type": "navigateur_inutilise",
+      "chemin": "/home/agent/.cache/ms-playwright/firefox-1509",
+      "taille_mesuree_octets": 287854592,
+      "gain_disque_octets": 287854592
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/4e6dba3-restauration-uid/candidat.tar.gz.age",
+      "gain_disque_octets": 109117440,
+      "sha256": "c7a46d4e78bdf6520c557948a5804e96b2565fe29b7788480e7ab6526ef2f6df",
+      "revision_transport": "0bc7abddb0ed1b8056fadfef87b4cb901af9e755",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/8576390-propriete-vue/candidat.tar.gz.age",
+      "gain_disque_octets": 109137920,
+      "sha256": "33d0a52d4d01478697769b0c414a408a326fcfb6d83cf9610625b4112cd1e063",
+      "revision_transport": "16679deba150c831fba0c89233d486b7f25f00f8",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/8d44379-reprise-redemarrage/candidat.tar.gz.age",
+      "gain_disque_octets": 109129728,
+      "sha256": "233f5ecacc62eea03d241216a404149bfa6e50e0332379c91a7fe073ae46eaed",
+      "revision_transport": "0d99db6f4b566a9c915324d5f96737edda74a833",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/9a063b8-rls27/candidat.tar.gz.age",
+      "gain_disque_octets": 109031424,
+      "sha256": "e8ad8f2832590e8a99c13f0d3186b23e5a9e5737c52c6490224437a3b3e2b659",
+      "revision_transport": "b02d22d74d531168a6e2523077ddf167497663b2",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/b3a552f-sondes/candidat.tar.gz.age",
+      "gain_disque_octets": 109137920,
+      "sha256": "deb7fb67eed0695b1c1370e7d51a1bd81826477d724f69d2fa18d9a3f4c2cf0a",
+      "revision_transport": "ebd33206e973ba765eed34df22526c117af816d4",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/c5548b3-identmap/candidat.tar.gz.age",
+      "gain_disque_octets": 109019136,
+      "sha256": "e710a430e8dbb6e62d7506ed05cd40949e6b201f496ccd292bfa1d4cffd09475",
+      "revision_transport": "8c57d52d0a54f0fe0aa1d2ee320483ddc4523edb",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/controle-sans-bytecode/candidat.tar.gz.age",
+      "gain_disque_octets": 109019136,
+      "sha256": "80ee4b46c3866150213f8a3265edf9a53e57ac1a3212b1f0e4491e896fff62da",
+      "revision_transport": "bbc2aee495fbe1982884dfefaba1600a503b1fba",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/dad8482-instants-lecture/candidat.tar.gz.age",
+      "gain_disque_octets": 109121536,
+      "sha256": "b0a48e48c3951ff3a84252cb5127c09b16f6c46949df5eb9250db7a782dc5ac7",
+      "revision_transport": "47521bfd67c12f1c4e19a3d4c8b8f3c39a25f93e",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "cache_candidat_redondant",
+      "chemin": "state/candidats-scelles/dbd5b19-sql-stdin/candidat.tar.gz.age",
+      "gain_disque_octets": 109121536,
+      "sha256": "61a52e48ed57ccc45903fea28136fd65ee420bccb395d0fd20a9863848c87ed8",
+      "revision_transport": "6eaa929fb433966043dfc6363c6e9dfc34124bb4",
+      "parties": [
+        "candidat.tar.gz.age.part-000",
+        "candidat.tar.gz.age.part-001",
+        "candidat.tar.gz.age.part-002"
+      ],
+      "reconstruction": "concaténation des blobs Git ; SHA256/size vérifiés ; copie distante inchangée"
+    },
+    {
+      "type": "atelier_frontend_temporaire",
+      "chemin": "state/matheval-developpement-jbgia3ck",
+      "taille_mesuree_octets": 367632384,
+      "gain_disque_octets": 367632384,
+      "sources": "sources canoniques Matheval et fixtures/tests conservés"
+    },
+    {
+      "type": "cache_telechargement",
+      "chemin": "/home/agent/.npm/_cacache",
+      "taille_mesuree_octets": 84021248,
+      "gain_disque_octets": 84021248
+    },
+    {
+      "type": "cache_fasl_obsolete",
+      "chemin": "/home/agent/.cache/common-lisp/sbcl-2.5.2.debian-linux-x64",
+      "taille_mesuree_octets": 1052672,
+      "gain_disque_octets": 1052672
+    },
+    {
+      "type": "runtime_sbcl_obsolete",
+      "chemin": "/workspace/scratch/sbcl-runtime",
+      "taille_mesuree_octets": 53227520,
+      "gain_disque_octets": 53227520
+    }
+  ],
+  "proteges": [
+    "image applicative CL-MCP/Swank",
+    "processus Tron",
+    "sources six dépôts",
+    "données métier",
+    "candidat actif185f931",
+    "points retour nécessaires et preuves"
+  ],
+  "head_avant": "7bc7de1558dff0e2a538e7f8480b752b106a62f5",
+  "racines_nix_protegees": [
+    "/nix/store/0iqcbc2x89py8f2v3q58hbvvxdb079ii-source",
+    "/nix/store/1n4kapciw023gc8x7l40c01hcyv4vgl7-source",
+    "/nix/store/23fhqz8b23zyd8iy45jdqxri9dzc4xrm-source",
+    "/nix/store/2sjzvq2jpbwg6rn0fzbjkma3aq7hgmqg-source",
+    "/nix/store/345ysbcgi06nf9nzsca3gdwkhn22nvkx-source",
+    "/nix/store/4m91czjc41ywdk2djn9qyrnwc3ar3wpi-source",
+    "/nix/store/4w1dmzxbva92wbdm3q3m4njrvz8xlaz1-source",
+    "/nix/store/56as87pc10g9whgxjsnwb8zlp5x29bwp-elm-review-2.13.5",
+    "/nix/store/5c1fqd65hkdnpbrr1c6nv2xvmdxpjfbx-source",
+    "/nix/store/65bql01m584mvla6qvv8hnp53bm6lkn5-source",
+    "/nix/store/8k44gpr8a41sgzr3schb79qjm1ag4b3y-source",
+    "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification",
+    "/nix/store/bnx1szr618x72v72k6kyphadn9zxbx0q-source",
+    "/nix/store/cqng2yryfsrllwmdw8bf5r91l4vaib5l-source",
+    "/nix/store/gw05cd1vhszl8j8kx991a95vhzk4frs3-source",
+    "/nix/store/h30qr8f44x11vp79rms5kfin5fk7lvzp-source",
+    "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4",
+    "/nix/store/hzzyaa8x22cqlwnq3y744xasdg0a7745-source",
+    "/nix/store/i6nnd3amy08a3f3v8q76nh9kw9434z29-source",
+    "/nix/store/ig83qai9nspf2xmg0z6ziava826ai15n-source",
+    "/nix/store/j1v3xipzl4jmx94758w1q23bdn9aidd5-source",
+    "/nix/store/k15d6kjjl2pkv7jj45l0c62xgjd9f8f7-source",
+    "/nix/store/khg2kqs21gfb0fzrfvqhjwcl7nfrz56c-mrjam-sources-elm-review-animator",
+    "/nix/store/l16za2094vjhqzflgxx8irrv40rbvbx5-source",
+    "/nix/store/m47gcy3qn5jcvi8hjix20skfcqkzm2ny-source",
+    "/nix/store/mzh57nnqjav4r4h9fp35iwbpnqqczaj3-source",
+    "/nix/store/n18zh46m5wyqlwwbq63rriwb9ihrhf2q-source",
+    "/nix/store/nq8729macji666smhhddvf9i4xqzkdy4-mrjam-metier-158e4a52e012",
+    "/nix/store/p0gd910qiwkrj18910hnl0p3an509y0v-sbcl-swank-2.29.1-build-patched",
+    "/nix/store/rbprz8bl3p689y7widb0gl230psxqk0a-mrjam-sources-outils-mcp",
+    "/nix/store/rfcg7d1p3n2zp4icd7fd95i6kj5pafn1-source",
+    "/nix/store/ri467dblz6s38a5kj1h3pf3n04ijar14-source",
+    "/nix/store/rv7jk1gq87ss102h80n7fh6awqm2pxsp-source",
+    "/nix/store/sk5ab989c1q4yb1b6rwh0rsa5d2iiq5b-source",
+    "/nix/store/v8jjfh35nra9kmwkp1sg39blccx526jh-source",
+    "/nix/store/vsxpsfikkhzz34pfvzyhwd3v902jrr9n-source",
+    "/nix/store/xvpzqwxvlbcl52z13hq1lx018c748msa-source",
+    "/nix/store/y8b8l8jrdhdnvg4ixszzqzrwlhndmdvi-source",
+    "/nix/store/z6lpb2f40nzdf39y6djc4vpdrnk948m8-source",
+    "/nix/store/zgr53a3nbrl9pr8kkl6kqmrfrwl759a0-source"
+  ],
+  "verifications": {
+    "images_mcp": "Même PID/marqueur/objet depuis CL-MCP et Tron ; mutations0 ; debugger absent, sans reconnexion",
+    "nix": "40 racines protégées présentes après GC ; binaire296b7 inchangé",
+    "retours": "185f931 actif et 77c7f82 précédent conservés intégralement",
+    "navigateurs": "Python/npm1.61.0 : Chromium154.0.8037.57 + Firefox151.0 réellement lancés, saisie0 et focus Tab",
+    "parcours_style": "lecture8contextes et notes7contextes réussis, rejoués après raccordement au Node commun",
+    "parcours_logique": "atelier complet et tactile390/768 réussis avec Node commun sur candidat d76f0074efa0-cd66ef05 ; premier essai sur dist absent échoué, cause identifiée",
+    "cargo": "Aucun CARGO_HOME/RUSTUP_HOME ni cache Cargo/Rustup dans le compte agent ; /root inaccessible, non nettoyé",
+    "production": "Aucun changement, aucun déploiement ni campagne CI",
+    "qualification": "Ménage et outils ciblés seulement ; pas de qualification globale nouvelle du produit",
+    "node": "SDK Python via PLAYWRIGHT_NODEJS_PATH officiel : même Node24.19.0 que npm ; binaire embarqué24.17 non exécuté et roue intacte"
+  },
+  "date_fin_utc": "2026-10-12T08:04:29.383815+00:00",
+  "disque_apres": {
+    "taille_octets": 33770192896,
+    "libres_utilisables": 5919502336,
+    "occupes_octets": 26115928064
+  },
+  "gain_net_octets": 4817440768,
+  "gains_retraits_par_type": {
+    "nix_gc": 764383232,
+    "cache_telechargement": 500248576,
+    "reference_bootstrap_mcp": 0,
+    "processus_obsolete": 0,
+    "navigateur_inutilise": 2243125248,
+    "cache_candidat_redondant": 981835776,
+    "atelier_frontend_temporaire": 367632384,
+    "cache_fasl_obsolete": 1052672,
+    "runtime_sbcl_obsolete": 53227520
+  },
+  "revisions_composants_publiees": {
+    "vision": "dd86673e07f5954b47096dd47d2166639d39638d",
+    "M-moire": "2afce3aae14af13ef6dbda960cf5a4716924dc72",
+    "apprendre-a-demontrer": "303e80be426012740eb16c5039bd4d3ea9155640",
+    "style-mrjam": "cc32742fd4ff554decfeca133fec7bc0f7e74fc7"
+  },
+  "versions_communes": {
+    "python": {
+      "playwright": "1.61.0",
+      "pillow": "12.3.0"
+    },
+    "npm": {
+      "@playwright/test": "1.61.0",
+      "playwright": "1.61.0",
+      "playwright-core": "1.61.0",
+      "@lydell/elm": "0.19.1-14",
+      "elm-format": "0.8.8",
+      "elm-test": "0.19.1-revision17"
+    },
+    "regle": "Même paquet au même niveau : une version. Nix bootstrap et bibliothèques de build/runtime distinctes ne sont pas remplacés par des liens manuels.",
+    "node_navigateur": {
+      "variable": "PLAYWRIGHT_NODEJS_PATH",
+      "cible": "même exécutable que node résolu dans PATH",
+      "observe": "24.19.0",
+      "version_embarquee_non_executee": "24.17.0",
+      "motif_conservation_fichier": "intégrité de la roue Python auditée ; pas de runtime produit"
+    },
+    "exceptions_transitives_npm": [
+      {
+        "paquet": "commander",
+        "version": "9.5.0",
+        "parent": "elm-test@0.19.1-revision17",
+        "role": "CLI de tests Elm"
+      },
+      {
+        "paquet": "commander",
+        "version": "15.0.0",
+        "parent": "katex@0.18.7",
+        "role": "CLI du moteur mathématique Logique ; API majeure différente, dépendance parent verrouillée"
+      }
+    ]
+  },
+  "recus_locaux": {
+    "provenance-navigateurs": {
+      "fichier": "state/recus/provenance-navigateurs.json",
+      "sha256": "3d2d9eb16da079478187c152668955a97aa24d99e9114a69fc37d88bdba8955c",
+      "resultat": "succes",
+      "duree_secondes": 0.4084,
+      "confiance": "locale-non-attestee"
+    },
+    "editorial": {
+      "fichier": "state/recus/editorial.json",
+      "sha256": "4bedd29f9cb33360dab31dd39e6973b6d10f91cd76bdf9b5c1bd556dda826ddc",
+      "resultat": "succes",
+      "duree_secondes": 0.4812,
+      "confiance": "locale-non-attestee"
+    },
+    "selection": {
+      "fichier": "state/recus/selection.json",
+      "sha256": "bebc7b0b04dd53812f72bde7cd8217deac97c0f636a44cd1b08427145bdd00eb",
+      "resultat": "succes",
+      "duree_secondes": 1.4489,
+      "confiance": "locale-non-attestee"
+    },
+    "frontend-sources": {
+      "fichier": "state/recus/frontend-sources.json",
+      "sha256": "b28482450335ee2b0d1630596de5653cfe5b3710e4df068938cebbba1289df10",
+      "resultat": "succes",
+      "duree_secondes": 1.6502,
+      "confiance": "locale-non-attestee"
+    }
+  },
+  "limites": [
+    "Les résultats ciblés qualifient le ménage et les outils, pas la nouvelle intégration Kanidm ni une campagne navigateur globale.",
+    "Marge restante mesurée ; suffisance pour la compilation Rust native non encore constatée.",
+    "Aucun déport ni augmentation de capacité, aucune opération de production."
+  ],
+  "parcours_reels_fichiers_sha256": {
+    "state/nettoyage-lecture-node-commun.log": "d3eac93ae76242b1a03b3625cfecd45fb316a20ded06405f20f02e405214bf71",
+    "state/nettoyage-notes-node-commun.log": "c99ec6fd617bdc4d3a9e238c210eb370270102d72c51eb4aa0c2bc38719c7280",
+    "state/nettoyage-atelier-node-commun.log": "0bbfc86c45adb09a510c1ad6861e20cf941681843ac00f866850d9162e07df27",
+    "state/nettoyage-tactile-node-commun.log": "8c90ec3322180404efe88a23c476a6fc4c374ae2b57877a89d6c51b6f1d3f515",
+    "/workspace/style-mrjam/public/galerie.js": "055bd83430315c136af4b436641149092223868c1d66324b56075ffb2f6e6330",
+    "state/frontends-candidats/logique-d76f0074efa0-cd66ef05/app.js": "47af30d2fdfd1b72014f8d960ec98706c69f6dbc4c26005c75f4de83df0427ac",
+    "state/frontends-candidats/logique-d76f0074efa0-cd66ef05/atelier.js": "dfdebef84e047a852b992c851e3a56267d9354b294d53ff5eb9f626fa53a9df7"
+  }
+}

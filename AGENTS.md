@@ -48,6 +48,10 @@ restent historiques ; constater l’état installé avant une opération.
   langage/service produit exige autorisation. Python permis pour l’outillage agent.
 - Serveur métier Common Lisp. Node limité aux constructions/tests frontend
   approuvés et référence différentielle temporaire Matheval sur bases isolées.
+- Outils communs : même paquet au même niveau, même version verrouillée dans
+  assemblage/dependances.json. Ne pas conserver plusieurs SDK/moteurs par projet ;
+  exceptions de niveau/ABI justifiées dans DEVELOPPEMENT.md. Vérification locale
+  bloquante avant qualification ; aucune installation implicite au push.
 - Données : propriétaires, observations/dates/stabilités/politiques/liens/historiques
   et séances ouvertes préservés. Vérifier tous les comptes avant destruction.
   IdP et compte métier distincts ; contenus clairs côté serveur, HTTPS et backups

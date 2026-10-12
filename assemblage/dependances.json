@@ -40,7 +40,7 @@
     "outils": "officiels uniquement",
     "revision": "547933867e87da737e79d26942dc9261adaa5ee9",
     "inventaire": "assemblage/kanidm/dependances.json",
-    "etat": "Préparation locale, installation et qualification IdP réel bloquées par capacité disque ; pas de bascule."
+    "etat": "Préparation locale ; ménage effectué le 12 octobre, nouvelle tentative d’installation à mesurer dans la capacité restante ; aucun IdP réel qualifié ni bascule."
   },
   "developpement_test_existants": [
     "Git/GitHub Actions",
@@ -372,12 +372,12 @@
     {
       "composant": "matheval",
       "lock": "docs/package-lock.json",
-      "sha256": "acb1e7544e7eb1da3146aeada68ba1fb051e6b3523aac50ffd013915e69851b8",
+      "sha256": "e430f560ab0d745c7caab845ffda2814ebf1ba1a042088ae0e782c421a1215b9",
       "directes": {
         "bibliotheques": {},
         "developpement_test": {
           "@lydell/elm": "0.19.1-14",
-          "@playwright/test": "^1.52.0",
+          "@playwright/test": "1.61.0",
           "elm-format": "^0.8.8",
           "elm-test": "^0.19.1-revision16",
           "vite": "^8.3.0"
@@ -464,8 +464,8 @@
         },
         {
           "chemin": "node_modules/@playwright/test",
-          "version": "1.58.2",
-          "integrite": "sha512-akea+6bHYBBfA9uQqSYmlJXn61cTa+jbO87xVLCWbTqbWadRVmhxlXATaOjOgcBaWU4ePo0wB41KMFv3o35IXA==",
+          "version": "1.61.0",
+          "integrite": "sha512-cKA5B6lpFEMyMGjxF54QihfYpB4FkEGH+qZhtArDEG+wezQAJY8Pq6C7T1SjWz+FFzt3TbyoXBQYk/0292TdJA==",
           "dev": true
         },
         {
@@ -812,14 +812,14 @@
         },
         {
           "chemin": "node_modules/playwright",
-          "version": "1.58.2",
-          "integrite": "sha512-vA30H8Nvkq/cPBnNw4Q8TWz1EJyqgpuinBcHET0YVJVFldr8JDNiU9LaWAE1KqSkRYazuaBhTpB5ZzShOezQ6A==",
+          "version": "1.61.0",
+          "integrite": "sha512-Z+7BeeqQPRRzklHsVFP4KTGIyMxKUmfeRA4WisM6G3/XW6nwGeX6fX9qYaDa+CiUqpOkb2f6X3nar05R3kSuJQ==",
           "dev": true
         },
         {
           "chemin": "node_modules/playwright-core",
-          "version": "1.58.2",
-          "integrite": "sha512-yZkEtftgwS8CsfYo7nm0KE8jsvm6i/PTgVtB8DL726wNf6H2IMsDuxCpJj59KDaxCtSnrWan2AeDqM7JBaultg==",
+          "version": "1.61.0",
+          "integrite": "sha512-caX7TrY3Ml6egyDX0WUcTHDxodl/b51y5wJOdCEA36QviK/s2g081hvmGs8eaE3DWb6NYZQ6BjO/QkNRPenoPA==",
           "dev": true
         },
         {
@@ -2081,10 +2081,10 @@
     {
       "composant": "vision",
       "fichier": "interface/tests/requirements.txt",
-      "sha256": "49ff58307703c3b8807dc0c4a80918a9d0b2fe79851b76038e25097e7e59b060",
+      "sha256": "0d0bc400271dbde4966f7d6649742959166a525cc858bb234328ab965568f934",
       "directes": [
-        "playwright==1.57.0",
-        "Pillow==11.3.0"
+        "playwright==1.61.0",
+        "Pillow==12.3.0"
       ],
       "categorie": "outils de test/construction existants",
       "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
@@ -2104,9 +2104,9 @@
     {
       "composant": "logique",
       "fichier": "tests/requirements.txt",
-      "sha256": "df7696acf1e200684a962c8b7cb25363273b8239093235e68bb3f60231a9799f",
+      "sha256": "1275e2cd682da90f5df2dd2094aa09aaeb19a2397e2c258b6fc4aac0a08256c8",
       "directes": [
-        "playwright==1.57.0"
+        "playwright==1.61.0"
       ],
       "categorie": "outils de test/construction existants",
       "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
@@ -2124,9 +2124,9 @@
     {
       "composant": "style",
       "fichier": "tests/requirements.txt",
-      "sha256": "df7696acf1e200684a962c8b7cb25363273b8239093235e68bb3f60231a9799f",
+      "sha256": "1275e2cd682da90f5df2dd2094aa09aaeb19a2397e2c258b6fc4aac0a08256c8",
       "directes": [
-        "playwright==1.57.0"
+        "playwright==1.61.0"
       ],
       "categorie": "outils de test/construction existants",
       "transitives": "assemblage/python/*-cp312-linux-x86_64.txt ; profils séparés Pillow11.3/Pillow12.3"
@@ -2342,14 +2342,14 @@
         },
         {
           "nom": "pillow",
-          "version": "11.3.0",
-          "sha256": "676b2815362456b5b3216b4fd5bd89d362100dc6f4945154ff172e206a22c024",
+          "version": "12.3.0",
+          "sha256": "78cb2c6865a35ab8ff8b75fd122f6033b92a62c82801110e48ddd6c936a45d91",
           "directe": true
         },
         {
           "nom": "playwright",
-          "version": "1.57.0",
-          "sha256": "284ed5a706b7c389a06caa431b2f0ba9ac4130113c3a779767dda758c2497bb1",
+          "version": "1.61.0",
+          "sha256": "54f3b39f6eab832e33458c1dd7da0b5682aedab3b09ae731b5c59fa12fd2024e",
           "directe": true
         },
         {
@@ -2378,7 +2378,7 @@
         }
       ],
       "origine": "requirements déjà présents ; dépendances transitives normales, aucune nouvelle directe",
-      "sha256": "3c07d9f4be9cc67ee59ac0ca35dedf53e9677e8a86647371cbfe96849d807266"
+      "sha256": "97a935b50432710e6ae506175ccd4635261ee589707f4212fbf7f259353b5219"
     },
     "signature": {
       "fichier": "assemblage/python/signature-cp312-linux-x86_64.txt",
@@ -2696,5 +2696,41 @@
     "audit": "assemblage/oidc/AUDIT.md",
     "usage": "Client OIDC ES256 en préparation, non activé dans le service stage1"
   },
-  "reference_execution_existante": "Inventaire initial historique ; état réel du jalon1 dans qualification-production-etape1.json (Node et auxiliaires métier arrêtés)."
+  "reference_execution_existante": "Inventaire initial historique ; état réel du jalon1 dans qualification-production-etape1.json (Node et auxiliaires métier arrêtés).",
+  "versions_communes_outillage": {
+    "python": {
+      "playwright": "1.61.0",
+      "pillow": "12.3.0"
+    },
+    "npm": {
+      "@playwright/test": "1.61.0",
+      "playwright": "1.61.0",
+      "playwright-core": "1.61.0",
+      "@lydell/elm": "0.19.1-14",
+      "elm-format": "0.8.8",
+      "elm-test": "0.19.1-revision17"
+    },
+    "regle": "Même paquet au même niveau : une version. Nix bootstrap et bibliothèques de build/runtime distinctes ne sont pas remplacés par des liens manuels.",
+    "node_navigateur": {
+      "variable": "PLAYWRIGHT_NODEJS_PATH",
+      "cible": "même exécutable que node résolu dans PATH",
+      "observe": "24.19.0",
+      "version_embarquee_non_executee": "24.17.0",
+      "motif_conservation_fichier": "intégrité de la roue Python auditée ; pas de runtime produit"
+    },
+    "exceptions_transitives_npm": [
+      {
+        "paquet": "commander",
+        "version": "9.5.0",
+        "parent": "elm-test@0.19.1-revision17",
+        "role": "CLI de tests Elm"
+      },
+      {
+        "paquet": "commander",
+        "version": "15.0.0",
+        "parent": "katex@0.18.7",
+        "role": "CLI du moteur mathématique Logique ; API majeure différente, dépendance parent verrouillée"
+      }
+    ]
+  }
 }

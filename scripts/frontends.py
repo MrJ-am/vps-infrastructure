@@ -78,7 +78,7 @@ def reutiliser_candidat(cle, sources, m):
 
 def tester_frontend(cle,sources,caches,campagne='base'):
     env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','ELM_HOME',
-        'PLAYWRIGHT_BROWSERS_PATH','CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI',
+        'PLAYWRIGHT_BROWSERS_PATH','PLAYWRIGHT_NODEJS_PATH','CHROMIUM','CHROMIUM_PATH','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CI',
         'MRJAM_TEST_FILTER','MRJAM_TEST_PROJECT','MRJAM_TEST_REPEAT','MRJAM_TEST_DIAGNOSTIC',
         'MRJAM_TEST_EXECUTABLE','MRJAM_LIBCRYPTO','MRJAM_LIBPQ','MRJAM_LIBSQLITE')}
     # Le profil audité décrit aussi le pilote réellement utilisé, pas seulement

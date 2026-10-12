@@ -6,6 +6,7 @@ les binaires réellement disponibles. Elles n'attestent pas un runner distant.
 import hashlib
 import json
 import os
+import shutil
 from pathlib import Path
 from assemblage import RACINE
 
@@ -43,6 +44,12 @@ def navigateurs(suite,sources):
     result={}
     installes=[]
     if suite.get('navigateurs_python'):
+        node=os.environ.get('PLAYWRIGHT_NODEJS_PATH')
+        commun=shutil.which('node')
+        if not node or not commun or Path(node).resolve(strict=True)!=Path(commun).resolve(strict=True):
+            raise ValueError('Playwright Python doit utiliser le même Node que npm ; aucun fallback embarqué')
+        result['node_driver_commun']={'chemin':str(Path(node).resolve(strict=True)),
+                                     'sha256':fichier(Path(node).resolve(strict=True))}
         installes.append(('python',RACINE/'state/outils-python/navigateur/lib/python3.12/site-packages/playwright/driver/package'))
     for k,p in suite.get('navigateurs_npm',{}).items():
         installes.append((k,sources[k]/p/'playwright-core'))
@@ -52,6 +59,10 @@ def navigateurs(suite,sources):
         config=json.loads((package/'browsers.json').read_text())
         for b in config['browsers']:
             if b['name'] not in suite.get('navigateurs', ['chromium','chromium-headless-shell','ffmpeg']):continue
+            # Les lanceurs assemblés de ce profil utilisent tous CHROMIUM ou
+            # PLAYWRIGHT_CHROMIUM_EXECUTABLE ; ne pas prétendre exécuter le cache.
+            if suite.get('chromium_externe') and b['name'] in ('chromium','chromium-headless-shell'):
+                continue
             # Les profils sont Linux x86_64 ; les seules variantes des moteurs
             # retenus concernent macOS. Refuser une future variante Linux plutôt
             # que présumer la résolution de Playwright.
@@ -62,4 +73,14 @@ def navigateurs(suite,sources):
             result[nom+'/'+dossier.name]=arbre(dossier)
     for k in ('PLAYWRIGHT_CHROMIUM_EXECUTABLE','CHROMIUM'):
         if os.environ.get(k):result[k]={'sha256':fichier(Path(os.environ[k]).resolve(strict=True))}
+    if suite.get('chromium_externe'):
+        chemins=[os.environ.get(k) for k in ('CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','CHROMIUM_PATH')]
+        if not all(chemins) or len({str(Path(p).resolve(strict=True)) for p in chemins})!=1:
+            raise ValueError('Fournir les trois chemins du même Chromium externe ; aucun fallback')
+        executable=Path(chemins[0]).resolve(strict=True)
+        result['chromium_externe']={'chemin':str(executable),'sha256':fichier(executable)}
+        # /usr/bin/chromium est un lanceur shell, pas le moteur exécuté.
+        if executable==Path('/usr/bin/chromium'):
+            moteur=Path('/usr/lib/chromium')
+            result['chromium_externe']['moteur']=arbre(moteur)
     return result

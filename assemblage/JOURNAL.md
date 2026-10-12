@@ -676,3 +676,24 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   Source native confirme absenceEmail de l’indexname2uuid et interdiction@dansName :
   adaptation bornée toujours exigée, aucune promesse de connexionemail native.
   Reprise/contratsécurité actualisés, preuveshistoriquejalon1 conservées.
+
+
+- 12 octobre2026 — nettoyage local demandé, sans extension ni déport. Référence
+  machine assemblage/nettoyage-20261012.json :1,10→5,92Go libres, gain net4,82Go ;
+  normalGC161objets avec40racines utiles protégées. Pip/npm/7caches navigateurs,
+  9copies chiffrées redondantes (blobs Git/SHA/taille/transport distant vérifiés),
+  atelier frontend temporaire et runtime/FASL SBCL2.5 obsolètes retirés. ImagesC/
+  Tron, données/sources/Git/preuves/modèle et deux retours préservés ; Cargo agent
+  absent, /root inaccessible. SDK1.61.0/Pillow12.3 communs, moteur Chromium système
+  et Firefox151 conservés. Contrôle versions/provenance7cas et commandes centrales
+  passent ; pilotes Python/npm réels, Style lecture8/notes7 et Logique atelier/
+  tactile390/768 réussis. Échec initial Logique : dist absent, aucun délai augmenté,
+  candidat exact choisi. Même image MCP PID/marqueur/objet, mutations0, debuggerNIL.
+  Quatre composants publiés avant manifeste ; aucun CI/déploiement/production.
+  Prochaine expérience : marge réellement suffisante pour installation Kanidm
+  native encore à mesurer, pas de succès annoncé à partir du seul ménage.
+
+  Node Python Playwright/Node npm harmonisés par PLAYWRIGHT_NODEJS_PATH officiel,
+  même exécutable24.19.0 ; provenance refuse absence/autre Node. Binaire embarqué
+  gardé pour intégrité de roue, non exécuté. Commander9.5/15 reste une transitive
+  de deux contrats majeurs distincts (CLI elm-test/CLI KaTeX), exception documentée.

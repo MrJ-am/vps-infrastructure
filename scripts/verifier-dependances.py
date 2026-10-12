@@ -100,12 +100,36 @@ def verifier_lisp_oidc(racine, inventory):
     return communs | {'ironclad/public-key/secp256r1'}
 
 
+def verifier_versions_python(inventory):
+    versions = {}
+    for profil in inventory.get('python_profils', {}).values():
+        for paquet in profil['paquets']:
+            nom = re.sub(r'[-_.]+', '-', paquet['nom']).lower()
+            versions.setdefault(nom, set()).add(paquet['version'])
+    if any(len(valeurs) != 1 for valeurs in versions.values()):
+        raise ValueError('Versions Python parallèles au même niveau sans justification')
+    for nom, version in inventory['versions_communes_outillage']['python'].items():
+        if nom in versions and versions[nom] != {version}:
+            raise ValueError('Version Python différente du socle commun : '+nom)
+
+
+def verifier_versions_npm(packages, communs):
+    for chemin, paquet in packages.items():
+        if 'node_modules/' not in chemin:
+            continue
+        nom = chemin.rsplit('node_modules/', 1)[1]
+        if nom in communs and paquet['version'] != communs[nom]:
+            raise ValueError('Version npm différente du socle commun : '+nom)
+
+
 def verifier():
     racine=Path(__file__).resolve().parents[1]
     inventory=json.loads((racine/'assemblage/dependances.json').read_text())
     verifier_outils_mcp(racine,inventory)
     verifier_outils_frontend(racine,inventory)
     systemes_tiers = verifier_lisp_oidc(racine, inventory)
+    communs = inventory['versions_communes_outillage']
+    verifier_versions_python(inventory)
     sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     for profile in inventory.get('python_profils',{}).values():
         p=racine/profile['fichier']
@@ -123,6 +147,8 @@ def verifier():
         if empreinte(lock.read_bytes())!=entre['sha256']:
             raise ValueError('Lock npm modifié sans autorisation inventoriée : '+entre['composant']+'/'+entre['lock'])
         package=json.loads(lock.with_name('package.json').read_text())
+        installees=json.loads(lock.read_text()).get('packages', {})
+        verifier_versions_npm(installees, communs['npm'])
         for cle,inventaire in [('dependencies','bibliotheques'),('devDependencies','developpement_test')]:
             if package.get(cle,{})!=entre['directes'][inventaire]:
                 raise ValueError('Dépendance directe npm différente : '+entre['composant']+'/'+cle)
@@ -144,6 +170,15 @@ def verifier():
                          else declarations_elm.get((nom,relatif)) if p.name=='elm.json' else False)
             if declaration is None or declaration and empreinte(p.read_bytes())!=declaration['sha256']:
                 raise ValueError('Dépendance Python/Elm hors inventaire : '+nom+'/'+relatif)
+            if declaration and p.name.startswith('requirements'):
+                directes={l.strip() for l in p.read_text().splitlines()
+                          if l.strip() and not l.lstrip().startswith('#')}
+                if directes!=set(declaration['directes']):
+                    raise ValueError('Dépendances Python différentes de leur inventaire : '+nom+'/'+relatif)
+                for paquet, version in communs['python'].items():
+                    trouvees=re.findall(r'^'+re.escape(paquet)+r'==([^\s]+)',p.read_text(),re.I|re.M)
+                    if any(v!=version for v in trouvees):
+                        raise ValueError('Version Python différente du socle commun : '+paquet)
     asds=[p for base in sources.values() for p in base.glob('*.asd')]
     declared=set()
     for p in asds:
