@@ -41,7 +41,7 @@ def diagnostic_identmap(avant,apres):
                                for r,ajout in zip(roles,ajouts)}}
 
 
-def diagnostic_erreur(texte,tables_autorisees=()):
+def diagnostic_erreur(texte,tables_autorisees=(),roles_autorises=()):
     # Pas de message de condition, requête SQL, ligne de source ni valeur locale.
     pile=[{'fichier':Path(n).name,'ligne':int(l)}
           for n,l in re.findall(r'File "([^"]+)", line (\d+)',texte)]
@@ -52,7 +52,21 @@ def diagnostic_erreur(texte,tables_autorisees=()):
     m=re.fullmatch(r'ValueError: Contrat SQL divergent : ([a-z_][a-z0-9_]*\.[a-z_][a-z0-9_]*) (rls|force_rls|colonne_utilisateur)',dernier)
     if m and m[1] in tables_autorisees:
         out['contrat_sql']={'table':m[1],'champ':m[2]}
+    m=re.fullmatch(r'ValueError: Rôle SQL privilégié : ([a-z_][a-z0-9_]*)',dernier)
+    if m and m[1] in roles_autorises:out['role_sql_privilegie']=m[1]
     return out
+
+
+def metadonnees_roles(postgres,base,attendus,controleur):
+    if base not in ('vision','matheval'):raise ValueError('Base hors périmètre')
+    if any(not re.fullmatch('[a-z_][a-z0-9_]*',r) for r in attendus):raise ValueError('Rôle hors format')
+    liste=','.join("'"+r+"'" for r in sorted(attendus))
+    q='BEGIN READ ONLY;\n'+controleur.ROLES_SQL.format(roles=liste)+';\nCOMMIT;'
+    p=subprocess.run(['runuser','-u','postgres','--',str(Path(postgres)/'bin/psql'),
+        '-XAtq','--set=ON_ERROR_STOP=1','--host=/run/postgresql','--dbname='+base,'--file=-'],
+        input=q,text=True,capture_output=True,timeout=30,check=True)
+    champs=('super','bypass','creer_role','creer_base','replication','membre_proprietaire')
+    return {r['nom']:{k:r[k] for k in champs} for r in json.loads(p.stdout) if r['nom'] in attendus}
 
 
 def metadonnees_rls(postgres,base,attendus):
@@ -117,10 +131,14 @@ def main(revision):
     out['parent_postgresql_traversable_par_vision']=acces_parent_restauration()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])
+    roles={b:set().union(*(set(t['droits_directs']) for t in inventaire[b].values())) for b in ('vision','matheval')}
+    spec=importlib.util.spec_from_file_location('tables_diagnostic',d/'payload/vps/scripts/verifier-tables.py')
+    controleur=importlib.util.module_from_spec(spec);spec.loader.exec_module(controleur)
+    out['roles_sql_actuels']={b:metadonnees_roles(r['postgres'],b,roles[b],controleur) for b in roles}
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
     for nom in ('restauration','activation'):
         p=d/('erreur-'+nom+'-privee.log')
-        if p.is_file():out['erreur_'+nom]=diagnostic_erreur(p.read_text(),tables_autorisees)
+        if p.is_file():out['erreur_'+nom]=diagnostic_erreur(p.read_text(),tables_autorisees,roles['vision']|roles['matheval'])
     if 'postgresAccesAvant' in r and 'postgresAccesApres' in r:
         out['identMap']=diagnostic_identmap(r['postgresAccesAvant']['identMap'],
                                           r['postgresAccesApres']['identMap'])
