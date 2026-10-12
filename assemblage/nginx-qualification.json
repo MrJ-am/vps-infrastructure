@@ -24,5 +24,9 @@
   ],
   "installation": "Substitution signée du cache Nix existant, aucun profil global modifié",
   "effets": "Aucun serveur au chargement ; fixture explicite loopback, arrêt et suppression de ses seuls états temporaires",
-  "limites": "Correspondance exacte au paquet du VPS encore à constater ; ne remplace pas ses contrôles TLS/OIDC/auth_request."
+  "limites": "Routage documentaire réel ; TLS, auth_request et contrôles du VPS qualifiés séparément.",
+  "correspondance_vps": {
+    "run": 38197483752,
+    "paquet_et_binaire_identiques": true
+  }
 }

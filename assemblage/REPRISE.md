@@ -14,12 +14,11 @@ Nouvelle suite centrale routage-nginx1,7222s, sécurité9,8278s,
 migration50,7521s, sélection1,2065s passent. Catalogue36suites.
 Nginx existant autorisé réutilisé pour test local, sourceofficiellec5c4a43 vérifiée,
 paquet/closure verrouillés dans assemblage/nginx-qualification.json ; aucun profil
-système ni produit modifié. Correspondance exacte au binaire VPS encore à lire.
+système ni produit modifié. Diagnostic38197483752 : paquet Nginx1.30.4 et SHA256 exacts identiques au VPS.
 Même image de travail C et mêmes sources métier/frontends ; outil de test froid
 Nginx/SBCL arrêté proprement après fixtures, aucun qualifier synthétique.
 
-Prochain : publier sources qualifiées et lire métadonnées fermées Nginx du VPS.
-Puis scellement36reçus exacts, transport/descripteur et une bascule. Constater
+Prochain : scellement36reçus exacts, transport/descripteur et une bascule. Constater
 issue avant répétition ; MCP réel/référence après activation avant jalon1/Kanidm.
 Kanidm non commencé ; rapport MCP non commité conservé.
 

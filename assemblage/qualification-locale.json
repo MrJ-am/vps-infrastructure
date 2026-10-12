@@ -398,10 +398,10 @@
     },
     "routage-nginx": {
       "resultat": "succes",
-      "duree_secondes": 1.7222,
+      "duree_secondes": 1.9193,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "bb2c222b09cf83a5444653947d27efd397c98f001570f1183131d2e7c1b10608",
+      "sha256": "aa0adad207837ae93ffe5a2be5236c5b5916b7a56b386f9cd2e71b7b66fcd977",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "Qualification locale affectée par routage, autres entrées préservées."
     }
@@ -473,7 +473,8 @@
       "meme_artefact_metier": true,
       "csp_no_store_preserves": true,
       "manifeste_interface_revision_exacte": true,
-      "nginx_vps_correspondance_restant": true
+      "nginx_vps_correspondance_restant": false,
+      "nginx_vps_diagnostic": 38197483752
     }
   },
   "historique_exact": {
