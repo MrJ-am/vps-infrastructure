@@ -20,8 +20,11 @@ adaptés à 25/26/27. Aucun SQL exécuté en production pour cette correction.
 Vision18c52cdd publié ; migration13,4831s, PostgreSQL145,7859s, SQLnative16,6193s,
 recherche CPU réelle36,871s, sécurité0,8142s, sélection1,0072s passent. Nouveau
 frontend Vision37871df2, présentation76,2795s et navigateur/MCP26,9502s passent.
-Les35reçus sont valides (34réutilisations exactes/éditorial rejoué) ; scellement
-et publication des opérateurs corrigés à effectuer.
+Les35reçus sont valides (34réutilisations exactes/éditorial rejoué). Opérateurs
+9a063b8e4c38de5fbfcb11208df67fd1d259d370 publiés ; scellement complet local réussi.
+Transportb02d22d74d531168a6e2523077ddf167497663b2 publié (trois parties),
+109027873octets chiffrés, SHA256e8ad8f2832590e8a99c13f0d3186b23e5a9e5737c52c6490224437a3b3e2b659.
+Descripteur central actualisé ; préparation sans activation à lancer puis constater.
 
 Le candidat c5548b3 reste historique et ne doit pas être redéployé : préparer un
 nouvel assemblage après qualification/publication des sources corrigées. Conserver
