@@ -2,6 +2,12 @@
 
 ## Point de reprise actif — correction RLS avant bascule
 
+Candidat courant4e6dba37bdb5da246b439b876164c50aed21b950 : scellement complet
+réussi, transport0bc7abddb0ed1b8056fadfef87b4cb901af9e755 publié,
+109109871octets chiffrés, SHA256c7a46d4e78bdf6520c557948a5804e96b2565fe29b7788480e7ab6526ef2f6df.
+Le descripteur central remplace9a063b8 ; préparation/restauration/activation
+conditionnelle sont la prochaine exécution fermée, sans nouvelle validation humaine.
+
 Production ancienne conservée ; étape 1 non activée, Kanidm non commencé.
 Préparation 38184214522 réussie, déploiement 38184424703 arrêté pendant la
 restauration isolée, avant activation. Diagnostic 38185217273 : les 14 tables
