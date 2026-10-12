@@ -21,7 +21,13 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION');d=stage.descriptor();rev=d['revision_operateurs']
-    stage.exiger(operation in ('restaurer','deployer','retour','diagnostic'),'Opération inconnue')
+    stage.exiger(operation in ('restaurer','deployer','retour','diagnostic','confirmer-retour'),'Opération inconnue')
+    if operation=='confirmer-retour':
+        nixpkgs=stage.manifeste()['toolchain']['production']['nixpkgs']
+        with (ROOT/'scripts/monolithe-retour-confirmer.py').open('rb') as f:
+            stage.ssh('nix-shell -I nixpkgs='+nixpkgs+' -p python3 --run '+
+                      shlex.quote('python3 -B - '+rev),stdin=f)
+        return
     if operation=='diagnostic':
         nixpkgs=stage.manifeste()['toolchain']['production']['nixpkgs']
         diagnostiquer(nixpkgs,rev)
