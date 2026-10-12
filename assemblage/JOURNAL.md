@@ -883,3 +883,12 @@ activation. Personne native existante conservée/reprise explicite par ancienop7
 retour/mailnonengagé/propriétaire/secret/politique exacts vérifiés ; aucun nouveau
 compte, aucun envoi jusqu’à réussite réelle.12tests dont SQLite reprise sans
 écriture/concurrence refusée. Date réelle de fin du lien dans futur courrier.
+
+12octobre —38322963139 : préparation Nginx syntaxe réussie ; nouvelle sauvegarde/
+restore(233745) et reprise de la même personne Native réussies. Retour confirmé
+38323297104 après HTTP502 découverte, services anciens/data rétablis, aucun mail.
+Native synthétique isolé accepte HTTP1.0/1.1 ; Type notify confirmé dans module
+officiel. Diagnostic38324014469 vérifie réellement chaîne publique avec CA proxy :
+OpenSSL profondeur1 code2, profondeur2/3 code0. Cause TLS constatée, profondeur2
+avec CA/hostname/verify maintenus, preflight de chaîne avant mutations ajouté.
+Aucune nouvelle bibliothèque, runtime ou recompilation métier/Rust.

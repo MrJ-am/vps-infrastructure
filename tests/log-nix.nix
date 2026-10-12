@@ -33,6 +33,8 @@ assert lib.hasInfix "mrj_identite mrjam-metier vision_identite" c.services.postg
 assert v."vision.mrj.am".locations."= /_vision_administration".proxyPass == "http://unix:/run/mrjam-metier/http.sock:/verify-gestion";
 assert v."vision.mrj.am".locations."= /_vision_mcp_token".proxyPass == "http://unix:/run/mrjam-metier/http.sock:/verify-mcp";
 assert lib.hasInfix "proxy_ssl_verify on" v."log.mrj.am".locations."/".extraConfig;
+assert lib.hasInfix "proxy_ssl_verify_depth 2;" v."log.mrj.am".locations."/".extraConfig;
+assert v."log.mrj.am".locations."/".return == null;
 assert v."log.mrj.am".locations."^~ /v1/raw/".return == "404";
 assert v."log.mrj.am".locations."^~ /realms/".return == "410";
 assert lib.all (n: !(lib.hasInfix "3002" (v."vision.mrj.am".locations.${n}.proxyPass or "")))

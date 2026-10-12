@@ -64,6 +64,11 @@ def preparer(revision):
     configs=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+\.conf',r['nginx'])
     s.exiger(len(nginx)==len(configs)==1,'Configuration Nginx candidate ambiguë')
     s.commande([nginx[0],'-t','-c',configs[0]],d)
+    tls=r['verificationTlsProxy']
+    certificat='/var/lib/acme/log.mrj.am/fullchain.pem'
+    s.commande([tls['openssl'],'verify','-verify_hostname','log.mrj.am',
+                '-verify_depth',str(tls['profondeur']),'-CAfile',tls['ca'],
+                '-untrusted',certificat,certificat],d)
     s.exiger(s.etat(d) == avant, 'Activation concurrente')
     p = dict(format=1, revision=revision, avant=avant, candidat=r['apres'], amorcage=r['amorcage'],
              configurations=sources, parametres=params, artefact_sha256=cert['qualification']['artefact_sha256'],

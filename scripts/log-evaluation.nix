@@ -60,6 +60,11 @@ in {
     inscriptionsOuvertes = base.infrastructure.identite.inscriptionsOuvertes;
     paquet = toString c.infrastructure.metier.paquet;
     nginx = c.systemd.services.nginx.serviceConfig.ExecStart;
+    verificationTlsProxy = {
+      openssl = "${lib.getBin pkgs.openssl}/bin/openssl";
+      ca = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+      profondeur = 2;
+    };
     kanidmConfig = c.systemd.services.kanidm.serviceConfig.ExecStart;
     backupRecipient = c.services.vision.backupRecipient;
   };
