@@ -2474,5 +2474,61 @@
         "--version"
       ]
     }
+  },
+  "oidc-transport": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-native.asd",
+        "mrjam-oidc.asd",
+        "lisp/native/*.lisp",
+        "lisp/identite/oidc-*.lisp",
+        "tests/oidc-transport*.lisp",
+        "tests/oidc_transport_fixture.py",
+        "scripts/oidc-qualifier.py",
+        "scripts/oidc-verifier-sources.py",
+        "assemblage/oidc/*"
+      ]
+    },
+    "impact": [
+      "vps/lisp/identite/oidc-*",
+      "vps/lisp/native/*",
+      "vps/mrjam-native.asd",
+      "vps/mrjam-oidc.asd",
+      "vps/tests/oidc-transport*",
+      "vps/tests/oidc_transport_fixture.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/oidc-qualifier.py",
+        "--transport"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "SBCL_HOME",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_CURL"
+    ]
   }
 }

@@ -697,3 +697,16 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   même exécutable24.19.0 ; provenance refuse absence/autre Node. Binaire embarqué
   gardé pour intégrité de roue, non exécuté. Commander9.5/15 reste une transitive
   de deux contrats majeurs distincts (CLI elm-test/CLI KaTeX), exception documentée.
+
+- 12 octobre2026 — reprise Kanidm, préférence propriétaire amendée : conserver
+  un seul compte issu de Vision avec email et mot de passe si import officiel
+  simple ; nouvelle inscription acceptable sinon. Code officiel SHA512-crypt
+  `{crypt}$6$` reconnu et mise à niveau Argon2id prévue, non encore testé sur IdP.
+  Transport Lisp écrit puis chargé dans l'image C saine,32assertions et11requêtes
+  HTTPS synthétiques ; refus TLS/SNI, POST non répétés, secrets sur pipe. Image
+  froide sans cache réussie ; commandes centrales OIDC681/transactions40/transport32,
+  courriel STARTTLS, sélection22 et éditorial passent. Domaine Matheval réel corrigé.
+  Précollecte native code0,741crates exactes et licences déclarées inventoriées,
+  staging fixe/cargoHash et vendor dérivé vérifiés séparément. Premier build
+  ENOSPC sur overlay, nettoyé par Nix ; build-dir corrigé vers tmpfs existant,
+  compilation encore active. Aucun serveur Kanidm/compte/import/CI/production.

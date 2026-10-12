@@ -8,9 +8,8 @@
                (string-equal (adresse (j c "username")) (adresse (j c "from_address")))) (refuse :smtp)) c)
 
 (defun config-curl (s)
-  (unless (and (stringp s) (every (lambda (c) (>= (char-code c) 32)) s)) (refuse :configuration-curl))
-  (with-output-to-string (o) (write-char #\" o)
-    (loop for c across s do (when (find c "\\\"") (write-char #\\ o)) (write-char c o)) (write-char #\" o)))
+  (handler-case (mrjam-native:chaine-config-curl s)
+    (mrjam-native:native-error () (refuse :configuration-curl))))
 
 (defun avec-temporaire (bytes fonction)
   (let* ((dir (repertoire-prive (format nil "/tmp/mrjam-metier-~D/" (sb-posix:geteuid))))

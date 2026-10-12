@@ -34,7 +34,7 @@
           (assert (= (+ maintenant 600) (mrjam-oidc:demarrage-expiration d)))
           (assert (not (search (mrjam-oidc:demarrage-binding d) (prin1-to-string d))))
           (refuse (lambda () (fin d maintenant "autre-client")))
-          (refuse (lambda () (fin d maintenant "mrjam-vision" "matheval.mrj.am")))
+          (refuse (lambda () (fin d maintenant "mrjam-vision" "principiipetit.io")))
           (refuse (lambda () (fin d maintenant "mrjam-vision" "vision.mrj.am" (mrjam-native:aleatoire-url))))
           ;; Une autre connexion voit la même transaction durable ; le mauvais hôte ne la consomme pas.
           (let* ((ligne (fin d)) (verifier (cdr (assoc "verifier" ligne :test #'equal))))
@@ -69,12 +69,16 @@
           (incf nombre 8))
         ;; Les secrets de transactions d'une application n'ouvrent pas celles d'une autre.
         (let ((a (debut))
-              (b (mrjam-oidc:demarrer-transaction chemin "mrjam-matheval" "matheval.mrj.am" maintenant)))
+              (b (mrjam-oidc:demarrer-transaction chemin "mrjam-matheval" "principiipetit.io" maintenant)))
           (refuse (lambda () (mrjam-oidc:consommer-transaction chemin (mrjam-oidc:demarrage-state a)
                               (mrjam-oidc:demarrage-binding b) "mrjam-vision" "vision.mrj.am" maintenant)))
           (fin a)
-          (fin b maintenant "mrjam-matheval" "matheval.mrj.am")
+          (fin b maintenant "mrjam-matheval" "principiipetit.io")
           (incf nombre 2))
+        (let ((d (mrjam-oidc:demarrer-transaction chemin "mrjam-matheval" "www.principiipetit.io" maintenant)))
+          (fin d maintenant "mrjam-matheval" "www.principiipetit.io") (incf nombre))
+        (dolist (hote '("principiipetit.io.intrus.invalid" "www.principiipetit.io:443" "www.principiipetit.io/"))
+          (refuse (lambda () (mrjam-oidc:demarrer-transaction chemin "mrjam-matheval" hote maintenant))))
         ;; Purge et borne contrôlées sur cette seule base synthétique.
         (mrjam-native:avec-sqlite chemin
           (lambda (db)

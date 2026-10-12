@@ -152,6 +152,9 @@ def compilation_entrees(chemins):
 def environnement(suite):
     versions = {}
     for nom, commande in suite.get('outils', {}).items():
+        commande = list(commande)
+        if nom == 'curl' and 'MRJAM_CURL' in suite.get('configuration', []) and os.environ.get('MRJAM_CURL'):
+            commande[0] = os.environ['MRJAM_CURL']
         p = subprocess.run(commande, capture_output=True, text=True, check=True)
         binaire = shutil.which(commande[0])
         versions[nom] = {'version': (p.stdout or p.stderr).strip(),

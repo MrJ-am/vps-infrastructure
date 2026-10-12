@@ -106,5 +106,6 @@ rétention actuelle 14 jours. Garanties Vision conservées : items communs du m�
 propriétaire, observations immuables, rectifications ajoutées, dates, versions,
 épisodes, conflits, clôtures atomiques, recherche. SQL métier : 7, création 1 ;
 schéma assemblé 27 (réconciliation explicite RLS sans réécriture des données),
-schéma de référence initial 25 ; migrations 026/027 appliquées lors des
-tentatives de bascule, ancienne génération applicative encore active après retour.
+schéma de référence initial 25 ; migrations 026/027 appliquées et monolithe actif
+au jalon1 qualifié. État/reçus exacts : assemblage/qualification-production-etape1.json ;
+nouveaux constats avant la bascule Kanidm, sans réécrire ce résultat historique.
