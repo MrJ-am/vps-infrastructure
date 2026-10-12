@@ -164,12 +164,12 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 10.065,
+      "duree_secondes": 9.8278,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "989f8de94d7e4c5a0a35c232ddbde9bff093c70311624169c7ad7abfba4de49b",
+      "sha256": "e36572f4069d90832507a5e6c9f9d8bf7c3022674ee6993fc3196b239e338e36",
       "artefact_metier_sha256": null,
-      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
+      "reuse": "Qualification locale affectée par routage, autres entrées préservées."
     },
     "json-commun": {
       "resultat": "succes",
@@ -245,12 +245,12 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 38.057,
+      "duree_secondes": 50.7521,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "0eff8e855bca52df891b4d541f300bdeb2a86d4eaa40220478caadeba75681db",
+      "sha256": "65b97841797f1484d98218ef8ece0ab06d57d7d7c55302c01562b94bffdcedb5",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
+      "reuse": "Qualification locale affectée par routage, autres entrées préservées."
     },
     "native-contrats": {
       "resultat": "succes",
@@ -317,12 +317,12 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 0.9849,
+      "duree_secondes": 1.2065,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "3ca010837ba94013677d341e21a9c53f4760651d91ff18cb24c1699f4ca94e00",
+      "sha256": "9156b082f9c0092df95ecf783e375b778683fd737005056956aaba05c613dbe0",
       "artefact_metier_sha256": null,
-      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
+      "reuse": "Qualification locale affectée par routage, autres entrées préservées."
     },
     "signature-web": {
       "resultat": "succes",
@@ -395,10 +395,19 @@
       "sha256": "fbd06cd40229110b1afec882d0622d7b19ac43e36bdeaeb9ed0aa7a535a76c4f",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "Contrôle affecté exécuté localement."
+    },
+    "routage-nginx": {
+      "resultat": "succes",
+      "duree_secondes": 1.7222,
+      "confiance": "locale-non-attestee",
+      "autorise_publication": false,
+      "sha256": "bb2c222b09cf83a5444653947d27efd397c98f001570f1183131d2e7c1b10608",
+      "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
+      "reuse": "Qualification locale affectée par routage, autres entrées préservées."
     }
   },
   "controle_final": {
-    "suites": 35,
+    "suites": 36,
     "resultat": "succes",
     "preuve_production": false,
     "reutilisation_finale": {
@@ -421,12 +430,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": {
-      "revision_operateurs": "b3a552fa6f744e8585fc101d4fa4f36c8f5095aa",
-      "stage_sha256": "8d3d0e38536ab513481cac3dfee80c6807f49e8dd65439fad6a0e4c7bbd96a5d",
-      "bundle_complet_verifie_localement": true,
-      "publication_effectuee": false
-    },
+    "scellement": "Requis pour accueil Vision et manifeste de routage",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -437,7 +441,7 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "Ancienne génération après retour38195473395 ; RLS/ACL et vue corrigées effectivement constatées",
+    "production": "Ancienne génération après retour38196244219",
     "restart_dependances": [
       "postgresql",
       "keycloak"
@@ -463,6 +467,13 @@
       "statuts_hors_contrat_en_mesure_refuses": true,
       "tests_http_reels_locaux": true,
       "raison_dernier_echec_non_identifiee_par_ancien_rapport": true
+    },
+    "routage_nginx": {
+      "ancien_accueil_404_reproduit": true,
+      "meme_artefact_metier": true,
+      "csp_no_store_preserves": true,
+      "manifeste_interface_revision_exacte": true,
+      "nginx_vps_correspondance_restant": true
     }
   },
   "historique_exact": {

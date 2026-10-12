@@ -84,6 +84,17 @@ COMMIT;"""
     return {k:r[k] for k in ('existe','proprietaire_vision','proprietaire_migration')}
 
 
+def version_nginx(commande):
+    chemins=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+/bin/nginx',commande)
+    if len(chemins)!=1:raise ValueError('Binaire Nginx non identifié')
+    binaire=Path(chemins[0])
+    p=subprocess.run([str(binaire),'-v'],capture_output=True,text=True,timeout=10,check=True)
+    m=re.fullmatch(r'nginx version: nginx/([0-9]+\.[0-9]+\.[0-9]+)\s*',p.stderr)
+    if not m:raise ValueError('Version Nginx hors format')
+    return {'paquet':str(binaire.parent.parent),'version':m[1],
+            'binaire_sha256':hashlib.sha256(binaire.read_bytes()).hexdigest()}
+
+
 def metadonnees_rls(postgres,base,attendus):
     if base not in ('vision','matheval'):raise ValueError('Base hors périmètre')
     # Métadonnées uniquement, transaction en lecture seule ; aucune ligne métier.
@@ -166,6 +177,7 @@ def main(revision):
     controleur=importlib.util.module_from_spec(spec);spec.loader.exec_module(controleur)
     out['roles_sql_actuels']={b:metadonnees_roles(r['postgres'],b,roles[b],controleur) for b in roles}
     out['vue_historique']=proprietes_vue_historique(r['postgres'])
+    out['nginx']=version_nginx(r['nginx'])
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
     for nom in ('restauration','activation'):
         p=d/('erreur-'+nom+'-privee.log')

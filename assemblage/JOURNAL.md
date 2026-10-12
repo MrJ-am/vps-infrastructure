@@ -594,3 +594,10 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   Trois vrais scénarios HTTP locaux, borne unitaire et confidentialité du rapport
   testés. Fixture d'horloge globale échouée car thread partageait time ; corrigée
   en bornant seulement l'unitaire. Sécurité10,065s/migration38,057s/sélection0,9849s.
+- Déploiement38196244219 : Matheval200, accueilVision404 ; retour enregistré.
+  Reproduction réelle Nginx/SBCL : index interne atteint /index.html non routé.
+  Accueil maintenu sur routeVision/, mêmes octets/CSP/no-store ; manifeste exact
+  raccordé. Six chemins publics et MCP401 passent sansSQL/IdP. Nginx autorisé
+  réutilisé localement depuis sourceNixc5 vérifiée/cache signé, audit/closure notés.
+  Nouveau contrôle bloquant routage-nginx1,7222s ; sécurité9,8278s et migration
+  50,7521s. Paquet actif VPS encore à comparer, aucun succès de production annoncé.
