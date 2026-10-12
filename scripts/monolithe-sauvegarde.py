@@ -112,7 +112,7 @@ def copie_registre(source,cible):
     for ligne in contenu.decode('utf-8').splitlines():exiger(isinstance(json.loads(ligne),dict))
     with cible.open('xb') as f:f.write(contenu);f.flush();os.fsync(f.fileno())
 
-def main(revision,qualifier=None):
+def main(revision,qualifier=None,sqlite_reprise=None,registres_reprise=None):
     global ETAPE
     exiger(os.geteuid()==0 and re.fullmatch('[0-9a-f]{40}',revision))
     os.umask(0o077)
@@ -176,13 +176,18 @@ def main(revision,qualifier=None):
                 'sessions':'/var/lib/mrj-auth/sessions.sqlite','cycle':'/var/lib/vision-cycle/courriels.sqlite',
                 'admissions':'/var/lib/mrjam-admission/admissions.sqlite','admission-courriel':'/var/lib/mrjam-admission/courriels.sqlite',
                 'fermetures':'/var/lib/mrjam-fermeture/courriels.sqlite','courriel':'/var/lib/mrjam-courriel/file.sqlite'}
+            sqlite.update(sqlite_reprise or {})
             copies_etats={}
             for nom,path in sqlite.items():
+                exiger(re.fullmatch('[a-z0-9-]{1,80}',nom))
                 source=Path(path)
                 if source.exists():
                     copie=tmp/(nom+'.sqlite');copie_sqlite(source,copie)
                     copies_etats[nom]=proteger(copie,nom+'.sqlite')
-            for nom,path in {'effacements':'/var/lib/vision-effacements/demandes.jsonl','effacements-cycle':'/var/lib/vision-cycle/effacements.jsonl','effacements-communs':'/var/lib/mrjam-fermeture/effacements.jsonl'}.items():
+            registres={'effacements':'/var/lib/vision-effacements/demandes.jsonl','effacements-cycle':'/var/lib/vision-cycle/effacements.jsonl','effacements-communs':'/var/lib/mrjam-fermeture/effacements.jsonl'}
+            registres.update(registres_reprise or {})
+            for nom,path in registres.items():
+                exiger(re.fullmatch('[a-z0-9-]{1,80}',nom))
                 source=Path(path)
                 if source.exists():
                     copie=tmp/(nom+'.jsonl');copie_registre(source,copie);proteger(copie,nom+'.jsonl')

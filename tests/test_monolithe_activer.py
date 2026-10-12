@@ -50,6 +50,55 @@ class Retour(unittest.TestCase):
         self.assertEqual(commande.call_args.kwargs['input'],(ROOT/'assemblage/roles-metier.sql').read_bytes())
         self.assertTrue(commande.call_args.kwargs['input'].startswith(b'-- Installation explicite'))
 
+    def test_lanceur_transitoire_ne_remplace_pas_la_verification_du_binaire(self):
+        with patch.object(m.stage,'commande',return_value=b'123\n'),\
+             patch.object(m.stage,'sha',side_effect=['b'*64,'a'*64]),patch.object(m.time,'sleep') as pause:
+            self.assertEqual(m.attendre_artefact(self.d,'a'*64),'123')
+            pause.assert_called_once_with(.05)
+        self.assertEqual(json.loads((self.d/'artefact-servi.json').read_text())['artefact_constate_sha256'],'a'*64)
+
+    def test_mauvais_binaire_persistant_et_pid_absent_restent_refuses(self):
+        for pid in (b'123\n',b'0\n'):
+            with self.subTest(pid=pid),patch.object(m.stage,'commande',return_value=pid),\
+                 patch.object(m.stage,'sha',return_value='b'*64),patch.object(m.time,'monotonic',side_effect=[0,10]):
+                with self.assertRaisesRegex(ValueError,'après attente bornée'):m.attendre_artefact(self.d,'a'*64)
+
+    def test_reprise_exige_retour_et_configuration_identiques(self):
+        ancien=self.r/('b'*40);ancien.mkdir()
+        (ancien/'preparation.json').write_text(json.dumps({'avant':self.before}))
+        preuve={'revision':'b'*40,'retour_code':True,'restauration_ancienne_sql':False,'derniers_etats_durables_recopies':True}
+        (ancien/'retour.json').write_text(json.dumps(preuve))
+        cert={'manifest':{'qualification':{'retour_precedent':'b'*40}}}
+        with patch.object(m,'ETAT_METIER',self.current),patch.object(m.stage,'commande',return_value=b'0'):
+            self.assertTrue(m.reprise_certifiee(self.d,self.prepare,cert))
+            preuve['derniers_etats_durables_recopies']=False
+            (ancien/'retour.json').write_text(json.dumps(preuve))
+            with self.assertRaisesRegex(ValueError,'non établi'):m.reprise_certifiee(self.d,self.prepare,cert)
+        self.assertFalse(m.reprise_certifiee(self.d,self.prepare,{'manifest':{'qualification':{}}}))
+
+    def test_reprise_priorite_aux_ecritures_historiques_et_conservation_etat_nouveau(self):
+        absent=self.old/'nouveau.sqlite'
+        with patch.object(m,'ETAT_METIER',self.current),patch.object(m.stage,'ETATS',{'courriel':str(self.target),'admissions':str(absent)}):
+            sources=m.sources_durables(True)
+            self.assertEqual(sources['courriel'],self.target)
+            self.assertEqual(sources['admissions'],self.current/'admission/admissions.sqlite')
+            self.assertEqual(m.sources_durables(False)['admissions'],absent)
+
+    def test_retour_partiel_ne_recopie_pas_sur_ecriture_historique_recente(self):
+        self.plan['etats_retour_copies']=True
+        with sqlite3.connect(self.target) as c:c.execute("INSERT INTO courriels VALUES(3,X'01',1)")
+        self.lancer()
+        with sqlite3.connect(self.target) as c:self.assertEqual(c.execute('SELECT * FROM courriels ORDER BY id').fetchall(),[(1,b'ancien',0),(3,b'\x01',1)])
+
+    def test_retour_enregistre_la_relance_tiers_sans_affaiblir_le_controle_de_bascule(self):
+        self.before['tiers_pids']={'keycloak':'1'}
+        actuel=dict(self.before,tiers_pids={'keycloak':'2'})
+        with patch.object(m.stage,'etat',return_value=actuel),patch.object(m.stage,'commande'):
+            self.assertEqual(m.metadonnees_retour_identiques(self.d,self.prepare),['keycloak'])
+        actuel['configuration_cible']='autre'
+        with patch.object(m.stage,'etat',return_value=actuel),patch.object(m.stage,'commande'):
+            with self.assertRaisesRegex(ValueError,'Configuration différente'):m.metadonnees_retour_identiques(self.d,self.prepare)
+
     def test_retour_conserve_ecritures_posterieures_et_ne_restaure_pas_sql(self):
         self.lancer()
         with sqlite3.connect(self.target) as c:

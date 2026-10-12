@@ -556,3 +556,17 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   Régression PostgreSQL réelle/autre UID : fichier privé refusé, stdin conserve
   méta-commandes/transaction, parent toujours privé. Migration29,7892s et
   sécurité0,9461s passent ; aucune modification du graphe Lisp ou des interfaces.
+- Run38189849220 : restauration/retour qualifiés, commun démarré ; /proc/exe lu
+  pendant lanceurBash, égalité stricte refusée. Observation locale sans données/
+  tâches : mêmePID passe de Bash à artefact296b7. Attente bornée conserve le
+  contrôle exact, PID absent/mauvais artefact refusés. Diagnostic38190351104 :
+  retour ancienne config/profil/publications, seul PIDKeycloak différent.
+  Confirmation38190627348 : retour déjà effectué vérifié, timer arrêté, aucune
+  nouvelle copie ni relance. Reprise explicite conserve les états communs et
+  préfère les écritures historiques récentes ; sauvegarde chiffrée étendue.
+- Essai PG/reload échoué : nouvelle config Nix effectivement construite et HUP
+  reçu, mais hba_file/ident_file postmaster exigent restart. Essai archivé exact,
+  non livré. Régression PG17 réelle : nouveaux chemins nécessitent restart,
+  zéro/NULL préservés et peer réel requis. RestartPG/Keycloak déclaré précisément,
+  autres protections inchangées ; rôle étroit posé après setupPG. Qualification
+  41968 : migration48,3562s, sécurité1,1802s, sélection0,972s ; deux reçus réutilisés.
