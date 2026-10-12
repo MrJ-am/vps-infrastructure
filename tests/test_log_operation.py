@@ -5,11 +5,27 @@ from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
 ROOT=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('operation_log',ROOT/'scripts/log-activer.py')
 m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 class Reprise(unittest.TestCase):
+    def test_monolithe_actif_emploie_etats_actuels_et_refuse_autre_artefact(self):
+        spec=importlib.util.spec_from_file_location('restauration_active_test',ROOT/'scripts/monolithe-restaurer.py')
+        r=importlib.util.module_from_spec(spec);spec.loader.exec_module(r)
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp);activer=SimpleNamespace(ETAT_METIER=p,DESTINATIONS={'admissions':'admission/admissions.sqlite'})
+            ref={'generation':'generation-test','artefact_sha256':'a'*64}
+            cert={'manifest':{'qualification':{'reference_production':ref,'retour_precedent':'historique'}}}
+            prepare={'avant':{'generation':ref['generation'],'demarrage':ref['generation']}}
+            stage=SimpleNamespace(ETATS={'admissions':'/historique/perime.sqlite'},exiger=m.exiger,
+                commande=lambda *a:b'123',sha=lambda *a:'a'*64)
+            self.assertEqual(r.sources_metier_actif(p,prepare,cert,stage,activer),
+                             {'admissions':p/'admission/admissions.sqlite'})
+            stage.sha=lambda *a:'b'*64
+            with self.assertRaisesRegex(ValueError,'Artefact métier actif'):
+                r.sources_metier_actif(p,prepare,cert,stage,activer)
     def test_diagnostic_classe_erreur_sans_publier_les_valeurs(self):
         spec=importlib.util.spec_from_file_location('log_diag_test',ROOT/'scripts/log-diagnostic.py')
         diag=importlib.util.module_from_spec(spec);spec.loader.exec_module(diag)

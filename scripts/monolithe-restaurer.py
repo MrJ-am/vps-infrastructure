@@ -55,7 +55,20 @@ def comparer_lectures(a,b,fenetres):
     return projection(a)==projection(b)
 
 
-def main(revision):
+def sources_metier_actif(d,prepare,cert,stage,activer):
+    "État actuel du monolithe accepté, distinct d'une reprise après retour."
+    r=cert['manifest']['qualification']['reference_production']
+    stage.exiger(prepare['avant']['generation']==prepare['avant']['demarrage']==r['generation'],
+                 'Génération métier active différente de la référence')
+    pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
+    stage.exiger(pid.isdigit() and int(pid)>0 and stage.sha(Path('/proc')/pid/'exe')==r['artefact_sha256'],
+                 'Artefact métier actif différent de la référence')
+    root=activer.ETAT_METIER
+    stage.exiger(root.is_dir() and not root.is_symlink(),'États métier actifs absents ou redirigés')
+    stage.exiger(not any(p.is_symlink() for p in root.rglob('*')),'État métier actif redirigé')
+    return {n:root/activer.DESTINATIONS[n] for n in stage.ETATS}
+
+def main(revision,metier_actif=False):
     if os.geteuid()!=0 or not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Opérateur/révision refusés')
     d=Path('/root/mrjam-assemblages')/revision
     prepare=json.loads((d/'preparation.json').read_text())
@@ -228,10 +241,11 @@ WHERE i.utilisateur='"""+proprietaire+"' AND i.id IN ("+','.join(map(str,ids))+'
           'retour_operations_ecriture_restant':False,
           'idp_smtp_non_contactes':True,'donnees_synthetiques_en_production':False}
     activer=module('mrjam_reprise_etats',ROOT/'scripts/monolithe-activer.py')
-    reprise=activer.reprise_certifiee(d,prepare,cert)
+    sources_actives=sources_metier_actif(d,prepare,cert,stage,activer) if metier_actif else None
+    reprise=False if metier_actif else activer.reprise_certifiee(d,prepare,cert)
     sqlite_reprise={};registres_reprise={}
-    if reprise:
-        sources=activer.sources_durables(True)
+    if reprise or metier_actif:
+        sources=sources_actives if metier_actif else activer.sources_durables(True)
         aliases={'cycle-courriels':'cycle','admissions':'admissions','admission-courriels':'admission-courriel',
                  'fermeture-courriels':'fermetures','courriel':'courriel',
                  'effacements':'effacements','effacements-cycle':'effacements-cycle',
@@ -239,10 +253,11 @@ WHERE i.utilisateur='"""+proprietaire+"' AND i.id IN ("+','.join(map(str,ids))+'
         for n,p in sources.items():
             cible=activer.ETAT_METIER/activer.DESTINATIONS[n]
             collection=sqlite_reprise if cible.suffix=='.sqlite' else registres_reprise
-            if p!=Path(stage.ETATS[n]) and p.exists():collection[aliases[n]]=str(p)
-            if cible.exists():collection['avant-reprise-'+aliases[n]]=str(cible)
+            if metier_actif or (p!=Path(stage.ETATS[n]) and p.exists()):collection[aliases[n]]=str(p)
+            if reprise and cible.exists():collection['avant-reprise-'+aliases[n]]=str(cible)
     rapport=backup.main(revision,qualifier=qualifier,sqlite_reprise=sqlite_reprise,registres_reprise=registres_reprise)
     rapport['etats_communs_precedents_chiffres']=bool(reprise)
+    rapport['etats_metier_actifs_sauvegardes']=metier_actif
     (d/'restauration.json').write_text(json.dumps(rapport,ensure_ascii=False,indent=2)+'\n')
 
 
@@ -250,9 +265,11 @@ if __name__=='__main__':
     try:
         os.umask(0o077)
         with open('/root/mrjam-assemblage.lock','a') as f:
-            fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);main(sys.argv[1])
+            if len(sys.argv) not in (2,3) or (len(sys.argv)==3 and sys.argv[2]!='--metier-actif'):
+                raise ValueError('Mode de restauration refusé')
+            fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);main(sys.argv[1],len(sys.argv)==3)
     except Exception:
-        if len(sys.argv)==2 and re.fullmatch('[a-f0-9]{40}',sys.argv[1]):
+        if len(sys.argv) in (2,3) and re.fullmatch('[a-f0-9]{40}',sys.argv[1]):
             d=Path('/root/mrjam-assemblages')/sys.argv[1]
             if d.is_dir() and not d.is_symlink():(d/'erreur-restauration-privee.log').write_text(traceback.format_exc())
         print('Restauration isolée refusée ; diagnostic privé sur le VPS.',file=sys.stderr);sys.exit(1)

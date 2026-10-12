@@ -16,7 +16,11 @@ mêmes seuils/focus ; aucune modification du rendu. Restauration froide/autreUID
 OIDC/MFA/passkey natifs réels et51suites qualifiés. Les sources ASDF OIDC auditées
 rejoignent la closure signée pour restauration, sans outillage MCP produit.
 
-Image C saine conservée (marqueur reprise-20261012-552402 observé, pas PID fixé).
+Après redémarrage environnementspec138, anciennes images disparues. Images C
+reconstruites depuis sources/FASL : marqueur reconnexion-20261012-652901 observé
+(pas PID fixé), même PID/marqueur/objet vu par CL-MCP et Tron, mutation synthétique
+1 croisée, poolNIL et debuggerNIL. Références MCP de transport précédentes
+archivées/invalidées ; aucun ancien objet/thread/restart réutilisé.
 CL-MCP sans pool/Swank, Tron distinct ; aucun qualifier synthétique de santé.
 Aucun REPL connecté à des données de production.
 
@@ -42,6 +46,14 @@ de génération, compte ou données ; courriel non envoyé. Correction principal
 main et regression23cas (handover réellement évalué pour Log/monolithe), même
 payload9fcf998 et binaire conservés. Reprendre la promotion, pas réengager une
 mutation métier incertaine ; préparation jamais appelée au premier run.
+
+Run38316938816 : deux générations préparées réellement (i6dlml4k/hrxwwswy),
+services préservés, avant activation. Restauration refusée car retour_precedent77c
+historique traité comme reprise, alors que monolithe actif accepté9qv/296b7.
+Mode fermé --metier-actif vérifie génération/démarrage et SHA réel du PID,
+sauvegarde exclusivement états actuels communs ; ne sélectionne jamais anciens
+chemins périmés. Mode de reprise historique inchangé. Test de mauvais artefact
+refusé, courriel toujours non envoyé. Resceller cette correction d’exploitation.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation
