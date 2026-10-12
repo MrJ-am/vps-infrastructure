@@ -11,6 +11,20 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_locations_installees_metadata_uniquement(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);p=d/'payload/vps/assemblage';p.mkdir(parents=True)
+            (p/'manifest.json').write_text('{"toolchain":{"production":{"nixpkgs":"/nix/store/nixpkgs"}}}')
+            rows={'= /':{'existe':True,'root':True,'secret':'prive','alias':False,'directives':['try_files','secret']},
+                  'inconnu':{'secret':'prive'}}
+            with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout=json.dumps(rows))) as run:
+                r=m.locations_vision(d)
+            self.assertEqual(r['= /'],{'existe':True,'root':True,'alias':False,'directives':['try_files']})
+            self.assertNotIn('prive',json.dumps(r));self.assertNotIn('secret',json.dumps(r))
+            self.assertIn('--eval',run.call_args.args[0]);self.assertNotIn('nix-build',run.call_args.args[0])
+            with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=1,stdout='secret')):
+                self.assertEqual(m.locations_vision(d),{'evaluation_code':1})
+
     def test_erreur_nix_ne_revele_pas_les_definitions_privees(self):
         t='error: The option `services.nginx.virtualHosts."vision.mrj.am".locations."= /".root` has conflicting definition values:\n- In /configuration-privee.nix: SECRET\nat /root/private/module.nix:34:5\n'
         r=m.erreur_nix(t)
@@ -19,6 +33,7 @@ class Diagnostic(unittest.TestCase):
         self.assertEqual(r['positions'],[{'fichier':'module.nix','ligne':34,'colonne':5}])
         self.assertNotIn('SECRET',json.dumps(r));self.assertNotIn('private',json.dumps(r));self.assertNotIn('privee',json.dumps(r))
         self.assertNotIn('SECRET',json.dumps(m.erreur_nix('error: valeur `SECRET` non valide')))
+        self.assertEqual(m.erreur_nix('Only one of nginx root or alias can be specified on a location.')['regle_nginx'],'root_alias_exclusifs')
 
     def test_nginx_binaire_fixe_sans_executer_la_configuration(self):
         b='/nix/store/'+'a'*32+'-nginx-1.30.4/bin/nginx'

@@ -124,7 +124,22 @@ in {
       # en-têtes CSP/no-store, sans redirection interne Nginx vers /index.html.
       lib.genAttrs [ "= /app.js" "= /app.css" "^~ /assets/mrjam/" ]
         (_: { root = lib.mkOverride 40 cfg.documentVision; }) // {
-          "= /interface-manifest.json".alias = "${cfg.documentVision}/manifest.json";
+          "= /" = {
+            root = lib.mkOverride 30 null;
+            alias = lib.mkOverride 30 null;
+            proxyPass = lib.mkOverride 30 upstream;
+            extraConfig = lib.mkAfter ''
+              proxy_set_header X-Mrjam-Service "vision";
+              proxy_set_header X-Mrj-User "";
+              proxy_set_header X-Vision-Authenticated "";
+              proxy_set_header X-Vision-Browser "";
+              proxy_set_header X-Vision-Administration "";
+            '';
+          };
+          "= /interface-manifest.json" = {
+            root = lib.mkOverride 30 null;
+            alias = lib.mkOverride 30 "${cfg.documentVision}/manifest.json";
+          };
         };
     services.nginx.virtualHosts."principiipetit.io".locations = {
       "/matheval/" = {
