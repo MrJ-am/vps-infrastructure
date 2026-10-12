@@ -124,6 +124,20 @@ def acces_parent_restauration():
     return r.returncode==0
 
 
+def acces_documents(revision):
+    if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
+    racine=Path('/srv/mrjam-assemblages')
+    document=racine/revision/'vision/app.html'
+    out={'mode_parent':oct(racine.stat().st_mode & 0o7777) if racine.exists() else None}
+    for role in ('nginx','mrjam-metier'):
+        out[role]={}
+        for nom,option,p in (('traverse_parent','-x',racine),('lit_accueil','-r',document)):
+            r=subprocess.run(['runuser','-u',role,'--','test',option,str(p)],capture_output=True,timeout=10)
+            if r.returncode not in (0,1):raise ValueError('Contrôle documentaire indisponible')
+            out[role][nom]=r.returncode==0
+    return out
+
+
 def etat_bascule(d):
     p=d/'activation.json'
     phase=json.loads(p.read_text()).get('phase') if p.exists() else None
@@ -238,6 +252,7 @@ def main(revision):
     out['roles_sql_actuels']={b:metadonnees_roles(r['postgres'],b,roles[b],controleur) for b in roles}
     out['vue_historique']=proprietes_vue_historique(r['postgres'])
     out['nginx']=version_nginx(r['nginx'])
+    out['acces_documents']=acces_documents(revision)
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
     for nom in ('restauration','activation'):
         p=d/('erreur-'+nom+'-privee.log')
