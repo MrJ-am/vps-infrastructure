@@ -426,7 +426,9 @@
         "scripts/monolithe-diagnostic.py",
         "tests/test_monolithe_diagnostic.py",
         "modules/metier.nix",
-        "tests/test_monolithe_operation.py"
+        "tests/test_monolithe_operation.py",
+        "scripts/monolithe-retour-confirmer.py",
+        "tests/test_monolithe_retour_confirmer.py"
       ],
       "vision": [
         "migrations/*.sql",
@@ -495,6 +497,16 @@
         "tests",
         "-p",
         "test_monolithe_operation.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_retour_confirmer.py"
       ]
     ],
     "dependances": [
