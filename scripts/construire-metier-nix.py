@@ -62,6 +62,8 @@ def construire(outils_seulement=False,avec_log=False):
             native=json.loads((RACINE/'assemblage/kanidm/installation-locale.json').read_text())
             attendu=native['paquet']
             actuel=subprocess.check_output(['nix-store','--query','--hash',attendu],env=env,text=True).strip()
+            actuel=subprocess.check_output(['nix','--extra-experimental-features','nix-command',
+                'hash','convert','--hash-algo','sha256','--to','sri',actuel],env=env,text=True).strip()
             if actuel!=native['nar_sha256']:raise ValueError('Paquet Kanidm déjà qualifié modifié')
             sorties['kanidm']=attendu  # Réutilisation du paquet vérifié, pas une reconstruction Rust.
         p={'format':1,'source_revision':revision,'nixpkgs_revision':cible['nixpkgs_revision'],
