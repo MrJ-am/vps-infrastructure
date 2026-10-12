@@ -67,6 +67,10 @@ def main(revision):
         'duplicate location':'nginx_location_dupliquee','invalid number of arguments':'nginx_arguments',
         'permission denied':'permission_refusee','No such file or directory':'fichier_absent',
         'Configuration métier invalide':'configuration_metier_invalide'}.items() if k.lower() in journal.lower()]
+    texte_erreur=(d/'erreur-commande-privee.log').read_text() if (d/'erreur-commande-privee.log').is_file() else ''
+    out['unites_echec']=[nom for nom in ('mrjam-metier','kanidm','nginx','postgresql','mrj-auth','keycloak')
+        if any(nom+'.service' in l and any(mot in l.lower() for mot in ('failed','failure','refus','error'))
+               for l in (texte_erreur+'\n'+journal).splitlines())]
     f=d/'evaluation-log-privee.json'
     if f.is_file():
         r=json.loads(f.read_text());out['services_preserves']=m.differences(r['protegeAvant'],r['protegeApres'])
