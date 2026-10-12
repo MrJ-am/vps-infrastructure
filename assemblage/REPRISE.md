@@ -1,38 +1,41 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — activation, SQL privé transmis par stdin
+## Point de reprise actif — correctifs de bascule qualifiés, promotion à faire
 
-Architecture C et travail frontend conservés ; image applicative saine encore
-présente, aucun qualifier MCP synthétique ni reconnexion. Kanidm non commencé.
+Production ancienne r6s7ags3 ; retour38190627348 finalisé, timer arrêté, aucune
+nouvelle copie/relance. Référence38190092443 : anciens services actifs, monolithe
+inactif, agrégats métier identiques. Kanidm non commencé. Image interactive C et
+interfaces qualifiées conservées ; aucun qualifier MCP synthétique ni reconnexion.
 
-Déploiement 38189157223 / 109ff5b7 : restauration isolée entièrement réussie,
-RLS/ACL, données, lectures temporelles, écritures croisées et redémarrage passent.
-Activation engagée, arrêt avant transfert à monolithe-activer.py:201 : psql sous
-Unix postgres ne peut pas lire le script privé situé sous /root. Retour du code
-exécuté ; référence 38189544447 réussie confirme génération et profil r6s7ags3,
-anciens services actifs, monolithe inactif, services tiers disponibles. Comptes
-Vision 1 actif/admin, rattachements cohérents ; Matheval 3 participations toutes
-ouvertes. Les migrations SQL 026/027 peuvent désormais être appliquées : ne pas
-présumer le schéma 25 ni annuler leur protection pour revenir au code ancien.
+Run38189849220/dbd5b19 : restauration complète réussie, démarrage commun puis
+refus du contrôle immédiat de l'artefact. Lanceur Bash avant exec reproduit
+localement ; attente bornée garde l'empreinte exacte et refuse mauvais PID/binaire.
+Retour effectué, seul PIDKeycloak différent (diagnostic38190351104). La recopie du
+retour est désormais journalisée avant le redémarrage ; un retry ne remplace pas
+les écritures historiques nouvelles. Reprise suivante explicitement liée au
+retourdbd5b19 : fichiers historiques récents prioritaires, états communs nouveaux
+conservés, tous fichiers communs précédents ajoutés au backup chiffré récent.
 
-Correction locale : SQL canonique lu par l'opérateur puis envoyé à psql par stdin,
-comme en restauration ; socket/base explicites. Aucun droit de /root élargi.
-Tests réels PostgreSQL/autre UID : fichier privé refusé, mêmes méta-commandes et
-transaction réussissent via stdin, accès au parent toujours refusé. Migration
-29,7892s et sécurité 0,9461s réussissent. Diagnostic fermé précise phase/retour/
-qualification finale sans exposer le plan privé. Opérateurs dbd5b19814b88b6ddc4e033134fc5b9e595de90d publiés et scellés ;
-transport 6eaa929fb433966043dfc6363c6e9dfc34124bb4 publié. Aucun rejeu de
-dad8482 ayant déjà engagé une activation. Descripteur publié d1ce2f1f9969d642a519bc365b01363e585d954f. Déploiement
-38189849220 en cours ; constater son issue réelle et son éventuel retour avant
-toute répétition. Une interruption de conversation ne l’arrête pas.
+Essai de rechargement PG abandonné et archivé exactement : hba_file/ident_file
+sont postmaster, leurs nouveaux chemins Nix nécessitent un restart. Test PG17
+réel : SIGHUP insuffisant, restart applique les chemins, zéro/NULL préservés,
+UID autorisé accepté et faux UID refusé. Pas de version/runtime mis à jour.
+Préparation annonce précisément restartPG/Keycloak ; tous autres services gardent
+leurs contrôles, unités/versions/configuration IdP restent invariantes. Rôles
+étroits appliqués après le setupPG avant démarrage. Parser « would restart » testé.
 
-Composants exacts du manifeste inchangés, Vision 18c52cdd. Même binaire Nix
-296b7c89, graphe Lisp inchangé, mêmes interfaces qualifiées. Reçus affectés seuls
-rejoués ; scellement doit vérifier les 35 reçus exacts avant transport. Sauvegarde
-fraîche/restauration/retour et bascule centrale uniquement, puis MCP réel,
-invariants, mémoire/latences, redémarrage et services tiers. Consigner le nouveau
-run avant toute interruption, constater son issue avant répétition. Étape 1 reste
-non livrée tant que sa version active et les critères ne sont pas constatés.
+Qualification41968 terminée0 : migration48,3562s, sécurité1,1802s, sélection0,972s
+réussies ; sauvegarde-copies et éditorial réutilisés après contrôle exact. Tests
+incluent RLS/ACL/données/séance ouverte/lectures datées, vrai SBCL autre UID, stdin
+SQL privé, reprise/retour partiel et PG17 réel. Nouveau scellement des35reçus
+encore nécessaire après publication des sources. Ancien reçu en échec de l'essai
+rechargement n'est pas utilisé ; historique dans coordination/historique/essai-*
+
+Prochaine séquence : publier opérateurs puis sceller le même binaire296b7 (graphe
+Lisp inchangé) et les mêmes interfaces, transporter chiffré, publier descripteur,
+un déploiement central avec sauvegarde/restauration/bascule/retour. Constater son
+issue avant toute répétition ; puis MCP réel, données, restart/mesures/services.
+Étape1 encore non livrée ; Kanidm automatiquement après constat personnel du jalon.
 
 ## État précédent — historique conservé
 
@@ -847,3 +850,37 @@ validation Lisp propre distincte sans détruire image saine, Nix/HBA actuel,
 backup/restauration isolée/retour, bascule réelleAPI/MCP/invariants/redémarrage.
 Kanidm seulement après constat réel étape1. Accès GitHubsettings403/Pagesdisable422
 historiques, aucun nettoyage distant prétendu réussi. Références ci-dessous.
+
+## Point de reprise antérieur — activation, SQL privé transmis par stdin
+
+Architecture C et travail frontend conservés ; image applicative saine encore
+présente, aucun qualifier MCP synthétique ni reconnexion. Kanidm non commencé.
+
+Déploiement 38189157223 / 109ff5b7 : restauration isolée entièrement réussie,
+RLS/ACL, données, lectures temporelles, écritures croisées et redémarrage passent.
+Activation engagée, arrêt avant transfert à monolithe-activer.py:201 : psql sous
+Unix postgres ne peut pas lire le script privé situé sous /root. Retour du code
+exécuté ; référence 38189544447 réussie confirme génération et profil r6s7ags3,
+anciens services actifs, monolithe inactif, services tiers disponibles. Comptes
+Vision 1 actif/admin, rattachements cohérents ; Matheval 3 participations toutes
+ouvertes. Les migrations SQL 026/027 peuvent désormais être appliquées : ne pas
+présumer le schéma 25 ni annuler leur protection pour revenir au code ancien.
+
+Correction locale : SQL canonique lu par l'opérateur puis envoyé à psql par stdin,
+comme en restauration ; socket/base explicites. Aucun droit de /root élargi.
+Tests réels PostgreSQL/autre UID : fichier privé refusé, mêmes méta-commandes et
+transaction réussissent via stdin, accès au parent toujours refusé. Migration
+29,7892s et sécurité 0,9461s réussissent. Diagnostic fermé précise phase/retour/
+qualification finale sans exposer le plan privé. Opérateurs dbd5b19814b88b6ddc4e033134fc5b9e595de90d publiés et scellés ;
+transport 6eaa929fb433966043dfc6363c6e9dfc34124bb4 publié. Aucun rejeu de
+dad8482 ayant déjà engagé une activation. Descripteur publié d1ce2f1f9969d642a519bc365b01363e585d954f. Déploiement
+38189849220 en cours ; constater son issue réelle et son éventuel retour avant
+toute répétition. Une interruption de conversation ne l’arrête pas.
+
+Composants exacts du manifeste inchangés, Vision 18c52cdd. Même binaire Nix
+296b7c89, graphe Lisp inchangé, mêmes interfaces qualifiées. Reçus affectés seuls
+rejoués ; scellement doit vérifier les 35 reçus exacts avant transport. Sauvegarde
+fraîche/restauration/retour et bascule centrale uniquement, puis MCP réel,
+invariants, mémoire/latences, redémarrage et services tiers. Consigner le nouveau
+run avant toute interruption, constater son issue avant répétition. Étape 1 reste
+non livrée tant que sa version active et les critères ne sont pas constatés.

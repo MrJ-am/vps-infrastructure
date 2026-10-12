@@ -30,6 +30,10 @@ DESTINATIONS={'cycle-courriels':'cycle/courriels.sqlite','admissions':'admission
  'courriel':'courriel/file.sqlite','effacements':'effacements/demandes.jsonl',
  'effacements-cycle':'cycle/effacements.jsonl','effacements-fermeture':'fermeture/effacements.jsonl'}
 ETAT_METIER=Path('/var/lib/mrjam-metier')
+PROPRIETAIRES_HISTORIQUES={'cycle-courriels':'vision_cycle','admissions':'vision_admission',
+ 'admission-courriels':'vision_admission','fermeture-courriels':'vision_fermeture',
+ 'courriel':'mrjam-courriel','effacements':'vision','effacements-cycle':'vision_cycle',
+ 'effacements-fermeture':'vision_fermeture'}
 PORTE=Path('/run/systemd/system/mrjam-metier.service.d/90-assemblage.conf')
 
 
@@ -58,7 +62,9 @@ def proprietes(p):
 
 def copie(source,cible,identite):
     stage.exiger(not source.is_symlink(),'Source redirigée')
+    parent_nouveau=not cible.parent.exists()
     cible.parent.mkdir(mode=0o700,parents=True,exist_ok=True)
+    if parent_nouveau:os.chown(cible.parent,identite['uid'],identite['gid'])
     tmp=cible.with_name(cible.name+'.assemblage-copie')
     stage.exiger(not tmp.exists() and not cible.is_symlink(),'Copie concurrente ou cible redirigée')
     if source.suffix=='.sqlite':backup.copie_sqlite(source,tmp)
@@ -93,11 +99,62 @@ def appliquer_roles(pg,d):
         d,input=(ROOT/'assemblage/roles-metier.sql').read_bytes())
 
 
+def attendre_artefact(d,attendu):
+    # Type=simple rend le lanceur actif avant son exec du binaire. Attendre
+    # l'identité exacte, sans accepter le lanceur comme artefact qualifié.
+    limite=time.monotonic()+10
+    while True:
+        pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
+        preuve={'format':1,'artefact_attendu_sha256':attendu,'pid_present':pid.isdigit() and int(pid)>0}
+        if preuve['pid_present']:
+            try:preuve['artefact_constate_sha256']=stage.sha(Path('/proc')/pid/'exe')
+            except (FileNotFoundError,ProcessLookupError):pass
+        ecrire(d/'artefact-servi.json',preuve)
+        if preuve.get('artefact_constate_sha256')==attendu:return pid
+        if time.monotonic()>=limite:raise ValueError('Artefact servi différent ou absent après attente bornée')
+        time.sleep(.05)
+
+
+def reprise_certifiee(d,prepare,cert):
+    revision=cert['manifest']['qualification'].get('retour_precedent')
+    if revision is None:return False
+    stage.exiger(isinstance(revision,str) and re.fullmatch('[a-f0-9]{40}',revision) and revision!=d.name,
+                 'Révision de retour précédente invalide')
+    ancien=d.parent/revision
+    retour=json.loads((ancien/'retour.json').read_text())
+    avant=json.loads((ancien/'preparation.json').read_text())['avant']
+    sans_pid=lambda v:{k:x for k,x in v.items() if k!='tiers_pids'}
+    stage.exiger(retour.get('retour_code') is True and retour.get('restauration_ancienne_sql') is False
+        and retour.get('derniers_etats_durables_recopies') is True and retour.get('revision')==revision,
+        'Retour précédent non établi')
+    stage.exiger(sans_pid(avant)==sans_pid(prepare['avant']),'Autre configuration depuis le retour précédent')
+    stage.exiger(stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).strip()==b'0',
+                 'Reprise avec serveur commun actif')
+    if ETAT_METIER.exists():
+        stage.exiger(not ETAT_METIER.is_symlink() and ETAT_METIER.is_dir(),'Répertoire d’états redirigé')
+        for p in ETAT_METIER.rglob('*'):stage.exiger(not p.is_symlink(),'État de reprise redirigé')
+    return True
+
+
+def sources_durables(reprise):
+    # Après retour, les anciennes applications peuvent avoir écrit : leurs
+    # chemins sont prioritaires. Un état commun nouveau reste conservé lorsque
+    # son équivalent historique n'existe pas encore.
+    return {n:Path(p) if Path(p).exists() or not reprise else ETAT_METIER/DESTINATIONS[n]
+            for n,p in stage.ETATS.items()}
+
+
+def metadonnees_retour_identiques(d,prepare):
+    actuel=stage.etat(d);avant=prepare['avant']
+    stage.exiger({k:v for k,v in actuel.items() if k!='tiers_pids'}==
+                 {k:v for k,v in avant.items() if k!='tiers_pids'},'Configuration différente après retour')
+    stage.commande(['systemctl','is-active',*stage.TIERS],d)
+    return sorted(k for k,v in avant.get('tiers_pids',{}).items() if actuel.get('tiers_pids',{}).get(k)!=v)
+
+
 def controle(d,prepare,cert,*,redemarrer=False):
     stage.commande(['systemctl','is-active','mrjam-metier','nginx','postgresql',*stage.TIERS],d)
-    pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
-    stage.exiger(pid.isdigit() and int(pid)>0,'PID métier absent')
-    stage.exiger(stage.sha(Path('/proc')/pid/'exe')==cert['qualification']['artefact_sha256'],'Artefact servi différent')
+    attendre_artefact(d,cert['qualification']['artefact_sha256'])
     # Constater les protections de la base réellement utilisée, y compris après
     # redémarrage ; la qualification de sa copie ne prouve pas son état actif.
     tables=module('mrjam_tables_activer',ROOT/'scripts/verifier-tables.py')
@@ -108,7 +165,10 @@ def controle(d,prepare,cert,*,redemarrer=False):
         p=stage.commande(['systemctl','show',n,'-p','MainPID','--value'],d).decode().strip()
         stage.exiger(p in ('','0'),'Ancien processus métier encore actif : '+n)
     actuel=stage.etat(d)
-    stage.exiger(actuel['tiers_pids']==prepare['avant']['tiers_pids'],'Processus tiers redémarré')
+    autorises=prepare.get('redemarrages_dependances_autorises',[])
+    stage.exiger(autorises==['postgresql','keycloak'],'Précondition de restart des accès PostgreSQL absente')
+    stage.exiger({k:v for k,v in actuel['tiers_pids'].items() if k!='keycloak'}==
+                 {k:v for k,v in prepare['avant']['tiers_pids'].items() if k!='keycloak'},'Processus tiers redémarré')
     reference=module('mrjam_reference_activer',ROOT/'scripts/monolithe-reference.py')
     for u,codes in [('https://principiipetit.io/matheval/api/health',(200,)),
                     ('https://vision.mrj.am/',(200,)),('https://vision.mrj.am/mcp',(401,)),
@@ -142,7 +202,7 @@ def controle(d,prepare,cert,*,redemarrer=False):
 
 def retour(d,prepare,plan):
     if (d/'retour.json').exists():
-        stage.exiger(stage.etat(d)==prepare['avant'],'État différent après le retour enregistré')
+        metadonnees_retour_identiques(d,prepare)
         return
     # Avant la génération candidate, cette unité peut ne pas exister. Un arrêt
     # refusé d'une unité présente reste une erreur ; on ne masque pas son code.
@@ -150,10 +210,14 @@ def retour(d,prepare,plan):
     if charge!='not-found':stage.commande(['systemctl','stop','mrjam-metier'],d)
     # Le nouveau serveur arrêté a pu ajouter des lignes : copier ses dernières
     # données vers les chemins historiques, jamais les copies d'avant bascule.
-    if plan.get('phase') in ('etats-transferes','service-demarre','qualification'):
+    if plan.get('phase') in ('etats-transferes','service-demarre','qualification') and not plan.get('etats_retour_copies'):
+        for n in METIER:
+            stage.exiger(stage.commande(['systemctl','show',n,'-p','MainPID','--value'],d).strip() in (b'',b'0'),
+                         'Ancien service actif avant recopie de retour')
         for n,ancien in plan['etats'].items():
             source=ETAT_METIER/DESTINATIONS[n]
             if source.exists():copie(source,Path(stage.ETATS[n]),ancien)
+        plan['etats_retour_copies']=True;ecrire(d/'activation.json',plan)
     if plan.get('publication_logique_avant'):
         p=Path(prepare['avant']['publications']['logique'])
         courant=str(p.resolve());ancien=prepare['avant']['cibles']['logique']
@@ -167,9 +231,10 @@ def retour(d,prepare,plan):
     stage.commande(['systemctl','daemon-reload'],d)
     units=[n for n,v in plan.get('unites_avant',{}).items() if v=='active']
     if units:stage.commande(['systemctl','start',*units],d)
-    stage.exiger(stage.etat(d)==prepare['avant'],'Retour différent de la référence ; vérifier le diagnostic privé')
+    relances=metadonnees_retour_identiques(d,prepare)
     ecrire(d/'retour.json',{'format':1,'revision':d.name,'retour_code':True,
-        'restauration_ancienne_sql':False,'derniers_etats_durables_recopies':True})
+        'restauration_ancienne_sql':False,'derniers_etats_durables_recopies':True,
+        'processus_tiers_relances':relances})
     stage.commande(['systemctl','stop','mrjam-retour-'+d.name[:12]+'.timer'],d)
 
 
@@ -183,11 +248,17 @@ def activer(d,prepare,cert):
                  'Restauration/retour non qualifiés')
     stage.exiger(time.time()-(d/'restauration.json').stat().st_mtime<900,'Sauvegarde de transition trop ancienne')
     stage.exiger(not (d/'activation.json').exists() and not (d/'termine.json').exists(),'Activation déjà engagée')
+    reprise=reprise_certifiee(d,prepare,cert)
+    sources=sources_durables(reprise)
     plan={'format':1,'phase':'preconditions','revision':d.name,'etats':{},'unites_avant':{}}
     for n in (*METIER,*TIMERS):
         plan['unites_avant'][n]=stage.commande(['systemctl','show',n,'-p','ActiveState','--value'],d).decode().strip()
-    for n,p in stage.ETATS.items():
-        if Path(p).exists():plan['etats'][n]=proprietes(Path(p))
+    for n,p in sources.items():
+        if p.exists():
+            props=proprietes(p)
+            if p!=Path(stage.ETATS[n]):
+                ancien=pwd.getpwnam(PROPRIETAIRES_HISTORIQUES[n]);props={'uid':ancien.pw_uid,'gid':ancien.pw_gid,'mode':0o600}
+            plan['etats'][n]=props
     ecrire(d/'activation.json',plan)
     unit='mrjam-retour-'+d.name[:12]
     cmd='python3 '+str(ROOT/'scripts/monolithe-activer.py')+' retour-auto '+d.name
@@ -206,8 +277,6 @@ def activer(d,prepare,cert):
         stage.exiger(v in ('25','26','27'),'Schéma Vision inattendu')
         if v=='25':sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
         sql('vision',(d/'payload/vision/migrations/027_retablir_rls.sql').read_text())
-        sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
-        appliquer_roles(pg,d)
         gate=PORTE
         gate.parent.mkdir(parents=True,exist_ok=True)
         stage.exiger(not gate.exists(),'Porte de démarrage concurrente')
@@ -215,12 +284,17 @@ def activer(d,prepare,cert):
         stage.commande(['systemctl','daemon-reload'],d)
         stage.commande([Path(prepare['candidat'])/'bin/switch-to-configuration','test'],d)
         stage.exiger(stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()=='0','Démarrage avant transfert')
+        # Le setup natif peut réappliquer ses grants au restart PG. Installer
+        # les rôles étroits après ce setup, avant tout démarrage métier.
+        sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
+        appliquer_roles(pg,d)
         user=pwd.getpwnam('mrjam-metier');base=ETAT_METIER
         base.mkdir(mode=0o700,exist_ok=True);os.chown(base,user.pw_uid,user.pw_gid);base.chmod(0o700)
         for n,props in plan['etats'].items():
             cible=base/DESTINATIONS[n]
-            stage.exiger(not cible.exists(),'État cible déjà présent ; reprise explicite requise')
-            copie(Path(stage.ETATS[n]),cible,{'uid':user.pw_uid,'gid':user.pw_gid,'mode':0o600})
+            stage.exiger(not cible.exists() or reprise,'État cible déjà présent ; reprise explicite requise')
+            if sources[n]!=cible:copie(sources[n],cible,{'uid':user.pw_uid,'gid':user.pw_gid,'mode':0o600})
+            else:os.chown(cible,user.pw_uid,user.pw_gid);cible.chmod(0o600)
         for p in base.rglob('*'):
             stage.exiger(not p.is_symlink(),'Lien dans les états cibles')
             if p.is_dir():os.chown(p,user.pw_uid,user.pw_gid);p.chmod(0o700)
@@ -248,6 +322,7 @@ def activer(d,prepare,cert):
            'artefact_sha256':cert['qualification']['artefact_sha256'],'donnees_preservees':True,
            'redemarrage_verifie':True,'rls_acl_actives_verifiees':True,'schema_vision':27,
            'processus_metier':1,'keycloak_conserve':True,
+           'redemarrages_dependances_autorises':prepare['redemarrages_dependances_autorises'],
            'mcp_anonyme_refuse':True,'mcp_client_personnel_non_reautorise':True})
         stage.commande(['systemctl','stop',unit+'.timer'],d)
         print(json.dumps(json.loads((d/'termine.json').read_text()),ensure_ascii=False))

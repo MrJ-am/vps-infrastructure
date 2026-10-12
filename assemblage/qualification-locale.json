@@ -119,10 +119,10 @@
     },
     "editorial": {
       "resultat": "succes",
-      "duree_secondes": 0.3181,
+      "duree_secondes": 0.2583,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "ae13590dda99a30490bf705a73f04aab5e5a9ec570adf40747d2152a7e361327",
+      "sha256": "6a1239949b90abd84ef4d6e163729a580ff9f0558cd19ccfbab3ed99b1affc49",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.9461,
+      "duree_secondes": 1.1802,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "1f033736e6a2287977d290f554c3a349eb5144c3ce7fb9d84e790a681248012f",
+      "sha256": "fbeb5bad164227da4db3ee1ec995aded6e55e4b0eb5e92bc52661e4947f504a1",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -245,10 +245,10 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 29.7892,
+      "duree_secondes": 48.3562,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "f35085ff95642fc7fe177a3e6b2f4ef3f1ccd7f937dd96a9e8688cbfb40a281d",
+      "sha256": "7c30cf967b2624f97bd062a17871b75efb927110d239b6e457d884be0e2e364b",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -299,10 +299,10 @@
     },
     "sauvegarde-copies": {
       "resultat": "succes",
-      "duree_secondes": 0.1696,
+      "duree_secondes": 0.1407,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "11847b71e5d5cecc4bd2c76aa3d8238162cfdd41e20294b065b12872c5ce41a6",
+      "sha256": "a4a639df61d7abe4173a234e7ad486ca6801ab8cd303c3ff22182d62f11ee281",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -317,10 +317,10 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 1.0104,
+      "duree_secondes": 0.972,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "62b3cb7ef54857eac6b9ee33ee6733bde5107eea0c89d6a08171af0dc04b5231",
+      "sha256": "48de35e0119168a60b78397c8bfd45b44a7c60ef4cb61f1bfb290e6e9378572f",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "réussi ; 35 reçus exacts dans bundle dbd5b19",
+    "scellement": "nouveau scellement requis après correctifs de bascule",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -426,10 +426,12 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "référence 38189544447 : retour ancienne génération confirmé, monolithe inactif ; étape1 non activée",
-    "revision_operateurs": "dbd5b19814b88b6ddc4e033134fc5b9e595de90d",
-    "stage_sha256": "81ca2845af334ae30bb74758e6a15125ef36a9743a2f7c585c16d41bcf056c96",
-    "bundle_complet_verifie_localement": true
+    "production": "ancienne r6s7ags3 ; retour38190627348 vérifié",
+    "restart_dependances": [
+      "postgresql",
+      "keycloak"
+    ],
+    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

@@ -220,15 +220,21 @@ def preparer(revision):
     commande(shlex.split(r['nginx'])+['-t'],d)
     simulation=commande([Path(construit)/'bin/switch-to-configuration','dry-activate'],d).decode()
     (d/'simulation-privee.txt').write_text(simulation)
-    for ligne in simulation.splitlines():
-        if 'stopping the following units:' in ligne or 'restarting the following units:' in ligne:
-            exiger(not any(n.replace('.timer','')+'.service' in ligne for n in TIERS), 'Redémarrage tiers imprévu')
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('simulation_systeme',Path(__file__).with_name('simulation-systeme.py'))
+    lecteur=importlib.util.module_from_spec(spec);spec.loader.exec_module(lecteur)
+    # hba_file/ident_file sont postmaster dans PostgreSQL17 : leurs nouveaux
+    # chemins Nix exigent le restart PG, puis son consommateur Keycloak.
+    # Versions/dataDir/paramètres hors accès et unités IdP restent invariants.
+    proteges=[n if n.endswith('.timer') else n+'.service' for n in TIERS if n!='keycloak']
+    lecteur.verifier(simulation,proteges)
     exiger(etat(d)==avant,'État modifié pendant préparation')
     promotion=json.loads((d/'promotion.json').read_text())
     preuve={'format':1,'revision':revision,'run_ci':promotion['run_ci'],'avant':avant,'candidat':construit,
             'configuration':str(candidate),'parametres':params,'etats_durables':inventaire_etats(),
             'artefact_sha256':cert['qualification']['artefact_sha256'],
             'systeme_construit':True,'activation':False,'sauvegarde_actuelle_requise':True,
+            'redemarrages_dependances_autorises':['postgresql','keycloak'],
             'restauration_acl_et_retour_restants':True}
     (d/'preparation.json').write_text(json.dumps(preuve,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps({k:v for k,v in preuve.items() if k not in ('avant','parametres','etats_durables')},ensure_ascii=False))

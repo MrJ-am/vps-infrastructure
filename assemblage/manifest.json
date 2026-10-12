@@ -107,7 +107,8 @@
       }
     },
     "assembleur_commit": null,
-    "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste."
+    "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste.",
+    "retour_precedent": "dbd5b19814b88b6ddc4e033134fc5b9e595de90d"
   },
   "frontends": {
     "vision": {

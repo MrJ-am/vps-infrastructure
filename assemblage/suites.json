@@ -428,7 +428,9 @@
         "modules/metier.nix",
         "tests/test_monolithe_operation.py",
         "scripts/monolithe-retour-confirmer.py",
-        "tests/test_monolithe_retour_confirmer.py"
+        "tests/test_monolithe_retour_confirmer.py",
+        "scripts/simulation-systeme.py",
+        "tests/test_simulation_systeme.py"
       ],
       "vision": [
         "migrations/*.sql",
@@ -507,6 +509,16 @@
         "tests",
         "-p",
         "test_monolithe_retour_confirmer.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_simulation_systeme.py"
       ]
     ],
     "dependances": [
@@ -1021,7 +1033,9 @@
         "tests/test_monolithe_activer.py",
         "tests/restauration-etats.lisp",
         "tests/vision-rls.py",
-        "tests/restauration-etats.py"
+        "tests/restauration-etats.py",
+        "tests/postgresql-fichiers-acces.py",
+        "assemblage/manifest.json"
       ],
       "vision": [
         "migrations/*.sql",
@@ -1036,7 +1050,8 @@
       "vps/scripts/monolithe-sauvegarde.py",
       "vps/scripts/monolithe-restaurer.py",
       "vps/scripts/monolithe-activer.py",
-      "vps/tests/restauration-etats.*"
+      "vps/tests/restauration-etats.*",
+      "vps/tests/postgresql-fichiers-acces.py"
     ],
     "commandes": [
       [
@@ -1076,6 +1091,10 @@
       [
         "python3",
         "tests/restauration-etats.py"
+      ],
+      [
+        "python3",
+        "tests/postgresql-fichiers-acces.py"
       ]
     ],
     "dependances": [

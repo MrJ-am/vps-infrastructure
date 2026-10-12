@@ -226,7 +226,22 @@ WHERE i.utilisateur='"""+proprietaire+"' AND i.id IN ("+','.join(map(str,ids))+'
           'ecritures_sur_copie_ancien_lues_apres_redemarrage_commun':True,
           'retour_operations_ecriture_restant':False,
           'idp_smtp_non_contactes':True,'donnees_synthetiques_en_production':False}
-    rapport=backup.main(revision,qualifier=qualifier)
+    activer=module('mrjam_reprise_etats',ROOT/'scripts/monolithe-activer.py')
+    reprise=activer.reprise_certifiee(d,prepare,cert)
+    sqlite_reprise={};registres_reprise={}
+    if reprise:
+        sources=activer.sources_durables(True)
+        aliases={'cycle-courriels':'cycle','admissions':'admissions','admission-courriels':'admission-courriel',
+                 'fermeture-courriels':'fermetures','courriel':'courriel',
+                 'effacements':'effacements','effacements-cycle':'effacements-cycle',
+                 'effacements-fermeture':'effacements-communs'}
+        for n,p in sources.items():
+            cible=activer.ETAT_METIER/activer.DESTINATIONS[n]
+            collection=sqlite_reprise if cible.suffix=='.sqlite' else registres_reprise
+            if p!=Path(stage.ETATS[n]) and p.exists():collection[aliases[n]]=str(p)
+            if cible.exists():collection['avant-reprise-'+aliases[n]]=str(cible)
+    rapport=backup.main(revision,qualifier=qualifier,sqlite_reprise=sqlite_reprise,registres_reprise=registres_reprise)
+    rapport['etats_communs_precedents_chiffres']=bool(reprise)
     (d/'restauration.json').write_text(json.dumps(rapport,ensure_ascii=False,indent=2)+'\n')
 
 
