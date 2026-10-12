@@ -19,6 +19,7 @@ import traceback
 sys.dont_write_bytecode=True # Le bundle scellé reste immuable entre opérations.
 
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
+PUBLICATION_ROOT=Path('/srv/mrjam-assemblages')
 TIERS=('sshd','mrj-auth','keycloak','vision-embeddings','phpfpm-nextcloud',
        'redis-nextcloud','nextcloud-backup.timer','postgresqlBackup-vision.timer',
        'postgresqlBackup-matheval.timer')
@@ -159,6 +160,19 @@ def verifier_acces_postgresql(avant,apres):
            'IdentMap : seuls les sept rôles métier limités sont autorisés')
 
 
+def permissions_ressources(public):
+    exiger(public.parent==PUBLICATION_ROOT and re.fullmatch('[a-f0-9]{40}',public.name),
+           'Publication hors périmètre')
+    exiger(PUBLICATION_ROOT.is_dir() and not PUBLICATION_ROOT.is_symlink(),
+           'Parent des ressources redirigé')
+    chemins=[public,*public.rglob('*')]
+    exiger(all(not p.is_symlink() for p in chemins),'Lien dans les ressources')
+    # mkdir(mode=0755) sous umask0077 crée 0700. Seul ce parent de
+    # ressources publiques doit être traversable, jamais le bundle privé.
+    PUBLICATION_ROOT.chmod(0o755)
+    for p in chemins:p.chmod(0o755 if p.is_dir() else 0o644)
+
+
 def preparer(revision):
     exiger(os.geteuid()==0 and re.fullmatch('[a-f0-9]{40}',revision),'Opérateur/révision refusés')
     os.umask(0o077)
@@ -180,7 +194,7 @@ def preparer(revision):
     # Aucun secret lu. Le corpus et la version sont issus de la source qualifiée.
     bank=json.loads((root/'matheval/research/bank.json').read_text())
     version=bank['version'];exiger(re.fullmatch('[A-Za-z0-9._-]+',version),'Version corpus invalide')
-    public=Path('/srv/mrjam-assemblages')/revision
+    public=PUBLICATION_ROOT/revision
     if public.exists():
         exiger(not public.is_symlink(),'Ressources redirigées')
         for nom,front in cert['frontends'].items():
@@ -190,9 +204,7 @@ def preparer(revision):
         public.parent.mkdir(mode=0o755,exist_ok=True)
         public.mkdir(mode=0o755)
         for nom in cert['frontends']:shutil.copytree(root/'frontends'/nom,public/nom)
-    for p in (public,*public.rglob('*')):
-        exiger(not p.is_symlink(),'Lien dans les ressources')
-        p.chmod(0o755 if p.is_dir() else 0o644)
+    permissions_ressources(public)
     params={'configuration':avant['configuration_cible'],
             'paquet':cert['qualification']['sorties_nix']['metier'],
             'documentVision':str(public/'vision'),

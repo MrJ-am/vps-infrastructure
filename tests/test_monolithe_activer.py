@@ -14,6 +14,28 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Retour(unittest.TestCase):
+    def test_parent_ressources_publiques_corrige_sans_ouvrir_bundle_prive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r=Path(tmp);parent=r/'public';parent.mkdir(mode=0o700)
+            public=parent/('a'*40);public.mkdir(mode=0o700)
+            f=public/'app.html';f.write_text('document synthétique');f.chmod(0o600)
+            prive=r/'prive';prive.mkdir(mode=0o700)
+            with patch.object(m.stage,'PUBLICATION_ROOT',parent):
+                m.stage.permissions_ressources(public);m.stage.permissions_ressources(public)
+                with self.assertRaisesRegex(ValueError,'hors périmètre'):m.stage.permissions_ressources(prive)
+            self.assertEqual(parent.stat().st_mode & 0o777,0o755)
+            self.assertEqual(f.stat().st_mode & 0o777,0o644)
+            self.assertEqual(f.read_text(),'document synthétique')
+            self.assertEqual(prive.stat().st_mode & 0o777,0o700)
+
+    def test_lien_ressource_refuse_avant_elargissement_du_parent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r=Path(tmp);parent=r/'public';parent.mkdir(mode=0o700)
+            public=parent/('a'*40);public.mkdir();(public/'lien').symlink_to(r/'secret')
+            with patch.object(m.stage,'PUBLICATION_ROOT',parent):
+                with self.assertRaisesRegex(ValueError,'Lien'):m.stage.permissions_ressources(public)
+            self.assertEqual(parent.stat().st_mode & 0o777,0o700)
+
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.r=Path(self.tmp.name)
         self.d=self.r/('a'*40);self.d.mkdir(mode=0o700)
