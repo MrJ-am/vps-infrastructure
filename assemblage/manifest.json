@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
+      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -70,7 +70,7 @@
     "vision": {
       "revision_sql": 7,
       "creation_sql": 1,
-      "schema": 26
+      "schema": 27
     },
     "matheval": {
       "prefixe": "/matheval",

@@ -89,6 +89,12 @@ def controle(d,prepare,cert,*,redemarrer=False):
     pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
     stage.exiger(pid.isdigit() and int(pid)>0,'PID métier absent')
     stage.exiger(stage.sha(Path('/proc')/pid/'exe')==cert['qualification']['artefact_sha256'],'Artefact servi différent')
+    # Constater les protections de la base réellement utilisée, y compris après
+    # redémarrage ; la qualification de sa copie ne prouve pas son état actif.
+    tables=module('mrjam_tables_activer',ROOT/'scripts/verifier-tables.py')
+    pg=Path(json.loads((d/'evaluation-privee.json').read_text())['postgres'])/'bin'
+    for base in ('vision','matheval'):
+        tables.verifier(base,lambda q,base=base:backup.sql(pg,Path('/run/postgresql'),base,q))
     for n in METIER:
         p=stage.commande(['systemctl','show',n,'-p','MainPID','--value'],d).decode().strip()
         stage.exiger(p in ('','0'),'Ancien processus métier encore actif : '+n)
@@ -161,6 +167,7 @@ def retour(d,prepare,plan):
 def activer(d,prepare,cert):
     stage.exiger(stage.etat(d)==prepare['avant'],'État concurrent depuis préparation')
     r=json.loads((d/'restauration.json').read_text());q=r['qualification_applicative']
+    stage.exiger(q.get('migration_27_rls_sur_copie') is True,'Réconciliation RLS non qualifiée sur la restauration')
     stage.exiger(r['empreintes_semantiques_identiques'] and r['retour_applicatif_qualifie']
                  and q['acl_vision_30_matheval_6'] and not q['retour_operations_ecriture_restant'],
                  'Restauration/retour non qualifiés')
@@ -186,8 +193,9 @@ def activer(d,prepare,cert):
         invariants={b:backup.schema(lambda t,b=b:sql(b,t)) for b in ('vision','matheval')}
         (d/'invariants-avant-prives.json').write_text(json.dumps(invariants,indent=2)+'\n')
         v=sql('vision','SELECT max(version) FROM vision_schema_migrations')
-        stage.exiger(v in ('25','26'),'Schéma Vision inattendu')
+        stage.exiger(v in ('25','26','27'),'Schéma Vision inattendu')
         if v=='25':sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
+        sql('vision',(d/'payload/vision/migrations/027_retablir_rls.sql').read_text())
         sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
         stage.commande(['runuser','-u','postgres','--',pg/'psql','-Xq','--set=ON_ERROR_STOP=1','--file',ROOT/'assemblage/roles-metier.sql'],d)
         gate=PORTE
@@ -228,7 +236,8 @@ def activer(d,prepare,cert):
         gate.unlink();stage.commande(['systemctl','daemon-reload'],d)
         ecrire(d/'termine.json',{'format':1,'revision':d.name,'generation':prepare['candidat'],
            'artefact_sha256':cert['qualification']['artefact_sha256'],'donnees_preservees':True,
-           'redemarrage_verifie':True,'processus_metier':1,'keycloak_conserve':True,
+           'redemarrage_verifie':True,'rls_acl_actives_verifiees':True,'schema_vision':27,
+           'processus_metier':1,'keycloak_conserve':True,
            'mcp_anonyme_refuse':True,'mcp_client_personnel_non_reautorise':True})
         stage.commande(['systemctl','stop',unit+'.timer'],d)
         print(json.dumps(json.loads((d/'termine.json').read_text()),ensure_ascii=False))

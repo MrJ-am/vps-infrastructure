@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
+      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -64,8 +64,8 @@
   },
   "frontends": {
     "vision": {
-      "revision": "649122bb45eeaf558caa626c85b8a52b35fe8c73",
-      "ensemble_sha256": "87c5bda677407aa4b91b329d51a6a1c9b3e1115ed00c3141599e36906d8fdc6f"
+      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
+      "ensemble_sha256": "37871df2ee044aa49295f41219ced9b961b89ddd5fa81ecd0883cc3ccdd2e444"
     },
     "matheval": {
       "revision": "68df529042609561329e757145a187ca079a5cea",
@@ -119,10 +119,10 @@
     },
     "editorial": {
       "resultat": "succes",
-      "duree_secondes": 0.289,
+      "duree_secondes": 0.3181,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "35caf8196b9253b015eb09e8314115cc4f262948d5942a4e20fa50bd3b28fc71",
+      "sha256": "ae13590dda99a30490bf705a73f04aab5e5a9ec570adf40747d2152a7e361327",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.7554,
+      "duree_secondes": 0.8142,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "88e07bb598fe77458c1de0d8ac38b30b3cfa1484f193b9f82133303ffab18c0e",
+      "sha256": "3fcb1a7b1bbeb05e4ce935a1c6b323ce6b1f58451e7ce43647d59dcf1adc106d",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -245,10 +245,10 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 0.4909,
+      "duree_secondes": 13.4831,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "d5be931416d508cddf39304693effe3ece88f080533e9d9344eb41d4b4a417d9",
+      "sha256": "e10c534d615cd70db646da756a7e288deac6fc9e7f103a82266d09c9f73e56e4",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -263,10 +263,10 @@
     },
     "navigateur-mcp": {
       "resultat": "succes",
-      "duree_secondes": 23.7191,
+      "duree_secondes": 26.9502,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "7d72afa608f0bd30b92bd037365847a5e9b0bb80f6ca13f7468a4e755e9e324f",
+      "sha256": "874b41297f18e8b4896ca9148f1e5654b95e56984d0659d06eff0159adb54aec",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -317,10 +317,10 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 1.1708,
+      "duree_secondes": 1.0072,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "6cb178bd957cf6ef11015edac8f141d1bc7c48abea0a57cca7a103600a76f80f",
+      "sha256": "043711d482223955f9c3ec606be734423cb91f2acd633824d516061ee53fbe92",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -362,37 +362,37 @@
     },
     "vision-interface": {
       "resultat": "succes",
-      "duree_secondes": 62.7724,
+      "duree_secondes": 76.2795,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "10ad8d32e23a43216b40f2c0b2b996c0f8a6195a85d8dde1c331367d30be67b3",
+      "sha256": "675332c0e1a44a60f9da8b844c62747bb29d7fa10d15acee6a2d85f03a426954",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-postgresql": {
       "resultat": "succes",
-      "duree_secondes": 117.2998,
+      "duree_secondes": 145.7859,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "12a2bb48b9caf59ed50117b04b672c6c02b5596df0c8604407219ec2d687c959",
+      "sha256": "c8f83204d9c6cc735e3b6e91a481be25a5c8230f1d2b222bc91480457778840e",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-semantique": {
       "resultat": "succes",
-      "duree_secondes": 36.7386,
+      "duree_secondes": 36.871,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "2d79ddf9f3f9f97c134816cced9191a20608f5b4b266c19c3fa22911b7b6491e",
+      "sha256": "6a000108777334ccb3a61a18374c5c3a88b840ede1daa1413bbd383f0fa59b1e",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
     "vision-sql-native": {
       "resultat": "succes",
-      "duree_secondes": 16.8229,
+      "duree_secondes": 16.6193,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "96d80cbecc2648c54ecfaa1dba929673d2188c09c8b1a253656489d1c2e4cdd4",
+      "sha256": "b6edf411f074ac4f143621ccab2a18e3220f7c1c6f0e25035744cc09a6cbe6fe",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     }
@@ -400,19 +400,22 @@
   "controle_final": {
     "suites": 35,
     "resultat": "succes",
+    "preuve_production": false,
     "reutilisation_finale": {
       "suites_reutilisees": 34,
-      "suite_reexecutee": "editorial",
-      "raison": "égalité des empreintes exactes, campagnes nouvelles déjà exécutées sur leurs candidats"
+      "suites_reexecutees": [
+        "editorial"
+      ],
+      "raison": "Les suites affectées par la migration 27 et le candidat Vision exact ont été requalifiées ; comparaison des entrées/outils/configurations inchangées pour les autres."
     },
-    "ajustement_final": "matheval-postgresql lié explicitement à l’image296b7 ; suite et sélection requalifiées après changement du catalogue",
-    "preuve_production": false,
-    "correctif_preparation": "verrou Git blob historique Logique déclaré et vérifié ; tests ciblés ; vérification complète du payload avant chiffrement",
-    "revision_operateurs": "c5548b354839db1f8875ec28a3ce7a8c810c42a4",
-    "bundle_complet_verifie_localement": true,
-    "stage_sha256": "b0bb6d7c35b18d263a6d9edd4f10fe1fcd88eb0f5ae4d407254b323ea57187e2",
-    "correctif_identMap": "Ajouts après la ligne native PostgreSQL ; priorité1600 ; ancien préfixe exact conservé ; test de régression passé. Configuration effective à requalifier sur VPS avant activation.",
-    "raison": "Nouveaux opérateurs vérifiés localement ; préparation réelle encore requise ; même binaire et frontends"
+    "correction_rls": {
+      "schema": 27,
+      "tables_privees": 14,
+      "donnees_metier_reecrites": false,
+      "refus_atomique_et_idempotence": true,
+      "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
+    },
+    "scellement": "à effectuer pour le commit des opérateurs ; aucun succès de production déduit"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
@@ -423,6 +426,7 @@
     "La preuve MCP de développement historique est vérifiée hors ligne, sans nouveau scénario ni reconnexion.",
     "Les tests navigateur et multi-comptes sont synthétiques hors production.",
     "Préparation, restauration récente, retour et contrôles de la version servie encore requis.",
-    "Protections/secrets/clés GitHub : inspection distante refusée 403, aucun nettoyage prétendu."
+    "Protections/secrets/clés GitHub : inspection distante refusée 403, aucun nettoyage prétendu.",
+    "Préparation/restauration/bascule du candidat corrigé encore requises ; production ancienne conservée."
   ]
 }

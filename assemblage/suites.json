@@ -936,7 +936,9 @@
       "vision": [
         "src/*.lisp",
         "interface/tests/*.py",
-        "tests/check_mcp_database.py"
+        "tests/check_mcp_database.py",
+        "migrations/*.sql",
+        "scripts/roles.sql"
       ],
       "vps": [
         "services/mrj-auth/*.py",
@@ -994,16 +996,19 @@
         "scripts/monolithe-activer.py",
         "scripts/monolithe-restaurer.py",
         "tests/test_monolithe_activer.py",
-        "tests/restauration-etats.lisp"
+        "tests/restauration-etats.lisp",
+        "tests/vision-rls.py"
       ],
       "vision": [
-        "migrations/*.sql"
+        "migrations/*.sql",
+        "scripts/roles.sql"
       ]
     },
     "impact": [
       "vps/scripts/*migration*",
       "vps/scripts/*retour*",
-      "vps/scripts/*reprise*"
+      "vps/scripts/*reprise*",
+      "vps/tests/vision-rls.py"
     ],
     "commandes": [
       [
@@ -1035,6 +1040,10 @@
         "tests",
         "-p",
         "test_monolithe_activer.py"
+      ],
+      [
+        "python3",
+        "tests/vision-rls.py"
       ]
     ],
     "dependances": [
@@ -1044,6 +1053,10 @@
     "outils": {
       "python": [
         "python3",
+        "--version"
+      ],
+      "docker": [
+        "docker",
         "--version"
       ]
     }
