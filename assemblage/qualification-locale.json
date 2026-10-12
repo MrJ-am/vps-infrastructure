@@ -415,7 +415,12 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "nouveau scellement requis pour capture stdout/stderr de dry-activate",
+    "scellement": {
+      "revision_operateurs": "77c7f82e8125ca081bc88d54bcf6a04bcf425b84",
+      "stage_sha256": "18f6d91e7c33781689db1dcdb5b89b62aa7f999d8111e65dea4e953ded894349",
+      "bundle_complet_verifie_localement": true,
+      "publication_effectuee": false
+    },
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
