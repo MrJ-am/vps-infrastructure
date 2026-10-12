@@ -170,10 +170,16 @@ def controle(d,prepare,cert,*,redemarrer=False):
     stage.exiger({k:v for k,v in actuel['tiers_pids'].items() if k!='keycloak'}==
                  {k:v for k,v in prepare['avant']['tiers_pids'].items() if k!='keycloak'},'Processus tiers redémarré')
     reference=module('mrjam_reference_activer',ROOT/'scripts/monolithe-reference.py')
-    for u,codes in [('https://principiipetit.io/matheval/api/health',(200,)),
-                    ('https://vision.mrj.am/',(200,)),('https://vision.mrj.am/mcp',(401,)),
-                    ('https://log.mrj.am/realms/mrjam/.well-known/openid-configuration',(200,)),
-                    ('https://logique.echos.systems/',(200,))]:reference.latence(u,codes)
+    sondes={}
+    for nom,u,codes in [('matheval','https://principiipetit.io/matheval/api/health',(200,)),
+                    ('vision','https://vision.mrj.am/',(200,)),('mcp','https://vision.mrj.am/mcp',(401,)),
+                    ('log','https://log.mrj.am/realms/mrjam/.well-known/openid-configuration',(200,)),
+                    ('logique','https://logique.echos.systems/',(200,))]:
+        try:sondes[nom]=reference.latence(u,codes,attendre=True)
+        except reference.SondeHorsContrat as erreur:
+            sondes[nom]={'codes':erreur.codes,'hors_contrat':True}
+            ecrire(d/'sondes-publiques.json',sondes);raise
+        ecrire(d/'sondes-publiques.json',sondes)
     # Sonde de falsification publique : un navigateur ne fabrique pas l'identité.
     import urllib.request,urllib.error
     req=urllib.request.Request('https://vision.mrj.am/api/v1/lire',data=b'{"type":"item","ids":[]}',

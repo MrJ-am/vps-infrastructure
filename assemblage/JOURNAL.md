@@ -586,3 +586,11 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   ou données. Fixture réelle reproduit ce refus, réparation répétée/accès refusé.
   35 reçus exacts :28 réutilisés/7 rejoués, mêmes sources Lisp/binaire296b7 ;
   seul manifeste de révision du frontend change. Aucun succès de production annoncé.
+- Bascule38195473395 : restauration complète et RLS/ACL actifs passent, vue
+  historique transférée/non propriétaire applicatif constatés ; arrêt ensuite
+  sur sonde HTTP, retour enregistré. Ancien rapport sans endpoint/codes : cause
+  exacte non attribuée. Mesures espacées250ms sous5r/s ; disponibilité bornée45s
+  avant mesures, codes fermés rapportés, aucun statut inattendu accepté en mesure.
+  Trois vrais scénarios HTTP locaux, borne unitaire et confidentialité du rapport
+  testés. Fixture d'horloge globale échouée car thread partageait time ; corrigée
+  en bornant seulement l'unitaire. Sécurité10,065s/migration38,057s/sélection0,9849s.

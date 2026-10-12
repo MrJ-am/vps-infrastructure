@@ -11,6 +11,15 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_sondes_fermees_sans_url_corps_ou_champ_libre(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp);self.assertEqual(m.sondes_publiques(d),{})
+            (d/'sondes-publiques.json').write_text(json.dumps({'matheval':{'codes':[200,429],'hors_contrat':True,'secret':'prive'},
+                'inconnu':{'codes':[200]},'log':{'codes':['secret'],'disponibilite_codes':[503,200]}}))
+            r=m.sondes_publiques(d)
+        self.assertEqual(r,{'matheval':{'codes':[200,429],'hors_contrat':True},'log':{'disponibilite_codes':[503,200]}})
+        self.assertNotIn('prive',json.dumps(r));self.assertNotIn('secret',json.dumps(r))
+
     def test_etat_bascule_ferme_ne_revele_pas_le_plan_prive(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp)

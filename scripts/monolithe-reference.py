@@ -44,24 +44,47 @@ def memoire(service):
             'plafond_octets': props['MemoryMax']}
 
 
-def latence(url, attentes):
+class SondeHorsContrat(ValueError):
+    def __init__(self,codes):
+        self.codes=sorted(set(codes))
+        super().__init__('Sonde publique hors contrat HTTP : '+str(self.codes))
+
+
+def lecture_http(url):
+    debut=time.monotonic()
+    try:
+        reponse=urllib.request.urlopen(url,timeout=10)
+    except urllib.error.HTTPError as e:reponse=e
+    with reponse:
+        reponse.read(65536) # Réponse publique, aucun journal du corps.
+        return reponse.status,(time.monotonic()-debut)*1000
+
+
+def latence(url, attentes, *, attendre=False):
+    disponibilite=[]
+    if attendre:
+        limite=time.monotonic()+45
+        while True:
+            code,_=lecture_http(url);disponibilite.append(code)
+            if code in attentes:break
+            if code not in (429,502,503,504) or time.monotonic()>=limite:
+                raise SondeHorsContrat(disponibilite)
+            time.sleep(1)
     valeurs = []
     codes = []
     for _ in range(10):
-        debut = time.monotonic()
-        try:
-            with urllib.request.urlopen(url, timeout=10) as r:
-                r.read(65536)  # réponses publiques uniquement, pas de journal du corps
-                code = r.status
-        except urllib.error.HTTPError as e:
-            code = e.code
+        # Sous la limite Nginx commune de 5r/s. La pause n'entre pas dans
+        # la latence réseau et aucune 429/5xx ne devient un échantillon valide.
+        time.sleep(.25)
+        code,duree=lecture_http(url)
         codes.append(code)
-        valeurs.append((time.monotonic() - debut) * 1000)
+        valeurs.append(duree)
     if any(c not in attentes for c in codes):
-        raise ValueError('Sonde publique hors contrat')
+        raise SondeHorsContrat(codes)
     valeurs.sort()
     return {'n': len(valeurs), 'codes': sorted(set(codes)), 'mediane_ms': round((valeurs[4] + valeurs[5]) / 2, 3),
-            'p90_ms': round(valeurs[8], 3), 'type': 'GET public, dix lectures, sans authentification'}
+            'p90_ms': round(valeurs[8], 3), 'type': 'GET public, dix lectures espacées de 250ms, sans authentification',
+            'disponibilite_codes':disponibilite}
 
 
 def main():
