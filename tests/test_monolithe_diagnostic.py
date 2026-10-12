@@ -10,6 +10,14 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_traversee_exacte_sous_vision_sans_lire_de_fichier(self):
+        for code in (0,1):
+            with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=code)) as run:
+                self.assertEqual(m.acces_parent_restauration(),code==0)
+                self.assertEqual(run.call_args.args[0],['runuser','-u','vision','--','test','-x','/var/lib/postgresql'])
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=2)):
+            with self.assertRaisesRegex(ValueError,'indisponible'):m.acces_parent_restauration()
+
     def test_unit_values_are_never_emitted(self):
         a={'units':{'auth':'ExecStart=ancien\nEnvironment=SECRET=prive-a\nUser=auth'}}
         b={'units':{'auth':'ExecStart=nouveau\nEnvironment=SECRET=prive-b\nUser=auth'}}
