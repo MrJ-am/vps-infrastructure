@@ -1,57 +1,42 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — candidat Log en qualification, production inchangée
+## Point de reprise actif — candidat Log scellé, promotion à lancer
 
-Le jalon1 reste en production9qv8n9gd/296b7 ; dernière référence réelle
-38262126595/aefeeed du12octobre14:20UTC. Aucune bascule Kanidm, aucune
-suppression personnelle et aucun courriel réel envoyé à ce point.
+Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
+Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
+Opérateurs scellés9fcf998, transport chiffrée895785 (182388105octets, cinq parties).
+Descripteur central operations/log-candidat.json ; 51suites avec reçus exacts et
+vérificateur du bundle privé réussi. Qualification complète puis réparation
+ciblée (37preuves conservées,14suites affectées) ; sources Lisp inchangées depuis
+construction17,7007s, HTTP/transactions/redémarrage20,2273s. Aucun nouveau build.
+Visiondecf5f7, Signature1719408, Stylea998822 publiés avant manifeste ; autres
+révisions inchangées. Inversion mesurée avec horloge installée avant Elm,
+mêmes seuils/focus ; aucune modification du rendu. Restauration froide/autreUID,
+OIDC/MFA/passkey natifs réels et51suites qualifiés. Les sources ASDF OIDC auditées
+rejoignent la closure signée pour restauration, sans outillage MCP produit.
 
-Sources conservées/publies : Visiondecf5f7 (admission native) et Signature1719408
-(fixture HTTP du navigateur commun), autres révisions du manifeste inchangées.
-Candidat métier propre77129dd/bc70c822 construit17,70s et HTTP qualifié20,23s.
-Candidats1551a8f etb784d5c historiques invalidés. Stylea998822 corrige seulement
-la mesure d’inversion (horloge installée avant chargement Elm), aucun changement
-produit. Qualification51 en cours de réparation ciblée : projection SQLite/ASDF
-restaurée avec chargeur OIDC ; navigateur Vision sur Chromium commun.
-Sources Lisp de l’image inchangées : ne pas reconstruire pour ces tests/outils.
-Image de développement C saine conservée, marqueur reprise-20261012-552402
-observé (pas un PID à fixer en script), cl-mcp sans pool + Swank et Tron distant.
-Aucun qualifier MCP synthétique relancé ni opération de production au REPL.
+Image C saine conservée (marqueur reprise-20261012-552402 observé, pas PID fixé).
+CL-MCP sans pool/Swank, Tron distinct ; aucun qualifier synthétique de santé.
+Aucun REPL connecté à des données de production.
 
-Ajouts en cours : alias mail→UUID au seul formulaire natif /ui/login/begin,
-politique privée qualifiée par sujet, fraîcheur administrative900s indépendante
-des écritures ordinaires, client de cycle lisant l'adresse certifiée locale.
-Tests réels : identités neuves MFA (aucun import), réauthentification TOTP puis
-password, Alice/Bob concurrents, consentement et famille MCP, CSRF/hôtes,
-restart IdP et logout. Chaîne opérateur native testée : personne neuve, pseudo
-mail par défaut, groupe rôle7j/minMFA, client S256/retour exact, invitation.
-Restauration native réelle réussie après correction des deux erreurs expliquées :
-commande officielle database restore ; backup en ligne gzip décompressé dans
-copie privée. database verify et lecture des entrées restaurées exécutés.
+Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
+main. Il vérifie le bundle, construit les superpositions depuis l'installation
+réelle, qualifie backup/restauration métier récent et retour, amorce Native sur
+loopback puis rattache explicitement le propriétaire stable. Inventaire de tous
+les realms et consommateurs IdP avant toute mutation ; identités supplémentaires
+refusées. Admission native conservée, demandes en cours refusées sans fermeture
+artificielle. API onboarding90j sans admin général, propriétaire protégé HP.
+Snapshot identités seulement pour retour ; jamais ancienne base métier restaurée.
+Intent personnel jamais sondé/consommé ; sondes artefact/ressources/données/restart
+avant SMTP. Marque avant envoi ; pas de renvoi après issue incertaine.
 
-Configuration/opérateurs Log nouveaux, encore non promus : modules/log.nix,
-scripts/log-{evaluation,preparer,activer,operation} et workflow manuel central.
-Préconditions : inscriptions conservées dans leur état actif, aucune admission/fermeture en cours,
-un propriétaire métier et un seul compte personnel Keycloak ; consommateurs
-IdP supplémentaires refusés avant mutation. Sauvegardes métier/restauration
-existantes réutilisées ; snapshot des seules identités pour retour, jamais
-ancienne base métier. Rattachement exact sur utilisateur stable, aucun hook
-fermeture. Intent personnel jamais sondé/consommé par l'agent. SMTP idempotent :
-marque avant envoi, aucun renvoi automatique après résultat incertain.
-
-Admission native portée : création après vérification mail, rattachement explicite,
-invitation durable et reprise sans double identité/courriel. Capacité onboarding
-plus lecture mail bornée90j ; propriétaire protégé par idm_high_privilege.
-Ce jalon d'invitation NE clôt pas toute l'étape2 : fermetures communes définitives
-IdP, préférences individuelles/panneau commun complet et
-qualification des connexions personnelles restent à terminer. Ne pas désactiver
-une admission active pour faciliter la bascule. Si la précondition distante est
-fausse, continuer son portage avant activation. Le prototype ACP reste non qualifié.
-
-Suite : terminer les tests ciblés des opérateurs/routage et le catalogue51,
-commiter/publier sources, construire une fois --avec-log, qualifier/reutiliser
-les reçus exacts, sceller/transport chiffré puis CI centrale. Constater toute
-opération commencée avant reprise ; pas de rejouage d'une mutation incertaine.
+Ne jamais répéter une bascule engagée sans constater son état privé. Lire le run
+et sa phase réelle ; arrêt/timeout du client ne prouve pas annulation. Ce jalon
+ne clôt pas toute l'étape2 : enrôlement/autorisation MCP personnels, panneau et
+préférences individuels, fermetures communes définitives restent à terminer.
+Après invitation réellement servie et SMTP accepté, attendre l'enrôlement demandé
+par l'utilisateur avant la suite ; ne pas annoncer une réception en boîte non
+observable. Le retour indépendant et les anciennes générations restent protégés.
 
 ## Historique conservé — autorisations propriétaire et constats précédents
 
