@@ -865,3 +865,10 @@ incrémental/contrôle initial, sessions MCP anciennes archivées (404 observé)
 Tron reconnexion explicite typeSwank. CL-MCP/Tron même652901/marqueur/objet1,
 poolNIL/debuggerNIL, aucun qualifier synthétique. Transports locaux9fc/b1 déjà
 publiés vérifiés puis supprimés (729730205octets), chiffrés et preuves conservés.
+
+12octobre —38318531651 : sauvegarde/restauration réelle des trois bases et états
+actuels (20261012T224807), empreintes identiques, retour et RLS36qualifiés sans
+écriture/interruption production. Inventaire ensuite refusé avantHTTP : API
+historique n'admettait pas GET/admin/realms. Extension uniquement lecture exacte,
+11tests avec vraies constructions Request/mock transport ; écritures et autre
+realm refusés avant transport. Aucun compte supprimé/courriel envoyé.

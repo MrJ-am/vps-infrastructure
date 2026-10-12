@@ -70,7 +70,8 @@ class ApiPrivee:
         self.opener=urllib.request.build_opener(urllib.request.ProxyHandler({}),SansRedirection())
     def __call__(self,path,body=None,method=None):
         exiger(not self.lecture_seule or (body is None and method in (None,'GET')))
-        exiger(isinstance(path,str) and path.startswith('/admin/realms/mrjam/') and
+        inventaire=path=='/admin/realms' and body is None and method in (None,'GET')
+        exiger(isinstance(path,str) and (path.startswith('/admin/realms/mrjam/') or inventaire) and
             not any(c in path for c in ('\r','\n','#')))
         headers={'Host':'log.mrj.am','X-Forwarded-Proto':'https','X-Forwarded-Port':'443',
             'Authorization':'Bearer '+self.token}

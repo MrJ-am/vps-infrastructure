@@ -55,6 +55,12 @@ sauvegarde exclusivement états actuels communs ; ne sélectionne jamais anciens
 chemins périmés. Mode de reprise historique inchangé. Test de mauvais artefact
 refusé, courriel toujours non envoyé. Resceller cette correction d’exploitation.
 
+Run38318531651 : sauvegarde/restauration fraîche réelle réussie, empreintes
+métier identiques/SQLite/retour qualifiés ; stoppé en inventaire AVANT activation.
+Diagnostic38318975785 : ApiPrivee historique refusait GET/admin/realms localement,
+avant HTTP. Lecture seule ajoutée exactement, POST/PUT/DELETE et autre realm
+toujours refusés (11tests opérateur). Nouveau scellement exploitation requis.
+
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation
 réelle, qualifie backup/restauration métier récent et retour, amorce Native sur
