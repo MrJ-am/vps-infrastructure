@@ -33,7 +33,8 @@ def qualifier(sources,executable,navigateur=False,modele=None):
     r=json.loads(executable.with_suffix('.qualification.json').read_text())
     assert r['artefact_sha256']==hashlib.sha256(executable.read_bytes()).hexdigest()
     assert r['sources_lisp_sha256']==compilation_entrees(chemins_sources(atelier=os.environ.get('MRJAM_ATELIER')))
-    env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH','CI','SBCL_HOME')}
+    env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH','CI','SBCL_HOME',
+        'CHROMIUM','PLAYWRIGHT_CHROMIUM_EXECUTABLE','PLAYWRIGHT_NODEJS_PATH')}
     nom='mrjam-vision-reference-'+uuid.uuid4().hex[:12]
     db='vision_semantique_test' if modele else 'vision_interface_test'
     def docker(*args,input=None):

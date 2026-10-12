@@ -90,7 +90,14 @@ def sceller(executable,destination):
             fronts[nom]={k:r[k] for k in ('revision','fichiers','ensemble_sha256')}
         shutil.copytree(RACINE/'state/recus',root/'recus')
         (root/'qualification.json').write_text(json.dumps(q,ensure_ascii=False,indent=2)+'\n')
-        fermeture=sorted(set(subprocess.check_output(['nix-store','-qR',*q['sorties_nix'].values()],text=True).splitlines()))
+        # La restauration isolée recharge aussi les sources ASDF officielles.
+        # Elles sont auditées/verrouillées et obtenues du même cache signé.
+        bibliotheques=json.loads((RACINE/'assemblage/oidc/dependances.lock.json').read_text())['bibliotheques']
+        for b in bibliotheques:
+            exiger(subprocess.check_output(['nix-store','-q','--hash',b['src']],text=True).strip()==b['nar_sha256'],
+                   'Source OIDC du store différente : '+b['name'])
+        fermeture=sorted(set(subprocess.check_output(['nix-store','-qR',*q['sorties_nix'].values(),
+                    *[b['src'] for b in bibliotheques]],text=True).splitlines()))
         exiger(all(re.fullmatch(r'/nix/store/[a-z0-9]{32}-[^/\s]+',p) for p in fermeture),'Closure invalide')
         # Les sorties propres sont promues, jamais reconstruites. Les autres
         # chemins sont les paquets officiels déjà qualifiés : substitution Nix

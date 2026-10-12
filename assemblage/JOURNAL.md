@@ -821,3 +821,14 @@ Provisionnement exact avec idm_high_privilege : vraie connexion MFA et durée
 Chromium commun interditfile:// ; ressources et assertions conservées.
 GC normal90chemins inutilisés :2920,56Mio récupérés, racines produit/outillage
 conservées. Image C saine toujours552402 (observation, aucun PID script fixe).
+
+12octobre — Qualification finale : binaire77129dd/bc70c822 construit17,7007s,
+40parcours HTTP/transactions/restart20,2273s. Échec inversion style aprèsRPC :
+horloge navigateur installée AVANT Elm (RAF mémorisé), pause ciblée160+16ms,
+mêmes bornes32..80/0..96 et focus ; trois largeurs passent. Aucun changement
+du produit. Enquête rejetée : JavaScript Galerie local périmé ; recompilation
+Contextes exacte employée. Chromium supprimé encore cherché par fixture Vision
+à cause du filtre env central : transmettre moteur commun et Node commun.
+Restauration froide : copier le chargeur OIDC manquant ; autre UID réussit,
+parent privé reste refusé. Sept sources OIDC hashées et disponibles cache signé
+(7réponsesnarinfo200), incluses en closure de la restauration, pas nouvel outil.
