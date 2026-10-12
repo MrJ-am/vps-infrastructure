@@ -18,6 +18,16 @@ stage=importlib.util.module_from_spec(spec_stage);spec_stage.loader.exec_module(
 
 
 class PromotionAmendement(unittest.TestCase):
+    def test_rapport_nix_sur_stderr_est_reellement_controle(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            sortie=preparer.commande(['sh','-c',"printf 'would activate the configuration\\nwould restart the following units: keycloak.service\\n' >&2"],d,rapport_complet=True)
+            s=importlib.util.spec_from_file_location('simulation_test',ROOT/'scripts/simulation-systeme.py')
+            lecteur=importlib.util.module_from_spec(s);s.loader.exec_module(lecteur)
+            self.assertIn(b'would activate the configuration',sortie)
+            with self.assertRaisesRegex(ValueError,'service préservé'):lecteur.verifier(sortie.decode(),['keycloak.service'])
+            self.assertFalse((d/'erreur-commande-privee.log').exists())
+
     def test_candidat_anterieur_ou_en_attente_refuse_avant_transport(self):
         for statut in (None,'requise','non-qualifie'):
             with self.subTest(statut=statut):

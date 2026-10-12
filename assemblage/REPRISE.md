@@ -1,43 +1,32 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — correctifs de bascule qualifiés, promotion à faire
+## Point de reprise actif — capture complète de la simulation Nix qualifiée
 
-Production ancienne r6s7ags3 ; retour38190627348 finalisé, timer arrêté, aucune
-nouvelle copie/relance. Référence38190092443 : anciens services actifs, monolithe
-inactif, agrégats métier identiques. Kanidm non commencé. Image interactive C et
-interfaces qualifiées conservées ; aucun qualifier MCP synthétique ni reconnexion.
+Production ancienne r6s7ags3 ; retour38190627348 finalisé, monolithe inactif,
+agrégats préservés. Kanidm non commencé. Image interactive C/interfaces préservées.
+Candidat8d44379 scellé et publié, mais déploiement38193221173/f5f64af refusé
+pendant préparation AVANT restauration/activation : simulation absente sur stdout.
+Source officielle verrouillée c5c4a43/switch-to-configuration-ng/src/main.rs vérifiée :
+« would activate » et actions sont écrits par eprintln!, donc stderr.
 
-Run38189849220/dbd5b19 : restauration complète réussie, démarrage commun puis
-refus du contrôle immédiat de l'artefact. Lanceur Bash avant exec reproduit
-localement ; attente bornée garde l'empreinte exacte et refuse mauvais PID/binaire.
-Retour effectué, seul PIDKeycloak différent (diagnostic38190351104). La recopie du
-retour est désormais journalisée avant le redémarrage ; un retry ne remplace pas
-les écritures historiques nouvelles. Reprise suivante explicitement liée au
-retourdbd5b19 : fichiers historiques récents prioritaires, états communs nouveaux
-conservés, tous fichiers communs précédents ajoutés au backup chiffré récent.
+Correction canonique : rapport_complet=True uniquement pour dry-activate, stdout/
+stderr réunis ; sorties SQL/JSON ordinaires inchangées. Régression réelle shell :
+rapport sur stderr capturé, restart protégé réellement refusé. Sécurité1,2728s
+passe ; autres entrées inchangées, seuls contrôles affectés rejoués. Publier cette
+source puis nouveau scellement exact35reçus, même binaire296b7 et mêmes interfaces.
+Ne pas redéployer8d44379. Historique des corrections utiles conservé ci-dessous.
 
-Essai de rechargement PG abandonné et archivé exactement : hba_file/ident_file
-sont postmaster, leurs nouveaux chemins Nix nécessitent un restart. Test PG17
-réel : SIGHUP insuffisant, restart applique les chemins, zéro/NULL préservés,
-UID autorisé accepté et faux UID refusé. Pas de version/runtime mis à jour.
-Préparation annonce précisément restartPG/Keycloak ; tous autres services gardent
-leurs contrôles, unités/versions/configuration IdP restent invariantes. Rôles
-étroits appliqués après le setupPG avant démarrage. Parser « would restart » testé.
+Corrections qualifiées conservées : attente exacte du binaire après lanceurBash,
+reprise explicitement liée au retourdbd5b19, sources historiques récentes
+prioritaires, états nouveaux conservés, fichiers communs supplémentaires chiffrés,
+retour partiel sans recopie après redémarrage. PG17 réel : hba_file/ident_file
+postmaster, restartPG/Keycloak précisément déclaré, versions/données conservées,
+autres protections inchangées ; rôle étroit après setupPG. Essai reload abandonné
+archivé, aucun succès prétendu. Migration48,3562s/sélection0,972s valides.
 
-Qualification41968 terminée0 : migration48,3562s, sécurité1,1802s, sélection0,972s
-réussies ; sauvegarde-copies et éditorial réutilisés après contrôle exact. Tests
-incluent RLS/ACL/données/séance ouverte/lectures datées, vrai SBCL autre UID, stdin
-SQL privé, reprise/retour partiel et PG17 réel. Nouveau scellement des35reçus
-encore nécessaire après publication des sources. Ancien reçu en échec de l'essai
-rechargement n'est pas utilisé ; historique dans coordination/historique/essai-*
-
-Opérateurs8d4437953a3a27959f28e2b7659098c7e8dc2f61 publiés, scellement
-complet35reçus réussi. Transport chiffré 0d99db6f4b566a9c915324d5f96737edda74a833
-publié. Prochaine séquence : publier descripteur du même binaire296b7 (graphe
-Lisp inchangé) et les mêmes interfaces, transporter chiffré, publier descripteur,
-un déploiement central avec sauvegarde/restauration/bascule/retour. Constater son
-issue avant toute répétition ; puis MCP réel, données, restart/mesures/services.
-Étape1 encore non livrée ; Kanidm automatiquement après constat personnel du jalon.
+Prochain : publication/scellement/transport/descripteur, un déploiement central
+préparer/restaurer/activer/contrôler, constater son issue avant répétition, puis
+MCP réel, données/restart/mesures/services avant jalon1 et Kanidm automatique.
 
 ## État précédent — historique conservé
 

@@ -44,11 +44,11 @@ def sha(p):
     return h.hexdigest()
 
 
-def commande(args,d,*,input=None,timeout=1800):
+def commande(args,d,*,input=None,timeout=1800,rapport_complet=False):
     p=subprocess.run([str(a) for a in args],input=input,stdout=subprocess.PIPE,
-                     stderr=subprocess.PIPE,timeout=timeout)
+                     stderr=subprocess.STDOUT if rapport_complet else subprocess.PIPE,timeout=timeout)
     if p.returncode:
-        (d/'erreur-commande-privee.log').write_bytes(p.stderr)
+        (d/'erreur-commande-privee.log').write_bytes(p.stdout if rapport_complet else p.stderr)
         raise RuntimeError('Commande refusée : '+Path(str(args[0])).name+', code '+str(p.returncode))
     return p.stdout
 
@@ -218,7 +218,7 @@ def preparer(revision):
         '-I','nixos-config='+str(candidate),'--out-link',racines/'candidat','--max-jobs','1','--cores','2'],d).decode().strip()
     exiger(construit==r['apres'],'Construction différente de l’évaluation')
     commande(shlex.split(r['nginx'])+['-t'],d)
-    simulation=commande([Path(construit)/'bin/switch-to-configuration','dry-activate'],d).decode()
+    simulation=commande([Path(construit)/'bin/switch-to-configuration','dry-activate'],d,rapport_complet=True).decode()
     (d/'simulation-privee.txt').write_text(simulation)
     import importlib.util
     spec=importlib.util.spec_from_file_location('simulation_systeme',Path(__file__).with_name('simulation-systeme.py'))
