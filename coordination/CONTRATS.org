@@ -106,4 +106,5 @@ rétention actuelle 14 jours. Garanties Vision conservées : items communs du m�
 propriétaire, observations immuables, rectifications ajoutées, dates, versions,
 épisodes, conflits, clôtures atomiques, recherche. SQL métier : 7, création 1 ;
 schéma assemblé 27 (réconciliation explicite RLS sans réécriture des données),
-schéma constaté en production 25 jusqu'à la bascule.
+schéma de référence initial 25 ; migrations 026/027 appliquées lors des
+tentatives de bascule, ancienne génération applicative encore active après retour.

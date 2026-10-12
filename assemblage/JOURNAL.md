@@ -576,3 +576,6 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   pourdry-activate ; sortiesSQL/JSON restent séparées. RégressionShell réelle
   rapportstderr et refusrestartprotégé ; sécurité1,2728s passe. Aucune activation
   ni restauration engagée par ce run. Même image/interfaces et autres reçus valides.
+- Reprise du contrôle local terminé : reçus migration41,0322s et sélection0,9335s,
+  succès/codes zéro vérifiés sur disque ; dépendance réelle au préparateur ajoutée
+  au catalogue. Aucun processus de qualification encore actif, image C préservée.
