@@ -4,7 +4,8 @@
 
 Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
 Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
-Opérateurs scellés9fcf998, transport chiffrée895785 (182388105octets, cinq parties).
+Opérateurs corrigés scellésb1fed953, transport chiffrée705611 (182393645octets,
+cinq parties). Ancien9fcf998/e895785 historique, jamais activé.
 Descripteur central operations/log-candidat.json ; 51suites avec reçus exacts et
 vérificateur du bundle privé réussi. Qualification complète puis réparation
 ciblée (37preuves conservées,14suites affectées) ; sources Lisp inchangées depuis
