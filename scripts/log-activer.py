@@ -82,6 +82,9 @@ def ancien_operateur():
     return anciennes.ApiPrivee(token)
 
 def inventorier_ancien(api):
+    realms=api('/admin/realms')
+    exiger(isinstance(realms,list) and {r.get('realm') for r in realms}=={'master','mrjam'},
+           'Realm IdP supplémentaire à préserver')
     realm=api('/admin/realms/mrjam/')
     exiger(set(realm.get('eventsListeners',[])) <= {'jboss-logging'}, 'Hook IdP supplémentaire à neutraliser')
     clients=api('/admin/realms/mrjam/clients')
