@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "nouveau scellement requis après correction stdin ; ancien dad8482 historique",
+    "scellement": "réussi ; 35 reçus exacts dans bundle dbd5b19",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -426,7 +426,10 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "référence 38189544447 : retour ancienne génération confirmé, monolithe inactif ; étape1 non activée"
+    "production": "référence 38189544447 : retour ancienne génération confirmé, monolithe inactif ; étape1 non activée",
+    "revision_operateurs": "dbd5b19814b88b6ddc4e033134fc5b9e595de90d",
+    "stage_sha256": "81ca2845af334ae30bb74758e6a15125ef36a9743a2f7c585c16d41bcf056c96",
+    "bundle_complet_verifie_localement": true
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
