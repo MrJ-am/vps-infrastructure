@@ -220,8 +220,14 @@ def sonder(d,p,cert,plan):
     exiger(discovery['issuer']==NEW_ISSUER and discovery['code_challenge_methods_supported']==['S256'],'Découverte active incorrecte')
     for url in ('https://vision.mrj.am/','https://principiipetit.io/matheval/api/health','https://logique.echos.systems/'):
         with urllib.request.urlopen(url,timeout=15) as r:exiger(r.status==200,'Interface publique indisponible')
-    with urllib.request.urlopen('https://vision.mrj.am/app.js',timeout=15) as r:
-        exiger(hashlib.sha256(r.read(16*1024*1024+1)).hexdigest()==cert['frontends']['vision']['fichiers']['app.js'],'Frontend actif différent')
+    ressources=[('vision','https://vision.mrj.am/app.js','app.js'),
+                ('logique','https://logique.echos.systems/app.js','app.js')]
+    ressources += [('matheval','https://principiipetit.io/matheval/'+f,f) for f in
+                   ('main.js','demo-card.js','survey.js','admin/administration.js','enquete.js')]
+    for nom,url,fichier in ressources:
+        with urllib.request.urlopen(url,timeout=15) as r:
+            exiger(hashlib.sha256(r.read(16*1024*1024+1)).hexdigest()==cert['frontends'][nom]['fichiers'][fichier],
+                   'Frontend actif différent : '+nom)
     # La sonde ne transporte ni ne consomme l'intent d'invitation personnel.
     # L'intent personnel n'est pas consommé/exchangé par une sonde.
     with urllib.request.urlopen('https://log.mrj.am/ui/reset',timeout=15) as r:
