@@ -299,10 +299,10 @@
     },
     "sauvegarde-copies": {
       "resultat": "succes",
-      "duree_secondes": 0.2916,
+      "duree_secondes": 0.1696,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "bb5b177bece8f768d75327982f651ebac7d2582f74469d42523e9da4650f90fd",
+      "sha256": "11847b71e5d5cecc4bd2c76aa3d8238162cfdd41e20294b065b12872c5ce41a6",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "à effectuer pour le commit des opérateurs ; aucun succès de production déduit",
+    "scellement": "réussi ; mêmes35 reçus exacts dans le bundle, candidat4e6dba3",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -423,7 +423,10 @@
       "regression": "SBCL neuf/autre UID, fichier existant inaccessible puis ASDF/FASL et quatre états SQLite initialisés sans réseau",
       "migration_secondes": 29.4132,
       "production": "ancienne conservée ; nouvelle restauration/bascule nécessaires"
-    }
+    },
+    "revision_operateurs": "4e6dba37bdb5da246b439b876164c50aed21b950",
+    "bundle_complet_verifie_localement": true,
+    "stage_sha256": "e6cc7657e7af98a144c4d7ab6ed0eaeea291836f648d68ebb05a4b58c0f04129"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
