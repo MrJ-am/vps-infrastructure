@@ -3021,14 +3021,19 @@
         "tests/log-nix.nix",
         "scripts/log-nix-qualifier.py",
         "scripts/log-evaluation.nix",
-        "assemblage/kanidm/artefact.nix"
+        "assemblage/kanidm/artefact.nix",
+        "scripts/monolithe-evaluation.nix",
+        "tests/log-evaluation.nix",
+        "tests/log-evaluation-base.nix"
       ]
     },
     "impact": [
       "vps/modules/log.nix",
       "vps/scripts/log-evaluation.nix",
       "vps/tests/log-nix.nix",
-      "vps/assemblage/kanidm/artefact.nix"
+      "vps/assemblage/kanidm/artefact.nix",
+      "vps/scripts/monolithe-evaluation.nix",
+      "vps/tests/log-evaluation*.nix"
     ],
     "commandes": [
       [
