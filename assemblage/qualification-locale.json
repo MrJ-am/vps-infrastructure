@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
+      "revision": "cd05b702b97469375a2d6aac88053fcc52852027",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -64,8 +64,8 @@
   },
   "frontends": {
     "vision": {
-      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
-      "ensemble_sha256": "37871df2ee044aa49295f41219ced9b961b89ddd5fa81ecd0883cc3ccdd2e444"
+      "revision": "cd05b702b97469375a2d6aac88053fcc52852027",
+      "ensemble_sha256": "3c00e4fdeb7cc6d0c3e1892822299b77c8fbcf2a67af4f353ccc657fed11999f"
     },
     "matheval": {
       "revision": "68df529042609561329e757145a187ca079a5cea",
@@ -88,7 +88,7 @@
       "autorise_publication": false,
       "sha256": "5fd9deab671bcfcb69ca7f9db4832534d673b8bb96be7357c255481d30838800",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "cache-documents": {
       "resultat": "succes",
@@ -97,7 +97,7 @@
       "autorise_publication": false,
       "sha256": "5bd8862625a81953d2ba75766fc8bee4558da1dd8433ff5d079aa5d8fa8621bc",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "cache-fasl": {
       "resultat": "succes",
@@ -106,7 +106,7 @@
       "autorise_publication": false,
       "sha256": "7280d6be097c7ef774517f0a5e2eb33586111f412b4dd300078f34a8b60217d7",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "courriel-composant": {
       "resultat": "succes",
@@ -115,16 +115,16 @@
       "autorise_publication": false,
       "sha256": "856d0ebfda9957a0b84150764279e160770866e896f6f231fa0b3544bc05dd86",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "editorial": {
       "resultat": "succes",
-      "duree_secondes": 0.523,
+      "duree_secondes": 0.3216,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "f91951a18f3e6cbb7d5b47c9e2805d36060780a86707a7a907c1251cc5bb33f8",
+      "sha256": "d2c8fe267bc18cec46eb9e34436e791d87cb9ee6b39bf25f61d4cd1e0497884e",
       "artefact_metier_sha256": null,
-      "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "frontend-regles": {
       "resultat": "succes",
@@ -133,7 +133,7 @@
       "autorise_publication": false,
       "sha256": "204e58d8ce6dde89a8f65839923264b1ebd3f6e807d2ac468563401dc783d32b",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "frontend-sources": {
       "resultat": "succes",
@@ -142,7 +142,7 @@
       "autorise_publication": false,
       "sha256": "8c26afab771bd0badda083937e6cb7f5bbfa96a54f60193a71229598a10b3074",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "gestion-validation": {
       "resultat": "succes",
@@ -151,7 +151,7 @@
       "autorise_publication": false,
       "sha256": "21f530dd2fabc4462ea1b0b5376bb65be3a7d831c37c2ef13299eeb6bd5cd10e",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "identite-client": {
       "resultat": "succes",
@@ -160,16 +160,16 @@
       "autorise_publication": false,
       "sha256": "32645e58625299c8d1c7a9d88dd939d92fb219004c77ef6986b7f80274eb1921",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 1.2728,
+      "duree_secondes": 1.3513,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "bf0b6fb27a031bd0e90cc1993de1b6c20b04c63172efa88e604c5d8d8b6bf5ea",
+      "sha256": "c9fc69d1189e14566cb366b036f758b580e8ef1db78166f4c4973d7d1f82ba49",
       "artefact_metier_sha256": null,
-      "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "json-commun": {
       "resultat": "succes",
@@ -178,7 +178,7 @@
       "autorise_publication": false,
       "sha256": "f2f528aea1af78218845ec73f7ef2026a2f935f32fd72d81ce9e89c6da5e5971",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "logique-correcteur": {
       "resultat": "succes",
@@ -187,7 +187,7 @@
       "autorise_publication": false,
       "sha256": "3384736d5c48593ec76d1f7213436669de8d3842afde57a34967fd13a5ad303a",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "logique-interface": {
       "resultat": "succes",
@@ -196,7 +196,7 @@
       "autorise_publication": false,
       "sha256": "394aef6c53c18387a7dad50a2290c1f04906a050885029360487b05dffe25de1",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "matheval-interface": {
       "resultat": "succes",
@@ -205,7 +205,7 @@
       "autorise_publication": false,
       "sha256": "872611d5bfbfa4cdc148bb394bae14513408fcc7e5ccd19b31446c1b8021efae",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "matheval-navigateur": {
       "resultat": "succes",
@@ -214,7 +214,7 @@
       "autorise_publication": false,
       "sha256": "a1618eccd36b57d24d99766eac80105dabda8be95ba94be474f3ce6eb069d616",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "matheval-postgresql": {
       "resultat": "succes",
@@ -223,7 +223,7 @@
       "autorise_publication": false,
       "sha256": "c5ba11b64db8216725e4c1f8e3fcc6386f1e2e31c25ef07feb2f86fd856a3f6d",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "matheval-pures": {
       "resultat": "succes",
@@ -232,7 +232,7 @@
       "autorise_publication": false,
       "sha256": "25c6876821a3d07436c627e55ae0a105a189f43d2d3db44f1872592fe6d53641",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "matheval-reference": {
       "resultat": "succes",
@@ -241,16 +241,16 @@
       "autorise_publication": false,
       "sha256": "52d5975b1f63eee5ace0294a288a17245a7150294e80834e5cb7f979c6ada0fd",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 41.0322,
+      "duree_secondes": 41.1296,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "375f758def72277d516eeb4e6220322fbaa9b22113e964b3a10f07f7d74007be",
+      "sha256": "cbfe0e38783685732296c8517e61d592b756f2b0c156bf96950f1fc1a283fcb9",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "Contrôles affectés rejoués ; dépendance réelle au préparateur incluse, aucun contrôle distant de développement."
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "native-contrats": {
       "resultat": "succes",
@@ -259,16 +259,16 @@
       "autorise_publication": false,
       "sha256": "12a0e62f156dfe3491383ee00324b5becee090a1fd10e215b746abbd3ef63319",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "navigateur-mcp": {
       "resultat": "succes",
-      "duree_secondes": 26.9502,
+      "duree_secondes": 28.4359,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "874b41297f18e8b4896ca9148f1e5654b95e56984d0659d06eff0159adb54aec",
+      "sha256": "516f90d9720a8b077179dd9a175ac0162a814ed9d0cf4c4fee1bfd1821d541c5",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "outils-mcp": {
       "resultat": "succes",
@@ -277,7 +277,7 @@
       "autorise_publication": false,
       "sha256": "002632756c05be9337586fbcab2bd5cd0536d69df1cf1a2dd8941bba1b68fe89",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "outils-routage": {
       "resultat": "succes",
@@ -286,7 +286,7 @@
       "autorise_publication": false,
       "sha256": "cfddc8152c37541833a3908961672e4f6f0816962a34881f6fa062bf9a0b0c3c",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "quotas-http": {
       "resultat": "succes",
@@ -295,7 +295,7 @@
       "autorise_publication": false,
       "sha256": "c1c39a59900d765b332eb814fc787d47ed328dc3aea1446fea8863549e8762bf",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "sauvegarde-copies": {
       "resultat": "succes",
@@ -304,7 +304,7 @@
       "autorise_publication": false,
       "sha256": "a4a639df61d7abe4173a234e7ad486ca6801ab8cd303c3ff22182d62f11ee281",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "schema-prive": {
       "resultat": "succes",
@@ -313,16 +313,16 @@
       "autorise_publication": false,
       "sha256": "11ec95dc064fbe2937e2d01c9ffaa4737c7ea45bb9236e798dc8d3fb72af0698",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 0.9335,
+      "duree_secondes": 1.0693,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "9c2fb4103511b646940b1093dc7256c6e150899bc372ce7fb8422f7d844857ea",
+      "sha256": "192ffe3f7df5b63b72b2b3d6115e4e57c8233fe0997dc29ca2692ed93f94af9e",
       "artefact_metier_sha256": null,
-      "reuse": "Contrôles affectés rejoués ; dépendance réelle au préparateur incluse, aucun contrôle distant de développement."
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "signature-web": {
       "resultat": "succes",
@@ -331,7 +331,7 @@
       "autorise_publication": false,
       "sha256": "830f4983f8fe0ed157d74761bbff2d961d4e3ce7d386d71733b41cb89249c792",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "style-logo": {
       "resultat": "succes",
@@ -340,7 +340,7 @@
       "autorise_publication": false,
       "sha256": "4a2827d4654e16046d7aaa8a5b801a17ceb08622095d0f232d29af83bfd586cc",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "style": {
       "resultat": "succes",
@@ -349,7 +349,7 @@
       "autorise_publication": false,
       "sha256": "064d6b82a5e0eda1f7b14e3f2f2cb073d528aa2133f3bba1f83f1744b3a91d83",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "vision-contrats": {
       "resultat": "succes",
@@ -358,25 +358,25 @@
       "autorise_publication": false,
       "sha256": "d269354bcc797a94591abaf4599661859ed9d452183f1f432dc12d58fdeabd7f",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "vision-interface": {
       "resultat": "succes",
-      "duree_secondes": 76.2795,
+      "duree_secondes": 59.6562,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "675332c0e1a44a60f9da8b844c62747bb29d7fa10d15acee6a2d85f03a426954",
+      "sha256": "da6d53da77ab834c1e6cba3bba00c4ecdd895ea7bf70761f72e8ad6e7502f2ca",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "vision-postgresql": {
       "resultat": "succes",
-      "duree_secondes": 145.7859,
+      "duree_secondes": 112.051,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "c8f83204d9c6cc735e3b6e91a481be25a5c8230f1d2b222bc91480457778840e",
+      "sha256": "239725e1c18d1e13c4c1db5b5cb51de9bf0682981ad2f5e6df1fcceb5a413f2c",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôle affecté exécuté localement."
     },
     "vision-semantique": {
       "resultat": "succes",
@@ -385,16 +385,16 @@
       "autorise_publication": false,
       "sha256": "6a000108777334ccb3a61a18374c5c3a88b840ede1daa1413bbd383f0fa59b1e",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
     },
     "vision-sql-native": {
       "resultat": "succes",
-      "duree_secondes": 16.6193,
+      "duree_secondes": 14.8583,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "b6edf411f074ac4f143621ccab2a18e3220f7c1c6f0e25035744cc09a6cbe6fe",
+      "sha256": "fbd06cd40229110b1afec882d0622d7b19ac43e36bdeaeb9ed0aa7a535a76c4f",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôle affecté exécuté localement."
     }
   },
   "controle_final": {
@@ -402,11 +402,17 @@
     "resultat": "succes",
     "preuve_production": false,
     "reutilisation_finale": {
-      "suites_reutilisees": 34,
+      "suites_reutilisees": 28,
       "suites_reexecutees": [
-        "editorial"
+        "editorial",
+        "selection",
+        "vision-postgresql",
+        "vision-interface",
+        "navigateur-mcp",
+        "migration",
+        "vision-sql-native"
       ],
-      "raison": "Suites affectées requalifiées ; le scelleur compare à nouveau les 35 reçus aux entrées/outils/configurations exactes avant transport."
+      "raison": "Correction de propriété SQL et révision exacte Vision ; contrôles indépendants inchangés réutilisés, sécurité du diagnostic requalifiée séparément."
     },
     "correction_rls": {
       "schema": 27,
@@ -415,12 +421,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": {
-      "revision_operateurs": "77c7f82e8125ca081bc88d54bcf6a04bcf425b84",
-      "stage_sha256": "18f6d91e7c33781689db1dcdb5b89b62aa7f999d8111e65dea4e953ded894349",
-      "bundle_complet_verifie_localement": true,
-      "publication_effectuee": false
-    },
+    "scellement": "Requis pour correction de propriété de la vue historique",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -431,12 +432,19 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "ancienne r6s7ags3 ; retour38190627348 vérifié",
+    "production": "Ancienne génération après retour38194338389",
     "restart_dependances": [
       "postgresql",
       "keycloak"
     ],
-    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés"
+    "reprise_etats": "Retour77c7f82 établi ; chemins historiques récents prioritaires, états nouveaux conservés et chiffrés",
+    "correction_vue_historique": {
+      "diagnostic": 38194819102,
+      "proprietaire_applicatif_constate": true,
+      "role_migration_sans_connexion": true,
+      "definition_donnees_preservees_fixture": true,
+      "refus_acces_direct_fixture": true
+    }
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",
