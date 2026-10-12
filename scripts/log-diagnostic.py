@@ -74,6 +74,19 @@ def main(revision):
     f=d/'evaluation-log-privee.json'
     if f.is_file():
         r=json.loads(f.read_text());out['services_preserves']=m.differences(r['protegeAvant'],r['protegeApres'])
+        binaries=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+/bin/nginx',r['nginx'])
+        configs=re.findall(r'/nix/store/[a-z0-9]{32}-[^/\s"\']+\.conf',r['nginx'])
+        if len(binaries)==len(configs)==1:
+            test=subprocess.run([binaries[0],'-t','-c',configs[0]],capture_output=True,text=True,timeout=20)
+            texte=test.stderr
+            out['nginx_candidat_code']=test.returncode
+            out['nginx_directives_dupliquees']=[v for v in ('proxy_ssl_server_name','proxy_ssl_name','proxy_ssl_verify',
+                'client_max_body_size','access_log','proxy_pass','proxy_http_version','proxy_set_header')
+                if re.search(re.escape('"'+v+'"')+r'.*duplicate',texte)]
+            out['nginx_erreur_categories']=[v for k,v in {'unknown directive':'directive_inconnue',
+                'duplicate':'directive_dupliquee','invalid':'invalide','permission denied':'permission_refusee',
+                'cannot load certificate':'certificat_indisponible','bind()':'port_indisponible'}.items()
+                if k in texte.lower()]
     elif not out['activation_engagee']:
         # Même expression fermée du préparateur, en lecture seule, trace
         # conservée privée ; seuls positions/classes/champs sont publiés.
