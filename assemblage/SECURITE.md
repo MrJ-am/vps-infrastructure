@@ -111,3 +111,38 @@ doit les exposer. Le fichier n'est pas une frontière entre bibliothèques Lisp
 compromises. Cette table additive ne modifie aucune donnée métier ou identité.
 Le client ne mappe jamais un sujet par adresse, ne crée pas de compte applicatif
 automatiquement et ne déduit pas une preuve MFA du seul `auth_time`.
+
+## Raccordement Log du12octobre — qualification locale avant bascule
+
+`mrjam-log` vérifie code/S256/state/nonce, ES256/issuer/audience/at_hash et le
+rattachement UUID explicite. Sessions/refresh durables privés ; compte actif et
+introspection native à chaque accès. Broker MCP : parent de session, consentement,
+retour exact, code à usage unique, rotation et révocation de famille. Deux
+personnes réelles d'IdP synthétique testées concurremment, aucune donnée réelle.
+`assemblage/oidc/tables-privees.json` classe aussi toutes les tables Log.
+
+Kanidm ne publie pas amr/acr. Le privilège administratif repose sur un sujet NEUF,
+sans credential importé, dont le groupe natifMFA empêche tout commit de credential
+password seul (même si une passkey existe : source credupdatesession.rs). Son
+rattachement/politique sont établis par l'opérateur ; auth_time est réellement
+signé et900s au plus. L'IdP réel exige TOTP puis password en réauthentification.
+La politique n'est pas déduite d'un booléen du navigateur. NativeCLI bootstrap
+idm_admin est désactivé après provisionnement ; pas de credential global produit.
+Limite : compromission complète du monolithe peut changer sa propre SQLite et
+ses contrôles ; ce n'est pas une frontière contre du Lisp/SQL arbitraire.
+
+Alias de connexion au seul formulaire natif /ui/login/begin, pas de système de
+mot de passe parallèle. Adresse indexée privée vers UUID ; nom affiché Unicode
+séparé du nom technique. Aucun rattachement métier par email. Réponse/formulaires
+Kanidm transmis tels quels ; cet adaptateur n'est pas une vue HTML/CSS applicative.
+Nginx fixe cible/service/hôte et vérifie TLS du Kanidm loopback. Répertoires
+identité/admin0700 et credentials séparés ; pas de debugger dans le produit.
+
+La bascule d'invitation conserve admissions FERMÉES et exige zéro demande en
+cours ; leur provisionnement natif/fermeture commune et le panneau complet
+restent non qualifiés. Ce jalon n'est pas la clôture de toute l'étape2. Ne pas
+fermer une admission active pour faire réussir un opérateur. Le contrôle doit
+refuser la promotion dans ce cas. L'intent personnel n'est jamais consommé par
+une sonde : `/ui/reset` sans token seulement. EnvoiSMTP marqué avant appel,
+aucun nouvel envoi automatique après résultat incertain. Les backups natifs
+et SQLite Log rejoignent le timer chiffré existant avant manifeste/copie froide.

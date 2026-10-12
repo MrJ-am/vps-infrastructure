@@ -1,0 +1,43 @@
+name: Promotion Log Kanidm qualifié localement
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        type: choice
+        options: [preparer, deployer, courriel, retour]
+        default: deployer
+        description: Opération fermée sur le candidat Log scellé dans main
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  promotion:
+    if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé administrative existante
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/log-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/log-ssh/admin"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/log-ssh/admin" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/log-ssh/admin" >> "$GITHUB_ENV"
+      - name: Recevoir, vérifier et promouvoir le même candidat
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MRJAM_OPERATION: ${{ inputs.operation }}
+        run: python3 scripts/log-operation.py
+      - name: Effacer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/log-ssh/admin"

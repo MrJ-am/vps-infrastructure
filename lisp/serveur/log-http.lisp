@@ -52,6 +52,10 @@
                  (redirection (concatenate 'string "/auth/connexion?retour=" (mrjam-native:parametre-url target)))))
             ((and (equal method "GET") (equal path "/auth/connexion"))
              (multiple-value-bind (url cookie) (mrjam-log:demarrer contexte hote (or (vision:json-object-get query "retour") "/"))
+               (when (equal (vision:json-object-get query "verification") "renforcee")
+                 ;; Instruction réellement prise en charge par Kanidm1.11.2,
+                 ;; sans accepter une préférence MFA provenant du navigateur.
+                 (setf url (concatenate 'string url "&prompt=login&max_age=0")))
                (redirection url (cons "Set-Cookie" cookie))))
             ((and (equal method "GET") (equal path "/auth/retour"))
              (multiple-value-bind (url cookie suppression) (mrjam-log:retour contexte hote
@@ -77,15 +81,18 @@
                     (unless (member decision '("autoriser" "refuser") :test #'equal) (erreur-http 400))
                     (log-json s 200 (vision:jobject "redirection" (mrjam-log::consentir-mcp contexte cookies
                       (vision:json-object-get p "id") (equal decision "autoriser"))))))
-                 ((and (equal method "GET") (equal path "/verify"))
+                 ((and (equal method "GET") (member path '("/verify" "/verify-gestion") :test #'equal))
                   (unless (member (entete headers "x-original-method") '("GET" "HEAD") :test #'equal) (csrf session))
+                  (when (and (equal path "/verify-gestion")
+                             (not (and (eq :true (vision:json-object-get compte "administrateur"))
+                                       (mrjam-log::verification-renforcee-p contexte session))))
+                    (erreur-http 403))
                   (log-json s 204 (vision:jobject) (list (cons "X-Mrj-User" username))))
                  ((and (equal method "GET") (equal path "/auth/session"))
                   (log-json s 200 (vision:jobject "username" username
                         "csrf" (mrjam-log::champ session "csrf") "expiresAt" (mrjam-log::champ session "expiresAt")
                         "administrateur" (if (eq :true (vision:json-object-get compte "administrateur")) :true :false)
-                        ;; Absence amr/acr : ne pas inventer une preuve MFA.
-                        "verificationRenforcee" :false)))
+                        "verificationRenforcee" (if (mrjam-log::verification-renforcee-p contexte session) :true :false))))
                  ((and (equal method "POST") (equal path "/auth/logout"))
                   (csrf session)
                   (log-json s 200 (vision:jobject "signedOut" :true)

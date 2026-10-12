@@ -11,6 +11,8 @@
   (cond
     ((equal commande "preparer") (uiop:symbol-call :mrjam-log-kanidm-tests :preparer (uiop:getenv "MRJAM_LOG_FIXTURE")))
     ((equal commande "terminer") (uiop:symbol-call :mrjam-log-kanidm-tests :terminer (uiop:getenv "MRJAM_LOG_FIXTURE")))
+    ((equal commande "preparer-bob") (uiop:symbol-call :mrjam-log-kanidm-tests :preparer-bob (uiop:getenv "MRJAM_LOG_FIXTURE")))
+    ((equal commande "terminer-bob") (uiop:symbol-call :mrjam-log-kanidm-tests :terminer-bob (uiop:getenv "MRJAM_LOG_FIXTURE")))
     ((equal commande "reprendre")
      (uiop:symbol-call :mrjam-log-kanidm-tests :reprendre (uiop:getenv "MRJAM_LOG_FIXTURE"))
      (uiop:symbol-call :mrjam-log-kanidm-tests :logout))

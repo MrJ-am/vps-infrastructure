@@ -2808,7 +2808,8 @@
         "lisp/identite/log-*.lisp",
         "lisp/serveur/*.lisp",
         "scripts/log-kanidm-qualifier.py",
-        "tests/log-*.lisp"
+        "tests/log-*.lisp",
+        "tests/kanidm_politiques.py"
       ],
       "vision": [
         "vision.asd",
@@ -2946,5 +2947,139 @@
     "navigateurs": [
       "chromium"
     ]
+  },
+  "kanidm-bootstrap": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/kanidm-politiques-qualifier.py",
+        "tests/kanidm_politiques.py",
+        "tests/kanidm_reel.py",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json",
+        "scripts/kanidm-api-privee.py",
+        "scripts/kanidm-bootstrap-qualifier.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/kanidm-api-privee.py",
+      "vps/scripts/kanidm-bootstrap-qualifier.py",
+      "vps/scripts/log-activer.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-bootstrap-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL"
+    ],
+    "reutilisable": false
+  },
+  "log-routage-nix": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "assemblage/kanidm/paquet.nix",
+        "assemblage/kanidm/service.nix",
+        "assemblage/kanidm/dependances.json",
+        "scripts/kanidm-verifier-configuration.py",
+        "tests/kanidm-configuration.nix",
+        "assemblage/manifest.json",
+        "modules/log.nix",
+        "modules/metier.nix",
+        "modules/identite.nix",
+        "modules/gateway.nix",
+        "tests/log-nix.nix",
+        "scripts/log-nix-qualifier.py",
+        "scripts/log-evaluation.nix"
+      ]
+    },
+    "impact": [
+      "vps/modules/log.nix",
+      "vps/scripts/log-evaluation.nix",
+      "vps/tests/log-nix.nix"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/log-nix-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    }
+  },
+  "log-operations": {
+    "niveau": 6,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/log-activer.py",
+        "scripts/log-preparer.py",
+        "scripts/log-operation.py",
+        "scripts/kanidm-api-privee.py",
+        "scripts/monolithe-stage.py",
+        "scripts/vision-proprietaire-enroler.py",
+        "tests/test_log_operation.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/log-activer.py",
+      "vps/scripts/log-preparer.py",
+      "vps/scripts/log-operation.py",
+      "vps/scripts/kanidm-api-privee.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_log_operation.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ]
+    },
+    "fixture": {
+      "donnees": "SQLite et JSONL synthétiques ; le chiffrement/restauration PostgreSQL est qualifié séparément par la CI sur cluster privé"
+    }
   }
 }

@@ -8,11 +8,13 @@ import sys
 import subprocess
 import threading
 import queue
+import time
 from urllib.parse import parse_qs, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT/'tests'))
 from kanidm_reel import EchecQualification, KanidmLocal
+from kanidm_politiques import creer_neuf_mfa, code_totp
 
 
 def main():
@@ -34,14 +36,31 @@ def main():
     paquet = os.environ.get('MRJAM_KANIDM'); curl = os.environ.get('MRJAM_CURL')
     if not paquet or not curl: raise EchecQualification('outils natifs verrouillés requis')
     with KanidmLocal(paquet, curl) as n:
-        n.importer_une_fois()  # Fixture seulement, pas la décision de migration.
+        qualified_after = int(time.time())
+        user = creer_neuf_mfa(n)
+        # La réauthentification native exige réellement TOTP puis password.
+        jar=n.root/'reauth-fixture.cookies'; jar.touch(mode=0o600)
+        status, auth=n.http('/v1/reauth','token',token=user,cookies=jar)
+        if status!=200 or auth.get('state',{}).get('continue')!=['totp']:
+            raise EchecQualification('réauthentification native sans TOTP')
+        status, auth=n.http('/v1/auth',{'step':{'cred':{'totp':code_totp(n.mfa_secret)}}},cookies=jar)
+        if status!=200 or auth.get('state',{}).get('continue')!=['password']:
+            raise EchecQualification('réauthentification native sans password après TOTP')
+        status, auth=n.http('/v1/auth',{'step':{'cred':{'password':n.password}}},cookies=jar)
+        if status!=200 or 'success' not in auth.get('state',{}):
+            raise EchecQualification('réauthentification MFA native refusée')
+        user=auth['state']['success']
+        alice_uuid, alice_nom, alice_mail = n.uuid, n.nom, n.mail
+        n.nom = 'fixture-bob'; n.mail = 'fixture-bob@example.test'
+        bob = creer_neuf_mfa(n); bob_uuid = n.uuid
+        n.uuid, n.nom, n.mail = alice_uuid, alice_nom, alice_mail
         secret = n.creer_client_oidc()
-        user = n.login(n.nom, n.password)
         fixture = n.root/'sessions-fixture.json'; result = n.root/'sessions-resultat.json'
         http = n.root/'http-reponse.txt'
         fixture.touch(mode=0o600); result.touch(mode=0o600); http.touch(mode=0o600)
         params = dict(uuid=n.uuid, secret=secret, curl=str(n.curl), ca=str(n.ca), port=n.port,
-                      base=str(n.root/'sessions.sqlite'), resultat=str(result), http=str(http))
+                      base=str(n.root/'sessions.sqlite'), resultat=str(result), http=str(http), mail=n.mail,
+                      qualifie_a=qualified_after, bob_uuid=bob_uuid)
         fixture.write_text(json.dumps(params))
         path = json.dumps(str(fixture))
         proc = None
@@ -81,6 +100,15 @@ def main():
             fixture.write_text(json.dumps(params))
             evaluer('(progn (uiop:symbol-call :mrjam-log-kanidm-tests :terminer '+path+') '
                     '(format t "LOG-TERMINE"))', 'terminer')
+            evaluer('(progn (uiop:symbol-call :mrjam-log-kanidm-tests :preparer-bob '+path+') '
+                    '(format t "LOG-TERMINE"))', 'preparer-bob')
+            start = json.loads(result.read_text()); q = parse_qs(urlsplit(start['uri']).query)
+            code = n.autoriser_code(bob, 'mrjam-vision', 'vision.mrj.am',
+                                   q['state'][0], q['nonce'][0], q['code_challenge'][0])
+            params.update(state=q['state'][0], code=code, cookie=start['cookie'])
+            fixture.write_text(json.dumps(params))
+            evaluer('(progn (uiop:symbol-call :mrjam-log-kanidm-tests :terminer-bob '+path+') '
+                    '(format t "LOG-TERMINE"))', 'terminer-bob')
             n.arreter(); n.demarrer()
             evaluer('(progn (uiop:symbol-call :mrjam-log-kanidm-tests :reprendre '+path+') '
                     '(uiop:symbol-call :mrjam-log-kanidm-tests :logout) (format t "LOG-TERMINE"))', 'reprendre')

@@ -39,6 +39,32 @@ def login_mfa(natif, secret):
     return response['state']['success']
 
 
+def creer_neuf_mfa(n):
+    """Identité synthétique neuve : aucun hash ni session d'un ancien IdP."""
+    op = n.login('idm_admin', n.recuperer('idm_admin'), privilegie=True)
+    status, _ = n.http('/v1/person', {'attrs': {'name': [n.nom],
+        'displayname': ['Élodie 東京 des étoiles'], 'mail': [n.mail]}}, token=op)
+    if status != 200: raise EchecQualification('personne neuve de fixture refusée')
+    status, profil = n.http('/v1/person/'+n.nom, token=op)
+    if status != 200: raise EchecQualification('personne neuve non lisible')
+    n.uuid = profil['attrs']['uuid'][0]
+    status, cu = n.http('/v1/person/'+n.nom+'/_credential/_update', token=op)
+    if status != 200: raise EchecQualification('enrôlement neuf indisponible')
+    token, _ = cu
+    status, cu = n.http('/v1/credential/_update', [{'password': n.password}, token])
+    if status != 200 or cu['can_commit'] or 'MfaRequired' not in cu['warnings']:
+        raise EchecQualification('MFA neuf non imposé')
+    status, cu = n.http('/v1/credential/_update', ['totpgenerate', token])
+    if status != 200: raise EchecQualification('TOTP neuf non généré')
+    secret = cu['mfaregstate']['TotpCheck']
+    status, cu = n.http('/v1/credential/_update', [{'totpverify': [code_totp(secret), 'fixture']}, token])
+    if status != 200 or not cu['can_commit']: raise EchecQualification('preuve TOTP neuve refusée')
+    status, _ = n.http('/v1/credential/_commit', token)
+    if status != 200: raise EchecQualification('MFA neuf non enregistré')
+    n.mfa_secret = secret  # Fixture privée éphémère, jamais un secret personnel.
+    return login_mfa(n, secret)
+
+
 def qualifier(paquet, curl):
     nombre = 0
     with KanidmLocal(paquet, curl) as n:

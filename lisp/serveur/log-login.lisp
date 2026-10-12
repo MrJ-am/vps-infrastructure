@@ -1,0 +1,75 @@
+(in-package #:mrjam-metier)
+
+(defun nom-connexion-log (contexte nom)
+  "Alias de connexion seulement ; ne crée ni ne rattache de compte métier."
+  (unless (and (stringp nom) (<= 1 (length nom) 320)
+               (every (lambda (x) (>= (char-code x) 32)) nom)) (erreur-http 400))
+  (if (find #\@ nom)
+      (or (mrjam-log::champ
+            (mrjam-log::base contexte (lambda (db) (first (mrjam-native:sqlite-requete db
+              "SELECT subject FROM log_principaux WHERE mail=?" (list (string-downcase nom)))))) "subject")
+          ;; Même réponse native pour alias inconnu, sans révéler les adresses.
+          "mrjam-compte-inconnu")
+      nom))
+
+(defun proxy-connexion-log (contexte sortie methode cible headers corps)
+  "Adaptateur étroit de l'identifiant du formulaire natif. Le reste de la
+connexion, de l'enrôlement et de l'interface est intégralement Kanidm."
+  (unless (and contexte (equal methode "POST") (equal cible "/ui/login/begin")
+               (equal (entete headers "x-forwarded-host") "log.mrj.am")
+               (equal (entete headers "x-forwarded-proto") "https")
+               (equal (entete headers "origin") "https://log.mrj.am")
+               (<= (length corps) 8192)
+               (equal (first (uiop:split-string (or (entete headers "content-type") "") :separator ";"))
+                      "application/x-www-form-urlencoded")) (erreur-http 403))
+  (let* ((p (decode-query corps))
+         (client (cdar (mrjam-log::contexte-clients contexte)))
+         (processus nil))
+    (unless (every (lambda (kv) (member (car kv) '("username" "password" "totp" "remember_me") :test #'equal))
+                   (vision:json-object-entries p)) (erreur-http 400))
+    (let ((form (mapcar (lambda (kv)
+                        (cons (car kv) (if (equal (car kv) "username")
+                                           (nom-connexion-log contexte (cdr kv)) (cdr kv))))
+                        (vision:json-object-entries p))))
+      (unwind-protect
+        (sb-ext:with-timeout 15
+          (setf processus (sb-ext:run-program (mrjam-oidc::client-oidc-curl client) '("--disable" "--config" "-")
+                            :input :stream :output :stream :error nil :wait nil :external-format :utf-8))
+          (let ((o (sb-ext:process-input processus)))
+            (format o "silent~%show-error~%max-time = 10~%proxy = \"\"~%noproxy = \"*\"~%proto = \"=https\"~%tlsv1.2~%max-filesize = 131072~%dump-header = \"-\"~%request = \"POST\"~%")
+            (flet ((option (k v) (format o "~A = ~A~%" k (mrjam-native:chaine-config-curl v))))
+              (option "url" "https://log.mrj.am/ui/login/begin")
+              (option "connect-to" (format nil "log.mrj.am:443:127.0.0.1:~D" (mrjam-oidc::client-oidc-port client)))
+              (when (mrjam-oidc::client-oidc-ca client) (option "cacert" (mrjam-oidc::client-oidc-ca client)))
+              (option "header" "Expect:")
+              (option "header" "Origin: https://log.mrj.am")
+              (option "header" "Content-Type: application/x-www-form-urlencoded")
+              (dolist (h '("cookie" "hx-request" "hx-target" "hx-current-url"))
+                (let ((v (entete headers h)))
+                  (when v
+                    (unless (and (< (length v) 16384) (notany (lambda (c) (or (< (char-code c) 32) (= 127 (char-code c)))) v))
+                      (erreur-http 400))
+                    (option "header" (concatenate 'string h ": " v)))))
+              (option "data" (mrjam-oidc::formulaire-oidc form)))
+            (finish-output o) (close o))
+          (let* ((tampon (make-array 147456 :element-type 'character))
+                 (n (read-sequence tampon (sb-ext:process-output processus)))
+                 (texte (subseq tampon 0 n))
+                 (fin (search (format nil "~C~C~C~C" #\Return #\Newline #\Return #\Newline) texte)))
+            (sb-ext:process-wait processus)
+            (unless (and fin (< n (length tampon)) (= 0 (sb-ext:process-exit-code processus))) (erreur-http 502))
+            (let* ((lignes (uiop:split-string (subseq texte 0 fin) :separator (string #\Newline)))
+                   (status (parse-integer (second (uiop:split-string (first lignes) :separator " "))))
+                   (entetes '(("Cache-Control" . "no-store"))))
+              (unless (= status 200) (erreur-http 502))
+              (dolist (l (rest lignes))
+                (let ((i (position #\: l)))
+                  (when i
+                    (let ((k (subseq l 0 i)) (v (string-trim '(#\Space #\Return) (subseq l (1+ i)))))
+                      (when (member (string-downcase k) '("content-type" "set-cookie" "hx-redirect" "hx-location"
+                                                          "hx-push-url" "hx-retarget" "hx-reswap") :test #'equal)
+                        (push (cons k v) entetes))))))
+              (repondre-http sortie 200 (subseq texte (+ fin 4)) entetes))))
+        (when processus
+          (when (sb-ext:process-alive-p processus) (sb-ext:process-kill processus sb-posix:sigkill))
+          (sb-ext:process-close processus))))))
