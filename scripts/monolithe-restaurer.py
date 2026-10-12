@@ -52,8 +52,9 @@ def main(revision):
         avant={b:backup.schema(lambda q,b=b:sql(b,q)) for b in ('vision','matheval')}
         # Migration sur la copie exclusivement, propriétaire cible NOLOGIN.
         version=sql('vision','SELECT max(version) FROM vision_schema_migrations')
-        backup.exiger(version in ('25','26'))
+        backup.exiger(version in ('25','26','27'))
         if version=='25':sql('vision',(d/'payload/vision/migrations/026_autorisation_admission.sql').read_text())
+        sql('vision',(d/'payload/vision/migrations/027_retablir_rls.sql').read_text())
         sql('vision',(d/'payload/vision/scripts/roles.sql').read_text())
         backup.commande(['runuser','-u','postgres','--',bin/'psql','-Xq','--set=ON_ERROR_STOP=1',
             '--host='+str(isole),'--dbname=vision','--file=-'],input=(ROOT/'assemblage/roles-metier.sql').read_bytes())
@@ -178,6 +179,7 @@ def main(revision):
         # Redémarrer la même image ; seules lectures, aucun faux objet ajouté.
         backup.exiger(essai(image,lire_commun,True)==retour)
         return {'acl_vision_30_matheval_6':True,'migration_26_sur_copie':True,
+          'migration_27_rls_sur_copie':True,
           'contenus_metier_preserves':True,'lectures_ancien_et_commun_identiques':True,
           'redemarrage_commun':True,'retour_lecture_qualifie':True,
           'retour_code_sans_restaurer_production':True,'sqlite_colonnes_et_messages_historiques_preserves':True,

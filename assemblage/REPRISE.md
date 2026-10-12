@@ -1,6 +1,47 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — restauration isolée à corriger
+## Point de reprise actif — correction RLS avant bascule
+
+Production ancienne conservée ; étape 1 non activée, Kanidm non commencé.
+Préparation 38184214522 réussie, déploiement 38184424703 arrêté pendant la
+restauration isolée, avant activation. Diagnostic 38185217273 : les 14 tables
+privées public.vision_* ont leur politique, mais ENABLE/FORCE RLS sont désactivés.
+Le pg_dump/restore local conserve ces attributs : dérive déjà présente en
+production, pas une perte à la restauration. Métadonnées privées dans
+state/reference-rls-active-38185217273.json ; aucun contenu métier journalisé.
+
+Correction qualifiée et publiée : migration Vision 027 explicite/idempotente, limitée aux
+14 tables classées. Elle rétablit les prédicats de propriétaire et ENABLE/FORCE,
+refuse une autre politique et ne rejoue ni la 019 ni les compteurs. Qualification
+PostgreSQL isolée : dérive réelle, échec atomique, données/observations/séance
+ouverte inchangées, idempotence et isolation. Opérateurs restauration/activation
+adaptés à 25/26/27. Aucun SQL exécuté en production pour cette correction.
+
+Vision18c52cdd publié ; migration13,4831s, PostgreSQL145,7859s, SQLnative16,6193s,
+recherche CPU réelle36,871s, sécurité0,8142s, sélection1,0072s passent. Nouveau
+frontend Vision37871df2, présentation76,2795s et navigateur/MCP26,9502s passent.
+Les35reçus sont valides (34réutilisations exactes/éditorial rejoué) ; scellement
+et publication des opérateurs corrigés à effectuer.
+
+Le candidat c5548b3 reste historique et ne doit pas être redéployé : préparer un
+nouvel assemblage après qualification/publication des sources corrigées. Conserver
+le même binaire Nix 296b7c89 (graphe Lisp inchangé) et les interfaces qualifiées ;
+rejouer les suites réellement affectées. Sauvegarde fraîche/restauration/retour
+restent obligatoires avant activation. Aucun assouplissement du contrat SQL.
+
+Constat de reprise : six dépôts préservés ; seuls les changements ci-dessus sont
+nouveaux, rapport MCP non commité conservé. Image SBCL/CL-MCP/Swank et Tron existants
+écoutent toujours localement ; aucune reconnexion ni qualifier synthétique.
+L'accès CLI GitHub est de nouveau fonctionnel (lecture du compte réussie).
+
+Après correction : publier Vision avant manifeste, qualification centrale exacte,
+sceller et promouvoir le même artefact, préparation/restauration/bascule par CI
+centrale uniquement, accès MCP réel/invariants/redémarrage/services voisins.
+Passer à Kanidm seulement après constat personnel de l'étape 1 en production.
+
+## États de promotion antérieurs — historique conservé
+
+## Point de reprise antérieur — restauration isolée à corriger
 
 Run38184424703 terminé en échec pendant restauration isolée (message générique),
 avant tout appel activer. Préparation réutilisée, ancien service non basculé.

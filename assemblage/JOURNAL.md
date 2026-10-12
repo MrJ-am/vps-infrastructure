@@ -497,3 +497,29 @@ frames réellement arrêtées, saisie/focus disponibles. Sources et JS synthéti
 aucune donnée réelle, aucune suite métier Node ou campagne distante. Analyse
 réelle421 violations encore bloquantes ; ces unités ne prouvent pas la conformité
 frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise.
+
+- Reprise ciblée : les six dépôts et l'image persistante sont conservés. Lecture
+  croisée CL-MCP/Tron : PID83928, session qualification-83928-4000700556,
+  objet12/effets1/résultat42 ; aucun DEBUG ouvert. Une première lecture d'un
+  symbole de marqueur inexistant a produit UNBOUND-VARIABLE, sans effet ; lecture
+  corrigée des symboles réels, aucun restart ni scénario synthétique relancé.
+- Préparation38184214522 réussie ; déploiement38184424703 arrêté en restauration
+  avant activation. Diagnostic38185217273 : 14 tables privées public sans RLS/force,
+  une politique chacune ; Gestion.comptes protégé. Restauration PG locale préserve
+  les attributs. Migration027 publiée dans Vision18c52cdd : liste fermée, prédicat
+  propriétaire normalisé, ENABLE/FORCE, refus de politique inattendue, aucune
+  ligne métier ni compteur réécrit. Tests PG isolés réels : refus tardif atomique,
+  double application, empreintes identiques de toutes données hors registre des
+  migrations, observation datée et séance ouverte conservées, Alice/Bob et lien
+  interpropriétaires, transaction sans identité. Suite migration11,9687s réussie.
+- CLI GitHub brièvement401, lecture authentifiée de nouveau réussie avant push.
+  Aucun autre canal d'administration créé. Frontend Vision reconstruit une fois
+  pour sa nouvelle révision embarquée ; requalifier ce candidat exact. Binaire
+  métier296b7 inchangé, graphe Lisp identique ; qualifications SQL/semantic/MCP
+  affectées lancées localement. Production ancienne, aucune activation ni Kanidm.
+- Correction027 qualifiée : VisionPostgreSQL145,7859s, SQLnative16,6193s
+  dans un processus SBCL de test propre, rechercheCPU36,871s, sécurité0,8142s,
+  sélection1,0072s, présentation76,2795s et navigateur/MCP26,9502s. Migration
+  finale13,4831s avec refus avant toute activation si preuve027 absente. Les35
+  reçus exacts passent :34réutilisés/éditorial seul rejoué ; aucune preuve de
+  production. Nouveau frontendVision37871df2 ; autres candidats inchangés.

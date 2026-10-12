@@ -77,5 +77,16 @@ class Retour(unittest.TestCase):
         (self.d/'termine.json').write_text('{"validation":true}')
         self.lancer();self.assertTrue((self.d/'retour.json').exists());self.assertTrue((self.d/'termine.json').exists())
 
+    def test_bascule_refuse_une_restauration_sans_reconciliation_rls(self):
+        for preuve in (None,False,'true'):
+            with self.subTest(preuve=preuve):
+                (self.d/'restauration.json').write_text(json.dumps({'qualification_applicative':{
+                    'migration_27_rls_sur_copie':preuve}}))
+                with patch.object(m.stage,'etat',return_value=self.before),patch.object(m.stage,'commande') as commande:
+                    with self.assertRaisesRegex(ValueError,'Réconciliation RLS non qualifiée'):
+                        m.activer(self.d,self.prepare,{})
+                    commande.assert_not_called()
+                self.assertFalse((self.d/'activation.json').exists())
+
 
 if __name__=='__main__':unittest.main()
