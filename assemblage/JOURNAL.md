@@ -843,3 +843,13 @@ héritées et liens vers même0aq : build court, ELF serveur/CLI identiques, auc
 Rust recompilé. Qualification force génération complète et refuse chemin brut.
 Workflowdiagnostic manuel fermé et testé ; aucune campagne de développement
 distante, aucun changement de compte/courriel à ce point.
+
+12octobre — Run38314437406 encore arrêté avant préparation/activation ; diagnostic
+38314944066 puis38315257346 sans valeurs : option infrastructure.metier.paquet
+unique déjà définie dans la configuration active. Fixture de superposition
+reproduit le même refus avant correctif. Quatre paramètres métier explicitement
+remplacés en final ; bootstrap priorité20 conserve paquet/ressources/banque actifs.
+Deux générations complètes, assertions et services protégés désormais évalués
+ensemble sur installation déjà active. Paquet shell de fixture n'est pas serveur
+Lisp ni artefact livré ; aucune empreinte d'un ancien commit dans ce contrôle.
+Aucun compte réel modifié et aucun courriel envoyé à ce point.

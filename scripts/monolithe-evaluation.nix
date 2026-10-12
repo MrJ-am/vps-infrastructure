@@ -31,8 +31,10 @@ let
     services.dbus.packages = lib.mkForce base.services.dbus.packages;
     infrastructure.metier = {
       enable = true;
-      paquet = builtins.storePath paquet;
-      inherit documentVision ressourcesMatheval bankVersion;
+      paquet = lib.mkForce (builtins.storePath paquet);
+      documentVision = lib.mkForce documentVision;
+      ressourcesMatheval = lib.mkForce ressourcesMatheval;
+      bankVersion = lib.mkForce bankVersion;
     };
     # Les secrets, clients, SMTP, IdP et embeddings viennent des options actives.
     infrastructure.identite.preconditionsValidees = lib.mkForce true;

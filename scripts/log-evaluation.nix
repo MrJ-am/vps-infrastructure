@@ -15,9 +15,10 @@ let
     imports = [ commun.moduleCandidate ];
     # Conserver exactement le processus métier et ses ressources pendant la
     # préparation du nouvel IdP loopback. Aucun client n'utilise encore Kanidm.
-    infrastructure.metier.paquet = lib.mkForce base.infrastructure.metier.paquet;
-    infrastructure.metier.documentVision = lib.mkForce base.infrastructure.metier.documentVision;
-    infrastructure.metier.ressourcesMatheval = lib.mkForce base.infrastructure.metier.ressourcesMatheval;
+    infrastructure.metier.paquet = lib.mkOverride 20 base.infrastructure.metier.paquet;
+    infrastructure.metier.documentVision = lib.mkOverride 20 base.infrastructure.metier.documentVision;
+    infrastructure.metier.ressourcesMatheval = lib.mkOverride 20 base.infrastructure.metier.ressourcesMatheval;
+    infrastructure.metier.bankVersion = lib.mkOverride 20 base.infrastructure.metier.bankVersion;
     services.kanidm.server.enable = lib.mkOverride 20 true;
     services.kanidm.package = lib.mkOverride 20 paquetKanidm;
     services.kanidm.server.settings.adminbindpath = "/run/kanidmd/admin.sock";

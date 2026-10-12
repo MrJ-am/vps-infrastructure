@@ -20,6 +20,13 @@ Image C saine conservée (marqueur reprise-20261012-552402 observé, pas PID fix
 CL-MCP sans pool/Swank, Tron distinct ; aucun qualifier synthétique de santé.
 Aucun REPL connecté à des données de production.
 
+Diagnostic38315257346 confirme encore9qv8n9gd et aucune activation.
+Superposition corrigée sur infrastructure.metier.paquet/documentVision/ressources/
+bankVersion ; bootstrap priorité20 conserve ancien état, final applique candidat.
+Fixture active reproduit l’erreur avant correction puis évalue deux générations
+complètes/services protégés avec réussite. Resceller uniquement configuration/
+opérateurs ; ELF bc70c822 inchangé, pas de nouvelle campagne navigateur.
+
 Diagnostic38312804717 confirme génération active/démarrage9qv8n9gd, aucune
 préparation ni activation engagée. Second run38312427457 arrêté en évaluation :
 module officiel attend .eolMessage/.version sur paquet, pas chemin brut.
