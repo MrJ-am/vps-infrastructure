@@ -31,6 +31,13 @@ def main(revision):
             texte=f.read_text();out['erreur_'+nom]=m.diagnostic_erreur(texte)
             cmd=re.search(r'RuntimeError: Commande refusée : (nix-instantiate|nix-build|systemctl), code ([0-9]+)',texte)
             if cmd:out['erreur_'+nom]['commande']={'outil':cmd[1],'code':int(cmd[2])}
+    f=d/'erreur-restauration-privee.log'
+    if f.is_file():
+        inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
+        tables=set(inventaire['vision'])|set(inventaire['matheval'])
+        roles=set().union(*(set(t['droits_directs']) for b in ('vision','matheval') for t in inventaire[b].values()))
+        out['erreur_restauration']=m.diagnostic_erreur(f.read_text(),tables,roles)
+    out['restauration']=(d/'restauration.json').is_file()
     f=d/'evaluation-log-privee.json'
     if f.is_file():
         r=json.loads(f.read_text());out['services_preserves']=m.differences(r['protegeAvant'],r['protegeApres'])
