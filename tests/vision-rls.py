@@ -1,5 +1,7 @@
 """Réparer la dérive RLS réelle dans un PostgreSQL jetable, sans données réelles."""
 import json
+import copy
+import importlib.util
 import os
 from pathlib import Path
 import subprocess
@@ -47,6 +49,7 @@ INSERT INTO vision_gestion.comptes(utilisateur,affichage) VALUES('alice','Alice'
 INSERT INTO vision_profils(utilisateur) VALUES('alice'),('bob');
 INSERT INTO vision_fiches(utilisateur,titre,contenu) VALUES('alice','Fiche Alice','Contenu Alice'),('bob','Fiche Bob','Contenu Bob');
 INSERT INTO vision_items(utilisateur,titre,contenu,objectifs,sens) VALUES('alice','Item Alice','Contenu Alice',ARRAY['definition'],ARRAY['rappel']),('bob','Item Bob','Contenu Bob',ARRAY['definition'],ARRAY['rappel']);
+UPDATE vision_items SET reference_a='2026-01-01T00:00:00Z',origine_reference='declaree' WHERE utilisateur='alice';
 INSERT INTO vision_liens(utilisateur,fiche_id,item_id) VALUES('alice',1,1),('bob',2,2);
 INSERT INTO vision_observations(utilisateur,item_id,texte,source,evenement_a) VALUES('alice',1,'Observation datée','explicite','2026-01-02T03:04:05Z');
 INSERT INTO vision_seances(utilisateur,fiche_id,items) VALUES('alice',1,'[{"id":1}]');
@@ -80,7 +83,32 @@ INSERT INTO vision_seances(utilisateur,fiche_id,items) VALUES('alice',1,'[{"id":
         # Une nouvelle transaction ne conserve pas l'identité précédente.
         assert sql('BEGIN; SET LOCAL ROLE vision; SELECT count(*) FROM vision_fiches; ROLLBACK;').stdout.strip()=='0'
         assert empreintes()==originaux
+        # Deux vrais instants SQL : les réponses complètes/urgences diffèrent,
+        # chaque fenêtre reste vérifiée par la fonction métier inchangée.
+        spec=importlib.util.spec_from_file_location('restauration_lectures',ROOT/'scripts/monolithe-restaurer.py')
+        restauration=importlib.util.module_from_spec(spec);spec.loader.exec_module(restauration)
+        a=lire("SELECT vision_lire('alice','{\"type\":\"item\",\"ids\":[1]}')")
+        b=lire("SELECT vision_lire('alice','{\"type\":\"item\",\"ids\":[1]}')")
+        def fenetres(instant):
+            return lire("SELECT json_object_agg(id,vision_fenetre(stabilite,0,90,0,reference_a,'"+instant+"'::timestamptz)) FROM vision_items WHERE utilisateur='alice' AND id=1")
+        assert a!=b and a['objets'][0]['fenetre']['urgence']!=b['objets'][0]['fenetre']['urgence']
+        assert restauration.comparer_lectures(a,b,fenetres)
+        for champ,valeur in [('contenu','Altéré'),('modifie_a','2025-01-01T00:00:00Z'),('stabilite',127),('reference_a',None)]:
+            c=copy.deepcopy(b);c['objets'][0][champ]=valeur
+            assert not restauration.comparer_lectures(a,c,fenetres)
+        c=copy.deepcopy(b);c['politique']['version']+=1
+        assert not restauration.comparer_lectures(a,c,fenetres)
+        for champ,valeur in [('urgence',999),('etat','avant_fenetre'),('centre','2025-01-01T00:00:00Z')]:
+            c=copy.deepcopy(b);c['objets'][0]['fenetre'][champ]=valeur
+            try:restauration.comparer_lectures(a,c,fenetres)
+            except ValueError:pass
+            else:raise AssertionError('Fenêtre altérée acceptée : '+champ)
+        c=copy.deepcopy(b);c['maintenant']='sans-fuseau'
+        try:restauration.comparer_lectures(a,c,fenetres)
+        except ValueError:pass
+        else:raise AssertionError('Instant invalide accepté')
         print('RLS : dérive des 14 tables réparée, refus atomique, idempotence, données/observations/séance ouverte inchangées, isolation Alice/Bob, lien interpropriétaires refusé et transaction sans identité vérifiés.')
+        print('Lectures : deux instants/urgences SQL réels, toutes données/dates/politiques comparées ; fenêtres recalculées et altérations refusées sans modification du modèle.')
     finally:docker('rm','--force',nom)
 
 

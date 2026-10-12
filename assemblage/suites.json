@@ -425,7 +425,8 @@
         "tests/test_monolithe_transport.py",
         "scripts/monolithe-diagnostic.py",
         "tests/test_monolithe_diagnostic.py",
-        "modules/metier.nix"
+        "modules/metier.nix",
+        "tests/test_monolithe_operation.py"
       ],
       "vision": [
         "migrations/*.sql",
@@ -484,6 +485,16 @@
         "tests",
         "-p",
         "test_monolithe_diagnostic.py"
+      ],
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_monolithe_operation.py"
       ]
     ],
     "dependances": [

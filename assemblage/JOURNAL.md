@@ -535,3 +535,16 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   Depuis parent accessible : ASDF/FASL puis quatre états SQLite initiaux réellement
   initialisés sans transport/IdP. Tests sur fixtures uniquement ; image interactive
   conservée et production ancienne inchangée.
+- Run38187899380 : préparation4e6dba3 réussie, générationblygjsd9 ; restauration
+  s'arrête avant activation sur comparaison161. Diagnostic38188175687 confirme
+  l'étape : SBCL/SQLite et les deux serveurs ont passé les contrôles précédents.
+  Égalité brute invalide : vision_lire retourne now() et vision_fenetre calcule
+  urgence/état à cet instant. Comparateur corrigé, mêmes données/dates/politiques
+  strictes, fenêtres complètes vérifiées par la fonction SQL métier inchangée à
+  chaque instant. Régression PG réelle avec référence datée : deux urgences
+  différentes acceptées, altérations de champs durables et fenêtres refusées.
+  Migration39,8565s passe, inclut froid/autre UID ; sécurité1,4081s passe avec
+  contrôleur d'opération (diagnostic fermé une fois, erreur initiale conservée,
+  aucune répétition/activation après échec). Test Python initial importait le
+  namespace assemblage sans scripts dans sys.path ; chemin du test corrigé.
+  Aucune modification du modèle/SQL métier ni donnée en production.

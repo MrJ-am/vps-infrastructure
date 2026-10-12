@@ -88,5 +88,14 @@ class Retour(unittest.TestCase):
                     commande.assert_not_called()
                 self.assertFalse((self.d/'activation.json').exists())
 
+    def test_bascule_refuse_une_restauration_sans_preuve_temporelle(self):
+        (self.d/'restauration.json').write_text(json.dumps({'qualification_applicative':{
+            'migration_27_rls_sur_copie':True}}))
+        with patch.object(m.stage,'etat',return_value=self.before),patch.object(m.stage,'commande') as commande:
+            with self.assertRaisesRegex(ValueError,'Fenêtres temporelles non qualifiées'):
+                m.activer(self.d,self.prepare,{})
+            commande.assert_not_called()
+        self.assertFalse((self.d/'activation.json').exists())
+
 
 if __name__=='__main__':unittest.main()

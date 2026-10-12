@@ -32,6 +32,29 @@ def module(nom,path):
     s=importlib.util.spec_from_file_location(nom,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 
 
+def comparer_lectures(a,b,fenetres):
+    """Même données, fenêtres vérifiées à chaque instant de lecture réel.
+
+    now() et l'urgence/état dérivés peuvent changer entre deux transactions.
+    Aucun champ durable/date/politique n'est exclu. Le callback recalcule la
+    fenêtre complète avec vision_fenetre existante dans la copie PostgreSQL.
+    """
+    def projection(v):
+        if not isinstance(v,dict) or not isinstance(v.get('maintenant'),str):raise ValueError('Lecture sans instant')
+        instant=datetime.datetime.fromisoformat(v['maintenant'].replace('Z','+00:00'))
+        if instant.tzinfo is None:raise ValueError('Lecture sans fuseau')
+        attendues=fenetres(instant.isoformat());objets=v.get('objets')
+        if not isinstance(objets,list):raise ValueError('Lecture sans objets')
+        if len(objets)!=len(attendues) or {str(o.get('id')) for o in objets}!=set(attendues):raise ValueError('Objets restaurés divergents')
+        resultat=[]
+        for o in objets:
+            f=o.get('fenetre')
+            if f!=attendues[str(o['id'])]:raise ValueError('Fenêtre restaurée divergente')
+            resultat.append({**o,'fenetre':{k:x for k,x in f.items() if k not in ('urgence','etat')}})
+        return {**{k:x for k,x in v.items() if k!='maintenant'},'objets':resultat}
+    return projection(a)==projection(b)
+
+
 def main(revision):
     if os.geteuid()!=0 or not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Opérateur/révision refusés')
     d=Path('/root/mrjam-assemblages')/revision
@@ -81,7 +104,22 @@ def main(revision):
         ids=json.loads(sql('vision',"SELECT coalesce(json_agg(id),'[]') FROM (SELECT id FROM vision_items WHERE utilisateur="+"'"+proprietaire+"' ORDER BY id LIMIT 1) s"))
         backup.exiger(len(ids)==1)
         contenu=json.dumps({'type':'item','ids':ids}).encode()
+        def fenetres(instant):
+            # Propriétaire déjà validé ; instant ISO reparsé/canonique et IDs
+            # issus de la base. Aucune valeur ou ligne personnelle journalisée.
+            if any(type(i) is not int or not 0<i<2**63 for i in ids):raise ValueError('IDs restaurés inattendus')
+            q="""BEGIN READ ONLY;
+SELECT coalesce(json_object_agg(i.id,vision_fenetre(i.stabilite,
+ coalesce((SELECT max(f.priorite) FROM vision_liens l JOIN vision_fiches f
+   ON f.utilisateur=l.utilisateur AND f.id=l.fiche_id
+   WHERE l.utilisateur=i.utilisateur AND l.item_id=i.id AND f.archive_a IS NULL),0),
+ coalesce(pr.intervalle_jours,90),coalesce(pr.decalage,0),i.reference_a,
+ '"""+instant+"""'::timestamptz)),'{}')
+FROM vision_items i LEFT JOIN vision_profils pr ON pr.utilisateur=i.utilisateur
+WHERE i.utilisateur='"""+proprietaire+"' AND i.id IN ("+','.join(map(str,ids))+'); COMMIT;'
+            return json.loads(sql('vision',q))
         env={'PATH':os.environ['PATH'],'LANG':'C.UTF-8','PGHOST':str(isole),'PGUSER':'vision','PGDATABASE':'vision',
+             'PGOPTIONS':'-c TimeZone=UTC -c DateStyle=ISO',
              'VISION_PSQL':str(wrapper),'VISION_DOCUMENT_ROOT':prepare['parametres']['documentVision'],'VISION_VERSION':'2.7.0',
              'MRJAM_LIBCRYPTO':str(outils/'openssl/lib/libcrypto.so.3'),
              'MRJAM_LIBPQ':str(outils/'postgresql/lib/libpq.so.5'),
@@ -158,7 +196,7 @@ def main(revision):
                 except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait();raise ValueError('Arrêt non borné')
                 journal.close();(essais/'metier.sock').unlink(missing_ok=True)
         old=essai(ancien,lire_ancien);new=essai(image,lire_commun,True)
-        backup.exiger(old==new and [o['id'] for o in new['objets']]==ids)
+        backup.exiger(comparer_lectures(old,new,fenetres) and [o['id'] for o in new['objets']]==ids)
         original=new['objets'][0]['contenu']
         def payload(obj,texte):return json.dumps({'id':obj['id'],'version':obj['version'],
             'contenu':texte,'cle':str(uuid.uuid4()),'emise_a':datetime.datetime.now(datetime.timezone.utc).isoformat().replace('+00:00','Z')}).encode()
@@ -168,7 +206,7 @@ def main(revision):
             code,_,_=http.requete(essais/'metier.sock',http.http('POST','/api/v1/enregistrer_item',service='vision',corps=data,extra=extra))
             backup.exiger(code==200);return lire_commun()
         modifie=essai(image,lire_commun,True,modifier_commun)
-        backup.exiger(essai(ancien,lire_ancien)==modifie)
+        backup.exiger(comparer_lectures(essai(ancien,lire_ancien),modifie,fenetres))
         def modifier_ancien(lu):
             req=urllib.request.Request('http://127.0.0.1:'+str(port)+'/api/v1/enregistrer_item',data=payload(lu['objets'][0],original),
                 headers={'Content-Type':'application/json','X-Vision-Authenticated':'1','X-Mrj-User':proprietaire})
@@ -177,9 +215,10 @@ def main(revision):
         retour=essai(ancien,lire_ancien,operation=modifier_ancien)
         backup.exiger(retour['objets'][0]['contenu']==original)
         # Redémarrer la même image ; seules lectures, aucun faux objet ajouté.
-        backup.exiger(essai(image,lire_commun,True)==retour)
+        backup.exiger(comparer_lectures(essai(image,lire_commun,True),retour,fenetres))
         return {'acl_vision_30_matheval_6':True,'migration_26_sur_copie':True,
           'migration_27_rls_sur_copie':True,
+          'fenetres_verifiees_aux_instants_de_lecture':True,
           'contenus_metier_preserves':True,'lectures_ancien_et_commun_identiques':True,
           'redemarrage_commun':True,'retour_lecture_qualifie':True,
           'retour_code_sans_restaurer_production':True,'sqlite_colonnes_et_messages_historiques_preserves':True,

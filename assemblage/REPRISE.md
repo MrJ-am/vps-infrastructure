@@ -1,12 +1,46 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — correction RLS avant bascule
+## Point de reprise actif — qualification du retour applicatif
+
+Étape 1 non activée, production ancienne r6s7ags3 conservée ; Kanidm non commencé.
+Dernier déploiement38187899380/0528f41, candidat4e6dba3 : préparation réussie,
+RLS/ACL, SBCL/copiesSQLite et démarrage ancien/commun passent ; arrêt avant
+activation sur égalité brute des lectures. Diagnostic38188175687 confirme ligne161,
+activationfalse/restaurationnonfinalisée. Aucun rejeu des écritures de copie.
+
+Correction qualifiée : comparer tous contenus/dates/versions/politiques, valider
+chaque fenêtre complète avec vision_fenetre à son instant de lecture, comparer
+les invariants après validation d'urgence/état dérivés. Tests PostgreSQL réels :
+deux instants et urgences différents, données identiques acceptées ; altérations
+de contenu/date/stabilité/référence/politique/fenêtre et instant invalide refusées.
+Modèle métier et sources Lisp inchangés. Migration39,8565s et sécurité1,4081s passent.
+Le workflow remontera le diagnostic fermé dans le même run en cas d'échec,
+sans répétition ni masquage de l'opération initiale (tests d'échec exécutés).
+
+Corrections conservées : Vision027 rétablit les14RLS sans réécrire les données ;
+répertoire de restauration éphémère privé sous /var/lib, aucun droit PG élargi ;
+régression réelle SBCL/autre UID sans réseau. Les tests de copie passent aussi.
+Vision18c52cdd publié, autres sources exactes dans manifest.json. Interfaces
+qualifiées conservées (Vision37871df2). Binaire Nix296b7c89/graphe Lisp inchangés.
+ArchitectureC/image persistante et pont existants préservés ; aucun nouveau
+qualifier synthétique, reconnexion, pool ou outil. CLI GitHub fonctionne.
+
+À reprendre : publier les opérateurs corrigés, vérifier les35reçus exacts et
+sceller le même artefact ; transport chiffré puis descripteur central. Une seule
+exécution fermée préparation/restauration/retour/activation conditionnelle.
+Après constat : MCP réel, invariants, mémoire/latences/redémarrage/services tiers.
+Kanidm seulement après validation personnelle de l'étape1 en production.
+
+## État précédent — historique conservé
+
+## Point de reprise antérieur — correction RLS avant bascule
 
 Candidat courant4e6dba37bdb5da246b439b876164c50aed21b950 : scellement complet
 réussi, transport0bc7abddb0ed1b8056fadfef87b4cb901af9e755 publié,
 109109871octets chiffrés, SHA256c7a46d4e78bdf6520c557948a5804e96b2565fe29b7788480e7ab6526ef2f6df.
 Le descripteur central remplace9a063b8 ; préparation/restauration/activation
-conditionnelle sont la prochaine exécution fermée, sans nouvelle validation humaine.
+conditionnelle sont exécutées dans le run38187899380 sur0528f41. Issue à
+constater après interruption ; ne pas supposer arrêt, retour ou activation.
 
 Production ancienne conservée ; étape 1 non activée, Kanidm non commencé.
 Préparation 38184214522 réussie, déploiement 38184424703 arrêté pendant la
