@@ -119,10 +119,10 @@
     },
     "editorial": {
       "resultat": "succes",
-      "duree_secondes": 0.2583,
+      "duree_secondes": 0.523,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "6a1239949b90abd84ef4d6e163729a580ff9f0558cd19ccfbab3ed99b1affc49",
+      "sha256": "f91951a18f3e6cbb7d5b47c9e2805d36060780a86707a7a907c1251cc5bb33f8",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -245,12 +245,12 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 48.3562,
+      "duree_secondes": 41.0322,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "7c30cf967b2624f97bd062a17871b75efb927110d239b6e457d884be0e2e364b",
+      "sha256": "375f758def72277d516eeb4e6220322fbaa9b22113e964b3a10f07f7d74007be",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôles affectés rejoués ; dépendance réelle au préparateur incluse, aucun contrôle distant de développement."
     },
     "native-contrats": {
       "resultat": "succes",
@@ -317,12 +317,12 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 0.972,
+      "duree_secondes": 0.9335,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "48de35e0119168a60b78397c8bfd45b44a7c60ef4cb61f1bfb290e6e9378572f",
+      "sha256": "9c2fb4103511b646940b1093dc7256c6e150899bc372ce7fb8422f7d844857ea",
       "artefact_metier_sha256": null,
-      "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
+      "reuse": "Contrôles affectés rejoués ; dépendance réelle au préparateur incluse, aucun contrôle distant de développement."
     },
     "signature-web": {
       "resultat": "succes",

@@ -1035,7 +1035,8 @@
         "tests/vision-rls.py",
         "tests/restauration-etats.py",
         "tests/postgresql-fichiers-acces.py",
-        "assemblage/manifest.json"
+        "assemblage/manifest.json",
+        "scripts/monolithe-preparer.py"
       ],
       "vision": [
         "migrations/*.sql",

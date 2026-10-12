@@ -22,7 +22,8 @@ prioritaires, états nouveaux conservés, fichiers communs supplémentaires chif
 retour partiel sans recopie après redémarrage. PG17 réel : hba_file/ident_file
 postmaster, restartPG/Keycloak précisément déclaré, versions/données conservées,
 autres protections inchangées ; rôle étroit après setupPG. Essai reload abandonné
-archivé, aucun succès prétendu. Migration48,3562s/sélection0,972s valides.
+archivé, aucun succès prétendu. Migration41,0322s/sélection0,9335s passent après ajout du préparateur réel
+aux dépendances de migration ; reçus vérifiés sur disque après fin du processus.
 
 Prochain : publication/scellement/transport/descripteur, un déploiement central
 préparer/restaurer/activer/contrôler, constater son issue avant répétition, puis
