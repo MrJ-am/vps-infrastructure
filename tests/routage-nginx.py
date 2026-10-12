@@ -32,8 +32,28 @@ def verifier():
     r=json.loads((ROOT/'state/frontends-candidats/dernier-vision.json').read_text())
     documents=(ROOT/r['candidat']).resolve()
     source=ROOT/'state/outils-sources'/('nixpkgs-'+audit['revision'])
-    expression='let p=import '+json.dumps(str(source))+' { system="x86_64-linux"; }; in (import '+str(ROOT/'modules/metier.nix')+' { lib=p.lib; pkgs=p; config.infrastructure.metier={ enable=true; documentVision='+json.dumps(str(documents))+'; ressourcesMatheval="/sans-matheval"; }; }).config.content.services.nginx.virtualHosts."vision.mrj.am".locations'
+    expression='''let p=import SOURCE { system="x86_64-linux"; }; lib=p.lib;
+      nouveaux=(import MODULE { inherit lib; pkgs=p;
+        config.infrastructure.metier={ enable=true; documentVision=DOCUMENTS; ressourcesMatheval="/sans-matheval"; };
+      }).config.content.services.nginx.virtualHosts."vision.mrj.am".locations;
+      options=import (SOURCE + "/nixos/modules/services/web-servers/nginx/location-options.nix") {
+        inherit lib; config.services.nginx={ recommendedProxySettings=false; recommendedUwsgiSettings=false; };
+      };
+      e=lib.evalModules { modules=[
+        { options.locations=lib.mkOption { type=lib.types.attrsOf (lib.types.submodule options); }; }
+        { config.locations={
+            "= /".root=lib.mkForce "/historique/vision";
+            "= /interface-manifest.json".root=lib.mkForce "/historique/vision";
+          };
+        }
+        { config.locations=nouveaux; }
+      ]; };
+      in e.config.locations'''.replace('SOURCE',json.dumps(str(source))).replace('MODULE',str(ROOT/'modules/metier.nix')).replace('DOCUMENTS',json.dumps(str(documents)))
     locations=json.loads(subprocess.check_output(['nix-instantiate','--eval','--strict','--json','--expr',expression],text=True))
+    # Assertion réelle du module Nginx NixOS : root et alias sont exclusifs.
+    assert all(v['root'] is None or v['alias'] is None for v in locations.values())
+    assert locations['= /']['root'] is None and locations['= /']['alias'] is None
+    assert locations['= /interface-manifest.json']['root'] is None
     with tempfile.TemporaryDirectory(prefix='mrjam-routage-') as tmp:
         d=Path(tmp);sock=d/'metier.sock'
         env={k:v for k,v in os.environ.items() if k in ('PATH','LANG','LC_ALL','MRJAM_LIBCRYPTO','MRJAM_LIBPQ','MRJAM_LIBSQLITE')}
@@ -60,7 +80,9 @@ def verifier():
                     directives=[]
                     for k in ('root','alias','proxyPass','extraConfig'):
                         if k not in opts:continue
-                        value=simplifier(opts[k]).replace('/run/mrjam-metier/http.sock',str(sock))
+                        value=simplifier(opts[k])
+                        if value is None:continue
+                        value=value.replace('/run/mrjam-metier/http.sock',str(sock))
                         directives.append(value if k=='extraConfig' else ('proxy_pass' if k=='proxyPass' else k)+' '+value+';')
                     lignes.append('location '+chemin+' {\n'+'\n'.join(directives)+'\n}')
                 conf=d/('ancien.conf' if ancien else 'actuel.conf')

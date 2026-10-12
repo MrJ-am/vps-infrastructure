@@ -155,6 +155,8 @@ def erreur_nix(texte):
                 'undefined variable':'variable_inconnue','Failed assertions':'assertions',
                 'syntax error':'syntaxe','cannot coerce':'conversion'}
     out['categories']=[v for k,v in categories.items() if k in texte]
+    if 'Only one of nginx root or alias can be specified on a location.' in texte:
+        out['regle_nginx']='root_alias_exclusifs'
     # Noms fixes de propriétés de routage, jamais les valeurs de définition.
     out['proprietes_nginx']=[k for k in ('root','alias','proxyPass','tryFiles','index','extraConfig')
         if re.search(r'\b'+k+r'\b',texte)]
@@ -171,6 +173,33 @@ def erreur_nix(texte):
     return out
 
 
+def locations_vision(d):
+    m=json.loads((d/'payload/vps/assemblage/manifest.json').read_text())
+    expression='''let p=import <nixpkgs> { system="x86_64-linux"; }; lib=p.lib;
+      e=import <nixpkgs/nixos/lib/eval-config.nix> {
+        system="x86_64-linux"; modules=[ (builtins.toPath CONFIGURATION) ];
+      };
+      ls=e.config.services.nginx.virtualHosts."vision.mrj.am".locations;
+      in lib.genAttrs [ "= /" "= /interface-manifest.json" "/" ] (n:
+        if !(builtins.hasAttr n ls) then { existe=false; } else let l=ls.${n}; in {
+          existe=true;
+          root=l.root!=null; alias=l.alias!=null; proxyPass=l.proxyPass!=null;
+          tryFiles=l.tryFiles!=null; index=l.index!=null; return=l.return!=null;
+          directives= builtins.filter (k: lib.hasInfix (k+" ") l.extraConfig)
+            [ "try_files" "index" "root" "alias" "return" "rewrite" "proxy_pass" "auth_request" ];
+        })'''.replace('CONFIGURATION',json.dumps(str(Path('/etc/nixos/configuration.nix').resolve())))
+    p=subprocess.run(['nix-instantiate','-I','nixpkgs='+m['toolchain']['production']['nixpkgs'],
+        '--eval','--strict','--json','--expr',expression],capture_output=True,text=True,timeout=120)
+    if p.returncode:return {'evaluation_code':p.returncode}
+    r=json.loads(p.stdout);out={}
+    champs=('existe','root','alias','proxyPass','tryFiles','index','return')
+    for n in ('= /','= /interface-manifest.json','/'):
+        v=r.get(n,{});out[n]={k:v[k] for k in champs if type(v.get(k)) is bool}
+        out[n]['directives']=[k for k in v.get('directives',[]) if k in
+            ('try_files','index','root','alias','return','rewrite','proxy_pass','auth_request')]
+    return out
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -178,7 +207,8 @@ def main(revision):
         p=d/'erreur-commande-privee.log'
         print(json.dumps({'revision':revision,'preparation_presente':False,
             'activation_presente':(d/'activation.json').exists(),
-            'evaluation_nix_incomplete':True,'erreur_nix':erreur_nix(p.read_text()) if p.is_file() else {}},ensure_ascii=False))
+            'evaluation_nix_incomplete':True,'erreur_nix':erreur_nix(p.read_text()) if p.is_file() else {},
+            'locations_vision_installees':locations_vision(d)},ensure_ascii=False))
         return
     r=json.loads((d/'evaluation-privee.json').read_text())
     out={'revision':revision,'assertions':r['assertions'],
