@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 0.9649,
+      "duree_secondes": 1.4081,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "07cdede126e59018c8a0f65aa76e85ad1068281e5f033460e7fc35bcbc6f33e1",
+      "sha256": "93ba787208f86870b5091a3738c7be596d00792a9c2776c9477935a0bb12bac8",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -245,10 +245,10 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 29.4132,
+      "duree_secondes": 39.8565,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "86445eb0b5dcc3da8e2f604024c79c2bbda14016121dda54b6c5a151ab5df3be",
+      "sha256": "5474253177dfc08e6f813f804bb0985ae42a933bf5e955e1414bc70ee8cb988e",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -317,10 +317,10 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 0.991,
+      "duree_secondes": 1.0104,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "06ae94a09b14bc35ac7d7d72a62007875e20f8cf6f82efb46184b3ce85fc3baf",
+      "sha256": "62b3cb7ef54857eac6b9ee33ee6733bde5107eea0c89d6a08171af0dc04b5231",
       "artefact_metier_sha256": null,
       "reuse": "égalité exacte des entrées/outils/configuration contrôlée localement ; le scelleur la vérifie avant soumission"
     },
@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "réussi ; mêmes35 reçus exacts dans le bundle, candidat4e6dba3",
+    "scellement": "à effectuer sur nouveaux opérateurs ; même graphe Lisp/artefact/interfaces",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -424,9 +424,7 @@
       "migration_secondes": 29.4132,
       "production": "ancienne conservée ; nouvelle restauration/bascule nécessaires"
     },
-    "revision_operateurs": "4e6dba37bdb5da246b439b876164c50aed21b950",
-    "bundle_complet_verifie_localement": true,
-    "stage_sha256": "e6cc7657e7af98a144c4d7ab6ed0eaeea291836f648d68ebb05a4b58c0f04129"
+    "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés."
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

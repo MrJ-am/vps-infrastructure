@@ -168,6 +168,7 @@ def activer(d,prepare,cert):
     stage.exiger(stage.etat(d)==prepare['avant'],'État concurrent depuis préparation')
     r=json.loads((d/'restauration.json').read_text());q=r['qualification_applicative']
     stage.exiger(q.get('migration_27_rls_sur_copie') is True,'Réconciliation RLS non qualifiée sur la restauration')
+    stage.exiger(q.get('fenetres_verifiees_aux_instants_de_lecture') is True,'Fenêtres temporelles non qualifiées sur la restauration')
     stage.exiger(r['empreintes_semantiques_identiques'] and r['retour_applicatif_qualifie']
                  and q['acl_vision_30_matheval_6'] and not q['retour_operations_ecriture_restant'],
                  'Restauration/retour non qualifiés')

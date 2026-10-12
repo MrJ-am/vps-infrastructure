@@ -4,10 +4,17 @@ import os
 from pathlib import Path
 import shlex
 import subprocess
+import sys
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('mrjam_stage',ROOT/'scripts/monolithe-stage.py')
 stage=importlib.util.module_from_spec(spec);spec.loader.exec_module(stage)
+
+
+def diagnostiquer(nixpkgs,revision):
+    with (ROOT/'scripts/monolithe-diagnostic.py').open('rb') as f:
+        stage.ssh('nix-shell -I nixpkgs='+nixpkgs+' -p python3 --run '+
+                  shlex.quote('python3 -B - '+revision),stdin=f)
 
 
 def main():
@@ -17,8 +24,7 @@ def main():
     stage.exiger(operation in ('restaurer','deployer','retour','diagnostic'),'Opération inconnue')
     if operation=='diagnostic':
         nixpkgs=stage.manifeste()['toolchain']['production']['nixpkgs']
-        with (ROOT/'scripts/monolithe-diagnostic.py').open('rb') as f:
-            stage.ssh('nix-shell -I nixpkgs='+nixpkgs+' -p python3 --run '+shlex.quote('python3 -B - '+rev),stdin=f)
+        diagnostiquer(nixpkgs,rev)
         return
     root=Path('/root/mrjam-assemblages')/rev/'payload/vps/scripts'
     commandes=[]
@@ -27,7 +33,15 @@ def main():
     if operation in ('deployer','retour'):
         commandes.append('python3 -B '+str(root/'monolithe-activer.py')+' '+('activer' if operation=='deployer' else 'retour')+' '+rev)
     nixpkgs=stage.manifeste()['toolchain']['production']['nixpkgs']
-    for commande in commandes:stage.ssh('nix-shell -I nixpkgs='+nixpkgs+' -p python3 --run '+shlex.quote(commande))
+    for commande in commandes:
+        try:stage.ssh('nix-shell -I nixpkgs='+nixpkgs+' -p python3 --run '+shlex.quote(commande))
+        except subprocess.CalledProcessError:
+            # Lecture fermée dans le même run : ne pas rejouer l'opération ni
+            # masquer son échec, même si son diagnostic est indisponible.
+            try:diagnostiquer(nixpkgs,rev)
+            except Exception as erreur:
+                print('Diagnostic fermé indisponible : '+type(erreur).__name__,file=sys.stderr)
+            raise
 
 
 if __name__=='__main__':main()
