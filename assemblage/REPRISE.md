@@ -29,7 +29,12 @@ Candidat77c7f82 scellé : mêmes35reçus/binaire296b7/interfaces, bundle complet
 vérifié ; transport e2d6910 publié,109128533octets chiffrés, SHA256
 5e4436ee75d40558a5649e4e4e8da74836e720b8e0d806d62ef8275ebf4ebf9a.
 
-Prochain : descripteur publié, un déploiement central
+Déploiement38194338389/b9eeb068 échoué : préparation et restauration complète
+réussies, service commun démarré puis contrôle rôles SQL refusé (verifier-tables40).
+Retour ancien système enregistré, seul PIDKeycloak différent, aucun SQL ancien
+restauré. Diagnostic fermé des rôles à relever avant correction/nouveau candidat.
+
+Prochain : constater ce déploiement central
 préparer/restaurer/activer/contrôler, constater son issue avant répétition, puis
 MCP réel, données/restart/mesures/services avant jalon1 et Kanidm automatique.
 

@@ -66,6 +66,22 @@ class Diagnostic(unittest.TestCase):
         self.assertNotIn('secret',json.dumps(r))
         self.assertNotIn('prive',json.dumps(r))
 
+    def test_role_privilegie_seulement_si_exact_et_versionne(self):
+        t='ValueError: Rôle SQL privilégié : vision'
+        self.assertEqual(m.diagnostic_erreur(t,(),{'vision'})['role_sql_privilegie'],'vision')
+        self.assertNotIn('role_sql_privilegie',m.diagnostic_erreur(t,(),{'autre'}))
+        self.assertNotIn('role_sql_privilegie',m.diagnostic_erreur(t+' secret',(),{'vision'}))
+
+    def test_roles_metadonnees_lecture_seule_filtrees(self):
+        champs=('super','bypass','creer_role','creer_base','replication','membre_proprietaire')
+        rows=[{'nom':r,**{k:False for k in champs},'secret':'prive'} for r in ('vision','inconnu')]
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(stdout=json.dumps(rows))) as run:
+            r=m.metadonnees_roles('/nix/store/postgres','vision',{'vision'},SimpleNamespace(ROLES_SQL='SELECT {roles}'))
+        self.assertEqual(set(r),{'vision'});self.assertNotIn('prive',json.dumps(r))
+        self.assertIn('BEGIN READ ONLY',run.call_args.kwargs['input'])
+        with self.assertRaises(ValueError):m.metadonnees_roles('/nix/store/postgres','autre',{'vision'},None)
+        with self.assertRaises(ValueError):m.metadonnees_roles('/nix/store/postgres','vision',{'secret;'},None)
+
     def test_seul_champ_de_contrat_de_table_versionnee_est_emis(self):
         t='ValueError: Contrat SQL divergent : public.vision_items force_rls'
         r=m.diagnostic_erreur(t,{'public.vision_items'})
