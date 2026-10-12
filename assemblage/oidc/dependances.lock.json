@@ -1,0 +1,141 @@
+{
+  "format": 1,
+  "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "sbcl": "2.6.4",
+  "asdf": "3.3.1",
+  "etat": "sources/licences/effets et NAR vérifiés ; qualification du client puis IdP réel encore requise",
+  "bibliotheques": [
+    {
+      "deps": [],
+      "hash": "0jq0n59s0r9yl374f0zpdnaflb5g853yqvax7ka8rnypspyykwdw",
+      "name": "alexandria",
+      "src": "/nix/store/i6nnd3amy08a3f3v8q76nh9kw9434z29-source",
+      "url": "https://beta.quicklisp.org/archive/alexandria/2024-10-12/alexandria-20241012-git.tgz",
+      "version": "20241012-git",
+      "licences_asd": [
+        "Public Domain / 0-clause MIT"
+      ],
+      "licences_fichiers": {
+        "LICENCE": "4404678ab808d822e3ec48eda2b4fb6b7d15aeff092979d7c662329b5f6a02a8"
+      },
+      "nar_sha256": "sha256:0jq0n59s0r9yl374f0zpdnaflb5g853yqvax7ka8rnypspyykwdw",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Définitions et macros ; aucun daemon/connexion/migration."
+    },
+    {
+      "deps": [
+        "alexandria",
+        "global-vars",
+        "trivial-features",
+        "trivial-garbage"
+      ],
+      "hash": "1ds1aa3rd38hq5i1nwd9qi8icxmdag0shcwwsf7km91v9214385d",
+      "name": "bordeaux-threads",
+      "src": "/nix/store/ri467dblz6s38a5kj1h3pf3n04ijar14-source",
+      "url": "https://beta.quicklisp.org/archive/bordeaux-threads/2024-10-12/bordeaux-threads-v0.9.4.tgz",
+      "version": "v0.9.4",
+      "licences_asd": [
+        "MIT"
+      ],
+      "licences_fichiers": {
+        "LICENSE": "a2a949a097dde905dc19964a9bab63af141f573ab688d035678283732286ca28",
+        "docs/themes/techdoc/LICENSE.md": "f95577d819aade173bb0265ff212d3a9c02bf0183ea335e96a85b9a278c71f8f"
+      },
+      "nar_sha256": "sha256:1ds1aa3rd38hq5i1nwd9qi8icxmdag0shcwwsf7km91v9214385d",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Définitions de threads/verrous et bindings spéciaux par défaut ; pas de thread métier démarré au chargement."
+    },
+    {
+      "deps": [],
+      "hash": "06m3xc8l3pgsapl8fvsi9wf6y46zs75cp9zn7zh6dc65v4s5wz3d",
+      "name": "global-vars",
+      "src": "/nix/store/zgr53a3nbrl9pr8kkl6kqmrfrwl759a0-source",
+      "url": "https://beta.quicklisp.org/archive/global-vars/2014-11-06/global-vars-20141106-git.tgz",
+      "version": "20141106-git",
+      "licences_asd": [
+        "MIT"
+      ],
+      "licences_fichiers": {},
+      "nar_sha256": "sha256:06m3xc8l3pgsapl8fvsi9wf6y46zs75cp9zn7zh6dc65v4s5wz3d",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Macros et plists de symboles à la compilation ; aucun service. Licence dans global-vars.lisp."
+    },
+    {
+      "deps": [],
+      "hash": "0r3lwy5ssrw6d3v1clyfqc59dxknsnr5zrb0h64zx5b7ddn6vb6q",
+      "name": "trivial-features",
+      "src": "/nix/store/mzh57nnqjav4r4h9fp35iwbpnqqczaj3-source",
+      "url": "https://beta.quicklisp.org/archive/trivial-features/2025-06-22/trivial-features-20250622-git.tgz",
+      "version": "20250622-git",
+      "licences_asd": [
+        "MIT"
+      ],
+      "licences_fichiers": {},
+      "nar_sha256": "sha256:0r3lwy5ssrw6d3v1clyfqc59dxknsnr5zrb0h64zx5b7ddn6vb6q",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Détection endian locale et mise à jour de *features* au chargement ; aucune connexion. Licence dans src/tf-sbcl.lisp."
+    },
+    {
+      "deps": [],
+      "hash": "0rfwxvwg0kpcaa0hsi035yrkfdfks4bq8d9azmrww2f0rmv9g6sd",
+      "name": "trivial-garbage",
+      "src": "/nix/store/k15d6kjjl2pkv7jj45l0c62xgjd9f8f7-source",
+      "url": "https://beta.quicklisp.org/archive/trivial-garbage/2023-10-21/trivial-garbage-20231021-git.tgz",
+      "version": "20231021-git",
+      "licences_asd": [
+        "Public Domain"
+      ],
+      "licences_fichiers": {},
+      "nar_sha256": "sha256:0rfwxvwg0kpcaa0hsi035yrkfdfks4bq8d9azmrww2f0rmv9g6sd",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Définitions/finaliseurs explicites ; aucun finaliseur applicatif installé au chargement. Domaine public dans trivial-garbage.lisp."
+    },
+    {
+      "deps": [],
+      "hash": "12jj54h0fs6n237cvnp8v6hn0imfksammq22ys6pi0gwz2w47rbj",
+      "name": "cl-base64",
+      "src": "/nix/store/345ysbcgi06nf9nzsca3gdwkhn22nvkx-source",
+      "url": "https://beta.quicklisp.org/archive/cl-base64/2020-10-16/cl-base64-20201016-git.tgz",
+      "version": "20201016-git",
+      "licences_asd": [
+        "BSD-style"
+      ],
+      "licences_fichiers": {
+        "COPYING": "338ab0f32de36c48335eedb49462ca8d06f2c5b2bb327518fce1acdbf42f0b03"
+      },
+      "nar_sha256": "sha256:12jj54h0fs6n237cvnp8v6hn0imfksammq22ys6pi0gwz2w47rbj",
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb / paquet SBCL ; source et patches exacts du store",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Tables de décodage au chargement ; décodeur permissif enveloppé par alphabet/tailles/canonicalité stricts. Tests propres sans ptester/kmrcl."
+    },
+    {
+      "name": "ironclad",
+      "version": "v0.61",
+      "revision": "d4fe172e4a44b2ac5ab73cf97372314f98e8b8a7",
+      "deps": [
+        "bordeaux-threads"
+      ],
+      "src": "/nix/store/4m91czjc41ywdk2djn9qyrnwc3ar3wpi-source",
+      "url": "https://beta.quicklisp.org/archive/ironclad/2024-10-12/ironclad-v0.61.tgz",
+      "hash": "1yszjy6a0q1jvdgd7fpmnvi9851s8ivp4plscw27lbnl7jlj1pmk",
+      "nar_sha256": "sha256:1yszjy6a0q1jvdgd7fpmnvi9851s8ivp4plscw27lbnl7jlj1pmk",
+      "licences_asd": [
+        "BSD-3-Clause"
+      ],
+      "licences_fichiers": {
+        "LICENSE": "cab6768feac35bcc68764bf19ff26b9729af1b1a14aa5a0b03d4fde6e4fec4dd"
+      },
+      "systemes": [
+        "ironclad/public-key/secp256r1"
+      ],
+      "provenance": "Nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb ; tous les fichiers du tag officiel sont identiques à cette source",
+      "portee": "bibliothèque produit OIDC en préparation ; aussi utilisée dans l’atelier, jamais cl-mcp/Tron/Swank dans le graphe produit",
+      "effets": "Définitions, VOP/métadonnées SBCL, verrou et objet PRNG OS au chargement ; /dev/urandom ouvert à la première utilisation (dont blinding de vérification). Aucun daemon/connexion/migration. Vérification seulement du sous-système P-256 ; entrée digest32 et signature r||s64 strictement bornées avant appel optimisé."
+    }
+  ]
+}

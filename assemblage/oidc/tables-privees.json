@@ -1,0 +1,17 @@
+{
+  "format": 1,
+  "base": "SQLite du client Log, initialisation explicite et additive ; non déployé",
+  "tables": {
+    "log_transactions": {
+      "classe": "secrets de transaction de connexion",
+      "colonnes": ["state", "binding", "client_id", "host", "verifier", "nonce", "retour", "expires", "stepup", "invitation", "notice"],
+      "acces": "répertoire0700/fichier0600 appartenant au processus métier ; aucun accès IdP/SQL public",
+      "isolation": "consommation liée à client+hôte+state+binding, nonce vérifié après signature ; SQL lié et transaction IMMEDIATE",
+      "rls": "SQLite ne propose pas RLS ; la frontière est le processus métier et les parcours contrôlés",
+      "retention_max_secondes": 600,
+      "limite_lignes": 4096,
+      "secrets_maitres_idp": false,
+      "tests": "tests/oidc-transactions.lisp ; IdP réel à qualifier ensuite"
+    }
+  }
+}

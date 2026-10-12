@@ -25,6 +25,15 @@ class Selection(unittest.TestCase):
         s = a.selection(['vision/src/json.lisp'], self.c)
         self.assertIn('matheval-pures', s)
         self.assertIn('vision-contrats', s)
+        self.assertIn('oidc-es256', s)
+
+    def test_oidc_cible_sans_frontend(self):
+        s = a.selection(['vps/lisp/identite/oidc-token.lisp'], self.c)
+        self.assertIn('oidc-es256', s)
+        self.assertNotIn('vision-interface', s)
+        s = a.selection(['vps/assemblage/oidc/dependances.lock.json'], self.c)
+        self.assertIn('oidc-es256', s)
+        self.assertNotIn('logique-interface', s)
 
     def test_sql_invalide_integration_et_migration(self):
         s = a.selection(['vision/migrations/019_multiutilisateur.sql'], self.c)

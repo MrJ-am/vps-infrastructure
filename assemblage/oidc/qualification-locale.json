@@ -1,0 +1,144 @@
+{
+  "format": 1,
+  "date_utc": "2026-10-12T05:11:37.705026+00:00",
+  "portee": "client Common Lisp et configuration préparatoire Kanidm uniquement",
+  "confiance": "locale-non-attestee",
+  "autorise_publication_production": false,
+  "activation_kanidm": false,
+  "suites": {
+    "oidc-es256": {
+      "resultat": "succes",
+      "duree_secondes": 4.9888,
+      "recu_sha256": "42fc7a74800dc296f7c53b9bd49f23780616f0a6d158236798af0ac0d820f657",
+      "entrees_sha256": {
+        "vps/mrjam-oidc.asd": "021ee466f216437aad74fe252e148ef3181540ddae06d3dfcd018c000486f8d3",
+        "vps/mrjam-native.asd": "e75b6c6a8ccbd9a8ae937e3076ce49fd85f64882f8b23edf1155c9d6df17f0a3",
+        "vps/lisp/identite/oidc-package.lisp": "78926c613e7c2f3dfaec78b8f5fd9d60ff932bf67f2e20b8b2c5c99b0658309a",
+        "vps/lisp/identite/oidc-token.lisp": "3235f3f3e6c656a91ed3a7c74a5b97a5da7d1dbc378e3b5c8fa690fe23124fe1",
+        "vps/lisp/identite/oidc-transactions.lisp": "ca31159059a17aefd39e66db4f9d3b25b1d3588b02557a96eb12fc02c3b6e4b7",
+        "vps/lisp/native/package.lisp": "68ade748bf4d70de360ccec77412880a7a565994b6a1f614f7d38abf0d5f1e16",
+        "vps/lisp/native/crypto.lisp": "d36c1d216a8e5f94d22a294211711de8c1fc162d1f3bfb0bb36791bc3d119233",
+        "vps/lisp/native/json-js.lisp": "4ed97721093ab746c004e4cc8e77cfa069c89b1f3306148d2ee272be1ee73982",
+        "vps/assemblage/oidc/dependances.lock.json": "ff8ccb3cfe8aa411ef8d181f9d0e0af6f17d9b4da0bfb2a5abbf9716ad036e37",
+        "vps/assemblage/oidc/charger-dependances.lisp": "238115e7e1ec5d6302baf65120bb8c04456b9f195a9b89d3f90a03d508c9fa76",
+        "vps/scripts/oidc-verifier-sources.py": "de81edffb507e8cdb63fc8ceaea1f058a613deb921654921cea89db5c58cdfac",
+        "vps/scripts/oidc-qualifier.py": "9dfba0149b678c49bec861ea325c7158533781d5180e68122660a7211cff52c5",
+        "vps/tests/fixtures/oidc-es256.json": "e86d795e2f2f82a76166ad5a6758907cf93a6797888adbd867b8ae0cb5aca5bd",
+        "vps/scripts/verifier-dependances.py": "591508b3b049e75c59b327dd1c9f5576ac1a1de90070f076ceeb2f463f70e63f",
+        "vps/tests/test_oidc_dependances.py": "3d58848ef367c37e0ce60d21361911b4a4fa9fbbcc72a03c43b55b4c0c102887",
+        "vps/assemblage/oidc/dependances.nix": "3383d74306b70df3ff0d1405b7ff36f45731319151c751bdd364ace40a92e5af",
+        "vps/tests/oidc-token.lisp": "7175e20cac4deda6d233a91d83693d459b82504767c855d52ad5e0eb65428bf1",
+        "vps/tests/oidc-froid.lisp": "8a23ed416ffa7ac1ecdccd25a4219dec5998d5db6344a48351765c98ed236788",
+        "vision/vision.asd": "e4dbc30b51729082925210565da783940df3b99bbf9f3a553586c3eb329471e3",
+        "vision/src/package.lisp": "c5b284c02d2bb792f1b855385ee88e4388ba7d0b3fcaac055faf901ec37adff9",
+        "vision/src/json.lisp": "b127cc8d060b0f4a0dc44da075d04f9728b054a2aeedec3c32701db02bf87117"
+      },
+      "definition_sha256": "262ad104055731b2025e9dec66e69dafb942faa754370156e3f4cfe12bf52a90"
+    },
+    "oidc-transactions": {
+      "resultat": "succes",
+      "duree_secondes": 1.6318,
+      "recu_sha256": "b878cbf2ba343f16ab230b63048e49bc630349d2871e77ed2356f80c844993b4",
+      "entrees_sha256": {
+        "vps/mrjam-oidc.asd": "021ee466f216437aad74fe252e148ef3181540ddae06d3dfcd018c000486f8d3",
+        "vps/mrjam-native.asd": "e75b6c6a8ccbd9a8ae937e3076ce49fd85f64882f8b23edf1155c9d6df17f0a3",
+        "vps/lisp/identite/oidc-package.lisp": "78926c613e7c2f3dfaec78b8f5fd9d60ff932bf67f2e20b8b2c5c99b0658309a",
+        "vps/lisp/identite/oidc-transactions.lisp": "ca31159059a17aefd39e66db4f9d3b25b1d3588b02557a96eb12fc02c3b6e4b7",
+        "vps/lisp/native/package.lisp": "68ade748bf4d70de360ccec77412880a7a565994b6a1f614f7d38abf0d5f1e16",
+        "vps/lisp/native/crypto.lisp": "d36c1d216a8e5f94d22a294211711de8c1fc162d1f3bfb0bb36791bc3d119233",
+        "vps/lisp/native/sqlite.lisp": "03fda02a97591023dff15276018f7fdafbb347a1ee78494feba7a1cdc58d5aa4",
+        "vps/assemblage/oidc/dependances.lock.json": "ff8ccb3cfe8aa411ef8d181f9d0e0af6f17d9b4da0bfb2a5abbf9716ad036e37",
+        "vps/assemblage/oidc/charger-dependances.lisp": "238115e7e1ec5d6302baf65120bb8c04456b9f195a9b89d3f90a03d508c9fa76",
+        "vps/scripts/oidc-verifier-sources.py": "de81edffb507e8cdb63fc8ceaea1f058a613deb921654921cea89db5c58cdfac",
+        "vps/scripts/oidc-qualifier.py": "9dfba0149b678c49bec861ea325c7158533781d5180e68122660a7211cff52c5",
+        "vps/tests/oidc-transactions-froid.lisp": "33020e0f3f7172ffc7f2b2c486bc6563ed6e8f3de92d73e22d93d4a83c8dd708",
+        "vps/tests/oidc-transactions.lisp": "97b2f05ae7e39ad15cb8c35289c09c4fda6dbf95ea907e84d7d4a8eda72cc75d",
+        "vps/assemblage/oidc/tables-privees.json": "f8d18d46c96f120546c4bd5b6e0227099410d4ac908efc8e27406319d9a0ce7e"
+      },
+      "definition_sha256": "0e2a11dd76395e8ad5468e9594004e6db6492225c40b20f78c27e15520729176"
+    },
+    "kanidm-configuration": {
+      "resultat": "succes",
+      "duree_secondes": 8.8789,
+      "recu_sha256": "63d8849b1bb2d62a855fd4a7c091bb270215c2d1134acbc079ab299c41e47f71",
+      "entrees_sha256": {
+        "vps/assemblage/kanidm/paquet.nix": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+        "vps/assemblage/kanidm/service.nix": "d42979b191da1f8210ed977655b26ef4f98905b4f0a17d28a68e5a61dbf12188",
+        "vps/assemblage/kanidm/dependances.json": "df8a742741291a34fb97ed361ad2ffa126454c70ba571ee6d719da332cf3e52e",
+        "vps/scripts/kanidm-verifier-configuration.py": "7f648ac492bf223af0ba39992b7e46880ab77290196ae6f84480f45e8cea80a8",
+        "vps/tests/kanidm-configuration.nix": "4864edde6d297b950a0b338dd6842ce61c1c778594b4b01d8fcb62a7a408d0e0",
+        "vps/assemblage/manifest.json": "e03703963e105deac5bf63d55aca5aaadb43a10d9444fbfa10d4af0192c15a39"
+      },
+      "definition_sha256": "9a8aab6e1d08b6dd37f5e63179edd3069bbd0f39ee4fde56b701e76c7904bd95"
+    },
+    "selection": {
+      "resultat": "succes",
+      "duree_secondes": 0.9378,
+      "recu_sha256": "d67ebaeaef9cf861d70fe7b0fa95fa54abf00d4cd8edd4e04616f28ee0935030",
+      "entrees_sha256": {
+        "vps/scripts/assemblage.py": "6a28d182ca481b1e8749587a2d49f5785112f05a15013021c02747a067a5c43d",
+        "vps/assemblage/suites.json": "cb05751209a6c87fe17cb1f5a3a423ea9b1241f0ae35e48f68dbc827af490c64",
+        "vps/tests/test_assemblage.py": "70ca1085cf4d681c8edbb8656f1bfc8128c283c101b4e21d0465b1ba71c2b000",
+        "vps/scripts/ci-impact.py": "cdeaa44d8587214b254a685c87f6430716f3068f9b16fb74485e72e6c8f720a8",
+        "vps/scripts/ci-qualifier.py": "8f1f5f6751a066e6c564c78b43176a58fccd53676fd08e3839486ba6b1676dc3",
+        "vps/tests/test_assemblage_revisions.py": "9f3074226984a634e20e76549fa36e9a9569709556f4e72e335ab2630d289670",
+        "vps/tests/test_assemblage_ci.py": "7ae025a085786376e858610496e8272ee411430e29b5effe6af05df0b5d7909f"
+      },
+      "definition_sha256": "61d31a45bd4887527f1676cb63cf1d4b128fe352b73ff612e63cc450892ff941"
+    },
+    "editorial": {
+      "resultat": "succes",
+      "duree_secondes": 0.2906,
+      "recu_sha256": "7ddd524cfbea983a4ce212f9e762f15e17a9f6fcf3494a0051251934b2b8872c",
+      "entrees_sha256": {
+        "vps/AGENTS.md": "e5d3904954f8bde6272b206ca72a512dbfeaa0cf32cdce0ddbc9b9c0fd96c6c3",
+        "vps/coordination/CONTRATS.org": "4e6efe4b8cf1c61ec3e1e35a97a028dcaf05393c287ef1e06dcb884421474498",
+        "vps/coordination/REGISTRE.org": "54b6bdfa0e9804a2cbeb35269aed7afb7351939296eb56a8123008e365f5fdbc",
+        "vps/assemblage/manifest.json": "e03703963e105deac5bf63d55aca5aaadb43a10d9444fbfa10d4af0192c15a39",
+        "vps/scripts/assemblage.py": "6a28d182ca481b1e8749587a2d49f5785112f05a15013021c02747a067a5c43d",
+        "vps/assemblage/dependances.json": "e38d8c6dda327adef28e00f8cb7c7e2fccb0b0e1fa7abee7d655cd6d6943ff09",
+        "vps/scripts/verifier-dependances.py": "591508b3b049e75c59b327dd1c9f5576ac1a1de90070f076ceeb2f463f70e63f",
+        "vps/assemblage/python/embeddings-cp312-linux-x86_64.txt": "5492566661e3fe9a9da8ea91a548e68715f40e53c5d90b1666a47d8a70b9dc03",
+        "vps/assemblage/python/logo-cp312-linux-x86_64.txt": "8ba3de6fe8b70878eb04ee0fddbd261cf7d0ee6e60392fd9d4860a1e56bed5f9",
+        "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt": "3c07d9f4be9cc67ee59ac0ca35dedf53e9677e8a86647371cbfe96849d807266",
+        "vps/assemblage/python/signature-cp312-linux-x86_64.txt": "ab53dc401a6bca58829622d8b94a41390d79f43fa11d34ae5f04c8f47d169adc",
+        "vps/scripts/verifier-ci.py": "bdc6669a1d47c3834902568d6e558444ba3dce670173816a4342b9f0674e9a72",
+        "vps/coordination/historique/workflows-infrastructure-20261011/INDEX.json": "7336f6b1c455820458cd0774dcd0fc60e0ceab8d1dded7e97095f0fc5dbe0de0",
+        "vps/coordination/historique/workflows-infrastructure-20261011/vision-demande.yml.archive": "e1e33339707c1172efdfe94eebb872f4671d25060ba917ad8d79f071ee56009f",
+        "vps/coordination/historique/workflows-infrastructure-20261011/vision-mise-en-service.yml.archive": "1679b31f70bb082d7b4ba611318d0a658c616e63cf3a677ac0fe825f42e4d902",
+        "vps/coordination/historique/qualification-ci-20261011/INDEX.json": "ea8e4ae468de86d085a40cd714064efa0ff363d224964c94c3666b5c11cca79d",
+        "vps/coordination/historique/qualification-ci-20261011/assemblage.yml.archive": "7725221ba14cda3c0ec29d7879c0615dc38df1cc96dda1d190dde0d089ecc003",
+        "vps/coordination/historique/qualification-ci-20261011/check.yml.archive": "c597f5845fdcd526543b32beabf238897b8e9b1f2635465090b973eaf343f923",
+        "vps/coordination/historique/qualification-ci-20261011/vision-autonomie-controles.yml.archive": "a16f4916ba40b3e1bd5f493e5dbb921bd42c65f0a69798fd4aac71703006dd7a"
+      },
+      "definition_sha256": "7b04411331993b779ed546ada10ccb1f62b8379ab5fbcdd529e6a8ebb120e2ad"
+    }
+  },
+  "assertions": {
+    "oidc_signatures_discovery": 681,
+    "transactions_sqlite": 36,
+    "refus_dependances": 6,
+    "selection": 21,
+    "configurations_nix": 4
+  },
+  "image_developpement": {
+    "pid_observe": 83928,
+    "architecture": "C",
+    "pool": false,
+    "cible_croisee_cl_mcp_tron": true,
+    "debugger_ouvert": false,
+    "controle": "fonctions OIDC/transactions visibles depuis Swank ; aucun scénario synthétique relancé"
+  },
+  "qualification_froide_sans_cache": {
+    "es256": 681,
+    "transactions": 36,
+    "source": "commandes oidc-qualifier.py --sans-cache et --transactions --sans-cache effectivement réussies"
+  },
+  "limites": [
+    "Aucun Kanidm installé/démarré et aucun échange réel OIDC/MCP avec lui.",
+    "Disque Codex32Go, environ1,1Go libre ; extension≥20Go demandée.",
+    "Licences Cargo vendor et compatibilité Rust à vérifier après récupération.",
+    "Politiques individuelles, email, fraîcheur MFA, sessions/révocation et récupération personnelle non qualifiés.",
+    "Jalon1 préservé ; ses preuves ne qualifient pas ce client en préparation."
+  ]
+}

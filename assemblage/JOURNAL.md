@@ -635,3 +635,44 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   de sonde refusées par CSP puis observateurs locators employés sans l’affaiblir.
   RSS principaux métier320270336→138428416octets, limites/dix latences explicites
   dans qualification-production-etape1.json. Kanidm peut commencer automatiquement.
+
+- DébutKanidm : stable1.11.2/5479338 officiel, MPL2, Cargo.lock774packages/741
+  registre sans Git transitif, checksums présents. Nix sourceNAR verrouillée,
+  provisioning non officiel explicitement désactivé. Précollecte vendor échouée
+  avant compilation : overlay32Go plein, toolchain nécessaire2,5Go non substituée.
+  Pas d’installation/serveur/prod modifiée ; disque supplémentaire demandé.
+  Deux seuls caches ciphertextf981717/0e3f999 redondants retirés après octets/SHA
+  identiques aux blobs Git et transports publiés ; sources/manifeste/preuves et
+  actif185f931 conservés. Quatre nouveaux substituts Rust/Cargo/LLVM retirés par
+  Nix--delete sans forçage/liveness,1016,31MiB ; marge1,125Go, aucune collecte globale.
+  Archive source Kanidm redondante retirée, source/provenance conservées. Image
+  interactive83928 confirmée identique depuis CL-MCP/Tron, poolNIL/debuggerNIL,
+  marqueur/objet égaux et aucune mutation ni nouveau qualifier synthétique.
+
+- ClientOIDC : Ironclad0.61/tagd4fe172, sourceNix identique fichier par fichier,
+  sept NAR/licences/effets verrouillés ; aucun outilMCP dans grapheproduit.
+  JOSE345d8cf écarté sansES256. Premier positif refusé : padding URIcl-base64
+  « . » interne, différent du standard« = » ; correction canonique, alphabet/
+  réencodage stricts, aucun remplissage accepté dans un JWT.681contrôles passent :
+  47fixtures signées/vérifiées OpenSSL indépendantes, mutations par caractère,
+  issuer/aud/azp/nonce/dates/auth_time/at_hash et profil discovery, huit sujets
+  sous lectures concurrentes. ASDFdansimage83928 puis reproduction propre ;
+  référence sanscache initiale672 puis finale681 effectivement réussie.
+- TransactionsOIDC SQLite : nouvelle table additive/classée, fichiers privés,
+  secretsIdPmaîtres absents, state/binding condensés et verifier durable.
+  Hôte/retour/client/nonce/PKCE, expiration600s/capacité4096 ; huit connexions
+  tentent la même consommation, une seule réussit et sept refusent.36contrôles
+  passent en image persistante et froide sanscache, cols/mode600 vérifiés.
+  Erreur de validation du suffixe résolue par
+  introspection UIOP : lambda(STRING SUFFIX), pas (SUFFIX STRING). Aucun effet
+  retenu hors sources, aucune table/identité réelle modifiée.
+- Kanidmpaquet : hashvendor officiel trouvé dans Nixpkgs c79f172, sourcehash
+  identique à source5479338 ; fakeHash retiré, recette/toolchain c5 conservées.
+  nix path-info renvoyait code0/null, donc aucune présence de cache prouvée ;
+  narinfo vendor/paquet effectivement404. ConfigurationNix évaluée : UIDkanidm,
+  Etat0700, TLSLoadCredential runtime, loopback8443, provisioningtiers/Unix/LDAP
+  désactivés. Trois fixturesTLS refusées, aucun serveur installé/démarré.
+  Disque1,1Go restant ; extension≥20Go déjà demandée, Rust/Kanidm réel bloqués.
+  Source native confirme absenceEmail de l’indexname2uuid et interdiction@dansName :
+  adaptation bornée toujours exigée, aucune promesse de connexionemail native.
+  Reprise/contratsécurité actualisés, preuveshistoriquejalon1 conservées.

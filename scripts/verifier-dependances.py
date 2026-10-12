@@ -65,11 +65,47 @@ def verifier_outils_frontend(racine,inventory):
             raise ValueError('Source npm frontend non verrouillée')
 
 
+def verifier_lisp_oidc(racine, inventory):
+    declaration = inventory['bibliotheques_lisp_oidc']
+    p = racine / declaration['fichier']
+    if (p.is_symlink() or not p.resolve().is_relative_to(racine / 'assemblage/oidc')
+            or empreinte(p.read_bytes()) != declaration['sha256']):
+        raise ValueError('Lock OIDC différent de son inventaire')
+    lock = json.loads(p.read_text())
+    toolchain = manifeste(racine)['toolchain']['qualification_locale']
+    if any(lock[cle] != toolchain[cle] for cle in ('sbcl', 'asdf', 'nixpkgs_revision')):
+        raise ValueError('Toolchain OIDC différente')
+    communs = {'alexandria', 'global-vars', 'trivial-features', 'trivial-garbage',
+               'bordeaux-threads', 'cl-base64'}
+    bibliotheques = lock['bibliotheques']
+    noms = {b['name'] for b in bibliotheques}
+    if noms != communs | {'ironclad'} or len(bibliotheques) != len(noms):
+        raise ValueError('Bibliothèque OIDC hors audit')
+    atelier = json.loads((racine / inventory['outillage_mcp_autorise']['fichier']).read_text())
+    atelier = {b['name']: b for b in atelier['bibliotheques']}
+    for b in bibliotheques:
+        if not set(b['deps']).issubset(noms) or not b['licences_asd']:
+            raise ValueError('Transitive OIDC non auditée')
+        if b['name'] in communs:
+            if any(b[cle] != atelier[b['name']][cle] for cle in
+                   ('version', 'hash', 'src', 'url', 'deps', 'licences_fichiers', 'nar_sha256')):
+                raise ValueError('Source commune OIDC différente de l’audit')
+        elif (b['version'] != 'v0.61'
+              or b['revision'] != 'd4fe172e4a44b2ac5ab73cf97372314f98e8b8a7'
+              or b['hash'] != '1yszjy6a0q1jvdgd7fpmnvi9851s8ivp4plscw27lbnl7jlj1pmk'
+              or b['src'] != '/nix/store/4m91czjc41ywdk2djn9qyrnwc3ar3wpi-source'
+              or b['url'] != 'https://beta.quicklisp.org/archive/ironclad/2024-10-12/ironclad-v0.61.tgz'
+              or b['systemes'] != ['ironclad/public-key/secp256r1']):
+            raise ValueError('Ironclad différent de l’audit ES256')
+    return communs | {'ironclad/public-key/secp256r1'}
+
+
 def verifier():
     racine=Path(__file__).resolve().parents[1]
     inventory=json.loads((racine/'assemblage/dependances.json').read_text())
     verifier_outils_mcp(racine,inventory)
     verifier_outils_frontend(racine,inventory)
+    systemes_tiers = verifier_lisp_oidc(racine, inventory)
     sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     for profile in inventory.get('python_profils',{}).values():
         p=racine/profile['fichier']
@@ -117,8 +153,8 @@ def verifier():
         for contenu in re.findall(r':depends-on\s*\(([^)]*)\)',texte,re.I):
             dependencies=re.findall(r'"([^"]+)"',contenu)
             if re.sub(r'"[^"]+"','',contenu).strip():raise ValueError('Déclaration ASDF non analysable : '+p.name)
-            if any(d not in declared for d in dependencies):raise ValueError('Bibliothèque tierce ASDF non autorisée : '+p.name)
-    print('Npm, requirements Python, profils transitifs, Elm et graphe interne ASDF conformes à l’inventaire verrouillé.')
+            if any(d not in declared | systemes_tiers for d in dependencies):raise ValueError('Bibliothèque tierce ASDF non autorisée : '+p.name)
+    print('Npm, requirements Python, profils transitifs, Elm et graphe ASDF audité conformes à l’inventaire verrouillé.')
 
 
 if __name__=='__main__':

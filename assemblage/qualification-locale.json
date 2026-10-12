@@ -505,5 +505,6 @@
     "Préparation, restauration récente, retour et contrôles de la version servie encore requis.",
     "Protections/secrets/clés GitHub : inspection distante refusée 403, aucun nettoyage prétendu.",
     "Préparation/restauration/bascule du candidat corrigé encore requises ; production ancienne conservée."
-  ]
+  ],
+  "portee_historique": "Qualification exacte du candidat296b7/operateurs185f931 ; jalon1 accepté dans qualification-production-etape1.json. Ce fichier et ses limites datées ne qualifient pas le client Kanidm en préparation."
 }
