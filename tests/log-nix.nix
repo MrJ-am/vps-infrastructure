@@ -36,7 +36,8 @@ assert lib.hasInfix "proxy_ssl_verify on" v."log.mrj.am".locations."/".extraConf
 assert v."log.mrj.am".locations."^~ /v1/raw/".return == "404";
 assert v."log.mrj.am".locations."^~ /realms/".return == "410";
 assert lib.all (n: !(lib.hasInfix "3002" (v."vision.mrj.am".locations.${n}.proxyPass or "")))
-  [ "/auth/" "/oauth/" "= /_mrj_session" "= /_vision_administration" "= /_vision_mcp_token"
+  [ "/auth/" "^~ /oauth/" "= /_mrj_session" "= /_vision_administration" "= /_vision_mcp_token"
     "= /.well-known/oauth-authorization-server" "= /.well-known/oauth-protected-resource/mcp" ];
+assert !(v."vision.mrj.am".locations ? "/oauth/");
 { generationEvaluee = true; kanidmSepare = true; clientLisp = true; keycloakActif = false;
   tlsVerifie = true; processusMetier = 1; production = false; }

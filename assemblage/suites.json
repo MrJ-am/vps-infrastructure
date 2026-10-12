@@ -3069,7 +3069,8 @@
         "scripts/monolithe-diagnostic.py",
         "tests/test_monolithe_stage.py",
         "scripts/monolithe-preparer.py",
-        "scripts/monolithe-restaurer.py"
+        "scripts/monolithe-restaurer.py",
+        "operations/log-reprise-native.json"
       ]
     },
     "impact": [

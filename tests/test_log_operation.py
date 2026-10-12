@@ -1,6 +1,7 @@
 """Refus/reprise des effets incertains, sans VPS ni mail réel."""
 import importlib.util
 import json
+import sqlite3
 from pathlib import Path
 import tempfile
 import unittest
@@ -12,6 +13,18 @@ s=importlib.util.spec_from_file_location('operation_log',ROOT/'scripts/log-activ
 m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 class Reprise(unittest.TestCase):
+    def test_politique_native_reprise_exacte_sans_ecriture(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            p=Path(tmp)/'log.sqlite'
+            with sqlite3.connect(p) as c:
+                c.execute('CREATE TABLE log_principaux(subject text,mail text,duration int,minimum text,qualified_after int)')
+                c.execute('INSERT INTO log_principaux VALUES(?,?,?,?,?)',('fixture','owner@example.test',604800,'mfa',100))
+            plan=dict(native_reutilisee=True,subject='fixture',mail='OWNER@example.test',qualified_after=100)
+            original=p.read_bytes();self.assertTrue(m.verifier_politique_reprise(p,plan));self.assertEqual(p.read_bytes(),original)
+            with self.assertRaisesRegex(ValueError,'Politique Log concurrente'):
+                m.verifier_politique_reprise(p,dict(plan,subject='autre'))
+            with self.assertRaisesRegex(ValueError,'reprise à constater'):
+                m.verifier_politique_reprise(p,dict(plan,native_reutilisee=False))
     def test_inventaire_realm_lecture_seule_admis_et_ecriture_refusee(self):
         spec=importlib.util.spec_from_file_location('api_kc_inventaire_test',ROOT/'scripts/vision-proprietaire-enroler.py')
         api_module=importlib.util.module_from_spec(spec);spec.loader.exec_module(api_module)

@@ -92,7 +92,7 @@ in {
           access_log off;
         '');
       };
-      "/oauth/" = auth "" ''limit_req zone=protected_api_per_ip burst=10 nodelay; limit_req_status 429;'';
+      "^~ /oauth/" = auth "" ''limit_req zone=protected_api_per_ip burst=10 nodelay; limit_req_status 429;'';
       "= /.well-known/oauth-authorization-server" = auth "/.well-known/oauth-authorization-server" "";
       "= /.well-known/oauth-protected-resource" = auth "/.well-known/oauth-protected-resource" "";
       "= /.well-known/oauth-protected-resource/mcp" = auth "/.well-known/oauth-protected-resource/mcp" "";
