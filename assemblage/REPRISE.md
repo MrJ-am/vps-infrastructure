@@ -18,7 +18,9 @@ système ni produit modifié. Diagnostic38197483752 : paquet Nginx1.30.4 et SHA2
 Même image de travail C et mêmes sources métier/frontends ; outil de test froid
 Nginx/SBCL arrêté proprement après fixtures, aucun qualifier synthétique.
 
-Prochain : scellement36reçus exacts, transport/descripteur et une bascule. Constater
+Candidatf981717 scellé et transport chiffré publié,109146518octets, SHA256
+e23c41731a28fa744ce774eb00de0797ddb23d5fb6bed46a85a1562eed8968ce.
+Bundle complet36reçus vérifié. Prochain : une bascule centrale. Constater
 issue avant répétition ; MCP réel/référence après activation avant jalon1/Kanidm.
 Kanidm non commencé ; rapport MCP non commité conservé.
 

@@ -1,18 +1,18 @@
 {
   "format": 1,
-  "revision_operateurs": "b3a552fa6f744e8585fc101d4fa4f36c8f5095aa",
+  "revision_operateurs": "f9817175e5a1c0c895ee0df1e744ded2000deb90",
   "revision_construction": "158e4a52e012e5e46cf83afa05d2e36cfe0f4e49",
   "artefact_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-  "cipher_sha256": "deb7fb67eed0695b1c1370e7d51a1bd81826477d724f69d2fa18d9a3f4c2cf0a",
-  "archive_sha256": "143440394c0d75e075512b1052b12c418e73ef56bc94bce7b865d8e05abda78e",
-  "stage_sha256": "8d3d0e38536ab513481cac3dfee80c6807f49e8dd65439fad6a0e4c7bbd96a5d",
-  "cipher_octets": 109135992,
+  "cipher_sha256": "e23c41731a28fa744ce774eb00de0797ddb23d5fb6bed46a85a1562eed8968ce",
+  "archive_sha256": "94f5d6b05d542436f8dc04a985a8a6349bfc553f5de7ee778e19f1726ee55af8",
+  "stage_sha256": "56fa09fde529c5ba44698d38883dff16d7c13e2eced2593cf08ac367c8fa91dd",
+  "cipher_octets": 109146518,
   "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
   "origine_preuves": "codex-local-non-attestee",
   "soumission_autorisee_par_proprietaire": true,
   "depot": "MrJ-am/vps-infrastructure",
   "transport": "git-chiffre",
-  "revision_transport": "ebd33206e973ba765eed34df22526c117af816d4",
+  "revision_transport": "b2d09b06484e3c52ed613bd56e53570d4476701b",
   "chemin_transport": "candidat.tar.gz.age",
   "parties_transport": [
     "candidat.tar.gz.age.part-000",
@@ -20,5 +20,5 @@
     "candidat.tar.gz.age.part-002"
   ],
   "qualification_amendement_20261011": "qualifiee",
-  "branche": "artefacts/monolithe-b3a552fa6f74"
+  "branche": "artefacts/monolithe-f9817175e5a1"
 }

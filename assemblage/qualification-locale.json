@@ -430,7 +430,12 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "Requis pour accueil Vision et manifeste de routage",
+    "scellement": {
+      "revision_operateurs": "f9817175e5a1c0c895ee0df1e744ded2000deb90",
+      "stage_sha256": "56fa09fde529c5ba44698d38883dff16d7c13e2eced2593cf08ac367c8fa91dd",
+      "bundle_complet_verifie_localement": true,
+      "publication_effectuee": false
+    },
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
