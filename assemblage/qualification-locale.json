@@ -409,7 +409,7 @@
   "controle_final": {
     "suites": 36,
     "resultat": "succes",
-    "preuve_production": false,
+    "preuve_production": true,
     "reutilisation_finale": {
       "suites_reutilisees": 28,
       "suites_reexecutees": [
@@ -434,7 +434,7 @@
       "revision_operateurs": "185f9316d6b208f12ef8279a52947a9789ee870d",
       "stage_sha256": "b522a86c7fec2990daf113da66f1d296d760ac9e70dfd417bf4bc790ca2be49b",
       "bundle_complet_verifie_localement": true,
-      "publication_effectuee": false
+      "publication_effectuee": true
     },
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
@@ -446,7 +446,7 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "Ancienne génération après retour38199267338 ; accueil500 et parent public0700 constatés",
+    "production": "Jalon1 accepté sur185f931 : run38200204066 et référence38200479116, génération9qv8n9gd, MCP réel et pages publiques vérifiés",
     "restart_dependances": [
       "postgresql",
       "keycloak"

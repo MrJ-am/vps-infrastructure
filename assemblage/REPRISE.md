@@ -1,28 +1,34 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — accès aux ressources publiques réparé
+## Point de reprise actif — étape1 acceptée, commencer Kanidm
 
-Production ancienne r6s7ags3 après retour38199267338 enregistré/timer arrêté.
-Restauration complète et RLS/ACL actifs passent ; Matheval200 puis accueilVision500.
-Diagnostic38199690520 : /srv/mrjam-assemblages mode0700 ; Nginx et mrjam-metier
-ne peuvent ni traverser le parent ni lire app.html. mkdir0755 sous umask0077
-créait0700 ; seuls la révision et ses enfants étaient ensuite corrigés.
+Déploiement38200204066/29c3f39 réussi ; opérateurs185f931 et binaire296b7.
+Génération active ET défaut9qv8n9gd ; une image métier, Node Matheval et anciens
+processus arrêtés, Keycloak/mrj-auth provisoires conservés. Restauration récupérable,
+retour code avec données actuelles, RLS/ACL36tables, artefact réel, ressources,
+falsification refusée, données invariantes et persistance après restart passent.
+Référence38200479116 : un compte/administrateur/identité, zéro orphelin/lien croisé,
+trois participations toujours ouvertes. MCP historique : politique/séances identiques,
+lecture62items possible, recherche hybride retrouve un item réellement existant,
+aucun contenu/séance/participation créé. Pages publiques réelles Vision/Matheval/
+Logique rendues, zéro erreurJavaScript ; HTML exacts qualifiés, session anonyme.
 
-Correction canonique : parent dédié aux seules ressources publiques en0755,
-révision/répertoires0755 et fichiers0644 ; bundle privé inchangé. Périmètre fermé
-et liens refusés avant changement des droits. Régression unitaire sur fichiers
-réels et autreUID Docker sans réseau : document refusé puis mêmes octets lisibles,
-bundle privé toujours inaccessible. Migration41,8496s et sécurité9,9023s passent. Fixture PG corrigée : attente
-loopback du serveur final ; serveur initdb temporaire Unix ensuite arrêté
-(source officielle de l’image verrouillée constatée). Échec précédent42,5943s
-conservé dans le journal ; aucun nouveau comportement métier.
-Fusion Nginx qualifiée conservée, même binaire296b7/frontends/image interactive C.
+Preuve : assemblage/qualification-production-etape1.json,36reçus locaux exacts.
+RSS principaux métier320270336→138428416octets (somme avec pages partagées,
+pas RAM physique libérée). Latences après mesurées/cadencées ; pas de gain promis.
+Navigateur initial sans proxy : délais ; pont réseau existant configuré explicitement.
+Sonde wait_for_function par chaîne refusée par CSP ; observation par locators,
+CSP non affaiblie, rendu complet attendu. Ces erreurs de sonde ne sont pas
+présentées comme des succès ; contrôle final effectivement exécuté.
 
-Candidat185f931 scellé/36reçus exacts vérifiés, transport2022c223 publié :
-109153068octets chiffrés, SHA256
-fb274659509d08ac0748602f227dc95b5ad6420295fa3d743295d3119ece0b46.
-Prochaine action : promotion centrale unique. Puis MCP réel/données/redémarrage/services/mesures.
-Ne pas redéployer0e3f999. Kanidm non commencé ; rapport MCP non commité conservé.
+Prochaine étape autorisée : Kanidm stable/officiel/verrouillé, lire configuration
+identité et exigences actuelles, préparer intégration/récupération et qualification
+réelle hors production avant seconde bascule. Ne pas réactiver l’ancien métier.
+Accès personnel/passkey à préparer sans inventer d’enrôlement. GitHub administration
+403 reste une limite exacte, pas une prétendue correction des réglages distants.
+Image de développement C conservée ; aucun qualifier synthétique/reconnexion.
+Rapport MCP non commité conservé. Retour applicatif185f931 utilisable avec données
+actuelles ; ne jamais restaurer une ancienne SQL pour un retour de code.
 
 ## État précédent — historique conservé
 

@@ -624,3 +624,14 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   listen_addresses vide puis arrêt. Attente modifiée vers listener loopback final,
   hors réseau ; nouvelle migration41,8496s réussie, sécurité9,9023s réussie.
   Même binaire296b7 et interfaces, aucune suite métier indépendante rejouée.
+
+- Jalon1 accepté : déploiement38200204066 et référence38200479116 réussis.
+  Opérateurs185f931, binaire296b7, génération active/défaut9qv8n9gd, un processus
+  métier, Node et auxiliaires métier inactifs. Restauration/retour, RLS/ACL réels,
+  empreintes et persistance après restart validés, données/séances préservées.
+  MCP réel politique/séances identiques, lecture/recherchehybride item existant
+  retrouvé sans création. Navigateur public rendu complet des trois interfaces,
+  HTML exacts, zéro erreurJavaScript. Proxy existant nécessaire ; chaînes eval
+  de sonde refusées par CSP puis observateurs locators employés sans l’affaiblir.
+  RSS principaux métier320270336→138428416octets, limites/dix latences explicites
+  dans qualification-production-etape1.json. Kanidm peut commencer automatiquement.
