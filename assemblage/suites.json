@@ -2222,5 +2222,173 @@
     },
     "candidat_metier": true,
     "candidat_frontend": "vision"
+  },
+  "oidc-es256": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-oidc.asd",
+        "mrjam-native.asd",
+        "lisp/identite/oidc-*.lisp",
+        "lisp/native/package.lisp",
+        "lisp/native/crypto.lisp",
+        "lisp/native/json-js.lisp",
+        "assemblage/oidc/dependances.lock.json",
+        "assemblage/oidc/charger-dependances.lisp",
+        "scripts/oidc-verifier-sources.py",
+        "scripts/oidc-qualifier.py",
+        "tests/fixtures/oidc-es256.json",
+        "scripts/verifier-dependances.py",
+        "tests/test_oidc_dependances.py",
+        "assemblage/oidc/dependances.nix",
+        "tests/oidc-token.lisp",
+        "tests/oidc-froid.lisp"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/package.lisp",
+        "src/json.lisp"
+      ]
+    },
+    "impact": [
+      "vps/mrjam-oidc.asd",
+      "vps/lisp/identite/oidc-*",
+      "vps/lisp/native/package.lisp",
+      "vps/lisp/native/crypto.lisp",
+      "vps/lisp/native/json-js.lisp",
+      "vps/assemblage/oidc/*",
+      "vps/scripts/oidc-*",
+      "vps/tests/fixtures/oidc-es256.json",
+      "vision/src/json.lisp",
+      "vision/src/package.lisp",
+      "vision/vision.asd",
+      "vps/tests/test_oidc_dependances.py",
+      "vps/scripts/verifier-dependances.py",
+      "vps/tests/oidc-token.lisp",
+      "vps/tests/oidc-froid.lisp"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_oidc_dependances.py"
+      ],
+      [
+        "python3",
+        "scripts/oidc-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "SBCL_HOME",
+      "MRJAM_LIBCRYPTO"
+    ]
+  },
+  "oidc-transactions": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-oidc.asd",
+        "mrjam-native.asd",
+        "lisp/identite/oidc-package.lisp",
+        "lisp/identite/oidc-transactions.lisp",
+        "lisp/native/package.lisp",
+        "lisp/native/crypto.lisp",
+        "lisp/native/sqlite.lisp",
+        "assemblage/oidc/dependances.lock.json",
+        "assemblage/oidc/charger-dependances.lisp",
+        "scripts/oidc-verifier-sources.py",
+        "scripts/oidc-qualifier.py",
+        "tests/oidc-transactions*.lisp",
+        "assemblage/oidc/tables-privees.json"
+      ]
+    },
+    "impact": [
+      "vps/mrjam-oidc.asd",
+      "vps/lisp/identite/oidc-package.lisp",
+      "vps/lisp/identite/oidc-transactions.lisp",
+      "vps/lisp/native/package.lisp",
+      "vps/lisp/native/crypto.lisp",
+      "vps/lisp/native/sqlite.lisp",
+      "vps/assemblage/oidc/*",
+      "vps/scripts/oidc-*",
+      "vps/tests/oidc-transactions*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/oidc-qualifier.py",
+        "--transactions"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "SBCL_HOME",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBSQLITE"
+    ]
+  },
+  "kanidm-configuration": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "assemblage/kanidm/paquet.nix",
+        "assemblage/kanidm/service.nix",
+        "assemblage/kanidm/dependances.json",
+        "scripts/kanidm-verifier-configuration.py",
+        "tests/kanidm-configuration.nix",
+        "assemblage/manifest.json"
+      ]
+    },
+    "impact": [
+      "vps/assemblage/kanidm/*",
+      "vps/scripts/kanidm-*",
+      "vps/tests/kanidm-*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-verifier-configuration.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    }
   }
 }

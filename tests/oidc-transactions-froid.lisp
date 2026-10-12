@@ -1,0 +1,8 @@
+(load (merge-pathnames "../assemblage/charger.lisp" *load-truename*))
+(load (merge-pathnames "../assemblage/oidc/charger-dependances.lisp" *load-truename*))
+(asdf:load-asd (merge-pathnames "../mrjam-oidc.asd" *load-truename*))
+(asdf:load-system "mrjam-oidc/transactions")
+(mrjam-native:initialiser-crypto (or (uiop:getenv "MRJAM_LIBCRYPTO") (error "Libcrypto verrouillé requis.")))
+(mrjam-native:initialiser-sqlite (or (uiop:getenv "MRJAM_LIBSQLITE") (error "SQLite verrouillé requis.")))
+(asdf:test-system "mrjam-oidc/transactions")
+(format t "~&Qualification des transactions OIDC en image propre réussie.~%")

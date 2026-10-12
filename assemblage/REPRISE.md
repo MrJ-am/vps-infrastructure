@@ -1,6 +1,6 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — étape1 acceptée, commencer Kanidm
+## Point de reprise actif — étape1 acceptée, client OIDC qualifié, installation Kanidm bloquée
 
 Déploiement38200204066/29c3f39 réussi ; opérateurs185f931 et binaire296b7.
 Génération active ET défaut9qv8n9gd ; une image métier, Node Matheval et anciens
@@ -20,6 +20,53 @@ Navigateur initial sans proxy : délais ; pont réseau existant configuré expli
 Sonde wait_for_function par chaîne refusée par CSP ; observation par locators,
 CSP non affaiblie, rendu complet attendu. Ces erreurs de sonde ne sont pas
 présentées comme des succès ; contrôle final effectivement exécuté.
+
+Kanidm stable1.11.2/revision5479338 officiel inspecté (correctif LDAP sécurité).
+Source et Cargo.lock774packages/741registre verrouillés ; précollecte vendor
+échouée sur espace : overlay32Go plein, substituts Cargo/Rust requis2,5Go.
+Aucun serveur installé/démarré ni changement production. Extension de disque
+d’au moins20Go demandée ; poursuivre travaux indépendants. Pour retrouver une
+marge d’écriture : caches f981717 et0e3f999 seulement retirés après vérification
+SHA256/octet exacte contre leurs trois blobs Git, transports publiés et tous
+manifestes/sources/preuves conservés ; candidat actif185f931 gardé intégralement.
+Ces caches se reconstituent par concaténation des parties de transport.json
+via git cat-file blob, puis vérification cipher_sha256 de soumission.json.
+Nix --delete sans forçage a retiré quatre substituts nouveaux de cette tentative
+(1016,31MiB), aucune collecte globale ; marge retrouvée1,125Go. Archive source
+Kanidm redondante retirée après SHA vérifié ; source extraite et provenance gardées. Provisioning
+non officiel Nix explicitement désactivé. Licences transitives/compatibilitéRust
+restent à qualifier avant compilation. Image83928 saine : identité/marqueur/objet
+identiques depuis CL-MCP et Tron, poolNIL, debuggerNIL, sans mutation/scénario.
+Client OIDC préparé et qualifié localement : mrjam-oidc, ES256 via Ironclad0.61
+(tag officiel identique à sourceNix), six bibliothèques communes réutilisées,
+NAR/licences/effets verrouillés. JOSE écarté car sans ES256. Après correction du
+remplissage URI cl-base64,681cas/assertions passent, signatures OpenSSL indépendantes,
+mutations et huit sujets concurrents ; image persistante puis image propre sans cache.
+Transactions PKCE durables additives : consommation unique sous huit connexions,
+36contrôles passent : refus client/hôte/binding/expiration/rejeu, répertoire0700/
+fichier0600 et colonnes exactes ; table classée.
+Aucune activation de ces bibliothèques ni nouvelle identité en production.
+
+PaquetKanidm1.11.2 verrouillé avec hashvendor officiel, Nixpkgs c79f172 source de
+ce hash seulement ; recette/toolchain c5 conservées sans mise à niveau générale.
+Nix path-info code0 avec valeursnull ne prouve pas un cache : narinfo paquet et
+vendor effectivement404. Module préparatoire Nix : serveurUIDkanidm/statemode0700,
+loopback8443, TLSLoadCredential horsstore, Unix/LDAP/provisioningtiers désactivés ;
+non importé dans configuration active. Installation/démarrage/échangesKanidm réels
+restent bloqués par disque (1,1Go disponible, extension≥20Go déjà demandée).
+Connexion par email : lecture source confirme name/SPN/UUID, nom interdit@ et email
+absent de name2uuid ; adaptation sûre requise, aucun retrait de l’exigence autorisé.
+Politiques individuelles, révocation et preuve MFA récente restent à qualifier
+sur Kanidm réel, sans credential d’administration générale dans le monolithe.
+Catalogue39suites, nouveaux reçus locaux : OIDC681cas4,9888s, transactions36contrôles
+1,6318s, configurationKanidm8,8789s ; sélection21tests1,2095s et éditorial0,2906s.
+Dernier contrôle depuis Tron : fonctionsOIDC/transactions visibles dans la même
+image83928, poolNIL, marqueur conservé, debuggerNIL, mutationsregistre0.
+Preuve préparatoire : assemblage/oidc/qualification-locale.json ; productionnonautorisée.
+Commandes locales : suites oidc-es256, oidc-transactions, kanidm-configuration ;
+CLIoidc-qualifier.py --sans-cache [--transactions] pour qualification de référence.
+Les reçus du jalon1 restent historiques sur leurs sources exactes, pas preuves
+pour ce nouveau client. Ne relancer ni ancien déploiement ni qualifier synthétique.
 
 Prochaine étape autorisée : Kanidm stable/officiel/verrouillé, lire configuration
 identité et exigences actuelles, préparer intégration/récupération et qualification
