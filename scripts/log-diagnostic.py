@@ -102,6 +102,15 @@ def main(revision):
             contenu=Path(configs[0]).read_text()
             ca=re.findall(r'proxy_ssl_trusted_certificate\s+(/nix/store/[a-z0-9]{32}-[^;\s]+/etc/ssl/certs/ca-bundle\.crt);',contenu)
             openssl=shutil.which('openssl')
+            if not openssl:
+                nixpkgs=json.loads((d/'payload/vps/assemblage/manifest.json').read_text())['toolchain']['production']['nixpkgs']
+                q=subprocess.run(['nix-instantiate','-I','nixpkgs='+nixpkgs,'--eval','--strict','--json',
+                    '--expr','let p=import <nixpkgs> {}; in toString (p.lib.getBin p.openssl)'],
+                    capture_output=True,text=True,timeout=20)
+                if q.returncode==0:
+                    candidat=Path(json.loads(q.stdout))/'bin/openssl'
+                    if candidat.is_file():openssl=str(candidat)
+            out['verification_chaine_disponible']=bool(openssl and len(set(ca))==1)
             if openssl and len(set(ca))==1:
                 cert='/var/lib/acme/log.mrj.am/fullchain.pem'
                 out['verification_chaine_proxy']={str(depth):subprocess.run(
