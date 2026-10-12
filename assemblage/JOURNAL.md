@@ -523,3 +523,15 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   finale13,4831s avec refus avant toute activation si preuve027 absente. Les35
   reçus exacts passent :34réutilisés/éditorial seul rejoué ; aucune preuve de
   production. Nouveau frontendVision37871df2 ; autres candidats inchangés.
+- Déploiement38186728742 arrêté avant activation ; RLS/ACL de la copie passent.
+  Diagnostic38186824686 : échec au démarrage SBCL de restauration128. Démarrage
+  local env vidé réussi. Diagnostic38187150992 : test-x sous UnixVision retourne
+  false sur /var/lib/postgresql. Un droit du sous-répertoire n'ouvre pas son parent.
+  Cluster temporaire déplacé sous /var/lib, privé, sans élargir les droits PG.
+  Régression réelle Docker/Nix sans réseau/autre UID : fichier existant sous
+  parent privé inaccessible ; SBCL le classe FILE-DOES-NOT-EXIST, pas Permission
+  denied. Assertion corrigée après observation : existence sous root et accès
+  sous autre UID constatés séparément, condition fichier et chemin vérifiés.
+  Depuis parent accessible : ASDF/FASL puis quatre états SQLite initiaux réellement
+  initialisés sans transport/IdP. Tests sur fixtures uniquement ; image interactive
+  conservée et production ancienne inchangée.

@@ -997,7 +997,8 @@
         "scripts/monolithe-restaurer.py",
         "tests/test_monolithe_activer.py",
         "tests/restauration-etats.lisp",
-        "tests/vision-rls.py"
+        "tests/vision-rls.py",
+        "tests/restauration-etats.py"
       ],
       "vision": [
         "migrations/*.sql",
@@ -1008,7 +1009,11 @@
       "vps/scripts/*migration*",
       "vps/scripts/*retour*",
       "vps/scripts/*reprise*",
-      "vps/tests/vision-rls.py"
+      "vps/tests/vision-rls.py",
+      "vps/scripts/monolithe-sauvegarde.py",
+      "vps/scripts/monolithe-restaurer.py",
+      "vps/scripts/monolithe-activer.py",
+      "vps/tests/restauration-etats.*"
     ],
     "commandes": [
       [
@@ -1044,6 +1049,10 @@
       [
         "python3",
         "tests/vision-rls.py"
+      ],
+      [
+        "python3",
+        "tests/restauration-etats.py"
       ]
     ],
     "dependances": [
@@ -1058,7 +1067,18 @@
       "docker": [
         "docker",
         "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
       ]
+    },
+    "candidat_metier": true,
+    "fixture": {
+      "image": "mirror.gcr.io/pgvector/pgvector@sha256:40b404964359299eefdd5f8518facf1886c562848cf4de13b6eaf91cb70c2b87",
+      "reseau": "aucun",
+      "nix_store": "lecture seule",
+      "donnees": "synthétiques, UID distinct pour la traversée Unix"
     }
   },
   "native-contrats": {

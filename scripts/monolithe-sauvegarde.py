@@ -128,7 +128,10 @@ def main(revision,qualifier=None):
     tag=revision[:12]+'-'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:8]
     destination=repertoire('/var/backup/mrjam-transitions')/tag;destination.mkdir(mode=0o700)
     postgres=pwd.getpwnam('postgres')
-    isole=Path('/var/lib/postgresql')/('mrjam-restauration-'+tag)
+    # Le compte Vision doit pouvoir traverser le parent pour qualifier les
+    # copies : /var/lib/postgresql reste privé à postgres. Ne pas élargir ses
+    # droits ; le cluster temporaire conserve son propre répertoire privé.
+    isole=Path('/var/lib')/('mrjam-restauration-'+tag)
     isole.mkdir(mode=0o700);os.chown(isole,postgres.pw_uid,postgres.pw_gid)
     actif=False
     try:
