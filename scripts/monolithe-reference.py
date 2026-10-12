@@ -7,6 +7,7 @@ ou requête SQL fournie par le demandeur n'est acceptée.
 import json
 from pathlib import Path
 import os
+import re
 import subprocess
 import time
 import urllib.request
@@ -26,6 +27,29 @@ def sql(base, requete):
     return json.loads(subprocess.run(['runuser', '-u', 'postgres', '--', 'psql', '-XAtq',
                       '--set=ON_ERROR_STOP=1', '--dbname=' + base], input=requete,
                       check=True, capture_output=True, text=True, timeout=30).stdout)
+
+
+def comptes_vision_historique(chemin=Path('/var/lib/vision/auth/htpasswd')):
+    """Inventaire agrégé du format installé ; aucune identité/empreinte exportée."""
+    if not chemin.exists():
+        return {'present': False}
+    if chemin.stat().st_size > 65536:
+        raise ValueError('Fichier de comptes historiques hors borne')
+    lignes = chemin.read_text().splitlines()
+    eligibles = {}; doublons = 0; invalides = 0
+    for ligne in lignes:
+        if not ligne.strip(): continue
+        if ':' not in ligne:
+            invalides += 1; continue
+        nom, encoded = ligne.split(':', 1)
+        if not re.fullmatch(r'[A-Za-z0-9_.-]{1,64}', nom) or nom.startswith(('vision-bootstrap-', 'vision-disabled')):
+            continue
+        doublons += int(nom in eligibles)
+        # Même algorithme que le serveur installé, sans vérification de password.
+        eligibles[nom] = bool(re.fullmatch(r'\$6\$(?:rounds=[1-9][0-9]{3,8}\$)?[./A-Za-z0-9]{1,16}\$[./A-Za-z0-9]{86}', encoded))
+    return {'present': True, 'comptes_eligibles': len(eligibles),
+            'sha512_crypt': sum(eligibles.values()), 'formats_non_reconnus': sum(not v for v in eligibles.values()),
+            'doublons': doublons, 'lignes_invalides': invalides}
 
 
 def memoire(service):
@@ -97,6 +121,7 @@ def main():
 SELECT json_build_object('total',count(*),'actifs',count(*) FILTER (WHERE actif),
  'administrateurs',count(*) FILTER (WHERE administrateur)) FROM vision_gestion.comptes;
 COMMIT;""")
+    resultat['vision_connexion_historique'] = comptes_vision_historique()
     resultat['vision_rattachements'] = sql('vision', """BEGIN READ ONLY;
 SELECT json_build_object('identites', (SELECT count(*) FROM vision_gestion.identites),
  'identites_sans_compte',(SELECT count(*) FROM vision_gestion.identites i LEFT JOIN vision_gestion.comptes c USING(utilisateur) WHERE c.utilisateur IS NULL),
