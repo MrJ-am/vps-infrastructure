@@ -2,6 +2,62 @@
 
 ## Point de reprise actif — IdP local qualifié, compte Log neuf retenu
 
+Reprise autorisée jusqu'à production/courriel12octobre : travail poursuivi, mais
+AUCUNE promotion Kanidm et AUCUN courriel personnel envoyé. Référence distante
+38262126595/aefeeed réussie14:20UTC, même génération9qv8,1compte actif/admin,
+1identité,0orphelin/lien croisé. Preuve reference-prebascule-20261012.json.
+Image C reconstruite après disparition ; marqueur nouveau vérifié depuisCL-MCP
+etTron, poolNIL. Sessions de transport anciennes archivées avant reconnexion ;
+anciennes références d'objets/restarts invalidées. Aucun qualifier synthétique.
+Bibliothèque nouvelle mrjam-log : transactions/sessions durables privées, OIDC
+réel, parent vérifié et compte actif à chaque accès, host-only cookies/CSRF ;
+adaptateur OAuth MCP porté (DCR/consentement/S256/codes/rotation/rejeu de famille).
+Routage HTTP raccordé à l'assemblage, sans activationNix. ValidationNative dans
+image persistante puis propre ; suites centrales log-sessions-kanidm4,551s et
+kanidm-invitation8,8297s réussies, catalogue47. L'invitation nouvelle et les retours
+de force pendant saisie sont effectivement exercés dansChromium,Unicode/espaces
+intacts. Ce n'est pas une activation utilisateur personnelle.
+Visionfrontend94f3c6d publié : consentement ElmUI partagé, contrôles ressources/
+elm-review/compilation37modules réussis ; campagne navigateur encore à compléter,
+composant publié avant manifeste. ParserJS1.58 périmé après ménage :
+bundlePlaywright1.61 installé comparé à l'archive officielle et intégritéSHA512,
+trois licences identiques ; verrou actualisé, aucun paquet ajouté/réinstallé.
+Configuration interne renommée configuration-runtime pour recharger le nouveau
+layout sans remplacer l'image : DEBUGTron/thread1/niveau1 inspecté, correction
+source puis RETRY compiler choisi par signification. EnveloppeABORTNIL n'a pas
+été prise pour résultat : debuggerNIL/classes/fonctions effectives ensuite lus.
+Prototype de délégation tests/kanidm_delegations.py NON qualifié : APIACPcreate
+403, assertion de JsonFilt refusée, modification du profil natif non appliquée.
+Diagnostic privé state/kanidm-echec-native.log, jamais preuve de conformité.
+Ne pas promouvoir avec cette hypothèse ni placer un credential IdP global dans
+le produit. Examiner les capacités natives de gestion d'entrées/groupes existantes
+pour un raccordement minimal. Pas de fork/patchRust, pas de contournementDB testé.
+Restent : accès administratifs/MFA réellement prouvés (router-log refuse toute
+preuve renforcée à ce stade), politiques personnelles, médiation email, portage
+des clients de cycle/admission/fermeture encoreKeycloak, routageNix, invitation/
+rattachement/SMTPprivés, qualification globale exacte/sauvegarde/retour puis bascule.
+Les sources Nix de build incluent les sept dépendances Lisp déjà auditées ;
+nouvelle construction propre encore à exécuter avant tout candidat promouvable.
+
+Amendement propriétaire du12octobre : suppression des deux anciennes identités
+autorisée, remplacement Keycloak par Kanidm confirmé. Préserver le compte métier
+et ses données ; ne jamais déclencher effacer_identite_cycle. Récupérer l'adresse
+du compte Keycloak par canal privé pour invitation personnelle expressément
+autorisée ; nouvelle identité liée explicitement au propriétaire stable AVANT
+ouverture de l'accès, sans fusion par mail. Aucun courriel encore envoyé.
+Inscription sur invitation : mail nécessaire à la récupération du compte ; pseudo
+facultatif, affichage du mail par défaut, jamais identifiant technique mutable.
+Unicode et espaces requis pour pseudo/phrase de passe ; nom affiché distinct du
+name Kanidm contraint. Phrase de passe longue et indication de force demandées.
+Version native1.11.2 : force zxcvbn score4, blacklist et minimum15 sansMFA/10avecMFA,
+maximum128 ; pas de composition majuscules/chiffres/symboles imposée. Ne pas
+promettre une règle exclusivement fondée sur la force ni un indicateur live non
+qualifié. Test natif étendu : pseudo Unicode/espaces intact ; phrase100caractères
+Unicode/espaces enregistrée puis connexion TOTP avant/après restart,25assertions.
+Image applicative absente du constat ps (seul Tron présent) : reconstruire la
+cible C et vérifier son identité avant prochaine opération Lisp ; ne pas réutiliser
+les références historiques. Aucun arrêt/reconstruction déclenché par ce constat.
+
 Mission poursuivie, étape1 toujours acceptée en production : génération9qv8n9gd,
 artefact296b7, opérateurs185f931. Aucune deuxième promotion. Vision, Matheval,
 Logique et leurs données préservés ; Keycloak/Python mrj-auth encore provisoires.

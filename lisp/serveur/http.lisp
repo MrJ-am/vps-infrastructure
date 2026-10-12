@@ -4,8 +4,9 @@
   ((status :initarg :status :reader http-status)))
 (defun erreur-http (status) (error 'http-error :status status))
 
-(defstruct (configuration (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket (workers 32))))
-  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture taches socket workers
+(defstruct (configuration-runtime (:conc-name configuration-)
+             (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log taches socket (workers 32))))
+  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log taches socket workers
   (quotas (faire-quotas)))
 
 (defun ligne-http (s maximum)
@@ -35,7 +36,8 @@
         (push (cons (string-downcase (subseq line 0 colon)) (string-trim '(#\Space #\Tab) (subseq line (1+ colon)))) headers)))
     (setf headers (nreverse headers))
     (dolist (nom '("content-length" "host" "origin" "content-type" "cookie" "authorization" "x-session-token" "x-mrjam-service" "x-mrj-user"
-                   "x-vision-authenticated" "x-vision-browser" "x-vision-administration" "x-matheval-request" "x-mrjam-remote-addr"))
+                   "x-vision-authenticated" "x-vision-browser" "x-vision-administration" "x-matheval-request" "x-mrjam-remote-addr"
+                   "x-forwarded-host" "x-forwarded-proto" "x-csrf-token" "x-original-method"))
       (when (> (count nom headers :key #'car :test #'equal) 1) (erreur-http 400)))
     (when (assoc "transfer-encoding" headers :test #'equal) (erreur-http 400))
     (let* ((len (or (entete headers "content-length") "0"))
@@ -93,6 +95,8 @@
     ;; En production, ce champ provient exclusivement du Nginx autorisé sur le
     ;; socket Unix privé. Il ne vérifie aucune identité par lui-même.
     (cond
+      ((equal service "log")
+       (router-log (configuration-log cfg) s method target headers body))
       ((equal service "fermeture-interne")
        (when q (erreur-http 400))
        (let ((p (configuration-fermeture cfg)))

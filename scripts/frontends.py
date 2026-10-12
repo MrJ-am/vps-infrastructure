@@ -91,7 +91,7 @@ def tester_frontend(cle,sources,caches,campagne='base'):
     commandes={
         'vision':[['npm','--prefix','interface','run','verifier'],['npm','--prefix','interface','test','--','--seed','20261011'],
                   ['python3','interface/tests/graphisme.py'],['python3','interface/tests/vitrine.py'],
-                  ['python3','interface/tests/multiutilisateur.py']],
+                  ['python3','interface/tests/multiutilisateur.py'], ['python3','interface/tests/mcp_consentement.py']],
         'matheval':[['npm','--prefix','docs','run','check:data'],['npm','--prefix','docs','run','test:data'],
                     ['python3','-m','unittest','discover','-s','docs/tests','-p','test_published_site.py'],
                     ['node','docs/scripts/test-survey.cjs'],['npm','--prefix','docs','run','test:construction'],

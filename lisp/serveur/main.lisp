@@ -19,6 +19,28 @@
 
 (defun client-identite (nom variable)
   (mrjam-identite:faire-client nom (mrjam-courriel:lire-secret-prive (obligatoire variable)) (obligatoire "MRJAM_CURL")))
+
+(defun configurer-log ()
+  (when (uiop:getenv "MRJ_LOG_DATABASE")
+    (mrjam-native:initialiser-sqlite (obligatoire "MRJAM_LIBSQLITE"))
+    (let* ((id "mrjam-vision")
+           (dsn (obligatoire "MRJ_LOG_IDENTITES_DSN"))
+           (client (mrjam-oidc:faire-client-oidc id
+               ;; Secret natif Kanidm : ne pas lui imposer le format43 des
+               ;; anciens clients Keycloak. Le client valide sa propre borne.
+               (string-trim '(#\Newline #\Return)
+                 (sb-ext:octets-to-string
+                   (mrjam-courriel::lire-octets-prives (obligatoire "MRJ_LOG_CLIENT_SECRET") 512)
+                   :external-format :utf-8))
+               (obligatoire "MRJAM_CURL") :ca (obligatoire "MRJAM_CA_FILE")
+               :hotes '("vision.mrj.am"))))
+      (mrjam-log::initialiser-oauth (mrjam-log:initialiser (mrjam-log:faire-contexte (obligatoire "MRJ_LOG_DATABASE")
+        (list (cons "vision.mrj.am" client))
+        (lambda (issuer subject)
+          (mrjam-native:avec-connexion dsn (lambda (c)
+            (let ((r (first (mrjam-native:requete c
+                             "SELECT vision_gestion.identifier($1,$2)::text AS compte" (list issuer subject)))))
+              (vision:parse-json (cdr (assoc "compte" r :test #'equal)))))))))))))
 (defun configurer-admission ()
   (when (uiop:getenv "MRJ_ADMISSION_DSN")
     (mrjam-native:initialiser-sqlite (obligatoire "MRJAM_LIBSQLITE"))
@@ -65,6 +87,7 @@
                   :document-vision (obligatoire "VISION_DOCUMENT_ROOT")
                   :executeur-vision (executeur-vision (obligatoire "VISION_DSN"))
                   :gestion-dsn (uiop:getenv "VISION_GESTION_DSN")
+                  :log (configurer-log)
                   :cycle cycle :admission admission :fermeture fermeture
                   :taches (append (when cycle (list (cons "cycle-vision" (lambda () (vision-cycle:traiter cycle)))))
                                   (when admission (list (cons "admission" (lambda () (vision-admission:traiter admission)))))

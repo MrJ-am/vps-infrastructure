@@ -3,6 +3,8 @@
 assert pkgs.sbcl.version == "2.6.4";
 assert builtins.match "[0-9a-f]{40}" revisionInfrastructure != null;
 let
+  verrouOidc = builtins.fromJSON (builtins.readFile ./oidc/dependances.lock.json);
+  sourcesOidc = map (b: builtins.storePath b.src) verrouOidc.bibliotheques;
   sourcesVision = pkgs.lib.cleanSourceWith {
     src = vision;
     filter = path: type:
@@ -26,8 +28,9 @@ pkgs.stdenv.mkDerivation {
     src = ../.;
     filter = path: type:
       let relatif = pkgs.lib.removePrefix (toString ../. + "/") (toString path); in
-      type == "directory" && (toString path == toString ../. || relatif == "assemblage" || relatif == "lisp" || pkgs.lib.hasPrefix "lisp/" relatif)
-      || builtins.elem relatif [ "mrjam-metier.asd" "mrjam-native.asd" "mrjam-courriel.asd" "mrjam-identite.asd"
+      type == "directory" && (toString path == toString ../. || relatif == "assemblage" || relatif == "assemblage/oidc" || relatif == "lisp" || pkgs.lib.hasPrefix "lisp/" relatif)
+      || builtins.elem relatif [ "mrjam-metier.asd" "mrjam-native.asd" "mrjam-courriel.asd" "mrjam-identite.asd" "mrjam-oidc.asd" "mrjam-log.asd"
+        "assemblage/oidc/charger-dependances.lisp" "assemblage/oidc/dependances.lock.json"
         "assemblage/charger.lisp" "assemblage/construire.lisp" ]
       || pkgs.lib.hasPrefix "lisp/" relatif && pkgs.lib.hasSuffix ".lisp" relatif;
   };
@@ -45,6 +48,9 @@ pkgs.stdenv.mkDerivation {
     export MRJAM_BUILD_METADATA="$out/share/mrjam/compilation.json"
     export ASDF_SOURCE_REGISTRY='(:source-registry :ignore-inherited-configuration)'
     export ASDF_OUTPUT_TRANSLATIONS="(:output-translations (t \"$TMPDIR/fasl/\") :ignore-inherited-configuration)"
+    # Inclure explicitement les sept sources déjà auditées dans les entrées Nix.
+    # Aucun worker/outillage MCP n'est ajouté au graphe produit.
+    export MRJAM_OIDC_SOURCES=${pkgs.lib.escapeShellArg (pkgs.lib.concatStringsSep ":" sourcesOidc)}
     # Aucun DSO, DSN, credential ni accès métier dans ce processus de build.
     sbcl --script assemblage/construire.lisp
     test -x "$out/bin/mrjam-metier"

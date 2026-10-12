@@ -47,6 +47,18 @@ def qualifier(paquet, curl):
         status, session = n.http('/v1/person/'+n.nom+'/_credential/_update', token=op)
         if status != 200: raise EchecQualification('enrôlement natif refusé')
         token, _ = session
+        # Contrat utilisateur : Unicode/espaces, sans trim ni identifiant technique
+        # dérivé du pseudo. Longueur100, sous le plafond natif128.
+        n.password = 'Étoile 東京 forêt tranquille ' + secrets.token_urlsafe(60)
+        n.password = n.password[:100]
+        status, _ = n.http('/v1/person/'+n.nom+'/_attr/displayname',
+                           ['Élodie 東京 des étoiles'], token=op, method='PUT')
+        if status != 200:
+            raise EchecQualification('pseudo Unicode avec espaces refusé')
+        status, displayed = n.http('/v1/person/'+n.nom+'/_attr/displayname', token=op)
+        if status != 200 or displayed != ['Élodie 東京 des étoiles']:
+            raise EchecQualification('pseudo Unicode altéré')
+        nombre += 2
         status, cu = n.http('/v1/credential/_update', [{'password': n.password}, token])
         if status != 200 or cu['can_commit'] or 'MfaRequired' not in cu['warnings']:
             raise EchecQualification('minimum MFA doit empêcher le commit password seul')
