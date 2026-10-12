@@ -50,8 +50,6 @@ def preparer(revision):
     def lignes(v): return [x.strip() for x in v.splitlines() if x.strip() and not x.lstrip().startswith('#')]
     s.exiger(lignes(r['postgresAccesApres']['identMap']) == lignes(r['postgresAccesAvant']['identMap'])+
              ['mrj_identite mrjam-metier vision_identite'], 'Mapping peer différent')
-    # L'ancien portage d'admission ne doit pas être désactivé s'il est ouvert.
-    s.exiger(not r['inscriptionsOuvertes'], 'Admission active : portage natif nécessaire avant bascule')
     sources = {}
     racines = Path('/nix/var/nix/gcroots/mrjam-log')/revision; racines.mkdir(parents=True,exist_ok=True)
     for nom, attribut in [('amorcage','moduleAmorcage'),('candidat','moduleLog')]:
@@ -64,13 +62,13 @@ def preparer(revision):
     s.exiger(s.etat(d) == avant, 'Activation concurrente')
     p = dict(format=1, revision=revision, avant=avant, candidat=r['apres'], amorcage=r['amorcage'],
              configurations=sources, parametres=params, artefact_sha256=cert['qualification']['artefact_sha256'],
-             inscriptions_fermees=True, activation=False)
+             inscriptions_preservees=True, activation=False)
     (d/'preparation-log.json').write_text(json.dumps(p,indent=2)+'\n')
     # Le restaurateur déjà qualifié reste le propriétaire de la sauvegarde et
     # des contrôles des bases métier, pas une nouvelle implémentation parallèle.
     (d/'preparation.json').write_text(json.dumps(dict(p,parametres=params),indent=2)+'\n')
     (d/'evaluation-privee.json').write_text(json.dumps({'postgres':r['protegeAvant']['postgres']['package']},indent=2)+'\n')
-    print(json.dumps({k:p[k] for k in ('revision','candidat','amorcage','activation','inscriptions_fermees')}))
+    print(json.dumps({k:p[k] for k in ('revision','candidat','amorcage','activation','inscriptions_preservees')}))
 
 if __name__ == '__main__':
     try:

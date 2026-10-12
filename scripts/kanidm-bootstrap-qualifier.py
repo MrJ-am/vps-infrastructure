@@ -4,9 +4,11 @@ import json
 import os
 from pathlib import Path
 import sys
+import base64
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tests'))
 from kanidm_reel import KanidmLocal, EchecQualification
+from kanidm_politiques import code_totp,login_mfa
 
 def main():
     spec=importlib.util.spec_from_file_location('native_ops',ROOT/'scripts/kanidm-api-privee.py')
@@ -15,7 +17,7 @@ def main():
         api=m.KanidmPrive(n.paquet,n.config,n.curl,ca=n.ca,port=n.port,
                           diagnostic=ROOT/'state/kanidm-operation-native-diagnostic.log')
         d=api.configurer_proprietaire({'name':'fixture-proprietaire','mail':'fixture-proprietaire@example.test'},n.root)
-        assert set(d)=={'subject','client_secret','intent'}
+        assert set(d)=={'subject','client_secret','intent','admission_token'}
         op=api.login('idm_admin',api.recuperer('idm_admin'),n.root)
         profil=api.http('/v1/person/'+d['subject'],token=op)['attrs']
         assert profil['mail']==['fixture-proprietaire@example.test']
@@ -30,7 +32,15 @@ def main():
         token, _=api.http('/v1/credential/_exchange_intent',d['intent'])
         cu=api.http('/v1/credential/_update',[{'password':n.password},token])
         assert not cu['can_commit'] and 'MfaRequired' in cu['warnings']
-        api.http('/v1/credential/_cancel',token)
+        cu=api.http('/v1/credential/_update',['totpgenerate',token])
+        totp=cu['mfaregstate']['TotpCheck']
+        cu=api.http('/v1/credential/_update',[{'totpverify':[code_totp(totp),'fixture']},token])
+        assert cu['can_commit']
+        api.http('/v1/credential/_commit',token)
+        n.nom='fixture-proprietaire'
+        session=login_mfa(n,totp)
+        payload=json.loads(base64.urlsafe_b64decode(session.split('.')[1]+'=='))
+        assert payload['expiry']-payload['issued_at']==604800
         backup=n.root/'proprietaire-backup.json'
         api.commande('scripting','backup',str(backup))
         assert api.restaurer_verifier(backup,n.root/'restauration',d['subject'])

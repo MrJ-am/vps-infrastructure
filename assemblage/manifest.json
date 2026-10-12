@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "94f3c6d8f5e99827654e55021fa0c7baa59005ef",
+      "revision": "decf5f70b9b22f042638d28ff6ec4481d584b5e8",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -36,7 +36,7 @@
     "signature": {
       "depot": "MrJ-am/Signature",
       "branche": "main",
-      "revision": "e9d9d34d353422c2993cd1bc7c3c626f503bb5e0",
+      "revision": "17194087eec9162bb5372221c43e1de0501dfe6a",
       "role": "ressources-identite"
     }
   },

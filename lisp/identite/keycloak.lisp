@@ -1,6 +1,8 @@
 (defpackage #:mrjam-identite
   (:use #:cl)
-  (:export #:faire-client #:requete #:autorisation #:adresse-verifiee #:issuer #:identite-error #:reponse-statut #:reponse-json #:reponse-location #:parametre-url))
+  (:export #:faire-client #:requete #:autorisation #:adresse-verifiee #:issuer #:identite-error #:reponse-statut #:reponse-json #:reponse-location #:parametre-url
+           #:faire-client-kanidm #:client-kanidm-p #:personne #:chercher-personnes #:creer-personne
+           #:activer-personne #:inviter-personne #:expirer-personne #:enregistrer-principal))
 (in-package #:mrjam-identite)
 (define-condition identite-error (error) ())
 (defun refuse () (error 'identite-error))

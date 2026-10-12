@@ -273,7 +273,11 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                     shutil.copytree(outils, dest, symlinks=True)
             if qualification:
                 if cle=='signature':
-                    env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH')}
+                    env={k:v for k,v in os.environ.items() if k in ('PATH','HOME','LANG','LC_ALL','PLAYWRIGHT_BROWSERS_PATH','PLAYWRIGHT_NODEJS_PATH')}
+                    navigateur=os.environ.get('PLAYWRIGHT_CHROMIUM_EXECUTABLE')
+                    if not navigateur or not Path(navigateur).is_file():
+                        raise ValueError('Chromium commun déjà qualifié requis pour Signature')
+                    env['BROWSER_EXECUTABLE_PATH']=navigateur
                     geometrie=json.loads((atelier/'web/geometry.json').read_text())
                     subprocess.run([RACINE/'state/outils-python/signature/bin/python','tools/build-web.py'],cwd=atelier,env=env,check=True)
                     # Certaines roues fontTools rendent des coordonnées entières
@@ -282,7 +286,19 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
                     if json.loads((atelier/'web/geometry.json').read_text())!=geometrie:
                         raise ValueError('Géométrie Signature modifiée par la génération')
                     subprocess.run(['git','diff','--exit-code','--','.',':(exclude)web/geometry.json'],cwd=atelier,check=True)
-                    subprocess.run([RACINE/'state/outils-python/navigateur/bin/python','tests/browser-copy.py'],cwd=atelier,env=env,check=True)
+                    # HTTP loopback : le navigateur géré interdit file://.
+                    # Fixture de test éphémère, pas un service du produit.
+                    from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+                    import functools, threading
+                    class Silencieux(SimpleHTTPRequestHandler):
+                        def log_message(self,*args): pass
+                    serveur=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(Silencieux,directory=str(atelier)))
+                    thread=threading.Thread(target=serveur.serve_forever,daemon=True);thread.start()
+                    env['SIGNATURE_TEST_URL']='http://127.0.0.1:'+str(serveur.server_port)+'/signature-autonome.html'
+                    try:
+                        subprocess.run([RACINE/'state/outils-python/navigateur/bin/python','tests/browser-copy.py'],cwd=atelier,env=env,check=True)
+                    finally:
+                        serveur.shutdown();thread.join();serveur.server_close()
                     print(json.dumps({'composant':cle,'revision':m['sources'][cle]['revision'],'tests':'reussis','publication':False}))
                     return
                 from importlib.util import spec_from_file_location, module_from_spec

@@ -181,7 +181,7 @@ Courriel personnel non envoyé et compte réel non modifié à ce stade.
 `python3 scripts/kanidm-bootstrap-qualifier.py` exerce le provisionnement et
 restore/verify/lecture officiels réellement ; `python3 scripts/log-nix-qualifier.py`
 évalue la séparation/routage. `python3 scripts/log-kanidm-qualifier.py --persistante`
-utilise la même image C ; sans option, test propre distinct. Catalogue central50.
+utilise la même image C ; sans option, test propre distinct. Catalogue central51.
 La CLI officielle est `database restore`, après décompression privée du backup
 onlinegzip. Ne pas remplacer un restore exécuté par `--help`. L'opérateur ne
 récupère pas d'ancien password ni ne visite une invitation personnelle.
@@ -190,3 +190,9 @@ ajoute au transport le paquet Native déjà vérifié0aq, sans recompilationRust
 Workflow log-deploiement manuel sur main, transport SSH/age existant ; aucun CI
 au push ni qualification de développement distante. Ne pas annoncer de promotion
 à partir de ces seuls fichiers ni envoyer le mail avant accès réellement servi.
+
+Admission native : commande `kanidm-admission-qualifier.py --persistante` pour
+l’image C, sans option pour la reproduction froide. Le réglage existant est
+conservé ; invitations, vérification mail/consentements et réservations SQL
+précèdent le rattachement. Capacité onboarding90j, refus testé de réinitialisation
+du propriétaire protégé, politique globale et élévation administrateur.

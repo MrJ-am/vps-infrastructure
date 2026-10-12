@@ -6,8 +6,9 @@ Le jalon1 reste en production9qv8n9gd/296b7 ; dernière référence réelle
 38262126595/aefeeed du12octobre14:20UTC. Aucune bascule Kanidm, aucune
 suppression personnelle et aucun courriel réel envoyé à ce point.
 
-Sources conservées/publies : Vision94f3c6d, frontend complet qualifié ; autres
-révisions du manifeste inchangées. Candidat binaire1551a8f/5e7e2 reste historique,
+Sources conservées/publies : Visiondecf5f7 (admission native) et Signature1719408
+(fixture HTTP du navigateur commun), autres révisions du manifeste inchangées.
+Candidats1551a8f etb784d5c restent historiques,
 invalidé pour les fichiers Lisp modifiés ensuite. Nouvelle image propre requise.
 Image de développement C saine conservée, marqueur reprise-20261012-552402
 observé (pas un PID à fixer en script), cl-mcp sans pool + Swank et Tron distant.
@@ -26,7 +27,7 @@ copie privée. database verify et lecture des entrées restaurées exécutés.
 
 Configuration/opérateurs Log nouveaux, encore non promus : modules/log.nix,
 scripts/log-{evaluation,preparer,activer,operation} et workflow manuel central.
-Préconditions : inscriptions déjà fermées, aucune admission/fermeture en cours,
+Préconditions : inscriptions conservées dans leur état actif, aucune admission/fermeture en cours,
 un propriétaire métier et un seul compte personnel Keycloak ; consommateurs
 IdP supplémentaires refusés avant mutation. Sauvegardes métier/restauration
 existantes réutilisées ; snapshot des seules identités pour retour, jamais
@@ -34,13 +35,16 @@ ancienne base métier. Rattachement exact sur utilisateur stable, aucun hook
 fermeture. Intent personnel jamais sondé/consommé par l'agent. SMTP idempotent :
 marque avant envoi, aucun renvoi automatique après résultat incertain.
 
-Ce jalon d'invitation NE clôt pas toute l'étape2 : provisionnement d'admissions/
-fermetures communes natif, préférences individuelles/panneau commun complet et
+Admission native portée : création après vérification mail, rattachement explicite,
+invitation durable et reprise sans double identité/courriel. Capacité onboarding
+plus lecture mail bornée90j ; propriétaire protégé par idm_high_privilege.
+Ce jalon d'invitation NE clôt pas toute l'étape2 : fermetures communes définitives
+IdP, préférences individuelles/panneau commun complet et
 qualification des connexions personnelles restent à terminer. Ne pas désactiver
 une admission active pour faciliter la bascule. Si la précondition distante est
 fausse, continuer son portage avant activation. Le prototype ACP reste non qualifié.
 
-Suite : terminer les tests ciblés des opérateurs/routage et le catalogue50,
+Suite : terminer les tests ciblés des opérateurs/routage et le catalogue51,
 commiter/publier sources, construire une fois --avec-log, qualifier/reutiliser
 les reçus exacts, sceller/transport chiffré puis CI centrale. Constater toute
 opération commencée avant reprise ; pas de rejouage d'une mutation incertaine.

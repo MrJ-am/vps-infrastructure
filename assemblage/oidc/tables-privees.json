@@ -36,7 +36,7 @@
     "log_principaux": {
       "classe": "adresse de récupération et politique qualifiée",
       "acces": "répertoire0700/fichier0600 du processus métier, sans API SQL publique",
-      "isolation": "sujet UUID stable ; écrit seulement par opérateur, pas par une préférence du navigateur",
+      "isolation": "Sujet UUID stable ; opérateur pour la politique, admission vérifiée pour le mail ; aucune préférence navigateur directe",
       "retention_max_secondes": null,
       "secrets_maitres_idp": false,
       "tests": "tests/log-kanidm.lisp ; IdP réel, deux personnes et accès concurrents"
