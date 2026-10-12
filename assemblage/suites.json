@@ -2657,5 +2657,126 @@
       "MRJAM_CURL"
     ],
     "reutilisable": false
+  },
+  "kanidm-politiques": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/kanidm-politiques-qualifier.py",
+        "tests/kanidm_politiques.py",
+        "tests/kanidm_reel.py",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json"
+      ]
+    },
+    "impact": [
+      "vps/scripts/kanidm-politiques-qualifier.py",
+      "vps/tests/kanidm_politiques.py",
+      "vps/tests/kanidm_reel.py",
+      "vps/assemblage/kanidm/*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-politiques-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL"
+    ],
+    "reutilisable": false
+  },
+  "kanidm-passkey": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/kanidm-passkey-qualifier.py",
+        "tests/kanidm_passkey.py",
+        "tests/kanidm_reel.py",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/kanidm/installation-locale.json",
+        "scripts/provenance-outils.py",
+        "assemblage/dependances.json",
+        "assemblage/python/*.txt"
+      ]
+    },
+    "impact": [
+      "vps/scripts/kanidm-passkey-qualifier.py",
+      "vps/tests/kanidm_passkey.py",
+      "vps/tests/kanidm_reel.py",
+      "vps/assemblage/kanidm/*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/kanidm-passkey-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "kanidmd": [
+        "kanidmd",
+        "version"
+      ],
+      "kanidm": [
+        "kanidm",
+        "version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ],
+    "reutilisable": false,
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ]
   }
 }

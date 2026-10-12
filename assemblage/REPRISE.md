@@ -56,6 +56,18 @@ idm_all_accounts/idm_all_persons contraignent les durées. Tous deux90j + profil
 restart. CredentialTypeMinimum concerne l'enrôlement, ne prouve pas l'usage MFA :
 password seul encore accepté sous minimummfa, confirmé parTODO authsession/mod.rs.
 Ne pas accorder de privilège métier administratif sur ce seul paramètre.
+Qualification canonique supplémentaire23assertions : enregistrement password
+seul non committable sous minimummfa, TOTP SHA256 généré/vérifié par Kanidm,
+commit puis seul mécanisme passwordmfa offert, vraie connexion avant ET après
+restart. Profils7/30/90j effectifs et rôle7j plus fort constatés. Passkey réelle
+viaChromium154/authentificateur virtuel : registration/login UVrequired,
+password absent, login conservé après restart, assertion signée sansUV refusée
+malgré affaiblissement du paramètre navigateur. Certificat synthétique ignoré
+dans ce seul contexte navigateur routé exclusivement vers loopback ; Curl TLS
+strict séparé qualifié. Aucune clé/passkey/OTP personnels ni accès production.
+Commandes centrales politiques2,2805s/passkey4,4917s passent ; catalogue45suites.
+Premier raccordement de provenance browser cherchait le cache supprimé : profil
+Chromium externe effectivement utilisé déclaré, aucun moteur réinstallé/guard désactivé.
 
 Kanidm officiel5479338, Nixpkgs c5, vendor741crates conformes au lock et licences
 déclarées inventoriées. Intégrité staging fixe ET vendor dérivé vérifiée ; cargoHash

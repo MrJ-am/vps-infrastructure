@@ -170,5 +170,67 @@
     "defauts90j_profil7j_secondes_effectives": 604800,
     "minimum_mfa_ne_prouve_pas_usage_mfa": true,
     "scope": "Sondes synthétiques séparées, pas une qualification de médiation personnelle."
+  },
+  "politiques_et_navigateur": {
+    "kanidm-politiques": {
+      "resultat": "succes",
+      "duree_secondes": 2.2805,
+      "recu_sha256": "bbb80d7b4d5307c0b66dfa6aa4d6c27930d8426bd181c469798c830f7545e7f1",
+      "entrees_sha256": {
+        "vps/scripts/kanidm-politiques-qualifier.py": "12fc3b55a02030cb863a141b4f25222b0cb460f692693ee1aac2e1d0d5bd54da",
+        "vps/tests/kanidm_politiques.py": "74f8e10cb35b8698367e5a2d4089691973ac6aae8de5ae56f18abed8831009d1",
+        "vps/tests/kanidm_reel.py": "d5797f954ba70361b5433d9caa3fd732403607037626e0d1188e2779956f83c6",
+        "vps/assemblage/kanidm/dependances.json": "669ecc58c33e7ca446e73bb0cf6705c4ba599a8c9fe24943b1fe1968593826c1",
+        "vps/assemblage/kanidm/installation-locale.json": "5edd76f8b22413651a0df66e437de8913ada7cf5feda2191851fb877e9ef5ee2"
+      },
+      "definition_sha256": "19e49f88628c3709d6b5238cc7009870954efdcbe6b78b808d8ef9b1a4f2d5ba",
+      "environnement_sha256": "9838efbd10ec7ecfa1a0e2f4a92f90c6abd97d23d74ea01a671d69b945a476c6",
+      "reutilisable": false
+    },
+    "kanidm-passkey": {
+      "resultat": "succes",
+      "duree_secondes": 4.4917,
+      "recu_sha256": "2702177c3e1f2fe6ba5e6fec0b6f1e91d8a002c3aa69f0cc577e7be2f8c25c66",
+      "entrees_sha256": {
+        "vps/scripts/kanidm-passkey-qualifier.py": "9ea51b94a783efdc93d4a0376cd9b9d7f47eec35b8e6c013c5c68693a7a2115a",
+        "vps/tests/kanidm_passkey.py": "cc70184d7869a4758b6c2261a723c1f67ea73c4db72d391fa2a69d9fccb300c3",
+        "vps/tests/kanidm_reel.py": "d5797f954ba70361b5433d9caa3fd732403607037626e0d1188e2779956f83c6",
+        "vps/assemblage/kanidm/dependances.json": "669ecc58c33e7ca446e73bb0cf6705c4ba599a8c9fe24943b1fe1968593826c1",
+        "vps/assemblage/kanidm/installation-locale.json": "5edd76f8b22413651a0df66e437de8913ada7cf5feda2191851fb877e9ef5ee2",
+        "vps/scripts/provenance-outils.py": "2e9d98c9274ecd7ac8efefc663ece0023c3ce472e42c8b47429183418bfcc116",
+        "vps/assemblage/dependances.json": "279c6aef5280ead37d937a696aedb49542e2da57434589ef83db419528a30f0d",
+        "vps/assemblage/python/embeddings-cp312-linux-x86_64.txt": "5492566661e3fe9a9da8ea91a548e68715f40e53c5d90b1666a47d8a70b9dc03",
+        "vps/assemblage/python/logo-cp312-linux-x86_64.txt": "8ba3de6fe8b70878eb04ee0fddbd261cf7d0ee6e60392fd9d4860a1e56bed5f9",
+        "vps/assemblage/python/navigateur-cp312-linux-x86_64.txt": "97a935b50432710e6ae506175ccd4635261ee589707f4212fbf7f259353b5219",
+        "vps/assemblage/python/signature-cp312-linux-x86_64.txt": "ab53dc401a6bca58829622d8b94a41390d79f43fa11d34ae5f04c8f47d169adc"
+      },
+      "definition_sha256": "084dc717454b0631e38d2cea18e70b734de8e274ce9e88551c248af80d3e6b73",
+      "environnement_sha256": "ce8beabb5481606c21adc89926317871c5d4cdecc5138e03c674207e621164b6",
+      "reutilisable": false
+    }
+  },
+  "resultats_politiques": {
+    "assertions": 23,
+    "TOTP_SHA256_enrole_nativement": true,
+    "password_seul_non_committable_sous_mfa": true,
+    "mecanisme_password_seul_absent_apres_enrol": true,
+    "mfa_apres_restart": true,
+    "durees_effectives_jours": [
+      7,
+      30,
+      90
+    ],
+    "contrainte_role7j": true
+  },
+  "resultats_passkey": {
+    "navigateur_reel": "Chromium154 système",
+    "authentificateur": "virtuel CTAP2",
+    "origine": "https://log.mrj.am",
+    "registration_login_UV_required": true,
+    "connexion_apres_restart": true,
+    "assertion_valide_sans_UV_refusee": true,
+    "certificat_synthetique_ignore_seul_navigateur": true,
+    "trafic": "uniquement loopback via route de test",
+    "enrolement_personnel": false
   }
 }

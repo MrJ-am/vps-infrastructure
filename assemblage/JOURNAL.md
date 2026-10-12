@@ -752,3 +752,17 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   all_persons90j + profil7j→604800s, un seul défaut laissé24h ; minimummfa ne force
   pas la méthode d'un credential existant, TODO amont et test réel concordants.
   Aucune promotion, connexion personnelle ou campagne MCP encore revendiquées.
+
+  NativeMFA23assertions canoniques : password seul non committable sousMFA,
+  TOTP256 natif vérifié, seulpasswordmfa proposé, connexions avant/après restart.
+  Profils7/30/90jours + contrainte rôle7jours réellement effectifs avec deux
+  défauts90jours. Calcul RFC6238 test uniquement stdlibhmac/hashlib, secret généré
+  par Kanidm, aucun OTP utilisateur. Passkey navigateur réelle/vituelle : UV
+  required registration/auth, primaire retiré, connexion après restart et refus
+  serveur d'une assertion signée sansUV alors que le client demande discouraged.
+  Chrome154 système/SDK1.61 déjà qualifiés ; origineLog conservée par route vers
+  loopback, certificat synthétique ignoré seulementdans ce navigateur, Curl strict
+  distinct. Politiques2,2805s/passkey4,4917s centrales passent. Échec initial du
+  reçu browser sur cache Chromium supprimé : déclarer moteur externe réellement
+  lancé, ni réinstallation ni affaiblissement de provenance.45suites. Aucun accès
+  personnel/migration/production affirmé ; reste raccordement Common Lisp/MCP.
