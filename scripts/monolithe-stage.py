@@ -119,7 +119,7 @@ with (p/'payload/closure.nar').open('rb') as f:subprocess.run(['nix-store','--im
 (p/'soumission.json').write_text(json.dumps(d,indent=2)+'\\n')
 (p/'promotion.json').write_text(json.dumps({'format':1,'run_ci':int(sys.argv[3]),'revision_deploiement':sys.argv[4],'origine':'soumission-locale-proprietaire-verifiee'},indent=2)+'\\n')
 a.unlink(missing_ok=True)
-subprocess.run([sys.executable,'-B',str(p/'payload/vps/scripts/'+sys.argv[5]+'-preparer.py'),p.name],check=True)
+subprocess.run([sys.executable,'-B',str(p/'payload/vps/scripts'/(sys.argv[5]+'-preparer.py')),p.name],check=True)
 """
         cmd='python3 -c '+shlex.quote(bootstrap)+' '+remote+' '+shlex.quote(json.dumps(d))+' '+os.environ['GITHUB_RUN_ID']+' '+os.environ['GITHUB_SHA']+' '+nature
         shell='nix-shell -I nixpkgs='+manifeste()['toolchain']['production']['nixpkgs']+' -p python3 age --run '+shlex.quote(cmd)

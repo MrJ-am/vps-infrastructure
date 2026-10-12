@@ -1,6 +1,6 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — candidat Log scellé, promotion à lancer
+## Point de reprise actif — candidat Log scellé, transport corrigé avant activation
 
 Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
 Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
@@ -18,6 +18,13 @@ rejoignent la closure signée pour restauration, sans outillage MCP produit.
 Image C saine conservée (marqueur reprise-20261012-552402 observé, pas PID fixé).
 CL-MCP sans pool/Swank, Tron distinct ; aucun qualifier synthétique de santé.
 Aucun REPL connecté à des données de production.
+
+Premier run38312028922/ef672f4 arrêté APRÈS réception/import/vérification, AVANT
+appel du préparateur : Path+str dans le bootstrap principal. Aucun changement
+de génération, compte ou données ; courriel non envoyé. Correction principale
+main et regression23cas (handover réellement évalué pour Log/monolithe), même
+payload9fcf998 et binaire conservés. Reprendre la promotion, pas réengager une
+mutation métier incertaine ; préparation jamais appelée au premier run.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation
