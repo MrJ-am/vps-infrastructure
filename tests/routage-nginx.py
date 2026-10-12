@@ -43,7 +43,9 @@ def verifier():
         { options.locations=lib.mkOption { type=lib.types.attrsOf (lib.types.submodule options); }; }
         { config.locations={
             "= /".root=lib.mkForce "/historique/vision";
+            "= /".tryFiles=lib.mkForce "/ancien-accueil.html =404";
             "= /interface-manifest.json".root=lib.mkForce "/historique/vision";
+            "= /interface-manifest.json".tryFiles=lib.mkForce "/ancien-manifeste.json =404";
           };
         }
         { config.locations=nouveaux; }
@@ -54,6 +56,7 @@ def verifier():
     assert all(v['root'] is None or v['alias'] is None for v in locations.values())
     assert locations['= /']['root'] is None and locations['= /']['alias'] is None
     assert locations['= /interface-manifest.json']['root'] is None
+    assert locations['= /']['tryFiles'] is None and locations['= /interface-manifest.json']['tryFiles'] is None
     with tempfile.TemporaryDirectory(prefix='mrjam-routage-') as tmp:
         d=Path(tmp);sock=d/'metier.sock'
         env={k:v for k,v in os.environ.items() if k in ('PATH','LANG','LC_ALL','MRJAM_LIBCRYPTO','MRJAM_LIBPQ','MRJAM_LIBSQLITE')}
@@ -78,12 +81,12 @@ def verifier():
                 if ancien:selection['= /']={'root':str(documents)}
                 for chemin,opts in selection.items():
                     directives=[]
-                    for k in ('root','alias','proxyPass','extraConfig'):
+                    for k in ('root','alias','proxyPass','extraConfig','tryFiles','index','return'):
                         if k not in opts:continue
                         value=simplifier(opts[k])
                         if value is None:continue
                         value=value.replace('/run/mrjam-metier/http.sock',str(sock))
-                        directives.append(value if k=='extraConfig' else ('proxy_pass' if k=='proxyPass' else k)+' '+value+';')
+                        directives.append(value if k=='extraConfig' else {'proxyPass':'proxy_pass','tryFiles':'try_files'}.get(k,k)+' '+value+';')
                     lignes.append('location '+chemin+' {\n'+'\n'.join(directives)+'\n}')
                 conf=d/('ancien.conf' if ancien else 'actuel.conf')
                 user='user root;\n' if os.geteuid()==0 else ''

@@ -1,5 +1,35 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Point de reprise actif — fusion Nginx corrigée et qualifiée
+
+Production ancienne r6s7ags3 après retour38196244219 enregistré/timer arrêté.
+Déploiement38197714319 refusé en préparation avant restauration/activation.
+Diagnostic38198619771 : root et tryFiles hérités présents sur les deux locations
+exactes Vision ; assertion Nix root/alias exclusifs. La valeur des anciens
+tryFiles n’a pas été exposée. La reproduction locale index/404 n’établit pas
+à elle seule la cause précise de l’ancien accueil en production.
+
+Correction limitée : root/alias/tryFiles supprimés explicitement sur l’accueil
+exact désormais proxy métier ; root/tryFiles supprimés sur le manifeste exact
+avec alias du fichier qualifié. Autres locations et protections conservées.
+Test avec les options location-options.nix officielles et héritage mkForce,
+vrai Nginx verrouillé et même binaire SBCL : accueil/octets/CSP/no-store,
+six chemins, manifeste/révision, MCP anonyme401 et ressource absente404 passent.
+Routage-nginx1,6523s, sécurité10,095s ; migration50,7521s et sélection1,2065s
+restent valides sur leurs entrées exactes. Catalogue36 suites.
+Diagnostic38197483752 : paquet Nginx1.30.4 et SHA256 exacts identiques au VPS.
+Aucun changement de dépendance produit ni du binaire296b7 ou des frontends.
+Image interactive C conservée, processus de tests froids arrêtés.
+
+Prochaine action : publier ces sources, sceller et vérifier les36 reçus,
+promouvoir une seule fois le nouveau candidat ; ne pas redéployer f981717.
+Puis constater MCP réel/données/redémarrage/services/mesures avant jalon1.
+Kanidm non commencé ; rapport MCP non commité conservé.
+
+## État précédent — historique conservé
+
+# Reprise — mission et amendement du 11 octobre 2026
+
 ## Point de reprise actif — routage Vision qualifié localement
 
 Production ancienne r6s7ags3 après retour38196244219 enregistré/timer arrêté.
@@ -20,11 +50,12 @@ Nginx/SBCL arrêté proprement après fixtures, aucun qualifier synthétique.
 
 Candidatf981717 scellé et transport chiffré publié,109146518octets, SHA256
 e23c41731a28fa744ce774eb00de0797ddb23d5fb6bed46a85a1562eed8968ce.
-Bundle complet36reçus vérifié. Prochain : une bascule centrale. Constater
+Bundle complet36reçus vérifié. Déploiement38197714319/90be33f déclenché
+02:55:37UTC ; issue à constater avant toute répétition. Constater
 issue avant répétition ; MCP réel/référence après activation avant jalon1/Kanidm.
 Kanidm non commencé ; rapport MCP non commité conservé.
 
-## État précédent — historique conservé
+
 
 # Reprise — mission et amendement du 11 octobre 2026
 

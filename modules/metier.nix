@@ -127,6 +127,7 @@ in {
           "= /" = {
             root = lib.mkOverride 30 null;
             alias = lib.mkOverride 30 null;
+            tryFiles = lib.mkOverride 30 null;
             proxyPass = lib.mkOverride 30 upstream;
             extraConfig = lib.mkAfter ''
               proxy_set_header X-Mrjam-Service "vision";
@@ -138,6 +139,7 @@ in {
           };
           "= /interface-manifest.json" = {
             root = lib.mkOverride 30 null;
+            tryFiles = lib.mkOverride 30 null;
             alias = lib.mkOverride 30 "${cfg.documentVision}/manifest.json";
           };
         };
