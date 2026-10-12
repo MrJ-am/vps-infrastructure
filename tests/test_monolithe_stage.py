@@ -6,7 +6,9 @@ from pathlib import Path
 import tempfile
 import unittest
 import sys
-from unittest.mock import patch
+import ast
+from types import SimpleNamespace
+from unittest.mock import patch,Mock
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts'))
@@ -18,6 +20,19 @@ stage=importlib.util.module_from_spec(spec_stage);spec_stage.loader.exec_module(
 
 
 class PromotionAmendement(unittest.TestCase):
+    def test_bootstrap_transmet_au_preparateur_de_la_bonne_nature(self):
+        arbre=ast.parse((ROOT/'scripts/monolithe-stage.py').read_text())
+        texte=next(n.value.value for n in ast.walk(arbre) if isinstance(n,ast.Assign)
+                   and any(isinstance(t,ast.Name) and t.id=='bootstrap' for t in n.targets))
+        appel=ast.Module(body=[ast.parse(texte).body[-1]],type_ignores=[])
+        for nature in ('monolithe','log'):
+            with self.subTest(nature=nature):
+                proc=Mock();p=Path('/fixture')/('a'*40)
+                exec(compile(ast.fix_missing_locations(appel),'bootstrap-handover','exec'),
+                     {'p':p,'subprocess':proc,'sys':SimpleNamespace(executable=sys.executable,argv=['','','','','',nature])})
+                proc.run.assert_called_once_with([sys.executable,'-B',
+                    str(p/'payload/vps/scripts'/(nature+'-preparer.py')),p.name],check=True)
+
     def test_rapport_nix_sur_stderr_est_reellement_controle(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp)
