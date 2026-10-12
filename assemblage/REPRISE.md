@@ -24,7 +24,13 @@ Les35reçus sont valides (34réutilisations exactes/éditorial rejoué). Opérat
 9a063b8e4c38de5fbfcb11208df67fd1d259d370 publiés ; scellement complet local réussi.
 Transportb02d22d74d531168a6e2523077ddf167497663b2 publié (trois parties),
 109027873octets chiffrés, SHA256e8ad8f2832590e8a99c13f0d3186b23e5a9e5737c52c6490224437a3b3e2b659.
-Descripteur central actualisé ; préparation sans activation à lancer puis constater.
+Descripteur central publié23aa0d14edf5f7e15a957f642988095dce77b694.
+Préparation38186573658 réussie : binaire296b7, générationNix9rsmp9wrp9vid4dk85cn30fckjszywwp,
+activationfalse, sondes des services existants réussies. Preuve dans
+state/preparation-38186573658.json. Déployer est la prochaine opération fermée :
+restauration fraîche/ACL/retour avant activation. Déploiement38186728742 sur23aa0d14 arrêté en restauration isolée avant activation,
+message générique ; diagnostic privé conservé sur VPS. Prochaine action : diagnostic
+fermé pour sa cause exacte, aucune répétition aveugle et production ancienne conservée.
 
 Le candidat c5548b3 reste historique et ne doit pas être redéployé : préparer un
 nouvel assemblage après qualification/publication des sources corrigées. Conserver

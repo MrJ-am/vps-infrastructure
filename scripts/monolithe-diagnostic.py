@@ -73,6 +73,16 @@ COMMIT;"""
             for r in rows if r['table'] in attendus}
 
 
+def acces_parent_restauration():
+    # Un droit sur le sous-répertoire ne donne pas le droit de traverser son
+    # parent PostgreSQL. Test effectif sous l'identité Unix de qualification,
+    # aucune ouverture de fichier ni lecture de donnée.
+    r=subprocess.run(['runuser','-u','vision','--','test','-x','/var/lib/postgresql'],
+                     capture_output=True,timeout=10)
+    if r.returncode not in (0,1):raise ValueError('Contrôle de traversée indisponible')
+    return r.returncode==0
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -82,6 +92,7 @@ def main(revision):
          'preparation_presente':(d/'preparation.json').exists(),
          'activation_presente':(d/'activation.json').exists()}
     out['restauration_presente']=(d/'restauration.json').exists()
+    out['parent_restauration_traversable_par_vision']=acces_parent_restauration()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])
     out['metadonnees_rls_vision_actives']=metadonnees_rls(r['postgres'],'vision',inventaire['vision'])
