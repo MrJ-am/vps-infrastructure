@@ -52,6 +52,18 @@ avant toute seconde promotion. Passkey/OTP personnels restent à préparer sans
 inventer l’enrôlement. Aucun retour à l’ancien déploiement ni nouvelle demande
 d’extension disque. Les documents ci-dessous constituent l’historique.
 
+Précollecte native effectivement relancée après ménage (12octobre, phase encore
+observée en cours au relevé). `nix-build --no-out-link --cores 2 --max-jobs 1`
+avec le paquet exact ci-dessus, cible cargoDeps seulement, TMPDIR=/tmp.
+Journal : `state/kanidm-precollecte-native-20261012.log` ; état daté et commande
+complète : `state/kanidm-precollecte-native-20261012.json`. Prévision Nix :60paths,
+943,12MiB téléchargés/2866,63MiB décompressés ; téléchargement Rust encore en cours,
+aucun résultat vendor réussi, aucune compilation/service Kanidm prétendus.
+La marge5,92Go documente l’issue du ménage AVANT ces nouveaux téléchargements ;
+relever la marge actuelle au prochain contrôle. Constater l’issue de cette commande
+avant toute répétition et protéger le vendor validé avant une autre GC. Pas de
+CI ni déport. Le rapport du ménage et ses mesures historiques restent exacts.
+
 ## État précédent — étape1 acceptée, préparation OIDC, blocage disque avant nettoyage
 
 Déploiement38200204066/29c3f39 réussi ; opérateurs185f931 et binaire296b7.
