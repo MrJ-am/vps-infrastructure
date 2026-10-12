@@ -25,8 +25,10 @@ qualifiées conservées (Vision37871df2). Binaire Nix296b7c89/graphe Lisp inchan
 ArchitectureC/image persistante et pont existants préservés ; aucun nouveau
 qualifier synthétique, reconnexion, pool ou outil. CLI GitHub fonctionne.
 
-À reprendre : publier les opérateurs corrigés, vérifier les35reçus exacts et
-sceller le même artefact ; transport chiffré puis descripteur central. Une seule
+Opérateursdad8482b0bc01c4b8fb3d522fb19d99b952051ba publiés ; scellement complet
+réussi pour les35reçus exacts. Transport47521bfd67c12f1c4e19a3d4c8b8f3c39a25f93e publié,
+109113579octets chiffrés, SHA256b0a48e48c3951ff3a84252cb5127c09b16f6c46949df5eb9250db7a782dc5ac7.
+Descripteur central actualisé. Prochaine étape : une seule
 exécution fermée préparation/restauration/retour/activation conditionnelle.
 Après constat : MCP réel, invariants, mémoire/latences/redémarrage/services tiers.
 Kanidm seulement après validation personnelle de l'étape1 en production.
