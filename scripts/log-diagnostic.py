@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess,ast
+import importlib.util,json,os,re,sys,subprocess,ast,shutil
 from pathlib import Path
 
 def classifier(texte,ancien):
@@ -97,6 +97,17 @@ def main(revision):
                 'duplicate':'directive_dupliquee','invalid':'invalide','permission denied':'permission_refusee',
                 'cannot load certificate':'certificat_indisponible','bind()':'port_indisponible'}.items()
                 if k in texte.lower()]
+            # Certificat public seulement, sans démarrer le serveur natif ni
+            # lire une clé privée. Même CA que le proxy candidat, codes seuls.
+            contenu=Path(configs[0]).read_text()
+            ca=re.findall(r'proxy_ssl_trusted_certificate\s+(/nix/store/[a-z0-9]{32}-[^;\s]+/etc/ssl/certs/ca-bundle\.crt);',contenu)
+            openssl=shutil.which('openssl')
+            if openssl and len(set(ca))==1:
+                cert='/var/lib/acme/log.mrj.am/fullchain.pem'
+                out['verification_chaine_proxy']={str(depth):subprocess.run(
+                    [openssl,'verify','-verify_hostname','log.mrj.am','-verify_depth',str(depth),
+                     '-CAfile',ca[0],'-untrusted',cert,cert],capture_output=True,timeout=10).returncode
+                    for depth in (1,2,3)}
     elif not out['activation_engagee']:
         # Même expression fermée du préparateur, en lecture seule, trace
         # conservée privée ; seuls positions/classes/champs sont publiés.
