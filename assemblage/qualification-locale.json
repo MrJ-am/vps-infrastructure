@@ -164,10 +164,10 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 1.1802,
+      "duree_secondes": 1.2728,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "fbeb5bad164227da4db3ee1ec995aded6e55e4b0eb5e92bc52661e4947f504a1",
+      "sha256": "bf0b6fb27a031bd0e90cc1993de1b6c20b04c63172efa88e604c5d8d8b6bf5ea",
       "artefact_metier_sha256": null,
       "reuse": "contrôles affectés par le préparateur exécutés localement ; autres entrées inchangées"
     },
@@ -415,7 +415,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": "réussi ; 35 reçus exacts dans bundle8d44379",
+    "scellement": "nouveau scellement requis pour capture stdout/stderr de dry-activate",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -431,10 +431,7 @@
       "postgresql",
       "keycloak"
     ],
-    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés",
-    "revision_operateurs": "8d4437953a3a27959f28e2b7659098c7e8dc2f61",
-    "stage_sha256": "947d792a6be01b31e52bed39fa06a7183bd7a960e22c8a862d047106a46640ba",
-    "bundle_complet_verifie_localement": true
+    "reprise_etats": "retourdbd5b19 établi, source historique récente prioritaire, états nouveaux et sauvegarde commune préservés"
   },
   "historique_exact": {
     "fichier": "coordination/historique/qualification-locale-avant-frontends-20261011.json.archive",

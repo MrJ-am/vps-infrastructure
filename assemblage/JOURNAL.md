@@ -570,3 +570,9 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   zéro/NULL préservés et peer réel requis. RestartPG/Keycloak déclaré précisément,
   autres protections inchangées ; rôle étroit posé après setupPG. Qualification
   41968 : migration48,3562s, sécurité1,1802s, sélection0,972s ; deux reçus réutilisés.
+- Préparation38193221173 refusée avant activation : simulation uniquementstdout
+  vide, marker obligatoire absent. Source officiellec5c4a43/main.rs vérifiée :
+  toutes actions « would » émettent surstderr. Rapport complet capturé uniquement
+  pourdry-activate ; sortiesSQL/JSON restent séparées. RégressionShell réelle
+  rapportstderr et refusrestartprotégé ; sécurité1,2728s passe. Aucune activation
+  ni restauration engagée par ce run. Même image/interfaces et autres reçus valides.
