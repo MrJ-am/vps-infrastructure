@@ -3,9 +3,11 @@ from collections import deque
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 import importlib.util
+import json
 from pathlib import Path
 import threading
 import time
+import tempfile
 import unittest
 from unittest.mock import patch
 
@@ -29,6 +31,29 @@ def serveur(codes):
 
 
 class Sondes(unittest.TestCase):
+    def test_formats_comptes_agreges_sans_secret_ni_identite(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fichier=Path(tmp)/'htpasswd'
+            secret='$6$rounds=656000$selSynthese$'+'a'*86
+            fichier.write_text('alice:'+secret+'\nbob:$argon2id$synthetique\nvision-bootstrap-test:'+secret+'\nvision-disabled-test:'+secret+'\n')
+            resultat=m.comptes_vision_historique(fichier)
+        self.assertEqual(resultat,{'present':True,'comptes_eligibles':2,'sha512_crypt':1,
+                                  'formats_non_reconnus':1,'doublons':0,'lignes_invalides':0})
+        sortie=json.dumps(resultat)
+        for sensible in ('alice','bob',secret,'selSynthese','argon2'):
+            self.assertNotIn(sensible,sortie)
+
+    def test_comptes_absents_doublons_et_fichier_invalide(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fichier=Path(tmp)/'htpasswd'
+            self.assertEqual(m.comptes_vision_historique(fichier),{'present':False})
+            fichier.write_text('alice:$6$malforme\nalice:$6$sel$'+'a'*86+'\nligne-invalide\n')
+            r=m.comptes_vision_historique(fichier)
+            self.assertEqual((r['comptes_eligibles'],r['sha512_crypt'],r['doublons'],r['lignes_invalides']),(1,1,1,1))
+            fichier.write_text('SECRET'*12000)
+            with self.assertRaisesRegex(ValueError,'hors borne') as e:m.comptes_vision_historique(fichier)
+            self.assertNotIn('SECRET',str(e.exception))
+
     def test_disponibilite_distincte_des_dix_mesures_espacement_reel(self):
         with serveur([503,200]+[200]*10) as (url,instants):
             r=m.latence(url,(200,),attendre=True)

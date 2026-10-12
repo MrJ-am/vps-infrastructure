@@ -710,3 +710,12 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   staging fixe/cargoHash et vendor dérivé vérifiés séparément. Premier build
   ENOSPC sur overlay, nettoyé par Nix ; build-dir corrigé vers tmpfs existant,
   compilation encore active. Aucun serveur Kanidm/compte/import/CI/production.
+
+  Sonde de préconditions étendue aux comptes Vision historiques : nombre de
+  comptes éligibles, formatSHA512-crypt, doublons/lignes invalides uniquement ;
+  aucune identité ni empreinte exportée. Deux régressions avec fichiers synthétiques
+  et suite intégration-sécurité60tests/10,242s passent localement. Reçus OIDC
+  publiés compactés aux empreintes des entrées/environnement et versions des outils,
+  reçus complets privés conservés ; anciennes qualifications laissées historiques.
+  Qualification native propriétaire préparée dans tests/kanidm_reel.py et
+  scripts/kanidm-qualifier.py, non exécutée tant que le paquet n'est pas construit.
