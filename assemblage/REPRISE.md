@@ -19,8 +19,9 @@ Diagnostic fermé sécurité1,3513s qualifié séparément. Binaire296b7 inchang
 frontend Vision3c00e4fd : seul manifest.json de révision diffère, fichiers servis
 identiques. Retour précédent explicitement77c7f82 dans manifeste.
 
-Prochain : publier opérateurs, sceller tous reçus exacts, transporter chiffré,
-publier descripteur et déployer une fois. Constater l'issue avant répétition,
+Candidat8576390 scellé et transport chiffré publié,109131832octets, SHA256
+33d0a52d4d01478697769b0c414a408a326fcfb6d83cf9610625b4112cd1e063.
+Bundle complet vérifié localement. Prochain : déployer une fois. Constater l'issue avant répétition,
 puis MCP réel/données/restart/services/mesures avant jalon1 et Kanidm automatique.
 Kanidm non commencé. Image interactive C/interfaces conservées, aucun qualifier
 synthétique ni nouvelle connexion. Rapport MCP non commité préservé.
