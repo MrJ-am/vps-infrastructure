@@ -1,36 +1,26 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — fusion Nginx corrigée et qualifiée
+## Point de reprise actif — accès aux ressources publiques réparé
 
-Production ancienne r6s7ags3 après retour38196244219 enregistré/timer arrêté.
-Déploiement38197714319 refusé en préparation avant restauration/activation.
-Diagnostic38198619771 : root et tryFiles hérités présents sur les deux locations
-exactes Vision ; assertion Nix root/alias exclusifs. La valeur des anciens
-tryFiles n’a pas été exposée. La reproduction locale index/404 n’établit pas
-à elle seule la cause précise de l’ancien accueil en production.
+Production ancienne r6s7ags3 après retour38199267338 enregistré/timer arrêté.
+Restauration complète et RLS/ACL actifs passent ; Matheval200 puis accueilVision500.
+Diagnostic38199690520 : /srv/mrjam-assemblages mode0700 ; Nginx et mrjam-metier
+ne peuvent ni traverser le parent ni lire app.html. mkdir0755 sous umask0077
+créait0700 ; seuls la révision et ses enfants étaient ensuite corrigés.
 
-Correction limitée : root/alias/tryFiles supprimés explicitement sur l’accueil
-exact désormais proxy métier ; root/tryFiles supprimés sur le manifeste exact
-avec alias du fichier qualifié. Autres locations et protections conservées.
-Test avec les options location-options.nix officielles et héritage mkForce,
-vrai Nginx verrouillé et même binaire SBCL : accueil/octets/CSP/no-store,
-six chemins, manifeste/révision, MCP anonyme401 et ressource absente404 passent.
-Routage-nginx1,6523s, sécurité10,095s ; migration50,7521s et sélection1,2065s
-restent valides sur leurs entrées exactes. Catalogue36 suites.
-Diagnostic38197483752 : paquet Nginx1.30.4 et SHA256 exacts identiques au VPS.
-Aucun changement de dépendance produit ni du binaire296b7 ou des frontends.
-Image interactive C conservée, processus de tests froids arrêtés.
+Correction canonique : parent dédié aux seules ressources publiques en0755,
+révision/répertoires0755 et fichiers0644 ; bundle privé inchangé. Périmètre fermé
+et liens refusés avant changement des droits. Régression unitaire sur fichiers
+réels et autreUID Docker sans réseau : document refusé puis mêmes octets lisibles,
+bundle privé toujours inaccessible. Migration41,8496s et sécurité9,9023s passent. Fixture PG corrigée : attente
+loopback du serveur final ; serveur initdb temporaire Unix ensuite arrêté
+(source officielle de l’image verrouillée constatée). Échec précédent42,5943s
+conservé dans le journal ; aucun nouveau comportement métier.
+Fusion Nginx qualifiée conservée, même binaire296b7/frontends/image interactive C.
 
-Candidat0e3f999 scellé et36reçus vérifiés ; transport c5198eb publié,
-109150049octets chiffrés, SHA256
-46f29f238ca4433a889cea5f9df404ffb052a15ba4fdb8a7a28cf4c4e432db83.
-Déploiement38199267338/ea49d8e échoué : restauration et RLS/ACL passent,
-accueilVision500 après démarrage ; retour enregistré/timer arrêté, ancienne
-génération. Diagnostic de lecture/traversée des ressources préparé et qualifié
-(sécurité10,0277s) ; cause encore à constater avant toute nouvelle bascule.
-Ne pas redéployer f981717 ni0e3f999.
-Puis constater MCP réel/données/redémarrage/services/mesures avant jalon1.
-Kanidm non commencé ; rapport MCP non commité conservé.
+Prochaine action après résultat : publier sources, sceller36reçus exacts,
+promotion centrale unique. Puis MCP réel/données/redémarrage/services/mesures.
+Ne pas redéployer0e3f999. Kanidm non commencé ; rapport MCP non commité conservé.
 
 ## État précédent — historique conservé
 

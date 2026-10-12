@@ -27,7 +27,7 @@ def verifier():
            '--mount','type=bind,src=/nix/store,dst=/nix/store,readonly',IMAGE)
     try:
         for _ in range(100):
-            if docker('exec',nom,'pg_isready','-U','postgres',check=False).returncode==0:break
+            if docker('exec',nom,'pg_isready','-h','127.0.0.1','-U','postgres',check=False).returncode==0:break
             time.sleep(.1)
         else:raise AssertionError('PostgreSQL isolé indisponible')
         with tempfile.TemporaryDirectory(prefix='restauration-sources-',dir=ROOT/'state') as tmp:
@@ -47,6 +47,19 @@ def verifier():
                 '--set=ON_ERROR_STOP=1','--file=-',input=sql.read_text())
             assert transmis.stdout.strip()=='postgres'
             assert docker('exec',nom,'runuser','-u','postgres','--','test','-x','/root/mrjam-operateur',check=False).returncode==1
+            # Même publication que sur le VPS : fichiers publics corrects,
+            # parent créé sous umask0077. Lecture réellement refusée à un
+            # autre UID, puis possible après correction limitée au parent.
+            pub='/srv/mrjam-assemblages';doc=pub+'/fixture/vision/app.html'
+            docker('exec',nom,'mkdir','-p',pub+'/fixture/vision')
+            docker('exec',nom,'sh','-c','printf document-synthetique > '+doc)
+            docker('exec',nom,'chmod','700',pub)
+            docker('exec',nom,'chmod','755',pub+'/fixture',pub+'/fixture/vision')
+            docker('exec',nom,'chmod','644',doc)
+            assert docker('exec',nom,'runuser','-u','nobody','--','cat',doc,check=False).returncode!=0
+            docker('exec',nom,'chmod','755',pub)
+            assert docker('exec',nom,'runuser','-u','nobody','--','cat',doc).stdout=='document-synthetique'
+            assert docker('exec',nom,'runuser','-u','nobody','--','test','-x','/root/mrjam-operateur',check=False).returncode==1
             source=Path(tmp)/'sources';atelier=Path(os.environ.get('MRJAM_ATELIER',ROOT.parent))
             chemins={'vps':ROOT,'vision':atelier/'vision','matheval':atelier/'M-moire'}
             noms={'vps':'vps','vision':'vision','matheval':'M-moire'}
@@ -83,6 +96,7 @@ def verifier():
             assert 'Copies SQLite initialisées ; aucun transport ni traitement exécuté.' in bon.stdout
             print('SBCL propre/autre UID : parent privé refusé ; sources/FASL et quatre états SQLite privés initialisés via parent accessible, sans SMTP/IdP ni réseau.')
             print('PostgreSQL/autre UID : fichier opérateur privé refusé ; mêmes méta-commandes/transaction exécutées par stdin, permissions inchangées.')
+            print('Ressource publique/autre UID : parent0700 refuse la lecture ; parent0755 permet les mêmes octets, bundle privé toujours inaccessible.')
     finally:docker('rm','--force','--volumes',nom)
 
 

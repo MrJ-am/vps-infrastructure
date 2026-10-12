@@ -611,3 +611,16 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   autres reçus préservés. Nginx actif identique au paquet local selon38197483752.
   Ancien prototype index/404 ne prouve pas la cause précise de l’ancien tryFiles.
   Pas de changement de binaire/frontend, ni succès de production annoncé.
+
+- Déploiement38199267338 : préparation/restauration et ACL passent, Matheval200
+  puis Vision500 ; retour enregistré/timer arrêté. Diagnostic38199690520 : parent
+  /srv/mrjam-assemblages0700, Nginx et mrjam-metier ne traversent/lisent pas.
+  mkdir0755 filtré par umask0077, parent oublié lors du chmod des ressources.
+  Correction limitée au parent public et arbre qualifié, chemins/liens refusés,
+  bundle privé inchangé. Régression fichiers réels/idempotence et Docker/autreUID :
+  lecture refusée puis mêmes octets lisibles, bundle privé toujours inaccessible.
+- Migration42,5943s échouée au démarrage PostgreSQL de fixture (psql code2 après
+  pg_isready Unix). Source officielle verrouillée : serveur temporaire initdb
+  listen_addresses vide puis arrêt. Attente modifiée vers listener loopback final,
+  hors réseau ; nouvelle migration41,8496s réussie, sécurité9,9023s réussie.
+  Même binaire296b7 et interfaces, aucune suite métier indépendante rejouée.

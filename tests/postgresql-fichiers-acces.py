@@ -16,7 +16,9 @@ def verifier():
         return subprocess.run(['docker',*map(str,args)],input=input,text=True,capture_output=True,check=check)
     def pret():
         for _ in range(100):
-            if docker('exec',nom,'pg_isready','-U','postgres',check=False).returncode==0:return
+            # Le serveur temporaire d'initdb ouvre déjà le socket Unix,
+            # puis s'arrête. Seul le serveur final ouvre TCP sur loopback.
+            if docker('exec',nom,'pg_isready','-h','127.0.0.1','-U','postgres',check=False).returncode==0:return
             time.sleep(.1)
         raise AssertionError('PostgreSQL indisponible')
     def sql(q):return docker('exec','-i',nom,'runuser','-u','postgres','--','psql','-XAtq',

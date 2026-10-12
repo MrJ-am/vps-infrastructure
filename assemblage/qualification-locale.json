@@ -164,12 +164,12 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 10.095,
+      "duree_secondes": 9.9023,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "53d6b6565035e081c454a9a818543b2136b5c94c7367f6552f8674e9d67c6312",
+      "sha256": "2536e59cd8d83d27bbfb78714853de8bdbd8eb710f26ad82d651a897d6f5932b",
       "artefact_metier_sha256": null,
-      "reuse": "Réexécuté après correction de la fusion des options Nginx héritées."
+      "reuse": "Contrôle concerné réexécuté localement, entrées exactes vérifiées."
     },
     "json-commun": {
       "resultat": "succes",
@@ -245,12 +245,12 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 50.7521,
+      "duree_secondes": 41.8496,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "65b97841797f1484d98218ef8ece0ab06d57d7d7c55302c01562b94bffdcedb5",
+      "sha256": "b3be08b5fab3a4dd8f26430236e90d498f69655a0ba589edd776588a09fda9c6",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "Qualification locale affectée par routage, autres entrées préservées."
+      "reuse": "Contrôle concerné réexécuté localement, entrées exactes vérifiées."
     },
     "native-contrats": {
       "resultat": "succes",
@@ -403,7 +403,7 @@
       "autorise_publication": false,
       "sha256": "ff775368a5f7bb28ef1903bdeee395e9764d9f4943d20fb5f977ea033c989cda",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "Réexécuté après correction de la fusion des options Nginx héritées."
+      "reuse": "Contrôles affectés par publication et diagnostic rejoués ; routage exact inchangé réutilisé."
     }
   },
   "controle_final": {
@@ -446,7 +446,7 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "Ancienne génération après retour38196244219 ; préparation38197714319 refusée avant activation",
+    "production": "Ancienne génération après retour38199267338 ; accueil500 et parent public0700 constatés",
     "restart_dependances": [
       "postgresql",
       "keycloak"
@@ -484,6 +484,14 @@
       "root_tryfiles_herites_supprimes_explicitement": true,
       "fusion_options_nixos_reellement_testee": true,
       "ancien_tryfiles_valeur_non_exposee": true
+    },
+    "correction_parent_publication": {
+      "diagnostic": 38199690520,
+      "mode_parent_constate": "0700",
+      "lecture_nginx_metier_refusee": true,
+      "correction_limitee_ressources_publiques": true,
+      "regression_autre_uid_reelle": true,
+      "bundle_prive_protege": true
     }
   },
   "historique_exact": {
