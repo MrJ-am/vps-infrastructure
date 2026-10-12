@@ -1,5 +1,34 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Point de reprise actif — propriété de la vue historique corrigée
+
+Production ancienne r6s7ags3 après retour38194338389, monolithe inactif.
+Préparation et restauration77c7f82 entièrement réussies ; commun démarré puis
+refus du contrôle SQL. Retour enregistré, timer arrêté, aucune base ancienne
+restaurée. Diagnostic38194819102 : vue public.vision_browser_sheets encore
+possédée par vision, donc rôle applicatif propriétaire. pg_tables ne listait
+pas cette vue. Visioncd05b702 publié : transfert au rôle sans connexion
+vision_migration, ACL existantes révoquées ; aucun changement de définition/donnée.
+
+Régression PostgreSQL réelle : ancienne propriété reproduite/refusée, réparation
+idempotente, définition/données/séance ouverte inchangées, accès direct refusé.
+35 reçus exacts passent,28 réutilisés et7 rejoués : PostgreSQLVision112,051s,
+interface59,6562s, navigateur/MCP28,4359s, migration41,1296s,
+SQLnative14,8583s, sélection1,0693s, éditorial0,3216s.
+Diagnostic fermé sécurité1,3513s qualifié séparément. Binaire296b7 inchangé ;
+frontend Vision3c00e4fd : seul manifest.json de révision diffère, fichiers servis
+identiques. Retour précédent explicitement77c7f82 dans manifeste.
+
+Prochain : publier opérateurs, sceller tous reçus exacts, transporter chiffré,
+publier descripteur et déployer une fois. Constater l'issue avant répétition,
+puis MCP réel/données/restart/services/mesures avant jalon1 et Kanidm automatique.
+Kanidm non commencé. Image interactive C/interfaces conservées, aucun qualifier
+synthétique ni nouvelle connexion. Rapport MCP non commité préservé.
+
+## État précédent — historique conservé
+
+# Reprise — mission et amendement du 11 octobre 2026
+
 ## Point de reprise actif — capture complète de la simulation Nix qualifiée
 
 Production ancienne r6s7ags3 ; retour38190627348 finalisé, monolithe inactif,
@@ -38,7 +67,8 @@ Prochain : constater ce déploiement central
 préparer/restaurer/activer/contrôler, constater son issue avant répétition, puis
 MCP réel, données/restart/mesures/services avant jalon1 et Kanidm automatique.
 
-## État précédent — historique conservé
+
+
 
 ## Point de reprise antérieur — correction RLS avant bascule
 

@@ -56,6 +56,22 @@ INSERT INTO vision_seances(utilisateur,fiche_id,items) VALUES('alice',1,'[{"id":
 """)
         originaux=empreintes();normal=protections()
         assert all(normal[t]==[True,True] for t in privees)
+        spec=importlib.util.spec_from_file_location('tables_roles_rls',ROOT/'scripts/verifier-tables.py')
+        controleur=importlib.util.module_from_spec(spec);spec.loader.exec_module(controleur)
+        roles_query=controleur.ROLES_SQL.format(roles="'vision'")
+        definition_vue=sql("SELECT pg_get_viewdef('public.vision_browser_sheets'::regclass)").stdout
+        # Dérive historique : la vue appartient à l'ancien rôle applicatif.
+        # La restauration --no-owner ne reproduisait pas cette propriété.
+        sql('ALTER VIEW public.vision_browser_sheets OWNER TO vision; GRANT SELECT ON public.vision_browser_sheets TO vision')
+        assert lire(roles_query)[0]['membre_proprietaire'] is True
+        sql((source/'scripts/roles.sql').read_text())
+        sql((source/'scripts/roles.sql').read_text())
+        assert not any(v for k,v in lire(roles_query)[0].items() if k!='nom')
+        assert sql("SELECT pg_get_userbyid(relowner) FROM pg_class WHERE oid='public.vision_browser_sheets'::regclass").stdout.strip()=='vision_migration'
+        assert sql("SELECT pg_get_viewdef('public.vision_browser_sheets'::regclass)").stdout==definition_vue
+        assert empreintes()==originaux and protections()==normal
+        e=sql('BEGIN; SET LOCAL ROLE vision; SELECT count(*) FROM public.vision_browser_sheets; ROLLBACK;',check=False)
+        assert e.returncode!=0 and 'permission denied' in e.stderr
         # Reproduire les métadonnées effectivement constatées sur le VPS.
         sql('\n'.join('ALTER TABLE '+t+' DISABLE ROW LEVEL SECURITY; ALTER TABLE '+t+' NO FORCE ROW LEVEL SECURITY;' for t in privees))
         derive=protections()

@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "18c52cddc1cabc91848b49368807e70008c5b04e",
+      "revision": "cd05b702b97469375a2d6aac88053fcc52852027",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -108,7 +108,7 @@
     },
     "assembleur_commit": null,
     "regle_assembleur": "Le commit du depot assembleur est porte par le recu de qualification externe ; self evite un hash de commit circulaire dans son propre manifeste.",
-    "retour_precedent": "dbd5b19814b88b6ddc4e033134fc5b9e595de90d"
+    "retour_precedent": "77c7f82e8125ca081bc88d54bcf6a04bcf425b84"
   },
   "frontends": {
     "vision": {

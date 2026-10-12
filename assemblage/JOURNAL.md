@@ -579,3 +579,10 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
 - Reprise du contrôle local terminé : reçus migration41,0322s et sélection0,9335s,
   succès/codes zéro vérifiés sur disque ; dépendance réelle au préparateur ajoutée
   au catalogue. Aucun processus de qualification encore actif, image C préservée.
+- Bascule38194338389 : restauration complète réussie, commun démarré puis rôle
+  propriétaire refusé ; retour enregistré et timer arrêté, ancienne génération.
+  Diagnostic38194819102 : vision possède encore la vue historique, omission
+  de pg_tables. Visioncd05b702 corrige son propriétaire sans changer définition
+  ou données. Fixture réelle reproduit ce refus, réparation répétée/accès refusé.
+  35 reçus exacts :28 réutilisés/7 rejoués, mêmes sources Lisp/binaire296b7 ;
+  seul manifeste de révision du frontend change. Aucun succès de production annoncé.

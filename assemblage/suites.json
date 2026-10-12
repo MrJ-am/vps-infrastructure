@@ -1036,7 +1036,8 @@
         "tests/restauration-etats.py",
         "tests/postgresql-fichiers-acces.py",
         "assemblage/manifest.json",
-        "scripts/monolithe-preparer.py"
+        "scripts/monolithe-preparer.py",
+        "scripts/verifier-tables.py"
       ],
       "vision": [
         "migrations/*.sql",
