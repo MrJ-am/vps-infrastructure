@@ -768,6 +768,12 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   personnel/migration/production affirmé ; reste raccordement Common Lisp/MCP.
 # 12 octobre — raccordement Log en cours, aucune deuxième promotion
 
+Complément : campagne Visionbase94f3c6d complète réussie, consentement4parcours
+clavier/CSRF/retour inclus. Build propreNix1551a8f15,0213s, artefact13404520octets,
+SHA2565e7e2a49b5cd0d7f0b6d6d773c10c4b153559b9d53e475cfc3daa9b1a44d56c4.
+TransportCurl/cacheNix corrigé pour proxyhébergé, credentials toujours exclus des
+dérivations. Construction réussie ne vaut ni qualification totale ni publication.
+
 - Image C reconstruite depuis sources ; CL-MCP/Swank mêmePID/marqueur observés
   depuis les deux chemins, nouvelles sessionsHTTP, aucun replay synthétique.
 - `scripts/log-kanidm-qualifier.py --persistante` puis commande froide : vrais
