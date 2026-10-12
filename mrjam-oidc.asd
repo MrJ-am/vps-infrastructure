@@ -45,3 +45,7 @@
                                 (error "Fixture HTTPS synthétique requise.")))))
                (assert (and (integerp nombre) (>= nombre 25)))
                (format t "~&OIDC transport : ~D contrôles HTTPS réels terminés.~%" nombre))))
+
+(asdf:defsystem "mrjam-oidc/kanidm-tests"
+  :depends-on ("mrjam-oidc/transport")
+  :components ((:file "tests/oidc-kanidm")))

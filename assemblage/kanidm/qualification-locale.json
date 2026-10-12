@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "portee": "IdP réel synthétique, import ponctuel propriétaire uniquement",
+  "portee": "IdP réel synthétique ; import rejeté pour production, OIDC client partiellement qualifié",
   "confiance": "locale-non-attestee",
   "autorise_publication_production": false,
   "production": false,
@@ -70,5 +70,105 @@
     "Aucun compte personnel migré ; compte Keycloak conservé temporairement en production.",
     "Règles OIDC/politiques multi-comptes/MCP métier et enrôlement personnel non qualifiés par ce scénario.",
     "Import par fichier ordinaire testé et refusé : API officielle SCIM finalisée, aucun élargissement ACL ni synchronisation permanente."
-  ]
+  ],
+  "limite_import_sha512": {
+    "resultat": "defaut_amont_observe",
+    "bon_password_refuse_apres_restart_avant_premier_login": true,
+    "formats_testes": [
+      5000,
+      656000
+    ],
+    "source": "https://github.com/kanidm/kanidm/blob/547933867e87da737e79d26942dc9261adaa5ee9/libs/crypto/src/lib.rs#L487",
+    "import_password_retenu_production": false,
+    "decision": "Nouveau compte Log unique, données Vision conservées ; enrôlement personnel."
+  },
+  "qualification_regression_import": {
+    "resultats": {
+      "argon2id_verifie": true,
+      "capacite_import_revoquee": true,
+      "choix_proprietaire": "nouvelle_identite_avec_donnees_Vision_preservees",
+      "defaut_reload_sha512_crypt_observe": true,
+      "email_conserve": true,
+      "import_password_retenu_production": false,
+      "import_ponctuel_finalise": true,
+      "mauvais_password_refuse": true,
+      "production": false,
+      "restart_sans_fichier_import": true,
+      "serveur_reel": true,
+      "session_conservee_au_restart": true,
+      "sha512_crypt_login": true,
+      "sha512_crypt_rounds_qualifies": [
+        5000,
+        656000
+      ],
+      "tls_verifie": true,
+      "uuid_conserve": true
+    },
+    "recu_sha256": "1c1b02d02a1efef28dbcfc1b94580fef2aa5f324ec4337977c85f4df34048355",
+    "entrees_sha256": {
+      "vps/scripts/kanidm-qualifier.py": "9f9aabe7d4b58e05916d97184640bb2e93f3ec51cbcf3f9e3247bb15ed4760d0",
+      "vps/tests/kanidm_reel.py": "d5797f954ba70361b5433d9caa3fd732403607037626e0d1188e2779956f83c6",
+      "vps/assemblage/kanidm/dependances.json": "669ecc58c33e7ca446e73bb0cf6705c4ba599a8c9fe24943b1fe1968593826c1",
+      "vps/assemblage/kanidm/paquet.nix": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+      "vps/assemblage/kanidm/installation-locale.json": "5edd76f8b22413651a0df66e437de8913ada7cf5feda2191851fb877e9ef5ee2"
+    },
+    "definition_sha256": "ce59d4de13ac4b1937f8b9d8537bd88a0d4dcad6df1d896beddc9387bea29c15",
+    "duree_secondes": 7.8983
+  },
+  "oidc_reel": {
+    "assertions": 15,
+    "image_persistante": true,
+    "image_froide": true,
+    "scenarios": [
+      "discovery/JWK",
+      "S256/consentement",
+      "ES256/issuer/audience/nonce/at_hash/UUID",
+      "introspection",
+      "refresh signé",
+      "révocation active=false",
+      "refresh après révocation400"
+    ],
+    "recu_sha256": "015d39161a4593f4dad46ac222456c7fe465e42fc17bd89de2763e8e3dfde312",
+    "entrees_sha256": {
+      "vps/mrjam-oidc.asd": "117e11880a4317691ea6f550f73829e5d9ff723716ee7a966518b40976a70622",
+      "vps/mrjam-native.asd": "b73187784dccb230c07929f9c1eeb5594b1a2ec35b308392df3a5f8a2dababc9",
+      "vps/lisp/identite/oidc-package.lisp": "41753a8015e99fbfe732ffe94bb97d2bf9a7b25711d3e87d342544cd5d97e8ff",
+      "vps/lisp/identite/oidc-token.lisp": "de5c9e60bf39251048f7c779d3958148d99a59a1093a9db5e938dc7d937b3c85",
+      "vps/lisp/identite/oidc-transactions.lisp": "abf21eb416c22df0bb0819b7b54cac82140d803cee44f2033d18029b51e4ee19",
+      "vps/lisp/identite/oidc-transport.lisp": "8d12c5fada20f5ecf2ecd79b4f0aab071d372d07a044446c86df1d5c8ed3c84d",
+      "vps/lisp/native/crypto.lisp": "d36c1d216a8e5f94d22a294211711de8c1fc162d1f3bfb0bb36791bc3d119233",
+      "vps/lisp/native/json-js.lisp": "4ed97721093ab746c004e4cc8e77cfa069c89b1f3306148d2ee272be1ee73982",
+      "vps/lisp/native/package.lisp": "54ad906b456dfe059955db9d99bddb19ba92d2d810872223180a2e3dc9d7b288",
+      "vps/lisp/native/postgresql.lisp": "11e7e650821ea098477944a2bf3337447bffdbd718a19efbc3ca0b9100423314",
+      "vps/lisp/native/sqlite.lisp": "03fda02a97591023dff15276018f7fdafbb347a1ee78494feba7a1cdc58d5aa4",
+      "vps/lisp/native/uri.lisp": "7dd19fdfb06f346e7f8688327b27db7b9b46f6098e6f7a08cddc1ee3ecdf8bd7",
+      "vps/assemblage/oidc/dependances.lock.json": "ff8ccb3cfe8aa411ef8d181f9d0e0af6f17d9b4da0bfb2a5abbf9716ad036e37",
+      "vps/assemblage/oidc/charger-dependances.lisp": "238115e7e1ec5d6302baf65120bb8c04456b9f195a9b89d3f90a03d508c9fa76",
+      "vps/assemblage/kanidm/dependances.json": "669ecc58c33e7ca446e73bb0cf6705c4ba599a8c9fe24943b1fe1968593826c1",
+      "vps/assemblage/kanidm/installation-locale.json": "5edd76f8b22413651a0df66e437de8913ada7cf5feda2191851fb877e9ef5ee2",
+      "vps/scripts/oidc-kanidm-qualifier.py": "38304e0edd3dedc713207429ba75ad2cb4f0bf3d7898d0c824fbc516d4d2e692",
+      "vps/tests/kanidm_reel.py": "d5797f954ba70361b5433d9caa3fd732403607037626e0d1188e2779956f83c6",
+      "vps/tests/oidc-kanidm.lisp": "1eeed3e71937333d9c2167dbde1c9ad35e7ea8c1beba5954d3f8a2d266026b9f",
+      "vps/tests/oidc-kanidm-froid.lisp": "913bc2ce7a2db8178d3bcec696b65051caa6c4e0802ff6b919ef4e853d2faf9a",
+      "vps/assemblage/charger.lisp": "2fb4aed521db212bdad80cdfb26b5610c0f6fd0bb13a31e0d73c74879d67bdcb",
+      "vision/vision.asd": "e4dbc30b51729082925210565da783940df3b99bbf9f3a553586c3eb329471e3",
+      "vision/src/package.lisp": "c5b284c02d2bb792f1b855385ee88e4388ba7d0b3fcaac055faf901ec37adff9",
+      "vision/src/json.lisp": "b127cc8d060b0f4a0dc44da075d04f9728b054a2aeedec3c32701db02bf87117"
+    },
+    "definition_sha256": "9fa18f34d6756d5e125d6543ddb4cb3c71a81e405fff0a145917d3d56822ce3d",
+    "duree_secondes": 4.5037,
+    "limites": [
+      "Routage/session monolithe non raccordés.",
+      "MCP utilisateurs/navigateurs/politiques et enrôlement personnel non qualifiés."
+    ]
+  },
+  "observations_politiques": {
+    "deux_defauts_requis": [
+      "idm_all_accounts",
+      "idm_all_persons"
+    ],
+    "defauts90j_profil7j_secondes_effectives": 604800,
+    "minimum_mfa_ne_prouve_pas_usage_mfa": true,
+    "scope": "Sondes synthétiques séparées, pas une qualification de médiation personnelle."
+  }
 }

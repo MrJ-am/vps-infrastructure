@@ -736,3 +736,19 @@ frontends. Détails de reprise et SHA dans REPRISE.md ; suite du portage requise
   Référence production38237108531 unique, format réel SHA512-crypt confirmé,
   génération/données inchangées ; téléchargement gh refusé403, journal récupéré
   par connecteur existant. Suite : OIDC réel, politiques, parcours et MCP.
+
+  Contrôle supplémentaire AVANT premier login : hashSHA512 importé stocké inchangé
+  mais bon password refusé après restart,5000/656000rounds. Source officielle
+  crypto/lib.rs487 : rechargement DbPasswordV1::CRYPT_SHA512→Kdf::CRYPT_SHA256.
+  Régression effectivement exécutée, import rejeté pour production, aucun fork
+  ni contournement. Repli utilisateur autorisé retenu : compte Log neuf unique,
+  propriétaire/données métier existants préservés, enrôlement personnel préparé.
+  OIDC réel15assertions viaimageC puis image froide et orchestration3,0434s :
+  discovery/JWK/S256/consentement, échangeTLS, ES256/iss/aud/nonce/at_hash/sub,
+  introspection, refresh signé, révocation activefalse et refresh400. Credential
+  opérateur uniquement fixturePython ; secret client seul dans Lisp, diagnostics
+  privés600. Renderer inexistant échoue à la lecture avant échange, json-encode
+  confirmé dans source puis testcanonique. Politiques : deux défauts all_accounts/
+  all_persons90j + profil7j→604800s, un seul défaut laissé24h ; minimummfa ne force
+  pas la méthode d'un credential existant, TODO amont et test réel concordants.
+  Aucune promotion, connexion personnelle ou campagne MCP encore revendiquées.

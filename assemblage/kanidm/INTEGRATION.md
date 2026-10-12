@@ -13,7 +13,7 @@ cela exige une migration complexe. Ne maintenir ni double compte ni ancien
 mécanisme d'authentification permanent. Le propriétaire SQL stable et ses données
 restent préservés ; leur conservation ne crée pas une seconde connexion.
 
-Voie simple qualifiée localement : le serveur historique Vision vérifie SHA512-crypt
+Voie d'import testée puis rejetée pour production : le serveur historique Vision vérifie SHA512-crypt
 (`services/mrj-auth/server.py`). Le parseur officiel Kanidm1.11.2 accepte
 `{crypt}` suivi de l'empreinte `$6$`, et marque celle-ci à mettre à niveau vers
 Argon2id (`libs/crypto/src/lib.rs`, parse_crypt/TryFrom/requires_upgrade ;
@@ -25,10 +25,20 @@ correctif amont ni ACL élargie. API officielle ponctuelle sync_account/token/Sy
 _finalise utilisée ; capacité ensuite401/403, parent de sync absent. Jamais
 _terminate, qui effacerait les comptes importés. Aucun service ni passerelle
 permanents ajoutés. UUID/email/password, mauvais password refusé, Argon2id et
-session après restart vérifiés dans tests/kanidm_reel.py. Acheminer l'empreinte
-uniquement entre stockages privés, jamais par argv/log/source/artefact public.
+session après restart APRES premier login vérifiés dans tests/kanidm_reel.py.
+Les empreintes des seules fixtures ont transité entre stockages privés, jamais
+par argv/log/source/artefact public. Aucun import personnel n'est prévu.
 Ne pas importer l'utilisateur ou les authentificateurs Keycloak. L'ancien accès
 est retiré après accès/récupération qualifiés ; compte métier et séances intacts.
+
+**Import non retenu pour la production.** Un contrôle supplémentaire a réellement
+refusé le bon password après restart AVANT premier login (5000/656000rounds).
+La source officielle libs/crypto/src/lib.rs487 reconstruit CRYPT_SHA512 en
+CRYPT_SHA256. Les succès après réhachage restent historiques, pas une garantie
+d'import durable. Aucun fork/patch Rust ni contournement dépendant d'une connexion
+immédiate. Repli autorisé : nouveau compte Log unique, données/propriétaire Vision
+conservés ; enrôlement personnel du password/TOTP/passkey. La personne peut choisir
+son ancien password si sa politique l'accepte. Aucun secret Keycloak migré.
 
 Constat réel du12octobre : [référence38237108531](reference-proprietaire-20261012.json)
 à la révision354ceb0, même génération active. Un compte métier actif/administrateur,
@@ -128,6 +138,15 @@ Points natifs établis dans le code1.11.2, à distinguer d'un parcours testé :
   jours, leur valeur effective, MFA/passkey avec vérification utilisateur,
   fraîcheur administrative, suspension/révocation, alertes et récupération restent
   des critères d'acceptation. Ne les afficher ni comme acquis ni comme abandonnés.
+
+Observations locales supplémentaires : tous deux idm_all_accounts ET
+idm_all_persons à90j, profil personnel7j, donnent604800s réellement. Un seul défaut
+modifié laissait86400s. Minimummfa n'interdit pas à lui seul un login password
+existant : tests réels etTODO authsession/mod.rs1161 le confirment. Ce paramètre
+d'enrôlement n'est donc pas une preuve de MFA utilisée pour un privilège métier.
+OIDC natif15assertions effectivement réussies en image persistante et froide :
+signature/S256/nonce/at_hash/UUID, refresh, révocation activefalse et refresh400.
+Cela ne qualifie pas encore la connexion personnelle, le navigateur ou le MCP.
 
 Aucune opération personnelle n'a été simulée. Les seules exceptions autorisées
 restent l'abandon du lien magique et de la connexion perpétuelle.
