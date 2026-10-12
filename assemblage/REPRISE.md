@@ -8,8 +8,12 @@ suppression personnelle et aucun courriel réel envoyé à ce point.
 
 Sources conservées/publies : Visiondecf5f7 (admission native) et Signature1719408
 (fixture HTTP du navigateur commun), autres révisions du manifeste inchangées.
-Candidats1551a8f etb784d5c restent historiques,
-invalidé pour les fichiers Lisp modifiés ensuite. Nouvelle image propre requise.
+Candidat métier propre77129dd/bc70c822 construit17,70s et HTTP qualifié20,23s.
+Candidats1551a8f etb784d5c historiques invalidés. Stylea998822 corrige seulement
+la mesure d’inversion (horloge installée avant chargement Elm), aucun changement
+produit. Qualification51 en cours de réparation ciblée : projection SQLite/ASDF
+restaurée avec chargeur OIDC ; navigateur Vision sur Chromium commun.
+Sources Lisp de l’image inchangées : ne pas reconstruire pour ces tests/outils.
 Image de développement C saine conservée, marqueur reprise-20261012-552402
 observé (pas un PID à fixer en script), cl-mcp sans pool + Swank et Tron distant.
 Aucun qualifier MCP synthétique relancé ni opération de production au REPL.

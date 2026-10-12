@@ -157,7 +157,8 @@ WHERE i.utilisateur='"""+proprietaire+"' AND i.id IN ("+','.join(map(str,ids))+'
         testenv=dict(env,MRJAM_ETATS_ISOLES=str(etats),MRJAM_AGE_RECIPIENT=recipient,AGE=str(outils/'age/bin/age'))
         source_test=essais/'sources';source_test.mkdir(mode=0o700)
         chemins={'vps':'vps','vision':'vision','matheval':'M-moire'}
-        for name in list(cert['qualification']['sources_lisp_sha256'])+['vps/tests/restauration-etats.lisp']:
+        for name in list(cert['qualification']['sources_lisp_sha256'])+['vps/tests/restauration-etats.lisp',
+                'vps/assemblage/oidc/charger-dependances.lisp']:
             composant,relatif=name.split('/',1);cible=source_test/chemins[composant]/relatif
             cible.parent.mkdir(parents=True,exist_ok=True)
             shutil.copyfile(d/'payload'/name,cible)

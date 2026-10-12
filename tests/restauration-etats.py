@@ -63,7 +63,8 @@ def verifier():
             source=Path(tmp)/'sources';atelier=Path(os.environ.get('MRJAM_ATELIER',ROOT.parent))
             chemins={'vps':ROOT,'vision':atelier/'vision','matheval':atelier/'M-moire'}
             noms={'vps':'vps','vision':'vision','matheval':'M-moire'}
-            for f in list(q['sources_lisp_sha256'])+['vps/tests/restauration-etats.lisp']:
+            for f in list(q['sources_lisp_sha256'])+['vps/tests/restauration-etats.lisp',
+                'vps/assemblage/oidc/charger-dependances.lisp']:
                 c,r=f.split('/',1);p=source/noms[c]/r;p.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(chemins[c]/r,p)
             # Uniquement ces répertoires propres au conteneur, pas le store ou
