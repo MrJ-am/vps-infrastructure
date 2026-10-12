@@ -24,7 +24,11 @@ Image interactive C conservée, processus de tests froids arrêtés.
 Candidat0e3f999 scellé et36reçus vérifiés ; transport c5198eb publié,
 109150049octets chiffrés, SHA256
 46f29f238ca4433a889cea5f9df404ffb052a15ba4fdb8a7a28cf4c4e432db83.
-Prochaine action : bascule centrale unique ; ne pas redéployer f981717.
+Déploiement38199267338/ea49d8e échoué : restauration et RLS/ACL passent,
+accueilVision500 après démarrage ; retour enregistré/timer arrêté, ancienne
+génération. Diagnostic de lecture/traversée des ressources préparé et qualifié
+(sécurité10,0277s) ; cause encore à constater avant toute nouvelle bascule.
+Ne pas redéployer f981717 ni0e3f999.
 Puis constater MCP réel/données/redémarrage/services/mesures avant jalon1.
 Kanidm non commencé ; rapport MCP non commité conservé.
 

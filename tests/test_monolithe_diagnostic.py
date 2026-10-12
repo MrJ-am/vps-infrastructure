@@ -11,6 +11,16 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_documents_sans_contenu_et_roles_precis(self):
+        with patch.object(m.subprocess,'run',side_effect=[SimpleNamespace(returncode=c) for c in (1,1,1,1)]) as run:
+            r=m.acces_documents('a'*40)
+        self.assertFalse(r['nginx']['traverse_parent']);self.assertFalse(r['mrjam-metier']['lit_accueil'])
+        self.assertEqual([c.args[0][2] for c in run.call_args_list],['nginx','nginx','mrjam-metier','mrjam-metier'])
+        self.assertEqual(set(r),{'mode_parent','nginx','mrjam-metier'})
+        with self.assertRaisesRegex(ValueError,'Révision'):m.acces_documents('../prive')
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=2)):
+            with self.assertRaisesRegex(ValueError,'indisponible'):m.acces_documents('a'*40)
+
     def test_locations_installees_metadata_uniquement(self):
         with tempfile.TemporaryDirectory() as tmp:
             d=Path(tmp);p=d/'payload/vps/assemblage';p.mkdir(parents=True)
