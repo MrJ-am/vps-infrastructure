@@ -83,6 +83,15 @@ def acces_parent_restauration():
     return r.returncode==0
 
 
+def etat_bascule(d):
+    p=d/'activation.json'
+    phase=json.loads(p.read_text()).get('phase') if p.exists() else None
+    phases={'preconditions','anciens-arretes','etats-transferes','service-demarre','qualification'}
+    return {'phase_activation':phase if phase in phases else 'absente-ou-inconnue',
+            'retour_code_enregistre':(d/'retour.json').is_file(),
+            'qualification_finale_enregistree':(d/'termine.json').is_file()}
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -92,6 +101,7 @@ def main(revision):
          'preparation_presente':(d/'preparation.json').exists(),
          'activation_presente':(d/'activation.json').exists()}
     out['restauration_presente']=(d/'restauration.json').exists()
+    out.update(etat_bascule(d))
     out['parent_postgresql_traversable_par_vision']=acces_parent_restauration()
     inventaire=json.loads((d/'payload/vps/assemblage/tables-privees.json').read_text())
     tables_autorisees=set(inventaire['vision'])|set(inventaire['matheval'])

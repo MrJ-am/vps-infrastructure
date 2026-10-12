@@ -2,6 +2,7 @@ import importlib.util
 from pathlib import Path
 import unittest
 import json
+import tempfile
 from unittest.mock import patch
 from types import SimpleNamespace
 
@@ -10,6 +11,20 @@ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 
 class Diagnostic(unittest.TestCase):
+    def test_etat_bascule_ferme_ne_revele_pas_le_plan_prive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            self.assertEqual(m.etat_bascule(d),{'phase_activation':'absente-ou-inconnue',
+                'retour_code_enregistre':False,'qualification_finale_enregistree':False})
+            (d/'activation.json').write_text(json.dumps({'phase':'anciens-arretes','etats':{'prive':'secret'}}))
+            (d/'retour.json').write_text('{}')
+            r=m.etat_bascule(d)
+            self.assertEqual(r['phase_activation'],'anciens-arretes')
+            self.assertTrue(r['retour_code_enregistre']);self.assertFalse(r['qualification_finale_enregistree'])
+            self.assertNotIn('secret',json.dumps(r))
+            (d/'activation.json').write_text('{"phase":"secret"}')
+            self.assertNotIn('secret',json.dumps(m.etat_bascule(d)))
+
     def test_traversee_exacte_sous_vision_sans_lire_de_fichier(self):
         for code in (0,1):
             with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=code)) as run:

@@ -1,37 +1,35 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — qualification du retour applicatif
+## Point de reprise actif — activation, SQL privé transmis par stdin
 
-Étape 1 non activée, production ancienne r6s7ags3 conservée ; Kanidm non commencé.
-Dernier déploiement38187899380/0528f41, candidat4e6dba3 : préparation réussie,
-RLS/ACL, SBCL/copiesSQLite et démarrage ancien/commun passent ; arrêt avant
-activation sur égalité brute des lectures. Diagnostic38188175687 confirme ligne161,
-activationfalse/restaurationnonfinalisée. Aucun rejeu des écritures de copie.
+Architecture C et travail frontend conservés ; image applicative saine encore
+présente, aucun qualifier MCP synthétique ni reconnexion. Kanidm non commencé.
 
-Correction qualifiée : comparer tous contenus/dates/versions/politiques, valider
-chaque fenêtre complète avec vision_fenetre à son instant de lecture, comparer
-les invariants après validation d'urgence/état dérivés. Tests PostgreSQL réels :
-deux instants et urgences différents, données identiques acceptées ; altérations
-de contenu/date/stabilité/référence/politique/fenêtre et instant invalide refusées.
-Modèle métier et sources Lisp inchangés. Migration39,8565s et sécurité1,4081s passent.
-Le workflow remontera le diagnostic fermé dans le même run en cas d'échec,
-sans répétition ni masquage de l'opération initiale (tests d'échec exécutés).
+Déploiement 38189157223 / 109ff5b7 : restauration isolée entièrement réussie,
+RLS/ACL, données, lectures temporelles, écritures croisées et redémarrage passent.
+Activation engagée, arrêt avant transfert à monolithe-activer.py:201 : psql sous
+Unix postgres ne peut pas lire le script privé situé sous /root. Retour du code
+exécuté ; référence 38189544447 réussie confirme génération et profil r6s7ags3,
+anciens services actifs, monolithe inactif, services tiers disponibles. Comptes
+Vision 1 actif/admin, rattachements cohérents ; Matheval 3 participations toutes
+ouvertes. Les migrations SQL 026/027 peuvent désormais être appliquées : ne pas
+présumer le schéma 25 ni annuler leur protection pour revenir au code ancien.
 
-Corrections conservées : Vision027 rétablit les14RLS sans réécrire les données ;
-répertoire de restauration éphémère privé sous /var/lib, aucun droit PG élargi ;
-régression réelle SBCL/autre UID sans réseau. Les tests de copie passent aussi.
-Vision18c52cdd publié, autres sources exactes dans manifest.json. Interfaces
-qualifiées conservées (Vision37871df2). Binaire Nix296b7c89/graphe Lisp inchangés.
-ArchitectureC/image persistante et pont existants préservés ; aucun nouveau
-qualifier synthétique, reconnexion, pool ou outil. CLI GitHub fonctionne.
+Correction locale : SQL canonique lu par l'opérateur puis envoyé à psql par stdin,
+comme en restauration ; socket/base explicites. Aucun droit de /root élargi.
+Tests réels PostgreSQL/autre UID : fichier privé refusé, mêmes méta-commandes et
+transaction réussissent via stdin, accès au parent toujours refusé. Migration
+29,7892s et sécurité 0,9461s réussissent. Diagnostic fermé précise phase/retour/
+qualification finale sans exposer le plan privé. Nouvelle source à publier puis
+sceller ; aucun rejeu du candidat dad8482 ayant déjà engagé une activation.
 
-Opérateursdad8482b0bc01c4b8fb3d522fb19d99b952051ba publiés ; scellement complet
-réussi pour les35reçus exacts. Transport47521bfd67c12f1c4e19a3d4c8b8f3c39a25f93e publié,
-109113579octets chiffrés, SHA256b0a48e48c3951ff3a84252cb5127c09b16f6c46949df5eb9250db7a782dc5ac7.
-Descripteur central actualisé. Prochaine étape : une seule
-exécution fermée préparation/restauration/retour/activation conditionnelle.
-Après constat : MCP réel, invariants, mémoire/latences/redémarrage/services tiers.
-Kanidm seulement après validation personnelle de l'étape1 en production.
+Composants exacts du manifeste inchangés, Vision 18c52cdd. Même binaire Nix
+296b7c89, graphe Lisp inchangé, mêmes interfaces qualifiées. Reçus affectés seuls
+rejoués ; scellement doit vérifier les 35 reçus exacts avant transport. Sauvegarde
+fraîche/restauration/retour et bascule centrale uniquement, puis MCP réel,
+invariants, mémoire/latences, redémarrage et services tiers. Consigner le nouveau
+run avant toute interruption, constater son issue avant répétition. Étape 1 reste
+non livrée tant que sa version active et les critères ne sont pas constatés.
 
 ## État précédent — historique conservé
 
