@@ -40,7 +40,7 @@ def main(revision):
         if f.is_file():
             texte=f.read_text();out['erreur_'+nom]=m.diagnostic_erreur(texte)
             if nom=='operation':out['erreur_'+nom]['regle']=raison_statique(texte,d/'payload/vps/scripts/log-activer.py')
-            cmd=re.search(r'RuntimeError: Commande refusée : (nix-instantiate|nix-build|systemctl), code ([0-9]+)',texte)
+            cmd=re.search(r'RuntimeError: Commande refusée : (nix-instantiate|nix-build|systemctl|switch-to-configuration), code ([0-9]+)',texte)
             if cmd:out['erreur_'+nom]['commande']={'outil':cmd[1],'code':int(cmd[2])}
     f=d/'erreur-restauration-privee.log'
     if f.is_file():
@@ -49,6 +49,24 @@ def main(revision):
         roles=set().union(*(set(t['droits_directs']) for b in ('vision','matheval') for t in inventaire[b].values()))
         out['erreur_restauration']=m.diagnostic_erreur(f.read_text(),tables,roles)
     out['restauration']=(d/'restauration.json').is_file()
+    out['retour_enregistre']=(d/'retour-log.json').is_file()
+    if out['retour_enregistre']:out['retour']=json.loads((d/'retour-log.json').read_text())
+    out['services']={}
+    for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
+        v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
+        out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'
+    # Journaux historiques bornés, classification uniquement. Ne publier
+    # aucun message libre pouvant contenir une valeur privée.
+    journal=subprocess.run(['journalctl','-u','mrjam-metier','-u','kanidm','-u','nginx',
+        '--since','30 minutes ago','--no-pager','-o','cat','-n','200'],capture_output=True,text=True,timeout=20).stdout
+    absent=sorted(set(re.findall(r'Configuration absente : ([A-Z][A-Z0-9_]{1,80})',journal)))
+    out['configuration_absente']=absent
+    out['erreurs_runtime']=[v for k,v in {
+        'cannot open shared object':'dso_absente','undefined symbol':'symbole_dso',
+        'FATAL:':'postgres_fatal','failed to load':'chargement_refuse','Failed to start':'service_demarrage_refuse',
+        'duplicate location':'nginx_location_dupliquee','invalid number of arguments':'nginx_arguments',
+        'permission denied':'permission_refusee','No such file or directory':'fichier_absent',
+        'Configuration métier invalide':'configuration_metier_invalide'}.items() if k.lower() in journal.lower()]
     f=d/'evaluation-log-privee.json'
     if f.is_file():
         r=json.loads(f.read_text());out['services_preserves']=m.differences(r['protegeAvant'],r['protegeApres'])
