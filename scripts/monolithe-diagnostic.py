@@ -122,6 +122,20 @@ def etat_bascule(d):
             'qualification_finale_enregistree':(d/'termine.json').is_file()}
 
 
+def sondes_publiques(d):
+    p=d/'sondes-publiques.json'
+    if not p.is_file():return {}
+    r=json.loads(p.read_text());out={}
+    for nom in ('matheval','vision','mcp','log','logique'):
+        if nom not in r:continue
+        v=r[nom];out[nom]={}
+        for k in ('codes','disponibilite_codes'):
+            a=v.get(k)
+            if isinstance(a,list) and len(a)<=100 and all(type(c) is int and 100<=c<=599 for c in a):out[nom][k]=a
+        if v.get('hors_contrat') is True:out[nom]['hors_contrat']=True
+    return out
+
+
 def main(revision):
     if not re.fullmatch('[a-f0-9]{40}',revision):raise ValueError('Révision refusée')
     d=Path('/root/mrjam-assemblages')/revision
@@ -132,6 +146,7 @@ def main(revision):
          'activation_presente':(d/'activation.json').exists()}
     out['restauration_presente']=(d/'restauration.json').exists()
     out.update(etat_bascule(d))
+    out['sondes_publiques']=sondes_publiques(d)
     # Lire l'état courant, pas seulement la présence du plan historique. Les
     # différences ne publient que noms de champs et empreintes, aucun PID tiers
     # ni contenu de configuration.

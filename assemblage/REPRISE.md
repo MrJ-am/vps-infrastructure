@@ -1,5 +1,33 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Point de reprise actif — sondes cadencées qualifiées
+
+Production ancienne r6s7ags3, retour38195473395 enregistré/timer arrêté, données
+actuelles conservées. Restauration complète et RLS/ACL actifs ont passé ; vue
+historique désormais possédée par vision_migration, aucun rôle applicatif privilégié.
+Bascule8576390 refusée ensuite sur une sonde publique ; ancien rapport ne précise
+ni laquelle ni ses codes, cause exacte non attribuée. Nouveau rapport fermé par
+nom/code et disponibilité, sans URL/corps/secret. Dix lectures désormais espacées
+250ms sous limite commune5r/s, attente explicite45s seulement pour429/502/503/504
+avant mesure ; 403/404/500 immédiats et toute erreur mesurée restent refusés.
+
+Tests HTTP locaux réels :503 puis disponibilité200, dix lectures réellement
+espacées, pauses hors latence ;429 mesurée et erreurs permanentes refusées.
+Deadline unitaire bornée : ancienne fixture échouait car time.monotonic partagé
+avec thread serveur ; substitution limitée au test de borne, trois scénarios HTTP
+réels conservés. Sécurité10,065s, migration38,057s, sélection0,9849s passent.
+Autres reçus inchangés ; ne rejouer ni interface ni calcul métier. Même binaire296b7,
+Visioncd05b702/frontend3c00e4fd, image interactive C préservée.
+
+Prochain : publication/scellement exact35reçus/transport chiffré/descripteur puis
+une bascule centrale. Constater issue, puis MCP réel et référence mémoire/comptes/
+latences/services avant jalon1 et Kanidm automatique. Kanidm non commencé.
+Rapport MCP non commité conservé. Aucun qualifier synthétique ni reconnexion.
+
+## État précédent — historique conservé
+
+# Reprise — mission et amendement du 11 octobre 2026
+
 ## Point de reprise actif — propriété de la vue historique corrigée
 
 Production ancienne r6s7ags3 après retour38194338389, monolithe inactif.
@@ -21,12 +49,14 @@ identiques. Retour précédent explicitement77c7f82 dans manifeste.
 
 Candidat8576390 scellé et transport chiffré publié,109131832octets, SHA256
 33d0a52d4d01478697769b0c414a408a326fcfb6d83cf9610625b4112cd1e063.
-Bundle complet vérifié localement. Prochain : déployer une fois. Constater l'issue avant répétition,
+Bundle complet vérifié localement. Déploiement38195473395/af32431 déclenché
+02:21:36UTC ; issue à constater avant toute répétition. Constater l'issue avant répétition,
 puis MCP réel/données/restart/services/mesures avant jalon1 et Kanidm automatique.
 Kanidm non commencé. Image interactive C/interfaces conservées, aucun qualifier
 synthétique ni nouvelle connexion. Rapport MCP non commité préservé.
 
-## État précédent — historique conservé
+
+
 
 # Reprise — mission et amendement du 11 octobre 2026
 

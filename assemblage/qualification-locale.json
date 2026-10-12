@@ -164,12 +164,12 @@
     },
     "integration-securite": {
       "resultat": "succes",
-      "duree_secondes": 1.3513,
+      "duree_secondes": 10.065,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "c9fc69d1189e14566cb366b036f758b580e8ef1db78166f4c4973d7d1f82ba49",
+      "sha256": "989f8de94d7e4c5a0a35c232ddbde9bff093c70311624169c7ad7abfba4de49b",
       "artefact_metier_sha256": null,
-      "reuse": "Égalité exacte des entrées/outils/configurations vérifiée localement ; aucun reçu de production."
+      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
     },
     "json-commun": {
       "resultat": "succes",
@@ -245,12 +245,12 @@
     },
     "migration": {
       "resultat": "succes",
-      "duree_secondes": 41.1296,
+      "duree_secondes": 38.057,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "cbfe0e38783685732296c8517e61d592b756f2b0c156bf96950f1fc1a283fcb9",
+      "sha256": "0eff8e855bca52df891b4d541f300bdeb2a86d4eaa40220478caadeba75681db",
       "artefact_metier_sha256": "296b7c89d9f40679a8fa69a3ceac1d8825d7bb211a051fe173af41a6e7bda69c",
-      "reuse": "Contrôle affecté exécuté localement."
+      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
     },
     "native-contrats": {
       "resultat": "succes",
@@ -317,12 +317,12 @@
     },
     "selection": {
       "resultat": "succes",
-      "duree_secondes": 1.0693,
+      "duree_secondes": 0.9849,
       "confiance": "locale-non-attestee",
       "autorise_publication": false,
-      "sha256": "192ffe3f7df5b63b72b2b3d6115e4e57c8233fe0997dc29ca2692ed93f94af9e",
+      "sha256": "3ca010837ba94013677d341e21a9c53f4760651d91ff18cb24c1699f4ca94e00",
       "artefact_metier_sha256": null,
-      "reuse": "Contrôle affecté exécuté localement."
+      "reuse": "Sondes HTTP/déploiement affectés requalifiés localement ; aucune nouvelle campagne navigateur."
     },
     "signature-web": {
       "resultat": "succes",
@@ -421,12 +421,7 @@
       "refus_atomique_et_idempotence": true,
       "controle_base_active_apres_redemarrage": "opérateur écrit ; constat de production encore requis"
     },
-    "scellement": {
-      "revision_operateurs": "8576390545e4a009172be2facdc5615589291ab2",
-      "stage_sha256": "9a3a67bb72d395b44d78862e9a38bd442d8e923c4a3d9c23d69b34a12a7c4675",
-      "bundle_complet_verifie_localement": true,
-      "publication_effectuee": false
-    },
+    "scellement": "Requis pour sondes cadencées et disponibilité explicite",
     "correction_parent_restauration": {
       "cause_constatee": "Vision ne peut pas traverser /var/lib/postgresql",
       "diagnostic_ci": 38187150992,
@@ -437,7 +432,7 @@
     },
     "correction_lecture_temporelle": "Données/dates/politiques strictes ; fenêtre complète validée par SQL métier à chaque instant, champs dérivés comparés après validation ; tests PostgreSQL positifs/négatifs exécutés.",
     "correction_sql_prive": "stdin psql depuis opérateur ; vraie régression UID/permissions et méta-commandes, aucun droit /root élargi",
-    "production": "Ancienne génération après retour38194338389",
+    "production": "Ancienne génération après retour38195473395 ; RLS/ACL et vue corrigées effectivement constatées",
     "restart_dependances": [
       "postgresql",
       "keycloak"
@@ -449,6 +444,20 @@
       "role_migration_sans_connexion": true,
       "definition_donnees_preservees_fixture": true,
       "refus_acces_direct_fixture": true
+    },
+    "sondes": {
+      "mesures": 10,
+      "espacement_ms": 250,
+      "disponibilite_bornee_secondes": 45,
+      "transitoires_avant_mesure": [
+        429,
+        502,
+        503,
+        504
+      ],
+      "statuts_hors_contrat_en_mesure_refuses": true,
+      "tests_http_reels_locaux": true,
+      "raison_dernier_echec_non_identifiee_par_ancien_rapport": true
     }
   },
   "historique_exact": {
