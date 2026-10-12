@@ -16,7 +16,7 @@ import tempfile
 import time
 from assemblage import RACINE,manifeste,chemins_sources,verifier_sources,compilation_entrees
 
-def construire(outils_seulement=False):
+def construire(outils_seulement=False,avec_log=False):
     m=manifeste();sources=chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     verifier_sources(sources,m,exact=True)
     if not shutil.which('nix-build'):raise ValueError('Nix approuvé requis ; aucune installation implicite')
@@ -58,6 +58,12 @@ def construire(outils_seulement=False):
               '--max-jobs','1','--cores','2'],env=env_telechargement,text=True).strip()
             if not sorties[nom].startswith('/nix/store/') or '\n' in sorties[nom]:raise ValueError('Sortie Nix ambiguë')
         if compilation_entrees(sources)!=inputs:raise ValueError('Sources modifiées pendant le build Nix')
+        if avec_log:
+            native=json.loads((RACINE/'assemblage/kanidm/installation-locale.json').read_text())
+            attendu=native['paquet']
+            actuel=subprocess.check_output(['nix-store','--query','--hash',attendu],env=env,text=True).strip()
+            if actuel!=native['nar_sha256']:raise ValueError('Paquet Kanidm déjà qualifié modifié')
+            sorties['kanidm']=attendu  # Réutilisation du paquet vérifié, pas une reconstruction Rust.
         p={'format':1,'source_revision':revision,'nixpkgs_revision':cible['nixpkgs_revision'],
            'sorties_nix':sorties,'publication_autorisee':False}
         if not outils_seulement:
@@ -86,5 +92,6 @@ def construire(outils_seulement=False):
         print(json.dumps({k:v for k,v in p.items() if k!='sources_lisp_sha256'},ensure_ascii=False))
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('--outils-seulement',action='store_true');a=p.parse_args()
-    construire(a.outils_seulement)
+    p=argparse.ArgumentParser();p.add_argument('--outils-seulement',action='store_true')
+    p.add_argument('--avec-log',action='store_true');a=p.parse_args()
+    construire(a.outils_seulement,a.avec_log)

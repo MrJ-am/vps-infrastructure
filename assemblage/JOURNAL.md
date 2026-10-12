@@ -794,3 +794,17 @@ dérivations. Construction réussie ne vaut ni qualification totale ni publicati
   Ne pas transformer ces échecs en succès ni élargir le credential du monolithe.
 - RéférenceVPS38262126595/aefeeed réussie : génération précédente et invariants
   comptes/rattachements préservés. Aucune activation/suppression de compte réelle.
+
+### 12octobre — raccordement Log et opérateur d'invitation, avant promotion
+
+Image C existante conservée ; PID/marqueur lus par CL-MCP, aucun débogage suspendu.
+ASDF chargé depuis sources canoniques. Sessions sur IdP réel neuf MFA passent :
+réauthentification demande TOTP puis password, deux comptes concurrents, consentement
+croisé refusé sans consommer Alice, rotation/rejeu/revocation et restart. Proxy du
+seul formulaire de nom : première URL supposée /ui/login_begin rendait404 ; route
+source officielle /ui/login/begin corrigée, réponse native TOTP réellement lue.
+PolitiqueMFA qualifiée + auth_time signé récent900s, aucune revendication de claimamr.
+Restauration native : ancien nom restore invalide (avant tout effet), corrigé en
+database restore ; format gzip du backup en ligne nécessitait décompression privée.
+Restore réel puis verify et lecture d'UUID/client/groupe réussis. Aucun IdP de
+production créé, aucun mail envoyé. Catalogue/opérateurs en cours de qualification.

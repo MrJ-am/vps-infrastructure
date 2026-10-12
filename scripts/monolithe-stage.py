@@ -25,8 +25,11 @@ def sha(p):
     return h.hexdigest()
 
 
-def descriptor():
-    d=json.loads((RACINE/'operations/monolithe-candidat.json').read_text())
+def descriptor(nature='monolithe'):
+    exiger(nature in ('monolithe','log'), 'Nature de promotion inconnue')
+    d=json.loads((RACINE/('operations/'+nature+'-candidat.json')).read_text())
+    if nature == 'log':
+        exiger(d.get('qualification_log_native') == 'qualifiee', 'Log non qualifié')
     exiger(d.get('qualification_amendement_20261011')=='qualifiee',
            'Amendement du 11 octobre non qualifié : promotion bloquée')
     exiger(d['format']==1 and d['soumission_autorisee_par_proprietaire'] is True,'Soumission non scellée')
@@ -54,11 +57,11 @@ def ssh(commande,**kwargs):
     return subprocess.run(['sh',str(RACINE/'scripts/connect.sh'),commande],check=True,**kwargs)
 
 
-def main():
+def main(nature='monolithe'):
     exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
            'Promotion réservée au déploiement central sur main')
     exiger(os.environ.get('GITHUB_REPOSITORY')=='MrJ-am/vps-infrastructure','Dépôt inconnu')
-    d=descriptor();rev=d['revision_operateurs'];remote='/root/mrjam-assemblages/'+rev
+    d=descriptor(nature);rev=d['revision_operateurs'];remote='/root/mrjam-assemblages/'+rev
     with tempfile.TemporaryDirectory(prefix='mrjam-promotion-') as tmp:
         cipher=Path(tmp)/'candidat.age'
         if d.get('transport')=='git-chiffre':
@@ -116,9 +119,9 @@ with (p/'payload/closure.nar').open('rb') as f:subprocess.run(['nix-store','--im
 (p/'soumission.json').write_text(json.dumps(d,indent=2)+'\\n')
 (p/'promotion.json').write_text(json.dumps({'format':1,'run_ci':int(sys.argv[3]),'revision_deploiement':sys.argv[4],'origine':'soumission-locale-proprietaire-verifiee'},indent=2)+'\\n')
 a.unlink(missing_ok=True)
-subprocess.run([sys.executable,'-B',str(p/'payload/vps/scripts/monolithe-preparer.py'),p.name],check=True)
+subprocess.run([sys.executable,'-B',str(p/'payload/vps/scripts/'+sys.argv[5]+'-preparer.py'),p.name],check=True)
 """
-        cmd='python3 -c '+shlex.quote(bootstrap)+' '+remote+' '+shlex.quote(json.dumps(d))+' '+os.environ['GITHUB_RUN_ID']+' '+os.environ['GITHUB_SHA']
+        cmd='python3 -c '+shlex.quote(bootstrap)+' '+remote+' '+shlex.quote(json.dumps(d))+' '+os.environ['GITHUB_RUN_ID']+' '+os.environ['GITHUB_SHA']+' '+nature
         shell='nix-shell -I nixpkgs='+manifeste()['toolchain']['production']['nixpkgs']+' -p python3 age --run '+shlex.quote(cmd)
         ssh(shell)
 

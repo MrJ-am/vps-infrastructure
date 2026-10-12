@@ -97,6 +97,8 @@
     (cond
       ((equal service "log")
        (router-log (configuration-log cfg) s method target headers body))
+      ((equal service "log-idp")
+       (proxy-connexion-log (configuration-log cfg) s method target headers body))
       ((equal service "fermeture-interne")
        (when q (erreur-http 400))
        (let ((p (configuration-fermeture cfg)))

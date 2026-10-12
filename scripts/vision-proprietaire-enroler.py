@@ -80,7 +80,7 @@ class ApiPrivee:
         with self.opener.open(urllib.request.Request('http://127.0.0.1:8085'+path,data,headers,method=method),timeout=15) as r:
             value=r.read(1048577);exiger(len(value)<=1048576)
             result=json.loads(value) if value else None
-            if method in ('POST','PUT'):return r.status,result,r.headers
+            if method in ('POST','PUT','DELETE'):return r.status,result,r.headers
             exiger(r.status==200);return result
 
 

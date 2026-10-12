@@ -1,58 +1,51 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — IdP local qualifié, compte Log neuf retenu
+## Point de reprise actif — candidat Log en qualification, production inchangée
 
-Reprise autorisée jusqu'à production/courriel12octobre : travail poursuivi, mais
-AUCUNE promotion Kanidm et AUCUN courriel personnel envoyé. Référence distante
-38262126595/aefeeed réussie14:20UTC, même génération9qv8,1compte actif/admin,
-1identité,0orphelin/lien croisé. Preuve reference-prebascule-20261012.json.
-Image C reconstruite après disparition ; marqueur nouveau vérifié depuisCL-MCP
-etTron, poolNIL. Sessions de transport anciennes archivées avant reconnexion ;
-anciennes références d'objets/restarts invalidées. Aucun qualifier synthétique.
-Bibliothèque nouvelle mrjam-log : transactions/sessions durables privées, OIDC
-réel, parent vérifié et compte actif à chaque accès, host-only cookies/CSRF ;
-adaptateur OAuth MCP porté (DCR/consentement/S256/codes/rotation/rejeu de famille).
-Routage HTTP raccordé à l'assemblage, sans activationNix. ValidationNative dans
-image persistante puis propre ; suites centrales log-sessions-kanidm4,551s et
-kanidm-invitation8,8297s réussies, catalogue47. L'invitation nouvelle et les retours
-de force pendant saisie sont effectivement exercés dansChromium,Unicode/espaces
-intacts. Ce n'est pas une activation utilisateur personnelle.
-Visionfrontend94f3c6d publié : consentement ElmUI partagé, contrôles ressources/
-elm-review/compilation37modules réussis ; campagne navigateur encore à compléter,
-composant publié avant manifeste. ParserJS1.58 périmé après ménage :
-bundlePlaywright1.61 installé comparé à l'archive officielle et intégritéSHA512,
-trois licences identiques ; verrou actualisé, aucun paquet ajouté/réinstallé.
-Configuration interne renommée configuration-runtime pour recharger le nouveau
-layout sans remplacer l'image : DEBUGTron/thread1/niveau1 inspecté, correction
-source puis RETRY compiler choisi par signification. EnveloppeABORTNIL n'a pas
-été prise pour résultat : debuggerNIL/classes/fonctions effectives ensuite lus.
-Prototype de délégation tests/kanidm_delegations.py NON qualifié : APIACPcreate
-403, assertion de JsonFilt refusée, modification du profil natif non appliquée.
-Diagnostic privé state/kanidm-echec-native.log, jamais preuve de conformité.
-Ne pas promouvoir avec cette hypothèse ni placer un credential IdP global dans
-le produit. Examiner les capacités natives de gestion d'entrées/groupes existantes
-pour un raccordement minimal. Pas de fork/patchRust, pas de contournementDB testé.
-Restent : accès administratifs/MFA réellement prouvés (router-log refuse toute
-preuve renforcée à ce stade), politiques personnelles, médiation email, portage
-des clients de cycle/admission/fermeture encoreKeycloak, routageNix, invitation/
-rattachement/SMTPprivés, qualification globale exacte/sauvegarde/retour puis bascule.
-Les sources Nix de build incluent les sept dépendances Lisp déjà auditées ;
-nouvelle construction propre encore à exécuter avant tout candidat promouvable.
+Le jalon1 reste en production9qv8n9gd/296b7 ; dernière référence réelle
+38262126595/aefeeed du12octobre14:20UTC. Aucune bascule Kanidm, aucune
+suppression personnelle et aucun courriel réel envoyé à ce point.
 
-Complément de reprise : Vision94f3c6d8f5e99827654e55021fa0c7baa59005ef publié ;
-campagne centrale base complète réussie (4testsElm,4formatsgraphisme/vitrine,
-6parcoursContinuousUI,2largeurscomptes et4parcoursconsentementMCP clavier/CSRF).
-Candidat frontend364b9f44531edc66f64a816cd3f855afe4476bfeab4d6722c9efed4982e39c89.
-Construction Nix propre1551a8f47ebacf888de2186c3e1dc7dabd6b59d9 réussie15,0213s,
-SBCL2.6.4/ASDF3.3.1 ; SHA2565e7e2a49b5cd0d7f0b6d6d773c10c4b153559b9d53e475cfc3daa9b1a44d56c4,
-13404520octets, paquet/nix/store/f278amsdl3rf2k69mxv4aj323j8i5bib-mrjam-metier-1551a8f47eba.
-Deux échecs avant compilation analysés : clientCurl puis clientNix perdaient le
-proxy hébergé dans l'environnement filtré. Proxy conservé pour téléchargement/
-cache, sans devenir un attribut de dérivation/credential de compilation ; archive
-SHA256 et toolchain restent verrouillées. Diagnostic finalprivé construction-log-
-avec-proxy-nix.log. Ce nouveau binaire n'est PAS promouvable : qualification
-d'assemblage complète/configurationNative/retour et opérations personnelles
-encore à réaliser. Descripteur actif inchangé ; aucun email réel ni suppression.
+Sources conservées/publies : Vision94f3c6d, frontend complet qualifié ; autres
+révisions du manifeste inchangées. Candidat binaire1551a8f/5e7e2 reste historique,
+invalidé pour les fichiers Lisp modifiés ensuite. Nouvelle image propre requise.
+Image de développement C saine conservée, marqueur reprise-20261012-552402
+observé (pas un PID à fixer en script), cl-mcp sans pool + Swank et Tron distant.
+Aucun qualifier MCP synthétique relancé ni opération de production au REPL.
+
+Ajouts en cours : alias mail→UUID au seul formulaire natif /ui/login/begin,
+politique privée qualifiée par sujet, fraîcheur administrative900s indépendante
+des écritures ordinaires, client de cycle lisant l'adresse certifiée locale.
+Tests réels : identités neuves MFA (aucun import), réauthentification TOTP puis
+password, Alice/Bob concurrents, consentement et famille MCP, CSRF/hôtes,
+restart IdP et logout. Chaîne opérateur native testée : personne neuve, pseudo
+mail par défaut, groupe rôle7j/minMFA, client S256/retour exact, invitation.
+Restauration native réelle réussie après correction des deux erreurs expliquées :
+commande officielle database restore ; backup en ligne gzip décompressé dans
+copie privée. database verify et lecture des entrées restaurées exécutés.
+
+Configuration/opérateurs Log nouveaux, encore non promus : modules/log.nix,
+scripts/log-{evaluation,preparer,activer,operation} et workflow manuel central.
+Préconditions : inscriptions déjà fermées, aucune admission/fermeture en cours,
+un propriétaire métier et un seul compte personnel Keycloak ; consommateurs
+IdP supplémentaires refusés avant mutation. Sauvegardes métier/restauration
+existantes réutilisées ; snapshot des seules identités pour retour, jamais
+ancienne base métier. Rattachement exact sur utilisateur stable, aucun hook
+fermeture. Intent personnel jamais sondé/consommé par l'agent. SMTP idempotent :
+marque avant envoi, aucun renvoi automatique après résultat incertain.
+
+Ce jalon d'invitation NE clôt pas toute l'étape2 : provisionnement d'admissions/
+fermetures communes natif, préférences individuelles/panneau commun complet et
+qualification des connexions personnelles restent à terminer. Ne pas désactiver
+une admission active pour faciliter la bascule. Si la précondition distante est
+fausse, continuer son portage avant activation. Le prototype ACP reste non qualifié.
+
+Suite : terminer les tests ciblés des opérateurs/routage et le catalogue50,
+commiter/publier sources, construire une fois --avec-log, qualifier/reutiliser
+les reçus exacts, sceller/transport chiffré puis CI centrale. Constater toute
+opération commencée avant reprise ; pas de rejouage d'une mutation incertaine.
+
+## Historique conservé — autorisations propriétaire et constats précédents
 
 Amendement propriétaire du12octobre : suppression des deux anciennes identités
 autorisée, remplacement Keycloak par Kanidm confirmé. Préserver le compte métier

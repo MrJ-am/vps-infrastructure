@@ -8,14 +8,23 @@
     (when path (string-trim '(#\Space #\Tab #\Newline #\Return)
                            (sb-ext:octets-to-string (mrjam-courriel::lire-octets-prives path 128) :external-format :utf-8)))))
 
-(defun configurer-cycle ()
+(defun configurer-cycle (&optional log)
   (when (uiop:getenv "VISION_CYCLE_DSN")
     (mrjam-native:initialiser-sqlite (obligatoire "MRJAM_LIBSQLITE"))
-    (let ((client (mrjam-identite:faire-client "mrjam-cycle"
-                    (mrjam-courriel:lire-secret-prive (obligatoire "VISION_CYCLE_CLIENT_SECRET")) (obligatoire "MRJAM_CURL"))))
+    (let ((client (unless log (mrjam-identite:faire-client "mrjam-cycle"
+                    (mrjam-courriel:lire-secret-prive (obligatoire "VISION_CYCLE_CLIENT_SECRET")) (obligatoire "MRJAM_CURL")))))
       (vision-cycle:faire-cycle (obligatoire "VISION_CYCLE_DSN") (obligatoire "VISION_CYCLE_ETAT")
         (mrjam-courriel:lire-prive (obligatoire "MRJ_SMTP_SECRET")) (mrjam-courriel:lire-prive (obligatoire "VISION_CYCLE_CONFIG"))
-        (lambda (d) (mrjam-identite:adresse-verifiee client d)) (obligatoire "AGE")))))
+        (lambda (d)
+          (if log
+              (progn
+                (unless (equal (vision:json-object-get d "emetteur") (mrjam-oidc:issuer-client "mrjam-vision"))
+                  (mrjam-log::refuser 403))
+                ;; Le mail a été vérifié lors de l'invitation privée ; aucune
+                ;; lecture/credential maître IdP nécessaire aux rappels Vision.
+                (mrjam-courriel:adresse (mrjam-log::champ
+                  (mrjam-log::politique log (vision:json-object-get d "sujet")) "mail")))
+              (mrjam-identite:adresse-verifiee client d))) (obligatoire "AGE")))))
 
 (defun client-identite (nom variable)
   (mrjam-identite:faire-client nom (mrjam-courriel:lire-secret-prive (obligatoire variable)) (obligatoire "MRJAM_CURL")))
@@ -79,7 +88,8 @@
         (mrjam-native:initialiser-postgresql (obligatoire "MRJAM_LIBPQ"))
         (sb-sys:enable-interrupt sb-posix:sigterm
           (lambda (&rest ignores) (declare (ignore ignores)) (sb-ext:exit :code 0 :abort nil)))
-        (let* ((cycle (configurer-cycle)) (admission (configurer-admission)) (fermeture (configurer-fermeture admission)))
+        (let* ((log (configurer-log)) (cycle (configurer-cycle log))
+               (admission (configurer-admission)) (fermeture (configurer-fermeture admission)))
           (servir (faire-configuration
                   :matheval (matheval:faire-contexte :connexion (obligatoire "MATHEVAL_DSN")
                               :version (obligatoire "MATHEVAL_BANK_VERSION") :activation (secret-fichier "MATHEVAL_SETUP_HASH_FILE"))
@@ -87,7 +97,7 @@
                   :document-vision (obligatoire "VISION_DOCUMENT_ROOT")
                   :executeur-vision (executeur-vision (obligatoire "VISION_DSN"))
                   :gestion-dsn (uiop:getenv "VISION_GESTION_DSN")
-                  :log (configurer-log)
+                  :log log
                   :cycle cycle :admission admission :fermeture fermeture
                   :taches (append (when cycle (list (cons "cycle-vision" (lambda () (vision-cycle:traiter cycle)))))
                                   (when admission (list (cons "admission" (lambda () (vision-admission:traiter admission)))))

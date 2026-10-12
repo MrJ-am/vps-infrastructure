@@ -181,6 +181,18 @@ in {
           ${pkgs.coreutils}/bin/mv "$destination/courriel-$jour.age.tmp" "$destination/courriel-$jour.age"
         fi
         ''}
+        ${lib.optionalString (config.infrastructure.log.enable or false) ''
+        native=/var/lib/kanidm/backups/transition-$jour.json.gz
+        ${config.services.kanidm.package}/bin/kanidmd -c ${lib.last (lib.splitString " " config.systemd.services.kanidm.serviceConfig.ExecStart)} scripting backup "$native" >/dev/null
+        ${pkgs.age}/bin/age -r "$recipient" "$native" > "$destination/kanidm-$jour.age.tmp"
+        ${pkgs.coreutils}/bin/mv "$destination/kanidm-$jour.age.tmp" "$destination/kanidm-$jour.age"
+        ${pkgs.coreutils}/bin/rm "$native"
+        if test -f /var/lib/mrjam-metier/log/sessions.sqlite; then
+          ${pkgs.sqlite}/bin/sqlite3 /var/lib/mrjam-metier/log/sessions.sqlite ".backup '$temporaire/log.sqlite'"
+          ${pkgs.age}/bin/age -r "$recipient" "$temporaire/log.sqlite" > "$destination/log-$jour.age.tmp"
+          ${pkgs.coreutils}/bin/mv "$destination/log-$jour.age.tmp" "$destination/log-$jour.age"
+        fi
+        ''}
         ${pkgs.python3}/bin/python3 ${../scripts/sauvegarde-externe.py} manifeste --repertoire "$destination" --date "$jour"
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name 'mrjam-*.json' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete
         ${pkgs.findutils}/bin/find "$destination" -maxdepth 1 -type f -name '*.age' -mmin +${toString (cfg.sauvegardesJours * 1440)} -delete

@@ -12,4 +12,5 @@
                (:file "lisp/serveur/quotas")
                (:file "lisp/serveur/http")
                (:file "lisp/serveur/log-http")
+               (:file "lisp/serveur/log-login")
                (:file "lisp/serveur/main")))

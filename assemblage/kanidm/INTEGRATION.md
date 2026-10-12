@@ -175,3 +175,18 @@ frappe à une API ni introduire un estimateur tiers sans audit/autorisation appl
 Test réel `tests/kanidm_politiques.py` : nom Unicode avec espaces lu intact,
 phrase100caractères Unicode/espaces acceptée, authentification conservée au restart.
 Courriel personnel non envoyé et compte réel non modifié à ce stade.
+
+### Commandes actuelles du candidat d'invitation
+
+`python3 scripts/kanidm-bootstrap-qualifier.py` exerce le provisionnement et
+restore/verify/lecture officiels réellement ; `python3 scripts/log-nix-qualifier.py`
+évalue la séparation/routage. `python3 scripts/log-kanidm-qualifier.py --persistante`
+utilise la même image C ; sans option, test propre distinct. Catalogue central50.
+La CLI officielle est `database restore`, après décompression privée du backup
+onlinegzip. Ne pas remplacer un restore exécuté par `--help`. L'opérateur ne
+récupère pas d'ancien password ni ne visite une invitation personnelle.
+Une fois toutes preuves exactes vérifiées, `construire-metier-nix.py --avec-log`
+ajoute au transport le paquet Native déjà vérifié0aq, sans recompilationRust.
+Workflow log-deploiement manuel sur main, transport SSH/age existant ; aucun CI
+au push ni qualification de développement distante. Ne pas annoncer de promotion
+à partir de ces seuls fichiers ni envoyer le mail avant accès réellement servi.

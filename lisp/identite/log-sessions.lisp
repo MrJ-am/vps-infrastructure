@@ -28,7 +28,13 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
        subject TEXT NOT NULL, username TEXT NOT NULL, csrf TEXT NOT NULL,
        created INTEGER NOT NULL, seen INTEGER NOT NULL, expires INTEGER NOT NULL,
        auth_time INTEGER NOT NULL, access TEXT NOT NULL, refresh TEXT NOT NULL,
-       nonce TEXT NOT NULL)")))
+       nonce TEXT NOT NULL)")
+    ;; Configuration privée établie par l'opérateur, jamais par le navigateur.
+    ;; Le sujet reste un UUID, indépendamment des noms et adresses modifiables.
+    (mrjam-native:sqlite-requete db
+      "CREATE TABLE IF NOT EXISTS log_principaux (subject TEXT PRIMARY KEY,
+       mail TEXT UNIQUE NOT NULL, duration INTEGER NOT NULL CHECK(duration IN (604800,2592000,7776000)),
+       minimum TEXT NOT NULL CHECK(minimum IN ('any','mfa')), qualified_after INTEGER NOT NULL)")))
   c)
 
 (defun cookie (nom valeur duree)
@@ -96,9 +102,11 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
         (refuser 429))
       (mrjam-native:sqlite-requete db "INSERT INTO log_sessions VALUES(?,?,?,?,?,?,?,?,?,?,?,?)"
         (list (mrjam-native:sha256 token) hote (mrjam-oidc:identite-sujet id) (j p "utilisateur") csrf
-              maintenant maintenant (+ maintenant (* 7 86400)) (mrjam-oidc:identite-auth-time id)
+              maintenant maintenant (+ maintenant (duree-session c (mrjam-oidc:identite-sujet id))) (mrjam-oidc:identite-auth-time id)
               (j d "access_token") (j d "refresh_token") (champ transaction "nonce")))))))
-    (values (champ transaction "retour") (cookie-session token) (cookie-transaction "" 0))))
+    (values (champ transaction "retour")
+            (cookie-session token (duree-session c (mrjam-oidc:identite-sujet id)))
+            (cookie-transaction "" 0))))
 
 (defun session (c hote cookies &optional (maintenant (temps)))
   (let ((secret (token-cookie cookies "__Host-mrj_session")))
@@ -140,7 +148,22 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
           ;; Ne jamais retourner les jetons fournisseur à la couche HTTP.
           (list (cons "username" (champ row "username")) (cons "csrf" (champ row "csrf"))
                 (cons "expiresAt" (champ row "expires")) (cons "createdAt" (champ row "created"))
+                (cons "subject" (champ row "subject"))
                 (cons "auth_time" (champ row "auth_time")) (cons "compte" p)))))))
+
+(defun politique (c subject)
+  (base c (lambda (db) (first (mrjam-native:sqlite-requete db
+     "SELECT * FROM log_principaux WHERE subject=?" (list subject))))))
+(defun duree-session (c subject)
+  (or (champ (politique c subject) "duration") 604800))
+(defun verification-renforcee-p (c session &optional (maintenant (temps)))
+  "Pas de claim amr inventé : seulement un sujet neuf dont l'enrôlement MFA
+obligatoire a été configuré/qualifié par l'opérateur, et une authentification
+signée postérieure à ce point. La fraîcheur expire sans bloquer le métier."
+  (let* ((p (and session (politique c (champ session "subject"))))
+         (auth (champ session "auth_time")))
+    (and (equal (champ p "minimum") "mfa") (integerp auth)
+         (<= (champ p "qualified_after") auth maintenant) (< (- maintenant auth) 900))))
 
 (defun csrf-valide-p (session origine hote csrf)
   (and session (equal origine (concatenate 'string "https://" hote))
