@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "revision_operateurs": "9fcf99816e08bd3476c185b83de8ca7b6f8f3b41",
+  "revision_construction": "77129dd9b98ea9831b03984bb26bb0219bb0d076",
+  "artefact_sha256": "bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb",
+  "cipher_sha256": "842a26bbe55f4bb556749f1f184c9da7e9dfa9b1008b7781acd5bc9846bccc79",
+  "archive_sha256": "61f88d219d9ae032ca8f1682b974a9ed921e6710644e1a2005c15d03e7037437",
+  "stage_sha256": "91ad5cf171254dec81d882a62280829a774bc1e79ed83d1daa7201fc3c7c0831",
+  "cipher_octets": 182388105,
+  "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
+  "origine_preuves": "codex-local-non-attestee",
+  "soumission_autorisee_par_proprietaire": true,
+  "revision_transport": "e8957859d79125f478eddf2a89246c4740e35d90",
+  "branche": "artefacts/log-9fcf99816e08",
+  "parties_transport": [
+    "candidat.tar.gz.age.part-000",
+    "candidat.tar.gz.age.part-001",
+    "candidat.tar.gz.age.part-002",
+    "candidat.tar.gz.age.part-003",
+    "candidat.tar.gz.age.part-004"
+  ],
+  "depot": "MrJ-am/vps-infrastructure",
+  "transport": "git-chiffre",
+  "chemin_transport": "candidat.tar.gz.age",
+  "qualification_amendement_20261011": "qualifiee",
+  "qualification_log_native": "qualifiee"
+}
