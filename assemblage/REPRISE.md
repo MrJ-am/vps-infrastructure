@@ -1324,3 +1324,15 @@ mutation des données, retour9qv qualifié, aucun mail. Chemin explicite ajouté
 aux dumps/restores et backup automatique ; ordre Native attendu. L’échec de ce
 seul job sera acquitté, puis la sauvegarde corrigée réellement exécutée avant
 mail. Nouveau scellement requis après qualification affectée, ELF inchangé.
+Qualification sélection1,226s/routage29,1851s/opérations+PG17,3503s,48preuves
+conservées. Opérateursd2450d1, descripteurf30fb69, run38329305886(deployer)
+engagé : constater issue/retour/courriel avant toute répétition.
+
+## Reprise finale de l’export Native
+
+38329305886 annulé APRÈS interfaces/discovery/binaire/invariants/restart tous
+réussis, sur sauvegardeNative.38329808590 confirme retour/data intactes/mailfalse.
+CLI officiel peut retourner0 après backendSQLite refusé sans créer fichier.
+SousUIDkanidm/stockageRW de sauvegardeRoot, stdoutcapturéprivé/test-s/age ;
+validation vraie gzip+JSON+restoreverify entrées réussie. Requalifier uniquement
+suites affectées puis resceller ; mêmeNative/ELF, aucune réécritureamont.
