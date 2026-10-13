@@ -52,6 +52,8 @@ in {
     '';
     systemd.tmpfiles.rules = [ "d /var/lib/kanidm/backups 0700 kanidm kanidm -" ];
     systemd.services.mrjam-sauvegarde.serviceConfig.ReadWritePaths = lib.mkAfter [ "/var/lib/kanidm/backups" ];
+    systemd.services.mrjam-sauvegarde.after = lib.mkAfter [ "kanidm.service" ];
+    systemd.services.mrjam-sauvegarde.requires = lib.mkAfter [ "kanidm.service" ];
     security.acme.certs."log.mrj.am".reloadServices = [ "nginx" "kanidm" ];
     services.keycloak.enable = lib.mkForce false;
     systemd.services.keycloak.enable = lib.mkForce false;

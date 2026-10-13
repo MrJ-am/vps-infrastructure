@@ -162,7 +162,7 @@ def amorcer(d,p,cert):
         plan['native_reutilisee']=True
     ecrire(d/'activation-log-privee.json',plan)
     PHASE='sauvegarde-identites'
-    dump=subprocess.run(['runuser','-u','postgres','--','pg_dump','--format=custom','mrjam_identite'],
+    dump=subprocess.run(['runuser','-u','postgres','--','pg_dump','--host=/run/postgresql','--format=custom','mrjam_identite'],
                         capture_output=True,check=True,timeout=60).stdout
     exiger(len(dump)<128*1024*1024,'Sauvegarde IdP hors borne')
     chiffrer(d,cert,'identite-retour.dump.age',dump)
@@ -356,11 +356,19 @@ def activer(d,p,cert):
         rattacher(plan);plan['rattache']=True;ecrire(d/'activation-log-privee.json',plan)
         changer=module('log_config','scripts/monolithe-activer.py')
         changer.changer_configuration(p['configurations']['candidat'])
-        stage.commande([Path(p['candidat'])/'bin/switch-to-configuration','test'],d)
+        # Acquitter uniquement le job ancien dont la connexion implicite a
+        # échoué. La sauvegarde corrigée doit ensuite être exécutée réellement,
+        # et un nouvel échec bloque toujours l'envoi et entraîne le retour.
+        stage.commande(['systemctl','reset-failed','mrjam-sauvegarde'],d)
+        stage.commande([Path(p['candidat'])/'bin/switch-to-configuration','test'],d,rapport_complet=True)
         plan['phase']='qualification-active';ecrire(d/'activation-log-privee.json',plan)
         mesures=sonder(d,p,cert,plan)
         stage.commande(['systemctl','restart','mrjam-metier'],d)
         mesures=sonder(d,p,cert,plan)
+        PHASE='sauvegarde-native-active'
+        stage.commande(['systemctl','start','mrjam-sauvegarde'],d)
+        result=stage.commande(['systemctl','show','mrjam-sauvegarde','-p','Result','--value'],d).strip()
+        exiger(result==b'success','Sauvegarde automatique corrigée non réussie')
         PHASE='enregistrement'
         stage.commande(['nix-env','--profile','/nix/var/nix/profiles/system','--set',p['candidat']],d)
         preuve_mail=envoyer(d,p,cert,plan)
@@ -369,7 +377,8 @@ def activer(d,p,cert):
         preuve=dict(format=1,revision=d.name,generation=p['candidat'],artefact_sha256=cert['qualification']['artefact_sha256'],
           kanidm_actif=True,keycloak_actif=False,mrj_auth_python_actif=False,proprietaire_metier_preserve=True,
           rattachement_explicite=True,anciennes_identites_retirees=True,donnees_preservees=True,
-          redemarrage_verifie=True,restauration_native_isolee=True,mail=preuve_mail,services=mesures,
+          redemarrage_verifie=True,restauration_native_isolee=True,sauvegarde_automatique_verifiee=True,
+          mail=preuve_mail,services=mesures,
           sondes_publiques=json.loads((d/'sondes-log.json').read_text()),
           etape2_complete=False,qualification_personnelle='en attente',
           limites=['Fermetures communes définitives IdP à terminer ; admission native conservée, secret borné90jours à renouveler par exploitation.',
@@ -392,7 +401,7 @@ def retour(d,p,cert):
         retablir_rattachement(plan)
     if plan.get('suppression_ancienne_engagee'):
         dump=dechiffrer(d,cert,'identite-retour.dump.age')
-        subprocess.run(['runuser','-u','postgres','--','pg_restore','--clean','--if-exists','--exit-on-error',
+        subprocess.run(['runuser','-u','postgres','--','pg_restore','--host=/run/postgresql','--clean','--if-exists','--exit-on-error',
                         '--dbname=mrjam_identite'],input=dump,capture_output=True,check=True,timeout=120)
     Path('/var/lib/vision/auth/htpasswd').write_bytes(dechiffrer(d,cert,'vision-ancienne-auth.age'))
     changer=module('log_config_retour','scripts/monolithe-activer.py')

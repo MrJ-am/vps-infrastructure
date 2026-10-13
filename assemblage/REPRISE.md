@@ -97,6 +97,8 @@ contrôle étape1 réutilisée pour Type simple ; refus permanents sans reessai.
 Nouveau scellement requis ; aucune nouvelle image métier, aucun mail envoyé.
 Disponibilité qualifiée localement : sélection1,1394s, opérations13+23cas/5,074s,
 49reçus exacts conservés. Sonde réelle502→200 passée ;403refusé sans reessai.
+Descripteurf64983d, run38325995231(deployer) engagé : constater issue/retour/mail
+avant toute autre mutation. Même Native7892 et ELFbc70c822, aucun compte doublon.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation
@@ -1312,3 +1314,12 @@ fraîche/restauration/retour et bascule centrale uniquement, puis MCP réel,
 invariants, mémoire/latences, redémarrage et services tiers. Consigner le nouveau
 run avant toute interruption, constater son issue avant répétition. Étape 1 reste
 non livrée tant que sa version active et les critères ne sont pas constatés.
+
+## Ajustement de reprise immédiat — sauvegarde nocturne
+
+Run38325995231 annulé en activation(code4).38327816108 : mrjam-sauvegarde
+avait échoué sur socket implicite pg_dump, sans environnement PGHOST ; aucune
+mutation des données, retour9qv qualifié, aucun mail. Chemin explicite ajouté
+aux dumps/restores et backup automatique ; ordre Native attendu. L’échec de ce
+seul job sera acquitté, puis la sauvegarde corrigée réellement exécutée avant
+mail. Nouveau scellement requis après qualification affectée, ELF inchangé.
