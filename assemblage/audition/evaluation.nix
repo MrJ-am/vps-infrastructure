@@ -28,7 +28,7 @@ let
       inherit (cfg.services.postgresql) ensureDatabases ensureUsers dataDir;
       identMap = lib.concatStringsSep "\n" (builtins.filter (l: l != "mrjam_metier mrjam-metier audition_app")
         (lib.splitString "\n" cfg.services.postgresql.identMap));
-      service = builtins.removeAttrs cfg.systemd.services.postgresql.serviceConfig [ "ExecStartPre" "ExecReload" ];
+      service = builtins.removeAttrs cfg.systemd.services.postgresql.serviceConfig [ "ExecStartPre" ];
       env = cfg.systemd.services.postgresql.environment; };
     kernel = toString cfg.boot.kernelPackages.kernel;
     firewall = cfg.networking.firewall.allowedTCPPorts;
@@ -51,8 +51,6 @@ in {
   authenticationAvant = b.services.postgresql.authentication;
   authenticationApres = c.services.postgresql.authentication;
   identMapAvant = b.services.postgresql.identMap; identMapApres = c.services.postgresql.identMap;
-  postgresReload = c.systemd.services.postgresql.reloadIfChanged;
-  postgresReloadCommande = c.systemd.services.postgresql.serviceConfig.ExecReload;
   postgresPreStart = c.systemd.services.postgresql.preStart;
   postgresPreStartAvant = b.systemd.services.postgresql.preStart;
   postgresConfigurationAvant = b.services.postgresql.settings;
