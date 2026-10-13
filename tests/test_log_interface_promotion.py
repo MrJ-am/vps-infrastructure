@@ -30,8 +30,11 @@ class Promotion(unittest.TestCase):
         sys.path.insert(0,str(ROOT/'scripts'))
         from assemblage import manifeste
         pkgs=str(ROOT/'state/outils-sources'/('nixpkgs-'+manifeste()['toolchain']['production']['nixpkgs_revision']))
-        expression='let pkgs=import <nixpkgs> {}; in import '+str(ROOT/'assemblage/log-interface/evaluation.nix')+' { configuration='+json.dumps(str(ROOT/'tests/log-connexion-base.nix'))+'; moduleInterface='+json.dumps(str(ROOT/'assemblage/log-interface/module.nix'))+'; site=builtins.toPath '+json.dumps(str(ROOT/'interface-log/dist'))+'; paquetMetier=pkgs.sbcl; }'
-        p=subprocess.run(['nix-instantiate','-I','nixpkgs='+pkgs,'--eval','--strict','--json','--expr',expression],capture_output=True,text=True)
+        with tempfile.TemporaryDirectory(prefix='mrjam-interface-force-') as tmp:
+            base=Path(tmp)/'base.nix'
+            base.write_text('{ lib, pkgs, ... }: { imports=[ '+json.dumps(str(ROOT/'tests/log-connexion-base.nix'))+' ]; infrastructure.metier.paquet=lib.mkForce pkgs.coreutils; }')
+            expression='let pkgs=import <nixpkgs> {}; in import '+str(ROOT/'assemblage/log-interface/evaluation.nix')+' { configuration='+json.dumps(str(base))+'; moduleInterface='+json.dumps(str(ROOT/'assemblage/log-interface/module.nix'))+'; site=builtins.toPath '+json.dumps(str(ROOT/'interface-log/dist'))+'; paquetMetier=pkgs.sbcl; }'
+            p=subprocess.run(['nix-instantiate','-I','nixpkgs='+pkgs,'--eval','--strict','--json','--expr',expression],capture_output=True,text=True)
         if p.returncode:raise AssertionError('Évaluation locale Nix refusée : '+p.stderr[-800:])
         r=json.loads(p.stdout)
         self.assertTrue(r['invariants']);self.assertTrue(r['assertions']);self.assertTrue(r['nativeActif'])
