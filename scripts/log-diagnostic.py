@@ -91,6 +91,20 @@ def main(revision):
             'invalid':'invalide','exit-code':'sortie_erreur','status=':'statut'}.items() if k in message.lower()]
         if classes:evenements.append({'unite':unit,'classes':classes})
     out['incidents_unites_systeme']=evenements[-40:]
+    sauvegarde=subprocess.run(['journalctl','-u','mrjam-sauvegarde','--since','60 minutes ago',
+        '--no-pager','-o','cat','-n','100'],capture_output=True,text=True,timeout=15).stdout
+    out['sauvegarde_erreurs']=[v for k,v in {
+        'readonly database':'sqlite_lecture_seule','read-only file system':'systeme_fichiers_lecture_seule',
+        'unable to open database':'sqlite_ouverture','database is locked':'sqlite_verrou',
+        'permission denied':'permission','connection refused':'connexion_refusee',
+        'admin socket':'socket_administratif','peer authentication failed':'postgres_peer',
+        'no such file':'fichier_absent','error:':'erreur_commande','failed to':'commande_refusee'
+        }.items() if k in sauvegarde.lower()]
+    out['sauvegarde_fichiers_concernes']=[nom for nom,path in {
+        'anciennes_sessions':'/var/lib/mrj-auth/sessions.sqlite',
+        'sessions_log':'/var/lib/mrjam-metier/log/sessions.sqlite',
+        'stockage_native':'/var/lib/kanidm','socket_native':'/run/kanidmd/admin.sock',
+        'destination':'/var/backup/mrjam'}.items() if path in sauvegarde]
     metier_journal=subprocess.run(['journalctl','-u','mrjam-metier','--since','30 minutes ago',
         '--no-pager','-o','cat','-n','100'],capture_output=True,text=True,timeout=15).stdout
     out['demarrages_metier_refuses']=metier_journal.count('Démarrage métier refusé : configuration ou dépendance indisponible.')
