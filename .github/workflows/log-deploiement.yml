@@ -4,7 +4,7 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, deployer, courriel, retour, diagnostic]
+        options: [preparer, deployer, courriel, retour, diagnostic, corriger-connexion]
         default: deployer
         description: Opération fermée sur le candidat Log scellé dans main
 permissions:

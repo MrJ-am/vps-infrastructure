@@ -1,4 +1,4 @@
-# Contrat de sécurité v2 — jalon1 qualifié, Kanidm en préparation
+# Contrat de sécurité v2 — jalons de production et preuves ciblées
 
 Aucune conformité ASVS globale revendiquée. Les règles ci-dessous distinguent
 la cible du mécanisme actuellement actif ; chaque preuve doit identifier code,
@@ -10,13 +10,16 @@ environnement et assemblage. Références officielles consultées le 11 octobre 
 Kanidm1.11.2 est retenu : [support](https://kanidm.github.io/kanidm/stable/support.html),
 [politiques](https://kanidm.github.io/kanidm/stable/accounts/account_policy.html).
 Ces documents et le code officiel verrouillé ont été consultés le12octobre2026.
-Installation/démarrage/qualification réelle restent à effectuer : aucun succès
-OIDC local ne prouve ces étapes. Le jalon1 et ses limites sont attestés dans
+L'installation et la bascule Native sont attestées dans
+[qualification-production-20261013.json](kanidm/qualification-production-20261013.json).
+Les contrôles techniques ne prouvent pas une connexion personnelle effectuée.
+Le jalon1 et ses limites sont attestés dans
 [qualification-production-etape1.json](qualification-production-etape1.json).
 
 | Règle | Nature et source | Application et preuve attendue |
 |---|---|---|
 | Identité vérifiée avant tout accès privé | Normative OIDC §3.1.3.7 et OAuth BCP ; choix produit refus par défaut | Signature, issuer/audience, state/nonce/PKCE, expiration ; test réel IdP, identité forgée refusée |
+| Origine du formulaire natif vérifiée et liens de récupération privés | Choix produit/contrôles CSRF ASVS ; comportement navigateur constaté | Origin HTTPS exact dans log-login.lisp ; Referrer-Policy strict-origin unique dans log-referrer.nix, chemin/query jamais transmis ; suites log-connexion et log-routage-nix, origine étrangère refusée. Aucun assouplissement à Origin:null |
 | Autorisation par ressource/opération | Exigence mission ; ASVS contrôle d'accès | Fonctions métier, RLS/contraintes, Alice/Bob lectures/écritures/liens/caches/exports/tâches concurrents |
 | Rôle SQL non propriétaire et non privilégié | Mission ; limite PostgreSQL RLS | Inventaire rôles/propriétaires/politiques ; tables privées classées, SQL isolé hostile et multi-comptes |
 | Contexte borné à la transaction/requête | Mission ; PostgreSQL SET LOCAL | Établissement depuis identité vérifiée, transaction, réutilisation connexion Alice puis Bob, refus par défaut sans contexte |

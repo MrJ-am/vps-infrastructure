@@ -203,3 +203,13 @@ l’image C, sans option pour la reproduction froide. Le réglage existant est
 conservé ; invitations, vérification mail/consentements et réservations SQL
 précèdent le rattachement. Capacité onboarding90j, refus testé de réinitialisation
 du propriétaire protégé, politique globale et élévation administrateur.
+# Correction HTTP du 13 octobre 2026
+
+Le formulaire de connexion natif utilise un POST navigateur. Le cumul ancien
+`origin, no-referrer` anonymise aussi Origin en `null`, refusé par l'adaptateur.
+Le fragment central `modules/log-referrer.nix` impose `strict-origin` seul et
+masque l'en-tête amont ; il conserve le contrôle CSRF et exclut chemin/query du
+Referer. Contrôles locaux `log-connexion`, `log-routage-nix`. Promotion manuelle
+centrale `corriger-connexion`, sources/contrôles exacts dans
+`operations/log-connexion-candidat.json`, sans changer de binaire ni restaurer
+de compte/base. La connexion personnelle reste à constater après correction.

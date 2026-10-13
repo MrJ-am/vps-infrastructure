@@ -1,6 +1,24 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — Kanidm en production, courriel accepté
+## Point de reprise actif — correction du formulaire de connexion
+
+Le propriétaire a enregistré son mot de passe puis obtenu `invalid_request`.
+Reproduction anonyme : démarrage OIDC200/formulaire natif ; Log sert deux
+Referrer-Policy, `origin` puis `no-referrer`. Chromium envoie alors Origin:null
+pour le POST natif, refusé403 par le contrôle d'origine Common Lisp. Reproduction
+avec formulaire intercepté : aucun POST envoyé à la production. `strict-origin`
+donne l'origine réelle et ne transmet ni chemin ni query dans Referer.
+
+Correction en cours de qualification : fragment central modules/log-referrer.nix,
+en-tête unique strict-origin, contrôle d'origine conservé ; promotion fermée
+`log-deploiement.yml / corriger-connexion`, même ELF, aucune opération sur les
+comptes ou bases, aucun réenrôlement/courriel. Évaluation des unités/routes
+préservées, nginx-t et PID Kanidm/SBCL/tiers inchangés bloquants. Retour vers la
+génération Native précédente seulement, sans copie de données. Preuve locale
+et descripteur exact à produire avant promotion ; connexion personnelle non
+simulée. Ancienne identité et nouveau mot de passe ne doivent pas être supprimés.
+
+## Jalon conservé — Kanidm en production, courriel accepté
 
 Run [38330950404](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38330950404)
 réussi le13octobre2026 à01:14UTC. Opérateurs54988ca67567db04d2e064feae91d558f7bb25fb,
