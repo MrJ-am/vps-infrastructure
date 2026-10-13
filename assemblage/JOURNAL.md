@@ -1050,3 +1050,27 @@ Anciennes options retour/deployer ne doivent pas être utilisées pour ce client
 Preuve datée qualification-interface-production-20261013.json ; aucune connexion
 personnelle inventée. Compte et phrase/passkeys existants préservés ; pas de mail
 ni réinscription. Limites de la mission générale conservées dans REPRISE.
+
+## 13 octobre — Audition intégré et publié
+
+Application ASDF/Elm interne,20opérations MCP sur le transport Vision, identité Log,
+groupes/RLS, cours et prescriptions versionnés, productions ouvertes, aides,
+observations révisables et rapports. Style partagé cebba182, Vision0270c38,
+Signature17194087 préservé. Aucun daemon ou fournisseur d'inférence ajouté, aucune
+dépendance externe nouvelle, aucun DNS ou compte personnel modifié.
+
+74assertions métier,228Native/OIDC isolées,40parcours du même binaire Nix,
+9tests Elm/review central, navigateur pédagogique doublé et9assemblage/promotion.
+Production38470128833 réussie21:23:54UTC, source9feac618, génération zmd027b9.
+Même artefact a74247c4/site a90dc352 ;95ressources HTTPS exactes, refus anonymes,
+OAuth Audition et navigateur public réel. Diagnostic38470473342/référence38470476909 :
+Native/tiers préservés, PG redémarré de façon bornée, données existantes identiques.
+Backup récupérable/restauration isolée et retour indépendant qualifiés avant bascule.
+
+La première bascule a réellement déclenché son retour sur PID PG changé ; aucun
+succès attribué à cet échec. Le schéma additif, l'habilitation technique auditée et
+le callback OIDC ont été conservés. Essai SIGHUP non activé : chemins PG postmaster.
+Correction explicite, autres PID bloquants et connexion/règles PG constatées.
+Aucun groupe, production ou participation de preuve en production. Pas d'essai
+Mistral ni de connexion personnelle inventée ; limites et preuves dans
+[audition/COMPTE-RENDU.md](audition/COMPTE-RENDU.md) et sa qualification-production.

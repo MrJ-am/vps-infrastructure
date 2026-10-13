@@ -23,3 +23,11 @@ HBA/IdentMap. Correction locale en cours ; aucun monolithe activé.
 Amendement frontend/outillage en cours, non qualifié ; ancien candidat bloqué.
 Une CI réussie ne prouve pas la version servie.
 
+
+* Audition — constat du 13 octobre 2026
+Application interne déployée par le workflow central, run38470128833.
+Sources9feac618, génération zmd027b9, diagnostic38470473342/référence38470476909.
+Les paragraphes précédents sont historiques. État actif et limites :
+[[file:../assemblage/REPRISE.md][reprise]],
+[[file:../assemblage/audition/COMPTE-RENDU.md][compte rendu]],
+[[file:../assemblage/audition/qualification-production-20261013.json][preuve datée]].

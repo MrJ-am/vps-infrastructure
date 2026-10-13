@@ -131,7 +131,7 @@ verrous/conflits et adoption explicite des versions sont des invariants serveur.
 L'exactitude mathématique et l'honnêteté du client ne sont pas certifiées.
 
 Elm/elm-ui et Animator partagés, variante Audio exacte de Signature/Style, palette
-commune. Qualification centrale : audition-metier, audition-interface,
+commune. Qualification centrale : audition-metier, audition-oidc, audition-interface,
 audition-assemblage. Activation conditionnée aux preuves réelles Log/OAuth,
 sauvegarde/restauration et retour de code avec données récentes préservées.
 Voir assemblage/audition/CONTRAT.md, MCP.md et EXPLOITATION.md.
