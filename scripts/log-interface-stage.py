@@ -76,7 +76,10 @@ for nom,h in plan['fichiers'].items(): assert sha(d/'payload'/nom)==h
 (d/'candidat.json').write_text(json.dumps(plan)+'\\n')
 subprocess.run([sys.executable,'-B',str(d/'payload/promouvoir.py'),'promouvoir',d.name],check=True)
 '''
-        cmd='python3 -c '+shlex.quote(bootstrap)+' '+shlex.quote(remote)+' '+shlex.quote(json.dumps(p))
+        # Les reçus npm/SBCL sont volumineux et déjà vérifiés dans cette CI.
+        # Ne pas les repasser dans argv/SSH ; seulement le plan d'exécution.
+        execution={k:v for k,v in p.items() if k not in ('recus','sources_qualifiees','qualification_image')}
+        cmd='python3 -c '+shlex.quote(bootstrap)+' '+shlex.quote(remote)+' '+shlex.quote(json.dumps(execution))
         stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
                   ' -p python3 age --run '+shlex.quote(cmd))
 

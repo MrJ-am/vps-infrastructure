@@ -31,8 +31,11 @@ def main(destination):
         recus[nom]=r
     construction=json.loads((RACINE/'state/artefacts/mrjam-metier.construction-nix.json').read_text())
     paquet=construction['sorties_nix']['metier'];image=Path(paquet)/'bin/mrjam-metier'
-    if construction['sources_lisp_sha256']!=compilation_entrees(sources) or construction['source_revision']!=rev:
+    if construction['sources_lisp_sha256']!=compilation_entrees(sources):
         raise ValueError('Binaire différent des sources qualifiées')
+    qualification=json.loads((RACINE/'state/artefacts/mrjam-metier.qualification.json').read_text())
+    if qualification['artefact_sha256']!=sha(image) or qualification['sources_lisp_sha256']!=construction['sources_lisp_sha256']:
+        raise ValueError('Binaire non qualifié ou sources différentes')
     site=RACINE/'interface-log/dist';rapport=json.loads((RACINE/'state/log-interface-construction.json').read_text())
     if contenus(site)!=rapport['fichiers']:raise ValueError('Site changé après construction')
     fichiers={};entrees={};mapping={'promouvoir.py':'scripts/log-interface-promouvoir.py',
@@ -65,7 +68,8 @@ def main(destination):
         'scripts/log-interface-*.py','scripts/log-operation.py','.github/workflows/log-deploiement.yml',
         'assemblage/log-interface','assemblage/manifest.json','assemblage/suites.json',
         'scripts/revoir-frontends.py','assemblage/elm-review/ressources.json'],cwd=RACINE,text=True).splitlines()
-    p=dict(format=1,revision_sources=rev,revision_assemblage='54988ca67567db04d2e064feae91d558f7bb25fb',
+    p=dict(format=1,revision_sources=rev,revision_construction=construction['source_revision'],qualification_image=qualification,
+        revision_assemblage='54988ca67567db04d2e064feae91d558f7bb25fb',
         generation_attendue='/nix/store/61lianh06k1x18jaikq6azyapn059q7x-nixos-system-nixos-26.05.8639.c5c4a43b0e80',
         artefact_avant='bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb',
         paquet_metier=paquet,artefact_sha256=sha(image),site_fichiers=rapport['fichiers'],site_sha256=rapport['ensemble_sha256'],
