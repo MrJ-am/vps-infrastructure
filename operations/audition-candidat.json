@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "6848137222f8ee1b12ff461305467deae3541771",
+  "revision_sources": "9feac618022a310de4f61cf2ce992ebe35e2f6dc",
   "revision_construction": "29ebb727a1046dc7b5157de018f8526d726473c9",
   "qualification_image": {
     "format": 1,
@@ -101,7 +101,7 @@
     "tests_secondes": 9.7737,
     "qualification": "candidat Nix local HTTP/transactions/redemarrage, pas production"
   },
-  "revision_assemblage": "6848137222f8ee1b12ff461305467deae3541771",
+  "revision_assemblage": "9feac618022a310de4f61cf2ce992ebe35e2f6dc",
   "generation_attendue": "/nix/store/wib5anxz5ryw8si1z7lfkmdywiw29srf-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
   "artefact_avant": "46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff",
   "paquet_metier": "/nix/store/dv109y63kv9cvpmnkqkcvcyjiqh1ssi2-mrjam-metier-29ebb727a104",
@@ -205,9 +205,9 @@
   },
   "site_sha256": "a90dc352ca8e3b59cc900a9a537214ab613f4ed735ce0e12422106aa717676b3",
   "fichiers": {
-    "promouvoir.py": "06204524a32c235d735abf3feff37ae50d0f7c8021438ffd8418d6ec7eed3cdf",
-    "module.nix": "854f40e304e8b99e046f4fa201b0f5a1477145c1ffeb93dbbef671d95bf5453a",
-    "evaluation.nix": "b352a098fcf44648e5876716ad42a631da3f846bc11db3abb9963dc603c39ae9",
+    "promouvoir.py": "94fcd95ff3fd355063f338de3139395f2a32edd4d1cab809105f8918b2939a3b",
+    "module.nix": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
+    "evaluation.nix": "86c3e6f706fffd0be794f1612c2171ad279ffdc77cf6b6cc1d4b2d4c1a1496df",
     "audition.nix": "e30a670160f9a0c995f2bafa94e4061c216f74162c7c93c57489450ea2cbe1ce",
     "001-schema.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
     "roles.sql": "413c25784387b4f46bc4febb890b1663c504621fca769e87caff3415211e97b4",
@@ -312,9 +312,9 @@
     "image.nar": "b4a5fd4b4750fa72a718f0fdd7c6d1d19d4325621856e5b8d626cc5307920f0e"
   },
   "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
-  "archive_sha256": "511239313483346e4fec020e7e6a0e9171fa10ca8e81c509e190151642e167eb",
-  "cipher_sha256": "99e8235241a47cca6b8759923e5192eea215c4527a120e2d4cd8f646bdc153cb",
-  "cipher_octets": 13729779,
+  "archive_sha256": "f8255965d689661b1164a50a69c12274d7c09290b2fbca15a141fadaf0e66747",
+  "cipher_sha256": "2ce5ef515ad68e4a8d6f8095598bc71dc60d9efe66177191fc342d3d1497e8d8",
+  "cipher_octets": 13729069,
   "origine_preuves": "codex-local-non-attestee",
   "recus": {
     "audition-metier": {
@@ -3588,10 +3588,10 @@
           "vps/assemblage/manifest.json": "8a00242fc6343050b527013375ab59147c21e74b2ed6c11333692d8b29194a2c",
           "vps/scripts/frontends.py": "fa2c7efff41eaedc1fd17122f55e444e6f973702aaeecffadf304d8ab3ebc412",
           "vps/scripts/revoir-frontends.py": "e1b069bd9f472c0270ed5d7d037fd91cab82fbf298361df1ba2cfa608513fc4a",
-          "vps/tests/test_audition_assemblage.py": "03714e01d5decf422d3a874f04fce2ca61bd63a5c6c840478eb171c2b036c196",
-          "vps/assemblage/audition/evaluation.nix": "b352a098fcf44648e5876716ad42a631da3f846bc11db3abb9963dc603c39ae9",
-          "vps/assemblage/audition/module.nix": "854f40e304e8b99e046f4fa201b0f5a1477145c1ffeb93dbbef671d95bf5453a",
-          "vps/scripts/audition-promouvoir.py": "06204524a32c235d735abf3feff37ae50d0f7c8021438ffd8418d6ec7eed3cdf",
+          "vps/tests/test_audition_assemblage.py": "4b759328adcfee0ad3d5c365660f748e0c21ff1922a498ad48a1e026ef8b543e",
+          "vps/assemblage/audition/evaluation.nix": "86c3e6f706fffd0be794f1612c2171ad279ffdc77cf6b6cc1d4b2d4c1a1496df",
+          "vps/assemblage/audition/module.nix": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
+          "vps/scripts/audition-promouvoir.py": "94fcd95ff3fd355063f338de3139395f2a32edd4d1cab809105f8918b2939a3b",
           "vps/scripts/log-interface-stage.py": "4d6e089aecd1ba11dcc0ff41555a66bfa69ee6472e20ede6ec0cae92183bd7ae",
           "vps/scripts/log-interface-sceller.py": "5e176976b80af55f805d42d19c6f493437e0248fdfcc13bfb2182350de3ae96f",
           "vps/scripts/monolithe-operation.py": "2cdfa99a1ffa81967c523c9b37fa0b2a82b4093a8e9f881a516b413938ecaa67",
@@ -3623,17 +3623,17 @@
       "codes": [
         0
       ],
-      "duree_secondes": 8.9298
+      "duree_secondes": 8.6104
     }
   },
   "sources_qualifiees": {
     ".github/workflows/monolithe-deploiement.yml": "9574aadfd435899fed3a8a37ff112239d511b1d182464541835f6a4af9d26e70",
     "assemblage/audition/001-schema.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
     "assemblage/audition/CONTRAT.md": "3e4105c02e4ad3dd0ef87980d529d2524f4fdf2d56f7e04d5384f87a55559b59",
-    "assemblage/audition/EXPLOITATION.md": "75e785c8718843d8beffeac853fd4889b7b5e460c9c167091b7a0f4affe77e19",
+    "assemblage/audition/EXPLOITATION.md": "cab3532b9be554e81a64b37327a48f25c23badd721bb9f214482b678b4daece8",
     "assemblage/audition/MCP.md": "7d9a2fd69b6007c9509dadd550715c7e4608d34d9dbc71e618a23543ebae9fca",
-    "assemblage/audition/evaluation.nix": "b352a098fcf44648e5876716ad42a631da3f846bc11db3abb9963dc603c39ae9",
-    "assemblage/audition/module.nix": "854f40e304e8b99e046f4fa201b0f5a1477145c1ffeb93dbbef671d95bf5453a",
+    "assemblage/audition/evaluation.nix": "86c3e6f706fffd0be794f1612c2171ad279ffdc77cf6b6cc1d4b2d4c1a1496df",
+    "assemblage/audition/module.nix": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
     "assemblage/audition/roles.sql": "413c25784387b4f46bc4febb890b1663c504621fca769e87caff3415211e97b4",
     "assemblage/elm-review/AUDIT.md": "1ffdaca0ea5b2018d9266caaa7216675151ff917ac6690f2a940051cbdbaf3ca",
     "assemblage/elm-review/elm.json": "fd704f50d7052ed10bebb7a4912296196c21ff1fecfc28a1180b8749290fe5ed",
@@ -3698,7 +3698,7 @@
     "scripts/audition-construire.py": "cb12ce67a2f3e58605929e5ade4e03494d187575d706222f4121a53c91d0e49e",
     "scripts/audition-diagnostic.py": "cbba173634999637919870f421789194fdae107396dfe8befdfd4a1606d91f21",
     "scripts/audition-oidc-qualifier.py": "0d7417ec0b52145a2ee83bdd413f26c6a07d585a9765074672028f3e34d036d1",
-    "scripts/audition-promouvoir.py": "06204524a32c235d735abf3feff37ae50d0f7c8021438ffd8418d6ec7eed3cdf",
+    "scripts/audition-promouvoir.py": "94fcd95ff3fd355063f338de3139395f2a32edd4d1cab809105f8918b2939a3b",
     "scripts/audition-qualifier.py": "cbb62d1ff52a3e818fe8730730f9a260082a8e5f3eb088944e66ae0369383dd1",
     "scripts/frontends.py": "fa2c7efff41eaedc1fd17122f55e444e6f973702aaeecffadf304d8ab3ebc412",
     "scripts/log-interface-sceller.py": "5e176976b80af55f805d42d19c6f493437e0248fdfcc13bfb2182350de3ae96f",
@@ -3712,11 +3712,11 @@
     "tests/audition-oidc-froid.lisp": "bd02b4dbfe1a4d875c503b0c174d59505f116b33fe1d6e6a8301238eabdf8382",
     "tests/audition-oidc.lisp": "8e1d90ec489646d64bc2853fcc5d2c1a8a3b87be7afb3c4459b9bb3067f64d9d",
     "tests/audition.lisp": "b5a9ce6a26a3606a54f4c8eb665b04ccc4668fdc2e59d4e39e8f342deeaa2f25",
-    "tests/test_audition_assemblage.py": "03714e01d5decf422d3a874f04fce2ca61bd63a5c6c840478eb171c2b036c196"
+    "tests/test_audition_assemblage.py": "4b759328adcfee0ad3d5c365660f748e0c21ff1922a498ad48a1e026ef8b543e"
   },
   "paquet_kanidm": "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2",
   "outils": "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification",
-  "revision_transport": "b7e4ae83369e8682e33d562e7e2a69a6bebc17d7",
+  "revision_transport": "57146d9f1078c09c427c89528300a59fd9fa02ee",
   "parties_transport": [
     "candidat.tar.gz.age.part-000"
   ],
