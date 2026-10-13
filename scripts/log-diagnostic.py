@@ -73,7 +73,7 @@ def main(revision):
             # local et la configuration installée. Lire seulement type/attributs.
             if not resume['activation_engagee']:
                 expr='let c=(import <nixpkgs/nixos/lib/eval-config.nix> { modules=[ /etc/nixos/configuration.nix ]; }); p=c.config.infrastructure.metier.paquet; in { type=builtins.typeOf p; attrs=if builtins.isAttrs p then builtins.attrNames p else []; typeOption=c.options.infrastructure.metier.paquet.type.name; }'
-                q=subprocess.run(['nix-instantiate','-I','nixpkgs='+m.NIXPKGS,'--eval','--strict','--json','--expr',expr],capture_output=True,text=True,timeout=90)
+                q=subprocess.run(['nix-instantiate','-I','nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos','--eval','--strict','--json','--expr',expr],capture_output=True,text=True,timeout=90)
                 if q.returncode==0:resume['paquet_actif_metadata']=json.loads(q.stdout)
             out['interfaces'].append(resume)
     for nom in ('preparation','operation'):
