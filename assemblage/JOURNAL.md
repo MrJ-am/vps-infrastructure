@@ -962,3 +962,32 @@ seulement, timer désarmé après succès. Aucun compte ou base restauré/réini
 aucun courriel réenvoyé. Sondes publiques actualisées et formulaire navigateur
 observé sans POST production ; connexion personnelle complète reste à effectuer.
 Preuve : kanidm/qualification-connexion-production-20261013.json.
+
+## 13 octobre — MCP public rétabli, production11:41 Paris
+
+Retour utilisateur : compte Vision accessible, page active conservée ; nouveau
+MCP échoue sur Vision/oauth/authorize, scope vision:mcp confirmé. Registre actuel
+vide et29clients historiques constatés par diagnostic readonly38373790739.
+Opérateur log-clients-mcp.py : lire seulement id/nom/redirections/cree historiques,
+valider HTTPS/retour exact, transaction sousUIDdu monolithe, ne jamais recopier
+comptes, sessions, codes ou jetons. Conflit annule toutes les insertions, même
+après une première ligne ; réexécution idempotente. Schéma historique réel utilisé
+par les tests ; aucun runtime/dépendance supplémentaire, aucun binaire modifié.
+C reconstruite après perte des processus, même PID/marqueur/objet visible par les
+outils ; poolNIL, DSO initialisées explicitement pour SQLite/crypto. Premiers
+essais navigateur non qualifiants : route.fetch ne garantissait pas les redirects
+hors handler. ProxyTLS local et DNSChrome bornés remplacent ce dispositif, vrais
+303/Set-Cookie transmis, autres destinations bloquées. Aucune preuve de ces
+essais échoués réutilisée. Les POST d'enrôlement/connexion étaient en fixture.
+Qualification finale log-parcours17,173s : tests SQL et diagnostic, Native réel
+avec Chromium dans C puis SBCL neuf, première connexionMFA et reconnexion sans
+login/consentement Native répété, pages connectées, ancien cookie Vision valide,
+client historique32chars avec nouveau consentementPKCE/code/bearer Alice,
+client inconnu refusé. Reçu exact avec outils/configuration/source conservé.
+Run38378081150 surffc3354, sources323a239 :29clients repris, zéro compte/session/
+jeton ; compte/mot de passe inchangés, aucun code/service remplacé ou relancé.
+Diagnostic38378368570 :29/29/29, même génération61lianh et états actifs attendus.
+Sondes publiques200/401 conformes ; choix personnel ChatGPT encore à effectuer.
+Preuve : kanidm/qualification-mcp-production-20261013.json. Différence scope
+optionnel historique et chemins Native non canoniques consignée dans REPRISE,
+sans déclarer ces points globalement conformes ni rouvrir l'architecture.
