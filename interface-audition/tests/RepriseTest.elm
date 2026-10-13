@@ -127,4 +127,45 @@ tests =
                 in
                 Expect.equal { ids = Just [ "raisonnement" ], typeActivite = Just "qcm", propositions = Just "3", publie = True }
                     { ids = Dict.get "a1" edite.drafts |> Maybe.map .attenduIds, typeActivite = Dict.get "a1" edite.drafts |> Maybe.map .typeActivite, propositions = Dict.get "a1" edite.drafts |> Maybe.map .propositions, publie = Dict.get "a1" edite.drafts |> Maybe.map (.publication >> (/=) "") |> Maybe.withDefault False }
+        , test "réconcilier un conflit de cours conserve le texte et adopte sa révision" <|
+            \_ ->
+                let
+                    c revision =
+                        E.object [ ( "id", E.string "c1" ), ( "revision", E.int revision ), ( "document", E.object [ ( "titre", E.string "Titre serveur" ), ( "contenu", E.string "Cours serveur" ) ] ) ]
+
+                    edite =
+                        Tuple.first (Main.update (Main.EditerCours (c 1)) (Tuple.first (Main.init (E.object []))))
+
+                    saisi =
+                        Tuple.first (Main.update (Main.Champ "cours-contenu" "Ma nouvelle démonstration") edite)
+
+                    conflit =
+                        Tuple.first (Main.update (Main.Reponse (E.object [ ( "operation", E.string "cours" ), ( "statut", E.int 409 ), ( "erreur", E.string "conflit_revision" ) ])) saisi)
+
+                    relu =
+                        Tuple.first (Main.update (Main.Reponse (E.object [ ( "operation", E.string "preparations" ), ( "statut", E.int 200 ), ( "document", E.object [ ( "cours", E.list identity [ c 2 ] ) ] ) ])) conflit)
+
+                    adopte =
+                        Tuple.first (Main.update Main.AccepterCoursVersion relu)
+                in
+                Expect.equal ( Just "2", Just "Ma nouvelle démonstration" ) ( Dict.get "cours-revision" adopte.champs, Dict.get "cours-contenu" adopte.champs )
+        , test "réconcilier un calendrier conserve l'échéance saisie" <|
+            \_ ->
+                let
+                    a revision =
+                        E.object [ ( "id", E.string "f1" ), ( "nature", E.string "affectation" ), ( "revision", E.int revision ), ( "document", E.object [ ( "activite", E.string "a1" ), ( "echeance", E.int 1792000000 ), ( "eleves", E.list E.string [ "alice" ] ) ] ) ]
+
+                    edite =
+                        Tuple.first (Main.update (Main.Calendrier (a 1)) (Tuple.first (Main.init (E.object []))))
+
+                    saisi =
+                        Tuple.first (Main.update (Main.Champ "echeance" "2026-11-10 12:00") edite)
+
+                    relu =
+                        Tuple.first (Main.update (Main.Reponse (E.object [ ( "operation", E.string "retrouver" ), ( "statut", E.int 200 ), ( "document", E.object [ ( "groupe", E.string "g1" ), ( "objet", a 2 ) ] ) ])) saisi)
+
+                    adopte =
+                        Tuple.first (Main.update Main.AccepterCalendrierVersion relu)
+                in
+                Expect.equal ( Just "2", Just "2026-11-10 12:00", [ "alice" ] ) ( Dict.get "affectation-revision" adopte.champs, Dict.get "echeance" adopte.champs, adopte.eleves )
         ]
