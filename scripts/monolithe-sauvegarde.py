@@ -117,7 +117,7 @@ def main(revision,qualifier=None,sqlite_reprise=None,registres_reprise=None):
     exiger(os.geteuid()==0 and re.fullmatch('[0-9a-f]{40}',revision))
     os.umask(0o077)
     exiger(str(Path('/run/current-system').resolve())==GENERATION and str(Path('/nix/var/nix/profiles/system').resolve())==GENERATION)
-    exiger(commande(['nix-instantiate','--find-file','nixpkgs']).decode().strip()==NIXPKGS)
+    exiger(commande(['nix-instantiate','-I','nixpkgs='+NIXPKGS,'--find-file','nixpkgs']).decode().strip()==NIXPKGS)
     avant_services=services()
     config="(import <nixpkgs/nixos/lib/eval-config.nix> { system=\"x86_64-linux\"; modules=[ /etc/nixos/configuration.nix ]; }).config"
     configuration=nix('let c='+config+'; in { postgres=c.services.postgresql.finalPackage.outPath; recipient=c.services.vision.backupRecipient; }')
