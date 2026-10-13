@@ -21,6 +21,13 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION')
+    if operation=='audition-diagnostic':
+        p=__import__('json').loads((ROOT/'operations/audition-candidat.json').read_text());cible=p['revision_sources']
+        stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',cible),'Révision de diagnostic invalide')
+        with (ROOT/'scripts/audition-diagnostic.py').open('rb') as f:
+            stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+                      ' -p python3 --run '+shlex.quote('python3 -B - '+cible),stdin=f)
+        return
     if operation in ('audition-preparer','audition-deployer'):
         spec=importlib.util.spec_from_file_location('stage_audition',ROOT/'scripts/log-interface-stage.py')
         m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
