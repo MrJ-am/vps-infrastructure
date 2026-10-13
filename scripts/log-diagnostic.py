@@ -64,9 +64,18 @@ def main(revision):
         for item in sorted(interfaces.iterdir()):
             if not re.fullmatch('[a-f0-9]{40}',item.name) or item.is_symlink():continue
             err=item/'erreur-commande-privee.log'
-            out['interfaces'].append({'revision':item.name,'activation_engagee':(item/'plan.json').is_file(),
+            resume={'revision':item.name,'activation_engagee':(item/'plan.json').is_file(),
                 'terminee':(item/'termine.json').is_file(),'retour':(item/'retour.json').is_file(),
-                'erreur_nix':classifier(err.read_text(),m) if err.is_file() else {}})
+                'erreur_nix':classifier(err.read_text(),m) if err.is_file() else {}}
+            if err.is_file():
+                resume['attributs_absents']=sorted(set(re.findall(r"attribute ['`]([A-Za-z_][A-Za-z0-9_]{0,63})['`] missing",err.read_text())))
+            # Les contextes de package Nix peuvent varier entre le checkout
+            # local et la configuration installée. Lire seulement type/attributs.
+            if not resume['activation_engagee']:
+                expr='let c=(import <nixpkgs/nixos/lib/eval-config.nix> { modules=[ /etc/nixos/configuration.nix ]; }); p=c.config.infrastructure.metier.paquet; in { type=builtins.typeOf p; attrs=if builtins.isAttrs p then builtins.attrNames p else []; typeOption=c.options.infrastructure.metier.paquet.type.name; }'
+                q=subprocess.run(['nix-instantiate','-I','nixpkgs='+m.NIXPKGS,'--eval','--strict','--json','--expr',expr],capture_output=True,text=True,timeout=90)
+                if q.returncode==0:resume['paquet_actif_metadata']=json.loads(q.stdout)
+            out['interfaces'].append(resume)
     for nom in ('preparation','operation'):
         f=d/('erreur-log-'+nom+'-privee.log')
         if f.is_file():
