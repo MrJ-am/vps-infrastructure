@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "99ac54a1ee13ffdc2744a9f99a4edbd7e8128b9d",
+  "revision_sources": "57c05412dc003099b547bd7751b1005e9c7e1b7c",
   "revision_construction": "29ebb727a1046dc7b5157de018f8526d726473c9",
   "qualification_image": {
     "format": 1,
@@ -101,7 +101,7 @@
     "tests_secondes": 9.7737,
     "qualification": "candidat Nix local HTTP/transactions/redemarrage, pas production"
   },
-  "revision_assemblage": "99ac54a1ee13ffdc2744a9f99a4edbd7e8128b9d",
+  "revision_assemblage": "57c05412dc003099b547bd7751b1005e9c7e1b7c",
   "generation_attendue": "/nix/store/wib5anxz5ryw8si1z7lfkmdywiw29srf-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
   "artefact_avant": "46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff",
   "paquet_metier": "/nix/store/dv109y63kv9cvpmnkqkcvcyjiqh1ssi2-mrjam-metier-29ebb727a104",
@@ -312,8 +312,8 @@
     "image.nar": "b4a5fd4b4750fa72a718f0fdd7c6d1d19d4325621856e5b8d626cc5307920f0e"
   },
   "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
-  "archive_sha256": "afecd7df3f76334093815d6ea0b5514809edd1ee545590d8d1e93f8818e168b1",
-  "cipher_sha256": "9d7cf3855e57ce91ca9ab6dae74b37522d8b037273f6f96d20f350be07a64026",
+  "archive_sha256": "266bc8c37e3a633673093b2f39c2786c10efff7241192bdc38a73e921b03d01e",
+  "cipher_sha256": "778d99d5d285043a6d10a4876fda792b0fb573e88c64bbdeb835637cb3539dcd",
   "cipher_octets": 13727261,
   "origine_preuves": "codex-local-non-attestee",
   "recus": {
@@ -3592,7 +3592,7 @@
           "vps/assemblage/audition/evaluation.nix": "3db2c3655409ff3176f633d369cd1a2a6cf00c0cd1d87d89dd2e5ffea952be97",
           "vps/assemblage/audition/module.nix": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
           "vps/scripts/audition-promouvoir.py": "dbc83bdb7b2a4b92664954ad8ac01463d7f43b932550885952e78b9d86ae9e89",
-          "vps/scripts/log-interface-stage.py": "61a416c55f26f9e785a1f471453557ebbe316e3d7c68ddcca0f5fd9bb24fc3cf",
+          "vps/scripts/log-interface-stage.py": "4d6e089aecd1ba11dcc0ff41555a66bfa69ee6472e20ede6ec0cae92183bd7ae",
           "vps/scripts/log-interface-sceller.py": "5e176976b80af55f805d42d19c6f493437e0248fdfcc13bfb2182350de3ae96f",
           "vps/scripts/monolithe-operation.py": "c65b50af0c93da5a3e0e7599c4c9af9fdf6d9649f35914ac371cfd64545121aa",
           "vps/scripts/monolithe-sauvegarde.py": "08df4beaf9b3298757e9278fc4b91d68662d1b8bd4a1b2f1765223664b6712fb",
@@ -3623,7 +3623,7 @@
       "codes": [
         0
       ],
-      "duree_secondes": 8.8346
+      "duree_secondes": 8.993
     }
   },
   "sources_qualifiees": {
@@ -3701,7 +3701,7 @@
     "scripts/audition-qualifier.py": "cbb62d1ff52a3e818fe8730730f9a260082a8e5f3eb088944e66ae0369383dd1",
     "scripts/frontends.py": "fa2c7efff41eaedc1fd17122f55e444e6f973702aaeecffadf304d8ab3ebc412",
     "scripts/log-interface-sceller.py": "5e176976b80af55f805d42d19c6f493437e0248fdfcc13bfb2182350de3ae96f",
-    "scripts/log-interface-stage.py": "61a416c55f26f9e785a1f471453557ebbe316e3d7c68ddcca0f5fd9bb24fc3cf",
+    "scripts/log-interface-stage.py": "4d6e089aecd1ba11dcc0ff41555a66bfa69ee6472e20ede6ec0cae92183bd7ae",
     "scripts/monolithe-operation.py": "c65b50af0c93da5a3e0e7599c4c9af9fdf6d9649f35914ac371cfd64545121aa",
     "scripts/monolithe-reference.py": "b71d4d3be8a91fac2cec42e3d7c2f35b9a1c5d73522e1d6d8a5e9fcfc8a12529",
     "scripts/monolithe-sauvegarde.py": "08df4beaf9b3298757e9278fc4b91d68662d1b8bd4a1b2f1765223664b6712fb",
@@ -3716,7 +3716,7 @@
   "paquet_kanidm": "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2",
   "outils": "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification",
   "transport": "git-chiffre",
-  "revision_transport": "366b9410ddf560b036b5dcb61cbfbbe5b436d71c",
+  "revision_transport": "2d542c943320169e89c5ef9182bf8606abfc297e",
   "parties_transport": [
     "candidat.tar.gz.age.part-000"
   ],
