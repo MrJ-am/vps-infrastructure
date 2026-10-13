@@ -177,7 +177,8 @@
       ],
       "schema": 1,
       "domaine": "audition.mrj.am",
-      "etat": "implementation-en-qualification-non-deployee"
+      "etat": "deployee-et-verifiee-publiquement-20261013",
+      "qualification_production": "assemblage/audition/qualification-production-20261013.json"
     }
   }
 }

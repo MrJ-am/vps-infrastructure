@@ -1,32 +1,49 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Audition — qualification locale et préparation de promotion
+## Point de reprise actif — Audition en production
 
-Mission du13octobre : extension interne ASDF du serveur commun, interface Elm,
-logo oreille exact du socle, PostgreSQL/RLS, Log et MCP public. Composants publiés :
-Vision0270c38, Stylecebba182, Signature17194087 inchangé. Aucun DNS, compte personnel
-ou contenu pédagogique de production modifié à ce point. Diagnostic38450435028 :
-wib5an/Native et services actifs ; référence38450204787 arrêtée sur la découverte
-Keycloak410 désormais retirée. Sonde corrigée vers l'issuer natif.
+Mission du 13 octobre : application interne ASDF du serveur commun, trois parcours
+Elm/elm-ui/Animator, oreille exacte du socle, PostgreSQL/RLS, Log et MCP public.
+Sources déployées 9feac618022a310de4f61cf2ce992ebe35e2f6dc, descripteur97e6e43,
+Vision0270c38, Stylecebba182, Signature17194087 inchangé. Binaire construit une fois
+29ebb727, SHA a74247c45b0889548c4d05d749cda8d2c77df902cdc9e3f18632789b45e82ae3 ;
+site a90dc352ca8e3b59cc900a9a537214ab613f4ed735ce0e12422106aa717676b3.
 
-PG17.11 isolé : métier, versions, bornes, 20outils, concurrence, idempotence,
-revocation, propositions non officielles, aides, états et suppressions/rejeu.
-Kanidm1.11.2 réel : deux identités MFA, OIDC/PKCE/TLS, préparation/affectation,
-séance MCP avec aide, rapport, audiences voisines refusées, rotation/révocation,
-restart natif + image propre et restauration. Aucun compte fournisseur LLM testé.
-Elm : sept tests, review central sans suppression, navigateur320/768/1440 et
-390pour les trois rôles, conflits/rejeu/saisies/focus/animations. API navigateur
-doublées ; authentification réelle qualifiée séparément. Nix : sites et services
-existants, identités et calendriers ACME conservés, paquet central à priorité20.
+Préparation38469826749 et déploiement38470128833 réussis, 21:23:54UTC.
+Génération active/démarrage zmd027b9fcpl8xnpmp0ysxdgzj7dn11a, diagnostic38470473342,
+référence38470476909. Backup actuel chiffré/restauration isolée :38tables Vision
+(Audition inclus),6Matheval,100SQLite identité, empreintes sémantiques identiques.
+Rôles/ACL qualifiés séparément ; propriétaires/RLS/peer constatés avant activation.
+PID tiers/Native conservés, PG redémarré de façon bornée pour les nouveaux chemins
+HBA/IdentMap. Retour code seul avec données actuelles, témoin indépendant qualifié.
 
-Suites audition-metier/audition-oidc/audition-interface/audition-assemblage.
-Module désactivé par défaut ; promotion par opérations fermées du workflow
-monolithe-deploiement existant. Binaire Nix exact et scellement restent à constater
-avant activation. Retour avec données récentes, backup chiffré/restauration et
-timer indépendant. Aucun workflow satellite, SDK fournisseur ou inférence.
-Le point Log ci-dessous reste le dernier déploiement réussi constaté.
+95ressources publiques exactes et HTTPS vérifié ; métier/session/MCP anonymes401,
+métadonnées OAuth Audition200. Navigateur réel390/1440 : landing, logo, guide,
+entrée vers le formulaire Log, sans donnée personnelle saisie. Compte/rattachement
+central et trois participations Matheval ouvertes préservés. Audition : schéma1,
+un administrateur technique réel, zéro groupe/objet pédagogique ; aucune donnée
+synthétique, réinscription personnelle ou modification DNS Alwaysdata.
 
-## Point de reprise actif — interface Log Elm en production
+Qualifications isolées :74assertions métier,228Native/OIDC et scénario complet,
+40parcours du même binaire,9tests Elm, review central,15conditions navigateur plus
+assertions DOM,9assemblage/promotion. Expiration, conflits/rejeu, versions,
+concurrence, cloisonnement, aides/corrections/retours et animations couverts.
+API navigateur pédagogique doublées ; Native réel qualifié séparément. Aucun
+compte fournisseur LLM testé ; parcours personnels de production non effectués.
+Même image persistante des outils de développement non prouvée dans cette session.
+
+Première bascule38466325512 refusée sur PID PostgreSQL ; retour wib5an réel,
+schéma/admin/audit et retour OIDC conservés. Les chemins hba/ident ont un contexte
+postmaster : essai SIGHUP uniquement préparé, jamais activé ; correction borne le
+redémarrage PG et vérifie configuration/connexion/invariants, autres PID bloquants.
+Opérations fermées dans monolithe-deploiement.yml : audition-diagnostic,
+audition-retour. Ne pas rejouer une ancienne migration Log ou un retour général.
+
+Preuve : audition/qualification-production-20261013.json.
+Compte rendu : audition/COMPTE-RENDU.md ; contrats et guide MCP dans le même dossier.
+Les constats Log ci-dessous restent historiques et sont conservés intégralement.
+
+## Jalon conservé — interface Log Elm en production
 
 Promotion38399140485/job115301948564 réussie le13octobre à12:43UTC/14:43Paris.
 Sources5023f4ed, promotion4d97569, transport1c6b7281 ; binaire construitUNE fois
