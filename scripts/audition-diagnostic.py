@@ -35,7 +35,7 @@ def main(revision):
         valeurs = dict(l.split('=', 1) for l in commande(['systemctl', 'show', n,
             '-p', 'MainPID', '-p', 'ActiveState']).splitlines())
         services[n] = {'etat': valeurs['ActiveState'],
-                       'pid_change_depuis_plan': n in plan.get('pids', {}) and valeurs['MainPID'] != plan['pids'][n]}
+                       'pid_change_depuis_plan': n in plan.get('pids', {}) and valeurs.get('MainPID', '') != plan['pids'][n]}
         if n == 'mrjam-metier' and valeurs['MainPID'] != '0':
             resultat['binaire_actif_sha256'] = hashlib.sha256((Path('/proc') / valeurs['MainPID'] / 'exe').read_bytes()).hexdigest()
     resultat['services'] = services
