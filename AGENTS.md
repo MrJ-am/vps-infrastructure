@@ -5,7 +5,8 @@ La mission et son amendement du 11 octobre 2026 gouvernent le travail. Lire
 `assemblage/DEVELOPPEMENT.md` et `assemblage/FRONTENDS.md`. Les preuves anciennes
 restent historiques ; constater l’état installé avant une opération.
 
-- Périmètre fermé : les six dépôts du manifeste. ETP Vie Amoureuse exclu.
+- Périmètre : les six dépôts du manifeste et Audition, composant interne
+  expressément demandé le 13 octobre 2026. ETP Vie Amoureuse exclu.
   Aucune modification tiers, licence/visibilité, PR ou contact externe.
 - L’infrastructure possède assemblage, commandes locales, CI/CD et exploitation.
   Composants : sources/contrats/tests. Aucun workflow satellite, acquittement,

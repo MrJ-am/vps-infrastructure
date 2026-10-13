@@ -42,9 +42,10 @@
                    (mrjam-courriel::lire-octets-prives (obligatoire "MRJ_LOG_CLIENT_SECRET") 512)
                    :external-format :utf-8))
                (obligatoire "MRJAM_CURL") :ca (obligatoire "MRJAM_CA_FILE")
-               :hotes '("vision.mrj.am"))))
+               :hotes (append '("vision.mrj.am") (when (uiop:getenv "AUDITION_DSN") '("audition.mrj.am"))))))
       (mrjam-log::initialiser-oauth (mrjam-log:initialiser (mrjam-log:faire-contexte (obligatoire "MRJ_LOG_DATABASE")
-        (list (cons "vision.mrj.am" client))
+        (append (list (cons "vision.mrj.am" client))
+                (when (uiop:getenv "AUDITION_DSN") (list (cons "audition.mrj.am" client))))
         (lambda (issuer subject)
           (mrjam-native:avec-connexion dsn (lambda (c)
             (let ((r (first (mrjam-native:requete c
@@ -109,6 +110,7 @@
                   :executeur-vision (executeur-vision (obligatoire "VISION_DSN"))
                   :gestion-dsn (uiop:getenv "VISION_GESTION_DSN")
                   :log log
+                  :audition (when (uiop:getenv "AUDITION_DSN") (mrjam-audition:faire-service (uiop:getenv "AUDITION_DSN")))
                   :cycle cycle :admission admission :fermeture fermeture
                   :taches (append (when cycle (list (cons "cycle-vision" (lambda () (vision-cycle:traiter cycle)))))
                                   (when admission (list (cons "admission" (lambda () (vision-admission:traiter admission)))))

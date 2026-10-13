@@ -21,7 +21,12 @@
 (defun retour-applicatif-p (retour)
   (and (texte-borne-p retour 1 4096)
        (not (find (code-char 127) retour))
-       (or (member retour '("/" "/auth/mcp" "/#administration" "/#compte") :test #'equal)
+       (or (member retour '("/" "/auth/mcp" "/#administration" "/#compte" "/#enseignant" "/#preparer" "/#suivre" "/#eleve" "/#aide") :test #'equal)
+           ;; Retour Audition borné aux objets canoniques ; jamais une URL libre.
+           (and (some (lambda (prefixe) (uiop:string-prefix-p prefixe retour)) '("/#seance/" "/#activite/" "/#cours/" "/#affectation/"))
+                (let ((id (subseq retour (1+ (position #\/ retour :from-end t)))))
+                  (and (<= 1 (length id) 64)
+                       (every (lambda (c) (or (alphanumericp c) (find c "_-"))) id))))
            (uiop:string-prefix-p "/oauth/authorize?" retour))))
 
 (defun initialiser-transactions (chemin)

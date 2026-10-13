@@ -29,7 +29,7 @@ pkgs.stdenv.mkDerivation {
     filter = path: type:
       let relatif = pkgs.lib.removePrefix (toString ../. + "/") (toString path); in
       type == "directory" && (toString path == toString ../. || relatif == "assemblage" || relatif == "assemblage/oidc" || relatif == "lisp" || pkgs.lib.hasPrefix "lisp/" relatif)
-      || builtins.elem relatif [ "mrjam-metier.asd" "mrjam-native.asd" "mrjam-courriel.asd" "mrjam-identite.asd" "mrjam-oidc.asd" "mrjam-log.asd"
+      || builtins.elem relatif [ "mrjam-metier.asd" "mrjam-native.asd" "mrjam-courriel.asd" "mrjam-identite.asd" "mrjam-oidc.asd" "mrjam-log.asd" "mrjam-audition.asd"
         "assemblage/oidc/charger-dependances.lisp" "assemblage/oidc/dependances.lock.json"
         "assemblage/charger.lisp" "assemblage/construire.lisp" ]
       || pkgs.lib.hasPrefix "lisp/" relatif && pkgs.lib.hasSuffix ".lisp" relatif;

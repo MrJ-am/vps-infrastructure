@@ -13,7 +13,7 @@ import time
 import urllib.request
 import urllib.error
 
-SERVICES = ('vision', 'matheval', 'mrjam-metier', 'mrj-auth', 'vision-gestion', 'vision-cycle',
+SERVICES = ('vision', 'matheval', 'mrjam-metier', 'kanidm', 'mrj-auth', 'vision-gestion', 'vision-cycle',
             'mrjam-admission', 'mrjam-fermeture', 'mrjam-courriel', 'keycloak',
             'nginx', 'postgresql', 'vision-embeddings', 'phpfpm-nextcloud')
 
@@ -147,7 +147,7 @@ COMMIT;""")
        [('matheval_sante','https://principiipetit.io/matheval/api/health', (200,)),
         ('vision_vitrine','https://vision.mrj.am/', (200,)),
         ('mcp_refus','https://vision.mrj.am/mcp', (401,)),
-        ('log_decouverte','https://log.mrj.am/realms/mrjam/.well-known/openid-configuration', (200,))]}
+        ('log_decouverte','https://log.mrj.am/oauth2/openid/mrjam-vision/.well-known/openid-configuration', (200,))]}
     resultat['limites'] = ['RSS principal distinct du cgroup qui inclut caches/enfants',
       'latences publiques depuis VPS sans charge hostile', 'aucune preuve de restauration nouvelle',
       'les agrégats ne remplacent pas les invariants privés avant bascule']

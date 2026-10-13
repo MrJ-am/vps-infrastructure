@@ -16,11 +16,14 @@ def exiger(v,message):
     if not v:raise ValueError(message)
 
 
-def main():
+def main(composant='log', activer=True):
+    exiger(composant in ('log','audition') and type(activer) is bool,'Composant fermé requis')
     exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main','CI main requise')
-    p=json.loads((RACINE/'operations/log-interface-candidat.json').read_text())
+    chemin='operations/log-interface-candidat.json' if composant=='log' else 'operations/audition-candidat.json'
+    p=json.loads((RACINE/chemin).read_text())
     exiger(p['format']==1 and p['origine_preuves']=='codex-local-non-attestee','Provenance absente')
-    exiger(set(p['recus'])=={'log-protocole-elm','log-interface','log-interface-promotion','log-parcours'},'Qualification incomplète')
+    attendues={'log-protocole-elm','log-interface','log-interface-promotion','log-parcours'} if composant=='log' else {'audition-metier','audition-oidc','audition-interface','audition-assemblage'}
+    exiger(set(p['recus'])==attendues,'Qualification incomplète')
     exiger(re.fullmatch('[a-f0-9]{40}',p['revision_sources']) and re.fullmatch('[a-f0-9]{40}',p['revision_transport']),'Révisions invalides')
     for nom,h in p['sources_qualifiees'].items():
         f=RACINE/nom
@@ -50,7 +53,7 @@ def main():
                 exiger(re.fullmatch('candidat.tar.gz.age.part-[0-9]{3}',nom),'Partie invalide')
                 subprocess.run(['git','show',p['revision_transport']+':'+nom],cwd=repo,stdout=f,check=True)
         exiger(cipher.stat().st_size==p['cipher_octets'] and hashlib.sha256(cipher.read_bytes()).hexdigest()==p['cipher_sha256'],'Chiffré différent')
-        remote='/root/mrjam-corrections/log-interface/'+p['revision_sources']
+        remote='/root/mrjam-corrections/'+('log-interface' if composant=='log' else 'audition')+'/'+p['revision_sources']
         cmd='set -eu; umask 077; install -d -m 700 '+shlex.quote(remote)+'; test ! -e '+shlex.quote(remote+'/plan.json')+'; cat > '+shlex.quote(remote+'/candidat.age')
         with cipher.open('rb') as f:stage.ssh(cmd,stdin=f)
         bootstrap='''import hashlib,json,pathlib,subprocess,tarfile,os,sys
@@ -67,15 +70,20 @@ subprocess.run(['age','-d','-i','/etc/ssh/ssh_host_ed25519_key','-o',str(a),str(
 assert sha(a)==plan['archive_sha256']
 with tarfile.open(a) as t:
  ms=t.getmembers()
- assert len(ms)<100 and sum(m.size for m in ms)<536870912
+ assert len(ms)<500 and sum(m.size for m in ms)<536870912
  assert all(m.isfile() and not pathlib.PurePosixPath(m.name).is_absolute() and '..' not in pathlib.PurePosixPath(m.name).parts and m.name.startswith('payload/') for m in ms)
  assert len({m.name for m in ms})==len(ms)
  t.extractall(d,filter='data')
 a.unlink()
 for nom,h in plan['fichiers'].items(): assert sha(d/'payload'/nom)==h
 (d/'candidat.json').write_text(json.dumps(plan)+'\\n')
-subprocess.run([sys.executable,'-B',str(d/'payload/promouvoir.py'),'promouvoir',d.name],check=True)
+commande=[sys.executable,'-B',str(d/'payload/promouvoir.py'),PHASE,d.name]
+if AUDITION:
+ commande=['systemd-run','--wait','--pipe','--collect','--unit=mrjam-audition-promotion-'+d.name[:12],
+           '--property=KillMode=control-group','--property=RuntimeMaxSec=40min']+commande
+subprocess.run(commande,check=True)
 '''
+        bootstrap='PHASE='+repr('promouvoir' if activer else 'preparer')+'\nAUDITION='+repr(composant=='audition')+'\n'+bootstrap
         # Les reçus npm/SBCL sont volumineux et déjà vérifiés dans cette CI.
         # Ne pas les repasser dans argv/SSH ; seulement le plan d'exécution.
         execution={k:v for k,v in p.items() if k not in ('recus','sources_qualifiees','qualification_image')}

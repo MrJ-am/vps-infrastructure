@@ -1,5 +1,31 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Audition — qualification locale et préparation de promotion
+
+Mission du13octobre : extension interne ASDF du serveur commun, interface Elm,
+logo oreille exact du socle, PostgreSQL/RLS, Log et MCP public. Composants publiés :
+Vision0270c38, Stylecebba182, Signature17194087 inchangé. Aucun DNS, compte personnel
+ou contenu pédagogique de production modifié à ce point. Diagnostic38450435028 :
+wib5an/Native et services actifs ; référence38450204787 arrêtée sur la découverte
+Keycloak410 désormais retirée. Sonde corrigée vers l'issuer natif.
+
+PG17.11 isolé : métier, versions, bornes, 20outils, concurrence, idempotence,
+revocation, propositions non officielles, aides, états et suppressions/rejeu.
+Kanidm1.11.2 réel : deux identités MFA, OIDC/PKCE/TLS, préparation/affectation,
+séance MCP avec aide, rapport, audiences voisines refusées, rotation/révocation,
+restart natif + image propre et restauration. Aucun compte fournisseur LLM testé.
+Elm : sept tests, review central sans suppression, navigateur320/768/1440 et
+390pour les trois rôles, conflits/rejeu/saisies/focus/animations. API navigateur
+doublées ; authentification réelle qualifiée séparément. Nix : sites et services
+existants, identités et calendriers ACME conservés, paquet central à priorité20.
+
+Suites audition-metier/audition-oidc/audition-interface/audition-assemblage.
+Module désactivé par défaut ; promotion par opérations fermées du workflow
+monolithe-deploiement existant. Binaire Nix exact et scellement restent à constater
+avant activation. Retour avec données récentes, backup chiffré/restauration et
+timer indépendant. Aucun workflow satellite, SDK fournisseur ou inférence.
+Le point Log ci-dessous reste le dernier déploiement réussi constaté.
+
 ## Point de reprise actif — interface Log Elm en production
 
 Promotion38399140485/job115301948564 réussie le13octobre à12:43UTC/14:43Paris.
