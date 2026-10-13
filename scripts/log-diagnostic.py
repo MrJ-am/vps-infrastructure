@@ -105,6 +105,18 @@ def main(revision):
         'sessions_log':'/var/lib/mrjam-metier/log/sessions.sqlite',
         'stockage_native':'/var/lib/kanidm','socket_native':'/run/kanidmd/admin.sock',
         'destination':'/var/backup/mrjam'}.items() if path in sauvegarde]
+    # Stderr des seules commandes de backup, jamais un corps applicatif.
+    # Supprimer paramètres cités, chemins, identifiants et toute ligne portant
+    # un vocabulaire de credential avant de publier un diagnostic borné.
+    messages=[]
+    for ligne in sauvegarde.splitlines():
+        if not any(k in ligne.lower() for k in ('no such file','error:','failed to','cannot ')):continue
+        if re.search(r'password|token|authorization|cookie|secret|mail|subject',ligne,re.I):continue
+        ligne=re.sub(r'"[^"\n]*"|\x27[^\x27\n]*\x27','<parametre>',ligne)
+        ligne=re.sub(r'/[^\s,;:)]*','<chemin>',ligne)
+        ligne=re.sub(r'[A-Za-z0-9_+=.-]{24,}','<identifiant>',ligne)
+        messages.append(ligne[:250])
+    out['sauvegarde_messages_commandes']=messages[-8:]
     metier_journal=subprocess.run(['journalctl','-u','mrjam-metier','--since','30 minutes ago',
         '--no-pager','-o','cat','-n','100'],capture_output=True,text=True,timeout=15).stdout
     out['demarrages_metier_refuses']=metier_journal.count('Démarrage métier refusé : configuration ou dépendance indisponible.')
