@@ -3073,7 +3073,9 @@
         "operations/log-reprise-native.json",
         "scripts/monolithe-activer.py",
         "scripts/monolithe-reference.py",
-        "tests/test_monolithe_sondes.py"
+        "tests/test_monolithe_sondes.py",
+        "modules/identite.nix",
+        "tests/log-sauvegarde-postgres.py"
       ]
     },
     "impact": [
@@ -3096,12 +3098,20 @@
         "tests",
         "-p",
         "test_monolithe_stage.py"
+      ],
+      [
+        "python3",
+        "tests/log-sauvegarde-postgres.py"
       ]
     ],
     "dependances": [],
     "outils": {
       "python": [
         "python3",
+        "--version"
+      ],
+      "docker": [
+        "docker",
         "--version"
       ]
     },

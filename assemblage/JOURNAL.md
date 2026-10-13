@@ -901,3 +901,20 @@ Log600/propriétaire métier, aucun sidecar restant. Type simple : attente HTTP
 bornée déjà éprouvée étape1 réutilisée, faux403 permanent toujours refusé ;
 sondes nommées/statuts/durée sans corps ni URL dans preuve. Régression vrai
 serveur HTTP synthétique502→200 puis10mesures,403refusé immédiatement.
+
+13octobre —38325995231 : activation Nix code4, retour qualifié/data préservées,
+mail non engagé.38327816108 identifie le job nocturne mrjam-sauvegarde : pg_dump
+utilisait le socket implicite, absent en unité sans environnement interactif.
+Socket /run/postgresql explicite dans backup et retour IdP ; backup Native
+ordonné après serveur. Marque de ce seul échec acquittée avant activation,
+exécution réelle de sauvegarde corrigée exigée avant mail, jamais timer supprimé.
+Fixture PG réelle : mauvais PGHOST refusé, hôte explicite prioritaire, dump/
+restore identiques. Premier essai accroche le serveur temporaire d’initdb ;
+attendre fin d’entrypoint et disponibilité définitive, pas rallonger timeout.
+
+13octobre — qualification backup : sélection1,226s, routage29,1851s,
+opérations13+23cas et PG réel17,3503s ;48preuves inchangées conservées.
+Redémarrage environnement : images précédentes disparues, C reconstruite depuis
+sources/FASL. CL-MCP et Tron voient mêmePID/marqueur reconnexion20261013,
+objet0→1 observé croisé, poolNIL/debuggerNIL ; aucune référence ancienne gardée,
+aucun qualifier synthétique répété, aucune donnée production connectée.

@@ -137,7 +137,7 @@ in {
         trap '${pkgs.coreutils}/bin/rm -rf "$temporaire"' EXIT
         recipient='${config.services.vision.backupRecipient}'
         for base in vision mrjam_identite ${lib.optionalString metier "matheval"}; do
-          ${pkgs.util-linux}/bin/runuser -u postgres -- ${config.services.postgresql.package}/bin/pg_dump --format=custom "$base" | \
+          ${pkgs.util-linux}/bin/runuser -u postgres -- ${config.services.postgresql.package}/bin/pg_dump --host=/run/postgresql --format=custom "$base" | \
             ${pkgs.age}/bin/age -r "$recipient" > "$destination/$base-$jour.age.tmp"
           ${pkgs.coreutils}/bin/mv "$destination/$base-$jour.age.tmp" "$destination/$base-$jour.age"
         done
