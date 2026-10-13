@@ -1,22 +1,43 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — correction du formulaire de connexion
+## Point de reprise actif — formulaire corrigé en production
+
+Run [38334437341](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38334437341)
+réussi le 13 octobre à 03:56 heure de Paris. Sources de correction 2a5ffdd,
+descripteur/promotion e9d1637 ; génération active et de démarrage 61lianh06k1x.
+Même ELF métier bc70c822 et même PID SBCL, Kanidm, PostgreSQL et services
+protégés. Aucun compte, credential, rattachement, base ou courriel modifié.
 
 Le propriétaire a enregistré son mot de passe puis obtenu `invalid_request`.
-Reproduction anonyme : démarrage OIDC200/formulaire natif ; Log sert deux
-Referrer-Policy, `origin` puis `no-referrer`. Chromium envoie alors Origin:null
-pour le POST natif, refusé403 par le contrôle d'origine Common Lisp. Reproduction
-avec formulaire intercepté : aucun POST envoyé à la production. `strict-origin`
-donne l'origine réelle et ne transmet ni chemin ni query dans Referer.
+Cause reproduite : deux Referrer-Policy (origin puis no-referrer) faisaient
+émettre Origin:null sur le POST natif, refusé403 par l'adaptateur Common Lisp.
+Fragment central modules/log-referrer.nix : strict-origin unique, en-tête amont
+masqué, contrôle d'origine conservé. Le navigateur transmet maintenant
+https://log.mrj.am ; chemin et query restent absents du Referer.
 
-Correction en cours de qualification : fragment central modules/log-referrer.nix,
-en-tête unique strict-origin, contrôle d'origine conservé ; promotion fermée
-`log-deploiement.yml / corriger-connexion`, même ELF, aucune opération sur les
-comptes ou bases, aucun réenrôlement/courriel. Évaluation des unités/routes
-préservées, nginx-t et PID Kanidm/SBCL/tiers inchangés bloquants. Retour vers la
-génération Native précédente seulement, sans copie de données. Preuve locale
-et descripteur exact à produire avant promotion ; connexion personnelle non
-simulée. Ancienne identité et nouveau mot de passe ne doivent pas être supprimés.
+Qualifications locales : log-routage-nix, log-connexion (sept tests de
+provenance/retour, vraie régression Chromium ancien refusé/nouveau accepté/
+origine étrangère refusée, superposition Native avec unités/routes protégées).
+Reçus et entrées exactes dans operations/log-connexion-candidat.json. La première
+promotion 38334201825 a échoué au checkout superficiel avant tout accès VPS ;
+checkout de profondeur2 et régression de clones qualifiés avant le run réussi.
+Nginx-t, génération, ELF, PID et en-tête réellement servi vérifiés sur le VPS.
+Sondes publiques Codex : Vision/OIDC/discoveryMCP/Matheval200, MCP anonyme401 ;
+formulaire natif et Origin navigateur observés sans POST envoyé à la production.
+
+Preuve : assemblage/kanidm/qualification-connexion-production-20261013.json.
+Prochaine étape personnelle : repartir de https://vision.mrj.am/auth/connexion
+avec le mot de passe déjà enregistré, puis le second facteur demandé. Le
+parcours personnel complet et l'autorisation MCP restent à constater ; ne pas
+recréer/réinitialiser le compte. Les travaux du panneau et préférences sont
+conservés pour la suite. Image de développement existante conservée, aucun
+changement Lisp/REPL requis pour cette réparation Nix/HTTP.
+
+Le retour automatique de cette promotion visait seulement la précédente
+génération Native1n51 ; il est désarmé après succès. Le choix `retour` du
+workflow Log concerne encore l'ancienne bascule IdP, pas ce correctif d'en-tête.
+Constater la référence actuelle avant tout retour ; aucune ancienne base métier
+ne doit être restaurée sur des données récentes.
 
 ## Jalon conservé — Kanidm en production, courriel accepté
 

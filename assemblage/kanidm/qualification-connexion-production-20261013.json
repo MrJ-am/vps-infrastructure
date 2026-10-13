@@ -1,0 +1,44 @@
+{
+  "format": 1,
+  "revision_sources": "2a5ffdd910961f400f43f27f1a3ed84413b7a790",
+  "generation": "/nix/store/61lianh06k1x18jaikq6azyapn059q7x-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "artefact_sha256": "bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb",
+  "processus_proteges_inchanges": true,
+  "referrer_policy": "strict-origin",
+  "controle_origine_conserve": true,
+  "comptes_et_donnees_non_modifies": true,
+  "connexion_personnelle": "a_verifier_par_utilisateur",
+  "run_id": 38334437341,
+  "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38334437341",
+  "revision_deploiement": "e9d1637bad0591384f8668871a282202f971641d",
+  "date_utc": "2026-10-13T01:56:38Z",
+  "retour_de_configuration_uniquement": "Pendant la promotion, vers la generation Native precedente ; aucun compte ou base restaure",
+  "generation_native_precedente": "/nix/store/1n51lw7473lad5q8fbjc5110wz53xvgg-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "qualification_locale": {
+    "suites": [
+      "log-routage-nix",
+      "log-connexion"
+    ],
+    "empreintes_et_environnement": "operations/log-connexion-candidat.json",
+    "lisp_et_frontends": "Sources et ELF inchanges ; suites precedentes conservees sur leur perimetre, aucun nouveau succes personnel revendique",
+    "tests_provenance": 7
+  },
+  "cause": "Double Referrer-Policy origin puis no-referrer : Origin:null sur le POST navigateur refuse par le controle CSRF.",
+  "limite": "Le POST du formulaire a ete observe dans le navigateur puis intercepte ; aucune saisie ou authentification personnelle par l'agent.",
+  "sondes_depuis_codex": {
+    "referrer_policy_servie": [
+      "strict-origin"
+    ],
+    "formulaire_natif_servi": true,
+    "origine_post_navigateur": "https://log.mrj.am",
+    "post_production": 0,
+    "sondes": {
+      "vision": 200,
+      "oidc": 200,
+      "mcp_discovery": 200,
+      "mcp_sans_jeton": 401,
+      "matheval": 200
+    },
+    "connexion_personnelle": "non effectuee par agent"
+  }
+}

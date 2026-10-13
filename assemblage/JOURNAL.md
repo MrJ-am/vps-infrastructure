@@ -940,3 +940,25 @@ préservés, backupautomatique réussi avantSMTPaccepté01:14:36UTC. Message jam
 sondé/consommé ; présence en boîte nonobservable. DepuisCodex Log/Vision/Math/
 discoveryMCP200, MCPanonyme401, issuer/S256exacts. Étape2partielle explicite,
 attendre enrôlement physique comme demandé. PreuvepublicJSON/retour protégés.
+
+## 13 octobre — correction du formulaire Native, production03:56 Paris
+
+Signal utilisateur : mot de passe enregistré, connexion renvoie invalid_request.
+GET anonyme Vision/auth/connexion → formulaire Native200. Réponse Log avec
+Referrer-Policy origin et no-referrer ; vrai Chromium : Origin:null pour POST.
+Reproduction avec interception : aucun POST production. strict-origin donne
+l'origine réelle et aucun chemin/query dans Referer ; origine étrangère refusée.
+Sources : fragment log-referrer.nix, opérateur fermé log-connexion-promouvoir.py,
+qualification et tests près de l'infrastructure ; aucun changement de données,
+identité, serveur Lisp, frontend, version de paquet ou outil de développement.
+log-routage-nix29,418s ; log-connexion23,2327s (sept tests + browser + Nix),
+editorial0,3378s. Reçus exacts scellés, aucune attestation externe inventée.
+Run38334201825 refusé avant SSH : parent qualifié absent du checkout profondeur1.
+Régression clones profondeur1/2, profondeur2 dans le workflow, requalification.
+Run38334437341 réussi sur e9d1637, sources2a5ffdd : génération61lianh06k1x,
+ELFbc70c822 inchangé ; PID SBCL/Kanidm/PG/tiers identiques, nginx-t et sonde
+Referrer-Policy unique strict-origin réussis. Retour de configuration Native
+seulement, timer désarmé après succès. Aucun compte ou base restauré/réinitialisé,
+aucun courriel réenvoyé. Sondes publiques actualisées et formulaire navigateur
+observé sans POST production ; connexion personnelle complète reste à effectuer.
+Preuve : kanidm/qualification-connexion-production-20261013.json.

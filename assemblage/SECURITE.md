@@ -29,8 +29,8 @@ Le jalon1 et ses limites sont attestés dans
 | Propriétaire métier stable | Produit mission | Association explicite issuer/sub au compte métier ; aucun rattachement email, aucun hook d'effacement lors du retrait IdP |
 | Matheval pseudonyme et résultats scientifiques | Produit mission | Secret de reprise indépendant, permissions dédiées résultats, zéro distinct de null, transactions/idempotence/conflits |
 | Retour sans écraser données récentes | Mission exploitation | Sauvegarde restaurée en isolation, retour code/ACL ciblé, invariants avant/après et redémarrage réel |
-| Vérificateur Kanidm ES256 strict | OIDC §3.1.3.7, RFC7515/7518 ; profil produit ES256 seulement | `mrjam-oidc`, suites `oidc-es256` : signatures indépendantes OpenSSL, issuer par client, aud/azp, nonce, dates/auth_time, at_hash, clés dupliquées/injectées, mutations et huit sujets concurrents ; non activé |
-| Transactions state/nonce/PKCE durables | OAuth BCP, choix produit600s et4096lignes | `mrjam-oidc/transactions`, SQLite privé, consommation atomique client/hôte/binding ; suite `oidc-transactions`, huit connexions concurrentes et refus de réutilisation ; non activé |
+| Vérificateur Kanidm ES256 strict | OIDC §3.1.3.7, RFC7515/7518 ; profil produit ES256 seulement | `mrjam-oidc`, suites `oidc-es256` : signatures indépendantes OpenSSL, issuer par client, aud/azp, nonce, dates/auth_time, at_hash, clés dupliquées/injectées, mutations et huit sujets concurrents ; activé, preuve de bascule Native du13octobre |
+| Transactions state/nonce/PKCE durables | OAuth BCP, choix produit600s et4096lignes | `mrjam-oidc/transactions`, SQLite privé, consommation atomique client/hôte/binding ; suite `oidc-transactions`, huit connexions concurrentes et refus de réutilisation ; activé, preuve de bascule Native du13octobre |
 
 Un `SET LOCAL vision.utilisateur` ne prouve pas l'authentification face à du SQL
 arbitraire. Le rôle Vision peut établir ce contexte après vérification à l'entrée ;
@@ -46,7 +46,7 @@ service et d'identité après `auth_request`, sans reprendre ceux du navigateur.
 `tests/serveur-artefact.py` refuse un autre UID portant des en-têtes forgés.
 L'évaluation Nix vérifie le routage et les permissions de la configuration cible ;
 la chaîne Nginx/Keycloak du jalon1 a été qualifiée en production ; le remplacement
-Kanidm reste à qualifier. Un Nginx compromis fait
+Kanidm est installé et sondé selon la preuve du13octobre ; le parcours personnel reste à constater. Un Nginx compromis fait
 partie de cette frontière de confiance, comme le monolithe compromis. Les
 campagnes hostiles restent en environnement isolé, jamais sur les données réelles.
 
@@ -58,7 +58,7 @@ course de révision, huit retransmissions concurrentes et un secret étranger.
 `tests/native-differentiel.mjs` compare SHA-256/scrypt et 8003 cas JSON binaire64 à
 Node. Elles sont complétées par `tests/vision-sql-native.py` : RLS Alice/Bob, liens
 croisés, contexte transactionnel et rôles auxiliaires réels sur PostgreSQL isolé.
-Le déploiement du jalon1 est qualifié ; la nouvelle chaîne Kanidm reste à qualifier.
+Les déploiements des jalons1 et Native sont attestés séparément ; les fonctionnalités restantes et le parcours personnel ne sont pas déclarés terminés.
 Les buffers de paramètres SQL et de scrypt sont effacés avant libération ; les
 chaînes Lisp d'entrée peuvent demeurer jusqu'au GC. Aucune promesse de purge
 générale du tas ou de résistance à une compromission du processus n'en découle.
