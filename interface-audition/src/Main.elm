@@ -96,6 +96,8 @@ type Msg
     | Traces String
     | Annoter E.Value
     | AccepterVersion
+    | AccepterCoursVersion
+    | AccepterCalendrierVersion
     | Reessayer
     | Rafraichir Time.Posix
     | Visibilite Bool
@@ -609,6 +611,27 @@ update msg m =
             in
             ( { m | drafts = Dict.insert m.edition { b | revision = rev } m.drafts, avis = "Version serveur adoptée explicitement. Votre saisie est conservée ; vérifiez les différences avant d'enregistrer." }, Cmd.none )
 
+        AccepterCoursVersion ->
+            let
+                actuel =
+                    D.liste "cours" (data "preparations" m) |> List.filter (\c -> D.texte "id" c == valeur "cours-id" m) |> List.head
+
+                rev =
+                    Maybe.withDefault (valeur "cours-revision" m) (Maybe.map (D.entier "revision" >> String.fromInt) actuel)
+            in
+            ( { m | champs = Dict.insert "cours-revision" rev m.champs, avis = "Version du cours adoptée explicitement. Votre texte est conservé ; relisez les différences avant d'enregistrer." }, Cmd.none )
+
+        AccepterCalendrierVersion ->
+            let
+                actuel =
+                    data "detail" m
+            in
+            if D.texte "nature" actuel == "affectation" && D.texte "id" actuel == valeur "affectation-id" m then
+                ( { m | champs = Dict.insert "affectation-revision" (String.fromInt (D.entier "revision" actuel)) m.champs, avis = "Version du calendrier adoptée explicitement. Votre échéance et la sélection sont conservées." }, Cmd.none )
+
+            else
+                ( { m | avis = "Relisez d'abord l'affectation enregistrée sur le serveur." }, Cmd.none )
+
         EnregistrerActivite ->
             let
                 b =
@@ -1121,6 +1144,12 @@ preparation m =
         , UI.wrappedRow [ UI.spacing 8 ] (List.map (\c -> commun.boutonSecondaire (D.texte "titre" (D.champ "document" c)) (EditerCours c)) (D.liste "cours" preparations))
         , commun.champ "Titre du cours" (valeur "cours-titre" m) (Champ "cours-titre")
         , commun.zoneTexte "Contenu du cours — texte et $TeX$" (valeur "cours-contenu" m) (Champ "cours-contenu")
+        , commun.boutonSecondaire "Relire les versions enregistrées" (Operation "preparations" (params m []))
+        , if valeur "cours-id" m /= "" then
+            commun.boutonSecondaire "Adopter la version serveur du cours en gardant ma saisie" AccepterCoursVersion
+
+          else
+            UI.none
         , commun.bouton "Enregistrer le cours"
             (Operation "cours"
                 (params m
@@ -1167,6 +1196,16 @@ preparation m =
     , commun.section "Affecter le travail"
         ([ MrJam.paragraphe "L'activité enregistrée ci-dessus sera affectée aux élèves sélectionnés."
          , commun.champ "Échéance (AAAA-MM-JJ HH:MM UTC)" (valeur "echeance" m) (Champ "echeance")
+         , if valeur "affectation-id" m /= "" then
+            commun.boutonSecondaire "Relire l'affectation enregistrée" (Operation "retrouver" (E.object [ ( "id", E.string (valeur "affectation-id" m) ) ]))
+
+           else
+            UI.none
+         , if valeur "affectation-id" m /= "" then
+            commun.boutonSecondaire "Adopter la version du calendrier en gardant ma saisie" AccepterCalendrierVersion
+
+           else
+            UI.none
          ]
             ++ List.map
                 (\e ->
