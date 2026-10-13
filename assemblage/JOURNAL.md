@@ -991,3 +991,21 @@ Sondes publiques200/401 conformes ; choix personnel ChatGPT encore à effectuer.
 Preuve : kanidm/qualification-mcp-production-20261013.json. Différence scope
 optionnel historique et chemins Native non canoniques consignée dans REPRISE,
 sans déclarer ces points globalement conformes ni rouvrir l'architecture.
+
+## 13 octobre — présentation Log et premier codec Elm
+
+Le propriétaire confirme le fonctionnement personnel après la réparation MCP.
+Écart visuel natif constaté par lecture du code officiel Kanidm5479338 : Askama/
+Bootstrap, personnalisation nom/image ; aucun raccord Elm Animator. Contrat central
+et consignes corrigés pour inclure le parcours Log, sans fork/service supplémentaire
+ni changement de compte/session. Les preuves de connexion ne prouvent pas la UI.
+Sources : interface-log/src/Log/Protocole.elm et tests canoniques. Unicode/espaces/
+longueur conservés, cookie demandé sans élévation, zéro TOTP présent, mécanismes
+inconnus/états ambigus refusés, résultat sans jeton et erreurs JSON éliminées.
+python3 scripts/assemblage.py tester --exact --suite log-protocole-elm : succès
+2,1397s ; elm-review central et format,9assertions effectives, reçu machine local.
+Sélection codec : une suite/53évitées ; documentation : editorial/53évitées.
+Aucune nouvelle dépendance, installation, CI de développement ou opération VPS.
+Raccordement réseau, WebAuthn, vues elm-ui/Animator et parcours réel encore à faire ;
+ces tests de codec ne les qualifient pas. Conserver les accès fonctionnels jusqu'à
+qualification et promotion du futur consommateur Log.

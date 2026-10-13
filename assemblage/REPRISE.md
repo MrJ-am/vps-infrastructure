@@ -1,6 +1,52 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — registre MCP rétabli en production
+## Point de reprise actif — présentation Log à corriger
+
+Le 13 octobre, le propriétaire confirme « Ça fonctionne » après la réparation
+du registre MCP : la reconnexion personnelle précédemment attendue est confirmée.
+Il constate cependant l'identité visuelle Kanidm et rappelle le Continuous Design.
+Cette interface n'est pas conforme au socle partagé ; ne pas clôturer l'étape2
+sur la seule réussite de connexion/MCP.
+
+Constat local non destructif sur la source officielle verrouillée5479338 :
+base.html utilise Askama/Bootstrap/style.css/override.css et le pied Kanidm.
+CLI/API officiels personnalisent le nom et l'image du domaine, pas un raccord
+Elm Animator. `/v1/auth`, protocole AuthStep/AuthState, prévoit init2.issue=cookie
+et émission Secure/HttpOnly ; la réponse JSON contient également le jeton.
+Capacité lue dans le code, pas encore qualifiée comme client Elm. Aucun changement
+de production, de compte, de credential ou de session effectué pour ce constat.
+
+Consignes actives corrigées : FRONTENDS.md et AGENTS.md distinguent le fournisseur
+Rust des parcours utilisateur Log, désormais soumis au socle MrJ.am. Le succès
+des anciennes qualifications d'identité reste conservé, sans l'étendre à la
+présentation native. Pas de CSS ajouté par-dessus Bootstrap, ni remplacement
+cosmétique présenté comme adoption Animator.
+
+Suite : réaliser le client de présentation Log avec les composants/contextes
+et transitions partagés, raccordé aux API officielles, sans réécriture IdP ni
+nouveau service ; qualifier les étapes et cookies sur Kanidm isolé avant routage
+public. Étendre les commandes locales Elm-review/construction au consommateur
+Log exact ; qualifier aussi récupération/enrôlement/passkeys, panneau, consentement,
+reconnexion déjà ouverte et MCP. Conserver les accès personnels actuels tant que
+ce candidat n'est pas qualifié puis promouvoir dans le circuit central existant.
+Le nouveau contrat détaille ces critères ; aucun client Elm Log n'est encore livré.
+
+Premier raccordement écrit : interface-log/src/Log/Protocole.elm, codec pur officiel
+init2.cookie non privilégié, mécanismes/défis/états et encodage phrase/TOTP. Neuf
+tests Elm réussissent : phrase Unicode/espaces et longueur conservés, zéro TOTP
+distinct d'absence, mécanismes inconnus refusés, états ambigus refusés, jeton écarté
+du résultat et diagnostics JSON sensibles éliminés. Review central/format réussis.
+Catalogue : log-protocole-elm (suite54), commande locale canonique, mêmes outils et
+dépendances approuvés ; aucune installation. Ce résultat reste un test de codec,
+sans connexion réelle ni vue. Le traitement du défi WebAuthn et le transport restent
+à implémenter/qualifier ; ne pas confondre une valeur de défi décodée avec un usage
+réel de passkey. Commande canonique réussie en2,1397s, reçu machine local
+state/recus/log-protocole-elm.json. Sélecteur vérifié : modification du codec
+sélectionne cette seule suite, documentation frontend seule sélectionne editorial,
+53 autres suites évitées dans les deux cas. Pas de déploiement ni de changement
+d'identité/sessions.
+
+## Jalon conservé — registre MCP rétabli en production
 
 Le propriétaire confirme sa connexion Vision personnelle et sa page encore
 fonctionnelle ; la réautorisation ChatGPT échouait sur /oauth/authorize avec
@@ -38,11 +84,10 @@ Log/Vision locale dans Chromium, autres destinations bloquées, Curlloopback ave
 CA/SNI vérifiés ; vrais Set-Cookie/redirections, sans endpoint dev public. Aucun
 POST personnel/production utilisé pour qualifier. Les fixtures restent isolées.
 
-Prochaine opération personnelle : relancer la connexion du connecteur Vision
-DANS ChatGPT, puis consentir. Conserver compte/mot de passe/page Vision ouverte.
-Ne pas ouvrir /oauth/authorize seul ni rejouer un ancien lien state/code. La fin
-personnelle MCP reste à constater ; pas de faux succès. Panneau/préférences et
-autres éléments de l'étape2 restent à terminer selon le jalon conservé.
+La connexion personnelle du connecteur a depuis été confirmée par le propriétaire.
+Conserver compte/mot de passe/page Vision ouverte. Ne pas ouvrir /oauth/authorize
+seul ni rejouer un ancien lien state/code. Panneau/préférences et autres éléments
+de l'étape2 restent à terminer selon le jalon conservé.
 
 Autres constats : /ui/ Native avec slash final renvoie404 et le GET direct
 /ui/login/begin est intercepté403 par l'ancien adaptateur. Aucun de ces chemins

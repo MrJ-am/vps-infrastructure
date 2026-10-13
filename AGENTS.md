@@ -41,6 +41,10 @@ restent historiques ; constater l’état installé avant une opération.
 - Continuous UI : interruptions/inversions, état, focus/clavier, reduced-motion,
   absence de rafraîchissement inutile. Le métier n’attend pas une décoration.
   Préserver ressources/identité visuelle et les fonctionnalités ; statique reste statique.
+- Log : le parcours utilisateur doit adopter le socle ElmUI/Animator partagé et
+  l'identité MrJ.am ; les pages natives Kanidm ne prouvent pas cette conformité.
+  Kanidm reste l'IdP séparé ; ni fork Rust, ni authentification réimplémentée,
+  ni perte des sessions/enrôlements existants. Voir FRONTENDS.md pour le raccordement.
 - Dépendances nommées par l’amendement et leurs nécessaires transitives autorisées
   après audit/verrouillage : elm-animator, elm-review, cl-mcp, cl-tron-mcp/Swank.
   Aucun cl-harness, fusion, MCP ou débogueur réécrit. Autres bibliothèques Lisp

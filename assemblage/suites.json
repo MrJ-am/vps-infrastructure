@@ -3367,5 +3367,41 @@
     "navigateurs": [
       "chromium"
     ]
+  },
+  "log-protocole-elm": {
+    "niveau": 2,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "interface-log/elm.json",
+        "interface-log/src/**/*.elm",
+        "interface-log/tests/*.elm",
+        "scripts/log-protocole-qualifier.py",
+        "scripts/revoir-frontends.py",
+        "scripts/frontends.py",
+        "scripts/provenance-outils.py",
+        "assemblage/elm-review/elm.json",
+        "assemblage/elm-review/outils.lock.json",
+        "assemblage/elm-review/src/**/*.elm",
+        "assemblage/dependances.json"
+      ],
+      "matheval": ["docs/package-lock.json"]
+    },
+    "impact": [
+      "vps/interface-log/*",
+      "vps/interface-log/**/*",
+      "vps/scripts/log-protocole-qualifier.py",
+      "vps/assemblage/elm-review/*",
+      "vps/assemblage/elm-review/**/*",
+      "vps/scripts/revoir-frontends.py"
+    ],
+    "commandes": [["python3", "scripts/log-protocole-qualifier.py"]],
+    "dependances": [],
+    "outils": {
+      "python": ["python3", "--version"],
+      "node": ["node", "--version"]
+    },
+    "configuration": ["ELM_HOME"],
+    "npm_installations": {"matheval": ["docs/node_modules"]}
   }
 }
