@@ -13,4 +13,5 @@
                (:file "lisp/serveur/http")
                (:file "lisp/serveur/log-http")
                (:file "lisp/serveur/log-login")
+               (:file "lisp/serveur/log-presentation")
                (:file "lisp/serveur/main")))

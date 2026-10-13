@@ -96,13 +96,36 @@ def verifier(composant,sources=None,m=None,*,fixture=None,projet_elm=None):
         print(composant+' : elm-review réussi sur toutes les sources assemblées.')
 
 
+def verifier_log():
+    """Consommateur interne, avec le même socle verrouillé et toutes les règles."""
+    sources=chemins_sources();m=manifeste();edge=m['frontends_infrastructure']['log']
+    commun=cache_style(sources['style'],edge['revision_style'])/'src'
+    cmd,env=outils();parent=RACINE/'state/review-frontends';parent.mkdir(parents=True,exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='log-',dir=parent) as temp:
+        stage=Path(temp)
+        shutil.copytree(commun,stage/'commun')
+        shutil.copytree(RACINE/'interface-log/src',stage/'src')
+        shutil.copytree(RACINE/'interface-log/tests',stage/'tests')
+        d=json.loads((RACINE/'interface-log/elm.json').read_text());d['source-directories']=['src','commun']
+        (stage/'elm.json').write_text(json.dumps(d)+'\n')
+        r=subprocess.run(cmd,cwd=stage,env=env,capture_output=True,text=True)
+        (parent/'log.json').write_text(r.stdout)
+        if r.returncode:raise ValueError('elm-review Log refusé ; rapport state/review-frontends/log.json')
+    import importlib.util
+    spec=importlib.util.spec_from_file_location('ressources_log',RACINE/'scripts/revoir-ressources.py')
+    resources=importlib.util.module_from_spec(spec);spec.loader.exec_module(resources)
+    resources.verifier('log',dict(sources,log=RACINE))
+    print('Log : toutes les sources communes et applicatives, amorçage et interopérabilité contrôlés.')
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--composant',choices=['vision','matheval','logique','style'],action='append')
+    p.add_argument('--composant',choices=['vision','matheval','logique','style','log'],action='append')
     p.add_argument('--fixture',type=Path,help='Projet synthétique complet ; mêmes règles sans exclusions')
     args=p.parse_args()
     for cle in args.composant or ['style','vision','matheval','logique']:
-        verifier(cle,fixture=args.fixture)
+        if cle=='log':verifier_log()
+        else:verifier(cle,fixture=args.fixture)
 
 
 if __name__=='__main__':

@@ -17,5 +17,7 @@ Un état de présentation ne constitue pas une preuve d'authentification serveur
 Préserver Unicode/espaces sans normalisation destructive et les sessions existantes.
 
 Commande locale : `python3 scripts/assemblage.py tester --exact --suite log-protocole-elm`
-depuis la racine d'infrastructure. La qualification actuelle porte sur le codec,
-pas sur une vue ni une connexion réelle. Ne pas la promouvoir comme interface.
+depuis la racine d'infrastructure. Les suites log-interface (navigateur/Native réel, chaud puis SBCL neuf) et
+log-interface-promotion complètent le codec. Seul le site et le binaire exacts
+qualifiés peuvent être promus. Les capacités de modification restent en mémoire
+du raccord JS, bornées à la session native ; aucun jeton dans l’état Elm.

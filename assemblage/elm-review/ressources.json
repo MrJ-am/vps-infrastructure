@@ -13,6 +13,9 @@
     "style": [
       "public/",
       "ateliers/logo/web/"
+    ],
+    "log": [
+      "interface-log/"
     ]
   },
   "bibliotheques_generees": {
