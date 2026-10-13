@@ -203,7 +203,7 @@ l’image C, sans option pour la reproduction froide. Le réglage existant est
 conservé ; invitations, vérification mail/consentements et réservations SQL
 précèdent le rattachement. Capacité onboarding90j, refus testé de réinitialisation
 du propriétaire protégé, politique globale et élévation administrateur.
-# Correction HTTP du 13 octobre 2026
+## Correction HTTP du 13 octobre 2026
 
 Le formulaire de connexion natif utilise un POST navigateur. Le cumul ancien
 `origin, no-referrer` anonymise aussi Origin en `null`, refusé par l'adaptateur.
@@ -213,3 +213,10 @@ Referer. Contrôles locaux `log-connexion`, `log-routage-nix`. Promotion manuell
 centrale `corriger-connexion`, sources/contrôles exacts dans
 `operations/log-connexion-candidat.json`, sans changer de binaire ni restaurer
 de compte/base. La connexion personnelle reste à constater après correction.
+
+Correction réellement promue par le run38334437341 : génération61lianh06k1x,
+contrôle d'origine intact, même ELF et PID des services protégés. Aucun compte,
+credential ou base modifié. Preuve :
+[qualification-connexion-production-20261013.json](qualification-connexion-production-20261013.json).
+Le POST a été observé puis intercepté dans Chromium : aucun login personnel
+simulé. Repartir de Vision/auth/connexion, conserver les credentials enrôlés.
