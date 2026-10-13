@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "2d736b16a4e78540ae4e9bf0963bc426cdd87f81",
+  "revision_sources": "5023f4ed3599827eeeeaa119d0babbc370c14d82",
   "revision_construction": "33a90baf854b3e442745e1958cdc00ff3fe91c7d",
   "qualification_image": {
     "format": 1,
@@ -111,7 +111,7 @@
   "site_sha256": "20e68d0f5b97baaf7a3c46e9843cf56675f5305a24f28d78327a6c2f44c0415b",
   "fichiers": {
     "promouvoir.py": "83207a041040cfd4aa5687c51a49a85734ce79af9d2c48ca2d28d8285affde5d",
-    "module.nix": "75e191a9cf5aac825f79c02e0e2a652288a07d5f4db06f847defa8e1ff2d5179",
+    "module.nix": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
     "evaluation.nix": "c8014346e59a99439d65f291e705ba5153bfd8bf6afe83e51e65797e5d7802c9",
     "site/assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
     "site/assets/mrjam/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
@@ -124,9 +124,9 @@
     "image.nar": "eb003aedcb658a5941e1343030dfe2da0b99af96137d466a75fbafa54cff6811"
   },
   "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
-  "archive_sha256": "dfdaf913e60922c0725291a11835ad2c515188da107248e3ba4776fdd51f078c",
-  "cipher_sha256": "2ced901677df124f3f6e381c2cad411c0cb330a2cf83e3f9dd3a71a9d4ccf99a",
-  "cipher_octets": 12109334,
+  "archive_sha256": "7d17e231673c042b6b8a062f2f42577e01f5d80cef283042bd0501dbb784bd52",
+  "cipher_sha256": "d414e59ea20d865cf9a08e39071e1a35904050bf6d108948e173ed4a3053f644",
+  "cipher_octets": 12109331,
   "origine_preuves": "codex-local-non-attestee",
   "recus": {
     "log-protocole-elm": {
@@ -1834,9 +1834,9 @@
           "vps/scripts/log-interface-sceller.py": "7f82f2fcd66bdcfa1770017c814779c50767dec3844328bb0fecea9c29725be4",
           "vps/scripts/log-operation.py": "1f1ad667add08c2d03e5b7a5dd4e68438b121310dae720495d5ea1de6b214a3c",
           "vps/assemblage/log-interface/evaluation.nix": "c8014346e59a99439d65f291e705ba5153bfd8bf6afe83e51e65797e5d7802c9",
-          "vps/assemblage/log-interface/module.nix": "75e191a9cf5aac825f79c02e0e2a652288a07d5f4db06f847defa8e1ff2d5179",
+          "vps/assemblage/log-interface/module.nix": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
           "vps/.github/workflows/log-deploiement.yml": "1c6dcf84321d140b56cfeea0a1bb38bbf599e1124d4a57c71f7ecb6e876bd46e",
-          "vps/tests/test_log_interface_promotion.py": "beebfddd041335df3b4e0142f3883570f6069a56c4017048db81591c94095c86",
+          "vps/tests/test_log_interface_promotion.py": "9e6ddfdf3b4fe096d74e9d4ec40a6a823c697566a9be831221792b2efb65d684",
           "vps/tests/log-connexion-base.nix": "46d6ec14eac69e0fe82e4b0e76c94d3425aa489ab8333f24638c023062fe7ff5",
           "vps/tests/log-evaluation-base.nix": "2c0555c5274c598d9dd5ce42ab172e2c9142dbb88eaf75e1e43d72b6e4cbac0d",
           "vps/modules/log.nix": "75ca92c2b305e60ab6680e68a9b47096696348f8ffcdec3a8204c5fd9432a805",
@@ -1867,7 +1867,7 @@
       "codes": [
         0
       ],
-      "duree_secondes": 19.4162
+      "duree_secondes": 22.8906
     },
     "log-parcours": {
       "format": 1,
@@ -1878,7 +1878,7 @@
           "vps/scripts/log-parcours-qualifier.py": "e3d6403cf922902a0819c9cc14612261b81179d6024c738dbf45902269110b12",
           "vps/scripts/log-clients-mcp.py": "61cafa9a8ac57697212258b4b870b0f38f3beead3cfd3eee6916a93cac4371c9",
           "vps/scripts/log-operation.py": "1f1ad667add08c2d03e5b7a5dd4e68438b121310dae720495d5ea1de6b214a3c",
-          "vps/scripts/log-diagnostic.py": "47905767cb11a00186cdd7cde8e73bc065d67672e3f4b4266f0e99da9e9a57d7",
+          "vps/scripts/log-diagnostic.py": "7ae9e344e5abb193f6481cfb930744099fa431e3a60c0740a8400c9b3a29dddb",
           "vps/scripts/monolithe-stage.py": "df5d443607d98a16bfa682c0426e21dfb6c17055d55ecd02f68cec42d4c77b93",
           "vps/.github/workflows/log-deploiement.yml": "1c6dcf84321d140b56cfeea0a1bb38bbf599e1124d4a57c71f7ecb6e876bd46e",
           "vps/tests/log-parcours.lisp": "367327723910b0be1e0cb44127c028a21f7dff99a628a0f302faa4e848632d61",
@@ -3441,14 +3441,14 @@
         0,
         0
       ],
-      "duree_secondes": 12.7066
+      "duree_secondes": 18.6269
     }
   },
   "sources_qualifiees": {
     ".github/workflows/log-deploiement.yml": "1c6dcf84321d140b56cfeea0a1bb38bbf599e1124d4a57c71f7ecb6e876bd46e",
     "assemblage/elm-review/ressources.json": "208aa36ca5f157effd4d3672c69cdf7e9e3af34adad68f6e0ba682309db8558e",
     "assemblage/log-interface/evaluation.nix": "c8014346e59a99439d65f291e705ba5153bfd8bf6afe83e51e65797e5d7802c9",
-    "assemblage/log-interface/module.nix": "75e191a9cf5aac825f79c02e0e2a652288a07d5f4db06f847defa8e1ff2d5179",
+    "assemblage/log-interface/module.nix": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
     "assemblage/manifest.json": "8ddd40cdfbddae16050b81c9080bc7ab237966c3f533ef1a1818b8620507c94a",
     "assemblage/suites.json": "7fec99f0c57c901343fd58e37995a7a35b67fa1fcfd713230bbcb803c26f4d92",
     "interface-log/.gitignore": "c1cd5eea9716d881a160dfae367ecdc156b3fd0f1453a6adb7a8ea78329e1644",
@@ -3480,7 +3480,7 @@
     "scripts/log-operation.py": "1f1ad667add08c2d03e5b7a5dd4e68438b121310dae720495d5ea1de6b214a3c",
     "scripts/revoir-frontends.py": "85ebc841cc53afe645272e243bb16a13e935f64e2adcdd7fec35d7c7c5d65b9d"
   },
-  "revision_transport": "b0814c0ccc1c7824634eb03e4ee6607a1b9bec91",
+  "revision_transport": "1c6b7281a21758c4707d91344f64bd500380a2df",
   "parties_transport": [
     "candidat.tar.gz.age.part-000"
   ]
