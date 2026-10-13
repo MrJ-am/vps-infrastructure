@@ -76,7 +76,24 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI centrale main')
     op=os.environ.get('MRJAM_OPERATION')
-    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','corriger-connexion','restaurer-clients-mcp','interface'),'Opération Log inconnue')
+    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','corriger-connexion','restaurer-clients-mcp','interface','interface-retour'),'Opération Log inconnue')
+    if op=='interface-retour':
+        p=json.loads((ROOT/'operations/log-interface-candidat.json').read_text())
+        rev=p['revision_sources']
+        stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',rev),'Révision de retour invalide')
+        code='''import fcntl,importlib.util,json,pathlib
+with open('/root/mrjam-log.lock','a') as lock:
+ fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ d=pathlib.Path('/root/mrjam-corrections/log-interface')/REVISION
+ s=importlib.util.spec_from_file_location('retour_interface',d/'payload/promouvoir.py')
+ m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+ p=json.loads((d/'plan.json').read_text())
+ m.retour(d,m.charger_stage(p),p)
+ print(json.dumps({'retour_code_seul':True,'donnees_et_identites_non_restaurees':True}))
+'''
+        code='REVISION='+repr(rev)+'\n'+code
+        stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+                  ' -p python3 --run '+shlex.quote('python3 -B -'),input=code.encode());return
     if op=='interface':
         s=importlib.util.spec_from_file_location('interface_stage',ROOT/'scripts/log-interface-stage.py')
         m=importlib.util.module_from_spec(s);s.loader.exec_module(m);m.main();return

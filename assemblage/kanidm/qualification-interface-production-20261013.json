@@ -1,0 +1,26 @@
+{
+  "format": 1,
+  "revision_sources": "5023f4ed3599827eeeeaa119d0babbc370c14d82",
+  "generation": "/nix/store/wib5anxz5ryw8si1z7lfkmdywiw29srf-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "artefact_sha256": "46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff",
+  "site_sha256": "20e68d0f5b97baaf7a3c46e9843cf56675f5305a24f28d78327a6c2f44c0415b",
+  "elm_ui_et_animator_servis": true,
+  "tiers_et_kanidm_preserves": true,
+  "schema_et_comptes_non_modifies": true,
+  "sauvegarde_actuelle_reussie": true,
+  "restauration_actuelle_isolee_reussie": true,
+  "invariants_metier_identiques": true,
+  "retour_code_disponible": true,
+  "run": 38399140485,
+  "job": 115301948564,
+  "revision_promotion": "4d97569a0e514982dd5616b86411d6a8065778fb",
+  "revision_construction": "33a90baf854b3e442745e1958cdc00ff3fe91c7d",
+  "interface_navigateur_public": {
+    "http": 200,
+    "elm_rendu": true,
+    "signature_selectionnable": true,
+    "bootstrap_absent": true,
+    "erreurs_javascript": 0
+  },
+  "reconnexion_personnelle_apres_interface": "non_effectuee_par_agent"
+}
