@@ -85,7 +85,8 @@ for nom,h in plan['fichiers'].items(): assert sha(d/'payload'/nom)==h
 commande=[sys.executable,'-B',str(d/'payload/promouvoir.py'),PHASE,d.name]
 if AUDITION:
  commande=['systemd-run','--wait','--pipe','--collect','--unit=mrjam-audition-promotion-'+d.name[:12],
-           '--property=KillMode=control-group','--property=RuntimeMaxSec=40min']+commande
+           '--property=KillMode=control-group','--property=RuntimeMaxSec=40min',
+           '--setenv=PATH='+os.environ['PATH']]+commande
 subprocess.run(commande,check=True)
 '''
         bootstrap='PHASE='+repr('promouvoir' if activer else 'preparer')+'\nAUDITION='+repr(composant=='audition')+'\n'+bootstrap
