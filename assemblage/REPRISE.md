@@ -1,6 +1,58 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — formulaire corrigé en production
+## Point de reprise actif — registre MCP rétabli en production
+
+Le propriétaire confirme sa connexion Vision personnelle et sa page encore
+fonctionnelle ; la réautorisation ChatGPT échouait sur /oauth/authorize avec
+invalid_request et scope=vision:mcp. Diagnostic38373790739 : zéro client actuel,
+29 historiques, aucun identifiant commun. Le nouveau registre n'avait pas repris
+les registrations publiques ; aucune identité personnelle ne doit être recréée.
+
+Réparation38378081150 réussie le13octobre à11:41 Paris, sources323a239,
+promotionffc3354 : 29 clients publics importés, aucun compte/session/jeton repris.
+Le SQL utilise le schéma historique réel (cree) et une transaction active sous
+UIDmrjam-metier, sans WAL Root ; conflits différents refusés, reprise idempotente.
+Nouveaux consentement et codePKCE restent nécessaires, aucune ancienne autorisation
+réactivée. Diagnostic38378368570 constate29/29/29 identifiants communs, génération
+61lianh inchangée ; SBCL/Kanidm/Nginx/PG actifs, Keycloak/mrj-auth inactifs. Sondes
+publiques Vision/Log/discovery/Matheval200, MCP anonyme401 ; strict-origin conservé.
+Preuve : kanidm/qualification-mcp-production-20261013.json.
+
+log-parcours17,173s : vraie connexion NativeMFA, reconnexion sans nouveau login,
+pages login/apps/profile connectées, ancienne session Vision conservée ; même
+client public historique32 caractères autorisé par nouveau consentementPKCE,
+code échangé et bearer rattaché à Alice, client inconnu refusé. Même image C et
+qualification finale dans SBCL neuf. Tests SQLite de reprise/conflit/secrets
+non copiés et diagnostic readonly. Reçu exact operations/log-clients-mcp.json.
+
+L'environnement avait perdu ses processus : C reconstruite via ASDF incrémental,
+CL-MCP poolNIL/Swank et Tron séparé ; PID/marqueur/objet partagé croisés, mutation1
+observée. Anciennes sessions de transport archivées, aucune référence ancienne
+réutilisée. DSO crypto/SQLite explicitement acquises pour les tests. Aucun REPL
+ou donnée de production. Image676905 observée historiquement, pas PID constant.
+
+Le premier dispositif navigateur route.fetch ne capturait pas le GET de reprise
+après303. Essais échoués, confinement des redirections non prouvé : aucune preuve
+réutilisée. Dispositif définitif : proxyTLS éphémère127.0.0.1:443, résolution
+Log/Vision locale dans Chromium, autres destinations bloquées, Curlloopback avec
+CA/SNI vérifiés ; vrais Set-Cookie/redirections, sans endpoint dev public. Aucun
+POST personnel/production utilisé pour qualifier. Les fixtures restent isolées.
+
+Prochaine opération personnelle : relancer la connexion du connecteur Vision
+DANS ChatGPT, puis consentir. Conserver compte/mot de passe/page Vision ouverte.
+Ne pas ouvrir /oauth/authorize seul ni rejouer un ancien lien state/code. La fin
+personnelle MCP reste à constater ; pas de faux succès. Panneau/préférences et
+autres éléments de l'étape2 restent à terminer selon le jalon conservé.
+
+Autres constats : /ui/ Native avec slash final renvoie404 et le GET direct
+/ui/login/begin est intercepté403 par l'ancien adaptateur. Aucun de ces chemins
+n'est utilisé dans les parcours canoniques qualifiés ci-dessus ; à reprendre avec
+leur URL effective si le propriétaire rencontre encore une erreur de page Log.
+Le contrat OAuth historique acceptait scope omis ; le portage exige actuellement
+scope explicite. Aucun assouplissement fait ici, l'URL ChatGPT fournie a le scope
+correct ; cette différence de contrat reste à corriger lors d'une livraison Lisp.
+
+## Jalon conservé — formulaire corrigé en production
 
 Run [38334437341](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38334437341)
 réussi le 13 octobre à 03:56 heure de Paris. Sources de correction 2a5ffdd,

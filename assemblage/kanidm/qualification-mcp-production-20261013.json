@@ -1,0 +1,71 @@
+{
+  "format": 1,
+  "date_paris": "2026-10-13T11:43:48+02:00",
+  "probleme": "ChatGPT reutilisait un identifiant client absent du nouveau registre OAuth MCP.",
+  "scope_utilisateur": "vision:mcp",
+  "diagnostic_avant": {
+    "run_id": 38373790739,
+    "registres": {
+      "clients_actuels": 0,
+      "clients_historiques": 29,
+      "identifiants_communs": 0
+    }
+  },
+  "reprise": {
+    "run_id": 38378081150,
+    "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38378081150",
+    "revision_deploiement": "ffc3354771c34ded2088a020903032aca08624b0",
+    "revision_sources": "323a23936cdadaaddca2a98c167b516d879f89ed",
+    "clients_importes": 29,
+    "clients_identiques_conserves": 0,
+    "comptes_importes": 0,
+    "sessions_importees": 0,
+    "jetons_importes": 0,
+    "nouvelle_autorisation_native_requise": true
+  },
+  "diagnostic_apres": {
+    "run_id": 38378368570,
+    "registres": {
+      "clients_actuels": 29,
+      "clients_historiques": 29,
+      "identifiants_communs": 29
+    },
+    "generation": "/nix/store/61lianh06k1x18jaikq6azyapn059q7x-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "services": {
+      "mrjam-metier": "active",
+      "kanidm": "active",
+      "keycloak": "inactive",
+      "mrj-auth": "inactive",
+      "nginx": "active",
+      "postgresql": "active"
+    }
+  },
+  "qualification_locale": {
+    "suite": "log-parcours",
+    "duree_secondes": 17.173,
+    "preuve_exacte": "operations/log-clients-mcp.json",
+    "images": [
+      "persistante CL-MCP",
+      "processus de test SBCL neuf"
+    ],
+    "parcours": [
+      "premiere connexion native MFA par navigateur",
+      "reconnexion avec cookie Native sans nouvelle saisie ni consentement Native",
+      "pages Log connectees login/apps/profile",
+      "ancienne session Vision encore valide apres nouvelle connexion",
+      "client historique32 caracteres et nouveau consentement PKCE",
+      "code echange puis bearer rattache a Alice",
+      "client inconnu refuse",
+      "reprise idempotente/conflit transactionnel/absence de copie de sessions ou jetons"
+    ]
+  },
+  "runtime_metier": "ELF bc70c822 et generation61lianh inchanges ; aucun deploiement de code ni redemarrage demande",
+  "limite": "Nouvelle autorisation personnelle dans ChatGPT a effectuer ; l'agent n'a pas execute cette operation dans le compte de l'utilisateur.",
+  "sondes_publiques": {
+    "vision": 200,
+    "log_login": 200,
+    "mcp_discovery": 200,
+    "mcp_sans_jeton": 401,
+    "matheval": 200
+  }
+}

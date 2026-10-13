@@ -220,3 +220,21 @@ credential ou base modifié. Preuve :
 [qualification-connexion-production-20261013.json](qualification-connexion-production-20261013.json).
 Le POST a été observé puis intercepté dans Chromium : aucun login personnel
 simulé. Repartir de Vision/auth/connexion, conserver les credentials enrôlés.
+
+## Reprise des clients MCP du 13 octobre 2026
+
+La connexion Vision personnelle fonctionne, mais ChatGPT présentait un client
+absent du registre nouveau (zéro client contre29historiques). Le scope fourni
+était correct. Run38378081150 :29registrations publiques reprises sans aucun
+compte, session ou jeton ancien ; nouveau consentementPKCE toujours requis.
+Contrôle readonly38378368570 :29identifiants communs, génération61lianh identique,
+services attendus actifs. Aucun déploiement de code ni redémarrage demandé.
+
+La suite centrale log-parcours exerce Native réel, vrais cookies/redirections et
+Chromium entièrement local : connexionMFA, seconde connexion sans login, pages
+Log connectées, ancienne session Vision valide, client historique/codePKCE/bearer
+Alice, refus d'un client inconnu. Même image C puis processus SBCL neuf. Les
+essais précédents au routage Playwright incomplet restent non qualifiants.
+Preuve actuelle : [qualification-mcp-production-20261013.json](qualification-mcp-production-20261013.json).
+Prochaine étape personnelle : relancer le connecteur Vision DANS ChatGPT et
+accepter la nouvelle autorisation ; ne pas rejouer un ancien lien state/code.
