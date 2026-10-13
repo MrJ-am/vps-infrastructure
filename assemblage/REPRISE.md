@@ -1,6 +1,44 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Reprise immédiate — client Log complet en qualification, pas encore déployé
+## Point de reprise actif — interface Log Elm en production
+
+Promotion38399140485/job115301948564 réussie le13octobre à12:43UTC/14:43Paris.
+Sources5023f4ed, promotion4d97569, transport1c6b7281 ; binaire construitUNE fois
+33a90ba, SHA46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff.
+Génération active/démarrage wib5anxz5ryw8si1z7lfkmdywiw29srf. Site exact
+20e68d0f5b97baaf7a3c46e9843cf56675f5305a24f28d78327a6c2f44c0415b :8ressources
+réellement servies à leurs empreintes. Navigateur public : Elm rendu, signature
+MrJ.am sélectionnable, Bootstrap absent, zéro erreur JS. Aucun POST personnel
+ou donnée pédagogique synthétique sur le VPS ; sonde profil anonyme en lecture.
+Native1.11.2 et tous les services tiers préservés ; une image SBCL métier active.
+Backup actuel/restauration isolée et backup automatique réussis ; invariants
+Vision/Matheval identiques, aucun schéma/compte/enrôlement changé. Retour du code
+61lianh conservé, sans retour de données.
+
+Qualifications : NativeMFA/OIDC/reconnexion/phrase Unicode/passkey/récupération/
+sessions et origine refusée, chaud puis SBCL neuf30,1072s ; protocole9assertions/
+review/ressources/format6,8559s ; promotion Nix avec paquet mkForce22,8906s ;
+MCP/session précédente18,6269s. Binaire propre13,8Mo construit14,0633s,40parcours
+PostgreSQL/HTTP/transactions/concurrence/redémarrage10,8086s. Port Docker dynamique
+non joignable : test refusé, PostgreSQL synthétique local existant55432 utilisé
+avec bases indépendantes ; aucune nouvelle installation ou runtime produit.
+
+Premier run38397037519 arrêté avant activation sur conflit du paquet imposé.
+Diagnostics38397472197/38398299291 constatent61lianh/activationfalse. Correction
+mkOverride30 et fixture reproduisant mkForce ; même binaire/site promus ensuite.
+Diagnostic38398120579 a lui-même échoué en lecture sur référence NIXPKGS absente,
+corrigée ; aucune mutation ni succès prétendu pour cet essai.
+
+Preuve : kanidm/qualification-interface-production-20261013.json. Retour manuel
+fermé : workflow log-deploiement.yml, operation=interface-retour ; importe le
+retour qualifié de cette présentation, conserve identités et données actuelles.
+Ne pas sélectionner retour/deployer historiques pour annuler cette interface.
+Connexion personnelle avec la nouvelle UI non effectuée par l'agent ; compte,
+phrase et passkeys actuels restent utilisables, aucune réinscription demandée.
+La mission générale conserve ses limites/panneau de préférences restant à traiter,
+sans les présenter comme achevées par ce déploiement de présentation.
+
+## Jalon conservé — client Log en qualification avant déploiement
 
 Demande utilisateur : mettre en production l’interface Log Elm/MrJ.am. Sources
 interface-log/Main.elm/pont.js, médiation lisp/serveur/log-presentation.lisp ajoutée

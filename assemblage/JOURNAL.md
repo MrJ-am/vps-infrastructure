@@ -1030,3 +1030,23 @@ hostiles exécutés sur handler de fixture, validation entière ensuite réussie
 Promotion : candidat propre à construire/sceller, retour code seul, sauvegarde
 actuelle + restauration isolée par mécanisme existant, Nix invariants et sondes
 réelles ; ne pas rejouer la migration Native ni réinitialiser le propriétaire.
+
+## 13 octobre — interface Log réellement servie
+
+38399140485/job115301948564, source5023f4ed/promotion4d97569/transport1c6b7281 :
+succès14:43Paris. Génération active/démarrage wib5anxz5ryw8si1z7lfkmdywiw29srf,
+ELF46b3c427, même artefact construit33a90ba, aucune reconstruction de publication.
+8ressources servedSHA identiques ; navigateur public Elm/MrJ.am, signature texte,
+Bootstrap absent et zéro erreurJS. Vision/discoveryMCP200 ; MCP anonyme401.
+Backup actuel/restauration isolée/backup automatique réussis, Vision/Math invariants
+identiques ; Native/tiers préservés, aucune migration ou modification de comptes.
+Premier38397037519 interrompu en évaluation avant bascule ; paquet lib.mkForce
+installé, nouvelle priorité30 et fixture correspondante qualifiés22,8906s.
+Diagnostics read-only confirment61lianh/activationfalse avant reprise. Un diagnostic
+intermédiaire a échoué sur référence NIXPKGS absente, corrigée sans mutation.
+Retour manuel nommé interface-retour, code seul/données courantes ; deux tests
+refus de révision arbitraire/absence de bascule IdP, fonctions de retour qualifiées.
+Anciennes options retour/deployer ne doivent pas être utilisées pour ce client.
+Preuve datée qualification-interface-production-20261013.json ; aucune connexion
+personnelle inventée. Compte et phrase/passkeys existants préservés ; pas de mail
+ni réinscription. Limites de la mission générale conservées dans REPRISE.
