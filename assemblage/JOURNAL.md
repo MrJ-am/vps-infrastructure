@@ -1009,3 +1009,24 @@ Aucune nouvelle dépendance, installation, CI de développement ou opération VP
 Raccordement réseau, WebAuthn, vues elm-ui/Animator et parcours réel encore à faire ;
 ces tests de codec ne les qualifient pas. Conserver les accès fonctionnels jusqu'à
 qualification et promotion du futur consommateur Log.
+
+## 13 octobre — interface Log qualifiée localement
+
+Médiation TLS Common Lisp et client Elm/MrJ.am écrits dans les sources ; systèmes
+chargés via ASDF de l’image C saine puis validation SBCL neuve. Produit sans MCP
+de développement/Swank. Native1.11.2 inchangé, aucun Node/Python métier ajouté.
+Sources communes a998822 et Signature1719408, elm-ui1.1.8/Animator2.0.0, review
+central obligatoire et amorçage/JS contrôlés sans exclusions. MFA/OIDC/callback
+Alice/reconnexion, qualité native, Unicode/espaces réellement sauvegardés puis
+authentifiés, passkey CTAP2 virtuelle avec API Native réelle, récupération, sessions
+et refus origine/chemin arbitraire passent. Réduction des mouvements et RAF arrêté.
+log-interface30,1072s ; log-parcours12,7066s ; protocole6,8559s et promotion17,9583s
+réutilisés pour mêmes entrées. Aucune opération VPS/compte personnel effectuée.
+Les essais en échec ne sont pas des preuves : Authorization requis par API OAuth,
+POST permit200+Location, json-array pour UUID, reauth avant réglages, nœud bootstrap
+remplacé par Browser.element, verrou de fixture élargi. APIRequestContext n’hérite
+pas du routage Chromium ; tentative échouée/confinement non prouvé, retirée ; tests
+hostiles exécutés sur handler de fixture, validation entière ensuite réussie.
+Promotion : candidat propre à construire/sceller, retour code seul, sauvegarde
+actuelle + restauration isolée par mécanisme existant, Nix invariants et sondes
+réelles ; ne pas rejouer la migration Native ni réinitialiser le propriétaire.

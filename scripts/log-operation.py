@@ -76,7 +76,10 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI centrale main')
     op=os.environ.get('MRJAM_OPERATION')
-    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','corriger-connexion','restaurer-clients-mcp'),'Opération Log inconnue')
+    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','corriger-connexion','restaurer-clients-mcp','interface'),'Opération Log inconnue')
+    if op=='interface':
+        s=importlib.util.spec_from_file_location('interface_stage',ROOT/'scripts/log-interface-stage.py')
+        m=importlib.util.module_from_spec(s);s.loader.exec_module(m);m.main();return
     if op=='restaurer-clients-mcp':
         restaurer_clients_mcp(); return
     if op=='corriger-connexion':

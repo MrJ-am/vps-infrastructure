@@ -1,6 +1,47 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — présentation Log à corriger
+## Reprise immédiate — client Log complet en qualification, pas encore déployé
+
+Demande utilisateur : mettre en production l’interface Log Elm/MrJ.am. Sources
+interface-log/Main.elm/pont.js, médiation lisp/serveur/log-presentation.lisp ajoutée
+au graphe produit ; aucun schéma ni compte modifié. Architecture C saine676905,
+marqueur/objet croisés avec Tron ; aucune campagne MCP synthétique.
+Navigateur avec Native1.11.2 isolé : MFA, consentement/callback propriétaire Alice,
+reconnexion sans authentification, reauth avant réglages, qualité native, phrase
+Unicode/espaces réellement sauvegardée puis utilisée, passkey navigateur CTAP2
+virtuelle avec Native réel, sessions et récupération par intent natif réussissent
+dans une image SBCL neuve. Pas de connexion personnelle simulée ou réenrôlée.
+Correctifs constatés : API OAuth exige Authorization (cookie natif seulement pour
+les vues), POST permit renvoie200+Location ; UUID JSON en json-array, pas vector ;
+réglages exigent reauth ; Browser.element remplace le nœud d’amorçage.
+Qualifieur utilise proxyTLS/résolution Chromium strictement locale. Une tentative
+APIRequestContext hors de ce routage a échoué, confinement non prouvé : résultat
+refusé, aucun succès retenu ; exercices hostiles désormais via handler de fixture.
+Verrou couvre fichier/évaluation/lecture, pas seulement RPC ; pas de concurrence
+incontrôlée dans l’image. Revalidation après ces corrections réussie à froid.
+
+Promotion en préparation : assemblage/log-interface/module.nix et evaluation.nix,
+log-interface-construire/qualifier/sceller/stage/promouvoir.py, opération interface
+dans le workflow central existant uniquement manuel. Retour code seul avec timer,
+NAR importé et site chiffrés via canal SSH CI existant ; aucune ancienne bascule IdP
+rejouée. Évaluation locale protège autres hôtes/services/PG/Native ; wrapper de
+démarrage ne change que le chemin du binaire (à vérifier par contenu après build).
+Suite log-protocole-elm corrigée pour classifier les sources partagées en commun/,
+aucune règle supprimée. Nouvelles suites log-interface et log-interface-promotion
+(catalogue56), réception/extraction/provenance à terminer puis qualifier.
+Qualification finale des sources : log-interface30,1072s (chaud/froid, Native et
+Chromium réels), log-parcours12,7066s (contrats MCP historiques/session conservée),
+log-protocole-elm6,8559s et log-interface-promotion17,9583s ; deux derniers reçus
+réutilisés avec empreintes inchangées. Review/ressources/format et9assertions Elm
+réussis ; reduced-motion et arrêt RAF au repos constatés.
+Prochaines étapes : commit sources, build Nix propre UNE fois, sceau
+streaming age, transport Git chiffré, descripteur parent direct du commit qualifié,
+publication + workflow interface, constater activation/retour et sondes réelles.
+Source de reprise précédente conservée ci-dessous ; production encore61lianh, ELF
+bc70c822, Native et sessions personnels inchangés. Le rapport MCP non suivi reste
+à préserver. Ne pas lancer l’opération deployer historique : elle migre les comptes.
+
+## Jalon conservé — présentation Log à corriger
 
 Le 13 octobre, le propriétaire confirme « Ça fonctionne » après la réparation
 du registre MCP : la reconnexion personnelle précédemment attendue est confirmée.

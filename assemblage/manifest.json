@@ -151,5 +151,13 @@
     "reference_frontend": "assemblage/FRONTENDS.md",
     "reference_developpement": "assemblage/DEVELOPPEMENT.md",
     "etat": "qualifie-localement"
+  },
+  "frontends_infrastructure": {
+    "log": {
+      "revision_style": "a998822b21352c98f6ad90738f3123711c49834b",
+      "revision_signature": "17194087eec9162bb5372221c43e1de0501dfe6a",
+      "source": "interface-log",
+      "etat": "en-developpement-non-promu"
+    }
   }
 }

@@ -4,8 +4,8 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, deployer, courriel, retour, diagnostic, corriger-connexion, restaurer-clients-mcp]
-        default: deployer
+        options: [preparer, deployer, courriel, retour, diagnostic, corriger-connexion, restaurer-clients-mcp, interface]
+        default: interface
         description: Opération fermée sur le candidat Log scellé dans main
 permissions:
   contents: read

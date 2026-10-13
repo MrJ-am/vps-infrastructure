@@ -13,8 +13,9 @@ from urllib.parse import parse_qs, urlsplit
 
 
 class ProxyLocal:
-    def __init__(self,n):
+    def __init__(self,n,*,presentation=None,site=None):
         self.captures=[];self.posts=[];self.paths=[];self.errors=[];self.n=n
+        self.presentation=presentation;self.site=site
     def __enter__(self):
         owner=self;n=self.n
         class Handler(BaseHTTPRequestHandler):
@@ -31,6 +32,25 @@ class ProxyLocal:
                     self.send_error(502,'Transport fixture indisponible')
             def forward(self):
                 host=self.headers.get('Host');u=urlsplit(self.path)
+                if host=='log.mrj.am' and u.path=='/presentation/api' and owner.presentation:
+                    size=int(self.headers.get('Content-Length','0'))
+                    if not 1<=size<=65536:self.send_error(413);return
+                    status,headers,body=owner.presentation(self.rfile.read(size),dict(self.headers))
+                    self.send_response(status)
+                    for k,v in headers:self.send_header(k,v)
+                    self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body);return
+                if host=='log.mrj.am' and owner.site and self.command=='GET':
+                    from pathlib import Path
+                    root=Path(owner.site).resolve()
+                    p=(root/u.path.lstrip('/')).resolve()
+                    if u.path=='/' or u.path=='/ui' or u.path.startswith('/ui/'):
+                        p=root/'index.html'
+                    if not p.is_relative_to(root) or not p.is_file():self.send_error(404);return
+                    import mimetypes
+                    body=p.read_bytes();self.send_response(200)
+                    self.send_header('Content-Type',mimetypes.guess_type(p.name)[0] or 'application/octet-stream')
+                    self.send_header('Referrer-Policy','strict-origin')
+                    self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body);return
                 if host=='vision.mrj.am' and u.path=='/auth/retour':
                     q=parse_qs(u.query);owner.captures.append(dict(state=q['state'][0],code=q['code'][0]))
                     self.send_response(200);self.send_header('Content-Length','7');self.end_headers();self.wfile.write(b'fixture');return

@@ -3383,9 +3383,18 @@
         "assemblage/elm-review/elm.json",
         "assemblage/elm-review/outils.lock.json",
         "assemblage/elm-review/src/**/*.elm",
-        "assemblage/dependances.json"
+        "assemblage/dependances.json",
+        "assemblage/manifest.json",
+        "assemblage/elm-review/ressources.json",
+        "scripts/revoir-ressources.py",
+        "scripts/revoir-interop.cjs"
       ],
-      "matheval": ["docs/package-lock.json"]
+      "matheval": [
+        "docs/package-lock.json"
+      ],
+      "style": [
+        "src/**/*.elm"
+      ]
     },
     "impact": [
       "vps/interface-log/*",
@@ -3395,13 +3404,141 @@
       "vps/assemblage/elm-review/**/*",
       "vps/scripts/revoir-frontends.py"
     ],
-    "commandes": [["python3", "scripts/log-protocole-qualifier.py"]],
+    "commandes": [
+      [
+        "python3",
+        "scripts/log-protocole-qualifier.py"
+      ]
+    ],
     "dependances": [],
     "outils": {
-      "python": ["python3", "--version"],
-      "node": ["node", "--version"]
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ]
     },
-    "configuration": ["ELM_HOME"],
-    "npm_installations": {"matheval": ["docs/node_modules"]}
+    "configuration": [
+      "ELM_HOME"
+    ],
+    "npm_installations": {
+      "matheval": [
+        "docs/node_modules"
+      ]
+    }
+  },
+  "log-interface": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/log-interface-qualifier.py",
+        "scripts/log-interface-construire.py",
+        "tests/log-presentation.lisp",
+        "tests/log_native_proxy.py",
+        "tests/log-parcours*",
+        "tests/kanidm_reel.py",
+        "tests/kanidm_politiques.py",
+        "lisp/serveur/*.lisp",
+        "lisp/identite/*.lisp",
+        "mrjam-metier.asd",
+        "interface-log/src/**/*.elm",
+        "interface-log/pont.js",
+        "interface-log/elm.json",
+        "interface-log/index.html",
+        "assemblage/manifest.json",
+        "assemblage/kanidm/dependances.json"
+      ]
+    },
+    "impact": [
+      "vps/interface-log/**/*",
+      "vps/lisp/serveur/log-presentation.lisp",
+      "vps/assemblage/log-interface/*",
+      "vps/scripts/log-interface-*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/log-interface-qualifier.py"
+      ],
+      [
+        "python3",
+        "scripts/log-interface-qualifier.py",
+        "--froide"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBSQLITE",
+      "PLAYWRIGHT_NODEJS_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE"
+    ],
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ]
+  },
+  "log-interface-promotion": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/log-interface-promouvoir.py",
+        "scripts/log-interface-stage.py",
+        "scripts/log-interface-sceller.py",
+        "scripts/log-operation.py",
+        "assemblage/log-interface/*.nix",
+        ".github/workflows/log-deploiement.yml",
+        "tests/test_log_interface_promotion.py",
+        "tests/log-connexion-base.nix",
+        "tests/log-evaluation-base.nix",
+        "modules/log.nix",
+        "modules/log-referrer.nix"
+      ]
+    },
+    "impact": [
+      "vps/interface-log/**/*",
+      "vps/lisp/serveur/log-presentation.lisp",
+      "vps/assemblage/log-interface/*",
+      "vps/scripts/log-interface-*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_log_interface_promotion.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    },
+    "configuration": []
   }
 }

@@ -15,14 +15,9 @@ def main():
     spec = importlib.util.spec_from_file_location('revoir_frontends', RACINE/'scripts/revoir-frontends.py')
     review = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(review)
-    commande, env = review.outils()
+    _, env = review.outils()
     projet = RACINE/'interface-log'
-    r = subprocess.run(commande, cwd=projet, env=env, capture_output=True, text=True)
-    dossier = RACINE/'state/review-frontends'
-    dossier.mkdir(parents=True, exist_ok=True)
-    (dossier/'log-protocole.json').write_text(r.stdout)
-    if r.returncode:
-        raise ValueError('elm-review Log refusé ; voir state/review-frontends/log-protocole.json')
+    review.verifier_log()
     # Pas de recours silencieux à un outil global ou à une autre version.
     outils = chemins_sources()['matheval']/'docs/node_modules/.bin'
     subprocess.run([str(outils/'elm-format'), 'src', 'tests', '--validate'], cwd=projet, env=env, check=True)
