@@ -116,10 +116,23 @@ def qualifier_retour_independant(d,stage):
             if marque.exists():break
             time.sleep(.5)
         exiger(marque.exists() and marque.read_text()=='retour-independant','Retour indépendant non exécuté')
-        etat=stage.commande(['systemctl','show',travail+'.service','-p','ActiveState','--value'],d).decode().strip()
-        exiger(etat=='inactive','Processus témoin non arrêté')
+        etat=etat_unite(travail+'.service')
+        exiger(etat.get('LoadState')=='not-found' or
+               (etat.get('ActiveState')=='inactive' and etat.get('MainPID')=='0'),'Processus témoin non arrêté')
     finally:
-        stage.commande(['systemctl','stop',travail+'.service',timer+'.timer'],d)
+        for nom in (travail+'.service',timer+'.timer'):
+            if etat_unite(nom).get('LoadState')!='not-found':
+                stage.commande(['systemctl','stop',nom],d)
+
+
+def etat_unite(nom):
+    """Une unité transitoire arrêtée peut avoir été collectée par systemd."""
+    r=subprocess.run(['systemctl','show',nom,'-p','LoadState','-p','ActiveState','-p','MainPID'],
+                     capture_output=True,text=True,timeout=15)
+    valeurs=dict(l.split('=',1) for l in r.stdout.splitlines() if '=' in l)
+    exiger(r.returncode==0 or (r.returncode in (1,4) and valeurs.get('LoadState')=='not-found'),
+           'État de l’unité transitoire indisponible')
+    return valeurs
 
 
 def promouvoir(d,activer=True):

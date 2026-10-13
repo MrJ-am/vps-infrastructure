@@ -89,5 +89,15 @@ class Audition(unittest.TestCase):
             m.retour(Path('/fixture'), stage, {'avant': {'generation': 'ancien'}, 'candidat': 'nouveau'})
         stage.commande.assert_not_called()
 
+    def test_unite_transitoire_collectee_et_erreur_reelle_distinctes(self):
+        from unittest.mock import patch
+        from types import SimpleNamespace
+        spec = importlib.util.spec_from_file_location('promotion_audition', ROOT / 'scripts/audition-promouvoir.py')
+        m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+        with patch.object(m.subprocess, 'run', return_value=SimpleNamespace(returncode=1, stdout='LoadState=not-found\nActiveState=inactive\nMainPID=0\n')):
+            self.assertEqual(m.etat_unite('temoin.service')['LoadState'], 'not-found')
+        with patch.object(m.subprocess, 'run', return_value=SimpleNamespace(returncode=1, stdout='')):
+            with self.assertRaises(ValueError):m.etat_unite('temoin.service')
+
 
 if __name__ == '__main__': unittest.main()
