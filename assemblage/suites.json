@@ -3278,5 +3278,94 @@
     "navigateurs": [
       "chromium"
     ]
+  },
+  "log-parcours": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/log-parcours-qualifier.py",
+        "scripts/log-clients-mcp.py",
+        "scripts/log-operation.py",
+        "scripts/log-diagnostic.py",
+        "scripts/monolithe-stage.py",
+        ".github/workflows/log-deploiement.yml",
+        "tests/log-parcours.lisp",
+        "tests/log-parcours-froid.lisp",
+        "tests/mrjam-log-parcours-tests.asd",
+        "tests/test_log_clients_mcp.py",
+        "tests/test_log_diagnostic_oauth.py",
+        "tests/kanidm_reel.py",
+        "tests/kanidm_politiques.py",
+        "tests/log-kanidm.lisp",
+        "services/mrj-auth/oauth.py",
+        "lisp/identite/*.lisp",
+        "lisp/serveur/log-http.lisp",
+        "mrjam-log.asd",
+        "mrjam-oidc.asd",
+        "assemblage/charger.lisp",
+        "assemblage/oidc/charger-dependances.lisp",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/dependances.json",
+        "assemblage/python/*.txt",
+        "scripts/provenance-outils.py",
+        "tests/log_native_proxy.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/log-parcours-qualifier.py",
+      "vps/scripts/log-clients-mcp.py",
+      "vps/tests/log-parcours*",
+      "vps/tests/mrjam-log-parcours-tests.asd",
+      "vps/tests/test_log_clients_mcp.py",
+      "vps/tests/test_log_diagnostic_oauth.py",
+      "vps/tests/log_native_proxy.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_log_clients_mcp.py"
+      ],
+      [
+        "python3",
+        "tests/test_log_diagnostic_oauth.py"
+      ],
+      [
+        "python3",
+        "scripts/log-parcours-qualifier.py"
+      ],
+      [
+        "python3",
+        "scripts/log-parcours-qualifier.py",
+        "--froide"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBSQLITE",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ],
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ]
   }
 }
