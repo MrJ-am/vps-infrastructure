@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess,ast,shutil
+import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd
 from pathlib import Path
 
 def classifier(texte,ancien):
@@ -68,6 +68,16 @@ def main(revision):
         '--since','30 minutes ago','--no-pager','-o','cat','-n','200'],capture_output=True,text=True,timeout=20).stdout
     absent=sorted(set(re.findall(r'Configuration absente : ([A-Z][A-Z0-9_]{1,80})',journal)))
     out['configuration_absente']=absent
+    metier_journal=subprocess.run(['journalctl','-u','mrjam-metier','--since','30 minutes ago',
+        '--no-pager','-o','cat','-n','100'],capture_output=True,text=True,timeout=15).stdout
+    out['demarrages_metier_refuses']=metier_journal.count('Démarrage métier refusé : configuration ou dépendance indisponible.')
+    uid=pwd.getpwnam('mrjam-metier').pw_uid
+    out['etat_log_permissions']={}
+    for nom in ('sessions.sqlite','sessions.sqlite-wal','sessions.sqlite-shm'):
+        f=Path('/var/lib/mrjam-metier/log')/nom
+        if f.exists():
+            s=f.stat();out['etat_log_permissions'][nom]={'proprietaire_metier':s.st_uid==uid,
+                'mode':oct(s.st_mode & 0o777),'octets':s.st_size}
     out['erreurs_runtime']=[v for k,v in {
         'cannot open shared object':'dso_absente','undefined symbol':'symbole_dso',
         'FATAL:':'postgres_fatal','failed to load':'chargement_refuse','Failed to start':'service_demarrage_refuse',
