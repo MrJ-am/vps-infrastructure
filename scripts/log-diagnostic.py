@@ -1,6 +1,22 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
 import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd
+import sqlite3
 from pathlib import Path
+
+def inventaire_clients_mcp(actuel, historique):
+    """Configurations publiques de clients seulement, aucune session/credential.
+
+    Lecture SQLite mode=ro. Ne publier ni identifiant client, ni nom libre,
+    ni redirection : seules tailles et intersections de registres.
+    """
+    def ids(path, table):
+        if not path.is_file():return set()
+        with sqlite3.connect(path.as_uri()+'?mode=ro',uri=True,timeout=3) as db:
+            if not db.execute('SELECT 1 FROM sqlite_master WHERE type=\'table\' AND name=?',(table,)).fetchone():return set()
+            return {row[0] for row in db.execute('SELECT id FROM '+table)}
+    nouveaux=ids(actuel,'log_oauth_clients');anciens=ids(historique,'oauth_clients')
+    return {'clients_actuels':len(nouveaux),'clients_historiques':len(anciens),
+            'identifiants_communs':len(nouveaux & anciens)}
 
 def classifier(texte,ancien):
     r=ancien.erreur_nix(texte)
@@ -64,6 +80,8 @@ def main(revision):
     out['retour_enregistre']=(d/'retour-log.json').is_file()
     if out['retour_enregistre']:out['retour']=json.loads((d/'retour-log.json').read_text())
     out['services']={}
+    out['registres_clients_mcp']=inventaire_clients_mcp(
+        Path('/var/lib/mrjam-metier/log/sessions.sqlite'),Path('/var/lib/mrj-auth/sessions.sqlite'))
     for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
         v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
         out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'
