@@ -56,6 +56,11 @@ def main(revision):
         roles=set().union(*(set(t['droits_directs']) for b in ('vision','matheval') for t in inventaire[b].values()))
         out['erreur_restauration']=m.diagnostic_erreur(f.read_text(),tables,roles)
     out['restauration']=(d/'restauration.json').is_file()
+    out['courriel_engage']=(d/'courriel-log.json').is_file()
+    if out['courriel_engage']:
+        out['courriel_accepte']=json.loads((d/'courriel-log.json').read_text()).get('accepte_par_relais') is True
+    f=d/'sondes-log.json'
+    if f.is_file():out['sondes_publiques']=json.loads(f.read_text())
     out['retour_enregistre']=(d/'retour-log.json').is_file()
     if out['retour_enregistre']:out['retour']=json.loads((d/'retour-log.json').read_text())
     out['services']={}
@@ -68,6 +73,24 @@ def main(revision):
         '--since','30 minutes ago','--no-pager','-o','cat','-n','200'],capture_output=True,text=True,timeout=20).stdout
     absent=sorted(set(re.findall(r'Configuration absente : ([A-Z][A-Z0-9_]{1,80})',journal)))
     out['configuration_absente']=absent
+    unites=('nginx.service','nginx-config-reload.service','kanidm.service','mrjam-metier.service',
+        'postgresql.service','postgresql-setup.service','systemd-tmpfiles-setup.service','systemd-sysusers.service')
+    args=['journalctl','--since','30 minutes ago','--no-pager','-o','json','-n','400']
+    for unit in unites:args+=['-u',unit]
+    lignes=subprocess.run(args,capture_output=True,text=True,timeout=20).stdout.splitlines()
+    evenements=[]
+    for ligne in lignes:
+        try:e=json.loads(ligne)
+        except ValueError:continue
+        unit=e.get('UNIT',e.get('_SYSTEMD_UNIT',e.get('OBJECT_SYSTEMD_UNIT')))
+        if unit not in unites:continue
+        message=e.get('MESSAGE','')
+        if not isinstance(message,str):continue
+        classes=[v for k,v in {'failed':'echec','permission denied':'permission',
+            'no such file':'fichier_absent','connection refused':'connexion_refusee',
+            'invalid':'invalide','exit-code':'sortie_erreur','status=':'statut'}.items() if k in message.lower()]
+        if classes:evenements.append({'unite':unit,'classes':classes})
+    out['incidents_unites_systeme']=evenements[-40:]
     metier_journal=subprocess.run(['journalctl','-u','mrjam-metier','--since','30 minutes ago',
         '--no-pager','-o','cat','-n','100'],capture_output=True,text=True,timeout=15).stdout
     out['demarrages_metier_refuses']=metier_journal.count('Démarrage métier refusé : configuration ou dépendance indisponible.')
