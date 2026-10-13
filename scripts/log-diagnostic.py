@@ -56,6 +56,17 @@ def main(revision):
         'generation_demarrage':str(Path('/nix/var/nix/profiles/system').resolve()),
         'preparation':(d/'preparation-log.json').is_file(),'activation_engagee':(d/'activation-log-privee.json').is_file(),
         'erreur_nix':classifier(f.read_text(),m) if f.is_file() else {}}
+    # Promotions de présentation : lecture seule, chemins fermés, diagnostics
+    # classés sans lignes libres de configuration ni paramètres privés.
+    interfaces=Path('/root/mrjam-corrections/log-interface')
+    out['interfaces']=[]
+    if interfaces.is_dir():
+        for item in sorted(interfaces.iterdir()):
+            if not re.fullmatch('[a-f0-9]{40}',item.name) or item.is_symlink():continue
+            err=item/'erreur-commande-privee.log'
+            out['interfaces'].append({'revision':item.name,'activation_engagee':(item/'plan.json').is_file(),
+                'terminee':(item/'termine.json').is_file(),'retour':(item/'retour.json').is_file(),
+                'erreur_nix':classifier(err.read_text(),m) if err.is_file() else {}})
     for nom in ('preparation','operation'):
         f=d/('erreur-log-'+nom+'-privee.log')
         if f.is_file():
