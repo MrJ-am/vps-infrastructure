@@ -182,8 +182,11 @@ in {
         fi
         ''}
         ${lib.optionalString (config.infrastructure.log.enable or false) ''
-        native=/var/lib/kanidm/backups/transition-$jour.json.gz
-        ${config.services.kanidm.package}/bin/kanidmd -c ${lib.last (lib.splitString " " config.systemd.services.kanidm.serviceConfig.ExecStart)} scripting backup "$native" >/dev/null
+        native="$temporaire/kanidm.json.gz"
+        ${pkgs.util-linux}/bin/runuser -u kanidm -- ${config.services.kanidm.package}/bin/kanidmd -c ${lib.last (lib.splitString " " config.systemd.services.kanidm.serviceConfig.ExecStart)} scripting backup > "$native"
+        # Plusieurs erreurs amont de setup_backend retournent zéro : ne pas
+        # chiffrer/publier un fichier vide comme une sauvegarde réussie.
+        test -s "$native"
         ${pkgs.age}/bin/age -r "$recipient" "$native" > "$destination/kanidm-$jour.age.tmp"
         ${pkgs.coreutils}/bin/mv "$destination/kanidm-$jour.age.tmp" "$destination/kanidm-$jour.age"
         ${pkgs.coreutils}/bin/rm "$native"

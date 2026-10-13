@@ -918,3 +918,18 @@ Redémarrage environnement : images précédentes disparues, C reconstruite depu
 sources/FASL. CL-MCP et Tron voient mêmePID/marqueur reconnexion20261013,
 objet0→1 observé croisé, poolNIL/debuggerNIL ; aucune référence ancienne gardée,
 aucun qualifier synthétique répété, aucune donnée production connectée.
+
+13octobre —38329305886 : Native/publicinterfaces/artefact/données/restart tous
+réellement réussis (sondes10GET chacune, vision6,94ms, math12,208ms, log49,682ms).
+Sauvegarde forcée ensuite refusée(age fichier Native absent), retour9qv qualifié,
+aucun mail. Source officielle server/core/src/lib.rs:354 : setup_backend ouvre
+SQLite ; erreurs setup/create retournent zéro sans export. Unité strict RO hors
+backups donc insuffisante. CLI sousUIDkanidm et stockageRW borné à ce jobRoot,
+stdout gzip capturé dansTmpprivé/test-s puisage, cleanup garanti. Flux véritable
+validé gzip/JSON puis restore/verify/lecture des entrées, aucune source amont
+modifiée. Monolithe n’acquiert aucun droit/secret IdP supplémentaire.
+
+Qualification export : Nativebootstrap1,9848s, routage32,4366s, opérations
+12,4117s ;48preuves conservées. Copies locales seules des archives17def8c/
+72d53d8 retirées aprèsSHA/taille/commitdistant vérifiés(364811639octets),
+preuves et chiffrés distants conservés, aucun point de retour VPS touché.
