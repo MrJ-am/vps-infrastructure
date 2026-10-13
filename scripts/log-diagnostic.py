@@ -108,6 +108,22 @@ def main(revision):
         'permission denied':'permission_refusee','No such file or directory':'fichier_absent',
         'Configuration métier invalide':'configuration_metier_invalide'}.items() if k.lower() in journal.lower()]
     texte_erreur=(d/'erreur-commande-privee.log').read_text() if (d/'erreur-commande-privee.log').is_file() else ''
+    out['activation_systeme_categories']=[v for k,v in {
+        'warning: user activation for root failed':'activation_utilisateur_root',
+        'Unable to list users with logind:':'inventaire_logind',
+        'Failed to run activate script':'script_activation',
+        'systemd daemon reload failed':'rechargement_systemd',
+        'Failed to restart sysinit-reactivation.target':'reactivation_sysinit',
+        'warning: the following units failed:':'unites_echec'}.items() if k in texte_erreur]
+    # Noms techniques fixes ou unités de retour portant seulement le hash
+    # public de cet assemblage ; aucune valeur personnelle issue des journaux.
+    techniques=set(unites)|{'systemd-journald@http.service','systemd-journald@identite.service',
+        'sysinit-reactivation.target','dbus.service','dbus-broker.service','user@0.service',
+        'user-runtime-dir@0.service','mrjam-log-retour-'+revision[:12]+'.service',
+        'mrjam-log-retour-'+revision[:12]+'.timer'}
+    out['unites_activation_erreur']=sorted(set(re.findall(
+        r'(?:Failed to (?:start|stop|reload|restart) |units failed: )([A-Za-z0-9@_.-]+\.(?:service|target|timer))',
+        texte_erreur)) & techniques)
     out['unites_echec']=[nom for nom in ('mrjam-metier','kanidm','nginx','postgresql','mrj-auth','keycloak')
         if any(nom+'.service' in l and any(mot in l.lower() for mot in ('failed','failure','refus','error'))
                for l in (texte_erreur+'\n'+journal).splitlines())]
