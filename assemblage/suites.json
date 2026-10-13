@@ -3024,7 +3024,8 @@
         "assemblage/kanidm/artefact.nix",
         "scripts/monolithe-evaluation.nix",
         "tests/log-evaluation.nix",
-        "tests/log-evaluation-base.nix"
+        "tests/log-evaluation-base.nix",
+        "modules/log-referrer.nix"
       ]
     },
     "impact": [
@@ -3033,7 +3034,8 @@
       "vps/tests/log-nix.nix",
       "vps/assemblage/kanidm/artefact.nix",
       "vps/scripts/monolithe-evaluation.nix",
-      "vps/tests/log-evaluation*.nix"
+      "vps/tests/log-evaluation*.nix",
+      "vps/modules/log-referrer.nix"
     ],
     "commandes": [
       [
@@ -3214,5 +3216,67 @@
       "MRJAM_LIBPQ"
     ],
     "reutilisable": false
+  },
+  "log-connexion": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "modules/log-referrer.nix",
+        "modules/log.nix",
+        "scripts/log-connexion*.py",
+        "scripts/log-connexion-evaluation.nix",
+        "scripts/log-operation.py",
+        "scripts/monolithe-stage.py",
+        ".github/workflows/log-deploiement.yml",
+        "tests/log-referrer-navigateur.py",
+        "tests/test_log_connexion.py",
+        "tests/log-connexion-base.nix",
+        "tests/log-evaluation-base.nix",
+        "scripts/provenance-outils.py",
+        "assemblage/dependances.json",
+        "assemblage/python/*.txt"
+      ]
+    },
+    "impact": [
+      "vps/modules/log-referrer.nix",
+      "vps/scripts/log-connexion*",
+      "vps/tests/log-connexion*",
+      "vps/tests/log-referrer-navigateur.py",
+      "vps/tests/test_log_connexion.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_log_connexion.py"
+      ],
+      [
+        "python3",
+        "scripts/log-connexion-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ],
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ]
   }
 }

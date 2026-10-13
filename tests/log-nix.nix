@@ -40,6 +40,9 @@ assert v."vision.mrj.am".locations."= /_vision_administration".proxyPass == "htt
 assert v."vision.mrj.am".locations."= /_vision_mcp_token".proxyPass == "http://unix:/run/mrjam-metier/http.sock:/verify-mcp";
 assert lib.hasInfix "proxy_ssl_verify on" v."log.mrj.am".locations."/".extraConfig;
 assert lib.hasInfix "proxy_ssl_verify_depth 2;" v."log.mrj.am".locations."/".extraConfig;
+assert lib.hasInfix ''add_header Referrer-Policy "strict-origin" always;'' v."log.mrj.am".extraConfig;
+assert !(lib.hasInfix "no-referrer" v."log.mrj.am".extraConfig);
+assert lib.hasInfix "proxy_hide_header Referrer-Policy;" v."log.mrj.am".locations."/".extraConfig;
 assert v."log.mrj.am".locations."/".return == null;
 assert v."log.mrj.am".locations."^~ /v1/raw/".return == "404";
 assert v."log.mrj.am".locations."^~ /realms/".return == "410";

@@ -29,7 +29,7 @@ in {
     secretClient = lib.mkOption { type = lib.types.str; default = "/var/lib/mrjam-identite/kanidm-vision.secret"; };
     secretAdmission = lib.mkOption { type = lib.types.str; default = "/var/lib/mrjam-identite/kanidm-admission.token"; };
   };
-  imports = [ (import ../assemblage/kanidm/service.nix {
+  imports = [ ./log-referrer.nix (import ../assemblage/kanidm/service.nix {
     tlsChainFile = "/var/lib/acme/log.mrj.am/fullchain.pem";
     tlsKeyFile = "/var/lib/acme/log.mrj.am/key.pem";
   }) ];
