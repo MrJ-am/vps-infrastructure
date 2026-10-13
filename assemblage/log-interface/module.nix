@@ -16,7 +16,7 @@ let
   ''; };
   fichier = { root = site; tryFiles = "$uri =404"; extraConfig = securite; };
 in {
-  infrastructure.metier.paquet = lib.mkForce paquetMetier;
+  infrastructure.metier.paquet = lib.mkOverride 30 paquetMetier;
   services.nginx.virtualHosts."log.mrj.am".locations = lib.mkOverride 30 (locations // {
     "= /" = page;
     "= /ui" = page;
