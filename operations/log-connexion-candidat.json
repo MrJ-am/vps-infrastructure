@@ -2,7 +2,7 @@
   "format": 1,
   "origine_preuves": "codex-local-non-attestee",
   "soumission_autorisee_par_proprietaire": true,
-  "revision_sources": "232bf76dad027c3971a3e9098edd05aa69ee76eb",
+  "revision_sources": "2a5ffdd910961f400f43f27f1a3ed84413b7a790",
   "revision_assemblage": "54988ca67567db04d2e064feae91d558f7bb25fb",
   "artefact_sha256": "bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb",
   "generation_attendue": "/nix/store/1n51lw7473lad5q8fbjc5110wz53xvgg-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
@@ -77,9 +77,9 @@
           "vps/scripts/log-connexion-evaluation.nix": "3b0e185a40bcbb00c25bbd65a058f1c33c2efd0379fa73de266e669ace7bd568",
           "vps/scripts/log-operation.py": "e6d88c48ff18cef8aebeceedde11ea2a445854a3bf52ca5221c1e7d520df57e5",
           "vps/scripts/monolithe-stage.py": "df5d443607d98a16bfa682c0426e21dfb6c17055d55ecd02f68cec42d4c77b93",
-          "vps/.github/workflows/log-deploiement.yml": "91a6bb2d26a5f648e38a06fcdbb1c63b6be755979ddb08a62b7e53c80e433ac0",
+          "vps/.github/workflows/log-deploiement.yml": "1706553cce30e2498e8ba1e886a54bfe199a6e3ae7db7912f2d90fdf786afeb5",
           "vps/tests/log-referrer-navigateur.py": "8bf848e70086515049b718b888b7a4feb254137ad8b6519d677290dec2210004",
-          "vps/tests/test_log_connexion.py": "fe2c307067ebbe60cfb841d7db215563146475e74d084eea15fc62b3f367d412",
+          "vps/tests/test_log_connexion.py": "cb216fb52a58c7bfc50a33157827e2f9de8ef33a947f1b80d17a5722e8ddc92d",
           "vps/tests/log-connexion-base.nix": "46d6ec14eac69e0fe82e4b0e76c94d3425aa489ab8333f24638c023062fe7ff5",
           "vps/tests/log-evaluation-base.nix": "2c0555c5274c598d9dd5ce42ab172e2c9142dbb88eaf75e1e43d72b6e4cbac0d",
           "vps/scripts/provenance-outils.py": "2e9d98c9274ecd7ac8efefc663ece0023c3ce472e42c8b47429183418bfcc116",
@@ -145,7 +145,7 @@
         0,
         0
       ],
-      "duree_secondes": 18.5788
+      "duree_secondes": 23.2327
     }
   },
   "modification": "Referrer-Policy strict-origin seul ; aucun changement des comptes, bases ou binaire"
