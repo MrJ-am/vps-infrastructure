@@ -933,3 +933,10 @@ Qualification export : Nativebootstrap1,9848s, routage32,4366s, opérations
 12,4117s ;48preuves conservées. Copies locales seules des archives17def8c/
 72d53d8 retirées aprèsSHA/taille/commitdistant vérifiés(364811639octets),
 preuves et chiffrés distants conservés, aucun point de retour VPS touché.
+
+13octobre —38330950404 réellement réussi : générationactive/default1n51lw74,
+artefactbc70c822, Nativeactif/KC-authinactifs ; données/invariants/restart
+préservés, backupautomatique réussi avantSMTPaccepté01:14:36UTC. Message jamais
+sondé/consommé ; présence en boîte nonobservable. DepuisCodex Log/Vision/Math/
+discoveryMCP200, MCPanonyme401, issuer/S256exacts. Étape2partielle explicite,
+attendre enrôlement physique comme demandé. PreuvepublicJSON/retour protégés.

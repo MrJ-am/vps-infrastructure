@@ -1,10 +1,17 @@
-# Kanidm — installation locale et intégration en cours
+# Kanidm — bascule active, qualification personnelle en attente
 
-Le jalon1 est actif et qualifié, avec Keycloak provisoire. Ce dossier prépare
-le jalon2 ; son module n'est pas importé dans la configuration active. Aucun
-serveur Kanidm, nouveau compte ou rattachement de production n'a encore été créé.
-Paquet officiel1.11.2 installé/vérifié localement ; scénarios natifs ci-dessous
-réussis, sans constituer la deuxième bascule.
+Le13octobre2026, la bascule38330950404 a servi Native1.11.2 et le monolithe
+qualifié, retiré les anciennes identités et préservé les données. Sauvegardes,
+restauration isolée et redémarrage réels réussis ; SMTP accepte le mail01:14UTC.
+Preuve actuelle : [qualification-production-20261013.json](qualification-production-20261013.json).
+Enrôlement/autorisation MCP personnels et fonctions restantes explicitement en
+attente ; aucune réception en boîte ou conformité globale prétendue.
+
+## Historique de qualification locale et décisions conservées
+
+Les résultats et états de préparation ci-dessous décrivent leur date antérieure ;
+l’état installé actuel est celui de la preuve et du point actif dans REPRISE.md.
+
 
 Préférence propriétaire du12octobre : un seul compte de connexion final, issu
 autant que possible de Vision, adresse électronique ajoutée et mot de passe

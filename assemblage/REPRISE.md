@@ -1,6 +1,46 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — retour vérifié, correction OAuth et reprise native qualifiées
+## Point de reprise actif — Kanidm en production, courriel accepté
+
+Run [38330950404](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38330950404)
+réussi le13octobre2026 à01:14UTC. Opérateurs54988ca67567db04d2e064feae91d558f7bb25fb,
+descripteurd392303, construction77129dd, même ELFbc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
+Génération active/démarrage1n51lw7473lad5q8fbjc5110wz53xvgg. Une image SBCL métier,
+Kanidm1.11.2 séparé ; Keycloak et mrj-auth inactifs, anciennes deux identités
+personnelles retirées. Propriétaire métier stable explicitement rattaché, hashes
+données identiques ; interfaces/discovery/ressources/artefact et restart réussis.
+Native backup réel sousUIDkanidm/stockageRW du jobRoot/fluxgzip privé puisage,
+job automatique réussi. Sauvegarde/restauration fraîche54988ca-011322 et retour
+qualifiés ; aucun rollback de base métier. Services tiers préservés.
+
+Courriel personnel réellement accepté par SMTP à01:14:36UTC, une seule tentative.
+Présence en boîte non observable. Ne pas réenvoyer ni sonder/consommer son lien.
+Ouvrir le mail « MrJ.am — créez votre compte Log et retrouvez Vision », enrôler
+phrase de passe+TOTP ou passkey UV, puis vision.mrj.am/auth/connexion ; réautoriser
+le client MCP/LLM. Date réelle d'expiration indiquée dans le message. Cette étape
+personnelle n'a pas été simulée. Arrêt au checkpoint demandé, reprendre après
+réponse/enrôlement utilisateur. Aucun retour automatique encore armé.
+
+Preuve : assemblage/kanidm/qualification-production-20261013.json.51suites exactes
+vérifiées au scellement ; dernier passage3affectées,48reçus conservés. Sondes
+anonymes depuisCodex : Log/Vision/Math/discoveryMCP200, MCPsansjeton401.
+Étape2 complète FALSE : panneau/préférences individuels, jauge live de force,
+fermetures communes définitives et parcours personnels restent à terminer ; ne
+pas présenter les qualifications techniques comme connexion personnelle.
+
+Retour : workflow central log-deploiement.yml, opération retour, descripteur54988ca.
+Ancienne génération9qv protégée ; identités/Basic seuls restaurables, jamais une
+ancienne base métier. Le contrôle du retour automatique utilise la référence de
+bascule : relever la référence actuelle et adapter ce contrôle avant un retour
+après de nouvelles écritures. Conserver Native et ses backups après retour.
+
+Environnement redémarré puis C reconstruite : CL-MCP sans pool/Swank dans l'image,
+Tron distinct connecté au même PID/marqueur/objet ; observations croisées1,
+debuggerNIL, aucune référence ancienne. Images encore saines à constater à la
+reprise, aucun PID constant ni qualifier synthétique comme contrôle de santé.
+
+
+## Historique de reprise — corrections et tentatives avant la bascule
 
 Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
 Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
@@ -1337,3 +1377,6 @@ CLI officiel peut retourner0 après backendSQLite refusé sans créer fichier.
 SousUIDkanidm/stockageRW de sauvegardeRoot, stdoutcapturéprivé/test-s/age ;
 validation vraie gzip+JSON+restoreverify entrées réussie. Requalifier uniquement
 suites affectées puis resceller ; mêmeNative/ELF, aucune réécritureamont.
+Qualification Nativebootstrap1,9848s/routage32,4366s/opérations12,4117s,48preuves
+conservées. Descripteurd392303/run38330950404(deployer) engagé ; constater
+issue/retour/courriel avant toute répétition ou nouvelle soumission.
