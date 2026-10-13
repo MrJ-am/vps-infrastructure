@@ -124,6 +124,9 @@ def main(revision):
     out['unites_activation_erreur']=sorted(set(re.findall(
         r'(?:Failed to (?:start|stop|reload|restart) |units failed: )([A-Za-z0-9@_.-]+\.(?:service|target|timer))',
         texte_erreur)) & techniques)
+    echecs=re.findall(r'warning: the following units failed: ([^\n]+)',texte_erreur)
+    out['unites_signalees_par_activation']=sorted({n.strip() for liste in echecs for n in liste.split(',')
+        if re.fullmatch(r'[A-Za-z0-9@_.-]{1,160}\.(?:service|target|timer)',n.strip())})
     out['unites_echec']=[nom for nom in ('mrjam-metier','kanidm','nginx','postgresql','mrj-auth','keycloak')
         if any(nom+'.service' in l and any(mot in l.lower() for mot in ('failed','failure','refus','error'))
                for l in (texte_erreur+'\n'+journal).splitlines())]
