@@ -892,3 +892,12 @@ officiel. Diagnostic38324014469 vérifie réellement chaîne publique avec CA pr
 OpenSSL profondeur1 code2, profondeur2/3 code0. Cause TLS constatée, profondeur2
 avec CA/hostname/verify maintenus, preflight de chaîne avant mutations ajouté.
 Aucune nouvelle bibliothèque, runtime ou recompilation métier/Rust.
+
+13octobre —38324574933 : Nginx/chaîne TLS et restauration fraîche réussis ;
+découverte Native passée, refus HTTP502 ensuite sur interfaces communes, retour
+qualifié38324998052. Premier diagnostic SSH timeout (aucune commande distante),
+lecture suivante réussie.38325389424 : aucun démarrage métier refusé, SQLite
+Log600/propriétaire métier, aucun sidecar restant. Type simple : attente HTTP
+bornée déjà éprouvée étape1 réutilisée, faux403 permanent toujours refusé ;
+sondes nommées/statuts/durée sans corps ni URL dans preuve. Régression vrai
+serveur HTTP synthétique502→200 puis10mesures,403refusé immédiatement.
