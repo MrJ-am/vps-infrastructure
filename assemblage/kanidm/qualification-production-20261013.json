@@ -1,0 +1,247 @@
+{
+  "format": 1,
+  "revision": "54988ca67567db04d2e064feae91d558f7bb25fb",
+  "generation": "/nix/store/1n51lw7473lad5q8fbjc5110wz53xvgg-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "artefact_sha256": "bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb",
+  "kanidm_actif": true,
+  "keycloak_actif": false,
+  "mrj_auth_python_actif": false,
+  "proprietaire_metier_preserve": true,
+  "rattachement_explicite": true,
+  "anciennes_identites_retirees": true,
+  "donnees_preservees": true,
+  "redemarrage_verifie": true,
+  "restauration_native_isolee": true,
+  "sauvegarde_automatique_verifiee": true,
+  "mail": {
+    "format": 1,
+    "accepte_par_relais": true,
+    "presence_en_boite": "non_observable_par_agent",
+    "enrolement_personnel": "a_effectuer",
+    "date_utc": "2026-10-13T01:14:36.501330+00:00"
+  },
+  "services": {
+    "kanidm": {
+      "etat": "active",
+      "pid_present": true,
+      "rss_processus_principal_octets": 38658048,
+      "cgroup_octets_avec_cache": 9510912,
+      "plafond_octets": "infinity"
+    },
+    "mrjam-metier": {
+      "etat": "active",
+      "pid_present": true,
+      "rss_processus_principal_octets": 180809728,
+      "cgroup_octets_avec_cache": 174280704,
+      "plafond_octets": "1073741824"
+    },
+    "keycloak": {
+      "etat": "inactive",
+      "pid_present": false,
+      "rss_processus_principal_octets": null,
+      "cgroup_octets_avec_cache": null,
+      "plafond_octets": "infinity"
+    },
+    "mrj-auth": {
+      "etat": "inactive",
+      "pid_present": false,
+      "rss_processus_principal_octets": null,
+      "cgroup_octets_avec_cache": null,
+      "plafond_octets": "infinity"
+    }
+  },
+  "sondes_publiques": {
+    "log_decouverte": {
+      "n": 10,
+      "codes": [
+        200
+      ],
+      "mediane_ms": 48.814,
+      "p90_ms": 53.73,
+      "type": "GET public, dix lectures espacées de 250ms, sans authentification",
+      "disponibilite_codes": [
+        200
+      ]
+    },
+    "vision": {
+      "n": 10,
+      "codes": [
+        200
+      ],
+      "mediane_ms": 7.936,
+      "p90_ms": 9.92,
+      "type": "GET public, dix lectures espacées de 250ms, sans authentification",
+      "disponibilite_codes": [
+        200
+      ]
+    },
+    "matheval": {
+      "n": 10,
+      "codes": [
+        200
+      ],
+      "mediane_ms": 15.34,
+      "p90_ms": 20.296,
+      "type": "GET public, dix lectures espacées de 250ms, sans authentification",
+      "disponibilite_codes": [
+        200
+      ]
+    },
+    "logique": {
+      "n": 10,
+      "codes": [
+        200
+      ],
+      "mediane_ms": 7.053,
+      "p90_ms": 9.922,
+      "type": "GET public, dix lectures espacées de 250ms, sans authentification",
+      "disponibilite_codes": [
+        200
+      ]
+    }
+  },
+  "etape2_complete": false,
+  "qualification_personnelle": "en attente",
+  "limites": [
+    "Fermetures communes définitives IdP à terminer ; admission native conservée, secret borné90jours à renouveler par exploitation.",
+    "Préférences individuelles et panneau commun complet restent à qualifier ; rôle propriétaire limité à sept jours.",
+    "Connexion et autorisation MCP personnelles restent à effectuer.",
+    "Jauge de force pendant la saisie et parcours complet de préférences restent à intégrer/qualifier ; validation native de force/Unicode/espaces testée."
+  ],
+  "nature": "Constats réels de production ; qualification locale non attestée",
+  "jalon": "bascule Kanidm et SMTP acceptés ; enrôlement personnel en attente",
+  "run_id": 38330950404,
+  "url": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38330950404",
+  "revision_deploiement": "d39230322659ad3ece5f16b0b4c52a6cb2e02dd2",
+  "revision_construction": "77129dd9b98ea9831b03984bb26bb0219bb0d076",
+  "restauration_metier": {
+    "format": 1,
+    "infrastructure": "54988ca67567db04d2e064feae91d558f7bb25fb",
+    "generation": "/nix/store/9qv8n9gd19sv3cwcy224zk9qavns1g2j-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "sauvegarde": "54988ca67567-20261013T011322Z-67729445",
+    "bases": [
+      "vision",
+      "matheval",
+      "mrjam_identite"
+    ],
+    "tables_restaurees": {
+      "vision": 30,
+      "matheval": 6,
+      "mrjam_identite": 100
+    },
+    "empreintes_semantiques_identiques": true,
+    "age_dechiffrement_verifie": true,
+    "cle_ephemere_enveloppee_pour_destinataire_existant": true,
+    "cle_personnelle_non_utilisee": true,
+    "sqlite_copie_et_integrite": true,
+    "registre_externe_recent_requis": true,
+    "retour_applicatif_qualifie": true,
+    "roles_restaures": false,
+    "acl_qualification_separee_requise": false,
+    "production_sql_ecriture": false,
+    "production_services_interrompus": false,
+    "qualification_applicative": {
+      "acl_vision_30_matheval_6": true,
+      "migration_26_sur_copie": true,
+      "migration_27_rls_sur_copie": true,
+      "fenetres_verifiees_aux_instants_de_lecture": true,
+      "contenus_metier_preserves": true,
+      "lectures_ancien_et_commun_identiques": true,
+      "redemarrage_commun": true,
+      "retour_lecture_qualifie": true,
+      "retour_code_sans_restaurer_production": true,
+      "sqlite_colonnes_et_messages_historiques_preserves": true,
+      "ecritures_sur_copie_communes_lues_par_ancien": true,
+      "ecritures_sur_copie_ancien_lues_apres_redemarrage_commun": true,
+      "retour_operations_ecriture_restant": false,
+      "idp_smtp_non_contactes": true,
+      "donnees_synthetiques_en_production": false
+    }
+  },
+  "retour": {
+    "generation": "/nix/store/9qv8n9gd19sv3cwcy224zk9qavns1g2j-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "operation": "Workflow log-deploiement.yml, opération retour, sur le descripteur 54988ca ; jamais de restauration ancienne de la base métier",
+    "limite": "Qualification de retour automatique liée aux empreintes de la bascule. Relever les empreintes actuelles et adapter ce contrôle avant un retour après de nouvelles écritures."
+  },
+  "sources_composants": {
+    "vps": {
+      "depot": "MrJ-am/vps-infrastructure",
+      "branche": "main",
+      "revision": "self",
+      "role": "assembleur"
+    },
+    "vision": {
+      "depot": "MrJ-am/vision",
+      "branche": "main",
+      "revision": "decf5f70b9b22f042638d28ff6ec4481d584b5e8",
+      "role": "bibliotheque-asdf"
+    },
+    "matheval": {
+      "depot": "MrJ-am/M-moire",
+      "branche": "master",
+      "revision": "2afce3aae14af13ef6dbda960cf5a4716924dc72",
+      "role": "bibliotheque-asdf-et-interface"
+    },
+    "logique": {
+      "depot": "MrJ-am/apprendre-a-demontrer",
+      "branche": "main",
+      "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+      "role": "frontend-statique"
+    },
+    "style": {
+      "depot": "MrJ-am/style-mrjam",
+      "branche": "main",
+      "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+      "role": "elm-ui"
+    },
+    "signature": {
+      "depot": "MrJ-am/Signature",
+      "branche": "main",
+      "revision": "17194087eec9162bb5372221c43e1de0501dfe6a",
+      "role": "ressources-identite"
+    }
+  },
+  "qualification_locale": {
+    "catalogue_suites": 51,
+    "dernier_passage": {
+      "executees": [
+        "kanidm-bootstrap",
+        "log-routage-nix",
+        "log-operations"
+      ],
+      "recus_identiques_conserves": 48,
+      "durees_secondes": {
+        "kanidm-bootstrap": 1.9848,
+        "log-routage-nix": 32.4366,
+        "log-operations": 12.4117
+      }
+    },
+    "provenance": "reçus locaux avec empreintes vérifiés au scellement ; aucune attestation indépendante"
+  },
+  "sondes_depuis_codex": {
+    "lecture_seule": true,
+    "sondes": [
+      {
+        "service": "log",
+        "http": 200,
+        "issuer_exact": true
+      },
+      {
+        "service": "vision",
+        "http": 200
+      },
+      {
+        "service": "matheval",
+        "http": 200
+      },
+      {
+        "service": "mcp_anonyme",
+        "http": 401
+      },
+      {
+        "service": "mcp_decouverte",
+        "http": 200
+      }
+    ]
+  }
+}
