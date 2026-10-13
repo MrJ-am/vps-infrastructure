@@ -105,10 +105,59 @@ Les renderers HTML/CSS d'Animator restent interdits, même dans le socle : seule
 ses valeurs numériques et timelines raccordent les attributs elm-ui.
 
 Conserver fonctionnalités, accessibilité, ressources, domaines/chemins et identité
-visuelle. Les projets statiques restent statiques, interfaces tierces exclues.
+visuelle. Les projets statiques restent statiques. Les interfaces des services
+tiers hors périmètre restent exclues ; cette exclusion ne couvre pas le parcours
+Log destiné aux utilisateurs de nos applications.
 Les anciennes interfaces sont des références fonctionnelles, pas une preuve de
 conformité à ce contrat. Les nouveaux artefacts et parcours affectés doivent être
 qualifiés avant promotion ; ne pas rejouer les suites Lisp arithmétiques pour du style.
+
+## Log — identité visuelle et Continuous UI
+
+La demande du 13 octobre 2026 s'applique au parcours Log : présentation elm-ui,
+identité issue de Signature et composants/contextes/transitions de style-mrjam.
+Kanidm reste le fournisseur d'identité Rust séparé, avec son stockage et ses
+politiques. Le client de présentation ne réimplémente ni vérification des
+authentificateurs, ni émission des jetons, ni décision d'autorisation. Pas de
+fork Rust, de service supplémentaire ou de credential administrateur dans le
+client. La personnalisation du nom/logo natif ne suffit pas à qualifier ce parcours.
+
+Écart actuellement constaté : les pages natives Kanidm 1.11.2 utilisent Askama,
+Bootstrap et le CSS/JavaScript du fournisseur, pas Elm ni Animator. Elles ne sont
+pas qualifiées comme interfaces MrJ.am. Les résultats antérieurs de connexion,
+MFA, OIDC et MCP restent des preuves fonctionnelles, pas des preuves de conformité
+visuelle ou de Continuous UI. La connexion personnelle et les sessions existantes
+doivent être préservées pendant leur remplacement.
+
+L'API officielle `/v1/auth` expose les étapes, les mécanismes autorisés et les
+défis ; `init2.issue = cookie` prévoit l'émission d'un cookie Secure/HttpOnly.
+Cette capacité est constatée dans le code verrouillé, pas encore qualifiée dans
+un client Elm. Le JSON de succès contient aussi un jeton : ne pas le conserver
+dans l'état Elm, le stockage navigateur, les traces ou les rapports. Vérifier
+réellement les attributs/portées/durées des cookies, l'origine des requêtes et la
+reprise OAuth ; ne pas déduire ces garanties de la seule présence de HttpOnly.
+
+La qualification du nouveau parcours couvre connexion/connexion déjà ouverte,
+phrase de passe Unicode sans normalisation destructive, TOTP, passkey/WebAuthn,
+enrôlement/récupération, consentement OIDC/MCP et panneau personnel. Les adaptations
+WebAuthn restent techniques et bornées ; aucune vue HTML injectée ou couche CSS
+Bootstrap recouverte. Les transitions utilisent le socle Animator partagé,
+avec interruptions/inversions, focus/clavier, reduced-motion et arrêt au repos.
+L'authentification n'attend pas la fin d'une animation décorative.
+
+Référence de la constatation : Kanidm officiel
+`547933867e87da737e79d26942dc9261adaa5ee9`,
+`server/core/templates/base.html`, `proto/src/v1/auth.rs`,
+`server/core/src/https/v1.rs::auth_session_state_management` et
+`server/core/src/https/views/login.rs` ; personnalisation native limitée constatée
+dans `tools/cli/src/cli/domain/mod.rs` et `libs/client/src/domain.rs`.
+
+Le raccordement commence dans `interface-log/src/Log/Protocole.elm` : codec pur,
+sans HTTP ni vue, sans décision de politique locale. Il réutilise elm/core1.0.5,
+elm/json1.1.3 et elm-explorations/test2.2.1 déjà approuvés/verrouillés, avec les
+mêmes compilateur, elm-test et règles elm-review centrales. Pas de nouvel outil
+ou dépendance externe. `log-protocole-elm` bloque sur review, format et assertions
+effectives ; ce reçu ne qualifie ni cookies réels, ni UI, ni passkeys réelles.
 
 Commandes canoniques :
 
