@@ -1,7 +1,7 @@
 """Promotion Audition : migration additive, client OIDC existant et même serveur commun.
 
-Opérateur Root transmis par la CI centrale. Native, PG et les services tiers
-restent dans leur génération/version ; le retour ne restaure aucune base.
+Opérateur Root transmis par la CI centrale. Versions PG/Native et services tiers
+préservés ; redémarrage PG borné pour hba/ident, retour sans restauration de base.
 """
 import hashlib
 import importlib.util
@@ -135,8 +135,8 @@ def etat_unite(nom):
     return valeurs
 
 
-def verifier_rechargement(backup,postgres,r):
-    """SIGHUP est asynchrone : constater les fichiers effectivement sélectionnés."""
+def verifier_postgresql(backup,postgres,r):
+    """Constater les règles chargées après le redémarrage PG central borné."""
     import time
     attendu={k:r['postgresConfigurationApres'][k] for k in ('hba_file','ident_file')}
     limite=time.monotonic()+10
@@ -144,7 +144,7 @@ def verifier_rechargement(backup,postgres,r):
         actuel=json.loads(backup.sql(Path(postgres)/'bin',Path('/run/postgresql'),'vision',
             "SELECT json_build_object('hba_file',current_setting('hba_file'),'ident_file',current_setting('ident_file'))"))
         if actuel==attendu:break
-        exiger(time.monotonic()<limite,'Configuration PostgreSQL non rechargée')
+        exiger(time.monotonic()<limite,'Configuration PostgreSQL non chargée')
         time.sleep(.2)
     exiger(backup.sql(Path(postgres)/'bin',Path('/run/postgresql'),'vision',
         'SELECT NOT EXISTS(SELECT FROM pg_settings WHERE pending_restart) AND '
@@ -177,8 +177,8 @@ def promouvoir(d,activer=True):
     module_interface=payload/'module.nix';evaluation=payload/'evaluation.nix';module_audition=payload/'audition.nix'
     expression='import '+str(evaluation)+' { configuration='+json.dumps(avant['configuration_cible'])+'; moduleInterface='+json.dumps(str(module_interface))+'; moduleAudition=builtins.toPath '+json.dumps(str(module_audition))+'; site=builtins.path { path='+json.dumps(str(site))+'; name="mrjam-audition"; }; paquetMetier=builtins.storePath '+json.dumps(plan['paquet_metier'])+'; }'
     r=json.loads(stage.commande(['nix-instantiate','-I','nixpkgs='+stage.NIXPKGS,'--eval','--strict','--json','--expr',expression],d))
-    exiger(r['avant']==avant['generation'] and r['invariants'] and r['assertions'] and r['nativeActif']
-           and r['postgresReload'],'Configuration hors périmètre')
+    exiger(r['avant']==avant['generation'] and r['invariants'] and r['assertions'] and r['nativeActif'],
+           'Configuration hors périmètre')
     exiger(r['paquetApres']==plan['paquet_metier'],'Autre paquet métier')
     ecrire(d/'evaluation-audition.json',r)
     cfg=d/'configuration.nix'
@@ -187,13 +187,6 @@ def promouvoir(d,activer=True):
     generation=stage.commande(['nix-build','<nixpkgs/nixos>','-A','system','-I','nixpkgs='+stage.NIXPKGS,
         '-I','nixos-config='+str(cfg),'--out-link',gcroot,'--max-jobs','1','--cores','2'],d).decode().strip()
     exiger(generation==r['apres'],'Génération différente de l’évaluation')
-    reload=r['postgresReloadCommande'].removesuffix(' $MAINPID')
-    exiger(re.fullmatch('/nix/store/[a-z0-9]{32}-mrjam-postgresql-recharger',reload), 'Rechargement PostgreSQL inconnu')
-    lien=[l.strip() for l in r['postgresPreStart'].splitlines() if 'ln -sfn' in l and '/postgresql.conf"' in l]
-    lignes=[l.strip() for l in Path(reload).read_text().splitlines()[1:] if l.strip()]
-    exiger(len(lien)==1 and len(lignes)==3 and lignes[:2]==['set -eu',lien[0]]
-           and re.fullmatch(r'/nix/store/[a-z0-9]{32}-coreutils-[^/]+/bin/kill -HUP "\$1"',lignes[2]),
-           'Rechargement PostgreSQL différent')
     sans_lien=lambda texte:[l for l in texte.splitlines() if 'ln -sfn' not in l]
     exiger(sans_lien(r['postgresPreStart'])==sans_lien(r['postgresPreStartAvant']),
            'Autre changement du démarrage PostgreSQL')
@@ -250,7 +243,7 @@ def promouvoir(d,activer=True):
         configuration(str(cfg))
         stage.commande(['nix-env','-p','/nix/var/nix/profiles/system','--set',generation],d)
         stage.commande([generation+'/bin/switch-to-configuration','switch'],d)
-        verifier_rechargement(backup,postgres,r)
+        verifier_postgresql(backup,postgres,r)
         stage.commande(['systemctl','start','mrjam-metier'],d)
         apres=donnees()
         exiger(all({k:v for k,v in apres[b].items() if not k.startswith('audition.')}==
@@ -258,8 +251,12 @@ def promouvoir(d,activer=True):
                'Invariants métier existants différents')
         exiger(stage.etat(d)['generation']==stage.etat(d)['demarrage']==generation,'Activation non constatée')
         maintenant=pids(stage,d)
-        changes=[n for n,pid in processus.items() if n!='mrjam-metier' and maintenant[n]!=pid]
-        ecrire(d/'services-apres.json',{'services_proteges_redemarres':changes})
+        # Les chemins hba_file/ident_file ont le contexte postmaster dans PG17.
+        # NixOS doit redémarrer ce seul service. Son paquet, hardening, autres
+        # paramètres et données sont vérifiés ; les autres PID restent bloquants.
+        changes=[n for n,pid in processus.items() if n not in ('mrjam-metier','postgresql') and maintenant[n]!=pid]
+        pg_redemarre=maintenant['postgresql']!=processus['postgresql']
+        ecrire(d/'services-apres.json',{'services_proteges_redemarres':changes,'postgresql_redemarre':pg_redemarre})
         exiger(not changes,'Service protégé redémarré')
         exiger(sha(Path('/proc')/maintenant['mrjam-metier']/'exe')==plan['artefact_sha256'],'Binaire servi différent')
         stage.commande(['systemctl','is-active','mrjam-metier','kanidm','nginx','postgresql'],d)
@@ -286,7 +283,8 @@ def promouvoir(d,activer=True):
             'comptes_et_schemas_existants_preserves':True,'client_oidc_secret_et_retours_preserves':True,
             'sauvegarde_actuelle_reussie':True,'restauration_actuelle_isolee_reussie':True,
             'invariants_metier_existants_identiques':True,'retour_code_disponible':True,'retour_independant_reel':True}
-        preuve['postgres_recharge_sans_redemarrage']=True
+        preuve['postgres_redemarrage_borne']=pg_redemarre
+        preuve['postgres_regles_chargees_et_role_verifies']=True
         ecrire(d/'termine.json',preuve);print(json.dumps(preuve))
     except Exception:
         retour(d,stage,etat);stage.commande(['systemctl','stop',timer+'.timer'],d);raise
