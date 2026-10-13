@@ -25,6 +25,11 @@ def main(composant='log', activer=True):
     attendues={'log-protocole-elm','log-interface','log-interface-promotion','log-parcours'} if composant=='log' else {'audition-metier','audition-oidc','audition-interface','audition-assemblage'}
     exiger(set(p['recus'])==attendues,'Qualification incomplète')
     exiger(re.fullmatch('[a-f0-9]{40}',p['revision_sources']) and re.fullmatch('[a-f0-9]{40}',p['revision_transport']),'Révisions invalides')
+    # Checkout Actions est volontairement peu profond. Recevoir le seul commit
+    # qualifié, puis conserver le contrôle de chacun de ses octets ci-dessous.
+    if subprocess.run(['git','cat-file','-e',p['revision_sources']+'^{commit}'],cwd=RACINE,
+                      stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL).returncode:
+        subprocess.run(['git','fetch','--quiet','--no-tags','--depth','1','origin',p['revision_sources']],cwd=RACINE,check=True)
     for nom,h in p['sources_qualifiees'].items():
         f=RACINE/nom
         exiger(f.resolve().is_relative_to(RACINE) and hashlib.sha256(f.read_bytes()).hexdigest()==h,'Source non qualifiée')
