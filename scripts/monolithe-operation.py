@@ -20,7 +20,18 @@ def diagnostiquer(nixpkgs,revision):
 def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
-    operation=os.environ.get('MRJAM_OPERATION');d=stage.descriptor();rev=d['revision_operateurs']
+    operation=os.environ.get('MRJAM_OPERATION')
+    if operation in ('audition-preparer','audition-deployer'):
+        spec=importlib.util.spec_from_file_location('stage_audition',ROOT/'scripts/log-interface-stage.py')
+        m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+        m.main('audition',activer=operation=='audition-deployer');return
+    if operation=='audition-retour':
+        p=__import__('json').loads((ROOT/'operations/audition-candidat.json').read_text());cible=p['revision_sources']
+        stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',cible),'Révision de retour invalide')
+        root=Path('/root/mrjam-corrections/audition')/cible
+        stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+          ' -p python3 --run '+shlex.quote('python3 -B '+str(root/'payload/promouvoir.py')+' retour '+cible));return
+    d=stage.descriptor();rev=d['revision_operateurs']
     stage.exiger(operation in ('restaurer','deployer','retour','diagnostic','confirmer-retour'),'Opération inconnue')
     if operation=='confirmer-retour':
         nixpkgs=stage.manifeste()['toolchain']['production']['nixpkgs']

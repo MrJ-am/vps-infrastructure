@@ -5,8 +5,8 @@
 (defun erreur-http (status) (error 'http-error :status status))
 
 (defstruct (configuration-runtime (:conc-name configuration-)
-             (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log taches socket (workers 32))))
-  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log taches socket workers
+             (:constructor faire-configuration (&key matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log audition taches socket (workers 32))))
+  matheval origine document-vision executeur-vision gestion-dsn cycle admission fermeture log audition taches socket workers
   (quotas (faire-quotas)))
 
 (defun ligne-http (s maximum)
@@ -95,6 +95,8 @@
     ;; En production, ce champ provient exclusivement du Nginx autorisé sur le
     ;; socket Unix privé. Il ne vérifie aucune identité par lui-même.
     (cond
+      ((equal service "audition")
+       (router-audition (configuration-audition cfg) (configuration-log cfg) s method target headers body))
       ((equal service "log")
        (router-log (configuration-log cfg) s method target headers body))
       ((equal service "log-idp")

@@ -3540,5 +3540,264 @@
       ]
     },
     "configuration": []
+  },
+  "audition-metier": {
+    "niveau": 4,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-audition.asd",
+        "lisp/audition/*.lisp",
+        "assemblage/audition/*.sql",
+        "tests/audition.lisp",
+        "tests/audition-charger.lisp",
+        "scripts/audition-qualifier.py"
+      ],
+      "vision": [
+        "src/*.lisp",
+        "vision.asd"
+      ]
+    },
+    "impact": [
+      "vps/lisp/audition/*",
+      "vps/mrjam-audition.asd",
+      "vps/assemblage/audition/*.sql",
+      "vps/tests/audition.lisp",
+      "vps/scripts/audition-qualifier.py",
+      "vision/src/mcp.lisp"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/audition-qualifier.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_SBCL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBPQ"
+    ]
+  },
+  "audition-interface": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "interface-audition/src/*.elm",
+        "interface-audition/tests/*.elm",
+        "interface-audition/index.html",
+        "interface-audition/pont.js",
+        "interface-audition/elm.json",
+        "scripts/audition-construire.py",
+        "scripts/revoir-frontends.py",
+        "scripts/frontends.py",
+        "tests/audition-navigateur.cjs",
+        "assemblage/manifest.json",
+        "assemblage/elm-review/ressources.json",
+        "assemblage/elm-review/src/**/*.elm"
+      ],
+      "style": [
+        "src/**/*.elm",
+        "public/assets/mrjam/*.js",
+        "public/assets/mrjam/ecriture.css"
+      ],
+      "signature": [
+        "fonts/Parisienne-Regular.ttf",
+        "web/signature.css"
+      ]
+    },
+    "impact": [
+      "vps/interface-audition/*",
+      "vps/interface-audition/**/*",
+      "vps/scripts/audition-construire.py",
+      "vps/tests/audition-navigateur.cjs",
+      "style/src/*",
+      "style/src/**/*",
+      "vps/scripts/revoir-frontends.py",
+      "vps/assemblage/elm-review/*",
+      "vps/assemblage/elm-review/**/*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/frontends.py",
+        "construire",
+        "--composant",
+        "audition"
+      ],
+      [
+        "python3",
+        "scripts/frontends.py",
+        "qualifier",
+        "--composant",
+        "audition"
+      ]
+    ],
+    "dependances": [
+      "frontend-regles"
+    ],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "node": [
+        "node",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "ELM_HOME",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE"
+    ],
+    "npm_installations": {
+      "matheval": [
+        "docs/node_modules"
+      ],
+      "logique": [
+        "node_modules"
+      ]
+    }
+  },
+  "audition-assemblage": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "mrjam-*.asd",
+        "lisp/serveur/audition-http.lisp",
+        "lisp/identite/log-oauth.lisp",
+        "lisp/identite/oidc-transactions.lisp",
+        "modules/audition.nix",
+        "modules/gateway.nix",
+        "modules/postgresql.nix",
+        "assemblage/manifest.json",
+        "scripts/frontends.py",
+        "scripts/revoir-frontends.py",
+        "tests/test_audition_assemblage.py",
+        "assemblage/audition/*.nix",
+        "scripts/audition-promouvoir.py",
+        "scripts/log-interface-stage.py",
+        "scripts/log-interface-sceller.py",
+        "scripts/monolithe-operation.py",
+        "scripts/monolithe-sauvegarde.py",
+        ".github/workflows/monolithe-deploiement.yml"
+      ]
+    },
+    "impact": [
+      "vps/modules/audition.nix",
+      "vps/lisp/serveur/audition-http.lisp",
+      "vps/assemblage/audition/*",
+      "vps/scripts/frontends.py",
+      "vps/lisp/identite/log-oauth.lisp",
+      "vps/lisp/identite/oidc-transactions.lisp"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_audition_assemblage.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    }
+  },
+  "audition-oidc": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "lisp/identite/*.lisp",
+        "lisp/serveur/*.lisp",
+        "lisp/audition/*.lisp",
+        "mrjam-*.asd",
+        "assemblage/charger.lisp",
+        "assemblage/oidc/*",
+        "assemblage/audition/*.sql",
+        "scripts/audition-qualifier.py",
+        "scripts/audition-oidc-qualifier.py",
+        "tests/audition-oidc*.lisp",
+        "tests/kanidm_reel.py",
+        "tests/kanidm_politiques.py",
+        "assemblage/kanidm/dependances.json"
+      ],
+      "vision": [
+        "src/*.lisp",
+        "vision.asd"
+      ],
+      "matheval": [
+        "lisp/*.lisp",
+        "matheval.asd"
+      ]
+    },
+    "impact": [
+      "vps/lisp/audition/*",
+      "vps/lisp/serveur/audition-http.lisp",
+      "vps/lisp/serveur/log-http.lisp",
+      "vps/lisp/identite/log-oauth.lisp",
+      "vps/lisp/identite/oidc-transactions.lisp",
+      "vps/scripts/audition-oidc-qualifier.py",
+      "vps/tests/audition-oidc*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "scripts/audition-oidc-qualifier.py"
+      ]
+    ],
+    "dependances": [
+      "audition-metier"
+    ],
+    "outils": {
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "docker": [
+        "docker",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_SBCL",
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBPQ",
+      "MRJAM_LIBSQLITE"
+    ]
   }
 }

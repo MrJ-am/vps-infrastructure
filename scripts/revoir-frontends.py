@@ -96,35 +96,40 @@ def verifier(composant,sources=None,m=None,*,fixture=None,projet_elm=None):
         print(composant+' : elm-review réussi sur toutes les sources assemblées.')
 
 
-def verifier_log():
+def verifier_interne(nom):
     """Consommateur interne, avec le même socle verrouillé et toutes les règles."""
-    sources=chemins_sources();m=manifeste();edge=m['frontends_infrastructure']['log']
+    sources=chemins_sources();m=manifeste();edge=m['frontends_infrastructure'][nom]
     commun=cache_style(sources['style'],edge['revision_style'])/'src'
     cmd,env=outils();parent=RACINE/'state/review-frontends';parent.mkdir(parents=True,exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='log-',dir=parent) as temp:
+    with tempfile.TemporaryDirectory(prefix=nom+'-',dir=parent) as temp:
         stage=Path(temp)
         shutil.copytree(commun,stage/'commun')
-        shutil.copytree(RACINE/'interface-log/src',stage/'src')
-        shutil.copytree(RACINE/'interface-log/tests',stage/'tests')
-        d=json.loads((RACINE/'interface-log/elm.json').read_text());d['source-directories']=['src','commun']
+        shutil.copytree(RACINE/('interface-'+nom)/'src',stage/'src')
+        shutil.copytree(RACINE/('interface-'+nom)/'tests',stage/'tests')
+        d=json.loads((RACINE/('interface-'+nom)/'elm.json').read_text());d['source-directories']=['src','commun']
         (stage/'elm.json').write_text(json.dumps(d)+'\n')
         r=subprocess.run(cmd,cwd=stage,env=env,capture_output=True,text=True)
-        (parent/'log.json').write_text(r.stdout)
-        if r.returncode:raise ValueError('elm-review Log refusé ; rapport state/review-frontends/log.json')
+        (parent/(nom+'.json')).write_text(r.stdout)
+        if r.returncode:raise ValueError('elm-review '+nom+' refusé ; rapport state/review-frontends/'+nom+'.json')
     import importlib.util
     spec=importlib.util.spec_from_file_location('ressources_log',RACINE/'scripts/revoir-ressources.py')
     resources=importlib.util.module_from_spec(spec);spec.loader.exec_module(resources)
-    resources.verifier('log',dict(sources,log=RACINE))
-    print('Log : toutes les sources communes et applicatives, amorçage et interopérabilité contrôlés.')
+    resources.verifier(nom,dict(sources,**{nom:RACINE}))
+    print(nom+' : toutes les sources communes et applicatives, amorçage et interopérabilité contrôlés.')
+
+
+def verifier_log():
+    """API historique conservée pour les qualifieurs Log déjà publiés."""
+    return verifier_interne('log')
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--composant',choices=['vision','matheval','logique','style','log'],action='append')
+    p.add_argument('--composant',choices=['vision','matheval','logique','style','log','audition'],action='append')
     p.add_argument('--fixture',type=Path,help='Projet synthétique complet ; mêmes règles sans exclusions')
     args=p.parse_args()
     for cle in args.composant or ['style','vision','matheval','logique']:
-        if cle=='log':verifier_log()
+        if cle in ('log','audition'):verifier_interne(cle)
         else:verifier(cle,fixture=args.fixture)
 
 

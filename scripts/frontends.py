@@ -344,11 +344,19 @@ def construire(cle, sources, m,qualification=False,campagne='base'):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('operation', choices=['preparer', 'construire','qualifier'])
-    p.add_argument('--composant', choices=['vision', 'matheval', 'logique', 'style','signature'])
+    p.add_argument('--composant', choices=['vision', 'matheval', 'logique', 'style','signature','audition'])
     p.add_argument('--campagne',choices=['base','complement','unitaire'],default='base')
     args = p.parse_args()
     if args.operation != 'preparer' and not args.composant: p.error('--composant requis')
-    if args.composant=='signature' and args.operation!='qualifier':p.error('Signature est qualifiée sans nouvelle construction de site')
+    if args.composant=='audition':
+        if args.operation=='preparer':p.error('Audition réutilise la préparation centrale du socle')
+        if args.operation=='construire':
+            from importlib.util import spec_from_file_location, module_from_spec
+            spec=spec_from_file_location('audition_construire',RACINE/'scripts/audition-construire.py')
+            module=module_from_spec(spec);spec.loader.exec_module(module);module.construire()
+        else:subprocess.run(['node',str(RACINE/'tests/audition-navigateur.cjs')],check=True)
+        return
+    if args.composant=='signature'  and args.operation!='qualifier':p.error('Signature est qualifiée sans nouvelle construction de site')
     sources = chemins_sources(atelier=os.environ.get('MRJAM_ATELIER'))
     m = manifeste()
     if args.operation != 'preparer': construire(args.composant,sources,m,args.operation=='qualifier',args.campagne)

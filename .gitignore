@@ -12,3 +12,5 @@ state/
 *.zip
 reports/http-startup.log
 elm-stuff/
+interface-audition/.dependances/
+interface-audition/dist/

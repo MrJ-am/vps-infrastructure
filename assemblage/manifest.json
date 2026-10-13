@@ -12,7 +12,7 @@
     "vision": {
       "depot": "MrJ-am/vision",
       "branche": "main",
-      "revision": "decf5f70b9b22f042638d28ff6ec4481d584b5e8",
+      "revision": "0270c38ec981b610dd6194d7c1cf691c7152de52",
       "role": "bibliotheque-asdf"
     },
     "matheval": {
@@ -30,7 +30,7 @@
     "style": {
       "depot": "MrJ-am/style-mrjam",
       "branche": "main",
-      "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+      "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
       "role": "elm-ui"
     },
     "signature": {
@@ -158,6 +158,26 @@
       "revision_signature": "17194087eec9162bb5372221c43e1de0501dfe6a",
       "source": "interface-log",
       "etat": "en-developpement-non-promu"
+    },
+    "audition": {
+      "revision_style": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "revision_signature": "17194087eec9162bb5372221c43e1de0501dfe6a",
+      "source": "interface-audition",
+      "etat": "en-developpement-non-promu"
+    }
+  },
+  "composants_internes": {
+    "audition": {
+      "depot": "MrJ-am/vps-infrastructure",
+      "revision": "self",
+      "systemes": [
+        "mrjam-audition/modele",
+        "mrjam-audition/services",
+        "mrjam-audition"
+      ],
+      "schema": 1,
+      "domaine": "audition.mrj.am",
+      "etat": "implementation-en-qualification-non-deployee"
     }
   }
 }

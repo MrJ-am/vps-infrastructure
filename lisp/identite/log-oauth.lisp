@@ -1,5 +1,15 @@
 (in-package #:mrjam-log)
 
+;; Audience bornée à la requête centrale. Les grants sont liés à une session
+;; host-only ; verifier/jetons exigent la session de cette audience à chaque appel.
+;; Vision garde la valeur historique par défaut et les grants existants.
+(defvar *hote-mcp* "vision.mrj.am")
+(defun origine-mcp ()
+  (unless (member *hote-mcp* '("vision.mrj.am" "audition.mrj.am") :test #'equal) (refuser 403))
+  (concatenate 'string "https://" *hote-mcp*))
+(defun url-mcp () (concatenate 'string (origine-mcp) "/mcp"))
+(defun scope-mcp () (if (equal *hote-mcp* "audition.mrj.am") "audition:mcp" "vision:mcp"))
+
 (defun initialiser-oauth (c)
   "Adaptateur du contrat OAuth MCP existant ; aucun compte ni authentificateur."
   (base c (lambda (db)
@@ -38,30 +48,30 @@
 
 (defun metadata-mcp (&optional resource)
   (if resource
-      (vision:jobject "resource" "https://vision.mrj.am/mcp"
-        "authorization_servers" (vision:jarray "https://vision.mrj.am")
-        "scopes_supported" (vision:jarray "vision:mcp") "bearer_methods_supported" (vision:jarray "header"))
-      (vision:jobject "issuer" "https://vision.mrj.am"
-        "authorization_endpoint" "https://vision.mrj.am/oauth/authorize"
-        "token_endpoint" "https://vision.mrj.am/oauth/token"
-        "registration_endpoint" "https://vision.mrj.am/oauth/register"
-        "revocation_endpoint" "https://vision.mrj.am/oauth/revoke"
+      (vision:jobject "resource" (url-mcp)
+        "authorization_servers" (vision:jarray (origine-mcp))
+        "scopes_supported" (vision:jarray (scope-mcp)) "bearer_methods_supported" (vision:jarray "header"))
+      (vision:jobject "issuer" (origine-mcp)
+        "authorization_endpoint" (concatenate 'string (origine-mcp) "/oauth/authorize")
+        "token_endpoint" (concatenate 'string (origine-mcp) "/oauth/token")
+        "registration_endpoint" (concatenate 'string (origine-mcp) "/oauth/register")
+        "revocation_endpoint" (concatenate 'string (origine-mcp) "/oauth/revoke")
         "response_types_supported" (vision:jarray "code")
         "grant_types_supported" (vision:jarray "authorization_code" "refresh_token")
         "code_challenge_methods_supported" (vision:jarray "S256")
         "token_endpoint_auth_methods_supported" (vision:jarray "none")
-        "scopes_supported" (vision:jarray "vision:mcp"))))
+        "scopes_supported" (vision:jarray (scope-mcp)))))
 
 (defun demander-mcp (c cookies query &optional (maintenant (temps)))
-  (let* ((session (session c "vision.mrj.am" cookies maintenant))
+  (let* ((session (session c *hote-mcp* cookies maintenant))
          (client (j query "client_id")) (redirect (j query "redirect_uri"))
          (state (j query "state")) (challenge (j query "code_challenge"))
          (id (mrjam-native:aleatoire-url)))
     (unless session (refuser))
     (unless (and (equal (j query "response_type") "code") (equal (j query "code_challenge_method") "S256")
                  (mrjam-oidc::secret-url-p challenge) (mrjam-oidc::texte-borne-p state 1 1024)
-                 (equal (j query "scope") "vision:mcp")
-                 (member (j query "resource") '(nil "https://vision.mrj.am/mcp") :test #'equal)) (refuser 400))
+                 (equal (j query "scope") (scope-mcp))
+                 (member (j query "resource") (list nil (url-mcp)) :test #'equal)) (refuser 400))
     (base c (lambda (db) (mrjam-native:sqlite-transaction db (lambda (db)
       (let ((row (first (mrjam-native:sqlite-requete db "SELECT * FROM log_oauth_clients WHERE id=?" (list client)))))
         (unless (and row (member redirect (vision:json-array-items (vision:parse-json (champ row "redirects"))) :test #'equal)) (refuser 400)))
@@ -72,16 +82,16 @@
     id))
 
 (defun lire-demande-mcp (c cookies id &optional (maintenant (temps)))
-  (unless (session c "vision.mrj.am" cookies maintenant) (refuser))
+  (unless (session c *hote-mcp* cookies maintenant) (refuser))
   (let ((row (base c (lambda (db) (first (mrjam-native:sqlite-requete db
        "SELECT r.id,c.name,r.redirect FROM log_oauth_requests r JOIN log_oauth_clients c ON c.id=r.client WHERE r.id=? AND r.session=? AND r.expires>?"
        (list id (mrjam-native:sha256 (token-cookie cookies "__Host-mrj_session")) maintenant)))))))
     (unless row (refuser 404))
     (vision:jobject "id" (champ row "id") "client" (champ row "name") "redirect_uri" (champ row "redirect")
-                    "scope" "vision:mcp")))
+                    "scope" (scope-mcp))))
 
 (defun consentir-mcp (c cookies id accepter &optional (maintenant (temps)))
-  (unless (session c "vision.mrj.am" cookies maintenant) (refuser))
+  (unless (session c *hote-mcp* cookies maintenant) (refuser))
   (base c (lambda (db) (mrjam-native:sqlite-transaction db (lambda (db)
     (let ((row (first (mrjam-native:sqlite-requete db "SELECT * FROM log_oauth_requests WHERE id=? AND session=? AND expires>?"
                  (list id (mrjam-native:sha256 (token-cookie cookies "__Host-mrj_session")) maintenant))))
@@ -105,7 +115,7 @@
       (mrjam-native:sqlite-requete db "INSERT INTO log_oauth_tokens VALUES(?,?,?,?,?,NULL,?)"
         (list (mrjam-native:sha256 secret) client parent kind (+ maintenant duree) famille)))
     (vision:jobject "access_token" access "refresh_token" refresh "token_type" "Bearer"
-                    "expires_in" duree-access "scope" "vision:mcp")))
+                    "expires_in" duree-access "scope" (scope-mcp))))
 
 (defun jetons-mcp (c query &optional (maintenant (temps)))
   (let* ((client (j query "client_id")) (grant (j query "grant_type"))
@@ -113,7 +123,7 @@
          (table (if (equal grant "authorization_code") "log_oauth_codes" "log_oauth_tokens")))
     (unless (and (member grant '("authorization_code" "refresh_token") :test #'equal)
                  (mrjam-oidc::secret-url-p secret)
-                 (member (j query "resource") '(nil "https://vision.mrj.am/mcp") :test #'equal)) (refuser 400))
+                 (member (j query "resource") (list nil (url-mcp)) :test #'equal)) (refuser 400))
     ;; Authentification native hors verrou SQLite ; puis relecture atomique
     ;; du grant pour consommation/rotation. Les entrées restent bornées.
     (let* ((digest (mrjam-native:sha256 secret))
@@ -121,7 +131,7 @@
                     (concatenate 'string "SELECT * FROM " table " WHERE digest=? AND client=?") (list digest client)))))))
       (unless (and row (> (champ row "expires") maintenant)
                    (or (equal grant "authorization_code") (equal (champ row "kind") "refresh"))
-                   (session-digest c "vision.mrj.am" (champ row "session") maintenant)) (refuser 400))
+                   (session-digest c *hote-mcp* (champ row "session") maintenant)) (refuser 400))
       (when (equal grant "authorization_code")
         (let ((verifier (j query "code_verifier")))
           (unless (and (mrjam-oidc::texte-borne-p verifier 43 128)
@@ -145,14 +155,16 @@
                 (creer-paire-mcp db client (champ current "session") famille maintenant))))))))))
         (or result (refuser 400))))))
 
-(defun verifier-mcp (c authorization &optional (maintenant (temps)))
+(defun session-mcp (c authorization &optional (maintenant (temps)))
   (when (and (stringp authorization) (>= (length authorization) 7) (string-equal "Bearer " authorization :end2 7)
              (mrjam-oidc::secret-url-p (subseq authorization 7)))
     (let ((row (base c (lambda (db) (first (mrjam-native:sqlite-requete db
                   "SELECT session FROM log_oauth_tokens WHERE digest=? AND kind='access' AND revoked IS NULL AND expires>?"
                   (list (mrjam-native:sha256 (subseq authorization 7)) maintenant)))))))
-      (when row (let ((s (session-digest c "vision.mrj.am" (champ row "session") maintenant)))
-                  (champ s "username"))))))
+      (when row (session-digest c *hote-mcp* (champ row "session") maintenant)))))
+
+(defun verifier-mcp (c authorization &optional (maintenant (temps)))
+  (champ (session-mcp c authorization maintenant) "username"))
 
 (defun revoquer-mcp (c client token &optional (maintenant (temps)))
   (unless (mrjam-oidc::secret-url-p token) (refuser 400))

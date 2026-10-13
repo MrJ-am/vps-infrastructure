@@ -6,7 +6,8 @@
 :CUSTOM_ID: coordination
 :END:
 La mission et son amendement du 11 octobre2026 remplacent le protocole v1.
-Le périmètre reste les six dépôts ; ETP Vie Amoureuse totalement exclu.
+Le périmètre conserve les six dépôts et ajoute Audition comme composant interne
+de l'assembleur (mission du 13 octobre2026). ETP Vie Amoureuse reste exclu.
 MrJ-am/vps-infrastructure est responsable de l'assemblage. Le manifeste
 assemblage/manifest.json identifie les six sources, révisions et contrats.
 Publier les composants avant référencement. Aucun accusé de lecture,
@@ -109,3 +110,28 @@ schéma assemblé 27 (réconciliation explicite RLS sans réécriture des donné
 schéma de référence initial 25 ; migrations 026/027 appliquées et monolithe actif
 au jalon1 qualifié. État/reçus exacts : assemblage/qualification-production-etape1.json ;
 nouveaux constats avant la bascule Kanidm, sans réécrire ce résultat historique.
+
+* Audition — contrat pédagogique et intégration
+La mission Audition du13octobre2026 autorise ses bibliothèques internes et les
+adaptations nécessaires du socle, sans nouvelle dépendance externe. Domaine
+audition.mrj.am, DNS Alwaysdata existant inchangé. Les systèmes
+mrjam-audition/modele, mrjam-audition/services et mrjam-audition sont chargés par
+mrjam-metier ; aucun listener, daemon, connexion ou migration au chargement.
+Les appels web/MCP utilisent les mêmes services et autorisations. Le transport
+MCP est celui de Vision, avec invoker/catalogue/info serveur bornés à la requête.
+Le broker OAuth Log conserve Vision par défaut ; Audition a une audience et des
+sessions host-only distinctes. Ni Swank ni outils MCP de développement publics.
+
+Habilitations explicites par groupe ; administrateur technique sans accès implicite
+aux productions. Prescription officielle, proposition LLM, production rapportée,
+aides et interprétation sont séparées. Une proposition MCP attend l'enregistrement
+web de l'enseignant pour devenir officielle. Consignes/barèmes/cours sont versionnés,
+séances et observations gardent les versions utilisées. Clôture complète, idempotence,
+verrous/conflits et adoption explicite des versions sont des invariants serveur.
+L'exactitude mathématique et l'honnêteté du client ne sont pas certifiées.
+
+Elm/elm-ui et Animator partagés, variante Audio exacte de Signature/Style, palette
+commune. Qualification centrale : audition-metier, audition-interface,
+audition-assemblage. Activation conditionnée aux preuves réelles Log/OAuth,
+sauvegarde/restauration et retour de code avec données récentes préservées.
+Voir assemblage/audition/CONTRAT.md, MCP.md et EXPLOITATION.md.

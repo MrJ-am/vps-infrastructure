@@ -32,7 +32,10 @@
     "mrjam-courriel (interne infrastructure)",
     "mrjam-identite (client provisoire interne)",
     "vision/admission",
-    "vision/fermeture"
+    "vision/fermeture",
+    "mrjam-audition (interne infrastructure)",
+    "mrjam-audition/modele",
+    "mrjam-audition/services"
   ],
   "kanidm": {
     "autorise": true,
@@ -2326,6 +2329,18 @@
       "fichier": "tests/fixtures/review-inutilise/elm.json",
       "sha256": "88736fa417a5ea5b853efa9adaf1f8d04a5d6d4e30be00cb9886f6de48188cca",
       "origine": "fixture synthetique du controle frontend obligatoire"
+    },
+    {
+      "composant": "vps",
+      "fichier": "interface-audition/elm.json",
+      "sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0",
+      "origine": "Audition interne ; réutilisation exacte du graphe Elm approuvé de Log"
+    },
+    {
+      "composant": "vps",
+      "fichier": "interface-log/elm.json",
+      "sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0",
+      "origine": "Inventorier le client Log déjà présent, sans changement de son graphe ni ajout de bibliothèque externe"
     }
   ],
   "python_profils": {

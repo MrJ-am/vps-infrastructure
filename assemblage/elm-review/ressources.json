@@ -16,6 +16,9 @@
     ],
     "log": [
       "interface-log/"
+    ],
+    "audition": [
+      "interface-audition/"
     ]
   },
   "bibliotheques_generees": {
@@ -47,6 +50,10 @@
         "ateliers/logo/src/Palette/Couleurs.elm": "ce2e144b0a63196d97f563cf85e677a3c941ecceb8e93e620b1bd3bc97499043",
         "src/MrJam/OKLab.elm": "f1cb4ec549cd301c2a7cfb9bcc97d15c8ee494947d8f3713a8e3b5dcfcbccc1a"
       }
+    },
+    "style/public/assets/mrjam/ecriture.css": {
+      "sha256": "a1c7061c33ab8eef246964e01cf90b8c6aa690a39e6f3b9026155467d4bba8cc",
+      "role": "Déclaration bornée de la fonte Parisienne existante de Signature ; aucune règle de présentation applicative."
     }
   },
   "adaptateurs_js": {

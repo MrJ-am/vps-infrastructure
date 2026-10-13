@@ -47,7 +47,7 @@ def nix(expression):
     return json.loads(commande(['nix-instantiate','-I','nixpkgs='+NIXPKGS,'--eval','--strict','--json','--expr',expression]))
 
 def schema(requete):
-    tables=json.loads(requete("SELECT coalesce(json_agg(json_build_array(schemaname,tablename) ORDER BY schemaname,tablename),'[]')::text FROM pg_tables WHERE schemaname IN ('public','vision_gestion')"))
+    tables=json.loads(requete("SELECT coalesce(json_agg(json_build_array(schemaname,tablename) ORDER BY schemaname,tablename),'[]')::text FROM pg_tables WHERE schemaname IN ('public','vision_gestion','audition')"))
     resultat={}
     for namespace,t in tables:
         # SHA-256 PostgreSQL officiel ; seule l'empreinte quitte le serveur SQL.
