@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "57c05412dc003099b547bd7751b1005e9c7e1b7c",
+  "revision_sources": "77d905581cd8ecd4484f080040d4c2f01552238e",
   "revision_construction": "29ebb727a1046dc7b5157de018f8526d726473c9",
   "qualification_image": {
     "format": 1,
@@ -101,7 +101,7 @@
     "tests_secondes": 9.7737,
     "qualification": "candidat Nix local HTTP/transactions/redemarrage, pas production"
   },
-  "revision_assemblage": "57c05412dc003099b547bd7751b1005e9c7e1b7c",
+  "revision_assemblage": "77d905581cd8ecd4484f080040d4c2f01552238e",
   "generation_attendue": "/nix/store/wib5anxz5ryw8si1z7lfkmdywiw29srf-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
   "artefact_avant": "46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff",
   "paquet_metier": "/nix/store/dv109y63kv9cvpmnkqkcvcyjiqh1ssi2-mrjam-metier-29ebb727a104",
@@ -212,7 +212,7 @@
     "001-schema.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
     "roles.sql": "413c25784387b4f46bc4febb890b1663c504621fca769e87caff3415211e97b4",
     "preparer.py": "f55fe3aa44be376d192fb3b33940da4657f2f82fea844abaf83a771425bc4fbc",
-    "sauvegarde.py": "08df4beaf9b3298757e9278fc4b91d68662d1b8bd4a1b2f1765223664b6712fb",
+    "sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
     "native.py": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
     "site/assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
     "site/assets/mrjam/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
@@ -312,9 +312,9 @@
     "image.nar": "b4a5fd4b4750fa72a718f0fdd7c6d1d19d4325621856e5b8d626cc5307920f0e"
   },
   "recipient_ssh": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKKe0VAhlUUoMePTyzULCxedYl6jFlpJbhHM62SJEd6+",
-  "archive_sha256": "266bc8c37e3a633673093b2f39c2786c10efff7241192bdc38a73e921b03d01e",
-  "cipher_sha256": "778d99d5d285043a6d10a4876fda792b0fb573e88c64bbdeb835637cb3539dcd",
-  "cipher_octets": 13727261,
+  "archive_sha256": "a7f37bdde62098e5197e8a9cafd3d4dffdb8067314659ab39856e339795ec9d7",
+  "cipher_sha256": "4c80619f3eab636e773608bf73872cecce594f998c122abed2ea458895e4da7a",
+  "cipher_octets": 13727288,
   "origine_preuves": "codex-local-non-attestee",
   "recus": {
     "audition-metier": {
@@ -3595,7 +3595,7 @@
           "vps/scripts/log-interface-stage.py": "4d6e089aecd1ba11dcc0ff41555a66bfa69ee6472e20ede6ec0cae92183bd7ae",
           "vps/scripts/log-interface-sceller.py": "5e176976b80af55f805d42d19c6f493437e0248fdfcc13bfb2182350de3ae96f",
           "vps/scripts/monolithe-operation.py": "c65b50af0c93da5a3e0e7599c4c9af9fdf6d9649f35914ac371cfd64545121aa",
-          "vps/scripts/monolithe-sauvegarde.py": "08df4beaf9b3298757e9278fc4b91d68662d1b8bd4a1b2f1765223664b6712fb",
+          "vps/scripts/monolithe-sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
           "vps/.github/workflows/monolithe-deploiement.yml": "3fb32b8b03219a1e999f99f6641e1b3fc69c464d8c7be169cba917d761a904e5"
         },
         "environnement": {
@@ -3623,7 +3623,7 @@
       "codes": [
         0
       ],
-      "duree_secondes": 8.993
+      "duree_secondes": 8.6085
     }
   },
   "sources_qualifiees": {
@@ -3704,7 +3704,7 @@
     "scripts/log-interface-stage.py": "4d6e089aecd1ba11dcc0ff41555a66bfa69ee6472e20ede6ec0cae92183bd7ae",
     "scripts/monolithe-operation.py": "c65b50af0c93da5a3e0e7599c4c9af9fdf6d9649f35914ac371cfd64545121aa",
     "scripts/monolithe-reference.py": "b71d4d3be8a91fac2cec42e3d7c2f35b9a1c5d73522e1d6d8a5e9fcfc8a12529",
-    "scripts/monolithe-sauvegarde.py": "08df4beaf9b3298757e9278fc4b91d68662d1b8bd4a1b2f1765223664b6712fb",
+    "scripts/monolithe-sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
     "scripts/revoir-frontends.py": "e1b069bd9f472c0270ed5d7d037fd91cab82fbf298361df1ba2cfa608513fc4a",
     "tests/audition-charger.lisp": "1ea66fa4b53712a6d1d44f79de73f305d65d5f682c0d4b1453e5051ed551acd9",
     "tests/audition-navigateur.cjs": "a48548b165bd3a84241b8d976c7f7d2db036cc2d3ecdb365eedd3025982dadc1",
@@ -3716,7 +3716,7 @@
   "paquet_kanidm": "/nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2",
   "outils": "/nix/store/a2ai6rhqhmba55arai7mxrs7mlwzlxfw-mrjam-outils-qualification",
   "transport": "git-chiffre",
-  "revision_transport": "2d542c943320169e89c5ef9182bf8606abfc297e",
+  "revision_transport": "76d855b76d4f81bc6627595c646d7ca0565dc493",
   "parties_transport": [
     "candidat.tar.gz.age.part-000"
   ],
