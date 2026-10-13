@@ -89,6 +89,13 @@ cette chaîne avant activation ajoutée au préparateur. Scellement à renouvele
 uniquement pour les opérateurs/configurations, binaire métier inchangé.
 Qualification ciblée réussie : routage38,7426s, opérations12+23cas/0,504s ;
 49reçus identiques réutilisés, aucune campagne navigateur ou Lisp relancée.
+Descripteur0e9942d/run38324574933 annulé après HTTP502 sur interfaces communes,
+découverteNative réussie et empreintes conservées. Diagnostic38325389424 : aucun
+démarrage métier refusé, SQLite600/propriétaire métier. Attente HTTP bornée du
+contrôle étape1 réutilisée pour Type simple ; refus permanents sans reessai.
+Nouveau scellement requis ; aucune nouvelle image métier, aucun mail envoyé.
+Disponibilité qualifiée localement : sélection1,1394s, opérations13+23cas/5,074s,
+49reçus exacts conservés. Sonde réelle502→200 passée ;403refusé sans reessai.
 
 Suite immédiate : workflow manuel log-deploiement.yml, opération deployer sur
 main. Il vérifie le bundle, construit les superpositions depuis l'installation

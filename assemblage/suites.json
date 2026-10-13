@@ -3070,7 +3070,10 @@
         "tests/test_monolithe_stage.py",
         "scripts/monolithe-preparer.py",
         "scripts/monolithe-restaurer.py",
-        "operations/log-reprise-native.json"
+        "operations/log-reprise-native.json",
+        "scripts/monolithe-activer.py",
+        "scripts/monolithe-reference.py",
+        "tests/test_monolithe_sondes.py"
       ]
     },
     "impact": [

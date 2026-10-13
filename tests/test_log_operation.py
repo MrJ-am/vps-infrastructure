@@ -13,6 +13,22 @@ s=importlib.util.spec_from_file_location('operation_log',ROOT/'scripts/log-activ
 m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
 
 class Reprise(unittest.TestCase):
+    def test_sondes_reelles_disponibilite_bornee_sans_masquer_refus(self):
+        spec=importlib.util.spec_from_file_location('sondes_fixture_log',ROOT/'tests/test_monolithe_sondes.py')
+        fixture=importlib.util.module_from_spec(spec);spec.loader.exec_module(fixture)
+        with tempfile.TemporaryDirectory() as tmp:
+            d=Path(tmp)
+            with fixture.serveur([502,200]+[200]*10) as (url,instants):
+                m.sonde_publique(d,fixture.m,'vision',url)
+            r=json.loads((d/'sondes-log.json').read_text())
+            self.assertEqual(r['vision']['disponibilite_codes'],[502,200])
+            self.assertEqual(r['vision']['codes'],[200]);self.assertEqual(len(instants),12)
+            with fixture.serveur([403]) as (url,instants):
+                with self.assertRaises(fixture.m.SondeHorsContrat):m.sonde_publique(d,fixture.m,'vision',url)
+                self.assertEqual(len(instants),1)
+            texte=(d/'sondes-log.json').read_text()
+            self.assertEqual(json.loads(texte)['vision'],{'codes':[403],'hors_contrat':True})
+            self.assertNotIn(url,texte);self.assertNotIn('public',texte)
     def test_politique_native_reprise_exacte_sans_ecriture(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)/'log.sqlite'

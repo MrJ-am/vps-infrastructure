@@ -251,19 +251,31 @@ def retablir_rattachement(plan):
     if actuel=={'emetteur':NEW_ISSUER,'sujet':plan['subject']}: rattacher(plan,retour=True)
     else: exiger(actuel=={k:plan['ancien_lien'][k] for k in ('emetteur','sujet')},'Rattachement concurrent au retour')
 
+def sonde_publique(d,reference,nom,url):
+    f=d/'sondes-log.json'
+    sondes=json.loads(f.read_text()) if f.exists() else {}
+    try:
+        sondes[nom]=reference.latence(url,(200,),attendre=True)
+    except reference.SondeHorsContrat as erreur:
+        sondes[nom]={'codes':erreur.codes,'hors_contrat':True}
+        ecrire(f,sondes);raise
+    ecrire(f,sondes)
+
 def sonder(d,p,cert,plan):
     reference=module('log_sondes','scripts/monolithe-reference.py')
     stage.commande(['systemctl','is-active','kanidm','mrjam-metier','nginx','postgresql'],d)
     stage.commande(['systemctl','is-active',*[n for n in stage.TIERS if n not in ('keycloak','mrj-auth')]],d)
     for n in ('keycloak','mrj-auth','vision','matheval'):
         exiger(stage.commande(['systemctl','show',n,'-p','MainPID','--value'],d).strip() in (b'',b'0'),'Ancien processus actif')
-    pid=stage.commande(['systemctl','show','mrjam-metier','-p','MainPID','--value'],d).decode().strip()
-    exiger(hashlib.sha256(Path('/proc',pid,'exe').read_bytes()).hexdigest()==cert['qualification']['artefact_sha256'],'Artefact actif différent')
+    commun=module('log_artefact_servi','scripts/monolithe-activer.py')
+    commun.attendre_artefact(d,cert['qualification']['artefact_sha256'])
+    sonde_publique(d,reference,'log_decouverte','https://log.mrj.am/oauth2/openid/mrjam-vision/.well-known/openid-configuration')
     with urllib.request.urlopen('https://log.mrj.am/oauth2/openid/mrjam-vision/.well-known/openid-configuration',timeout=15) as r:
         discovery=json.load(r)
     exiger(discovery['issuer']==NEW_ISSUER and discovery['code_challenge_methods_supported']==['S256'],'Découverte active incorrecte')
-    for url in ('https://vision.mrj.am/','https://principiipetit.io/matheval/api/health','https://logique.echos.systems/'):
-        with urllib.request.urlopen(url,timeout=15) as r:exiger(r.status==200,'Interface publique indisponible')
+    for nom,url in (('vision','https://vision.mrj.am/'),('matheval','https://principiipetit.io/matheval/api/health'),
+                    ('logique','https://logique.echos.systems/')):
+        sonde_publique(d,reference,nom,url)
     ressources=[('vision','https://vision.mrj.am/app.js','app.js'),
                 ('logique','https://logique.echos.systems/app.js','app.js')]
     ressources += [('matheval','https://principiipetit.io/matheval/'+f,f) for f in
@@ -358,6 +370,7 @@ def activer(d,p,cert):
           kanidm_actif=True,keycloak_actif=False,mrj_auth_python_actif=False,proprietaire_metier_preserve=True,
           rattachement_explicite=True,anciennes_identites_retirees=True,donnees_preservees=True,
           redemarrage_verifie=True,restauration_native_isolee=True,mail=preuve_mail,services=mesures,
+          sondes_publiques=json.loads((d/'sondes-log.json').read_text()),
           etape2_complete=False,qualification_personnelle='en attente',
           limites=['Fermetures communes définitives IdP à terminer ; admission native conservée, secret borné90jours à renouveler par exploitation.',
                    'Préférences individuelles et panneau commun complet restent à qualifier ; rôle propriétaire limité à sept jours.',
