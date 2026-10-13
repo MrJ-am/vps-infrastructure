@@ -25,7 +25,11 @@ let
     }) (builtins.removeAttrs cfg.services.nginx.virtualHosts [ "audition.mrj.am" ]);
     postgres = { package = toString cfg.services.postgresql.finalPackage;
       settings = builtins.removeAttrs cfg.services.postgresql.settings [ "hba_file" "ident_file" ];
-      inherit (cfg.services.postgresql) ensureDatabases ensureUsers; };
+      inherit (cfg.services.postgresql) ensureDatabases ensureUsers dataDir;
+      identMap = lib.concatStringsSep "\n" (builtins.filter (l: l != "mrjam_metier mrjam-metier audition_app")
+        (lib.splitString "\n" cfg.services.postgresql.identMap));
+      service = builtins.removeAttrs cfg.systemd.services.postgresql.serviceConfig [ "ExecStartPre" "ExecReload" ];
+      env = cfg.systemd.services.postgresql.environment; };
     kernel = toString cfg.boot.kernelPackages.kernel;
     firewall = cfg.networking.firewall.allowedTCPPorts;
     acme = { defaults = cfg.security.acme.defaults; certs = builtins.removeAttrs cfg.security.acme.certs [ "audition.mrj.am" ]; };
@@ -47,6 +51,13 @@ in {
   authenticationAvant = b.services.postgresql.authentication;
   authenticationApres = c.services.postgresql.authentication;
   identMapAvant = b.services.postgresql.identMap; identMapApres = c.services.postgresql.identMap;
+  postgresReload = c.systemd.services.postgresql.reloadIfChanged;
+  postgresReloadCommande = c.systemd.services.postgresql.serviceConfig.ExecReload;
+  postgresPreStart = c.systemd.services.postgresql.preStart;
+  postgresPreStartAvant = b.systemd.services.postgresql.preStart;
+  postgresConfigurationAvant = b.services.postgresql.settings;
+  postgresConfigurationApres = c.services.postgresql.settings;
+  postgresDataDir = c.services.postgresql.dataDir;
   auditionDsn = c.systemd.services.mrjam-metier.environment.AUDITION_DSN;
   kanidmCommande = c.systemd.services.kanidm.serviceConfig.ExecStart;
   host = { inherit (c.services.nginx.virtualHosts."audition.mrj.am") enableACME forceSSL; };

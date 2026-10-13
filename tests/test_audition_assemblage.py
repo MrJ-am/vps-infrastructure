@@ -64,6 +64,14 @@ class Audition(unittest.TestCase):
                          r['authenticationAvant'].replace('local vision audition_app peer map=mrjam_metier\n', ''))
         self.assertTrue(r['host']['enableACME']); self.assertTrue(r['host']['forceSSL'])
         self.assertIn('audition_app', r['auditionDsn'])
+        self.assertTrue(r['postgresReload'])
+        self.assertRegex(r['postgresReloadCommande'], r'^/nix/store/[a-z0-9]{32}-mrjam-postgresql-recharger \$MAINPID$')
+        # Une seule sélection du fichier, sans initdb dans le rechargement.
+        self.assertEqual(r['postgresPreStart'].count('ln -sfn'), 1)
+        sans_lien=lambda texte:[l for l in texte.splitlines() if 'ln -sfn' not in l]
+        self.assertEqual(sans_lien(r['postgresPreStartAvant']),sans_lien(r['postgresPreStart']))
+        self.assertEqual({k:v for k,v in r['postgresConfigurationAvant'].items() if k not in ('hba_file','ident_file')},
+                         {k:v for k,v in r['postgresConfigurationApres'].items() if k not in ('hba_file','ident_file')})
 
     def test_retour_code_garde_les_donnees_recentes(self):
         from types import SimpleNamespace
@@ -98,6 +106,19 @@ class Audition(unittest.TestCase):
             self.assertEqual(m.etat_unite('temoin.service')['LoadState'], 'not-found')
         with patch.object(m.subprocess, 'run', return_value=SimpleNamespace(returncode=1, stdout='')):
             with self.assertRaises(ValueError):m.etat_unite('temoin.service')
+
+    def test_rechargement_constate_les_regles_et_le_role_reel(self):
+        from unittest.mock import Mock, patch
+        from types import SimpleNamespace
+        spec = importlib.util.spec_from_file_location('promotion_audition', ROOT / 'scripts/audition-promouvoir.py')
+        m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+        attendu={'hba_file':'/fixture/hba','ident_file':'/fixture/ident'}
+        backup=SimpleNamespace(sql=Mock(side_effect=[json.dumps(attendu),'t']))
+        with patch.object(m.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='t\n')):
+            m.verifier_rechargement(backup,'/fixture/pg',{'postgresConfigurationApres':attendu})
+        backup.sql=Mock(side_effect=[json.dumps(attendu),'f'])
+        with self.assertRaisesRegex(ValueError,'Règles PostgreSQL'):
+            m.verifier_rechargement(backup,'/fixture/pg',{'postgresConfigurationApres':attendu})
 
 
 if __name__ == '__main__': unittest.main()
