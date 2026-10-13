@@ -4,8 +4,9 @@
 
 Production toujours étape1 (9qv8n9gd/296b7), aucun courriel personnel envoyé.
 Candidat métier construit77129dd, SHA256bc70c8225908dd0c566fdcb27a49d62e8b1e39d46c81862098a5221676e9fcbb.
-Opérateurs corrigés scellésff808fda6872, transport chiffré3b82b2d0e5f5
-(182408885octets,cinq parties). 72d53d8/48716d0 annulé avant attenteHTTP.
+Opérateurs corrigés scellésd2450d1ef20e, transport chiffrée9255f2ab342
+(182413973octets,cinq parties). ff808fd/3b82b2d annulé par job backup nocturne.
+72d53d8/48716d0 annulé avant attenteHTTP.
 17def8c/383d471 a été annulé après HTTP502.
 7892f3c/a2328b1 a été activé puis annulé ;
 il fournit uniquement la référence privée de reprise native contrôlée.
