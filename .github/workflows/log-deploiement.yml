@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           persist-credentials: false
+          # Le descripteur suit le commit des sources qualifiées. Vérifier
+          # ce parent exact sans récupérer les branches d'artefacts chiffrés.
+          fetch-depth: 2
       - name: Préparer la clé administrative existante
         env:
           SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}

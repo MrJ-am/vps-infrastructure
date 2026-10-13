@@ -7,6 +7,7 @@ import hashlib
 import json
 import sys
 import tempfile
+import subprocess
 
 ROOT=Path(__file__).resolve().parents[1]
 s=importlib.util.spec_from_file_location('connexion_test',ROOT/'scripts/log-connexion-promouvoir.py')
@@ -47,6 +48,23 @@ class Correction(unittest.TestCase):
         config.assert_not_called();stage.commande.assert_not_called()
 
 class Provenance(unittest.TestCase):
+    def test_revision_sources_disponible_dans_checkout_central(self):
+        workflow=(ROOT/'.github/workflows/log-deploiement.yml').read_text()
+        self.assertIn('fetch-depth: 2',workflow)
+        with tempfile.TemporaryDirectory() as tmp:
+            depot=Path(tmp)/'source';depot.mkdir()
+            def git(*args):return subprocess.check_output(['git','-C',str(depot),*args],stderr=subprocess.DEVNULL)
+            git('init','--quiet');git('config','user.name','Fixture');git('config','user.email','fixture@example.test')
+            (depot/'module.nix').write_text('fixture\n');git('add','module.nix');git('commit','--quiet','-m','Sources')
+            rev=git('rev-parse','HEAD').decode().strip()
+            (depot/'preuve.json').write_text('{}\n');git('add','preuve.json');git('commit','--quiet','-m','Preuve')
+            for profondeur in (1,2):
+                clone=Path(tmp)/str(profondeur)
+                subprocess.run(['git','clone','--quiet','--depth',str(profondeur),depot.as_uri(),str(clone)],check=True,
+                               stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
+                r=subprocess.run(['git','-C',str(clone),'show',rev+':module.nix'],capture_output=True)
+                if profondeur==1:self.assertNotEqual(r.returncode,0)
+                else:self.assertEqual((r.returncode,r.stdout),(0,b'fixture\n'))
     def setUp(self):
         sys.path.insert(0,str(ROOT/'scripts'))
         spec=importlib.util.spec_from_file_location('connexion_ci_test',ROOT/'scripts/log-operation.py')
