@@ -51,6 +51,17 @@ class Selection(unittest.TestCase):
         self.assertIn('integration-securite', s)
         self.assertIn('navigateur-mcp', s)
 
+    def test_reconnexion_couvre_transport_identite_et_consentement_livre(self):
+        for chemin in ('vps/lisp/identite/log-sessions.lisp',
+                       'vps/lisp/identite/log-oauth.lisp',
+                       'vps/lisp/identite/oidc-transport.lisp',
+                       'vps/lisp/serveur/log-http.lisp',
+                       'vision/interface/src/Main.elm',
+                       'vision/interface/src/AutorisationMcp.elm',
+                       'vision/interface/pont.js'):
+            with self.subTest(chemin=chemin):
+                self.assertIn('mcp-reconnexion', a.selection([chemin], self.c))
+
     def test_documentation_seule(self):
         self.assertEqual(['editorial'], a.selection(['vps/docs/ETAT.md'], self.c))
         self.assertEqual(['editorial'], a.selection(['matheval/research/memoire.org'], self.c))

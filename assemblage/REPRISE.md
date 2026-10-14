@@ -1,6 +1,31 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Point de reprise actif — Audition en production
+## Point de reprise actif — reconnexion MCP corrigée, promotion à qualifier
+
+14 octobre : incident personnel « Se reconnecter » depuis une conversation audio
+ChatGPT, erreur JSON immédiate dans le navigateur intégré. Diagnostic readonly
+[38541683112](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38541683112) :
+29 clients historiques conservés. La cause exacte du clic n'est pas attribuable
+sans trace ; reproduction d'une cause compatible sur ff303d8 : cookie Vision
+survivant à un refresh Native révoqué → 401/invalid_request avant connexion.
+
+Vision publié en `a3cb6be33652c7f2b824af0213bd1604eb9d6d5f` avant référencement central.
+Sources corrigées : reprise des sessions expirées/révoquées, pannes conservant
+la session, cookies de transaction par onglet compatibles avec l'ancien retour,
+scope facultatif, invalid_grant côté client, consentement Elm récupérable.
+Suite centrale `mcp-reconnexion` : 24 tests HTTP et 16 parcours par moteur,
+Chromium/Firefox/WebKit. Les quatre régressions principales échouent sur
+l'ancien code. Tests existants Log/OIDC, Elm, consentement et sélecteur passants.
+Voir [la matrice et les commandes](../docs/MCP-RECONNEXION.md).
+
+Qualification de reproduction locale seulement : SBCL et dépendances verrouillés
+préparés hors Nix, règles elm-review centrales, vraie interface compilée, serveur
+HTTP/SQLite/MCP réel ; fournisseur OIDC et callback ChatGPT synthétiques.
+La promotion du candidat Nix avec les reçus centraux, le parcours Kanidm réel
+et l'essai sur l'application ChatGPT ne sont pas attestés ici. Aucun déploiement
+effectué ; les états de production ci-dessous restent ceux constatés.
+
+## État de production conservé — Audition en production
 
 Mission du 13 octobre : application interne ASDF du serveur commun, trois parcours
 Elm/elm-ui/Animator, oreille exacte du socle, PostgreSQL/RLS, Log et MCP public.

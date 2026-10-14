@@ -3368,6 +3368,86 @@
       "chromium"
     ]
   },
+  "mcp-reconnexion": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/mcp-reconnexion-qualifier.py",
+        "tests/mcp_reconnexion*.py",
+        "tests/test_mcp_reconnexion.py",
+        "tests/mcp-reconnexion-serveur.lisp",
+        "lisp/identite/*.lisp",
+        "lisp/serveur/*.lisp",
+        "lisp/native/*.lisp",
+        "mrjam-*.asd",
+        "assemblage/charger.lisp",
+        "assemblage/oidc/*",
+        "assemblage/dependances.json",
+        "assemblage/python/navigateur-cp312-linux-x86_64.txt",
+        "scripts/provenance-outils.py"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/*.lisp",
+        "docs/tutoriel.json",
+        "docs/outils.json",
+        "interface/src/**/*.elm",
+        "interface/app.html",
+        "interface/pont.js",
+        "interface/exports.js",
+        "interface/compiler.py",
+        "interface/style.lock.json",
+        "interface/elm.json",
+        "interface/package-lock.json"
+      ]
+    },
+    "impact": [
+      "vps/scripts/mcp-reconnexion-qualifier.py",
+      "vps/tests/mcp_reconnexion*.py",
+      "vps/tests/test_mcp_reconnexion.py",
+      "vps/tests/mcp-reconnexion-serveur.lisp",
+      "vps/lisp/identite/*.lisp",
+      "vps/lisp/serveur/log-http.lisp",
+      "vps/lisp/serveur/http.lisp",
+      "vision/interface/*",
+      "vision/interface/**/*"
+    ],
+    "commandes": [
+      ["python3", "scripts/mcp-reconnexion-qualifier.py", "--candidat"]
+    ],
+    "dependances": [
+      "json-commun",
+      "native-contrats",
+      "oidc-es256",
+      "oidc-transactions",
+      "oidc-transport",
+      "vision-interface"
+    ],
+    "outils": {
+      "python": ["python3", "--version"],
+      "sbcl": ["sbcl", "--version"],
+      "curl": ["curl", "--version"],
+      "openssl": ["openssl", "version"]
+    },
+    "configuration": [
+      "MRJAM_CURL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBSQLITE",
+      "MRJAM_ATELIER",
+      "CHROMIUM",
+      "CHROMIUM_PATH",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH",
+      "PLAYWRIGHT_BROWSERS_PATH"
+    ],
+    "candidat_frontend": "vision",
+    "python_profils": ["navigateur"],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": ["chromium", "firefox", "webkit"],
+    "reutilisable": false
+  },
   "log-protocole-elm": {
     "niveau": 2,
     "repertoire": "vps",

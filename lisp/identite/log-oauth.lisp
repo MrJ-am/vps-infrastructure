@@ -70,7 +70,9 @@
     (unless session (refuser))
     (unless (and (equal (j query "response_type") "code") (equal (j query "code_challenge_method") "S256")
                  (mrjam-oidc::secret-url-p challenge) (mrjam-oidc::texte-borne-p state 1 1024)
-                 (equal (j query "scope") (scope-mcp))
+                 ;; OAuth permet d'omettre scope ; notre seule portée annoncée
+                 ;; est alors le défaut. Une portée explicite étrangère reste refusée.
+                 (equal (or (j query "scope") (scope-mcp)) (scope-mcp))
                  (member (j query "resource") (list nil (url-mcp)) :test #'equal)) (refuser 400))
     (base c (lambda (db) (mrjam-native:sqlite-transaction db (lambda (db)
       (let ((row (first (mrjam-native:sqlite-requete db "SELECT * FROM log_oauth_clients WHERE id=?" (list client)))))
@@ -84,10 +86,16 @@
 (defun lire-demande-mcp (c cookies id &optional (maintenant (temps)))
   (unless (session c *hote-mcp* cookies maintenant) (refuser))
   (let ((row (base c (lambda (db) (first (mrjam-native:sqlite-requete db
-       "SELECT r.id,c.name,r.redirect FROM log_oauth_requests r JOIN log_oauth_clients c ON c.id=r.client WHERE r.id=? AND r.session=? AND r.expires>?"
+       "SELECT r.*,c.name FROM log_oauth_requests r JOIN log_oauth_clients c ON c.id=r.client WHERE r.id=? AND r.session=? AND r.expires>?"
        (list id (mrjam-native:sha256 (token-cookie cookies "__Host-mrj_session")) maintenant)))))))
     (unless row (refuser 404))
     (vision:jobject "id" (champ row "id") "client" (champ row "name") "redirect_uri" (champ row "redirect")
+                    "reprise" (concatenate 'string "/oauth/authorize?"
+                      (mrjam-oidc::formulaire-oidc
+                        (list (cons "client_id" (champ row "client")) (cons "redirect_uri" (champ row "redirect"))
+                              (cons "response_type" "code") (cons "code_challenge_method" "S256")
+                              (cons "code_challenge" (champ row "challenge")) (cons "state" (champ row "state"))
+                              (cons "scope" (scope-mcp)) (cons "resource" (url-mcp)))))
                     "scope" (scope-mcp))))
 
 (defun consentir-mcp (c cookies id accepter &optional (maintenant (temps)))
