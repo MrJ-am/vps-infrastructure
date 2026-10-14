@@ -1096,3 +1096,12 @@ Outillage local hors Nix aux versions verrouillées ; pas de reçu de promotion
 fabriqué, pas de déploiement, pas de séance synthétique en production et pas de
 connexion personnelle ChatGPT revendiquée. Cette correction reste à promouvoir
 avec l'artefact Nix et les preuves centrales, puis à constater sur appareil.
+
+
+- 14 octobre, demande explicite de production reconnexion. Diagnostic38585519292
+  sain, génération zmd027b9 ; candidat Nix fb5b7e217822 construit une fois et
+  qualifié40cas, Visiona3cb6be compilé centralement et72parcours canoniques passants.
+  Export officiel Native chiffré38587825108, NAR vérifié localement ; MFA/SSO/client
+  historique en image froide réussis. Transport/promoteur fermés, invariants Nix,
+  sauvegarde/restauration et retour indépendant avant activation. Aucune activation
+  ni validation sur l'application ChatGPT encore revendiquée.

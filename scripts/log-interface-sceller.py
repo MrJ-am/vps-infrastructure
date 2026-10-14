@@ -20,12 +20,13 @@ def sha(p):
 
 
 def main(destination, composant='log'):
-    if composant not in ('log','audition'): raise ValueError('Composant fermé requis')
+    if composant not in ('log','audition','reconnexion'): raise ValueError('Composant fermé requis')
     if subprocess.check_output(['git','status','--porcelain','--untracked-files=no'],cwd=RACINE):
         raise ValueError('Sources infrastructure non commitées')
     rev=subprocess.check_output(['git','rev-parse','HEAD'],cwd=RACINE,text=True).strip()
     sources=chemins_sources();recus={};suites=catalogue()
     attendues=('log-protocole-elm','log-interface','log-interface-promotion','log-parcours') if composant=='log' else ('audition-metier','audition-oidc','audition-interface','audition-assemblage')
+    if composant=='reconnexion':attendues=('mcp-reconnexion','mcp-reconnexion-native','mcp-reconnexion-promotion')
     for nom in attendues:
         r=json.loads((RACINE/'state/recus'/f'{nom}.json').read_text())
         if r['resultat']!='succes' or r['identite']!=identifiant_suite(nom,suites[nom],sources):
@@ -38,7 +39,13 @@ def main(destination, composant='log'):
     qualification=json.loads((RACINE/'state/artefacts/mrjam-metier.qualification.json').read_text())
     if qualification['artefact_sha256']!=sha(image) or qualification['sources_lisp_sha256']!=construction['sources_lisp_sha256']:
         raise ValueError('Binaire non qualifié ou sources différentes')
-    site=RACINE/('interface-'+composant+'/dist');rapport=json.loads((RACINE/('state/'+composant+'-interface-construction.json' if composant=='log' else 'state/audition-construction.json')).read_text())
+    if composant=='reconnexion':
+        rapport=json.loads((RACINE/'state/frontends-candidats/dernier-vision.json').read_text())
+        site=RACINE/rapport['candidat']
+        from assemblage import manifeste
+        if rapport['revision']!=manifeste()['sources']['vision']['revision']:raise ValueError('Révision Vision différente')
+    else:
+        site=RACINE/('interface-'+composant+'/dist');rapport=json.loads((RACINE/('state/'+composant+'-interface-construction.json' if composant=='log' else 'state/audition-construction.json')).read_text())
     if contenus(site)!=rapport['fichiers']:raise ValueError('Site changé après construction')
     fichiers={};entrees={};mapping={'promouvoir.py':'scripts/log-interface-promouvoir.py',
         'module.nix':'assemblage/log-interface/module.nix','evaluation.nix':'assemblage/log-interface/evaluation.nix'} if composant=='log' else {
@@ -47,6 +54,10 @@ def main(destination, composant='log'):
         '001-schema.sql':'assemblage/audition/001-schema.sql','roles.sql':'assemblage/audition/roles.sql',
         'preparer.py':'scripts/monolithe-preparer.py','sauvegarde.py':'scripts/monolithe-sauvegarde.py',
         'native.py':'scripts/kanidm-api-privee.py'}
+    if composant=='reconnexion':
+        mapping={'promouvoir.py':'scripts/mcp-reconnexion-promouvoir.py',
+            'module.nix':'assemblage/mcp-reconnexion/module.nix','evaluation.nix':'assemblage/mcp-reconnexion/evaluation.nix',
+            'preparer.py':'scripts/monolithe-preparer.py','sauvegarde.py':'scripts/monolithe-sauvegarde.py'}
     for nom,path in mapping.items():
         fichiers[nom]=sha(RACINE/path);entrees[nom]=RACINE/path
     for nom,h in rapport['fichiers'].items():fichiers['site/'+nom]=h;entrees['site/'+nom]=site/nom
@@ -82,6 +93,15 @@ def main(destination, composant='log'):
             'scripts/monolithe-sauvegarde.py','scripts/monolithe-reference.py','scripts/revoir-frontends.py','scripts/frontends.py',
             '.github/workflows/monolithe-deploiement.yml','modules/audition.nix','modules/postgresql.nix','modules/gateway.nix',
             'tests/audition*','tests/test_audition*'],cwd=RACINE,text=True).splitlines()
+    if composant=='reconnexion':
+        tracked=subprocess.check_output(['git','ls-files','lisp','mrjam-*.asd',
+            'assemblage/mcp-reconnexion','assemblage/manifest.json','assemblage/suites.json',
+            'scripts/mcp-reconnexion-*.py','scripts/log-interface-stage.py','scripts/log-interface-sceller.py',
+            'scripts/monolithe-operation.py','scripts/monolithe-preparer.py','scripts/monolithe-sauvegarde.py',
+            'scripts/provenance-outils.py','scripts/frontends.py','scripts/revoir-frontends.py',
+            '.github/workflows/monolithe-deploiement.yml','tests/test_mcp_reconnexion*',
+            'tests/test_provenance_navigateurs.py','tests/log-connexion-base.nix','tests/log-evaluation-base.nix',
+            'modules/metier.nix'],cwd=RACINE,text=True).splitlines()
     p=dict(format=1,revision_sources=rev,revision_construction=construction['source_revision'],qualification_image=qualification,
         revision_assemblage='54988ca67567db04d2e064feae91d558f7bb25fb',
         generation_attendue='/nix/store/61lianh06k1x18jaikq6azyapn059q7x-nixos-system-nixos-26.05.8639.c5c4a43b0e80',
@@ -94,9 +114,14 @@ def main(destination, composant='log'):
         p.update(revision_assemblage=rev,generation_attendue='/nix/store/wib5anxz5ryw8si1z7lfkmdywiw29srf-nixos-system-nixos-26.05.8639.c5c4a43b0e80',
             artefact_avant='46b3c4277d6805a660b864b5028f838cfa388690b7c7efeb861806d61259ccff',
             paquet_kanidm=construction['sorties_nix']['kanidm'],outils=construction['sorties_nix']['outils'])
+    if composant=='reconnexion':
+        p.update(revision_assemblage=rev,
+            generation_attendue='/nix/store/zmd027b9fcpl8xnpmp0ysxdgzj7dn11a-nixos-system-nixos-26.05.8639.c5c4a43b0e80',
+            artefact_avant='a74247c45b0889548c4d05d749cda8d2c77df902cdc9e3f18632789b45e82ae3',
+            revision_vision=rapport['revision'])
     (destination/'candidat.json').write_text(json.dumps(p,indent=2)+'\n')
     print(json.dumps({'revision_sources':rev,'cipher_octets':p['cipher_octets'],'publication':False}))
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('destination',type=Path);p.add_argument('--composant',choices=['log','audition'],default='log');a=p.parse_args();main(a.destination,a.composant)
+    p=argparse.ArgumentParser();p.add_argument('destination',type=Path);p.add_argument('--composant',choices=['log','audition','reconnexion'],default='log');a=p.parse_args();main(a.destination,a.composant)

@@ -3414,7 +3414,11 @@
       "vision/interface/**/*"
     ],
     "commandes": [
-      ["python3", "scripts/mcp-reconnexion-qualifier.py", "--candidat"]
+      [
+        "python3",
+        "scripts/mcp-reconnexion-qualifier.py",
+        "--candidat"
+      ]
     ],
     "dependances": [
       "json-commun",
@@ -3425,10 +3429,22 @@
       "vision-interface"
     ],
     "outils": {
-      "python": ["python3", "--version"],
-      "sbcl": ["sbcl", "--version"],
-      "curl": ["curl", "--version"],
-      "openssl": ["openssl", "version"]
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ],
+      "curl": [
+        "curl",
+        "--version"
+      ],
+      "openssl": [
+        "openssl",
+        "version"
+      ]
     },
     "configuration": [
       "MRJAM_CURL",
@@ -3442,11 +3458,18 @@
       "PLAYWRIGHT_BROWSERS_PATH"
     ],
     "candidat_frontend": "vision",
-    "python_profils": ["navigateur"],
+    "python_profils": [
+      "navigateur"
+    ],
     "navigateurs_python": true,
     "chromium_externe": true,
-    "navigateurs": ["chromium", "firefox", "webkit"],
-    "reutilisable": false
+    "navigateurs": [
+      "chromium",
+      "firefox",
+      "webkit"
+    ],
+    "reutilisable": false,
+    "plateforme_playwright": "debian13-x64"
   },
   "log-protocole-elm": {
     "niveau": 2,
@@ -3879,5 +3902,140 @@
       "MRJAM_LIBPQ",
       "MRJAM_LIBSQLITE"
     ]
+  },
+  "mcp-reconnexion-native": {
+    "niveau": 5,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/log-parcours-qualifier.py",
+        "scripts/log-clients-mcp.py",
+        "scripts/log-operation.py",
+        "scripts/log-diagnostic.py",
+        "scripts/monolithe-stage.py",
+        ".github/workflows/log-deploiement.yml",
+        "tests/log-parcours.lisp",
+        "tests/log-parcours-froid.lisp",
+        "tests/mrjam-log-parcours-tests.asd",
+        "tests/test_log_clients_mcp.py",
+        "tests/test_log_diagnostic_oauth.py",
+        "tests/kanidm_reel.py",
+        "tests/kanidm_politiques.py",
+        "tests/log-kanidm.lisp",
+        "services/mrj-auth/oauth.py",
+        "lisp/identite/*.lisp",
+        "lisp/serveur/log-http.lisp",
+        "mrjam-log.asd",
+        "mrjam-oidc.asd",
+        "assemblage/charger.lisp",
+        "assemblage/oidc/charger-dependances.lisp",
+        "assemblage/kanidm/dependances.json",
+        "assemblage/dependances.json",
+        "assemblage/python/*.txt",
+        "scripts/provenance-outils.py",
+        "tests/log_native_proxy.py"
+      ]
+    },
+    "impact": [
+      "vps/scripts/log-parcours-qualifier.py",
+      "vps/scripts/log-clients-mcp.py",
+      "vps/tests/log-parcours*",
+      "vps/tests/mrjam-log-parcours-tests.asd",
+      "vps/tests/test_log_clients_mcp.py",
+      "vps/tests/test_log_diagnostic_oauth.py",
+      "vps/tests/log_native_proxy.py"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_log_clients_mcp.py"
+      ],
+      [
+        "python3",
+        "tests/test_log_diagnostic_oauth.py"
+      ],
+      [
+        "python3",
+        "scripts/log-parcours-qualifier.py",
+        "--froide"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_KANIDM",
+      "MRJAM_CURL",
+      "MRJAM_LIBCRYPTO",
+      "MRJAM_LIBSQLITE",
+      "PLAYWRIGHT_CHROMIUM_EXECUTABLE",
+      "PLAYWRIGHT_NODEJS_PATH"
+    ],
+    "python_profils": [
+      "navigateur"
+    ],
+    "navigateurs_python": true,
+    "chromium_externe": true,
+    "navigateurs": [
+      "chromium"
+    ],
+    "reutilisable": false
+  },
+  "mcp-reconnexion-promotion": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "scripts/mcp-reconnexion-promouvoir.py",
+        "scripts/log-interface-stage.py",
+        "scripts/log-interface-sceller.py",
+        "scripts/monolithe-operation.py",
+        "scripts/monolithe-preparer.py",
+        "scripts/monolithe-sauvegarde.py",
+        "scripts/provenance-outils.py",
+        "assemblage/mcp-reconnexion/*.nix",
+        ".github/workflows/monolithe-deploiement.yml",
+        "tests/test_mcp_reconnexion_promotion.py",
+        "tests/test_provenance_navigateurs.py",
+        "tests/log-connexion-base.nix",
+        "tests/log-evaluation-base.nix",
+        "modules/*.nix",
+        "hosts/hostinger/*.nix"
+      ]
+    },
+    "impact": [
+      "vps/scripts/mcp-reconnexion*",
+      "vps/assemblage/mcp-reconnexion/*"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_mcp_reconnexion_promotion.py"
+      ],
+      [
+        "python3",
+        "tests/test_provenance_navigateurs.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ]
+    },
+    "configuration": []
   }
 }
