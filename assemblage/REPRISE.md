@@ -1,18 +1,29 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Promotion reconnexion autorisée — candidat qualifié, activation à constater
+## État actif — reconnexion MCP en production
 
-L'utilisateur demande explicitement « Mets en production ». Diagnostic38585519292 :
-production toujours zmd027b9, binaire a74247c4, 29clients historiques conservés.
-Nouveau binaire Nix fb5b7e217822 SHA2e72ea810fb5 :40tests applicatifs réussis,
-Visiona3cb6be candidat central c1072e9e :72parcours réussis, Native réel froid
-MFA/SSO/client historique réussi. Aucun test en application ChatGPT réelle.
-Promotion fermée reconnexion ajoutée à la CI centrale, sans migration ni nouveau
-canal. Les reçus et mêmes octets doivent être scellés puis promus. Pas encore
-activé au moment de cette entrée ; constater le run avant toute reprise.
+14 octobre2026,15:29:58UTC : production activée par demande explicite utilisateur.
+Sources08e1d2d87e6e3c3290171436f6f5fb2acb8b5147, descripteur6091478,
+Visiona3cb6be ; même binaire Nix fb5b7e217822, SHA256
+2e72ea810fb58f75441fe0c9493c5072b91d4939bdff379f4878e4e1c324f0df.
+Génération active/démarrage az22hgl8xp9sab6incdcnhbj7ljang78.
+Préparation38589166917, déploiement38589625866, diagnostic38589943881 et
+référence38590095562 réussis.
+Les 29clients OAuth, données, comptes, Native et processus tiers sont conservés.
+Interfaces servies exactes, MCP anonyme401, découverte200, redémarrage et
+persistance constatés. Backup actuel chiffré/restauration isolée :38tables Vision,
+6Matheval,100identité ; empreintes sémantiques identiques. Retour indépendant
+exercé ; retour code seul disponible par reconnexion-retour, aucune base ancienne
+à restaurer sur les écritures courantes. Ancienne génération zmd027b9 conservée.
 
+Qualification locale :40tests du même binaire,72parcours Chromium/Firefox/WebKit,
+Native réel froid MFA/SSO/client historique, invariants Nix et refus hors périmètre.
+Aucun essai dans l'application ChatGPT réelle ; ce parcours sur appareil reste
+à constater. Les détails sont dans docs/MCP-RECONNEXION.md et la preuve de
+production operations/mcp-reconnexion-production.json. Ne pas rejouer deployer
+sur cette opération terminée ; diagnostic fermé disponible.
 
-## Point de reprise actif — reconnexion MCP corrigée, promotion à qualifier
+## Historique — correction avant qualification de promotion
 
 14 octobre : incident personnel « Se reconnecter » depuis une conversation audio
 ChatGPT, erreur JSON immédiate dans le navigateur intégré. Diagnostic readonly
@@ -37,7 +48,7 @@ La promotion du candidat Nix avec les reçus centraux, le parcours Kanidm réel
 et l'essai sur l'application ChatGPT ne sont pas attestés ici. Aucun déploiement
 effectué ; les états de production ci-dessous restent ceux constatés.
 
-## État de production conservé — Audition en production
+## Historique — état précédent avec Audition en production
 
 Mission du 13 octobre : application interne ASDF du serveur commun, trois parcours
 Elm/elm-ui/Animator, oreille exacte du socle, PostgreSQL/RLS, Log et MCP public.
