@@ -122,8 +122,9 @@ l'étape, l'OS/version, l'heure, le statut et la réussite de l'appel, sans
 exporter les URL ni les secrets. Un appel de catalogue suffit pour la sonde
 automatique ; aucune séance fictive en production.
 
-Au moment de cette correction, la matrice est locale : aucun déploiement ni
-essai sur l'application ChatGPT réelle n'est attesté par ces tests.
+À l'étape de reproduction initiale, aucun déploiement n'était attesté. La
+promotion ci-dessous est maintenant constatée ; l'essai ChatGPT sur appareil
+reste distinct des tests automatisés.
 
 
 ## Qualification du candidat de production — 14 octobre 2026
@@ -155,3 +156,29 @@ exercé ; après : ressources HTTPS, MCP anonyme401, découverte200, clients OAu
 invariants métier et persistance après redémarrage. Retour du code uniquement.
 Les commandes fermées sont `reconnexion-preparer`, `reconnexion-deployer`,
 `reconnexion-diagnostic` et `reconnexion-retour` dans le workflow central.
+
+
+## Production constatée
+
+Activation le14octobre2026 à15:29:58UTC, génération
+`az22hgl8xp9sab6incdcnhbj7ljang78-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+[Préparation38589166917](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38589166917),
+[déploiement38589625866](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38589625866)
+et [diagnostic38589943881](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38589943881)
+réussis. Binaire et site correspondent aux empreintes qualifiées ci-dessus.
+Les29clients OAuth restent identiques après activation et redémarrage, de même
+que les données métier ; Native, PostgreSQL et services tiers sont préservés.
+La sauvegarde actuelle a été déchiffrée et restaurée dans un cluster isolé avec
+empreintes identiques. Le témoin de retour indépendant fonctionne. Aucun compte,
+consentement ou contenu fictif n'a été créé en production.
+
+Le document et le JavaScript publics ont aussi été téléchargés depuis l'atelier :
+leurs empreintes correspondent au candidat. La preuve synthétique est conservée
+dans `operations/mcp-reconnexion-production.json`. Ces sondes ne prétendent pas
+exécuter une conversation audio dans l'application ChatGPT.
+
+[Référence38590095562](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38590095562)
+réussie : génération active et démarrage identiques, serveur métier RSS180.7Mio,
+cgroup avec cache172.1Mio. Les latences de dix lectures publiques par route
+sont conservées dans la preuve ; elles ne mesurent pas un appel authentifié ni
+le réseau du téléphone.

@@ -1105,3 +1105,15 @@ avec l'artefact Nix et les preuves centrales, puis à constater sur appareil.
   historique en image froide réussis. Transport/promoteur fermés, invariants Nix,
   sauvegarde/restauration et retour indépendant avant activation. Aucune activation
   ni validation sur l'application ChatGPT encore revendiquée.
+
+
+- 14octobre2026,15:29:58UTC : reconnexion MCP réellement en production.
+  Sources08e1d2d/descripteur6091478, Visiona3cb6be, générationaz22hgl8,
+  binaire2e72ea81 et sitec1072e9e identiques aux candidats qualifiés.
+  Préparation38589166917, déploiement38589625866, diagnostic38589943881 réussis.
+  Backup/restauration38Vision/6Matheval/100identité, données et29clients OAuth
+  préservés ; Native/tiers intacts, persistance après redémarrage, ressources
+  HTTPS exactes et vérification externe. Retour code seul disponible et témoin
+  indépendant réussi. Parcours ChatGPT réel sur téléphone encore non constaté.
+  Référence38590095562 réussie : métier RSS180.7Mio, cgroup172.1Mio ;
+  générations active/démarrage identiques, latences publiques mesurées séparément.
