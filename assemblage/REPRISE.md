@@ -1,5 +1,17 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Promotion reconnexion autorisée — candidat qualifié, activation à constater
+
+L'utilisateur demande explicitement « Mets en production ». Diagnostic38585519292 :
+production toujours zmd027b9, binaire a74247c4, 29clients historiques conservés.
+Nouveau binaire Nix fb5b7e217822 SHA2e72ea810fb5 :40tests applicatifs réussis,
+Visiona3cb6be candidat central c1072e9e :72parcours réussis, Native réel froid
+MFA/SSO/client historique réussi. Aucun test en application ChatGPT réelle.
+Promotion fermée reconnexion ajoutée à la CI centrale, sans migration ni nouveau
+canal. Les reçus et mêmes octets doivent être scellés puis promus. Pas encore
+activé au moment de cette entrée ; constater le run avant toute reprise.
+
+
 ## Point de reprise actif — reconnexion MCP corrigée, promotion à qualifier
 
 14 octobre : incident personnel « Se reconnecter » depuis une conversation audio

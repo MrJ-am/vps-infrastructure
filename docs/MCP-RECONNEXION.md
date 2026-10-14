@@ -124,3 +124,34 @@ automatique ; aucune séance fictive en production.
 
 Au moment de cette correction, la matrice est locale : aucun déploiement ni
 essai sur l'application ChatGPT réelle n'est attesté par ces tests.
+
+
+## Qualification du candidat de production — 14 octobre 2026
+
+Le candidat Nix `v2zss0pfglkl8ba1g6lwxwkx5az29jbq-mrjam-metier-fb5b7e217822`
+est construit une seule fois (SHA256
+`2e72ea810fb58f75441fe0c9493c5072b91d4939bdff379f4878e4e1c324f0df`).
+Ses 40 tests réels HTTP/PostgreSQL passent. Vision `a3cb6be` est construit par
+`frontends.py`, elm-review central sans suppression ; ensemble
+`c1072e9e8d93267a42ba8a43ca60104d990399a6634dc2ce19735132ae54eebb`.
+Les 72 parcours passent sur ce candidat frontend avec les outils Nix canoniques,
+le profil Python verrouillé et WebKit original, sans lanceur de remplacement.
+Le profil Debian13-x64 sélectionne explicitement la révision WebKit2311 ; une
+variante incompatible ou forcée est refusée et les moteurs sont empreintés.
+
+`mcp-reconnexion-native` complète cette matrice : Kanidm1.11.2 exact de production,
+export chiffré par la CI existante et empreinte NAR vérifiée, serveur local isolé,
+MFA initiale, SSO sans formulaire, pages déjà connectées, ancienne session Vision,
+client historique et nouveau consentement PKCE. Processus Lisp propre ; aucune
+qualification en image persistante n'est revendiquée.
+
+`mcp-reconnexion-promotion` vérifie l'évaluation Nix comparative et le retour sans
+restauration des bases. Le changement se limite au binaire et au document Vision,
+sans changement de configuration Native, PostgreSQL ou des autres sites. Un port
+supplémentaire fait échouer les invariants. Le canal central reçoit le même NAR,
+compare ses empreintes et refuse une production différente. Avant bascule :
+sauvegarde actuelle chiffrée, restauration isolée, timer indépendant réellement
+exercé ; après : ressources HTTPS, MCP anonyme401, découverte200, clients OAuth,
+invariants métier et persistance après redémarrage. Retour du code uniquement.
+Les commandes fermées sont `reconnexion-preparer`, `reconnexion-deployer`,
+`reconnexion-diagnostic` et `reconnexion-retour` dans le workflow central.

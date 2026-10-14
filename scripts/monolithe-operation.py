@@ -25,6 +25,17 @@ def main():
         spec=importlib.util.spec_from_file_location('outillage_reconnexion',ROOT/'scripts/mcp-reconnexion-outillage.py')
         m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
         m.main();return
+    if operation in ('reconnexion-preparer','reconnexion-deployer'):
+        spec=importlib.util.spec_from_file_location('stage_reconnexion',ROOT/'scripts/log-interface-stage.py')
+        m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+        m.main('reconnexion',activer=operation=='reconnexion-deployer');return
+    if operation in ('reconnexion-diagnostic','reconnexion-retour'):
+        p=__import__('json').loads((ROOT/'operations/mcp-reconnexion-candidat.json').read_text());cible=p['revision_sources']
+        stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',cible),'Révision invalide')
+        root=Path('/root/mrjam-corrections/reconnexion')/cible
+        phase='diagnostic' if operation=='reconnexion-diagnostic' else 'retour'
+        stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+          ' -p python3 --run '+shlex.quote('python3 -B '+str(root/'payload/promouvoir.py')+' '+phase+' '+cible));return
     if operation=='audition-diagnostic':
         p=__import__('json').loads((ROOT/'operations/audition-candidat.json').read_text());cible=p['revision_sources']
         stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',cible),'Révision de diagnostic invalide')

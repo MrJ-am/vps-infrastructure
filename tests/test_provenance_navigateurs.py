@@ -59,3 +59,37 @@ class Navigateurs(unittest.TestCase):
             (pkg/'browsers.json').write_text(json.dumps({'browsers':[{'name':'firefox','revision':'456'}]}))
             with patch.dict(os.environ,{'PLAYWRIGHT_BROWSERS_PATH':str(root/'absent')}):
                 with self.assertRaises(ValueError):p.navigateurs({'navigateurs_npm':{'style':'node_modules'},'navigateurs':['firefox'],'chromium_externe':True},{'style':root})
+
+
+class Provenance(unittest.TestCase):
+    def verifier(self,version,profil,override=None):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);package=root/'state/outils-python/navigateur/lib/python3.12/site-packages/playwright/driver/package'
+            package.mkdir(parents=True)
+            (package/'browsers.json').write_text(json.dumps({'browsers':[{
+                'name':'webkit','revision':'2311','revisionOverrides':{'debian11-x64':'2105'}}]}))
+            for revision in ('2311','2105'):
+                d=root/'cache'/('webkit-'+revision);d.mkdir(parents=True);(d/'moteur').write_text(revision)
+            node=root/'node';node.write_text('node commun')
+            env={'PLAYWRIGHT_NODEJS_PATH':str(node),'PLAYWRIGHT_BROWSERS_PATH':str(root/'cache')}
+            if override:env['PLAYWRIGHT_HOST_PLATFORM_OVERRIDE']=override
+            with patch.object(p,'RACINE',root),patch.object(p.shutil,'which',return_value=str(node)),\
+                 patch.object(p.platform,'freedesktop_os_release',return_value={'ID':'debian','VERSION_ID':version}),\
+                 patch.object(p.platform,'machine',return_value='x86_64'),patch.dict(os.environ,env,clear=True):
+                return p.navigateurs({'navigateurs_python':True,'navigateurs':['webkit'],
+                                     'plateforme_playwright':profil},{})
+
+    def test_distribution_actuelle_utilise_moteur_courant(self):
+        self.assertIn('python/webkit-2311',self.verifier('13','debian13-x64'))
+
+    def test_ancienne_distribution_utilise_sa_variante(self):
+        self.assertIn('python/webkit-2105',self.verifier('11','debian11-x64'))
+
+    def test_refus_profil_incompatible(self):
+        with self.assertRaises(ValueError):self.verifier('13','debian11-x64')
+
+    def test_refus_override_non_atteste(self):
+        with self.assertRaises(ValueError):self.verifier('13','debian13-x64','debian11-x64')
+
+
+if __name__=='__main__':unittest.main()

@@ -7,6 +7,7 @@ import hashlib
 import json
 import os
 import shutil
+import platform
 from pathlib import Path
 from assemblage import RACINE
 
@@ -63,12 +64,19 @@ def navigateurs(suite,sources):
             # PLAYWRIGHT_CHROMIUM_EXECUTABLE ; ne pas prétendre exécuter le cache.
             if suite.get('chromium_externe') and b['name'] in ('chromium','chromium-headless-shell'):
                 continue
-            # Les profils sont Linux x86_64 ; les seules variantes des moteurs
-            # retenus concernent macOS. Refuser une future variante Linux plutôt
-            # que présumer la résolution de Playwright.
+            revision=b['revision']
             if any(k.startswith(('ubuntu','debian','linux')) for k in b.get('revisionOverrides',{})):
-                raise ValueError('Variante Linux du navigateur : profil explicite requis')
-            revision=b['revision'];nom_cache=b['name'].replace('-','_')
+                # Verrouiller la variante réellement choisie sur cette machine,
+                # y compris quand seules les anciennes distributions diffèrent.
+                os_release=platform.freedesktop_os_release()
+                architecture={'x86_64':'x64','aarch64':'arm64'}.get(platform.machine())
+                actuelle=os_release['ID']+os_release['VERSION_ID']+'-'+str(architecture)
+                profil=suite.get('plateforme_playwright')
+                if not architecture or profil!=actuelle or os.environ.get('PLAYWRIGHT_HOST_PLATFORM_OVERRIDE'):
+                    raise ValueError('Variante Linux du navigateur : profil explicite correspondant requis')
+                revision=b.get('revisionOverrides',{}).get(profil,revision)
+                result['plateforme_playwright']=profil
+            nom_cache=b['name'].replace('-','_')
             dossier=cache/(nom_cache+'-'+revision)
             result[nom+'/'+dossier.name]=arbre(dossier)
     for k in ('PLAYWRIGHT_CHROMIUM_EXECUTABLE','CHROMIUM'):
