@@ -129,10 +129,16 @@ class ReconnexionHTTP(unittest.TestCase):
         self.assertNotEqual(before['refresh'],after['refresh'])
 
     def test_panne_introspection_ne_supprime_pas_session(self):
-        cookies=self.login();before=self.f.sql('SELECT * FROM log_sessions')
+        cookies=self.login();tokens=self.grant(cookies)
+        before=self.f.sql('SELECT * FROM log_sessions')
         self.f.faults['/oauth2/token/introspect']=(503,{'error':'temporarily_unavailable'})
         url,_,_=self.f.authorization(self.client)
-        self.assertEqual(self.f.request('GET',url.removeprefix(VISION),cookies=cookies)[0],503)
+        status,headers,error=self.f.request('GET',url.removeprefix(VISION),cookies=cookies)
+        self.assertEqual((status,error),(503,{'error':'temporarily_unavailable'}))
+        self.assertEqual(header(headers,'Retry-After'),'5')
+        status,_,error=self.f.request('POST','/oauth/token',urlencode(dict(grant_type='refresh_token',
+            client_id=self.client,refresh_token=tokens['refresh_token'])))
+        self.assertEqual((status,error),(503,{'error':'temporarily_unavailable'}))
         self.assertEqual(self.f.sql('SELECT * FROM log_sessions'),before)
         self.f.faults.clear()
         self.assert_mcp(self.grant(cookies)['access_token'])

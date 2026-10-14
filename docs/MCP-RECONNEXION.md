@@ -21,8 +21,9 @@ par le transport en `invalid_request`, avant toute redirection vers Log.
 
 - Une session absente, expirée ou définitivement révoquée reprend la connexion,
   en conservant la demande OAuth, son état et son challenge PKCE.
-- Une panne d'introspection ou de renouvellement retourne 503 et conserve la
-  session. Elle n'est pas assimilée à une révocation.
+- Une panne d'introspection ou de renouvellement retourne 503 avec
+  `temporarily_unavailable` et `Retry-After`, et conserve la session.
+  Elle n'est pas assimilée à une révocation ou à une requête invalide.
 - Chaque connexion possède son cookie de transaction ; deux onglets ne
   s'écrasent plus. Un retour déjà commencé avec l'ancien cookie reste accepté.
 - L'absence de `scope` sélectionne l'unique portée annoncée ; une portée

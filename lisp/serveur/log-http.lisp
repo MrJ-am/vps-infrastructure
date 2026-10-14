@@ -116,5 +116,11 @@
                   (csrf session) (mrjam-log:revoquer-autres contexte hote cookies)
                   (log-json s 200 (vision:jobject "sessionsApplicativesRevoquees" :true)))
                  (t (erreur-http 404))))))
-        (mrjam-log:log-error (e) (erreur-http (mrjam-log:statut-erreur e)))
+        (mrjam-log:log-error (e)
+          ;; Un fournisseur indisponible n'a pas reçu une mauvaise requête.
+          ;; Préserver le statut ET le code OAuth récupérable par le client.
+          (if (= 503 (mrjam-log:statut-erreur e))
+              (log-json s 503 (vision:jobject "error" "temporarily_unavailable")
+                        (list '("Retry-After" . "5")))
+              (erreur-http (mrjam-log:statut-erreur e))))
         (mrjam-oidc:oidc-error () (erreur-http 401))))))
