@@ -35,7 +35,14 @@
              (log-json s 201 (mrjam-log::enregistrer-client contexte (document "application/json"))))
             ((and (equal method "POST") (equal path "/oauth/token"))
              (unless (member hote '("vision.mrj.am" "audition.mrj.am") :test #'equal) (erreur-http 403))
-             (log-json s 200 (mrjam-log::jetons-mcp contexte (document "application/x-www-form-urlencoded"))))
+             (handler-case
+                 (log-json s 200 (mrjam-log::jetons-mcp contexte (document "application/x-www-form-urlencoded")))
+               (mrjam-log:log-error (e)
+                 ;; Un grant expiré/révoqué demande une nouvelle autorisation
+                 ;; au client OAuth. Une panne 503 n'est jamais invalid_grant.
+                 (if (member (mrjam-log:statut-erreur e) '(400 401 403))
+                     (log-json s 400 (vision:jobject "error" "invalid_grant"))
+                     (error e)))))
             ((and (equal method "POST") (equal path "/oauth/revoke"))
              (unless (member hote '("vision.mrj.am" "audition.mrj.am") :test #'equal) (erreur-http 403))
              (let ((p (document "application/x-www-form-urlencoded")))
@@ -48,9 +55,16 @@
                (log-json s 204 (vision:jobject) (list (cons "X-Mrj-User" username)))))
             ((and (equal method "GET") (equal path "/oauth/authorize"))
              (unless (member hote '("vision.mrj.am" "audition.mrj.am") :test #'equal) (erreur-http 403))
-             (if (mrjam-log:session contexte hote cookies)
-                 (redirection (concatenate 'string "/#autorisation-mcp=" (mrjam-log::demander-mcp contexte cookies query)))
-                 (redirection (concatenate 'string "/auth/connexion?retour=" (mrjam-native:parametre-url target)))))
+             (flet ((connecter ()
+                      (redirection (concatenate 'string "/auth/connexion?retour=" (mrjam-native:parametre-url target)))))
+               (handler-case
+                   (if (mrjam-log:session contexte hote cookies)
+                       (redirection (concatenate 'string "/#autorisation-mcp=" (mrjam-log::demander-mcp contexte cookies query)))
+                       (connecter))
+                 ;; Cookie ambigu ou session expirée entre les deux contrôles :
+                 ;; aucune identité accordée, nouvelle connexion complète.
+                 (mrjam-log:log-error (e)
+                   (if (= 401 (mrjam-log:statut-erreur e)) (connecter) (error e))))))
             ((and (equal method "GET") (equal path "/auth/connexion"))
              (multiple-value-bind (url cookie) (mrjam-log:demarrer contexte hote (or (vision:json-object-get query "retour") "/"))
                (when (equal (vision:json-object-get query "verification") "renforcee")

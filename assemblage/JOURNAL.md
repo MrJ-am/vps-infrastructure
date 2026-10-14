@@ -1074,3 +1074,25 @@ Correction explicite, autres PID bloquants et connexion/règles PG constatées.
 Aucun groupe, production ou participation de preuve en production. Pas d'essai
 Mistral ni de connexion personnelle inventée ; limites et preuves dans
 [audition/COMPTE-RENDU.md](audition/COMPTE-RENDU.md) et sa qualification-production.
+
+## 14 octobre — reconnexion Vision MCP
+
+Diagnostic central readonly38541683112 : 29clients historiques toujours présents.
+Reproduction sur l'ancien serveur d'un cookie Vision dont le refresh Native est
+révoqué : erreur401/invalid_request avant connexion. Incident personnel compatible,
+sans attribution certaine faute de trace du clic dans le navigateur ChatGPT.
+
+Reprise corrigée, transactions parallèles indépendantes, scope omis accepté,
+révocations distinguées des pannes, consentement Elm débloqué après perte de
+réponse/expiration. Aucun contrôle CSRF, PKCE, compte ou usage unique relâché.
+24tests HTTP et16parcours par moteur Chromium/Firefox/WebKit ; quatre régressions
+échouent sur l'ancien code. Tests Log12/OIDC681/transactions40/transport32,
+Elm4, sélecteur26, consentement existant, format et règles frontend centrales.
+La matrice TLS utilise le serveur livré et l'interface compilée ; IdP et callback
+ChatGPT sont des doubles. Commande centrale et limites :
+[MCP-RECONNEXION.md](../docs/MCP-RECONNEXION.md).
+
+Outillage local hors Nix aux versions verrouillées ; pas de reçu de promotion
+fabriqué, pas de déploiement, pas de séance synthétique en production et pas de
+connexion personnelle ChatGPT revendiquée. Cette correction reste à promouvoir
+avec l'artefact Nix et les preuves centrales, puis à constater sur appareil.

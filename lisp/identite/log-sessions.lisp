@@ -43,8 +43,13 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
   (format nil "~A=~A; Path=/; Secure; HttpOnly; SameSite=Lax; Max-Age=~D" nom valeur duree))
 (defun cookie-session (valeur &optional (duree (* 7 86400)))
   (cookie "__Host-mrj_session" valeur duree))
-(defun cookie-transaction (valeur &optional (duree 600))
-  (cookie "__Host-mrj_oidc" valeur duree))
+(defun nom-cookie-transaction (state)
+  (unless (mrjam-oidc::secret-url-p state) (refuser 400))
+  (concatenate 'string "__Host-mrj_oidc_" state))
+(defun cookie-transaction (valeur &optional (duree 600) state)
+  ;; Chaque onglet possède son binding. Le cookie historique reste lisible
+  ;; pour terminer les connexions commencées avant une mise à jour.
+  (cookie (if state (nom-cookie-transaction state) "__Host-mrj_oidc") valeur duree))
 (defun token-cookie (texte nom)
   (when (stringp texte)
     (let ((trouve nil))
@@ -69,7 +74,7 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
                 (cons "nonce" (mrjam-oidc:demarrage-nonce d))
                 (cons "code_challenge" (mrjam-oidc:demarrage-challenge d))
                 (cons "code_challenge_method" "S256"))))
-      (cookie-transaction (mrjam-oidc:demarrage-binding d)))))
+      (cookie-transaction (mrjam-oidc:demarrage-binding d) 600 (mrjam-oidc:demarrage-state d)))))
 
 (defun principal (c issuer subject)
   (let ((p (funcall (contexte-identifier c) issuer subject)))
@@ -85,7 +90,9 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
 
 (defun retour (c hote state code cookie &optional (maintenant (temps)))
   (let* ((client (client c hote))
-         (binding (token-cookie cookie "__Host-mrj_oidc"))
+         (nom-cookie (nom-cookie-transaction state))
+         (binding-propre (token-cookie cookie nom-cookie))
+         (binding (or binding-propre (token-cookie cookie "__Host-mrj_oidc")))
          (transaction (mrjam-oidc:consommer-transaction (contexte-chemin c)
            state binding (mrjam-oidc::client-oidc-id client) hote maintenant))
          ;; Consommation avant HTTP : un timeout ne rend jamais le code rejouable.
@@ -106,17 +113,26 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
               (j d "access_token") (j d "refresh_token") (champ transaction "nonce")))))))
     (values (champ transaction "retour")
             (cookie-session token (duree-session c (mrjam-oidc:identite-sujet id)))
-            (cookie-transaction "" 0))))
+            (cookie-transaction "" 0 (when binding-propre state)))))
 
 (defun session (c hote cookies &optional (maintenant (temps)))
   (let ((secret (token-cookie cookies "__Host-mrj_session")))
     (when secret (session-digest c hote (mrjam-native:sha256 secret) maintenant))))
 
+(defun document-introspection (reponse)
+  (let ((document (mrjam-oidc:reponse-oidc-document reponse)))
+    ;; Une erreur fournisseur ou une réponse tronquée ne révoque pas un compte.
+    (unless (and (= 200 (mrjam-oidc:reponse-oidc-statut reponse))
+                 (vision:json-object-p document)
+                 (member (j document "active") '(:true :false))) (refuser 503))
+    document))
+
 (defun session-digest (c hote digest &optional (maintenant (temps)))
   "Chemin interne du broker MCP : DIGEST provient de sa base, jamais d'un header."
   (unless (and (stringp digest) (= 64 (length digest))
                (every (lambda (x) (find x "0123456789abcdef")) digest)) (refuser))
-  (let ((client (client c hote)))
+  (handler-case
+   (let ((client (client c hote)))
     ;; Une seule image produit : sérialiser rotation/révocation d'une session.
     (sb-thread:with-mutex ((contexte-verrou c))
       (let ((row (base c (lambda (db) (first (mrjam-native:sqlite-requete db
@@ -126,12 +142,26 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
         (let* ((issuer (mrjam-oidc:issuer-client (mrjam-oidc::client-oidc-id client)))
                (p (principal c issuer (champ row "subject")))
                (r (mrjam-oidc:introspecter-jeton client (champ row "access")))
-               (d (mrjam-oidc:reponse-oidc-document r)))
+               (d (document-introspection r)))
           (unless (equal (j p "utilisateur") (champ row "username")) (refuser 403))
-          (when (and (= 200 (mrjam-oidc:reponse-oidc-statut r))
-                     (or (not (eq :true (j d "active")))
-                         (and (integerp (j d "exp")) (<= (j d "exp") (+ maintenant 60)))))
-            (let* ((tokens (document-token (mrjam-oidc:renouveler-jetons client (champ row "refresh"))))
+          ;; Une indisponibilité n'est pas une révocation. Ne pas détruire la
+          ;; session ni envoyer la personne dans une boucle de connexion.
+          (when (or (eq :false (j d "active"))
+                    (and (integerp (j d "exp")) (<= (j d "exp") (+ maintenant 60))))
+            (let* ((renouvellement (mrjam-oidc:renouveler-jetons client (champ row "refresh")))
+                   (tokens
+                     (cond
+                       ((and (= 400 (mrjam-oidc:reponse-oidc-statut renouvellement))
+                             (equal "invalid_grant" (j (mrjam-oidc:reponse-oidc-document renouvellement) "error")))
+                        ;; Le cookie peut survivre à la révocation/expiration
+                        ;; Native. C'est une session absente, pas une requête
+                        ;; OAuth mal formée : /authorize doit reprendre Log.
+                        (base c (lambda (db) (mrjam-native:sqlite-requete db
+                          "DELETE FROM log_sessions WHERE digest=?" (list digest))))
+                        (return-from session-digest nil))
+                       ((= 200 (mrjam-oidc:reponse-oidc-statut renouvellement))
+                        (document-token renouvellement))
+                       (t (refuser 503))))
                    (id (mrjam-oidc:verifier-id-token (j tokens "id_token") (mrjam-oidc:lire-jwks client)
                          :client-id (mrjam-oidc::client-oidc-id client) :maintenant maintenant :nonce (champ row "nonce")
                          :access-token (j tokens "access_token"))))
@@ -140,8 +170,8 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
                 "UPDATE log_sessions SET access=?,refresh=? WHERE digest=?"
                 (list (j tokens "access_token") (j tokens "refresh_token") (champ row "digest")))))
               (setf r (mrjam-oidc:introspecter-jeton client (j tokens "access_token"))
-                    d (mrjam-oidc:reponse-oidc-document r))))
-          (unless (and (= 200 (mrjam-oidc:reponse-oidc-statut r)) (eq :true (j d "active")))
+                    d (document-introspection r))))
+          (unless (eq :true (j d "active"))
             (base c (lambda (db) (mrjam-native:sqlite-requete db "DELETE FROM log_sessions WHERE digest=?" (list (champ row "digest")))))
             (return-from session-digest nil))
           (base c (lambda (db) (mrjam-native:sqlite-requete db "UPDATE log_sessions SET seen=? WHERE digest=?" (list maintenant (champ row "digest")))))
@@ -149,7 +179,12 @@ métier à chaque accès ; aucun raccordement implicite par adresse électroniqu
           (list (cons "username" (champ row "username")) (cons "csrf" (champ row "csrf"))
                 (cons "expiresAt" (champ row "expires")) (cons "createdAt" (champ row "created"))
                 (cons "subject" (champ row "subject"))
-                (cons "auth_time" (champ row "auth_time")) (cons "compte" p)))))))
+                (cons "auth_time" (champ row "auth_time")) (cons "compte" p))))))
+    (mrjam-oidc:oidc-error (e)
+      (if (member (mrjam-oidc:oidc-error-raison e)
+                  '(:transport :reponse-transport :redirection-transport :jwks-transport))
+          (refuser 503)
+          (error e)))))
 
 (defun politique (c subject)
   (base c (lambda (db) (first (mrjam-native:sqlite-requete db
