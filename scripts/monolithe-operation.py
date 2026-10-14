@@ -21,6 +21,10 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION')
+    if operation=='reconnexion-outillage':
+        spec=importlib.util.spec_from_file_location('outillage_reconnexion',ROOT/'scripts/mcp-reconnexion-outillage.py')
+        m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+        m.main();return
     if operation=='audition-diagnostic':
         p=__import__('json').loads((ROOT/'operations/audition-candidat.json').read_text());cible=p['revision_sources']
         stage.exiger(__import__('re').fullmatch('[a-f0-9]{40}',cible),'Révision de diagnostic invalide')

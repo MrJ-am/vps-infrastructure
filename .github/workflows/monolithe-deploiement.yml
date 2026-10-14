@@ -4,7 +4,7 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, restaurer, deployer, retour, diagnostic, confirmer-retour, audition-preparer, audition-deployer, audition-retour, audition-diagnostic]
+        options: [preparer, restaurer, deployer, retour, diagnostic, confirmer-retour, audition-preparer, audition-deployer, audition-retour, audition-diagnostic, reconnexion-outillage]
         default: deployer
         description: Opération sur le candidat chiffré verrouillé dans main
 permissions:
@@ -45,6 +45,14 @@ jobs:
         run: python3 scripts/monolithe-operation.py
       - name: Sonder les services existants
         run: python3 scripts/probe.py
+      - name: Conserver le paquet officiel chiffré pour la qualification locale
+        if: inputs.operation == 'reconnexion-outillage'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: kanidm-reconnexion-chiffre
+          path: ${{ runner.temp }}/kanidm-reconnexion.nar.age
+          retention-days: 1
+          if-no-files-found: error
       - name: Retirer la clé temporaire
         if: always()
         run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"
