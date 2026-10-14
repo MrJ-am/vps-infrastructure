@@ -14,7 +14,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   promotion:
-    if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am'
+    if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am' && inputs.operation != 'reconnexion-outillage'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     environment: vps-production
@@ -53,6 +53,36 @@ jobs:
           path: ${{ runner.temp }}/kanidm-reconnexion.nar.age
           retention-days: 1
           if-no-files-found: error
+      - name: Retirer la clé temporaire
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"
+  outillage-reconnexion:
+    if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am' && inputs.operation == 'reconnexion-outillage'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: vps-production
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé administrative existante
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          install -d -m 700 "$RUNNER_TEMP/monolithe-ssh"
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/monolithe-ssh/admin"
+          ssh-keygen -y -P '' -f "$RUNNER_TEMP/monolithe-ssh/admin" >/dev/null
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/monolithe-ssh/admin" >> "$GITHUB_ENV"
+      - name: Recevoir et publier uniquement le paquet officiel chiffré
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MRJAM_TRANSPORT_OUTILLAGE: git-chiffre
+        run: python3 scripts/mcp-reconnexion-outillage.py
       - name: Retirer la clé temporaire
         if: always()
         run: rm -f -- "$RUNNER_TEMP/monolithe-ssh/admin"
