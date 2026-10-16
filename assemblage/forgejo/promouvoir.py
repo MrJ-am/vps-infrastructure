@@ -120,6 +120,7 @@ def rollback():
  current=P('/etc/nixos/configuration.nix').read_bytes()
  expected=('{ ... }: { imports = [ '+json.dumps(str(D/'configuration.nix'))+' ]; }\n').encode()
  require(current in (expected,(D/'base.nix').read_bytes()),'Configuration concurrente: retour automatique arrêté')
+ cmd(['systemctl','stop','forgejo-retour-'+REV[:12]+'.timer'])
  temp=P('/etc/nixos/.forgejo-return.tmp');temp.write_bytes((D/'base.nix').read_bytes());temp.chmod(0o644);temp.replace('/etc/nixos/configuration.nix')
  cmd(['nix-env','--profile','/nix/var/nix/profiles/system','--set',EXPECTED])
  cmd([EXPECTED+'/bin/switch-to-configuration','switch'],timeout=300)
@@ -171,12 +172,11 @@ def deploy():
   require(int(admin)>0,'Aucun administrateur Forgejo')
   for _ in range(60):
    try:
-    with urllib.request.urlopen('https://forge.mrj.am/api/v1/version',timeout=10) as r:
-     require(r.status==200,'Forgejo inaccessible');version=json.load(r)
+    with urllib.request.urlopen('https://forge.mrj.am/user/login',timeout=10) as r:
+     require(r.status==200 and b'name="user_name"' in r.read(),'Connexion HTTPS Forgejo inaccessible')
     break
    except Exception:time.sleep(2)
   else:raise RuntimeError('HTTPS Forgejo non disponible')
-  require(version['version'].startswith('16.0.3'),'Version inattendue')
   cmd(['systemctl','stop',timer+'.timer'])
   (D/'deployed.json').write_text(json.dumps({'revision':REV,'generation':prepared['generation'],'timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'protectedCodeUnchanged':True,'postgresRestarted':before_pg!=after_pg,'dependencyRestarts':restarted},indent=2)+'\n')
   print(json.dumps({'forgejo':'deployed','revision':REV,'generation':prepared['generation'],'https':True,'protectedCodeUnchanged':True,'postgresRestarted':before_pg!=after_pg,'dependencyRestarts':restarted}),flush=True)

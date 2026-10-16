@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Real Chromium assertions. Credentials remain in a private file, never reported."""
-import argparse, json, pathlib, re, urllib.parse
+import argparse, json, pathlib, re, urllib.parse, os
 from playwright.sync_api import sync_playwright
 
 def main():
@@ -8,12 +8,13 @@ def main():
  p.add_argument('--url',required=True);p.add_argument('--credentials',type=pathlib.Path,required=True)
  p.add_argument('--username',default='validation');p.add_argument('--repository',default='org-validation')
  p.add_argument('--output',type=pathlib.Path,required=True);p.add_argument('--chromium',default='/usr/bin/chromium')
+ p.add_argument('--proxy',default=os.environ.get('HTTPS_PROXY'))
  a=p.parse_args();base=a.url.rstrip('/')
  text=a.credentials.read_text();m=re.search("generated random password is '(.*?)'",text)
  password=m.group(1) if m else text.strip()
  results={'url':base,'engine':'Chromium','tests':[],'javascriptErrors':[],'resourceErrors':[]}
  with sync_playwright() as pw:
-  browser=pw.chromium.launch(executable_path=a.chromium,headless=True,args=['--no-sandbox'])
+  browser=pw.chromium.launch(executable_path=a.chromium,headless=True,args=['--no-sandbox'],proxy={'server':a.proxy,'bypass':'127.0.0.1,localhost'} if a.proxy else None)
   context=browser.new_context(viewport={'width':1280,'height':900})
   page=context.new_page();page.on('pageerror',lambda e:results['javascriptErrors'].append(str(e)))
   page.on('console',lambda msg:results['javascriptErrors'].append(msg.text) if msg.type=='error' else None)
