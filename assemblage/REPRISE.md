@@ -1,5 +1,20 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Mission Forgejo — 16 octobre 2026, préparation sans activation
+
+Candidat `228db509abb2f36ad154333247cd521a77b54bea` construit et sauvegarde/restauration
+isolée qualifiée, run38880366362 réussi. Génération candidate ha71rm2gjz7b7ys17chf3i38cmx897lw ;
+active az22hgl8 inchangée. Forgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 ; rendu CHTML
+réel, Git et persistance qualifiés localement seulement. 25 sondes production
+réussies. Aucun compte/dépôt Forgejo sur le VPS, pas d’activation ni de nouveau runner.
+Blocage : git.mrg.am NXDOMAIN, zone Netim sans accès disponible ; A requis vers
+187.77.95.158. Le VPS n’a pas de flake, entrée Nix classique préservée.
+Reprendre par assemblage/forgejo/COMPTE-RENDU.md, README.md, preparation-vps.json et
+operations/forgejo-candidat.json. L’activation doit encore qualifier le service,
+TLS/SSH, dépôt privé/navigateur, sauvegarde Forgejo et retour indépendant.
+Ne pas confondre préparation réussie et installation active.
+
+
 ## État actif — reconnexion MCP en production
 
 14 octobre2026,15:29:58UTC : production activée par demande explicite utilisateur.

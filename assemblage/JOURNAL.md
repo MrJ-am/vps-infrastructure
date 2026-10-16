@@ -1117,3 +1117,17 @@ avec l'artefact Nix et les preuves centrales, puis à constater sur appareil.
   indépendant réussi. Parcours ChatGPT réel sur téléphone encore non constaté.
   Référence38590095562 réussie : métier RSS180.7Mio, cgroup172.1Mio ;
   générations active/démarrage identiques, latences publiques mesurées séparément.
+
+
+## 16 octobre 2026 — Forgejo préparé, DNS bloquant
+
+Mission Forgejo autorise ce service et ses dépendances. Dépôt et VPS inspectés
+par le canal GitHub/SSH existant. Aucun flake constaté ; intégration classique
+sans réécriture de l’infrastructure. Sources228db509, préparation38880366362 réussie,
+active az22hgl8 conservée, candidate ha71rm2g. Pandoc externe .org vérifié dans
+Chromium avec MathJax4.1.3 CHTML local, mobile, assainissement, Git HTTP/SSH et
+redémarrage local ; tests locaux distincts de la production. Nix/Gixy et invariants
+réels qualifiés. Sauvegarde age/restauration isolée38/6/100tables identique,
+25 sondes HTTP/TLS réussies. Pas d’activation, de compte ni de dépôt Forgejo VPS :
+git.mrg.am NXDOMAIN et accès DNS Netim absent. Détails/preuves et reprise dans
+assemblage/forgejo/. Aucun secret ou contenu personnel publié.
