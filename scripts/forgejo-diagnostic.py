@@ -44,4 +44,9 @@ r['forgejoBackupTimer']=cmd(['systemctl','show','forgejo-backup.timer','--proper
 r['forgejoEncryptedBackupPairs']=sum(1 for p in pathlib.Path('/var/backup/forgejo').glob('*.tar.age') if pathlib.Path(str(p)+'.key.age').is_file())
 r['kanidmExecStart']=cmd(['systemctl','show','kanidm','--property=ExecStart','--value'])
 r['forgejoAccounts']=json.loads(cmd(['runuser','-u','postgres','--','psql','-XAtq','-d','forgejo','-c', "SELECT json_agg(json_build_object('name',name,'admin',is_admin,'loginType',login_type,'loginSource',login_source,'mustChangePassword',must_change_password)) FROM \"user\";"]))
+identity=pathlib.Path('/var/lib/forgejo-identity/client.json')
+if identity.exists():
+    stat=identity.stat();r['oidcSecretMetadata']={'uid':stat.st_uid,'mode':oct(stat.st_mode & 0o777),'parentMode':oct(identity.parent.stat().st_mode & 0o777),'contentRead':False}
+r['temporarySsoProbeTokens']=int(cmd(['runuser','-u','postgres','--','psql','-XAtq','-d','forgejo','-c', "SELECT count(*) FROM access_token WHERE name LIKE 'forgejo-sso-probe-%' OR name LIKE 'declarative-rename-%';"]))
+r['oldBootstrapCredentialExists']=secret.exists()
 print(json.dumps(r,sort_keys=True))
