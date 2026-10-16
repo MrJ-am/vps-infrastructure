@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "1ff899d3ab82bc0c16bb4987e7c9a8204d61f47d",
+  "revision_sources": "ac739eedcffc32d2fba29f4ce5b124e6c291b642",
   "domain": "forge.mrj.am",
   "qualification_locale": "assemblage/forgejo/qualification-locale.json",
   "activation": "DNS A exact et sauvegarde/restauration actuelle requis",
