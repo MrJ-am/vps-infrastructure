@@ -49,4 +49,10 @@ if identity.exists():
     stat=identity.stat();r['oidcSecretMetadata']={'uid':stat.st_uid,'mode':oct(stat.st_mode & 0o777),'parentMode':oct(identity.parent.stat().st_mode & 0o777),'contentRead':False}
 r['temporarySsoProbeTokens']=int(cmd(['runuser','-u','postgres','--','psql','-XAtq','-d','forgejo','-c', "SELECT count(*) FROM access_token WHERE name LIKE 'forgejo-sso-probe-%' OR name LIKE 'declarative-rename-%';"]))
 r['oldBootstrapCredentialExists']=secret.exists()
+if identity.exists():
+    data=json.loads(identity.read_text());binding=json.loads((identity.parent/'binding.json').read_text())
+    row=json.loads(cmd(['runuser','-u','postgres','--','psql','-XAtq','-d','forgejo','-c', "SELECT json_build_object('id',id,'source',login_source,'subject',login_name,'admin',is_admin,'type',login_type,'mustChangePassword',must_change_password) FROM \"user\" WHERE name='MrJam';"]))
+    r['administratorBindingVerified']=bool(row and row['id']==binding['administratorId'] and row['source']==binding['sourceId'] and row['subject']==data['ownerSubject'] and row['admin'] and row['type']==6 and not row['mustChangePassword'])
+    r['oidcSecretMetadata']['contentRead']=True
+    r['oidcSecretMetadata']['secretPublished']=False
 print(json.dumps(r,sort_keys=True))
