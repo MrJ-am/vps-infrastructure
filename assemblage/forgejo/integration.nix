@@ -1,6 +1,6 @@
 # Keep the complete observed production configuration as the base.
 # Its old generations, secrets and services are neither copied nor reconstructed.
-{ baseConfiguration, timerConfiguration ? baseConfiguration }:
+{ baseConfiguration, timerConfiguration ? baseConfiguration, kanidmApi ? ../../scripts/kanidm-api-privee.py }:
 { lib, ... }:
 let
   base = (import <nixpkgs/nixos/lib/eval-config.nix> {
@@ -11,7 +11,9 @@ let
   }).config;
 in {
   imports = [ baseConfiguration ./module.nix ];
+  _module.args.forgejoKanidmApi = kanidmApi;
   infrastructure.forgejo.enable = true;
+  infrastructure.forgejo.sso.enable = true;
   # Production includes a priority-20 override and a catch-all reject. Insert this
   # socket/DB/Unix-user triple; leave every existing HBA rule byte-for-byte intact.
   services.postgresql.authentication = lib.mkOverride 10

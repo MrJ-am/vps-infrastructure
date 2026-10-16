@@ -8,6 +8,7 @@ def cmd(args, timeout=180):
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
 EXPR='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; c=e.config; in {
  kanidm={package=toString c.services.kanidm.package;configFile=c.services.kanidm.server.configFile or null;};
+ forgejoAuthentication={internal=c.services.forgejo.settings.service.ENABLE_INTERNAL_SIGNIN or true;basic=c.services.forgejo.settings.service.ENABLE_BASIC_AUTHENTICATION or true;quotaEnabled=c.services.forgejo.settings.quota.ENABLED or false;quotaTotal=c.services.forgejo.settings."quota.default".TOTAL or "-1";maxRepositories=c.services.forgejo.settings.repository.MAX_CREATION_LIMIT or (-1);};
  forgejo=c.services.forgejo.enable; forgejoVersion=e.pkgs.forgejo.version; pandocVersion=e.pkgs.pandoc.version;
  postgres={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;authentication=c.services.postgresql.authentication;identMap=c.services.postgresql.identMap;};
  domains=builtins.attrNames c.services.nginx.virtualHosts;
@@ -33,7 +34,7 @@ for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/*.log'
     errors=__import__('re').findall(r'(?m)^\s*(?:error:|curl:|tar:|cp:|mv:) ([^\n]+)',text)
     r['forgejo_preparation_errors'].append({'revision':log.parent.name,'log':log.name,'errors':[e[:500] for e in errors[-12:]]})
 
-r['forgejoUnits']={n:cmd(['systemctl','show',n,'--property=ActiveState,SubState,Result,ExecMainStatus','--value']) for n in ('forgejo','forgejo-bootstrap','forgejo-backup','forgejo-backup-qualification')}
+r['forgejoUnits']={n:cmd(['systemctl','show',n,'--property=ActiveState,SubState,Result,ExecMainStatus','--value']) for n in ('forgejo','forgejo-identity','forgejo-account','forgejo-backup','forgejo-backup-qualification')}
 journal=cmd(['journalctl','-u','forgejo-backup-qualification','-n','70','--no-pager','-o','cat'])
 r['backupErrors']=[line[:400] for line in journal.splitlines() if any(token in line for token in ('RuntimeError:','Error:','Permission denied','not found','cannot ','could not ','failed:'))]
 secret=pathlib.Path('/var/lib/forgejo-bootstrap/initial-admin.txt')
