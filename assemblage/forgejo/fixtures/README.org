@@ -1,0 +1,9 @@
+#+TITLE: Validation Org — Pandoc et MathJax
+* Documents privés de validation
+- [[file:docs/mathematiques.org][Mathématiques]]
+- [[file:docs/delimiteurs.org][Délimiteurs du lecteur Org Pandoc]]
+- [[file:docs/structure.org][Structure, liens et sécurité]]
+
+Formule en ligne : $\frac{1}{2}+\alpha$.
+
+\[ \sum_{k=1}^{n} k = \frac{n(n+1)}{2} \]

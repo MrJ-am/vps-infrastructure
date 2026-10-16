@@ -1,0 +1,17 @@
+{
+  "nixpkgsRevision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "forgejo": "16.0.3",
+  "pandoc": "3.7.0.2",
+  "assets": {
+    "mathjax": {
+      "version": "4.1.3",
+      "url": "https://registry.npmjs.org/mathjax/-/mathjax-4.1.3.tgz",
+      "hash": "sha256-txCfUW89hC3mK5XWU+NfoJdtwiNwaip3RA5/dyPwxU0="
+    },
+    "font": {
+      "version": "4.1.3",
+      "url": "https://registry.npmjs.org/@mathjax/mathjax-newcm-font/-/mathjax-newcm-font-4.1.3.tgz",
+      "hash": "sha256-h9e4acaiphadmlOsxOq2yEapy+EXUnOCJkYbtQcMi4g="
+    }
+  }
+}
