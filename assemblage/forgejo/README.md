@@ -69,23 +69,24 @@ nouvelle tentative. L’ajout d’un chemin HBA peut imposer un redémarrage Pos
 borné ; le dataDir et la version majeure ne changent pas. Seules ses dépendances explicites peuvent également redémarrer, avec le même code ;
 les autres processus protégés doivent conserver leur PID.
 
-## Premier administrateur
+## Connexion et administration actuelles
 
-Au premier démarrage seulement, si aucun compte n’existe, le service
-`forgejo-bootstrap` crée `mrjam-admin`. Forgejo génère lui-même un mot de passe
-aléatoire de 40 caractères, absent des arguments, du store et des journaux.
-Le résultat est conservé dans `/var/lib/forgejo-bootstrap/initial-admin.txt`,
-accessible uniquement à root. Le propriétaire peut le consulter dans son canal
-administratif habituel ou le terminal hPanel, se connecter sur HTTPS et changer
-le mot de passe à la première connexion. Supprimer ensuite ce fichier initial.
-Configurer la double authentification et enregistrer la clé SSH personnelle.
-Aucun secret de connexion n’est publié par l’opérateur GitHub.
+La seule connexion Web est **Kanidm**, via `log.mrj.am`. Le compte administrateur
+existant est renommé **MrJam** et rattaché à l'UUID de l'identité propriétaire
+native. L'ancien fichier de mot de passe initial est supprimé ; aucun formulaire
+ou compte local de secours n'est proposé. La réparation reste possible par le
+canal root/Nix existant. Les clés et jetons restent les moyens techniques Git/API.
+
+Le guide [SSO-QUOTAS.md](SSO-QUOTAS.md) décrit la connexion, les limites natives,
+le nombre de dépôts par compte dans l'administration, les quotas de stockage par
+API et l'outil `scripts/forgejo-quotas.py`. Les défauts initiaux sont illimités
+(`-1`), avec moteur de quotas activé ; aucun chiffre arbitraire n'est imposé.
 
 ## Sauvegardes et restauration
 
 Le timer quotidien `forgejo-backup` (04:45 UTC, décalage aléatoire maximal dix
 minutes) suspend brièvement Forgejo pour obtenir une copie cohérente des dépôts,
-données, configuration/secrets runtime et base PostgreSQL. Le service reprend
+données, configuration/secrets runtime, état OIDC `forgejo-identity` et base PostgreSQL. Le service reprend
 l’instance même si la sauvegarde échoue. Les archives sont dans
 `/var/backup/forgejo`, root uniquement, rétention tmpfiles de 30 jours.
 
@@ -123,43 +124,40 @@ ne qualifie pas la connexion PostgreSQL, ACME, le pare-feu ou la persistance du 
 Le DNS est contrôlé avant activation. Le redémarrage d’un service ne prouve pas un redémarrage complet du VPS.
 
 
-## Validation de production
+## Validation de production actuelle
 
-`forgejo-tester` crée le compte non administrateur `forgejo-validation` et le
-dépôt privé `org-validation` avec les fixtures demandées. Les opérations Git HTTPS
-et SSH sont sondées depuis le runner administratif existant. Le mot de passe
-aléatoire du compte de test reste dans un fichier root privé sur le VPS ; seul son
-chiffrement RSA-OAEP pour la clé publique de qualification est publié dans le run.
-Le premier compte administrateur et son secret ne sont jamais lus par ces sondes.
+`forgejo-tester` utilise un jeton d'exploitation temporaire créé par la CLI native
+pour `MrJam`, compte administrateur rattaché à Kanidm. Il crée le dépôt privé
+`MrJam/org-validation`, vérifie l'API de gestion des quotas et exerce Git HTTPS/SSH
+avec une clé temporaire. Le jeton est capturé uniquement par l'opérateur SSH et
+révoqué dans son `finally` ; aucun secret ni jeton chiffré réutilisable n'est publié.
+Le dépôt historique `forgejo-validation/org-validation` reste conservé ; son
+ancien compte de validation local est bloqué, sans suppression de données.
 
-`forgejo-persistance` redémarre uniquement Forgejo, compare le commit du dépôt
-et les PID des services protégés, puis démarre `forgejo-backup-qualification`.
-Cette unité emploie le même script de snapshot et chiffrement que le timer quotidien,
-puis restaure le dump déchiffré dans un cluster PostgreSQL privé sans TCP. Elle
-compare les empreintes de toutes les tables et vérifie les dépôts restaurés par
-`git fsck`. Le cluster et les copies claires sont supprimés à la fin. Un verrou
-commun empêche la concurrence entre sauvegarde quotidienne et qualification.
+`forgejo-persistance` redémarre uniquement Forgejo, compare le commit et les PID
+protégés, puis lance la sauvegarde avec restauration PostgreSQL isolée, empreintes
+de toutes les tables et `git fsck` des dépôts. Le cluster et les copies claires sont
+supprimés à la fin ; un verrou commun empêche la concurrence entre les sauvegardes.
 
-Un changement de PID d’un service protégé durant la bascule n’est accepté que
-s’il dépend effectivement de PostgreSQL, que PostgreSQL a redémarré et que le code
-exécutable est identique. Les autres PID sont conservés ; les sondes fonctionnelles
-restent obligatoires. Le retour précédent et son interpréteur sont protégés de la
-collecte Nix, et un vrai timer systemd exerce le témoin indépendant avant bascule.
-
+`scripts/forgejo-sso-navigateur.py` vérifie en production l'absence de formulaire,
+les refus POST/Basic, l'unique fournisseur, le client/retour OIDC et PKCE vers le
+vrai Log. `scripts/forgejo-sso-qualifier.py` exerce les programmes natifs en isolation,
+avec vraie authentification MFA et échange OIDC, création externe, renommage et
+quotas. La connexion personnelle MFA de production reste réservée au propriétaire.
+Les qualifications historiques Org/CHTML restent dans `qualification-production.json` ;
+le nouveau reçu SSO est `qualification-sso-production.json`.
 
 ## État installé et maintenance
 
-État effectif et reçus : `COMPTE-RENDU.md`, `qualification-production.json`.
-La correction finale ajoute `diffutils` au PATH des sauvegardes (`cmp`) ; son
-opérateur compare toutes les unités et n’autorise de différence que pour les deux
-unités de sauvegarde Forgejo. PostgreSQL, Nginx et les autres unités restent identiques.
-Le contrôle HTTPS utilise la page de connexion ; l’API de version exige une
-identification et est vérifiée avec le compte de qualification.
+État effectif et reçus : `COMPTE-RENDU.md`, `qualification-sso-production.json`.
+Le déploiement SSO autorise uniquement les changements d'unités Forgejo requis
+pour l'identité, le compte et sa sauvegarde. PostgreSQL, Kanidm, les autres unités
+protégées, Nginx et les hôtes existants restent identiques.
 
 Ne pas supprimer `/root/mrjam-corrections/forgejo/` : les configurations de base,
-imports et racines de retour y sont préservés, comme dans le circuit de déploiement
-existant. Sauvegarder cette chaîne avec `/etc/nixos` et le dépôt Infrastructure.
+imports et racines de retour y sont préservés, comme dans le circuit existant.
+Sauvegarder cette chaîne avec `/etc/nixos` et le dépôt Infrastructure.
 Avant une future promotion, réinspecter la génération/configuration active et
 actualiser les préconditions strictes de `promouvoir.py` ; elles empêchent la
 réapplication aveugle sur une configuration modifiée. Les sources initiales et
-la correction restent dans l’historique Git, avec leurs descripteurs exacts.
+les corrections restent dans l'historique Git, avec leurs descripteurs exacts.

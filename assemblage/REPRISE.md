@@ -1,25 +1,35 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Mission Forgejo — 16 octobre 2026, déployée et qualifiée
+## Mission Forgejo — Kanidm seul et quotas, 16 octobre 2026
 
-https://forge.mrj.am/ actif en HTTPS. Sources finales f79bcaddf7ddaa637350d04bec01d30629e49c29,
-génération 6791pn34plb531ygfxfyk9riq79x10d0, déploiement38888040761 réussi.
-Forgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 ; moteur Pandoc effectif sur tous les Org,
-CHTML réel vérifié dans Chromium sur production à1280/390px, avant/après reprise.
-Git HTTPS/SSH2222, confidentialité, inscriptions fermées et rôle PG restreint qualifiés.
-Persistance38888153134 : même commit, PID protégés conservés, sauvegarde chiffrée
-restaurée isolément,130tables aux empreintes identiques,1dépôt git fsck réussi.
-25sondes HTTP/TLS existantes passent. Correction sauvegarde limitée à ses2unités,
-sans redémarragePG/autres services ; installation initiale avait redémarréPG et son
-dépendant métier avec le même code. Retour du code réellement exercé sans restauration
-des données lors de la correction d’une sonde API anonyme interdite par le mode privé.
-Le VPS n’a pas de flake ; entrée Nix classique et imports préservés. Aucun runner ajouté.
-Premier admin mrjam-admin ; secret root uniquement dans /var/lib/forgejo-bootstrap/initial-admin.txt,
-jamais lu/publié. Changement imposé à la connexion. Dépôt privé forgejo-validation/org-validation.
-Reprendre par assemblage/forgejo/COMPTE-RENDU.md, README.md et qualification-production.json.
-Limites : pas de reboot complet du VPS, pas de destination de sauvegarde hors VPS.
-Ne pas supprimer les configurations de base dans /root/mrjam-corrections/forgejo/ :
-la chaîne déclarative et les possibilités de retour les référencent.
+https://forge.mrj.am/ actif ; seule connexion Web via Kanidm/log.mrj.am.
+Compte administrateur existant renommé MrJam, même identifiant interne, rattaché
+à l'UUID propriétaire natif ; égalité vérifiée sans publication de cet UUID.
+Aucun facteur MFA personnel réinitialisé. Ancien mot de passe initial supprimé,
+formulaires/POST locaux et Basic par mot de passe désactivés côté serveur.
+SSH2222 et jetonsHTTPS restent les moyens Git/API après connexion Kanidm.
+Sources ac739eedcffc32d2fba29f4ce5b124e6c291b642 ; génération zm6k63jq,
+run38895153571 réussi, aucun redémarrage PG/Kanidm/autre service protégé.
+Quotas natifs activés, défauts initiaux illimités (-1) et limites configurables ;
+compteur par personne dans l'admin, stockage via API/scripts/forgejo-quotas.py.
+Pas de plafond strict par dépôt : total avant écriture, dépassement d'une écriture
+possible ; API16.0.3 refuse le dépôt de trop avec500, contrôle effectif testé.
+Tests natifs isolés MFA/OIDC/PKCE/ES256, compte préexistant, création externe,
+renommage, refus mots de passe, quotas et surcharges réussis. IdP local1.11.1,
+production1.11.2 : distinctions et médiationUI explicites dans les reçus.
+Production : Chromium TLS vérifié, unique fournisseur/redirectionLog+PKCE, interface
+Log mobile inspectée sans erreurJS ; GitHTTPS/SSH et APIquotas réussis, jetons et clés
+temporaires révoqués (compteur0). Persistance38895497132 : même commit, autresPID
+conservés,130tables restaurées isolément aux empreintes identiques et2dépôts gitfsck.
+Dépôt courant de test MrJam/org-validation ; ancien dépôt forgejo-validation conservé,
+ancien compte local de qualification bloqué.25sondes HTTP/TLS existantes passent.
+Forgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 et leur rendu/assainissement conservés.
+Ni flake ni runner nouveau : entrée Nix classique et chaîne d'imports préservées.
+Preuves/guide : assemblage/forgejo/COMPTE-RENDU.md, SSO-QUOTAS.md,
+qualification-sso-production.json, qualification-sso-locale.json. La connexion
+personnelle MFA de production reste à effectuer par le propriétaire, sans partager
+ses secrets. Pas de reboot complet du VPS ni de copie des sauvegardes hors VPS.
+Conserver /root/mrjam-corrections/forgejo/ : imports, bases et racines de retour.
 
 
 ## État actif — reconnexion MCP en production

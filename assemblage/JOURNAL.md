@@ -1156,3 +1156,36 @@ VersionsForgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 verrouillées, sources/proofs d
 assemblage/forgejo/. Pas de flake constaté ; imports existants conservés. Aucun
 runner/workflow supplémentaire. Limites : pas de rebootVPS complet, backup chiffré
 local30j sans destination externe. Compte rendu et reprise actualisés.
+
+
+## 16 octobre 2026 — Forgejo : Kanidm seul et gestion des quotas
+
+Demande explicite : seul accès Web via log.mrj.am, nom de compte MrJam, gestion
+du nombre et de la taille des dépôts. Sources ac739eed, génération zm6k63jq,
+déploiement38895153571 réussi après préparation/restaurations38894793015.
+Seules unités Forgejo nécessaires modifiées ; PG, Kanidm et autresPID protégés
+conservés,25sondes existantes passent. Client OIDC confidentiel mrjam-forgejo,
+retour strict et PKCES256, secret root horsGit/store/argv, seule source active.
+Compte administrateur existant renommé par API, rattaché par UUID propriétaire
+natif sans égalité de mail ; facteurs personnels conservés. Compte technique
+idm_admin récupéré ponctuellement via socket natif, puis désactivé. Aucun mot
+de passe local ou ancien OpenID ; ancien secret initial supprimé. Accès Git
+SSH/jetons préservés. Nouveau compte ordinaire possible après identité Kanidm.
+Gestion native des quotas activée, options Nix et scripts/forgejo-quotas.py,
+surcharge compteur via administration, stockage via groupes/API. Défauts -1,
+aucune taille/quantité imposée arbitrairement. Limites natives documentées : total
+avant écriture, pas strict par dépôt, dépassement possible d'une écriture ; refus
+API du nombre renvoie500 mais ne crée rien, administrateurs exemptés du compteur.
+Qualification locale : vrais Forgejo16.0.3 et Kanidm1.11.1 verrouillé, MFA/OIDC,
+PKCE/ES256, compte lié, création externe, renommage, refus mots de passe, limites
+et exceptions par compte/groupe. Étape UI IdP médiée par API native, production
+Kanidm1.11.2 distincte. Chromium production : seul bouton Kanidm, POST/Basic
+refusés, vrai Log/PKCE, interface mobile inspectée sans erreurJS. Git/APIquotas
+38895359486 réussis, clé temporaire retirée et jeton révoqué. Dépôt privé courant
+MrJam/org-validation, ancien dépôt conservé et ancien compte local de test bloqué.
+Persistance38895497132 : même commit et autresPID, sauvegarde déchiffrée restaurée
+sansTCP dansPGisolé,130tables identiques,2dépôts gitfsck. Diagnostic38895735479 :
+rattachement propriétaire conforme, secret0600/root0700, bootstrap absent,
+aucun jeton de sonde restant. Pas de connexion personnelle MFA ni rebootVPS
+complet effectués ; destination backup externe toujours absente. Preuves et guide
+SSO-QUOTAS.md ajoutés ; compte rendu et reprise mis à jour sans secret personnel.

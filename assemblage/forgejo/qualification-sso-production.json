@@ -1,0 +1,142 @@
+{
+  "format": 1,
+  "observedAt": "2026-10-16T11:48:31.317035+00:00",
+  "url": "https://forge.mrj.am",
+  "sourceRevision": "ac739eedcffc32d2fba29f4ce5b124e6c291b642",
+  "preparation": {
+    "forgejo": "prepared",
+    "revision": "ac739eedcffc32d2fba29f4ce5b124e6c291b642",
+    "generation": "/nix/store/zm6k63jqbrlgszmlyx88wivm6a7gk3jb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "existingUnitsUnchanged": true,
+    "oldVhostsUnchanged": true,
+    "oldHbaPreserved": true,
+    "activated": false
+  },
+  "deployment": {
+    "forgejo": "deployed",
+    "revision": "ac739eedcffc32d2fba29f4ce5b124e6c291b642",
+    "generation": "/nix/store/zm6k63jqbrlgszmlyx88wivm6a7gk3jb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "https": true,
+    "protectedCodeUnchanged": true,
+    "postgresRestarted": false,
+    "dependencyRestarts": []
+  },
+  "runs": {
+    "preparation": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38894793015",
+    "deployment": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895153571",
+    "gitAndQuotaApi": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895359486",
+    "persistence": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895497132",
+    "diagnostic": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895735479"
+  },
+  "browser": {
+    "url": "https://forge.mrj.am",
+    "ownerInteractiveLoginPerformed": false,
+    "tlsValidation": true,
+    "onlyKanidmProvider": true,
+    "noPasswordForm": true,
+    "passwordPostDenied": true,
+    "basicPasswordDenied": true,
+    "realIdpRedirect": true,
+    "pkceS256": true,
+    "identityProviderHost": "log.mrj.am"
+  },
+  "browserAfterRestart": {
+    "url": "https://forge.mrj.am",
+    "ownerInteractiveLoginPerformed": false,
+    "tlsValidation": true,
+    "onlyKanidmProvider": true,
+    "noPasswordForm": true,
+    "passwordPostDenied": true,
+    "basicPasswordDenied": true,
+    "realIdpRedirect": true,
+    "pkceS256": true,
+    "identityProviderHost": "log.mrj.am"
+  },
+  "gitAndQuotaApi": {
+    "identityProvider": "Kanidm",
+    "domain": "forge.mrj.am",
+    "username": "MrJam",
+    "repository": "org-validation",
+    "private": true,
+    "administratorBoundByNativeUuid": true,
+    "head": "ec4afc0a6185d4e43d316799b4e9c664ab580ab3",
+    "timestamp": "2026-10-16T11:41:03.410606+00:00",
+    "quotaAdministrationApi": true,
+    "git": {
+      "private": true,
+      "httpScheme": "https",
+      "httpClonePush": true,
+      "sshClonePush": true,
+      "head": "dac6004f8aa2dd3b4e350e7fb83f19a86d4997ac",
+      "temporaryKeyRemoved": true
+    },
+    "temporaryProbeTokenRevoked": true
+  },
+  "persistence": {
+    "identityProvider": "Kanidm",
+    "persistenceAfterForgejoRestart": true,
+    "head": "dac6004f8aa2dd3b4e350e7fb83f19a86d4997ac",
+    "protectedPidsUnchanged": true,
+    "backup": {
+      "verifiedAt": "2026-10-16T11:42:29.749149+00:00",
+      "isolatedPostgresqlRestore": true,
+      "tables": 130,
+      "semanticFingerprintsEqual": true,
+      "repositoriesFsck": 2,
+      "productionDataRestored": false
+    },
+    "fullVpsReboot": false
+  },
+  "finalState": {
+    "generation": "/nix/store/zm6k63jqbrlgszmlyx88wivm6a7gk3jb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration_sha256": "7d291cb8359ef2e4697e759d85bd575b96e0e5046f10d186c543933e4bfdd04e",
+    "administratorBindingVerified": true,
+    "oidcSecretMetadata": {
+      "contentRead": true,
+      "mode": "0o600",
+      "parentMode": "0o700",
+      "secretPublished": false,
+      "uid": 0
+    },
+    "oldBootstrapCredentialExists": false,
+    "temporarySsoProbeTokens": 0,
+    "forgejoEncryptedBackupPairs": 5,
+    "forgejoBackupTimer": "active\nSat 2026-10-17 04:46:42 UTC",
+    "forgejoUnits": {
+      "forgejo": "active\nrunning\nsuccess\n0",
+      "forgejo-account": "inactive\ndead\nsuccess\n0",
+      "forgejo-backup": "inactive\ndead\nsuccess\n0",
+      "forgejo-backup-qualification": "inactive\ndead\nsuccess\n0",
+      "forgejo-identity": "active\nexited\nsuccess\n0"
+    }
+  },
+  "authenticationAndQuotaSettings": {
+    "basic": false,
+    "internal": false,
+    "maxRepositories": -1,
+    "quotaEnabled": true,
+    "quotaTotal": "-1"
+  },
+  "existingHttpProbes": 25,
+  "productionIdpVersion": "1.11.2",
+  "productionIdpSigningAlgorithms": [
+    "ES256"
+  ],
+  "idpUiJavascriptErrors": [],
+  "ownerInteractiveLoginPerformed": false,
+  "notPerformed": [
+    "Owner personal MFA login in production",
+    "Full VPS reboot"
+  ],
+  "nativeLimitations": [
+    "Aggregate storage quota checked before write, not hard per-repository cap",
+    "An operation can cross the storage threshold before subsequent writes are denied",
+    "Repository count limit API refusal returns HTTP500 in 16.0.3; creation is denied",
+    "Administrators exempt from repository count limit",
+    "Existing Forgejo sessions and Git credentials need separate revocation when suspending an IdP identity"
+  ],
+  "initialDefaultLimits": {
+    "repositoryCount": -1,
+    "totalStorage": -1
+  }
+}
