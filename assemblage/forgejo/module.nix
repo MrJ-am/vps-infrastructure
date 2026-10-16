@@ -89,10 +89,8 @@ in {
         ''; };
       locations."^~ /assets/forgejo-org/" = {
         alias = "${assets}/";
-        extraConfig = ''
-          add_header X-Content-Type-Options nosniff always;
-          add_header Cache-Control "public, max-age=3600";
-        '';
+        # expires sets caching without replacing inherited security headers.
+        extraConfig = "expires 1h;";
       };
       extraConfig = ''
         add_header X-Content-Type-Options nosniff always;
