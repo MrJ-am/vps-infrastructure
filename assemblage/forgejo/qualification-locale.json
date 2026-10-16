@@ -84,7 +84,7 @@
     "assemblage/forgejo/fixtures/images/point.png": "ad3c285f9f93b5a369ee3993296c77071b108359643f83847c6fae1469347a14",
     "assemblage/forgejo/integration.nix": "933000e91851f679225244d64de438360000c2f1301506e4e71401b94f62e398",
     "assemblage/forgejo/module.nix": "9ee5c9a784477299a62e45a9fb4e3c3394333fce37404a01d34b9e68bcf1a8bd",
-    "assemblage/forgejo/promouvoir.py": "07f615acbfc9461c2a2899489b24f9d444f363080b4c9cf78ac33167b30c0eff",
+    "assemblage/forgejo/promouvoir.py": "ac6750d473b237b6d782a1423b8c21ac95a43a0ea25a467d909728609bf127d7",
     "assemblage/forgejo/versions.json": "661e4b273d700cab10ee6dc68597318e8a14fbc1109b13dfd24edb8b2c0dfbcf",
     "scripts/forgejo-navigateur.py": "2c8d41e184c646a1d4aba1a5bf4ae476d00935f70c48b77c1307f9c131a1b315",
     "scripts/forgejo-git.py": "1d4bc8234b3e00b54a03f41557d615d42ccbf21dd5ef0c6aa010feb376c7b76a"
