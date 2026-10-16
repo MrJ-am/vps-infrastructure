@@ -1,0 +1,14 @@
+#+TITLE: Délimiteurs du lecteur Org Pandoc
+* Dollar simple
+Inline : $\frac{1}{2}$.
+* Double dollar
+$$\frac{2}{3}$$
+* Parenthèses
+Inline : \(\frac{3}{4}\).
+* Crochets
+\[\frac{4}{5}\]
+* Environnement
+\begin{align}
+x &= \frac{5}{6} \\
+y &= \sqrt{2}
+\end{align}

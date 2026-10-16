@@ -1,0 +1,21 @@
+#+TITLE: Mathématiques en sous-répertoire
+* Fractions, matrices et équations
+Une fraction $\frac{a+b}{c+d}$ et une matrice :
+
+\[
+\begin{pmatrix}1 & 2 \\ 3 & 4\end{pmatrix}
+\]
+
+\begin{align}
+a+b &= c \label{eq:somme} \\
+x^2+y^2 &= z^2
+\end{align}
+
+Référence : $\eqref{eq:somme}$.
+
+* Expression longue
+\[
+f(x)=a_1+a_2+a_3+a_4+a_5+a_6+a_7+a_8+a_9+a_{10}+a_{11}+a_{12}+a_{13}+a_{14}+a_{15}+a_{16}+a_{17}+a_{18}+a_{19}+a_{20}
+\]
+
+[[file:../README.org][Retour à l’accueil]] et [[file:structure.org][document voisin]].

@@ -1,0 +1,168 @@
+{
+  "scope": "qualification locale uniquement, SQLite, HTTP loopback ; aucun déploiement",
+  "nixpkgsRevision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "forgejo": "16.0.3",
+  "pandoc": "3.7.0.2",
+  "mathjax": "4.1.3",
+  "nixAssertions": [],
+  "browser": {
+    "url": "http://127.0.0.1:3304",
+    "engine": "Chromium",
+    "tests": [
+      {
+        "document": "README.org",
+        "width": 1280,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 1280,
+        "pandocMathNodes": 0,
+        "chtml": false
+      },
+      {
+        "document": "README.org",
+        "width": 390,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 390,
+        "pandocMathNodes": 0,
+        "chtml": false
+      }
+    ],
+    "javascriptErrors": [],
+    "resourceErrors": [],
+    "privateAnonymousDenied": true,
+    "publicRegistrationDisabled": true
+  },
+  "git": {
+    "private": true,
+    "httpScheme": "http",
+    "httpClonePush": true,
+    "sshClonePush": true,
+    "head": "89f309a7bb26e92b34d74ad60a72bc9a5aa89316",
+    "temporaryKeyRemoved": true
+  },
+  "sourceSha256": {
+    "assemblage/forgejo/README.md": "ca84ae934db4a70bfa6db0d9b376f4732676c6630630a08db32e8659e3a496fb",
+    "assemblage/forgejo/assets/config.js": "ad6570e15600ee9036401b820bbd5f368cd213d6a0c5afe5a0e2444d2960ddb5",
+    "assemblage/forgejo/assets/footer.tmpl": "2446903db4dd611955cfcb1937eabff7e9fb530be59f0ae7e6a0e751f466ee22",
+    "assemblage/forgejo/assets/org.css": "9dc497eb0bffb10b69b0d11af59047ca83c2a7dd47e2b9c89a24ef4278526111",
+    "assemblage/forgejo/assets.nix": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+    "assemblage/forgejo/fixtures/README.org": "35e2767df66a96e91e23f8d35d8ad5d4c4799fb4bd3f93a941b1eda86f0e98dd",
+    "assemblage/forgejo/fixtures/docs/delimiteurs.org": "69ddb39c5182b89b6c0a311f463bc8279295f0f240356bc11e878f5ae6ca7133",
+    "assemblage/forgejo/fixtures/docs/mathematiques.org": "b13ebd2ced31885dc53d825aaf9fbba48d8ceedcbad2fcf096ae2ed0bf55f44d",
+    "assemblage/forgejo/fixtures/docs/structure.org": "8e8c045b6b8be56c9dba5d0d21c5630846e09829596ab3734aeed2d2c2fa9c82",
+    "assemblage/forgejo/fixtures/images/point.png": "ad3c285f9f93b5a369ee3993296c77071b108359643f83847c6fae1469347a14",
+    "assemblage/forgejo/integration.nix": "933000e91851f679225244d64de438360000c2f1301506e4e71401b94f62e398",
+    "assemblage/forgejo/module.nix": "9ee5c9a784477299a62e45a9fb4e3c3394333fce37404a01d34b9e68bcf1a8bd",
+    "assemblage/forgejo/promouvoir.py": "07f615acbfc9461c2a2899489b24f9d444f363080b4c9cf78ac33167b30c0eff",
+    "assemblage/forgejo/versions.json": "661e4b273d700cab10ee6dc68597318e8a14fbc1109b13dfd24edb8b2c0dfbcf",
+    "scripts/forgejo-navigateur.py": "2c8d41e184c646a1d4aba1a5bf4ae476d00935f70c48b77c1307f9c131a1b315",
+    "scripts/forgejo-git.py": "1d4bc8234b3e00b54a03f41557d615d42ccbf21dd5ef0c6aa010feb376c7b76a"
+  },
+  "limitations": [
+    "PostgreSQL de production, TLS/ACME et redémarrage VPS non testés",
+    "Binaires Nix exécutés par leur chargeur glibc dans cet environnement sans namespace /nix ; code ELF non modifié",
+    "Git local via HTTP et SSH ; HTTPS de production reste à vérifier"
+  ],
+  "persistenceAfterServiceRestart": {
+    "sameGitHead": true,
+    "authenticationAndPrivateRepository": true,
+    "browser": {
+      "url": "http://127.0.0.1:3304",
+      "engine": "Chromium",
+      "tests": [
+        {
+          "document": "README.org",
+          "width": 1280,
+          "pandocMathNodes": 2,
+          "chtml": true
+        },
+        {
+          "document": "docs/mathematiques.org",
+          "width": 1280,
+          "pandocMathNodes": 5,
+          "chtml": true
+        },
+        {
+          "document": "docs/delimiteurs.org",
+          "width": 1280,
+          "pandocMathNodes": 5,
+          "chtml": true
+        },
+        {
+          "document": "docs/structure.org",
+          "width": 1280,
+          "pandocMathNodes": 0,
+          "chtml": false
+        },
+        {
+          "document": "README.org",
+          "width": 390,
+          "pandocMathNodes": 2,
+          "chtml": true
+        },
+        {
+          "document": "docs/mathematiques.org",
+          "width": 390,
+          "pandocMathNodes": 5,
+          "chtml": true
+        },
+        {
+          "document": "docs/delimiteurs.org",
+          "width": 390,
+          "pandocMathNodes": 5,
+          "chtml": true
+        },
+        {
+          "document": "docs/structure.org",
+          "width": 390,
+          "pandocMathNodes": 0,
+          "chtml": false
+        }
+      ],
+      "javascriptErrors": [],
+      "resourceErrors": [],
+      "privateAnonymousDenied": true,
+      "publicRegistrationDisabled": true
+    },
+    "git": {
+      "private": true,
+      "httpScheme": "http",
+      "httpClonePush": true,
+      "sshClonePush": true,
+      "head": "89f309a7bb26e92b34d74ad60a72bc9a5aa89316",
+      "temporaryKeyRemoved": true
+    },
+    "fullVpsRebootTested": false
+  }
+}
