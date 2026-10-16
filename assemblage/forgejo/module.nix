@@ -13,7 +13,7 @@ let
   backupService = verify: {
       description = "Sauvegarde cohérente chiffrée Forgejo (données, dépôts, PostgreSQL)";
       after = [ "postgresql.service" ];
-      path = [ pkgs.coreutils pkgs.gnutar pkgs.age pkgs.util-linux pkgs.git config.services.postgresql.package ];
+      path = [ pkgs.coreutils pkgs.diffutils pkgs.gnutar pkgs.age pkgs.util-linux pkgs.git config.services.postgresql.package ];
       serviceConfig = { Type = "oneshot"; UMask = "0077"; TimeoutStartSec = "5min"; };
       script = ''
         set -euo pipefail

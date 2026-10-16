@@ -1,10 +1,13 @@
 # Keep the complete observed production configuration as the base.
 # Its old generations, secrets and services are neither copied nor reconstructed.
-{ baseConfiguration }:
+{ baseConfiguration, timerConfiguration ? baseConfiguration }:
 { lib, ... }:
 let
   base = (import <nixpkgs/nixos/lib/eval-config.nix> {
     system = "x86_64-linux"; modules = [ baseConfiguration ];
+  }).config;
+  timers = (import <nixpkgs/nixos/lib/eval-config.nix> {
+    system = "x86_64-linux"; modules = [ timerConfiguration ];
   }).config;
 in {
   imports = [ baseConfiguration ./module.nix ];
@@ -17,7 +20,7 @@ in {
   # pre-existing timer exactly as observed when adding this certificate.
   systemd.timers = lib.mapAttrs (_: timer: {
     timerConfig.OnCalendar = lib.mkOverride 10 timer.timerConfig.OnCalendar;
-  }) (lib.filterAttrs (name: _: lib.hasPrefix "acme-renew-" name) base.systemd.timers);
+  }) (lib.filterAttrs (name: _: lib.hasPrefix "acme-renew-" name) timers.systemd.timers);
   systemd.units = lib.mapAttrs (_: unit: { text = lib.mkOverride 10 unit.text; })
-    (lib.filterAttrs (name: _: lib.hasPrefix "acme-renew-" name && lib.hasSuffix ".timer" name) base.systemd.units);
+    (lib.filterAttrs (name: _: lib.hasPrefix "acme-renew-" name && lib.hasSuffix ".timer" name) timers.systemd.units);
 }
