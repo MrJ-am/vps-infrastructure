@@ -100,8 +100,8 @@ puis l’archive avec cette clé ; extraire `forgejo.dump` et `data.tar` dans un
 répertoire privé. Restaurer d’abord dans une instance PostgreSQL et un état
 Forgejo isolés, avec la même version du programme. Une restauration en production
 requiert l’arrêt Forgejo et la préservation explicite des écritures plus récentes.
-Les archives locales doivent suivre la copie hors VPS déjà utilisée ; aucun
-stockage distant n’est inventé par cette intégration.
+Aucune copie hors VPS n’est configurée par cette intégration ; le transport
+externe reste à raccorder si une destination de sauvegarde existe.
 
 ## Validation
 
@@ -112,6 +112,11 @@ et refuse erreurs JS, ressources manquantes, CDN, injections et page débordante
 `scripts/forgejo-git.py` exerce clone/push HTTP(S) et SSH avec une clé temporaire
 puis retirée. Aucun mot de passe ne figure dans la ligne de commande ou les preuves.
 Ces scripts sont manuels et ne déclenchent pas de tests au push.
+`tests/forgejo-integration.nix`, évalué avec Nixpkgs verrouillé, reproduit la
+priorité PostgreSQL 20, vérifie son extension exacte et le maintien du timer ACME.
+La dérivation `nginxConfigDrv` du résultat doit aussi être construite : Gixy
+contrôle alors les en-têtes réellement générés, dont l’héritage sur les ressources
+MathJax. Aucun contrôle de sécurité du constructeur NixOS n’est désactivé.
 
 Les preuves locales et distantes restent distinctes. Une instance locale SQLite
 ne qualifie pas la connexion PostgreSQL, ACME, le pare-feu ou la persistance du VPS.
