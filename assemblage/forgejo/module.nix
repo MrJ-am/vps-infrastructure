@@ -8,7 +8,8 @@ let
     set -eu
     ulimit -v 1048576
     exec ${pkgs.coreutils}/bin/timeout 20s ${pkgs.pandoc}/bin/pandoc \
-      --sandbox --from=org --to=html5 --mathjax --wrap=none
+      --sandbox --from=org --to=html5 --mathjax --wrap=none \
+      --lua-filter=${./org-links.lua}
   '';
   identityIni = pkgs.writeText "forgejo-identity.ini" (lib.generators.toINI {} {
     DEFAULT = { RUN_USER = "forgejo"; RUN_MODE = "prod"; WORK_PATH = f.stateDir; };

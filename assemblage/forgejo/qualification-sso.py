@@ -4,7 +4,8 @@
 This does not claim an interactive owner login: their Kanidm MFA stays personal.
 The transport captures the PAT privately and always asks this script to revoke it.
 """
-import base64,datetime,json,os,pathlib,re,secrets,subprocess,sys,time,urllib.request,urllib.error
+import base64,datetime,json,os,pathlib,posixpath,re,secrets,subprocess,sys,time,urllib.request,urllib.error,urllib.parse
+from html.parser import HTMLParser
 P=pathlib.Path;USER='MrJam';REPO='org-validation'
 
 def run(args,*,input=None,timeout=180):
@@ -55,6 +56,35 @@ def state():
  head=api('repos/'+USER+'/'+REPO+'/branches/main')['commit']['id']
  return {'identityProvider':'Kanidm','domain':'forge.mrj.am','username':USER,'repository':REPO,'private':True,'administratorBoundByNativeUuid':True,'head':head,'timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat()}
 
+def org_links():
+ # Exercise the actual production renderer and sanitizer through the native API.
+ # This is deliberately distinct from the local full-Web Chromium click tests.
+ class Links(HTMLParser):
+  def __init__(self):super().__init__();self.links=[]
+  def handle_starttag(self,tag,attrs):
+   if tag=='a':self.links.extend(v for k,v in attrs if k=='href')
+ result=[];root='repos/'+USER+'/'+REPO+'/contents/'
+ for path in ('README.org','docs/mathematiques.org','docs/delimiteurs.org','docs/structure.org'):
+  text=base64.b64decode(api(root+path)['content']).decode()
+  directory=posixpath.dirname(path)
+  body={'mode':'file','text':text,'context':'/'+USER+'/'+REPO,'file_path':path,'branch_path':'branch/main'+('/'+directory if directory else '')}
+  request=urllib.request.Request('http://127.0.0.1:3004/api/v1/markup',headers={'Authorization':'token '+TOKEN,'Content-Type':'application/json'},data=json.dumps(body).encode())
+  with urllib.request.urlopen(request,timeout=30) as response:html=response.read().decode()
+  parser=Links();parser.feed(html);checked=[]
+  for href in parser.links:
+   target=urllib.parse.urlsplit(href)
+   if not target.path.lower().endswith('.org'):continue
+   prefix='/'+USER+'/'+REPO+'/src/branch/main/'
+   assert target.path.startswith(prefix), 'Org link escaped repository/branch context'
+   destination=posixpath.normpath(urllib.parse.unquote(target.path.removeprefix(prefix)))
+   assert not destination.startswith('../')
+   assert api(root+urllib.parse.quote(destination))['type']=='file'
+   checked.append(destination)
+  if path!='docs/delimiteurs.org':assert checked, 'Expected inter-document Org links absent'
+  assert '<script' not in html and 'javascript:' not in html.lower()
+  result.append({'document':path,'existingOrgTargets':checked,'productionRendererAndSanitizer':True})
+ return result
+
 def seed():
  try:repo=api('repos/'+USER+'/'+REPO)
  except urllib.error.HTTPError as e:
@@ -68,7 +98,9 @@ def seed():
   except urllib.error.HTTPError as e:
    if e.code!=404:raise
    current=None
-  if current and base64.b64decode(current['content'])==file.read_bytes():continue
+  # The validation repository now belongs to its owner: never replace an
+  # existing document, even if it has changed since the original fixtures.
+  if current:continue
   data={'content':base64.b64encode(file.read_bytes()).decode(),'message':'Validation privée Org et connexion Kanidm'}
   if current:data['sha']=current['sha']
   api(route,data,'PUT' if current else 'POST')
@@ -77,7 +109,7 @@ def seed():
  api('admin/quota/groups',{'name':label,'rules':[{'name':rule,'limit':1024,'subjects':['size:all']}]})
  groups=api('admin/quota/groups');assert any(g['name']==label for g in groups)
  api('admin/quota/groups/'+label,method='DELETE');api('admin/quota/rules/'+rule,method='DELETE')
- value=state();value['quotaAdministrationApi']=True
+ value=state();value['quotaAdministrationApi']=True;value['orgLinks']=org_links()
  keys=run(['ssh-keyscan','-p','2222','127.0.0.1'])
  value['knownHosts']='\n'.join(l.replace('[127.0.0.1]:2222','[forge.mrj.am]:2222') for l in keys.splitlines() if not l.startswith('#'))+'\n'
  value['password']=TOKEN  # Captured privately by the existing SSH operator.

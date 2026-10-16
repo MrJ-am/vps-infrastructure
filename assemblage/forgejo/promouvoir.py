@@ -3,8 +3,8 @@
 import datetime,hashlib,importlib.util,json,os,pathlib,re,shlex,subprocess,sys,time,urllib.request,uuid
 P=pathlib.Path
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
-EXPECTED='/nix/store/6791pn34plb531ygfxfyk9riq79x10d0-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
-CONFIG_SHA='83f9b487c1060986b6de9a018b1f69737fe35955d3c2d8bde48a25fa8b7ef51a'
+EXPECTED='/nix/store/zm6k63jqbrlgszmlyx88wivm6a7gk3jb-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
+CONFIG_SHA='7d291cb8359ef2e4697e759d85bd575b96e0e5046f10d186c543933e4bfdd04e'
 RUNTIME_BASE='/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix'
 PROTECTED=('sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud','redis-nextcloud')
 

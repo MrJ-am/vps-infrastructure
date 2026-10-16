@@ -27,8 +27,31 @@ def main():
   page.locator('form .button.primary').click();page.wait_for_load_state('load')
   assert '/user/login' not in page.url,'Login failed'
   prefix=f'{base}/{a.username}/{a.repository}/src/branch/main/'
+  results['orgLinkClicks']=[]
+  def follow_org(label, expected):
+   link=page.locator('.markup a').filter(has_text=label)
+   assert link.count()==1, 'Ambiguous/missing Org link: '+label
+   href=link.get_attribute('href')
+   assert urllib.parse.urlsplit(urllib.parse.urljoin(page.url,href)).path==urllib.parse.urlsplit(prefix+expected).path, 'Wrong Org link base: '+str(href)
+   with page.expect_navigation() as navigation:link.click()
+   assert navigation.value.status==200, 'Broken Org destination'
+   markup=page.locator('.markup').first
+   assert markup.locator('h1,h2,h3').count()>0, 'Destination not rendered'
+   if markup.locator('.math').count():
+    page.wait_for_function("document.documentElement.dataset.orgMathjax === 'ready'",timeout=45000)
+    assert markup.locator('mjx-container[jax="CHTML"]').count()==markup.locator('.math').count()
+   results['orgLinkClicks'].append({'from':origin,'label':label,'destination':expected,'width':width})
   for width in (1280,390):
    page.set_viewport_size({'width':width,'height':900})
+   # A README embedded on the repo page used to resolve docs/... outside the
+   # repository. Opening README.org directly hid that regression.
+   for origin in (f'{base}/{a.username}/{a.repository}',f'{base}/{a.username}/{a.repository}/',prefix.rstrip('/'),prefix+'README.org'):
+    for label,path in (('Mathématiques','docs/mathematiques.org'),('Délimiteurs du lecteur Org Pandoc','docs/delimiteurs.org'),('Structure, liens et sécurité','docs/structure.org')):
+     assert page.goto(origin).status==200
+     follow_org(label,path)
+   origin=prefix+'docs/mathematiques.org';page.goto(origin)
+   follow_org('document voisin','docs/structure.org')
+   origin=page.url;follow_org('Accueil','README.org')
    for path in ('README.org','docs/mathematiques.org','docs/delimiteurs.org','docs/structure.org'):
     response=page.goto(prefix+path);assert response.status==200
     page.wait_for_load_state('load')
