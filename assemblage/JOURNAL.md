@@ -1189,3 +1189,20 @@ rattachement propriétaire conforme, secret0600/root0700, bootstrap absent,
 aucun jeton de sonde restant. Pas de connexion personnelle MFA ni rebootVPS
 complet effectués ; destination backup externe toujours absente. Preuves et guide
 SSO-QUOTAS.md ajoutés ; compte rendu et reprise mis à jour sans secret personnel.
+
+## 2026-10-16 — Forgejo : liens Org du README intégré
+
+Défaut reproduit dans Chromium : docs/mathematiques.org depuis /MrJam/org-validation
+devenait /MrJam/docs/mathematiques.org. Pandoc conservait les chemins, mais le
+post-traitement HTML externe Forgejo ne rebase pas les ancres ordinaires. Filtre
+Lua Pandoc versionné utilisant GITEA_PREFIX_SRC ; aucun changement aux sources
+Org, URL externes, ancres ou images. Emacs natif ouvre les six liens inchangés.
+Tests étendus aux vrais clics depuis la page du dépôt avec/sans slash, branche,
+README ouvert, voisin, parent, mobile et commit ; CHTML et protections conservés.
+Sources cff7b94, préparation38901370067, activation38901969259, générationlddfg6bb.
+Sauvegardes restaurées isolément et retour indépendant avant activation ; aucune
+modification/redémarrage PG/Kanidm/autre service protégé. Production38902142018 :
+quatre rendus réels API/assainissement et six destinations privées existantes,
+GitHTTPS/SSH passent ; HEADdac6004 inchangé, compte Kanidm MrJam conservé, jeton
+et clé temporaires supprimés. Aucun loginMFA personnel prétendu. Documents et
+preuves dédiés ajoutés ; qualification ne remplace plus les fichiers existants.

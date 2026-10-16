@@ -1,0 +1,100 @@
+{
+  "scope": "Production : API authentifiée du vrai renderer et Git ; Chromium/Emacs réels isolés consignés séparément",
+  "preparationRun": 38901370067,
+  "deploymentRun": 38901969259,
+  "testRun": 38902142018,
+  "preparation": {
+    "forgejo": "prepared",
+    "revision": "cff7b9401bb65cc93973eae68499cd0e37ad465b",
+    "generation": "/nix/store/lddfg6bbifq8sf27zdyns1rrijwz9wzn-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "existingUnitsUnchanged": true,
+    "oldVhostsUnchanged": true,
+    "oldHbaPreserved": true,
+    "activated": false
+  },
+  "deployment": {
+    "forgejo": "deployed",
+    "revision": "cff7b9401bb65cc93973eae68499cd0e37ad465b",
+    "generation": "/nix/store/lddfg6bbifq8sf27zdyns1rrijwz9wzn-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "https": true,
+    "protectedCodeUnchanged": true,
+    "postgresRestarted": false,
+    "dependencyRestarts": []
+  },
+  "production": {
+    "identityProvider": "Kanidm",
+    "domain": "forge.mrj.am",
+    "username": "MrJam",
+    "repository": "org-validation",
+    "private": true,
+    "administratorBoundByNativeUuid": true,
+    "head": "dac6004f8aa2dd3b4e350e7fb83f19a86d4997ac",
+    "timestamp": "2026-10-16T12:40:29.110180+00:00",
+    "quotaAdministrationApi": true,
+    "orgLinks": [
+      {
+        "document": "README.org",
+        "existingOrgTargets": [
+          "docs/mathematiques.org",
+          "docs/delimiteurs.org",
+          "docs/structure.org"
+        ],
+        "productionRendererAndSanitizer": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "existingOrgTargets": [
+          "README.org",
+          "docs/structure.org"
+        ],
+        "productionRendererAndSanitizer": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "existingOrgTargets": [],
+        "productionRendererAndSanitizer": true
+      },
+      {
+        "document": "docs/structure.org",
+        "existingOrgTargets": [
+          "README.org"
+        ],
+        "productionRendererAndSanitizer": true
+      }
+    ],
+    "git": {
+      "private": true,
+      "httpScheme": "https",
+      "httpClonePush": true,
+      "sshClonePush": true,
+      "head": "dac6004f8aa2dd3b4e350e7fb83f19a86d4997ac",
+      "temporaryKeyRemoved": true
+    },
+    "temporaryProbeTokenRevoked": true
+  },
+  "validationRepositoryHeadUnchanged": true,
+  "ownerInteractiveWebLoginPerformed": false,
+  "localEvidence": "qualification-liens-locale.json",
+  "finalDiagnosticRun": 38902289716,
+  "finalState": {
+    "generation": "/nix/store/lddfg6bbifq8sf27zdyns1rrijwz9wzn-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration_sha256": "06cfa7aa479ad343fa242808be3b34ac7de2c0f2c03e4a28547da6884f297601",
+    "administratorBindingVerified": true,
+    "temporarySsoProbeTokens": 0,
+    "oldBootstrapCredentialExists": false,
+    "forgejoUnits": {
+      "forgejo": "active\nrunning\nsuccess\n0",
+      "forgejo-account": "inactive\ndead\nsuccess\n0",
+      "forgejo-backup": "inactive\ndead\nsuccess\n0",
+      "forgejo-backup-qualification": "inactive\ndead\nsuccess\n0",
+      "forgejo-identity": "active\nexited\nsuccess\n0"
+    },
+    "authenticationAndQuotas": {
+      "basic": false,
+      "internal": false,
+      "maxRepositories": -1,
+      "quotaEnabled": true,
+      "quotaTotal": "-1"
+    }
+  }
+}

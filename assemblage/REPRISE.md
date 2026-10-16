@@ -1,5 +1,20 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Forgejo — liens Org corrigés, 16 octobre 2026
+
+Sources cff7b9401bb65cc93973eae68499cd0e37ad465b, génération lddfg6bb,
+activation38901969259 réussie après préparation38901370067/sauvegardes/retour.
+Le filtre Pandoc org-links.lua utilise GITEA_PREFIX_SRC : le README intégré
+ne résout plus docs/... hors du dépôt. Aucune source Org du dépôt privé modifiée ;
+HEAD MrJam/org-validation toujours dac6004f8aa2dd3b4e350e7fb83f19a86d4997ac.
+28 clics Chromium aux largeurs1280/390, huit contrôles HTML/CHTML/sécurité,
+navigation figée par commit et six ouvertures org-open-at-point Emacs30.2/Org9.7.11
+réussis en local. Production38902142018 : quatre rendus API et six cibles privées
+existantes, Git HTTPS/SSH, confidentialité, jeton/clé temporaires supprimés.
+Pas de connexion MFA personnelle effectuée ; distinguer les clics Web locaux
+des vérifications API de production. PostgreSQL et services protégés sans restart.
+Guide LIENS-ORG.md, reçus qualification-liens-{locale,production}.json.
+
 ## Mission Forgejo — Kanidm seul et quotas, 16 octobre 2026
 
 https://forge.mrj.am/ actif ; seule connexion Web via Kanidm/log.mrj.am.
