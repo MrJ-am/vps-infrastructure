@@ -92,5 +92,9 @@ if __name__=='__main__':
  expression='(import <nixpkgs/nixos/lib/eval-config.nix> { system="x86_64-linux";modules=[/etc/nixos/configuration.nix]; }).config.services.forgejo.package.outPath'
  FORGEJO=json.loads(run(['nix-instantiate','-I','nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos','--eval','--strict','--json','--expr',expression]))+'/bin/forgejo'
  assert phase in ('seed','persistance')
- C=json.loads((D/'validation-secret.json').read_text()) if (D/'validation-secret.json').exists() else None
+ secret=D/'validation-secret.json'
+ previous=P('/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/validation-secret.json')
+ if not secret.exists() and previous.exists():
+  secret.write_bytes(previous.read_bytes());secret.chmod(0o600)
+ C=json.loads(secret.read_text()) if secret.exists() else None
  {'seed':seed,'persistance':persistence}[phase]()

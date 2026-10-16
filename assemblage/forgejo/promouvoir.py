@@ -3,8 +3,9 @@
 import datetime,hashlib,importlib.util,json,os,pathlib,re,shlex,subprocess,sys,time,urllib.request,uuid
 P=pathlib.Path
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
-EXPECTED='/nix/store/az22hgl8xp9sab6incdcnhbj7ljang78-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
-CONFIG_SHA='7a7fc7c90cc1cf662144020c5c5e5c55035c4afb60f25612d2bf8c159f1c1f81'
+EXPECTED='/nix/store/hqsfqg1yjzis295fhgkvfd9hj7vxl2qb-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
+CONFIG_SHA='72f2192d8600f2579ee73f847e7fd80f0b29a4a778a18fea6ad49fe82a114c64'
+RUNTIME_BASE='/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix'
 PROTECTED=('sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud','redis-nextcloud')
 
 def require(b,msg):
@@ -26,6 +27,7 @@ def evaluate(path):
  expression='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[PATH];};c=e.config; in {
  toplevel=toString c.system.build.toplevel;
  errors=map (a: a.message) (builtins.filter (a: !a.assertion) c.assertions);
+ units=builtins.mapAttrs (n: u: u.text) c.systemd.units;
  protected=builtins.listToAttrs (map (n: {name=n;value=c.systemd.units."${n}.service".text;}) PROTECTED);
  hosts=builtins.mapAttrs (n: v: builtins.toJSON (e.pkgs.lib.filterAttrs (k: value: (builtins.tryEval value).success) v)) c.services.nginx.virtualHosts;
  pg={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;settings=builtins.removeAttrs c.services.postgresql.settings ["hba_file" "ident_file"];ident=c.services.postgresql.identMap;hba=c.services.postgresql.authentication;databases=c.services.postgresql.ensureDatabases;users=map (u: u.name) c.services.postgresql.ensureUsers;};
@@ -76,21 +78,25 @@ def prepare():
  if not base.exists():base.write_bytes(P('/etc/nixos/configuration.nix').read_bytes())
  require(hashlib.sha256(base.read_bytes()).hexdigest()==CONFIG_SHA,'Base invalide')
  configuration=D/'configuration.nix'
- configuration.write_text('{ ... }: { imports = [ (import ./payload/integration.nix { baseConfiguration = ./base.nix; }) ]; }\n')
+ configuration.write_text('{ ... }: { imports = [ (import ./payload/integration.nix { baseConfiguration = '+RUNTIME_BASE+'; timerConfiguration = ./base.nix; }) ]; }\n')
  before=evaluate(base);after=evaluate(configuration)
  require(before['toplevel']==EXPECTED,'Évaluation de base différente du système installé')
  require(not after['errors'],'Assertions NixOS refusées')
  require(before['protected']==after['protected'],'Unité protégée modifiée')
  require(all(after['hosts'].get(k)==v for k,v in before['hosts'].items()),'Hôte existant modifié')
- require(set(after['hosts'])-set(before['hosts'])=={'forge.mrj.am'},'Hôte nouveau inattendu')
+ require(set(after['hosts'])==set(before['hosts']),'Registre des hôtes modifié')
+ require(after['forgejo']==before['forgejo'],'Paramètres Forgejo modifiés')
+ allowed={'forgejo-backup.service','forgejo-backup-qualification.service'}
+ require(set(after['units'])==set(before['units']),'Registre des unités modifié')
+ require(all(after['units'][n]==v for n,v in before['units'].items() if n not in allowed),'Unité hors sauvegarde Forgejo modifiée')
  b=before['pg'];a=after['pg']
  for k in ('package','dataDir','settings','ident'):require(a[k]==b[k],'Configuration PostgreSQL historique modifiée: '+k)
- require(a['hba']=='local forgejo forgejo peer\n'+b['hba'],'Règles HBA non conservées')
- for k in ('databases','users'):require(set(a[k])==set(b[k])|{'forgejo'},'Registre SQL modifié: '+k)
+ require(a['hba']==b['hba'],'Règles HBA non conservées')
+ for k in ('databases','users'):require(set(a[k])==set(b[k]),'Registre SQL modifié: '+k)
  require(after['backups']==before['backups'],'Sauvegardes historiques modifiées')
  require(all(after['acmeTimers'].get(k)==v for k,v in before['acmeTimers'].items()),'Renouvellement TLS existant modifié')
  for k in before['system']:
-  if k=='firewall':require(set(after['system'][k])==set(before['system'][k])|{2222},'Pare-feu inattendu')
+  if k=='firewall':require(set(after['system'][k])==set(before['system'][k]),'Pare-feu inattendu')
   else:require(after['system'][k]==before['system'][k],'Socle modifié: '+k)
  with (D/'build.log').open('w') as log:
   p=subprocess.run(['nix-build','-I','nixpkgs='+NIXPKGS,'--no-out-link','--expr',
