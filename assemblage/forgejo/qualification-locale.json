@@ -72,7 +72,7 @@
     "temporaryKeyRemoved": true
   },
   "sourceSha256": {
-    "assemblage/forgejo/README.md": "d1313d9a35ad6966fce3ad2c0170f78d4f3cea7a98639d73b41746646684d905",
+    "assemblage/forgejo/README.md": "26af58e5cc8444e7975dfc33ea4a9072edb8ab6722308a761d37976c8defc2bb",
     "assemblage/forgejo/assets/config.js": "ad6570e15600ee9036401b820bbd5f368cd213d6a0c5afe5a0e2444d2960ddb5",
     "assemblage/forgejo/assets/footer.tmpl": "2446903db4dd611955cfcb1937eabff7e9fb530be59f0ae7e6a0e751f466ee22",
     "assemblage/forgejo/assets/org.css": "9dc497eb0bffb10b69b0d11af59047ca83c2a7dd47e2b9c89a24ef4278526111",
@@ -83,8 +83,8 @@
     "assemblage/forgejo/fixtures/docs/structure.org": "8e8c045b6b8be56c9dba5d0d21c5630846e09829596ab3734aeed2d2c2fa9c82",
     "assemblage/forgejo/fixtures/images/point.png": "ad3c285f9f93b5a369ee3993296c77071b108359643f83847c6fae1469347a14",
     "assemblage/forgejo/integration.nix": "624c922c6852befd8fc9564405cfc671627b88571fdeacdf071a1015771e5935",
-    "assemblage/forgejo/module.nix": "310237ba2ae6f55c66722430fcbb887a47b64c0b28ab6f740b5bfd218c2f6790",
-    "assemblage/forgejo/promouvoir.py": "6ae81c88231ac5f0df2ea190bb765069f7848d56be2e40791112e6a099ea13c2",
+    "assemblage/forgejo/module.nix": "c5ca8d5ba075445143e57da772a8912d70823ba76b64e8a32cf6810af595a0af",
+    "assemblage/forgejo/promouvoir.py": "d23aee774b9eefbb952f64961009b496a39d87a0149a48bcf7dd3fce71ffe085",
     "assemblage/forgejo/versions.json": "661e4b273d700cab10ee6dc68597318e8a14fbc1109b13dfd24edb8b2c0dfbcf",
     "scripts/forgejo-navigateur.py": "2c8d41e184c646a1d4aba1a5bf4ae476d00935f70c48b77c1307f9c131a1b315",
     "scripts/forgejo-git.py": "1d4bc8234b3e00b54a03f41557d615d42ccbf21dd5ef0c6aa010feb376c7b76a",
@@ -168,13 +168,13 @@
   },
   "nixIntegration": {
     "errors": [],
-    "nginxConfigDrv": "/nix/store/hnxmzm8i088nbh8lklxqbmpanzxdha5h-nginx.conf.drv",
+    "nginxConfigDrv": "/nix/store/135arkk8gnpvpcm7qjxqxpc0m1hfw8wc-nginx.conf.drv",
     "oldTimer": true,
     "peer": true,
-    "system": "/nix/store/k5n57s2zkrw773xr83bjrmgfjwrylc2n-nixos-system-nixos-26.05pre-git.drv"
+    "system": "/nix/store/2n19nwkq2n994wccmz0h8ii2vjam8afx-nixos-system-nixos-26.05pre-git.drv"
   },
   "nginxGixy": {
-    "config": "/nix/store/sgkll27j1s5gzvwmwl3xx878n30xhdib-nginx.conf",
+    "config": "/nix/store/61pfxam8gc8mnl859nb2nd012hbwcf23-nginx.conf",
     "issues": {
       "unspecified": 0,
       "low": 0,
@@ -182,5 +182,7 @@
       "high": 0
     },
     "securityHeaderInheritance": true
-  }
+  },
+  "domain": "forge.mrj.am",
+  "productionExtensions": "Contrôle de restauration PostgreSQL/Git et sondes de production à exécuter après activation."
 }

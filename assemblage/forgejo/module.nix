@@ -10,10 +10,46 @@ let
     exec ${pkgs.coreutils}/bin/timeout 20s ${pkgs.pandoc}/bin/pandoc \
       --sandbox --from=org --to=html5 --mathjax --wrap=none
   '';
+  backupService = verify: {
+      description = "Sauvegarde cohérente chiffrée Forgejo (données, dépôts, PostgreSQL)";
+      after = [ "postgresql.service" ];
+      path = [ pkgs.coreutils pkgs.gnutar pkgs.age pkgs.util-linux pkgs.git config.services.postgresql.package ];
+      serviceConfig = { Type = "oneshot"; UMask = "0077"; TimeoutStartSec = "5min"; };
+      script = ''
+        set -euo pipefail
+        exec 9>/run/lock/forgejo-backup.lock
+        flock 9
+        tmp=$(mktemp -d /var/backup/forgejo/.snapshot-XXXXXX)
+        active=0
+        if ${pkgs.systemd}/bin/systemctl is-active --quiet forgejo; then active=1; fi
+        cleanup() {
+          if [ "$active" = 1 ]; then ${pkgs.systemd}/bin/systemctl start forgejo; fi
+          rm -rf -- "$tmp"
+        }
+        trap cleanup EXIT
+        ${pkgs.systemd}/bin/systemctl stop forgejo
+        runuser -u forgejo -- pg_dump -h /run/postgresql --format=custom forgejo > "$tmp/forgejo.dump"
+        tar -C /var/lib -cf "$tmp/data.tar" forgejo
+        dest=/var/backup/forgejo/forgejo-$(date -u +%Y%m%dT%H%M%SZ).tar.age
+        age-keygen -o "$tmp/key" 2>/dev/null
+        public=$(age-keygen -y "$tmp/key")
+        age -r '${cfg.backupRecipient}' "$tmp/key" > "$dest.key.age.tmp"
+        tar -C "$tmp" -cf - forgejo.dump data.tar | age -r "$public" > "$dest.tmp"
+        # Verify actual decryption and archive contents before accepting the pair.
+        mkdir "$tmp/verified"
+        age -d -i "$tmp/key" "$dest.tmp" | tar -xf - -C "$tmp/verified"
+        cmp "$tmp/forgejo.dump" "$tmp/verified/forgejo.dump"
+        cmp "$tmp/data.tar" "$tmp/verified/data.tar"
+        pg_restore --list "$tmp/verified/forgejo.dump" >/dev/null
+        ${lib.optionalString verify "${pkgs.python3}/bin/python3 ${./verify-backup.py} \"$tmp/verified\" ${config.services.postgresql.finalPackage}"}
+        mv "$dest.key.age.tmp" "$dest.key.age"
+        mv "$dest.tmp" "$dest"
+      '';
+    };
 in {
   options.infrastructure.forgejo = {
     enable = lib.mkEnableOption "Forgejo privé avec Pandoc et MathJax locaux";
-    domain = lib.mkOption { type = lib.types.str; default = "git.mrg.am"; };
+    domain = lib.mkOption { type = lib.types.str; default = "forge.mrj.am"; };
     backupRecipient = lib.mkOption { type = lib.types.str;
       default = config.services.vision.backupRecipient; };
   };
@@ -118,39 +154,8 @@ in {
         fi
       '';
     };
-    systemd.services.forgejo-backup = {
-      description = "Sauvegarde cohérente chiffrée Forgejo (données, dépôts, PostgreSQL)";
-      after = [ "postgresql.service" ];
-      path = [ pkgs.coreutils pkgs.gnutar pkgs.age pkgs.util-linux config.services.postgresql.package ];
-      serviceConfig = { Type = "oneshot"; UMask = "0077"; TimeoutStartSec = "5min"; };
-      script = ''
-        set -euo pipefail
-        tmp=$(mktemp -d /var/backup/forgejo/.snapshot-XXXXXX)
-        active=0
-        if ${pkgs.systemd}/bin/systemctl is-active --quiet forgejo; then active=1; fi
-        cleanup() {
-          if [ "$active" = 1 ]; then ${pkgs.systemd}/bin/systemctl start forgejo; fi
-          rm -rf -- "$tmp"
-        }
-        trap cleanup EXIT
-        ${pkgs.systemd}/bin/systemctl stop forgejo
-        runuser -u forgejo -- pg_dump -h /run/postgresql --format=custom forgejo > "$tmp/forgejo.dump"
-        tar -C /var/lib -cf "$tmp/data.tar" forgejo
-        dest=/var/backup/forgejo/forgejo-$(date -u +%Y%m%dT%H%M%SZ).tar.age
-        age-keygen -o "$tmp/key" 2>/dev/null
-        public=$(age-keygen -y "$tmp/key")
-        age -r '${cfg.backupRecipient}' "$tmp/key" > "$dest.key.age.tmp"
-        tar -C "$tmp" -cf - forgejo.dump data.tar | age -r "$public" > "$dest.tmp"
-        # Verify actual decryption and archive contents before accepting the pair.
-        mkdir "$tmp/verified"
-        age -d -i "$tmp/key" "$dest.tmp" | tar -xf - -C "$tmp/verified"
-        cmp "$tmp/forgejo.dump" "$tmp/verified/forgejo.dump"
-        cmp "$tmp/data.tar" "$tmp/verified/data.tar"
-        pg_restore --list "$tmp/verified/forgejo.dump" >/dev/null
-        mv "$dest.key.age.tmp" "$dest.key.age"
-        mv "$dest.tmp" "$dest"
-      '';
-    };
+    systemd.services.forgejo-backup = backupService false;
+    systemd.services.forgejo-backup-qualification = backupService true;
     systemd.timers.forgejo-backup = {
       wantedBy = [ "timers.target" ];
       timerConfig = { OnCalendar = "*-*-* 04:45:00"; Persistent = true; RandomizedDelaySec = "10min"; };

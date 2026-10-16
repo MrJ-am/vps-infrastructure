@@ -4,7 +4,7 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, restaurer, deployer, retour, diagnostic, confirmer-retour, audition-preparer, audition-deployer, audition-retour, audition-diagnostic, reconnexion-outillage, reconnexion-preparer, reconnexion-deployer, reconnexion-retour, reconnexion-diagnostic, forgejo-diagnostic, forgejo-preparer, forgejo-deployer, forgejo-retour]
+        options: [preparer, restaurer, deployer, retour, diagnostic, confirmer-retour, audition-preparer, audition-deployer, audition-retour, audition-diagnostic, reconnexion-outillage, reconnexion-preparer, reconnexion-deployer, reconnexion-retour, reconnexion-diagnostic, forgejo-diagnostic, forgejo-preparer, forgejo-deployer, forgejo-retour, forgejo-tester, forgejo-persistance]
         default: deployer
         description: Opération sur le candidat chiffré verrouillé dans main
 permissions:

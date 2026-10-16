@@ -21,7 +21,7 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION')
-    if operation in ('forgejo-preparer','forgejo-deployer','forgejo-retour'):
+    if operation in ('forgejo-preparer','forgejo-deployer','forgejo-retour','forgejo-tester','forgejo-persistance'):
         spec=importlib.util.spec_from_file_location('forgejo_operation',ROOT/'scripts/forgejo-operation.py')
         m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
         m.main();return
