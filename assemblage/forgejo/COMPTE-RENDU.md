@@ -83,3 +83,17 @@ rétention30jours, maintenant avec l'état OIDC. Destination hors VPS restant à
 Mail sortant désactivé. La suspension Kanidm n'est pas une révocation instantanée
 des sessions et accès Git existants : bloquer aussi le compte Forgejo lors d'un retrait.
 La procédure et les limites précises sont dans [SSO-QUOTAS.md](SSO-QUOTAS.md).
+
+## Correction des liens Org — 16 octobre 2026
+
+Les liens relatifs du README intégré étaient résolus par le navigateur hors du
+dépôt. `org-links.lua` utilise maintenant `GITEA_PREFIX_SRC` pour le HTML rendu ;
+les sources `[[file:…org]]` restent inchangées. Voir [LIENS-ORG.md](LIENS-ORG.md).
+Les 28 clics Chromium, huit contrôles de documents et six ouvertures natives
+Emacs/Org passent localement ; une vue par commit conserve aussi son contexte.
+
+Déployé (sources `cff7b94`, génération `lddfg6bb`, run38901969259). Le contrôle
+de production38902142018 confirme les quatre rendus Pandoc/assainissement et six
+destinations privées, Git HTTPS/SSH et suppression des accès de test temporaires.
+HEAD du dépôt inchangé ; PostgreSQL/Kanidm/services protégés sans redémarrage.
+La navigation Web personnelle avec MFA n’a pas été effectuée par l’opérateur.
