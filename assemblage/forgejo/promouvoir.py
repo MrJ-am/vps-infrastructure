@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Closed Forgejo preparation, activation and independent code-only rollback."""
-import datetime,hashlib,importlib.util,json,os,pathlib,re,shlex,subprocess,sys,time,urllib.request
+import datetime,hashlib,importlib.util,json,os,pathlib,re,shlex,subprocess,sys,time,urllib.request,uuid
 P=pathlib.Path
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
 EXPECTED='/nix/store/az22hgl8xp9sab6incdcnhbj7ljang78-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
@@ -38,6 +38,34 @@ def evaluate(path):
 
 def pids():return {n:cmd(['systemctl','show',n,'-p','MainPID','--value']) for n in PROTECTED}
 
+def executable_hash(pid):
+ if pid=='0':return None
+ require(pid.isdigit() and int(pid)>0,'Processus actif attendu')
+ with open('/proc/'+pid+'/exe','rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+
+def pg_dependency(unit,seen=None):
+ seen=set() if seen is None else seen
+ if unit in seen or len(seen)>100:return False
+ if unit in ('postgresql.service','postgresql-setup.service'):return True
+ seen.add(unit)
+ deps=cmd(['systemctl','show',unit,'-p','Requires','-p','BindsTo','--value']).split()
+ return any(pg_dependency(dep,seen) for dep in deps if dep.endswith('.service'))
+
+def qualify_return():
+ marker=D/'return-probe.json'
+ marker.unlink(missing_ok=True)
+ name='forgejo-retour-check-'+REV[:12]+'-'+uuid.uuid4().hex[:6]
+ cmd(['systemd-run','--unit='+name,'--collect','--on-active=2s',sys.executable,str(D/'payload/promouvoir.py'),'temoin-retour',REV])
+ for _ in range(40):
+  if marker.exists():break
+  time.sleep(.25)
+ require(marker.exists() and json.loads(marker.read_text())['base']==EXPECTED,'Témoin indépendant non exécuté')
+
+def return_probe():
+ require(hashlib.sha256((D/'base.nix').read_bytes()).hexdigest()==CONFIG_SHA,'Base de retour invalide')
+ require(P(EXPECTED+'/bin/switch-to-configuration').is_file(),'Génération de retour absente')
+ (D/'return-probe.json').write_text(json.dumps({'base':EXPECTED,'revision':REV,'executedBy':'systemd-timer'})+'\n')
+
 def unchanged():
  require(str(P('/run/current-system').resolve())==EXPECTED,'Génération de base modifiée: réinspecter')
  require(hashlib.sha256(P('/etc/nixos/configuration.nix').read_bytes()).hexdigest()==CONFIG_SHA,'Configuration concurrente: réinspecter')
@@ -54,7 +82,7 @@ def prepare():
  require(not after['errors'],'Assertions NixOS refusées')
  require(before['protected']==after['protected'],'Unité protégée modifiée')
  require(all(after['hosts'].get(k)==v for k,v in before['hosts'].items()),'Hôte existant modifié')
- require(set(after['hosts'])-set(before['hosts'])=={'git.mrg.am'},'Hôte nouveau inattendu')
+ require(set(after['hosts'])-set(before['hosts'])=={'forge.mrj.am'},'Hôte nouveau inattendu')
  b=before['pg'];a=after['pg']
  for k in ('package','dataDir','settings','ident'):require(a[k]==b[k],'Configuration PostgreSQL historique modifiée: '+k)
  require(a['hba']=='local forgejo forgejo peer\n'+b['hba'],'Règles HBA non conservées')
@@ -71,6 +99,9 @@ def prepare():
  require(p.stdout.strip()==after['toplevel'],'Artefact différent de l’évaluation')
  require(P(after['toplevel']).is_dir(),'Artefact absent')
  cmd(['nix-store','--add-root',str(D/'candidate-root'),'--indirect','-r',after['toplevel']])
+ cmd(['nix-store','--add-root',str(D/'base-root'),'--indirect','-r',EXPECTED])
+ cmd(['nix-store','--add-root',str(D/'return-python-root'),'--indirect','-r',str(P(sys.executable).resolve().parents[1])])
+ qualify_return()
  backup_current()
  (D/'prepared.json').write_text(json.dumps({'revision':REV,'generation':after['toplevel'],'base':EXPECTED,'configuration_sha256':CONFIG_SHA,'preparedAt':time.time()},indent=2)+'\n')
  print(json.dumps({'forgejo':'prepared','revision':REV,'generation':after['toplevel'],'existingUnitsUnchanged':True,'oldVhostsUnchanged':True,'oldHbaPreserved':True,'activated':False}),flush=True)
@@ -78,10 +109,10 @@ def prepare():
 def dns_ready():
  for resolver in ('https://dns.google/resolve','https://cloudflare-dns.com/dns-query'):
   for kind in ('A','AAAA'):
-   req=urllib.request.Request(resolver+'?name=git.mrg.am&type='+kind,headers={'Accept':'application/dns-json'})
+   req=urllib.request.Request(resolver+'?name=forge.mrj.am&type='+kind,headers={'Accept':'application/dns-json'})
    with urllib.request.urlopen(req,timeout=20) as f:d=json.load(f)
    vals={v['data'] for v in d.get('Answer',[]) if v['type']==(1 if kind=='A' else 28)}
-   require(d.get('Status')==0 and (vals=={'187.77.95.158'} if kind=='A' else not vals),'DNS git.mrg.am non prêt: activation arrêtée')
+   require(d.get('Status')==0 and (vals=={'187.77.95.158'} if kind=='A' else not vals),'DNS forge.mrj.am non prêt: activation arrêtée')
 
 def rollback():
  # Idempotent return of configuration/code only. Never restore an old database.
@@ -89,7 +120,7 @@ def rollback():
  current=P('/etc/nixos/configuration.nix').read_bytes()
  expected=('{ ... }: { imports = [ '+json.dumps(str(D/'configuration.nix'))+' ]; }\n').encode()
  require(current in (expected,(D/'base.nix').read_bytes()),'Configuration concurrente: retour automatique arrêté')
- P('/etc/nixos/configuration.nix').write_bytes((D/'base.nix').read_bytes())
+ temp=P('/etc/nixos/.forgejo-return.tmp');temp.write_bytes((D/'base.nix').read_bytes());temp.chmod(0o644);temp.replace('/etc/nixos/configuration.nix')
  cmd(['nix-env','--profile','/nix/var/nix/profiles/system','--set',EXPECTED])
  cmd([EXPECTED+'/bin/switch-to-configuration','switch'],timeout=300)
  require(str(P('/run/current-system').resolve())==EXPECTED,'Retour non activé')
@@ -102,6 +133,8 @@ def backup_current():
  backup.GENERATION=EXPECTED
  try:report=backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
  except Exception:raise RuntimeError('Sauvegarde actuelle arrêtée à l’étape '+backup.ETAPE) from None
+ cmd(['systemctl','start','mrjam-sauvegarde.service'],timeout=300)
+ require(cmd(['systemctl','show','mrjam-sauvegarde.service','-p','Result','--value'])=='success','Sauvegarde Native courante refusée')
  require(pids()==before_pids,'Processus protégé changé durant la sauvegarde')
  (D/'backup.json').write_text(json.dumps({k:v for k,v in report.items() if k!='fichiers_chiffres'},indent=2)+'\n')
 
@@ -110,7 +143,11 @@ def deploy():
  prepared=json.loads((D/'prepared.json').read_text())
  require(prepared['revision']==REV and time.time()-prepared['preparedAt']<86400,'Préparation périmée')
  before_pids=pids()
+ before_pg=cmd(['systemctl','show','postgresql','-p','MainPID','--value'])
+ binaries={n:executable_hash(pid) for n,pid in before_pids.items()}
+ dependents={n:pg_dependency(n+'.service') for n in PROTECTED}
  backup_current()
+ qualify_return()
  unchanged();dns_ready()
  timer='forgejo-retour-'+REV[:12]
  cmd(['systemd-run','--unit='+timer,'--on-active=10min',sys.executable,str(D/'payload/promouvoir.py'),'retour',REV])
@@ -120,19 +157,29 @@ def deploy():
   cmd(['nix-env','--profile','/nix/var/nix/profiles/system','--set',prepared['generation']])
   cmd([prepared['generation']+'/bin/switch-to-configuration','switch'],timeout=360)
   require(str(P('/run/current-system').resolve())==prepared['generation'],'Activation différente du candidat')
-  require(pids()==before_pids,'Un processus protégé a redémarré')
+  after_pids=pids();after_pg=cmd(['systemctl','show','postgresql','-p','MainPID','--value'])
+  restarted=[]
+  for name,pid in after_pids.items():
+   require(executable_hash(pid)==binaries[name],'Code protégé modifié: '+name)
+   if pid!=before_pids[name]:
+    require(before_pg!=after_pg and dependents[name],'Redémarrage hors dépendance PostgreSQL: '+name)
+    restarted.append(name)
   cmd(['systemctl','is-active','forgejo','nginx','postgresql','sshd','mrjam-metier','kanidm'])
+  cmd(['systemctl','start','forgejo-bootstrap'])
+  require(cmd(['systemctl','show','forgejo-bootstrap','-p','Result','--value'])=='success','Amorçage administrateur refusé')
+  admin=cmd(['runuser','-u','forgejo','--','psql','-XAtq','-h','/run/postgresql','-d','forgejo','-c','SELECT count(*) FROM "user" WHERE is_admin;'])
+  require(int(admin)>0,'Aucun administrateur Forgejo')
   for _ in range(60):
    try:
-    with urllib.request.urlopen('https://git.mrg.am/api/v1/version',timeout=10) as r:
+    with urllib.request.urlopen('https://forge.mrj.am/api/v1/version',timeout=10) as r:
      require(r.status==200,'Forgejo inaccessible');version=json.load(r)
     break
    except Exception:time.sleep(2)
   else:raise RuntimeError('HTTPS Forgejo non disponible')
   require(version['version'].startswith('16.0.3'),'Version inattendue')
   cmd(['systemctl','stop',timer+'.timer'])
-  (D/'deployed.json').write_text(json.dumps({'revision':REV,'generation':prepared['generation'],'timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'protectedPidsUnchanged':True},indent=2)+'\n')
-  print(json.dumps({'forgejo':'deployed','revision':REV,'generation':prepared['generation'],'https':True,'protectedPidsUnchanged':True}),flush=True)
+  (D/'deployed.json').write_text(json.dumps({'revision':REV,'generation':prepared['generation'],'timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'protectedCodeUnchanged':True,'postgresRestarted':before_pg!=after_pg,'dependencyRestarts':restarted},indent=2)+'\n')
+  print(json.dumps({'forgejo':'deployed','revision':REV,'generation':prepared['generation'],'https':True,'protectedCodeUnchanged':True,'postgresRestarted':before_pg!=after_pg,'dependencyRestarts':restarted}),flush=True)
  except Exception:
   rollback();raise
 
@@ -141,8 +188,8 @@ if __name__=='__main__':
  phase,REV=sys.argv[1:];require(os.geteuid()==0 and re.fullmatch('[0-9a-f]{40}',REV),'Contexte invalide')
  D=P('/root/mrjam-corrections/forgejo')/REV
  require(P(__file__).resolve()==D/'payload/promouvoir.py','Emplacement invalide')
- require(phase in ('preparer','deployer','retour'),'Opération inconnue')
- try:{'preparer':prepare,'deployer':deploy,'retour':rollback}[phase]()
+ require(phase in ('preparer','deployer','retour','temoin-retour'),'Opération inconnue')
+ try:{'preparer':prepare,'deployer':deploy,'retour':rollback,'temoin-retour':return_probe}[phase]()
  except Exception as e:
   print(json.dumps({'forgejo':'stopped','phase':phase,'reason':str(e),'privateLog':str(D/'operation-private.log')}),flush=True)
   sys.exit(1)

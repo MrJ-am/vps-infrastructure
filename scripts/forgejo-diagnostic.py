@@ -21,6 +21,7 @@ r={'generation':cmd(['readlink','-f','/run/current-system']),
    'configuration':json.loads(cmd(['nix-instantiate','-I','nixpkgs='+NIXPKGS,'--eval','--strict','--json','--expr',EXPR])),
    'listeners':cmd(['ss','-lnt']),
    'services':{n:cmd(['systemctl','show',n,'--property=ActiveState,MainPID','--value']) for n in ('nginx','postgresql','sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud')},
+   'dependencies':{n:cmd(['systemctl','show',n,'--property=Requires,BindsTo','--value']) for n in ('sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud','redis-nextcloud')},
    'forgejo_paths_present':{p:pathlib.Path(p).exists() for p in ('/var/lib/forgejo','/var/backup/forgejo')}}
 
 r['forgejo_preparation_errors']=[]

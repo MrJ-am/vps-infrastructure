@@ -46,7 +46,7 @@ exercés dans `fixtures/docs/delimiteurs.org` ainsi que les environnements align
 
 Le circuit existant `.github/workflows/monolithe-deploiement.yml` porte les
 opérations fermées `forgejo-diagnostic`, `forgejo-preparer`, `forgejo-deployer`
-et `forgejo-retour`. Aucun workflow ou runner supplémentaire. Le descripteur
+et `forgejo-retour`, puis `forgejo-tester` et `forgejo-persistance`. Aucun workflow ou runner supplémentaire. Le descripteur
 `operations/forgejo-candidat.json` identifie le commit des sources à transporter.
 
 La préparation compare l’évaluation de base à la génération active puis les
@@ -122,3 +122,27 @@ Les preuves locales et distantes restent distinctes. Une instance locale SQLite
 ne qualifie pas la connexion PostgreSQL, ACME, le pare-feu ou la persistance du VPS.
 L’absence de DNS bloque les essais de production et doit rester visible dans le
 compte rendu. Le redémarrage d’un service ne prouve pas un redémarrage complet du VPS.
+
+
+## Validation de production
+
+`forgejo-tester` crée le compte non administrateur `forgejo-validation` et le
+dépôt privé `org-validation` avec les fixtures demandées. Les opérations Git HTTPS
+et SSH sont sondées depuis le runner administratif existant. Le mot de passe
+aléatoire du compte de test reste dans un fichier root privé sur le VPS ; seul son
+chiffrement RSA-OAEP pour la clé publique de qualification est publié dans le run.
+Le premier compte administrateur et son secret ne sont jamais lus par ces sondes.
+
+`forgejo-persistance` redémarre uniquement Forgejo, compare le commit du dépôt
+et les PID des services protégés, puis démarre `forgejo-backup-qualification`.
+Cette unité emploie le même script de snapshot et chiffrement que le timer quotidien,
+puis restaure le dump déchiffré dans un cluster PostgreSQL privé sans TCP. Elle
+compare les empreintes de toutes les tables et vérifie les dépôts restaurés par
+`git fsck`. Le cluster et les copies claires sont supprimés à la fin. Un verrou
+commun empêche la concurrence entre sauvegarde quotidienne et qualification.
+
+Un changement de PID d’un service protégé durant la bascule n’est accepté que
+s’il dépend effectivement de PostgreSQL, que PostgreSQL a redémarré et que le code
+exécutable est identique. Les autres PID sont conservés ; les sondes fonctionnelles
+restent obligatoires. Le retour précédent et son interpréteur sont protégés de la
+collecte Nix, et un vrai timer systemd exerce le témoin indépendant avant bascule.
