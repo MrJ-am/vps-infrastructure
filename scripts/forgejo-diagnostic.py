@@ -35,4 +35,9 @@ for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/*.log'
 r['forgejoUnits']={n:cmd(['systemctl','show',n,'--property=ActiveState,SubState,Result,ExecMainStatus','--value']) for n in ('forgejo','forgejo-bootstrap','forgejo-backup','forgejo-backup-qualification')}
 journal=cmd(['journalctl','-u','forgejo-backup-qualification','-n','70','--no-pager','-o','cat'])
 r['backupErrors']=[line[:400] for line in journal.splitlines() if any(token in line for token in ('RuntimeError:','Error:','Permission denied','not found','cannot ','could not ','failed:'))]
+secret=pathlib.Path('/var/lib/forgejo-bootstrap/initial-admin.txt')
+if secret.exists():
+    stat=secret.stat();r['bootstrapSecretMetadata']={'uid':stat.st_uid,'mode':oct(stat.st_mode & 0o777),'parentMode':oct(secret.parent.stat().st_mode & 0o777),'contentRead':False}
+r['forgejoBackupTimer']=cmd(['systemctl','show','forgejo-backup.timer','--property=ActiveState,NextElapseUSecRealtime','--value'])
+r['forgejoEncryptedBackupPairs']=sum(1 for p in pathlib.Path('/var/backup/forgejo').glob('*.tar.age') if pathlib.Path(str(p)+'.key.age').is_file())
 print(json.dumps(r,sort_keys=True))
