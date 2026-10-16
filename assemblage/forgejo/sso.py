@@ -112,7 +112,7 @@ def account():
    except Exception:
     if attempt==29:raise
     time.sleep(.5)
-  api('admin/users/'+name+'/rename',token,{'new_name':'MrJam'})
+  api('admin/users/'+name+'/rename',token,{'new_username':'MrJam'})
   check=api('user',token)
   if check['id']!=binding['administratorId'] or check['login']!='MrJam' or not check['is_admin']:raise RuntimeError('Rename changed administrator identity')
   binding['name']='MrJam';(STATE/'binding.json').write_text(json.dumps(binding))

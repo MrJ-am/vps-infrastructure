@@ -69,6 +69,7 @@ in {
   };
   config = lib.mkIf cfg.enable {
     assertions = [
+      { assertion = !cfg.sso.enable || (cfg.domain == "forge.mrj.am" && config.services.kanidm.server.settings.origin == "https://log.mrj.am"); message = "Requalifier les origines OIDC avant de changer de domaine."; }
       { assertion = !cfg.sso.enable || config.services.kanidm.server.enable;
         message = "Le raccordement Forgejo exige le Kanidm existant."; }
       { assertion = builtins.match "(-1|[0-9]+( ?(B|KiB|MiB|GiB|TiB))?)" cfg.quotas.totalStorage != null; message = "Quota de stockage invalide."; }
