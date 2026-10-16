@@ -24,11 +24,11 @@ r={'generation':cmd(['readlink','-f','/run/current-system']),
    'forgejo_paths_present':{p:pathlib.Path(p).exists() for p in ('/var/lib/forgejo','/var/backup/forgejo')}}
 
 r['forgejo_preparation_errors']=[]
-for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/operation-private.log')):
-    if log.stat().st_size>262144:continue
+for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/*.log')):
+    if log.name not in ('operation-private.log','build.log') or log.stat().st_size>1048576:continue
     # Error summaries only: no eval output, SQL data, journal or arbitrary file.
     text=log.read_text()
-    errors=__import__('re').findall(r'(?m)^\s*error: ([^\n]+)',text)
-    r['forgejo_preparation_errors'].append({'revision':log.parent.name,'errors':[e[:300] for e in errors[-4:]]})
+    errors=__import__('re').findall(r'(?m)^\s*(?:error:|curl:|tar:|cp:|mv:) ([^\n]+)',text)
+    r['forgejo_preparation_errors'].append({'revision':log.parent.name,'log':log.name,'errors':[e[:500] for e in errors[-12:]]})
 
 print(json.dumps(r,sort_keys=True))
