@@ -1,75 +1,85 @@
-# Forgejo — déployé le 16 octobre 2026
+# Forgejo — Kanidm seul et quotas, 16 octobre 2026
 
-**https://forge.mrj.am/** est opérationnel, avec HTTPS vérifié, PostgreSQL existant
-et Git HTTPS/SSH (port **2222**). SSH administratif reste sur 22. Inscriptions
-fermées, authentification requise, dépôts privés imposés, aucun runner installé.
+**https://forge.mrj.am/** est déployé avec **Kanidm comme seule connexion Web**,
+via **https://log.mrj.am/**. Le compte administrateur est **MrJam**, même identifiant
+interne et droits conservés, rattaché par UUID à l'identité propriétaire existante.
+Les facteurs MFA du propriétaire n'ont pas été réinitialisés.
 
-Versions : **Forgejo 16.0.3**, **Pandoc 3.7.0.2**, **MathJax et polices 4.1.3**.
-Nixpkgs et archives sont verrouillés dans `versions.json` avec SHA-256.
+Les formulaires et authentifications locales par mot de passe sont désactivés
+côté serveur, ainsi que l'ancien OpenID. Le fichier de mot de passe initial a été
+supprimé. Inscription locale fermée, création de compte ordinaire après une
+connexion Kanidm autorisée, aucun rapprochement automatique par courriel.
+Clés SSH2222 et jetons HTTPS restent disponibles pour les opérations Git/API.
 
-## Configuration publiée dans VPS Infrastructure
+Versions conservées : Forgejo16.0.3, Pandoc3.7.0.2, MathJax/polices4.1.3,
+Kanidm de production1.11.2. Moteur Pandoc, MathJax local et assainissement inchangés.
+Nixpkgs et dépendances restent verrouillés ; aucun runner ou workflow supplémentaire.
+Le VPS utilise son entrée NixOS classique, sans flake ; imports existants préservés.
 
-- Nix : `assemblage/forgejo/module.nix`, `integration.nix`, `assets.nix`.
-- Ressources locales MathJax, extension officielle `custom/footer`, fixtures,
-  vérificateur des sauvegardes et opérateur dans `assemblage/forgejo/`.
-- Déploiement/sondes : `scripts/forgejo-*.py`, `scripts/monolithe-operation.py`,
-  options du workflow administratif existant et `operations/forgejo-candidat.json`.
-- Régression Nix : `tests/forgejo-integration.nix`.
+## Gestion des limites
 
-Le VPS inspecté n’avait **pas de flake** : son entrée classique
-`/etc/nixos/configuration.nix` et toute sa chaîne d’imports sont préservées.
-Le module officiel `services.forgejo` porte l’installation déclarative.
-La source finale est `f79bcaddf7ddaa637350d04bec01d30629e49c29` ; génération
-`6791pn34plb531ygfxfyk9riq79x10d0`.
+- Nombre de dépôts : défaut global Nix, surcharge par personne depuis
+  Administration → Comptes utilisateurs → Modifier.
+- Stockage total par personne/groupe : moteur de quotas activé, API native et
+  `scripts/forgejo-quotas.py` fournis. Vue d'utilisation dans les paramètres du compte.
+- Défauts actuellement **illimités**, aucune limite chiffrée imposée à cette étape.
+  Les options Nix `infrastructure.forgejo.quotas.maxRepositories` et `totalStorage`
+  permettent une politique globale reproductible ; les exceptions sont sauvegardées
+  avec PostgreSQL. [Guide et commandes](SSO-QUOTAS.md).
 
-## Tests réellement effectués sur le VPS
+Le stockage natif limite le total d'un propriétaire, pas strictement chaque dépôt.
+Une écriture peut dépasser le seuil avant blocage des suivantes. Le plafond de
+nombre est effectif, mais son refus via l'API16.0.3 renvoie500 au lieu de4xx ;
+ce comportement amont est documenté et testé, sans modification fragile du programme.
+Les administrateurs sont exemptés du plafond de nombre de dépôts.
 
-- Construction NixOS avant activation ; assertions, priorités HBA, timers TLS,
-  comparaison des unités/hôtes/réseau/SSH et Gixy réussis. Sauvegarde de l’existant
-  déchiffrée puis restaurée isolément, 38/6/100 tables aux empreintes identiques.
-- Certificat HTTPS vérifié ; 25 sondes HTTP/TLS existantes passent. Lors de
-  l’installation, PostgreSQL et son dépendant métier ont redémarré avec le même
-  code. La correction finale ne change que les deux unités de sauvegarde Forgejo,
-  sans redémarrage PostgreSQL ni autre service protégé.
-- Dépôt privé `forgejo-validation/org-validation`, compte non administrateur,
-  README et trois documents Org dans des sous-répertoires. Clone/push HTTPS et
-  SSH réussis ; clé de test temporaire retirée. Rôle PostgreSQL sans superuser,
-  createdb, createrole, réplication ou bypassrls.
-- Chromium réel : huit vues à 1280/390 px, puis mêmes tests après redémarrage
-  et sauvegarde. Pandoc remplace réellement le moteur Org natif ; MathJax produit
-  des nœuds CHTML. Quatre délimiteurs, align, fractions, matrices et référence
-  d’équation composés. Titres, listes, tableaux, code, liens et images vérifiés.
-  Injections HTML/JS rejetées ; aucune erreur JavaScript, ressource manquante ou
-  requête CDN ; pas de débordement mobile. Capture mobile inspectée visuellement.
-- Redémarrage Forgejo : même commit Git et confidentialité ; PID des autres
-  services conservés. Sauvegarde chiffrée réellement déchiffrée, **130 tables**
-  restaurées dans un cluster PostgreSQL isolé sans TCP, empreintes identiques,
-  **un dépôt** restauré vérifié par `git fsck`. Aucune donnée de production restaurée.
-- Retour du code réellement exercé lors d’une première sonde incorrecte : l’API
-  de version anonyme était justement interdite par le mode privé. La sonde HTTPS
-  utilise désormais la page de connexion ; la version est vérifiée authentifiée.
-  Configuration/génération précédentes rétablies sans restaurer d’anciennes données.
+## Tests effectués
 
-Preuves et liens des exécutions : `qualification-production.json`,
-`preparation-vps.json`, `qualification-locale.json`.
-[Déploiement final](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888040761) ·
-[Persistance/restauration](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888153134).
+Construction NixOS avant activation, comparaison des unités et des hôtes, règles
+PostgreSQL et timers TLS conservés ; sauvegardes existantes restaurées isolément.
+La bascule SSO n'a redémarré ni PostgreSQL ni les services protégés.25sondes
+HTTP/TLS existantes passent après déploiement et persistance.
 
-## Premier accès administrateur
+En production : Chromium avec TLS vérifié, pas de formulaire de mot de passe,
+POST local et Basic refusés, un seul fournisseur, redirection réelle vers
+`log.mrj.am` avec le bon client/retour et PKCE S256. Interface Log mobile inspectée,
+sans erreur JavaScript ; découverte native annonçant ES256. Compte MrJam et
+rattachement par UUID vérifiés sans publier l'identifiant personnel.
 
-Compte : **`mrjam-admin`**. Depuis le canal SSH administrateur habituel ou le
-terminal VPS, consulter en root `/var/lib/forgejo-bootstrap/initial-admin.txt`,
-puis se connecter à l’URL HTTPS. Changement du mot de passe imposé au premier accès.
-Le secret n’a été ni lu par l’agent ni publié ; il reste hors Git/store/journaux.
-Après changement, supprimer le fichier initial et configurer la double authentification.
+API de gestion des quotas exercée avec règle temporaire affectée à personne puis
+supprimée. Dépôt privé `MrJam/org-validation`, clone/push HTTPS et SSH réussis ;
+clé et jeton de test révoqués. Ancien dépôt privé de validation préservé.
+Après redémarrage Forgejo : même commit, PID des autres services conservés,
+sauvegarde déchiffrée puis restaurée dans un PostgreSQL isolé sans TCP,
+**130 tables aux empreintes identiques et deux dépôts vérifiés par git fsck**.
+Aucune donnée de production restaurée. La politique SSO reste active après reprise.
 
-## Limites et exploitation
+En isolation : vrai Forgejo16.0.3 et vrai Kanidm1.11.1 du Nixpkgs verrouillé,
+sessions MFA, code/PKCE/échange et vérification ES256 réels, rattachement du compte
+existant, création externe non administratrice, renommage conservant l'identifiant,
+refus des mots de passe, plafonds de nombre et stockage, surcharges par compte/groupe.
+L'étape UI IdP de ce test est médiée par son API native, pas par une personne.
+Les tests historiques Chromium Org/CHTML, mobile, injections, liens et images restent
+consultables dans `qualification-production.json` ; cette configuration est conservée.
 
-- Redémarrage du service vérifié ; **aucun redémarrage complet du VPS** effectué.
-- Sauvegarde quotidienne à 04:45 UTC (+0–10 min), rétention 30 jours dans
-  `/var/backup/forgejo`, chiffrée pour le destinataire age existant. Pas de copie
-  hors VPS configurée : une destination externe reste à raccorder.
-- Mail sortant désactivé ; récupération de compte par l’administrateur.
-- Pour une mise à jour, requalifier les versions verrouillées et actualiser les
-  préconditions de génération/configuration de l’opérateur avant construction.
-  La procédure de restauration et les imports conservés sont détaillés dans `README.md`.
+**Non effectué : connexion personnelle MFA du propriétaire sur la production.**
+Utiliser le bouton Kanidm de Forgejo avec les identifiants Log habituels pour la
+première connexion ; le compte Forgejo associé est MrJam. Aucun secret personnel
+n'est demandé par l'agent. Aucun redémarrage complet du VPS n'a été effectué.
+
+## Sources et exploitation
+
+Source déployée : `ac739eedcffc32d2fba29f4ce5b124e6c291b642`, génération `zm6k63jq`.
+Nix : `module.nix`, `integration.nix`, `assets.nix`. Raccordement : `sso.py`,
+`qualification-sso.py`, opérateurs et testeurs `scripts/forgejo-*.py`.
+[Déploiement](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895153571) ·
+[Git et quotas](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895359486) ·
+[Persistance/restauration](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38895497132).
+Reçus détaillés : `qualification-sso-production.json`, `qualification-sso-locale.json`.
+
+Secret OIDC root uniquement, fichier0600/répertoire0700, hors Git/store/arguments ;
+sa valeur n'est jamais publiée. Sauvegarde quotidienne chiffrée à04:45UTC (+0–10min),
+rétention30jours, maintenant avec l'état OIDC. Destination hors VPS restant à raccorder.
+Mail sortant désactivé. La suspension Kanidm n'est pas une révocation instantanée
+des sessions et accès Git existants : bloquer aussi le compte Forgejo lors d'un retrait.
+La procédure et les limites précises sont dans [SSO-QUOTAS.md](SSO-QUOTAS.md).
