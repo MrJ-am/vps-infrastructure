@@ -1,8 +1,8 @@
 {
   "format": 1,
-  "revision_sources": "ac739eedcffc32d2fba29f4ce5b124e6c291b642",
+  "revision_sources": "67c42c825a014cd22e3332e9b090ba55d3fdbefe",
   "domain": "forge.mrj.am",
-  "qualification_locale": "assemblage/forgejo/qualification-locale.json",
+  "qualification_locale": "assemblage/forgejo/qualification-liens-locale.json",
   "activation": "DNS A exact et sauvegarde/restauration actuelle requis",
-  "objet": "Kanidm seul via log.mrj.am, rattachement UUID et quotas natifs"
+  "objet": "Liens Org relatifs résolus dans le contexte Git ; sources compatibles Emacs"
 }
