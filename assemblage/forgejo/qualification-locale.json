@@ -83,8 +83,8 @@
     "assemblage/forgejo/fixtures/docs/structure.org": "8e8c045b6b8be56c9dba5d0d21c5630846e09829596ab3734aeed2d2c2fa9c82",
     "assemblage/forgejo/fixtures/images/point.png": "ad3c285f9f93b5a369ee3993296c77071b108359643f83847c6fae1469347a14",
     "assemblage/forgejo/integration.nix": "933000e91851f679225244d64de438360000c2f1301506e4e71401b94f62e398",
-    "assemblage/forgejo/module.nix": "9ee5c9a784477299a62e45a9fb4e3c3394333fce37404a01d34b9e68bcf1a8bd",
-    "assemblage/forgejo/promouvoir.py": "ac6750d473b237b6d782a1423b8c21ac95a43a0ea25a467d909728609bf127d7",
+    "assemblage/forgejo/module.nix": "73da2c3c716982e99bdb759319008102fcab025574bfeb00f3c86d63d0a8a504",
+    "assemblage/forgejo/promouvoir.py": "c2a504f35d4a95182b75e7fdc0d683cb7fe828752d8aef1f28fdefb7576e9cc2",
     "assemblage/forgejo/versions.json": "661e4b273d700cab10ee6dc68597318e8a14fbc1109b13dfd24edb8b2c0dfbcf",
     "scripts/forgejo-navigateur.py": "2c8d41e184c646a1d4aba1a5bf4ae476d00935f70c48b77c1307f9c131a1b315",
     "scripts/forgejo-git.py": "1d4bc8234b3e00b54a03f41557d615d42ccbf21dd5ef0c6aa010feb376c7b76a"

@@ -63,6 +63,15 @@ in {
         log.LEVEL = "Warn";
       };
     };
+    # Restrict even the database's default PUBLIC grants to its dedicated owner.
+    systemd.services.postgresql-setup.postStart = lib.mkAfter ''
+      ${config.services.postgresql.finalPackage}/bin/psql -X --set=ON_ERROR_STOP=1 \
+        --host=/run/postgresql --dbname=forgejo <<'SQL'
+      REVOKE ALL PRIVILEGES ON DATABASE forgejo FROM PUBLIC;
+      REVOKE ALL PRIVILEGES ON SCHEMA public FROM PUBLIC;
+      GRANT USAGE, CREATE ON SCHEMA public TO forgejo;
+      SQL
+    '';
     # The stock module provisions persistent runtime secrets outside the store.
     systemd.tmpfiles.rules = [
       "d ${f.customDir}/templates 0750 forgejo forgejo - -"
