@@ -16,15 +16,16 @@
   "defaultStorageQuotaEnforced": true,
   "storageGroupQuotaEnforced": true,
   "storageGroupCanBeChanged": true,
-  "observedAt": "2026-10-16T11:31:18.091404+00:00",
+  "observedAt": "2026-10-16T11:35:30.291434+00:00",
   "nixos": {
     "errors": [],
     "nginxConfigDrv": "/nix/store/135arkk8gnpvpcm7qjxqxpc0m1hfw8wc-nginx.conf.drv",
     "oldTimer": true,
     "peer": true,
     "sso": true,
-    "system": "/nix/store/4bc2bya2pgrhqj3i0zii85amm39q30bd-nixos-system-nixos-26.05pre-git.drv"
+    "system": "/nix/store/8gys9q071dgncdr9i4yxpbxkd4l0xakz-nixos-system-nixos-26.05pre-git.drv"
   },
   "productionIdpVersion": "1.11.2",
-  "limitation": "Native local IdP 1.11.1 from pinned Nixpkgs; production 1.11.2 and the owner personal browser MFA are separate checks."
+  "limitation": "Native local IdP 1.11.1 from pinned Nixpkgs; production 1.11.2 and the owner personal browser MFA are separate checks.",
+  "nativeRenamePreservesAdministratorId": true
 }

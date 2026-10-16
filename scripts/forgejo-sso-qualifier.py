@@ -130,6 +130,12 @@ def qualify(a):
     proof['localPasswordAndBasicRejected']=True
     pat=cli('admin','user','generate-access-token','--username',username,'--token-name','fixture-user','--scopes','write:repository,write:user','--raw').splitlines()[-1]
     admin=cli('admin','user','generate-access-token','--username','MrJam','--token-name','fixture-admin','--scopes','all','--raw').splitlines()[-1]
+    rename=cli('admin','user','generate-access-token','--username','MrJam','--token-name','fixture-rename','--scopes','write:admin,write:user','--raw').splitlines()[-1]
+    before_id=api('user',rename)[1]['id']
+    changed=api('admin/users/MrJam/rename',rename,{'new_username':'MrJamRenamed'});assert changed[0]==204,changed
+    assert api('user',rename)[1]['id']==before_id
+    assert api('admin/users/MrJamRenamed/rename',rename,{'new_username':'MrJam'})[0]==204
+    proof['nativeRenamePreservesAdministratorId']=True
     assert api('user',pat)[0]==200
     first=api('user/repos',pat,{'name':'one','private':True});assert first[0]==201,first
     second=api('user/repos',pat,{'name':'two','private':True});assert second[0] in (403,409,422,500),second
