@@ -1,0 +1,58 @@
+{
+  "format": 1,
+  "observedAt": "2026-10-16T09:29:49.267975+00:00",
+  "run": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38880366362",
+  "result": "success",
+  "preparation": {
+    "forgejo": "prepared",
+    "revision": "228db509abb2f36ad154333247cd521a77b54bea",
+    "generation": "/nix/store/ha71rm2gjz7b7ys17chf3i38cmx897lw-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "existingUnitsUnchanged": true,
+    "oldVhostsUnchanged": true,
+    "oldHbaPreserved": true,
+    "activated": false
+  },
+  "backup": {
+    "format": 1,
+    "infrastructure": "228db509abb2f36ad154333247cd521a77b54bea",
+    "generation": "/nix/store/az22hgl8xp9sab6incdcnhbj7ljang78-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "sauvegarde": "228db509abb2-20261016T092649Z-84989a28",
+    "bases": [
+      "vision",
+      "matheval",
+      "mrjam_identite"
+    ],
+    "tables_restaurees": {
+      "vision": 38,
+      "matheval": 6,
+      "mrjam_identite": 100
+    },
+    "empreintes_semantiques_identiques": true,
+    "age_dechiffrement_verifie": true,
+    "cle_ephemere_enveloppee_pour_destinataire_existant": true,
+    "cle_personnelle_non_utilisee": true,
+    "sqlite_copie_et_integrite": true,
+    "registre_externe_recent_requis": true,
+    "retour_applicatif_qualifie": false,
+    "roles_restaures": false,
+    "acl_qualification_separee_requise": true,
+    "production_sql_ecriture": false,
+    "production_services_interrompus": false
+  },
+  "existingHttpProbes": 25,
+  "activated": false,
+  "dns": {
+    "domain": "git.mrg.am",
+    "resolver": "dns.google",
+    "status": 3,
+    "meaning": "NXDOMAIN"
+  },
+  "notPerformed": [
+    "Forgejo activation on VPS",
+    "PostgreSQL access from the running Forgejo service",
+    "Forgejo HTTPS/ACME and external SSH Git",
+    "Production private test repository/browser tests",
+    "Forgejo backup restore and independent rollback exercise",
+    "Full VPS reboot"
+  ]
+}
