@@ -23,7 +23,7 @@ def evaluate(path):
  toplevel=toString c.system.build.toplevel;
  errors=map (a: a.message) (builtins.filter (a: !a.assertion) c.assertions);
  protected=builtins.listToAttrs (map (n: {name=n;value=c.systemd.units."${n}.service".text;}) PROTECTED);
- hosts=builtins.mapAttrs (n: v: builtins.toJSON v) c.services.nginx.virtualHosts;
+ hosts=builtins.mapAttrs (n: v: builtins.toJSON (e.pkgs.lib.filterAttrs (k: value: (builtins.tryEval value).success) v)) c.services.nginx.virtualHosts;
  pg={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;settings=builtins.removeAttrs c.services.postgresql.settings ["hba_file" "ident_file"];ident=c.services.postgresql.identMap;hba=c.services.postgresql.authentication;databases=c.services.postgresql.ensureDatabases;users=map (u: u.name) c.services.postgresql.ensureUsers;};
  system={kernel=toString c.boot.kernelPackages.kernel;filesystems=c.fileSystems;network=c.systemd.network.networks;firewall=c.networking.firewall.allowedTCPPorts;openssh=c.services.openssh.settings;};
  backups=c.services.postgresqlBackup.databases;
@@ -65,6 +65,7 @@ def prepare():
  require(p.stdout.strip()==after['toplevel'],'Artefact différent de l’évaluation')
  require(P(after['toplevel']).is_dir(),'Artefact absent')
  cmd(['nix-store','--add-root',str(D/'candidate-root'),'--indirect','-r',after['toplevel']])
+ backup_current()
  (D/'prepared.json').write_text(json.dumps({'revision':REV,'generation':after['toplevel'],'base':EXPECTED,'configuration_sha256':CONFIG_SHA,'preparedAt':time.time()},indent=2)+'\n')
  print(json.dumps({'forgejo':'prepared','revision':REV,'generation':after['toplevel'],'existingUnitsUnchanged':True,'oldVhostsUnchanged':True,'oldHbaPreserved':True,'activated':False}),flush=True)
 
@@ -88,15 +89,21 @@ def rollback():
  require(str(P('/run/current-system').resolve())==EXPECTED,'Retour non activé')
  print(json.dumps({'forgejo':'rolled-back','dataRestored':False,'generation':EXPECTED}),flush=True)
 
+def backup_current():
+ before_pids=pids()
+ spec=importlib.util.spec_from_file_location('forgejo_backup_existing',D/'payload/backup-existing.py')
+ backup=importlib.util.module_from_spec(spec);spec.loader.exec_module(backup)
+ backup.GENERATION=EXPECTED
+ report=backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
+ require(pids()==before_pids,'Processus protégé changé durant la sauvegarde')
+ (D/'backup.json').write_text(json.dumps({k:v for k,v in report.items() if k!='fichiers_chiffres'},indent=2)+'\n')
+
 def deploy():
  unchanged();dns_ready()
  prepared=json.loads((D/'prepared.json').read_text())
  require(prepared['revision']==REV and time.time()-prepared['preparedAt']<86400,'Préparation périmée')
  before_pids=pids()
- spec=importlib.util.spec_from_file_location('forgejo_backup_existing',D/'payload/backup-existing.py')
- backup=importlib.util.module_from_spec(spec);spec.loader.exec_module(backup)
- backup.GENERATION=EXPECTED
- backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
+ backup_current()
  unchanged();dns_ready()
  timer='forgejo-retour-'+REV[:12]
  cmd(['systemd-run','--unit='+timer,'--on-active=10min',sys.executable,str(D/'payload/promouvoir.py'),'retour',REV])
