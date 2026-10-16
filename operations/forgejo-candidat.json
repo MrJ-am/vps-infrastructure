@@ -1,7 +1,8 @@
 {
   "format": 1,
-  "revision_sources": "f79bcaddf7ddaa637350d04bec01d30629e49c29",
+  "revision_sources": "1ff899d3ab82bc0c16bb4987e7c9a8204d61f47d",
   "domain": "forge.mrj.am",
   "qualification_locale": "assemblage/forgejo/qualification-locale.json",
-  "activation": "DNS A exact et sauvegarde/restauration actuelle requis"
+  "activation": "DNS A exact et sauvegarde/restauration actuelle requis",
+  "objet": "Kanidm seul via log.mrj.am, rattachement UUID et quotas natifs"
 }
