@@ -67,7 +67,7 @@ def org_links():
  for path in ('README.org','docs/mathematiques.org','docs/delimiteurs.org','docs/structure.org'):
   text=base64.b64decode(api(root+path)['content']).decode()
   directory=posixpath.dirname(path)
-  body={'mode':'file','text':text,'context':'/'+USER+'/'+REPO,'file_path':path,'branch_path':'branch/main'+('/'+directory if directory else '')}
+  body={'mode':'file','text':text,'context':'/'+USER+'/'+REPO,'FilePath':path,'BranchPath':'branch/main'+('/'+directory if directory else '')}
   request=urllib.request.Request('http://127.0.0.1:3004/api/v1/markup',headers={'Authorization':'token '+TOKEN,'Content-Type':'application/json'},data=json.dumps(body).encode())
   with urllib.request.urlopen(request,timeout=30) as response:html=response.read().decode()
   parser=Links();parser.feed(html);checked=[]
