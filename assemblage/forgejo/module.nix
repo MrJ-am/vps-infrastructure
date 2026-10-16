@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, forgejoKanidmApi ? ../../scripts/kanidm-api-privee.py, ... }:
 let
   cfg = config.infrastructure.forgejo;
   f = config.services.forgejo;
@@ -10,6 +10,15 @@ let
     exec ${pkgs.coreutils}/bin/timeout 20s ${pkgs.pandoc}/bin/pandoc \
       --sandbox --from=org --to=html5 --mathjax --wrap=none
   '';
+  identityIni = pkgs.writeText "forgejo-identity.ini" (lib.generators.toINI {} {
+    DEFAULT = { RUN_USER = "forgejo"; RUN_MODE = "prod"; WORK_PATH = f.stateDir; };
+    database = { DB_TYPE = "postgres"; HOST = "/run/postgresql"; NAME = "forgejo"; USER = "forgejo"; SSL_MODE = "disable"; };
+    security.INSTALL_LOCK = true;
+    server.ROOT_URL = "https://${cfg.domain}/";
+    repository.ROOT = "${f.stateDir}/repositories";
+    log = { MODE = "console"; LEVEL = "Error"; };
+  });
+  identityCommand = phase: "${pkgs.python3}/bin/python3 ${./sso.py} ${phase} /var/lib/forgejo-identity ${config.services.postgresql.finalPackage} ${f.package}/bin/forgejo ${identityIni} ${config.services.kanidm.package} ${pkgs.curl}/bin/curl ${forgejoKanidmApi}";
   backupService = verify: {
       description = "Sauvegarde cohérente chiffrée Forgejo (données, dépôts, PostgreSQL)";
       after = [ "postgresql.service" ];
@@ -29,7 +38,7 @@ let
         trap cleanup EXIT
         ${pkgs.systemd}/bin/systemctl stop forgejo
         runuser -u forgejo -- pg_dump -h /run/postgresql --format=custom forgejo > "$tmp/forgejo.dump"
-        tar -C /var/lib -cf "$tmp/data.tar" forgejo
+        tar -C /var/lib -cf "$tmp/data.tar" forgejo ${lib.optionalString cfg.sso.enable "forgejo-identity"}
         dest=/var/backup/forgejo/forgejo-$(date -u +%Y%m%dT%H%M%SZ).tar.age
         age-keygen -o "$tmp/key" 2>/dev/null
         public=$(age-keygen -y "$tmp/key")
@@ -49,12 +58,21 @@ let
 in {
   options.infrastructure.forgejo = {
     enable = lib.mkEnableOption "Forgejo privé avec Pandoc et MathJax locaux";
+    sso.enable = lib.mkEnableOption "Kanidm comme unique connexion Web";
+    quotas = {
+      maxRepositories = lib.mkOption { type = lib.types.int; default = -1; description = "Nombre de dépôts par personne, -1 sans limite ; surchargeable par compte."; };
+      totalStorage = lib.mkOption { type = lib.types.str; default = "-1"; description = "Stockage total par défaut (ex. 5 GiB), -1 sans limite ; groupes via API."; };
+    };
     domain = lib.mkOption { type = lib.types.str; default = "forge.mrj.am"; };
     backupRecipient = lib.mkOption { type = lib.types.str;
       default = config.services.vision.backupRecipient; };
   };
   config = lib.mkIf cfg.enable {
     assertions = [
+      { assertion = !cfg.sso.enable || config.services.kanidm.server.enable;
+        message = "Le raccordement Forgejo exige le Kanidm existant."; }
+      { assertion = builtins.match "(-1|[0-9]+( ?(B|KiB|MiB|GiB|TiB))?)" cfg.quotas.totalStorage != null; message = "Quota de stockage invalide."; }
+      { assertion = cfg.quotas.maxRepositories >= -1; message = "Quota du nombre de dépôts invalide."; }
       { assertion = pkgs.forgejo.version == lock.forgejo && pkgs.pandoc.version == lock.pandoc;
         message = "Requalifier Forgejo/Pandoc et actualiser versions.json avant mise à jour."; }
       { assertion = builtins.match "[a-z0-9.-]+" cfg.domain != null;
@@ -75,8 +93,13 @@ in {
           DISABLE_SSH = false; OFFLINE_MODE = true;
         };
         service = { DISABLE_REGISTRATION = true; REQUIRE_SIGNIN_VIEW = true;
+          ENABLE_INTERNAL_SIGNIN = !cfg.sso.enable;
+          ENABLE_BASIC_AUTHENTICATION = !cfg.sso.enable;
+          ALLOW_ONLY_EXTERNAL_REGISTRATION = cfg.sso.enable;
+          DEFAULT_ALLOW_CREATE_ORGANIZATION = false;
           DEFAULT_KEEP_EMAIL_PRIVATE = true; ENABLE_NOTIFY_MAIL = false; };
         repository = { DEFAULT_PRIVATE = "private"; FORCE_PRIVATE = true;
+          MAX_CREATION_LIMIT = cfg.quotas.maxRepositories;
           DISABLE_HTTP_GIT = false; ENABLE_PUSH_CREATE_USER = false;
           ENABLE_PUSH_CREATE_ORG = false; };
         "repository.upload".ENABLED = false;
@@ -84,6 +107,17 @@ in {
         security = { INSTALL_LOCK = true; PASSWORD_HASH_ALGO = "argon2";
           REVERSE_PROXY_LIMIT = 1; REVERSE_PROXY_TRUSTED_PROXIES = "127.0.0.1/32"; };
         session.COOKIE_SECURE = true;
+        openid = { ENABLE_OPENID_SIGNIN = false; ENABLE_OPENID_SIGNUP = false; };
+        oauth2_client = {
+          ENABLE_AUTO_REGISTRATION = cfg.sso.enable;
+          ACCOUNT_LINKING = "disabled";
+          USERNAME = "nickname";
+          OPENID_CONNECT_SCOPES = "openid profile email";
+        };
+        admin = { DISABLE_REGULAR_ORG_CREATION = true;
+          EXTERNAL_USER_DISABLE_FEATURES = "manage_password"; };
+        quota.ENABLED = true;
+        "quota.default".TOTAL = cfg.quotas.totalStorage;
         actions.ENABLED = false;
         packages.ENABLED = false;
         federation.ENABLED = false;
@@ -136,7 +170,7 @@ in {
     };
     networking.firewall.allowedTCPPorts = [ 2222 ];
     # Bootstrap only on an empty installation, with no password in argv or journal.
-    systemd.services.forgejo-bootstrap = {
+    systemd.services.forgejo-bootstrap = lib.mkIf (!cfg.sso.enable) {
       description = "Créer le premier administrateur Forgejo hors store et journaux";
       wantedBy = [ "multi-user.target" ];
       requires = [ "forgejo.service" ]; after = [ "forgejo.service" ];
@@ -153,6 +187,25 @@ in {
             --must-change-password=true > /var/lib/forgejo-bootstrap/initial-admin.txt
         fi
       '';
+    };
+    systemd.services.forgejo = lib.mkIf cfg.sso.enable {
+      requires = [ "forgejo-identity.service" ]; after = [ "forgejo-identity.service" ];
+    };
+    systemd.services.forgejo-identity = lib.mkIf cfg.sso.enable {
+      description = "Client Kanidm et rattachement Forgejo par UUID natif";
+      requires = [ "postgresql-setup.service" "kanidm.service" ];
+      after = [ "postgresql-setup.service" "kanidm.service" ]; before = [ "forgejo.service" ];
+      path = [ pkgs.util-linux pkgs.coreutils ];
+      serviceConfig = { Type = "oneshot"; UMask = "0077"; StateDirectory = "forgejo-identity";
+        StateDirectoryMode = "0700"; TimeoutStartSec = "3min"; RemainAfterExit = true; };
+      script = identityCommand "prepare";
+    };
+    systemd.services.forgejo-account = lib.mkIf cfg.sso.enable {
+      description = "Conserver le compte administrateur sous le nom MrJam";
+      wantedBy = [ "multi-user.target" ]; requires = [ "forgejo.service" ]; after = [ "forgejo.service" ];
+      path = [ pkgs.util-linux pkgs.coreutils ];
+      serviceConfig = { Type = "oneshot"; UMask = "0077"; TimeoutStartSec = "2min"; };
+      script = identityCommand "account";
     };
     systemd.services.forgejo-backup = backupService false;
     systemd.services.forgejo-backup-qualification = backupService true;

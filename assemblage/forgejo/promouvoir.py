@@ -3,8 +3,8 @@
 import datetime,hashlib,importlib.util,json,os,pathlib,re,shlex,subprocess,sys,time,urllib.request,uuid
 P=pathlib.Path
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
-EXPECTED='/nix/store/hqsfqg1yjzis295fhgkvfd9hj7vxl2qb-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
-CONFIG_SHA='72f2192d8600f2579ee73f847e7fd80f0b29a4a778a18fea6ad49fe82a114c64'
+EXPECTED='/nix/store/6791pn34plb531ygfxfyk9riq79x10d0-nixos-system-nixos-26.05.8639.c5c4a43b0e80'
+CONFIG_SHA='83f9b487c1060986b6de9a018b1f69737fe35955d3c2d8bde48a25fa8b7ef51a'
 RUNTIME_BASE='/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix'
 PROTECTED=('sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud','redis-nextcloud')
 
@@ -78,7 +78,7 @@ def prepare():
  if not base.exists():base.write_bytes(P('/etc/nixos/configuration.nix').read_bytes())
  require(hashlib.sha256(base.read_bytes()).hexdigest()==CONFIG_SHA,'Base invalide')
  configuration=D/'configuration.nix'
- configuration.write_text('{ ... }: { imports = [ (import ./payload/integration.nix { baseConfiguration = '+RUNTIME_BASE+'; timerConfiguration = ./base.nix; }) ]; }\n')
+ configuration.write_text('{ ... }: { imports = [ (import ./payload/integration.nix { baseConfiguration = '+RUNTIME_BASE+'; timerConfiguration = ./base.nix; kanidmApi = ./payload/kanidm-api-privee.py; }) ]; }\n')
  before=evaluate(base);after=evaluate(configuration)
  require(before['toplevel']==EXPECTED,'Évaluation de base différente du système installé')
  require(not after['errors'],'Assertions NixOS refusées')
@@ -86,9 +86,9 @@ def prepare():
  require(all(after['hosts'].get(k)==v for k,v in before['hosts'].items()),'Hôte existant modifié')
  require(set(after['hosts'])==set(before['hosts']),'Registre des hôtes modifié')
  require(after['forgejo']==before['forgejo'],'Paramètres Forgejo modifiés')
- allowed={'forgejo-backup.service','forgejo-backup-qualification.service'}
- require(set(after['units'])==set(before['units']),'Registre des unités modifié')
- require(all(after['units'][n]==v for n,v in before['units'].items() if n not in allowed),'Unité hors sauvegarde Forgejo modifiée')
+ allowed={'forgejo.service','forgejo-bootstrap.service','forgejo-identity.service','forgejo-account.service','forgejo-backup.service','forgejo-backup-qualification.service'}
+ require((set(after['units']) ^ set(before['units'])) <= allowed,'Registre des unités modifié')
+ require(all(after['units'].get(n)==v for n,v in before['units'].items() if n not in allowed),'Unité hors sauvegarde Forgejo modifiée')
  b=before['pg'];a=after['pg']
  for k in ('package','dataDir','settings','ident'):require(a[k]==b[k],'Configuration PostgreSQL historique modifiée: '+k)
  require(a['hba']==b['hba'],'Règles HBA non conservées')
@@ -140,6 +140,8 @@ def backup_current():
  backup.GENERATION=EXPECTED
  try:report=backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
  except Exception:raise RuntimeError('Sauvegarde actuelle arrêtée à l’étape '+backup.ETAPE) from None
+ cmd(['systemctl','start','forgejo-backup-qualification.service'],timeout=300)
+ require(cmd(['systemctl','show','forgejo-backup-qualification','-p','Result','--value'])=='success','Sauvegarde Forgejo restaurée isolément refusée')
  cmd(['systemctl','start','mrjam-sauvegarde.service'],timeout=300)
  require(cmd(['systemctl','show','mrjam-sauvegarde.service','-p','Result','--value'])=='success','Sauvegarde Native courante refusée')
  require(pids()==before_pids,'Processus protégé changé durant la sauvegarde')
@@ -172,14 +174,15 @@ def deploy():
     require(before_pg!=after_pg and dependents[name],'Redémarrage hors dépendance PostgreSQL: '+name)
     restarted.append(name)
   cmd(['systemctl','is-active','forgejo','nginx','postgresql','sshd','mrjam-metier','kanidm'])
-  cmd(['systemctl','start','forgejo-bootstrap'])
-  require(cmd(['systemctl','show','forgejo-bootstrap','-p','Result','--value'])=='success','Amorçage administrateur refusé')
+  cmd(['systemctl','start','forgejo-account'])
+  require(cmd(['systemctl','show','forgejo-account','-p','Result','--value'])=='success','Rattachement administrateur refusé')
+  require(cmd(['systemctl','show','forgejo-identity','-p','Result','--value'])=='success','Client Kanidm refusé')
   admin=cmd(['runuser','-u','forgejo','--','psql','-XAtq','-h','/run/postgresql','-d','forgejo','-c','SELECT count(*) FROM "user" WHERE is_admin;'])
   require(int(admin)>0,'Aucun administrateur Forgejo')
   for _ in range(60):
    try:
     with urllib.request.urlopen('https://forge.mrj.am/user/login',timeout=10) as r:
-     require(r.status==200 and b'name="user_name"' in r.read(),'Connexion HTTPS Forgejo inaccessible')
+     require(r.status==200 and b'/user/oauth2/Kanidm' in r.read(),'Connexion HTTPS Forgejo inaccessible')
     break
    except Exception:time.sleep(2)
   else:raise RuntimeError('HTTPS Forgejo non disponible')

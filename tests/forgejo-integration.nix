@@ -15,6 +15,12 @@ let
       boot.loader.grub.enable = false;
       fileSystems."/" = { device = "/dev/vda"; fsType = "ext4"; };
       system.stateVersion = "26.05";
+      services.kanidm.package = pkgs.kanidm_1_11;
+      services.kanidm.server = {
+        enable = true;
+        settings = { domain = "log.mrj.am"; origin = "https://log.mrj.am";
+          tls_chain = "/run/idp/cert"; tls_key = "/run/idp/key"; };
+      };
       services.postgresql = {
         enable = true; package = pkgs.postgresql_17;
         authentication = lib.mkOverride 20 "local all postgres peer\nlocal all all reject\n";
@@ -33,8 +39,12 @@ let
   peer = after.services.postgresql.authentication == "local forgejo forgejo peer\n" + before.services.postgresql.authentication;
   oldTimer = after.systemd.units."acme-renew-existing.example.org.timer".text == before.systemd.units."acme-renew-existing.example.org.timer".text;
   errors = map (a: a.message) (builtins.filter (a: !a.assertion) after.assertions);
-in assert peer; assert oldTimer; assert errors == []; {
-  inherit peer oldTimer errors;
+  sso = !after.services.forgejo.settings.service.ENABLE_INTERNAL_SIGNIN
+    && !after.services.forgejo.settings.service.ENABLE_BASIC_AUTHENTICATION
+    && after.services.forgejo.settings.oauth2_client.ACCOUNT_LINKING == "disabled"
+    && after.services.forgejo.settings.quota.ENABLED;
+in assert sso; assert peer; assert oldTimer; assert errors == []; {
+  inherit peer oldTimer errors sso;
   nginxConfigDrv = builtins.head (builtins.filter (path: (import (nixpkgs + "/lib")).hasSuffix "-nginx.conf.drv" path)
     (builtins.attrNames (builtins.getContext after.systemd.services.nginx.serviceConfig.ExecStart)));
   system = after.system.build.toplevel.drvPath;
