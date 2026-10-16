@@ -15,7 +15,11 @@ def cmd(args,timeout=180,input=None):
  if p.returncode:
   # Commands can touch private data; retain diagnostics locally, print no bodies.
   with (D/'operation-private.log').open('a') as f:f.write(p.stderr+'\n'+p.stdout+'\n')
-  raise RuntimeError('Commande refusée: '+P(str(args[0])).name+' (voir operation-private.log sur le VPS)')
+  detail=''
+  if P(str(args[0])).name=='nix-instantiate':
+   errors=re.findall(r'(?m)^\s*error: ([^\n]+)',p.stderr)
+   detail=': '+errors[-1][:300] if errors else ''
+  raise RuntimeError('Commande refusée: '+P(str(args[0])).name+detail+' (voir operation-private.log sur le VPS)')
  return p.stdout.strip()
 
 def evaluate(path):
@@ -25,7 +29,7 @@ def evaluate(path):
  protected=builtins.listToAttrs (map (n: {name=n;value=c.systemd.units."${n}.service".text;}) PROTECTED);
  hosts=builtins.mapAttrs (n: v: builtins.toJSON (e.pkgs.lib.filterAttrs (k: value: (builtins.tryEval value).success) v)) c.services.nginx.virtualHosts;
  pg={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;settings=builtins.removeAttrs c.services.postgresql.settings ["hba_file" "ident_file"];ident=c.services.postgresql.identMap;hba=c.services.postgresql.authentication;databases=c.services.postgresql.ensureDatabases;users=map (u: u.name) c.services.postgresql.ensureUsers;};
- system={kernel=toString c.boot.kernelPackages.kernel;filesystems=c.fileSystems;network=c.systemd.network.networks;firewall=c.networking.firewall.allowedTCPPorts;openssh=c.services.openssh.settings;};
+ system={kernel=toString c.boot.kernelPackages.kernel;filesystems=builtins.mapAttrs (n: fs: e.pkgs.lib.getAttrs ["device" "fsType" "options" "neededForBoot" "autoResize" "autoFormat"] fs) c.fileSystems;network=builtins.mapAttrs (n: file: toString file.source) (e.pkgs.lib.filterAttrs (n: file: e.pkgs.lib.hasPrefix "systemd/network/" n) c.environment.etc);firewall=c.networking.firewall.allowedTCPPorts;openssh=c.services.openssh.settings;};
  backups=c.services.postgresqlBackup.databases;
  forgejo={enable=c.services.forgejo.enable;package=toString c.services.forgejo.package;root=c.services.forgejo.settings.server.ROOT_URL;};
 }'''.replace('PATH',str(path)).replace('PROTECTED','[ '+' '.join(json.dumps(n) for n in PROTECTED)+' ]')
