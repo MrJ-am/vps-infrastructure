@@ -1,18 +1,25 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## Mission Forgejo — 16 octobre 2026, préparation sans activation
+## Mission Forgejo — 16 octobre 2026, déployée et qualifiée
 
-Candidat `228db509abb2f36ad154333247cd521a77b54bea` construit et sauvegarde/restauration
-isolée qualifiée, run38880366362 réussi. Génération candidate ha71rm2gjz7b7ys17chf3i38cmx897lw ;
-active az22hgl8 inchangée. Forgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 ; rendu CHTML
-réel, Git et persistance qualifiés localement seulement. 25 sondes production
-réussies. Aucun compte/dépôt Forgejo sur le VPS, pas d’activation ni de nouveau runner.
-Blocage : git.mrg.am NXDOMAIN, zone Netim sans accès disponible ; A requis vers
-187.77.95.158. Le VPS n’a pas de flake, entrée Nix classique préservée.
-Reprendre par assemblage/forgejo/COMPTE-RENDU.md, README.md, preparation-vps.json et
-operations/forgejo-candidat.json. L’activation doit encore qualifier le service,
-TLS/SSH, dépôt privé/navigateur, sauvegarde Forgejo et retour indépendant.
-Ne pas confondre préparation réussie et installation active.
+https://forge.mrj.am/ actif en HTTPS. Sources finales f79bcaddf7ddaa637350d04bec01d30629e49c29,
+génération 6791pn34plb531ygfxfyk9riq79x10d0, déploiement38888040761 réussi.
+Forgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 ; moteur Pandoc effectif sur tous les Org,
+CHTML réel vérifié dans Chromium sur production à1280/390px, avant/après reprise.
+Git HTTPS/SSH2222, confidentialité, inscriptions fermées et rôle PG restreint qualifiés.
+Persistance38888153134 : même commit, PID protégés conservés, sauvegarde chiffrée
+restaurée isolément,130tables aux empreintes identiques,1dépôt git fsck réussi.
+25sondes HTTP/TLS existantes passent. Correction sauvegarde limitée à ses2unités,
+sans redémarragePG/autres services ; installation initiale avait redémarréPG et son
+dépendant métier avec le même code. Retour du code réellement exercé sans restauration
+des données lors de la correction d’une sonde API anonyme interdite par le mode privé.
+Le VPS n’a pas de flake ; entrée Nix classique et imports préservés. Aucun runner ajouté.
+Premier admin mrjam-admin ; secret root uniquement dans /var/lib/forgejo-bootstrap/initial-admin.txt,
+jamais lu/publié. Changement imposé à la connexion. Dépôt privé forgejo-validation/org-validation.
+Reprendre par assemblage/forgejo/COMPTE-RENDU.md, README.md et qualification-production.json.
+Limites : pas de reboot complet du VPS, pas de destination de sauvegarde hors VPS.
+Ne pas supprimer les configurations de base dans /root/mrjam-corrections/forgejo/ :
+la chaîne déclarative et les possibilités de retour les référencent.
 
 
 ## État actif — reconnexion MCP en production

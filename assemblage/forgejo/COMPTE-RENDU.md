@@ -1,52 +1,75 @@
-# Forgejo — état du 16 octobre 2026
+# Forgejo — déployé le 16 octobre 2026
 
-Sources publiées et candidat construit sur le VPS, **sans activation**.
-[Préparation réussie](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38880366362).
-Source verrouillée : `228db509abb2f36ad154333247cd521a77b54bea`.
+**https://forge.mrj.am/** est opérationnel, avec HTTPS vérifié, PostgreSQL existant
+et Git HTTPS/SSH (port **2222**). SSH administratif reste sur 22. Inscriptions
+fermées, authentification requise, dépôts privés imposés, aucun runner installé.
 
-- URL prévue : `https://git.mrg.am/`. Le DNS public renvoie NXDOMAIN.
-  Enregistrement requis : A `git.mrg.am` → `187.77.95.158`, sans AAAA non qualifié.
-  Aucun accès de gestion de cette zone Netim n’est disponible dans cette session.
-- Versions du candidat : Forgejo **16.0.3**, Pandoc **3.7.0.2**, MathJax et polices
-  **4.1.3**, archives verrouillées par SHA-256. Les services ne sont pas activés.
-- Nix : `module.nix`, `integration.nix`, `assets.nix`. Paramètres et actifs dans
-  le même dossier ; opérateurs/testeurs `scripts/forgejo-*.py`, régression
-  `tests/forgejo-integration.nix`, descripteur `operations/forgejo-candidat.json`.
-  Le workflow administratif central est étendu, aucun nouveau workflow/runner.
-- L’existant inspecté n’a pas de flake : entrée classique `/etc/nixos/configuration.nix`.
-  Toute sa chaîne d’imports est conservée dans le candidat, sans migration générale.
+Versions : **Forgejo 16.0.3**, **Pandoc 3.7.0.2**, **MathJax et polices 4.1.3**.
+Nixpkgs et archives sont verrouillés dans `versions.json` avec SHA-256.
 
-## Tests réellement effectués
+## Configuration publiée dans VPS Infrastructure
 
-Qualification locale sur le vrai Forgejo, avec SQLite et HTTP en boucle locale :
-README et trois Org en sous-répertoire, Pandoc confirmé par les spans produits,
-composition MathJax CHTML effective dans Chromium, huit vues 1280/390 px.
-Quatre délimiteurs mathématiques, align, fractions, matrice et référence numérotée ;
-structure, liens et image, injections HTML/JS refusées, zéro erreur JS ou ressource
-manquante, aucune ressource CDN. Expressions longues confinées au défilement du
-conteneur, page mobile sans débordement. Authentification, refus anonyme,
-inscriptions fermées, clone/push HTTP et SSH, puis mêmes contrôles après redémarrage
-du service local avec conservation du commit Git. Cette instance n’est pas le VPS.
+- Nix : `assemblage/forgejo/module.nix`, `integration.nix`, `assets.nix`.
+- Ressources locales MathJax, extension officielle `custom/footer`, fixtures,
+  vérificateur des sauvegardes et opérateur dans `assemblage/forgejo/`.
+- Déploiement/sondes : `scripts/forgejo-*.py`, `scripts/monolithe-operation.py`,
+  options du workflow administratif existant et `operations/forgejo-candidat.json`.
+- Régression Nix : `tests/forgejo-integration.nix`.
 
-Nix : assertions et régression de priorité HBA/timer ACME réussies ; constructeur
-Nginx/Gixy avec zéro problème. Sur le VPS, construction complète réussie, unités
-protégées et hôtes conservés, anciens HBA et renouvellements TLS inchangés.
-Sauvegarde age et restauration isolée de 38 tables Vision, 6 Matheval et 100
-mrjam_identite avec empreintes identiques, sans interruption de production.
-Les 25 sondes HTTP existantes passent avec TLS vérifié. Génération active conservée.
-Détails : `qualification-locale.json`, `preparation-vps.json`.
+Le VPS inspecté n’avait **pas de flake** : son entrée classique
+`/etc/nixos/configuration.nix` et toute sa chaîne d’imports sont préservées.
+Le module officiel `services.forgejo` porte l’installation déclarative.
+La source finale est `f79bcaddf7ddaa637350d04bec01d30629e49c29` ; génération
+`6791pn34plb531ygfxfyk9riq79x10d0`.
 
-## Accès et contrôles restant à faire
+## Tests réellement effectués sur le VPS
 
-L’activation est bloquée avant toute bascule tant que le DNS requis n’existe pas.
-Restent à vérifier sur la production : service Forgejo/PostgreSQL, certificat
-ACME/HTTPS, Git externe HTTPS/SSH, dépôt privé de test et rendu navigateur, sauvegarde
-Forgejo/restauration isolée, retour indépendant et persistance après redémarrage.
-Aucun redémarrage complet du VPS n’a été effectué.
+- Construction NixOS avant activation ; assertions, priorités HBA, timers TLS,
+  comparaison des unités/hôtes/réseau/SSH et Gixy réussis. Sauvegarde de l’existant
+  déchiffrée puis restaurée isolément, 38/6/100 tables aux empreintes identiques.
+- Certificat HTTPS vérifié ; 25 sondes HTTP/TLS existantes passent. Lors de
+  l’installation, PostgreSQL et son dépendant métier ont redémarré avec le même
+  code. La correction finale ne change que les deux unités de sauvegarde Forgejo,
+  sans redémarrage PostgreSQL ni autre service protégé.
+- Dépôt privé `forgejo-validation/org-validation`, compte non administrateur,
+  README et trois documents Org dans des sous-répertoires. Clone/push HTTPS et
+  SSH réussis ; clé de test temporaire retirée. Rôle PostgreSQL sans superuser,
+  createdb, createrole, réplication ou bypassrls.
+- Chromium réel : huit vues à 1280/390 px, puis mêmes tests après redémarrage
+  et sauvegarde. Pandoc remplace réellement le moteur Org natif ; MathJax produit
+  des nœuds CHTML. Quatre délimiteurs, align, fractions, matrices et référence
+  d’équation composés. Titres, listes, tableaux, code, liens et images vérifiés.
+  Injections HTML/JS rejetées ; aucune erreur JavaScript, ressource manquante ou
+  requête CDN ; pas de débordement mobile. Capture mobile inspectée visuellement.
+- Redémarrage Forgejo : même commit Git et confidentialité ; PID des autres
+  services conservés. Sauvegarde chiffrée réellement déchiffrée, **130 tables**
+  restaurées dans un cluster PostgreSQL isolé sans TCP, empreintes identiques,
+  **un dépôt** restauré vérifié par `git fsck`. Aucune donnée de production restaurée.
+- Retour du code réellement exercé lors d’une première sonde incorrecte : l’API
+  de version anonyme était justement interdite par le mode privé. La sonde HTTPS
+  utilise désormais la page de connexion ; la version est vérifiée authentifiée.
+  Configuration/génération précédentes rétablies sans restaurer d’anciennes données.
 
-Aucun compte Forgejo de production n’a été créé. Après activation, le bootstrap
-créera `mrjam-admin` et enregistrera son résultat dans
-`/var/lib/forgejo-bootstrap/initial-admin.txt`, root uniquement, sans mot de passe
-dans les arguments, le store ou les journaux. Accès par le canal administratif
-existant/hPanel ; changement de mot de passe imposé à la première connexion.
-La procédure détaillée et les sauvegardes déclarées sont dans `README.md`.
+Preuves et liens des exécutions : `qualification-production.json`,
+`preparation-vps.json`, `qualification-locale.json`.
+[Déploiement final](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888040761) ·
+[Persistance/restauration](https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888153134).
+
+## Premier accès administrateur
+
+Compte : **`mrjam-admin`**. Depuis le canal SSH administrateur habituel ou le
+terminal VPS, consulter en root `/var/lib/forgejo-bootstrap/initial-admin.txt`,
+puis se connecter à l’URL HTTPS. Changement du mot de passe imposé au premier accès.
+Le secret n’a été ni lu par l’agent ni publié ; il reste hors Git/store/journaux.
+Après changement, supprimer le fichier initial et configurer la double authentification.
+
+## Limites et exploitation
+
+- Redémarrage du service vérifié ; **aucun redémarrage complet du VPS** effectué.
+- Sauvegarde quotidienne à 04:45 UTC (+0–10 min), rétention 30 jours dans
+  `/var/backup/forgejo`, chiffrée pour le destinataire age existant. Pas de copie
+  hors VPS configurée : une destination externe reste à raccorder.
+- Mail sortant désactivé ; récupération de compte par l’administrateur.
+- Pour une mise à jour, requalifier les versions verrouillées et actualiser les
+  préconditions de génération/configuration de l’opérateur avant construction.
+  La procédure de restauration et les imports conservés sont détaillés dans `README.md`.
