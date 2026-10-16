@@ -4,7 +4,7 @@
 The parent SSH operator captures stdout privately and encrypts the test credential
 before publishing any result. The administrator credential is never read.
 """
-import base64,datetime,hashlib,json,os,pathlib,re,subprocess,sys,urllib.request
+import base64,datetime,hashlib,json,os,pathlib,re,subprocess,sys,time,urllib.request,urllib.error
 P=pathlib.Path
 USER='forgejo-validation';REPO='org-validation';DOMAIN='forge.mrj.am'
 
@@ -18,7 +18,13 @@ def run(args,*,env=None,input=None):
 def api(path,data=None,method=None):
  auth=base64.b64encode((USER+':'+C['password']).encode()).decode()
  req=urllib.request.Request('http://127.0.0.1:3004/api/v1/'+path,data=json.dumps(data).encode() if data is not None else None,headers={'Authorization':'Basic '+auth,'Content-Type':'application/json'},method=method)
- with urllib.request.urlopen(req,timeout=30) as r:return json.load(r) if r.status!=204 else None
+ for attempt in range(20):
+  try:
+   with urllib.request.urlopen(req,timeout=30) as r:return json.load(r) if r.status!=204 else None
+  except urllib.error.HTTPError:raise
+  except urllib.error.URLError:
+   if attempt==19:raise
+   time.sleep(.5)
 
 def meta():
  repo=api('repos/'+USER+'/'+REPO);assert repo['private']
@@ -39,6 +45,7 @@ def seed():
   secret.write_text(json.dumps({'username':USER,'password':password}));secret.chmod(0o600)
  C=json.loads(secret.read_text())
  me=api('user');assert me['login']==USER and not me['is_admin']
+ assert api('version')['version'].startswith('16.0.3')
  import urllib.error
  try:repo=api('repos/'+USER+'/'+REPO)
  except urllib.error.HTTPError as e:
