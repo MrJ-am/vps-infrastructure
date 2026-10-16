@@ -22,4 +22,13 @@ r={'generation':cmd(['readlink','-f','/run/current-system']),
    'listeners':cmd(['ss','-lnt']),
    'services':{n:cmd(['systemctl','show',n,'--property=ActiveState,MainPID','--value']) for n in ('nginx','postgresql','sshd','mrjam-metier','kanidm','vision-embeddings','phpfpm-nextcloud')},
    'forgejo_paths_present':{p:pathlib.Path(p).exists() for p in ('/var/lib/forgejo','/var/backup/forgejo')}}
+
+r['forgejo_preparation_errors']=[]
+for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/operation-private.log')):
+    if log.stat().st_size>262144:continue
+    # Error summaries only: no eval output, SQL data, journal or arbitrary file.
+    text=log.read_text()
+    errors=__import__('re').findall(r'(?m)^\s*error: ([^\n]+)',text)
+    r['forgejo_preparation_errors'].append({'revision':log.parent.name,'errors':[e[:300] for e in errors[-4:]]})
+
 print(json.dumps(r,sort_keys=True))
