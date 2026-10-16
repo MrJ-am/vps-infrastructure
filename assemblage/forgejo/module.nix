@@ -79,6 +79,7 @@ in {
       "L+ ${f.customDir}/templates/custom/footer.tmpl - - - - ${./assets/footer.tmpl}"
       "d /var/backup/forgejo 0700 root root 30d -"
     ];
+    services.nginx.enable = true;
     services.nginx.virtualHosts.${cfg.domain} = {
       forceSSL = true; enableACME = true;
       locations."/" = { proxyPass = "http://127.0.0.1:3004"; proxyWebsockets = true;

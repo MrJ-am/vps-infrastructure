@@ -31,6 +31,7 @@ def evaluate(path):
  pg={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;settings=builtins.removeAttrs c.services.postgresql.settings ["hba_file" "ident_file"];ident=c.services.postgresql.identMap;hba=c.services.postgresql.authentication;databases=c.services.postgresql.ensureDatabases;users=map (u: u.name) c.services.postgresql.ensureUsers;};
  system={kernel=toString c.boot.kernelPackages.kernel;filesystems=builtins.mapAttrs (n: fs: e.pkgs.lib.getAttrs ["device" "fsType" "options" "neededForBoot" "autoResize" "autoFormat"] fs) c.fileSystems;network=builtins.mapAttrs (n: file: toString file.source) (e.pkgs.lib.filterAttrs (n: file: e.pkgs.lib.hasPrefix "systemd/network/" n) c.environment.etc);firewall=c.networking.firewall.allowedTCPPorts;openssh=c.services.openssh.settings;};
  backups=c.services.postgresqlBackup.databases;
+ acmeTimers=builtins.mapAttrs (n: unit: unit.text) (e.pkgs.lib.filterAttrs (n: unit: e.pkgs.lib.hasPrefix "acme-renew-" n && e.pkgs.lib.hasSuffix ".timer" n) c.systemd.units);
  forgejo={enable=c.services.forgejo.enable;package=toString c.services.forgejo.package;root=c.services.forgejo.settings.server.ROOT_URL;};
 }'''.replace('PATH',str(path)).replace('PROTECTED','[ '+' '.join(json.dumps(n) for n in PROTECTED)+' ]')
  return json.loads(cmd(['nix-instantiate','-I','nixpkgs='+NIXPKGS,'--eval','--strict','--json','--expr',expression],timeout=300))
@@ -59,6 +60,7 @@ def prepare():
  require(a['hba']=='local forgejo forgejo peer\n'+b['hba'],'Règles HBA non conservées')
  for k in ('databases','users'):require(set(a[k])==set(b[k])|{'forgejo'},'Registre SQL modifié: '+k)
  require(after['backups']==before['backups'],'Sauvegardes historiques modifiées')
+ require(all(after['acmeTimers'].get(k)==v for k,v in before['acmeTimers'].items()),'Renouvellement TLS existant modifié')
  for k in before['system']:
   if k=='firewall':require(set(after['system'][k])==set(before['system'][k])|{2222},'Pare-feu inattendu')
   else:require(after['system'][k]==before['system'][k],'Socle modifié: '+k)
@@ -98,7 +100,8 @@ def backup_current():
  spec=importlib.util.spec_from_file_location('forgejo_backup_existing',D/'payload/backup-existing.py')
  backup=importlib.util.module_from_spec(spec);spec.loader.exec_module(backup)
  backup.GENERATION=EXPECTED
- report=backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
+ try:report=backup.main(REV,sqlite_reprise={'log-native':'/var/lib/mrjam-metier/log/sessions.sqlite'})
+ except Exception:raise RuntimeError('Sauvegarde actuelle arrêtée à l’étape '+backup.ETAPE) from None
  require(pids()==before_pids,'Processus protégé changé durant la sauvegarde')
  (D/'backup.json').write_text(json.dumps({k:v for k,v in report.items() if k!='fichiers_chiffres'},indent=2)+'\n')
 
