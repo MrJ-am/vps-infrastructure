@@ -7,6 +7,7 @@ def cmd(args, timeout=180):
 
 NIXPKGS='/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos'
 EXPR='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; c=e.config; in {
+ kanidm={package=toString c.services.kanidm.package;configFile=c.services.kanidm.server.configFile or null;};
  forgejo=c.services.forgejo.enable; forgejoVersion=e.pkgs.forgejo.version; pandocVersion=e.pkgs.pandoc.version;
  postgres={package=toString c.services.postgresql.finalPackage;dataDir=c.services.postgresql.dataDir;authentication=c.services.postgresql.authentication;identMap=c.services.postgresql.identMap;};
  domains=builtins.attrNames c.services.nginx.virtualHosts;
@@ -40,4 +41,6 @@ if secret.exists():
     stat=secret.stat();r['bootstrapSecretMetadata']={'uid':stat.st_uid,'mode':oct(stat.st_mode & 0o777),'parentMode':oct(secret.parent.stat().st_mode & 0o777),'contentRead':False}
 r['forgejoBackupTimer']=cmd(['systemctl','show','forgejo-backup.timer','--property=ActiveState,NextElapseUSecRealtime','--value'])
 r['forgejoEncryptedBackupPairs']=sum(1 for p in pathlib.Path('/var/backup/forgejo').glob('*.tar.age') if pathlib.Path(str(p)+'.key.age').is_file())
+r['kanidmExecStart']=cmd(['systemctl','show','kanidm','--property=ExecStart','--value'])
+r['forgejoAccounts']=json.loads(cmd(['runuser','-u','postgres','--','psql','-XAtq','-d','forgejo','-c', "SELECT json_agg(json_build_object('name',name,'admin',is_admin,'loginType',login_type,'loginSource',login_source,'mustChangePassword',must_change_password)) FROM \"user\";"]))
 print(json.dumps(r,sort_keys=True))
