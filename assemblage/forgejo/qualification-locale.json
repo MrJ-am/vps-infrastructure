@@ -82,9 +82,9 @@
     "assemblage/forgejo/fixtures/docs/mathematiques.org": "b13ebd2ced31885dc53d825aaf9fbba48d8ceedcbad2fcf096ae2ed0bf55f44d",
     "assemblage/forgejo/fixtures/docs/structure.org": "8e8c045b6b8be56c9dba5d0d21c5630846e09829596ab3734aeed2d2c2fa9c82",
     "assemblage/forgejo/fixtures/images/point.png": "ad3c285f9f93b5a369ee3993296c77071b108359643f83847c6fae1469347a14",
-    "assemblage/forgejo/integration.nix": "933000e91851f679225244d64de438360000c2f1301506e4e71401b94f62e398",
-    "assemblage/forgejo/module.nix": "73da2c3c716982e99bdb759319008102fcab025574bfeb00f3c86d63d0a8a504",
-    "assemblage/forgejo/promouvoir.py": "c2a504f35d4a95182b75e7fdc0d683cb7fe828752d8aef1f28fdefb7576e9cc2",
+    "assemblage/forgejo/integration.nix": "624c922c6852befd8fc9564405cfc671627b88571fdeacdf071a1015771e5935",
+    "assemblage/forgejo/module.nix": "b8e7bb7596dbff20f32505ec31eb94540e7f70a145b8c0d92bd869a23b9efbad",
+    "assemblage/forgejo/promouvoir.py": "6ae81c88231ac5f0df2ea190bb765069f7848d56be2e40791112e6a099ea13c2",
     "assemblage/forgejo/versions.json": "661e4b273d700cab10ee6dc68597318e8a14fbc1109b13dfd24edb8b2c0dfbcf",
     "scripts/forgejo-navigateur.py": "2c8d41e184c646a1d4aba1a5bf4ae476d00935f70c48b77c1307f9c131a1b315",
     "scripts/forgejo-git.py": "1d4bc8234b3e00b54a03f41557d615d42ccbf21dd5ef0c6aa010feb376c7b76a"
@@ -164,5 +164,11 @@
       "temporaryKeyRemoved": true
     },
     "fullVpsRebootTested": false
+  },
+  "nixIntegration": {
+    "errors": [],
+    "oldTimer": true,
+    "peer": true,
+    "system": "/nix/store/h5i14cn9rqimr82wwdqqnwjpxmlwg292-nixos-system-nixos-26.05pre-git.drv"
   }
 }
