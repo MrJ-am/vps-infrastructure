@@ -1,6 +1,6 @@
 {
   "format": 1,
-  "revision_sources": "6d36110e1fad1cb66f0e80f148988c98a35841f9",
+  "revision_sources": "745d9fe27f53a0c6d7d26707648d3dd37ef997e1",
   "domain": "git.mrg.am",
   "qualification_locale": "assemblage/forgejo/qualification-locale.json",
   "activation": "DNS A exact et sauvegarde/restauration actuelle requis"
