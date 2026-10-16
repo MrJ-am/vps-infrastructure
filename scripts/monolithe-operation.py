@@ -21,6 +21,11 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION')
+    if operation=='forgejo-diagnostic':
+        with (ROOT/'scripts/forgejo-diagnostic.py').open('rb') as f:
+            stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+                      ' -p python3 --run '+shlex.quote('python3 -B -'),stdin=f)
+        return
     if operation=='reconnexion-outillage':
         spec=importlib.util.spec_from_file_location('outillage_reconnexion',ROOT/'scripts/mcp-reconnexion-outillage.py')
         m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
