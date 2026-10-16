@@ -32,4 +32,7 @@ for log in sorted(pathlib.Path('/root/mrjam-corrections/forgejo').glob('*/*.log'
     errors=__import__('re').findall(r'(?m)^\s*(?:error:|curl:|tar:|cp:|mv:) ([^\n]+)',text)
     r['forgejo_preparation_errors'].append({'revision':log.parent.name,'log':log.name,'errors':[e[:500] for e in errors[-12:]]})
 
+r['forgejoUnits']={n:cmd(['systemctl','show',n,'--property=ActiveState,SubState,Result,ExecMainStatus','--value']) for n in ('forgejo','forgejo-bootstrap','forgejo-backup','forgejo-backup-qualification')}
+journal=cmd(['journalctl','-u','forgejo-backup-qualification','-n','70','--no-pager','-o','cat'])
+r['backupErrors']=[line[:400] for line in journal.splitlines() if any(token in line for token in ('RuntimeError:','Error:','Permission denied','not found','cannot ','could not ','failed:'))]
 print(json.dumps(r,sort_keys=True))
