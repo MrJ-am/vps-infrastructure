@@ -28,7 +28,10 @@ avec un README et trois fichiers ordinaires de sous-répertoire.
 
 Pandoc reçoit stdin avec `--sandbox --from=org --to=html5 --mathjax`. Temps et
 mémoire sont bornés ; aucune inclusion de fichiers serveur n’est autorisée.
-`NEED_POSTPROCESS=true` conserve le traitement Forgejo des liens et images.
+`NEED_POSTPROCESS=true` conserve le traitement Forgejo des images. Le filtre
+versionné `org-links.lua` résout les liens relatifs avec `GITEA_PREFIX_SRC`, y
+compris pour les README intégrés ; les sources restent utilisables dans Emacs.
+Voir [LIENS-ORG.md](LIENS-ORG.md) pour la cause et les contrôles de navigation.
 L’assainissement reste activé : une règle propre au renderer permet uniquement
 les classes `math inline` et `math display` sur les spans. Aucun script, gestionnaire
 d’événement ou URL JavaScript n’est autorisé par cette règle.

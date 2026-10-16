@@ -16,7 +16,7 @@ def main():
   data=io.BytesIO()
   with tarfile.open(fileobj=data,mode='w:gz') as t:
    for path in listing+['scripts/monolithe-sauvegarde.py','scripts/kanidm-api-privee.py']:
-    if path.endswith(('.nix','.json','.js','.css','.tmpl','.py','.org','.png')):
+    if path.endswith(('.nix','.json','.js','.css','.tmpl','.py','.lua','.org','.png')):
      content=subprocess.check_output(['git','show',revision+':'+path],cwd=ROOT)
      name='payload/'+('backup-existing.py' if path.endswith('monolithe-sauvegarde.py') else 'kanidm-api-privee.py') if path.startswith('scripts/') else 'payload/'+path.removeprefix('assemblage/forgejo/')
      info=tarfile.TarInfo(name);info.size=len(content);info.mode=0o600
