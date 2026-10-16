@@ -1,0 +1,204 @@
+{
+  "format": 1,
+  "observedAt": "2026-10-16T10:36:52.791675+00:00",
+  "url": "https://forge.mrj.am",
+  "gitRun": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38887282166",
+  "git": {
+    "private": true,
+    "httpScheme": "https",
+    "httpClonePush": true,
+    "sshClonePush": true,
+    "head": "afde1ab7db5e0ff95c902e5912daa88ad11f72d6",
+    "temporaryKeyRemoved": true
+  },
+  "postgresRole": {
+    "superuser": false,
+    "createdb": false,
+    "createrole": false,
+    "replication": false,
+    "bypassrls": false
+  },
+  "browser": {
+    "url": "https://forge.mrj.am",
+    "engine": "Chromium",
+    "tests": [
+      {
+        "document": "README.org",
+        "width": 1280,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 1280,
+        "pandocMathNodes": 0,
+        "chtml": false
+      },
+      {
+        "document": "README.org",
+        "width": 390,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 390,
+        "pandocMathNodes": 0,
+        "chtml": false
+      }
+    ],
+    "javascriptErrors": [],
+    "resourceErrors": [],
+    "privateAnonymousDenied": true,
+    "publicRegistrationDisabled": true
+  },
+  "rollbackActuallyPerformed": {
+    "run": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38886666731",
+    "dataRestored": false,
+    "reason": "Anonymous version API correctly denied; health probe corrected to login page"
+  },
+  "fullVpsReboot": false,
+  "initialDeployment": {
+    "forgejo": "deployed",
+    "revision": "95b33d038c5652b4d23d30b8ccee21b8989f06c8",
+    "generation": "/nix/store/hqsfqg1yjzis295fhgkvfd9hj7vxl2qb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "https": true,
+    "protectedCodeUnchanged": true,
+    "postgresRestarted": true,
+    "dependencyRestarts": [
+      "mrjam-metier"
+    ]
+  },
+  "initialDeploymentRun": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38887033393",
+  "deployment": {
+    "forgejo": "deployed",
+    "revision": "f79bcaddf7ddaa637350d04bec01d30629e49c29",
+    "generation": "/nix/store/6791pn34plb531ygfxfyk9riq79x10d0-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "https": true,
+    "protectedCodeUnchanged": true,
+    "postgresRestarted": false,
+    "dependencyRestarts": []
+  },
+  "deploymentRun": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888040761",
+  "persistenceRun": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888153134",
+  "persistence": {
+    "persistenceAfterForgejoRestart": true,
+    "head": "afde1ab7db5e0ff95c902e5912daa88ad11f72d6",
+    "protectedPidsUnchanged": true,
+    "backup": {
+      "verifiedAt": "2026-10-16T10:35:14.962633+00:00",
+      "isolatedPostgresqlRestore": true,
+      "tables": 130,
+      "semanticFingerprintsEqual": true,
+      "repositoriesFsck": 1,
+      "productionDataRestored": false
+    },
+    "fullVpsReboot": false
+  },
+  "browserAfterPersistence": {
+    "url": "https://forge.mrj.am",
+    "engine": "Chromium",
+    "tests": [
+      {
+        "document": "README.org",
+        "width": 1280,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 1280,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 1280,
+        "pandocMathNodes": 0,
+        "chtml": false
+      },
+      {
+        "document": "README.org",
+        "width": 390,
+        "pandocMathNodes": 2,
+        "chtml": true
+      },
+      {
+        "document": "docs/mathematiques.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/delimiteurs.org",
+        "width": 390,
+        "pandocMathNodes": 5,
+        "chtml": true
+      },
+      {
+        "document": "docs/structure.org",
+        "width": 390,
+        "pandocMathNodes": 0,
+        "chtml": false
+      }
+    ],
+    "javascriptErrors": [],
+    "resourceErrors": [],
+    "privateAnonymousDenied": true,
+    "publicRegistrationDisabled": true
+  },
+  "existingHttpProbes": 25,
+  "remaining": [
+    "Full VPS reboot not performed",
+    "Encrypted backups remain local to VPS; no external destination configured"
+  ],
+  "finalDiagnosticRun": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/38888298960",
+  "finalState": {
+    "generation": "/nix/store/6791pn34plb531ygfxfyk9riq79x10d0-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "configuration_sha256": "83f9b487c1060986b6de9a018b1f69737fe35955d3c2d8bde48a25fa8b7ef51a",
+    "forgejoUnits": {
+      "forgejo": "active\nrunning\nsuccess\n0",
+      "forgejo-backup": "inactive\ndead\nsuccess\n0",
+      "forgejo-backup-qualification": "inactive\ndead\nsuccess\n0",
+      "forgejo-bootstrap": "inactive\ndead\nsuccess\n0"
+    },
+    "bootstrapSecretMetadata": {
+      "contentRead": false,
+      "mode": "0o600",
+      "parentMode": "0o700",
+      "uid": 0
+    },
+    "forgejoBackupTimer": "active\nSat 2026-10-17 04:48:48 UTC",
+    "forgejoEncryptedBackupPairs": 1
+  }
+}

@@ -1,6 +1,6 @@
 # Forgejo privé — intégration déclarative
 
-Candidat de la mission Forgejo du 16 octobre 2026. Le VPS inspecté utilise
+Intégration de la mission Forgejo du 16 octobre 2026, domaine `forge.mrj.am`. Le VPS inspecté utilise
 `/etc/nixos/configuration.nix`, sans flake. L’intégration conserve cette entrée
 et toute sa chaîne d’imports ; elle ne migre pas les applications existantes.
 
@@ -66,8 +66,8 @@ gh workflow run monolithe-deploiement.yml --repo MrJ-am/vps-infrastructure --ref
 Le journal de construction/activation détaillé reste privé sur le VPS dans
 `/root/mrjam-corrections/forgejo/<revision>/`. Un arrêt doit être analysé avant
 nouvelle tentative. L’ajout d’un chemin HBA peut imposer un redémarrage PostgreSQL
-borné ; le dataDir et la version majeure ne changent pas. Les autres processus
-protégés doivent conserver leur PID.
+borné ; le dataDir et la version majeure ne changent pas. Seules ses dépendances explicites peuvent également redémarrer, avec le même code ;
+les autres processus protégés doivent conserver leur PID.
 
 ## Premier administrateur
 
@@ -120,8 +120,7 @@ MathJax. Aucun contrôle de sécurité du constructeur NixOS n’est désactivé
 
 Les preuves locales et distantes restent distinctes. Une instance locale SQLite
 ne qualifie pas la connexion PostgreSQL, ACME, le pare-feu ou la persistance du VPS.
-L’absence de DNS bloque les essais de production et doit rester visible dans le
-compte rendu. Le redémarrage d’un service ne prouve pas un redémarrage complet du VPS.
+Le DNS est contrôlé avant activation. Le redémarrage d’un service ne prouve pas un redémarrage complet du VPS.
 
 
 ## Validation de production
@@ -146,3 +145,21 @@ s’il dépend effectivement de PostgreSQL, que PostgreSQL a redémarré et que 
 exécutable est identique. Les autres PID sont conservés ; les sondes fonctionnelles
 restent obligatoires. Le retour précédent et son interpréteur sont protégés de la
 collecte Nix, et un vrai timer systemd exerce le témoin indépendant avant bascule.
+
+
+## État installé et maintenance
+
+État effectif et reçus : `COMPTE-RENDU.md`, `qualification-production.json`.
+La correction finale ajoute `diffutils` au PATH des sauvegardes (`cmp`) ; son
+opérateur compare toutes les unités et n’autorise de différence que pour les deux
+unités de sauvegarde Forgejo. PostgreSQL, Nginx et les autres unités restent identiques.
+Le contrôle HTTPS utilise la page de connexion ; l’API de version exige une
+identification et est vérifiée avec le compte de qualification.
+
+Ne pas supprimer `/root/mrjam-corrections/forgejo/` : les configurations de base,
+imports et racines de retour y sont préservés, comme dans le circuit de déploiement
+existant. Sauvegarder cette chaîne avec `/etc/nixos` et le dépôt Infrastructure.
+Avant une future promotion, réinspecter la génération/configuration active et
+actualiser les préconditions strictes de `promouvoir.py` ; elles empêchent la
+réapplication aveugle sur une configuration modifiée. Les sources initiales et
+la correction restent dans l’historique Git, avec leurs descripteurs exacts.

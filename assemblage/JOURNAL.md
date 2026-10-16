@@ -1131,3 +1131,28 @@ réels qualifiés. Sauvegarde age/restauration isolée38/6/100tables identique,
 25 sondes HTTP/TLS réussies. Pas d’activation, de compte ni de dépôt Forgejo VPS :
 git.mrg.am NXDOMAIN et accès DNS Netim absent. Détails/preuves et reprise dans
 assemblage/forgejo/. Aucun secret ou contenu personnel publié.
+
+
+## 16 octobre 2026 — Forgejo actif sur forge.mrj.am
+
+Après création DNS par le propriétaire : A187.77.95.158 vérifié sur Google/Cloudflare,
+sansAAAA. Installation initiale95b33d0, puis correction déclarative diffutils f79bcadd ;
+génération finale6791pn34, run38888040761 réussi. Toutes les unités hors sauvegarde
+Forgejo sont identiques lors de cette correction ; aucun redémarragePG/dépendant.
+L’installation initiale avait redémarréPG et mrjam-metier avec le même code,25sondes
+HTTP/TLS réussies. Un retour réel a rétabli configuration/génération précédentes
+sans restauration de données quand la sonde anonyme /api/v1/version a rencontré
+l’interdiction attendue du mode privé ; sonde remplacée par connexionHTTPS,
+version vérifiée authentifiée. Données Forgejo conservées lors de ce retour.
+Dépôt privé demandé créé avec README et documentsOrg, compte de test nonadmin ;
+GitHTTPS/SSH2222 clone/push réussis, clé temporaire retirée. Chromium production :
+CHTMLMathJax4.1.3 réel, quatre délimiteurs,align/fractions/matrices/références,
+structure/liens/images, injections refusées, mobile390px, zéroerreurJS/ressource/CDN.
+Après redémarrage et sauvegarde : mêmes tests et commit, autresPID inchangés.
+Run38888153134 : déchiffrement réel, restaurationPG isolée sansTCP,130tables aux
+empreintes identiques et1dépôt gitfsck. Aucune donnée production restaurée.
+Admin mrjam-admin provisionné avec secretroot horsGit/store/journaux, jamais lu.
+VersionsForgejo16.0.3/Pandoc3.7.0.2/MathJax4.1.3 verrouillées, sources/proofs dans
+assemblage/forgejo/. Pas de flake constaté ; imports existants conservés. Aucun
+runner/workflow supplémentaire. Limites : pas de rebootVPS complet, backup chiffré
+local30j sans destination externe. Compte rendu et reprise actualisés.
