@@ -227,5 +227,16 @@
     ],
     "privateAnonymousDenied": true,
     "publicRegistrationDisabled": true
+  },
+  "emacs": {
+    "emacs": "30.2",
+    "org": "9.7.11",
+    "nativeOrgFileLinksOpened": 6,
+    "sourceLinksUnchanged": true
+  },
+  "commitNavigation": {
+    "preservesCommit": true,
+    "head": "89f309a7bb26e92b34d74ad60a72bc9a5aa89316",
+    "realClickAndChtml": true
   }
 }

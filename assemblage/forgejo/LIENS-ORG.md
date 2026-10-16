@@ -42,3 +42,7 @@ La qualification de production utilise le vrai moteur et son assainissement
 via l'API native `/markup`, puis vérifie l'existence des destinations privées
 via l'API authentifiée. Elle ne prétend pas effectuer la connexion MFA
 personnelle du propriétaire dans l'interface Web de production.
+
+Emacs 30.2 / Org 9.7.11 a ouvert les six liens inter-documents des sources
+originales via `org-open-at-point`, sans modification. Le contrôle reproductible
+est `scripts/forgejo-liens-emacs.el` ; résultat dans le reçu local.
