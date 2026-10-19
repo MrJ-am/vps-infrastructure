@@ -177,11 +177,34 @@ def probe():
     require(status['versionstring']=='34.0.4' and not status['maintenance'] and not status['needsDbUpgrade'],'Nextcloud status unhealthy')
     return {'redirectToLog':True,'pkceS256':True,'localPasswordPostDenied':True,'healthy':True}
 
+GATE=P('/run/nextcloud-sso-gate')
+GATED=['phpfpm-nextcloud','nextcloud-cron']
+def close_gate():
+    require(not GATE.exists() or GATE.read_text()==REV,'Another Nextcloud operation owns the gate')
+    GATE.write_text(REV);GATE.chmod(0o644)
+    for unit in GATED:
+        d=P('/run/systemd/system')/(unit+'.service.d');d.mkdir(exist_ok=True)
+        p=d/'90-nextcloud-sso.conf';content='[Unit]\nConditionPathExists=!'+str(GATE)+'\n'
+        require(not p.exists() or p.read_text()==content,'Concurrent service drop-in')
+        p.write_text(content);p.chmod(0o644)
+    run(['systemctl','daemon-reload'])
+    run(['systemctl','stop','phpfpm-nextcloud.service','nextcloud-cron.timer','nextcloud-cron.service'])
+
+def open_gate():
+    require(not GATE.exists() or GATE.read_text()==REV,'Another Nextcloud operation owns the gate')
+    for unit in GATED:
+        (P('/run/systemd/system')/(unit+'.service.d/90-nextcloud-sso.conf')).unlink(missing_ok=True)
+    GATE.unlink(missing_ok=True)
+    run(['systemctl','daemon-reload'])
+    run(['systemctl','start','phpfpm-nextcloud.service','nextcloud-cron.timer'])
+
 def rollback():
     state=json.loads((D/'prepared.json').read_text())
     entry=P('/etc/nixos/configuration.nix')
     ours='{ ... }: { imports = [ '+str(D/'configuration.nix')+' ]; }\n'
     require(entry.read_text() in [ours,(D/'base.nix').read_text()],'Concurrent configuration prevents automatic return')
+    close_gate()
+    occ('maintenance:mode','--off')
     # Disable only this newly installed application, preserving every account,
     # file and token, including any writes after the cutover.
     try:occ('app:disable','user_oidc')
@@ -191,6 +214,8 @@ def rollback():
     run([state['base']+'/bin/switch-to-configuration','switch'],timeout=360)
     occ('maintenance:mode','--off')
     require(current()==state['base'],'Return generation not active')
+    open_gate()
+    run(['systemctl','stop','nextcloud-sso-return-'+REV[:12]+'.timer'])
     print(json.dumps({'phase':'returned','restoredOldDatabase':False}))
 
 def deploy():
@@ -205,14 +230,18 @@ def deploy():
         if witness.exists():break
         time.sleep(.2)
     require(witness.exists(),'Independent return timer not executed')
-    occ('maintenance:mode','--on');run(['systemctl','stop','nextcloud-cron.timer','nextcloud-cron.service'])
-    state['invariants']=invariants();(D/'prepared.json').write_text(json.dumps(state))
     try:
+        close_gate()
+        occ('maintenance:mode','--on')
+        state['invariants']=invariants();(D/'prepared.json').write_text(json.dumps(state))
         backup(state)
         run(['systemctl','start','mrjam-sauvegarde.service'],timeout=300)
         require(run(['systemctl','show','mrjam-sauvegarde','-p','Result','--value'])=='success','Native backup failed')
         lease(state)
         run(['systemd-run','--unit='+timer,'--on-active=10min',sys.executable,str(D/'payload/promote.py'),'retour',REV])
+        # NixOS runs occ upgrade; both it and the provider command require
+        # maintenance=false. The independent service gate blocks Web and cron.
+        occ('maintenance:mode','--off')
         entry=P('/etc/nixos/configuration.nix');temp=entry.with_name('.nextcloud-sso.nix')
         temp.write_text('{ ... }: { imports = [ '+str(D/'configuration.nix')+' ]; }\n');temp.chmod(0o644);temp.replace(entry)
         try:
@@ -222,15 +251,15 @@ def deploy():
             require(invariants()==state['invariants'],'Existing account/file/share/group metadata changed')
             require(pids()==before,'Protected service restarted')
             occ('maintenance:mode','--off')
+            open_gate()
             report=probe()
-            run(['systemctl','start','nextcloud-cron.timer'])
             run(['systemctl','stop',timer+'.timer'])
             report.update(revision=REV,generation=current(),dataPreserved=True,protectedServicesUnchanged=True,personalLoginTested=False)
             (D/'deployed.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report))
         except BaseException:
             rollback();run(['systemctl','stop',timer+'.timer']);raise
     finally:
-        occ('maintenance:mode','--off');run(['systemctl','start','nextcloud-cron.timer'])
+        occ('maintenance:mode','--off');open_gate()
 
 if __name__=='__main__':
     os.umask(0o077)
