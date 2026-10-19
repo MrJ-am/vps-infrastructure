@@ -73,4 +73,31 @@ class Inventaire(unittest.TestCase):
             with sqlite3.connect(p) as db:db.execute('CREATE TABLE autre(n INTEGER)')
             self.assertEqual(m.inventaire_reconnexion_mcp(p,1000),{'present':True,'schema_complet':False})
 
+    def test_nginx_ne_publie_que_les_directives_mcp_vision(self):
+        texte='''server {
+    server_name vision.mrj.am;
+    location = /mcp {
+        auth_request /_vision_mcp_token;
+        proxy_set_header X-Mrj-User $vision_mcp_user;
+        proxy_set_header Authorization "secret-prive";
+        proxy_set_header Cookie "cookie-prive";
+    }
+    location @vision-mcp-authentication-required {
+        add_header WWW-Authenticate 'Bearer realm="Vision MCP"' always;
+        return 401 '{"prive":"ne-pas-publier"}';
+    }
+}
+server {
+    server_name audition.mrj.am;
+    location = /mcp {
+        proxy_pass http://autre-prive;
+    }
+}
+'''
+        out=m.resume_nginx_mcp(texte)
+        self.assertEqual(out,{'/mcp':['auth_request /_vision_mcp_token;',
+            'proxy_set_header X-Mrj-User $vision_mcp_user;'],
+            '@vision-mcp-authentication-required':['defi=Bearer']})
+        self.assertNotIn('prive',json.dumps(out))
+
 if __name__=='__main__':unittest.main()
