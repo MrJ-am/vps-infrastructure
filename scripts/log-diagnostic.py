@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd,hashlib,time
+import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd,hashlib,time,shlex
 import sqlite3
 from pathlib import Path
 
@@ -81,6 +81,39 @@ def configuration_mcp_actuelle():
         verification_commune=d['verifier']=='http://unix:/run/mrjam-metier/http.sock:/verify-mcp',
         adresse_publique_configuree=d['adresse']=='https://vision.mrj.am/mcp')
     return out
+
+def resume_nginx_mcp(texte):
+    """Uniquement des directives techniques connues des locations MCP Vision."""
+    out={}
+    chemins=('/mcp','/_vision_mcp_token','@vision-mcp-authentication-required')
+    for bloc in re.finditer(r'(?ms)^(?P<indent>[ \t]*)location\s+(?:=\s+)?(?P<chemin>\S+)\s*\{\n(?P<corps>.*?)^(?P=indent)\}',texte):
+        if bloc['chemin'] not in chemins:continue
+        noms=re.findall(r'\bserver_name\s+([^;]+);',texte[:bloc.start()])
+        if not noms or 'vision.mrj.am' not in noms[-1].split():continue
+        lignes=[]
+        for l in bloc['corps'].splitlines():
+            if re.match(r'\s*(?:auth_request(?:_set)?|auth_basic|satisfy|error_page|proxy_pass|proxy_set_header\s+(?:X-Mrj-User|X-Mrjam-Service|X-Vision-Authenticated|X-Forwarded-Host))\s',l):
+                # Ces directives n'acceptent ici que des noms techniques/chemins,
+                # jamais une valeur Authorization/Cookie ni un corps de requête.
+                lignes.append(l.strip())
+            elif re.match(r'\s*add_header WWW-Authenticate\s',l):
+                lignes.append('defi='+('Bearer' if 'Bearer ' in l else 'Basic' if 'Basic ' in l else 'inconnu'))
+        out[bloc['chemin']]=lignes
+    return out
+
+def nginx_mcp_execute():
+    pid=subprocess.run(['systemctl','show','nginx','-p','MainPID','--value'],
+        check=True,capture_output=True,text=True,timeout=10).stdout.strip()
+    if not re.fullmatch('[1-9][0-9]*',pid):return {'processus_present':False}
+    proc=Path('/proc')/pid
+    args=proc.joinpath('cmdline').read_bytes().decode().replace('\0',' ')
+    match=re.search(r'(?:^|\s)-c\s+(/(?:etc/nginx/|nix/store/)[^\s;]+)',args)
+    if not match:return {'configuration_identifiee':False}
+    conf=Path(match[1])
+    r=subprocess.run([str(proc/'exe'),'-T','-c',str(conf)],capture_output=True,text=True,timeout=20)
+    return {'configuration_identifiee':True,'syntaxe_valide':r.returncode==0,
+            'configuration_sha256':hashlib.sha256(conf.read_bytes()).hexdigest(),
+            'routes':resume_nginx_mcp(r.stdout) if r.returncode==0 else {}}
 
 def classifier(texte,ancien):
     r=ancien.erreur_nix(texte)
@@ -168,6 +201,7 @@ def main(revision):
         Path('/var/lib/mrjam-metier/log/sessions.sqlite'),Path('/var/lib/mrj-auth/sessions.sqlite'))
     out['reconnexion_mcp']=inventaire_reconnexion_mcp(Path('/var/lib/mrjam-metier/log/sessions.sqlite'),int(time.time()))
     out['configuration_mcp']=configuration_mcp_actuelle()
+    out['nginx_mcp']=nginx_mcp_execute()
     for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
         v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
         out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'
