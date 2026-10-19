@@ -43,3 +43,8 @@ Qualification locale : conteneurs officiels Nextcloud34.0.4 et Kanidm1.11.2,
 module user_oidc exact, Nginx réel, TLS vérifié avec CA de test, vrais MFA/code/
 PKCE/ES256 et compte préexistant. L'étape UI de Kanidm est médiée par son API
 native. Aucune connexion personnelle de production n'est simulée.
+
+Déployé le 19 octobre 2026 : [opération 39330935764](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39330935764).
+Le reçu `qualification-production.json` consigne l'artefact, les sondes et leurs
+limites ; le parcours personnel de production reste à effectuer par son titulaire.
+La configuration Contacts préparée auparavant est conservée sans activation.

@@ -1,5 +1,24 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Nextcloud — connexion Log active, 19 octobre 2026
+
+Déploiement 39330935764 réussi, sources SSO
+1cfa76edd667dd2cb54228919c329b72b6c49462, génération active/démarrage
+84sxk2qrbvrbvk06kg1w5k6mzp3mj02y. Le compte existant MrJam est explicitement
+rattaché au propriétaire Kanidm via OIDC ; aucun nouveau compte ni association
+par mail. Connexion Web locale et mot de passe ordinaire DAV refusés ; jetons
+applicatifs conservés. 25 sondes HTTP/TLS réussies, redirection Log/PKCE vérifiée,
+invariants comptes/fichiers/partages/carnets/calendriers et PID protégés inchangés.
+Sauvegardes chiffrées restaurées en isolation avant activation, retour indépendant
+qualifié puis désarmé. Connexion personnelle de production non effectuée.
+
+L'entrée /etc/nixos/configuration.nix importe désormais le candidat sous
+/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/.
+La source Contacts du 17 octobre est conservée mais exclue du candidat : elle
+n'était pas activée. La divergence actif/source signalée ci-dessous est ainsi
+résolue pour cette nouvelle référence ; constater celle-ci avant toute autre
+promotion. Voir assemblage/nextcloud-sso/README.md et qualification-production.json.
+
 ## Vision — reconnexion Android à confirmer, 19 octobre 2026
 
 Ancien correctif OAuth toujours actif, même SHA256 `2e72ea81…`, 29 clients
