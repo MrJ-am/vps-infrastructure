@@ -18,6 +18,9 @@ class ConfigurationMcp(unittest.TestCase):
             '--expr', expression % (ROOT/'tests/log-evaluation-base.nix')],
             capture_output=True, text=True, check=True)
         environnement = json.loads(resultat.stdout)
+        self.verifier_tutoriel(environnement)
+
+    def verifier_tutoriel(self, environnement):
         # Aucun DSN/secret de la configuration n'est transmis au processus.
         env = {k:v for k,v in os.environ.items() if not k.startswith('VISION_')}
         env.update({k:v for k,v in environnement.items() if k in (

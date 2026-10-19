@@ -21,6 +21,10 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI/CD centrale sur main')
     operation=os.environ.get('MRJAM_OPERATION')
+    if operation in ('vision-mcp-preparer','vision-mcp-deployer','vision-mcp-retour','vision-mcp-diagnostic'):
+        spec=importlib.util.spec_from_file_location('vision_mcp_operation',ROOT/'scripts/vision-mcp-configuration-operation.py')
+        m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+        m.main();return
     if operation in ('nextcloud-sso-preparer','nextcloud-sso-deployer','nextcloud-sso-retour','nextcloud-sso-diagnostic'):
         spec=importlib.util.spec_from_file_location('nextcloud_sso_operation',ROOT/'scripts/nextcloud-sso-operation.py')
         m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
