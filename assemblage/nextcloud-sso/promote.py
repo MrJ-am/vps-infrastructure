@@ -90,7 +90,11 @@ def prepare():
     require(all(after['hosts'][n]==v for n,v in before['hosts'].items() if n!='cloud.mrj.am'),'Other virtual host changed')
     require('nextcloud_local_password' in after['hosts']['cloud.mrj.am']['extra'],'Password POST filter missing')
     changes=[n for n in set(before['units'])|set(after['units']) if before['units'].get(n)!=after['units'].get(n)]
-    allowed=lambda n:n.startswith('nextcloud-') or n in ['nginx.service','phpfpm-nextcloud.service']
+    tmpfiles='systemd-tmpfiles-resetup.service'
+    if tmpfiles in changes:
+        stable=lambda text:'\n'.join(l for l in text.splitlines() if not l.startswith('X-Restart-Triggers='))
+        require(stable(before['units'][tmpfiles])==stable(after['units'][tmpfiles]),'Tmpfiles command changed beyond its configuration trigger')
+    allowed=lambda n:n.startswith('nextcloud-') or n in ['nginx.service','phpfpm-nextcloud.service',tmpfiles]
     require(all(allowed(n) for n in changes),'Unexpected unit changes: '+','.join(n for n in changes if not allowed(n)))
     for n in ['kanidm','postgres','recipient']:require(before[n]==after[n],'Protected configuration changed: '+n)
     built=run(['nix-build','--no-out-link','--expr','(import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=['+str(config)+'];}).config.system.build.toplevel'],timeout=1800)
