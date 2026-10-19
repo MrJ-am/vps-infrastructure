@@ -3,7 +3,7 @@ import hashlib,json,pathlib,subprocess
 
 def run(args):
     p=subprocess.run(args,capture_output=True,text=True,timeout=180)
-    if p.returncode: raise RuntimeError(p.stderr[-2500:])
+    if p.returncode: raise RuntimeError('Command '+str(args[:5])+' failed: '+p.stderr[-2000:]+' stdout: '+p.stdout[:500])
     return p.stdout.strip()
 
 expression='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; c=e.config; in {
@@ -19,8 +19,8 @@ def sql(query):
 result={'configuration':json.loads(run(['nix-instantiate','--eval','--strict','--json','--expr',expression])),
  'entrySha256':hashlib.sha256(pathlib.Path('/etc/nixos/configuration.nix').read_bytes()).hexdigest(),
  'entry':pathlib.Path('/etc/nixos/configuration.nix').read_text(),
- 'status':json.loads(run(['runuser','-u','nextcloud','--','nextcloud-occ','status','--output=json'])),
- 'apps':json.loads(run(['runuser','-u','nextcloud','--','nextcloud-occ','app:list','--output=json']))}
+ 'status':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','nextcloud-occ','status','--output=json'])),
+ 'apps':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','nextcloud-occ','app:list','--output=json']))}
 result['accounts']={'local':int(sql('SELECT count(*) FROM oc_users')),
  'admins':int(sql("SELECT count(*) FROM oc_group_user WHERE gid='admin'")),
  'filecache':int(sql('SELECT count(*) FROM oc_filecache')),
