@@ -10,5 +10,6 @@
   "davPasswordDenied": true,
   "existingAppTokenWorks": true,
   "production": false,
-  "idpUiMediatedByNativeApi": true
+  "idpUiMediatedByNativeApi": true,
+  "nativeMaintenanceUpgradeConstraintVerified": true
 }

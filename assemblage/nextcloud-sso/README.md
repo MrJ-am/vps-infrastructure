@@ -29,7 +29,10 @@ les jetons d'application Nextcloud.
 L'opération manuelle `nextcloud-sso-preparer`, puis `nextcloud-sso-deployer`, du
 workflow central `monolithe-deploiement.yml` construit la configuration sans
 changer les autres applications. Le descripteur central verrouille les sources.
-Avant activation : maintenance brève, sauvegarde fichiers/base chiffrée avec clé
+Avant activation : accès Web et cron arrêtés par une condition systemd temporaire,
+sauvegarde en mode maintenance, puis maintenance désactivée pour les commandes
+`occ upgrade` du setup NixOS et `user_oidc:provider`. La condition empêche leur
+redémarrage jusqu’à la fin de la configuration. Sauvegarde fichiers/base chiffrée avec clé
 age enveloppée pour le destinataire existant, déchiffrement et restauration dans
 une base séparée, empreintes des comptes/fichiers/partages/carnets/calendriers.
 Un timer indépendant rétablit le code/configuration en cas d'échec, sans restaurer
