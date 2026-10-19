@@ -1,10 +1,5 @@
 name: Auditer le VPS pour Nextcloud sans modification
 on:
-  push:
-    branches: [main]
-    paths:
-      - scripts/nextcloud-audit.sh
-      - .github/workflows/nextcloud-audit.yml
   workflow_dispatch:
 permissions:
   contents: read
@@ -33,8 +28,10 @@ jobs:
           ssh-keygen -y -P '' -f "$VPS_SSH_KEY" >/dev/null
       - name: État serveur en lecture seule
         run: sh scripts/connect.sh sh -s < scripts/nextcloud-audit.sh
+      - name: Préconditions du raccordement Kanidm
+        run: sh scripts/connect.sh "nix-shell -p python3 --run 'python3 -B -'" < scripts/nextcloud-sso-diagnostic.py
       - name: Contrôler une seconde connexion SSH
-        run: sh scripts/connect.sh sh -c 'readlink -f /run/current-system; systemctl is-active nginx postgresql sshd'
+        run: sh scripts/connect.sh 'readlink -f /run/current-system; systemctl is-active nginx postgresql sshd'
       - name: Effacer la clé temporaire
         if: always()
         run: rm -f -- "$RUNNER_TEMP/nextcloud-audit-admin"
