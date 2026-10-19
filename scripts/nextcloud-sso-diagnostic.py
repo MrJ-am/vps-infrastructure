@@ -35,5 +35,7 @@ result['installedGeneration']=str(pathlib.Path('/run/current-system').resolve())
 log=pathlib.Path('/root/mrjam-corrections/nextcloud-sso/095ee47d56db59347b74db4a8bd7c391bda92671/command-private.log')
 if log.exists():
     result['switchErrors']=[line[:700] for line in log.read_text().splitlines() if re.search(r'error|failed|not found|Traceback|Error|No such|Permission|cannot|insecure|PATH|undefined|unbound',line)][:25]
+journal=run(['journalctl','-u','nextcloud-setup.service','--since','2026-10-19 21:42:00 UTC','--no-pager','-o','cat','-n','80'])
+result['setupDiagnostic']=journal.splitlines()[-65:]
 result['returnTimers']=run(['systemctl','list-timers','--all','--no-legend','nextcloud-sso-return-*'])
 print(json.dumps(result,sort_keys=True))
