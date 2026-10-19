@@ -59,10 +59,17 @@ def prepare():
     base=D/'base.nix';base.write_bytes(P('/etc/nixos/configuration.nix').read_bytes())
     require('imports' in base.read_text() and '/root/' in base.read_text(),'Unexpected production entry')
     before=evaluate('/etc/nixos/configuration.nix')
+    pending_contacts=False
     if before['generation']!=current():
-        different=[n for n,v in before['units'].items() if not (P('/etc/systemd/system')/n).is_file() or (P('/etc/systemd/system')/n).read_text()!=v]
-        print(json.dumps({'evaluatedBase':before['generation'],'installedBase':current(),'differentUnits':different}),flush=True)
-        require(False,'Installed generation differs from evaluated base')
+        # The existing Contacts wrapper was written on Oct 17 but never activated.
+        # Reproduce the installed generation exactly; keep its source untouched.
+        require('contacts' in before['nc']['apps'],'Unknown difference from installed generation')
+        active=D/'active-base.nix'
+        appset=' '.join(k+' = '+v+';' for k,v in before['nc']['apps'].items() if k!='contacts')
+        active.write_text('{lib,...}: { imports=[./base.nix]; services.nextcloud.extraApps=lib.mkForce { '+appset+' }; }\n')
+        before=evaluate(active)
+        require(before['generation']==current(),'Pending Contacts is not the only difference; inspect again')
+        pending_contacts=True
     require(not before['errors'],'Existing Nix assertions failed')
     apps=json.loads(occ('app:list','--output=json'))
     require('user_oidc' not in apps['enabled'] and 'encryption' not in apps['enabled'],'An existing OIDC or encryption configuration requires inspection')
@@ -71,7 +78,12 @@ def prepare():
     target=json.loads((D/'payload/target.json').read_text())
     uid=target['uid'];require(any(a['uid']==uid and a['admin'] for a in accounts),'Selected existing owner missing')
     require(sorted(a['uid'] for a in accounts)==target['accounts'],'Account inventory changed')
-    config=D/'configuration.nix';config.write_text('{ ... }: { imports = [ ./base.nix ./payload/module.nix ]; }\n')
+    config=D/'configuration.nix'
+    apps_override=''
+    if pending_contacts:
+        appset=' '.join(k+' = '+v+';' for k,v in before['nc']['apps'].items())
+        apps_override=' services.nextcloud.extraApps=lib.mkForce { '+appset+' user_oidc=pkgs.nextcloud34Packages.apps.user_oidc; };'
+    config.write_text('{lib,pkgs,...}: { imports = [ ./base.nix ./payload/module.nix ];'+apps_override+' }\n')
     after=evaluate(config);require(not after['errors'],'Candidate Nix assertions failed')
     require(after['nc']['package']==before['nc']['package'],'Nextcloud version changed')
     require({k:v for k,v in after['nc']['apps'].items() if k!='user_oidc'}==before['nc']['apps'],'Existing Nextcloud apps changed')
@@ -90,7 +102,7 @@ def prepare():
     for name in ['age','curl']:run(['nix-store','-r',after[name]])
     state={'revision':REV,'base':before['generation'],'generation':built,'entrySha256':digest(base),'preparedAt':time.time(),'uid':uid,'accounts':accounts,'config':after,'protectedPids':pids()}
     (D/'prepared.json').write_text(json.dumps(state))
-    print(json.dumps({'phase':'prepared','generation':built,'base':before['generation'],'changedUnits':changes,'activated':False}))
+    print(json.dumps({'phase':'prepared','generation':built,'base':before['generation'],'changedUnits':changes,'pendingContactsPreservedWithoutActivation':pending_contacts,'activated':False}))
 
 def backup(state):
     conf=state['config'];age=P(conf['age'])/'bin/age';keygen=P(conf['age'])/'bin/age-keygen'
@@ -127,8 +139,9 @@ def provision(state):
     # Cross-check against the independently established Forgejo owner binding.
     subject=json.loads(P('/var/lib/forgejo-identity/client.json').read_text())['ownerSubject']
     with tempfile.TemporaryDirectory(dir=D) as tmp:
-        token=api.login('idm_admin',api.recuperer('idm_admin'),tmp)
-        try:data=configure(api,token,uid,subject)
+        try:
+            token=api.login('idm_admin',api.recuperer('idm_admin'),tmp)
+            data=configure(api,token,uid,subject)
         finally:api.commande('disable-account','idm_admin')
     stateDir=P('/var/lib/nextcloud-sso');stateDir.mkdir(mode=0o700,exist_ok=True)
     (stateDir/'binding.json').write_text(json.dumps({'ownerSubject':data['ownerSubject'],'nextcloudUid':uid,'client':CLIENT}))
