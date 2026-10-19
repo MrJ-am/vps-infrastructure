@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd
+import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd,hashlib,time
 import sqlite3
 from pathlib import Path
 
@@ -17,6 +17,70 @@ def inventaire_clients_mcp(actuel, historique):
     nouveaux=ids(actuel,'log_oauth_clients');anciens=ids(historique,'oauth_clients')
     return {'clients_actuels':len(nouveaux),'clients_historiques':len(anciens),
             'identifiants_communs':len(nouveaux & anciens)}
+
+def inventaire_reconnexion_mcp(chemin, maintenant):
+    """Compter les étapes OAuth sans lire jetons, cookies, sujets ou redirections."""
+    if not chemin.is_file():return {'present':False}
+    with sqlite3.connect(chemin.as_uri()+'?mode=ro',uri=True,timeout=3) as db:
+        db.execute('PRAGMA query_only=ON')
+        db.execute('BEGIN')
+        tables={r[0] for r in db.execute('SELECT name FROM sqlite_master WHERE type=\'table\'')}
+        attendues={'log_sessions','log_oauth_requests','log_oauth_codes','log_oauth_tokens'}
+        if not attendues.issubset(tables):return {'present':True,'schema_complet':False}
+        sessions={}
+        for hote in ('vision.mrj.am','audition.mrj.am'):
+            row=db.execute('SELECT count(*),coalesce(sum(expires>?),0),max(seen) FROM log_sessions WHERE host=?',
+                           (maintenant,hote)).fetchone()
+            sessions[hote]={'total':row[0],'non_expirees':row[1],
+                            'derniere_lecture_minute':row[2]//60 if row[2] is not None else None}
+        out={'present':True,'schema_complet':True,'sessions':sessions}
+        for nom,table in (('demandes','log_oauth_requests'),('codes','log_oauth_codes')):
+            row=db.execute('SELECT count(*),coalesce(sum(r.expires>?),0),'
+                'coalesce(sum(s.digest IS NULL OR s.expires<=?),0),max(r.expires) FROM '+table+
+                ' r LEFT JOIN log_sessions s ON s.digest=r.session',(maintenant,maintenant)).fetchone()
+            out[nom]={'total':row[0],'non_expires':row[1],'session_absente_ou_expiree':row[2],
+                      'derniere_expiration_minute':row[3]//60 if row[3] is not None else None}
+        out['jetons']=[]
+        for kind in ('access','refresh'):
+            row=db.execute('SELECT count(*),coalesce(sum(t.revoked IS NULL AND t.expires>?),0),'
+                'coalesce(sum(t.revoked IS NOT NULL),0),'
+                'coalesce(sum(s.digest IS NULL OR s.expires<=?),0),max(t.expires) '
+                'FROM log_oauth_tokens t LEFT JOIN log_sessions s ON s.digest=t.session WHERE t.kind=?',
+                (maintenant,maintenant,kind)).fetchone()
+            out['jetons'].append({'type':kind,'total':row[0],'non_expires_non_revoques':row[1],
+                'revoques':row[2],'session_absente_ou_expiree':row[3],
+                'derniere_expiration_minute':row[4]//60 if row[4] is not None else None})
+        return out
+
+def configuration_mcp_actuelle():
+    """Comparer le code exécuté et les seules routes/configurations publiques MCP."""
+    expr='''let e=import <nixpkgs/nixos/lib/eval-config.nix> { modules=[ /etc/nixos/configuration.nix ]; };
+      c=e.config; v=c.services.nginx.virtualHosts."vision.mrj.am".locations; in {
+        generation=toString c.system.build.toplevel;
+        paquet=toString c.infrastructure.metier.paquet;
+        mcp=v."= /mcp".extraConfig;
+        refus=v."@vision-mcp-authentication-required".extraConfig;
+        verifier=v."= /_vision_mcp_token".proxyPass;
+        adresse=c.systemd.services.mrjam-metier.environment.VISION_PUBLIC_MCP_URL or "";
+      }'''
+    r=subprocess.run(['nix-instantiate','-I','nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos',
+        '--eval','--strict','--json','--expr',expr],capture_output=True,text=True,timeout=90)
+    out={'evaluation_reussie':r.returncode==0}
+    if r.returncode:return out
+    d=json.loads(r.stdout)
+    pid=subprocess.run(['systemctl','show','mrjam-metier','-p','MainPID','--value'],
+        check=True,capture_output=True,text=True,timeout=10).stdout.strip()
+    if not re.fullmatch('[1-9][0-9]*',pid):return dict(out,processus_present=False)
+    image=Path('/proc')/pid/'exe';candidat=Path(d['paquet'])/'bin/mrjam-metier'
+    def empreinte(p):
+        with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
+    out.update(generation_configuree=d['generation'],code_actif_sha256=empreinte(image),
+        code_configure_sha256=empreinte(candidat),
+        controle_mcp_commun='auth_request /_vision_mcp_token;' in d['mcp'],
+        defi_bearer='Bearer ' in d['refus'],defi_basic='Basic ' in d['refus'],
+        verification_commune=d['verifier']=='http://unix:/run/mrjam-metier/http.sock:/verify-mcp',
+        adresse_publique_configuree=d['adresse']=='https://vision.mrj.am/mcp')
+    return out
 
 def classifier(texte,ancien):
     r=ancien.erreur_nix(texte)
@@ -102,6 +166,8 @@ def main(revision):
     out['services']={}
     out['registres_clients_mcp']=inventaire_clients_mcp(
         Path('/var/lib/mrjam-metier/log/sessions.sqlite'),Path('/var/lib/mrj-auth/sessions.sqlite'))
+    out['reconnexion_mcp']=inventaire_reconnexion_mcp(Path('/var/lib/mrjam-metier/log/sessions.sqlite'),int(time.time()))
+    out['configuration_mcp']=configuration_mcp_actuelle()
     for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
         v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
         out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'
