@@ -2,7 +2,9 @@
 import hashlib,json,pathlib,subprocess
 
 def run(args):
-    return subprocess.run(args,check=True,capture_output=True,text=True,timeout=180).stdout.strip()
+    p=subprocess.run(args,capture_output=True,text=True,timeout=180)
+    if p.returncode: raise RuntimeError(p.stderr[-2500:])
+    return p.stdout.strip()
 
 expression='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; c=e.config; in {
   generation=toString c.system.build.toplevel;
