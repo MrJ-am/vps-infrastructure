@@ -96,7 +96,7 @@ server {
 '''
         out=m.resume_nginx_mcp(texte)
         self.assertEqual(out,{'/mcp':['auth_request /_vision_mcp_token;',
-            'proxy_set_header X-Mrj-User $vision_mcp_user;'],
+            'proxy_set_header X-Mrj-User $vision_mcp_user;','authorization_transmise=False'],
             '@vision-mcp-authentication-required':['defi=Bearer']})
         self.assertNotIn('prive',json.dumps(out))
 
