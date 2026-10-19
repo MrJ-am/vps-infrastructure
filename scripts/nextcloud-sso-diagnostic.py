@@ -26,4 +26,5 @@ result['accounts']={'local':int(sql('SELECT count(*) FROM oc_users')),
  'filecache':int(sql('SELECT count(*) FROM oc_filecache')),
  'shares':int(sql('SELECT count(*) FROM oc_share'))}
 result['protectedPids']={n:run(['systemctl','show',n,'-p','MainPID','--value']) for n in ['postgresql','kanidm','mrjam-metier','forgejo','sshd']}
+result['accountMetadata']=json.loads(sql("SELECT json_agg(json_build_object('uid',u.uid,'admin',EXISTS(SELECT 1 FROM oc_group_user g WHERE g.uid=u.uid AND g.gid='admin'),'lastLogin',(SELECT configvalue FROM oc_preferences p WHERE p.userid=u.uid AND p.appid='login' AND p.configkey='lastLogin'),'tokens',(SELECT count(*) FROM oc_authtoken t WHERE t.uid=u.uid))) FROM oc_users u"))
 print(json.dumps(result,sort_keys=True))
