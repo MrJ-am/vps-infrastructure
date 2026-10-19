@@ -9,7 +9,7 @@ def run(args):
 expression='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; c=e.config; in {
   generation=toString c.system.build.toplevel;
   nextcloud={package=toString c.services.nextcloud.package;php=toString c.services.nextcloud.phpPackage;apps=builtins.mapAttrs (_: a: toString a) c.services.nextcloud.extraApps;};
-  oidc={package=toString e.pkgs.nextcloud34Packages.apps.user_oidc;version=e.pkgs.nextcloud34Packages.apps.user_oidc.version;};
+  oidc={package=toString e.pkgs.nextcloud34Packages.apps.user_oidc;name=e.pkgs.nextcloud34Packages.apps.user_oidc.name;};
   kanidm=toString c.services.kanidm.package;
   postgres=toString c.services.postgresql.finalPackage;
 }'''
