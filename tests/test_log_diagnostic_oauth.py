@@ -108,4 +108,16 @@ server {
         self.assertEqual(m.resumer_http_mcp(lignes),[dict(minute='2026-10-19T20:53+00:00',
             methode='POST',statut=401,amont='-',nombre=2)])
 
+    def test_chronologie_rpc_sans_messages_libres_ni_identifiants(self):
+        def ligne(message):
+            return json.dumps({'MESSAGE':message,'__REALTIME_TIMESTAMP':'120000000',
+                'PRIVE':'identifiant-prive'})
+        out=m.resumer_rpc_mcp([ligne('mcp_trace=1234 result=parse_error'),
+            ligne('mcp_trace=1235 method=tools/call tool=tutoriel result=ok'),
+            ligne('mcp_trace=1236 method=tools/call tool=tutoriel result=ok'),
+            ligne('mcp_trace=1237 result=secret-prive'),ligne('message personnel'),
+            'null','[]','invalide'])
+        self.assertEqual(out,[dict(minute_utc=2,methode='inconnue',resultat='parse_error',nombre=1),
+            dict(minute_utc=2,methode='tools/call',resultat='ok',nombre=2)])
+
 if __name__=='__main__':unittest.main()
