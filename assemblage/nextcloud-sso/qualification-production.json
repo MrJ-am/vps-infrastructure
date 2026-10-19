@@ -12,5 +12,9 @@
   "preparationRun": 39330675057,
   "encryptedBackupRestoredInIsolation": true,
   "publicHttpChecks": 25,
-  "verifiedAt": "2026-10-19T21:53:54Z"
+  "verifiedAt": "2026-10-19T21:53:54Z",
+  "finalAuditRun": 39331330889,
+  "activeBootAndSourceAgree": true,
+  "webGateRemoved": true,
+  "existingOwnerAppTokens": 8
 }
