@@ -1,10 +1,37 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Vision — configuration MCP active, Android à confirmer, 19 octobre 2026
+
+Déploiement 39334676138 réussi, sources de promotion
+178a781317f09bd6d588d3cde3177d35c11bb435, génération active/démarrage
+vsw0jx0yv1w5rd8fv72sfbn7j2w9sv54. L'entrée Nix importe le candidat sous
+/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/.
+Il conserve la configuration Nextcloud SSO et ajoute uniquement l'adresse MCP
+au serveur métier. Même binaire SHA256 2e72ea81…, ancien correctif OAuth actif,
+29 clients conservés, huit PID protégés inchangés. Sauvegarde chiffrée restaurée
+en isolation, retour indépendant qualifié puis désarmé. Aucun ancien état SQL
+ou jeton restauré ; seul le même serveur métier redémarre.
+
+Le défaut reproduit était : adresse publique absente → NIL non encodable →
+erreur JSON-RPC id:null. À 22:26 UTC, les appels réels ChatGPT `tutoriel` et
+`lire_politique` réussissent en 1,016 s / 0,645 s. Sept tests Nix/SBCL/promotion
+passent, ainsi que 22 tests de l'assembleur, six du registre et 26 sondes HTTP/TLS.
+Le registre de sondes exige désormais `/mcp-config.json` et ses adresses exactes.
+Diagnostic final 39335040321 : actif/démarrage/configuration identiques, aucun
+service en échec, renouvellement de jeton constaté et deux appels MCP réussis.
+
+La boucle de consentement Android demeure à confirmer : un nouvel essai après
+bascule a été demandé. Ne pas déduire sa résolution du seul succès dans ce fil.
+Voir docs/MCP-RECONNEXION.md et assemblage/vision-mcp-configuration/README.md,
+qualification-locale.json et qualification-production.json. La référence active
+est cohérente ; l'ancien blocage Nextcloud Contacts n'est plus une précondition
+manquante. Préserver les changements Nextcloud ci-dessous.
+
 ## Nextcloud — connexion Log active, 19 octobre 2026
 
 Déploiement 39330935764 réussi, sources SSO
-1cfa76edd667dd2cb54228919c329b72b6c49462, génération active/démarrage
-84sxk2qrbvrbvk06kg1w5k6mzp3mj02y. Le compte existant MrJam est explicitement
+1cfa76edd667dd2cb54228919c329b72b6c49462, génération lors de cette activation
+84sxk2qrbvrbvk06kg1w5k6mzp3mj02y (remplacée depuis par la correction Vision ci-dessus). Le compte existant MrJam est explicitement
 rattaché au propriétaire Kanidm via OIDC ; aucun nouveau compte ni association
 par mail. Connexion Web locale et mot de passe ordinaire DAV refusés ; jetons
 applicatifs conservés. 25 sondes HTTP/TLS réussies, redirection Log/PKCE vérifiée,
@@ -12,31 +39,11 @@ invariants comptes/fichiers/partages/carnets/calendriers et PID protégés incha
 Sauvegardes chiffrées restaurées en isolation avant activation, retour indépendant
 qualifié puis désarmé. Connexion personnelle de production non effectuée.
 
-L'entrée /etc/nixos/configuration.nix importe désormais le candidat sous
+La configuration Vision conserve l'import du candidat Nextcloud sous
 /root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/.
 La source Contacts du 17 octobre est conservée mais exclue du candidat : elle
-n'était pas activée. La divergence actif/source signalée ci-dessous est ainsi
-résolue pour cette nouvelle référence ; constater celle-ci avant toute autre
-promotion. Voir assemblage/nextcloud-sso/README.md et qualification-production.json.
-
-## Vision — reconnexion Android à confirmer, 19 octobre 2026
-
-Ancien correctif OAuth toujours actif, même SHA256 `2e72ea81…`, 29 clients
-conservés et jetons nouveaux émis à l'heure de la vidéo. Un appel réel
-`lire_politique` via ChatGPT réussit à 21:18 UTC. Le tutoriel échoue à 21:14 :
-reproduction locale de `VISION_PUBLIC_MCP_URL` absent → résultat contenant NIL →
-erreur JSON-RPC avec id:null. Correctif source `c3adad9` et test utilisant
-l'environnement Nix réel : ancien module refusé, module corrigé passant.
-Pas de modification du protocole OAuth ni de déploiement du correctif.
-
-Précondition non satisfaite : actif `lddfg6bb`, démarrage/configuration `jzvmg8sf`,
-sept unités différentes dont Nginx ; entrée issue de Nextcloud Contacts du
-17 octobre. Préserver cette opération et ses services ; rétablir une référence
-constatée avant promotion, sans retour aveugle ni assouplissement des gardes.
-Lecture des réglages dans une nouvelle conversation texte Android demandée,
-résultat non reçu. Ne pas déclarer la boucle mobile corrigée ni attribuer sa
-cause au tutoriel sans cette preuve. Voir docs/MCP-RECONNEXION.md, diagnostic
-39327919219 et operations/mcp-reconnexion-diagnostic-20261019.json.
+n'était pas activée. La divergence actif/source historique est résolue ; constater la
+référence Vision actuelle ci-dessus avant toute autre promotion. Voir assemblage/nextcloud-sso/README.md et qualification-production.json.
 
 ## Forgejo — liens Org corrigés, 16 octobre 2026
 

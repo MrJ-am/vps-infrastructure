@@ -1225,3 +1225,18 @@ différentes dont Nginx, entrée Nextcloud Contacts du 17 octobre. Conserver ces
 changements ; ne pas réutiliser la promotion du 14 ni forcer la référence.
 Boucle mobile encore non attribuée ; essai dans une nouvelle conversation texte
 Android demandé et sans réponse à ce stade. Guide et preuve datée mis à jour.
+
+## 19 octobre 2026 — configuration MCP Vision mise en service après Nextcloud
+
+Référence Nextcloud SSO 84sxk2qr constatée cohérente par le diagnostic 39332607246.
+Sources 178a781, préparation 39334439095, activation 39334676138 : seule l'unité du
+serveur métier change, pour VISION_PUBLIC_MCP_URL. Génération vsw0jx0y, même SHA256
+2e72ea81…, 29 clients OAuth conservés, huit PID protégés inchangés. Backups chiffrés
+PG/SQLite restaurés en isolation ; retour indépendant qualifié puis désarmé.
+La tentative 39333929870 s'était arrêtée avant bascule faute de PATH dans l'unité
+transitoire ; chemins d'outils/certificats transmis explicitement et requalifiés.
+Sept tests Nix/SBCL/promotion, 22 assembleur et six registre passent. Après bascule,
+tutoriel ChatGPT 1,016 s et lecture réglages 0,645 s réussis à 22:26 UTC, sans publication
+de contenu personnel. 26 sondes HTTP/TLS passent ; adresse MCP/gestion désormais
+vérifiée dans le registre courant. Le dialogue Android attend un nouvel essai ;
+aucune résolution de sa boucle n'est déduite du seul succès serveur/connecteur.
