@@ -44,7 +44,11 @@ jobs:
           MRJAM_OPERATION: ${{ inputs.operation }}
         run: python3 scripts/monolithe-operation.py
       - name: Sonder les services existants
+        if: inputs.operation != 'nextcloud-sso-deployer'
         run: python3 scripts/probe.py
+      - name: Sonder les services après raccordement Nextcloud
+        if: inputs.operation == 'nextcloud-sso-deployer'
+        run: python3 scripts/probe.py --nextcloud-sso
       - name: Conserver le paquet officiel chiffré pour la qualification locale
         if: inputs.operation == 'reconnexion-outillage'
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
