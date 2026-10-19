@@ -1,0 +1,16 @@
+{
+  "redirectToLog": true,
+  "pkceS256": true,
+  "localPasswordPostDenied": true,
+  "healthy": true,
+  "revision": "1cfa76edd667dd2cb54228919c329b72b6c49462",
+  "generation": "/nix/store/84sxk2qrbvrbvk06kg1w5k6mzp3mj02y-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "dataPreserved": true,
+  "protectedServicesUnchanged": true,
+  "personalLoginTested": false,
+  "deploymentRun": 39330935764,
+  "preparationRun": 39330675057,
+  "encryptedBackupRestoredInIsolation": true,
+  "publicHttpChecks": 25,
+  "verifiedAt": "2026-10-19T21:53:54Z"
+}

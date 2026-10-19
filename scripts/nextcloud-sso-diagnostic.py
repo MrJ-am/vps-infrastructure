@@ -1,5 +1,5 @@
 """Read-only metadata for the Nextcloud / Kanidm integration; no credentials."""
-import hashlib,json,pathlib,re,subprocess
+import hashlib,json,pathlib,subprocess
 
 def run(args):
     p=subprocess.run(args,capture_output=True,text=True,timeout=180)
@@ -30,12 +30,8 @@ result['accountMetadata']=json.loads(sql("SELECT json_agg(json_build_object('uid
 without_contacts='''let base=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix ({lib,...}: {services.nextcloud.extraApps=lib.mkForce (builtins.removeAttrs base.config.services.nextcloud.extraApps ["contacts"]);})];}; in toString e.config.system.build.toplevel'''
 result['evaluatedWithoutPendingContacts']=json.loads(run(['nix-instantiate','--eval','--strict','--json','--expr',without_contacts]))
 result['installedGeneration']=str(pathlib.Path('/run/current-system').resolve())
-# The failed command was switch-to-configuration, before client provisioning.
-# Only its fixed operator error lines are exported, never arbitrary private logs.
-log=pathlib.Path('/root/mrjam-corrections/nextcloud-sso/095ee47d56db59347b74db4a8bd7c391bda92671/command-private.log')
-if log.exists():
-    result['switchErrors']=[line[:700] for line in log.read_text().splitlines() if re.search(r'error|failed|not found|Traceback|Error|No such|Permission|cannot|insecure|PATH|undefined|unbound',line)][:25]
-journal=run(['journalctl','-u','nextcloud-setup.service','--since','2026-10-19 21:42:00 UTC','--no-pager','-o','cat','-n','80'])
-result['setupDiagnostic']=journal.splitlines()[-65:]
+result['bootGeneration']=str(pathlib.Path('/nix/var/nix/profiles/system').resolve())
+result['webGatePresent']=pathlib.Path('/run/nextcloud-sso-gate').exists()
+result['nextcloudServiceResults']={n:run(['systemctl','show',n,'-p','Result','--value']) for n in ['nextcloud-setup','phpfpm-nextcloud']}
 result['returnTimers']=run(['systemctl','list-timers','--all','--no-legend','nextcloud-sso-return-*'])
 print(json.dumps(result,sort_keys=True))

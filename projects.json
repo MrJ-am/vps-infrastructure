@@ -139,7 +139,7 @@
       },
       {
         "path": "/login",
-        "status": 200,
+        "status": 302,
         "contentType": "text/html"
       }
     ]
