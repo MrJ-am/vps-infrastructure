@@ -138,6 +138,22 @@ def journal_http_mcp():
         '--no-pager','-o','cat','-n','5000'],capture_output=True,text=True,timeout=20)
     return {'lecture_reussie':r.returncode==0,'limite':5000,'chronologie':resumer_http_mcp(r.stdout.splitlines())}
 
+def journal_rpc_mcp():
+    r=subprocess.run(['journalctl','-u','mrjam-metier','--since','90 minutes ago',
+        '--no-pager','-o','json','-n','1000'],capture_output=True,text=True,timeout=20)
+    groupes={}
+    for ligne in r.stdout.splitlines():
+        try:e=json.loads(ligne)
+        except ValueError:continue
+        message=e.get('MESSAGE','');date=e.get('__REALTIME_TIMESTAMP','')
+        if not isinstance(message,str) or not isinstance(date,str) or not re.fullmatch('[0-9]{1,18}',date):continue
+        m=re.fullmatch(r'mcp_trace=[0-9]+ (?:method=(initialize|ping|tools/list|tools/call|autre) tool=[a-z_]{1,80} result=(ok|tool_error|-?[0-9]{1,10})|result=(parse_error|invalid_request))',message)
+        if not m:continue
+        cle=(int(date)//60000000,m[1] or 'inconnue',m[2] or m[3])
+        groupes[cle]=groupes.get(cle,0)+1
+    return {'lecture_reussie':r.returncode==0,'chronologie':[
+        dict(minute_utc=k[0],methode=k[1],resultat=k[2],nombre=v) for k,v in sorted(groupes.items())]}
+
 def classifier(texte,ancien):
     r=ancien.erreur_nix(texte)
     r['attributs_absents']=[a for a in ('version','outPath','enable','paquet','text','users','services')
@@ -226,6 +242,7 @@ def main(revision):
     out['configuration_mcp']=configuration_mcp_actuelle()
     out['nginx_mcp']=nginx_mcp_execute()
     out['http_mcp']=journal_http_mcp()
+    out['rpc_mcp']=journal_rpc_mcp()
     for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
         v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
         out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'
