@@ -27,4 +27,7 @@ result['accounts']={'local':int(sql('SELECT count(*) FROM oc_users')),
  'shares':int(sql('SELECT count(*) FROM oc_share'))}
 result['protectedPids']={n:run(['systemctl','show',n,'-p','MainPID','--value']) for n in ['postgresql','kanidm','mrjam-metier','forgejo','sshd']}
 result['accountMetadata']=json.loads(sql("SELECT json_agg(json_build_object('uid',u.uid,'admin',EXISTS(SELECT 1 FROM oc_group_user g WHERE g.uid=u.uid AND g.gid='admin'),'lastLogin',(SELECT configvalue FROM oc_preferences p WHERE p.userid=u.uid AND p.appid='login' AND p.configkey='lastLogin'),'tokens',(SELECT count(*) FROM oc_authtoken t WHERE t.uid=u.uid))) FROM oc_users u"))
+without_contacts='''let base=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix];}; e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[/etc/nixos/configuration.nix ({lib,...}: {services.nextcloud.extraApps=lib.mkForce (builtins.removeAttrs base.config.services.nextcloud.extraApps ["contacts"]);})];}; in toString e.config.system.build.toplevel'''
+result['evaluatedWithoutPendingContacts']=json.loads(run(['nix-instantiate','--eval','--strict','--json','--expr',without_contacts]))
+result['installedGeneration']=str(pathlib.Path('/run/current-system').resolve())
 print(json.dumps(result,sort_keys=True))
