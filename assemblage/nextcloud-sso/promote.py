@@ -23,7 +23,7 @@ def sql(query,db='nextcloud'):
 def occ(*args):
     return run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','USER=nextcloud','HOME=/var/lib/nextcloud','nextcloud-occ',*args])
 
-def evaluate(path):
+def evaluate(path, omit_contacts=False):
     expr='''let e=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[PATH];}; c=e.config; in {
       generation=toString c.system.build.toplevel;
       errors=map (a: a.message) (builtins.filter (a: !a.assertion) c.assertions);
@@ -35,6 +35,8 @@ def evaluate(path):
       age=toString e.pkgs.age;curl=toString e.pkgs.curl;
       recipient=c.services.vision.backupRecipient;
     }'''.replace('PATH',str(path))
+    if omit_contacts:
+        expr=expr.replace('let e=import', 'let base=import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=['+str(path)+'];}; e=import', 1).replace('modules=['+str(path)+'];}; c=e.config;', 'modules=['+str(path)+' ({lib,...}: {services.nextcloud.extraApps=lib.mkForce (builtins.removeAttrs base.config.services.nextcloud.extraApps ["contacts"]);})];}; c=e.config;')
     return json.loads(run(['nix-instantiate','--eval','--strict','--json','--expr',expr],timeout=300))
 
 def pids():return {n:run(['systemctl','show',n,'-p','MainPID','--value']) for n in PROTECTED}
@@ -64,10 +66,7 @@ def prepare():
         # The existing Contacts wrapper was written on Oct 17 but never activated.
         # Reproduce the installed generation exactly; keep its source untouched.
         require('contacts' in before['nc']['apps'],'Unknown difference from installed generation')
-        active=D/'active-base.nix'
-        appset=' '.join(k+' = '+v+';' for k,v in before['nc']['apps'].items() if k!='contacts')
-        active.write_text('{lib,...}: { imports=[./base.nix]; services.nextcloud.extraApps=lib.mkForce { '+appset+' }; }\n')
-        before=evaluate(active)
+        before=evaluate('/etc/nixos/configuration.nix',omit_contacts=True)
         require(before['generation']==current(),'Pending Contacts is not the only difference; inspect again')
         pending_contacts=True
     require(not before['errors'],'Existing Nix assertions failed')
@@ -81,9 +80,8 @@ def prepare():
     config=D/'configuration.nix'
     apps_override=''
     if pending_contacts:
-        appset=' '.join(k+' = '+v+';' for k,v in before['nc']['apps'].items())
-        apps_override=' services.nextcloud.extraApps=lib.mkForce { '+appset+' user_oidc=pkgs.nextcloud34Packages.apps.user_oidc; };'
-    config.write_text('{lib,pkgs,...}: { imports = [ ./base.nix ./payload/module.nix ];'+apps_override+' }\n')
+        apps_override=' services.nextcloud.extraApps=lib.mkForce ((builtins.removeAttrs staged.services.nextcloud.extraApps ["contacts"]) // {user_oidc=pkgs.nextcloud34Packages.apps.user_oidc;});'
+    config.write_text('{lib,pkgs,...}: let staged=(import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[./base.nix];}).config; in { imports = [ ./base.nix ./payload/module.nix ];'+apps_override+' }\n')
     after=evaluate(config);require(not after['errors'],'Candidate Nix assertions failed')
     require(after['nc']['package']==before['nc']['package'],'Nextcloud version changed')
     require({k:v for k,v in after['nc']['apps'].items() if k!='user_oidc'}==before['nc']['apps'],'Existing Nextcloud apps changed')
