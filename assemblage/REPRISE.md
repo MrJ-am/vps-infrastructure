@@ -1,5 +1,24 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Vision — reconnexion Android à confirmer, 19 octobre 2026
+
+Ancien correctif OAuth toujours actif, même SHA256 `2e72ea81…`, 29 clients
+conservés et jetons nouveaux émis à l'heure de la vidéo. Un appel réel
+`lire_politique` via ChatGPT réussit à 21:18 UTC. Le tutoriel échoue à 21:14 :
+reproduction locale de `VISION_PUBLIC_MCP_URL` absent → résultat contenant NIL →
+erreur JSON-RPC avec id:null. Correctif source `c3adad9` et test utilisant
+l'environnement Nix réel : ancien module refusé, module corrigé passant.
+Pas de modification du protocole OAuth ni de déploiement du correctif.
+
+Précondition non satisfaite : actif `lddfg6bb`, démarrage/configuration `jzvmg8sf`,
+sept unités différentes dont Nginx ; entrée issue de Nextcloud Contacts du
+17 octobre. Préserver cette opération et ses services ; rétablir une référence
+constatée avant promotion, sans retour aveugle ni assouplissement des gardes.
+Lecture des réglages dans une nouvelle conversation texte Android demandée,
+résultat non reçu. Ne pas déclarer la boucle mobile corrigée ni attribuer sa
+cause au tutoriel sans cette preuve. Voir docs/MCP-RECONNEXION.md, diagnostic
+39327919219 et operations/mcp-reconnexion-diagnostic-20261019.json.
+
 ## Forgejo — liens Org corrigés, 16 octobre 2026
 
 Sources cff7b9401bb65cc93973eae68499cd0e37ad465b, génération lddfg6bb,
