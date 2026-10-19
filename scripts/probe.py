@@ -106,13 +106,15 @@ def main():
     parser.add_argument("--registry", type=Path, default=ROOT / "projects.json")
     parser.add_argument("--baseline", type=Path)
     parser.add_argument("--output", type=Path)
-    parser.add_argument("--nextcloud-sso", action="store_true")
+    login = parser.add_mutually_exclusive_group()
+    login.add_argument("--nextcloud-sso", action="store_true")
+    login.add_argument("--nextcloud-local-login", action="store_true")
     args = parser.parse_args()
     projects = load(args.registry)
-    if args.nextcloud_sso:
+    if args.nextcloud_sso or args.nextcloud_local_login:
         for probe in projects['nextcloud']['probes']:
             if probe['path'] == '/login':
-                probe['status'] = 302
+                probe['status'] = 302 if args.nextcloud_sso else 200
     results = check(projects)
     if args.baseline:
         compare(json.loads(args.baseline.read_text()), results)
