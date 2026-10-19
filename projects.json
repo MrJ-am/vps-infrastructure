@@ -71,6 +71,15 @@
         "contentType": "application/json"
       },
       {
+        "path": "/mcp-config.json",
+        "status": 200,
+        "contentType": "application/json",
+        "json": {
+          "url_mcp": "https://vision.mrj.am/mcp",
+          "gestion_acces": "https://vision.mrj.am/auth/mcp"
+        }
+      },
+      {
         "path": "/mobile-live-test-openapi.json",
         "status": 200,
         "contentType": "application/json"
