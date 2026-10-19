@@ -1,5 +1,5 @@
 """Sondes Log fermées : phases, erreurs classées et empreintes, aucune valeur privée."""
-import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd,hashlib,time,shlex
+import importlib.util,json,os,re,sys,subprocess,ast,shutil,pwd,hashlib,time
 import sqlite3
 from pathlib import Path
 
@@ -115,6 +115,26 @@ def nginx_mcp_execute():
             'configuration_sha256':hashlib.sha256(conf.read_bytes()).hexdigest(),
             'routes':resume_nginx_mcp(r.stdout) if r.returncode==0 else {}}
 
+def resumer_http_mcp(lignes):
+    """Chronologie par minute/statut, sans IP, identifiant ni texte libre."""
+    groupes={}
+    for ligne in lignes:
+        try:e=json.loads(ligne)
+        except (ValueError,TypeError):continue
+        if not isinstance(e,dict) or e.get('site')!='vision.mrj.am' or e.get('route')!='mcp':continue
+        date=e.get('date','');methode=e.get('methode');statut=e.get('statut');amont=e.get('amont','')
+        if not isinstance(date,str) or not re.fullmatch(r'\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:Z|[+-]\d\d:\d\d)',date):continue
+        if methode not in ('GET','POST','HEAD','OPTIONS') or type(statut)!=int or not 100<=statut<=599:continue
+        if not isinstance(amont,str) or not re.fullmatch(r'(?:-|[1-5][0-9]{2})(?:, (?:-|[1-5][0-9]{2})){0,5}',amont):amont='inconnu'
+        cle=(date[:16]+date[19:],methode,statut,amont)
+        groupes[cle]=groupes.get(cle,0)+1
+    return [dict(minute=k[0],methode=k[1],statut=k[2],amont=k[3],nombre=v) for k,v in sorted(groupes.items())]
+
+def journal_http_mcp():
+    r=subprocess.run(['journalctl','--namespace=http','-t','http_acces','--since','90 minutes ago',
+        '--no-pager','-o','cat','-n','5000'],capture_output=True,text=True,timeout=20)
+    return {'lecture_reussie':r.returncode==0,'limite':5000,'chronologie':resumer_http_mcp(r.stdout.splitlines())}
+
 def classifier(texte,ancien):
     r=ancien.erreur_nix(texte)
     r['attributs_absents']=[a for a in ('version','outPath','enable','paquet','text','users','services')
@@ -202,6 +222,7 @@ def main(revision):
     out['reconnexion_mcp']=inventaire_reconnexion_mcp(Path('/var/lib/mrjam-metier/log/sessions.sqlite'),int(time.time()))
     out['configuration_mcp']=configuration_mcp_actuelle()
     out['nginx_mcp']=nginx_mcp_execute()
+    out['http_mcp']=journal_http_mcp()
     for nom in ('mrjam-metier','kanidm','keycloak','mrj-auth','nginx','postgresql'):
         v=subprocess.run(['systemctl','show',nom,'-p','ActiveState','--value'],capture_output=True,text=True,timeout=10).stdout.strip()
         out['services'][nom]=v if v in ('active','inactive','failed','activating','deactivating') else 'inconnu'

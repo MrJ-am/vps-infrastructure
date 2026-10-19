@@ -100,4 +100,12 @@ server {
             '@vision-mcp-authentication-required':['defi=Bearer']})
         self.assertNotIn('prive',json.dumps(out))
 
+    def test_chronologie_http_agregee_sans_ip_ni_identifiants(self):
+        e=dict(site='vision.mrj.am',route='mcp',date='2026-10-19T20:53:30+00:00',
+               methode='POST',statut=401,amont='-',ip='reseau-prive',id='identifiant-prive')
+        lignes=[json.dumps(e),json.dumps(dict(e,date='2026-10-19T20:53:50+00:00')),
+                json.dumps(dict(e,site='autre')),json.dumps(dict(e,route='auth')),json.dumps(dict(e,date='prive')),'null','invalide']
+        self.assertEqual(m.resumer_http_mcp(lignes),[dict(minute='2026-10-19T20:53+00:00',
+            methode='POST',statut=401,amont='-',nombre=2)])
+
 if __name__=='__main__':unittest.main()
