@@ -225,8 +225,8 @@ def deploy():
     before=pids();timer='nextcloud-sso-return-'+REV[:12]
     # Qualify independent execution before relying on it for the return path.
     witness=D/'return-witness';witness.unlink(missing_ok=True)
-    run(['systemd-run','--unit='+timer+'-witness','--collect','--on-active=1s',sys.executable,str(D/'payload/promote.py'),'witness',REV])
-    for _ in range(30):
+    run(['systemd-run','--unit='+timer+'-witness','--collect','--on-active=1s','--timer-property=AccuracySec=1s',sys.executable,str(D/'payload/promote.py'),'witness',REV])
+    for _ in range(75):
         if witness.exists():break
         time.sleep(.2)
     require(witness.exists(),'Independent return timer not executed')
@@ -238,7 +238,7 @@ def deploy():
         run(['systemctl','start','mrjam-sauvegarde.service'],timeout=300)
         require(run(['systemctl','show','mrjam-sauvegarde','-p','Result','--value'])=='success','Native backup failed')
         lease(state)
-        run(['systemd-run','--unit='+timer,'--on-active=10min',sys.executable,str(D/'payload/promote.py'),'retour',REV])
+        run(['systemd-run','--unit='+timer,'--on-active=10min','--timer-property=AccuracySec=1s',sys.executable,str(D/'payload/promote.py'),'retour',REV])
         # NixOS runs occ upgrade; both it and the provider command require
         # maintenance=false. The independent service gate blocks Web and cron.
         occ('maintenance:mode','--off')
