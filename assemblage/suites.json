@@ -4037,5 +4037,58 @@
       ]
     },
     "configuration": []
+  },
+  "vision-configuration-mcp": {
+    "niveau": 3,
+    "repertoire": "vps",
+    "entrees": {
+      "vps": [
+        "tests/test_vision_mcp_configuration.py",
+        "tests/log-evaluation-base.nix",
+        "modules/*.nix",
+        "apps/vision.nix",
+        "hosts/hostinger/*.nix",
+        "projects.json"
+      ],
+      "vision": [
+        "vision.asd",
+        "src/*.lisp",
+        "docs/tutoriel.json",
+        "docs/outils.json",
+        "docs/CONTRAT-SEANCE.md"
+      ]
+    },
+    "impact": [
+      "vps/modules/metier.nix",
+      "vps/tests/test_vision_mcp_configuration.py",
+      "vision/src/contenus.lisp",
+      "vision/src/mcp.lisp"
+    ],
+    "commandes": [
+      [
+        "python3",
+        "tests/test_vision_mcp_configuration.py"
+      ]
+    ],
+    "dependances": [],
+    "outils": {
+      "python": [
+        "python3",
+        "--version"
+      ],
+      "nix": [
+        "nix-instantiate",
+        "--version"
+      ],
+      "sbcl": [
+        "sbcl",
+        "--version"
+      ]
+    },
+    "configuration": [
+      "MRJAM_SOURCE_VISION",
+      "SBCL",
+      "NIX_PATH"
+    ]
   }
 }

@@ -68,6 +68,9 @@ in {
           VISION_CYCLE_DSN = "host=/run/postgresql dbname=vision user=vision_cycle options='-c statement_timeout=5000'";
           VISION_ENTRETIEN_DSN = "host=/run/postgresql dbname=vision user=vision_entretien options='-c statement_timeout=10000'";
           VISION_DOCUMENT_ROOT = cfg.documentVision;
+          # Le serveur commun remplace l'unité Vision historique, y compris
+          # son adresse publique utilisée par le tutoriel MCP et les liens.
+          VISION_PUBLIC_MCP_URL = "https://${config.services.vision.domain}/mcp";
           VISION_CURL = "${pkgs.curl}/bin/curl";
           VISION_EMBEDDINGS_URL = "http://127.0.0.1:39004/embedding";
           VISION_VERSION = "2.7.0";
