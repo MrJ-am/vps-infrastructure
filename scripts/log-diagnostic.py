@@ -98,6 +98,9 @@ def resume_nginx_mcp(texte):
                 lignes.append(l.strip())
             elif re.match(r'\s*add_header WWW-Authenticate\s',l):
                 lignes.append('defi='+('Bearer' if 'Bearer ' in l else 'Basic' if 'Basic ' in l else 'inconnu'))
+            elif re.match(r'\s*proxy_set_header Authorization\s',l):
+                lignes.append('authorization_transmise='+str(bool(re.fullmatch(
+                    r'\s*proxy_set_header Authorization\s+\$http_authorization;\s*',l))))
         out[bloc['chemin']]=lignes
     return out
 
