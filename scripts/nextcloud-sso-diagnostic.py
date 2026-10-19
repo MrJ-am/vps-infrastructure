@@ -19,8 +19,8 @@ def sql(query):
 result={'configuration':json.loads(run(['nix-instantiate','--eval','--strict','--json','--expr',expression])),
  'entrySha256':hashlib.sha256(pathlib.Path('/etc/nixos/configuration.nix').read_bytes()).hexdigest(),
  'entry':pathlib.Path('/etc/nixos/configuration.nix').read_text(),
- 'status':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','nextcloud-occ','status','--output=json'])),
- 'apps':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','nextcloud-occ','app:list','--output=json']))}
+ 'status':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','USER=nextcloud','HOME=/var/lib/nextcloud','nextcloud-occ','status','--output=json'])),
+ 'apps':json.loads(run(['runuser','-u','nextcloud','--','env','-i','PATH=/run/current-system/sw/bin','USER=nextcloud','HOME=/var/lib/nextcloud','nextcloud-occ','app:list','--output=json']))}
 result['accounts']={'local':int(sql('SELECT count(*) FROM oc_users')),
  'admins':int(sql("SELECT count(*) FROM oc_group_user WHERE gid='admin'")),
  'filecache':int(sql('SELECT count(*) FROM oc_filecache')),
