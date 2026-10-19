@@ -4051,7 +4051,15 @@
         "apps/*.nix",
         "vendor/**/*.nix",
         "databases.json",
-        "assemblage/manifest.json"
+        "assemblage/manifest.json",
+        "tests/test_vision_mcp_promotion.py",
+        "assemblage/vision-mcp-configuration/*.nix",
+        "assemblage/vision-mcp-configuration/promote.py",
+        "assemblage/vision-mcp-configuration/target.json",
+        "scripts/vision-mcp-configuration-operation.py",
+        "scripts/monolithe-sauvegarde.py",
+        "scripts/monolithe-operation.py",
+        ".github/workflows/monolithe-deploiement.yml"
       ],
       "vision": [
         "vision.asd",
@@ -4065,12 +4073,19 @@
       "vps/modules/metier.nix",
       "vps/tests/test_vision_mcp_configuration.py",
       "vision/src/contenus.lisp",
-      "vision/src/mcp.lisp"
+      "vision/src/mcp.lisp",
+      "vps/assemblage/vision-mcp-configuration/*",
+      "vps/scripts/vision-mcp-configuration-operation.py",
+      "vps/tests/test_vision_mcp_promotion.py"
     ],
     "commandes": [
       [
         "python3",
         "tests/test_vision_mcp_configuration.py"
+      ],
+      [
+        "python3",
+        "tests/test_vision_mcp_promotion.py"
       ]
     ],
     "dependances": [],
