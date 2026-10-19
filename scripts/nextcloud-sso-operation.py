@@ -24,5 +24,7 @@ def main():
     command='python3 -B '+remote+'/payload/promote.py '+phase+' '+rev
     # Strip nix-shell development variables when operating the installed PHP CLI.
     subprocess.run(['sh',str(ROOT/'scripts/connect.sh'),'nix-shell -p python3 --run '+shlex.quote(command)],check=True)
+    if phase=='retour':
+        subprocess.run(['sh',str(ROOT/'scripts/connect.sh'),'systemctl stop nextcloud-sso-return-'+rev[:12]+'.timer'],check=True)
 
 if __name__=='__main__':main()
