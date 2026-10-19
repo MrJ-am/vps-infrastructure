@@ -4046,9 +4046,12 @@
         "tests/test_vision_mcp_configuration.py",
         "tests/log-evaluation-base.nix",
         "modules/*.nix",
-        "apps/vision.nix",
         "hosts/hostinger/*.nix",
-        "projects.json"
+        "projects.json",
+        "apps/*.nix",
+        "vendor/**/*.nix",
+        "databases.json",
+        "assemblage/manifest.json"
       ],
       "vision": [
         "vision.asd",

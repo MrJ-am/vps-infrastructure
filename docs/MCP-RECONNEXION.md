@@ -1,5 +1,50 @@
 # Reconnexion Vision depuis ChatGPT
 
+## Constat du 19 octobre 2026 — incident encore ouvert
+
+La vidéo Android montre le consentement Vision puis le retour à la fenêtre
+« Reconnecter Vision ». Le correctif du 14 octobre est toujours exécuté : le
+binaire actif possède la même empreinte SHA256, et les 29 clients historiques
+sont conservés. À l'heure de la vidéo, les codes ont été échangés contre de
+nouveaux jetons ; aucune demande ni aucun code ne reste en attente. Cela ne
+prouve pas que l'application mobile a repris l'appel avec ces nouveaux jetons.
+
+Deux appels réels en lecture seule depuis le connecteur ChatGPT distinguent les
+étapes : `tutoriel` dépasse le délai à 21:14 UTC, tandis que `lire_politique`
+réussit à 21:18 UTC. Les traces montrent une erreur JSON-RPC `parse_error` pour
+le premier, et `tools/call result=ok` pour le second, après authentification
+HTTP réussie dans les deux cas. Aucun contenu métier n'est publié dans les
+diagnostics ; seuls des comptes, statuts, minutes et empreintes sont conservés.
+
+Une cause du délai est reproduite localement avec Vision `a3cb6be` et SBCL 2.6.4 :
+le serveur commun ne définit pas `VISION_PUBLIC_MCP_URL`. Le tutoriel essaie
+d'encoder `NIL` dans son résultat ; la gestion d'erreur renvoie alors
+`-32700 / id:null` malgré une requête valide avec un identifiant. Avec l'adresse
+configurée, le même appel réussit et conserve son identifiant. Cette reproduction
+explique l'échec du tutoriel ; son lien avec la boucle de la vidéo reste à établir.
+
+Le correctif source `c3adad9` transmet l'adresse publique depuis la configuration
+Nix au serveur commun. La suite `vision-configuration-mcp` évalue ce véritable
+environnement puis exécute le tutoriel dans une image SBCL propre, sans base ni
+contenu de production. Elle échoue sur l'ancien module et passe sur le correctif.
+Les 7 tests de confidentialité/agrégation du diagnostic, les 22 tests de
+l'assembleur et les 4 tests de sélection d'impact passent également.
+
+**Le correctif de configuration n'est pas déployé.** Le
+[diagnostic 39327919219](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39327919219)
+constate une génération active `lddfg6bb` et une génération enregistrée `jzvmg8sf`,
+avec sept unités différentes, dont Nginx. L'entrée enregistrée importe la
+configuration Nextcloud Contacts du 17 octobre. Les préconditions existantes de
+sauvegarde et de promotion exigent une référence cohérente ; ne pas effacer cet
+écart, rejouer l'ancienne promotion ou activer ces autres changements avec le
+correctif Vision. Aucun déploiement, aucune réinitialisation de jeton ou de compte,
+ni aucune écriture de contenu métier n’a été effectué ici.
+
+La vérification Android demandée reste en attente : fermer le dialogue, ouvrir
+une nouvelle conversation texte avec Vision et demander la lecture des réglages.
+Une lecture réussie dans ce fil ne prouve pas la reprise du dialogue mobile.
+Preuve synthétique : `operations/mcp-reconnexion-diagnostic-20261019.json`.
+
 ## Incident du 14 octobre 2026
 
 Depuis une conversation audio ChatGPT, le bouton « Se reconnecter » ouvre son

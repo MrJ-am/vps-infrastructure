@@ -1206,3 +1206,22 @@ quatre rendus réels API/assainissement et six destinations privées existantes,
 GitHTTPS/SSH passent ; HEADdac6004 inchangé, compte Kanidm MrJam conservé, jeton
 et clé temporaires supprimés. Aucun loginMFA personnel prétendu. Documents et
 preuves dédiés ajoutés ; qualification ne remplace plus les fichiers existants.
+
+## 19 octobre 2026 — diagnostic de reconnexion Vision et tutoriel
+
+Vidéo Android : consentement puis retour au dialogue de reconnexion ChatGPT.
+Correctif OAuth du 14 toujours actif, empreinte identique, 29 clients conservés,
+nouveaux jetons émis. Sondes réelles du connecteur : tutoriel en délai dépassé
+à 21:14 UTC, lecture des réglages réussie à 21:18. Diagnostic central enrichi
+sans secrets : agrégats SQLite en lecture seule, routes Nginx filtrées, traces
+HTTP/JSON-RPC par minute. Reproduction locale avec SBCL2.6.4/Visiona3cb6be :
+adresse publique absente → NIL non encodable → erreur JSON-RPC id:null.
+Correctif source c3adad9 dans l'environnement du serveur commun ; test utilisant
+l'évaluation Nix réelle, échec sur l'ancien module et succès après correction.
+7 tests du diagnostic, 22 de l'assembleur et 4 de sélection passent également.
+Aucun déploiement ni changement de comptes/données/tokens. Préconditions de
+promotion non satisfaites : actif lddfg6bb, démarrage jzvmg8sf, sept unités
+différentes dont Nginx, entrée Nextcloud Contacts du 17 octobre. Conserver ces
+changements ; ne pas réutiliser la promotion du 14 ni forcer la référence.
+Boucle mobile encore non attribuée ; essai dans une nouvelle conversation texte
+Android demandé et sans réponse à ce stade. Guide et preuve datée mis à jour.
