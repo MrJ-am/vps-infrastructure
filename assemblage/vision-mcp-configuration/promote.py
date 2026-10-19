@@ -77,6 +77,16 @@ def stop_if_loaded(name):
         run(['systemctl', 'stop', name])
 
 
+def systemd_command(name):
+    # Une unité transitoire ne reçoit pas le PATH du nix-shell parent.
+    # Conserver les chemins d'outils/certificats et le domicile existants,
+    # sans transmettre les credentials ni les autres variables du shell.
+    names = ('PATH', 'HOME', 'SSL_CERT_FILE', 'SSL_CERT_DIR', 'NIX_SSL_CERT_FILE')
+    require('PATH' in os.environ, 'Chemin des outils absent')
+    return ['systemd-run', '--unit='+name]+[
+        '--setenv='+key+'='+os.environ[key] for key in names if key in os.environ]
+
+
 def executable():
     pid = run(['systemctl', 'show', 'mrjam-metier', '-p', 'MainPID', '--value'])
     require(pid.isdigit() and pid != '0', 'Serveur métier arrêté')
@@ -120,7 +130,7 @@ def prepare():
         run(['nix-store', '--add-root', str(D/(name+'-root')), '--indirect', '-r', path])
     state = dict(base=target['generation'], generation=built, entrySha256=digest(base),
                  originalLink=original_link, preparedAt=time.time(), target=target)
-    lease(state); write(D/'prepared.json', state)
+    lease(state); independent_return(); write(D/'prepared.json', state)
     print(json.dumps(dict(phase='prepared', generation=built, base=state['base'],
                           changedUnits=result['changedUnits'], activated=False)), flush=True)
 
@@ -165,8 +175,8 @@ def rollback():
 def independent_return():
     marker = D/'return-witness'; marker.unlink(missing_ok=True)
     worker = TIMER+'-worker'
-    run(['systemd-run', '--unit='+worker, '--collect', '/run/current-system/sw/bin/sleep', '60'])
-    run(['systemd-run', '--unit='+TIMER+'-witness', '--collect', '--on-active=1s',
+    run(systemd_command(worker)+['--collect', '/run/current-system/sw/bin/sleep', '60'])
+    run(systemd_command(TIMER+'-witness')+['--collect', '--on-active=1s',
          '--timer-property=AccuracySec=1s', sys.executable, __file__, 'witness', REV])
     try:
         for _ in range(75):
@@ -220,7 +230,7 @@ def deploy():
     require(run(['systemctl', 'show', 'mrjam-sauvegarde', '-p', 'Result', '--value']) == 'success', 'Sauvegarde Native refusée')
     independent_return(); lease(state)
     require(pids() == before and executable() == (old_binary, old_pid), 'Service modifié avant activation')
-    run(['systemd-run', '--unit='+TIMER, '--on-active=10min', '--timer-property=AccuracySec=1s',
+    run(systemd_command(TIMER)+['--on-active=10min', '--timer-property=AccuracySec=1s',
          sys.executable, __file__, 'automatic-return', REV])
     try:
         install_entry(content=own_entry())
@@ -253,9 +263,12 @@ if __name__ == '__main__':
     try:
         if phase == 'launch':
             # Le timer peut interrompre ce groupe après disparition de la CI.
-            subprocess.run(['systemd-run', '--unit=vision-mcp-deploy-'+REV[:12], '--wait', '--pipe', '--collect',
+            subprocess.run(systemd_command('vision-mcp-deploy-'+REV[:12])+['--wait', '--pipe', '--collect',
                             sys.executable, '-B', __file__, 'deployer', REV], check=True)
         elif phase == 'witness':
+            run(['nix-instantiate', '--version'])
+            with urllib.request.urlopen('https://vision.mrj.am/.well-known/oauth-protected-resource/mcp', timeout=10) as response:
+                require(response.status == 200, 'TLS du processus indépendant indisponible')
             run(['systemctl', 'stop', TIMER+'-worker.service'])
             (D/'return-witness').write_text('ok')
         elif phase == 'diagnostic':
@@ -273,5 +286,8 @@ if __name__ == '__main__':
                      'automatic-return': rollback}[phase]()
     except Exception as e:
         # Ne jamais publier le corps d'une réponse HTTP ou les erreurs SQL/Nix.
-        print(json.dumps(dict(phase=phase, stopped=True, reason=str(e) if isinstance(e, (ValueError, RuntimeError)) else type(e).__name__)))
+        reason = str(e) if isinstance(e, (ValueError, RuntimeError)) else type(e).__name__
+        if isinstance(e, FileNotFoundError) and e.filename in ('nix-instantiate', 'systemctl', 'nix-env', 'nix-store', 'runuser'):
+            reason += ': '+e.filename
+        print(json.dumps(dict(phase=phase, stopped=True, reason=reason)))
         sys.exit(1)

@@ -1,8 +1,10 @@
 """Vraies évaluations Nix, régression SBCL et refus des bascules hors périmètre."""
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -87,6 +89,17 @@ class PromotionMcp(unittest.TestCase):
         with patch.object(promotion.subprocess, 'run', return_value=completed):
             with self.assertRaisesRegex(ValueError, 'indisponible'):
                 promotion.stop_if_loaded('temoin.service')
+
+    def test_outils_nix_disponibles_apres_isolation_environnement_systemd(self):
+        command = promotion.systemd_command('temoin')
+        settings = [arg.removeprefix('--setenv=') for arg in command if arg.startswith('--setenv=')]
+        keys = {s.split('=', 1)[0] for s in settings}
+        self.assertIn('PATH', keys)
+        self.assertLessEqual(keys, {'PATH', 'HOME', 'SSL_CERT_FILE', 'SSL_CERT_DIR', 'NIX_SSL_CERT_FILE'})
+        isolated = {'PATH': '/aucun-outil', 'HOME': os.environ['HOME']}
+        isolated.update(dict(s.split('=', 1) for s in settings))
+        subprocess.run([sys.executable, '-c', 'import shutil,subprocess; assert shutil.which("nix-instantiate"); subprocess.run(["nix-instantiate","--version"],check=True,stdout=subprocess.DEVNULL)'],
+                       env=isolated, check=True)
 
 
 if __name__ == '__main__':

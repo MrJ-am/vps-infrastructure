@@ -1,12 +1,12 @@
 {
   "format": 1,
-  "qualifiedAt": "2026-10-19T22:15:32.769696+00:00",
+  "qualifiedAt": "2026-10-19T22:21:51.384810+00:00",
   "passed": true,
   "realNixAndSbcl": true,
   "regressionBeforeRejected": true,
   "tests": {
     "mcpConfiguration": 1,
-    "promotionGuards": 5,
+    "promotionGuards": 6,
     "assembler": 22
   },
   "productionReferenceDiagnostic": 39332607246,
@@ -48,10 +48,10 @@
     "vendor/vision-embeddings/modele.nix": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032",
     "databases.json": "73f824e83ea260111a868dd3753eecb38f658662a8ea8268688669d7b4071076",
     "assemblage/manifest.json": "cea031e5797fbc4bc1a58e9d71668df5396389e9b32831b1aa941d8d8d2b16d0",
-    "tests/test_vision_mcp_promotion.py": "c54d6b2afee04b7be83e7880adf379e87954af76d9fc175b9d46aa93ae48e4b5",
+    "tests/test_vision_mcp_promotion.py": "f6549089167fae103c0d2ad6ccbfe6cd16a85b5030946546d930f6f919c13d90",
     "assemblage/vision-mcp-configuration/evaluation.nix": "2b11284cfd814de504339117928dd92356a8d4c407974f660da07196ea588d2f",
     "assemblage/vision-mcp-configuration/module.nix": "9eb42be4529af34fe6cf4f35819f5565fcd64fcc87a45769e152846ca4c5cf26",
-    "assemblage/vision-mcp-configuration/promote.py": "4ed02b3977668d92149ca2de1e43e89a72783ba982756ec00a383a8f72921710",
+    "assemblage/vision-mcp-configuration/promote.py": "dcddc6546752e849da3aaf3a45caf4eb80b58b20cd6dd782df3beca5eae53575",
     "assemblage/vision-mcp-configuration/target.json": "8e472a78f1ead23a574241a5f67536e3f098fd31a7808ad5643f1d9918d47ba7",
     "scripts/vision-mcp-configuration-operation.py": "e3ba4a9d5ec668813f463386a9283233fe7984e7e84170d5e6f7fba3356e7456",
     "scripts/monolithe-sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
@@ -101,10 +101,10 @@
         "vps/vendor/vision-embeddings/modele.nix": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032",
         "vps/databases.json": "73f824e83ea260111a868dd3753eecb38f658662a8ea8268688669d7b4071076",
         "vps/assemblage/manifest.json": "cea031e5797fbc4bc1a58e9d71668df5396389e9b32831b1aa941d8d8d2b16d0",
-        "vps/tests/test_vision_mcp_promotion.py": "c54d6b2afee04b7be83e7880adf379e87954af76d9fc175b9d46aa93ae48e4b5",
+        "vps/tests/test_vision_mcp_promotion.py": "f6549089167fae103c0d2ad6ccbfe6cd16a85b5030946546d930f6f919c13d90",
         "vps/assemblage/vision-mcp-configuration/evaluation.nix": "2b11284cfd814de504339117928dd92356a8d4c407974f660da07196ea588d2f",
         "vps/assemblage/vision-mcp-configuration/module.nix": "9eb42be4529af34fe6cf4f35819f5565fcd64fcc87a45769e152846ca4c5cf26",
-        "vps/assemblage/vision-mcp-configuration/promote.py": "4ed02b3977668d92149ca2de1e43e89a72783ba982756ec00a383a8f72921710",
+        "vps/assemblage/vision-mcp-configuration/promote.py": "dcddc6546752e849da3aaf3a45caf4eb80b58b20cd6dd782df3beca5eae53575",
         "vps/assemblage/vision-mcp-configuration/target.json": "8e472a78f1ead23a574241a5f67536e3f098fd31a7808ad5643f1d9918d47ba7",
         "vps/scripts/vision-mcp-configuration-operation.py": "e3ba4a9d5ec668813f463386a9283233fe7984e7e84170d5e6f7fba3356e7456",
         "vps/scripts/monolithe-sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
@@ -170,6 +170,6 @@
       0,
       0
     ],
-    "duree_secondes": 39.5252
+    "duree_secondes": 40.3077
   }
 }
