@@ -4,6 +4,9 @@
   "unsafeChangesRejected": true,
   "versionBoundaryCases": 13,
   "unsafeCandidateCases": 6,
+  "filterCgiEmptyEnvironment": true,
+  "filterCgiDuplicateAvoided": true,
+  "filterCgiTestAdaptationEffective": true,
   "containedChangedUnits": [
     "nextcloud-cron.service",
     "nginx.service",
@@ -22,14 +25,15 @@
   "sha256": {
     "assemblage/nextcloud-php-security/guard.nix": "00748a668a37427978d56bd00a8c0555469c0c3c6d8d0e62b96c9319c929582f",
     "assemblage/nextcloud-php-security/containment.nix": "6bb7ce1a6d5b91022a61b97d4671dcb0a1b4ae9581b7f41458051997ceaca5ce",
-    "assemblage/nextcloud-php-security/module.nix": "631641105d73d1c2119bd686cd817ad21aff2a70908d509f7c84699a2c64067b",
+    "assemblage/nextcloud-php-security/module.nix": "474bee60c40bb7f6d8c8ebd4d4a517968cc47ad1967ca02c4a7f0e4f086683e0",
+    "assemblage/nextcloud-php-security/filter-test-cgi.sh": "4a8b84376d0e2919d209edfbd825399f6edd38c12b194839eb5a7aefd80ed2b2",
     "assemblage/nextcloud-php-security/evaluation.nix": "4c75c76afcdb6a4c35f68a2f7f12039c216b4aceda5e99c982dce98ab7e40ecb",
-    "assemblage/nextcloud-php-security/target.json": "b3b5bbc434110480f40eecfe89ee435a8b8d8fe035b717daf2a01b87f55b0e7f",
+    "assemblage/nextcloud-php-security/target.json": "5af1a79c51d2e965b99b2af6dffa4770ccc9eafe650e13a85dd785d31d7d87f6",
     "assemblage/nextcloud-php-security/promote.py": "832d8386c0cbfae109cad27078deb417ad9b796902e4b53d9754ba0c7a71319b",
     "assemblage/nextcloud-php-security/fixture.nix": "16ed20950dc41815d29e5464bb30d74dbdb35ebd5ef1b9f0c358f9ac7abc493d",
     "scripts/monolithe-sauvegarde.py": "9dead597c73bf6af1b6130462dbdddc1ef4a40f0c844f02e25e391a0062a1137",
-    "scripts/nextcloud-php-security-operation.py": "4f8e49ddafb402c74b809511853e3fbb915a0b91f6110ac0442b0252a9675832",
-    "scripts/nextcloud-php-security-qualify.py": "fa290348f227424fd72591283320b671aa94aeb8833f7af995fbf167275f8c1d",
+    "scripts/nextcloud-php-security-operation.py": "fbd3c99d7cef97115c4cd8e169f8349bebf42b2863085ac9a1ea79fdd4bedb1f",
+    "scripts/nextcloud-php-security-qualify.py": "39bcf5f310f247954c336dc0005e693d5d9a33f250c92e935851179dddfe742d",
     ".github/workflows/nextcloud-php-security.yml": "c7a321ecdaf0c8c86b9f16ac6a843f7234d20db50eef2e20a775fd4c2d5fa6b0",
     "scripts/nextcloud-php-security.sh": "733bda58610f09397d4848fcaf0ad4ec9d43dbf4b32434f437272c244e202b40"
   }
