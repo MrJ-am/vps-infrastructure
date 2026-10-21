@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import subprocess
 import tempfile
+import shlex
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'assemblage/nextcloud-php-security/'
@@ -28,8 +29,30 @@ def main():
     pids = {name:'100' for name in operator.PROTECTED}
     assert operator.retained_pids(dict(pids, nginx='1'), dict(pids, nginx='2'))
     assert not operator.retained_pids(pids, dict(pids, postgresql='200'))
+    expression = '''let pkgs=import NIXPKGS {system="x86_64-linux";};
+      m=import MODULE {inherit pkgs;lib=pkgs.lib;}; p=m.services.nextcloud.phpPackage.content;
+      checked=p.withExtensions ({enabled,...}:
+        let filters=builtins.filter (x: x.extensionName=="filter") enabled; in
+        assert builtins.length filters==1;
+        assert builtins.all (x: x.doCheck && (x ? preCheck) && pkgs.lib.hasInfix "TEST_PHP_CGI_EXECUTABLE" x.preCheck) filters;
+        enabled);
+      in {package=toString checked;version=checked.version;}'''
+    expression = expression.replace('NIXPKGS',nixpkgs).replace('MODULE',str(ROOT/PREFIX/'module.nix'))
+    checked = json.loads(subprocess.check_output([nix,'--eval','--strict','--json','--expr',expression],text=True))
+    assert checked['version']=='8.4.27'
     with tempfile.TemporaryDirectory(prefix='php-security-', dir=ROOT/'.cache') as tmp:
         tmp = Path(tmp)
+        fake = tmp/'php-cgi-fake'
+        fake.write_text('#!/bin/sh\nprintf "%s\\n" "$@"\n')
+        fake.chmod(0o700)
+        wrapper = tmp/'php-cgi-with-filter'
+        wrapper.write_text('#!/bin/sh\nphp_filter_test_cgi='+shlex.quote(str(fake))+'\nphp_filter_test_module=/build/filter/modules/filter.so\n'+
+                           (ROOT/PREFIX/'filter-test-cgi.sh').read_text())
+        wrapper.chmod(0o700)
+        args = ['-n','-d','memory_limit=12M']
+        assert subprocess.check_output([str(wrapper),*args],env={},text=True).splitlines() == ['-d','extension=/build/filter/modules/filter.so',*args]
+        args = ['-n','-d','extension=/build/filter/modules/filter.so','-d','memory_limit=12M']
+        assert subprocess.check_output([str(wrapper),*args],env={},text=True).splitlines() == args
         fixture = ROOT/PREFIX/'fixture.nix'
         data = {}
         for name, modules in {
@@ -68,12 +91,14 @@ def main():
                 pass
             else:
                 raise AssertionError('An unsafe candidate was accepted')
-        files = [PREFIX+n for n in ('guard.nix','containment.nix','module.nix','evaluation.nix','target.json','promote.py','fixture.nix')]
+        files = [PREFIX+n for n in ('guard.nix','containment.nix','module.nix','filter-test-cgi.sh','evaluation.nix','target.json','promote.py','fixture.nix')]
         files += ['scripts/monolithe-sauvegarde.py','scripts/nextcloud-php-security-operation.py',
                   'scripts/nextcloud-php-security-qualify.py','.github/workflows/nextcloud-php-security.yml',
                   'scripts/nextcloud-php-security.sh']
         proof = {'passed':True,'realNixEvaluation':True,'unsafeChangesRejected':True,
                  'versionBoundaryCases':len(versions),'unsafeCandidateCases':len(cases),
+                 'filterCgiEmptyEnvironment':True,'filterCgiDuplicateAvoided':True,
+                 'filterCgiTestAdaptationEffective':True,
                  'containedChangedUnits':contained_changes,'patchedChangedUnits':patched_changes,
                  'phpVersion':data['patched']['phpVersion'],'nixpkgsRevision':'c5c4a43b0e8056328ec4529f735cabdb8f1942bb',
                  'confiance':'locale-non-attestee','sha256':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in files}}

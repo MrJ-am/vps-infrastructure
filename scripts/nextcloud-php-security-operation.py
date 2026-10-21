@@ -11,7 +11,7 @@ import tarfile
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'assemblage/nextcloud-php-security/'
-FILES = [PREFIX+n for n in ('guard.nix', 'containment.nix', 'module.nix', 'evaluation.nix', 'target.json', 'promote.py')]
+FILES = [PREFIX+n for n in ('guard.nix', 'containment.nix', 'module.nix', 'filter-test-cgi.sh', 'evaluation.nix', 'target.json', 'promote.py')]
 FILES += ['scripts/monolithe-sauvegarde.py']
 
 
