@@ -1,0 +1,73 @@
+{
+  "deja_renomme": false,
+  "uuid_et_credentials_sessions_preserves": true,
+  "ancien_nom_retire": true,
+  "nom_et_spn_natifs_modifies": true,
+  "sauvegarde_chiffree_recuperable": true,
+  "restauration_isolee": true,
+  "principal_et_processus_preserves": true,
+  "aucun_alias": true,
+  "plan_exploitation_synchronise": true,
+  "administrateur_technique_desactive": true,
+  "format": 1,
+  "run": 39626383550,
+  "revision": "24863fe8b41bfde1d5ad87d5f32c1e66196f3166",
+  "date_utc": "2026-10-21T15:32:32.436308+00:00",
+  "qualification_locale": "operations/log-identifiant-qualification.json",
+  "navigateur": [
+    {
+      "entree": "nouvel_identifiant",
+      "resultat": "passkey_demandee",
+      "appels": [
+        {
+          "action": "profil",
+          "status": 401
+        },
+        {
+          "action": "auth",
+          "status": 200
+        },
+        {
+          "action": "auth",
+          "status": 200
+        }
+      ],
+      "erreurs_js": []
+    },
+    {
+      "entree": "mail",
+      "resultat": "passkey_demandee",
+      "appels": [
+        {
+          "action": "profil",
+          "status": 401
+        },
+        {
+          "action": "auth",
+          "status": 200
+        },
+        {
+          "action": "auth",
+          "status": 200
+        }
+      ],
+      "erreurs_js": []
+    },
+    {
+      "entree": "ancien_identifiant",
+      "resultat": "refuse",
+      "appels": [
+        {
+          "action": "profil",
+          "status": 401
+        },
+        {
+          "action": "auth",
+          "status": 404
+        }
+      ],
+      "erreurs_js": []
+    }
+  ],
+  "authentification_personnelle_finale": false
+}
