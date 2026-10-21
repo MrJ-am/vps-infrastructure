@@ -7,9 +7,12 @@ printf 'BLOCKED=%s\n' "$(test -f /var/lib/nextcloud-php-security/blocked && echo
 printf 'FPM_PID=%s\n' "$(systemctl show phpfpm-nextcloud -p MainPID --value)"
 systemctl show phpfpm-nextcloud -p ExecStart -p ActiveState -p ConditionResult
 systemctl --failed --no-legend --plain --no-pager
+for unit in postgresql kanidm mrjam-metier forgejo sshd vision-embeddings nginx dbus-broker; do
+  printf 'CURRENT_PID_%s=%s\n' "$unit" "$(systemctl show "$unit" -p MainPID --value)"
+done
 for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
   test -f "$state" || continue
-  jq '{revision, baseline, contained, patched, complete, backupPresent:has("backup")}' "$state"
+  jq '{revision, baseline, contained, patched, complete, protectedPids, backupPresent:has("backup")}' "$state"
   dir=${state%/state.json}
   for log in "$dir"/*-build-private.log; do
     test -f "$log" || continue
