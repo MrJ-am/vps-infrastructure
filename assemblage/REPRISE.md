@@ -1,35 +1,35 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
-## PHP — confinement de Nextcloud et correction en cours, 21 octobre 2026
+## PHP — Nextcloud corrigé et réouvert, 21 octobre 2026
 
-Incident CVE-2026-109618 / CVE-2026-109619. Audit39684485721 : Nextcloud34.0.4
-sert PHP-FPM8.4.24 ; aucune autre unité PHP publiée identifiée. Pool et cron
-arrêtés22:13UTC (39684865733). Génération l71lkqp3h7yf4jw7km3r320672a32axb
-active ET de démarrage : réponse Nginx503 avant PHP, condition systemd persistante
-sur /var/lib/nextcloud-php-security/blocked. La génération vsw0jx0y ci-dessous
-est désormais historique et son PHP ne doit pas être réexposé.
+CVE-2026-109618/109619 corrigées : PHP-FPM8.4.24 →8.4.27 officiel, cœur et
+extensions internes issus de la même archive vérifiée. Sourcesba49a07931a20e3730b2085b2a7922330acf1979,
+run39692233609 réussi, réouverture23:18:53UTC. Génération sxxx2yw80dqzknf7zrv0ijllg97g93sk
+active ET de démarrage ; nouvelle connexion39692651522 constate le véritable
+binaire FPM4h8xvdd2 en8.4.27, HTTPS200, connexion302 et DAV anonyme401.
+Nextcloud reste34.0.4, Nixpkgs c5c4a43b0e80 ; aucune migration en attente.
 
-Sauvegarde Nextcloud chiffrée age, récupération propriétaire ET clé d'hôte
-vérifiées ; restauration dans un nouveau cluster Unix sans TCP, empreintes
-de toutes les tables identiques. Retour automatique vers le code confiné
-réellement exécuté après l'échec de construction39686911294 ; aucune ancienne
-base restaurée. Seul Nginx a redémarré pour charger le confinement ; PostgreSQL,
-Kanidm, métier, Forgejo, SSH, embeddings et D-Bus gardent leurs PID.
+Confinement dès22:13UTC (39684865733), puis génération l71lkqp3 persistante503.
+Backups age récupérables par le propriétaire ET la clé d'hôte, déchiffrement et
+restauration dans un nouveau cluster Unix sans TCP vérifiés. Empreintes de
+toutes les tables identiques avant réouverture ; aucune ancienne base restaurée.
+PostgreSQL, Kanidm, métier, Forgejo, SSH, embeddings et D-Bus gardent leurs PID.
+Nginx a redémarré pour charger puis retirer sa réponse de confinement.
 
-Correctif PHP8.4.27 officiel, archive SHA256 b2530a877c722f4b08c9e174a30cb08bac2b7e1903ee6e9e315f0aa9f5f82c24.
-Échec initial des trois nouveaux PHPT filter : leur sous-processus CGI -n
-ne charge pas le module partagé Nix. Lanceur de test corrigé sans modifier
-les PHPT ni désactiver les tests ; environnement vide et double chargement
-contrôlés localement, adaptation effective prouvée par Nix. Qualification
-locale dans assemblage/nextcloud-php-security/qualification-locale.json.
-Sources714df5ce4d246a3b77527b1893cc18c5dc5a4f1f, run39689506132 en cours :
-constater son issue avant toute répétition. Le cœur PHP déjà construit est
-réutilisé ; Nextcloud reste34.0.4, Nixpkgs c5c4a43b0e80 inchangé.
+Les nouveaux PHPT filter lancent php-cgi -n : lanceur de test adapté au module
+partagé Nix, sans modifier ou désactiver les PHPT. Build complet et extensions
+requis réussis ; qualification locale Nix/shell, environnement vide et double
+chargement vérifiés. Le vérificateur interne Nextcloud est désactivé par le
+module NixOS : intégrité native vérifiée sur208chemins du store, PHP/bibliothèques,
+cœur et applications Nextcloud inclus. Les anciens minuteurs de retour sont
+désarmés ; une reprise devenue obsolète ne ferme plus un déploiement ultérieur.
 
-Voir operations/nextcloud-php-security-production.json. Ne retirer le marqueur
-qu'après validation du binaire PHP effectif, des extensions, des données et
-des sondes HTTPS/OIDC/DAV. Le retour préserve les données actuelles et ferme
-Nextcloud ; il ne réactive jamais le PHP vulnérable en accès Web.
+Contrôle public indépendant23:20UTC : statut sain, client/callback OIDC exacts,
+PKCES256, mots de passe locaux403, DAV401 ; Vision/Log/Forge200. Accès encore200
+après l'ancienne échéance de retour23:22UTC. Reçu complet dans
+operations/nextcloud-php-security-production.json et guide docs/NEXTCLOUD.md.
+La génération l71lkqp3 est le retour fermé conservant les données actuelles ;
+ne pas exposer à nouveau les anciennes générations en PHP8.4.24.
 
 ## Log — véritable identifiant renommé, 21 octobre 2026
 

@@ -1,5 +1,39 @@
 # Nextcloud et Talk sur cloud.mrj.am
 
+## PHP corrigé le 21 octobre 2026
+
+Les failles critiques [CVE-2026-109618 et CVE-2026-109619](https://www.php.net/archive/2026.php#2026-10-21-5)
+concernaient le PHP-FPM **8.4.24** réellement utilisé par Nextcloud.
+Il est remplacé par **PHP 8.4.27**, version officielle dont l'archive et les
+sources utilisées pour les extensions ont été vérifiées. Nextcloud reste34.0.4.
+
+Accès coupé22:13UTC, confinement persistant Nginx503 et PHP/cron arrêtés pendant
+la construction, puis réouverture23:18:53UTC après validation. [Correction39692233609](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39692233609)
+réussie, sources `ba49a07931a20e3730b2085b2a7922330acf1979`.
+Génération active et de démarrage :
+`/nix/store/sxxx2yw80dqzknf7zrv0ijllg97g93sk-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+[Audit par nouvelle connexion39692651522](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39692651522)
+confirme le binaire FPM exécuté en8.4.27 et les routes HTTPS attendues.
+
+Sauvegarde Nextcloud chiffrée, récupérable par le propriétaire et l'hôte,
+décryptée et restaurée dans un cluster Unix privé sans TCP. Toutes les tables
+comparées avant réouverture, données préservées ; aucun ancien état SQL remis
+en production. Les applications et bases des autres services sont conservées.
+
+Intégrité native Nix contrôlée sur208chemins (PHP, bibliothèques, cœur et apps
+Nextcloud). Le module NixOS désactive son vérificateur interne Nextcloud au profit
+de celui du store ; ce mécanisme existant est conservé. Statut sain sans migration
+en attente, extensions requises et configuration FPM valides, redirection Log
+avec PKCES256 et callback exact, mots de passe locaux refusés403 et DAV anonyme401.
+Les sondes externes Vision/Log/Forge répondent200. Les minuteurs de retour sont
+désarmés ; le retour sécurisé reste la génération l71lkqp3 bloquant Nextcloud.
+
+Les trois nouveaux PHPT filter qui lançaient un sous-processus CGI sans leur
+module partagé ont reçu un lanceur de test adapté à Nix. Aucun test amont n'a
+été modifié ou désactivé. Preuves et empreintes :
+`assemblage/nextcloud-php-security/qualification-locale.json` et
+`operations/nextcloud-php-security-production.json`.
+
 ## Talk installé et vérifié le 30 septembre 2026 à 22:17 UTC
 
 Talk **24.0.4** (`spreed`) est installé et activé sur Nextcloud 34.0.4.

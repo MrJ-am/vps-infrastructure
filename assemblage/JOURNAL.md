@@ -1258,5 +1258,17 @@ Lanceur CGI limité à l'environnement de test, module explicitement chargé mê
 sous environnement vide ; double chargement évité. PHPT amont et contrôles Nix
 conservés. Qualification locale Nix réelle et shell réussie ; source officielle
 identique pour cœur/filter/session, empreinte vérifiée. Reprise714df5c,
-run39689506132 en cours ; vérifier l'issue et la version réellement en service
-avant de conclure ou de rejouer. Reprise et reçu de production dédiés.
+run39689506132 : build et contrôles PHP/FPM réussis, puis retour fermé sur le
+vérificateur interne Nextcloud, désactivé par le module NixOS. Contrôle adapté
+au mécanisme natif nix-store --verify-path et minuteurs obsolètes neutralisés ;
+le test de reprise vérifie qu'une configuration ultérieure ne sera pas arrêtée.
+
+Sourcesba49a07, run39692233609 réussi23:18UTC. Même artefact PHP8.4.27 qualifié,
+intégrité208chemins vérifiée, tables identiques avant ouverture, génération sxxx2yw8
+active/démarrage et ancien retour fermé l71lkqp3 conservé. Nouvelle connexion
+39692651522 : FPMréel8.4.27, HTTP200/302/401. Contrôle externe indépendant23:20 :
+statut sain, client/callback OIDC exacts/PKCES256, mots de passe locaux403,
+DAV401, Vision/Log/Forge200. Aucun ancien état de production restauré et sept
+PID applicatifs protégés inchangés. Nginx a chargé puis retiré le confinement.
+Anciens minuteurs désarmés ; accès encore200 après leur ancienne échéance23:22.
+Reçu de production et guides actualisés, aucune intervention personnelle requise.
