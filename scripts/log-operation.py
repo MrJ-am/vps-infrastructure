@@ -76,7 +76,32 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI centrale main')
     op=os.environ.get('MRJAM_OPERATION')
-    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','retrouver-identite','corriger-connexion','restaurer-clients-mcp','interface','interface-retour'),'Opération Log inconnue')
+    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','retrouver-identite','renommer-identite','corriger-connexion','restaurer-clients-mcp','interface','interface-retour'),'Opération Log inconnue')
+    if op=='renommer-identite':
+        preuve=json.loads((ROOT/'operations/log-identifiant-qualification.json').read_text())
+        stage.exiger(preuve.get('resultat')=='succes' and preuve.get('confiance')=='locale-non-attestee'
+                     and preuve.get('kanidm_version')=='1.11.2'
+                     and all(preuve.get('controles',{}).get(k) is True for k in (
+                         'nom_natif_modifie','ancien_nom_refuse','passkey_reutilisee',
+                         'session_existante_preservee','conflit_refuse','retour_cible_reel')),
+                     'Renommage non qualifié localement')
+        for nom,empreinte in preuve['sources'].items():
+            stage.exiger(hashlib.sha256((ROOT/nom).read_bytes()).hexdigest()==empreinte,
+                         'Source de renommage différente de la qualification')
+        # Lire l'entrée depuis l'événement : aucune identité dans l'environnement
+        # affiché par Actions, la ligne de commande ou les journaux SSH.
+        demande=json.loads(Path(os.environ['GITHUB_EVENT_PATH']).read_text())
+        nom=demande.get('inputs',{}).get('nouvel_identifiant','')
+        stage.exiger(isinstance(nom,str) and __import__('re').fullmatch('[A-Za-z][A-Za-z0-9_.-]{1,63}',nom),
+                     'Nouveau nom invalide')
+        rev=stage.descriptor('log')['revision_operateurs']
+        run=os.environ['GITHUB_RUN_ID']
+        stage.exiger(__import__('re').fullmatch('[0-9]{1,20}',run),'Run invalide')
+        source=('NOUVEAU_NOM='+repr(nom)+'\nNATIVE_SOURCE='+repr((ROOT/'scripts/kanidm-api-privee.py').read_text())+'\n').encode()
+        source+=(ROOT/'scripts/log-identite-renommer.py').read_bytes()
+        stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+                  ' -p python3 age curl --run '+shlex.quote('python3 -B - '+rev+' '+run),input=source)
+        return
     if op=='retrouver-identite':
         destinataire=os.environ.get('MRJAM_IDENTITE_DESTINATAIRE','')
         stage.exiger(__import__('re').fullmatch('[A-Za-z0-9+/=]{500,2048}',destinataire),
