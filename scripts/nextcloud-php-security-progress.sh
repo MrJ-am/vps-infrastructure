@@ -17,6 +17,8 @@ for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
   for log in "$dir"/*-build-private.log; do
     test -f "$log" || continue
     stat --printf='BUILD_LOG=%n SIZE=%s MODIFIED=%y\n' "$log"
+    # Uniquement le nom public du dernier paquet Nix, jamais le diagnostic brut.
+    sed -n -E "s|^building '(/nix/store/[a-z0-9]{32}-[A-Za-z0-9.+_-]+\\.drv)'\\.\\.\\.$|BUILDING=\\1|p" "$log" | tail -1
   done
 done
 ps -C nix-build,gcc,cc1,cc1plus,make,ld -o pid=,comm= || true
