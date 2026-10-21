@@ -26,7 +26,18 @@ for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
         ;;
     esac
   done
+  diagnostic="$dir/command-private.log"
+  if test -f "$diagnostic"; then
+    for marker in INVALID_HASH EXTRA_FILE MISSING_FILE SQLSTATE 'No such file' 'Permission denied' \
+      'Connection refused' 'Cannot read credential' 'not allowed' 'not found' 'signature' 'not writable'; do
+      if grep -qiF -- "$marker" "$diagnostic"; then
+        printf 'PRIVATE_DIAGNOSTIC_MARKER=%s\n' "$marker"
+      fi
+    done
+    stat --printf='PRIVATE_DIAGNOSTIC_SIZE=%s\n' "$diagnostic"
+  fi
 done
+systemctl list-timers --all --no-legend --no-pager 'nextcloud-php-return-*'
 ps -C nix-build,gcc,cc1,cc1plus,make,ld -o pid=,comm= || true
 df -Pk / | tail -1
 free -m | head -2
