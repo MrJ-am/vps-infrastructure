@@ -1240,3 +1240,23 @@ tutoriel ChatGPT 1,016 s et lecture réglages 0,645 s réussis à 22:26 UTC, san
 de contenu personnel. 26 sondes HTTP/TLS passent ; adresse MCP/gestion désormais
 vérifiée dans le registre courant. Le dialogue Android attend un nouvel essai ;
 aucune résolution de sa boucle n'est déduite du seul succès serveur/connecteur.
+
+## 21 octobre 2026 — urgence PHP et confinement Nextcloud
+
+Bulletin PHP officiel du21octobre : CVE-2026-109618/109619, RCE sans
+authentification. Audit39684485721 constate PHP-FPM8.4.24 pour Nextcloud34.0.4.
+Isolation39684865733 à22:13UTC, puis génération l71lkqp3 active/démarrage,
+blocage Nginx503 et condition systemd persistante. Sauvegardes age récupérables
+par le propriétaire et l'hôte, restauration isolée PG sans TCP et empreintes
+des tables identiques avant bascule. Nginx redémarre pour charger sa nouvelle
+configuration ; les sept autres PID protégés restent identiques.
+
+39686911294 : construction officielle PHP8.4.27, cœur réussi, échec des
+nouveaux PHPT filter lançant php-cgi -n sans le module partagé de Nix. Retour
+automatique au confinement constaté ; aucune restauration d'une ancienne base.
+Lanceur CGI limité à l'environnement de test, module explicitement chargé même
+sous environnement vide ; double chargement évité. PHPT amont et contrôles Nix
+conservés. Qualification locale Nix réelle et shell réussie ; source officielle
+identique pour cœur/filter/session, empreinte vérifiée. Reprise714df5c,
+run39689506132 en cours ; vérifier l'issue et la version réellement en service
+avant de conclure ou de rejouer. Reprise et reçu de production dédiés.

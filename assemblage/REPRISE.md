@@ -1,5 +1,36 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## PHP — confinement de Nextcloud et correction en cours, 21 octobre 2026
+
+Incident CVE-2026-109618 / CVE-2026-109619. Audit39684485721 : Nextcloud34.0.4
+sert PHP-FPM8.4.24 ; aucune autre unité PHP publiée identifiée. Pool et cron
+arrêtés22:13UTC (39684865733). Génération l71lkqp3h7yf4jw7km3r320672a32axb
+active ET de démarrage : réponse Nginx503 avant PHP, condition systemd persistante
+sur /var/lib/nextcloud-php-security/blocked. La génération vsw0jx0y ci-dessous
+est désormais historique et son PHP ne doit pas être réexposé.
+
+Sauvegarde Nextcloud chiffrée age, récupération propriétaire ET clé d'hôte
+vérifiées ; restauration dans un nouveau cluster Unix sans TCP, empreintes
+de toutes les tables identiques. Retour automatique vers le code confiné
+réellement exécuté après l'échec de construction39686911294 ; aucune ancienne
+base restaurée. Seul Nginx a redémarré pour charger le confinement ; PostgreSQL,
+Kanidm, métier, Forgejo, SSH, embeddings et D-Bus gardent leurs PID.
+
+Correctif PHP8.4.27 officiel, archive SHA256 b2530a877c722f4b08c9e174a30cb08bac2b7e1903ee6e9e315f0aa9f5f82c24.
+Échec initial des trois nouveaux PHPT filter : leur sous-processus CGI -n
+ne charge pas le module partagé Nix. Lanceur de test corrigé sans modifier
+les PHPT ni désactiver les tests ; environnement vide et double chargement
+contrôlés localement, adaptation effective prouvée par Nix. Qualification
+locale dans assemblage/nextcloud-php-security/qualification-locale.json.
+Sources714df5ce4d246a3b77527b1893cc18c5dc5a4f1f, run39689506132 en cours :
+constater son issue avant toute répétition. Le cœur PHP déjà construit est
+réutilisé ; Nextcloud reste34.0.4, Nixpkgs c5c4a43b0e80 inchangé.
+
+Voir operations/nextcloud-php-security-production.json. Ne retirer le marqueur
+qu'après validation du binaire PHP effectif, des extensions, des données et
+des sondes HTTPS/OIDC/DAV. Le retour préserve les données actuelles et ferme
+Nextcloud ; il ne réactive jamais le PHP vulnérable en accès Web.
+
 ## Log — véritable identifiant renommé, 21 octobre 2026
 
 Demande explicite du propriétaire : remplacer le nom natif généré, sans alias
