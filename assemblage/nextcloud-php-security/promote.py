@@ -22,7 +22,9 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-PROTECTED = ('postgresql', 'kanidm', 'mrjam-metier', 'forgejo', 'sshd', 'vision-embeddings', 'nginx', 'dbus-broker')
+# Nginx charge la réponse de confinement par son mécanisme NixOS de redémarrage.
+# Les autres processus, dont les applications et PostgreSQL, restent identiques.
+PROTECTED = ('postgresql', 'kanidm', 'mrjam-metier', 'forgejo', 'sshd', 'vision-embeddings', 'dbus-broker')
 BLOCK = Path('/var/lib/nextcloud-php-security/blocked')
 MINIMUM = {(8, 2): 35, (8, 3): 36, (8, 4): 27, (8, 5): 12}
 
@@ -102,6 +104,10 @@ def current():
 
 def pids():
     return {n: run(['systemctl', 'show', n, '-p', 'MainPID', '--value']) for n in PROTECTED}
+
+
+def retained_pids(before, after):
+    return all(before.get(name) == after.get(name) for name in PROTECTED)
 
 
 def evaluate(path):
@@ -301,14 +307,29 @@ def probe():
 
 def correct():
     require(not (D/'state.json').exists(), 'Inspect existing operation before repeating')
-    require(current() == TARGET['generation'] == str(Path('/nix/var/nix/profiles/system').resolve()), 'Production generation changed')
-    require(digest('/etc/nixos/configuration.nix') == TARGET['entrySha256'], 'Production source changed')
+    expected_generation = TARGET['generation']
+    expected_entry = TARGET['entrySha256']
+    source = Path('/etc/nixos/configuration.nix')
+    previous = None
+    if TARGET.get('resumeFrom'):
+        resume = TARGET['resumeFrom']
+        require(re.fullmatch('[a-f0-9]{40}', resume), 'Invalid resume revision')
+        previous_dir = D.parent/resume
+        previous = json.loads((previous_dir/'state.json').read_text())
+        require(not previous.get('complete') and previous['baseline'] == TARGET['generation'], 'Wrong previous operation')
+        require(retained_pids(previous['protectedPids'], pids()), 'An application process changed since containment')
+        expected_generation = previous['contained']
+        expected_entry = hashlib.sha256(('{ imports = [ '+str(previous_dir/'contained.nix')+' ]; }\n').encode()).hexdigest()
+        source = previous_dir/'base.nix'
+        require(digest(source) == TARGET['entrySha256'], 'Original production source differs')
+    require(current() == expected_generation == str(Path('/nix/var/nix/profiles/system').resolve()), 'Production generation changed')
+    require(digest('/etc/nixos/configuration.nix') == expected_entry, 'Production source changed')
     close_gate()
     assert_closed()
-    baseline = evaluate('/etc/nixos/configuration.nix')
-    require(not baseline['errors'] and baseline['generation'] == current(), 'Source does not reproduce installed generation')
+    (D/'base.nix').write_bytes(source.read_bytes())
+    baseline = evaluate(D/'base.nix')
+    require(not baseline['errors'] and baseline['generation'] == TARGET['generation'], 'Source does not reproduce original installed generation')
     require(baseline['phpVersion'] == TARGET['previousPhp'], 'Different PHP installation')
-    (D/'base.nix').write_bytes(Path('/etc/nixos/configuration.nix').read_bytes())
     (D/'contained.nix').write_text('{ imports = [ ./base.nix ./payload/guard.nix ./payload/containment.nix ]; }\n')
     (D/'patched.nix').write_text('{ imports = [ ./base.nix ./payload/guard.nix ./payload/module.nix ]; }\n')
     contained = evaluate(D/'contained.nix')
@@ -321,7 +342,7 @@ def correct():
     run(['nix-store', '--add-root', str(D/'python-root'), '--indirect', '-r', str(Path(sys.executable).resolve().parents[1])])
     helper = backup(state, baseline)
     run(shlex.split(contained['nginx'])+['-t'])
-    require(current() == baseline['generation'] and digest('/etc/nixos/configuration.nix') == TARGET['entrySha256'],
+    require(current() == expected_generation and digest('/etc/nixos/configuration.nix') == expected_entry,
             'Production changed before containment')
     entry(D/'contained.nix')
     switch(generation)
