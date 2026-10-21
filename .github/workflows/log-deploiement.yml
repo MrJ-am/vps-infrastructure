@@ -4,13 +4,17 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, deployer, courriel, retour, diagnostic, retrouver-identite, corriger-connexion, restaurer-clients-mcp, interface, interface-retour]
+        options: [preparer, deployer, courriel, retour, diagnostic, retrouver-identite, renommer-identite, corriger-connexion, restaurer-clients-mcp, interface, interface-retour]
         default: interface
         description: Opération fermée sur le candidat Log scellé dans main
       destinataire_identite:
         type: string
         default: ''
         description: Clé publique RSA 4096 PEM en base64 pour le relevé privé en lecture seule
+      nouvel_identifiant:
+        type: string
+        default: ''
+        description: Nouveau nom natif du compte Log existant, sans alias
 permissions:
   contents: read
 concurrency:

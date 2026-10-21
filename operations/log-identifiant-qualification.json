@@ -1,0 +1,33 @@
+{
+  "format": 1,
+  "resultat": "succes",
+  "confiance": "locale-non-attestee",
+  "production": false,
+  "kanidm_version": "1.11.2",
+  "date_utc": "2026-10-21T15:30:34.345441+00:00",
+  "image_officielle": "docker.io/kanidm/server@sha256:e45f00bd354c1fc1c06a4be484b4e87b094c431e78280f1d19e911815e63efb5",
+  "binaire_sha256": "eb870a0bde86829fb422e381ec01183f7b1d8451d32949f0fd84c66974174264",
+  "commandes": [
+    "python3 -m unittest discover -s tests -p test_log_identite_relever.py -v",
+    "KANIDM_TEST_PACKAGE=<binaire-officiel-local> python3 -m unittest discover -s tests -p test_log_identite_renommer.py -v"
+  ],
+  "controles": {
+    "nom_natif_modifie": true,
+    "ancien_nom_refuse": true,
+    "passkey_reutilisee": true,
+    "session_existante_preservee": true,
+    "conflit_refuse": true,
+    "retour_cible_reel": true
+  },
+  "sources": {
+    "scripts/log-operation.py": "a921e7fd53f2cece726a26add779bef7a1c5d43e0a1f62c304f74de353d1d9de",
+    "scripts/log-identite-renommer.py": "5d3c5b8727523dd52fe106ca49dd7a2a7aecaaf4d9241f67bdc4b33f8398065f",
+    "scripts/kanidm-api-privee.py": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+    "tests/test_log_identite_renommer.py": "3a8c561a4706a4bfca742df84a932af267954e695cd7424ff9270373b2077448",
+    ".github/workflows/log-deploiement.yml": "03f0747768578d17a5fd2e0c8ab209598e8d7fa35d808d4705c4c10212e42587"
+  },
+  "limites": [
+    "Build officiel conteneur1.11.2, distinct du build Nix1.11.2 installé ; aucune reconstruction ou qualification globale produit.",
+    "Compte et authentificateur Chromium entièrement synthétiques et isolés."
+  ]
+}

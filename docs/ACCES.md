@@ -37,3 +37,12 @@ chiffré RSA4096/OAEP-SHA256 pour la clé publique PEM/base64 fournie dans
 `destinataire_identite`. Garder la clé privée dans l'atelier ; aucun identifiant,
 mail, UUID ou authentificateur en clair dans le dépôt, les logs ou les artefacts.
 Ce relevé ne récupère aucun compte administrateur et ne modifie pas l'IdP.
+
+`renommer-identite`, avec `nouvel_identifiant`, modifie le véritable attribut
+`name` du propriétaire Kanidm et son SPN natif, sans alias. L'opérateur compare
+UUID, mail, credentials et sessions, refuse un nom occupé et retire l'ancien
+nom de connexion. Sauvegarde chiffrée récupérable et restauration isolée avant
+mutation ; retour du seul nom en cas d'échec, aucun retour d'une ancienne base.
+Le plan privé d'exploitation est synchronisé au nouveau nom. Les preuves locales
+de passkey/session/conflit/retour et leurs sources exactes sont contrôlées avant
+exécution ; le compte technique temporaire est désactivé après l'opération.
