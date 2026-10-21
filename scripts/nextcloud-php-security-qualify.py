@@ -25,6 +25,9 @@ def main():
         '8.4.27-dev': False,
     }
     assert all(operator.patched(v) is expected for v, expected in versions.items())
+    pids = {name:'100' for name in operator.PROTECTED}
+    assert operator.retained_pids(dict(pids, nginx='1'), dict(pids, nginx='2'))
+    assert not operator.retained_pids(pids, dict(pids, postgresql='200'))
     with tempfile.TemporaryDirectory(prefix='php-security-', dir=ROOT/'.cache') as tmp:
         tmp = Path(tmp)
         fixture = ROOT/PREFIX/'fixture.nix'
