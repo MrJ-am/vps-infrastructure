@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-21",
+  "status": "confinement-persistant-construction-correctif",
+  "service": "cloud.mrj.am",
+  "cves": ["CVE-2026-109618", "CVE-2026-109619"],
+  "advisory": "https://www.php.net/archive/2026.php#2026-10-21-5",
+  "before": {"php": "8.4.24", "nextcloud": "34.0.4", "sapi": "fpm-fcgi"},
+  "targetPhp": "8.4.27",
+  "auditRun": 39684485721,
+  "isolationRun": 39684865733,
+  "containmentRun": 39686157778,
+  "containmentGeneration": "/nix/store/l71lkqp3h7yf4jw7km3r320672a32axb-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "containmentBootCommitted": true,
+  "publicAccessBlocked": true,
+  "backupEncrypted": true,
+  "backupRestoredInIsolatedCluster": true,
+  "ownerAndHostRecoveryVerified": true,
+  "restoredOldProductionDatabase": false,
+  "correctionRun": 39689506132,
+  "correctionSources": "714df5ce4d246a3b77527b1893cc18c5dc5a4f1f",
+  "previousBuildFailure": {
+    "run": 39686911294,
+    "cause": "Les nouveaux PHPT filter lancent php-cgi -n sans charger le module partagé de Nix",
+    "closedReturnVerified": true,
+    "upstreamTestsRetained": true
+  },
+  "phpSourceSha256": "b2530a877c722f4b08c9e174a30cb08bac2b7e1903ee6e9e315f0aa9f5f82c24",
+  "sourceForCoreAndInternalExtensionsVerified": true,
+  "localQualification": "assemblage/nextcloud-php-security/qualification-locale.json",
+  "scope": "PHP uniquement ; version applicative Nextcloud et Nixpkgs conservés"
+}
