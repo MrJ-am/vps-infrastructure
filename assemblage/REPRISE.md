@@ -1,5 +1,25 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Log — nom et courriel vérifiés, 21 octobre 2026
+
+Incident reproduit dans Chromium : le nom du compte Forgejo saisi dans Log
+renvoie404/nomatchingentries ; l'interface le présente par le message générique
+de politique. Ce constat seul ne prouve pas une interdiction des identifiants.
+Le relevé privé39623750459, sourcesb48e101, croise le plan d'activation avec le
+rattachement actuel SQLite en lecture seule et retourne seulement nom/mail
+chiffrésRSA4096/OAEP-SHA256 pour une clé privée conservée dans l'atelier.
+Deux tests locaux vérifient chiffrement réel, déchiffrement, projection sans
+credentials, refus d'un rattachement différent et invariance de la base.
+
+Vérification réelle dans deux contextes Chromium neufs390px : identifiant natif
+depuis Log et adresse enregistrée depuis Vision/auth/connexion, deux appels
+auth200 par parcours, écran « Utiliser ma passkey », zéro erreurJS. Le mécanisme
+actuellement proposé par Kanidm est passkey ; aucune saisie de secret personnel
+ni authentification finale effectuée. Les deux modes d'identification existants
+sont acceptés ; aucun renommage, changement de politique, réenrôlement, reset de
+facteur ou redémarrage du produit. Valeurs communiquées uniquement au propriétaire,
+sans identité personnelle dans le dépôt ou les journaux publics.
+
 ## Vision — configuration MCP active, Android à confirmer, 19 octobre 2026
 
 Déploiement 39334676138 réussi, sources de promotion
