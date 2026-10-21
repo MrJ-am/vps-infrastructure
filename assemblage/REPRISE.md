@@ -1,5 +1,28 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## Log — véritable identifiant renommé, 21 octobre 2026
+
+Demande explicite du propriétaire : remplacer le nom natif généré, sans alias
+vers l'ancien compte. Run39626383550, sources24863fe, réussi15:31UTC : PATCH
+officiel de l'attribut name de la personne existante ; nom/SPN réellement
+modifiés et ancien nom absent de la recherche native. UUID, autres attributs,
+credentials, sessions natives et principal Log identiques. Plan privé actualisé
+au nouveau nom, aucun alias ajouté. Compte technique désactivé en finally,
+septPID protégés inchangés ; aucun redémarrage ou changement des applications.
+
+Avant mutation : sauvegardes Native/plan chiffrées pour les destinataires hôte
+et propriétaire, déchiffrement comparé et restauration Native isolée vérifiée.
+Retour limité au seul nom, jamais d'ancienne base sur les données actuelles.
+Qualification locale : Kanidm officiel1.11.2 conteneur à digest figé, passkey
+Chromium réellement réutilisée avant/après, session existante conservée, collision
+refusée, retour ciblé et nouveau renommage réels. Deux contrôles de relevé privé
+passants ; sources exactes vérifiées par l'opérateur avant exécution distante.
+
+Production : trois contextes Chromium neufs390px, nouveau nom et mail enregistrés
+→ deux auth200 puis demande de passkey ; ancien nom → auth404. Zéro erreurJS.
+Confirmation personnelle de passkey non effectuée par l'agent. Aucune identité
+nominative dans les preuves publiées ; reçu operations/log-identifiant-production.json.
+
 ## Log — nom et courriel vérifiés, 21 octobre 2026
 
 Incident reproduit dans Chromium : le nom du compte Forgejo saisi dans Log
