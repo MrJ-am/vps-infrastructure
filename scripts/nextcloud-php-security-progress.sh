@@ -19,6 +19,12 @@ for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
     stat --printf='BUILD_LOG=%n SIZE=%s MODIFIED=%y\n' "$log"
     # Uniquement le nom public du dernier paquet Nix, jamais le diagnostic brut.
     sed -n -E "s|^building '(/nix/store/[a-z0-9]{32}-[A-Za-z0-9.+_-]+\\.drv)'\\.\\.\\.$|BUILDING=\\1|p" "$log" | tail -1
+    case "$log" in
+      */patched-build-private.log)
+        # Diagnostics du compilateur des sources publiques PHP uniquement.
+        sed -n -E '/^error:|^> |fatal error:|Error [0-9]|hash mismatch|failed with exit/p' "$log" | tail -35
+        ;;
+    esac
   done
 done
 ps -C nix-build,gcc,cc1,cc1plus,make,ld -o pid=,comm= || true
