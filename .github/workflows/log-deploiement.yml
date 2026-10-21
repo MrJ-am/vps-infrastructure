@@ -4,9 +4,13 @@ on:
     inputs:
       operation:
         type: choice
-        options: [preparer, deployer, courriel, retour, diagnostic, corriger-connexion, restaurer-clients-mcp, interface, interface-retour]
+        options: [preparer, deployer, courriel, retour, diagnostic, retrouver-identite, corriger-connexion, restaurer-clients-mcp, interface, interface-retour]
         default: interface
         description: Opération fermée sur le candidat Log scellé dans main
+      destinataire_identite:
+        type: string
+        default: ''
+        description: Clé publique RSA 4096 PEM en base64 pour le relevé privé en lecture seule
 permissions:
   contents: read
 concurrency:
@@ -40,6 +44,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           MRJAM_OPERATION: ${{ inputs.operation }}
+          MRJAM_IDENTITE_DESTINATAIRE: ${{ inputs.destinataire_identite }}
         run: python3 scripts/log-operation.py
       - name: Effacer la clé temporaire
         if: always()

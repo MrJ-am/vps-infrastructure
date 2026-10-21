@@ -29,3 +29,11 @@ Les APIs de protections de branche, secrets et deploy keys ont répondu 403 à
 l'intégration lors de l'inventaire. Leur inspection/retrait distant éventuel
 nécessite la capacité correspondante ; ne pas prétendre les avoir nettoyées.
 Les sauvegardes, rôles, services tiers et générations de retour sont conservés.
+
+Pour retrouver le nom Log et le mail du propriétaire, l'opération fermée
+`retrouver-identite` de `log-deploiement.yml` lit les seules métadonnées du plan
+et les croise avec `log_principaux` ouvert en lecture seule. Le résultat est
+chiffré RSA4096/OAEP-SHA256 pour la clé publique PEM/base64 fournie dans
+`destinataire_identite`. Garder la clé privée dans l'atelier ; aucun identifiant,
+mail, UUID ou authentificateur en clair dans le dépôt, les logs ou les artefacts.
+Ce relevé ne récupère aucun compte administrateur et ne modifie pas l'IdP.

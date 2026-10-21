@@ -76,7 +76,16 @@ def main():
     stage.exiger(os.environ.get('GITHUB_ACTIONS')=='true' and os.environ.get('GITHUB_REF')=='refs/heads/main',
                  'Opérateur réservé à la CI centrale main')
     op=os.environ.get('MRJAM_OPERATION')
-    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','corriger-connexion','restaurer-clients-mcp','interface','interface-retour'),'Opération Log inconnue')
+    stage.exiger(op in ('preparer','deployer','courriel','retour','diagnostic','retrouver-identite','corriger-connexion','restaurer-clients-mcp','interface','interface-retour'),'Opération Log inconnue')
+    if op=='retrouver-identite':
+        destinataire=os.environ.get('MRJAM_IDENTITE_DESTINATAIRE','')
+        stage.exiger(__import__('re').fullmatch('[A-Za-z0-9+/=]{500,2048}',destinataire),
+                     'Destinataire de relevé absent ou invalide')
+        rev=stage.descriptor('log')['revision_operateurs']
+        source=('DESTINATAIRE='+repr(destinataire)+'\n').encode()+(ROOT/'scripts/log-identite-relever.py').read_bytes()
+        stage.ssh('nix-shell -I nixpkgs='+stage.manifeste()['toolchain']['production']['nixpkgs']+
+                  ' -p python3 openssl --run '+shlex.quote('python3 -B - '+rev),input=source)
+        return
     if op=='interface-retour':
         p=json.loads((ROOT/'operations/log-interface-candidat.json').read_text())
         rev=p['revision_sources']
