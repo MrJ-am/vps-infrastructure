@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 import shlex
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = 'assemblage/nextcloud-php-security/'
@@ -29,6 +30,13 @@ def main():
     pids = {name:'100' for name in operator.PROTECTED}
     assert operator.retained_pids(dict(pids, nginx='1'), dict(pids, nginx='2'))
     assert not operator.retained_pids(pids, dict(pids, postgresql='200'))
+    operator.D = Path('/test-current-operation')
+    operator.REV = 'a'*40
+    with mock.patch.object(Path,'read_text',return_value='{ imports = [ /newer/configuration.nix ]; }\n'), \
+         mock.patch.object(operator,'disarm_return'), mock.patch.object(operator,'log'), \
+         mock.patch.object(operator,'close_gate') as close:
+        assert operator.return_closed({}) is False
+        close.assert_not_called()
     expression = '''let pkgs=import NIXPKGS {system="x86_64-linux";};
       m=import MODULE {inherit pkgs;lib=pkgs.lib;}; p=m.services.nextcloud.phpPackage.content;
       checked=p.withExtensions ({enabled,...}:
@@ -99,6 +107,7 @@ def main():
                  'versionBoundaryCases':len(versions),'unsafeCandidateCases':len(cases),
                  'filterCgiEmptyEnvironment':True,'filterCgiDuplicateAvoided':True,
                  'filterCgiTestAdaptationEffective':True,
+                 'staleReturnPreservesNewDeployment':True,
                  'containedChangedUnits':contained_changes,'patchedChangedUnits':patched_changes,
                  'phpVersion':data['patched']['phpVersion'],'nixpkgsRevision':'c5c4a43b0e8056328ec4529f735cabdb8f1942bb',
                  'confiance':'locale-non-attestee','sha256':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in files}}
