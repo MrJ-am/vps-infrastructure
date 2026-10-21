@@ -5,7 +5,7 @@ on:
       operation:
         description: Opération bornée pour les CVE PHP du 21 octobre 2026
         type: choice
-        options: [audit, isolate]
+        options: [audit, isolate, correct]
         default: audit
 permissions:
   contents: read
@@ -16,7 +16,7 @@ jobs:
   securiser:
     if: github.ref == 'refs/heads/main' && github.actor == 'MrJ-am'
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 90
     environment: vps-production
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
@@ -34,9 +34,13 @@ jobs:
           ssh-keygen -y -P '' -f "$RUNNER_TEMP/nextcloud-php-security/admin" >/dev/null
           printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/nextcloud-php-security/admin" >> "$GITHUB_ENV"
       - name: Vérifier ou isoler le seul PHP de Nextcloud
+        if: inputs.operation != 'correct'
         env:
           SECURITY_OPERATION: ${{ inputs.operation }}
         run: sh scripts/connect.sh bash -s -- "$SECURITY_OPERATION" "$GITHUB_SHA" < scripts/nextcloud-php-security.sh
+      - name: Corriger PHP avec sauvegarde et retour fermé
+        if: inputs.operation == 'correct'
+        run: python3 scripts/nextcloud-php-security-operation.py
       - name: Effacer la clé temporaire
         if: always()
         run: rm -f -- "$RUNNER_TEMP/nextcloud-php-security/admin"
