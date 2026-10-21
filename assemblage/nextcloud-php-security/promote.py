@@ -185,16 +185,31 @@ def save_state(state):
     (D/'state.json').write_text(json.dumps(state))
 
 
+def owns_entry(text, directory):
+    return text in ['{ imports = [ '+str(directory/name)+' ]; }\n' for name in ('contained.nix', 'patched.nix')]
+
+
+def disarm_return(revision):
+    require(re.fullmatch('[a-f0-9]{40}', revision), 'Invalid return revision')
+    unit = 'nextcloud-php-return-'+revision[:12]+'.timer'
+    result = subprocess.run(['systemctl','show',unit,'-p','LoadState','--value'],capture_output=True,text=True)
+    if result.stdout.strip() == 'loaded':
+        run(['systemctl','stop',unit])
+
+
 def return_closed(state):
+    # Un ancien minuteur ne doit jamais arrêter une nouvelle promotion.
+    disarm_return(REV)
+    if not owns_entry(Path('/etc/nixos/configuration.nix').read_text(), D):
+        log('stale-return-skipped', foreignConfigurationPreserved=True)
+        return False
     close_gate()
-    require(Path('/etc/nixos/configuration.nix').read_text() in
-            ['{ imports = [ '+str(D/name)+' ]; }\n' for name in ('contained.nix', 'patched.nix')],
-            'Concurrent configuration prevents automatic code return; PHP kept closed')
     entry(D/'contained.nix')
     switch(state['contained'])
     persist(state['contained'])
     assert_closed(503)
     log('returned-to-persistent-containment', restoredOldDatabase=False)
+    return True
 
 
 def backup(state, conf):
@@ -276,9 +291,21 @@ def php_check(conf):
 
 def occ_status(generation):
     result = json.loads(run(['runuser', '-u', 'nextcloud', '--', 'env', '-i', 'PATH=/run/current-system/sw/bin',
-                             'USER=nextcloud', 'HOME=/var/lib/nextcloud', generation+'/sw/bin/nextcloud-occ', 'status', '--output=json']))
+                             'USER=nextcloud', 'HOME=/var/lib/nextcloud', 'nextcloud-occ', 'status', '--output=json']))
     require(result['installed'] and result['versionstring'] == '34.0.4' and
             not result['maintenance'] and not result['needsDbUpgrade'], 'Nextcloud status invalid')
+
+
+def code_integrity(conf):
+    # Le module NixOS désactive la vérification interne Nextcloud, car le store
+    # possède ses propres empreintes cryptographiques et demeure en lecture seule.
+    # Vérifier aussi toute la closure PHP et les applications empaquetées.
+    roots = [conf['nc']['package'], conf['php'], *conf['nc']['apps'].values()]
+    paths = run(['nix-store','--query','--requisites',*roots]).splitlines()
+    require(paths and all(re.fullmatch('/nix/store/[a-z0-9]{32}-[^/\n]+',p) for p in paths), 'Invalid integrity closure')
+    run(['nix-store','--verify-path',*paths], timeout=600)
+    log('nix-store-integrity-checked', verifiedPaths=len(paths), immutableCode=True)
+    return len(paths)
 
 
 def probe():
@@ -324,6 +351,8 @@ def correct():
         require(digest(source) == TARGET['entrySha256'], 'Original production source differs')
     require(current() == expected_generation == str(Path('/nix/var/nix/profiles/system').resolve()), 'Production generation changed')
     require(digest('/etc/nixos/configuration.nix') == expected_entry, 'Production source changed')
+    if previous is not None:
+        disarm_return(TARGET['resumeFrom'])
     close_gate()
     assert_closed()
     (D/'base.nix').write_bytes(source.read_bytes())
@@ -368,9 +397,10 @@ def correct():
         switch(generation)
         assert_closed()
         php_check(candidate)
+        log('nextcloud-status-check-started')
         occ_status(generation)
-        run(['runuser', '-u', 'nextcloud', '--', 'env', '-i', 'PATH=/run/current-system/sw/bin', 'USER=nextcloud',
-             'HOME=/var/lib/nextcloud', generation+'/sw/bin/nextcloud-occ', 'integrity:check-core'], timeout=300)
+        log('nextcloud-status-checked', installed=True, needsDbUpgrade=False)
+        verified_paths = code_integrity(candidate)
         require(helper.schema(lambda q: helper.sql(Path(candidate['postgres'])/'bin', '/run/postgresql', 'nextcloud', q)) == state['dbHashes'], 'Production data changed before reopening')
         require(pids() == state['protectedPids'], 'Protected services restarted')
         persist(generation)
@@ -384,12 +414,13 @@ def correct():
         require(actual.startswith('PHP 8.4.27 '), 'Running FPM version differs')
         probe()
         require(pids() == state['protectedPids'], 'Protected services changed after reopening')
-        run(['systemctl', 'stop', timer+'.timer'])
+        disarm_return(REV)
         state['complete'] = True
         save_state(state)
         log('corrected-and-reopened', generation=generation, phpVersion='8.4.27', nextcloudVersion='34.0.4',
             changedUnits=changed, protectedPidsUnchanged=True, backupRestoredInIsolation=True,
-            oidcPkce=True, anonymousDavDenied=True, localPasswordDenied=True, coreIntegrity=True,
+            oidcPkce=True, anonymousDavDenied=True, localPasswordDenied=True, nixStoreIntegrity=True,
+            integrityVerifiedPaths=verified_paths,
             bootGenerationCommitted=True, restoredOldDatabase=False)
     except BaseException:
         return_closed(state)

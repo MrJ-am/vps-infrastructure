@@ -29,7 +29,7 @@ for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
   diagnostic="$dir/command-private.log"
   if test -f "$diagnostic"; then
     for marker in INVALID_HASH EXTRA_FILE MISSING_FILE SQLSTATE 'No such file' 'Permission denied' \
-      'Connection refused' 'Cannot read credential' 'not allowed' 'not found' 'signature' 'not writable'; do
+      'Connection refused' 'Cannot read credential' 'not allowed' 'not found' 'signature' 'not writable' 'git checkouts'; do
       if grep -qiF -- "$marker" "$diagnostic"; then
         printf 'PRIVATE_DIAGNOSTIC_MARKER=%s\n' "$marker"
       fi

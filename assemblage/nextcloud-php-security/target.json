@@ -4,6 +4,6 @@
   "nixpkgs": "/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos",
   "previousPhp": "8.4.24",
   "patchedPhp": "8.4.27",
-  "resumeFrom": "f608cb058634929bdff9e94e9b0b7f0fce6a5b41",
+  "resumeFrom": "714df5ce4d246a3b77527b1893cc18c5dc5a4f1f",
   "advisory": "https://www.php.net/archive/2026.php#2026-10-21-5"
 }
