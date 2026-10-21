@@ -22,7 +22,7 @@ for state in /root/mrjam-corrections/nextcloud-php-security/*/state.json; do
     case "$log" in
       */patched-build-private.log)
         # Diagnostics du compilateur des sources publiques PHP uniquement.
-        sed -n -E '/^error:|^> |fatal error:|Error [0-9]|hash mismatch|failed with exit/p' "$log" | tail -35
+        sed -n -E '/error:|^[[:space:]]*> |Error [0-9]|hash mismatch|failed with exit|^FAIL|FAILED TEST|^Test [0-9]+/p' "$log" | tail -65
         ;;
     esac
   done
