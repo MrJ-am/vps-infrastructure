@@ -198,6 +198,16 @@ def apply():
         legacy.close_gate()
         legacy.assert_closed()
         helper = legacy.backup(state, baseline)
+        # Exercer le même exécutable indépendant que le minuteur, pendant que
+        # PHP est déjà arrêté. Le retour ne restaure aucune donnée ancienne.
+        run([sys.executable, HERE/'promote.py', 'return', legacy.REV], timeout=600)
+        require((ROOT/'returned').is_file() and legacy.current() == baseline['generation']
+                and str(Path('/nix/var/nix/profiles/system').resolve()) == baseline['generation'],
+                'Independent return not verified')
+        require(legacy.pids() == state['protectedPids'], 'Protected service restarted during return check')
+        log('independent-return-verified', restoresOldDatabase=False, closedPhp=True)
+        (ROOT/'returned').unlink()
+        legacy.entry(ROOT/'candidate.nix')
         require(owns_entry() and not (ROOT/'returned').exists(), 'Independent return already executed')
         legacy.switch(generation)
         legacy.php_check(candidate)
@@ -219,7 +229,8 @@ def apply():
         log('mitigated-and-reopened', generation=generation, phpVersion='8.4.27', nextcloudVersion='34.0.4',
             sessionUploadProgressEnabled=False, cliSessionUploadProgressEnabled=False,
             changedUnits=changes, backupRestoredInIsolation=True, protectedPidsUnchanged=True,
-            bootGenerationCommitted=True, restoredOldDatabase=False, oidcPkce=True, anonymousDavDenied=True)
+            independentReturnVerified=True, bootGenerationCommitted=True, restoredOldDatabase=False,
+            oidcPkce=True, anonymousDavDenied=True)
     except BaseException:
         restore_closed(state)
         disarm()
