@@ -1,5 +1,37 @@
 # Nextcloud et Talk sur cloud.mrj.am
 
+## Progression des uploads PHP désactivée le 23 octobre 2026
+
+La protection recommandée pour **CVE-2026-115560** est active :
+`session.upload_progress.enabled = Off` dans le php.ini FPM, le wrapper CLI/cron
+de Nextcloud et un `php_admin_flag` du pool. Le module déclaratif est aussi
+importé par `apps/nextcloud.nix` pour les prochaines constructions.
+
+L'[audit initial](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39982233248)
+a constaté le réglage encore activé dans le processus FPM réel et le CLI.
+La [correction](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39982585355)
+est réussie, sources `986f2a909ae4d54a2b76cc532be2191d177ede87`.
+À 15:59:59 UTC, une requête FastCGI sur le socket Unix a confirmé le réglage
+désactivé dans le processus qui sert réellement Nextcloud ; le CLI est aussi
+protégé. PHP reste **8.4.27**, Nextcloud **34.0.4**, sans migration en attente.
+L'[audit par nouvelle connexion](https://github.com/MrJ-am/vps-infrastructure/actions/runs/39983199292)
+confirme à 16:01:42 UTC les protections effectives, déclaratives et de démarrage.
+
+Génération active et de démarrage :
+`/nix/store/hbcmvlnc9mvkpvd8lcz4f95m03l96vcp-nixos-system-nixos-26.05.8639.c5c4a43b0e80`.
+Sauvegarde chiffrée récupérable par l'hôte et le propriétaire, restauration
+isolée et comparaison des tables avant réouverture réussies. Retour indépendant
+exercé en processus neuf et minuteur désarmé après succès. Les données actuelles
+sont conservées ; aucun ancien état SQL restauré en production.
+
+Intégrité Nix vérifiée sur 208 chemins. Les PID de Nginx, PostgreSQL, Kanidm,
+métier, Forgejo, SSH, embeddings et D-Bus sont inchangés. Les contrôles
+OIDC/PKCE, refus des mots de passe locaux et DAV anonyme ont réussi. Les sondes
+externes Nextcloud, Vision, Log et Forgejo répondent 200 après réouverture.
+Preuves : `operations/php-upload-progress-production.json` et
+`assemblage/php-upload-progress/qualification-locale.json`.
+Le réglage reste désactivé en attendant le correctif PHP de cette nouvelle faille.
+
 ## PHP corrigé le 21 octobre 2026
 
 Les failles critiques [CVE-2026-109618 et CVE-2026-109619](https://www.php.net/archive/2026.php#2026-10-21-5)

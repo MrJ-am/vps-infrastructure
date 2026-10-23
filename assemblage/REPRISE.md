@@ -1,5 +1,25 @@
 # Reprise — mission et amendement du 11 octobre 2026
 
+## PHP — progression des uploads désactivée, 23 octobre 2026
+
+Protection CVE-2026-115560 appliquée via la CI centrale, sources
+986f2a909ae4d54a2b76cc532be2191d177ede87, run39982585355 réussi.
+L'audit39982233248 avait constaté le réglage activé. À15:59:59UTC,
+le FPM réel et le CLI Nextcloud le constatent désactivé. php.ini FPM global,
+wrapper CLI/cron et php_admin_flag du pool ; import durable dans apps/nextcloud.nix.
+PHP8.4.27 et Nextcloud34.0.4 conservés, aucun autre pool ni Apache déclaré.
+Génération hbcmvlnc9mvkpvd8lcz4f95m03l96vcp active ET de démarrage.
+
+Sauvegarde chiffrée récupérable par l'hôte/propriétaire et restauration isolée
+réussies, tables identiques avant réouverture. Retour indépendant réellement
+exercé en processus neuf ; aucun ancien état SQL restauré. Intégrité Nix208chemins,
+PID des huit services protégés inchangés, OIDC/PKCE et refus DAV/mots de passe
+locaux conservés. Nextcloud rouvert16:00UTC, sondes publiques Nextcloud/Vision/
+Log/Forge200. Module et qualification locale dans assemblage/php-upload-progress,
+preuve dans operations/php-upload-progress-production.json, guide docs/NEXTCLOUD.md.
+Nouvelle connexion39983199292 réussie16:01:42UTC : génération active/démarrage
+identique, FPM/CLI désactivés, déclaration et php_admin_flag confirmés.
+
 ## PHP — Nextcloud corrigé et réouvert, 21 octobre 2026
 
 CVE-2026-109618/109619 corrigées : PHP-FPM8.4.24 →8.4.27 officiel, cœur et
