@@ -14,6 +14,8 @@ let
     };
   });
 in {
+  imports = [ ../assemblage/php-upload-progress/module.nix ];
+
   assertions = [
     {
       assertion =
