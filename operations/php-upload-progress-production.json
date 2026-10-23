@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-23",
+  "sourceCommit": "986f2a909ae4d54a2b76cc532be2191d177ede87",
+  "advisory": "https://www.php.net/archive/2026.php#2026-10-23-1",
+  "auditBefore": {
+    "run": 39982233248,
+    "sessionUploadProgressEnabled": true
+  },
+  "apply": {
+    "run": 39982585355,
+    "conclusion": "success",
+    "at": "2026-10-23T16:00:00.7126454Z",
+    "phase": "mitigated-and-reopened",
+    "generation": "/nix/store/hbcmvlnc9mvkpvd8lcz4f95m03l96vcp-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "phpVersion": "8.4.27",
+    "nextcloudVersion": "34.0.4",
+    "sessionUploadProgressEnabled": false,
+    "cliSessionUploadProgressEnabled": false,
+    "changedUnits": [
+      "nextcloud-backup.service",
+      "nextcloud-cron.service",
+      "nextcloud-setup.service",
+      "nextcloud-update-db.service",
+      "phpfpm-nextcloud.service"
+    ],
+    "backupRestoredInIsolation": true,
+    "protectedPidsUnchanged": true,
+    "independentReturnVerified": true,
+    "bootGenerationCommitted": true,
+    "restoredOldDatabase": false,
+    "oidcPkce": true,
+    "anonymousDavDenied": true
+  },
+  "events": [
+    {
+      "at": "2026-10-23T15:57:19.7920859Z",
+      "phase": "serving-php-observed",
+      "phpVersion": "8.4.27",
+      "sapi": "fpm-fcgi",
+      "sessionUploadProgressEnabled": true,
+      "cliSessionUploadProgressEnabled": true,
+      "poolCount": 1
+    },
+    {
+      "at": "2026-10-23T15:57:41.9841591Z",
+      "phase": "build-started",
+      "artifact": "mitigated"
+    },
+    {
+      "at": "2026-10-23T15:58:31.0511756Z",
+      "phase": "build-complete",
+      "artifact": "mitigated",
+      "generation": "/nix/store/hbcmvlnc9mvkpvd8lcz4f95m03l96vcp-nixos-system-nixos-26.05.8639.c5c4a43b0e80"
+    },
+    {
+      "at": "2026-10-23T15:59:18.4677720Z",
+      "phase": "nix-store-integrity-checked",
+      "verifiedPaths": 208,
+      "immutableCode": true
+    },
+    {
+      "at": "2026-10-23T15:59:34.6869276Z",
+      "phase": "backup-restored-in-isolation",
+      "encrypted": true,
+      "ownerAndHostRecoveryVerified": true,
+      "productionDatabaseRestored": false
+    },
+    {
+      "at": "2026-10-23T15:59:47.6594415Z",
+      "phase": "independent-return-verified",
+      "restoresOldDatabase": false,
+      "closedPhp": true
+    },
+    {
+      "at": "2026-10-23T15:59:59.5672997Z",
+      "phase": "serving-php-observed",
+      "phpVersion": "8.4.27",
+      "sapi": "fpm-fcgi",
+      "sessionUploadProgressEnabled": false,
+      "cliSessionUploadProgressEnabled": false,
+      "poolCount": 1
+    },
+    {
+      "at": "2026-10-23T16:00:00.7126454Z",
+      "phase": "mitigated-and-reopened",
+      "generation": "/nix/store/hbcmvlnc9mvkpvd8lcz4f95m03l96vcp-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+      "phpVersion": "8.4.27",
+      "nextcloudVersion": "34.0.4",
+      "sessionUploadProgressEnabled": false,
+      "cliSessionUploadProgressEnabled": false,
+      "changedUnits": [
+        "nextcloud-backup.service",
+        "nextcloud-cron.service",
+        "nextcloud-setup.service",
+        "nextcloud-update-db.service",
+        "phpfpm-nextcloud.service"
+      ],
+      "backupRestoredInIsolation": true,
+      "protectedPidsUnchanged": true,
+      "independentReturnVerified": true,
+      "bootGenerationCommitted": true,
+      "restoredOldDatabase": false,
+      "oidcPkce": true,
+      "anonymousDavDenied": true
+    }
+  ],
+  "externalHealth": {
+    "nextcloud": 200,
+    "vision": 200,
+    "log": 200,
+    "forgejo": 200
+  },
+  "scope": "Un seul pool PHP-FPM installé, Nextcloud 34.0.4 et CLI/cron. PHP 8.4.27 conservé ; aucune migration ni restauration d'ancienne base.",
+  "auditAfter": {
+    "run": 39983199292,
+    "conclusion": "success",
+    "observedAt": "2026-10-23T16:01:42Z",
+    "generation": "/nix/store/hbcmvlnc9mvkpvd8lcz4f95m03l96vcp-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "bootGenerationMatches": true,
+    "sessionUploadProgressEnabled": false,
+    "cliSessionUploadProgressEnabled": false,
+    "declarationProtected": true,
+    "fpmAdminProtected": true
+  }
+}
