@@ -1,0 +1,13 @@
+{
+  "domain": "https://vise.mrj.am",
+  "artifactSha256": "08013e729f41d0aa9198757eb0c1257fab8992e9b9e297567453885ecd339398",
+  "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "sharedPostgres": true,
+  "separateDatabase": "etp_carnet",
+  "protectedApplicationPidsPreserved": true,
+  "sharedPostgresRestartedForHba": true,
+  "httpsHealth": true,
+  "encryptedBackup": true,
+  "run": "https://github.com/MrJ-am/vps-infrastructure/actions/runs/40456207396",
+  "date": "2026-10-27"
+}

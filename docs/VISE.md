@@ -43,3 +43,18 @@ utiliser le journal actuel le plus récent, jamais seulement celui d’un ancien
 La sortie emporte ce binaire statique, les assets, le dump de cette seule base
 et le journal actuel ; elle n’emporte aucun composant des autres projets.
 Le site reste un prototype à données fictives, sans certification clinique/HDS.
+
+## Mise en ligne constatée le 27 octobre 2026
+
+Promotion réussie : run40456207396. La configuration active et celle de démarrage
+sont enregistrées ; HTTPS/API et les ressources PWA/HTML/PDF/sondage répondent200.
+Les empreintes des ressources publiques correspondent à l’artefact qualifié.
+Preuves : production.json et public-verification.json dans assemblage/vise.
+Les gardes de redémarrage PostgreSQL ne servent qu’à l’activation : l’opération
+normaliser40456444877 retire ces trois réglages de l’adaptateur persistant, sans
+activation Nix, SQL ni redémarrage de service. La politique normale des autres
+déploiements PostgreSQL n’est donc pas confiée à ViSe.
+
+Les premiers essais refusés ont déclenché leur retour automatique ; aucune
+ancienne sauvegarde SQL n’a été restaurée en production. Les copies de sécurité
+ont été restaurées uniquement dans un cluster temporaire isolé.
