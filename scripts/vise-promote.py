@@ -65,7 +65,7 @@ def main():
   check(switched.returncode in (0,4),'Configuration activation failed')
   # PostgreSQL17 marks hba_file as postmaster: reload cannot change its path.
   # The shared cluster is restarted once; no dataDir or major version changes.
-  subprocess.run(['systemctl','restart','postgresql.service'],check=True)
+  subprocess.run(['systemctl','--job-mode=ignore-dependencies','restart','postgresql.service'],check=True)
   subprocess.run(['systemctl','reset-failed','vise.service'],check=True)
   subprocess.run(['systemctl','restart','vise.service'],check=True)
   for _ in range(60):
@@ -75,7 +75,7 @@ def main():
    except Exception:time.sleep(5)
   else:raise RuntimeError('HTTPS health failed')
   after={s:run(['systemctl','show',s,'-p','MainPID','--value']) for s in protect}
-  check(all(before[s]==after[s] for s in protect if s!='postgresql'),'Protected application restarted unexpectedly')
+  check(all(before[s]==after[s] for s in protect if s!='postgresql'),'Protected application restarted unexpectedly: '+','.join(s for s in protect if s!='postgresql' and before[s]!=after[s]))
   check(after['postgresql']!='0','Shared PostgreSQL unavailable')
   # Authentication into other databases must be rejected by peer/HBA.
   denied=subprocess.run(['runuser','-u','etp_carnet','--','psql','-h','/run/postgresql','-U','etp_carnet','-d','postgres','-c','SELECT 1'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
