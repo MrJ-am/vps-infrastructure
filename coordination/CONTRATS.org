@@ -135,3 +135,12 @@ commune. Qualification centrale : audition-metier, audition-oidc, audition-inter
 audition-assemblage. Activation conditionnée aux preuves réelles Log/OAuth,
 sauvegarde/restauration et retour de code avec données récentes préservées.
 Voir assemblage/audition/CONTRAT.md, MCP.md et EXPLOITATION.md.
+
+* ViSe — hébergement indépendant autorisé le 27 octobre 2026
+ViSe reste extérieur au graphe métier et au SSO. vise.mrj.am utilise un binaire
+Rust portable qualifié dans MrJ-am/etp-vie-affective, promu par empreinte exacte.
+Une base et un rôle etp_carnet vivent dans le PostgreSQL général existant, avec
+socket Unix/peer limité à cette base ; aucune nouvelle instance PostgreSQL.
+L’infrastructure possède seulement le service systemd, le vhost Nginx, la règle
+HBA ciblée, le provisionnement borné et la sauvegarde chiffrée propre au service.
+La CI centrale existante transporte ; aucun accès administratif satellite.
