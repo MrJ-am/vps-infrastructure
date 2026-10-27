@@ -38,7 +38,7 @@ def main():
  spec=importlib.util.spec_from_file_location('vise_backup',ROOT/'scripts/monolithe-sauvegarde.py')
  backup=importlib.util.module_from_spec(spec);spec.loader.exec_module(backup)
  backup.GENERATION=str(generation)
- backup.main('vise-'+sha[:12])
+ backup.main(target['sourceRevision'])
  release=P('/var/lib/vise/releases')/sha;release.mkdir(parents=True,exist_ok=True)
  for parent in (release.parent.parent, release.parent, release):parent.chmod(0o755)
  with tarfile.open(archive) as a:
@@ -55,7 +55,7 @@ def main():
  candidate=run(['nix-build','<nixpkgs/nixos>','-A','system','-I','nixpkgs='+NIX,'-I','nixos-config='+str(stage/'candidate.nix'),'--out-link',stage/'result'])
  check(candidate.startswith('/nix/store/'),'Invalid candidate')
  rollback=stage/'rollback.sh'
- rollback.write_text('#!/bin/sh\nset -eu\ncp '+str(stage/'base.nix')+' /etc/nixos/configuration.nix\n'+str(generation)+'/bin/switch-to-configuration test\n')
+ rollback.write_text('#!/bin/sh\nset -eu\ncp '+str(stage/'base.nix')+' /etc/nixos/configuration.nix\n'+str(generation)+'/bin/switch-to-configuration test\nnix-env -p /nix/var/nix/profiles/system --set '+str(generation)+'\n'+str(generation)+'/bin/switch-to-configuration boot\n')
  rollback.chmod(0o700)
  run(['systemd-run','--unit=vise-return','--on-active=12m',rollback])
  try:
