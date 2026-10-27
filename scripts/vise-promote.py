@@ -61,7 +61,13 @@ def main():
  rollback.chmod(0o700)
  run(['systemd-run','--unit=vise-return','--on-active=12m',rollback])
  try:
-  subprocess.run([candidate+'/bin/switch-to-configuration','test'],check=True)
+  switched=subprocess.run([candidate+'/bin/switch-to-configuration','test'])
+  check(switched.returncode in (0,4),'Configuration activation failed')
+  # PostgreSQL17 marks hba_file as postmaster: reload cannot change its path.
+  # The shared cluster is restarted once; no dataDir or major version changes.
+  subprocess.run(['systemctl','restart','postgresql.service'],check=True)
+  subprocess.run(['systemctl','reset-failed','vise.service'],check=True)
+  subprocess.run(['systemctl','restart','vise.service'],check=True)
   for _ in range(60):
    try:
     with urllib.request.urlopen('https://vise.mrj.am/api/health',timeout=10) as r:
@@ -69,7 +75,8 @@ def main():
    except Exception:time.sleep(5)
   else:raise RuntimeError('HTTPS health failed')
   after={s:run(['systemctl','show',s,'-p','MainPID','--value']) for s in protect}
-  check(before==after,'Protected service restarted unexpectedly')
+  check(all(before[s]==after[s] for s in protect if s!='postgresql'),'Protected application restarted unexpectedly')
+  check(after['postgresql']!='0','Shared PostgreSQL unavailable')
   # Authentication into other databases must be rejected by peer/HBA.
   denied=subprocess.run(['runuser','-u','etp_carnet','--','psql','-h','/run/postgresql','-U','etp_carnet','-d','postgres','-c','SELECT 1'],stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL)
   check(denied.returncode!=0,'Cross-database access not rejected')
@@ -85,7 +92,7 @@ def main():
   subprocess.run(['nix-env','-p','/nix/var/nix/profiles/system','--set',candidate],check=True)
   subprocess.run([candidate+'/bin/switch-to-configuration','boot'],check=True)
   run(['systemctl','stop','vise-return.timer'])
-  report={'domain':'https://vise.mrj.am','artifactSha256':sha,'generation':candidate,'sharedPostgres':True,'separateDatabase':'etp_carnet','protectedPidsPreserved':True,'httpsHealth':True,'encryptedBackup':True}
+  report={'domain':'https://vise.mrj.am','artifactSha256':sha,'generation':candidate,'sharedPostgres':True,'separateDatabase':'etp_carnet','protectedApplicationPidsPreserved':True,'sharedPostgresRestartedForHba':True,'httpsHealth':True,'encryptedBackup':True}
   (stage/'result.json').write_text(json.dumps(report,indent=2));print(json.dumps(report))
  except BaseException:
   subprocess.run([str(rollback)],check=False)

@@ -9,7 +9,7 @@ let
   }).config;
 in {
   # Keep existing HBA rules exact; add only this peer-authenticated database.
-  services.postgresql.authentication = lib.mkOverride 40
+  services.postgresql.authentication = lib.mkOverride 5
     ("local etp_carnet etp_carnet peer\n" + baseline.services.postgresql.authentication);
   users.groups.etp_carnet = {};
   users.users.etp_carnet = { isSystemUser = true; group = "etp_carnet"; };
