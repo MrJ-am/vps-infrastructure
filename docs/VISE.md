@@ -8,7 +8,8 @@ Le processus Rust écoute uniquement `127.0.0.1:3017`. Nginx gère HTTPS/ACME.
 Le serveur PostgreSQL général existant héberge la base séparée `etp_carnet`.
 L’utilisateur Unix et le rôle SQL `etp_carnet` se connectent par socket local
 avec authentification peer ; aucun mot de passe ni écoute TCP supplémentaire.
-La seule règle HBA ajoutée autorise cette paire base/rôle. Toutes les règles
+PostgreSQL17 nécessite un redémarrage bref pour modifier le chemin Nix du
+fichier HBA ; l’instance et son dataDir ne sont pas remplacés. La seule règle HBA ajoutée autorise cette paire base/rôle. Toutes les règles
 précédentes sont obtenues du module de base et conservées, y compris les refus.
 Le rôle est sans privilèges globaux ; son provisionnement refuse un propriétaire
 ou des privilèges inattendus. Aucun registre/ACL des autres bases n’est modifié.
@@ -19,7 +20,7 @@ ou des privilèges inattendus. Aucun registre/ACL des autres bases n’est modif
 le canal administratif de `docs/ACCES.md`, vérifie l’archive qualifiée par SHA256,
 réutilise la sauvegarde/restauration isolée centrale avec la génération constatée,
 construit le candidat Nix puis arme un retour autonome avant la bascule.
-La validation exige HTTPS, le maintien des PID protégés, le refus d’accès SQL
+La validation exige HTTPS, le maintien des PID applicatifs protégés, le refus d’accès SQL
 transversal et une sauvegarde ViSe chiffrée déchiffrable. Code et configuration
 reviennent ensemble en cas d’échec ; aucune ancienne base n’est restaurée sur
 les écritures courantes. Le journal de suppressions reste conservé.
