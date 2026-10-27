@@ -53,7 +53,7 @@ def main():
  shutil.copy(ROOT/'assemblage/vise/backup.sh',stage/'backup.sh')
  shutil.copy(ROOT/'assemblage/vise/provision.sh',stage/'provision.sh')
  (stage/'target.json').write_text(json.dumps(target))
- (stage/'candidate.nix').write_text('{ imports = [ /etc/nixos/configuration.nix ./module.nix ]; }\n')
+ (stage/'candidate.nix').write_text('{ imports = [ /etc/nixos/configuration.nix ./module.nix { systemd.services.postgresql = { restartIfChanged = false; reloadIfChanged = false; stopIfChanged = false; }; } ]; }\n')
  candidate=run(['nix-build','<nixpkgs/nixos>','-A','system','-I','nixpkgs='+NIX,'-I','nixos-config='+str(stage/'candidate.nix'),'--out-link',stage/'result'])
  check(candidate.startswith('/nix/store/'),'Invalid candidate')
  rollback=stage/'rollback.sh'
