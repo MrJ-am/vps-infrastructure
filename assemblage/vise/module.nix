@@ -4,17 +4,27 @@ let
   target = builtins.fromJSON (builtins.readFile ./target.json);
   release = "/var/lib/vise/releases/${target.sha256}";
   pg = config.services.postgresql.finalPackage;
+  baseline = (import <nixpkgs/nixos/lib/eval-config.nix> {
+    modules = [ (builtins.toPath target.baselineConfiguration) ];
+  }).config;
 in {
-  infrastructure.postgresql.projects.vise.name = "etp_carnet";
+  # Keep existing HBA rules exact; add only this peer-authenticated database.
+  services.postgresql.authentication = lib.mkOverride 40
+    ("local etp_carnet etp_carnet peer\n" + baseline.services.postgresql.authentication);
   users.groups.etp_carnet = {};
   users.users.etp_carnet = { isSystemUser = true; group = "etp_carnet"; };
-  # Keep existing plaintext backup selection; ViSe has its own encrypted backup.
-  services.postgresqlBackup.databases = lib.mkForce target.existingBackupDatabases;
+  # No modification to shared registry, existing DB owners, or backup selection.
+  systemd.services.vise-provision = {
+    after = [ "postgresql.service" ]; requires = [ "postgresql.service" ];
+    path = [ pg ];
+    serviceConfig = { Type = "oneshot"; User = "postgres"; RemainAfterExit = true; };
+    script = builtins.readFile ./provision.sh;
+  };
   systemd.services.vise = {
     description = "ViSe — independent encrypted ETP notebook";
     wantedBy = [ "multi-user.target" ];
-    after = [ "postgresql.service" "postgresql-setup.service" ];
-    requires = [ "postgresql.service" "postgresql-setup.service" ];
+    after = [ "postgresql.service" "vise-provision.service" ];
+    requires = [ "postgresql.service" "vise-provision.service" ];
     environment = {
       CARNET_BIND = "127.0.0.1:3017";
       CARNET_DIST = "${release}/dist";

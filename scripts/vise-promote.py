@@ -33,6 +33,7 @@ def main():
  settings=json.loads(run(['nix-instantiate','-I','nixpkgs='+NIX,'--eval','--strict','--json','--expr',expr]))
  check(settings['backupRecipient'].startswith(('age1','ssh-')),'Missing owner backup recipient')
  target.update(settings)
+ target['baselineConfiguration']='/etc/nixos/configuration.nix'
  # Reuse the existing isolated restore mechanism against the observed baseline,
  # as other promotion operators do; its algorithms/SQL remain unchanged.
  spec=importlib.util.spec_from_file_location('vise_backup',ROOT/'scripts/monolithe-sauvegarde.py')
@@ -50,6 +51,7 @@ def main():
  check(q['apiTests']==9 and hashlib.sha256((release/'server').read_bytes()).hexdigest()==q['serverSha256'],'Unqualified server')
  shutil.copy(ROOT/'assemblage/vise/module.nix',stage/'module.nix')
  shutil.copy(ROOT/'assemblage/vise/backup.sh',stage/'backup.sh')
+ shutil.copy(ROOT/'assemblage/vise/provision.sh',stage/'provision.sh')
  (stage/'target.json').write_text(json.dumps(target))
  (stage/'candidate.nix').write_text('{ imports = [ /etc/nixos/configuration.nix ./module.nix ]; }\n')
  candidate=run(['nix-build','<nixpkgs/nixos>','-A','system','-I','nixpkgs='+NIX,'-I','nixos-config='+str(stage/'candidate.nix'),'--out-link',stage/'result'])
@@ -75,7 +77,9 @@ def main():
   check(run(['systemctl','show','vise-backup','-p','Result','--value'])=='success','Backup failed')
   # Persist an additive wrapper, preserving the original module byte for byte.
   persisted=P('/etc/nixos/vise-hosting');persisted.mkdir(mode=0o700)
-  for name in ('module.nix','backup.sh','target.json'):shutil.copy(stage/name,persisted/name)
+  for name in ('module.nix','backup.sh','provision.sh'):shutil.copy(stage/name,persisted/name)
+  target['baselineConfiguration']='/etc/nixos/vise-base.nix'
+  (persisted/'target.json').write_text(json.dumps(target))
   shutil.copy(stage/'base.nix',P('/etc/nixos/vise-base.nix'))
   entry.write_text('{ imports = [ ./vise-base.nix ./vise-hosting/module.nix ]; }\n')
   subprocess.run(['nix-env','-p','/nix/var/nix/profiles/system','--set',candidate],check=True)
