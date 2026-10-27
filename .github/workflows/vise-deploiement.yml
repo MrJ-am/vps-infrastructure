@@ -1,0 +1,46 @@
+name: ViSe — service autonome
+on:
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Lecture des préconditions du service autonome
+        type: choice
+        options: [diagnostic]
+        default: diagnostic
+permissions:
+  contents: read
+concurrency:
+  group: vps-administration
+  cancel-in-progress: false
+jobs:
+  vise:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: vps-production
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - name: Préparer la clé d'exploitation existante
+        env:
+          SSH_KEY: ${{ secrets.VPS_ADMIN_SSH_KEY }}
+        run: |
+          set -eu
+          test -n "$SSH_KEY"
+          umask 077
+          printf '%s\n' "$SSH_KEY" > "$RUNNER_TEMP/vise-cle"
+          printf 'VPS_SSH_KEY=%s\n' "$RUNNER_TEMP/vise-cle" >> "$GITHUB_ENV"
+      - name: Diagnostic sans mutation ni donnée métier
+        run: |
+          set -eu
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vise-diagnostic.py > vise-diagnostic.json
+          python3 -m json.tool vise-diagnostic.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vise-diagnostic
+          path: vise-diagnostic.json
+          retention-days: 7
+      - name: Retirer la clé éphémère
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/vise-cle"
