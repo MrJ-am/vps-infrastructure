@@ -5,7 +5,7 @@ on:
       operation:
         description: Lecture des préconditions du service autonome
         type: choice
-        options: [diagnostic, apply]
+        options: [diagnostic, apply, normaliser]
         default: diagnostic
 permissions:
   contents: read
@@ -37,6 +37,10 @@ jobs:
           set -eu
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vise-diagnostic.py > vise-diagnostic.json
           python3 -m json.tool vise-diagnostic.json
+      - name: Retirer uniquement les gardes temporaires de redémarrage
+        if: inputs.operation == 'normaliser'
+        run: |
+          sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 -'" < scripts/vise-normaliser.py
       - name: Lire le candidat portable figé
         if: inputs.operation == 'apply'
         id: target

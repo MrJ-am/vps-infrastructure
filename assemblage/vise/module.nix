@@ -13,9 +13,6 @@ in {
     ("local etp_carnet etp_carnet peer\n" + baseline.services.postgresql.authentication);
   # Switch installs the new PostgreSQL unit without cascading its restart.
   # The promotion performs one dependency-isolated restart afterwards.
-  systemd.services.postgresql.restartIfChanged = lib.mkForce false;
-  systemd.services.postgresql.reloadIfChanged = lib.mkForce false;
-  systemd.services.postgresql.stopIfChanged = lib.mkForce false;
   users.groups.etp_carnet = {};
   users.users.etp_carnet = { isSystemUser = true; group = "etp_carnet"; };
   # No modification to shared registry, existing DB owners, or backup selection.
