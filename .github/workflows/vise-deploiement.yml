@@ -63,7 +63,7 @@ jobs:
           tar -czf - assemblage/vise scripts/vise-promote.py scripts/monolithe-sauvegarde.py vise-portable.tar.gz | sh scripts/connect.sh "umask 077; test ! -e $DELIVERY; mkdir -p $DELIVERY; tar -xzf - -C $DELIVERY"
           sh scripts/connect.sh "nix-shell -I nixpkgs=/nix/store/81s59zcy998ym4b36ayr29cjc9yhma5n-nixos-26.05.8639.c5c4a43b0e80/nixos -p python3 --run 'python3 $DELIVERY/scripts/vise-promote.py'"
       - uses: actions/upload-artifact@v4
-        if: inputs.operation == 'diagnostic' 
+        if: inputs.operation == 'diagnostic'
         with:
           name: vise-diagnostic
           path: vise-diagnostic.json
