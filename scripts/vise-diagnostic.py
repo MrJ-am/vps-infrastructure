@@ -14,7 +14,7 @@ report={
  'etpUser':run(['getent','passwd','etp_carnet']),
  'uid10001':run(['getent','passwd','10001']),
  'disk':run(['df','-h','/var/lib']),
- 'viseStartupErrors':run(['journalctl','-u','vise.service','-n','55','--no-pager','-o','cat']),
+ 'viseStartupErrors':run(['journalctl','-u','vise.service','-g','^Error:','-n','1','--no-pager','-o','cat']),
  'listeners':run(['ss','-lnt']),
 }
 print(json.dumps(report,indent=2))
