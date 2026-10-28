@@ -1,6 +1,0 @@
-{
-  "uid": "MrJam",
-  "accounts": ["MrJam", "admin"],
-  "inventory_run": 39327465931,
-  "reason": "Existing active administrator; eight existing device/session tokens. The bootstrap admin has none."
-}

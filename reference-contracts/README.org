@@ -1,0 +1,8 @@
+#+title: Contrats historiques autorisés
+#+language: fr
+
+Les documents Audition conservés sont des sources de travail pour la réécriture,
+liées à la révision indiquée dans =../reference-nixos/provenance.json=.
+Ils ne sont ni un état de production vérifié ni une autorité de validation du
+nouveau candidat Rust. Les changements voulus et la compatibilité seront
+documentés et qualifiés avant l'ouverture des nouveaux transports.

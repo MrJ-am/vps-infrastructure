@@ -1,0 +1,102 @@
+#+title: Retrait de l'ancien code au tip et conservation des composants d'infrastructure
+#+language: fr
+
+* Portée de la proposition
+L'inventaire part de l'arbre complet, non tronqué, de =MrJ-am/vps-infrastructure=
+à la révision =c6459ae215b0e4e8b1350b02222ad21af41db836=, tête initiale constatée
+par l'API de références Git. Aucune suppression distante n'a été exécutée par
+l'agent de ce lot. Root seul compose et publie le nouvel arbre après gel des
+déploiements. Une référence de retour doit conserver l'ancien commit, sans
+réécriture ni clone intégral de son historique.
+
+Le retrait concerne les arbres courants. Il ne supprime ni sauvegarde, ni donnée
+applicative, ni archive, ni document scientifique M-moire. Les JSON historiques
+de qualification, références de production et tables privées n'ont pas été lus
+et ne doivent pas être transférés dans le nouvel environnement. Leurs noms
+présents dans les manifestes sont des métadonnées d'arbre, pas leur contenu.
+
+* Sources et opérations à retirer ou remplacer
+=evidence/legacy-removal-candidates.json= contient les chemins exacts. L'arbre
+contient 104 fichiers =.lisp= ou =.asd=, notamment :
+- =lisp/= : domaines, serveur, adaptateurs natifs et identité du monolithe SBCL ;
+- fichiers =mrjam-*.asd=, chargeurs et constructeurs sous =assemblage/= ;
+- tests Lisp, outil de diagnostic Lisp et huit sources sous =vendor/vision/source/=.
+
+Leur présence dans la référence de retour préserve l'origine des contrats. Le
+nouvel environnement Rust n'en fait pas une dépendance exécutable et ne doit pas
+réinstaller SBCL, un REPL Common Lisp, ASDF, Quicklisp ou leurs outils MCP.
+
+=assemblage/metier.nix= exige SBCL 2.6.4 et exécute le constructeur Lisp ;
+=assemblage/outils.nix= installe également SBCL. Leurs sources et outils
+spécifiques doivent quitter le tip avec leurs anciens points d'entrée.
+=modules/metier.nix= configure le service SBCL et doit être remplacé dans la
+nouvelle architecture, pas importé par le module Rust.
+
+=scripts/connect.sh= est un accès SSH root qui transmet des arguments libres.
+Il doit quitter l'arbre courant et ne doit jamais être donné comme mécanisme
+d'accès d'un agent. Les =scripts/monolithe-*= et leurs workflows appartiennent à
+l'ancienne chaîne : les geler puis les retirer du tip en conservant leur révision
+de retour. Aucun workflow de migration ou de déploiement ne doit se déclencher
+du fait du nouveau push.
+
+=modules/matheval.nix= contient encore l'ancien serveur Node et un script de
+livraison qui lance npm puis redémarre le service. Il n'est pas une implémentation
+de la livraison Rust sans interruption. Sa chaîne d'import doit être retirée ou
+remplacée sans supprimer les données, les comptes historiques, les contrats
+frontend ni la provenance de Mateval dans M-moire.
+
+* Composants à conserver sélectivement
+=evidence/preserve-infrastructure-code.json= répertorie les blobs source pouvant
+être conservés côté Git par référence, sans clone de l'historique. Il distingue les
+fichiers effectivement examinés de ceux classés uniquement par chemin. Ce
+préclassement n'est pas une certification générale de confidentialité.
+
+Il faut conserver les sources et dépendances nécessaires de :
+- =assemblage/forgejo/= : module, assets, Pandoc, filtre des liens Org, MathJax,
+  modèles, fixtures synthétiques, outils de sauvegarde/SSO et leurs versions ;
+- =assemblage/kanidm/= : paquet, artefact, service, documentation et dépendances ;
+- intégrations Nextcloud, SSO, correctifs PHP, scripts source de sauvegarde et
+  configuration ACME ;
+- =assemblage/elm-review/= : règles Elm, tests, manifestes et outils verrouillés ;
+- PostgreSQL, bibliothèques de configuration et code de l'intégration Keycloak
+  historique, y compris descripteurs =META-INF/services/= et notices de licence.
+
+Ne pas supprimer =assemblage/= en bloc. Les 23 JSON historiques exclus dans ces
+sous-arbres restent uniquement dans la référence de retour ; ils ne deviennent
+pas des preuves de la nouvelle chaîne. Préserver les helpers source n'autorise
+pas à les exécuter : ceux de promotion nécessitent un nouveau plan approuvé,
+des sorties bornées et un contrôleur qualifié. Les fichiers =target.json=
+historiques n'en sont pas un substitut.
+
+* Références à réparer avant toute future évaluation complète
+L'analyse de 28 fichiers Nix source conservés est enregistrée dans
+=evidence/retained-nix-audit.json=. Elle relève les points suivants :
+
+| Fichier | Référence ancienne | Traitement requis |
+|---------+--------------------+-------------------|
+| modules/gateway.nix | importe metier.nix, log.nix, audition.nix et auxiliaires | réécrire les imports ou garder cette configuration en référence inactive |
+| modules/postgresql.nix | option infrastructure.metier.enable avec valeur de repli false | préserver les rôles/données, clarifier le raccord Rust avant activation |
+| assemblage/nextcloud-php-security/fixture.nix | service mrjam-metier dans fixture synthétique | adapter le nom et le contrat synthétiques |
+| apps/nextcloud.nix | projects.json et scripts/nextcloud-backup.sh | conserver les sources nécessaires et examiner le registre de service séparément |
+| modules/postgresql.nix | databases.json | conserver ou reconstruire le registre de rôles autorisé, sans contenu SQL réel |
+| hosts/hostinger/nextcloud-acme.nix | importe logique.nix | examiner la chaîne de configuration historique, sans l'activer |
+| assemblage/forgejo/module.nix | kanidm-api-privee.py, sso.py, verify-backup.py et assets | conserver les sources ; ne pas appeler les opérations de données depuis un agent |
+
+Les modules Forgejo, Kanidm, Nextcloud et elm-review examinés n'ont pas de
+référence directe à SBCL/Lisp. Cela ne valide ni leur graphe complet de
+dépendances, ni leurs actions administratives. Plusieurs outils historiques
+utilisent =<nixpkgs>= ; ils ne constituent pas une entrée verrouillée pour le
+nouvel environnement. Leur adaptation doit conserver les fonctions demandées.
+
+* Critères avant la reprise d'exploitation
+- Nouvel arbre sans sources/outillage Lisp actifs et sans shell SSH administratif
+  générique accessible par les agents ; références de retour intactes.
+- Aucun import du module Rust dans une configuration de machine active.
+- Forgejo/Org/LaTeX, authentification et services tiers conservés avec leurs
+  dépendances et droits réévalués ; aucune preuve historique réutilisée comme
+  validation actuelle.
+- Déploiements toujours bloqués, y compris événements externes et anciens
+  workflows. Une réponse API 403 n'est pas la preuve de leur désactivation.
+- Évaluation Nix et tests synthétiques exécutés dans l'environnement suivant,
+  puis qualification indépendante des ressources, de la frontière des données,
+  des artefacts, de la bascule et de la restauration avant toute activation.

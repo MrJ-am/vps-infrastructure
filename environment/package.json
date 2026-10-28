@@ -1,0 +1,16 @@
+{
+  "name": "mrjam-codex-environment",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pinned tools for the private, synthetic Codex environment",
+  "engines": {
+    "node": "24.19.0",
+    "npm": "11.9.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "elm": "0.19.1-6",
+    "elm-review": "2.13.5",
+    "elm-test": "0.19.1-revision17"
+  }
+}

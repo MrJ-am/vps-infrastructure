@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "scope": "private Codex workshop, synthetic data only; not production",
+  "observed_platform": {
+    "os": "Debian 13",
+    "architecture": "x86_64",
+    "python": "3.12.14",
+    "docker_server": "28.4.0",
+    "node": "24.19.0",
+    "npm": "11.9.0"
+  },
+  "checks": [
+    {
+      "command": "bash setup.sh --check before installation",
+      "result": "correctly_incomplete",
+      "detail": "Rust reused; missing npm tools and browser were reported as false"
+    },
+    {
+      "command": "bash setup.sh --install",
+      "result": "passed",
+      "detail": "Rust 1.99.1 reused; npm packages and Chromium installed; pinned images present"
+    },
+    {
+      "command": "bash setup.sh --install repeated",
+      "result": "passed",
+      "detail": "Rust and browser reused, npm fingerprint and image digests verified"
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "result": "passed",
+      "tests": 15
+    },
+    {
+      "command": "bash services.sh up; bash check.sh --services",
+      "result": "passed",
+      "detail": "Tools, browser, PostgreSQL query and loopback socket, Nginx HTTP marker all passed"
+    },
+    {
+      "command": "repeat services_up with a row in environment_bootstrap_probe",
+      "result": "passed",
+      "detail": "Synthetic row preserved across repeated startup; dedicated probe schema removed afterward"
+    },
+    {
+      "command": "elm-review --help",
+      "result": "passed",
+      "detail": "Installed CLI 2.13.5 advertises --config; application rules were not tested by this lot"
+    },
+    {
+      "command": "npm audit --json --no-fund",
+      "result": "passed",
+      "reported_vulnerabilities": 0,
+      "detail": "Registry result for this lock on the stated date; not a guarantee of absence of vulnerabilities"
+    },
+    {
+      "command": "postgres --version; nginx -v inside synthetic containers",
+      "result": "passed",
+      "postgres": "18.6 (Debian 18.6-1.pgdg12+2)",
+      "nginx": "1.30.6"
+    }
+  ],
+  "limitations": [
+    "Fresh native Rust installation path not exercised because the exact toolchain already existed",
+    "New Cloud environment creation and publication not performed by these scripts",
+    "Real teardown not exercised after sharing the synthetic cluster with other domain agents",
+    "Docker bridge allows loopback publishing; it is not an egress-denial or VPS CI security boundary",
+    "Application correctness, independent acceptance rules, Forgejo transport and deployment remain separate qualifications"
+  ],
+  "fixed_during_qualification": [
+    "Nginx synthetic configuration required normal readable checkout permissions",
+    "Docker internal network did not publish host ports; switched to dedicated development bridge and verified real loopback connections"
+  ]
+}

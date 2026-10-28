@@ -1,0 +1,282 @@
+#+title: Environnement Codex privé pour la réécriture Rust
+#+language: fr
+
+* Résultat préparé
+
+Ce dossier prépare un environnement de développement Cloud Linux x86_64, avec
+outils versionnés et services entièrement synthétiques. Il n'active aucun
+déploiement et ne configure aucun accès au VPS. Les comptes PostgreSQL ci-dessous
+sont fictifs ; aucune base réelle, sauvegarde ou identité de production n'est
+nécessaire.
+
+La source de versions est [[file:toolchains.lock.json][toolchains.lock.json]]. Le graphe npm et
+ses intégrités sont dans [[file:package-lock.json][package-lock.json]], et les empreintes de contenu des
+navigateurs sont dans [[file:browser-bundles.lock.json][browser-bundles.lock.json]]. Les commandes exécutées dans
+l'atelier initial PostgreSQL 18.6 et leurs limites sont conservées dans
+[[file:verification.json][verification.json]] et [[file:evidence-postgres18/verification.json][evidence-postgres18/verification.json]].
+La qualification supplémentaire PostgreSQL 17 + pgvector est décrite dans
+[[file:postgres17-qualification.json][postgres17-qualification.json]]. Le verrou courant choisit désormais ce dernier profil.
+
+| Composant | Version préparée | Vérification |
+|-----------+------------------+--------------|
+| Rust / Cargo | 1.99.1 | Version exacte ; rustfmt et Clippy disponibles |
+| Node.js | 24.19.0 | Runtime déjà fourni, conservé ; branche 24 maintenue jusqu'au 2028-04-30 selon calendrier officiel |
+| npm | 11.9.0 | Version exacte du runtime existant |
+| Elm | 0.19.1, paquet npm 0.19.1-6 | Exécutable local et intégrité npm |
+| elm-review | 2.13.5 | Version et présence de --config dans l'aide de l'exécutable |
+| elm-test | 0.19.1-revision17 | Version publiée exacte, intégrité npm ; exécutable pour les tests des règles Elm |
+| Playwright | 1.64.1 | Paquet et graphe npm verrouillés |
+| Chromium | 156.0.8078.4, révision Playwright 1248 | Empreintes des distributions et parcours synthétique en navigateur |
+| PostgreSQL / pgvector | 17.11 / 0.8.7 | Image amont pgvector par digest ; versions effectives, extension, six tests SQL, requête locale et socket loopback vérifiés |
+| Nginx | 1.30.6 | Image officielle par digest ; version et réponse HTTP synthétique vérifiées |
+
+Python 3.11 ou supérieur est utilisé pour les outils de préparation ; Python
+3.12.14 est présent dans l'atelier. L'installation native de Rust exige aussi le
+filtre sûr =tarfile.data_filter=, disponible dans les versions Python corrigées.
+Un daemon Docker local géré par l'environnement est nécessaire aux services.
+Le script ne démarre ni ne reconfigure le daemon.
+
+Le module historique =modules/postgresql.nix= à
+=c6459ae215b0e4e8b1350b02222ad21af41db836= déclare =pkgs.postgresql_17= et
+pgvector optionnel pour Vision. Il ne démontre pas la version réellement
+installée sur le VPS ; celle-ci n'a pas été interrogée. Cette découverte motive
+la seconde qualification locale, sans présenter les essais PostgreSQL 18.6
+comme une preuve de compatibilité de la production.
+
+Le tag =pgvector/pgvector:0.8.7-pg17-bookworm= est daté du 2026-10-01 sur Docker
+Hub. Son digest figé contient effectivement PostgreSQL =17.11-1.pgdg12+2=,
+et non 17.10. Le registre et =postgres --version= ont été vérifiés séparément.
+La page officielle de PostgreSQL 17.11 indique une publication le 2026-08-13.
+Il n'y a donc pas, pour ce digest observé, d'attente d'une reconstruction
+17.10 vers 17.11. Cela ne vaut pas validation des migrations historiques.
+
+* Création dans l'interface réellement disponible
+
+Documentation officielle consultée le 2026-10-28 :
+[[https://learn.chatgpt.com/docs/environments/cloud-environments][Cloud environments]]. La page actuelle décrit =Create environment=,
+=Install script=, =Start skill= et =Publish=. Le point d'entrée historique
+=developers.openai.com/codex/cloud/environments/= redirige vers le guide
+=cloud-environment= au singulier, explicitement marqué Legacy ; il ne faut pas
+confondre ses champs avec l'interface actuelle.
+
+Avant de sélectionner un dépôt existant, établir le comportement réel de son
+chargement initial : seuls les commits/arbres propres autorisés doivent entrer
+dans Cloud, sans récupération implicite des ancêtres ou des anciennes archives.
+Les scripts locaux et le bootstrap des composants ne contrôlent pas ce chargement
+initial ; il n'a pas été qualifié ici. Le nettoyage du tip ne supprime pas
+l'historique. Si cette propriété n'est pas vérifiable dans le créateur, ne pas
+lui rattacher les anciens dépôts : amorcer avec les nouveaux dépôts sans
+historique ancien et préparer un transfert borné du seul code autorisé. Vérifier
+aussi que les capacités Git attachées n'ouvrent pas une lecture de données
+présentes dans d'anciennes références ; une simple consigne n'est pas une ACL.
+
+1. Dans =Work in > Cloud > Select environment > Create environment=, ou
+   =Settings > Codex Cloud > Environments=, sélectionner les dépôts GitHub
+   préparés et leurs branches principales. Choisir =Only me= pour l'accès.
+2. Demander au créateur de conserver Node 24.19.0/npm 11.9.0, de préparer Python
+   3.11+ et Docker local, puis d'utiliser le script de ce dossier. Aucun secret,
+   réseau privé, identité cloud ou connexion métier de production ne doit être
+   attaché. Le miroir et les droits GitHub doivent rester limités au travail de
+   code autorisé ; ces scripts ne changent pas les permissions d'un connecteur.
+3. Depuis la racine de =vps-infrastructure=, enregistrer dans =Install script= :
+
+   #+begin_src bash
+   bash environment/setup.sh --install
+   #+end_src
+
+   Si le créateur utilise un autre chemin de checkout, il résout le chemin de
+   ce même fichier et l'enregistre explicitement. Il n'existe ici aucun fichier
+   =.codex= prétendument auto-détecté. Les scripts calculent leur propre chemin
+   et ne dépendent pas du répertoire courant.
+4. Fournir [[file:start/SKILL.md][start/SKILL.md]] comme instructions du champ =Start skill=.
+   Ce chemin sert de source versionnée ; sa présence seule ne configure pas
+   le champ de l'environnement et n'est pas présentée comme une auto-découverte.
+5. Exécuter les contrôles ci-dessous, vérifier le rapport, les fichiers, les
+   dépôts sélectionnés, l'absence de secrets et les accès effectifs. Sauvegarder
+   et publier l'environnement depuis l'interface, puis ouvrir la nouvelle
+   conversation demandée par l'utilisateur. La publication d'un environnement
+   n'est pas une publication de l'application sur le VPS.
+
+La documentation indique que chaque nouvelle tâche reçoit son espace isolé
+depuis l'état publié et que les mises à jour de dépôt ne relancent pas les
+commandes d'installation. Après une modification des verrous, préparer et tester
+la mise à jour dans l'éditeur d'environnement, puis republier. Ne pas considérer
+un cache ancien comme une preuve de compatibilité.
+
+* Installation, contrôle et démarrage
+
+Depuis ce dossier :
+
+#+begin_src bash
+bash setup.sh --check
+bash setup.sh --install
+source .local/activate.sh
+bash services.sh up
+bash check.sh --services
+python3 -m unittest discover -s tests -v
+#+end_src
+
+=--check= n'installe rien et ne démarre aucun service. Il vérifie les outils,
+les images présentes et un navigateur sur contenu synthétique local. Le code
+de sortie est non nul si un prérequis manque ; il ne transforme pas un contrôle
+absent en succès. =check.sh --services= exige également PostgreSQL accessible
+sur loopback, la version serveur verrouillée, l'extension vector à la version
+exacte et la réponse Nginx attendue.
+
+=--install= vérifie Node/npm, réutilise Rust 1.99.1 s'il est disponible, installe
+les outils npm avec =npm ci --ignore-scripts=, télécharge le Chromium attendu et
+récupère les deux images exactes. Il écrit =.local/activate.sh= pour le PATH et
+les chemins des caches. Il ne modifie pas =.bashrc= ni les variables persistantes
+de la plateforme. Un verrou local empêche deux installations/démarrages
+simultanés. Une deuxième exécution vérifie et réutilise les outils.
+
+Rust absent est installé sans privilèges depuis l'archive officielle 1.99.1 dont
+le SHA-256 est vérifié, dans =.local/rust=. Les composants sont rustc, cargo,
+rust-std, rustfmt et Clippy. L'archive est extraite avec le filtre sûr de Python ;
+le téléchargement est borné et l'installation exige au moins 3 Gio disponibles.
+Ce chemin d'installation de secours n'a pas été exécuté dans l'atelier, où le
+cache Rust existant a été réutilisé. Il reste à l'exercer dans le nouvel
+environnement s'il ne possède pas déjà la version requise.
+
+Les scripts retournent des codes prédéfinis, sans renvoyer les sorties d'erreur
+des installateurs ou des commandes Docker. Une erreur de téléchargement ou de
+certificat n'entraîne ni désactivation TLS ni contournement du proxy. Une
+incompatibilité Node/npm, un daemon absent, un manque d'espace ou des
+bibliothèques système manquantes interrompt seulement la préparation concernée.
+Les scripts ne lancent pas sudo/apt implicitement. Le créateur peut préparer les
+dépendances Linux de Chromium dans la VM de développement s'il constate
+=BROWSER_OS_DEPENDENCIES_OR_LAUNCH_FAILED=, puis refaire les contrôles.
+
+* Services synthétiques
+
+| Service | Adresse locale | Identité / contenu |
+|---------+----------------+--------------------|
+| PostgreSQL | =127.0.0.1:55432= | Base et rôle =mrjam_synthetic= ; mot de passe fictif =mrjam_synthetic_only= |
+| Nginx | =http://127.0.0.1:18080/__synthetic__/ready= | Réponse fixe =MRJAM_SYNTHETIC_OK= ; toute autre route répond 404 |
+
+=.local/activate.sh= expose =MRJAM_SYNTHETIC_DATABASE_URL=. Il n'écrase pas
+=DATABASE_URL=. Les tests existants acceptent uniquement l'URL littérale de cet
+atelier et utilisent leurs variables dédiées. Depuis le workspace Rust de la
+plateforme :
+
+#+begin_src bash
+VISION_TEST_ADMIN_URL="$MRJAM_SYNTHETIC_DATABASE_URL" \
+  cargo test --locked --offline -p mrjam-vision --features integration-postgres --test postgres_synthetique
+MRJAM_SYNTHETIC_DATABASE_URL="$MRJAM_SYNTHETIC_DATABASE_URL" \
+  cargo test --locked --offline -p mrjam-mateval --features integration-tests --test postgres
+MRJAM_SYNTHETIC_DATABASE_URL="$MRJAM_SYNTHETIC_DATABASE_URL" \
+  cargo test --locked --offline -p mrjam-server --features integration-postgres --test mateval_http_postgres
+#+end_src
+
+Ces commandes n'affirment pas que toutes les fonctionnalités sont portées.
+Utiliser des schémas distincts pour les lots Vision et Mateval afin que leurs
+tests concurrents ne se détruisent pas mutuellement.
+
+Depuis ce dossier, le replay borné des six tests existants, suivi des contrôles
+d'installation et d'idempotence, s'exécute avec :
+
+#+begin_src bash
+python3 qualify-postgres17.py --workspace /chemin/local/du/workspace-rust
+#+end_src
+
+Le chemin est celui du checkout Rust préparé ; aucun emplacement implicite de
+production n'est utilisé. Le script exige la fixture déjà démarrée, conserve
+les variables réseau de la plateforme, retire les sélecteurs PostgreSQL génériques
+du seul sous-processus de test et impose les deux URL de fixture exactes.
+Il vérifie les six tests non ignorés, les empreintes des fichiers de test et du
+verrou Cargo, puis écrit =postgres17-qualification.json=. Les traces brutes
+synthétiques restent sous =.local/=. Les résultats de qualification 18.6 restent
+séparés et ne sont jamais écrasés par ce replay.
+
+Au démarrage, le helper exécute =CREATE EXTENSION IF NOT EXISTS vector= dans
+la seule base =mrjam_synthetic=, via son conteneur local étiqueté et compatible.
+Le nom de base et le rôle sont constants ; une garde SQL vérifie les deux.
+Il ne lance aucune migration Vision historique. Un calcul de distance sur
+deux vecteurs inventés vérifie l'extension ; les six tests existants qualifient
+leurs fixtures SQL/RLS/HTTP, pas la recherche vectorielle métier complète.
+
+Le réseau bridge dédié =mrjam-codex-synthetic-local= permet les ports publiés sur
+127.0.0.1. Un premier essai avec réseau Docker =--internal= n'exposait pas les
+ports dans cet atelier ; ce défaut a été détecté par les essais TCP, puis corrigé.
+Le réseau bridge n'interdit pas à lui seul les sorties réseau. Ce dispositif
+sert au développement Cloud entièrement synthétique ; il ne qualifie pas
+l'isolation de la future CI sur le VPS et ne doit jamais y être installé tel quel.
+
+Les conteneurs ont un système de fichiers racine en lecture seule, toutes les
+capabilities retirées, =no-new-privileges=, 128 processus et 1 CPU maximum chacun.
+PostgreSQL dispose de 768 Mio de mémoire et de 512 Mio de données en tmpfs ;
+Nginx de 128 Mio. Aucun socket Docker ni volume de production n'est monté.
+Le chemin déclaré VOLUME par l'image PostgreSQL 17, =/var/lib/postgresql/data=,
+est explicitement monté en tmpfs ; Docker n'alloue aucun volume anonyme durable.
+Le seul bind mount est la configuration Nginx synthétique, en lecture seule.
+Les logs de ces conteneurs ne sont pas conservés. Le check vérifie une requête
+SQL constante dans la base synthétique et l'accès TCP réel depuis l'atelier.
+
+Le helper refuse de remplacer ou supprimer un conteneur/réseau portant les mêmes
+noms sans son label. Cela prévient des collisions accidentelles, pas une attaque
+d'un acteur qui possède déjà le daemon Docker. Les utilisateurs de cette VM
+possèdent un environnement de développement, pas un pouvoir de production.
+
+=services.sh up= conserve les données tant que PostgreSQL est déjà démarré ;
+ce comportement a été vérifié avec une ligne synthétique. =services.sh down=
+supprime les seuls conteneurs étiquetés et leur réseau ; leurs données tmpfs sont
+perdues. Ne pas arrêter ce PostgreSQL pendant qu'un autre lot l'utilise.
+Après la fin des autres tests, le teardown du seul cluster synthétique 18.6
+et du Nginx synthétique a été réellement exécuté pour passer au nouveau verrou.
+La recréation des deux conteneurs était nécessaire car leurs labels lient le
+verrou global. Les démarrages 17.11 répétés conservent les identifiants des
+conteneurs et une ligne inventée de contrôle. Le refus de supprimer une
+ressource étrangère et le refus d'initialiser son extension sont couverts par
+les tests du helper : 18 tests réussis pour cette qualification supplémentaire.
+
+* Réseau, caches et intégrité
+
+Conserver les proxies, l'injection réseau et les autorités de certification de la
+plateforme. Le helper choisit explicitement le daemon Unix local et retire les
+sélecteurs Docker distants pour ses commandes ; il conserve =DOCKER_CONFIG= et
+les réglages réseau existants sans les afficher.
+
+Le préréglage =Package managers= de l'interface couvre les registres Rust/npm et
+plusieurs hébergeurs GitHub. Selon la politique effective, les téléchargements
+peuvent aussi nécessiter =cdn.playwright.dev=,
+=playwright.download.prss.microsoft.com= et les destinations du registre Docker
+(=registry-1.docker.io=, =auth.docker.io= et ses hôtes de distribution). Les URL
+Playwright ont été observées par =install --dry-run chromium=. Ajouter uniquement
+une destination nécessaire établie par le diagnostic ; ne pas ouvrir la
+production ou un VPN pour résoudre l'installation d'outils publics.
+
+Les bundles Chromium/FFmpeg sont épinglés par des empreintes de contenu de leurs
+fichiers et chemins. Deux marqueurs locaux de Playwright sont exclus du calcul ;
+les ressources du navigateur sont incluses. Une substitution renvoie
+=BROWSER_BUNDLE_DIGEST_MISMATCH=. Les empreintes proviennent des distributions
+publiques installées dans cet atelier et ne constituent pas une signature
+indépendante d'un fournisseur. Le verrou npm contient les intégrités des archives.
+Les digests Docker fixent les images ; leur disponibilité et leur exécution ont
+été vérifiées localement.
+
+Les versions des outils sont fixées ; l'image de base complète de la VM et toutes
+ses bibliothèques système ne sont pas rendues reproductibles bit à bit par ces
+scripts. Aucun montant, abonnement, serveur ou API IA supplémentaire n'est
+introduit. Les téléchargements utilisent les ressources de l'environnement
+existant. Si la capacité du plan est insuffisante, le contrôle doit rester en
+échec au lieu de créer une ressource payante.
+
+* Sources primaires
+
+- [[https://learn.chatgpt.com/docs/environments/cloud-environments][Interface et fonctionnement actuels de Codex Cloud]], consultation 2026-10-28.
+- [[https://static.rust-lang.org/dist/channel-rust-1.99.1.toml][Manifeste Rust 1.99.1]], daté 2026-10-15 ; URL et empreintes dans le verrou.
+- [[https://raw.githubusercontent.com/nodejs/Release/main/schedule.json][Calendrier Node.js]], branche 24 : maintenance depuis 2026-10-20,
+  fin de support 2028-04-30, consultation 2026-10-28.
+- Métadonnées npm : [[https://registry.npmjs.org/elm/0.19.1-6][Elm 0.19.1-6]],
+  [[https://registry.npmjs.org/elm-review/2.13.5][elm-review 2.13.5]],
+  [[https://registry.npmjs.org/elm-test/0.19.1-revision17][elm-test 0.19.1-revision17]], publié le 2025-11-18, Node >=12.20 ;
+  [[https://registry.npmjs.org/@playwright/test/1.64.1][Playwright 1.64.1]].
+- Module historique : [[https://github.com/MrJ-am/vps-infrastructure/blob/c6459ae215b0e4e8b1350b02222ad21af41db836/modules/postgresql.nix][PostgreSQL 17 et option pgvector]].
+- Profil courant : [[https://hub.docker.com/v2/repositories/pgvector/pgvector/tags/0.8.7-pg17-bookworm][Métadonnées du tag pgvector]],
+  digest index =sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d=,
+  manifest amd64 =sha256:cd4ccfdaf62cbfeb5c6ee19ef0dd663406d4ed740c320b324d016a90e85385b3=.
+  [[https://www.postgresql.org/docs/release/17.11/][Notes officielles PostgreSQL 17.11]], consultées le 2026-10-28.
+- Images officielles : métadonnées Docker Hub
+  [[https://hub.docker.com/v2/repositories/library/postgres/tags/18.6-bookworm][PostgreSQL 18.6-bookworm]] et
+  [[https://hub.docker.com/v2/repositories/library/nginx/tags/stable-alpine][Nginx stable-alpine]], consultation 2026-10-28, puis résolution figée par digest.
+

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "scope": "local_nix_syntax_only",
+  "files": {
+    "nixos/mrjam-rust.nix": "fdabdc8867fc83d126feb7edb53ae18f6ac747364957ff9618d3754571acefe8",
+    "tests/module-evaluation.nix": "a7beb670cb0610f9fa44247124370675ba68d1f755a22583adbf9f54ecef11e8"
+  },
+  "result": {
+    "check": "nix_syntax_only",
+    "results": {
+      "nixos/mrjam-rust.nix": "pass",
+      "tests/module-evaluation.nix": "pass"
+    },
+    "status": "pass",
+    "versions": {
+      "tree-sitter": "0.25.2",
+      "tree-sitter-nix": "0.1.0"
+    }
+  },
+  "nix_evaluation": "not_run_missing_executable",
+  "systemd_execution": "not_run",
+  "production_access": false,
+  "deployment": false
+}

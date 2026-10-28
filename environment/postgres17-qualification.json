@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-10-28T08:52:45.842320+00:00",
+  "scope": "local disposable synthetic cluster; not production compatibility",
+  "status": "passed",
+  "postgres_pin": {
+    "version": "17.11",
+    "server_version_num": 170011,
+    "major": 17,
+    "pgvector": "0.8.7",
+    "image": "docker.io/pgvector/pgvector@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d",
+    "amd64_manifest_digest": "sha256:cd4ccfdaf62cbfeb5c6ee19ef0dd663406d4ed740c320b324d016a90e85385b3",
+    "source_tag": "0.8.7-pg17-bookworm",
+    "tag_last_updated": "2026-10-01T17:36:15.174181Z",
+    "port": 55432,
+    "data_directory": "/var/lib/postgresql/data"
+  },
+  "effective_database": {
+    "server_version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg12+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit",
+    "server_version_num": "170011",
+    "database": "mrjam_synthetic",
+    "current_user": "mrjam_synthetic",
+    "vector_version": "0.8.7",
+    "vector_distance": 5.196152422706632
+  },
+  "tests": [
+    {
+      "package": "mrjam-vision",
+      "command": [
+        "/workspace/.tools/cargo/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/workspace/mrjam-refonte/platform/Cargo.toml",
+        "--package",
+        "mrjam-vision",
+        "--features",
+        "integration-postgres",
+        "--test",
+        "postgres_synthetique"
+      ],
+      "database_variable": "VISION_TEST_ADMIN_URL",
+      "database_target": "literal synthetic loopback URL only",
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.24s"
+      ],
+      "two_tests_passed": true,
+      "output_sha256": "6dc8d48852fa56dca13a67817f698c0a15af8bf61d47a0ca8acd950411775c09"
+    },
+    {
+      "package": "mrjam-mateval",
+      "command": [
+        "/workspace/.tools/cargo/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/workspace/mrjam-refonte/platform/Cargo.toml",
+        "--package",
+        "mrjam-mateval",
+        "--features",
+        "integration-tests",
+        "--test",
+        "postgres"
+      ],
+      "database_variable": "MRJAM_SYNTHETIC_DATABASE_URL",
+      "database_target": "literal synthetic loopback URL only",
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.31s"
+      ],
+      "two_tests_passed": true,
+      "output_sha256": "8dc74e39965c96f6f8497c1d60536ff33d7378a7137b4669a68ae77241283343"
+    },
+    {
+      "package": "mrjam-server",
+      "command": [
+        "/workspace/.tools/cargo/bin/cargo",
+        "test",
+        "--locked",
+        "--offline",
+        "--manifest-path",
+        "/workspace/mrjam-refonte/platform/Cargo.toml",
+        "--package",
+        "mrjam-server",
+        "--features",
+        "integration-postgres",
+        "--test",
+        "mateval_http_postgres"
+      ],
+      "database_variable": "MRJAM_SYNTHETIC_DATABASE_URL",
+      "database_target": "literal synthetic loopback URL only",
+      "exit_code": 0,
+      "summary": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.27s"
+      ],
+      "two_tests_passed": true,
+      "output_sha256": "cc4504369b89128ca211f51edac6dd87425bcaf0d3aa7c83483128ef5fb7f1e3"
+    }
+  ],
+  "test_count": 6,
+  "setup_checks": [
+    {
+      "command": [
+        "bash",
+        "setup.sh",
+        "--install"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "action": "reused",
+          "status": "ok",
+          "step": "rust"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "npm"
+        },
+        {
+          "action": "reused",
+          "status": "ok",
+          "step": "browser"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "postgres_image"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "nginx_image"
+        },
+        {
+          "checks": {
+            "browser": true,
+            "clippy": true,
+            "elm": true,
+            "elm_review": true,
+            "elm_test": true,
+            "images": true,
+            "local_docker": true,
+            "node": true,
+            "npm": true,
+            "npm_lock": true,
+            "npm_packages": true,
+            "playwright": true,
+            "rust": true,
+            "rustfmt": true
+          },
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "command": [
+        "bash",
+        "setup.sh",
+        "--install"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "action": "reused",
+          "status": "ok",
+          "step": "rust"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "npm"
+        },
+        {
+          "action": "reused",
+          "status": "ok",
+          "step": "browser"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "postgres_image"
+        },
+        {
+          "action": "verified",
+          "status": "ok",
+          "step": "nginx_image"
+        },
+        {
+          "checks": {
+            "browser": true,
+            "clippy": true,
+            "elm": true,
+            "elm_review": true,
+            "elm_test": true,
+            "images": true,
+            "local_docker": true,
+            "node": true,
+            "npm": true,
+            "npm_lock": true,
+            "npm_packages": true,
+            "playwright": true,
+            "rust": true,
+            "rustfmt": true
+          },
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "command": [
+        "bash",
+        "setup.sh",
+        "--check"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "checks": {
+            "browser": true,
+            "clippy": true,
+            "elm": true,
+            "elm_review": true,
+            "elm_test": true,
+            "images": true,
+            "local_docker": true,
+            "node": true,
+            "npm": true,
+            "npm_lock": true,
+            "npm_packages": true,
+            "playwright": true,
+            "rust": true,
+            "rustfmt": true
+          },
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "command": [
+        "bash",
+        "services.sh",
+        "up"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "action": "synthetic_services_ready",
+          "ports": {
+            "nginx": 18080,
+            "postgres": 55432
+          },
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "command": [
+        "bash",
+        "services.sh",
+        "up"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "action": "synthetic_services_ready",
+          "ports": {
+            "nginx": 18080,
+            "postgres": 55432
+          },
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "command": [
+        "bash",
+        "check.sh",
+        "--services"
+      ],
+      "exit_code": 0,
+      "reports": [
+        {
+          "checks": {
+            "browser": true,
+            "clippy": true,
+            "elm": true,
+            "elm_review": true,
+            "elm_test": true,
+            "images": true,
+            "local_docker": true,
+            "nginx_synthetic": true,
+            "node": true,
+            "npm": true,
+            "npm_lock": true,
+            "npm_packages": true,
+            "playwright": true,
+            "postgres_pgvector": true,
+            "postgres_synthetic": true,
+            "postgres_version": true,
+            "rust": true,
+            "rustfmt": true
+          },
+          "status": "ok"
+        }
+      ]
+    }
+  ],
+  "idempotence": {
+    "container_ids_unchanged": true,
+    "synthetic_row_preserved": true
+  },
+  "postgres_storage": {
+    "no_bind_or_anonymous_volume": true,
+    "tmpfs": {
+      "/tmp": "rw,nosuid,nodev,noexec,size=64m",
+      "/var/lib/postgresql/data": "rw,nosuid,nodev,noexec,size=512m,uid=999,gid=999",
+      "/var/run/postgresql": "rw,nosuid,nodev,noexec,size=16m,uid=999,gid=999"
+    }
+  },
+  "source_sha256": {
+    "Cargo.toml": "15e11c371a9eaca68295ae3a00a611ad12176e5ca37eefd91ca7b451bc6ee6ef",
+    "Cargo.lock": "286a5d4ce1c98acd26ed35e87a0ea7769b27ad0f920b11b8553c27bbf84e1cdd",
+    "crates/server/tests/mateval_http_postgres.rs": "c59cfd648a67fc320d281ca36eb1fcd6be589d1c6c78d6a4ec86c4954994ea86",
+    "components/vision/tests/postgres_synthetique.rs": "9bc39d7ed1d27a034657ab6d977b5ea088d842cd01a713fb7660afd301216ec2",
+    "components/vision/tests/fixtures/postgres.sql": "43c8450b79f9ad1ed54f4b773dbc5f5f948b3cdea18060fc07a3d355cfb3ab7e",
+    "components/mateval/tests/postgres.rs": "8678d52783ed53c9fc4f7f96e6518c6f2142582ac8cab699a924d5f4f586f114",
+    "components/mateval/migrations/001-collecte.sql": "ed168c35bcdf2f5576631158a30b93ec27dc8c3ba2ecc623c7181c5afca00b83",
+    "components/mateval/migrations/002-sessions-administrateur.sql": "6cf8f26b734cc5b383275bd002db608b1576af9f01be58da4161fa5a0db504d1"
+  },
+  "toolchain_lock_sha256": "0023f56fcda9f20ce9777afc7dac5c10abb720d2c21b9b66897f4c4ae2694ec5",
+  "baseline_postgres18": "evidence-postgres18/verification.json",
+  "limitations": [
+    "The source Nix module declares major17; actual production version was not queried",
+    "The vector distance smoke check does not qualify historical Vision vector-search business logic",
+    "The six tests use existing synthetic fixtures, not the full historical Vision migration",
+    "No production database or deployment was contacted"
+  ],
+  "source_observations_snapshot": "postgres17-source-observations.json",
+  "source_observations_sha256": "9b25d687c55040d7317f09edee6119a60b60cd7c7d52cb2f10643e43b89e2868",
+  "additional_checks": [
+    {
+      "command": "python3 -m unittest discover -s tests -v",
+      "exit_code": 0,
+      "tests_passed": 18
+    },
+    {
+      "command": "python3 -m py_compile environment.py qualify-postgres17.py",
+      "exit_code": 0
+    },
+    {
+      "command": "npm audit --json --no-fund",
+      "exit_code": 0,
+      "reported_vulnerabilities": 0
+    },
+    {
+      "command": "bash services.sh down before PG17 startup",
+      "exit_code": 0,
+      "scope": "only the two previously labeled synthetic containers and their dedicated network"
+    }
+  ],
+  "environment_files_sha256": {
+    "toolchains.lock.json": "0023f56fcda9f20ce9777afc7dac5c10abb720d2c21b9b66897f4c4ae2694ec5",
+    "environment.py": "ef399d45bd5ea296bad416f1c87e0a18216e81c086432dff1677a28d57ec58d2",
+    "qualify-postgres17.py": "638bd1e3c4979de6661f50de10fb3b57c8ce3da6ed1bb702ff0785a6954acb67",
+    "package.json": "398679645c9836c625c402163e17fc2fb26fd1bb54f81d11920115dc2054e83b",
+    "package-lock.json": "73d693a210deb990a2ae561318b5ea9d957eaa528c59de03961072121a7e0bf1",
+    "tests/test_environment.py": "75b127654445617d997a53dd7da6cd548be0d89635100468d5f2860d10dca8a9",
+    "start/SKILL.md": "e11f8ce3b64ee7325ab70b222837f38b5153ba24bf8f1fed7d35c5a57f68eb57"
+  }
+}

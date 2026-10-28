@@ -1,0 +1,59 @@
+#+title: Dépendances des références d'infrastructure
+#+language: fr
+
+* Références autonomes conservées
+L'arborescence relative d'origine est conservée sous =reference-nixos/=. Les
+chemins relatifs suivants disposent de leurs sources nécessaires dans ce dossier :
+
+| Composant | Dépendances conservées | Limite |
+|-----------+------------------------+--------|
+| Forgejo | module, assets, versions, filtre Org, modèles, fixtures, sso.py, verify-backup.py, kanidm-api-privee.py | pas de promotion ni de résultat de qualification historique |
+| Kanidm | service.nix, paquet.nix, artefact.nix, dépendances | pas de configuration privée ni preuve de version installée |
+| Nextcloud | apps/nextcloud.nix, registre projects.json, script source de sauvegarde, module PHP upload | pas de déclenchement de sauvegarde ni activation |
+| Correctifs PHP Nextcloud | module, guard, containment, filter-test-cgi.sh | scripts source inactifs, versions à requalifier |
+| PostgreSQL | module, lib/databases.nix, databases.json | anciennes options métier et rôles à raccorder explicitement |
+| Keycloak | paquet, sources Java, thèmes, META-INF, constructeur Java local | pas de realm privé ni de déploiement |
+| Broker d'identité historique | module mrj-auth et ses sources Python/HTML/JS/CSS | référence séparée du serveur applicatif, pas de service nouveau |
+
+Les fichiers Java et le petit constructeur local de l'extension Keycloak sont
+conservés comme source de l'intégration du logiciel tiers, sans droit d'exécution.
+Les seuls helpers source hors de leurs dossiers de composant sont ceux référencés
+par les déclarations de sauvegarde ou d'identité. Aucun helper SSH administratif,
+commande de déploiement générique ou ancienne chaîne de build applicative n'est
+conservé.
+
+* Imports volontairement inopérants
+Les configurations de machine et de passerelle restent des pièces de référence,
+pas un ensemble déployable. Les absences suivantes sont délibérées :
+=dependency-audit.json= énumère chaque référence relative contrôlée et son état.
+
+| Source conservée | Référence absente | Motif et suite |
+|------------------+------------------+---------------|
+| hosts/hostinger/configuration.nix | apps/matheval.nix, apps/vision.nix, apps/vision-interface.nix | ancien runtime retiré du tip ; construire une future configuration Rust distincte |
+| modules/gateway.nix | modules metier, log, audition et auxiliaires métier | conserver le routage comme information ; réécrire une passerelle qualifiée sans importer ces modules |
+| modules/identite.nix | services/sources-mrjam.nix | ancien paquet d'auxiliaires retiré ; isoler la future intégration du fournisseur d'identité |
+| modules/identite.nix | operations/identite/realm.json et profil éventuel | configuration privée non rapatriée ; demander un export de schéma/configuration autorisé si nécessaire |
+
+Les références existantes à des options historiques dans PostgreSQL ne créent
+aucun utilisateur ni rôle tant que cette source reste non importée. Une reprise
+ne doit pas inventer un =mkDefault= ou supprimer une assertion pour forcer une
+évaluation favorable. Les versions installées, l'état réel et les capacités du
+VPS restent à observer par le mécanisme borné.
+
+* Validation Elm et frontends
+=interface-log/= et =interface-audition/= conservent leurs sources et leurs
+tests. Les remplacements approuvés de versions/dépendances sont appliqués par le
+lot de publication final. Les anciennes règles =assemblage/elm-review/= et leurs
+fixtures quittent ce dépôt ; l'unique source est =mrjam-validation/review=.
+Les packages de style restent partagés, avec leur résolution qualifiée.
+
+* Vérification avant publication et avant exploitation
+Le manifeste local classe tous les blobs de l'ancien arbre et interdit tout
+fichier de workflow, source de l'ancien runtime ou copie active des règles Elm
+dans son résultat. Les overlays =environment/=, =operations/= et documents
+ajoutés par root doivent subir les mêmes contrôles après assemblage complet.
+
+Cette vérification de chemins ne prouve pas qu'un import indirect, une commande
+ou un service serait sûr à exécuter. Aucune évaluation système ni activation de
+ces références n'a été réalisée ; leur mise à l'écart sert précisément à éviter
+de présenter l'ancien ensemble comme prêt à déployer.

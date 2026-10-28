@@ -1,0 +1,27 @@
+#+title: Reprise du chantier VPS
+#+language: fr
+
+Le mandat, l'état courant et le prompt de reprise complets sont dans le dépôt
+privé [[https://github.com/MrJ-am/mrjam-plateforme][mrjam-plateforme]], dossier =docs/=. Les preuves et propositions de règles
+sont dans [[https://github.com/MrJ-am/mrjam-validation][mrjam-validation]]. Les deux dépôts doivent être publiés et accessibles
+avant de créer l'environnement à partir de leurs branches principales.
+
+Ce dépôt fournit =environment/= pour le créateur Cloud. Utiliser son
+=README.org= et son =start/SKILL.md= dans les champs réels de l'interface.
+La publication d'un environnement ne publie pas le serveur sur le VPS.
+
+Les frontends Log/Audition conservent leurs sources et les pins exacts de
+=frontends.lock.json=. La qualification est rejouable depuis
+=mrjam-validation/frontend-qualification= avec les règles =review/= du même
+dépôt ; suivre son README et utiliser les versions préparées dans environment.
+Aucune copie des règles ou commande de déploiement n'est ajoutée ici.
+
+Le module Nix Rust reste désactivé. Les références NixOS et schémas sont des
+sources pour la reprise, avec leurs dépendances historiques absentes signalées.
+Il faut reconstruire et qualifier la configuration d'exploitation avant toute
+activation ; ce dépôt courant ne doit pas servir à lancer un switch NixOS.
+
+Les prochaines étapes établissent les accès bornés, l'inventaire réel sans
+données personnelles, le pont Forgejo à https://forge.mrj.am, les autorités
+de validation/exploitation et les fonctions métier manquantes. Le développement
+utilise uniquement des bases et identités synthétiques, sans secrets de production.
