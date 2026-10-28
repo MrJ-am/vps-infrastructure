@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "observed_on": "2026-10-28",
+  "platform": "linux-x86_64",
+  "node": "24.19.0",
+  "npm": "11.9.0",
+  "rust": {
+    "version": "1.99.1",
+    "target": "x86_64-unknown-linux-gnu",
+    "url": "https://static.rust-lang.org/dist/2026-10-15/rust-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+    "sha256": "231fcae47ee950621374725b5fc3b5441d2fbda2955ac45dd7dc816d8876cfe7",
+    "manifest_url": "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml",
+    "manifest_sha256": "fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463"
+  },
+  "npm_packages": {
+    "elm": "0.19.1-6",
+    "elm-review": "2.13.5",
+    "@playwright/test": "1.64.1",
+    "elm-test": "0.19.1-revision17"
+  },
+  "postgres": {
+    "version": "17.11",
+    "server_version_num": 170011,
+    "major": 17,
+    "pgvector": "0.8.7",
+    "image": "docker.io/pgvector/pgvector@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d",
+    "amd64_manifest_digest": "sha256:cd4ccfdaf62cbfeb5c6ee19ef0dd663406d4ed740c320b324d016a90e85385b3",
+    "source_tag": "0.8.7-pg17-bookworm",
+    "tag_last_updated": "2026-10-01T17:36:15.174181Z",
+    "port": 55432,
+    "data_directory": "/var/lib/postgresql/data"
+  },
+  "nginx": {
+    "image": "docker.io/library/nginx@sha256:47928bf67eb62a1863cb08d9ecb52d3e704304ba614eaee17884204677702951",
+    "source_tag": "stable-alpine",
+    "port": 18080
+  }
+}

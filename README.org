@@ -1,0 +1,21 @@
+#+title: Infrastructure MRJ.AM — préparation Rust et Elm
+#+language: fr
+
+Ce dépôt prépare l'environnement Rust, Elm, Nginx, PostgreSQL et Playwright.
+Les déploiements sont gelés ; le serveur actuellement exploité reste inchangé.
+Le contenu de cette branche n'est pas une configuration de machine activable.
+
+- =environment/= : environnement de développement et vérifications locales.
+- =operations/= : propositions bornées d'exploitation ; le module Rust NixOS
+  reste désactivé et n'active aucun routage.
+- =interface-log/= et =interface-audition/= : frontends Elm conservés.
+- =reference-nixos/= : sources historiques des services tiers et de l'identité,
+  non importées par l'environnement ; dépendances et limites y sont documentées.
+- =reference-schemas/= et =reference-contracts/= : sources utiles à la reprise,
+  sans migration automatique ni preuve de qualification actuelle.
+
+Les propositions de règles canoniques Elm sont dans =mrjam-validation/review= ;
+leur adoption protégée reste à réaliser.
+Aucune copie de ces règles ni aucun workflow de déploiement n'est maintenu ici.
+La forge cible reste =https://forge.mrj.am=. La poursuite de l'exploitation exige
+la qualification et les accès bornés prévus par le mandat.

@@ -1,0 +1,4 @@
+.syntax-tools/
+__pycache__/
+*.pyc
+

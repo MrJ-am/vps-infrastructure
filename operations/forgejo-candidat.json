@@ -1,8 +1,0 @@
-{
-  "format": 1,
-  "revision_sources": "cff7b9401bb65cc93973eae68499cd0e37ad465b",
-  "domain": "forge.mrj.am",
-  "qualification_locale": "assemblage/forgejo/qualification-liens-locale.json",
-  "activation": "DNS A exact et sauvegarde/restauration actuelle requis",
-  "objet": "Liens Org relatifs résolus dans le contexte Git ; sources compatibles Emacs"
-}

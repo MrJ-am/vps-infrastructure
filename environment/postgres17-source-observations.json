@@ -1,0 +1,76 @@
+{
+  "observed_on": "2026-10-28",
+  "declared_infrastructure": {
+    "repository": "MrJ-am/vps-infrastructure",
+    "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+    "path": "modules/postgresql.nix",
+    "git_blob": "2d8860c47c457a7a6a253d43b8864f9b1f677a3d",
+    "postgres_package": "pkgs.postgresql_17",
+    "pgvector_option": "infrastructure.postgresql.visionSemantique",
+    "actual_production_version": "not queried"
+  },
+  "image_public_metadata": {
+    "url": "https://hub.docker.com/v2/repositories/pgvector/pgvector/tags/0.8.7-pg17-bookworm",
+    "tag": "0.8.7-pg17-bookworm",
+    "index_digest": "sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d",
+    "last_updated": "2026-10-01T17:36:15.174181Z",
+    "linux_amd64_manifest": "sha256:cd4ccfdaf62cbfeb5c6ee19ef0dd663406d4ed740c320b324d016a90e85385b3"
+  },
+  "image_local_observation": {
+    "Id": "sha256:151aa1c2e849e7828ed8aef2183ae15f692cbe887d2f28921d8b44b26e154d7e",
+    "RepoDigests": [
+      "pgvector/pgvector@sha256:ac08538c6f8b9904c33c8224c5e5706dbe760aca29db1d096972b4052c22a75d"
+    ],
+    "Architecture": "amd64",
+    "Os": "linux",
+    "Created": "2026-10-01T17:35:53.866963013Z",
+    "pg_env": [
+      "PG_MAJOR=17",
+      "PG_VERSION=17.11-1.pgdg12+2",
+      "PGDATA=/var/lib/postgresql/data"
+    ]
+  },
+  "postgres_official_release": {
+    "url": "https://www.postgresql.org/docs/release/17.11/",
+    "version": "17.11",
+    "release_date_shown": "2026-08-13",
+    "image_contains_same_version": true,
+    "pending_17_10_to_17_11_rebuild": false
+  },
+  "elm_test": {
+    "registry_url": "https://registry.npmjs.org/elm-test/0.19.1-revision17",
+    "version": "0.19.1-revision17",
+    "published_at": "2025-11-18T09:39:49.094Z",
+    "node_engines": {
+      "node": ">=12.20.0"
+    },
+    "tarball": "https://registry.npmjs.org/elm-test/-/elm-test-0.19.1-revision17.tgz",
+    "integrity": "sha512-P9J8tXdLXmqgIMlSozfcb/KCORq4GuxfwBbzqFLMss8KlGmUKonOJwseRX6xVkdU5xgGVA/mz9rfMTNomIbwng==",
+    "installation_command": [
+      "npm",
+      "install",
+      "--save-dev",
+      "--save-exact",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "elm-test@0.19.1-revision17"
+    ],
+    "observed_binary_version": "0.19.1-revision17",
+    "new_lock_vulnerabilities_reported": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "rule_suite_qualification": "Separate validation/preuve-elm-rules.json, executed by independent_contracts; not claimed by this environment helper"
+  },
+  "preserved_baseline_sha256": {
+    "evidence-postgres18/package-lock.json": "40a623e2854a3de1f516def00f7e4ed9c2ca80589b3262b5c7396f4a1cbf3efd",
+    "evidence-postgres18/package.json": "486f0665002cad5d4cfc31afbe0245480fbb30caaf113d85aa3357d4b2f05543",
+    "evidence-postgres18/toolchains.lock.json": "71f989b730680ad360ecbc68d5e56c77135f3d76f77d8f373f8716a61cb21075",
+    "evidence-postgres18/verification.json": "7636e2d3f485cea17cc602e3a5378048ca533488e8c11f102b60832eb3716e97"
+  }
+}

@@ -1,0 +1,657 @@
+{
+  "schema_version": 1,
+  "repository": "MrJ-am/vps-infrastructure",
+  "base_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "scope": "tree_metadata_with_selected_nix_source_reference_scan_no_history_clone_no_remote_change",
+  "source_blobs_to_preserve": [
+    {
+      "path": "apps/nextcloud.nix",
+      "blob": "444a4e61424ecf87a6392e45e9c3923239b9b245",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/elm-review/AUDIT.md",
+      "blob": "ac424cac93139991b1fd843988f07470ee890901",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/elm.json",
+      "blob": "b12cdc6d28a58f6b0520e7d6cc396d7d53242bd0",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/outils.lock.json",
+      "blob": "2624874441d89d650708ba0b00b57748b1e8978a",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/outils.nix",
+      "blob": "36f72bae3044a9f52692d902548d5d71201c7d3a",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/elm-review/ressources.json",
+      "blob": "076a2b2f1999bae372292623135ab015db4517dc",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/src/MrJam/Presentation.elm",
+      "blob": "00064bf4ecdf1d99f04207adddd24ed1c7f8efcb",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/src/ReviewConfig.elm",
+      "blob": "d19ee9e3afa6766ffcf39a3a3410a4279f578f2a",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/elm-review/tests/PresentationTest.elm",
+      "blob": "ed870e3d32e5503ecf75808f8cf9931e28f83db5",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/COMPTE-RENDU.md",
+      "blob": "3dc10af2fa9e735e5c5bcb34e2dc20d40a4cdb0b",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/LIENS-ORG.md",
+      "blob": "692606d015e3e7d6464afbd08a479730b20313b2",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/README.md",
+      "blob": "0757693485e7d5fde1c6625ffb751e0bd62bbb1d",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/SSO-QUOTAS.md",
+      "blob": "419ee5db424e82e9a9c29938afadb41273540cd1",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/assets.nix",
+      "blob": "216b6ef55ced3a80e3ce35d1cf82c6f8f4f3e33a",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/forgejo/assets/config.js",
+      "blob": "7988a1b0d5f2ab739ef88fc41677c2849519fed7",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/assets/footer.tmpl",
+      "blob": "8f9bbf36dfcb17e7db392388683c99538e119623",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/assets/org.css",
+      "blob": "9f835eb313e1e4ad5109259bae1fd41ff136e398",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/fixtures/README.org",
+      "blob": "4b276de114471adf990231af539bf7d66dd94131",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/fixtures/docs/delimiteurs.org",
+      "blob": "7fda80bf84411d23bb0577dcdc7e9f24b8dbef26",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/fixtures/docs/mathematiques.org",
+      "blob": "82aa9b2078422a472a026461e61cf46fd396b8d7",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/fixtures/docs/structure.org",
+      "blob": "fe266f861b8689e3ab42955856a8369eec0be077",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/fixtures/images/point.png",
+      "blob": "98b18fd9441e2f0590ebcf6689b8be573ff4701e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/integration.nix",
+      "blob": "7c4d5d39228ab178be6145a5082b8d3e70ef2adc",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/forgejo/module.nix",
+      "blob": "2368635f66e8cccfe1b6c5698ab973f34e21e799",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/forgejo/org-links.lua",
+      "blob": "a2a58f57dbdb8abc225cc657f6e1ee8a2b0bc150",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/promouvoir.py",
+      "blob": "45d9514dc3d68e943daa99cc9639272fa02a44f8",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-sso.py",
+      "blob": "942356a7ca72be94c2f01d866dccc1bec9d80657",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/qualification.py",
+      "blob": "aea7a1398ac11e67308ef23c9dcd697c81c6774e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/sso.py",
+      "blob": "ba62d1fd677af3e321853445f7c827ea74e34a5e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/verify-backup.py",
+      "blob": "a29f8e7419b66a216c68265531d230f9afd86427",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/forgejo/versions.json",
+      "blob": "24e6fa84a720b149483f3b9c431bd749e1bac7e6",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/kanidm/INTEGRATION.md",
+      "blob": "ab1897e15bdd1aadab8e9e152584ade8c3a37942",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/kanidm/artefact.nix",
+      "blob": "7add0977e79e1cf2ccd27d9b3cf3cc19127a1dcd",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/kanidm/dependances.json",
+      "blob": "2bf77653b7805933774c3f21e8f72fa1e6742c4e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/kanidm/paquet.nix",
+      "blob": "ba5381d299d158d881bb79260130ab6931828c3c",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/kanidm/service.nix",
+      "blob": "ec8287af6afe0238d051ff5e4edd292e7c5a025b",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/containment.nix",
+      "blob": "b8f377beb35693e384538abe666acaa6e0f5f891",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/evaluation.nix",
+      "blob": "1175655dbfba8b5bc77b1d1fb3efd329c1c4b083",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/filter-test-cgi.sh",
+      "blob": "a70fc13b9e68bf0f5e1c5f35abc53a197466136a",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/fixture.nix",
+      "blob": "8a3381be92cfce95eccf9fe72d62530dbdee36be",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/guard.nix",
+      "blob": "e463b7c6b57d3a42da89d03f0aca402b5e9cc1bd",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/module.nix",
+      "blob": "04fdffa3e50c0541ccbbaf5d7de8cd9741064c1a",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/promote.py",
+      "blob": "882550ddfd2c690344245d1c992aebd4af9e3ee8",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/README.md",
+      "blob": "ed535149136dcf1f453c54e2916b05c776630cf2",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/client.py",
+      "blob": "94ee62cd27a75a888bcf7b0055937249eb92e89e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/module.nix",
+      "blob": "2d2c802db439ccdedccf164fbea7ede7197bdef5",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/promote.py",
+      "blob": "639f46cca904e87a4cf9e6c209c61357b7b4a0c7",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/php-upload-progress/README.md",
+      "blob": "4a740ab4b7efc121c4fed304694b050113a930ec",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "assemblage/php-upload-progress/evaluation.nix",
+      "blob": "5fb134d65a90f92bb78c6979b0cf7549e6bf3459",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/php-upload-progress/module.nix",
+      "blob": "cfc97ff536f4a1a72dff05ec8666ae09d28622bc",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "assemblage/php-upload-progress/promote.py",
+      "blob": "e32f06d62c1b961c1694b2c1571fa5f2dedbacee",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "hosts/hostinger/hardware-configuration.nix",
+      "blob": "e4a62b31d6719468a970bb8d5d038708638ae978",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "hosts/hostinger/nextcloud-acme.nix",
+      "blob": "135446f94dfea850e30372d1758cbd2ba2fcae7a",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "lib/databases.nix",
+      "blob": "25a4e34b68dba58015dc2cd32dabc16491a62dbe",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "lib/keycloak-optimise.nix",
+      "blob": "c265a4702969369476297ed8a4f5ec3ac69b2167",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "lib/virtual-hosts.nix",
+      "blob": "0b8cd6962b9722a7c9b3c753bc778d73009d6a21",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "licenses/AGPL-3.0.txt",
+      "blob": "0c97efd25b5974b974ed9a8a18207bc4f55bb338",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "licenses/SERVICES-MRJAM.md",
+      "blob": "a1bfb869feca37a2426a5ad6afce65ee446ab0ea",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "modules/gateway.nix",
+      "blob": "c4b4f98e9d2e12eab13b8fa4a6c919d82343583f",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "modules/postgresql.nix",
+      "blob": "2d8860c47c457a7a6a253d43b8864f9b1f677a3d",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "scripts/kanidm-api-privee.py",
+      "blob": "97394540e8ce6d7d882b983aa73b4de4b7eec5df",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "scripts/nextcloud-backup.sh",
+      "blob": "fe36d296d83402d67284b3da62efa0ce7f5d20a6",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/compiler.sh",
+      "blob": "ded733e0185205e61c57272b4cc4d37084b3d57e",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/default.nix",
+      "blob": "864890d9a55238dbb6da5c2e867d785ac8cdc867",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "services/keycloak-mrjam/paquet.nix",
+      "blob": "82bbebc80792b7e7c03f1052a4a44f2dae26f1fe",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.AuthenticatorFactory",
+      "blob": "8b08b7895a6ecb36f94d113035ba929783be46e0",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.RequiredActionFactory",
+      "blob": "a1a3620959aff57feed6efc9de9096cfc458982d",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.actiontoken.ActionTokenHandlerFactory",
+      "blob": "785a0b39c4439789d6b676aa7332ce5ea1cd813f",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.email.EmailSenderProviderFactory",
+      "blob": "d2dc6d960ed4451b7483d7adbeb322d7545bc990",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/src/org/mrjam/identite/ConnexionCourriel.java",
+      "blob": "211a2d585e6e42fef2905349bac3e23fd0c907fa",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/src/org/mrjam/identite/CourrielSecurise.java",
+      "blob": "44a85407164802d160bd20536b8ef0a45ce961b5",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/src/org/mrjam/identite/FermerCompte.java",
+      "blob": "41bd439407d511a672fb6d23cd3c3ef554102515",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/src/org/mrjam/identite/JetonCourriel.java",
+      "blob": "81e43d10e5140cd8e75c9ab0f9073a29a05007d1",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/src/org/mrjam/identite/VerifierCourriel.java",
+      "blob": "b54db9de29bf8ff99e3656ca57e1fe045aaf599f",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/email/html/connexion-courriel.ftl",
+      "blob": "8f477abdd0340ff728182daed708ba03f34ad549",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/email/messages/messages_fr.properties",
+      "blob": "3a71ae88cdca39e5bad9831b885fd6b8d7f03357",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/email/text/connexion-courriel.ftl",
+      "blob": "496a4ef8b748fe5f1c4c5aff7428f844f5c3d3de",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/email/theme.properties",
+      "blob": "bf6d1df7dbc8b094255924ae729933cbc576c3fa",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/login/connexion-courriel.ftl",
+      "blob": "c8b53e9019f4fbed4087ad1cba363325ed757ce8",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/login/fermer-compte.ftl",
+      "blob": "2888e6b2c3f618854df7195e9771df7ee41a0f63",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/login/messages/messages_fr.properties",
+      "blob": "e975a1d9f40615d400dcc013f9efb3a70fe8c782",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/login/resources/css/mrjam.css",
+      "blob": "b428be7e6934af3b70405f18094730b7c7447c21",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "services/keycloak-mrjam/theme/login/theme.properties",
+      "blob": "5422f01283b0a63a7fed418715471ea904a9a7c4",
+      "category": "preserve_source_without_activation",
+      "content_review": "not_read"
+    },
+    {
+      "path": "tests/forgejo-integration.nix",
+      "blob": "dca319ea54a768f34dd51602e9255d6cb25328c8",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "tests/kanidm-configuration.nix",
+      "blob": "c1a17263310d5dfae28cf6628e933ff4fdba1f04",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    },
+    {
+      "path": "tests/nextcloud-acme.nix",
+      "blob": "0e38ab13192a51ea7922759db0c5f2e2b612d520",
+      "category": "preserve_source_without_activation",
+      "content_review": "selected_code_reference_scan"
+    }
+  ],
+  "non_source_metadata_not_to_copy_to_new_environment": [
+    {
+      "path": "assemblage/forgejo/preparation-vps.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-liens-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-liens-production.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-production.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-sso-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/forgejo/qualification-sso-production.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/installation-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/qualification-connexion-production-20261013.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/qualification-interface-production-20261013.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/qualification-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/qualification-mcp-production-20261013.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/qualification-production-20261013.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/reference-prebascule-20261012.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/reference-proprietaire-20261012.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/kanidm/vendor-qualification.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/qualification-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/target.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/qualification-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/qualification-production.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/nextcloud-sso/target.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/php-upload-progress/qualification-locale.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    },
+    {
+      "path": "assemblage/php-upload-progress/target.json",
+      "category": "historical_report_or_non_source_keep_only_in_return_reference"
+    }
+  ],
+  "notes": [
+    "Preserving code does not import or activate it",
+    "Most retained source contents not read; no claim of complete sensitivity audit",
+    "Historical qualification reports are not current authority",
+    "Promotion helpers depend on historical targets excluded from current tree and must stay non-executable until re-qualified",
+    "Root owns final retained tree and import consistency review"
+  ],
+  "dependency_followup_required": [
+    {
+      "from": "apps/nextcloud.nix",
+      "requires": "projects.json",
+      "resolution": "preserve_or_replace_reviewed_service_registry_without_personal_data"
+    },
+    {
+      "from": "modules/postgresql.nix",
+      "requires": "databases.json",
+      "resolution": "preserve_or_replace_reviewed_role_registry_without_SQL_data"
+    },
+    {
+      "from": "hosts/hostinger/nextcloud-acme.nix",
+      "requires": "hosts/hostinger/logique.nix",
+      "resolution": "old_host_chain_requires_independent_review_do_not_import_new_module"
+    },
+    {
+      "from": "modules/gateway.nix",
+      "requires": "modules/metier.nix and legacy helpers",
+      "resolution": "rewrite_gateway_imports_or_keep_as_inactive_historical_reference"
+    },
+    {
+      "from": "assemblage/forgejo/module.nix",
+      "requires": "scripts/kanidm-api-privee.py and verify-backup.py",
+      "resolution": "preserved_source_only_no_execution_by_agents"
+    },
+    {
+      "from": "promotion helpers",
+      "requires": "historical target JSON",
+      "resolution": "production_entrypoints_disabled_new_reviewed_plan_needed"
+    }
+  ]
+}

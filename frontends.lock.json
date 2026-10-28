@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "proposed-not-independently-adopted",
+  "protected_authority": false,
+  "canonical_rules_proposal": {
+    "repository": "MrJ-am/mrjam-validation",
+    "path": "review",
+    "protected_adoption": "remaining"
+  },
+  "inventory_provenance": {
+    "file": "frontend-qualification/frontend-inventory.json",
+    "sha256": "cb04d36adae7850f8a548ca432a29fe52751c2ddeb932245d64e0ba8782194eb"
+  },
+  "frontends": [
+    {
+      "id": "log",
+      "manifest": "interface-log/elm.json",
+      "manifest_git_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "manifest_sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0",
+      "source_directories": [
+        "src",
+        ".dependances/style-mrjam/src"
+      ],
+      "entrypoints": [
+        "src/Main.elm"
+      ],
+      "style": {
+        "repository": "MrJ-am/style-mrjam",
+        "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+        "source_directory": ".dependances/style-mrjam/src",
+        "elm_source_files": 54
+      },
+      "provenance": {
+        "repository": "MrJ-am/vps-infrastructure",
+        "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+        "historical_style_binding": "assemblage/manifest.json",
+        "historical_style_binding_git_blob": "5ca790a2df4b6a20c48f51fba21c2de6252ad0d8",
+        "historical_binding_is_not_present_in_this_tip": true,
+        "qualification_status": "passed",
+        "baseline_result": "result-log.json"
+      }
+    },
+    {
+      "id": "audition",
+      "manifest": "interface-audition/elm.json",
+      "manifest_git_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "manifest_sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0",
+      "source_directories": [
+        "src",
+        ".dependances/style-mrjam/src"
+      ],
+      "entrypoints": [
+        "src/Main.elm"
+      ],
+      "style": {
+        "repository": "MrJ-am/style-mrjam",
+        "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+        "source_directory": ".dependances/style-mrjam/src",
+        "elm_source_files": 54
+      },
+      "provenance": {
+        "repository": "MrJ-am/vps-infrastructure",
+        "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+        "historical_style_binding": "assemblage/manifest.json",
+        "historical_style_binding_git_blob": "5ca790a2df4b6a20c48f51fba21c2de6252ad0d8",
+        "historical_binding_is_not_present_in_this_tip": true,
+        "qualification_status": "passed",
+        "baseline_result": "result-audition.json"
+      }
+    }
+  ],
+  "notes": [
+    "Source directories are relative to each frontend manifest and match the qualified inventory exactly.",
+    "The previous assembly manifest is provenance only; this extracted binding does not restore its old runtime/tooling.",
+    "Pinned style revisions are not upgraded or unified by this preparation.",
+    "Historical result filenames describe the qualification source, not files available in this repository."
+  ]
+}

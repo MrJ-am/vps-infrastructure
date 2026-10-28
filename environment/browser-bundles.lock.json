@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "platform": "linux-x86_64",
+  "playwright": "1.64.1",
+  "chromium_revision": "1248",
+  "chromium_version": "156.0.8078.4",
+  "algorithm": "sha256-path-length-path-kind-content-sha256-v1",
+  "ignored_marker_names": [
+    "DEPENDENCIES_VALIDATED",
+    "INSTALLATION_COMPLETE"
+  ],
+  "bundles": {
+    "chromium-1248": {
+      "sha256": "d4a9403fe18d5fa20e60780ccd03ad52a53e2bf786f81d29efdf21440497e044",
+      "files": 301
+    },
+    "chromium_headless_shell-1248": {
+      "sha256": "b485084e2ff52d922292509cdcf512ce9592e519b11a9ca209553c565cba1a84",
+      "files": 287
+    },
+    "ffmpeg-1013": {
+      "sha256": "a59aadc8417f6d18ab6821d94d9a1df44990e8e6fc5c2c574f55e74a0bcac370",
+      "files": 2
+    }
+  }
+}

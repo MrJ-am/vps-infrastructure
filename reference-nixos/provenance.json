@@ -1,0 +1,701 @@
+{
+  "schema_version": 1,
+  "repository": "MrJ-am/vps-infrastructure",
+  "base_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "status": "inactive_source_reference_not_deployed_state",
+  "renames": [
+    {
+      "source_path": "apps/logique.nix",
+      "source_blob": "64f89c3f0c8aaf235801e5efd41756e8eaa28966",
+      "target_path": "reference-nixos/apps/logique.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "apps/nextcloud.nix",
+      "source_blob": "444a4e61424ecf87a6392e45e9c3923239b9b245",
+      "target_path": "reference-nixos/apps/nextcloud.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/audition/001-schema.sql",
+      "source_blob": "a907a1893da184354d813c374167bc2c75243c21",
+      "target_path": "reference-schemas/audition/001-schema.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "assemblage/audition/CONTRAT.md",
+      "source_blob": "6b746a82d1615f62e74c4ce363ee5f3ddc3f38ab",
+      "target_path": "reference-contracts/audition/CONTRAT.md",
+      "target_mode": "100644",
+      "reason": "historical_contract_source_not_current_acceptance_authority"
+    },
+    {
+      "source_path": "assemblage/audition/MCP.md",
+      "source_blob": "089e56c7140130bdc824b635cf11b93e887dc8df",
+      "target_path": "reference-contracts/audition/MCP.md",
+      "target_mode": "100644",
+      "reason": "historical_contract_source_not_current_acceptance_authority"
+    },
+    {
+      "source_path": "assemblage/audition/roles.sql",
+      "source_blob": "1e959f2b81bb81eb95b3ce2a9c7b6f49a33834b2",
+      "target_path": "reference-schemas/audition/roles.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "assemblage/forgejo/assets.nix",
+      "source_blob": "216b6ef55ced3a80e3ce35d1cf82c6f8f4f3e33a",
+      "target_path": "reference-nixos/assemblage/forgejo/assets.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/assets/config.js",
+      "source_blob": "7988a1b0d5f2ab739ef88fc41677c2849519fed7",
+      "target_path": "reference-nixos/assemblage/forgejo/assets/config.js",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/assets/footer.tmpl",
+      "source_blob": "8f9bbf36dfcb17e7db392388683c99538e119623",
+      "target_path": "reference-nixos/assemblage/forgejo/assets/footer.tmpl",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/assets/org.css",
+      "source_blob": "9f835eb313e1e4ad5109259bae1fd41ff136e398",
+      "target_path": "reference-nixos/assemblage/forgejo/assets/org.css",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/fixtures/README.org",
+      "source_blob": "4b276de114471adf990231af539bf7d66dd94131",
+      "target_path": "reference-nixos/assemblage/forgejo/fixtures/README.org",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/fixtures/docs/delimiteurs.org",
+      "source_blob": "7fda80bf84411d23bb0577dcdc7e9f24b8dbef26",
+      "target_path": "reference-nixos/assemblage/forgejo/fixtures/docs/delimiteurs.org",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/fixtures/docs/mathematiques.org",
+      "source_blob": "82aa9b2078422a472a026461e61cf46fd396b8d7",
+      "target_path": "reference-nixos/assemblage/forgejo/fixtures/docs/mathematiques.org",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/fixtures/docs/structure.org",
+      "source_blob": "fe266f861b8689e3ab42955856a8369eec0be077",
+      "target_path": "reference-nixos/assemblage/forgejo/fixtures/docs/structure.org",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/fixtures/images/point.png",
+      "source_blob": "98b18fd9441e2f0590ebcf6689b8be573ff4701e",
+      "target_path": "reference-nixos/assemblage/forgejo/fixtures/images/point.png",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/module.nix",
+      "source_blob": "2368635f66e8cccfe1b6c5698ab973f34e21e799",
+      "target_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/org-links.lua",
+      "source_blob": "a2a58f57dbdb8abc225cc657f6e1ee8a2b0bc150",
+      "target_path": "reference-nixos/assemblage/forgejo/org-links.lua",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/sso.py",
+      "source_blob": "ba62d1fd677af3e321853445f7c827ea74e34a5e",
+      "target_path": "reference-nixos/assemblage/forgejo/sso.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/verify-backup.py",
+      "source_blob": "a29f8e7419b66a216c68265531d230f9afd86427",
+      "target_path": "reference-nixos/assemblage/forgejo/verify-backup.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/forgejo/versions.json",
+      "source_blob": "24e6fa84a720b149483f3b9c431bd749e1bac7e6",
+      "target_path": "reference-nixos/assemblage/forgejo/versions.json",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/kanidm/artefact.nix",
+      "source_blob": "7add0977e79e1cf2ccd27d9b3cf3cc19127a1dcd",
+      "target_path": "reference-nixos/assemblage/kanidm/artefact.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/kanidm/dependances.json",
+      "source_blob": "2bf77653b7805933774c3f21e8f72fa1e6742c4e",
+      "target_path": "reference-nixos/assemblage/kanidm/dependances.json",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/kanidm/paquet.nix",
+      "source_blob": "ba5381d299d158d881bb79260130ab6931828c3c",
+      "target_path": "reference-nixos/assemblage/kanidm/paquet.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/kanidm/service.nix",
+      "source_blob": "ec8287af6afe0238d051ff5e4edd292e7c5a025b",
+      "target_path": "reference-nixos/assemblage/kanidm/service.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-php-security/containment.nix",
+      "source_blob": "b8f377beb35693e384538abe666acaa6e0f5f891",
+      "target_path": "reference-nixos/assemblage/nextcloud-php-security/containment.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-php-security/filter-test-cgi.sh",
+      "source_blob": "a70fc13b9e68bf0f5e1c5f35abc53a197466136a",
+      "target_path": "reference-nixos/assemblage/nextcloud-php-security/filter-test-cgi.sh",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-php-security/guard.nix",
+      "source_blob": "e463b7c6b57d3a42da89d03f0aca402b5e9cc1bd",
+      "target_path": "reference-nixos/assemblage/nextcloud-php-security/guard.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-php-security/module.nix",
+      "source_blob": "04fdffa3e50c0541ccbbaf5d7de8cd9741064c1a",
+      "target_path": "reference-nixos/assemblage/nextcloud-php-security/module.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-sso/client.py",
+      "source_blob": "94ee62cd27a75a888bcf7b0055937249eb92e89e",
+      "target_path": "reference-nixos/assemblage/nextcloud-sso/client.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/nextcloud-sso/module.nix",
+      "source_blob": "2d2c802db439ccdedccf164fbea7ede7197bdef5",
+      "target_path": "reference-nixos/assemblage/nextcloud-sso/module.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/php-upload-progress/module.nix",
+      "source_blob": "cfc97ff536f4a1a72dff05ec8666ae09d28622bc",
+      "target_path": "reference-nixos/assemblage/php-upload-progress/module.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "assemblage/roles-metier.sql",
+      "source_blob": "0405797ae8efb5284a2c7d25109c52a1eaeea42d",
+      "target_path": "reference-schemas/historical-roles.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "databases.json",
+      "source_blob": "6da794fbc189929ece9ed3d2364eec3ca182ab16",
+      "target_path": "reference-nixos/databases.json",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "hosts/hostinger/configuration.nix",
+      "source_blob": "e7b87c8fc4335f489a91f887d283aadcc5487a4d",
+      "target_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "hosts/hostinger/hardware-configuration.nix",
+      "source_blob": "e4a62b31d6719468a970bb8d5d038708638ae978",
+      "target_path": "reference-nixos/hosts/hostinger/hardware-configuration.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "hosts/hostinger/logique-acme.nix",
+      "source_blob": "7fd36bcf32f3c68e6399515c912c3f6346df36f3",
+      "target_path": "reference-nixos/hosts/hostinger/logique-acme.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "hosts/hostinger/logique.nix",
+      "source_blob": "99c5cc08e9192804eee652acdf933f4aba405912",
+      "target_path": "reference-nixos/hosts/hostinger/logique.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "hosts/hostinger/nextcloud-acme.nix",
+      "source_blob": "135446f94dfea850e30372d1758cbd2ba2fcae7a",
+      "target_path": "reference-nixos/hosts/hostinger/nextcloud-acme.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "interface-audition/elm.json",
+      "source_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "target_path": "interface-audition/elm.json",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-audition/index.html",
+      "source_blob": "2ffb3678f751127d80d02bd9e3d2be263037c473",
+      "target_path": "interface-audition/index.html",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-audition/pont.js",
+      "source_blob": "d48bb3bafcfefbb25d6a1c16e52d37c10c18c3c5",
+      "target_path": "interface-audition/pont.js",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-audition/src/Donnees.elm",
+      "source_blob": "0cff6bac33c7b045a8d15d2dfd6bdba55b3bc01d",
+      "target_path": "interface-audition/src/Donnees.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-audition/src/Main.elm",
+      "source_blob": "87131afc080763a4bd0723d3d42afed67701491b",
+      "target_path": "interface-audition/src/Main.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-audition/tests/RepriseTest.elm",
+      "source_blob": "f139ea92cc7426272129ad4840013982c5a70e4f",
+      "target_path": "interface-audition/tests/RepriseTest.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/.gitignore",
+      "source_blob": "50eb77cf281553b89c533e2302e88f8d87371544",
+      "target_path": "interface-log/.gitignore",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/elm.json",
+      "source_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "target_path": "interface-log/elm.json",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/index.html",
+      "source_blob": "6ce7a8d7a5fd412423ffac2f72e4c2e0c25c3fcb",
+      "target_path": "interface-log/index.html",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/pont.js",
+      "source_blob": "6ed0b4287c9d03fb8a1df6edca28bd4b5d50e947",
+      "target_path": "interface-log/pont.js",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/src/Log/Protocole.elm",
+      "source_blob": "a80e79c51454c0e3785b330ef8a77732e2045422",
+      "target_path": "interface-log/src/Log/Protocole.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/src/Main.elm",
+      "source_blob": "68219c9bfb5832f21d5084b4940dd774bc211c1e",
+      "target_path": "interface-log/src/Main.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "interface-log/tests/ProtocoleTest.elm",
+      "source_blob": "13e235ccd55cbc7c71b34b8f5763735ce55e5564",
+      "target_path": "interface-log/tests/ProtocoleTest.elm",
+      "target_mode": "100644",
+      "reason": "preserved_elm_frontend_source"
+    },
+    {
+      "source_path": "lib/databases.nix",
+      "source_blob": "25a4e34b68dba58015dc2cd32dabc16491a62dbe",
+      "target_path": "reference-nixos/lib/databases.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "lib/journal-http.conf",
+      "source_blob": "c8c3590fb5746c44e5184379f0509d74c25696a7",
+      "target_path": "reference-nixos/lib/journal-http.conf",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "lib/keycloak-optimise.nix",
+      "source_blob": "c265a4702969369476297ed8a4f5ec3ac69b2167",
+      "target_path": "reference-nixos/lib/keycloak-optimise.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "lib/virtual-hosts.nix",
+      "source_blob": "0b8cd6962b9722a7c9b3c753bc778d73009d6a21",
+      "target_path": "reference-nixos/lib/virtual-hosts.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "licenses/AGPL-3.0.txt",
+      "source_blob": "0c97efd25b5974b974ed9a8a18207bc4f55bb338",
+      "target_path": "licenses/AGPL-3.0.txt",
+      "target_mode": "100644",
+      "reason": "preserved_license_notice"
+    },
+    {
+      "source_path": "licenses/SERVICES-MRJAM.md",
+      "source_blob": "a1bfb869feca37a2426a5ad6afce65ee446ab0ea",
+      "target_path": "licenses/SERVICES-MRJAM.md",
+      "target_mode": "100644",
+      "reason": "preserved_license_notice"
+    },
+    {
+      "source_path": "modules/gateway.nix",
+      "source_blob": "c4b4f98e9d2e12eab13b8fa4a6c919d82343583f",
+      "target_path": "reference-nixos/modules/gateway.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "modules/identite.nix",
+      "source_blob": "b65aef543abc451565cbe0172e744349f02623cb",
+      "target_path": "reference-nixos/modules/identite.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "modules/journal-http.nix",
+      "source_blob": "2b22a9e02418c05a6cbda1028903877be3f432b1",
+      "target_path": "reference-nixos/modules/journal-http.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "modules/mrj-auth.nix",
+      "source_blob": "aeaa9a82501ef8b61bad0efeedd9d5e3342e98bf",
+      "target_path": "reference-nixos/modules/mrj-auth.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "modules/postgresql.nix",
+      "source_blob": "2d8860c47c457a7a6a253d43b8864f9b1f677a3d",
+      "target_path": "reference-nixos/modules/postgresql.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "operations/logique-site.json",
+      "source_blob": "a8813c86d7ab15d1b14323ef8b2c7f6140d077a9",
+      "target_path": "reference-nixos/operations/logique-site.json",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "projects.json",
+      "source_blob": "e5e5bcca29a4c8d35f86ff8e87a35ba8c6b55037",
+      "target_path": "reference-nixos/projects.json",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "scripts/kanidm-api-privee.py",
+      "source_blob": "97394540e8ce6d7d882b983aa73b4de4b7eec5df",
+      "target_path": "reference-nixos/scripts/kanidm-api-privee.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "scripts/nextcloud-backup.sh",
+      "source_blob": "fe36d296d83402d67284b3da62efa0ce7f5d20a6",
+      "target_path": "reference-nixos/scripts/nextcloud-backup.sh",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "scripts/sauvegarde-externe.py",
+      "source_blob": "82cf9828d92abcaa20883125f6ed1c7101ff3b20",
+      "target_path": "reference-nixos/scripts/sauvegarde-externe.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/compiler.sh",
+      "source_blob": "ded733e0185205e61c57272b4cc4d37084b3d57e",
+      "target_path": "reference-nixos/services/keycloak-mrjam/compiler.sh",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/default.nix",
+      "source_blob": "864890d9a55238dbb6da5c2e867d785ac8cdc867",
+      "target_path": "reference-nixos/services/keycloak-mrjam/default.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/paquet.nix",
+      "source_blob": "82bbebc80792b7e7c03f1052a4a44f2dae26f1fe",
+      "target_path": "reference-nixos/services/keycloak-mrjam/paquet.nix",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.AuthenticatorFactory",
+      "source_blob": "8b08b7895a6ecb36f94d113035ba929783be46e0",
+      "target_path": "reference-nixos/services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.AuthenticatorFactory",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.RequiredActionFactory",
+      "source_blob": "a1a3620959aff57feed6efc9de9096cfc458982d",
+      "target_path": "reference-nixos/services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.RequiredActionFactory",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.actiontoken.ActionTokenHandlerFactory",
+      "source_blob": "785a0b39c4439789d6b676aa7332ce5ea1cd813f",
+      "target_path": "reference-nixos/services/keycloak-mrjam/resources/META-INF/services/org.keycloak.authentication.actiontoken.ActionTokenHandlerFactory",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/resources/META-INF/services/org.keycloak.email.EmailSenderProviderFactory",
+      "source_blob": "d2dc6d960ed4451b7483d7adbeb322d7545bc990",
+      "target_path": "reference-nixos/services/keycloak-mrjam/resources/META-INF/services/org.keycloak.email.EmailSenderProviderFactory",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/src/org/mrjam/identite/ConnexionCourriel.java",
+      "source_blob": "211a2d585e6e42fef2905349bac3e23fd0c907fa",
+      "target_path": "reference-nixos/services/keycloak-mrjam/src/org/mrjam/identite/ConnexionCourriel.java",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/src/org/mrjam/identite/CourrielSecurise.java",
+      "source_blob": "44a85407164802d160bd20536b8ef0a45ce961b5",
+      "target_path": "reference-nixos/services/keycloak-mrjam/src/org/mrjam/identite/CourrielSecurise.java",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/src/org/mrjam/identite/FermerCompte.java",
+      "source_blob": "41bd439407d511a672fb6d23cd3c3ef554102515",
+      "target_path": "reference-nixos/services/keycloak-mrjam/src/org/mrjam/identite/FermerCompte.java",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/src/org/mrjam/identite/JetonCourriel.java",
+      "source_blob": "81e43d10e5140cd8e75c9ab0f9073a29a05007d1",
+      "target_path": "reference-nixos/services/keycloak-mrjam/src/org/mrjam/identite/JetonCourriel.java",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/src/org/mrjam/identite/VerifierCourriel.java",
+      "source_blob": "b54db9de29bf8ff99e3656ca57e1fe045aaf599f",
+      "target_path": "reference-nixos/services/keycloak-mrjam/src/org/mrjam/identite/VerifierCourriel.java",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/email/html/connexion-courriel.ftl",
+      "source_blob": "8f477abdd0340ff728182daed708ba03f34ad549",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/email/html/connexion-courriel.ftl",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/email/messages/messages_fr.properties",
+      "source_blob": "3a71ae88cdca39e5bad9831b885fd6b8d7f03357",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/email/messages/messages_fr.properties",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/email/text/connexion-courriel.ftl",
+      "source_blob": "496a4ef8b748fe5f1c4c5aff7428f844f5c3d3de",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/email/text/connexion-courriel.ftl",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/email/theme.properties",
+      "source_blob": "bf6d1df7dbc8b094255924ae729933cbc576c3fa",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/email/theme.properties",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/login/connexion-courriel.ftl",
+      "source_blob": "c8b53e9019f4fbed4087ad1cba363325ed757ce8",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/login/connexion-courriel.ftl",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/login/fermer-compte.ftl",
+      "source_blob": "2888e6b2c3f618854df7195e9771df7ee41a0f63",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/login/fermer-compte.ftl",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/login/messages/messages_fr.properties",
+      "source_blob": "e975a1d9f40615d400dcc013f9efb3a70fe8c782",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/login/messages/messages_fr.properties",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/login/resources/css/mrjam.css",
+      "source_blob": "b428be7e6934af3b70405f18094730b7c7447c21",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/login/resources/css/mrjam.css",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/keycloak-mrjam/theme/login/theme.properties",
+      "source_blob": "5422f01283b0a63a7fed418715471ea904a9a7c4",
+      "target_path": "reference-nixos/services/keycloak-mrjam/theme/login/theme.properties",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/mcp.html",
+      "source_blob": "7323ba1c608b109972dbd51a039001e741f35513",
+      "target_path": "reference-nixos/services/mrj-auth/mcp.html",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/mcp.js",
+      "source_blob": "e64545ce070db6e04458989913ce5ac631aad6f1",
+      "target_path": "reference-nixos/services/mrj-auth/mcp.js",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/oauth.py",
+      "source_blob": "c1b7bb8dd510eb82fb520b3c27fa3e59ca858475",
+      "target_path": "reference-nixos/services/mrj-auth/oauth.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/oidc.py",
+      "source_blob": "295c59d15c85ae892151c82714ee5d742130b928",
+      "target_path": "reference-nixos/services/mrj-auth/oidc.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/server.py",
+      "source_blob": "95a5ff2e2eb263ac1e6a20f7121db68bfb0a7140",
+      "target_path": "reference-nixos/services/mrj-auth/server.py",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "services/mrj-auth/style.css",
+      "source_blob": "edfdbf03f83b4600f042916d26dec2da191f3bcb",
+      "target_path": "reference-nixos/services/mrj-auth/style.css",
+      "target_mode": "100644",
+      "reason": "inactive_third_party_or_identity_reference"
+    },
+    {
+      "source_path": "vendor/vision/source/migrations/001_initial.sql",
+      "source_blob": "41003b4f1a4609b53f78cb97d42ca83d1a587a3c",
+      "target_path": "reference-schemas/vision/001_initial.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "vendor/vision/source/migrations/002_memory_sheets.sql",
+      "source_blob": "498a43a680d9d06280b9c8d235d53b3d35d591cd",
+      "target_path": "reference-schemas/vision/002_memory_sheets.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "vendor/vision/source/migrations/003_fsrs.sql",
+      "source_blob": "2a8b3ae35362410376daa624c0bb8bebc5176aa2",
+      "target_path": "reference-schemas/vision/003_fsrs.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    },
+    {
+      "source_path": "vendor/vision/source/migrations/004_browser.sql",
+      "source_blob": "91b8600a0b490ec4243bf4394f26a156e0807603",
+      "target_path": "reference-schemas/vision/004_browser.sql",
+      "target_mode": "100644",
+      "reason": "schema_source_reference_never_auto_migrated"
+    }
+  ],
+  "important": [
+    "No historical state, dump, secret, qualification result or archive content is copied by this plan",
+    "Source helpers retained in reference-nixos are not agent operational capabilities",
+    "All retained source scripts are regular 0644 files without executable bits",
+    "Missing historical imports are deliberate and documented in dependances.org",
+    "No active Lisp toolchain, workflow or elm-review policy copy is retained"
+  ]
+}

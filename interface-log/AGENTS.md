@@ -1,23 +1,6 @@
-# Client de présentation Log
+# Interface Log — Elm conservé
 
-Lire les règles centrales dans `../AGENTS.md`, `../assemblage/FRONTENDS.md`
-et `../assemblage/REPRISE.md`. Ce client appartient à vps-infrastructure ;
-aucun dépôt, service ni workflow supplémentaire.
-
-Présentation elm-ui, ressources Signature, composants/contextes et transitions
-Animator de style-mrjam, à révisions exactes. Aucun HTML/CSS de présentation,
-framework alternatif ou dépendance ajoutée implicitement. Les ports WebAuthn
-éventuels restent des adaptateurs techniques bornés et testés.
-
-Kanidm vérifie les authentificateurs, applique les politiques et émet les sessions.
-Ne pas conserver de jeton dans l'état Elm ou le stockage navigateur ; aucune
-trace de phrase de passe, code, défi personnel ou réponse brute. Lire les réponses
-du protocole par `Log.Protocole.lire`, qui élimine les diagnostics JSON sensibles.
-Un état de présentation ne constitue pas une preuve d'authentification serveur.
-Préserver Unicode/espaces sans normalisation destructive et les sessions existantes.
-
-Commande locale : `python3 scripts/assemblage.py tester --exact --suite log-protocole-elm`
-depuis la racine d'infrastructure. Les suites log-interface (navigateur/Native réel, chaud puis SBCL neuf) et
-log-interface-promotion complètent le codec. Seul le site et le binaire exacts
-qualifiés peuvent être promus. Les capacités de modification restent en mémoire
-du raccord JS, bornées à la session native ; aucun jeton dans l’état Elm.
+- Préserver les contrats d'identité et les styles ; ne pas remplacer Elm.
+- Utiliser les versions et commandes documentées dans `environment/` à la racine du dépôt.
+- Les propositions de règles canoniques viennent de `mrjam-validation/review`, sans copie locale active ; leur adoption protégée reste à réaliser.
+- Tests avec identités et échanges synthétiques uniquement. Aucun service de production ni ancien script d'exploitation.

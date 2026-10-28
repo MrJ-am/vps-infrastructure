@@ -1,0 +1,13 @@
+#+title: Schémas de référence — aucune migration automatique
+#+language: fr
+
+Les fichiers SQL de ce dossier sont des sources de schémas et de rôles issues
+de l'historique de code. Ils ne sont ni des dumps ni des données réelles.
+Ils ne sont branchés à aucun exécuteur de migrations et ne doivent pas être
+exécutés contre la production par un agent.
+
+Les futures migrations Rust/PostgreSQL nécessitent une correspondance des
+versions, des tests synthétiques et un plan de retour qui conserve les données.
+Les anciens noms de rôles sont une information de provenance, pas une nouvelle
+attribution de droits. Les copies de code sont reliées à leur blob d'origine
+dans =../reference-nixos/provenance.json=.

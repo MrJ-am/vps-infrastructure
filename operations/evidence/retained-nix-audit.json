@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "repository": "MrJ-am/vps-infrastructure",
+  "base_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "scope": "selected_source_reference_scan_not_installed_state",
+  "files": [
+    {
+      "path": "apps/nextcloud.nix",
+      "blob": "444a4e61424ecf87a6392e45e9c3923239b9b245",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  site = (builtins.fromJSON (builtins.readFile ../projects.json)).nextcloud;"
+        },
+        {
+          "line": 17,
+          "code": "  imports = [ ../assemblage/php-upload-progress/module.nix ];"
+        },
+        {
+          "line": 86,
+          "code": "    script = builtins.readFile ../scripts/nextcloud-backup.sh;"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/elm-review/outils.nix",
+      "blob": "36f72bae3044a9f52692d902548d5d71201c7d3a",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  lock = builtins.fromJSON (builtins.readFile ./outils.lock.json);"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/forgejo/assets.nix",
+      "blob": "216b6ef55ced3a80e3ce35d1cf82c6f8f4f3e33a",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  lock = builtins.fromJSON (builtins.readFile ./versions.json);"
+        },
+        {
+          "line": 9,
+          "code": "  cp ${./assets/config.js} $out/config.js"
+        },
+        {
+          "line": 10,
+          "code": "  cp ${./assets/org.css} $out/org.css"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/forgejo/integration.nix",
+      "blob": "7c4d5d39228ab178be6145a5082b8d3e70ef2adc",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 6,
+          "code": "  base = (import <nixpkgs/nixos/lib/eval-config.nix> {"
+        },
+        {
+          "line": 9,
+          "code": "  timers = (import <nixpkgs/nixos/lib/eval-config.nix> {"
+        },
+        {
+          "line": 13,
+          "code": "  imports = [ baseConfiguration ./module.nix ];"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/forgejo/module.nix",
+      "blob": "2368635f66e8cccfe1b6c5698ab973f34e21e799",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 5,
+          "code": "  lock = builtins.fromJSON (builtins.readFile ./versions.json);"
+        },
+        {
+          "line": 6,
+          "code": "  assets = import ./assets.nix { inherit pkgs; };"
+        },
+        {
+          "line": 12,
+          "code": "      --lua-filter=${./org-links.lua}"
+        },
+        {
+          "line": 22,
+          "code": "  identityCommand = phase: \"${pkgs.python3}/bin/python3 ${./sso.py} ${phase} /var/lib/forgejo-identity ${config.services.postgresql.finalPackage} ${f.package}/bin/forgejo ${identityIni} ${config.services.kanidm.package} ${pkgs.curl}/bin/curl ${forgejoKanidmApi}\";"
+        },
+        {
+          "line": 54,
+          "code": "        ${lib.optionalString verify \"${pkgs.python3}/bin/python3 ${./verify-backup.py} \\\"$tmp/verified\\\" ${config.services.postgresql.finalPackage}\"}"
+        },
+        {
+          "line": 151,
+          "code": "      \"L+ ${f.customDir}/templates/custom/footer.tmpl - - - - ${./assets/footer.tmpl}\""
+        }
+      ]
+    },
+    {
+      "path": "assemblage/kanidm/artefact.nix",
+      "blob": "7add0977e79e1cf2ccd27d9b3cf3cc19127a1dcd",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  reference = import ./paquet.nix { inherit pkgs; };"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/kanidm/paquet.nix",
+      "blob": "ba5381d299d158d881bb79260130ab6931828c3c",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 5,
+          "code": "pkgs.callPackage (import (pkgs.path + \"/pkgs/servers/kanidm/generic.nix\") {"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/kanidm/service.nix",
+      "blob": "ec8287af6afe0238d051ff5e4edd292e7c5a025b",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 14,
+          "code": "    package = import ./paquet.nix { inherit pkgs; };"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/containment.nix",
+      "blob": "b8f377beb35693e384538abe666acaa6e0f5f891",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/evaluation.nix",
+      "blob": "1175655dbfba8b5bc77b1d1fb3efd329c1c4b083",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  e = import <nixpkgs/nixos/lib/eval-config.nix> {"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/fixture.nix",
+      "blob": "8a3381be92cfce95eccf9fe72d62530dbdee36be",
+      "status": "code_examined",
+      "hits": [
+        {
+          "line": 37,
+          "category": "legacy_monolith_reference"
+        }
+      ],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/guard.nix",
+      "blob": "e463b7c6b57d3a42da89d03f0aca402b5e9cc1bd",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "assemblage/nextcloud-php-security/module.nix",
+      "blob": "04fdffa3e50c0541ccbbaf5d7de8cd9741064c1a",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 26,
+          "code": "            cat ${./filter-test-cgi.sh} >> \"$php_filter_test_wrapper\""
+        }
+      ]
+    },
+    {
+      "path": "assemblage/nextcloud-sso/module.nix",
+      "blob": "2d2c802db439ccdedccf164fbea7ede7197bdef5",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "assemblage/php-upload-progress/evaluation.nix",
+      "blob": "5fb134d65a90f92bb78c6979b0cf7549e6bf3459",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  e = import <nixpkgs/nixos/lib/eval-config.nix> {"
+        },
+        {
+          "line": 8,
+          "code": "in (import ../nextcloud-php-security/evaluation.nix { inherit configuration; }) // {"
+        }
+      ]
+    },
+    {
+      "path": "assemblage/php-upload-progress/module.nix",
+      "blob": "cfc97ff536f4a1a72dff05ec8666ae09d28622bc",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "hosts/hostinger/hardware-configuration.nix",
+      "blob": "e4a62b31d6719468a970bb8d5d038708638ae978",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 4,
+          "code": "  imports = [ (modulesPath + \"/profiles/qemu-guest.nix\") ];"
+        }
+      ]
+    },
+    {
+      "path": "hosts/hostinger/nextcloud-acme.nix",
+      "blob": "135446f94dfea850e30372d1758cbd2ba2fcae7a",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 4,
+          "code": "  imports = [ ./logique.nix ];"
+        }
+      ]
+    },
+    {
+      "path": "lib/databases.nix",
+      "blob": "25a4e34b68dba58015dc2cd32dabc16491a62dbe",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "lib/keycloak-optimise.nix",
+      "blob": "c265a4702969369476297ed8a4f5ec3ac69b2167",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 5,
+          "code": "  c = (import (pkgs.path + \"/nixos/lib/eval-config.nix\") {"
+        },
+        {
+          "line": 11,
+          "code": "        package = import ../services/keycloak-mrjam/paquet.nix { inherit pkgs; };"
+        },
+        {
+          "line": 13,
+          "code": "          [ (import ../services/keycloak-mrjam { inherit pkgs; }) ];"
+        }
+      ]
+    },
+    {
+      "path": "lib/virtual-hosts.nix",
+      "blob": "0b8cd6962b9722a7c9b3c753bc778d73009d6a21",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "modules/gateway.nix",
+      "blob": "c4b4f98e9d2e12eab13b8fa4a6c919d82343583f",
+      "status": "code_examined",
+      "hits": [
+        {
+          "line": 42,
+          "category": "legacy_monolith_reference"
+        }
+      ],
+      "source_dependency_lines": [
+        {
+          "line": 42,
+          "code": "  imports = [ ./mrj-auth.nix ./journal-http.nix ./identite.nix ./vision-gestion.nix ./courriel.nix ./vision-cycle.nix ./admission.nix ./fermeture.nix ./metier.nix ./log.nix ./audition.nix ];"
+        },
+        {
+          "line": 45,
+          "code": "    default = builtins.fromJSON (builtins.readFile ../projects.json);"
+        },
+        {
+          "line": 66,
+          "code": "    virtualHosts = (import ../lib/virtual-hosts.nix)"
+        }
+      ]
+    },
+    {
+      "path": "modules/postgresql.nix",
+      "blob": "2d8860c47c457a7a6a253d43b8864f9b1f677a3d",
+      "status": "code_examined",
+      "hits": [
+        {
+          "line": 7,
+          "category": "legacy_monolith_reference"
+        }
+      ],
+      "source_dependency_lines": [
+        {
+          "line": 4,
+          "code": "  layout = import ../lib/databases.nix projects;"
+        },
+        {
+          "line": 23,
+          "code": "    default = builtins.fromJSON (builtins.readFile ../databases.json);"
+        }
+      ]
+    },
+    {
+      "path": "services/keycloak-mrjam/default.nix",
+      "blob": "864890d9a55238dbb6da5c2e867d785ac8cdc867",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 2,
+          "code": "let keycloak = import ./paquet.nix { inherit pkgs; };"
+        },
+        {
+          "line": 9,
+          "code": "  sh ${./.}/compiler.sh ${keycloak.src}/lib/lib/main \"$out/mrjam-identite.jar\""
+        }
+      ]
+    },
+    {
+      "path": "services/keycloak-mrjam/paquet.nix",
+      "blob": "82bbebc80792b7e7c03f1052a4a44f2dae26f1fe",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": []
+    },
+    {
+      "path": "tests/forgejo-integration.nix",
+      "blob": "dca319ea54a768f34dd51602e9255d6cb25328c8",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 5,
+          "code": "  evaluate = modules: (import (nixpkgs + \"/nixos/lib/eval-config.nix\") {"
+        },
+        {
+          "line": 9,
+          "code": "    imports = [ ../assemblage/forgejo/module.nix ];"
+        },
+        {
+          "line": 38,
+          "code": "  after = evaluate [ (import ../assemblage/forgejo/integration.nix { baseConfiguration = base; }) ];"
+        },
+        {
+          "line": 48,
+          "code": "  nginxConfigDrv = builtins.head (builtins.filter (path: (import (nixpkgs + \"/lib\")).hasSuffix \"-nginx.conf.drv\" path)"
+        }
+      ]
+    },
+    {
+      "path": "tests/kanidm-configuration.nix",
+      "blob": "c1a17263310d5dfae28cf6628e933ff4fdba1f04",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 3,
+          "code": "  eval = import (pkgs.path + \"/nixos/lib/eval-config.nix\") {"
+        },
+        {
+          "line": 7,
+          "code": "      (import ../assemblage/kanidm/service.nix {"
+        }
+      ]
+    },
+    {
+      "path": "tests/nextcloud-acme.nix",
+      "blob": "0e38ab13192a51ea7922759db0c5f2e2b612d520",
+      "status": "code_examined",
+      "hits": [],
+      "source_dependency_lines": [
+        {
+          "line": 2,
+          "code": "  lib = import <nixpkgs/lib>;"
+        },
+        {
+          "line": 3,
+          "code": "  config = (import <nixpkgs/nixos/lib/eval-config.nix> {"
+        }
+      ]
+    }
+  ]
+}

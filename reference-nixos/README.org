@@ -1,0 +1,27 @@
+#+title: Sources NixOS et services tiers — références inactives
+#+language: fr
+
+Ces sources proviennent de la révision
+=c6459ae215b0e4e8b1350b02222ad21af41db836= de =vps-infrastructure=.
+=provenance.json= relie chaque fichier retenu à son blob et à son chemin d'origine.
+Les modes exécutables des scripts ont été retirés. Aucun fichier de ce dossier
+n'est importé par le nouvel environnement et aucune machine n'en est construite.
+L'absence de bit exécutable n'est pas une ACL : un interpréteur pourrait encore
+lire ces sources. Aucun pouvoir d'exploitation ne découle de leur conservation.
+
+Forgejo et son rendu Org/LaTeX, Kanidm, Nextcloud, PostgreSQL, l'intégration
+Keycloak et les sources de l'identité sont conservés pour une reprise vérifiable.
+Les helpers source ne constituent pas une interface d'exploitation autorisée :
+leurs droits et sorties doivent être qualifiés avant toute réutilisation.
+
+Cette collection est volontairement incomplète en tant qu'ancien système :
+elle ne contient ni ancien runtime applicatif, ni opérations de déploiement,
+ni configuration privée d'identité, ni rapport attestant l'état installé.
+=dependances.org= décrit les références conservées et les imports laissés
+inopérants. Ne pas contourner ces manques en récupérant des données privées.
+
+Une référence Nix peut définir =enable=true= si elle était autrefois importée.
+Cela ne l'active pas ici et ne doit pas être utilisé comme procédure de reprise.
+Toute nouvelle configuration sera construite séparément à partir de contrats,
+versions et pouvoirs qualifiés. La production actuelle reste sur sa génération
+existante pendant ce travail de code.

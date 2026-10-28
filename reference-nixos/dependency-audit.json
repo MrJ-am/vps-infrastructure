@@ -1,0 +1,460 @@
+{
+  "schema_version": 1,
+  "base_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "scope": "static_relative_reference_scan_not_nixos_evaluation",
+  "relative_references": [
+    {
+      "source_path": "reference-nixos/apps/logique.nix",
+      "relative_reference": "../operations/logique-site.json",
+      "historical_dependency": "operations/logique-site.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/operations/logique-site.json"
+    },
+    {
+      "source_path": "reference-nixos/apps/logique.nix",
+      "relative_reference": "../projects.json",
+      "historical_dependency": "projects.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/projects.json"
+    },
+    {
+      "source_path": "reference-nixos/apps/nextcloud.nix",
+      "relative_reference": "../projects.json",
+      "historical_dependency": "projects.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/projects.json"
+    },
+    {
+      "source_path": "reference-nixos/apps/nextcloud.nix",
+      "relative_reference": "../assemblage/php-upload-progress/module.nix",
+      "historical_dependency": "assemblage/php-upload-progress/module.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/php-upload-progress/module.nix"
+    },
+    {
+      "source_path": "reference-nixos/apps/nextcloud.nix",
+      "relative_reference": "../scripts/nextcloud-backup.sh",
+      "historical_dependency": "scripts/nextcloud-backup.sh",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/scripts/nextcloud-backup.sh"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets.nix",
+      "relative_reference": "./versions.json",
+      "historical_dependency": "assemblage/forgejo/versions.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/versions.json"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets.nix",
+      "relative_reference": "./assets/config.js",
+      "historical_dependency": "assemblage/forgejo/assets/config.js",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/assets/config.js"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets.nix",
+      "relative_reference": "./assets/org.css",
+      "historical_dependency": "assemblage/forgejo/assets/org.css",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/assets/org.css"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "../../scripts/kanidm-api-privee.py",
+      "historical_dependency": "scripts/kanidm-api-privee.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/scripts/kanidm-api-privee.py"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./versions.json",
+      "historical_dependency": "assemblage/forgejo/versions.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/versions.json"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./assets.nix",
+      "historical_dependency": "assemblage/forgejo/assets.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/assets.nix"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./org-links.lua",
+      "historical_dependency": "assemblage/forgejo/org-links.lua",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/org-links.lua"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./sso.py",
+      "historical_dependency": "assemblage/forgejo/sso.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/sso.py"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./verify-backup.py",
+      "historical_dependency": "assemblage/forgejo/verify-backup.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/verify-backup.py"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/module.nix",
+      "relative_reference": "./assets/footer.tmpl",
+      "historical_dependency": "assemblage/forgejo/assets/footer.tmpl",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/forgejo/assets/footer.tmpl"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/kanidm/artefact.nix",
+      "relative_reference": "./paquet.nix",
+      "historical_dependency": "assemblage/kanidm/paquet.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/kanidm/paquet.nix"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/kanidm/service.nix",
+      "relative_reference": "./paquet.nix",
+      "historical_dependency": "assemblage/kanidm/paquet.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/kanidm/paquet.nix"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/nextcloud-php-security/module.nix",
+      "relative_reference": "./filter-test-cgi.sh",
+      "historical_dependency": "assemblage/nextcloud-php-security/filter-test-cgi.sh",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/assemblage/nextcloud-php-security/filter-test-cgi.sh"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "./hardware-configuration.nix",
+      "historical_dependency": "hosts/hostinger/hardware-configuration.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/hosts/hostinger/hardware-configuration.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../apps/matheval.nix",
+      "historical_dependency": "apps/matheval.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../apps/vision.nix",
+      "historical_dependency": "apps/vision.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../apps/vision-interface.nix",
+      "historical_dependency": "apps/vision-interface.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../apps/nextcloud.nix",
+      "historical_dependency": "apps/nextcloud.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/apps/nextcloud.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../modules/gateway.nix",
+      "historical_dependency": "modules/gateway.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/modules/gateway.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/configuration.nix",
+      "relative_reference": "../../modules/postgresql.nix",
+      "historical_dependency": "modules/postgresql.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/modules/postgresql.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/logique-acme.nix",
+      "relative_reference": "./configuration.nix",
+      "historical_dependency": "hosts/hostinger/configuration.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/hosts/hostinger/configuration.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/logique-acme.nix",
+      "relative_reference": "../../apps/logique.nix",
+      "historical_dependency": "apps/logique.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/apps/logique.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/logique.nix",
+      "relative_reference": "./configuration.nix",
+      "historical_dependency": "hosts/hostinger/configuration.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/hosts/hostinger/configuration.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/logique.nix",
+      "relative_reference": "../../apps/logique.nix",
+      "historical_dependency": "apps/logique.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/apps/logique.nix"
+    },
+    {
+      "source_path": "reference-nixos/hosts/hostinger/nextcloud-acme.nix",
+      "relative_reference": "./logique.nix",
+      "historical_dependency": "hosts/hostinger/logique.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/hosts/hostinger/logique.nix"
+    },
+    {
+      "source_path": "reference-nixos/lib/keycloak-optimise.nix",
+      "relative_reference": "../services/keycloak-mrjam/paquet.nix",
+      "historical_dependency": "services/keycloak-mrjam/paquet.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam/paquet.nix"
+    },
+    {
+      "source_path": "reference-nixos/lib/keycloak-optimise.nix",
+      "relative_reference": "../services/keycloak-mrjam",
+      "historical_dependency": "services/keycloak-mrjam",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam"
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./mrj-auth.nix",
+      "historical_dependency": "modules/mrj-auth.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/modules/mrj-auth.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./journal-http.nix",
+      "historical_dependency": "modules/journal-http.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/modules/journal-http.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./identite.nix",
+      "historical_dependency": "modules/identite.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/modules/identite.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./vision-gestion.nix",
+      "historical_dependency": "modules/vision-gestion.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./courriel.nix",
+      "historical_dependency": "modules/courriel.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./vision-cycle.nix",
+      "historical_dependency": "modules/vision-cycle.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./admission.nix",
+      "historical_dependency": "modules/admission.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./fermeture.nix",
+      "historical_dependency": "modules/fermeture.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./metier.nix",
+      "historical_dependency": "modules/metier.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./log.nix",
+      "historical_dependency": "modules/log.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "./audition.nix",
+      "historical_dependency": "modules/audition.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "../projects.json",
+      "historical_dependency": "projects.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/projects.json"
+    },
+    {
+      "source_path": "reference-nixos/modules/gateway.nix",
+      "relative_reference": "../lib/virtual-hosts.nix",
+      "historical_dependency": "lib/virtual-hosts.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/lib/virtual-hosts.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../services/keycloak-mrjam/paquet.nix",
+      "historical_dependency": "services/keycloak-mrjam/paquet.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam/paquet.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../services/keycloak-mrjam",
+      "historical_dependency": "services/keycloak-mrjam",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam"
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../services/sources-mrjam.nix",
+      "historical_dependency": "services/sources-mrjam.nix",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../services/keycloak-mrjam/theme",
+      "historical_dependency": "services/keycloak-mrjam/theme",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam/theme"
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../operations/identite/realm.json",
+      "historical_dependency": "operations/identite/realm.json",
+      "state": "deliberately_absent",
+      "reference_target": null
+    },
+    {
+      "source_path": "reference-nixos/modules/identite.nix",
+      "relative_reference": "../scripts/sauvegarde-externe.py",
+      "historical_dependency": "scripts/sauvegarde-externe.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/scripts/sauvegarde-externe.py"
+    },
+    {
+      "source_path": "reference-nixos/modules/journal-http.nix",
+      "relative_reference": "../lib/journal-http.conf",
+      "historical_dependency": "lib/journal-http.conf",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/lib/journal-http.conf"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/server.py",
+      "historical_dependency": "services/mrj-auth/server.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/server.py"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/oauth.py",
+      "historical_dependency": "services/mrj-auth/oauth.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/oauth.py"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/oidc.py",
+      "historical_dependency": "services/mrj-auth/oidc.py",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/oidc.py"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/mcp.html",
+      "historical_dependency": "services/mrj-auth/mcp.html",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/mcp.html"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/mcp.js",
+      "historical_dependency": "services/mrj-auth/mcp.js",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/mcp.js"
+    },
+    {
+      "source_path": "reference-nixos/modules/mrj-auth.nix",
+      "relative_reference": "../services/mrj-auth/style.css",
+      "historical_dependency": "services/mrj-auth/style.css",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/mrj-auth/style.css"
+    },
+    {
+      "source_path": "reference-nixos/modules/postgresql.nix",
+      "relative_reference": "../lib/databases.nix",
+      "historical_dependency": "lib/databases.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/lib/databases.nix"
+    },
+    {
+      "source_path": "reference-nixos/modules/postgresql.nix",
+      "relative_reference": "../databases.json",
+      "historical_dependency": "databases.json",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/databases.json"
+    },
+    {
+      "source_path": "reference-nixos/services/keycloak-mrjam/default.nix",
+      "relative_reference": "./paquet.nix",
+      "historical_dependency": "services/keycloak-mrjam/paquet.nix",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam/paquet.nix"
+    },
+    {
+      "source_path": "reference-nixos/services/keycloak-mrjam/default.nix",
+      "relative_reference": "./",
+      "historical_dependency": "services/keycloak-mrjam",
+      "state": "retained_reference",
+      "reference_target": "reference-nixos/services/keycloak-mrjam"
+    }
+  ],
+  "deliberately_missing_historical_dependencies": [
+    "apps/matheval.nix",
+    "apps/vision-interface.nix",
+    "apps/vision.nix",
+    "modules/admission.nix",
+    "modules/audition.nix",
+    "modules/courriel.nix",
+    "modules/fermeture.nix",
+    "modules/log.nix",
+    "modules/metier.nix",
+    "modules/vision-cycle.nix",
+    "modules/vision-gestion.nix",
+    "operations/identite/realm.json",
+    "services/sources-mrjam.nix"
+  ],
+  "dynamic_dependencies": [
+    "nixpkgs package set and modulesPath supplied by caller; no current machine imports these references"
+  ],
+  "deployment_allowed": false
+}
