@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-qualification",
+  "authority": "unsigned-local-evidence",
+  "manifest_sha256": null,
+  "rules_revision": null,
+  "checks": {
+    "admission": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "closure": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "continuity": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "elm": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "forgejo": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "http": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "isolation": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "migrations": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "nixos": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "postgres": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "privacy": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "restore": {
+      "status": null,
+      "receipt_sha256": null
+    },
+    "rust": {
+      "status": null,
+      "receipt_sha256": null
+    }
+  }
+}

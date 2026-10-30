@@ -1,0 +1,300 @@
+#+title: Livraison déclarative MRJ.am — dossier et plans locaux, gel maintenu
+#+language: fr
+
+* Livrable et état
+Ce répertoire prépare les objets de revue de la livraison Rust/Elm et les
+paramètres Forgejo qui ne sont pas des options NixOS. Les deux programmes sont
+des lecteurs de fichiers locaux : ils n'ont ni client réseau, ni sous-processus,
+ni import Nix, ni écriture de configuration, ni commande d'activation. Leurs
+sorties ont toujours =production_authorized=false= et =execution_supported=false=.
+Une sortie réussie signifie seulement que le dossier satisfait les contrôles
+locaux décrits ci-dessous. Les actions sont des noms d'opérations à revoir ;
+aucun exécuteur de ces opérations n'est fourni.
+
+Les gabarits =templates/*.json.in= contiennent des valeurs =null= là où la preuve
+manque. Ils sont volontairement refusés par les vérificateurs. Ne pas remplacer
+une valeur inconnue par un résultat inventé. Le workflow =.yml.in= est inactif,
+hors de tout répertoire de workflows ; son contrôleur et ses chemins approuvés
+restent à fournir et qualifier. Aucun workflow ancien n'est réintroduit.
+
+Le dossier ne prouve pas l'état installé du VPS. =vps-infrastructure= est la
+source de configuration désignée par l'utilisateur ; l'alignement de sa future
+cible NixOS avec la génération en cours demande encore une preuve bornée. Le
+binaire Rust garde =/readyz= à =503 NOT_READY= tant que les raccordements ne sont
+pas qualifiés. Une livraison métier est donc bloquée à ce stade.
+
+* Fichiers et commandes locales
+| Fichier | Fonction |
+|---------+----------|
+| =release_plan.py= | Contrat fermé, hachage des fichiers et plan de livraison/retour |
+| =forgejo_plan.py= | Diff local borné des paramètres de trois dépôts et du runner |
+| =templates/release-*.json.in= | Quatre entrées séparées, incomplètes par construction |
+| =templates/forgejo-*.json.in= | État désiré proposé et observation filtrée à compléter |
+| =templates/qualification-profile.json= | Limites synthétiques proposées, adoption interdite |
+| =templates/independent-validation.yml.in= | Proposition de workflow de contrôle indépendant |
+| =tests/= | Artefacts, états, identités et résultats entièrement inventés |
+| =verification.json= | Commande exécutée, résultats locaux et empreintes du code testé |
+
+Depuis =operations/release/=, avec Python 3 et sa bibliothèque standard :
+
+#+begin_src sh
+python3 -m unittest discover -s tests
+python3 -I -S release_plan.py manifest.json policy.json observed.json evidence.json artifact-root
+python3 -I -S forgejo_plan.py desired.json forgejo-observed.json SHA256_CANONIQUE_OBSERVATION
+#+end_src
+
+Les deux dernières commandes supposent des fichiers locaux préparés pour la
+revue ; elles ne contactent aucun serveur. Code retour =0= : plan local produit ;
+=2= : refus fermé en JSON, sans chemin d'entrée ni exception brute. Un code =0=
+n'autorise jamais une opération. =-I -S= ignore =PYTHONPATH=, le site et les
+modules du répertoire appelant ; Forgejo importe seulement le contrat voisin du
+programme sélectionné. L'interpréteur de qualification doit être fourni par le
+verrou Nix de la chaîne avant d'en faire une autorité ; =python3= ici désigne
+uniquement l'outil local utilisé pour ces tests.
+
+* Contrat de livraison
+Le schéma normatif est fermé dans =validate_manifest/policy/observed/evidence=.
+Les champs supplémentaires, clés JSON dupliquées, flottants et valeurs non
+finies sont refusés. Chaque document est limité à 128 Kio. Les références Git
+sont des SHA de 40 caractères, les empreintes de contenu des SHA-256 de 64
+caractères minuscules. Les liens interdocuments utilisent le SHA-256 de
+=json.dumps(value, ensure_ascii=True, sort_keys=True, separators=(",", ":"))=
+encodé UTF-8. C'est un format canonique local précis, pas une signature ni une
+conversion implicite d'une empreinte des octets JSON reçus.
+
+Le manifeste fixe :
+- les révisions et empreintes d'arbre de l'application, l'infrastructure, la
+  validation indépendante, Vision et Mateval ;
+- seize fichiers distincts : serveur, ressources frontend, paquet des sources,
+  Cargo.lock, verrous frontend, verrou de l'outillage, flake.lock, paramètres de
+  construction, configuration d'exécution non secrète, plan de migration,
+  paquet des règles, NAR de génération nouvelle et précédente, reçu de
+  répétition restauration, reçu ressources et reçu compatibilité des sessions ;
+- dérivation, sortie et narHash de chaque génération ; révision des règles
+  identique à la révision de validation, indépendamment épinglée par la politique ;
+- cible fermée (=mrjam-vps= ou =synthetic-vps=), migration initiale ou ordinaire,
+  compatibilité lecture/écriture des anciennes et nouvelles applications avec
+  le schéma résultant, préservation des nouvelles écritures ;
+- références symboliques aux secrets =database=, =identity=, =signer= et
+  =runner_registration= ; aucune valeur, clé ou jeton n'est accepté ici ;
+- fenêtre maximale de trois heures, échéance d'abandon et réserve pour retour.
+
+Chaque fichier est ouvert sous la racine d'artefacts choisie par le contrôleur.
+Les chemins absolus, remontées, alias de chemin, liens symboliques de fichiers
+ou répertoires et fichiers non réguliers sont refusés. =O_NONBLOCK= évite
+l'attente sur un FIFO ; chaque composant est ouvert par descripteur avec
+=O_NOFOLLOW=. Les octets sont réellement hachés par blocs et leur taille et
+métadonnées sont contrôlées avant/après lecture. Limites : 2 Gio par fichier,
+8 Gio au total. Ces limites bornent le travail de vérification ; elles ne
+mesurent aucun quota de CI. La racine de dépôt des artefacts doit être isolée,
+sans secret et détenue par le contrôleur, puis rendue immuable pendant la revue.
+Le vérificateur n'est pas une sandbox contre un détenteur hostile de cette racine.
+
+La politique est une entrée distincte, choisie par un futur contrôleur hors de
+l'espace candidat. Elle lie manifeste, observation, preuve détachée, cible,
+révision des règles, intervalle de revue d'au plus une heure et référence
+d'approbation. Le remplacement de règles dans le manifeste échoue si cette
+politique reste fixe. Un appelant pouvant remplacer aussi la politique peut
+produire un autre plan : ce programme n'authentifie aucune autorité. Le gel
+doit être =true= ; une référence d'approbation non nulle reste non authentifiée.
+
+L'observation lie le manifeste actif, la génération, le schéma et le slot. Toute
+variation invalide une politique qui la liait. Un changement de cible, une
+observation différente de celle retenue par la politique ou une fenêtre expirée
+est refusé. Le même dossier donne
+le même plan ; un état déjà aligné sur ce manifeste produit =no-changes= avec
+listes d'installation et de retour vides. Un futur exécuteur doit encore
+acquérir un verrou exclusif et refaire ces contrôles immédiatement avant chaque
+effet ; l'idempotence du calcul local ne prouve pas celle d'un système distribué.
+Aucun anti-rejeu distribué, nonce persistant ou capture distante fraîche n'est
+implémenté dans ces lecteurs locaux.
+
+Les preuves détachées ne font pas partie du hash du manifeste : elles peuvent
+donc désigner son empreinte sans boucle de hachage. La liste des contrôles
+obligatoires est fermée (=admission, closure, continuity, elm, forgejo, http,
+isolation, migrations, nixos, postgres, privacy, restore, rust=). Aucun candidat
+ne peut la réduire. Tous les statuts doivent être =passed= pour produire un
+plan ; un statut déclaré n'est pas un résultat authentifié.
+
+* Ce qui reste explicitement non établi
+Les portes correspondantes restent dans chaque plan, même après tous les
+contrôles locaux :
+
+| Lien ou capacité | Contrôle effectué ici | Qualification encore nécessaire |
+|-----------------+-----------------------+---------------------------------|
+| Sources → commits | Syntaxe, inclusion dans le manifeste haché | Exporter indépendant, arbres exacts et leurs contenus |
+| Fichiers → empreintes | Octets et tailles effectivement hachés | Provenance des constructions et résultat de chaque outil verrouillé |
+| NAR → narHash | Hash des octets du fichier NAR annoncé | Parser/importer Nix, références transitives, dérivation → sortie, fermeture complète |
+| Reçus → réussite | Liste/statuts fermés, hash du document de preuve | Contenu de chaque reçu, émetteur indépendant, signatures et révocation |
+| Ancienne génération | Concordance déclarée avec l'observation liée | Génération réellement courante et ancienne fermeture conservée |
+| Secrets → références | Noms fermés, aucune valeur | Résolution locale par service autorisé, droits et rotation |
+| Compatibilité | Matrice déclarée cohérente | Exécution ancienne/nouvelle version et migrations sur données synthétiques |
+| Fenêtre | Arithmétique de la réserve ≤ 3 h | Durées mesurées de répétition et capacité effective de retour |
+| Plan → action | Ordre déterministe, aucune exécution | Déployeur borné indépendant, ACL, verrou, reprise après échec et refus réels |
+| Approbation | Référence facultative et manifeste ciblé | Identité humaine, autorité et accord explicite hors du candidat |
+
+Les fixtures de tests contiennent des textes inventés pour les rôles =server=
+et =generation_nar=. Ce ne sont ni des exécutables ni des archives NAR valides.
+Leur réussite vérifie le contrat de hachage et les refus ; elle ne constitue
+pas une qualification Rust/Elm, NixOS ou de production.
+
+* Forgejo : paramètres désirés et mécanisme restant à adopter
+=forgejo_plan.py= compare uniquement =mrjam-plateforme=, =mrjam-validation= et
+=vps-infrastructure=. Les autres dépôts, équipes et identités sont hors du
+périmètre et ne sont jamais supprimés. L'état désiré propose trois dépôts privés,
+branche =main=, au moins une revue, contrôle =mrjam/independent-validation=,
+absence de force-push, suppression de branche et contournement administrateur.
+Actions et runner restent désactivés. Une adoption de dépôt public est refusée
+et exige une revue distincte ; le gabarit ne constitue pas une décision de
+changer une visibilité existante.
+
+Le runner de contrôle appartient seulement à =mrjam-validation= ou
+=vps-infrastructure=, jamais au dépôt candidat. Il est proposé éphémère, un job,
+sans privilèges, socket Docker, réseau ou volumes de production, clé de signature
+ou identifiants de déploiement. Le secret d'enregistrement reste une référence
+gérée hors du candidat. L'état observé doit décrire complètement ce périmètre :
+un dépôt absent du JSON signifie absence constatée ; une absence inconnue ne
+doit pas être inventée. Le =null= du runner signifie absence constatée dans une
+observation complétée. Les gabarits incomplets ne servent pas d'observations.
+
+Le diff est lié au hash de l'observation. À état égal, aucune modification ;
+sinon seulement création privée désactivée, modification d'un champ géré ou
+préparation du runner désactivé. Aucune URL, requête arbitraire, identité, chemin
+de données ou valeur de secret n'entre dans ce format.
+
+L'applicateur futur devra être un paquet indépendant, verrouillé, exécuté hors
+du candidat avec une identité limitée à ces objets. Il devra traduire cette
+liste fermée pour l'API Forgejo effectivement observée, vérifier l'ancien état
+avant mutation, lire le nouvel état avec le même filtre, refuser toute opération
+supplémentaire et recommencer sans doublon après une interruption. Le résultat
+devra être un reçu fermé lié à la révision de configuration et au plan. Ce
+mécanisme est spécifié, son calcul de diff est implémenté ; l'authentification,
+la capture distante et l'applicateur API ne le sont pas. Aucun jeton n'est
+demandé à Cloud. Les permissions exactes disponibles attendent la version et
+les capacités observées de Forgejo.
+
+Le flux accepté est =Forgejo main → miroir GitHub=. Les changements Cloud sur
+GitHub empruntent une branche de proposition et la revue Forgejo, sans rendre
+deux branches principales concurrentes. L'identité de validation, l'identité
+de miroir et celle d'administration bornée doivent être distinctes. Le miroir
+n'a pas de droit de signer, approuver ni déclencher une activation. La capacité
+à émettre le statut protégé doit appartenir au contrôleur indépendant ; une
+protection qui accepte un statut choisi par un candidat est insuffisante.
+
+* Ressources et observations complémentaires minimales
+=templates/qualification-profile.json= cite seulement l'observation filtrée
+fournie : 2 CPU, 8 328 343 552 octets RAM et 69 968 510 976 octets libres sur la
+racine ; KVM absent. L'autorité reste =unverified_observation=. Ces valeurs ne
+prouvent ni cgroups effectifs, ni marge, ni quotas disque, ni coexistence de CI
+et services ou de deux slots applicatifs. Les limites proposées concernent une
+répétition locale isolée et ne sont pas une réservation sur le VPS.
+
+Avant adoption, préparer puis revoir séparément une capacité bornée qui rende
+seulement les versions et identités de builds utiles, l'identité de génération
+active, les capacités précises de l'exécuteur et des mesures agrégées de
+ressources/isolation. Elle doit filtrer côté VPS, sans journaux, données,
+secrets, contenu de sauvegardes ou SQL libre. Les namespaces non privilégiés
+ne prouvent pas une frontière de sécurité ; l'absence de KVM n'autorise pas à
+présumer des VM disponibles. Les essais d'évasion utilisent seulement des
+marqueurs synthétiques sur une cible autorisée. Si la marge de coexistence
+n'est pas démontrée, qualifier hors VPS et choisir une procédure dont les
+besoins ont été mesurés. Ne pas modifier la sonde originale ni sa commande
+forcée pour obtenir ces réponses ; toute extension a sa révision, son contrat
+fermé, ses tests et son adoption séparés.
+
+* Procédure de préparation, revue et future livraison
+La procédure ci-dessous fixe l'ordre et les préconditions. Les opérations
+distantes restent interdites tant que les portes critiques ne sont pas levées.
+
+1. Geler les sources exactes et leurs verrous : Cargo, Elm, outils et Nix.
+   Construire hors production avec ces seuls verrous ; hacher le binaire et les
+   ressources statiques réellement servis, leur configuration et les plans de
+   migration. Conserver les empreintes de contenu des ressources frontend et
+   leur politique de cache/compatibilité avec les anciens clients.
+2. Qualifier Rust/Elm, contrats HTTP, intégration PostgreSQL et identité,
+   migrations et compatibilité applicative sur données synthétiques. La
+   révision des règles vient de l'autorité protégée, jamais de la proposition
+   candidate. Conserver sorties filtrées et reçus de contrôle liés aux mêmes
+   artefacts. Aucun secret de signature ne se trouve dans cet environnement.
+3. Construire la génération complète à partir du module VPS faisant autorité,
+   conserver =stateVersion= et comparer les services conservés. Obtenir la
+   fermeture transitive, vérifier ses objets et leur narHash, la dérivation,
+   la génération de retour et l'absence de construction pendant installation.
+   Un seul NAR de sommet ne contient pas toute la fermeture.
+4. Faire vérifier indépendamment le manifeste, les résultats, l'autorité des
+   règles, les ACL, le plan de migration, les ressources, les secrets par
+   référence et le retour. La revue doit citer leurs empreintes exactes.
+   Préparer les documents d'observation et de politique séparément, puis
+   exécuter les deux programmes locaux. Aucun champ inconnu ne doit être forcé.
+5. Obtenir un accord explicite de l'utilisateur sur révisions, manifeste,
+   générations/fermetures, configuration, cible, fenêtre et critères d'abandon.
+   L'accord doit aussi couvrir les opérations de données prévues et la capacité
+   technique bornée qui exécutera les actions. Un accord sur le code ou un push
+   n'est pas un accord d'activation. Le présent vérificateur reste non exécutant
+   même après cet accord ; une implémentation d'activation distincte est requise.
+6. Après levée explicite du gel, l'opérateur autorisé prend le verrou exclusif
+   de cible, refait les observations bornées et vérifie leur concordance avec
+   l'accord. Il installe exactement les fermetures préqualifiées ; aucune
+   compilation candidate, installation flottante ou résolution de canal ne se
+   produit dans cette phase. Une divergence interrompt avant changement.
+7. Pour la migration initiale : arrêter les producteurs de toutes les écritures
+   et tâches, drainer chaque canal, prendre une sauvegarde cohérente via le
+   mécanisme borné approuvé, puis appliquer seulement le plan de migration
+   qualifié. Chronométrer l'échéance d'abandon en réservant le retour avant la
+   limite de trois heures. La qualification préalable de restauration doit
+   établir cohérence, droits, durées et capacité de récupérer les écritures ;
+   une archive créée ne suffit pas. Les sauvegardes et données restaurées ne
+   sont jamais exposées aux agents.
+8. Pour une livraison ordinaire : conserver les écrivains autorisés et appliquer
+   uniquement des migrations compatibles ancienne/nouvelle version. Les tâches
+   doivent avoir un propriétaire unique qualifié et une reprise idempotente.
+   Toute migration destructive ou incompatible sort de ce chemin et bloque la
+   livraison ; elle ne devient pas admissible en modifiant des empreintes.
+9. Démarrer le slot privé inactif seulement si sa marge et son isolation sont
+   prouvées. Exiger =/readyz= métier à 200 et les contrôles synthétiques prévus,
+   puis valider la configuration Nginx exacte et recharger gracieusement.
+   Préserver anciennes ressources Elm, sessions et canaux persistants requis.
+   Vérifier intégrité des écritures et continuité HTTP/SSE/WebSocket/MCP selon
+   les contrats applicables. Une reconnexion forcée n'est pas une preuve de
+   continuité. =/healthz= seul est insuffisant.
+10. Drainer l'ancien slot sans le tuer pour tenir artificiellement la fenêtre.
+    Si le drainage ou un contrôle échoue, garder les artefacts, états et chemins
+    de retour et suivre les critères d'abandon. Conserver l'ancienne fermeture,
+    les paramètres et la compatibilité du schéma pendant toute la période de
+    retour approuvée. Produire uniquement un reçu de codes/empreintes filtré.
+
+* Retour applicatif et données
+Le plan de retour référence le manifeste antérieur observé et la même ancienne
+dérivation/sortie/narHash, déjà conservée et qualifiée. Il exige de recontrôler
+état et compatibilité, démarrer cet ancien artefact, vérifier sa disponibilité,
+valider Nginx, recharger gracieusement, démontrer la préservation des nouvelles
+écritures, puis drainer le slot remplacé. Il ne reconstruit pas une ancienne
+version depuis une branche mobile.
+
+Un retour de binaire ne remet pas automatiquement le schéma en arrière. Un
+retour de génération NixOS ne restaure pas PostgreSQL, les fichiers ou les effets
+des tâches. Le contrat refuse le retour automatique à un instantané de données.
+Une récupération depuis sauvegarde exige un plan distinct approuvé : gel des
+écrivains, sauvegarde de l'état courant par l'opérateur autorisé, restauration
+isolée, vérification de cohérence, rapprochement de toutes les écritures admises
+depuis le point de sauvegarde, puis accord pour réouverture. Si ce rapprochement
+ou le retour ne tient pas dans la réserve mesurée, la livraison reste bloquée.
+
+* Dossier de revue indépendante
+La revue de ce lot doit examiner =release_plan.py=, =forgejo_plan.py=, tous les
+gabarits, les tests et leurs limites ; vérifier que nulle sortie ne peut lever
+le gel et qu'aucune commande distante n'existe. Les tests couvrent notamment
+substitution à taille identique, fichiers manquants/tronqués, liens et FIFO,
+clés dupliquées, contrôles omis, règle ancienne, rejeu de cible/observation,
+preuves changées, expiration, changement de génération, incompatibilité de
+schéma et fuite d'erreur. Ils vérifient aussi l'idempotence du diff Forgejo, les
+refus de contournement, d'activation du runner et d'autorité bidirectionnelle.
+
+Pour une future livraison réelle, ajouter au dossier : commit de l'intégration
+revu, manifeste rempli, tous les octets vérifiés, reçus indépendants, preuve de
+fermeture complète, observations bornées, adoption de politique/ACL, mesures de
+ressources, restauration et retour, résolution locale des références de secrets
+et décision humaine ciblée. L'authentification et la frontière entre candidat,
+validation, signature et activation devront faire l'objet d'essais de refus
+réels distincts. L'absence de l'un de ces contrôles critiques interdit de déclarer
+la migration prête.

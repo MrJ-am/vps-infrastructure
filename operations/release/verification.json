@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-30T16:16:01.688620+00:00",
+  "scope": "local-synthetic-release-contract",
+  "authority": "unsigned-local-evidence",
+  "deployment_freeze": true,
+  "production_authorized": false,
+  "execution_supported": false,
+  "interpreter": {
+    "name": "CPython",
+    "observed_version": "3.12.14",
+    "production_interpreter_qualified": false
+  },
+  "executed": [
+    {
+      "command": "python3 -m unittest discover -s tests",
+      "working_directory": "operations/release",
+      "tests": 58,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --no-index --check -- /dev/null FILE (for every listed source)",
+      "files_checked": 13,
+      "diagnostics": 0,
+      "interpretation": "exit 1 without diagnostics means expected new-file difference, not a whitespace failure"
+    }
+  ],
+  "source_sha256": {
+    "README.org": "1d3f16f3d8cd8b86bbf7a5d4a28959fa0fc1c01533fbfe783ff39f98b9503f12",
+    "forgejo_plan.py": "5da3b5fd16e19abbb221dc134328fb78878168bb05c4d56a70939e9dc600aecf",
+    "release_plan.py": "9be125a61d2ab22dd0f557461c3aeefad1269e3d089ae48293b686769be126ff",
+    "templates/forgejo-desired.json.in": "f029deca7e7731ccab6f3cc7bb523fdba49ef7afc2d4832bf706f740bf9cc80b",
+    "templates/forgejo-observation.json.in": "0f794ac1b8d4afcdacd4f04dadaa14f0e63525126ff343007500cbb44c7d2fc5",
+    "templates/independent-validation.yml.in": "6127b675c1e25307d3a4deba4687883b1870510847a4a3b1921bcb80af34b69f",
+    "templates/qualification-profile.json": "d9da5f545b3eb77e8aa303c3e22b1fdde17e2cb9fef120d5d328953b1e7f9dca",
+    "templates/release-evidence.json.in": "576b3075a764b1cd72d3b5bd810a0f09c64391df61e259e1c2707700ac087f46",
+    "templates/release-manifest.json.in": "e546c724fd788d5ef37ac321a93e786b8e8426417eba5ce3f2c33049eb954f7a",
+    "templates/release-observation.json.in": "553157b8df5d811d316abb7226dcc3ce16702c3002f250560617fa6e331c9160",
+    "templates/release-policy.json.in": "c375b6f81b340628e2229b9bc85242be16ae4a642d8293a2e8745b0bfb2620b8",
+    "tests/test_forgejo_plan.py": "543695944ec34e1427ba961e7a34ce743ac9ea6a425109003f361da6ef6bcb37",
+    "tests/test_release_plan.py": "4d0f2a2382275918faba076689adfd23fd4bc2c0be83be9e09897562b59aa3c4"
+  },
+  "fixtures": {
+    "all_data": "invented synthetic values",
+    "artifact_files": "short text fixtures, not executables or valid NAR archives",
+    "receipt_statuses": "invented values testing the contract, not independent qualification results",
+    "observed_targets": "invented snapshots, never fetched from production"
+  },
+  "not_executed": [
+    {
+      "check": "Rust/Elm or Nix builds by these planners",
+      "reason": "Planners hash supplied files only; actual construction belongs to the independently locked build chain"
+    },
+    {
+      "check": "NAR parse/import and transitive closure verification",
+      "reason": "No store operation or closure parser implemented"
+    },
+    {
+      "check": "Commit-to-source content relation",
+      "reason": "Independent source exporter and tree relation validation remain unqualified"
+    },
+    {
+      "check": "Receipt content and authority verification",
+      "reason": "Detached evidence syntax and digest binding only; no signatures or independent issuer"
+    },
+    {
+      "check": "Actual VPS state, resource headroom, runner isolation and Forgejo API",
+      "reason": "No production access authorized from Cloud"
+    },
+    {
+      "check": "Deployment, migration on real data, restore or activation rollback",
+      "reason": "Freeze active; no bounded executor implemented or approved"
+    },
+    {
+      "check": "Independent review/adoption",
+      "reason": "This local report is not an independent approval"
+    }
+  ]
+}

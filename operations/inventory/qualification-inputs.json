@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "scope": "local_synthetic_qualification_artifacts_and_sources",
+  "sha256": {
+    "qualification-build.json": "0701becd9fc093791a5653a5883103aee9b16e053e1690a25fbd3a252a1bd0a2",
+    "qualification-container-restoration.json": "9941b7e7066c3e442c340fc638421cc655f0dadfc350b8c4f002dc2a960e605a",
+    "qualification-ssh.json": "c5ecc2f23f98d098407e0d23ad33639063557de7eef4e6047ad59e40b91b8724",
+    "qualification-unit.json": "88d440b0c3136c8aa25050eead7bddb96dd1f6d26002f85ca59d189da407b5f4",
+    "tests/qualify_ssh_isolated.py": "106d267a2af14c6612edadca4272ddc9fe976741ad51ceebd550e6eb94e3eb8d"
+  }
+}

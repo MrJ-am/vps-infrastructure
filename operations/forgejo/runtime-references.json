@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "proposal-not-adopted",
+  "activation_allowed": false,
+  "host_authority": "MrJ-am/vps-infrastructure",
+  "domain": "forge.mrj.am",
+  "data": [
+    {"path": "/var/lib/forgejo", "owner": "forgejo", "group": "forgejo", "mode": "0750", "content": "persistent-private", "adoption_verified": false},
+    {"path": "/var/lib/forgejo-identity", "owner": "root", "group": "root", "mode": "0700", "content": "persistent-private", "adoption_verified": false},
+    {"path": "/var/backup/forgejo", "owner": "root", "group": "root", "mode": "0700", "content": "encrypted-private-backups", "adoption_verified": false}
+  ],
+  "secrets": [
+    {"ref": "ref:forgejo/security-secret-key", "store": false, "git": false, "cloud": false, "exact_existing_path": null},
+    {"ref": "ref:forgejo/internal-token", "store": false, "git": false, "cloud": false, "exact_existing_path": null},
+    {"ref": "ref:forgejo/oauth2-jwt-secret", "store": false, "git": false, "cloud": false, "exact_existing_path": null},
+    {"ref": "ref:forgejo/kanidm-client-secret", "store": false, "git": false, "cloud": false, "exact_existing_path": null},
+    {"ref": "ref:forgejo/runner-registration", "store": false, "git": false, "cloud": false, "exact_existing_path": null},
+    {"ref": "ref:forgejo/backup-recipient-public-key", "public": true, "exact_existing_path": null}
+  ],
+  "database": {"engine": "postgresql", "database": "forgejo", "role": "forgejo", "socket": "/run/postgresql", "create_database": false, "arbitrary_sql": false, "schema_compatibility": "unknown"},
+  "identity": {"provider": "Kanidm", "origin": "https://log.mrj.am", "local_signin": false, "bootstrap_admin": false, "sso_adapter_qualified": false},
+  "runner": {"production_host_allowed": false, "isolation": "unqualified", "runtime_backend": null, "registration_enabled": false},
+  "missing_before_enable": [
+    "installed Forgejo/runner/Kanidm builds and exact generation",
+    "reviewed compatibility and forward/backward database migration contract",
+    "SSO account linkage and identity adoption without bootstrap/reset",
+    "existing UID/GID, ownership, paths, quotas and credential references",
+    "authorized synthetic and real bounded backup/restore qualification",
+    "Org/LaTeX sanitization and browser qualification on chosen Forgejo",
+    "isolated runner executor, namespace/network/volume/resource enforcement",
+    "protected repository policy API mapping and external reconciler identity"
+  ]
+}

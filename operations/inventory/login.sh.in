@@ -1,0 +1,7 @@
+#!@bash@/bin/bash -p
+set +x
+exec 2>/dev/null
+[[ "$UID" -ne 0 && "$EUID" -ne 0 ]] || exit 64
+[[ "$#" -eq 2 && "$1" == -c && "$2" == mrjam-inventory-v1 ]] || exit 64
+[[ "${SSH_ORIGINAL_COMMAND-}" == mrjam-inventory-v1 ]] || exit 64
+exec @coreutils@/bin/env -i LANG=C LC_ALL=C @python@/bin/python3 -I -S @out@/libexec/runner.py

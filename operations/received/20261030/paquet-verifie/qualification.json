@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "as_of_utc": "2026-10-30T07:10:00.368750+00:00",
+  "status": "synthetic-local-qualification-only",
+  "base_commit": "3ac42ab9b55cb44535c0a397b2ade5809cbd54fa",
+  "production_access_used": false,
+  "production_inventory_executed": false,
+  "deployment_authorized": false,
+  "authenticated_validation_authority": false,
+  "command": "python3 -m unittest -v test_inventory.py test_validate_report.py",
+  "exit_code": 0,
+  "tests_run": 22,
+  "tests_passed": 22,
+  "tests_skipped": 0,
+  "unchanged_initial_probe_tests": 11,
+  "new_report_filter_tests": 11,
+  "probe_and_schema_unchanged_from_initial_prototype": true,
+  "checked_artifacts": [
+    {
+      "path": "inventory.py",
+      "sha256": "b4abbdd8afbd1216cde98bf001ea0908ad3fb90d3068272db3e19d58edc80a45",
+      "bytes": 11613
+    },
+    {
+      "path": "inventory.schema.json",
+      "sha256": "86f9a82d9f9f4881156b5fa10afd41a0ee912930cd62df3f347fcc29f0e202f5",
+      "bytes": 22136
+    },
+    {
+      "path": "validate_report.py",
+      "sha256": "212e4d78986c4d5421f09004982d9ca3cd436a629e6c044ca85bce0f186342e0",
+      "bytes": 4603
+    },
+    {
+      "path": "test_inventory.py",
+      "sha256": "561ec496a7cd02decf5b38979792a3673a192db173ee1c5fd11c87cb7fb88794",
+      "bytes": 7915
+    },
+    {
+      "path": "test_validate_report.py",
+      "sha256": "4ddbc1ce3a62448cd6fb4903b3ccbf4d137b90e2ff7f32bbd39af87a70b6e78c",
+      "bytes": 6871
+    },
+    {
+      "path": "inventaire-borne.org",
+      "sha256": "e9e2d72b9c8d0813a13fdbe40a44f132b81439b8ab30e647f9a8d1ee62028c1e",
+      "bytes": 10492
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "e13b82b8214eb77671dc63500d974f3cfdd30224b13adbdd0aae9340edc2881a",
+      "bytes": 967
+    }
+  ],
+  "limits": [
+    "No real VPS metadata collected",
+    "No authenticated producer, protected adoption or ACL demonstrated",
+    "Numeric versions describe system-profile binaries, not running processes",
+    "No deployment or new authority is granted by the local report filter"
+  ]
+}

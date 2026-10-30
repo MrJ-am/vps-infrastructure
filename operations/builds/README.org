@@ -1,0 +1,158 @@
+#+title: Construction déclarative Rust et Elm — proposition sous gel
+#+language: fr
+
+* Portée et références
+
+=default.nix= fournit cinq dérivations : validation de toutes les entrées,
+toolchain Rust 1.99.1, Node 24.19.0, serveur Rust et site Mateval Elm 0.19.1.
+Ces versions conservent les exigences de l'application existante. Les versions
+Rust 1.95.0 et Node 24.22.1 du nixpkgs retenu ne les remplacent pas. Aucune de
+ces versions ne décrit un processus installé sur le VPS.
+
+La sélection =sources.lock.json= contient seulement les sources de compilation,
+tests, migrations et ressources publiques nécessaires, avec leurs SHA-256.
+Elle épingle la plateforme =0a4d261b2b9d6439a072077bb3b7dd49845fe732= et ses
+gitlinks Vision =44ecabd871bb3b5005bbd551205ca15bd644bd5c= et Mateval
+=ccde49f2a9b16927e977ba5f75a0f62635d1ac2b=. Aucun dépôt de mémoire, réponse de
+participant, historique privé, clé ou cache d'identifiants n'entre dans ce
+paquet. Les fichiers supplémentaires d'un checkout ne sont pas exportés.
+
+Le style Mateval reste =27111a95d0222c634e55fb2e3ff8e45041b40b16=, les polices
+et la banque publique restent vérifiées par les scripts d'origine. Les
+empreintes ne sont pas recalculées pour accepter un changement de contenu.
+La sélection nouvelle et le verrou de contenu Elm sont des propositions à
+revoir ; ils ne constituent pas leur propre autorité de validation.
+
+* Préparation des entrées
+
+=prepare.py= exige un nouveau dossier, des checkouts aux commits et gitlinks
+exacts, l'export fermé du style, le cache source Elm et les archives Cargo.
+Il ne clone pas les dépôts, ne parcourt pas leur historique et n'exécute pas
+leur code pendant l'export. Tous les fichiers sélectionnés sont lus après
+contrôle de chemin et de lien, puis comparés aux empreintes versionnées. Les
+lectures parcourent tous les ancêtres par descripteurs avec =O_NOFOLLOW=,
+refusent les fichiers spéciaux avant lecture, utilisent =O_NONBLOCK= pour
+éviter l'attente d'un FIFO et bornent chaque fichier à 64 Mio.
+
+#+begin_src sh
+python3 operations/builds/prepare.py \
+  --platform "$PLATFORM_SOURCE" --style "$STYLE_EXPORT" \
+  --elm-home "$ELM_SOURCE_CACHE" --cargo-cache "$CRATE_ARCHIVES" \
+  --destination "$NEW_BUILD_INPUTS"
+#+end_src
+
+=--download-missing= permet exclusivement le téléchargement HTTPS des archives
+publiques crates.io aux noms et versions du Cargo.lock ; leur SHA-256 doit
+correspondre au verrou avant extraction. Un fichier existant invalide est
+refusé, jamais remplacé. Le cache fourni reste en lecture seule ; les octets
+téléchargés alimentent uniquement la nouvelle matérialisation. Les liens,
+chemins traversants et fichiers spéciaux
+des archives sont refusés. Les dépendances Cargo extraites reçoivent les
+=.cargo-checksum.json= usuels, incluant le checksum de l'archive d'origine.
+
+Le cache Elm épinglé contient les seuls =elm.json= et =src/= des 17 paquets
+requis, ainsi que le snapshot =registry.dat=. Les octets publics du snapshot
+sont versionnés ici dans =elm-registry.dat= : son URL amont évolutive ne permet
+pas à elle seule de retrouver une ancienne version. Pour un nouveau cache,
+copier ce fichier à =0.19.1/packages/registry.dat= et fournir les sources des
+17 versions énumérées par le verrou. Ne pas écraser un cache divergent pour
+masquer un échec de vérification. Aucun résultat compilé du cache
+n'est importé. Le verrou =elm-dependencies.lock.json= relève les octets du
+cache préparé avec TLS contrôlé dans l'environnement de reprise ; sa revue
+indépendante reste requise avant adoption. Le format registry.dat dépend du
+compilateur Elm 0.19.1 et n'est pas supposé compatible avec une autre version.
+
+L'export retourne =materialization.json= sans date ni chemin local. Son hash
+attendu est une entrée obligatoire de l'expression Nix. =verify_inputs.py=
+compare les verrous versionnés, chaque source, chaque dépendance Cargo, les
+ensembles exacts de fichiers et les copies du manifeste. Un fichier ajouté,
+modifié, supprimé ou un lien fait échouer cette validation. Les builds n'ont
+aucune dépendance implicite aux chemins =/workspace=.
+
+* Construction et identification
+
+Importer le nixpkgs du =flake.lock= racine, puis :
+
+#+begin_src nix
+pkgs.callPackage ./operations/builds {
+  materialized = inputsPath;
+  expectedManifestSha256 = reviewedManifestSha256;
+}
+#+end_src
+
+Les attributs sont =verifiedInputs=, =rustToolchain=, =nodeToolchain=,
+=rustServer= et =matevalElm=. Une erreur de hash est fatale. Rust utilise
+=cargo build --release --frozen --offline= et =cargo test --workspace
+--frozen --offline= sur le vendor intégral ; aucun résolveur ne met le verrou
+à jour. Les tests PostgreSQL nécessitant la feature d'intégration restent un
+contrôle séparé : ce build n'instancie pas de base de données.
+Les chemins de sources et du vendor sont remappés dans les diagnostics Rust.
+=disallowedReferences= interdit au résultat de conserver le dossier d'entrées
+comme dépendance runtime ; sa présence avait ajouté 211 Mo de sources à une
+fermeture préparatoire et a été corrigée après inspection de =nix path-info=.
+
+Elm compile Main, Survey, Administration et DemoCard avec =--optimize= via
+les scripts existants. Le build conserve les versions de modules, ressources,
+polices et la banque publique ; l'identité =interface.json= utilise le commit
+Mateval exact. Le verrou de dépendances ne nécessite aucun =npm install= : les
+scripts utilisent uniquement les modules intégrés de Node et le compilateur
+Elm fourni par le nixpkgs verrouillé.
+
+Chaque résultat contient =artifact.json= : références sources, empreinte du
+manifeste d'entrées, verrou d'outils et SHA-256 des fichiers livrés. Le chemin
+store, le drvPath, le NAR hash et la fermeture runtime sont à relever après
+construction et à joindre au dossier de revue. =artifact.json= ne remplace
+pas cette identification de la fermeture Nix. Le choix des artefacts doit
+être enregistré après les tests et avant approbation ; aucune reconstruction
+implicite n'est admise lors de l'installation future.
+La génération refuse les fichiers spéciaux et un manifeste déjà présent ;
+elle ne peut pas inclure puis écraser sa propre ancienne empreinte.
+
+Les destinations de matérialisation et d'artefact doivent être détenues
+exclusivement par le constructeur, sans écrivain concurrent ; la vérification
+Nix porte ensuite sur les chemins immuables du store. Les limites de taille
+et de membres des archives complètent la sélection par SHA-256, mais le
+parcours =tar.getmembers()= précède le contrôle du nombre de membres : aucune
+borne générale de CPU/mémoire sur une archive hostile arbitraire n'est
+revendiquée. Les archives admises sont celles du Cargo.lock revu.
+
+Le wrapper local peut précharger les outils et dépendances, puis construire
+dans un conteneur à réseau désactivé avec =--offline-container=. Son sandbox
+Nix est désactivé dans ce conteneur Docker ; ce contrôle n'est pas une preuve
+d'isolation d'un runner ou du VPS. Une seconde construction de la même
+dérivation avec =nix build --rebuild= et comparaison des résultats peut établir
+la répétabilité locale de ces artefacts. Sans ce contrôle exécuté, aucune
+reproductibilité binaire n'est revendiquée.
+
+* Couverture et limites bloquantes
+
+| Interface | Couverture de cette recette | Qualification restant distincte |
+|-----------+----------------------------+----------------------------------|
+| Mateval | 4 entrées Elm, ressources et contenu public épinglés | Parcours complets, administration, authentification et branchement CLI |
+| Vision | Sources Rust du gitlink incluses | Construction finale de l'interface Elm et parcours |
+| Log | Aucune nouvelle dérivation Elm | Pin propre du style et qualification finale |
+| Audition | Modèle Rust inclus | Interface Elm, backend et intégration |
+| Logique | Aucune nouvelle dérivation Elm | Ressources et parcours de la livraison |
+| Style | Modules du pin Mateval compilés par ses 4 entrées | 8 exemples et styles propres aux autres applications |
+| Style-logo | Aucune nouvelle dérivation Elm | 4 entrées de l'atelier et ressources |
+
+Les résultats historiques des sept interfaces et des 208 règles elm-review
+restent identifiés dans =mrjam-validation/frontend-qualification/= et
+=review/=. Cette recette ne les transforme pas en nouvelle preuve. ViSe
+reste hors du lot des sept interfaces. Aucune unification de pins de style
+ni adoption des règles canoniques n'est réalisée ici.
+
+Le CLI du serveur conserve sa disponibilité fonctionnelle incomplète :
+=/readyz= reste 503, aucun pool PostgreSQL ni service statique Elm de production
+n'y est branché. Une compilation réussie ne rend pas la migration déployable.
+L'évaluation du système NixOS complet, la continuité des services tiers, les
+migrations de données, les droits/secret refs, sauvegarde/restauration et la
+qualification indépendante restent les préconditions du dossier global.
+
+* Preuve de cette reprise
+
+Les commandes exécutées, résultats, NAR hashes, fermetures runtime et limites
+de cette reprise sont consignés dans [[file:qualification.json][qualification.json]].
+Cette preuve concerne des artefacts préparatoires locaux et conserve
+=deployment_authorized=false=. Elle ne désigne aucune génération NixOS
+activable ni aucune révision observée du VPS.

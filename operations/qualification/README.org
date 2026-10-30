@@ -1,0 +1,17 @@
+#+title: Preuves locales de la préparation déclarative
+#+language: fr
+
+Les reçus décrivent les commandes réellement exécutées, leurs sources et
+limites. Ils ne sont pas signés par une autorité indépendante et ne lèvent pas
+le gel. Le JSON reçu de Spectre reste dans ../received avec sa provenance.
+
+Le relevé global est declaratif-20261030.json. Les reçus spécialisés restent
+dans ../builds, ../inventory, ../forgejo, ../release et ../probes/adoption-v2.
+La revue indépendante est dans mrjam-validation/declarative-access ; la revue
+du préparateur de builds et du harnais de restauration est dans
+../release/review-preparation.org.
+
+La génération complète du VPS n'a pas été construite. Les tests de modules
+emploient des identités et fichiers système synthétiques. La rétention de
+fermetures et l'adoption des références de secrets doivent être qualifiées
+par le mécanisme autorisé avant installation.

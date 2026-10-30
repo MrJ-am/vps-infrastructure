@@ -1,0 +1,31 @@
+{
+  "scope": "local_disposable_ssh_fixture_only_no_VPS_access",
+  "status": "exact_original_public_image_bytes_restored",
+  "image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+  "affected_store_path": "/nix/store/kis5v17r29vz5k2bwh5hsrhz4rhj3bvl-base-system",
+  "cause": "image_etc_account_files_were_symlinks_into_shared_local_Nix_volume",
+  "known_append_only": true,
+  "originals_source": "fresh_container_same_image_digest_without_shared_Nix_volume",
+  "before_verify_exit": 1,
+  "after_verify_exit": 0,
+  "verification_command": "nix-store --verify-path /nix/store/kis5v17r29vz5k2bwh5hsrhz4rhj3bvl-base-system",
+  "files": {
+    "passwd": {
+      "before_sha256": "3b9fdf5a9952c1b17d87b454a9272e125c3cb60dd13566ac416c5097b302c726",
+      "restored_sha256": "fa1c644ecaac4c60e6be4d7a39560856bfdedc86d49c1375314285f66508917f",
+      "restored_bytes": 2248
+    },
+    "group": {
+      "before_sha256": "018b9a3729eaccdd5cffaec9ea982ceb6622a73f78dbcfd36fb8b53b43ec3efb",
+      "restored_sha256": "d52a3e02e11273bf5a8ae7eefc4cd139fbd7eecd6ef3bec223142b8ce9ff01bb",
+      "restored_bytes": 330
+    },
+    "shadow": {
+      "before_sha256": "b5e9c69f5701076592ff684f4c1fc6a5202b79bd91861ac43e604412e1e5acff",
+      "restored_sha256": "2cbd3cba9b6ba3022720d33b321c59d277d40b8f767f76a0a1c300041cfaca6c",
+      "restored_bytes": 631
+    }
+  },
+  "prevention": "test driver verifies public image file hashes and replaces /etc symlinks with disposable overlay files before any fixture mutation",
+  "not_affected": ["Cloud host accounts", "production", "private user keys", "application data"]
+}

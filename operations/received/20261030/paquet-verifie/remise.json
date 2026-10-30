@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "prepared-local-review-bundle-not-deployed",
+  "repository": "MrJ-am/mrjam-validation",
+  "prepared_from_commit": "3ac42ab9b55cb44535c0a397b2ade5809cbd54fa",
+  "published_revision": null,
+  "revision_note": "Base commit identifies the prior checkout only. Exact proposed bytes are bound by SHA256SUMS; no new commit or remote publication is claimed.",
+  "runtime_files": [
+    "inventory.py",
+    "validate_report.py",
+    "inventory.schema.json"
+  ],
+  "review_files": [
+    "AGENTS.md",
+    "inventaire-borne.org",
+    "test_inventory.py",
+    "test_validate_report.py",
+    "qualification.json"
+  ],
+  "integrity_file": "SHA256SUMS",
+  "administrative_procedure": "inventaire-borne.org",
+  "administrative_prerequisite": "Existing administrator channel and approved local Python 3.11+; no new agent credential or package installation",
+  "agent_output": "Only the JSON produced by validate_report.py, after local validation",
+  "additional_cost": 0,
+  "production_access_used": false,
+  "deployment_freeze": true,
+  "authentication_note": "Checksums establish byte integrity only. They are not a signature or an adopted policy."
+}

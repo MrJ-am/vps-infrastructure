@@ -1,0 +1,4 @@
+.markup .math.display { display: block; max-width: 100%; overflow-x: auto; }
+.markup mjx-container { max-width: 100%; }
+.markup mjx-container[display="true"] { overflow-x: auto; overflow-y: hidden; }
+.markup pre, .markup table { max-width: 100%; overflow-x: auto; }

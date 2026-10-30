@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "authority": "verified_attachment_bytes_only",
+  "received_archive": {
+    "name": "mrjam-reprise-declarative-sources-20261030.tar.gz",
+    "sha256": "921f18487f1c7804b1a9f497c6fcedfe18ac467e6bd33a382c1cea363e825361"
+  },
+  "original_archive": {
+    "name": "mrjam-inventaire-borne-20261030.tar.gz",
+    "sha256": "47c0c620a241cb37dd44601f21322badcb18aed0d4e0161a3e891ef795514b9e"
+  },
+  "prior_reference": {
+    "repository": "MrJ-am/mrjam-validation",
+    "revision": "3ac42ab9b55cb44535c0a397b2ade5809cbd54fa",
+    "published_revision": null,
+    "meaning": "earlier_reference_only_not_publication_or_installed_revision"
+  },
+  "unchanged_original_files": [
+    {"path":"probe/inventory.py","bytes":11613,"sha256":"b4abbdd8afbd1216cde98bf001ea0908ad3fb90d3068272db3e19d58edc80a45"},
+    {"path":"probe/validate_report.py","bytes":4603,"sha256":"212e4d78986c4d5421f09004982d9ca3cd436a629e6c044ca85bce0f186342e0"},
+    {"path":"probe/inventory.schema.json","bytes":22136,"sha256":"86f9a82d9f9f4881156b5fa10afd41a0ee912930cd62df3f347fcc29f0e202f5"}
+  ],
+  "legacy_access_runner": {
+    "bytes": 3420,
+    "sha256": "5e888ab7ae7a7a3ecef742941ff0f47720790979ffe9c1ff744e4b879665a201",
+    "use": "read_only_adoption_comparison_never_reinstalled"
+  },
+  "candidate_status": "preparatory_disabled_no_production_authorization"
+}

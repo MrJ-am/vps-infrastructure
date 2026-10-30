@@ -1,0 +1,13 @@
+Remise de sources pour préparation déclarative, 30 octobre 2026.
+Le JSON est le seul contenu observé sur le VPS inclus dans cette remise.
+Les autres fichiers sont les sources locales vérifiées et le compte rendu.
+Le dossier acces-borne décrit un accès créé impérativement, encore à reprendre en Nix.
+Les contrôles existants ne constituent pas une revue indépendante ni une autorisation de déploiement.
+Aucune clé privée ou publique, configuration SSH locale, donnée métier, sauvegarde ou journal n’est inclus.
+Aucun accès de production n’est délégué à Cloud par ces fichiers.
+Ne pas exécuter les commandes install/collecte des clients sur la production.
+acces-borne/acces_borne.py importe remise_inventaire.py à la racine.
+Les chemins d’exécution sont ceux de Spectre ; préparer des tests déclarés adaptés à Cloud.
+La référence de base du paquet ne prouve pas la publication de ses ajouts sur GitHub.
+SHA256SUMS à la racine couvre cette remise ; paquet-verifie/SHA256SUMS est inchangé.
+Les empreintes prouvent l’intégrité des octets, pas leur authenticité ou une approbation.

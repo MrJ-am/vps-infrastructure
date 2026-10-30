@@ -1,0 +1,128 @@
+#+title: Forgejo et runner — préparation déclarative, activation bloquée
+#+language: fr
+
+* Résultat préparé
+
+=../nixos/mrjam-forgejo.nix= expose un paquet de configuration immuable via
+=services.mrjamForgejo.preparation=. Son import n'ajoute aucun compte, unité,
+base, port, timer, secret, fichier de configuration système ou runner. Les
+options =enable= et =runner.enable= valent =false= ; les mettre à =true= échoue
+à l'évaluation par une assertion. Le verrou est dans le code et ne peut pas
+être levé par un simple champ =approved=true= du candidat.
+
+Le paquet contient une proposition =forgejo-candidate.ini=, les assets locaux
+Org/MathJax et les références de fonctionnement. Il ne contient aucun exécuteur
+d'installation. Copier cet INI sur une instance existante n'est pas une étape
+autorisée : le raccordement SSO, les secrets, quotas et données manquent encore.
+
+La configuration historique reste dans =reference-nixos/=, inactive. Aucun de
+ses modules, scripts SQL, scripts d'identité ou de sauvegarde n'est importé ni
+exécuté. Quatre fichiers statiques examinés sont repris octet pour octet ;
+=sources.lock.json= conserve leurs empreintes et leur révision d'origine.
+
+* Versions et raison du blocage
+
+Le pin global =6f06d204d8f2d8761d9da78778745974a3216381= fournit Forgejo
+=17.0.1=, forgejo-runner =13.2.0= et Pandoc =3.7.0.2=. Ces valeurs ont été
+évaluées dans Cloud. La référence historique indique Forgejo =16.0.3= ; elle
+ne prouve pas la version installée. Le rapport réel indique Forgejo et runner
+=unknown=. Aucun upgrade vers 17.0.1 n'est décidé dans ce lot : cette version
+sert à préparer un candidat vérifiable, en attendant la preuve du build actif
+et la politique officielle de migration correspondant exactement à ce couple.
+
+Les archives MathJax et NewCM restent en =4.1.3= avec les empreintes inchangées
+de la référence. Les assertions du paquet refusent un changement de versions
+Forgejo, runner ou Pandoc et un changement des quatre sources auditées.
+
+Le module amont NixOS Forgejo de ce pin exécute automatiquement =forgejo migrate=,
+=admin regenerate hooks= et =admin regenerate keys= dans =preStart=. Il ajoute
+=WantedBy=multi-user.target=. Il ne suffit donc pas d'activer ce module pour
+adopter sans effet les données existantes. La future révision doit séparer et
+qualifier la migration, préserver secrets/identités, puis installer exactement
+la fermeture approuvée. Un ancien système NixOS ne restaure pas le schéma SQL.
+
+* Paramètres et dépendances préparés
+
+=settings.nix= décrit HTTP sur =127.0.0.1:3004=, l'URL =https://forge.mrj.am/=,
+les propositions de paramètres SSH Git déjà présentes dans la référence, les
+dépôts privés, l'interdiction d'inscription locale, la connexion SSO sans
+repli vers un mot de passe local, les cookies sécurisés et le rendu Org
+sanitisé. Aucun firewall, certificat, routage Nginx ou serveur SSH n'est modifié.
+
+Le moteur Org utilise un Pandoc verrouillé, =--sandbox=, une limite mémoire
+virtuelle de 1 Gio et un délai de 20 secondes. Le filtre de liens et les assets
+MathJax sont locaux au store. La sanitisation annoncée est une configuration
+à qualifier dans Forgejo : construire un INI ou un asset ne prouve pas le
+comportement du navigateur, du sanitizer, du SSO ou de la forge en cours.
+
+Les limites de quotas ne sont volontairement pas reprises des anciennes valeurs
+illimitées. Leur valeur effective et leur politique doivent être établies avant
+une configuration exploitable. Les 2 CPU, 8 328 343 552 octets de RAM et l'espace
+disque observés ne prouvent pas une marge pour des jobs CI ou deux instances.
+
+=runtime-references.json= décrit les emplacements persistants proposés, les
+propriétaires/permissions à confirmer, le rôle PostgreSQL dédié, les origines
+SSO et les références de secrets. Il ne lit aucun de ces chemins. Une référence
+=ref:= n'est ni un secret ni un fichier existant démontré. Les UID/GID, chemins
+effectifs et droits doivent être rapprochés par contrôle borné avant adoption,
+sans recréation, bootstrap administrateur ou régénération de secrets implicite.
+
+* Runner et objets Forgejo hors NixOS
+
+=runner-policy.json= est la politique déclarative proposée, compatible avec
+=../release/forgejo_plan.py= : runner désactivé, un job maximum, dépôt de
+validation uniquement, éphémère, sans identité de signature, socket Docker,
+montage ni réseau de production. Le backend d'exécution reste =null= dans les
+références ; aucun fichier de runner exploitable n'est présenté comme qualifié.
+
+Le module amont =services.gitea-actions-runner= n'est pas activé. Sur le pin
+considéré, il inscrit automatiquement les runners, passe le jeton d'inscription
+en argument de commande et peut ajouter les groupes Docker/Podman selon les
+labels. =DynamicUser= ou un label =host= ne prouve pas l'isolation des candidats.
+La future chaîne doit isoler l'inscription du jeton et les jobs, détruire leurs
+espaces de travail, borner CPU/RAM/disque/processus et contrôler réseau/volumes
+par une frontière effective. Aucun runner de cette préparation n'est installé
+sur le VPS. La disponibilité d'un autre exécuteur autorisé reste à établir.
+
+Le planificateur =../release/forgejo_plan.py= couvre les trois dépôts, protections,
+contrôles requis et flux de miroir. Il est idempotent sur des instantanés JSON
+filtrés et ne fait aucune requête. Le mapping API par version, l'identité de
+réconciliation et les ACL ne sont pas encore qualifiés. Aucun workflow actif
+n'est ajouté ; les modèles restent en =../release/templates/=.
+
+* Qualification locale reproductible
+
+Depuis la racine du dépôt, avec le source nixpkgs déjà verrouillé :
+
+#+begin_src sh
+bash operations/tools/nix-local.sh nix-instantiate --eval --strict --json \
+  operations/forgejo/tests/module-evaluation.nix \
+  --arg nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source
+#+end_src
+
+Les contrôles vérifient import inerte, absence de services/comptes/SQL/Nginx,
+refus d'activation, absence d'authentification locale de repli, actions gelées,
+dépôts privés et paramètres Org. Le constructeur vérifie ses entrées et ses
+sorties préparatoires. Les résultats effectivement exécutés sont consignés
+séparément dans =qualification.json= ; ce document ne préjuge pas leur succès.
+
+Les commandes utilisent un conteneur local avec Nix =sandbox=false= ; ce n'est
+pas la qualification d'un runner ni une frontière de production. Aucun test de
+SSO réel, de base réelle, de sauvegarde réelle, d'API Forgejo réelle, de navigateur
+contre Forgejo, de migration de données ni de bascule n'est exécuté ici.
+
+* Preuves minimales avant remplacement du verrou
+
+1. Observation bornée du build Forgejo actif et de la génération système, puis
+   matrice officielle de migration du build observé au candidat choisi.
+2. Adoption des comptes, chemins, références de secrets, quotas et identité SSO
+   avec preuve filtrée de continuité des identités et de refus du contournement.
+3. Migration/restauration répétée sur données synthétiques, délai d'abandon et
+   retour applicatif/schema définis ; contrôle réel de sauvegarde/restauration
+   par composant autorisé sans transfert de contenu vers Cloud.
+4. Qualification Org/LaTeX/SSO/API dans une instance synthétique isolée ; ne pas
+   supposer que cette instance peut cohabiter sur le VPS.
+5. Frontières du runner et ACL de la forge démontrées, règles indépendamment
+   adoptées, artefacts et génération identifiés dans le dossier de livraison.
+6. Revue de la nouvelle implémentation d'adoption puis autorisation explicite
+   de l'utilisateur portant sur les révisions et les artefacts exacts.

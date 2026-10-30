@@ -1,0 +1,31 @@
+#+title: Sources remises depuis Spectre, conservées octet pour octet
+#+language: fr
+
+Le sous-dossier =20261030/= contient les 21 fichiers du manifeste remis et ce
+manifeste intact. Les deux pièces jointes, l'archive originale et les 9 entrées
+du manifeste imbriqué ont été vérifiés avant utilisation. La provenance est
+dans =provenance-20261030.json=. Les vérifications ne sont pas des signatures.
+
+Le JSON est l'observation filtrée explicitement autorisée par l'utilisateur.
+Il reste =unverified_observation= : ce dossier ne contient ni identifiant
+d'accès, ni secret, ni donnée métier, ni preuve de la génération installée.
+Le commit de base de la remise ne prouve pas la publication de ses ajouts.
+
+L'installateur impératif est conservé uniquement comme source à relire. Ne pas
+le relancer. Les commandes SSH de la remise ne sont pas autorisées à Cloud.
+La proposition qui remplace l'accès se trouve dans =../inventory/= ; les
+trois fichiers V1 consommés par celle-ci gardent les empreintes originales.
+
+Les tests originaux emploient des chemins NixOS fixes. Sur le Cloud sans
+=/run/current-system=, les 22 tests de sonde/filtre réussissent ; les suites
+remise et accès échouent sur l'absence de ces exécutables (13 sous-cas en
+échec + 5 erreurs sur 16 méthodes ; 2 erreurs sur 10 méthodes). Ce premier
+résultat est conservé, sans modification des fichiers ou des empreintes.
+Le profil local =received-tests-profile= du flake permet leur rejeu dans un
+conteneur jetable, avec ce chemin synthétique, sans connexion distante.
+
+Ce rejeu a été exécuté sous UID 1000 dans le conteneur local sans réseau :
+22 + 16 + 10 méthodes réussies, zéro omission. Le reçu
+=../qualification/received-replay.json= identifie le profil construit et les
+codes de sortie. Ce succès ne contredit pas les défauts reproduits séparément
+dans le runner historique : ses anciens tests ne les couvraient pas.

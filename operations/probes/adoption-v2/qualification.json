@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "operation": "mrjam-inventory-adoption-v2",
+  "status": "prepared-not-deployed",
+  "deployment_freeze": true,
+  "production_access_used": false,
+  "date": "2026-10-30",
+  "execution": {
+    "environment": "cloud-matheval",
+    "python": "3.12.14",
+    "command": "python3 -m unittest -v test_adoption.py test_validate_report.py",
+    "test_count": 40,
+    "result": "passed",
+    "data": "synthetic-only",
+    "elapsed_seconds_reported_by_unittest": 5.977
+  },
+  "additional_local_check": {
+    "subject": "Verified received legacy runner unpack() refuses V2 bytes",
+    "legacy_runner_sha256": "5e888ab7ae7a7a3ecef742941ff0f47720790979ffe9c1ff744e4b879665a201",
+    "cases": ["actual V2 length", "V2 padded to V1 envelope size with incorrect content hash"],
+    "passed": 2,
+    "runner_main_executed": false
+  },
+  "independent_contract_review": {
+    "repository": "MrJ-am/mrjam-validation",
+    "file": "declarative-access/test_adoption_probe_contract.py",
+    "test_count": 12,
+    "result": "passed-reported-by-independent-review-agent",
+    "production_access_used": false
+  },
+  "not_executed": [
+    "Probe on production or any real account",
+    "Production NSS backend or effective network isolation",
+    "Effective production filesystem, SSH policy, password locking or account permissions",
+    "NixOS integration/activation or boot of this proposal",
+    "Authenticated production generation/source mapping",
+    "Administrative execution procedure on Spectre or VPS"
+  ],
+  "limits": [
+    "Source review and synthetic tests do not create a production ACL",
+    "Store hash field is neither a NAR hash nor source revision",
+    "NSS may use system backends; network isolation is a prerequisite for future observation",
+    "A report remains authority=unverified_observation",
+    "Version 1 source and allowlist remain unchanged"
+  ]
+}

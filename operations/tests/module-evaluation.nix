@@ -23,8 +23,11 @@ let
     };
   };
   enabled = (evaluate options).config;
-  policyPasses = configuration: builtins.all (item: item.assertion)
-    (builtins.filter (item: lib.hasPrefix "mrjam-rust:" item.message) configuration.assertions);
+  # NixOS assertion messages can refer to failure-only data (e.g. a filesystem
+  # cycle). Never force messages for successful assertions while selecting ours.
+  policyPasses = configuration: builtins.all
+    (item: item.assertion || !(lib.hasPrefix "mrjam-rust:" item.message))
+    configuration.assertions;
   unitBlue = enabled.systemd.services.mrjam-rust-blue;
   unitGreen = enabled.systemd.services.mrjam-rust-green;
   duplicatePorts = (evaluate (lib.recursiveUpdate options {
@@ -57,7 +60,10 @@ let
       && unitGreen.serviceConfig.Slice == "mrjam-rust.slice"
       && enabled.systemd.slices.mrjam-rust.sliceConfig.CPUQuota == "100%";
     nginxUntouched = enabled.services.nginx.enable == disabled.services.nginx.enable
-      && enabled.services.nginx.virtualHosts == disabled.services.nginx.virtualHosts;
+      # Compare the actual declarations; forcing every normalized virtual-host
+      # option touches undefined certificate fields of a disabled default host.
+      && (evaluate options).options.services.nginx.virtualHosts.definitions
+        == (evaluate { }).options.services.nginx.virtualHosts.definitions;
     postgresqlUntouched = enabled.services.postgresql.enable == disabled.services.postgresql.enable;
     validConfigurationPasses = policyPasses enabled;
     duplicatePortsRejected = !(policyPasses duplicatePorts);

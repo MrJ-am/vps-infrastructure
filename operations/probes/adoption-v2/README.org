@@ -1,0 +1,193 @@
+#+title: Sonde d'adoption V2 — proposition distincte, jamais exécutée sur le VPS
+#+language: fr
+
+* Objet et état
+Ce lot prépare les seules observations manquantes pour reprendre le compte
+=mrjam-inventory= dans NixOS. Il ne déploie rien et ne constitue pas une capacité
+d'accès. Le gel reste actif. Les tests n'utilisent que des comptes, liens et
+rapports fabriqués ; aucune collecte réelle n'a été faite avec cette sonde.
+
+Le nom d'opération =mrjam-inventory-adoption-v2= distingue explicitement cette
+proposition de =mrjam-inventory-v1=. Le paquet original et son filtre sont
+inchangés. Son archive conserve l'empreinte
+=47c0c620a241cb37dd44601f21322badcb18aed0d4e0161a3e891ef795514b9e=.
+L'exécuteur V1 installé n'accepte que les trois fichiers originaux : il doit
+refuser ce lot. Ne pas lui envoyer cette proposition, changer son allowlist,
+réutiliser son installateur ni lui donner une commande ou un chemin libre.
+
+La revue des octets de cette proposition et l'autorisation d'une nouvelle
+observation humaine restent nécessaires avant toute exécution sur le VPS.
+=SHA256SUMS= fixe les octets du lot préparé ; il ne signe ni l'auteur ni le
+résultat. Le commit final sera celui consigné par la revue globale du dépôt.
+
+* Lecture des résultats
+Le rapport est fermé et conserve =authority=unverified_observation=. Il ne
+contient ni nom d'hôte, date, clé, chemin personnel, nom d'utilisateur découvert,
+suffixe de store, message d'erreur, état de mot de passe ni contenu de fichier.
+
+| Champ | Observation permise | Limite |
+|-------+--------------------+--------|
+| =account.uid/gid= | UID/GID positifs du seul compte nommé =mrjam-inventory= | L'état système du compte et le verrouillage du mot de passe ne sont pas établis |
+| =home_matches/shell_matches= | Égalité avec le home et shell impératifs attendus | Aucun contenu de shell n'est lu ; le shell déclaratif futur sera différent |
+| =group_matches= | Le groupe nommé =mrjam-inventory= a le GID primaire attendu | =null= signifie inconnu |
+| =supplementary_groups_absent= | Liste NSS bornée réduite au GID primaire | Aucun groupe réel n'est exporté ; =null= n'est pas un succès |
+| =paths.*= | Type, propriétaire, groupe et mode des seuls objets du tableau ci-dessous | Ni contenu, ni ACL POSIX, ni politique SSH effective ; les parents doivent être root:root non modifiables et sans lien |
+| =generation.current= | Champ de 32 caractères du store dans le lien fixe =/run/current-system= | Ni NAR hash, ni commit source, ni preuve d'un build/processus actif |
+| =generation.profile= | Numéro du profil =system-N-link= et champ de store, puis comparaison avec current | Le profil sélectionné et les services en cours peuvent différer ; aucune atomicité globale n'est affirmée |
+
+Un objet absent vaut =state=absent/code=NOT_FOUND= ; un accès refusé ou un format
+inattendu vaut =unknown= avec un code fermé. L'absence du lien ne prouve pas
+l'absence de NixOS. Les booléens =false= sont des écarts observés ; =null= reste
+inconnu. UID/GID nuls ou hors borne sont rejetés comme =INVALID_OUTPUT=.
+La sonde n'infère jamais =system.stateVersion= d'une version NixOS.
+
+Les chemins sont inscrits dans le code ; aucune entrée ne peut les remplacer.
+Toutes leurs métadonnées sont obtenues sans suivre le dernier lien symbolique.
+
+| Nom de champ | Objet fixe | Type attendu | Propriétaire et mode |
+|--------------+------------+--------------+----------------------|
+| =base= | =/var/lib/mrjam-inventory-access= | répertoire | root:root 0755 |
+| =home= | =/var/lib/mrjam-inventory-access/home= | répertoire | root:root 0755 |
+| =ssh_directory= | =/var/lib/mrjam-inventory-access/home/.ssh= | répertoire | root:root 0755 |
+| =authorized_keys= | =/var/lib/mrjam-inventory-access/home/.ssh/authorized_keys= | fichier régulier | root:root 0644 |
+| =login= | =/var/lib/mrjam-inventory-access/login= | fichier régulier | root:root 0555 |
+| =runner= | =/var/lib/mrjam-inventory-access/runner.py= | fichier régulier | root:root 0444 |
+| =work= | =/var/lib/mrjam-inventory-access/work= | répertoire | UID:GID observés, 0700 |
+| =declarative_authorized_keys= | =/etc/ssh/mrjam-inventory-authorized-keys= | fichier régulier | root:root 0444 |
+
+Le dernier objet concerne un conflit éventuel avec la destination déclarative
+future. Son absence avant adoption est normale. Un lien vers le store reste un
+type différent, à examiner par le précontrôle ; la sonde n'en lit pas la cible
+ou le contenu. La sonde ne vérifie pas les nouveaux objets de verrouillage sous
+=/run/mrjam-inventory-lock=, qui n'existent pas nécessairement avant adoption.
+
+* Frontière technique et limites
+Les seuls appels de compte sont =getpwnam/getgrnam/getgrouplist= pour le nom fixe.
+La sonde ne parcourt pas =/etc/passwd=, ne lit jamais shadow et ne récupère pas
+d'autres identités. Ces fonctions utilisent NSS : aucun appel réseau n'est
+programmé dans Python, mais un backend système peut en effectuer indirectement.
+Avant exécution, l'administrateur doit établir que ces recherches sont locales
+ou employer une isolation réseau déjà disponible, préalablement revue et
+autorisée. Cette propriété n'est pas démontrée par les tests Cloud. Ne pas
+installer un outil ou donner plus de privilèges pour combler ce prérequis.
+
+Un parent supervise un enfant local créé par =fork=, sans shell ni exécutable
+externe. Le parent reçoit au plus 8 Kio et impose cinq secondes même si NSS
+bloque dans libc ; à l'échéance, il tue l'enfant et réserve au plus 0,1 seconde
+à sa récupération sans attente noyau illimitée. Les plafonds CPU (2 secondes),
+espace virtuel (128 Mio par processus), descripteurs (64) et core dump (0) sont abaissés,
+jamais relevés. Le filtre séparé a ses propres bornes de cinq secondes et 8 Kio.
+Un processus en attente noyau non interruptible reste une limite du système,
+pas une propriété d'isolation démontrée par ce programme.
+
+Les chemins parents sont ouverts avec =O_NOFOLLOW/O_DIRECTORY= et vérifiés
+root:root sans écriture groupe/autres avant descente. Les liens de génération
+doivent appartenir à root:root ; leur identité est comparée avant/après lecture.
+Seuls deux formats fixes sont admis : store Nix direct, ou profil
+=system-N-link= avec N positif borné. Aucun suffixe de store n'est transmis.
+Le lien du profil est contrôlé une seconde fois pour repérer un changement.
+Il n'existe aucune lecture générale de chemin, fichier, commande, SQL ou URL.
+
+Le filtre n'importe pas la sonde. Il lit seulement stdin et le schéma adjacent
+à empreinte SHA-256 épinglée, refuse les liens à la place de ce schéma,
+propriétés inconnues, doublons JSON, flottants/non-finis, types ambigus,
+valeurs hors borne et combinaisons d'états incohérentes. Il n'authentifie pas
+le producteur et ne transforme pas une observation en autorisation.
+
+* Procédure humaine proposée après revue et autorisation distinctes
+La procédure suivante est un dossier à approuver, pas une instruction déjà
+autorisée à un agent. Elle ne nécessite ni clé remise à Cloud ni nouvel accès
+persistant. Ne pas employer =connect.sh= ou les anciens workflows.
+
+1. Examiner le commit exact du dépôt et le présent sous-dossier ; consigner
+   cette révision et le SHA-256 du manifeste de la remise approuvée. Vérifier
+   dans le sous-dossier complet :
+
+   #+begin_src bash
+   sha256sum -c SHA256SUMS
+   #+end_src
+
+   S'arrêter au premier écart sans modifier les empreintes. Le filtre a aussi
+   sa propre empreinte du schéma, qui ne se sélectionne pas par le rapport.
+2. L'administrateur transfère lui-même les trois seuls fichiers d'exécution
+   =adoption_probe.py=, =adoption.schema.json=, =validate_report.py= vérifiés
+   dans un répertoire temporaire neuf par son canal existant. Ne pas les
+   déposer dans =/var/lib/mrjam-inventory-access= et ne pas toucher au V1.
+   Vérifier à nouveau leurs trois empreintes depuis le manifeste approuvé.
+   Ni configuration SSH locale, clé privée, sauvegarde, journal ni donnée
+   métier ne doit entrer dans la remise ou le retour.
+3. Utiliser un compte humain local existant non privilégié et un Python 3.11+
+   existant dont l'administrateur a approuvé le chemin absolu dans le store.
+   Le compte dédié à V1 ne dispose pas du shell requis et ne doit pas être
+   élargi. Si seul root est accessible, si Python manque, ou si le backend NSS
+   et son isolation restent indéterminés, arrêter avec ce prérequis. Aucune
+   création de compte, installation, utilisation de sudo ou modification SSH
+   n'est autorisée implicitement par cette procédure.
+4. Dans le répertoire temporaire contenant les trois fichiers vérifiés,
+   l'administrateur remplace la valeur =PYTHON_ADOPTION= ci-dessous par ce
+   chemin absolu approuvé. Depuis Bash non privilégié, exécuter le pipeline
+   local fixe ; aucun argument de sonde n'est permis :
+
+   #+begin_src bash
+   PYTHON_ADOPTION=/nix/store/CHEMIN_PYTHON_DEJA_PRESENT_APPROUVE/bin/python3
+   set -o pipefail
+   set -o noclobber
+   umask 077
+   if "$PYTHON_ADOPTION" -I -S ./adoption_probe.py 2>/dev/null |
+      "$PYTHON_ADOPTION" -I -S ./validate_report.py 2>/dev/null > adoption-v2-filtre.json
+   then
+       printf '%s\n' ADOPTION_REPORT_FILTERED
+   else
+       printf '%s\n' ADOPTION_REPORT_NOT_USABLE
+       false
+   fi
+   #+end_src
+
+   =CHEMIN_PYTHON_DEJA_PRESENT_APPROUVE= est volontairement un prérequis local,
+   pas un artefact inventé comme disponible. Aucun paquet ne doit être installé
+   pour remplacer ce prérequis. =noclobber= refuse d'écraser un retour antérieur.
+   Après =ADOPTION_REPORT_NOT_USABLE=, ne transmettre aucun fichier ou diagnostic
+   brut : signaler uniquement l'échec fermé. Même un JSON partiel ou de rejet
+   n'est pas un rapport à utiliser. Ne pas relancer sous root pour remplir un
+   =unknown=. La sonde refuse UID/EUID zéro avant toute observation.
+5. Après =ADOPTION_REPORT_FILTERED= seulement, l'administrateur valide le même
+   JSON une seconde fois avec le filtre revu sur Spectre et transmet uniquement
+   ce JSON filtré et son SHA-256. Aucun fichier de données réel n'est demandé.
+   Conserver côté humain le lien avec la révision et le manifeste approuvés.
+   Le rapport conserve son statut d'observation non authentifiée.
+
+Aucun de ces gestes ne lève le gel, ne qualifie la survie de l'accès après
+activation ni n'autorise la déclaration de l'UID/GID avant revue du résultat.
+Le précontrôle d'adoption sous =operations/inventory/adoption.py= traite
+séparément les contenus source/publics et les conflits d'adoption ; les ACL
+effectives, le verrouillage du mot de passe, la clé dédiée, la disponibilité
+de l'accès administratif de secours et la continuité doivent être qualifiés
+par leur mécanisme autorisé. Ne pas transférer shadow ou une clé privée pour
+combler les champs volontairement absents.
+
+* Qualification locale reproductible
+Depuis ce répertoire, sans accès au VPS :
+
+#+begin_src bash
+python3 -m unittest -v test_adoption.py test_validate_report.py
+#+end_src
+
+Les 40 tests exécutés couvrent fixtures de compte, métadonnées, liens,
+refus d'arguments/root, erreurs fermées, collecteur bloqué tué/récupéré,
+limites de sortie, filtre épinglé, schéma remplacé ou symbolique, doublons,
+types, fragments supplémentaires, profondeur et attente stdin bornée.
+Le rapport =qualification.json= distingue ces résultats des contrôles non
+exécutés. La revue indépendante de code ne remplace pas une qualification
+NixOS ou une preuve de frontière effective sur le VPS.
+
+La revue indépendante a également exécuté 12 contrats externes sous
+=MrJ-am/mrjam-validation:declarative-access/test_adoption_probe_contract.py=,
+tous réussis, dont un enfant synthétique bloqué tué/récupéré et l'absence
+d'écho d'une erreur du collecteur. Elle conserve les prérequis NSS et les
+limites noyau décrits ci-dessus ; ce résultat n'autorise pas l'exécution distante.
+
+Deux vérifications locales supplémentaires ont importé seulement =unpack()=
+du =runner.py= reçu et vérifié (empreinte inscrite dans =qualification.json=).
+Il a refusé le lot V2, puis ce même lot ajusté à la longueur V1 mais conservant
+ses octets différents. Ni =main()= ni la création de lot ni son pipeline n'ont
+été exécutés. Ces refus locaux ne prétendent pas être de nouveaux essais SSH.

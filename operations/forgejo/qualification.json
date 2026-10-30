@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "scope": "local-synthetic-preparation-only",
+  "authority": "local-unverified-test-report",
+  "recorded_at_utc": "2026-10-30T16:23:29.310317+00:00",
+  "deployment_authorized": false,
+  "production_access_performed": false,
+  "nix": {
+    "version": "2.34.8",
+    "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+    "container_image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+    "nix_sandbox": false,
+    "local_container_no_new_privileges": true,
+    "offline_rebuild_container_network": "none",
+    "limitation": "Local root inside container; not a production runner isolation qualification"
+  },
+  "module_evaluation": {
+    "checks": 15,
+    "exit_code": 0,
+    "results": {
+      "actionsFrozen": true,
+      "disabledPasses": true,
+      "forgejoEnableRejected": true,
+      "noForgejoIdentity": true,
+      "noForgejoService": true,
+      "noLocalAuthenticationFallback": true,
+      "noNginxProvisioning": true,
+      "noPostgresProvisioning": true,
+      "noRunnerService": true,
+      "noRuntimeInstalled": true,
+      "noSSOOrBackupUnits": true,
+      "privateHTTP": true,
+      "privateRepositoryDefault": true,
+      "runnerEnableRejected": true,
+      "sanitizedOrg": true
+    },
+    "command": "bash operations/tools/nix-local.sh nix-instantiate --eval --strict --json operations/forgejo/tests/module-evaluation.nix --arg nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+    "initial_harness_issue": "Selection forced a passing upstream assertion message with absent cycle field; fixed lazy message selection without changing the contract"
+  },
+  "build": {
+    "exit_code": 0,
+    "drv_path": "/nix/store/qfscaydvg0f8wrlk3f96a1h5mv9wm7mv-mrjam-forgejo-preparation-20261030.drv",
+    "output_path": "/nix/store/3yjs3bqb274mcz8fqjb7485ycs0gxzgr-mrjam-forgejo-preparation-20261030",
+    "nar_hash": "sha256-GctXioV+pnk0gd05r3q/eCAJa51cgABsMHb3YfhhmuY=",
+    "nar_size": 69484920,
+    "closure_size": 371378584,
+    "signatures": [],
+    "build_output_contract_passed": true,
+    "expression": "let pkgs = import /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source { system = \"x86_64-linux\"; }; in pkgs.callPackage /workspace/vps-infrastructure/operations/forgejo/package.nix { }",
+    "offline_rebuild_exit_code": 0,
+    "offline_rebuild_same_output": true,
+    "rebuild_scope": "Top-level preparation derivation only; dependency closures were already present"
+  },
+  "renderer": {
+    "checks": 6,
+    "exit_code": 0,
+    "build": {
+      "drvPath": "/nix/store/vp6qra9bsamyvvh98496hr23lixhd02b-mrjam-forgejo-org-render-contract.drv",
+      "outputs": {
+        "out": "/nix/store/kr4gzxrq59k2h0carzlcvik6751k7ifn-mrjam-forgejo-org-render-contract"
+      }
+    },
+    "report": {
+      "browser_mathjax_qualified": false,
+      "forgejo_sanitizer_qualified": false,
+      "results": {
+        "absolute_links": true,
+        "display_math": true,
+        "heading": true,
+        "inline_math": true,
+        "relative_links": true,
+        "sandbox_include_refused": true
+      },
+      "schema_version": 1,
+      "scope": "synthetic-Pandoc-only",
+      "sso_qualified": false
+    },
+    "network": "none"
+  },
+  "integrity": {
+    "copied_sources_checked": 4,
+    "copied_sources_match": true,
+    "runner_policy_matches_release_planner_desired_contract": true,
+    "sha256": {
+      "operations/forgejo/README.org": "1cc9566ad433142821463c44be2047c4c832a0dbc6755dd6230f4c3047e75801",
+      "operations/forgejo/assets/config.js": "ad6570e15600ee9036401b820bbd5f368cd213d6a0c5afe5a0e2444d2960ddb5",
+      "operations/forgejo/assets/footer.tmpl": "2446903db4dd611955cfcb1937eabff7e9fb530be59f0ae7e6a0e751f466ee22",
+      "operations/forgejo/assets/org.css": "9dc497eb0bffb10b69b0d11af59047ca83c2a7dd47e2b9c89a24ef4278526111",
+      "operations/forgejo/org-links.lua": "007f3eb954ec8e081b34ec1943a397077ca0da6fc19bb6da98142399171f7bb2",
+      "operations/forgejo/package.nix": "c0eb15821a118f0f0517499aebaea4377ffedbbe4632947ab2792a6c0f113db0",
+      "operations/forgejo/runner-policy.json": "c888c9b9fce810ca5d6bc591491207950f9590ec4e3f5a03911c517e9537735e",
+      "operations/forgejo/runtime-references.json": "5eb62cee6823bb8ea72a945ff910ba7b6652bf7810862875fefae510c3902de0",
+      "operations/forgejo/settings.nix": "74edce15a2852008b5a4ba4896f2ccd006bad93271740ca43850f7a25d9fc604",
+      "operations/forgejo/sources.lock.json": "7cd0e674a5c4a8ce5b6aa58cd77c20233645fc071126a1af8b7a58e1e56568a1",
+      "operations/forgejo/tests/check_output.py": "d7639259486bc269eae0746ccf7e2ef0668d2b1d382af4ed625afb822254a446",
+      "operations/forgejo/tests/module-evaluation.nix": "f8bcb60c5da98beeceb2b8355fed14e432209e2f22e40c46c4813363f255b9f5",
+      "operations/forgejo/tests/render-contract.nix": "739f424eff804d9ebde07ea427b560ca2e3572ac5db9bdc9b81a7e01c650cfec",
+      "operations/forgejo/tests/test_renderer.py": "3555be7074db50d292f94ac51c26c2290eefecba08d7e8999f7f80ca36631854",
+      "operations/forgejo/versions.lock.json": "59e5b69e94294d602678c27a309bfa785cc9d8d08b2918bc18893d1752746720",
+      "operations/nixos/mrjam-forgejo.nix": "cc1289376b3f5666a5b4bbc3bab3f20558a38f89115d5189c96509ddb660f54b"
+    }
+  },
+  "not_executed": [
+    "Forgejo/runner executable build or live service test",
+    "Full machine generation build",
+    "Forgejo HTML sanitizer and MathJax browser integration",
+    "Kanidm SSO and account adoption",
+    "Forgejo API and repository permission enforcement",
+    "Database migration, backup and restore",
+    "Runner registration, execution isolation and resource qualification",
+    "VPS installation, activation and cutover"
+  ],
+  "blocking": [
+    "Installed Forgejo build unknown; candidate17.0.1 upgrade unqualified",
+    "Automatic upstream migrate/hooks/key regeneration requires separated reviewed adoption",
+    "SSO, identity, credentials, quotas, backup/restore and schema compatibility unqualified",
+    "No isolated runner executor or protected reconciler identity qualified"
+  ]
+}

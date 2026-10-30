@@ -1,0 +1,14 @@
+{
+  "enabled": false,
+  "repository": "mrjam-validation",
+  "label": "mrjam-synthetic-isolated",
+  "ephemeral": true,
+  "privileged": false,
+  "docker_socket": false,
+  "production_mounts": [],
+  "production_network": false,
+  "signing_credentials": false,
+  "registration_secret_ref": "ref:forgejo/runner-registration",
+  "maximum_jobs": 1,
+  "qualification_profile": "synthetic-unqualified-for-vps"
+}

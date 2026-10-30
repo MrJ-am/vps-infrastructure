@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scope": "local-review-proposal",
+  "target": "mrjam-vps",
+  "manifest_sha256": null,
+  "evidence_sha256": null,
+  "observed_sha256": null,
+  "rules_revision": null,
+  "not_before": null,
+  "expires_at": null,
+  "approval_reference": null,
+  "deployment_freeze": true
+}

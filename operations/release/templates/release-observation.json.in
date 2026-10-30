@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "target": "mrjam-vps",
+  "authority": "unverified_observation",
+  "active_manifest_sha256": null,
+  "generation": {
+    "derivation": null,
+    "output": null,
+    "nar_hash": null
+  },
+  "schema": null,
+  "active_slot": null
+}
