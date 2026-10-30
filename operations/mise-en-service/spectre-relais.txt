@@ -1,0 +1,95 @@
+RELAIS SPECTRE — FINALISER LA MISE EN SERVICE MRJ.AM
+
+L'utilisateur a demandé de terminer entièrement l'infrastructure, les applications
+Rust/Elm et la première mise en service avant de reprendre ses projets. Cloud
+poursuit ces développements. Tu travailles sur Spectre pour préparer le relais
+qui nécessite les capacités locales. Ne lui redemande pas une autorisation
+GÉNÉRALE de poursuivre déjà donnée. Ne déduis pas d'une autorisation d'objectif
+qu'un artefact non qualifié ou un accès général est permis.
+
+Frontières conservées : aucun agent ne doit lire données personnelles, bases,
+sauvegardes (même chiffrées), journaux applicatifs, clés privées ou valeurs de
+secrets. Ne transmet aucun identifiant d'accès vers Cloud. N'utilise pas
+connect.sh, les anciens workflows, un shell/SQL libre de production ou un
+wrapper modifiable présenté comme ACL. Le compte mrjam-inventory V1 reste intact.
+Aucune commande distante nouvelle n'est autorisée par le simple nom d'une clé.
+
+Les références déjà publiées à récupérer par arbres de code bornés, sans cloner
+les anciens historiques :
+- MrJ-am/vps-infrastructure, branche declaratif-20261030,
+  commit f763073f3436cc6e52e268455f9f8b9d1976b755 ;
+- MrJ-am/mrjam-plateforme, branche declaratif-20261030,
+  commit 02b5378056c9df59605ae962ad3aedd29b804db9 ;
+- MrJ-am/mrjam-validation, branche declaratif-20261030,
+  commit 3053cf79de7bd1ab1c6dd8509c96afc950e8f0af.
+Ces commits sont le socle publié. Des développements opérationnels plus récents
+sont en cours dans Cloud et seront remis avec des références supplémentaires.
+Ne remplace pas un checkout local contenant du travail utilisateur par ces arbres.
+
+Lire les AGENTS.md applicables et operations/dossier-deploiement.org. Leurs
+mentions du gel correspondent au lot précédent ; l'objectif courant comprend
+la première mise en service. Les conditions techniques et protections des données
+restent requises. Aucune des générations préparatoires n'est annoncée activable.
+
+1. RETROUVER LA SOURCE VPS DANS LE CODE LOCAL
+
+L'utilisateur confirme que MrJ-am/vps-infrastructure est la source de vérité
+souhaitée. Cloud n'y a trouvé qu'une référence NixOS historique inactive avec
+des imports manquants. Il faut établir si Spectre possède le checkout/source
+VPS réellement utilisé pour la dernière construction.
+
+Dans les seuls emplacements de code de ton espace de travail, repère le checkout
+vps-infrastructure déjà présent. Ne parcours pas .ssh, coffres, sauvegardes,
+documents personnels, répertoires applicatifs ou historiques de recherches.
+Lis les métadonnées Git (HEAD, arbre, branche, statut), sans afficher d'URL
+contenant des credentials, et seulement les sources Nix/manifestes de ce VPS.
+Ne prends jamais la configuration matérielle de Spectre pour celle du VPS.
+
+Rapporte les références non secrètes suivantes, ou « inconnu » avec raison courte :
+- commit et arbre exacts du checkout VPS ; présence de modifications locales ;
+- fichier d'entrée et cible nixosConfigurations, si elle existe ;
+- system.stateVersion déclaré dans cette source, sans en déduire l'état installé ;
+- mécanisme qui lie, s'il existe, cette source à la génération du VPS ;
+- référence publiée exacte de ces sources ou liste des SEULS fichiers source
+  manquants à transmettre après vérification qu'ils ne contiennent aucun secret.
+Ne tar pas /etc/nixos, un home ou un dépôt entier non examiné. Si la source
+n'existe pas localement, indique ce résultat ; ne contourne pas cette absence
+par SSH root ou exploration générale de la production.
+
+2. PRÉPARER LE RELAIS D'OBSERVATION IMMUTABLE
+
+L'inventaire V1 a déjà été fait ; ne le relance pas pour remplir les nouvelles
+inconnues. Le programme V1 n'accepte que ses trois blobs épinglés et refuse V2.
+La clé publique dédiée est déjà fournie, validée et versionnée :
+SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A.
+Ne demande ni ne lis la clé privée. Ne régénère pas de clé ou de compte.
+
+Cloud prépare et qualifie operations/bootstrap-observation : un paquet Nix
+immuable avec Python et systemd épinglés, sonde V2 inchangée et filtres fermés.
+L'opération humaine unique est bin/mrjam-observe-adoption, sans argument.
+Elle crée seulement une unité systemd transitoire fixe, exécutée sous le compte
+mrjam-inventory existant, sans réseau ni privilèges supplémentaires, avec bornes
+de temps/mémoire/tâches. Elle conserve V1, SSH, les services et les données.
+Sa sortie n'est rendue qu'après réussite et validation du JSON côté VPS.
+
+N'exécute pas cette opération tant que Cloud n'a pas livré son commit, son chemin
+store, son NAR hash, les octets exportés et la preuve de qualification système.
+Un paquet construit seul n'est pas une qualification. Cette première reprise
+te permet de préparer le côté local en parallèle sans attendre ces éléments.
+
+Le futur import et lancement initial appartiennent à l'administrateur humain
+par son canal existant : préparer pour lui une commande FIXE avec les artefacts
+qualifiés, jamais une délégation root générale à l'agent. Aucun installer.py reçu
+ne doit être relancé. N'accorde pas de shell au compte V1. Un échec ou prérequis
+absent doit produire un code fermé, sans journal ou sortie brute transférée.
+
+3. RETOUR À CLOUD PENDANT QUE LE DÉVELOPPEMENT CONTINUE
+
+Produis un résumé bref des références source trouvées et des capacités locales
+nécessaires pour importer un artefact Nix déjà construit. Précise explicitement
+ce qui est seulement lu dans du code, ce qui est constaté localement sur Spectre,
+et ce qui n'a PAS été observé sur le VPS. N'invente ni commit installé, ni UID/GID,
+ni version de service ou succès de déploiement.
+
+Cette demande vise des références de code et un relais techniquement borné.
+Elle ne demande aucune clé, aucun secret et aucune donnée métier.

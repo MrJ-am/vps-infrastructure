@@ -1,0 +1,39 @@
+#+title: Directive courante — achever la mise en service MRJ.am
+#+date: 2026-10-30
+#+language: fr
+
+L'utilisateur demande :
+
+#+begin_quote
+Je ne veux pas reprendre le travail sur mes projets tant que l'infrastructure
+n'est pas opérationnelle. Donc les chantiers dont tu me parles, à savoir rendre
+la chaîne de travail opérationnelle, compléter la configuration déclarative du
+VPS, terminer les applications Rust, qualifier puis effectuer une première mise
+en service, je veux que tu le fasses complètement et que tu ne t'arrêtes pas
+tant que ce n'est pas opérationnel.
+#+end_quote
+
+Cette directive remplace la suspension générale des déploiements des lots
+antérieurs. Elle autorise la poursuite jusqu'à la première mise en service, sans
+redemander une autorisation générale déjà donnée. Les anciennes preuves ne sont
+pas réécrites : elles décrivent leurs révisions et conditions d'exécution.
+
+Elle ne supprime pas la confidentialité, le budget nul, l'isolation, la
+préservation des données, les versions verrouillées, la revue indépendante,
+les artefacts identifiés ni la qualification du retour. Une autorisation
+d'objectif ne fait pas réussir un contrôle manquant. Aucun booléen de candidat
+ne transforme une preuve locale en autorité protégée de déploiement.
+
+Cloud ne dispose d'aucune capacité de production attachée. La clé publique
+fournie est une référence, pas un moyen de connexion. Aucun root/shell général,
+SQL arbitraire, secret, donnée applicative ou sauvegarde ne doit parvenir à un
+agent. Les relais nécessaires sur Spectre doivent être préparés avec leurs
+octets, opérations, effets et retours fermés. L'amorçage humain peut installer
+un artefact précisément qualifié ; cela ne délègue aucun accès général à Cloud.
+
+Priorités exécutées en parallèle selon le mandat original : raccord du serveur
+Rust et de l'identité, fonctions métier manquantes, configuration machine,
+Forgejo/validation/livraison, essais indépendants puis première mise en service.
+Ne pas déclarer l'ensemble opérationnel à partir d'une fixture ou d'un simple
+build. Signaler les prérequis externes concrets tout en poursuivant le travail
+indépendant ; ne pas proposer de reprendre les projets comme substitut.

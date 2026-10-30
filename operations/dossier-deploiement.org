@@ -3,10 +3,16 @@
 
 * Décision actuelle
 
-La migration n'est pas prête à déployer. Le gel demandé par l'utilisateur reste
-actif. Cette branche contient du code, des configurations, des qualifications
-synthétiques et des procédures à revoir. Rien de ce dossier n'autorise une
-activation, une installation sur le VPS ou une migration de données réelles.
+L'utilisateur demande désormais d'achever les quatre chantiers jusqu'à la première
+mise en service : voir [[file:mise-en-service/mandat.org][la directive courante]]. L'ancien gel général
+est remplacé par cette autorisation d'objectif. Les révisions déjà préparées ne
+deviennent pas pour autant prêtes à déployer : les blocages techniques recensés
+ci-dessous restent à résoudre. Les preuves antérieures conservent leurs conditions
+et empreintes ; aucune activation ou migration réelle n'est encore réalisée.
+
+Les branches préparatoires exactes ont été publiées le 30 octobre : voir
+=mise-en-service/publication-initiale.json=. Les développements en cours peuvent
+précéder leur publication suivante ; ne pas assimiler HEAD local au HEAD distant.
 
 L'utilisateur confirme =MrJ-am/vps-infrastructure= comme source de vérité
 attendue du VPS. Sa tête publiée observée au démarrage est
@@ -184,12 +190,14 @@ Il retourne toujours =production_authorized=false= et n'exécute aucune commande
    état externe de Forgejo/identité. Les contrôles post-installation doivent
    confirmer services, identité, refus d'accès, parcours et absence de perte.
 
-La levée du gel devra porter explicitement sur la cible, l'opération (accès
-seul ou migration applicative), les commits, la politique protégée, le manifeste
-et ses empreintes, les artefacts/générations, la migration et compatibilité,
+L'autorisation d'objectif courante devra être liée par le dossier final à la
+cible, l'opération, les commits, la politique protégée, le manifeste et ses
+empreintes, les artefacts/générations, la migration et sa compatibilité,
 les précontrôles, la fenêtre et réserve de retour, les références de sauvegarde
-et de secrets, le contrôleur et les critères de réussite. La publication du
-code préparatoire ne constitue aucune de ces approbations.
+et de secrets, le contrôleur et les critères de réussite. Ne pas redemander
+l'autorisation générale déjà donnée ; un contrôle manquant ou une capacité
+d'accès absente reste un obstacle concret. La publication du code ne qualifie
+ni les artefacts ni leur installation.
 
 * Clé publique reçue et suite de l'adoption
 

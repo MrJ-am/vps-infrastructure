@@ -1,6 +1,7 @@
-# Proposition d'exploitation Rust ; déploiements gelés
+# Exploitation Rust ; objectif de première mise en service autorisé
 
-- Aucun accès au VPS, SSH administratif, SQL libre, lecture de secrets ou activation Nix.
+- Lire `mise-en-service/mandat.org` : la directive courante autorise l'achèvement jusqu'à la première mise en service. L'ancien gel n'est plus un motif d'arrêt ; la qualification et les frontières techniques restent exigées.
+- Aucun accès général/root au VPS depuis Cloud, SQL libre, lecture de secrets ou données. Les opérations de production passent par un composant borné qualifié ou par l'administrateur humain, jamais par une délégation générale à l'agent.
 - `nixos/mrjam-rust.nix` reste désactivé par défaut et sans démarrage/routage automatique.
 - Les artefacts préconstruits doivent provenir d'une qualification indépendante ; un chemin Nix store n'en est pas la preuve.
 - Préserver PostgreSQL, authentification, Forgejo, Nginx, Nextcloud, archives et références historiques.

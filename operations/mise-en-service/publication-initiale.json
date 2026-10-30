@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-30T18:06:47.564955+00:00",
+  "scope": "Publish already-qualified preparatory branch snapshots; no active workflow or production action",
+  "method": "Native Git push of exact commits because connector create_commit cannot preserve existing commit authorship/timestamps/identity",
+  "refs_verified_by": "git ls-remote --heads origin declaratif-20261030 after successful exact-commit push",
+  "default_branches_modified": false,
+  "production_actions_performed": false,
+  "repositories": [
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "branch": "declaratif-20261030",
+      "commit": "f763073f3436cc6e52e268455f9f8b9d1976b755"
+    },
+    {
+      "repository": "MrJ-am/mrjam-plateforme",
+      "branch": "declaratif-20261030",
+      "commit": "02b5378056c9df59605ae962ad3aedd29b804db9"
+    },
+    {
+      "repository": "MrJ-am/mrjam-validation",
+      "branch": "declaratif-20261030",
+      "commit": "3053cf79de7bd1ab1c6dd8509c96afc950e8f0af"
+    }
+  ]
+}
