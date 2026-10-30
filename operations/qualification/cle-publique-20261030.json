@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "scope": "User-supplied public key reference; no production access or activation",
+  "recorded_at_utc": "2026-10-30T17:42:58.308605+00:00",
+  "source_base_commit": "3b58b38740b9aa66f411979b2115003c9c6ce7bd",
+  "deployment_freeze": true,
+  "production_authorized": false,
+  "public_key_source": "Complete public key supplied by the user in this conversation",
+  "public_key_reference": "operations/targets/keys/mrjam-inventory.pub",
+  "public_key_fingerprint": "SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A",
+  "input_sha256": {
+    "operations/targets/keys/mrjam-inventory.pub": "f4590e8f1417499cc995e68d77958b54b2502e5142ab819f0bee4ad3e9f2d554",
+    "operations/targets/mrjam-vps.json": "1650511722a147d0827d5cae81c4cc20d7c9c45723bd207c8b66c7a66c8815ae",
+    "operations/nixos/vps-preparation.nix": "9aecf7901fd275cc2a2ad846d426cc639bd3b10da95c1d9c2929b3334d52b6b0",
+    "operations/inventory/public_keys.py": "8f7140282c9be2024f02512a2953c90e24d628402b7426d8c43f6bc14c69ec40"
+  },
+  "checks": {
+    "canonical_base64_and_exact_ed25519_wire_format": "PASS",
+    "existing_package_public_key_validator": "PASS",
+    "ssh_keygen_fingerprint_cross_check": "256 SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A mrjam-inventory-borne-20261030 (ED25519)",
+    "target_manifest_reference_hash_and_freeze": "PASS",
+    "nix_public_key_reference_matches_user_input": "PASS",
+    "nix_inactive_composition": {
+      "forgejoDisabled": true,
+      "identityUnspecified": true,
+      "inventoryDisabled": true,
+      "noAuthorizedKeysFile": true,
+      "noInventoryAccount": true,
+      "noInventoryGroup": true,
+      "noInventorySshMatch": true,
+      "noProductionHost": true,
+      "rustDisabled": true
+    }
+  },
+  "nix_evaluation_command_argv": [
+    "bash",
+    "operations/tools/nix-local.sh",
+    "--offline-container",
+    "nix",
+    "eval",
+    "--offline",
+    "--impure",
+    "--json",
+    "--expr",
+    "let\n  flake = builtins.getFlake \"path:/workspace/vps-infrastructure\";\n  config = (flake.inputs.nixpkgs.lib.nixosSystem {\n    system = \"x86_64-linux\";\n    modules = [ flake.nixosModules.vpsPreparation ];\n  }).config;\nin {\n  publicKeys = config.services.mrjamInventory.publicKeys;\n  inventoryDisabled = !config.services.mrjamInventory.enable;\n  rustDisabled = !config.services.mrjamRust.enable;\n  forgejoDisabled = !config.services.mrjamForgejo.enable;\n  noInventoryAccount = !(config.users.users ? mrjam-inventory);\n  noInventoryGroup = !(config.users.groups ? mrjam-inventory);\n  noAuthorizedKeysFile = !(config.environment.etc ? \"ssh/mrjam-inventory-authorized-keys\");\n  noInventorySshMatch = !(flake.inputs.nixpkgs.lib.hasInfix \"Match User mrjam-inventory\" config.services.openssh.extraConfig);\n  noProductionHost = !(flake ? nixosConfigurations);\n  identityUnspecified = config.services.mrjamInventory.adoption.uid == null && config.services.mrjamInventory.adoption.gid == null;\n}"
+  ],
+  "nix_evaluation_exit_code": 0,
+  "nix_evaluation_network": "none; pinned local Nix image/store",
+  "not_executed": [
+    "No SSH connection, possession challenge or comparison with the installed key: production access not authorized from Cloud",
+    "No adoption, activation or production package build: UID/GID and complete generation remain unknown; deployment freeze active",
+    "No Rust/Elm rebuild or application test replay: only public reference, inactive composition and documentation changed"
+  ],
+  "previous_qualifications": "Prior receipts and synthetic key fixtures are unchanged; this receipt does not qualify a production identity package"
+}

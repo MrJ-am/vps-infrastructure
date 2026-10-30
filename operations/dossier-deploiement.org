@@ -52,7 +52,8 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
 | KVM absent ; limite userns non nulle ; commutateur userns inconnu | Observé partiellement | Aucune VM ou isolation effective présumée |
 | vps-infrastructure source de vérité | Exigence confirmée par l'utilisateur | Alignement installé non démontré |
 | Compte impératif et refus SSH réels sur Spectre | Rapporté dans RESULTAT-SPECTRE.org | Revue locale distincte ; aucune observation Cloud directe |
-| Identité/limites/clefs du futur accès | Proposition testée localement | UID/GID et clé publique de production encore manquants |
+| Clé publique dédiée | Fournie par l'utilisateur, format Ed25519 validé localement | Versionnée sous targets/keys/mrjam-inventory.pub ; correspondance avec l'accès installé encore à vérifier |
+| Identité/limites du futur accès | Proposition testée localement | UID/GID existants encore inconnus ; adoption non qualifiée |
 
 * Code livré et chaîne déclarative
 
@@ -123,7 +124,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 
 | Blocage | État | Preuve minimale | Obtention autorisée/proposée |
 |---------+------+----------------+------------------------------|
-| Adoption du compte existant | Inconnu/bloquant | UID/GID, même clé publique, métadonnées et refus SSH effectifs, absence de conflit | Clé publique lue sur Spectre ; nouvelle sonde adoption-v2 après revue/autorisation distinctes ; préflight et essais administrateur sans export de secrets |
+| Adoption du compte existant | Inconnu/bloquant | UID/GID, correspondance de la clé publique fournie avec celle installée, métadonnées et refus SSH effectifs, absence de conflit | Nouvelle sonde adoption-v2 après revue/autorisation distinctes ; préflight et essais administrateur sans export de secrets |
 | Assemblage complet du VPS | Inconnu/bloquant | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | Métadonnées bornées ; export sélectif des seules sources de configuration par l'administrateur, si nécessaire, jamais matériel de Spectre ni fichiers de données |
 | Builds en cours Forgejo/Kanidm/runner | Inconnu/bloquant pour changement de service | Versions/builds des services ciblés et compatibilité de migration | Nouveau contrôle fermé approuvé, lié aux unités fixes ; pas de shell/chemin/processus arbitraire |
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
@@ -190,15 +191,19 @@ les précontrôles, la fenêtre et réserve de retour, les références de sauve
 et de secrets, le contrôleur et les critères de réussite. La publication du
 code préparatoire ne constitue aucune de ces approbations.
 
-* Geste simple demandé sur Spectre
+* Clé publique reçue et suite de l'adoption
 
-La seule information à transmettre maintenant est la clé *publique* dédiée :
+L'utilisateur a fourni la ligne publique complète le 30 octobre 2026. Elle est
+versionnée sous =targets/keys/mrjam-inventory.pub= et référencée par la composition
+Nix préparatoire, toujours désactivée. Son empreinte SSH est
+=SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A=.
+Le format SSH Ed25519 et le contenu canonique ont été validés localement ; voir
+=qualification/cle-publique-20261030.json=. Aucune possession de la clé privée
+ni correspondance avec le serveur n'est déduite de ce contrôle. Les fixtures
+conservent leurs clés synthétiques. La clé privée reste sur Spectre.
 
-#+begin_src sh
-cat -- '/home/jam/Téléchargements/mrjam-inventaire-20261030-egaxjj56/acces-borne/.identite-restreinte/id_ed25519.pub'
-#+end_src
-
-Transmettre la ligne =ssh-ed25519 ...=, ou indiquer que le fichier est introuvable.
-Le fichier sans suffixe =.pub= est la clé privée : il reste sur Spectre.
+La demande de transmission de la clé publique est satisfaite ; ne pas la refaire.
+Le précontrôle d'adoption devra encore rapprocher cette référence de l'existant,
+sans élargir l'accès ni modifier les pièces reçues ou leurs empreintes.
 La nouvelle observation V2 est un lot séparé à examiner ; ce document ne demande
 pas de l'exécuter immédiatement et ne délègue aucun accès root à Cloud.

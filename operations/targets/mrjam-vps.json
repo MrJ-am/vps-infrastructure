@@ -18,7 +18,11 @@
   "inventory_adoption": {
     "uid": null,
     "gid": null,
-    "public_key_reference": null,
+    "public_key_reference": "operations/targets/keys/mrjam-inventory.pub",
+    "public_key_file_sha256": "f4590e8f1417499cc995e68d77958b54b2502e5142ab819f0bee4ad3e9f2d554",
+    "public_key_fingerprint": "SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A",
+    "public_key_source": "Complete public key supplied by the user on 2026-10-30; format validated locally",
+    "installed_public_key_match": "not-verified; requires the bounded adoption preflight",
     "private_key_location": "Spectre only, never requested or read",
     "enable": false
   },
