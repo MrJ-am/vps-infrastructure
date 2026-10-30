@@ -6,6 +6,8 @@ let
   module = ../nixos/mrjam-rust.nix;
   bluePath = "/nix/store/00000000000000000000000000000000-synthetic-mrjam-blue";
   greenPath = "/nix/store/11111111111111111111111111111111-synthetic-mrjam-green";
+  blueConfig = "/nix/store/22222222222222222222222222222222-synthetic-runtime-blue";
+  greenConfig = "/nix/store/33333333333333333333333333333333-synthetic-runtime-green";
   evaluate = extra: import (nixpkgs + "/nixos/lib/eval-config.nix") {
     system = "x86_64-linux";
     modules = [ module {
@@ -18,8 +20,13 @@ let
   options = {
     services.mrjamRust = {
       enable = true;
-      slots.blue = { enable = true; artifactStorePath = bluePath; };
-      slots.green = { enable = true; artifactStorePath = greenPath; };
+      slots.blue = {
+        enable = true;
+        artifactStorePath = bluePath;
+        runtimeConfigStorePath = blueConfig;
+        credentials.db-mateval = "/run/secrets/mrjam/synthetic-mateval";
+      };
+      slots.green = { enable = true; artifactStorePath = greenPath; runtimeConfigStorePath = greenConfig; };
     };
   };
   enabled = (evaluate options).config;
@@ -51,8 +58,11 @@ let
       && unitGreen.environment.MRJAM_LISTEN_ADDR == "127.0.0.1:38102";
     workersDisabled = unitBlue.environment.MRJAM_WORKERS_ENABLED == "false"
       && unitGreen.environment.MRJAM_WORKERS_ENABLED == "false";
-    prebuiltBinaryOnly = unitBlue.serviceConfig.ExecStart == "${bluePath}/bin/mrjam-server serve"
-      && unitGreen.serviceConfig.ExecStart == "${greenPath}/bin/mrjam-server serve";
+    prebuiltBinaryOnly = unitBlue.serviceConfig.ExecStart == "${bluePath}/bin/mrjam-server serve --config ${blueConfig}/runtime.json"
+      && unitGreen.serviceConfig.ExecStart == "${greenPath}/bin/mrjam-server serve --config ${greenConfig}/runtime.json";
+    configRequiredBeforeStart = unitBlue.unitConfig.AssertPathExists == "${blueConfig}/runtime.json";
+    secretReferencesOnly = unitBlue.serviceConfig.LoadCredential == [ "db-mateval:/run/secrets/mrjam/synthetic-mateval" ]
+      && unitGreen.serviceConfig.LoadCredential == [ ];
     stopDoesNotForceKill = unitBlue.serviceConfig.KillSignal == "SIGTERM"
       && unitBlue.serviceConfig.TimeoutStopSec == "infinity"
       && !unitBlue.serviceConfig.SendSIGKILL;
@@ -69,6 +79,15 @@ let
     duplicatePortsRejected = !(policyPasses duplicatePorts);
     absentArtifactRejected = !(policyPasses noArtifact);
     buildContextRejected = !(policyPasses derivationContext);
+    absentRuntimeConfigurationRejected = !(policyPasses (evaluate (lib.recursiveUpdate options {
+      services.mrjamRust.slots.blue.runtimeConfigStorePath = null;
+    })).config);
+    runtimeBuildContextRejected = !(policyPasses (evaluate ({ pkgs, ... }: lib.recursiveUpdate options {
+      services.mrjamRust.slots.blue.runtimeConfigStorePath = toString pkgs.hello;
+    })).config);
+    parentCredentialReferenceRejected = !(policyPasses (evaluate (lib.recursiveUpdate options {
+      services.mrjamRust.slots.blue.credentials.db-mateval = "/run/secrets/../other";
+    })).config);
   };
 in
 assert builtins.all (value: value) (builtins.attrValues results);

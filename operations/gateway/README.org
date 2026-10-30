@@ -1,0 +1,31 @@
+#+title: Passerelle déclarative Rust et frontière d'identité
+#+language: fr
+
+=../nixos/mrjam-gateway.nix= relie une liste explicite d'hôtes au slot Rust
+sélectionné, sur 127.0.0.1. Il exige Nginx et ce slot déjà déclarés. Il conserve
+les références de certificats existants sans créer de compte ACME, changer le
+pare-feu ou importer l'ancienne passerelle et le runtime Lisp.
+
+Le Host transmis est fixé par la configuration du vhost. Les en-têtes d'identité
+forgés sont supprimés ; Cookie, Origin, X-CSRF-Token et Authorization sont
+transmis au vérificateur applicatif. La passerelle ne leur attribue elle-même
+aucune identité. Les endpoints de santé ne sont pas publiés.
+
+Pour les sites explicitement sélectionnés, /auth/ reste sur le service séparé
+d'identité. L'option MCP conserve les six chemins exacts de découverte et
+d'autorisation OAuth ; les autres chemins ne sont pas délégués. Cela conserve
+la surface du contrat existant sans prétendre qualifier le fournisseur OIDC,
+la MFA, les sessions ou la révision d'identité réellement installée.
+
+=qualification-20261030.json= identifie les sources, la dérivation de fixture
+et le résultat réel : 24 assertions Nix et 13 groupes de contrôles HTTP/TLS
+passent avec Nginx 1.30.6, un certificat inventé vérifié et deux services echo.
+Le conteneur n'a que le loopback. Son worker root:root est une adaptation de
+fixture, pas l'identité proposée pour Nginx sur le VPS. Aucun fichier de compte
+de l'image n'est modifié.
+
+Le rechargement testé accepte une nouvelle connexion ; ce résultat ne prouve
+pas la continuité d'une requête longue, des sessions ou d'une migration. Les
+parcours navigateur et le système complet doivent employer les vrais artefacts
+Rust/Elm qualifiés avant la première mise en service. Aucun test de ce lot ne
+lit de certificat, clé, réponse ou journal de production.
