@@ -4,9 +4,11 @@
 
 Candidat inactif, sans configuration machine de production. Le module
 =../nixos/mrjam-inventory.nix= est désactivé par défaut. Son import ne déclenche
-aucune activation et ne constitue aucune autorisation. Les UID/GID existants,
-la clé publique approuvée, la révision système active et sa configuration
-complète restent des préconditions de la revue du système final.
+aucune activation et ne constitue aucune autorisation. La clé publique dédiée
+fournie par l'utilisateur est versionnée dans =../targets/keys/mrjam-inventory.pub=
+et référencée par la composition préparatoire désactivée. Les UID/GID existants,
+la correspondance de cette clé avec l'accès installé, la révision système active
+et sa configuration complète restent des préconditions de la revue du système final.
 
 Les trois fichiers de =probe/= proviennent, octet pour octet, de la remise
 vérifiée. =PROVENANCE.json= et =policy.json= donnent leurs références. Le commit
@@ -203,7 +205,7 @@ Nix de ce chemin, qui passe après restauration, figurent dans
 le succès final et vérifie à nouveau le store à la fin.
 
 Restent bloquants pour la production : génération machine complète rapprochée,
-identité réelle d'adoption, clé publique approuvée, évaluation SSH réelle de
+identité réelle d'adoption, concordance de la clé publique fournie, évaluation SSH réelle de
 la génération complète avec sa pile PAM et l'ensemble de ses contextes,
 précontrôle local juste avant mutation, maintien d'un canal de secours et qualification du
 retour arrière depuis l'installation impérative. Aucun succès local ne lève
