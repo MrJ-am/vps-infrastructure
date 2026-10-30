@@ -1,0 +1,15 @@
+{
+  "command": "python3 -m unittest discover -s operations/runtime -p test_*.py -v",
+  "not_executed": [
+    "Configuration package against final Rust Nix artefact; source JSON for VPS not yet established"
+  ],
+  "production_qualification": false,
+  "schema_version": 1,
+  "scope": "public runtime binding boundary tests only",
+  "source_sha256": {
+    "operations/runtime/package.nix": "e4369bff0af705a1d8edc5d12a0baa2b050f1dc46a48626e6916a3301f8e4bd8",
+    "operations/runtime/test_configuration_binding.py": "215bb35db350bc883306a993ce6584e51d5f232ae12093b4411f69dbd970c2fe",
+    "operations/runtime/verify_configuration.py": "7a98b230ab8ae026833c1be1822306f3490576cc87ad8e0e47d26e0a0f527eef"
+  },
+  "tests_passed": 5
+}

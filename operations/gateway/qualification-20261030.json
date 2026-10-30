@@ -1,0 +1,75 @@
+{
+  "adaptations": [
+    "root:root Nginx worker in disposable network-none container; account activation not exercised",
+    "synthetic certificate trusted explicitly; TLS verification enabled",
+    "loopback echo services; no real application or identity traffic",
+    "HTTP18081/HTTPS18443"
+  ],
+  "checks": {
+    "auth_bridge_to_separate_service": "PASS",
+    "authentication_inputs_preserved": "PASS",
+    "canonical_host_forwarded": "PASS",
+    "forged_identity_headers_removed": "PASS",
+    "forwarded_network_headers_replaced": "PASS",
+    "generated_nginx_configuration_valid": "PASS",
+    "graceful_reload_accepts_new_connection": "PASS",
+    "http_redirects_to_https": "PASS",
+    "mateval_not_sent_to_identity_bridge": "PASS",
+    "other_oauth_paths_not_delegated": "PASS",
+    "private_health_not_published": "PASS",
+    "six_exact_oauth_discovery_endpoints_preserved": "PASS",
+    "unrecognized_host_refused": "PASS"
+  },
+  "configuration_sha256": "339461f178716f8d828551ef05e13fab8a8c05e3f37b96d2316162ed4dfab21e",
+  "date": "2026-10-30",
+  "evaluation": {
+    "absentNginxRejected": true,
+    "absentRustRejected": true,
+    "authLoopRejected": true,
+    "canonicalHost": true,
+    "cookieAndCsrfForwarded": true,
+    "disabledCreatesNoRustUnits": true,
+    "disabledKeepsNginxOff": true,
+    "fixtureValid": true,
+    "foreignHostRejected": true,
+    "identityHeadersRemoved": true,
+    "internalHealthNotPublished": true,
+    "matevalAuthNotRerouted": true,
+    "matevalBodyLimitPreserved": true,
+    "noFirewallMutation": true,
+    "oauthDelegationIsClosed": true,
+    "oauthDiscoveryPreserved": true,
+    "oauthWithoutIdentityRejected": true,
+    "originAndBearerForwarded": true,
+    "preservedCertificateReferences": true,
+    "privateProxy": true,
+    "requestLogsSuppressed": true,
+    "separateAuthBridge": true,
+    "sourceVersionPreserved": true,
+    "tlsRequired": true
+  },
+  "fixture_derivation": "/nix/store/lky619cn5wx2lkfqip607kgjbg2fg6pa-mrjam-gateway-synthetic-test.drv",
+  "fixture_output": "/nix/store/gdq22ijlsjzj3pznzm6yjybdfwhp3005-mrjam-gateway-synthetic-test",
+  "limitations": [
+    "No production TLS or certificate checked",
+    "No long-lived request or application migration continuity proof",
+    "Unknown host rejection exercised over TLS",
+    "No first commissioning performed"
+  ],
+  "production_qualification": false,
+  "runtime": {
+    "config": "/nix/store/a6qz665h3dc0gjxkm9v22dnr8pa1fdjn-nginx.conf",
+    "nginx": "/nix/store/n4ck0rg8zmymb9jj7j57v3wczgfdj93x-nginx-1.30.6/bin/nginx",
+    "openssl": "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin/bin/openssl",
+    "python": "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3"
+  },
+  "schema_version": 1,
+  "scope": "synthetic-container-only",
+  "source_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/gateway/tests/fixture.nix": "bf743e0985f04aaf131ae40ca65b36b2439ff3fa64cf6783a82b03db281940f4",
+    "operations/gateway/tests/qualify.py": "1f5794b63102323156e084046610724a5f4ded3a879262c9907d9d71a5f2657e",
+    "operations/nixos/mrjam-gateway.nix": "af37802920e0949acab401802bb0323bcae92db178b7bd4cd60a0bcd6be544f8",
+    "operations/tests/gateway-evaluation.nix": "2470fdc4627dc880d458868d8b9d88fa23d0cad1874dcfe686122170c3e632bd"
+  }
+}

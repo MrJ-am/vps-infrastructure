@@ -1,0 +1,55 @@
+#+title: Configuration d'exécution Rust et références de credentials
+#+language: fr
+
+Le module =../nixos/mrjam-rust.nix= exige, pour chaque slot installé, deux sorties
+préconstruites identifiées : le binaire (bin/mrjam-server) et la configuration
+(runtime.json). Il démarre =serve --config .../runtime.json=, sans construction,
+migration implicite, mot de passe dans l'environnement ou changement Nginx.
+
+Le JSON est fermé et validé par le serveur. Il décrit les hôtes publics, les
+capacités nécessaires, les artefacts Elm et leurs empreintes, les connexions
+PostgreSQL locales, les références d'identité/embeddings et les chemins de
+credentials. Une capacité requise mais absente refuse le démarrage ; les probes
+de disponibilité testent les raccordements effectivement implémentés.
+
+Les seuls noms LoadCredential acceptés par le module sont :
+=db-mateval=, =db-mateval-admin=, =mateval-activation-sha256=, =db-vision=,
+=db-vision-journal=, =db-vision-admin=, =db-audition=.
+Leur valeur déclarative est un chemin de fichier existant sous /run/secrets,
+/run/keys ou /var/lib/mrjam/secrets, jamais son contenu. Aucun chemin parent,
+contexte de dérivation ou secret dans le store n'est admis. La gestion des
+sources de secrets reste au composant autorisé côté VPS ; Cloud ne les ouvre pas.
+
+Dans runtime.json, le mot de passe du slot blue désigne par exemple
+=/run/credentials/mrjam-rust-blue.service/db-mateval=. systemd fournit ce fichier
+privé au seul service. Le suffixe =.service= fait partie du nom de répertoire.
+La simple présence d'une référence ne prouve ni l'existence ni les droits de la
+source ; le contrôleur doit vérifier ce prérequis sans transférer sa valeur.
+
+Les identités de base doivent être dédiées et non privilégiées, avec les droits
+fermés de chaque composant. La collecte Mateval, son administration scientifique,
+les rôles Vision, le journal durable d'effacement et Audition ont des rôles
+séparés. Ni le service ni une migration ne doivent employer le compte de
+qualification synthétique dans la configuration du VPS.
+
+=package.nix= fabrique la sortie immutable =runtime.json= à partir d'un fichier
+public versionné et de fermetures déjà présentes. Il exige un slot explicite,
+le chemin du serveur et le SHA-256 de son manifeste ; aucun fetcher, compilation
+applicative, credential ou connexion métier n'intervient. Le serveur qualifié
+exécute =check-config= sur les octets copiés. =verify_configuration.py= vérifie
+ensuite les manifestes Elm et du serveur, la CA publique si présente, et lie
+chaque nom de credential au répertoire exact du slot systemd. Les composants
+de chemins sont ouverts sans suivre de liens ; les lectures sont bornées.
+
+La sortie =configuration-manifest.json= identifie configuration, assets,
+serveur et références de credentials. Elle ne constitue ni une approbation ni
+une preuve que les secrets, certificats ou services de production existent.
+Les cinq tests de frontière de =test_configuration_binding.py= vérifient les
+confusions de slot/rôle, clés JSON dupliquées, liens, FIFO et tailles excessives.
+La construction avec le serveur Nix final reste nécessaire pour chaque JSON
+de livraison ; aucun exemple synthétique ne la remplace.
+
+Aucune configuration runtime de production n'est inventée ici. La génération
+machine, les références existantes et le routage doivent être rapprochés avant
+la construction du dossier d'installation. Les fixtures d'évaluation Nix n'ont
+aucune autorité sur ces valeurs.

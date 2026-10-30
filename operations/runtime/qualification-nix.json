@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scope": "Nix evaluation of prebuilt runtime configuration and secret references",
+  "recorded_at_utc": "2026-10-30T18:14:36.821257+00:00",
+  "command": [
+    "bash",
+    "operations/tools/nix-local.sh",
+    "--offline-container",
+    "nix-instantiate",
+    "--eval",
+    "--strict",
+    "--json",
+    "operations/tests/module-evaluation.nix",
+    "--arg",
+    "nixpkgs",
+    "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+  ],
+  "checks_passed": 21,
+  "exit_code": 0,
+  "input_sha256": {
+    "operations/nixos/mrjam-rust.nix": "7f6782102f3b2b99d00ce94789fceabda1b2b2c943acbc19a8d3b58c51fba997",
+    "operations/tests/module-evaluation.nix": "02767435d7a8d6baeeaa8823e18dbfce94543897b54d7877973d862eae4de6f8"
+  },
+  "production_activated": false,
+  "not_executed": [
+    "Complete VPS generation, actual secrets and service activation not observed; runtime application is under separate qualification"
+  ]
+}

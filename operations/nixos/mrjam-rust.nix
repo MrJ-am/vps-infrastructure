@@ -3,6 +3,11 @@
 let
   cfg = config.services.mrjamRust;
   storePathType = lib.types.strMatching "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
+  credentialNames = [
+    "db-mateval" "db-mateval-admin" "mateval-activation-sha256"
+    "db-vision" "db-vision-journal" "db-vision-admin" "db-audition"
+  ];
+  credentialPathType = lib.types.strMatching "/(run/secrets|run/keys|var/lib/mrjam/secrets)/[A-Za-z0-9._/-]+";
   slotType = port: lib.types.submodule {
     options = {
       enable = lib.mkEnableOption "installation de l'unité privée, sans démarrage automatique";
@@ -15,6 +20,21 @@ let
           n'est ni une signature ni une preuve de qualification.
         '';
       };
+      runtimeConfigStorePath = lib.mkOption {
+        type = lib.types.nullOr storePathType;
+        default = null;
+        description = ''
+          Fermeture préconstruite qualifiée contenant runtime.json, sans secret.
+          Les mots de passe y désignent /run/credentials/mrjam-rust-SLOT.service/NOM.
+          Le serveur valide strictement cette configuration et refuse une capacité
+          exigée mais absente ; aucune migration n'est exécutée au démarrage.
+        '';
+      };
+      credentials = lib.genAttrs credentialNames (_: lib.mkOption {
+        type = lib.types.nullOr credentialPathType;
+        default = null;
+        description = "Référence d'un fichier secret existant hors store ; contenu jamais lu par Nix ou Cloud.";
+      });
       port = lib.mkOption {
         type = lib.types.port;
         default = port;
@@ -75,6 +95,19 @@ in
       assertion = slot.artifactStorePath != null
         && !(builtins.hasContext slot.artifactStorePath);
       message = "mrjam-rust: chaque slot installé exige un chemin de fermeture préconstruite sans contexte dérivation.";
+    }) enabledSlots ++ lib.mapAttrsToList (_: slot: {
+      assertion = slot.runtimeConfigStorePath != null
+        && !(builtins.hasContext slot.runtimeConfigStorePath);
+      message = "mrjam-rust: chaque slot exige sa configuration runtime préconstruite, sans contenu secret ni contexte dérivation.";
+    }) enabledSlots ++ lib.mapAttrsToList (_: slot: {
+      assertion = lib.all (path: path == null || (
+        !(builtins.hasContext path)
+        && !(lib.hasInfix "//" path)
+        && !(builtins.elem ".." (lib.splitString "/" path))
+        && !(builtins.elem "." (lib.splitString "/" path))
+        && !(lib.hasSuffix "/" path)
+      )) (builtins.attrValues slot.credentials);
+      message = "mrjam-rust: les références de credentials doivent être absolues, canoniques, hors store et sans contexte Nix.";
     }) enabledSlots;
 
     users.groups = lib.mapAttrs' (name: _: lib.nameValuePair (serviceName name) { }) enabledSlots;
@@ -103,6 +136,7 @@ in
         unit = serviceName name;
         # Empty only while reporting an invalid configuration assertion.
         artifact = if slot.artifactStorePath == null then "/unconfigured" else slot.artifactStorePath;
+        runtime = if slot.runtimeConfigStorePath == null then "/unconfigured" else slot.runtimeConfigStorePath;
         executable = "${artifact}/bin/mrjam-server";
       in lib.nameValuePair unit {
         description = "Monolithe Rust privé ${name}, non promu automatiquement";
@@ -113,6 +147,7 @@ in
         after = [ "network.target" ];
         unitConfig = {
           AssertFileIsExecutable = executable;
+          AssertPathExists = "${runtime}/runtime.json";
           StartLimitIntervalSec = 60;
           StartLimitBurst = 3;
         };
@@ -125,7 +160,9 @@ in
           Type = "simple";
           User = unit;
           Group = unit;
-          ExecStart = "${executable} serve";
+          ExecStart = "${executable} serve --config ${runtime}/runtime.json";
+          LoadCredential = lib.mapAttrsToList (name: path: "${name}:${path}")
+            (lib.filterAttrs (_: path: path != null) slot.credentials);
           WorkingDirectory = "/";
           Slice = "mrjam-rust.slice";
           Restart = "on-failure";
