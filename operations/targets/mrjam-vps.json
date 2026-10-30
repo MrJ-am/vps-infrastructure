@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "target": "mrjam-vps",
+  "source_authority": "MrJ-am/vps-infrastructure",
+  "authority_basis": "User clarified that the VPS must align with this repository",
+  "status": "preparation-not-an-activatable-host",
+  "deployment_freeze": true,
+  "production_authorized": false,
+  "proposed_module": "operations/nixos/vps-preparation.nix",
+  "production_nixos_configuration": null,
+  "installed_source_commit": null,
+  "installed_generation": null,
+  "system_state_version": null,
+  "change_state_version": false,
+  "copy_hardware_from_spectre": false,
+  "observed_report_sha256": "10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898",
+  "observation_authority": "unverified_observation",
+  "inventory_adoption": {
+    "uid": null,
+    "gid": null,
+    "public_key_reference": null,
+    "private_key_location": "Spectre only, never requested or read",
+    "enable": false
+  },
+  "application_enable": false,
+  "forgejo_enable": false,
+  "runner_on_vps_allowed": false,
+  "qualified_complete_system_generation": null,
+  "independent_approval_reference": null,
+  "blocked_by": "operations/dossier-deploiement.org"
+}

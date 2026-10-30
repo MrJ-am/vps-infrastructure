@@ -1,0 +1,768 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bounded NixOS inventory observation v1",
+  "$defs": {
+    "unknown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "code"
+      ],
+      "properties": {
+        "status": {
+          "const": "unknown"
+        },
+        "code": {
+          "enum": [
+            "UNAVAILABLE",
+            "UNTRUSTED_EXECUTABLE",
+            "COMMAND_FAILED",
+            "TIMEOUT",
+            "OUTPUT_LIMIT",
+            "INVALID_OUTPUT",
+            "UNSUPPORTED_ARGUMENTS",
+            "INTERNAL_ERROR"
+          ]
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "scope",
+        "authority",
+        "resources",
+        "isolation",
+        "versions",
+        "services"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "scope": {
+          "const": "local_read_only_metadata"
+        },
+        "authority": {
+          "const": "unverified_observation"
+        },
+        "resources": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "logical_cpu_count",
+            "memory_total_bytes",
+            "root_filesystem_total_bytes",
+            "root_filesystem_available_bytes"
+          ],
+          "properties": {
+            "logical_cpu_count": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9223372036854775807
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "memory_total_bytes": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9223372036854775807
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "root_filesystem_total_bytes": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9223372036854775807
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "root_filesystem_available_bytes": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "value"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9223372036854775807
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            }
+          }
+        },
+        "isolation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kvm",
+            "user_namespace_limit_nonzero",
+            "unprivileged_user_namespace_switch"
+          ],
+          "properties": {
+            "kvm": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "device_present"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "device_present": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "user_namespace_limit_nonzero": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "enabled"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "unprivileged_user_namespace_switch": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "enabled"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "enabled": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            }
+          }
+        },
+        "versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "nixos",
+            "nix",
+            "forgejo",
+            "forgejo_runner",
+            "postgresql",
+            "kanidm"
+          ],
+          "properties": {
+            "nixos": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "nix": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "forgejo": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "forgejo_runner": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "postgresql": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "kanidm": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "release_core",
+                    "exact_build"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "release_core": {
+                      "type": "array",
+                      "minItems": 2,
+                      "maxItems": 4,
+                      "items": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9999
+                      }
+                    },
+                    "exact_build": {
+                      "const": "not_reported"
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            }
+          }
+        },
+        "services": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "forgejo",
+            "postgresql",
+            "kanidm",
+            "nginx",
+            "mrjam_metier",
+            "nextcloud_php_pool"
+          ],
+          "properties": {
+            "forgejo": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "postgresql": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "kanidm": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "nginx": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "mrjam_metier": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            },
+            "nextcloud_php_pool": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "status",
+                    "load_state",
+                    "active_state"
+                  ],
+                  "properties": {
+                    "status": {
+                      "const": "ok"
+                    },
+                    "load_state": {
+                      "enum": [
+                        "stub",
+                        "loaded",
+                        "not-found",
+                        "bad-setting",
+                        "error",
+                        "merged",
+                        "masked"
+                      ]
+                    },
+                    "active_state": {
+                      "enum": [
+                        "active",
+                        "reloading",
+                        "inactive",
+                        "failed",
+                        "activating",
+                        "deactivating",
+                        "maintenance",
+                        "refreshing"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/$defs/unknown"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_version",
+        "status",
+        "code"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "status": {
+          "const": "error"
+        },
+        "code": {
+          "enum": [
+            "UNSUPPORTED_ARGUMENTS",
+            "INTERNAL_ERROR"
+          ]
+        }
+      }
+    }
+  ]
+}

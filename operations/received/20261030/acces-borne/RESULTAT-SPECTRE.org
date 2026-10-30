@@ -1,0 +1,131 @@
+#+title: Inventaire exécuté et accès restreint — Spectre, 30 octobre 2026
+#+language: fr
+
+* Résultat
+Le compte non privilégié =mrjam-inventory= a été créé sur le VPS par l’accès root
+existant, conformément à la nouvelle instruction explicite de l’utilisateur :
+« Connecte-toi en root pour créer un accès non privilégié et reprends à partir de là ».
+L’inventaire a ensuite été exécuté avec ce compte, par une nouvelle capacité SSH
+restreinte. Le JSON filtré a été reçu et validé sur Spectre.
+
+Ce compte rendu décrit l’état final et remplace l’état d’attente de la notice
+initiale =../REMISE-SPECTRE.org=, conservée comme trace de la première préparation.
+Les fichiers originaux de =../paquet-verifie/= et leur manifeste restent inchangés.
+
+Fichier à joindre à la conversation Cloud :
+=/home/jam/Téléchargements/mrjam-inventaire-20261030-egaxjj56/inventaire-borne-filtre.json=.
+
+SHA-256 du JSON reçu et validé :
+=10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898=.
+
+* Observations permises par le rapport
+- Six unités ciblées chargées et actives : Forgejo, PostgreSQL, Kanidm, Nginx,
+  mrjam-metier et pool PHP Nextcloud.
+- Deux processeurs logiques ; mémoire physique totale : 8 328 343 552 octets.
+- Système de fichiers racine : capacité de 105 590 210 560 octets,
+  espace disponible de 69 968 510 976 octets.
+- Cœurs de version observés : Nix 2.34.8 et PostgreSQL 17.11.
+- Versions Forgejo, forgejo-runner et Kanidm : =unknown / UNAVAILABLE=.
+- Version NixOS : =unknown / INVALID_OUTPUT=. Aucun examen de sa sortie brute
+  n’a été effectué pour contourner le filtre.
+- Périphérique KVM non présent ; limite d’espaces de noms utilisateur non nulle ;
+  interrupteur unprivileged_userns_clone inconnu.
+
+Les versions concernent les exécutables accessibles au profil système selon
+la sonde, pas nécessairement les processus en cours. Un =unknown= n’établit
+jamais l’absence du logiciel. Aucune recherche supplémentaire avec plus de
+privilèges n’a été faite pour combler ces inconnues.
+
+* Frontière effectivement installée
+L’accès créé n’est pas un compte SSH général muni d’un simple wrapper.
+
+- Compte système dédié, UID et GID non nuls, mot de passe verrouillé et aucune
+  appartenance à un groupe supplémentaire.
+- Clé Ed25519 dédiée générée sur Spectre ; sa partie privée n’a pas été ouverte
+  par les scripts ni affichée. Le nouveau client emploie exclusivement cette clé,
+  avec agent SSH désactivé, sans proposer l’identité root.
+- Destination et fichiers de clés d’hôte repris de la référence SSH locale =vps=.
+  =StrictHostKeyChecking=yes=, aucun ajout automatique de clé d’hôte.
+- Nouvelle arborescence =/var/lib/mrjam-inventory-access= détenue par root.
+  Le domicile, le répertoire SSH, la clé publique autorisée et le programme
+  d’entrée sont détenus par root et non modifiables par le compte.
+- Clé autorisée munie de =restrict,command="mrjam-inventory-v1"= : commande
+  forcée, sans terminal, redirections TCP, transfert d’agent ou script SSH utilisateur.
+- Shell de connexion dédié détenu par root : il refuse le shell libre, les autres
+  commandes et les arguments inattendus ; Bash ignore les scripts de démarrage
+  hérités. Le programme Python reçoit un environnement minimal et =-I -S=.
+- Programme d’entrée détenu par root : une seule opération, aucune sélection
+  externe de commande, chemin, service ou schéma. Il accepte uniquement les
+  octets correspondant aux longueurs et SHA-256 épinglés des trois fichiers.
+- Seul le répertoire =work= de cette nouvelle arborescence appartient au compte.
+  Chaque invocation valide crée un sous-dossier privé neuf. Les lots restent
+  sur le VPS avec le résultat filtré ; ils ne contiennent aucun fichier de données
+  applicatives copié par cette opération.
+
+La politique SSH effective a été contrôlée avant et après création du compte.
+Les autres sources de clés, commandes forcées globales, chroots et règles de
+groupe incompatibles sont refusées par l’installateur. L’activation de la clé
+intervient seulement après validation des droits et appartenances du compte.
+
+* Exécution et vérifications réellement effectuées
+1. Nouvelle vérification de l’archive contre
+   =47c0c620a241cb37dd44601f21322badcb18aed0d4e0161a3e891ef795514b9e=,
+   des neuf entrées du manifeste et de tous les fichiers extraits.
+2. Vérification de la disponibilité d’un Python 3.11+ existant sur le VPS.
+   L’interpréteur retenu résout dans un store contrôlé par root.
+3. Dix tests synthétiques supplémentaires de la frontière, réussis : intégrité
+   des trois fichiers, politique SSH, refus du shell et de BASH_ENV, refus de root,
+   erreurs de pipeline et non-publication d’un retour rejeté. Ils complètent les
+   22 tests du paquet et les 16 tests de la remise initiale déjà réussis.
+4. Création du compte et de ses fichiers d’accès. Un premier contrôle a refusé
+   la sortie SSH en raison de son format ; l’analyseur a été corrigé et testé
+   pour la casse et les espaces avant la création effective.
+5. Trois essais réels par la nouvelle identité : commande non autorisée refusée
+   (code 64), demande de shell libre refusée (64), paquet invalide refusé (65).
+   Aucune sortie de contenu n’a été reçue lors de ces essais.
+6. Transmission par SSH du seul lot de trois fichiers originaux, encapsulé dans
+   un protocole à longueur fixe ; contrôle des empreintes côté VPS, écriture dans
+   un nouveau dossier, puis nouveau contrôle des fichiers écrits.
+7. Exécution du pipeline Bash demandé, avec =pipefail=, sous l’UID non privilégié.
+   La sonde et le filtre ont tous deux réussi. Le seul contenu retourné par cette
+   opération est le JSON filtré, après ce succès.
+8. Nouvelle validation sur Spectre par =validate_report.py= inchangé, puis
+   publication du fichier local sans écraser de résultat précédent. Validation
+   répétée immédiatement avant de présenter le contenu à l’agent.
+
+Les diagnostics SSH et système ont été supprimés à la source des appels ;
+les échecs n’ont produit que des codes fermés. Aucun contenu de clé privée,
+journal applicatif, sauvegarde, base ou réponse métier n’a été consulté.
+
+* Fichiers techniques et réutilisation
+=installer.py= et =runner.py= décrivent les nouveaux fichiers d’accès du serveur.
+=acces_borne.py= est le client local ; =test_acces.py= contient les tests.
+=ACCES.SHA256SUMS= permet de vérifier les ajouts et le rapport, sans inclure
+la clé privée. Les empreintes ne constituent pas une signature.
+
+Le client original de remise manuelle n’est pas adapté au nouveau compte à
+commande forcée. Pour une nouvelle observation autorisée, utiliser ce client :
+
+#+begin_src bash
+/nix/store/jy00n3jp5xj8s40n1fbldmkcr5n7avxc-python3-3.13.15/bin/python3 -I -S ./acces_borne.py --check-boundary
+/nix/store/jy00n3jp5xj8s40n1fbldmkcr5n7avxc-python3-3.13.15/bin/python3 -I -S ./acces_borne.py --run
+#+end_src
+
+Le rapport existant est protégé contre l’écrasement : une nouvelle collecte
+s’arrête avec =RESULT_ALREADY_EXISTS= tant que ce fichier est présent.
+La commande =--install= n’est pas une commande de collecte : ne pas la relancer
+pour réutiliser l’accès. Elle refuse un compte ou répertoire déjà existant.
+
+* Limites et état des déploiements
+Le rapport conserve =authority=unverified_observation= : il ne constitue pas une
+preuve authentifiée ni une autorisation de déploiement. Les valeurs de ressources
+ne donnent ni quotas cgroup, ni charge, ni marge CI ; les autres limites de la
+sonde d’origine restent applicables.
+
+L’accès reste installé. Il a été créé sans activation NixOS et n’a pas été ajouté
+à une configuration Nix déclarative ; sa conservation lors d’une future activation
+NixOS n’est pas qualifiée. L’accès d’administration root préexistant appartient
+toujours à l’utilisateur ; il n’est pas employé pour la collecte de ce rapport.
+
+Aucun paquet installé, service redémarré, système activé, SQL exécuté ou
+déploiement applicatif effectué. Le gel des déploiements reste actif.

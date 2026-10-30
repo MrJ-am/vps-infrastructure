@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "operation": "mrjam-inventory-v1",
+  "magic": "MRJAM-INVENTORY-V1\n",
+  "account": "mrjam-inventory",
+  "root": "/var/lib/mrjam-inventory-access",
+  "lock": "/run/mrjam-inventory-lock/operation.lock",
+  "max_input_seconds": 15,
+  "max_run_seconds": 60,
+  "max_report_bytes": 16384,
+  "max_proc_entries": 4096,
+  "retention_new_reports_seconds": 0,
+  "limits": {
+    "address_space_bytes": 268435456,
+    "cpu_seconds": 30,
+    "file_size_bytes": 65536,
+    "open_files": 32,
+    "processes": 32
+  },
+  "files": [
+    {"name":"inventory.py","bytes":11613,"sha256":"b4abbdd8afbd1216cde98bf001ea0908ad3fb90d3068272db3e19d58edc80a45"},
+    {"name":"validate_report.py","bytes":4603,"sha256":"212e4d78986c4d5421f09004982d9ca3cd436a629e6c044ca85bce0f186342e0"},
+    {"name":"inventory.schema.json","bytes":22136,"sha256":"86f9a82d9f9f4881156b5fa10afd41a0ee912930cd62df3f347fcc29f0e202f5"}
+  ]
+}

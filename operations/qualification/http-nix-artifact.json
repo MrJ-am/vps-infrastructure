@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-local-loopback-in-network-none-container",
+  "authority": "unsigned-local-evidence",
+  "test_source": "MrJ-am/mrjam-validation:test_http_boundary.py",
+  "test_source_sha256": "a1116a424a908af678f3cf03232792edecd4166d3c1b9b40f8d5a2b445d621a4",
+  "binary": "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d/bin/mrjam-server",
+  "application_source_commit": "0a4d261b2b9d6439a072077bb3b7dd49845fe732",
+  "tests": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "production_access": false,
+  "runtime_readiness_expected": "503 NOT_READY",
+  "production_ready": false,
+  "command": "bash operations/tools/nix-local.sh --offline-container /nix/store/3vv8xznwq3spw9gac3hqzqp44gxl2i9w-mrjam-received-synthetic-test-profile/bin/python3 -B /workspace/mrjam-validation/test_http_boundary.py /nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d/bin/mrjam-server",
+  "binary_sha256": "07234ab69dc16ba6235d87f2b8ea7a046dad50ff167de074cd40e1ec809d1329",
+  "status": "passed-final-build-with-no-vendor-runtime-reference",
+  "previous_build_tests": {
+    "tests": 17,
+    "status": "passed-but-superseded-for-delivery",
+    "reason": "Removed unnecessary vendor/source reference from runtime closure; tests rerun on the final exact binary"
+  }
+}

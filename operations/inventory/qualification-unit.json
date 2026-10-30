@@ -1,0 +1,33 @@
+{
+  "authority": "local_synthetic_qualification",
+  "command": "python3 -B -m unittest discover -s operations/inventory/tests -v",
+  "container_uid": 0,
+  "errors": 0,
+  "exit_code": 0,
+  "failures": 0,
+  "image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+  "module_sha256": "08bd9fdd77a692822bd39b7d78df21fb222e8301580853a7c8298a15010e5531",
+  "network": "none",
+  "not_established": [
+    "production identity or SSH",
+    "production PAM",
+    "NixOS activation or rollback",
+    "production generation or resource isolation"
+  ],
+  "schema_version": 1,
+  "scope": "unit_and_process_tests_in_disposable_local_container_no_actual_inventory",
+  "skipped": 0,
+  "source_sha256": {
+    "adoption.py": "0b624c34ff9a6c433022d234be2dbbea9d2c45491ab7ece6413528598f19603e",
+    "effective_ssh.py": "87172776f9a5c01e7e70b3bf0b39d47810c9d85fc1492ba01a0fe2291f83fdc4",
+    "login.sh.in": "b3a69a5857b4d7f707652d38a87b35fa8e97efa4162d337946b2b68b3e8bb02d",
+    "package.nix": "ef1321550f7277e9a440ac98065300d0f4679d43fcbd6a760db18e8b0ea690bd",
+    "policy.json": "cf61972dcfce8e83e59ffa5baea0962571dc61ae6bf04e45107fc473cfd16ee4",
+    "public_keys.py": "8f7140282c9be2024f02512a2953c90e24d628402b7426d8c43f6bc14c69ec40",
+    "runner.py": "cff6afeb12a2a36c549a39da01f3276834c853f02f27e7f87bee5b0b6378efda",
+    "tests/test_inventory_access.py": "05c7d61034d68d2d46a4365719bc067df7453a1707978873efbec77e55b133da"
+  },
+  "status": "passed",
+  "tests_run": 21,
+  "tools_profile": "/nix/store/3vv8xznwq3spw9gac3hqzqp44gxl2i9w-mrjam-received-synthetic-test-profile"
+}

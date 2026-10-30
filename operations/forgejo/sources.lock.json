@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_repository": "MrJ-am/vps-infrastructure",
+  "source_revision": "b9621e4e9b1c42648f822962622bdc64d297f38a",
+  "status": "audited-static-sources-only-not-live-configuration",
+  "files": [
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/org-links.lua",
+      "destination": "org-links.lua",
+      "bytes": 609,
+      "sha256": "007f3eb954ec8e081b34ec1943a397077ca0da6fc19bb6da98142399171f7bb2"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets/config.js",
+      "destination": "assets/config.js",
+      "bytes": 1290,
+      "sha256": "ad6570e15600ee9036401b820bbd5f368cd213d6a0c5afe5a0e2444d2960ddb5"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets/footer.tmpl",
+      "destination": "assets/footer.tmpl",
+      "bytes": 203,
+      "sha256": "2446903db4dd611955cfcb1937eabff7e9fb530be59f0ae7e6a0e751f466ee22"
+    },
+    {
+      "source_path": "reference-nixos/assemblage/forgejo/assets/org.css",
+      "destination": "assets/org.css",
+      "bytes": 266,
+      "sha256": "9dc497eb0bffb10b69b0d11af59047ca83c2a7dd47e2b9c89a24ef4278526111"
+    }
+  ]
+}

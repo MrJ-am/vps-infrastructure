@@ -1,0 +1,529 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "operation": {
+      "type": "string",
+      "const": "mrjam-inventory-adoption-v2"
+    },
+    "authority": {
+      "type": "string",
+      "const": "unverified_observation"
+    },
+    "account": {
+      "$ref": "#/$defs/account"
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "base": {
+          "$ref": "#/$defs/metadata"
+        },
+        "home": {
+          "$ref": "#/$defs/metadata"
+        },
+        "ssh_directory": {
+          "$ref": "#/$defs/metadata"
+        },
+        "authorized_keys": {
+          "$ref": "#/$defs/metadata"
+        },
+        "login": {
+          "$ref": "#/$defs/metadata"
+        },
+        "runner": {
+          "$ref": "#/$defs/metadata"
+        },
+        "work": {
+          "$ref": "#/$defs/metadata"
+        },
+        "declarative_authorized_keys": {
+          "$ref": "#/$defs/metadata"
+        }
+      },
+      "required": [
+        "base",
+        "home",
+        "ssh_directory",
+        "authorized_keys",
+        "login",
+        "runner",
+        "work",
+        "declarative_authorized_keys"
+      ]
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "current": {
+          "$ref": "#/$defs/current"
+        },
+        "profile": {
+          "$ref": "#/$defs/profile"
+        }
+      },
+      "required": [
+        "current",
+        "profile"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "operation",
+    "authority",
+    "account",
+    "paths",
+    "generation"
+  ],
+  "$defs": {
+    "account": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "uid": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "gid": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "home_matches": {
+              "type": "boolean"
+            },
+            "shell_matches": {
+              "type": "boolean"
+            },
+            "group_matches": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "supplementary_groups_absent": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "uid",
+            "gid",
+            "home_matches",
+            "shell_matches",
+            "group_matches",
+            "supplementary_groups_absent"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "absent"
+            },
+            "code": {
+              "type": "string",
+              "const": "NOT_FOUND"
+            },
+            "uid": {
+              "type": "null"
+            },
+            "gid": {
+              "type": "null"
+            },
+            "home_matches": {
+              "type": "null"
+            },
+            "shell_matches": {
+              "type": "null"
+            },
+            "group_matches": {
+              "type": "null"
+            },
+            "supplementary_groups_absent": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "uid",
+            "gid",
+            "home_matches",
+            "shell_matches",
+            "group_matches",
+            "supplementary_groups_absent"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "INVALID_OUTPUT"
+              ]
+            },
+            "uid": {
+              "type": "null"
+            },
+            "gid": {
+              "type": "null"
+            },
+            "home_matches": {
+              "type": "null"
+            },
+            "shell_matches": {
+              "type": "null"
+            },
+            "group_matches": {
+              "type": "null"
+            },
+            "supplementary_groups_absent": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "uid",
+            "gid",
+            "home_matches",
+            "shell_matches",
+            "group_matches",
+            "supplementary_groups_absent"
+          ]
+        }
+      ]
+    },
+    "metadata": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "type_matches": {
+              "type": "boolean"
+            },
+            "owner_matches": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "group_matches": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "mode_matches": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "type_matches",
+            "owner_matches",
+            "group_matches",
+            "mode_matches"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "absent"
+            },
+            "code": {
+              "type": "string",
+              "const": "NOT_FOUND"
+            },
+            "type_matches": {
+              "type": "null"
+            },
+            "owner_matches": {
+              "type": "null"
+            },
+            "group_matches": {
+              "type": "null"
+            },
+            "mode_matches": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "type_matches",
+            "owner_matches",
+            "group_matches",
+            "mode_matches"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "PARENT_UNSAFE"
+              ]
+            },
+            "type_matches": {
+              "type": "null"
+            },
+            "owner_matches": {
+              "type": "null"
+            },
+            "group_matches": {
+              "type": "null"
+            },
+            "mode_matches": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "type_matches",
+            "owner_matches",
+            "group_matches",
+            "mode_matches"
+          ]
+        }
+      ]
+    },
+    "current": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "store_hash": {
+              "type": "string",
+              "pattern": "[0-9abcdfghijklmnpqrsvwxyz]{32}",
+              "maxLength": 32
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "store_hash"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "absent"
+            },
+            "code": {
+              "type": "string",
+              "const": "NOT_FOUND"
+            },
+            "store_hash": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "store_hash"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "PARENT_UNSAFE",
+                "INVALID_OUTPUT",
+                "CHANGED"
+              ]
+            },
+            "store_hash": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "store_hash"
+          ]
+        }
+      ]
+    },
+    "profile": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "number": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "store_hash": {
+              "type": "string",
+              "pattern": "[0-9abcdfghijklmnpqrsvwxyz]{32}",
+              "maxLength": 32
+            },
+            "matches_current": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "number",
+            "store_hash",
+            "matches_current"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "absent"
+            },
+            "code": {
+              "type": "string",
+              "const": "NOT_FOUND"
+            },
+            "number": {
+              "type": "null"
+            },
+            "store_hash": {
+              "type": "null"
+            },
+            "matches_current": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "number",
+            "store_hash",
+            "matches_current"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "PARENT_UNSAFE",
+                "INVALID_OUTPUT",
+                "CHANGED"
+              ]
+            },
+            "number": {
+              "type": "null"
+            },
+            "store_hash": {
+              "type": "null"
+            },
+            "matches_current": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "number",
+            "store_hash",
+            "matches_current"
+          ]
+        }
+      ]
+    }
+  }
+}

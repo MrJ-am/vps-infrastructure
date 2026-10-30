@@ -1,0 +1,210 @@
+#+title: Adoption déclarative de l'accès borné d'inventaire
+
+* Statut et périmètre
+
+Candidat inactif, sans configuration machine de production. Le module
+=../nixos/mrjam-inventory.nix= est désactivé par défaut. Son import ne déclenche
+aucune activation et ne constitue aucune autorisation. Les UID/GID existants,
+la clé publique approuvée, la révision système active et sa configuration
+complète restent des préconditions de la revue du système final.
+
+Les trois fichiers de =probe/= proviennent, octet pour octet, de la remise
+vérifiée. =PROVENANCE.json= et =policy.json= donnent leurs références. Le commit
+antérieur de validation n'atteste ni leur publication ni l'état du VPS. Le
+paquet original, le protocole V1 et son schéma restent inchangés. La nouvelle
+implémentation d'accès est une modification distincte à revoir et qualifier.
+
+* Déclaration et dépendances
+
+#+begin_src nix
+services.mrjamInventory = {
+  enable = true; # seulement dans une génération revue et explicitement autorisée
+  adoption.uid = /* UID existant observé et rapproché, aucun défaut */;
+  adoption.gid = /* GID existant observé et rapproché, aucun défaut */;
+  publicKeys = [ /* clé publique dédiée approuvée ; aucune clé privée */ ];
+};
+#+end_src
+
+Cet extrait décrit les champs obligatoires, il n'est pas une configuration
+exécutable. La fixture =../tests/inventory-fixture.nix= utilise uniquement des
+identifiants et une clé synthétiques, qui ne doivent jamais être autorisés.
+Le paquet =package.nix= utilise le Python, Bash et coreutils du =nixpkgs=
+verrouillé de l'assembleur. Le paquet contient les trois blobs épinglés et sa
+configuration runtime ; le build refuse toute empreinte différente, identité
+nulle ou clé Ed25519 structurellement invalide. Aucun chemin d'interpréteur
+mutable n'est sélectionné à l'exécution.
+
+Le compte et le groupe =mrjam-inventory= gardent leurs identifiants observés,
+sans groupes supplémentaires, avec mot de passe verrouillé et shell du store.
+Le home, =home/.ssh= et la racine existante restent =root:root 0755= ; =work=
+reste au compte en =0700=. Les anciens fichiers login, runner et clé sont
+conservés pour une transition contrôlée, sans être exécutés par le candidat.
+Il n'y a ni suppression récursive, ni réinstallation impérative, ni copie de
+matériel, ni modification de =stateVersion=.
+
+* Frontière SSH et traitement du protocole
+
+La seule opération est =mrjam-inventory-v1=. Le shell du store refuse tout
+autre couple d'arguments, toute autre =SSH_ORIGINAL_COMMAND= et l'UID 0. Il
+utilise Bash =-p=, puis =env -i= et Python =-I -S=. Les variables héritées ne
+sélectionnent ni programme ni politique.
+
+Le bloc =Match User= impose clé publique seule, commande forcée, source de clés
+unique =/etc/ssh/mrjam-inventory-authorized-keys=, sans CA, principal ou commande
+d'autorisation alternatifs. Il interdit shell interactif, PTY, tunnels,
+forwarding TCP/Unix/agent, X11 et user rc. Chaque clé porte aussi =restrict= et
+la commande forcée. Le fichier déclaré est une copie =root:root 0444= ; une
+clé du home n'est plus une source d'authentification après adoption.
+
+=PermitUserEnvironment no= est global car OpenSSH l'interdit dans =Match=.
+Une politique machine qui exige autre chose doit être résolue avant adoption.
+=effective_ssh.py= contrôle la sortie effective de =sshd -T= pour chaque
+contexte réseau autorisé ; il n'accepte que des comptes/groupes littéraux dans
+Allow/Deny et refuse les motifs dont il ne qualifie pas la sémantique. Il
+refuse également AcceptEnv autre que LANG/LC_*. Un contrôle de texte ne remplace
+ni l'évaluation effective ni les essais de refus sur le service isolé.
+Certains builds OpenSSH ne publient pas le champ GSSAPIAuthentication dans
+=sshd -T=. Le filtre n'en déduit aucune absence de capacité : le contrôle
+obligatoire demeure =AuthenticationMethods publickey= et =PubkeyAuthentication
+yes=, qui exclut toute autre méthode. Si le champ GSSAPI est publié, il doit
+être =no=. Un résultat sans ce champ reste « non observé » pour cette propriété.
+
+Le runner vérifie la taille et le SHA-256 des trois blobs reçus, puis les jette.
+Il exécute seulement les copies immuables du paquet, avec =pipefail=. Aucun
+script ni rapport n'est relu depuis un répertoire modifiable par le compte.
+Il revalide en mémoire la sortie du filtre contre le schéma épinglé et refuse
+son enveloppe d'erreur. Le stdout reste vide avant succès complet ; les erreurs
+n'exposent ni le payload ni les sorties intermédiaires. Le rapport conserve
+=authority=unverified_observation=.
+
+* Limites et rétention
+
+Une opération au plus détient un =flock= exclusif non bloquant. Le répertoire
+de verrou est =root:mrjam-inventory 0750= ; son fichier est
+=root:mrjam-inventory 0440=, vide et à un seul lien. Le runner ouvre le fichier
+en lecture seule : Linux autorise le flock exclusif sans droit d'écriture.
+Le compte ne peut remplacer l'inode et le runner ne crée pas le verrou.
+
+Le délai d'entrée est 15 s ; celui du pipeline est 60 s, puis 2 s au maximum
+pour le nettoyage. La sortie est limitée à 16 384 octets. Les limites de
+processus sont : espace virtuel 256 MiB, CPU 30 s, fichiers 64 KiB, 32
+descripteurs, 32 processus par UID, core désactivé. Ce ne sont pas des quotas
+CI, une garantie de mémoire cumulée ou une preuve d'isolation de conteneur.
+Le verrou borne le travail effectif, sans fixer le nombre de tentatives SSH
+avant authentification ; cette politique de service doit être revue au niveau
+du serveur complet.
+
+La sonde originale crée elle-même des sessions pour ses exécutables. Le
+runner devient donc sous-réaper Linux : il tue le groupe du pipeline, puis
+tue et réadopte/récolte ses descendants, même détachés par =setsid=. Il refuse
+de démarrer avec des enfants préexistants. Si =/proc/.../children= manque,
+il parcourt au plus 4 096 entrées PID, lit au plus 4 096 octets de =stat= par
+entrée et ne conserve que les enfants dont PPid est le sien. Aucun nom de
+processus ou PID n'est transféré. Les fonctionnalités noyau requises sont
+testées ; leur absence refuse l'opération. Un processus bloqué en état noyau
+non interruptible produit un échec, jamais une certification de terminaison.
+
+Aucun job ni rapport nouveau n'est écrit : rétention zéro et croissance disque
+nulle par invocation. L'ancien =work/= est conservé, sans inspection de son
+contenu. Son nettoyage éventuel nécessitera une opération distincte autorisée
+et bornée ; ce candidat n'affirme pas avoir établi sa taille ni sa rétention.
+
+* Adoption avant toute mutation
+
+La commande empaquetée =bin/mrjam-inventory-adoption= ne prend aucun argument.
+Elle compare seulement le compte fixe, ses groupes et les chemins fixes à la
+configuration empaquetée. Elle contrôle UID/GID/home/shell, types, propriétaires,
+modes, octets exacts de la clé publique et du login ancien, SHA du runner
+ancien, absence ou conformité des futurs fichiers de clés et verrou.
+Les lectures de code/clé publique sont bornées. Elle ne lit ni shadow, ni clé
+privée, ni contenu de =work/=, ni données applicatives. Elle ne prouve donc pas
+l'état présent du mot de passe ; la déclaration et le refus SSH du mot de
+passe restent des contrôles distincts. Elle n'écrit rien et refuse toute
+collision inconnue au lieu de la réparer.
+Le groupe nommé ne doit pas déclarer de membre tiers et le module refuse les
+membres additionnels déclarés. Cette lecture bornée ne cherche pas les autres
+comptes qui partageraient son GID primaire ; le caractère dédié du GID doit
+être rapproché de la configuration machine et reste une précondition réelle.
+
+Ce précontrôle doit être exécuté par le contrôleur administratif autorisé
+*avant* tout changement users/groups, /etc, tmpfiles ou activation NixOS.
+Un simple =ExecStartPre= serait trop tard. Aucun booléen « vérifié » dans le
+module ne tient lieu de constat réel. Le précontrôle seul n'est pas un verrou
+transactionnel : le contrôleur doit suspendre les changements concurrents,
+identifier le paquet et la génération qualifiés, puis vérifier immédiatement
+avant l'action approuvée. Cloud n'a pas cette délégation et ne l'exécute pas.
+
+Ordre du dossier de déploiement à faire approuver :
+
+1. Rapprocher l'autorité machine, sa révision active, UID/GID et clé publique ;
+   conserver un canal administratif indépendant déjà autorisé sur Spectre.
+2. Construire la génération complète avec dépendances verrouillées, exporter
+   ses identités et qualifier ce même paquet dans un environnement isolé.
+3. Qualifier =sshd -t= puis =sshd -T -C user=mrjam-inventory,...= et le filtre
+   empaqueté pour tous les contextes admis ; tester opération valide et refus
+   commande libre, shell, PTY, forwarding, clé alternative et paquet altéré.
+4. Faire approuver explicitement révision, artefacts, nouvelle politique SSH,
+   preconditions, fenêtre et retour arrière. Le gel demeure jusque-là.
+5. Depuis le canal administratif autorisé seulement : vérifier l'identité des
+   artefacts, réussir les précontrôles bornés avant mutation, installer la
+   génération qualifiée et contrôler immédiatement le même protocole.
+6. En cas d'échec, arrêter la transition. Le retour à la génération précédente
+   doit être contrôlé depuis le canal indépendant et refaire les refus SSH.
+   Comme l'accès antérieur était impératif, une ancienne génération peut ne
+   pas rétablir son shell/compte/clé : le retour arrière doit lui aussi être
+   préparé et qualifié sur une image synthétique avant toute adoption réelle.
+   Ne pas relancer l'installateur reçu. Aucun changement de données applicatives
+   n'est inclus dans cette adoption ; le rollback de migration de données est
+   un dossier distinct.
+
+* Qualification reproductible et limites actuelles
+
+#+begin_src sh
+python3 -B -m unittest discover -s operations/inventory/tests -v
+#+end_src
+
+Ces tests utilisent des blobs originaux comme entrée, des rapports fabriqués,
+des processus temporaires et des comptes simulés. Ils n'exécutent pas la sonde
+sur Cloud ou le VPS. Les cas de propriétaires root et de changement local
+d'UID s'exécutent dans le conteneur jetable de qualification, jamais sur le
+VPS. L'évaluation Nix et le paquet synthétique sont exposés par la flake ; le
+dossier de revue recense séparément les tests externes et les tests système.
+
+Les reçus locaux qualifiés de cette reprise sont :
+
+- =qualification-unit.json= : 21 tests exécutés dans le conteneur local avec
+  UID 0, tous réussis sans skip ; empreintes du code effectivement testé.
+- =qualification-ssh.json= : 12 contrôles réussis avec OpenSSH 10.6p1 épinglé,
+  dont =sshd -t=, =sshd -T= filtré et 10 refus sur des connexions SSH réelles
+  en loopback uniquement. Paquet, fichier de configuration et adaptations de
+  fixture sont identifiés ; le champ GSSAPI reste non observé.
+- =qualification-build.json= : dérivations et sorties du paquet synthétique,
+  configuration SSH, OpenSSH et profil d'outils réellement construits.
+- =qualification-inputs.json= : empreintes des reçus et du pilote SSH.
+
+Le pilote =tests/qualify_ssh_isolated.py= exige un conteneur jetable UID 0,
+le marqueur explicite =MRJAM_SYNTHETIC_CONTAINER=1= et une seule interface
+=lo=. Il crée des clés éphémères et des identités synthétiques ; il remplace
+les liens /etc de l'image par des fichiers de l'overlay avant toute écriture.
+Il refuse tout autre état de l'image et vérifie son store après les essais.
+L'adaptation =UsePAM no= laisse la pile PAM réelle non qualifiée. Aucun payload
+valide d'inventaire n'a été envoyé dans ce test réseau, donc aucune sonde
+réelle n'a été exécutée. Le filtre positif est qualifié séparément sur JSON
+entièrement fabriqué ; les handshakes de forwarding agent/X11 restent à faire.
+
+Un premier essai de la fixture avait ajouté ses trois lignes synthétiques
+aux fichiers passwd/group/shadow de l'image publique, via leurs liens vers le
+volume Nix partagé. Le compte n'existait pas sur l'hôte Cloud et aucun VPS
+n'était impliqué. Les octets originaux ont été récupérés depuis un conteneur
+neuf de la même image par digest, sans ce volume ; chaque différence était
+exactement l'ajout synthétique connu. La restauration exacte et le contrôle
+Nix de ce chemin, qui passe après restauration, figurent dans
+=qualification-container-restoration.json=. Le pilote a été corrigé avant
+le succès final et vérifie à nouveau le store à la fin.
+
+Restent bloquants pour la production : génération machine complète rapprochée,
+identité réelle d'adoption, clé publique approuvée, évaluation SSH réelle de
+la génération complète avec sa pile PAM et l'ensemble de ses contextes,
+précontrôle local juste avant mutation, maintien d'un canal de secours et qualification du
+retour arrière depuis l'installation impérative. Aucun succès local ne lève
+ces points ni le gel.

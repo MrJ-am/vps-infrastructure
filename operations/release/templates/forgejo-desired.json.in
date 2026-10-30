@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "scope": "prepared-not-adopted",
+  "target": "forge.mrj.am",
+  "deployment_freeze": true,
+  "accepted_flow": "forgejo-main-to-github-mirror",
+  "proposal_flow": "github-proposal-to-forgejo-review",
+  "rules_revision": null,
+  "controller_revision": null,
+  "repositories": {
+    "mrjam-plateforme": {
+      "private": true,
+      "default_branch": "main",
+      "actions_enabled": false,
+      "protection": {
+        "branch": "main",
+        "required_checks": [
+          "mrjam/independent-validation"
+        ],
+        "minimum_reviews": 1,
+        "force_push": false,
+        "deletion": false,
+        "administrator_bypass": false
+      }
+    },
+    "mrjam-validation": {
+      "private": true,
+      "default_branch": "main",
+      "actions_enabled": false,
+      "protection": {
+        "branch": "main",
+        "required_checks": [
+          "mrjam/independent-validation"
+        ],
+        "minimum_reviews": 1,
+        "force_push": false,
+        "deletion": false,
+        "administrator_bypass": false
+      }
+    },
+    "vps-infrastructure": {
+      "private": true,
+      "default_branch": "main",
+      "actions_enabled": false,
+      "protection": {
+        "branch": "main",
+        "required_checks": [
+          "mrjam/independent-validation"
+        ],
+        "minimum_reviews": 1,
+        "force_push": false,
+        "deletion": false,
+        "administrator_bypass": false
+      }
+    }
+  },
+  "runner": {
+    "enabled": false,
+    "repository": "mrjam-validation",
+    "label": "mrjam-synthetic-isolated",
+    "ephemeral": true,
+    "privileged": false,
+    "docker_socket": false,
+    "production_mounts": [],
+    "production_network": false,
+    "signing_credentials": false,
+    "registration_secret_ref": "ref:forgejo/runner-registration",
+    "maximum_jobs": 1,
+    "qualification_profile": "synthetic-unqualified-for-vps"
+  }
+}

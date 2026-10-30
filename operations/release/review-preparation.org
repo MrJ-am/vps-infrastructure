@@ -1,0 +1,248 @@
+#+title: Revue indépendante locale — entrées de construction et répétition de migration
+#+language: fr
+#+date: 2026-10-30
+
+* Périmètre et méthode
+Revue effectuée par l'agent =chaine_declarative=, qui n'est pas l'auteur de
+=operations/builds/= ni de =mrjam-plateforme/tools/migration-synthetic/=. Aucun
+code candidat ou résultat attendu n'a été modifié par le relecteur. Seul ce
+rapport appartient à son lot. Les sources, gabarits, migrations et tests locaux
+ont été lus. Les reproductions emploient des répertoires temporaires et des
+octets inventés ; les contre-exemples PostgreSQL remplacent les appels Docker
+et SQL par des doublures locales. Aucun serveur, conteneur, base ou sauvegarde
+n'a été consulté par cette revue.
+
+Cette revue indépendante entre auteurs n'est ni une approbation humaine, ni une
+signature d'autorité de validation, ni une autorisation de production. Le gel
+reste actif. L'état exact des corrections ci-dessous doit être rapproché des
+empreintes finales avant intégration.
+
+* Constats et corrections demandées
+** MIG-01 — résultat faux positif lorsque Python désactive les assertions
+Priorité haute pour l'intégrité du résultat de qualification. Dans la première
+version relue, =qualify.py= utilisait =assert= pour les comparaisons SQL, le
+format du dump, la restauration et la preuve de perte d'écriture. Avec =-O= ou
+=PYTHONOPTIMIZE=, Python supprime ces contrôles ainsi que certains appels SQL
+qu'ils contiennent ; les sept groupes étaient ensuite marqués =true=.
+
+Reproduction : charger le module, remplacer =sources= et =verify_container= par
+des doublures, renvoyer la version =170011= et =0= pour le contrôle de nettoyage,
+mais =deliberately-wrong-result= pour les autres SQL et =invalid-archive= pour
+=pg=. Le même programme a donné :
+
+| Interpréteur | Première version relue |
+|--------------+------------------------|
+| Python normal | =AssertionError= |
+| Python =-O= | =status=passed=, sept groupes =true= |
+
+L'auteur a remplacé ces assertions par =require= levant explicitement
+=Refused/SYNTHETIC_ASSERTION_FAILED=. Contre-revue réalisée après correction :
+le même contre-exemple est refusé avec et sans =-O= ; quatre tests du candidat
+passent, incluant sa régression en interpréteur optimisé. Ce défaut est corrigé
+dans les octets relus après notification de l'auteur. La nouvelle exécution
+réelle sur PostgreSQL annoncée par l'auteur n'a pas été relancée par le relecteur.
+
+** BUILD-01 — lecture de FIFO et liens dans les ancêtres des racines
+Priorité moyenne pour la frontière d'entrée et la disponibilité de l'export.
+La première version de =prepare.checked_bytes= vérifiait =is_symlink= avant
+=read_bytes=, sans ouverture par descripteur ni contrôle de fichier régulier.
+Un FIFO nommé =source.fifo= a bloqué la lecture jusqu'à l'arrêt du processus
+après 0,5 s, sans producteur. Ce n'est pas un refus borné.
+
+Les racines dont un ancêtre était un lien ont été suivies :
+=checked_bytes(base/alias/nested, source.rs, SHA256)= et
+=crate_archive(base/alias/cache, package, false)= ont accepté des octets inventés
+où =alias= pointait sur =base/actual=. Le contrôle du lien terminal ne couvre
+pas ces ancêtres ; les contrôles séparés de l'ouverture laissent aussi une
+course entre vérification et lecture. Aucun contenu non synthétique n'a été lu
+dans ces essais.
+
+Correction demandée à l'auteur : ouverture relative à des descripteurs avec
+=O_NOFOLLOW= pour tous les composants, =O_NONBLOCK= et =fstat= du fichier final,
+borne de lecture et contrôle de modification pendant lecture. Appliquer la même
+discipline au cache Cargo et aux sources ; un cache existant invalide doit être
+refusé avant téléchargement. Le répertoire de destination doit rester neuf et
+détenu exclusivement par l'exporteur. L'auteur a ajouté les ouvertures par
+descripteurs depuis =/=, le refus des types non réguliers et une borne de
+64 Mio. Contre-revue : les ancêtres liens de source/cache sont refusés ; le FIFO
+est refusé immédiatement. Les octets sources restent liés à leurs empreintes
+attendues. Le contrôle ne remplace pas la propriété exclusive des répertoires
+ni leur stabilité pendant une qualification.
+
+** BUILD-02 — liste d'artefacts incomplète et auto-empreinte périmée
+Priorité moyenne pour la vérifiabilité du manifeste de sortie. La première
+version de =artifact_manifest.py= a accepté un répertoire contenant un fichier
+ordinaire et un FIFO, avec code retour =0= ; le FIFO n'apparaissait pas dans
+=payload_sha256=. Le programme refusait les liens mais ignorait les autres
+types spéciaux.
+
+Une seconde exécution sur le même répertoire incluait l'ancien =artifact.json=
+dans =payload_sha256=, puis l'écrasait. L'empreinte annoncée de ce fichier ne
+correspondait donc pas à ses nouveaux octets. Le constructeur Nix est normalement
+exécuté sur une sortie neuve et ne valide pas les FIFO comme objets NAR : ces
+contre-exemples ne démontrent pas qu'une telle sortie a été promue. Ils montrent
+que le producteur du manifeste n'applique pas lui-même son contrat de complétude.
+
+Correction demandée : refuser les types autres que fichiers réguliers et
+répertoires, refuser une sortie déjà munie d'un manifeste, ou définir une
+exclusion stable explicite de ce fichier et une procédure de remplacement
+atomique. L'auteur a retenu le refus des types spéciaux et de tout manifeste
+préexistant, avec ouverture exclusive par descripteur. Contre-revue : le FIFO
+provoque un échec sans créer =artifact.json= ; une seconde génération échoue
+en préservant exactement le premier manifeste. Les deux défauts sont corrigés.
+
+** MIG-02 — portée exacte de la comparaison après restauration
+Limite de couverture à rendre explicite ; ne pas annoncer une qualification
+complète du schéma. Le =snapshot_query= relu comparait cinq tables alors que
+=001-collecte.sql= en crée six. =interaction_events= n'avait aucune ligne
+synthétique et n'était pas dans la projection. Les séquences et la capacité
+d'une nouvelle insertion avec identité après restauration n'étaient pas
+contrôlées explicitement.
+
+Recommandation transmise à l'auteur : ajouter un événement inventé à la fixture
+et à la projection, puis vérifier une insertion avec identité après restauration,
+ou inscrire cette couverture partielle dans le reçu. Le vrai =pg_dump/pg_restore=
+et les comparaisons effectuées restent des preuves utiles dans leur périmètre ;
+ils ne qualifient ni tous les domaines, ni une ancienne version du binaire, ni
+les sauvegardes réelles, ni la récupération des écritures postérieures au dump.
+
+L'auteur a ajouté un événement synthétique à la fixture et à la comparaison,
+ainsi qu'une insertion avec identité après restauration exigeant =id=2=. Ces
+changements ont été relus ; leur nouvelle exécution PostgreSQL appartient au
+relevé de l'auteur. Le scénario définit maintenant huit groupes, dont
+=identity_sequence_restored=. L'ancienne limitation des cinq tables est corrigée
+dans le code ; la couverture reste celle d'un schéma inventé et de projections
+SQL, sans essai de l'ancien binaire.
+
+* Points examinés sans défaut confirmé supplémentaire
+- Les archives Cargo sont vérifiées contre le checksum du =Cargo.lock= avant
+  extraction ; les traversées =..=, chemins absolus, doublons de fichiers,
+  liens symboliques/durs et fichiers spéciaux sont refusés par les tests lus.
+  L'extraction retourne des octets et ne fait pas appel à =extractall=. Le nombre
+  de membres est contrôlé après =getmembers= : cette borne ne démontre pas une
+  consommation mémoire/CPU bornée pour une archive hostile arbitraire. Les
+  archives actuelles restent épinglées et leur sélection doit être revue.
+- L'export sélectionne des fichiers au lieu de copier un checkout entier ; les
+  commits et gitlinks attendus sont comparés. L'autorité de la sélection reste
+  proposée, conformément au README. La publication ou l'adoption de cette
+  sélection ne se déduit pas des hashes locaux.
+- =verify_inputs.py= lie la sélection, les verrous, les copies du manifeste et
+  les fichiers Cargo, puis compare l'ensemble des fichiers présents. Un ajout
+  ordinaire ne peut pas être silencieusement consommé par le constructeur.
+- Les constructions Rust utilisent =--frozen --offline= et le vendor vérifié ;
+  l'absence de réseau au niveau du runner est une qualification distincte.
+  La recette expose seulement le serveur et le frontend Mateval ; les autres
+  interfaces et les raccordements métier sont explicitement hors preuve.
+- =artifact.json= ne revendique pas la fermeture Nix complète. Chemin store,
+  dérivation, narHash et références transitives devront être relevés et liés
+  séparément aux artefacts avant une approbation. Aucun import de fermeture ou
+  test de reproductibilité binaire n'a été effectué par cette revue.
+- Le programme de répétition n'accepte ni chemin de dump, ni cible SQL, ni SQL
+  utilisateur. Le nom du schéma provient d'un préfixe fixe et de 16 octets
+  aléatoires en hexadécimal ; les migrations sont épinglées avant Docker.
+- =pg_dump= limite la sélection au schéma créé ; l'archive reste en mémoire et
+  =pg_restore= reçoit uniquement cette archive ou les octets invalides inventés.
+  Le nettoyage est dans =finally= et la sortie réussie attend la disparition
+  du schéma. La preuve de perte d'une écriture après restauration interdit de
+  confondre retour applicatif et retour aveugle à un instantané.
+- Le garde Docker initial compare image, label local et racine en lecture seule.
+  Cela ne prouve pas à soi seul l'absence de montage persistant de PGDATA. La
+  référence à un conteneur créé localement et jetable est une précondition à
+  conserver ; un contrôle fermé des tmpfs, montages et réseau a été recommandé.
+  L'auteur a ajouté les tmpfs exacts, le refus des montages persistants, le réseau
+  nommé et la publication limitée au loopback. Ces gardes ont été exercées avec
+  métadonnées inventées : bind persistant, tmpfs de données absent, réseau host
+  et publication =0.0.0.0= refusés. Le réseau bridge de la fixture ne prétend pas
+  bloquer le trafic sortant. Ces contrôles locaux ne peuvent pas devenir une
+  ACL d'exploitation distante.
+
+* Exécutions indépendantes de ce relevé
+| Commande ou contre-exemple | Résultat observé |
+|---------------------------+------------------|
+| =python3 -m unittest discover -s operations/builds -p test_*.py= | 11 tests, 0 échec |
+| =python3 -m unittest discover -s tools/migration-synthetic -p test_*.py=, avant correction | 3 tests, 0 échec |
+| Même commande après MIG-01 | 4 tests, 0 échec |
+| MIG-01, doublures SQL/archive, avant correction | Faux succès sous =-O= confirmé |
+| MIG-01, mêmes doublures après correction | Refus explicite avec et sans =-O= |
+| BUILD-01, FIFO temporaire | Processus bloqué jusqu'au délai de 0,5 s |
+| BUILD-01, ancêtres liens de source et cache | Lectures acceptées |
+| BUILD-02, FIFO dans la sortie | Succès, FIFO absent de la liste |
+| BUILD-02, seconde génération du manifeste | Auto-empreinte annoncée différente des octets courants |
+| Suite builds après corrections | 17 tests, 0 échec |
+| BUILD-01, contre-exemples après corrections | FIFO et deux ancêtres liens refusés |
+| BUILD-02, contre-exemples après corrections | FIFO refusé sans manifeste ; réexécution refusée, manifeste intact |
+| Gardes conteneur, métadonnées inventées | Configuration attendue acceptée ; quatre écarts refusés |
+| Erreur synthétique après création du schéma | Nettoyage tenté, succès impossible |
+| Même erreur avec nettoyage incomplet | =SYNTHETIC_CLEANUP_FAILED= |
+
+Les commandes ont été lancées depuis leurs dépôts respectifs avec Python
+3.12.14. Les bibliothèques Docker/SQL ont été doublées uniquement dans les
+contre-exemples ; ces essais ne comptent pas comme des scénarios PostgreSQL.
+Les tests adverses n'ont pas modifié les fichiers du candidat ni leurs attentes.
+
+* État final de contre-revue
+MIG-01, BUILD-01 et BUILD-02 sont corrigés et leurs contre-exemples ont été
+réexécutés indépendamment. MIG-02 a conduit à une extension du scénario relue
+dans le code ; l'exécution réelle de ce scénario élargi reste dans le dossier
+de l'auteur. Aucun défaut supplémentaire bloquant l'intégration de ce lot
+préparatoire n'a été confirmé dans ce périmètre. Cela ne constitue pas une
+déclaration d'aptitude au déploiement : fermeture Nix complète, reproductibilité,
+autorité des règles, frontière du runner et observations de production restent
+à qualifier selon les documents de chaque lot.
+
+Les empreintes SHA-256 suivantes identifient les octets de code/test relus à la
+fin de cette contre-revue, avant les commits d'intégration. Les noms
+=infrastructure/= et =application/= désignent respectivement les dépôts
+=vps-infrastructure= et =mrjam-plateforme= ; ce ne sont pas des chemins installés.
+
+| Fichier | SHA-256 |
+|---------+---------|
+| =infrastructure/operations/builds/prepare.py= | =6b428742a8ddadab1f69ce3daf1e5ce8dcaa8a06019662e8e0d2735829b0141a= |
+| =infrastructure/operations/builds/verify_inputs.py= | =c1634b4753f17f1f6dc128208921e059d967fcb0079853259951ee3d3b233445= |
+| =infrastructure/operations/builds/artifact_manifest.py= | =92657c9e82df0e7a1a15af76ccfc95be2a90f9f8a99e07ca2ab6843ef60ae936= |
+| =infrastructure/operations/builds/test_build_inputs.py= | =e5591bc2217bdb79e891268d88c490c8f86081f72c323ecca0929db6ad1acb45= |
+| =infrastructure/operations/builds/default.nix= | =ada03e712f347a329b6404c6d3cafc5544167e3c607bb37811a5ecc6990539be= |
+| =infrastructure/operations/builds/toolchains.nix= | =d3f8c20761216ac22b426d41d10e817a2583ab8ebf866cdb63ac7c2a92de0fb4= |
+| =application/tools/migration-synthetic/qualify.py= | =4bfde89fb9c723caffd4291ce7cc12f62e65c3f67ee1cc04984881a6dce439c6= |
+| =application/tools/migration-synthetic/test_guard.py= | =46cbf33673ba83d8849dca49eeb0008df1802e6454fe8fefe049417a1b0237ea= |
+
+Les builds et le scénario PostgreSQL n'ont pas été rejoués par le relecteur.
+Leurs résultats et artefacts doivent être lus dans les preuves distinctes de
+leurs auteurs ; ce rapport ne les invente pas et ne s'y substitue pas.
+
+* Addendum — retrait d'une référence inutile aux sources dans la fermeture Rust
+Une correction ciblée de =operations/builds/default.nix= a été relue après le
+tableau d'empreintes ci-dessus. L'empreinte finale de ce fichier est :
+
+=cbbe356defca769ab0b7ac2d1232d3372c045921d136d8fe4c8e39bebcdeb879=.
+
+L'ancienne empreinte
+=ada03e712f347a329b6404c6d3cafc5544167e3c607bb37811a5ecc6990539be=
+reste conservée dans le tableau pour identifier la première contre-revue. Le
+relecteur a retiré en mémoire les deux ajouts et leur commentaire ; le SHA-256
+ainsi recalculé correspond exactement à cette ancienne empreinte. Aucun autre
+changement du fichier n'est donc inclus dans cet addendum.
+
+Les deux changements sont :
+- ajout de =--remap-path-prefix=${inputs}=mrjam-dependencies= aux =RUSTFLAGS=
+  existants, afin que les emplacements de sources des dépendances compilées
+  n'incorporent plus le chemin store de l'ensemble source/vendor ;
+- ajout de =disallowedReferences = [ inputs ];= à la seule dérivation Rust,
+  pour faire échouer une construction qui conserverait cette référence dans
+  sa sortie.
+
+Le contrôle des entrées vérifiées, =--frozen --offline=, la suite Cargo,
+l'installation du même binaire construit et le producteur de manifeste restent
+inchangés. La nouvelle contrainte de référence renforce le contrôle Nix ; elle
+ne remplace ni ne désactive une vérification, ne retire aucun test et ne change
+pas les verrous ou les sources. Le remappage concerne les chemins de sources
+émis par le compilateur ; le changement de binaire qui en résulte exige bien
+une nouvelle identification et ses propres résultats de qualification.
+
+L'auteur des builds et root indiquent une nouvelle construction, reconstruction
+identique hors réseau, 67 tests Cargo et 17 contrôles HTTP sur le nouvel artefact,
+avec une fermeture réduite de quelque 253 Mo à 41 986 016 octets. Ces exécutions
+n'ont pas été répétées par ce relecteur : les identifiants exacts, narHash et
+mesures doivent provenir de leur collecte finale. La revue ciblée n'a relevé
+aucun affaiblissement de garde et ne change pas le statut non déployable ni le
+gel des opérations de production.

@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-30T16:55:50.074580+00:00",
+  "status": "prepared-and-locally-tested-not-deployable",
+  "authority": "unsigned-local-evidence",
+  "branch": "declaratif-20261030",
+  "infrastructure_base_commit": "b9621e4e9b1c42648f822962622bdc64d297f38a",
+  "preparation_commits": {
+    "platform": "d9098b93e867d72c5cfb7030b7caa13ae98f95b3",
+    "validation": "3053cf79de7bd1ab1c6dd8509c96afc950e8f0af",
+    "infrastructure": "Resolve the commit containing this receipt; exact ID is in the external handoff"
+  },
+  "qualified_runtime_source_commits": {
+    "mateval": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+    "platform": "0a4d261b2b9d6439a072077bb3b7dd49845fe732",
+    "vision": "44ecabd871bb3b5005bbd551205ca15bd644bd5c"
+  },
+  "infrastructure_source_authority": "MrJ-am/vps-infrastructure, explicitly confirmed by user",
+  "source_to_running_generation_binding": null,
+  "deployment_freeze": true,
+  "production_authorized": false,
+  "production_access_used": false,
+  "production_data_received": false,
+  "filtered_metadata_received": true,
+  "production_credentials_received": false,
+  "private_spectre_key_received": false,
+  "remote_publication_performed": false,
+  "startup": {
+    "helper": "/workspace/shared/mrjam-environment",
+    "commands": [
+      "setup.sh --check",
+      "services.sh up",
+      "check.sh --services"
+    ],
+    "result": "passed at start of this resumption",
+    "environment_recreated": false,
+    "not_an_acl_attestation": true
+  },
+  "received": {
+    "attachment_archive_sha256": "921f18487f1c7804b1a9f497c6fcedfe18ac467e6bd33a382c1cea363e825361",
+    "filtered_report_sha256": "10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898",
+    "original_archive_sha256": "47c0c620a241cb37dd44601f21322badcb18aed0d4e0161a3e891ef795514b9e",
+    "top_manifest_entries_verified": 21,
+    "nested_manifest_entries_verified": 9,
+    "observation_authority": "unverified_observation",
+    "received_published_revision": null
+  },
+  "checks": {
+    "received_test_methods": [
+      22,
+      16,
+      10
+    ],
+    "inventory_internal_tests": 21,
+    "inventory_independent_tests": 62,
+    "independent_count_breakdown": {
+      "legacy_defect_witnesses": 3,
+      "access_and_adoption_contracts": 47,
+      "v2_contracts": 12
+    },
+    "inventory_ssh_checks": 12,
+    "inventory_ssh_real_refusals": 10,
+    "v2_development_tests": 40,
+    "release_and_forgejo_planner_tests": 58,
+    "build_input_boundary_tests": 17,
+    "rust_workspace_tests": 67,
+    "rust_exact_nix_binary_http_contracts": 17,
+    "elm_entrypoints_built": 4,
+    "nixos_module_evaluation_checks": {
+      "rust": 16,
+      "inventory": 20,
+      "forgejo": 15
+    },
+    "nixos_inventory_fixture_all_assertions": true,
+    "flake_check": {
+      "command": "bash operations/tools/nix-local.sh --offline-container nix flake check --offline --no-write-lock-file path:.",
+      "exit_code": 0
+    },
+    "pandoc_render_contract_cases": 6,
+    "platform_postgresql_integration_tests": 6,
+    "migration_harness_guard_tests": 4,
+    "migration_restore_scenarios": 1,
+    "migration_restore_assertion_groups": 8,
+    "cargo_fmt_and_all_features_clippy": "passed",
+    "repeatability": {
+      "comparison": "Nix rebuilt and compared outputs successfully",
+      "elm_exit_code": 0,
+      "method": "nix build --offline --rebuild with the same final derivations in a Docker network-none container",
+      "rust_exit_code": 0,
+      "scope": "same local machine, existing pinned compiler store; not a separate trusted builder"
+    },
+    "counting": "Suites and scenarios are separate; no grand total and no added count for repeated runs"
+  },
+  "runtime_artifacts": {
+    "elm": {
+      "artifact_manifest_sha256": "4ba21c4b0bda422be1a60e08639dd486642829b1539d6e5c8793f9fe45345816",
+      "closure_size_bytes": 3834408,
+      "direct_references": [],
+      "drv_path": "/nix/store/jky92kh24490grp4j2xl07ayn50g4klh-mrjam-mateval-elm-preparation-ccde49f2a9b1.drv",
+      "nar_hash": "sha256-Z4+PwZ4hhUeZslj/CmofS8qZ9aAa6WP9PW2WrtD5eBc=",
+      "nar_size_bytes": 3834408,
+      "store_path": "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+    },
+    "rust": {
+      "artifact_manifest_sha256": "54601afdefbc2d2e65d41308076a0a29f9281ee05971972725e6aa83f04838c2",
+      "closure_size_bytes": 41986016,
+      "direct_references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "drv_path": "/nix/store/1c2pylxpilgazvhwxg0zknw4vc2aqwn3-mrjam-server-preparation-0.1.0-0a4d261b2b9d.drv",
+      "nar_hash": "sha256-Moz1BieIXcCfM0ezvAtwnj2VcwpD83aDO4d5vN6b8Ws=",
+      "nar_size_bytes": 4268072,
+      "store_path": "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d"
+    }
+  },
+  "runtime_export": {
+    "base_system_integrity_after_fixture_repair": "verified",
+    "bytes": 45822112,
+    "collection_recipe": [
+      "nix-store --query --requisites ROOT_RUST ROOT_ELM",
+      "nix-store --verify-path ALL_EXPORTED_STORE_PATHS",
+      "nix path-info --offline --json --json-format 1 --recursive --closure-size ROOT_RUST ROOT_ELM",
+      "nix-store --export ALL_EXPORTED_STORE_PATHS > mrjam-rust-elm-runtime.nix-export",
+      "Python 3.13.17 from pinned nixpkgs: gzip.GzipFile(filename=\"\", mode=\"wb\", compresslevel=9, mtime=0)"
+    ],
+    "compressed": {
+      "bytes": 16104797,
+      "compression_level": 9,
+      "decompression_sha256_verified": true,
+      "file": "mrjam-rust-elm-runtime.nix-export.gz",
+      "gzip_filename": "",
+      "gzip_mtime": 0,
+      "python": "3.13.17 from pinned nixpkgs",
+      "sha256": "3b95b88306073e80765807f8296fd6a6faa551dd128a3274799e6d1196a7abb4",
+      "uncompressed_sha256": "d0facf8abcdc176979aaa5e900f84bdec3ccdfe91756ef6fc9d8c0d6e4f96ff9",
+      "zlib_version": "1.3.2"
+    },
+    "exported_store_paths": [
+      "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1",
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+      "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d"
+    ],
+    "file": "mrjam-rust-elm-runtime.nix-export",
+    "local_directory": "/workspace/shared/mrjam-declarative-nix/build-proof-20261030-final",
+    "local_nix_store_integrity": "verified_all_exported_paths",
+    "production_authorized": false,
+    "roots": [
+      "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d",
+      "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+    ],
+    "sha256": "d0facf8abcdc176979aaa5e900f84bdec3ccdfe91756ef6fc9d8c0d6e4f96ff9"
+  },
+  "inventory_artifact_purpose": "Synthetic UID/GID990 and synthetic public bytes only; must be rebuilt/requalified for the approved production identity",
+  "complete_nixos_generation": null,
+  "independent_review": {
+    "repository": "MrJ-am/mrjam-validation",
+    "commit": "3053cf79de7bd1ab1c6dd8509c96afc950e8f0af",
+    "evidence": "declarative-access/preuve-revue-locale.json",
+    "evidence_sha256": "f5b8312b941fc4278e126de177a669ae16008005bb066290557b287fa561dfc5",
+    "protected_rules_adopted": false,
+    "shared_workspace_is_an_acl": false
+  },
+  "evidence_sha256": {
+    "operations/builds/qualification.json": "3d96b41aa5f91adb16bf8f9792ca69cdef648ff92d65997606db451ea8f082dd",
+    "operations/inventory/qualification-unit.json": "88d440b0c3136c8aa25050eead7bddb96dd1f6d26002f85ca59d189da407b5f4",
+    "operations/inventory/qualification-ssh.json": "c5ecc2f23f98d098407e0d23ad33639063557de7eef4e6047ad59e40b91b8724",
+    "operations/inventory/qualification-inputs.json": "dc41fbf654baecc3367c07fa3f4b04798840e2ced1c9dbb4ecff9b1492b4a2a5",
+    "operations/inventory/qualification-build.json": "0701becd9fc093791a5653a5883103aee9b16e053e1690a25fbd3a252a1bd0a2",
+    "operations/inventory/qualification-container-restoration.json": "9941b7e7066c3e442c340fc638421cc655f0dadfc350b8c4f002dc2a960e605a",
+    "operations/forgejo/qualification.json": "9c2b68cf5eaa0bb9a68f5ca7d0fb20732670bf17240d731424c8a887cda16b07",
+    "operations/release/verification.json": "e5d9bc10e91518adbe60f63d57ebc4ad08975fb4a167839e0e49e3fa855f6402",
+    "operations/release/review-preparation.org": "64ae74be95faf7a12a20b692d60d840647c558e68c38373bfefb41c7b123531a",
+    "operations/probes/adoption-v2/qualification.json": "71bd96fda37e57e8848627a64eb9db234ecd27bc13f15aab7a988adf760cfcd9",
+    "operations/received/provenance-20261030.json": "ef7820af9a80393cb07f8dbc8609b1294eaaa2d411b0e9afa96778436de7fbd3",
+    "operations/qualification/received-replay.json": "e3106fb8e3826919957c9a2412c9703ec186b398b8887ca4ebf98502829c8352",
+    "operations/qualification/rust-module-evaluation.json": "9b2291c74f438bcac5ab209e4f6e0f77d43b31e1e70ad228b26530a02871b3c6",
+    "operations/qualification/inventory-module-evaluation.json": "2fb03537c94233504082fc7938c302ddaa96f2ff2d86ccd05a363a8d0b5da801",
+    "operations/qualification/inventory-path-info.json": "52ea14640e4cfd05877c9bd7ec860b513a675c7212db75c5c7f4438000316199",
+    "operations/qualification/http-nix-artifact.json": "bee08bf8138f8d5468311a9480b840d21846884441bf46cb36115b82b516e891"
+  },
+  "initial_failures_and_corrections": [
+    "Received NixOS-specific tests failed on Cloud host paths, then all48 passed with unchanged source bytes in disposable Nix profile",
+    "Pure Nix test harness forced success-only assertion messages and undefined disabled Nginx fields; laziness fixed without reducing checks",
+    "Flake dynamic check attribute collision corrected before final successful flake check",
+    "Independent reviewers reproduced legacy mutable-file/retention defects, detached descendant timeout, GSS output contract and adoption issues; corrected candidates requalified",
+    "Build input FIFO/ancestor symlinks and output manifest omission/reentry corrected and counter-tested",
+    "Migration Python -O false success corrected with explicit Refused checks and tested under -O",
+    "Local SSH fixture changed three public image base-system files through /etc symlinks; exact image bytes restored, Nix verified, fixture now detaches overlay files first",
+    "Final Rust closure no longer retains source/vendor input tree; disallowedReferences enforced and exact final binary tested"
+  ],
+  "not_executed_or_not_established": [
+    "Production access, new remote observation, package installation, NixOS activation, service change, SQL, deployment or switchover",
+    "Complete authoritative VPS host evaluation/build; source-generation alignment, installed stateVersion and target architecture remain to establish",
+    "Actual UID/GID, dedicated public key, effective production SSH/PAM and adoption/rollback continuity",
+    "Successful V1 payload over actual SSH; agent/X11 handshake; production NSS and kernel isolation",
+    "Full service build identities and compatibility for Forgejo, Kanidm and runner",
+    "Browser qualification of the exact new Elm artifact and fresh Nix builds of the other six frontend entries/categories",
+    "Production-ready Rust CLI: readiness remains503 and required runtime/domain integrations remain incomplete",
+    "Independent protected validation authority/signatures/ACLs and bounded installation executor or Forgejo API applicator",
+    "Actual VPS CI headroom, cgroups, disk quotas and runner isolation",
+    "Full migration/switchover/session compatibility and authorized real backup/restore receipts",
+    "Import of the exported application closure into another store; no production system generation exists"
+  ],
+  "required_approval": "Future explicit authorization bound to exact target, operation, source revisions, protected policy, reviewed manifest and artifacts/generations, migration compatibility, backup/recovery references, window/return reserve, bounded executor and success criteria",
+  "dossier": "operations/dossier-deploiement.org",
+  "closed_build_input_export": {
+    "file": "build-inputs.tar.xz",
+    "local_directory": "/workspace/shared/mrjam-declaratif-20261030",
+    "bytes": 22160076,
+    "sha256": "42506e267376c87c55b637402ddc143fe9a2bfeeb08e77f4fb767c18816cc56f",
+    "materialization_sha256": "bc36f0e32752954f32836e5217b9225ad26a67833470555473997ed6bc275152",
+    "content": "only selected code, public resources and locked dependencies; no credentials, personal data, history or compiled dependency cache",
+    "extraction_requires_integrity_check": true
+  }
+}

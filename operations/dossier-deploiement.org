@@ -1,0 +1,204 @@
+#+title: MRJ.am — dossier déclaratif préparatoire du 30 octobre 2026
+#+language: fr
+
+* Décision actuelle
+
+La migration n'est pas prête à déployer. Le gel demandé par l'utilisateur reste
+actif. Cette branche contient du code, des configurations, des qualifications
+synthétiques et des procédures à revoir. Rien de ce dossier n'autorise une
+activation, une installation sur le VPS ou une migration de données réelles.
+
+L'utilisateur confirme =MrJ-am/vps-infrastructure= comme source de vérité
+attendue du VPS. Sa tête publiée observée au démarrage est
+=b9621e4e9b1c42648f822962622bdc64d297f38a=, arbre
+=7edc720d13b4eed70657b9c137e7a4f8901d72bb=. La branche de travail est
+=declaratif-20261030=. Le contenu sous =reference-nixos/= est historique et
+inactif ; il n'est ni importé ni présenté comme un système activable. Il reste
+à réconcilier la génération effectivement installée et un assemblage complet
+dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
+
+Les modules exportés par le nouveau =flake.nix= sont =rust=, =inventory= et
+=forgejo=. =nixos/vps-preparation.nix= compose ces propositions désactivées.
+Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
+de test sont des fixtures, sans cible de production dans =nixosConfigurations=.
+
+* Provenance et observations reçues
+
+=received/provenance-20261030.json= trace les deux SHA-256 des pièces jointes,
+les 21 entrées du manifeste de remise, les 9 entrées du paquet original et son
+archive exacte. Tous ont été vérifiés avant utilisation. Les octets remis sont
+conservés sous =received/20261030/=, y compris l'installateur impératif comme
+source de revue seulement. Il n'a pas été exécuté dans cette reprise.
+
+Le commit =3ac42ab9b55cb44535c0a397b2ade5809cbd54fa= de la remise est une base
+antérieure. =published_revision=null= reste null. La validation locale part
+de =ae56a11fc270e44e23cd464e4ac4c99f02d4cee6= ; la plateforme part de
+=0a4d261b2b9d6439a072077bb3b7dd49845fe732=. Les sources du paquet original
+ont été rapprochées octet pour octet de =mrjam-validation/prototypes/inventaire-borne=.
+Aucune de ces références n'identifie la révision installée sur le VPS.
+
+Le JSON reçu reste =authority=unverified_observation=. Les versions proviennent
+des exécutables du profil système, pas nécessairement des processus actifs.
+La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune version.
+
+| Fait | Statut | Portée et limite |
+|------+--------+-----------------|
+| 2 processeurs logiques ; RAM 8 328 343 552 octets | Observé, non authentifié | Ni quotas ni marge disponible pour la CI |
+| Racine 105 590 210 560 octets ; disponibles 69 968 510 976 | Observé, non authentifié | Ni quota de job ni réserve garantie |
+| Forgejo, PostgreSQL, Kanidm, Nginx, mrjam-metier, pool PHP Nextcloud actifs | Observé, non authentifié | Ni contrats métier ni version exacte en cours |
+| Nix 2.34.8 ; PostgreSQL 17.11 | Observé sur exécutables | Aucun build de processus déduit |
+| Forgejo, runner, Kanidm unknown/UNAVAILABLE | Inconnu | Ne signifie pas absents |
+| NixOS unknown/INVALID_OUTPUT | Inconnu | Aucun stateVersion déduit |
+| KVM absent ; limite userns non nulle ; commutateur userns inconnu | Observé partiellement | Aucune VM ou isolation effective présumée |
+| vps-infrastructure source de vérité | Exigence confirmée par l'utilisateur | Alignement installé non démontré |
+| Compte impératif et refus SSH réels sur Spectre | Rapporté dans RESULTAT-SPECTRE.org | Revue locale distincte ; aucune observation Cloud directe |
+| Identité/limites/clefs du futur accès | Proposition testée localement | UID/GID et clé publique de production encore manquants |
+
+* Code livré et chaîne déclarative
+
+1. =builds/= exporte une sélection fermée des sources et gitlinks exacts,
+   vérifie Cargo.lock et les archives Cargo, verrouille les sources Elm et
+   conserve les pins de style et d'artefacts publics. Rust 1.99.1, Node 24.19.0
+   et Elm 0.19.1 conservent les exigences des applications ; les versions
+   différentes de nixpkgs ne les remplacent pas silencieusement.
+2. =flake.lock= épingle nixpkgs à
+   =6f06d204d8f2d8761d9da78778745974a3216381= avec son NAR hash.
+   La branche 26.05 a servi à sélectionner ce candidat cohérent avec la
+   référence historique. Ce choix n'établit pas la version installée.
+   Aucun module proposé n'augmente =stateVersion=.
+3. Les dérivations construisent Rust et les quatre entrées Elm Mateval,
+   l'accès d'inventaire et les configurations/assets Forgejo préparatoires.
+   Les autres frontends gardent leurs preuves historiques distinctes ; ils
+   ne sont pas annoncés construits par cette nouvelle recette.
+4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
+   dans le store, identité explicite, verrou de concurrence root, entrée/sortie
+   bornées, nettoyage des descendants et filtre final. Aucun nouveau rapport
+   n'est conservé ; le répertoire ancien n'est ni purgé ni réattribué en masse.
+   Voir =inventory/README.org= pour précontrôle, permissions et adoption.
+5. =forgejo/= conserve les assets Org/LaTeX et propose les réglages SSO,
+   références de secrets et politique du runner. L'activation est refusée par
+   le code. L'amont démarre une migration Forgejo automatiquement : ce chemin
+   n'est pas importé comme adoption neutre. Le runner n'est pas autorisé sur
+   le VPS ; aucune capacité d'exécution isolée n'y est supposée.
+6. =release/= vérifie les octets des artefacts d'un manifeste fermé et génère
+   un plan de livraison/retour. Le diff de dépôts/règles Forgejo est local,
+   idempotent et à périmètre limité ; ses gabarits de workflows sont inactifs.
+   L'applicateur API et le contrôleur de déploiement restent à implémenter et
+   qualifier. Les preuves/approbations ne sont pas authentifiées par ce planneur.
+
+Les paramètres de ressources sont des plafonds proposés, pas une réservation
+mesurée. Les emplacements et références des données/secrets sont décrits dans
+=forgejo/runtime-references.json= et les gabarits release. Les valeurs restent
+hors Git, du store et de Cloud. Les références encore inconnues restent null ;
+on ne crée aucun mot de passe, jeton ou rôle de production pour les remplir.
+
+* Qualification et limites de l'atelier
+
+=qualification/declaratif-20261030.json= est le relevé des contrôles exécutés,
+des artefacts construits et des limites. Les reçus des sous-lots gardent leurs
+empreintes et résultats précis. Les suites ne sont pas additionnées avec leurs
+rejeux ou les scénarios navigateur ; une compilation n'est pas une disponibilité.
+
+Nix 2.34.8 est exécuté dans une image Docker amd64 par digest, avec volume Nix
+local, deux CPU, 4 Gio et 1024 tâches maximum par conteneur. Le conteneur utilise
+root en interne, sans mode privilégié, socket Docker, identité de production ou
+répertoire utilisateur monté. =sandbox=false= est une limite déclarée. Les
+reconstructions hors réseau vérifient la répétabilité locale quand leur reçu le
+confirme ; elles ne prouvent ni ACL indépendante ni isolation du futur runner.
+
+Les 48 méthodes de test reçues sont rejouées sans modification des sources dans
+un profil Nix synthétique. Le premier passage sur l'hôte Cloud échoue sur les
+chemins NixOS absents ; voir =received/README.org=. La revue indépendante a
+reproduit des fenêtres de substitution de fichiers et l'absence de rétention
+bornée dans l'ancien exécuteur, avec des marqueurs synthétiques. Ces témoins ne
+démontrent pas une exploitation distante du VPS.
+
+Le nouveau harnais plateforme =tools/migration-synthetic/= crée son seul schéma
+inventé, exerce les migrations Mateval 001/002, rejoue l'additive, vérifie
+l'ancien contrat SQL et zéro/null, puis utilise réellement pg_dump/pg_restore.
+Il démontre aussi la perte d'une écriture postérieure au snapshot lors d'une
+restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
+
+* Blocages et preuve minimale pour les lever
+
+| Blocage | État | Preuve minimale | Obtention autorisée/proposée |
+|---------+------+----------------+------------------------------|
+| Adoption du compte existant | Inconnu/bloquant | UID/GID, même clé publique, métadonnées et refus SSH effectifs, absence de conflit | Clé publique lue sur Spectre ; nouvelle sonde adoption-v2 après revue/autorisation distinctes ; préflight et essais administrateur sans export de secrets |
+| Assemblage complet du VPS | Inconnu/bloquant | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | Métadonnées bornées ; export sélectif des seules sources de configuration par l'administrateur, si nécessaire, jamais matériel de Spectre ni fichiers de données |
+| Builds en cours Forgejo/Kanidm/runner | Inconnu/bloquant pour changement de service | Versions/builds des services ciblés et compatibilité de migration | Nouveau contrôle fermé approuvé, lié aux unités fixes ; pas de shell/chemin/processus arbitraire |
+| Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
+| Serveur Rust exploitable | Établi incomplet/bloquant | Auth, pool, fichiers statiques, domaines et administration portés ; readiness réelle | Développement et tests Cloud sur données inventées ; CLI actuel readyz=503 |
+| Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
+| Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
+| Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
+| Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |
+| Bascule/retour sans perte | Inconnu/bloquant | Continuité sessions/connexions, arrêt écritures/workers, temps mesurés et décision d'abandon | Répétition synthétique complète puis contrôles bornés approuvés, sans trafic réel envoyé au Cloud |
+
+La V2 prête à examiner est sous =probes/adoption-v2/=. Elle ne recueille que les
+identifiants numériques du compte, métadonnées de chemins fixes et une identité
+partielle de génération. Elle ne couvre pas les autres lignes. Les extensions
+versions/ressources restent des opérations distinctes à spécifier et revoir
+lorsqu'elles seront nécessaires ; aucune interface générale n'est introduite.
+
+* Procédure de livraison et de retour à faire approuver
+
+La procédure détaillée et les formats sont dans =release/README.org=.
+Le planneur s'exécute localement sur manifeste, politique, observation, reçus
+et racine d'artefacts explicitement sélectionnés. Les gabarits null sont refusés.
+Il retourne toujours =production_authorized=false= et n'exécute aucune commande.
+
+1. Clore les blocages ci-dessus ; adopter les règles indépendamment du candidat.
+   Fixer les commits des cinq dépôts, gitlinks, locks, chaque fichier, dérivation,
+   sortie store, NAR hash et fermeture, ancienne et nouvelle générations.
+2. Vérifier par le contrôleur la provenance et la signature des preuves,
+   l'absence de rejeu, les droits et références de secrets, puis relier le plan
+   à la cible et à une approbation explicite. Le contrôleur est encore bloquant.
+3. Pour l'accès d'inventaire seul, réaliser le précontrôle de l'existant avant
+   toute activation. Conserver l'identité et la clé, les fichiers impératifs
+   inchangés et l'accès humain de secours. Arrêter au moindre conflit.
+   Lier aussi le retour à la fermeture des interpréteurs du shell/exécuteur
+   impératif et la protéger de la collecte Nix par le mécanisme autorisé :
+   conserver leurs fichiers seuls ne conserve pas leurs dépendances.
+   Installer uniquement la génération qualifiée, contrôler SSH, puis tester depuis
+   Spectre commande autorisée et refus. Ne pas relancer installer.py.
+4. Pour la migration initiale applicative, réserver au plus trois heures,
+   fixer une échéance d'abandon laissant le temps du retour mesuré, fermer les
+   écritures et arrêter les producteurs/workers, drainer, obtenir une sauvegarde
+   cohérente via le mécanisme autorisé. Un contrôle manquant arrête la procédure.
+5. Importer les fermetures déjà qualifiées, vérifier leurs identités et toutes
+   les préconditions, appliquer seulement la migration approuvée, puis démarrer
+   le service attendu. Aucun build, fetch de dépendance ou nouveau SQL libre
+   n'appartient à cette phase. Aucune bascule sur le bootstrap readyz=503.
+6. Avant routage, exiger readiness et contrats synthétiques isolés, compatibilité
+   des sessions/assets et contrôles des services tiers. Changer exactement le
+   routage approuvé, contrôler les codes fermés attendus et le drainage. Ne pas
+   conserver deux instances si la marge/isolation n'a pas été démontrée.
+7. En cas d'échec avant réouverture des écritures, revenir selon le plan qualifié
+   dans la réserve restante. Après réouverture, revenir à l'ancien binaire
+   seulement s'il lit et écrit le schéma courant en conservant les nouvelles
+   écritures. Sinon maintenir le gel des écritures et exécuter la récupération
+   distincte avec réconciliation ; ne jamais restaurer aveuglément un snapshot.
+8. Conserver les fermetures de retour et la fenêtre de vérification approuvée.
+   Le retour de génération NixOS ne restaure pas les données, ni l'ancien
+   état externe de Forgejo/identité. Les contrôles post-installation doivent
+   confirmer services, identité, refus d'accès, parcours et absence de perte.
+
+La levée du gel devra porter explicitement sur la cible, l'opération (accès
+seul ou migration applicative), les commits, la politique protégée, le manifeste
+et ses empreintes, les artefacts/générations, la migration et compatibilité,
+les précontrôles, la fenêtre et réserve de retour, les références de sauvegarde
+et de secrets, le contrôleur et les critères de réussite. La publication du
+code préparatoire ne constitue aucune de ces approbations.
+
+* Geste simple demandé sur Spectre
+
+La seule information à transmettre maintenant est la clé *publique* dédiée :
+
+#+begin_src sh
+cat -- '/home/jam/Téléchargements/mrjam-inventaire-20261030-egaxjj56/acces-borne/.identite-restreinte/id_ed25519.pub'
+#+end_src
+
+Transmettre la ligne =ssh-ed25519 ...=, ou indiquer que le fichier est introuvable.
+Le fichier sans suffixe =.pub= est la clé privée : il reste sur Spectre.
+La nouvelle observation V2 est un lot séparé à examiner ; ce document ne demande
+pas de l'exécuter immédiatement et ne délègue aucun accès root à Cloud.

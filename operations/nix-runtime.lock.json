@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scope": "Local Cloud evaluation/build tools only; no production change",
+  "nix_version": "2.34.8",
+  "nix_source_archive": {
+    "url": "https://releases.nixos.org/nix/nix-2.34.8/nix-2.34.8-x86_64-linux.tar.xz",
+    "sha256": "2c2e146b80834fe0ca201b51deeb939405b4f18e8d2071bf80b10f8123c50464",
+    "checksum_source": "https://releases.nixos.org/nix/nix-2.34.8/nix-2.34.8-x86_64-linux.tar.xz.sha256"
+  },
+  "container_image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+  "container_platform": "linux/amd64",
+  "nixpkgs_commit": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "nixpkgs_selection": "nixos-26.05 branch observed 2026-10-30, then fixed to this commit; a candidate source, not the installed VPS version",
+  "production_state_version_change": false,
+  "nixpkgs_nar_hash": "sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE=",
+  "runtime_limits": {
+    "cpus": 2,
+    "memory_bytes": 4294967296,
+    "pids": 1024,
+    "nix_sandbox": false,
+    "docker_privileged": false,
+    "root_inside_local_container": true,
+    "network_disabled_for_qualified_rebuild": true,
+    "not_production_runner_isolation": true
+  }
+}

@@ -1,0 +1,160 @@
+#+title: Inventaire borné du VPS — proposition d'amorçage
+#+language: fr
+
+* Statut et périmètre
+Réalisé : =inventory.py=, Python 3.11 ou ultérieur, bibliothèque standard,
+et schéma fermé =inventory.schema.json= (JSON Schema 2020-12).
+La reprise du 30 octobre 2026 ajoute =validate_report.py=, filtre autonome à
+exécuter sur l'hôte administratif avant de transmettre le rapport. Il n'étend
+ni les opérations de la sonde ni son schéma. La sonde et le schéma initiaux
+restent identiques aux empreintes de =../origine-lot-initial.json=.
+Vérification locale : 22 tests entièrement synthétiques, dont les 11 tests
+initiaux inchangés et 11 tests du filtre ; preuve dans =qualification.json=.
+Non réalisé : exécution sur le VPS, installation d'une interface d'exploitation,
+validation indépendante et preuve authentifiée. Ce programme est une proposition
+à examiner dans une révision précise. Son rapport ne fait pas autorité.
+
+Le programme ne prend aucun argument. Il ne lit ni base, ni journaux, ni données
+applicatives, ni environnement hérité. Il ne fait aucun appel réseau et ne change
+ni configuration, ni permissions, ni services. Il n'appelle jamais SSH, SQL, Nix
+activation, un shell ou un outil d'inspection mémoire.
+
+* Informations produites
+- Nombre de processeurs logiques, mémoire physique totale, capacité et espace
+  disponible du système de fichiers racine, en nombres entiers bornés.
+- Présence d'un périphérique caractère =/dev/kvm=, et état de deux réglages
+  numériques du noyau relatifs aux espaces de noms utilisateur.
+- Cœur numérique de version des exécutables système NixOS, Nix, Forgejo,
+  forgejo-runner, PostgreSQL et Kanidm, lorsqu'ils sont accessibles par les
+  chemins fixés. Les suffixes, révisions et options de compilation sont exclus.
+- États de chargement et d'activité pour six unités nommées dans le code :
+  Forgejo, PostgreSQL, Kanidm, Nginx, mrjam-metier, pool PHP Nextcloud.
+
+Les noms d'hôte, IP, identités, chemins personnels, secrets, messages d'erreur et
+horodatages ne figurent jamais dans le schéma. Les noms des unités sont des
+candidats attestés ou plausibles d'après la documentation, pas une découverte de
+la machine. =not-found= n'est pas assimilé à un service installé mais arrêté.
+
+Les binaires doivent provenir du profil système NixOS fixe et résoudre dans
+=/nix/store=. Les chemins sont contrôlés avant exécution : propriétaire root,
+absence de droits d'écriture groupe/autres, sauf la racine sticky du store dont
+l'écriture groupe est habituelle. Les arguments autorisés sont inscrits dans le
+code. =stderr= est dirigé vers =/dev/null= avant collecte ; =stdout= est limité à
+2048 octets puis réduit à des entiers ou énumérations fermées. Chaque sonde a un
+délai maximal de trois secondes ; son groupe de processus est arrêté ensuite.
+
+* Exécution administrative proposée
+La section 3 du mandat interdit l'acquisition temporaire d'un shell root par les
+agents. L'administrateur exécute lui-même cette procédure par son canal existant.
+Ne pas utiliser les anciens workflows =monolithe-reference= ni =connect.sh= :
+ils peuvent exposer une clé SSH administrative et des commandes générales.
+
+1. Examiner le lot décrit dans =remise.json=, son diff depuis la révision de
+   base et les empreintes de =SHA256SUMS=. La révision de base ne désigne pas
+   les ajouts non encore publiés : ce sont les octets remis et leurs empreintes
+   qui définissent ce lot. Si le lot est publié ensuite, consigner également
+   son commit exact. Ne pas employer un pointeur mobile comme =main=.
+   Dans le répertoire complet reçu, vérifier =sha256sum -c SHA256SUMS= ; aucune
+   empreinte reçue par le même canal ne constitue à elle seule une signature.
+2. Transférer uniquement =inventory.py=, =validate_report.py= et
+   =inventory.schema.json= vérifiés dans un même répertoire par le canal administratif déjà
+   utilisé. Aucun jeton, clé SSH ou accès shell de production n'est donné aux
+   agents. N'effectuer aucune installation de paquet pour cette étape : utiliser
+   un Python 3.11+ déjà disponible et approuvé sur le VPS.
+3. Depuis ce canal, avec un compte local existant non privilégié disposant des
+   droits ordinaires de consultation des propriétés systemd, exécuter :
+
+   #+begin_src sh
+   set -o pipefail
+   python3 -I -S ./inventory.py 2>/dev/null |
+     python3 -I -S ./validate_report.py 2>/dev/null > inventaire-borne-filtre.json
+   #+end_src
+
+   Exécuter depuis ce répertoire vérifié avec Bash ; le chemin est choisi
+   localement par l'administrateur. =-I -S= ignore les
+   variables Python et les modules de démarrage du site. Si Python n'est pas
+   installé, signaler ce seul prérequis ; ne pas donner davantage de droits aux
+   agents. Ne pas lancer sous sudo pour compenser un état =unknown=.
+4. Transmettre uniquement =inventaire-borne-filtre.json= après réussite de la
+   commande. Un rapport valide peut contenir des contrôles =unknown= ; le filtre
+   ne les transforme pas en succès et garde =authority=unverified_observation=.
+   Aucun fichier brut intermédiaire n'est nécessaire. Le code de retour reste
+   non nul pour une erreur de la sonde ou un rejet du filtre. Le filtre renvoie
+   alors seulement un objet fermé ou le code d'erreur fermé de la sonde.
+   En cas d'erreur de l'interpréteur
+   avant le démarrage du script, transmettre le fait « exécution impossible »,
+   jamais une sortie brute contenant chemins ou informations personnelles.
+
+Cette procédure ne crée aucune identité persistante ni délégation. Elle ne
+nécessite donc pas de clé d'amorçage à conserver/révoquer. Une future interface
+automatique nécessitera ses propres ACL, authenticité des rapports et revue
+indépendante ; ajouter ce script à une commande SSH générique ne suffit pas.
+
+* Filtre de retour ajouté le 30 octobre 2026
+
+=validate_report.py= ne prend aucun argument et lit seulement son entrée
+standard et le schéma adjacent dont l'empreinte est inscrite dans son code.
+Il n'importe pas =inventory.py=, ne lance aucun processus et n'ouvre aucun
+réseau. Son entrée est plafonnée à 16 384 octets avant analyse. Les sorties
+valides suivent le schéma exact ; les propriétés inconnues, doublons JSON,
+types ambigus, nombres flottants/non finis, valeurs hors bornes, fragments
+supplémentaires et substitutions du schéma sont refusés sans écho.
+L'interpréteur de schéma implémente seulement le sous-ensemble fermé du schéma
+épinglé ; il ne résout aucune référence externe. Une évolution de ce schéma
+requiert une nouvelle revue et une nouvelle empreinte du filtre.
+
+Un rejet du filtre renvoie uniquement
+={"status":"rejected","code":"INVALID_REPORT"}= ; un argument interdit
+renvoie =UNSUPPORTED_ARGUMENTS= dans cette même enveloppe. Cette enveloppe
+de rejet est distincte du schéma des observations. Aucun diagnostic de parseur,
+chemin, octet reçu ou erreur système n'est écrit. La normalisation du JSON
+ne constitue ni une authentification du producteur ni une preuve d'isolation.
+Les entiers autorisés restent des observations déclarées par la sonde.
+
+* Limites importantes pour la décision de faisabilité
+Les versions concernent les exécutables présents dans le profil système, pas
+nécessairement les processus en cours. Une version =unknown= ne signifie pas que
+le logiciel manque ; NixOS peut fournir un binaire uniquement dans la fermeture
+d'un service. Le cœur numérique ne qualifie pas un build exact ni les correctifs
+de sécurité appliqués. Toute qualification devra identifier la dérivation et la
+révision approuvées par un mécanisme distinct et borné.
+
+La mémoire totale et l'espace du système de fichiers racine ne donnent pas les
+quotas cgroup, l'espace de volumes distincts, les pointes de charge, les budgets
+de la CI ni la marge pour deux instances. La présence de KVM et les réglages du
+noyau ne démontrent pas une capacité effective de virtualisation ou d'isolation.
+La sonde ne crée ni VM ni espace de noms et ne touche aucun socket de production.
+
+Les ports, rôles PostgreSQL, certificats, sauvegardes, destinations, domaines,
+permissions de forge et secrets restent à inventorier par des opérations bornées
+supplémentaires. Aucun résultat de ce script n'autorise une promotion, une
+migration de données ou une bascule. Les tests prouvent des propriétés limitées
+du filtre, pas l'absence absolue de fuite dans la plateforme.
+
+| Dépendance | Ce que le lot peut établir | Ce qui reste hors de cette sonde |
+|------------+----------------------------+----------------------------------|
+| Forgejo et runner | Cœur de version du binaire si accessible ; état de l'unité Forgejo fixée | Build exact, runner réellement lancé, identités, ACL, protocoles/OIDC, proposition et validation authentifiée |
+| NixOS et IdP | Cœurs de version du profil système ; état Kanidm de l'unité fixée | Révision système effective et configuration SSO/clients/sessions |
+| Ressources | CPU logique, RAM totale et espace racine observés | Quotas cgroup, volumes séparés, charge, marge CI et deux instances |
+| Isolation | Présence KVM et interrupteurs du noyau | Capacité effective de virtualisation, réseau, mounts et limites de la sandbox |
+| Documentation/objets | Aucun contenu lu | Rendu Org/LaTeX, liens privés, objets non Git et direction unique des branches acceptées |
+
+L'action personnelle minimale encore nécessaire est la seule exécution de ce
+lot par le canal administratif existant et le retour de son JSON filtré.
+Ce retour débloquera un premier inventaire de faisabilité ; il ne suffira pas
+aux dépendances de la dernière colonne et ne lèvera pas le gel des déploiements.
+Les qualifications locales et le développement synthétique continuent pendant
+son attente, sans acquisition d'un accès administratif par les agents.
+
+* Vérification locale reproductible
+Depuis =prototypes/inventaire-borne/= :
+
+#+begin_src sh
+python3 -m unittest -v test_inventory.py test_validate_report.py
+#+end_src
+
+Les tests utilisent des marqueurs fabriqués, un interpréteur local et des doubles
+de sondes. Ils vérifient notamment le rejet d'arguments génériques, de sorties
+systemd inattendues, les limites de sortie et de durée, l'absence de transmission
+de stderr et de l'environnement, et le refus des chemins exécutables non admis.
+Ils n'interrogent aucun service réel ni machine distante.

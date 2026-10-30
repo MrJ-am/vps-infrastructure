@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "candidate": {
+    "forgejo": "17.0.1",
+    "forgejo_runner": "13.2.0",
+    "pandoc": "3.7.0.2"
+  },
+  "reference_only": {
+    "forgejo": "16.0.3",
+    "pandoc": "3.7.0.2",
+    "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb"
+  },
+  "observed_running": {
+    "forgejo": null,
+    "forgejo_runner": null,
+    "pandoc": null
+  },
+  "assets": {
+    "mathjax": {
+      "version": "4.1.3",
+      "url": "https://registry.npmjs.org/mathjax/-/mathjax-4.1.3.tgz",
+      "hash": "sha256-txCfUW89hC3mK5XWU+NfoJdtwiNwaip3RA5/dyPwxU0="
+    },
+    "font": {
+      "version": "4.1.3",
+      "url": "https://registry.npmjs.org/@mathjax/mathjax-newcm-font/-/mathjax-newcm-font-4.1.3.tgz",
+      "hash": "sha256-h9e4acaiphadmlOsxOq2yEapy+EXUnOCJkYbtQcMi4g="
+    }
+  },
+  "production_upgrade_authorized": false
+}

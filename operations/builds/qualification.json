@@ -1,0 +1,438 @@
+{
+  "application_source_commits": {
+    "mateval": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+    "platform": "0a4d261b2b9d6439a072077bb3b7dd49845fe732",
+    "vision": "44ecabd871bb3b5005bbd551205ca15bd644bd5c"
+  },
+  "artifact_availability": "Local Cloud Nix store and local export only; no remote cache publication or production import",
+  "artifacts": {
+    "elm": {
+      "artifact_manifest_sha256": "4ba21c4b0bda422be1a60e08639dd486642829b1539d6e5c8793f9fe45345816",
+      "closure_size_bytes": 3834408,
+      "direct_references": [],
+      "drv_path": "/nix/store/jky92kh24490grp4j2xl07ayn50g4klh-mrjam-mateval-elm-preparation-ccde49f2a9b1.drv",
+      "manifest": {
+        "artifact": "mateval-elm",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "bc36f0e32752954f32836e5217b9225ad26a67833470555473997ed6bc275152",
+        "payload_sha256": {
+          "share/mrjam/mateval/admin/admin.js": "47682a5dd047411a7014fd4c3e9f504c7144c085674c9c2f07e86c0d254a9314",
+          "share/mrjam/mateval/admin/administration.js": "a3436a98873269daa9e1dd5f891a61b7d11970779789f0926fb1f9db16cd29f7",
+          "share/mrjam/mateval/admin/assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
+          "share/mrjam/mateval/admin/assets/mrjam/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
+          "share/mrjam/mateval/admin/assets/mrjam/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
+          "share/mrjam/mateval/admin/assets/mrjam/animations.js": "6e34281068e4e414d10a7ed5ef612fb6f7102dcee53bd7e2387b03c27e90460f",
+          "share/mrjam/mateval/admin/assets/mrjam/axes.js": "9fee9781c6fc784b29dd5540e6bc05465cadee2b8415938f1c1cea50696fffab",
+          "share/mrjam/mateval/admin/assets/mrjam/dialogues.js": "f8b3c6ee2b0f9a81fc5822ee7440e3f0289e4c1f989d5a94a867ac666ba27034",
+          "share/mrjam/mateval/admin/assets/mrjam/espace.js": "39c0d4f6bcbdc54f8adaf9d6c172033df3fad73450fb160347c0f83703be3984",
+          "share/mrjam/mateval/admin/assets/mrjam/fenetres.js": "b7ccc64445ef1749cf6d05ea8dc541837e8d840e6cc5f8e4f7fd8b6a46636400",
+          "share/mrjam/mateval/admin/assets/mrjam/identite.json": "98805217ea35c28b493c3d1927caba3c7b5747b39a9e4a361275f4d029898c86",
+          "share/mrjam/mateval/admin/assets/mrjam/mathematiques.js": "4ae70b915357d25bc515f84eb7bda6af4413e16f29fe53813cd482e7f09d6e80",
+          "share/mrjam/mateval/admin/assets/mrjam/notes.js": "5f7d615c1b56e502ed068528a93006bec4518f32a28fa572f64df316ac38b598",
+          "share/mrjam/mateval/admin/assets/mrjam/polices.json": "ebfc8defa94c489550962867bb7bb32425669ca74eadc587fe47425609fbd384",
+          "share/mrjam/mateval/admin/assets/mrjam/signature.css": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830",
+          "share/mrjam/mateval/admin/index.html": "ce673caad2cda5acb0a16762427da15d4c3488a95bfc8ff9c8893c0cc2f958bf",
+          "share/mrjam/mateval/assets/mrjam/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
+          "share/mrjam/mateval/assets/mrjam/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
+          "share/mrjam/mateval/assets/mrjam/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
+          "share/mrjam/mateval/assets/mrjam/animations.js": "6e34281068e4e414d10a7ed5ef612fb6f7102dcee53bd7e2387b03c27e90460f",
+          "share/mrjam/mateval/assets/mrjam/axes.js": "9fee9781c6fc784b29dd5540e6bc05465cadee2b8415938f1c1cea50696fffab",
+          "share/mrjam/mateval/assets/mrjam/dialogues.js": "f8b3c6ee2b0f9a81fc5822ee7440e3f0289e4c1f989d5a94a867ac666ba27034",
+          "share/mrjam/mateval/assets/mrjam/espace.js": "39c0d4f6bcbdc54f8adaf9d6c172033df3fad73450fb160347c0f83703be3984",
+          "share/mrjam/mateval/assets/mrjam/fenetres.js": "b7ccc64445ef1749cf6d05ea8dc541837e8d840e6cc5f8e4f7fd8b6a46636400",
+          "share/mrjam/mateval/assets/mrjam/identite.json": "98805217ea35c28b493c3d1927caba3c7b5747b39a9e4a361275f4d029898c86",
+          "share/mrjam/mateval/assets/mrjam/mathematiques.js": "4ae70b915357d25bc515f84eb7bda6af4413e16f29fe53813cd482e7f09d6e80",
+          "share/mrjam/mateval/assets/mrjam/notes.js": "5f7d615c1b56e502ed068528a93006bec4518f32a28fa572f64df316ac38b598",
+          "share/mrjam/mateval/assets/mrjam/polices.json": "ebfc8defa94c489550962867bb7bb32425669ca74eadc587fe47425609fbd384",
+          "share/mrjam/mateval/assets/mrjam/signature.css": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830",
+          "share/mrjam/mateval/collection.js": "74a6e0c9ba969691f21509efcaba2517fefe7875f17491da9621364d7bdd76ce",
+          "share/mrjam/mateval/data/bank.json": "247e5a96f387fe87a183c07274139cd32f957b8ca54c9ca07257b6ee208bf480",
+          "share/mrjam/mateval/demo-card.js": "e7d70daa273dc17d309323213cbdbba06f178bf9bd2e09e69818daba191edf15",
+          "share/mrjam/mateval/enquete.html": "189de0512e5eefdfdfc02aab88bf6336e2a53ad927002f73e9a8f8dd01b9a97c",
+          "share/mrjam/mateval/enquete.js": "ab0f16daaf42cef5d18b1b43fd95e17aea085639769c2dfe5c1797be714d02f5",
+          "share/mrjam/mateval/favicon.svg": "d5eb16bd3043d7eab7befb99835056c539bc4fefd94db29f9751d57623f0d086",
+          "share/mrjam/mateval/index.html": "189de0512e5eefdfdfc02aab88bf6336e2a53ad927002f73e9a8f8dd01b9a97c",
+          "share/mrjam/mateval/interface.json": "e54088466b8f41a1fa608f0f2b4ff9093825f7735460f037656b9b4048d4d35c",
+          "share/mrjam/mateval/main.js": "f264d3a5346a3eb4416813af41fe190ffd018da16177c0547ed6f3937fe415f9",
+          "share/mrjam/mateval/prototype.html": "845a146178d87c66b6990eed1438f51b267a1f7fa0c7f39ffb4a156adde9f548",
+          "share/mrjam/mateval/prototype.js": "f6773a6d52dd6e1206fa042ab6390c8880f927c1bca44b63a08c7816d91a5882",
+          "share/mrjam/mateval/session.js": "44fc617998f1806d09c3b14ffbe2f27c72cf996fc9937ac91753ec8be7ad95a6",
+          "share/mrjam/mateval/survey.js": "3157fc35dbd87cd2ce47cdfb8c331f52e10d58bdeb4536cfac33d3031bf003b3",
+          "share/mrjam/mateval/test.html": "6984f10c114bcf57858a23178bd588e6af73e1ba1378e0b0f85de052e8071406",
+          "share/mrjam/mateval/vendor/drag-drop-touch/drag-drop-touch.esm.min.js": "119fba63ae4cb989a6cff4dd291d2937a93fbbcdaf2714f9ec02ff85c08f001c",
+          "share/mrjam/mateval/vendor/katex/auto-render.min.js": "7b57d427ac6270677daf8d8380ded2cc73336f9149a167b8e1fe0d6ef66604ae",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_AMS-Regular.ttf": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_AMS-Regular.woff": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_AMS-Regular.woff2": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Bold.ttf": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Regular.ttf": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Bold.ttf": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Regular.ttf": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Bold.ttf": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Bold.woff": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Bold.woff2": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-BoldItalic.ttf": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Italic.ttf": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Italic.woff": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Italic.woff2": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Regular.ttf": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Regular.woff": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Main-Regular.woff2": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-BoldItalic.ttf": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-Italic.ttf": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-Italic.woff": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Math-Italic.woff2": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Bold.ttf": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Italic.ttf": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Regular.ttf": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Script-Regular.ttf": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Script-Regular.woff": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Script-Regular.woff2": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size1-Regular.ttf": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size1-Regular.woff": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size1-Regular.woff2": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size2-Regular.ttf": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size2-Regular.woff": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size2-Regular.woff2": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size3-Regular.ttf": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size3-Regular.woff": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size3-Regular.woff2": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size4-Regular.ttf": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size4-Regular.woff": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Size4-Regular.woff2": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Typewriter-Regular.ttf": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7",
+          "share/mrjam/mateval/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+          "share/mrjam/mateval/vendor/katex/katex.min.css": "717bc9ae7853b61f0f76455dddf0ecd4f527a783f42de2ac24684899c1c46258",
+          "share/mrjam/mateval/vendor/katex/katex.min.js": "e6bfe5deebd4c7ccd272055bab63bd3ab2c73b907b6e6a22d352740a81381fd4"
+        },
+        "runtime_qualification": "not_established_by_this_build",
+        "schema_version": 1,
+        "source_commits": {
+          "mateval": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+          "platform": "0a4d261b2b9d6439a072077bb3b7dd49845fe732",
+          "vision": "44ecabd871bb3b5005bbd551205ca15bd644bd5c"
+        },
+        "style_revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+        "toolchains_lock_sha256": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae"
+      },
+      "nar_hash": "sha256-Z4+PwZ4hhUeZslj/CmofS8qZ9aAa6WP9PW2WrtD5eBc=",
+      "nar_size_bytes": 3834408,
+      "store_path": "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+    },
+    "rust": {
+      "artifact_manifest_sha256": "54601afdefbc2d2e65d41308076a0a29f9281ee05971972725e6aa83f04838c2",
+      "closure_size_bytes": 41986016,
+      "direct_references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "drv_path": "/nix/store/1c2pylxpilgazvhwxg0zknw4vc2aqwn3-mrjam-server-preparation-0.1.0-0a4d261b2b9d.drv",
+      "manifest": {
+        "artifact": "rust-server",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "bc36f0e32752954f32836e5217b9225ad26a67833470555473997ed6bc275152",
+        "payload_sha256": {
+          "bin/mrjam-server": "07234ab69dc16ba6235d87f2b8ea7a046dad50ff167de074cd40e1ec809d1329"
+        },
+        "runtime_qualification": "not_established_by_this_build",
+        "schema_version": 1,
+        "source_commits": {
+          "mateval": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+          "platform": "0a4d261b2b9d6439a072077bb3b7dd49845fe732",
+          "vision": "44ecabd871bb3b5005bbd551205ca15bd644bd5c"
+        },
+        "style_revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+        "toolchains_lock_sha256": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae"
+      },
+      "nar_hash": "sha256-Moz1BieIXcCfM0ezvAtwnj2VcwpD83aDO4d5vN6b8Ws=",
+      "nar_size_bytes": 4268072,
+      "store_path": "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d"
+    }
+  },
+  "authority": "unsigned-local-evidence-not-protected-adoption",
+  "candidate_files_sha256": {
+    "README.org": "276937a8e6c6b988041f5e98d9b1600cdd35c6ede5573926702b75ba2392f750",
+    "artifact_manifest.py": "92657c9e82df0e7a1a15af76ccfc95be2a90f9f8a99e07ca2ab6843ef60ae936",
+    "default.nix": "cbbe356defca769ab0b7ac2d1232d3372c045921d136d8fe4c8e39bebcdeb879",
+    "elm-dependencies.lock.json": "22157531d0f5e3759bcfc87289e94e0f0941c12007f859eaeae275416af13421",
+    "elm-registry.dat": "076c0320cd01bdb2920ca5dffc22312d9a220fabab53967023d4b5ac389f2e75",
+    "prepare.py": "6b428742a8ddadab1f69ce3daf1e5ce8dcaa8a06019662e8e0d2735829b0141a",
+    "sources.lock.json": "f8cc5fbce40ecf2ff50e27c3dae848594143a41714ac3a9e4fa730606a4bbb87",
+    "test_build_inputs.py": "e5591bc2217bdb79e891268d88c490c8f86081f72c323ecca0929db6ad1acb45",
+    "toolchains.lock.json": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae",
+    "toolchains.nix": "d3f8c20761216ac22b426d41d10e817a2583ab8ebf866cdb63ac7c2a92de0fb4",
+    "verify_inputs.py": "c1634b4753f17f1f6dc128208921e059d967fcb0079853259951ee3d3b233445"
+  },
+  "closure_fix": {
+    "change": "Remap vendored Rust source locations and reject input tree runtime references with disallowedReferences",
+    "final_rust_closure_bytes": 41986016,
+    "input_tree_runtime_reference_present": false,
+    "prior_rust_closure_bytes": 253457776
+  },
+  "date_utc": "2026-10-30",
+  "deployment_authorized": false,
+  "environment": {
+    "container_image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+    "cpu_limit": 2,
+    "docker_network": "none for final builds, comparisons and export",
+    "docker_socket_mounted": false,
+    "interpretation": "Does not prove VPS or runner isolation, quotas or headroom",
+    "memory_limit_bytes": 4294967296,
+    "nix": "2.34.8",
+    "nix_sandbox": false,
+    "nixpkgs": {
+      "lastModified": 1793294725,
+      "narHash": "sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE=",
+      "owner": "NixOS",
+      "repo": "nixpkgs",
+      "rev": "6f06d204d8f2d8761d9da78778745974a3216381",
+      "type": "github"
+    },
+    "pids_limit": 1024,
+    "privileged_container": false,
+    "system": "x86_64-linux",
+    "wrapper": "operations/tools/nix-local.sh",
+    "wrapper_sha256": "f8b384d02d087fd49394c26d62a079734e74b4acc31a106903f96ab39f2ee959"
+  },
+  "export": {
+    "base_system_integrity_after_fixture_repair": "verified",
+    "bytes": 45822112,
+    "collection_recipe": [
+      "nix-store --query --requisites ROOT_RUST ROOT_ELM",
+      "nix-store --verify-path ALL_EXPORTED_STORE_PATHS",
+      "nix path-info --offline --json --json-format 1 --recursive --closure-size ROOT_RUST ROOT_ELM",
+      "nix-store --export ALL_EXPORTED_STORE_PATHS > mrjam-rust-elm-runtime.nix-export",
+      "Python 3.13.17 from pinned nixpkgs: gzip.GzipFile(filename=\"\", mode=\"wb\", compresslevel=9, mtime=0)"
+    ],
+    "compressed": {
+      "bytes": 16104797,
+      "compression_level": 9,
+      "decompression_sha256_verified": true,
+      "file": "mrjam-rust-elm-runtime.nix-export.gz",
+      "gzip_filename": "",
+      "gzip_mtime": 0,
+      "python": "3.13.17 from pinned nixpkgs",
+      "sha256": "3b95b88306073e80765807f8296fd6a6faa551dd128a3274799e6d1196a7abb4",
+      "uncompressed_sha256": "d0facf8abcdc176979aaa5e900f84bdec3ccdfe91756ef6fc9d8c0d6e4f96ff9",
+      "zlib_version": "1.3.2"
+    },
+    "exported_store_paths": [
+      "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1",
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+      "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d"
+    ],
+    "file": "mrjam-rust-elm-runtime.nix-export",
+    "local_directory": "/workspace/shared/mrjam-declarative-nix/build-proof-20261030-final",
+    "local_nix_store_integrity": "verified_all_exported_paths",
+    "production_authorized": false,
+    "roots": [
+      "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d",
+      "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+    ],
+    "sha256": "d0facf8abcdc176979aaa5e900f84bdec3ccdfe91756ef6fc9d8c0d6e4f96ff9"
+  },
+  "fixture_incident": {
+    "application_source_or_artifact_mutation_identified": false,
+    "proof_not_an_isolation_attestation": true,
+    "resolution": "Restored to canonical image bytes; nix-store --verify-path base-system passed before final build comparison and during final export collection",
+    "scope": "Unrelated local SSH fixture had appended to three public Nix image base-system account files in the shared local store"
+  },
+  "input_materialization": {
+    "cargo_registry_packages": 211,
+    "elm_packages": 17,
+    "network_required_inside_build": false,
+    "repeat_materialization_identical": true,
+    "sha256": "bc36f0e32752954f32836e5217b9225ad26a67833470555473997ed6bc275152",
+    "source_files": 381,
+    "total_files": 10060,
+    "verified_with_final_fd_based_reader": true
+  },
+  "limits": [
+    "The CLI still has no production PostgreSQL pool or static Elm service and readiness stays 503",
+    "Elm source content lock and allowlisted source selection are proposed inputs requiring protected review/adoption",
+    "Materialization/output destinations require exclusive ownership and no concurrent writers; Nix verification uses immutable store inputs",
+    "tar.getmembers scans before the member-count check; no general CPU/memory bound on an arbitrary hostile archive is claimed",
+    "No backup or real data were read; Nix generation rollback does not establish data migration reversibility"
+  ],
+  "nixos_generation": null,
+  "not_executed_in_this_lot": [
+    "PostgreSQL integration feature suites; separate synthetic migration qualification is required",
+    "Browser end-to-end qualification of this exact Elm output",
+    "Fresh Nix builds of Log, Audition, Logique, Vision interfaces, Style examples or Style-logo; historical seven-frontend proof is not renewed here",
+    "Fresh full canonical elm-review and protected rules adoption",
+    "Independent trusted-machine rebuild, protected CI attestation or cache signing",
+    "Import of the exported closure into a separate Nix store",
+    "A complete VPS NixOS generation or any production operation"
+  ],
+  "production_access": false,
+  "production_ready": false,
+  "repeatability": {
+    "comparison": "Nix rebuilt and compared outputs successfully",
+    "elm_exit_code": 0,
+    "method": "nix build --offline --rebuild with the same final derivations in a Docker network-none container",
+    "rust_exit_code": 0,
+    "scope": "same local machine, existing pinned compiler store; not a separate trusted builder"
+  },
+  "review": {
+    "final_nix_remap_diff": "reviewed after closure cleanup",
+    "findings_BUILD_01_and_BUILD_02": "corrected and original counterexamples refused",
+    "protected_adoption": false,
+    "report": "operations/release/review-preparation.org",
+    "reviewer": "separate chaine_declarative agent"
+  },
+  "runtime_closure": {
+    "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1": {
+      "narHash": "sha256-Z4+PwZ4hhUeZslj/CmofS8qZ9aAa6WP9PW2WrtD5eBc=",
+      "narSize": 3834408,
+      "references": []
+    },
+    "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+      "narHash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+      "narSize": 197672,
+      "references": []
+    },
+    "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+      "narHash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+      "narSize": 35073152,
+      "references": [
+        "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+      ]
+    },
+    "/nix/store/fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr-mrjam-server-preparation-0.1.0-0a4d261b2b9d": {
+      "narHash": "sha256-Moz1BieIXcCfM0ezvAtwnj2VcwpD83aDO4d5vN6b8Ws=",
+      "narSize": 4268072,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+      "narHash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+      "narSize": 2078944,
+      "references": [
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+      ]
+    },
+    "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+      "narHash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+      "narSize": 368176,
+      "references": [
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": "Local declarative build preparation using allowlisted public code and synthetic tests",
+  "tests": {
+    "elm": {
+      "build_log_sha256": "eab04437f8bfe8fe76864958bb927ae8797f5f92c16f76dfff144ddb28e0bfd6",
+      "command_sequence": [
+        "node scripts/check-artifacts.mjs",
+        "node scripts/build-elm.cjs",
+        "node scripts/version-assets.cjs"
+      ],
+      "compiler_flags": [
+        "--optimize"
+      ],
+      "entrypoints": [
+        "Main",
+        "Survey",
+        "Administration",
+        "DemoCard"
+      ],
+      "output_payload_files": 107,
+      "passed": 4,
+      "public_bank_style_and_font_fingerprints": "verified by unchanged upstream scripts"
+    },
+    "exact_rust_artifact_http": {
+      "binary_sha256": "07234ab69dc16ba6235d87f2b8ea7a046dad50ff167de074cd40e1ec809d1329",
+      "executed_by": "root agent",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 17,
+      "readiness": "503 NOT_READY as expected",
+      "receipt_sha256": "bee08bf8138f8d5468311a9480b840d21846884441bf46cb36115b82b516e891",
+      "reference": "operations/qualification/http-nix-artifact.json"
+    },
+    "input_boundary": {
+      "command": "python3 -m unittest discover -s operations/builds -p test_*.py -v",
+      "coverage": [
+        "archive integrity and traversal/link rejection",
+        "source byte and Git revision mismatch",
+        "FIFO refusal without waiting",
+        "ancestor symlinks for sources and Cargo cache",
+        "64 MiB read bound",
+        "artifact special files and manifest re-entry"
+      ],
+      "failed": 0,
+      "passed": 17
+    },
+    "rust": {
+      "breakdown": {
+        "audition_contracts": 21,
+        "graceful_shutdown": 1,
+        "http_admission": 3,
+        "mateval_domain": 20,
+        "server_unit": 9,
+        "vision_contracts": 13
+      },
+      "build_command": "cargo build --release --frozen --offline -p mrjam-server",
+      "build_log_sha256": "f95c88ac921c56c165add4eadd6f3944b23972068663b88c93fe130e6c2b691c",
+      "failed": 0,
+      "ignored": 0,
+      "passed": 67,
+      "postgres_features_enabled": false,
+      "test_command": "cargo test --workspace --frozen --offline"
+    }
+  },
+  "tools": {
+    "deployment_authorized": false,
+    "elm": {
+      "dependency_content_lock": "elm-dependencies.lock.json",
+      "provider": "elmPackages.elm from the root flake.lock nixpkgs input",
+      "version": "0.19.1"
+    },
+    "node": {
+      "manifest_sha256": "be0629ee2bcd8e40bb856abdd3407f0762101b76bd60a36b8867f637733631c0",
+      "manifest_url": "https://nodejs.org/dist/v24.19.0/SHASUMS256.txt",
+      "provenance": "Version preserved from existing environment lock; archive checksum read from official HTTPS SHASUMS256 on 2026-10-30, no signature verification claimed",
+      "sha256": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+      "url": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz",
+      "version": "24.19.0"
+    },
+    "purpose": "Build tools for the existing application pins, not observed VPS versions",
+    "rust": {
+      "manifest_sha256": "fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463",
+      "manifest_url": "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml",
+      "provenance": "Existing environment/toolchains.lock.json, matching rust-toolchain.toml and workspace rust-version",
+      "sha256": "231fcae47ee950621374725b5fc3b5441d2fbda2955ac45dd7dc816d8876cfe7",
+      "url": "https://static.rust-lang.org/dist/2026-10-15/rust-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+      "version": "1.99.1"
+    },
+    "schema_version": 1,
+    "target": "x86_64-linux"
+  }
+}

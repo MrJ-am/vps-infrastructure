@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-unqualified-for-vps",
+  "execution_enabled": false,
+  "observed_host": {
+    "logical_cpu_count": 2,
+    "physical_memory_bytes": 8328343552,
+    "root_available_bytes": 69968510976,
+    "authority": "unverified_observation",
+    "kvm_device_present": false
+  },
+  "proposed_local_test_limits": {
+    "maximum_concurrent_jobs": 1,
+    "cpu_quota_percent": 100,
+    "memory_max_bytes": 2147483648,
+    "tasks_max": 256,
+    "workspace_max_bytes": 4294967296,
+    "wall_time_max_seconds": 1800
+  },
+  "capabilities": {
+    "production_network": false,
+    "production_mounts": [],
+    "host_docker_socket": false,
+    "privileged_mode": false,
+    "signing_credentials": false,
+    "deployment_credentials": false
+  },
+  "adoption_requires": [
+    "actual cgroup and namespace enforcement measured",
+    "disk quota enforced, not only declared",
+    "synthetic marker escape tests refused",
+    "measured resource headroom and impact on production workloads",
+    "approved runner binary and executor version",
+    "independent controller and rules authority"
+  ],
+  "limitations": [
+    "These proposed limits are not a production reservation or capacity proof",
+    "No additional VM capacity is assumed",
+    "Shared-kernel isolation is not an independent machine boundary"
+  ]
+}

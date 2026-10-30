@@ -1,0 +1,28 @@
+# INACTIVE TEMPLATE. This file is not under any forge workflow directory.
+# Render only after independent policy adoption, observed Forgejo capability
+# qualification, isolated runner qualification and explicit freeze lifting.
+# This belongs to the protected validation authority, never to a candidate PR.
+# The three @...@ values are deliberately not executable defaults.
+name: mrjam-independent-validation
+on:
+  workflow_dispatch:
+    inputs:
+      proposal_digest:
+        required: true
+        type: string
+jobs:
+  validate:
+    runs-on: ["@QUALIFIED_EPHEMERAL_RUNNER_LABEL@"]
+    timeout-minutes: 30
+    steps:
+      - name: Delegate to independently pinned controller
+        env:
+          MRJAM_PROPOSAL_DIGEST: ${{ inputs.proposal_digest }}
+        run: |
+          exec @APPROVED_CONTROLLER_STORE_PATH@/bin/mrjam-validation-controller \
+            --policy @APPROVED_POLICY_STORE_PATH@
+# The future controller must read the digest as data, validate its closed format,
+# resolve exact source/rules outside the candidate, and isolate all candidate
+# build/tests. This template is not an implementation of that controller.
+# No signer, deployment key, registration token or production credential belongs
+# in this job. A candidate-generated status is never authoritative evidence.

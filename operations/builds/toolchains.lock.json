@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "target": "x86_64-linux",
+  "purpose": "Build tools for the existing application pins, not observed VPS versions",
+  "rust": {
+    "version": "1.99.1",
+    "url": "https://static.rust-lang.org/dist/2026-10-15/rust-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+    "sha256": "231fcae47ee950621374725b5fc3b5441d2fbda2955ac45dd7dc816d8876cfe7",
+    "manifest_url": "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml",
+    "manifest_sha256": "fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463",
+    "provenance": "Existing environment/toolchains.lock.json, matching rust-toolchain.toml and workspace rust-version"
+  },
+  "node": {
+    "version": "24.19.0",
+    "url": "https://nodejs.org/dist/v24.19.0/node-v24.19.0-linux-x64.tar.xz",
+    "sha256": "14b342e71204f811bde6153be8e04b62aef63c236fef92b55f9c83154b409647",
+    "manifest_url": "https://nodejs.org/dist/v24.19.0/SHASUMS256.txt",
+    "manifest_sha256": "be0629ee2bcd8e40bb856abdd3407f0762101b76bd60a36b8867f637733631c0",
+    "provenance": "Version preserved from existing environment lock; archive checksum read from official HTTPS SHASUMS256 on 2026-10-30, no signature verification claimed"
+  },
+  "elm": {
+    "version": "0.19.1",
+    "provider": "elmPackages.elm from the root flake.lock nixpkgs input",
+    "dependency_content_lock": "elm-dependencies.lock.json"
+  },
+  "deployment_authorized": false
+}

@@ -5,6 +5,14 @@ Ce dépôt prépare l'environnement Rust, Elm, Nginx, PostgreSQL et Playwright.
 Les déploiements sont gelés ; le serveur actuellement exploité reste inchangé.
 Le contenu de cette branche n'est pas une configuration de machine activable.
 
+La reprise déclarative du 30 octobre est dans
+[[file:operations/dossier-deploiement.org][le dossier de revue et de déploiement]].
+Le =flake.lock= épingle les dépendances ; le flake exporte les modules inertes,
+paquets préparatoires et contrôles synthétiques. L'accès d'inventaire impératif
+reçu de Spectre est repris dans un module proposé, avec adoption encore bloquée
+par les faits et contrôles manquants. L'utilisateur confirme ce dépôt comme
+source de vérité attendue du VPS ; l'alignement installé reste à établir.
+
 - =environment/= : environnement de développement et vérifications locales.
 - =operations/= : propositions bornées d'exploitation ; le module Rust NixOS
   reste désactivé et n'active aucun routage.

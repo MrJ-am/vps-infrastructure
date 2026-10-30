@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "target": "mrjam-vps",
+  "mode": "initial",
+  "sources": {
+    "application": {
+      "commit": null,
+      "tree_sha256": null
+    },
+    "infrastructure": {
+      "commit": null,
+      "tree_sha256": null
+    },
+    "validation": {
+      "commit": null,
+      "tree_sha256": null
+    },
+    "vision": {
+      "commit": null,
+      "tree_sha256": null
+    },
+    "mateval": {
+      "commit": null,
+      "tree_sha256": null
+    }
+  },
+  "files": {
+    "server": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "frontends": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "source_bundle": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "cargo_lock": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "frontend_locks": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "toolchain_lock": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "nix_lock": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "build_config": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "runtime_config": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "migration_plan": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "rules_bundle": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "generation_nar": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "previous_generation_nar": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "backup_rehearsal_receipt": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "resources_receipt": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    },
+    "session_compatibility_receipt": {
+      "path": null,
+      "sha256": null,
+      "bytes": null
+    }
+  },
+  "nix": {
+    "derivation": null,
+    "output": null,
+    "nar_hash": null
+  },
+  "previous_nix": {
+    "derivation": null,
+    "output": null,
+    "nar_hash": null
+  },
+  "rules_revision": null,
+  "required_checks": [
+    "admission",
+    "closure",
+    "continuity",
+    "elm",
+    "forgejo",
+    "http",
+    "isolation",
+    "migrations",
+    "nixos",
+    "postgres",
+    "privacy",
+    "restore",
+    "rust"
+  ],
+  "migration": {
+    "current_schema": null,
+    "resulting_schema": null,
+    "old_reads": [],
+    "old_writes": [],
+    "new_reads": [],
+    "new_writes": [],
+    "preserves_new_writes": null,
+    "data_restore": "separate-reconciled-recovery-required"
+  },
+  "secret_references": {
+    "database": "ref:mrjam/database",
+    "identity": "ref:mrjam/identity",
+    "signer": "ref:validation/signer",
+    "runner_registration": "ref:forgejo/runner-registration"
+  },
+  "window": {
+    "maximum_seconds": 10800,
+    "abandon_after_seconds": null,
+    "return_reserve_seconds": null
+  }
+}

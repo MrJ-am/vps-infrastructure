@@ -1,0 +1,264 @@
+{
+  "schema_version": 1,
+  "status": "proposed-content-lock-not-independent-adoption",
+  "elm": "0.19.1",
+  "origin": "Public package sources prepared through TLS-verifying elm-review prepare-offline; exact content now bound below",
+  "registry_sha256": "076c0320cd01bdb2920ca5dffc22312d9a220fabab53967023d4b5ac389f2e75",
+  "packages": {
+    "avh4/elm-color": {
+      "version": "1.0.0",
+      "files": {
+        "elm.json": "2ed787bc9b42ee8f75fcd1a2c2857f3474fd280ad375f28a0fb82fe01c5ff6ae",
+        "src/Color.elm": "557499a8fda931acd45f96fd62a765b5876632792c2ee3727c3b7249b1195251"
+      }
+    },
+    "elm-explorations/test": {
+      "version": "2.2.1",
+      "files": {
+        "elm.json": "29a4a42e22ad68be66843c8d369c44eb152c492b31f4218058c54b62e0229641",
+        "src/AsciiTable.elm": "11359463fa63e6e8c5b0494bc9ada2262a067aff7e2a7a4d15370d07330691bf",
+        "src/Elm/Kernel/HtmlAsJson.js": "c08afdc02053eaddbb769273922f9cb3a255587385e47e235f40f9272d55c471",
+        "src/Elm/Kernel/Test.js": "1732028b856bbe59e5b256103effa7fa4e86bddbd78a5e9d761fb23c9b9f02db",
+        "src/Expect.elm": "32965a7d2580b8e24d0ae3e4074ef193f2820686fc169a7b72608315dbec5512",
+        "src/Fuzz/Float.elm": "f3d4e964a769fa964e9472a02a96c5aa086350fab7bfe8efcd2a3e399ec84e87",
+        "src/Fuzz/Internal.elm": "b8f5e02d4ede79d29b1880a03851dd0848a2002da70409d30ed404548b237685",
+        "src/Fuzz.elm": "ef5e44f4a3bea2094a892f33b511fc9fe5e497de8557027b2a7217f15e6e6500",
+        "src/GenResult.elm": "5ea27678e1da9adde28079081040b95ab18816462a63505040ff00461f30a23d",
+        "src/MicroBitwiseExtra.elm": "ceca4d0f816e2f9eb4b8b28a219a30b9d44419268bc890ba24fcedec340d0d07",
+        "src/MicroDictExtra.elm": "715f19e1467807e6e560eaebff8e3e2051343ee6f03ea1d0f9dc573d54788bf4",
+        "src/MicroListExtra.elm": "cebbfd54b35877cd5543fe7d0b2b8b7a90edc05e467a0f15324649c05f77a6eb",
+        "src/MicroMaybeExtra.elm": "74888329abd1558d6c0c123f3a933973c2c69192299e420ffbe6363c8dcd56bc",
+        "src/PRNG.elm": "086feed0832f14bc09bf841638d88e8486b1530e8bc2ab2cbe9233c217aad602",
+        "src/Queue.elm": "ae01d4c1ba50198f10e35b46681360a8df1407058ce016c8155c165190f8b05d",
+        "src/RandomRun.elm": "0b9a905394fd741dec206fc3b84303e333ae6b49df7a9f59473ae70b87b7166c",
+        "src/Simplify/Cmd.elm": "ce61733a706da785599bf947e1bdad3c8a00532f885802497bfd3fc83a2e274e",
+        "src/Simplify.elm": "510dce8abe49de56c425515358454f456b78a812df4141c0bc9949b28afdd71e",
+        "src/Test/Distribution/Internal.elm": "1ba0fea8483ef4a8372f9617022b840d31de55b9420af0d2e353353188df3b56",
+        "src/Test/Distribution.elm": "815027e48f1ae723333aa8b263dd1aa2ee743ce73e611ada9bbd04d2d7f1bf6a",
+        "src/Test/Expectation.elm": "438654516acbaace5926cc136d794c9a1772e217a2fef83968e906738ae202c7",
+        "src/Test/Fuzz.elm": "7f151a8e3169b85884fde2d4e92a1e4528697d5993bc915134ed6354b659138a",
+        "src/Test/Html/Descendant.elm": "5655faa4afbb5f9d353b86c689e3ef86c27ee8855ef5b243e7709e8310643b98",
+        "src/Test/Html/Event.elm": "50ffa824aea795305de7be60beeb49a46dc86029aa3659a7e2c6269a5ea2a068",
+        "src/Test/Html/Internal/ElmHtml/Constants.elm": "8929e96da7572ef8c27832767a3a05321e4ac0b2b8616680f39b72d47ed2c45b",
+        "src/Test/Html/Internal/ElmHtml/Helpers.elm": "def271351e166332684779934bf99a40c69c3bb6ba2db5569f480655b1f4da35",
+        "src/Test/Html/Internal/ElmHtml/InternalTypes.elm": "946f1717b19c39bf4ecb84dd9823822619227c26c83a0978b3fa14b5d4a8c440",
+        "src/Test/Html/Internal/ElmHtml/Markdown.elm": "0be4170ac91d6915d951def87b7e7a67959f3201c10f0779898978e181e68e8a",
+        "src/Test/Html/Internal/ElmHtml/Query.elm": "93118dd2daf6a967205b44ece1a1ab77950c8c99bdeb6c859e0a712faa4d39b2",
+        "src/Test/Html/Internal/ElmHtml/ToString.elm": "1e3677826d74a588dc4983b133e5fae824e4a572879efa28d6c95dc297403e6b",
+        "src/Test/Html/Internal/Inert.elm": "bcbebab89d84a2b66198a3723ab2b75ca7e24e552a585455cf062ec7218b4ccb",
+        "src/Test/Html/Query/Internal.elm": "79f053e5eeda8989eab8ad9133e7214fd6ac204fcf190bffcb061c2e0e0f1969",
+        "src/Test/Html/Query.elm": "e8a7fa1aeb5affe1bf30a3bf83ea3c26162345f7c7f971e03ca65848bd03556c",
+        "src/Test/Html/Selector/Internal.elm": "85dcff2118fbbed28d2d0cc9c5cb5a9b69b99c083b7166a5c8080054fe0ec2ca",
+        "src/Test/Html/Selector.elm": "f0cefd876fc17e5d4ce0a78f9171719f37f0a3e1928b68a453b0f636ee8e83d2",
+        "src/Test/Internal/KernelConstants.elm": "037695cd96d876274c999a2404bb57dcfb1ec9f7b4c13ad8a8bdada4a75ddaf1",
+        "src/Test/Internal.elm": "8dbfde1292b02b7722bb442daf1b271ba4e55bfa893e5b6e186ba66ea2906fe7",
+        "src/Test/Runner/Distribution.elm": "e2fd49a6f7a3e9a16b854f8488431c4abde36913688c6ebbfd0c6eeb4197ff4a",
+        "src/Test/Runner/Failure.elm": "c1b16477b83c17b97d346d1f692f7805ab6202eb50a35d6d2038da1267edda38",
+        "src/Test/Runner.elm": "287945b396572616feb65b4e99879f209b971aed0633a7148734cdc3722cdf19",
+        "src/Test.elm": "89537ee1f3cb9a3e0782a1979687f3457fba37510877bb2c68b0f58ea29109b1"
+      }
+    },
+    "elm/browser": {
+      "version": "1.0.2",
+      "files": {
+        "elm.json": "f50e12cb6b89a97ef18dde0c64fa92aa78469c412c19d64ca1c56931a1fbc52f",
+        "src/Browser/AnimationManager.elm": "b5eec62b6f9e2e94f5f1b573228e332784580fddc5898c732c4f5c48f4a5a854",
+        "src/Browser/Dom.elm": "03bee2960770cea5b6ee2a208f33622432b8a1ae12e77412cf84b67a453ac2a7",
+        "src/Browser/Events.elm": "b72f8970ee085dab3c7e5504f661e21ed6cefaea21890899d9cd32ebc7f2bd4f",
+        "src/Browser/Navigation.elm": "329085431ef02615190706903d090364097ed3ddaf466370918af69379354706",
+        "src/Browser.elm": "2722873214de2d381a02e037dd56f764c522c0b4ccbbfb3edccce69e0c3c32a5",
+        "src/Debugger/Expando.elm": "c93b00af7bf99c8929db06cdfaf7c6b26b955ac576e62ee4fe2c0be6e4f01a6b",
+        "src/Debugger/History.elm": "4ef4701403e4b960a902a12f20f5feb3ac8881850ba7a71ca6c50f363c60caa9",
+        "src/Debugger/Main.elm": "4513896c62d0ba2f3f27bae3cf39145af8e5ccf428abde16db782ed1c7db3b6a",
+        "src/Debugger/Metadata.elm": "733be27ac5b7651c55b62161f24c508c9a62cf69a481672f17a0c58068591cd8",
+        "src/Debugger/Overlay.elm": "cbb5380cc49af503a462d4e1c0112fe6d46653fc34d8948243f5782591094b47",
+        "src/Debugger/Report.elm": "2323bbd81acaaf3b6077d66fda4fd12a15b1d9c21e9571ab21f0b7c069a5d096",
+        "src/Elm/Kernel/Browser.js": "ae20f6a08a7926cc4f19290da136a4e39d9993076db91fa85f54d7d0f244eb0d",
+        "src/Elm/Kernel/Browser.server.js": "e5e2a7ad542e5b222ac71f989e3f29a43035b44e6fcc8a7af0341585a35c9ee5",
+        "src/Elm/Kernel/Debugger.js": "c74f81f8684fbafeba01b90273f575b3a66fcf317c129074b1244a07845f0c97"
+      }
+    },
+    "elm/bytes": {
+      "version": "1.0.8",
+      "files": {
+        "elm.json": "3e1ed5a8d9f91a44d273a84900258d637c63ba90a4662c4603d75f2cedb266c9",
+        "src/Bytes/Decode.elm": "0081a9ec6a859589b689aad1cd1cb401d8f89f6b71f7dd26a243bcf6cc1a6a4d",
+        "src/Bytes/Encode.elm": "fbad353e50263bc3e8d0a563fad68ab919df0bfd249bf66697031dca033a8607",
+        "src/Bytes.elm": "3a40eb753082a46a555d8169cb87c551f1a10e48876592c69a25a5e5ccf3bd41",
+        "src/Elm/Kernel/Bytes.js": "94ae3e965f180d7677777b74afc55ef74875b37e4fe32c655686481fa8586ab7"
+      }
+    },
+    "elm/core": {
+      "version": "1.0.5",
+      "files": {
+        "elm.json": "db814e9f01c211e63d3b86e2546e924aaba8be2ee2b12299ab81456e9a268993",
+        "src/Array.elm": "1f60be42ecfeaae7dab6e5f6887c49ecdc4089e4348b6f9694e095bd0f434eac",
+        "src/Basics.elm": "649e41513480066f951eef04931a1caea463d3b052cb4a86182c6fcd87e980f2",
+        "src/Bitwise.elm": "0b3c9aef28504672f08209b26e24390aa65ee8a7ae97e71ba84770ff56d25978",
+        "src/Char.elm": "90db4547054916b2e71b364e3253f50f551e03627ce7e8ae53d1fb1ae667e387",
+        "src/Debug.elm": "1407cfff0d9882dc4b6557c7b99f8bbb6f19dbf345ae919c87daf0ca979fd4fe",
+        "src/Dict.elm": "2afc5fcbc080b98903d9b05a98eb0efbf65265eb42ed076b2d442d9e4aca14e5",
+        "src/Elm/JsArray.elm": "bfa0bc6ae1b5b5786f1224b9c0eb476380e9818af53523fdda4b0c30eb60a0d2",
+        "src/Elm/Kernel/Basics.js": "30364c4d72f08888cb16a5ecdd6f04bcf66e6a7d5902ece907c9c01f1ca4d55d",
+        "src/Elm/Kernel/Bitwise.js": "41a1e83136e4a5222bd11dd372c508b33815fe45c8795fe4e8c78a5acfeb35d8",
+        "src/Elm/Kernel/Char.js": "b77e57164741ab7e5e1b78cdfdeffb125c665eb748ea5d5ac62318435b7105b7",
+        "src/Elm/Kernel/Debug.js": "8371e580481da98ca6ccaed2638053ffcee4bee04e2b5c8b86e2ea5c955fc462",
+        "src/Elm/Kernel/JsArray.js": "888aa1150c7ef8b485f835de1cebc5f69056d547155e624a8aa77a18bf102dd3",
+        "src/Elm/Kernel/List.js": "975268b3694443d66e3e68c4dac9a8bb20e6b84f324046b12222e51b64eaa687",
+        "src/Elm/Kernel/Platform.js": "569148a4e6b9371214da1e54285a6a4bfdd1cb42220886f2392a46d8f84e5863",
+        "src/Elm/Kernel/Process.js": "50554f94246d84921109584196c7c43f90775ff4256ce4df363b44f7794065da",
+        "src/Elm/Kernel/Process.server.js": "823d7abb8d78ea9f88488d9b1eeb2d2b049544f05d8223862e7cef76c1c1db34",
+        "src/Elm/Kernel/Scheduler.js": "bdc18efab541e63edd65173fd995e35edc0fefe182fdb46c914b56734e2dbe6a",
+        "src/Elm/Kernel/String.js": "037260f1df8da6007eb54f9464167ce59e9332b804013127a5e036f0919e266b",
+        "src/Elm/Kernel/Utils.js": "cc6c6c94d8e8c0ba0041ab09fabf6235c2cc4ab220d54257e6c7c4ffa7876017",
+        "src/List.elm": "79e513a52ab45ab98f3a5ad9c87779c2cb29519c5adcf91ab3b70fb5de234f41",
+        "src/Maybe.elm": "35aa285d930a4da6d918717209f230667ab127d357f69d6ea3dbab31e567f5aa",
+        "src/Platform/Cmd.elm": "015c3c2469abeb1cfcf757017d4448c0e453da972fb846f93a91768488e7dfd5",
+        "src/Platform/Sub.elm": "fdb296916f45f3ed0096959e5d727b32a05e7459ef5cc95f00e76951221499dd",
+        "src/Platform.elm": "71d83575a51451379e81fc2712e925a5fc242286c5c971259ff1740274f7e527",
+        "src/Process.elm": "a6af86afca70423a8ec9092c34f5b4b4247cb25dc67074864cdcab8c895d0455",
+        "src/Result.elm": "1efa7ed54dfcfc31c35ffae770afc6b9b095e063b325d80f5e5550600ded746b",
+        "src/Set.elm": "765ce399f1ed4c92bb47fe0af07808875a2377fdc89f951d513b6f55e5744f85",
+        "src/String.elm": "e7300d71211211e5e0b8b1b3bcd0d6407416a498bcfb682b26a8642fa965e4a0",
+        "src/Task.elm": "f546ccb07a58b26fcf791ed45a6236e80e45aaed00c29cbaeced5dcd6da034fa",
+        "src/Tuple.elm": "b970211ee185cf3184634702aa54f6ec33e2aafb8930caead713ee7929236b46"
+      }
+    },
+    "elm/file": {
+      "version": "1.0.5",
+      "files": {
+        "elm.json": "5d4cf2de2834ee996025dc82d9291e83c42c3752ebc63ddb5923014e9e724438",
+        "src/Elm/Kernel/File.js": "b77a131b0841566318c42fc8e952ca06129b5abeccf8cc3c1950e5f966e4d792",
+        "src/File/Download.elm": "9516bec7c52dd9aba7d781410af88a63cd9e36cc3a07cd0d8d843870049f342a",
+        "src/File/Select.elm": "c7d40566987ed90ab8735c16f2d6c1eb813c73e78aaa4fde18fff331e35f4a5d",
+        "src/File.elm": "87e2d28653ec162f589d5fec45ec9d0aa0f4a040aa9d58419ac56ed15519dbd6"
+      }
+    },
+    "elm/html": {
+      "version": "1.0.0",
+      "files": {
+        "elm.json": "84dbb28e88ffbaf32e0e7ce11b8d14ccc97c0798b2d0945ed94668c12a0b9e25",
+        "src/Html/Attributes.elm": "b4ff344168f9199de2bfee5f8e3c1441c621692ddc99a5ce7e380f3014e6d367",
+        "src/Html/Events.elm": "d633d86ecee6195d6bea6f7c8b49a5df3befecd8e9589745055dc5f30b0cef9e",
+        "src/Html/Keyed.elm": "346e9fe65945ccedc250e5d5cc739fe3505dc9be37bcb93fd311527964b55ff7",
+        "src/Html/Lazy.elm": "e6ec7de40a8c6318a055898a144e8cc56b2c9b32f7694be1bf223e98db6cd031",
+        "src/Html.elm": "2e567c415bfeb2a743b0c6fee980383b3e378785247b3e930f77aa98e1dbb4d9"
+      }
+    },
+    "elm/http": {
+      "version": "2.0.0",
+      "files": {
+        "elm.json": "a52cb6d3d4ee83e6eb9c883e28380bda8e25d640fd04b6c3316398ed3951d65b",
+        "src/Elm/Kernel/Http.js": "0cc54240d870127251fe6f2d76bf7ec0db1701d9dacbd893d79109af3580fce6",
+        "src/Elm/Kernel/Http.server.js": "014637cc6a5b20391af1f65609da5a37b1366da2b82ed21d4f2dc5a9dc1a2f4f",
+        "src/Http.elm": "791023f4674eedb81e09d4509b5b642006f216b076480b4dac76ce49ea065009"
+      }
+    },
+    "elm/json": {
+      "version": "1.1.3",
+      "files": {
+        "elm.json": "b6c2ce9de7bd7ed70de7a111e87c449ec3aa7819bf6c48953ce7221e776f7a3e",
+        "src/Elm/Kernel/Json.js": "17d5536d6f22be1614a73837368e2a61439ebfa9dd0ff732880ee544baa41af2",
+        "src/Json/Decode.elm": "f68189c7da6b1fb23c08878296b0e55575480ac0632adfc6d7ba76f8617672ea",
+        "src/Json/Encode.elm": "9cdf3d660f182aed97117205e72388e2bb0d0ad795b4749975fa2c639b808a2a"
+      }
+    },
+    "elm/random": {
+      "version": "1.0.0",
+      "files": {
+        "elm.json": "783ce1a6372ea08b75386982dc50384d4bbbc2387902f0b1f1886e467f057aa3",
+        "src/Random.elm": "62bc5496b27a6bebfe5ad208f4b10e4d41a849a50e7bc17c7686d238e80eb98c"
+      }
+    },
+    "elm/svg": {
+      "version": "1.0.1",
+      "files": {
+        "elm.json": "4d3aa46f79c1f0f7d4117e827edb6791f8bd8ee59c3c23d23fdc3d7aeaa20cc7",
+        "src/Svg/Attributes.elm": "45ebba3826dbcd28909b8297c46f87e47f6da9adc1224e4647abe8b82049cc01",
+        "src/Svg/Events.elm": "612b0ed785cfabb6ca63786063a59f02861283c4a6b2d626b8d1b3e5c2f97458",
+        "src/Svg/Keyed.elm": "01f8ab6cdc8b614b06bf2f1f61b5efc92e41a25f965f7cd690c55f2cfb342e9c",
+        "src/Svg/Lazy.elm": "b44c83642f82153fa19711b937c4cf88b652c09d388348df4a94acdc9033f4ab",
+        "src/Svg.elm": "181ecb9c536a31b309069651243868faddf2485d50dd0e108a012746cb54207c"
+      }
+    },
+    "elm/time": {
+      "version": "1.0.0",
+      "files": {
+        "elm.json": "03445516f62e4a779b7267e25f053732f57bda580b871f99a3e53a7979b2dfa4",
+        "src/Elm/Kernel/Time.js": "cc59eff642bd2dc98ffde4a99ed0c682821e09a4601c083338d442b15ccd5cb1",
+        "src/Elm/Kernel/Time.server.js": "888d36edbd6d8fe5e69a3802c56f93a1341f0dcfa14e9be1ab10de3c188602c8",
+        "src/Time.elm": "e4c55a925c664c25b8ffcd1510c827793d670ec159dc18af3ebd7f642ee4e638"
+      }
+    },
+    "elm/url": {
+      "version": "1.0.0",
+      "files": {
+        "elm.json": "b2c089bbe199a8431fd53635a55fdc10e7ee4bb4a993064688f74812dc94dc5e",
+        "src/Elm/Kernel/Url.js": "56250d3bec1cbc6c8974514ea56040043b237b058cb8cdad54a8b32e33676922",
+        "src/Url/Builder.elm": "e4922467375bcedd187bbd811b5dfd49b7f9b6a08063b7ef411f2ad0aa6e8dad",
+        "src/Url/Parser/Internal.elm": "91cec106bc5eb47ae5b1ff86ac1589989785080805bc4e38dd187ec22dbbfc26",
+        "src/Url/Parser/Query.elm": "2b14aab77b663bef2b9434fccc3ca6c102990b9cf87dea650ae8341a9325bf4e",
+        "src/Url/Parser.elm": "0a42ac79944c28778c0e32510cd089e7d80e6d202937238f829d4de2d942d028",
+        "src/Url.elm": "c1dad01869f5a4fe29406b3409508ec4754bf8125cc01ef5106b2e369c5c647c"
+      }
+    },
+    "elm/virtual-dom": {
+      "version": "1.0.3",
+      "files": {
+        "elm.json": "f00299c02b546533702cacd34ed0eef09bf2bbba138585bb86a79e6b0fd11a83",
+        "src/Elm/Kernel/VirtualDom.js": "9246c8591d9b511468e8257b60c8495020164a5fd58f21d523722775292095db",
+        "src/Elm/Kernel/VirtualDom.server.js": "68c145d1f3ae40618e023b4109edc3f474f12c83af9ad5a3cfa2232f7cfd0bd9",
+        "src/VirtualDom.elm": "85f06afbc5f418f69c424ecc9b61969cc460444f97987054fb14d2a944d3bba8"
+      }
+    },
+    "mdgriffith/elm-animator": {
+      "version": "2.0.0",
+      "files": {
+        "elm.json": "10306e4cd306766eb373ff3d470b0a25b2b2694e9f5f17fb8a00d531a556043e",
+        "src/Animator/Timeline.elm": "5371f9ad2263e0258e2fa435a30e02238ff77314219fbfd491f94b9af78253ad",
+        "src/Animator/Transition.elm": "1860a6e36005ee638cbdec1d1e68cd841df9237a41e5c9e2bfaadb6671fdf3ed",
+        "src/Animator/Value.elm": "78ef13f2daf7dc0ec578553099502acbbca70c1bc20b1f91596cf53be2605714",
+        "src/Animator.elm": "86c5efddf9de94ad1017ed7977eb841341c70943bbc3b92e532453ddbf4eb8ab",
+        "src/InternalAnim/Css/Props.elm": "857a863ce9fd6c0d160975db26438f8683cbe0261a3f09efec7f41040b6890c7",
+        "src/InternalAnim/Duration.elm": "3b353ff917d3c6efdedc05eba4140ce0beceab2423b66b74c337e1fae907c1bd",
+        "src/InternalAnim/Move.elm": "cd8ca7e5a8e76dedf8cd086fc2e174598dcc7bd8a10fbb3e8ddb60d2050b4c6a",
+        "src/InternalAnim/Property.elm": "3cb69060acb04f87bd29be53a526490d72aceba22c54514bc89397d107240d66",
+        "src/InternalAnim/Quantity.elm": "fe429f1e309abb9fcd9c51c37a5dfecbec75a6a7a220b4d9d0fb9726dca76a3d",
+        "src/InternalAnim/Random.elm": "484d2cbd4ae897fd5d5c6c4a6e166d572666a48adbe5747cee1fbcc19da57d82",
+        "src/InternalAnim/Render/Css.elm": "18526c7ee105d891a9aaaa18266a4e661e7bf58fa000bc476dd98ef11f7df880",
+        "src/InternalAnim/Render.elm": "492db1046da075ed58248467748d847d37d5da9c2e1971a6569109597b9a9858",
+        "src/InternalAnim/Time.elm": "c7b948d6a2f4c38802f42f1d7d23ba6eb22645ea261ca4f461970887cd5ebd49",
+        "src/InternalAnim/Timeline.elm": "cab39bdd37608c491f1ed0e1af829b8afc1cbc11267b9815ef256423ffdfd304",
+        "src/InternalAnim/Transition.elm": "206552e8f06b4e5070235a61ef3e4f935814ecfbb4cdf8e91014dd3d8fdd044c",
+        "src/InternalAnim/Units.elm": "6364397c13569ccaf511e0e8f636cf0cbf3a1e23c20bb5e263f81e28fa1d681f"
+      }
+    },
+    "mdgriffith/elm-bezier": {
+      "version": "2.0.0",
+      "files": {
+        "elm.json": "7b1813c26f5de31f301092893adb9c46a3b52b5bdc1aa73b6ae16b2f56ca987a",
+        "src/Bezier/Spring.elm": "dfbc9dd78e8ba50cece5d3a7f698700b819d0f6e7fd79fb2ce4bf90e44c2f96d",
+        "src/Bezier.elm": "78872ae81cba8b6637153212af58eb2553f6d768bf7430b44a4da7b8b063af40"
+      }
+    },
+    "mdgriffith/elm-ui": {
+      "version": "1.1.8",
+      "files": {
+        "elm.json": "4d4486fd3afe94d769c31a63b995d2a6fda9ae9daed659cbfd47c8537540f883",
+        "src/Element/Background.elm": "78a96f16c743961e0dfec4915873cf915a4f9b6382ff287e3c7b9e307c7ae513",
+        "src/Element/Border.elm": "1cbea164b59ab5fc93a501761ca3e973489923e5e77ab2cc8d004ac2e7d7b12a",
+        "src/Element/Events.elm": "1f8050dc9bd572366187980dca6bc0b48300b5521b60ff536afa168dd263e4b3",
+        "src/Element/Font.elm": "31d5566e1257ff62532c47b5f3f2dcb4ae826693c6ab678780c0b13a7a083638",
+        "src/Element/Input.elm": "2ef63faa892478055d7bc2b906eb24c50f0f5711b04d51091af3af19eec635e5",
+        "src/Element/Keyed.elm": "101e6089636d2a028b5597305815b150cd44d1c3941fdd91716a7f2c22216550",
+        "src/Element/Lazy.elm": "4ec07fde711f818f79c8f7d4d01554c72e43980c8cc7399232be46ab47a7a13f",
+        "src/Element/Region.elm": "53b98fc578bd63e70efd1101e7d1dcc0097326d45ecc3465d48ffe52927be9a3",
+        "src/Element.elm": "6f797b99dd3d1d6ff1f8498850bb4b8b960de2499672cbf7f86c2c40f6768e75",
+        "src/Internal/Flag.elm": "81e633801ab2f0feb781038a3c644f7c1df993e17ebdf136b39ad966bc592bda",
+        "src/Internal/Grid.elm": "50279400d5a76f3e24e0cbb965828645b3045a31d4dde90b533c9ef9ea243c30",
+        "src/Internal/Model.elm": "7e5da5dfaa70f63be1213ece514d6aab01ebbbb1199ff7d7931bb488567543ad",
+        "src/Internal/Style.elm": "13040599cd8f913e685c9fb85d90a7f4f16f2e2164cb1d462b289900e5e71c17"
+      }
+    }
+  }
+}
