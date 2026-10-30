@@ -1,0 +1,405 @@
+#+title: Point de reprise après indisponibilité de matheval
+#+date: 2026-10-30
+#+language: fr
+
+* Objectif courant et état réel
+
+La directive utilisateur demande d'achever l'infrastructure, les applications
+Rust/Elm, la chaîne Forgejo, la qualification et la première mise en service.
+Voir mandat.org. Ne pas rétablir l'ancien gel comme motif d'arrêt et ne pas
+redemander une autorisation générale déjà donnée. Les frontières de données,
+les capacités techniques bornées et les contrôles critiques restent exigés.
+
+L'ensemble N'EST PAS opérationnel. Aucune intervention de production n'a été
+effectuée depuis Cloud. Aucun artefact n'est ici déclaré installable sur le VPS.
+Ce fichier est un point de reprise documentaire, pas une sauvegarde des fichiers
+locaux non publiés, une preuve de déploiement ou un reçu de qualification.
+
+Vers 19:49 UTC, l'exécuteur a perdu sa connexion puis a refusé toute commande
+avec « No usable execution environment is available ». Le contexte a marqué
+l'environnement unavailable. Le connecteur Cloud rapportait simultanément
+running/connected ; cela ne prouve pas l'utilisabilité de l'exécuteur.
+Les diagnostics retenus ne fournissaient aucun enregistrement. Aucune cause
+racine n'est établie. Le connecteur GitHub restait utilisable.
+
+Préserver/reconnecter LE MÊME espace matheval avant toute reconstruction.
+Ne pas supprimer les répertoires de travail, faire reset --hard ou réinitialiser
+les dépôts pour retrouver les commits publiés. Les modifications les plus
+récentes sont locales et leur récupération n'a pas été vérifiée après la panne.
+
+* Références distantes revérifiées pendant l'incident
+
+Ces cinq refs ont été lues via le connecteur GitHub. Ce point de reprise est
+ajouté ensuite à la branche infrastructure ; les autres refs ne sont pas modifiées.
+
+| Dépôt MrJ-am | Branche | Commit publié constaté |
+|--------------------+-------------------------------+------------------------------------------|
+| vps-infrastructure | declaratif-20261030 | 4bf2baac5fc3262c1871bdbb45865e91ad0576ad |
+| mrjam-plateforme | declaratif-20261030 | 02b5378056c9df59605ae962ad3aedd29b804db9 |
+| mrjam-validation | declaratif-20261030 | 3053cf79de7bd1ab1c6dd8509c96afc950e8f0af |
+| matheval | operationnel-mateval-20261030 | 91b5b33541a39faade0c40792bfed5ad35ae80a1 |
+| vision | operationnel-20261030 | 99eace9df76777c89bbd992952738b3f57608801 |
+
+Le commit infrastructure 4bf2baa contient le raccord du runtime public, le
+module de passerelle Nginx et ses preuves synthétiques. Son parent est
+50bbcfa65b7c068d406c2119d1d82724b1fe5aa1, puis
+f763073f3436cc6e52e268455f9f8b9d1976b755.
+Aucune branche principale n'a été déplacée, aucune PR créée.
+
+Le prompt Spectre publié est operations/mise-en-service/spectre-relais.txt,
+SHA256 503064389679a409c21f8a4de992354dfc536bd7b8343624b6f61c060ca11dde.
+Son premier travail est uniquement la recherche locale des références de code
+VPS sur Spectre. Son étape d'observation attend encore un paquet qualifié.
+Ses anciennes références de socle ne désignent pas les derniers travaux locaux.
+
+* Provenance à conserver sans réécriture
+
+Les pièces reçues ont été contrôlées avant extraction : 21 entrées de remise
+et 9 entrées du paquet original vérifiées. Sources versionnées sous
+operations/received/20261030.
+- inventaire-borne-filtre.json :
+  10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898
+- mrjam-reprise-declarative-sources-20261030.tar.gz :
+  921f18487f1c7804b1a9f497c6fcedfe18ac467e6bd33a382c1cea363e825361
+- paquet original :
+  47c0c620a241cb37dd44601f21322badcb18aed0d4e0161a3e891ef795514b9e
+
+Le rapport reste authority=unverified_observation. Le published_revision null
+original n'a pas été réécrit. Les 2 CPU, 8 328 343 552 octets de RAM et l'espace
+disque observé ne qualifient ni quotas ni marge de cohabitation/CI.
+Nix 2.34.8 et PostgreSQL 17.11 concernent les exécutables du profil, pas les
+builds exacts des processus. Les autres versions inconnues restent inconnues.
+
+La clé publique complète fournie est déjà versionnée sous
+operations/targets/keys/mrjam-inventory.pub :
+SHA256 du fichier f4590e8f1417499cc995e68d77958b54b2502e5142ab819f0bee4ad3e9f2d554,
+empreinte SSH SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A.
+Ne pas demander, chercher ou transférer la clé privée. L'installateur impératif
+reçu est historique et ne doit pas être relancé en production.
+
+* Travaux locaux à récupérer
+
+Les chemins suivants sont dans l'espace matheval, pas nécessairement publiés.
+Les états ci-dessous proviennent des derniers résultats effectivement observés
+avant l'incident ; ils ne constituent pas un nouveau test après récupération.
+
+** Infrastructure et PostgreSQL
+
+Dans /workspace/vps-infrastructure :
+- operations/nixos/mrjam-postgresql-access.nix ;
+- operations/tests/postgresql-access-evaluation.nix ;
+- operations/runtime/postgresql-peer.org et postgresql-peer-systemd.nix ;
+- operations/runtime/qualification-peer-budgets-20261030.json ;
+- nouvelle proposition de budgets mrjam-rust.nix : 512 Mio par instance,
+  1024 Mio pour la tranche commune ; marge VPS non démontrée ;
+- flake.nix et operations/dossier-deploiement.org ont des modifications locales
+  de raccord qui ne sont pas encore toutes stabilisées.
+
+21 assertions peer, 21 Rust et 24 passerelle ont réussi ensemble (66).
+Le module peer est désactivé par défaut, exige PostgreSQL 17 séparément déclaré
+et ne crée ni rôle, ni base, ni migration, ni secret. Il lie les UID des slots
+aux couples base/rôle explicites et refuse les extensions de la carte réservée.
+
+La VM PostgreSQL n'a PAS encore réussi :
+- essais initiaux : sorties du cache binaire manquantes, préchargées ensuite ;
+- essai 4 : VM démarrée, test exécuté avant postgresql-setup.service ;
+- essai 5 : conflit Nix listen_addresses entre localhost et chaîne vide ;
+- essai 6 : nix-build ne reconnaît pas --offline ;
+- correction de fixture écrite : attendre postgresql-setup.service et
+  settings.listen_addresses = lib.mkForce "";
+- essai 7 : lancement non confirmé, transport de l'exécuteur indisponible.
+Logs synthétiques sous /workspace/shared/mrjam-postgresql-peer-systemd-20261030*.
+Ne pas compter une correction non exécutée comme PASS.
+
+** Passerelle et liaison du runtime déjà publiées
+
+operations/gateway/qualification-20261030.json :
+SHA256 e735a765a779d256ca84b6aa6855fe7345e8e6afe5e6346d9dad812f28755abd.
+24 assertions Nix et 13 groupes HTTP/TLS réellement réussis.
+Nginx 1.30.6/OpenSSL 3.6.5, certificats inventés vérifiés, réseau isolé.
+Les tests ne prouvent ni certificats de production ni continuité longue durée.
+
+operations/runtime/package.nix lie une configuration JSON publique aux
+manifestes des artefacts préconstruits, aux noms de credentials et aux références
+de CA publiques. Cinq tests de frontière réussis.
+La construction effective de ce paquet CONTRE LE NOUVEAU SERVEUR NIX reste à faire.
+Adapter la lecture de password_file à l'option peer nullable sans affaiblir
+la validation du serveur. Aucun secret n'entre dans le store.
+
+** Frontends construits et vérifiés, non encore publiés en totalité
+
+operations/builds/ contient de nouveaux outils de sélection, matérialisation,
+ressources épinglées, manifests et export. Ne pas réécrire sources.lock.json
+ou qualification.json historiques pour leur faire désigner ce lot.
+
+Reçu operations/builds/qualification-frontends-operationnel-20261030.json :
+SHA256 f06476f901d2c2853cf5ec121331e95ba56de2ae386235f6f63a73c426830325.
+39 tests de frontière ; trois nouveaux builds Vision/Log/Audition et répétitions
+hors réseau ; réutilisation vérifiée du frontend Mateval inchangé ; quatre
+vérifications store et export. Cela ne prouve pas le fonctionnement navigateur
+avec le nouveau serveur.
+
+Artefacts locaux /workspace/shared/mrjam-frontends-runtime-20261030 :
+runtime-artifacts.json contient les manifestes complets.
+- Mateval : /nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1
+  manifeste 4ba21c4b0bda422be1a60e08639dd486642829b1539d6e5c8793f9fe45345816
+- Vision : /nix/store/a5sy4nqf9yf75pbbvrjb9rhjxn7axk8x-mrjam-vision-elm-99eace9df767
+  manifeste a1b03d1a4b84ff9569ff3f914664e91d67168e548c47ca3e61bdcd9b2c5eaf5a
+- Log : /nix/store/ab1j5g6k8w8vig47lbjm2jjm294aq95v-mrjam-log-elm-50bbcfa65b7c
+  manifeste 0da3a226c890b83fc157bae323d5f1f54525944d415e5553087818ecf084245d
+- Audition : /nix/store/57y8s7zb9hm3c3m1rc3d4m4hcqchv6z5-mrjam-audition-elm-50bbcfa65b7c
+  manifeste 73044b762807d1c5d6f20cdaea668ddc7c92d3b68dd0d90f4aa002759e51e587
+
+Export gzip : 3 186 905 octets,
+SHA256 31be5c13f17c792b46c8600a72f0da49e2b0f9fd271525ca22f2e0b4aeab008e,
+sous /workspace/shared/mrjam-declarative-nix/build-frontends-operationnel-20261030/export/.
+Préserver les pins distincts : Signature Log/Audition 17194087…,
+Vision 17495b13… ; KaTeX Audition 0.18.7 et Mateval 0.16.11.
+Les polices, logos et éléments d'identité réservés restent dans les artefacts
+appropriés, sans publication dans une archive de préparation publique.
+
+** Serveur Rust et applications
+
+Dans /workspace/mrjam-plateforme, crates/server et Cargo.toml/Cargo.lock :
+runtime public, routeurs métiers, SQL, identité, ressources statiques, validation
+stricte JSON, lecture descriptor-relative avec O_NOFOLLOW, droits SQL exacts,
+budgets de concurrence et limitation de tentatives administrateur.
+
+Dernière suite release terminée : 29 tests réussis, une mesure ignorée par défaut.
+Mesure distincte réussie : 64 requêtes maximales concurrentes refusées avant lecture ;
+RSS 193440 KiB, TRANSPORT ET PARSEUR SEULEMENT. Ne pas extrapoler aux connexions
+SQL, ressources, scrypt ou charge VPS. Les modifications peer Unix et ACL systemd
+ont été écrites APRES cette suite ; leur clippy (session 50563) n'a pas de résultat
+final connu.
+
+MCP Audition reste à implémenter selon reference-contracts/audition/MCP.md :
+https://audition.mrj.am/mcp, audience audition:mcp, protocole 2025-06-18.
+Ne pas réutiliser l'audience Vision ni assimiler proposition MCP à prescription Web.
+L'exécuteur borné de déploiement dans operations/release n'est PAS encore écrit ;
+le planificateur existant n'installe rien.
+
+Mateval publié 91b5b… : administration/session/import/export scientifique,
+29 tests dont PostgreSQL, qualification supplémentaire de huit privilèges SQL
+excessifs GRANT/refus/REVOKE ; preuve
+components/mateval/docs/qualification-droits-scientifiques-20261030.json,
+SHA256 f51c0e376a5c20e19d286c4a8b6442f581d8ff2bfefba22291d469a31f17cb08.
+Ne pas extraire les corpus réels pour qualifier leur adoption.
+
+Audition et Log sont encore locaux à la plateforme :
+- crates/audition : 20 opérations, transactions/RLS/versions/idempotence,
+  preuve qualification-service-20261030.json,
+  SHA256 45728c95206dd20f9334cf2a70905fbdc002d580b7881697cbe9de3fd325933b ;
+- crates/log : 16 actions Kanidm, TLS vérifié avec SNI fixe, alias SQLite
+  en lecture seule, preuve qualification-20261030.json,
+  SHA256 a309b4c3deaa2aa3ae6bfcb6663fce2fe62be10f65aff954cc7be3e39b78d879.
+Les permissions/WAL partagés avec l'identité réelle restent à raccorder.
+
+Vision publié 99eace… : fonctions privées et adoption bornée des journaux
+historiques, 22 tests avec PostgreSQL (19 sans). Les workers supplémentaires
+sont dans le worktree /workspace/shared/vision-workers-operationnels,
+branche workers-operationnels-20261030, base 99eace… :
+queue SQLite, SMTP Proton STARTTLS vérifié, archive age et rejeu, client
+Keycloak borné. Leur état final et leur qualification doivent être récupérés ;
+ne pas les annoncer terminés. Le module NixOS lifecycle est un travail restant.
+Les migrations de contenu historiques restent inchangées.
+
+** Forgejo, runner et autorité de validation
+
+Code local operations/forgejo/{reconcile,register_runner,request_validation,submit,worker}.py
+et quatre modules NixOS mrjam-forgejo-policy, mrjam-forgejo-runner,
+mrjam-validation-worker, mrjam-validation-collector.
+
+Dernier lot complet observé : 58 tests réussis
+(27 reconcile, 13 worker, 9 submit, 9 register_runner).
+Quatre tests ACL ajoutés ensuite : résultat de session 81700 non récupéré ;
+ne pas annoncer 62 réussites.
+Évaluations Nix : policy 13 avant correction TimeoutStartSec,
+worker 14, runner 18 après séparation de l'UID collecteur.
+14 contretests natifs de namespaces réussis.
+
+La chaîne réelle locale Forgejo 17.0.1 / runner 13.2.0 a confirmé
+l'enregistrement limité au dépôt, son idempotence et le daemon token_url/idle/label.
+Le job de workflow a échoué sur SYNTHETIC_RUN_TIMEOUT.
+Le dernier lancement de diagnostic filtré (session 93545) n'a pas de résultat
+récupéré. Ne pas annoncer la chaîne opérationnelle.
+
+BLOCAGE DE SÉCURITÉ CONNU : la protection de main et le contrôle de son HEAD
+ne suffisent pas à empêcher un workflow de branche arbitraire d'être exécuté
+sous l'UID du daemon avant bwrap. Il faut qualifier les ACL réelles du dépôt de
+validation ou une admission exacte du workflow/ref AVANT exécution de toute étape.
+Cette protection n'est ni implémentée ni qualifiée.
+Le daemon doit rester désactivé. Aucun statut Actions ne vaut autorité de promotion.
+
+Collecteur séparé : troisième UID, cache privé
+/var/lib/mrjam-validation-collector/artifacts/<proposalSHA>/,
+répertoires0700/fichiers0400 ; candidat et daemon n'ont ni accès d'écriture au
+cache ni accès direct au socket du worker. Ce modèle doit encore être testé
+dans les unités finales et avec le pipeline complet.
+
+Dans /workspace/mrjam-validation/workflow-runner :
+validateur canonique, bwrap imbriqué par phase, sources/critères séparés,
+PostgreSQL synthétique privé, formats de sortie fermés FIFO vers memfd.
+11 tests unitaires et 12 tests natifs d'isolation réussis auparavant.
+Paquet /nix/store/28nlkmw6n41ydqchlpm06k3y554aslms-mrjam-validate construit
+avec politique SYNTHÉTIQUE ; pas une validation du candidat final.
+Pipeline complet sept frontends + Rust encore à exécuter.
+L'ancien plafond work tmpfs1GiB est insuffisant face à un debug observé8,3GiB ;
+versionner les profils et mesurer les besoins au lieu d'augmenter sans preuve.
+PG cible Nix17.11/pgvector0.8.2 ; environnement de développement pgvector0.8.7 :
+ne pas confondre ces qualifications.
+
+** Revue indépendante et observation bootstrap
+
+Dans /workspace/mrjam-validation/operational-review :
+contracts-20261030-03.json : 30 contretests réussis
+(12 bootstrap, 12 Forgejo, 6 flux worker), puis reconcile a encore changé.
+
+systemd-credential-metadata-20261030.json établit SANS lire le secret :
+fichier root:root0440, parent root:root0550, montage RO,
+ACL nominative exacte UID64551, groupe effectif et autres sans droit.
+Le masque ACL affiché dans les bits de mode ne doit pas être confondu avec
+un accès de groupe. Corriger précisément fichier ET parents ET montage ; ne pas
+accepter tout fichier0440. Les correctifs Forgejo/runtime nécessitent retest.
+
+VM Forgejo avant correction : refus UNSAFE_CREDENTIAL avant mutation.
+Aucune VM réussie après correction. worker-systemd.nix préparée, jamais lancée.
+Dix contretests runtime dans qualify_runtime.py préparés, jamais exécutés
+en attente du binaire final.
+
+operations/bootstrap-observation : paquet immuable, no-args, unité transitoire
+fixe sous mrjam-inventory, V1 intact, filtrage côté VPS, aucun réseau/accès données.
+V2 original inchangé, seulement budgets enveloppe révisés après échecs TCG.
+Candidat actuel /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2.
+11 tests locaux réussis.
+Dernière VM connue : observation froide réussie (68,440s murales /13,579s CPU),
+sept premiers groupes réussis, puis échec watchdog FIFO de fixture3s.
+Reçu d'échec bootstrap-tcg-composed-attempt1-20261030.json conservé.
+Rerun froid avec watchdog15s (session40791) : résultat NON récupéré.
+Dérivation /nix/store/yl03dxi7s0c8kby4gz0bhxcsdyg89vh1-vm-test-run-mrjam-bootstrap-observation-independent.drv.
+Log local /workspace/shared/mrjam-declarative-nix/bootstrap-systemd-composed-cold-final-build.log.
+NE PAS livrer ce paquet comme qualifié avant suite complète réussie et revue.
+
+La fermeture interrogée contient83chemins/345793728octets NAR :
+/workspace/shared/mrjam-observe-adoption-v2-20261030/closure-unqualified.json,
+SHA256 0d5defde31542d11d6e02fd170500547bbc38e2847517afb4c86edbe6bd86fce.
+Aucun export/adoption en production effectué.
+
+* Compléments des chantiers reçus pendant la panne
+
+** Frontends dans le validateur
+
+Distinguer les quatre artefacts Nix déjà construits et leur assembleur vérifié
+dans infrastructure/operations/builds, du constructeur interne au validateur :
+ce dernier assemblage est encore incomplet. Vision exige Elm + exports.js +
+animations du style + pont.js + fenêtres du style ; Mateval ses quatre entrées
+et les URL de ressources versionnées ; Audition KaTeX. Réutiliser les contrats
+de l'assembleur qualifié et contrôler toutes les références HTML/CSS.
+
+Le harnais plateforme tools/runtime-browser-synthetic n'avait encore AUCUN
+fichier créé. Aucun parcours navigateur avec le nouveau CLI n'est acquis.
+Le nouveau verrou Rust, vendor, build final et intégration navigateur sont à faire.
+
+La sélection du validateur atteint 311 fichiers et cinq arbres Git complets ;
+workflow-runner/source-observations.json a pour SHA256
+3a9bc9bbfa37f79119e0a093d31754514a894fde76af0db9b4e80c88757424b0.
+Sources locales sous /workspace/shared/mrjam-workflow-sources-20261030 :
+- Logique 303e80be426012740eb16c5039bd4d3ea9155640 ;
+- Style/atelier logo cebba1824b6b5e939ae0155481ed87d7a98771e0 ;
+- Style Log a998822b21352c98f6ad90738f3123711c49834b ;
+- Style Mateval/Vision 27111a95d0222c634e55fb2e3ff8e45041b40b16 ;
+- Style Logique fbdb9dbb0c723ecd6a16e492e47af085c6033531.
+Seuls cours/parcours.org et data/course.json de Logique ont été pris après
+confirmation de leur rôle de code pédagogique public.
+
+Outils Nix construits :
+/nix/store/cdilc0zq2gxyjpgcynnwrgr6hxfv5r38-mrjam-elm-validation-tools,
+/nix/store/10psfl320cvkha5m17kmizfwwvvnlrwn-mrjam-elm-validation-cache,
+/nix/store/dnrmqfgsmr73clan0px0bi56adsbyj2q-mrjam-pinned-browser-resources.
+Le validateur préliminaire et sa fermeture
+/nix/store/c79cxf0fb60bibgb67lgmpz039xfdk8g-closure-info précèdent des modifications ;
+ne pas les sélectionner pour une mise en service.
+
+** Workers Vision : sous-ensembles testés, ensemble incomplet
+
+Le worktree possède notamment src/workers/{stockage,courrier,smtp,archive,rejeu,
+admissions,keycloak,cycle}.rs, workers/001_courriels.sql,
+workers/002_admissions.sql et journal/003_archivage_rejeu.sql.
+Le Cargo.lock du composant a changé hors ligne, pas celui de la plateforme.
+
+Tests terminés : cargo check avant cycle.rs ; deux tests unitaires SMTP ;
+migrations_metier sous PostgreSQL17.11/pgvector0.8.7 avec journal003 ;
+workers_courriel (redémarrage, reprise, idempotence, collision, annulation,
+rétention et préservation des anciens MIME).
+Le cargo check suivant cycle.rs (session11048) n'a pas de résultat récupéré.
+
+Restent : rejeu périodique avec marqueurs, assemblage HTTP/processus/binaires,
+adoption explicite des anciennes SQLite et courriels en attente, tests du client
+Keycloak et du chiffrement age réel, scénarios bout en bout avec interruptions,
+credentials systemd précis et peer Unix, module NixOS lifecycle et ses tests.
+Le lecteur stable d'adoption Vision refuse encore le credential systemd0440
+avec ACL ; il ne doit pas être annoncé compatible avant correction et VM.
+
+Aucun contact Proton réel ni accès à une archive réelle n'a eu lieu.
+Ne pas produire ce contact depuis Cloud pour contourner une qualification manquante.
+
+** Revue système
+
+La dernière dérivation Forgejo en échec confirmé est
+/nix/store/zqa9vzyasrx9c2byb55qwak3cii7wbl7-vm-test-run-mrjam-forgejo-policy-independent.drv ;
+log /workspace/shared/mrjam-declarative-nix/forgejo-systemd-acl-build.log.
+Le correctif ACL ultérieur n'est ni retesté en VM ni relu indépendamment.
+La fixture worker-systemd.nix s'appuie sur worker-validator-fixture.py et
+worker-client-fixture.py ; aucune exécution n'est acquise.
+
+* Reprise technique dès que l'exécuteur redevient disponible
+
+1. Lire AGENTS.md et les états Git sans écraser les modifications.
+   Récupérer ce nouveau commit distant sans reset/rebase automatique du travail
+   sale ; l'ajout documentaire distant doit être intégré sans perte.
+2. Inspecter uniquement les résultats synthétiques des sessions interrompues ;
+   un PID, fichier ou dérivation présent ne signifie pas que le test a réussi.
+3. Arrêter si encore vivant le helper local Docker bda372c24f28
+   (charming_mendeleev, label mrjam.scope=local-declarative-synthetic),
+   sleep1800 initialisé vers19:33UTC. L'arrêt n'a pas pu être exécuté pendant
+   l'indisponibilité ; il était prévu auto-expirant.
+   Ne pas arrêter les services synthétiques partagés PostgreSQL/Nginx.
+4. Finaliser les corrections serveur, MCP Audition, workers Vision et leurs
+   tests ; commits de composants, puis commit plateforme et gitlinks exacts.
+5. Construire le nouveau serveur Nix depuis ces sources verrouillées, vérifier
+   ses artefacts, qualifier le runtime public, navigateurs, HTTP/MCP, SQL,
+   ressources et unités systemd. Ne pas réutiliser l'ancien binaire Rust
+   fc2d7bp82ayj2f77fd2ac3h5jw1zr6qr… comme preuve de ces changements.
+6. Fermer l'admission des workflows, exécuter le pipeline réel sous quotas,
+   qualifier l'autorité de validation et le collecteur indépendant.
+7. Finaliser le module machine VPS depuis ses véritables références, sans
+   copier le matériel de Spectre, augmenter stateVersion, ou activer les
+   références historiques inactives. Réconcilier notamment les règles HBA
+   historiques mkForce avec le nouvel accès peer.
+8. Achever exécuteur borné, sauvegarde/restauration et migrations qualifiées
+   sans exposition des données aux agents ; distinguer retour applicatif et
+   restauration de données. Identifier génération, artefacts, préconditions,
+   contrôles et opération humaine initiale exacts avant mise en service.
+
+Outils locaux connus : Rust1.99.1, Elm0.19.1, Nix2.34.8 ;
+nixpkgs6f06d204d8f2d8761d9da78778745974a3216381,
+NAR sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE=.
+Wrapper operations/tools/nix-local.sh ; store dans volume
+mrjam-declarative-nix-store-20261030.
+Le disque était contraint (environ5–7GiB libres) ; ne pas relancer toutes les
+compilations simultanément ni effacer les preuves/caches utilisés par un autre chantier.
+
+* Préconditions externes restantes
+
+La source de vérité souhaitée est bien MrJ-am/vps-infrastructure, selon
+l'utilisateur. Cela ne prouve pas quelle source/génération est actuellement
+installée. Le checkout publié contient encore des références historiques
+inactives ; la source machine réellement utilisée reste à rapprocher.
+
+Le relais Spectre a été demandé : exécuter seulement la première partie du
+prompt spectre-relais.txt et transmettre les références de code non secrètes.
+Ce retour n'est pas encore arrivé. Ne pas demander d'export de /etc/nixos,
+d'historique privé, de .ssh, de journal, de base ou de sauvegarde.
+
+La mise en service demeure bloquée par les preuves techniques manquantes,
+l'absence de capacité de production bornée qualifiée et l'indisponibilité
+actuelle de l'exécuteur, pas par une nouvelle demande d'autorisation générale.
