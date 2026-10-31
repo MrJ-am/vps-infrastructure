@@ -1,0 +1,35 @@
+{
+  "authorization_header_supplied": false,
+  "branch": "declaratif-20261030",
+  "checked_at": "2026-10-31T22:34:33.827845+00:00",
+  "curl_configuration_disabled": true,
+  "downloads": {
+    "archive": {
+      "bytes": 430080,
+      "http_status": 200,
+      "matches_local_bytes": true,
+      "sha256": "e9167d1024528806a624bf99ae70b983717b0a3a182bd7fb0d2e946ead38669f",
+      "url": "https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/9885278bff4af859f70140aeb0fc2e66171387b0/operations/bootstrap-provenance/remise-20261031/mrjam-observation-provenance-20261031.tar"
+    },
+    "prompt": {
+      "bytes": 4896,
+      "http_status": 200,
+      "matches_local_bytes": true,
+      "sha256": "356f5ddb0c3fcccbe127ae3c13d7c3ef0020ce7d6ebce5632535bda8503cd30d",
+      "url": "https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/476429f826fb6582c1228a674e657d9b5ce26e70/operations/bootstrap-provenance/ACCES-GITHUB.txt"
+    },
+    "qualification": {
+      "bytes": 5337,
+      "http_status": 200,
+      "matches_local_bytes": true,
+      "sha256": "f16e5a09e217f43a83eb47062400bc91eb6517bb170d0a7a9eca5888c769ef7e",
+      "url": "https://raw.githubusercontent.com/MrJ-am/mrjam-validation/d1f5997a6320feb7bc3c2e7c4076f4c8a82226ec/operational-review/provenance-systemd-pass-20261031.json"
+    }
+  },
+  "original_observation_archive_unchanged": true,
+  "production_access": false,
+  "production_activation": false,
+  "published_infrastructure_commit": "476429f826fb6582c1228a674e657d9b5ce26e70",
+  "published_validation_commit": "d1f5997a6320feb7bc3c2e7c4076f4c8a82226ec",
+  "schema_version": 1
+}
