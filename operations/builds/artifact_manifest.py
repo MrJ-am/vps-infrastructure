@@ -11,7 +11,7 @@ from prepare import directory_descriptor, regular_bytes
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--inputs", type=Path, required=True)
-parser.add_argument("--artifact", choices=("rust-server", "mateval-elm"), required=True)
+parser.add_argument("--artifact", choices=("rust-server", "mateval-elm", "vision-journal-adoption"), required=True)
 args = parser.parse_args()
 output_directory = directory_descriptor(args.output)
 if (args.output / "artifact.json").exists() or (args.output / "artifact.json").is_symlink():

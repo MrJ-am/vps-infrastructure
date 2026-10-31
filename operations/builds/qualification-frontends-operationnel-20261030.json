@@ -1,0 +1,183 @@
+{
+  "artifacts": {
+    "audition": {
+      "artifact_manifest_sha256": "73044b762807d1c5d6f20cdaea668ddc7c92d3b68dd0d90f4aa002759e51e587",
+      "drv_path": "/nix/store/nhcmvnipclkplislf0ff0a9a3z66qp15-mrjam-audition-elm-50bbcfa65b7c.drv",
+      "mount": "/",
+      "nar_hash": "sha256-GJLbiNTOGkFcWzfHzw9ZNnfQbL+dTRqgiNrMrzEs/cw=",
+      "nar_size": 3730464,
+      "payload_bytes": 3695618,
+      "payload_files": 95,
+      "payload_prefix": "share/mrjam/audition/",
+      "runtime_references": [],
+      "store_path": "/nix/store/57y8s7zb9hm3c3m1rc3d4m4hcqchv6z5-mrjam-audition-elm-50bbcfa65b7c"
+    },
+    "log": {
+      "artifact_manifest_sha256": "0da3a226c890b83fc157bae323d5f1f54525944d415e5553087818ecf084245d",
+      "drv_path": "/nix/store/69lz1vss24p1c86fxw2fb16yxihw13bh-mrjam-log-elm-50bbcfa65b7c.drv",
+      "mount": "/",
+      "nar_hash": "sha256-TqKwwssxpDVNxff3e8oU6hsEmCDW74+/bmv7rk5ehFE=",
+      "nar_size": 553168,
+      "payload_bytes": 548961,
+      "payload_files": 8,
+      "payload_prefix": "share/mrjam/log/",
+      "runtime_references": [],
+      "store_path": "/nix/store/ab1j5g6k8w8vig47lbjm2jjm294aq95v-mrjam-log-elm-50bbcfa65b7c"
+    },
+    "mateval": {
+      "artifact_manifest_sha256": "4ba21c4b0bda422be1a60e08639dd486642829b1539d6e5c8793f9fe45345816",
+      "drv_path": "/nix/store/jky92kh24490grp4j2xl07ayn50g4klh-mrjam-mateval-elm-preparation-ccde49f2a9b1.drv",
+      "mount": "/matheval/",
+      "nar_hash": "sha256-Z4+PwZ4hhUeZslj/CmofS8qZ9aAa6WP9PW2WrtD5eBc=",
+      "nar_size": 3834408,
+      "payload_bytes": 3795704,
+      "payload_files": 107,
+      "payload_prefix": "share/mrjam/mateval/",
+      "runtime_references": [],
+      "store_path": "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+    },
+    "vision": {
+      "artifact_manifest_sha256": "a1b03d1a4b84ff9569ff3f914664e91d67168e548c47ca3e61bdcd9b2c5eaf5a",
+      "drv_path": "/nix/store/b49iam959p4f1bac8zxsqkqzh00y4xi5-mrjam-vision-elm-99eace9df767.drv",
+      "mount": "/",
+      "nar_hash": "sha256-9RtAKxheBA2kMj0+NTENT/azZgX689ZN5TF0OQYxfp4=",
+      "nar_size": 1123272,
+      "payload_bytes": 1113918,
+      "payload_files": 23,
+      "payload_prefix": "share/mrjam/vision/",
+      "runtime_references": [],
+      "store_path": "/nix/store/a5sy4nqf9yf75pbbvrjb9rhjxn7axk8x-mrjam-vision-elm-99eace9df767"
+    }
+  },
+  "authority": "local_execution_evidence_not_deployment_approval",
+  "dependencies": {
+    "audition_katex": "0.18.7",
+    "elm": "0.19.1",
+    "elm_animator": "2.0.0",
+    "elm_format": "0.8.8",
+    "elm_ui": "1.1.8",
+    "log_and_audition_signature": "17194087eec9162bb5372221c43e1de0501dfe6a",
+    "mateval_katex_preserved": "0.16.11",
+    "node": "24.19.0",
+    "vision_signature": "17495b13cefa24473e37434b98336b27caec8cdf"
+  },
+  "deployment_authorized": false,
+  "exports": {
+    "mrjam-frontends-private-delivery.nix-export": {
+      "bytes": 9242168,
+      "sha256": "02ce25a2a83515496427ccf739b2adaf3f5a26344c753d7af4fa67c5a6dd3f90"
+    },
+    "mrjam-frontends-private-delivery.nix-export.gz": {
+      "bytes": 3186905,
+      "sha256": "31be5c13f17c792b46c8600a72f0da49e2b0f9fd271525ca22f2e0b4aeab008e"
+    }
+  },
+  "historical_evidence_preserved_sha256": {
+    "elm-reuse-operationnel-20261030.json": "391ee9069bab4a7a62044324712181cca582d1531fd2541821d3e508de6b4ef8",
+    "qualification.json": "3d96b41aa5f91adb16bf8f9792ca69cdef648ff92d65997606db451ea8f082dd",
+    "sources.lock.json": "f8cc5fbce40ecf2ff50e27c3dae848594143a41714ac3a9e4fa730606a4bbb87"
+  },
+  "initial_failed_attempt": {
+    "log_sha256": "8794e3bfa27b1f131c080b64dee432262ee97bbfd5d64b479c977410f04b73cc",
+    "prefetch_result_sha256": "fa2ea98a65df5905888635aa35e27acbe2c5b5bee92160ae0f9303c128e29d6b",
+    "reason": "Elm formatter0.8.8 absent from local Nix cache; network-disabled build refused missing dependencies",
+    "resolution": "Prefetch exact pinned formatter from cache.nixos.org, then successful network-disabled build and rebuild; no expected content hash changed"
+  },
+  "materialization": {
+    "independent_fresh_materialization_same_hash": true,
+    "resource_lock_sha256": "1bb48635b0a47ee13f502676e9e9187484e642c654a0e7951c9614754a136815",
+    "sha256": "2acaa86daf63ddd9b68b3393e1576bbcb148d6f929a6f399036b2d067405fb42",
+    "source_files": 481,
+    "source_lock_sha256": "226c11b33446aa3f5447566e64559dfe506bac722c2e48616d1891a624db89b1"
+  },
+  "nix": {
+    "isolation_claim": "Local repeatability only; not a VPS/runner confinement proof",
+    "network": "none during all build/rebuild and export runs",
+    "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+    "sandbox": false,
+    "version": "nix (Nix) 2.34.8"
+  },
+  "not_covered_by_this_receipt": [
+    "HTTP/browser behavior with final Rust binary",
+    "Other three historical frontends are qualified separately, no new compilation claimed here",
+    "Production identity provider, database, migration or deployment",
+    "Independent adoption of frontend rule authority"
+  ],
+  "production_access": false,
+  "production_ready": false,
+  "recorded_at_utc": "2026-10-30T19:01:39.623610+00:00",
+  "runtime_copy": {
+    "copied_payload_hashes_reverified": true,
+    "distribution": "Local only; reserved resources must not enter public preparation archives",
+    "metadata_sha256": "0328bb7e7329f08d09e7c2c8d623937ca91f7daa9e972e5496a59bf4302fa423",
+    "path": "/workspace/shared/mrjam-frontends-runtime-20261030"
+  },
+  "schema_version": 1,
+  "scope": "Three new optimized Elm frontends and exact reuse of unchanged Mateval; closed local build/export only",
+  "source_commits": {
+    "log_and_audition": "50bbcfa65b7c068d406c2119d1d82724b1fe5aa1",
+    "mateval_current_backend": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+    "mateval_frontend_build": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+    "vision": "99eace9df76777c89bbd992952738b3f57608801"
+  },
+  "tested_tools_sha256": {
+    "check_frontend_site.py": "7e961bd309ac2a7424bd22e5f04de5a7cdcd28354d398675f84d48d4bb34f21c",
+    "elm-dependencies.lock.json": "22157531d0f5e3759bcfc87289e94e0f0941c12007f859eaeae275416af13421",
+    "export_frontends.py": "c8036b15d3a0a011e567fa083f021401339a5485ca66a4f12de570dc036c37e1",
+    "fetch_frontend_resources.py": "b627e28687fe7cb523a360701fa649dfc1d40cf8a7e068b8df14281a93a37b88",
+    "frontend-resources-operationnel-20261030.lock.json": "1bb48635b0a47ee13f502676e9e9187484e642c654a0e7951c9614754a136815",
+    "frontend-sources-operationnel-20261030.lock.json": "226c11b33446aa3f5447566e64559dfe506bac722c2e48616d1891a624db89b1",
+    "frontend_artifact.py": "3b6902dcf2764733c30806eb048958abc7d5df39fde9af6b5ca9908e6d064106",
+    "frontend_inputs.py": "c0aea62dc647d2ac14c462299bb62e1870fe8deb2cab61cd1ea57222e2c1a14b",
+    "frontends.nix": "efedb3b90278b003595bd0066395bd0f748b234cbf7a95860b528f74933bc02c",
+    "prepare.py": "59b5a518636c47bf529514c88ad47c7bb7cd04b60fcc1ee8108680d13dadf6fe",
+    "prepare_frontends.py": "3c9bd4df26020daf195d5812be2617ad727ab2021bdcecdd0c600aa084aa38ae",
+    "reuse_frontend.py": "8dd69dcb4812268fcaa287fc324e10d60a5456198b961963b3afbf199be687bf",
+    "select_frontends.py": "9aafc0f7440c71d4d91c3067c1e6f650cd823826b7e5b5af9f5e9a6752bc2e73",
+    "select_sources.py": "b4b84a010ec60e2f574ab13391fae86230feba48508e75e1a2a7d87eacd71918",
+    "test_build_inputs.py": "e5591bc2217bdb79e891268d88c490c8f86081f72c323ecca0929db6ad1acb45",
+    "test_frontend_inputs.py": "d99eeeb363b566226e00c76cb0049a0570373c17933b748180d1c4f7528df5f9",
+    "test_frontend_resources.py": "5bd3fee084a7b911e8fcba25907a0cb11ef237619c6ce563c2e10d0c95a78fb7",
+    "test_frontend_site.py": "5c428022150fb0a26f2e16070aab3ff3a3a6ad6da72849147948f673f49449b9",
+    "test_source_selection.py": "69b6d39174d1d6c6ac27ef15246837af5446ee97dc1c66000da05951f139b9a7",
+    "toolchains.lock.json": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae",
+    "toolchains.nix": "d3f8c20761216ac22b426d41d10e817a2583ab8ebf866cdb63ac7c2a92de0fb4"
+  },
+  "tests": {
+    "nix_store_verify_and_payload_hashes": {
+      "export_result_sha256": "d617a827949475e47faf85757a7b1c286c547bbbbba18ec6970df91a6fd43b74",
+      "outputs": 4,
+      "passed": true
+    },
+    "offline_nix_build": {
+      "exit_code": 0,
+      "log_sha256": "9e644d2e54c8e95d14252a943503599f3e2765c0634c76c5afeea3fa952abfe7",
+      "mateval_recompiled": false,
+      "new_optimized_entrypoints": [
+        "vision/interface/src/Main.elm",
+        "interface-log/src/Main.elm",
+        "interface-audition/src/Main.elm"
+      ],
+      "post_build_html_css_local_reference_check": true,
+      "result_sha256": "f9b25ec9ef4ac2a87db654b400506d8ab17ff0a2e434137a78e9be1e5509f0a3"
+    },
+    "offline_nix_rebuild": {
+      "exit_code": 0,
+      "log_sha256": "770a5f505c46f4edf80bf3a2627da35a969a1dc50664cf5af867607d82a7d746",
+      "result_matches_original": true,
+      "result_sha256": "f9b25ec9ef4ac2a87db654b400506d8ab17ff0a2e434137a78e9be1e5509f0a3"
+    },
+    "python_boundary_tests": {
+      "failed": 0,
+      "log_sha256": "2933d3d0241f9e20e9988335a7bb279cbeab04b8411462df981bae060385ad4d",
+      "passed": 39
+    },
+    "resource_fetch_replay": {
+      "frontend_assignments": 92,
+      "katex_dist_files": 83,
+      "result_sha256": "8744a6c8825d18c4a3490c8815fd227b1aa6c0749a7c713467f694c4794d2cf2",
+      "signature_blobs": 6,
+      "unique_files": 89
+    }
+  }
+}
