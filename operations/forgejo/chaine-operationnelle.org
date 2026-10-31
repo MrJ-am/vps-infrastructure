@@ -10,6 +10,12 @@ sept manifestes frontend changent. Les qualifications antérieures ci-dessous
 restent conservées. Les listeners Cloud remplacent systemd dans ce scénario ;
 les modules, l’autorité de production et le staging de confiance restent distincts.
 
+La [[file:STAGING-SOURCES.org][publication déclarative des sources]] est maintenant qualifiée séparément
+sur les mêmes 815 fichiers : 17 tests natifs, 17 tests Nix, 17 assertions et
+huit groupes système. Elle remplace la copie manuelle depuis des paquets déjà
+sélectionnés, avec verrou commun au worker, reprise et rétention. Le fetch
+depuis la forge et l'adoption protégée du catalogue restent à raccorder.
+
 * Sources exécutables et frontières
 
 =reconcile.py= applique les ressources déclarées des neuf dépôts avec plan,

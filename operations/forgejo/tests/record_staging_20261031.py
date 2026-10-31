@@ -38,9 +38,9 @@ def main():
     vm = builds['staging-systemd-20261031-03']
     package_current = subprocess.check_output(['nix','eval','--offline','--raw','--file',
         str(BUILD/'staging-package-20261031-01.nix'),'--apply','p: p.drvPath']).decode()
-    vm_current = subprocess.check_output(['nix','eval','--offline','--raw','--file',
+    vm_current = subprocess.check_output(['nix-instantiate',
         str(VALIDATION/'operational-review/staging-sources-systemd.nix'),'--arg','nixpkgs',
-        '/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source','--apply','p: p.drvPath']).decode()
+        '/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source']).decode().strip()
     assert package_current == package['drvPath'] and vm_current == vm['drvPath']
     result_path = Path(vm['outputs']['out'])/'staging-systemd-assertions.json'
     result = read(result_path)
@@ -89,6 +89,9 @@ def main():
         'execution':read(OUTPUT/'staging-systemd-20261031-03-execution.json'),
         'source_sha256':{str(p):sha(p) for p in sources},
         'logs_sha256':{p.name:sha(p) for p in OUTPUT.glob('staging-*.log')},
+        'recording_failure_preserved':{
+            'log_sha256':sha(OUTPUT/'record-staging-20261031-01.log'),
+            'reason':'nix eval --apply selected drvPath on the uncalled fixture function. Explicit nix-instantiate applies the pinned argument and compares the same derivation; no build or expectation is changed.'},
         'earlier_systemd_attempt':read(OUTPUT/'staging-systemd-20261031-01-execution.json'),
         'second_systemd_attempt':read(OUTPUT/'staging-systemd-20261031-02-execution.json'),
         'second_systemd_failure_reason':'Repeated publication unnecessarily copied and verified an already checked tree and reached the unchanged 120s unit timeout at 20% CPU. The new implementation rechecks both published and store bytes without copying an existing proposal. Unit limits are unchanged.',

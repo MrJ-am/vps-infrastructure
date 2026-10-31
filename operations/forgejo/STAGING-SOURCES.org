@@ -94,7 +94,15 @@ La suite =mrjam-validation/operational-review/staging-sources-systemd.nix=
 emploie les 815 fichiers publics, 6413759 octets de code et manifeste exact
 =5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087=
 de l'intégration précédente. Elle n'exécute pas le compilateur. Les résultats
-effectifs sont à lire dans le reçu de cette suite, jamais déduits de son code.
+effectifs sont consignés dans [[file:qualification-staging-20261031.json][le reçu de cette suite]] : 17 tests natifs,
+17 tests du paquet Nix, 17 assertions du module et huit groupes système
+réussis. Le lancement système complet a duré 610,402 secondes, en émulation
+TCG. La limite de chaque invocation de l'unité reste 120 secondes ; le temps
+total comprend les répétitions, refus, reprises et remplacements du catalogue.
+Le paquet qualifié est
+=/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1=.
+Les dérivations courantes et les contenus transitifs sont revérifiés par
+=tests/record_staging_20261031.py= avant l'enregistrement du reçu.
 
 Ce lot ne récupère pas automatiquement les sources depuis Forgejo, n'adopte
 aucune politique protégée et ne fournit pas d'identité d'attestation. La preuve

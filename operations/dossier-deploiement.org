@@ -33,7 +33,7 @@ inactif ; il n'est ni importé ni présenté comme un système activable. Il res
 dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
 
 Le =flake.nix= exporte les modules Rust, inventaire, Forgejo, passerelle,
-politique Forgejo, runner, worker, collecteur, archiviste, rejeu, cycle,
+politique Forgejo, runner, worker, publication des sources, collecteur, archiviste, rejeu, cycle,
 fermeture, admission, adoption d'admission et accès PostgreSQL.
 =nixos/vps-preparation.nix= conserve une composition préparatoire désactivée.
 Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
@@ -120,8 +120,10 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    distinctes ; les VM du worker et du runner utilisent un vérificateur inventé.
    Le pipeline Rust/Elm complet passe aussi de bout en bout avec Forgejo,
    runner, collecteur et worker réels : 17 contrôles et 74 étapes du
-   vérificateur réussis, voir =forgejo/INTEGRATION-COMPLETE.org=. Le staging
-   de confiance et l’attestation protégée restent à raccorder.
+   vérificateur réussis, voir =forgejo/INTEGRATION-COMPLETE.org=. La publication
+   déclarative des mêmes 815 sources a ensuite passé sa qualification distincte :
+   =forgejo/STAGING-SOURCES.org=. La récupération depuis la forge, l'adoption
+   protégée du catalogue et l’attestation restent à raccorder.
    Le contrôleur de mise en service reste en chantier. Un plan ou un statut
    Actions ne constitue pas une preuve authentifiée de qualification.
 7. =runtime/= lie configuration publique, manifeste serveur et manifestes Elm,
@@ -160,6 +162,7 @@ autre binaire :
 | Même ELF, sept sites, navigateurs et systemd | 442 ressources HTTP exactes ; 10 groupes navigateur ; 7 groupes système | =runtime/qualification-runtime-complete-systemd-20261031.json= et reçus navigateur/static de mrjam-validation ; identité synthétique |
 | Forgejo et runner complets sous systemd | 7 groupes réussis, 25 assertions runner et 17 worker | =forgejo/forgejo-runner-systemd-pass-20261031.json= ; compilateur inventé dans cette VM, pipeline réel testé séparément |
 | Chaîne Forgejo/runner/collecteur/worker avec compilateur réel | 17 contrôles et 74 étapes du vérificateur réussis ; un seul build, second dispatch servi depuis cache vérifié | =forgejo/qualification-complete-chain-20261031.json= ; deux conteneurs Cloud hors réseau, entrées scellées au préalable, pas d’autorité protégée |
+| Publication déclarative des mêmes 815 sources | 17 tests natifs, 17 tests Nix, 17 assertions et 8 groupes système ; permissions, verrou, idempotence, reprise simulée et rétention | =forgejo/qualification-staging-20261031.json= ; même manifeste, pas de fetch ou d’adoption protégée, aucun test de perte électrique |
 | Rejeu normal Vision 51e7bcd6 et module | 32 tests Nix, 35 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-replay-systemd-20261031.json= ; clients privés inventés, restauration complète distincte |
 | Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
 | Cycle de préavis 47286a8a et module | 34 tests Nix, 37 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-cycle-systemd-20261031.json= ; annulations/reprises natives, SMTP refusé en VM, acceptation/délai/archive simulés explicitement |
@@ -261,10 +264,15 @@ La procédure détaillée et les formats sont dans =release/README.org=.
 Le planneur s'exécute localement sur manifeste, politique, observation, reçus
 et racine d'artefacts explicitement sélectionnés. Les gabarits null sont refusés.
 Il retourne toujours =production_authorized=false= et n'exécute aucune commande.
+Son ancien format à cinq dépôts ne représente pas encore le graphe final :
+les travailleurs Vision et plusieurs ressources de style ont des révisions
+distinctes. Les sélections de revue identifient ces composants, mais le manifeste
+de génération et son contrôleur doivent encore les relier sans substitution.
 
 1. Clore les blocages ci-dessus ; adopter les règles indépendamment du candidat.
-   Fixer les commits des cinq dépôts, gitlinks, locks, chaque fichier, dérivation,
-   sortie store, NAR hash et fermeture, ancienne et nouvelle générations.
+   Fixer toutes les révisions par composant, y compris les travailleurs et les
+   variantes de style, gitlinks, locks, chaque fichier, dérivation, sortie store,
+   NAR hash et fermeture, ancienne et nouvelle générations.
 2. Vérifier par le contrôleur la provenance et la signature des preuves,
    l'absence de rejeu, les droits et références de secrets, puis relier le plan
    à la cible et à une approbation explicite. Le contrôleur est encore bloquant.

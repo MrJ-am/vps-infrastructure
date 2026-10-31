@@ -91,8 +91,11 @@ sources versionnées ; aucune sortie inventée ne remplace le compilateur.
 
 Les sources ont été préparées et scellées avant le dispatch par les outils
 versionnés ; cet essai n’automatise pas leur transfert depuis une forge de
-production. Le staging de confiance, l’adoption protégée des règles et l’identité
-d’attestation restent à raccorder au backend autorisé. Les écarts de génération,
+production. Le composant de [[file:STAGING-SOURCES.org][publication des sources]] a depuis sa qualification
+système distincte sur les mêmes 815 fichiers et le même manifeste. Il ne
+refait pas cet essai Forgejo/compilateur. Le fetch de confiance, l’adoption
+protégée des règles et l’identité d’attestation restent à raccorder au backend
+autorisé. Les écarts de génération,
 UID/GID, stateVersion et builds du VPS restent inconnus. Le retour borné
 =adoption-v2.json= est toujours attendu. L’IdP/SSO réel, les références de secrets,
 la marge CI, les sauvegardes et la bascule/retour après migration de données
