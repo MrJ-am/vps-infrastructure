@@ -1,0 +1,80 @@
+#+title: Cycle des préavis — exécutable, état privé et droits déclaratifs
+#+language: fr
+
+Le candidat =vision@47286a8a808b74909bfc647ff8d10e281b4982e4= fournit
+=vision-cycle=. Les 37 tests natifs, formatage et Clippy passent ; voir
+=vision/docs/qualification-cycle-cli-20261031.json=. Le build verrouillé et
+le test NixOS sont consignés séparément. Le gitlink de la plateforme et les
+artefacts archiviste/rejeu déjà qualifiés ne sont pas remplacés.
+
+=../builds/qualification-vision-cycle-build-20261031.json= consigne 34 tests
+Nix hors PostgreSQL et l'ELF SHA-256
+=ac414571e3141c9c3f88094504401b5789bbb21984151dab34405c2306aed45a=,
+sortie =/nix/store/phrp20jmipdai9z3c3k13fq8srcvh734-mrjam-vision-cycle-0.1.0-47286a8a808b=,
+NAR =sha256-aNncD6EjEDjaEo/qGLM/Fh7IlcA1Ar8YYUkuzubsH+4==.
+Le même ELF passe huit groupes NixOS TCG en 254,33 s :
+=qualification-vision-cycle-systemd-20261031.json=. La dérivation du test et
+l'intégrité récursive sont recontrôlées. Cette construction ultérieure n'est
+pas incluse dans le premier paquet de revue à onze sorties ; ses pins sont
+conservés séparément pour le prochain assemblage.
+
+* Traitement et reprise
+
+Les seuls verbes sont =check-config=, =check-local=, =initialize-state= et
+=run-once=. La configuration ferme les bases, l'état SQLite et les références
+de credentials ; les rôles =vision_cycle= et =vision_journal_writer= passent
+par le socket Unix fixe. L'initialisation ne crée aucun rôle ou schéma
+PostgreSQL. Le passage normal refuse une file absente ou incompatible.
+
+Le worker récupère l'adresse vérifiée par le client historique de cycle,
+enregistre le courrier durablement, puis attend l'acceptation SMTP. SQL fixe
+ensuite le délai de trente jours. Une annulation avant acceptation empêche
+l'envoi ; après acceptation, elle produit un seul courrier d'annulation.
+Une échéance ne permet l'effacement qu'après acquittement externe de l'archive.
+Les erreurs de transport conservent un message et son délai de reprise ; un
+crash après acceptation peut répéter le même Message-ID. Il ne faut pas
+présenter cette garantie comme une livraison SMTP exactement une fois.
+
+=check-local= contrôle les credentials, la structure SQLite et les capacités
+SQL. Il n'atteste pas la disponibilité de l'IdP ou de Proton. Un passage réussi
+peut avoir laissé des courriers en attente et des intentions non acquittées :
+la readiness globale doit aussi considérer ces dépendances et leur adoption.
+Le CLI ne retourne ni adresse, identifiant, message, requête SQL ou secret.
+
+* Module NixOS et adoption
+
+=../nixos/mrjam-vision-cycle.nix= est désactivé par défaut. Le compte dédié est
+verrouillé et sans groupe supplémentaire ; aucune unité ou timer ne démarre
+automatiquement. L'état =/var/lib/mrjam-vision-cycle/courriels.sqlite= appartient
+au service, fichier 0600 dans répertoire 0700. La file conserve ses messages
+acceptés/annulés puis purge leur corps après trente jours selon la politique
+existante. La limite SQLite déclarée n'est pas un quota de système de fichiers
+prouvé pour un état historique déjà volumineux.
+
+L'unité d'initialisation est exclusive du traitement ; elle reçoit seulement
+le credential SMTP. L'unité normale reçoit aussi le credential du client
+Keycloak de cycle. Le module fixe 256 Mio, 32 tâches, 20 % d'un CPU,
+=TimeoutStartSec=900= et un délai du CLI de 840 secondes. Le relais SMTP est
+fixé dans le code ; l'accès réseau du compte n'est pas présenté comme une ACL
+limitée à ce domaine. Les rôles SQL exacts et bases distinctes sont exigés.
+
+Les vingt assertions propres au module et les régressions archiviste (16),
+rejeu (20) et accès PostgreSQL (21) passent :
+=qualification-vision-cycle-module-20261031.json=. Ce sont des évaluations,
+pas une preuve d'état du VPS ni de livraison réelle de courriel.
+
+La VM confirme l'initialisation explicite, le refus d'une file absente ou
+corrompue, les credentials et limites effectifs, Unix peer, refus d'un autre UID
+et de droits SQL élargis, l'absence de délai après refus SMTP et la reprise du
+même message. Elle simule séparément l'acceptation du préavis, le temps écoulé
+et l'acquittement d'archive pour vérifier le seuil d'effacement et préserver
+un compte tiers ; cela n'est pas un succès SMTP réel. Le scénario natif de
+livraison/annulation et le test TLS demeurent des preuves complémentaires.
+
+Avant adoption : rapprocher les identités et fichiers existants sans contenu,
+qualifier l'import de la file historique, vérifier le journal indépendant,
+les capacités exactes de l'IdP et les références SMTP, installer l'artefact
+retenu puis initialiser uniquement un état neuf explicitement approuvé.
+Ne jamais remplacer une file historique par une file vide pour obtenir un
+succès. Arrêter cycle, admissions et autres producteurs avant une restauration ;
+la reprise normale de ce worker ne remplace pas le rejeu complet du journal.
