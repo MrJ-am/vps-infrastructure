@@ -6,9 +6,12 @@ Candidat inactif, sans configuration machine de production. Le module
 =../nixos/mrjam-inventory.nix= est désactivé par défaut. Son import ne déclenche
 aucune activation et ne constitue aucune autorisation. La clé publique dédiée
 fournie par l'utilisateur est versionnée dans =../targets/keys/mrjam-inventory.pub=
-et référencée par la composition préparatoire désactivée. Les UID/GID existants,
-la correspondance de cette clé avec l'accès installé, la révision système active
-et sa configuration complète restent des préconditions de la revue du système final.
+et référencée par la composition préparatoire désactivée. Le retour V2 reçu
+le 31 octobre indique UID/GID =980:980= ; ces valeurs fixent désormais le
+candidat inactif et son paquet =inventory-vps-candidate=. Voir
+[[file:../targets/ADOPTION-OBSERVEE-20261031.org][le rapprochement et ses limites]]. La correspondance de cette clé avec l'accès
+installé, le précontrôle exact, la source de la génération active et sa
+configuration complète restent des préconditions de la revue du système final.
 
 Les trois fichiers de =probe/= proviennent, octet pour octet, de la remise
 vérifiée. =PROVENANCE.json= et =policy.json= donnent leurs références. Le commit

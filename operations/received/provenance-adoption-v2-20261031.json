@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "received_on": "2026-10-31",
+  "source": "User-supplied attachment adoption-v2.json after the Spectre handoff",
+  "report": {
+    "path": "20261031/adoption-v2.json",
+    "bytes": 1529,
+    "sha256": "5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4"
+  },
+  "sender_supplied_sha256": null,
+  "hash_basis": "SHA-256 calculated at reception; not a signature or an independently supplied expected hash",
+  "authority": "unverified_observation",
+  "validation": {
+    "result": "accepted",
+    "command": "python3 -I -S operations/probes/adoption-v2/validate_report.py < adoption-v2.json",
+    "exit_code": 0,
+    "original_probe_SHA256SUMS_checked": true,
+    "validator_sha256": "c82e66018ac9f35ccb3b52a33a9ec7ab2f54f55962410a55cd8c50134e1625d1",
+    "schema_sha256": "4cd2b1949bb2229a3254ae5f0dd98608ce5683bf5e7bee28a297ad95b3d03036"
+  },
+  "production_access_by_cloud": false,
+  "proof_of_nar_verification": false,
+  "proof_of_installed_source_revision": false,
+  "limits": [
+    "No authenticated producer identity or collection timestamp is provided",
+    "A valid report does not prove the preceding Nix import and integrity steps",
+    "The store name hash field is neither a NAR hash nor a Git revision",
+    "No public key contents, password state, effective SSH policy or configuration stateVersion are observed"
+  ]
+}

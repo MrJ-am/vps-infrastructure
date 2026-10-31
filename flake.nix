@@ -11,6 +11,7 @@
       };
       rustEvaluation = import ./operations/tests/module-evaluation.nix { inherit nixpkgs; };
       inventoryEvaluation = import ./operations/tests/inventory-evaluation.nix { inherit nixpkgs; };
+      vpsPreparationEvaluation = import ./operations/tests/vps-preparation-evaluation.nix { inherit nixpkgs; };
       forgejoEvaluation = import ./operations/forgejo/tests/module-evaluation.nix { inherit nixpkgs; };
       gatewayEvaluation = import ./operations/tests/gateway-evaluation.nix { inherit nixpkgs; };
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
@@ -46,6 +47,7 @@
       # Deliberately no production nixosConfiguration or default deployable image.
       lib.qualification.rust = rustEvaluation;
       lib.qualification.inventory = inventoryEvaluation;
+      lib.qualification.vpsPreparation = vpsPreparationEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
       lib.qualification.gateway = gatewayEvaluation;
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
@@ -63,7 +65,9 @@
         (entry: entry.assertion) inventoryFixture.config.assertions;
       packages.${system} = {
         inventory-synthetic = inventoryFixture.config.services.mrjamInventory.package;
+        inventory-vps-candidate = import ./operations/targets/inventory-candidate.nix { inherit pkgs; };
         observe-adoption = pkgs.callPackage ./operations/bootstrap-observation/package.nix { };
+        observe-provenance = pkgs.callPackage ./operations/bootstrap-provenance/package.nix { };
         inventory-sshd-config = inventoryFixture.config.environment.etc."ssh/sshd_config".source;
         openssh-qualified = pkgs.openssh;
         forgejo-preparation = pkgs.callPackage ./operations/forgejo/package.nix { };
@@ -83,6 +87,12 @@
       '';
       inventory-module = pkgs.runCommand "mrjam-inventory-module-evaluation" {
         result = builtins.toJSON inventoryEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      vps-preparation-module = pkgs.runCommand "mrjam-vps-preparation-module-evaluation" {
+        result = builtins.toJSON vpsPreparationEvaluation;
       } ''
         mkdir -p "$out"
         printf '%s\n' "$result" > "$out/result.json"

@@ -70,7 +70,8 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
 | vps-infrastructure source de vérité | Exigence confirmée par l'utilisateur | Alignement installé non démontré |
 | Compte impératif et refus SSH réels sur Spectre | Rapporté dans RESULTAT-SPECTRE.org | Revue locale distincte ; aucune observation Cloud directe |
 | Clé publique dédiée | Fournie par l'utilisateur, format Ed25519 validé localement | Versionnée sous targets/keys/mrjam-inventory.pub ; correspondance avec l'accès installé encore à vérifier |
-| Identité/limites du futur accès | Proposition testée localement | UID/GID existants encore inconnus ; adoption non qualifiée |
+| Identité de l'accès existant | V2 reçue, valide et non authentifiée | UID/GID 980:980 ; home/shell/groupes et métadonnées attendus concordants ; précontrôle exact et adoption encore à qualifier sur le VPS |
+| Profil et système courant | V2 reçue, valide et non authentifiée | Profil 56, champ store jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9 identique ; ni commit Git, ni NAR hash, ni stateVersion déduits |
 
 * Code livré et chaîne déclarative
 
@@ -207,15 +208,20 @@ sélection, sans modifier les anciennes archives.
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256
 =0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
-Le retour =adoption-v2.json= n'a pas encore été reçu. Le retour Spectre du
-31 octobre ne contient pas cette observation ; aucun alignement de la génération
-installée avec Git n'en est déduit.
-Un retour ultérieur signale =nar_verification / COMMAND_FAILED / 1= depuis
-Spectre vers le VPS. La [[file:bootstrap-observation/REPRISE-NAR-VERIFICATION.org][reprise publiée]] corrige l'activation implicite de
-=nix-command= dans la procédure. Cinq essais Nix réels et cinq tests du
-vérificateur réussissent dans Cloud, sans modifier le paquet. La cause réelle
-et le succès de la reprise sur le VPS restent à établir ; ce correctif ne
-constitue pas le retour d'observation attendu.
+Après le premier retour Spectre de préparation, un échec
+=nar_verification / COMMAND_FAILED / 1= a été signalé. La
+[[file:bootstrap-observation/REPRISE-NAR-VERIFICATION.org][reprise publiée]] corrige l'activation implicite de =nix-command= dans la
+procédure ; cinq essais Nix réels et cinq tests du vérificateur réussissent
+dans Cloud, sans modifier le paquet. La cause réelle du premier échec reste
+inconnue.
+
+Le retour =adoption-v2.json= est désormais reçu, conservé et accepté par le
+filtre V2 : SHA-256
+=5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4=.
+Les UID/GID observés fixent la préparation désactivée et le paquet candidat.
+Le [[file:targets/ADOPTION-OBSERVEE-20261031.org][rapprochement de la cible]] sépare les faits reçus des contrôles encore manquants.
+Ce retour ne prouve pas les vérifications de transfert et de NAR sur le VPS,
+ni l'alignement de la génération installée avec Git.
 
 =qualification/declaratif-20261030.json= est le relevé des contrôles exécutés,
 des artefacts construits et des limites. Les reçus des sous-lots gardent leurs
@@ -246,8 +252,8 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 
 | Blocage | État | Preuve minimale | Obtention autorisée/proposée |
 |---------+------+----------------+------------------------------|
-| Adoption du compte existant | Inconnu/bloquant | UID/GID, correspondance de la clé publique fournie avec celle installée, métadonnées et refus SSH effectifs, absence de conflit | Nouvelle sonde adoption-v2 après revue/autorisation distinctes ; préflight et essais administrateur sans export de secrets |
-| Assemblage complet du VPS | Inconnu/bloquant | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | Métadonnées bornées ; export sélectif des seules sources de configuration par l'administrateur, si nécessaire, jamais matériel de Spectre ni fichiers de données |
+| Adoption du compte existant | Identité et métadonnées observées ; adoption encore bloquante | Précontrôle exact avec UID/GID 980:980, clé/public code et politique SSH conformes, absence de conflit d'identité et continuité du retour | Paquet candidat lié au retour V2 ; préflight et essais administrateur bornés, sans export de secrets ; aucune nouvelle V2 demandée |
+| Assemblage complet du VPS | Profil 56 observé ; sources et assemblage encore bloquants | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | Référence Git non secrète de la dernière construction du VPS ; export sélectif de sources approuvées seulement si nécessaire, jamais configuration matérielle de Spectre ni données |
 | Builds en cours Forgejo/Kanidm/runner | Inconnu/bloquant pour changement de service | Versions/builds des services ciblés et compatibilité de migration | Nouveau contrôle fermé approuvé, lié aux unités fixes ; pas de shell/chemin/processus arbitraire |
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
@@ -258,9 +264,9 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |
 | Bascule/retour sans perte | Inconnu/bloquant | Continuité sessions/connexions, arrêt écritures/workers, temps mesurés et décision d'abandon | Répétition synthétique complète puis contrôles bornés approuvés, sans trafic réel envoyé au Cloud |
 
-La V2 prête à examiner est sous =probes/adoption-v2/=. Elle ne recueille que les
-identifiants numériques du compte, métadonnées de chemins fixes et une identité
-partielle de génération. Elle ne couvre pas les autres lignes. Les extensions
+La V2 sous =probes/adoption-v2/= a fourni le retour reçu. Elle ne recueille que
+les identifiants numériques du compte, métadonnées de chemins fixes et une
+identité partielle de génération. Elle ne couvre pas les autres lignes. Les extensions
 versions/ressources restent des opérations distinctes à spécifier et revoir
 lorsqu'elles seront nécessaires ; aucune interface générale n'est introduite.
 
