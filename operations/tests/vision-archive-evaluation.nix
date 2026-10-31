@@ -43,7 +43,8 @@ let
     noPrivateKeyReference = builtins.length service.serviceConfig.LoadCredential == 2;
     privateDurableState = service.serviceConfig.StateDirectoryMode == "0700";
     limits = service.serviceConfig.MemoryMax == "256M" && service.serviceConfig.TasksMax == 32
-      && service.serviceConfig.RuntimeMaxSec == 900;
+      && service.serviceConfig.Type == "oneshot" && service.serviceConfig.TimeoutStartSec == 900
+      && !(service.serviceConfig ? RuntimeMaxSec);
     noHostCapabilities = service.serviceConfig.CapabilityBoundingSet == "" && service.serviceConfig.NoNewPrivileges;
     peerOnlyFixedRole = lib.hasPrefix ''local "vision_journal_synthetic" "vision_journal_archiviste" peer map=mrjam_rust_slots'' pg.authentication
       && lib.hasInfix "mrjam_rust_slots mrjam-vision-archive vision_journal_archiviste" pg.identMap;
