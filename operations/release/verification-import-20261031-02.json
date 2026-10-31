@@ -1,0 +1,22 @@
+{
+  "authority": "unverified-local-test-result",
+  "limits": [
+    "Invented ELF header and assets; not application execution",
+    "Eight Nix outputs have not been built from actual pipeline artifacts yet",
+    "No policy adoption or production authority established"
+  ],
+  "production_authorized": false,
+  "schema_version": 1,
+  "sources_sha256": {
+    "operations/forgejo/tests/collect_local_outputs.py": "6e3c23bef76e80b8baa002e9a1b231b53cc87852ed9434e1136cef29b7a247b3",
+    "operations/release/import_qualified.py": "3f049224a87b3b7aea87fc82d6f99de5c628205d6b46fb5dbcf0ed9c80b5be11",
+    "operations/release/qualified-artifacts.nix": "77e59e8bd76862cddc9df251cac5f573e94623d290663b151e298c27dfdc525b",
+    "operations/release/tests/test_import_qualified.py": "fb949019cb8c8fc6458b408f744908a23adf72d9e95b1aa7d85f8aaf19b5c2e8"
+  },
+  "tests": {
+    "command": "python3 -B -m unittest discover -s operations/release/tests -v",
+    "log_sha256": "42b8b5805e088ba583e6ce4d3172da6ec617d34c85c88166a09318fc2f16b879",
+    "packaging_tests": 10,
+    "passed": 68
+  }
+}
