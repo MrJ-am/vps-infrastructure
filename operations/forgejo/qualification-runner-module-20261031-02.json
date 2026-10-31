@@ -1,0 +1,42 @@
+{
+  "assertions": 23,
+  "authority": "unverified-local-test-result",
+  "checks": {
+    "boundedCoordinator": true,
+    "credentialTraversalRejected": true,
+    "disabledInert": true,
+    "duplicateUidsRejected": true,
+    "fixedCollectorSocketOnly": true,
+    "fixedNftDestination": true,
+    "fixturePasses": true,
+    "mismatchedRulesRejected": true,
+    "missingCollectorRejected": true,
+    "missingFirewallRejected": true,
+    "missingUidRejected": true,
+    "missingWorkerRejected": true,
+    "noArbitraryNetwork": true,
+    "noAutomaticStart": true,
+    "noContainerGroup": true,
+    "noRegistrationTokenInDaemon": true,
+    "numericFirewallUidMatchesAccount": true,
+    "privateCredentialsByReference": true,
+    "renderedUnitKeepsPrivatePath": true,
+    "rootContainsOnlyPublicRuntime": true,
+    "separateArtifactOwner": true,
+    "separateIdentities": true,
+    "specializedAdmissionBeforeCandidate": true
+  },
+  "limits": [
+    "Synthetic UID allocation only; real identities and collision checks remain unknown",
+    "Runtime VM still in progress; evaluation is not an execution result"
+  ],
+  "production_access": false,
+  "result_sha256": "d2ad599e39788e3320b6b3e763ea1496585c74392c41c59171718cc7cd48256c",
+  "schema_version": 1,
+  "scope": "Nix module and rendered unit evaluation after immutable root mountpoint fixes",
+  "sources_sha256": {
+    "operations/forgejo/tests/runner-module-evaluation.nix": "f5c6b344c26c6ea94e44bcd413ee9354395735c0b203dfa2fb0d77aecb46ef7b",
+    "operations/nixos/mrjam-forgejo-runner.nix": "b564fcbf5ac868671290dbf81b83c9bb7f57b788a809c1e293b10c7b3f97b1a8"
+  },
+  "systemd_runner_qualified": false
+}

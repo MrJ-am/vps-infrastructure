@@ -1,0 +1,44 @@
+{
+  "assertions": 25,
+  "authority": "unverified-local-test-result",
+  "checks": {
+    "boundedCoordinator": true,
+    "credentialTraversalRejected": true,
+    "disabledInert": true,
+    "duplicateUidsRejected": true,
+    "fixedCollectorSocketAndPolicyOnly": true,
+    "fixedNftDestination": true,
+    "fixturePasses": true,
+    "kernelFilesystemGuardsPreserved": true,
+    "mismatchedRulesRejected": true,
+    "missingCollectorRejected": true,
+    "missingFirewallRejected": true,
+    "missingUidRejected": true,
+    "missingWorkerRejected": true,
+    "noArbitraryNetwork": true,
+    "noAutomaticStart": true,
+    "noContainerGroup": true,
+    "noRegistrationTokenInDaemon": true,
+    "numericFirewallUidMatchesAccount": true,
+    "privateCredentialsByReference": true,
+    "privateReadonlyPolicyCopy": true,
+    "renderedUnitKeepsPrivatePath": true,
+    "rootContainsOnlyPublicRuntime": true,
+    "separateArtifactOwner": true,
+    "separateIdentities": true,
+    "specializedAdmissionBeforeCandidate": true
+  },
+  "limits": [
+    "Synthetic UID allocation only; real identities and collisions unknown",
+    "Actual VM attempt 10 still refuses its dispatched job; module evaluation does not qualify execution"
+  ],
+  "production_access": false,
+  "result_sha256": "640b6ddb94810474157b3b594efba1383e93a98146a16f7f4203c51279479bc3",
+  "schema_version": 1,
+  "scope": "Nix module and rendered unit evaluation, protected single-link policy copy and immutable-root mountpoints",
+  "sources_sha256": {
+    "operations/forgejo/tests/runner-module-evaluation.nix": "5b603f0e1c1a37aef96659a0939a2c060b15f649b05734531a71f1c291153f4a",
+    "operations/nixos/mrjam-forgejo-runner.nix": "309f5612091d9f86263edd4016ffd95000a53f33ffeb08a7a1a88a668a9c8d1c"
+  },
+  "systemd_runner_qualified": false
+}
