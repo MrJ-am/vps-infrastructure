@@ -82,9 +82,22 @@ existants ; les valeurs de la VM ne sont jamais des allocations proposées au VP
 La politique d'admission est une copie NixOS root en 0444, montée seule en
 lecture dans la racine privée. La déduplication du store ne doit pas transformer
 ce fichier en lien multiple : le contrôle de refus du runner reste intact.
-L'essai système 10 confirme l'inscription, les credentials, la racine privée,
-les limites et les refus réseau ; le job atteint le collecteur puis est refusé
-par le worker. Ce résultat partiel ne qualifie pas encore la chaîne complète.
+L'essai système 10 confirmait ces frontières, puis refusait le job au worker.
+Le diagnostic 12 a établi que la liste de fermeture Nix avait elle aussi deux
+liens physiques. Le module déclare maintenant sa copie root en 0444 et la monte
+en lecture seule au chemin exact épinglé dans l'espace du worker. Son code de
+refus n'est pas modifié. Les 17 assertions du module et les sept groupes de son
+test système séparé passent : =qualification-worker-module-copy-20261031.json=
+et =worker-systemd-closure-copy-pass-20261031.json=.
+
+L'essai complet 13 passe sept groupes, dont le vrai job Forgejo traversant le
+coordinateur, le collecteur et le worker : =forgejo-runner-systemd-pass-20261031.json=.
+Les branches, entrées et workflows non admis restent refusés. Le vérificateur
+de cette VM et ses artefacts sont explicitement inventés. Le vrai pipeline
+Rust/Elm a réussi séparément dans le worker local à UID distinct, sous ses
+limites ; les contrôles de ses sorties ont ensuite détecté un manifeste Vision
+manquant et deux types de fichiers statiques refusés par Rust. Ces corrections
+doivent repasser la qualification complète et les parcours navigateur.
 
 * Reproduction locale
 

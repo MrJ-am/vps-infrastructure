@@ -1,0 +1,30 @@
+{
+  "assertions": 17,
+  "authority": "unverified-local-test-result",
+  "checks": {
+    "automaticTemplateInstance": true,
+    "composedPidBoundary": true,
+    "credentialsInaccessible": true,
+    "dedicatedUnprivilegedAccount": true,
+    "disabledInert": true,
+    "enforcedBudgets": true,
+    "exactIndependentRulesReference": true,
+    "fixedLocalSocket": true,
+    "namespaceNetwork": true,
+    "noAutomaticStart": true,
+    "noCallerMembersAssigned": true,
+    "noDockerSocket": true,
+    "noHostCapabilities": true,
+    "processTreeKill": true,
+    "protectedClosureCopy": true,
+    "singleJob": true,
+    "sourceOnlyRoot": true
+  },
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "Worker module with protected closure copy",
+  "sources_sha256": {
+    "operations/forgejo/tests/worker-module-evaluation.nix": "1150c8333680fc08b61d30ad89a74c5373466a117712e8c196b7a5b429ed027a",
+    "operations/nixos/mrjam-validation-worker.nix": "dd7c461e9dce9ed5b1c0b904663981359d789a381cca33168c2a017a701c846e"
+  }
+}

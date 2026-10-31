@@ -34,6 +34,13 @@ in {
       home = "/var/empty";
     };
     environment.etc."mrjam-validation-worker/policy.json" = { text = builtins.toJSON policy; mode = "0444"; };
+    # A Nix store file may have multiple hardlinks after optimisation. Preserve
+    # the worker's single-link refusal by supplying an explicit protected copy,
+    # with identical bytes, at the same pinned path in its mount namespace.
+    environment.etc."mrjam-validation-worker/store-paths" = {
+      source = "${closure}/store-paths";
+      mode = "0444";
+    };
     systemd.tmpfiles.rules = [
       "d /var/lib/mrjam-validation-input 0555 root root -"
       "d /run/mrjam-validation-worker 0750 root mrjam-validation-worker -"
@@ -97,6 +104,7 @@ in {
         # No broad syscall deny-list is advertised as qualified before VM tests.
         InaccessiblePaths = [ "-/run/credentials" "-/var/lib/forgejo" "-/var/lib/postgresql" "-/var/lib/kanidm" "-/var/lib/nextcloud" "-/var/backup" "-/var/backups" "-/var/run/docker.sock" ];
         ReadOnlyPaths = [ "/var/lib/mrjam-validation-input" ];
+        BindReadOnlyPaths = [ "/etc/mrjam-validation-worker/store-paths:${closure}/store-paths" ];
         MemoryMax = "2G";
         CPUQuota = "100%";
         TasksMax = 256;
