@@ -2,7 +2,39 @@
 #+date: 2026-10-31
 #+language: fr
 
-* Révision sélectionnée et qualification
+* Révision corrigée qualifiée localement
+
+La révision =718a8188= ci-dessous reste une preuve de son périmètre, mais ne
+doit plus être sélectionnée pour ouvrir une adoption historique. Le contretest
+=cff103224c7f7b986eb2a7a7ae23d3e7095e1fa7= reproduit une reprise bloquée après
+l'écriture durable de la notification finale Python et avant la clôture de
+la demande. =0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709= corrige cette fenêtre
+sans réencoder le message, réaffecter son empreinte ni répéter la finalisation
+IdP. Le nouvel artefact est :
+=/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1=.
+ELF SHA-256 =ada217cef9ffe1b3f60942038160c4da9ec3e6bb931b20cb47c03b410017caec= ;
+NAR =sha256-RWjDmYEwBXDeZ4P1/JR6JoOGZteJDJe0/gxh1u4xEJc==.
+
+[[file:../builds/qualification-vision-admission-legacy-build-20261031.json][La construction distincte]] passe 38 tests Nix et la suite native 41 tests,
+avec fmt et clippy. Les 33 fichiers SQL, Cargo.lock et les 178 dépendances sont
+inchangés. La recette =builds/vision-admission-legacy-20261031.nix= fige la
+nouvelle révision et le manifeste matérialisé ; l'ancienne recette est conservée.
+[[file:qualification-vision-admission-legacy-systemd-20261031.json][Les huit groupes système sont rejoués]] avec cet ELF exact : droits,
+credentials, peer, verrous, HTTP/SMTP, purge, modes déclaratifs et refus du DDL
+implicite. [[file:../migrations/admission/qualification-resume-systemd-20261031.json][Huit autres groupes]] qualifient l'adoption et la reprise ouverte
+de demandes historiques cohérentes avec PostgreSQL et un IdP HTTP inventé.
+Les dérivations et contenus ont été revérifiés après les deux succès.
+
+Le reçu final historique est contrôlé avant effet IdP et relu dans la
+transaction finale. Il conserve son condensat MIME et son NULL sémantique ;
+aucune nouvelle affectation de clé n'est autorisée. Le Message-ID replié de
+Python est accepté, les doublons et mauvais destinataires refusés. La preuve
+minimale restante après rétention exige clé, condensat et accusé durable ;
+elle ne permet plus de reconstituer le destinataire. L'identité SQL déjà
+allouée et la cohérence des snapshots restent donc des préconditions.
+La réponse de disponibilité ne certifie pas chaque demande historique.
+
+* Qualification antérieure conservée
 Source =MrJ-am/vision@718a81880090609b7730a27c4fb37f32bbb7e3d1=.
 Paquet :
 =/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090=.

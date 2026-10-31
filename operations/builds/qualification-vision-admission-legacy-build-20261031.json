@@ -1,0 +1,132 @@
+{
+  "decision": "verified-public-build",
+  "derivation": "/nix/store/pa6r126fn58njlzmayvqkszmmmvvjmgc-mrjam-vision-admission-0.1.0-0d33bd70f3b1.drv",
+  "artifact": {
+    "artifact": "vision-admission",
+    "deployment_authorized": false,
+    "input_manifest_sha256": "7af201cc0c21b8b396526c3f7b8a68fc21ce421440c4fe820de7ec22f6859dd6",
+    "payload_sha256": {
+      "bin/vision-admission": "ada217cef9ffe1b3f60942038160c4da9ec3e6bb931b20cb47c03b410017caec"
+    },
+    "schema_version": 1,
+    "source_commit": "0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709"
+  },
+  "path_info": {
+    "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1": {
+      "ca": null,
+      "deriver": "/nix/store/pa6r126fn58njlzmayvqkszmmmvvjmgc-mrjam-vision-admission-0.1.0-0d33bd70f3b1.drv",
+      "narHash": "sha256-RWjDmYEwBXDeZ4P1/JR6JoOGZteJDJe0/gxh1u4xEJc=",
+      "narSize": 11941784,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793468287,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "recursive_content_verified": true,
+  "current_derivation_matches": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 38,
+  "separate_native_suite_tests": 41,
+  "native_checks": {
+    "native_all_features_tests": 41,
+    "fmt": "passed",
+    "clippy_all_targets_all_features": "passed",
+    "legacy_notice_cases": [
+      "original MIME SHA unchanged and semantic SHA remains null",
+      "accepted body, accepted empty retention, and waiting backoff resume",
+      "altered SHA, recipient, Message-ID, duplicate case-varied Message-ID and cancellation refuse before identity effect",
+      "Python-style folded Message-ID is accepted without reencoding",
+      "no repeated native finalization and no repeated invitation use"
+    ]
+  },
+  "negative_control": {
+    "revision": "cff103224c7f7b986eb2a7a7ae23d3e7095e1fa7",
+    "runtime_revision": "718a81880090609b7730a27c4fb37f32bbb7e3d1",
+    "exit_code": 101,
+    "marker": "LEGACY_READY_NOTICE_BLOCKED_RESUME",
+    "log_sha256": "4b6bd23a58304534c57f8e587b3362245b4758b7d912f14e81ee8e2412190a6d"
+  },
+  "sources_sha256": {
+    "operations/builds/vision-admission-legacy-20261031.nix": "0112fd2bc57904d89a32efba922bc824b34212f2e51e61a38e4ed28b6c678792",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3"
+  },
+  "vision_sources_sha256": {
+    "src/workers/admissions.rs": "4145b055c51a7730352b4223ec8b1d096c2d79c90839917622650919e482b126",
+    "src/workers/courrier.rs": "936ef06831c70ee290edfaca5ed9b282bd1e50b3f5a365e1d0edb9b83b7f8fd2",
+    "tests/admissions_synthetiques/mod.rs": "6e08e3eab5d894f58c0dbad04b4cbc3ac43b871175bb0d88cfd2cf536895893e"
+  },
+  "logs_sha256": {
+    "vision-admission-build-20261031-03.log": "e9961a4c9794e1f66fadca5f1addad03f99aad7a1a938547804bb2427acfc125",
+    "vision-admission-build-20261031-03.json": "c2c1e72396b1ec2395bfbcb699b6212f2f7c664eb5041440108bd2375a371b03",
+    "vision-admission-inputs-20261031-03.json": "c646cf6516c79a0d27c24fc62df1146a55b610edd1e911bdc2cefcbdaa38064a",
+    "vision-admission-legacy-all-20261031-02.log": "b0afcc46efa46c298468847eb186de06f9ddf47ee2e5ff1a4196b5b5b29fce8c",
+    "vision-admission-legacy-clippy-20261031-02.log": "030226dacc876546bc1b402dabc2be6ae7ac49b155aa2c7ad1b8335958b263fd",
+    "vision-admission-legacy-negative-20261031-01.log": "4b6bd23a58304534c57f8e587b3362245b4758b7d912f14e81ee8e2412190a6d"
+  },
+  "retired_for_open_legacy_adoption": {
+    "revision": "718a81880090609b7730a27c4fb37f32bbb7e3d1",
+    "artifact": "/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090",
+    "original_receipts_and_archive_unchanged": true,
+    "reason": "Crash between durable historical final mail and request completion blocks resume; no new hash is assigned to historical content."
+  },
+  "limits": [
+    "This is a new admission artifact only; other qualified workers keep their own revisions",
+    "Native PostgreSQL and IdP adapters are invented; Nix build has no PostgreSQL",
+    "Real snapshot coherence, IdP/MFA and SMTP capability, protected approval and host generation require separate evidence"
+  ],
+  "compatibility": {
+    "previous_revision": "718a81880090609b7730a27c4fb37f32bbb7e3d1",
+    "current_revision": "0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709",
+    "only_materialized_files_changed": [
+      "source/src/workers/admissions.rs",
+      "source/src/workers/courrier.rs",
+      "source/tests/admissions_synthetiques/mod.rs"
+    ],
+    "cargo_lock_unchanged": true,
+    "cargo_graph_unchanged": true,
+    "sql_bytes_unchanged": {
+      "source/journal/001_effacements.sql": "ed13dbb7fcf697ac71033337460c0b5e84eb25c32d6939e70acc8d0f1456577f",
+      "source/journal/002_reprise.sql": "ea4ffd5314577fd65327b9c8d163b9517e121761cd56166c6da7d3d7874e2575",
+      "source/journal/003_archivage_rejeu.sql": "cd618af780bd787c3ff417e442d6a3b373073aad3c6ec430e3cede56483bc315",
+      "source/journal/004_ordre_rejeu.sql": "7cc54d48e53c1a32712234bd17ed88f7da8da7807c4a8181f94908021710e0e8",
+      "source/migrations/001_initial.sql": "400ac4d8739322e669f8fd854d401196e2513d9c2550b7f24ea99ddde1ada54a",
+      "source/migrations/002_memory_sheets.sql": "a72f77e0faef44823f6ba5ab79183292fcb2088600c0ac3acbcb049378e1d4e9",
+      "source/migrations/003_fsrs.sql": "e089ff5aac282c6caafef696d6aa8c417f76fd2f7c108408360c2b51b038392c",
+      "source/migrations/004_browser.sql": "fe7cbb65ddf258f6c594a25db141b2ca5aab1b0fd9301285eab21f3aca9aa3ff",
+      "source/migrations/005_fiches_items.sql": "bd22468f3efde49a4c4a0dce6c9c4e60d7c4a1cafa31828e8fc972e7d94e068d",
+      "source/migrations/006_lectures.sql": "6b6413e9fa126cf5f7d750b0a5938dc830a360af3577683202ae32d298cfdc09",
+      "source/migrations/007_ecritures.sql": "bac52dc1c211c9fe5aab07e70ad74cd22a5942a68491b5227164c6d61a8bb741",
+      "source/migrations/008_import.sql": "5dc339a7e81dc7374a2432d289fd5bce20592db0cbf093eee0d3cc8e480bfc60",
+      "source/migrations/009_revision_sequentielle.sql": "ea4a534cd21dc4f163ae706acdcecb7012da913754b9057eb3cc87324e496038",
+      "source/migrations/010_consigne_revision.sql": "8d01af79729203e88ad480ab7de4a4782f6c18a8e802383cad96a35b26e767de",
+      "source/migrations/011_seances.sql": "fc66f9ea3ea0bd523079e7c60552f10de40342e238e41318da99561e5f8453ca",
+      "source/migrations/012_reprise_seances.sql": "5366e6033e715344df2b64a18384abdced5cd05acd15fe945764cc96ae6dd3ef",
+      "source/migrations/013_observations_seances.sql": "61b8bd142fe105400560489f041ea22c1c7b921b13062cc3820ce6c45d4a9cce",
+      "source/migrations/014_items_contenu.sql": "3c3d3459930b6b776774658d65063c56305db993b7e3f869aa561de42e26281f",
+      "source/migrations/015_cloture_coherente.sql": "3a8f8a50053abbe050088982b890cad552fe14ca1d1238d0d81e84af51899c70",
+      "source/migrations/016_creation_semantique.sql": "3b0130d6173c9275c04e5825a3eef049334827a54afc28aa8fc427eb354e1abd",
+      "source/migrations/017_tutorat_temps.sql": "aa74a7c5c42a39e1613526a5b5c3ccd88c630f15c11b7e1f6ce6a8f7d82fee6a",
+      "source/migrations/018_consultation.sql": "8736096537e630f820c0ad9810183870c83f07ef53da189011714ec0971e2ad0",
+      "source/migrations/019_comptes_quotas.sql": "a8fdd790a0773a6f7b18d27af4a88538b9b3b736459bf4a57a795d091f90405c",
+      "source/migrations/020_administration_invitations.sql": "d25d4776894098ced5c44b959248d24b986975bbbb1bd647d9a7fe0c67d9c6e4",
+      "source/migrations/021_droits_personnes.sql": "f7a7dedfbe43be612de3020d2b9e4959867de371de0d2f98981f8981f7cace81",
+      "source/migrations/022_exports_coherents.sql": "a8c5459cd2cb972258851bf27e41e7f8b70420cc978559a973dc04e50b6fc5f4",
+      "source/migrations/023_preavis.sql": "a3fb0c3808bfcadd9bd8f7c6e3c6c21fc2d314ae3ff750e9742bebb2e5b317e9",
+      "source/migrations/024_admission_controlee.sql": "34fbeadba0a5aeb24a8e1c7c3fd319800c135198e87d74ad8e6f2e760d6619dd",
+      "source/migrations/025_fermeture_commune.sql": "9c08fd967d4d25a44cc302d2f4b6926d19bcfaa7c7f5c723ed91511e4909f902",
+      "source/migrations/026_autorisation_admission.sql": "f2d5b06b1582ea5bdbd35ef789b87be9bc5c04b0c1f5dc0a7ff1c154b7bc5f6e",
+      "source/migrations/027_retablir_rls.sql": "e7bfdbb890402d89643d09120ee507d1e909bbe59a1f341b4f9f3942d9d4d10c",
+      "source/workers/001_courriels.sql": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093",
+      "source/workers/002_admissions.sql": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb"
+    },
+    "data_downgrade_qualified": false
+  }
+}

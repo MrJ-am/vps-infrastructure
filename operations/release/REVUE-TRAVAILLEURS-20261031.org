@@ -79,3 +79,12 @@ la revue portera sur une génération complète, ces artefacts précisément
 sélectionnés, les migrations, les droits, les références de secrets, les
 préconditions et le retour. Aucun artefact de ce paquet ne doit être activé
 isolément sur le VPS en déduisant une permission d'un reçu local.
+
+* Avis complémentaire — admission historique
+Le paquet ci-dessous est conservé exactement avec ses empreintes initiales.
+Son admission =718a8188= ne doit plus être retenue pour ouvrir une adoption
+historique : le contretest =vision@cff103224c7f7b986eb2a7a7ae23d3e7095e1fa7=
+reproduit un blocage après une notification finale Python déjà durable.
+Voir [[file:../runtime/vision-admission.org][la correction et sa qualification distincte]]. Les artefacts cycle, fermeture
+et adoption hors ligne ne sont pas remplacés par ce constat. Ne jamais
+modifier les empreintes de cette archive pour y substituer le nouveau binaire.
