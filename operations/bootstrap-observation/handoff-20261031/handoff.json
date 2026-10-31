@@ -1,0 +1,11 @@
+{
+  "archive": "mrjam-observation-adoption-20261031.tar",
+  "bytes": 136396800,
+  "files_verified": 22,
+  "infra_commit": "e0edf7fd7201f0443f5d4b4acef8420f11cb097d",
+  "reproducible_tar_metadata": true,
+  "review_commit": "93828871fc79c2b98d128b5672bcccf8b6dbd466",
+  "sha256": "0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa",
+  "sha256sums_sha256": "9485ee9efb3c11f333afae6356f6f9bddd9b1191fc612e6b8647cb3e846ec900",
+  "source_selection_from_git_objects": true
+}
