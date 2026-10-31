@@ -1,0 +1,71 @@
+{
+  "derivation": "/nix/store/xfrw1g5czr53k4vpp79kir9zirwh5fzj-vm-test-run-mrjam-admission-resume-folded-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/4r5s296j28zr5ykydl80ad9zghsss1pg-vm-test-run-mrjam-admission-resume-folded-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/xfrw1g5czr53k4vpp79kir9zirwh5fzj-vm-test-run-mrjam-admission-resume-folded-systemd-independent.drv",
+      "narHash": "sha256-7EgSdZvxZGAt0irqHqkPJ9E5U1FMED+qt24RiXRkrC0=",
+      "narSize": 2040,
+      "references": [
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1",
+        "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission"
+      ],
+      "registrationTime": 1793471628,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented coherent PostgreSQL allocations and historical SQLite, actual Rust ELF and fixed fake IdP HTTP",
+    "artifact": "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1",
+    "code_sha256": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "admission_artifact": "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission",
+    "admission_sha256": "78812f981f0698674217c3677622d671b594c4677f2905ecaa28598c146a6112",
+    "checks": [
+      "exact-prebuilt-adopter-and-runtime-with-coherent-invented-sql-allocations",
+      "sealed-adoption-and-closed-mode-preserve-all-source-bytes-without-identity-effects",
+      "actual-open-worker-resumes-python-notices-and-folded-recipient-without-reencoding",
+      "before-notice-crash-finalizes-once-and-creates-new-mail-without-double-sql-allocation",
+      "misbound-legacy-notice-refused-before-identity-and-unconfirmed-request-remains-inactive",
+      "restart-recovers-consistent-fixture-without-repeated-password-action-mail",
+      "second-restart-does-not-reprovision-or-consume-another-invitation",
+      "return-to-closed-mode-preserves-new-state-without-claiming-data-downgrade"
+    ],
+    "production_access": false,
+    "limits": [
+      "No real snapshots, backup, data, secret, native IdP or delivered mail",
+      "SMTP refuses; accepted legacy notices represent durable invented historical acknowledgements",
+      "The fixture repair is not an authorized procedure to edit production state",
+      "SQL/IdP/source coherence, snapshot acquisition, native MFA and whole VPS deployment remain external requirements",
+      "Return to closed mode is not a reverse migration or restoration proof"
+    ]
+  },
+  "result_sha256": "9de7863223308b96c17c902ed06ef79b27117b86b5b25845aaa224fc44488833",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "validation_test_commit": "d468bb90c87043b182ca20d7998f092b1c15ab6c",
+  "duration_seconds": 293.47,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 308.918
+  },
+  "sources_sha256": {
+    "mrjam-validation/operational-review/admission-resume-folded-systemd.nix": "c68cc6f6925db94e64b37f3cebef840d69c433f59429864e889a2c7c3af41d99",
+    "mrjam-validation/operational-review/fixtures/admission-resume-folded-synthetic.py": "65c45ecdd912145679d1dae2d263e779db7cd641be79c31842b846b834928555",
+    "vps-infrastructure/operations/nixos/mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795",
+    "vps-infrastructure/operations/nixos/mrjam-vision-admission.nix": "8bf97e6cfd78d3dcfdb44d2521d9653d8abbb0f0127d5d591d37eb830b2e92cb",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "d8fe38f8d5954e7ad6968d43ccc30cf9c7a2c1ffda21dfbee939cf9e554d1647"
+  },
+  "qualification_helper_sha256": "b897950a09e7a3690b5ddae63e73af28f91337872d9f0d138f0afc1d682d6e49",
+  "logs_sha256": {
+    "vision-mail-admission-folded-systemd-20261031-01.log": "6cf9f4d838477e52e619bc4be2fd80d15e33dceb4377ae4c468ea2537b40e492",
+    "vision-mail-admission-folded-systemd-20261031-01.json": "f0b764f321d0bc2fa5e05e7319be52bdd852c18cd07c06a1635f73ad9873f393",
+    "vision-mail-admission-folded-systemd-20261031-01-execution.json": "d6391d1ec26b0acf55832bce41e72cf41d320c8d6b346c3cb6fed0e84f359881"
+  }
+}

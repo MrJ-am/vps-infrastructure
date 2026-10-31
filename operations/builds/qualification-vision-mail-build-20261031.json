@@ -1,0 +1,260 @@
+{
+  "decision": "verified-public-build",
+  "derivation": "/nix/store/073gfizn4w34h563iss1x3b2mh92zp0l-mrjam-vision-mail-workers-0.1.0-7d87768bd141.drv",
+  "artifacts": {
+    "admission": {
+      "path": "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission",
+      "sha256": "78812f981f0698674217c3677622d671b594c4677f2905ecaa28598c146a6112",
+      "manifest": {
+        "artifact": "vision-admission",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "d8290de12d49ecc797904ff5d0cd6d48bb3aa3fe30e1004d6b5bda1493651196",
+        "payload_sha256": {
+          "bin/vision-admission": "78812f981f0698674217c3677622d671b594c4677f2905ecaa28598c146a6112"
+        },
+        "schema_version": 1,
+        "source_commit": "7d87768bd141ec6a2a41b4ec9f3277639fcba67f"
+      }
+    },
+    "archive": {
+      "path": "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive",
+      "sha256": "45751f900b70f2231856ff83f339e69595d7cc620f150d004f2d882d68a04a1c",
+      "manifest": {
+        "artifact": "vision-archive",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "d8290de12d49ecc797904ff5d0cd6d48bb3aa3fe30e1004d6b5bda1493651196",
+        "payload_sha256": {
+          "bin/vision-archive": "45751f900b70f2231856ff83f339e69595d7cc620f150d004f2d882d68a04a1c"
+        },
+        "schema_version": 1,
+        "source_commit": "7d87768bd141ec6a2a41b4ec9f3277639fcba67f"
+      }
+    },
+    "cycle": {
+      "path": "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle",
+      "sha256": "61b94d0f0fabf7e5854cb38d25f176b053f41bb96ecff343c48d15d743f7be41",
+      "manifest": {
+        "artifact": "vision-cycle",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "d8290de12d49ecc797904ff5d0cd6d48bb3aa3fe30e1004d6b5bda1493651196",
+        "payload_sha256": {
+          "bin/vision-cycle": "61b94d0f0fabf7e5854cb38d25f176b053f41bb96ecff343c48d15d743f7be41"
+        },
+        "schema_version": 1,
+        "source_commit": "7d87768bd141ec6a2a41b4ec9f3277639fcba67f"
+      }
+    }
+  },
+  "catalog_output": "/nix/store/h6l45pn6254jjwxaym7cy388j4bxvqm3-mrjam-vision-mail-workers-0.1.0-7d87768bd141",
+  "path_info": {
+    "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive": {
+      "ca": null,
+      "deriver": "/nix/store/073gfizn4w34h563iss1x3b2mh92zp0l-mrjam-vision-mail-workers-0.1.0-7d87768bd141.drv",
+      "narHash": "sha256-5U+xUqIRsUePuMEegBvgSodJkWK3OUC86LAxUmI31Zw=",
+      "narSize": 10347600,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793471235,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/h6l45pn6254jjwxaym7cy388j4bxvqm3-mrjam-vision-mail-workers-0.1.0-7d87768bd141": {
+      "ca": null,
+      "deriver": "/nix/store/073gfizn4w34h563iss1x3b2mh92zp0l-mrjam-vision-mail-workers-0.1.0-7d87768bd141.drv",
+      "narHash": "sha256-mc9xm9z2/pZ+ILDQnea+0dpAJyO3F0aDclvYtdVs9Cg=",
+      "narSize": 1258600,
+      "references": [
+        "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive",
+        "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle",
+        "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission"
+      ],
+      "registrationTime": 1793471235,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle": {
+      "ca": null,
+      "deriver": "/nix/store/073gfizn4w34h563iss1x3b2mh92zp0l-mrjam-vision-mail-workers-0.1.0-7d87768bd141.drv",
+      "narHash": "sha256-sVPudG8E/1k0HNOF5ZGmBKczUH/v7zS0g1R2CGrhsC8=",
+      "narSize": 11474768,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793471235,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission": {
+      "ca": null,
+      "deriver": "/nix/store/073gfizn4w34h563iss1x3b2mh92zp0l-mrjam-vision-mail-workers-0.1.0-7d87768bd141.drv",
+      "narHash": "sha256-+tmjtOs7Nq5/9ldSHapUilatZ7zBb31fges7OYk3Xd4=",
+      "narSize": 11946968,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793471235,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "recursive_content_verification": true,
+  "current_derivation_matches": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 40,
+  "native_checks": {
+    "schema_version": 1,
+    "authority": "unverified-local-test-result",
+    "production_access": false,
+    "production_ready": false,
+    "negative_control": {
+      "revision": "b7d58104ddaeba2d601f1acfcd287fc3fe7eea2d",
+      "runtime_revision": "0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709",
+      "exit_code": 101,
+      "marker": "FOLDED_LEGACY_ADDRESS_REFUSED"
+    },
+    "native_all_features_tests": 43,
+    "fmt": "passed",
+    "clippy": "passed",
+    "previous_clippy_attempt": {
+      "result": "failed",
+      "reason": "Two expect() calls in the new test violate repository rules; replaced by explicit error propagation without changing expectations",
+      "log": "vision-folded-envelope-clippy-20261031-01.log"
+    },
+    "cases": [
+      "Folded valid recipient and sender retain exact original bytes",
+      "Case-varied duplicate From/To refused",
+      "Whitespace introducing a second address, orphan continuation, wrong sender and malformed header refused"
+    ],
+    "source_sha256": {
+      "src/workers/courrier.rs": "d3f7328f4a048e1c8ad16ee73275d541d77b1988eb913a768817b6439ae88b52"
+    },
+    "logs_sha256": {
+      "vision-folded-envelope-negative-20261031-01.log": "b4d3d14a3507f9cdeaa48ae9282d5fd2fb93dba0b7a32bfb397589dad717067d",
+      "vision-folded-envelope-all-20261031-02.log": "76fd4ad43d2b3525227a38fcd1b54b048844009871297df9353f9ffca7ebd729",
+      "vision-folded-envelope-clippy-20261031-02.log": "54ab05636f12aaa6ae31448258e98ffea4d30bf4e8e82f654346f54876be16b1",
+      "vision-folded-envelope-clippy-20261031-01.log": "6d4447c75d4d58f540e4d193ff33bb6601796d60cd77996d0ea9725251371474"
+    },
+    "scope": [
+      "Admission, cycle and archive use the durable-mail reader and need newly qualified artifacts",
+      "Closure and replay do not consume the mail outbox in their runtime entrypoints; their existing selected artifacts remain separate",
+      "No schema, dependency or content-hash policy change; no production access"
+    ]
+  },
+  "compatibility": {
+    "previous_revision": "0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709",
+    "current_revision": "7d87768bd141ec6a2a41b4ec9f3277639fcba67f",
+    "only_materialized_files_changed": [
+      "source/src/workers/courrier.rs"
+    ],
+    "cargo_lock_unchanged": true,
+    "cargo_graph_unchanged": true,
+    "sql_bytes_unchanged": {
+      "source/journal/001_effacements.sql": "ed13dbb7fcf697ac71033337460c0b5e84eb25c32d6939e70acc8d0f1456577f",
+      "source/journal/002_reprise.sql": "ea4ffd5314577fd65327b9c8d163b9517e121761cd56166c6da7d3d7874e2575",
+      "source/journal/003_archivage_rejeu.sql": "cd618af780bd787c3ff417e442d6a3b373073aad3c6ec430e3cede56483bc315",
+      "source/journal/004_ordre_rejeu.sql": "7cc54d48e53c1a32712234bd17ed88f7da8da7807c4a8181f94908021710e0e8",
+      "source/migrations/001_initial.sql": "400ac4d8739322e669f8fd854d401196e2513d9c2550b7f24ea99ddde1ada54a",
+      "source/migrations/002_memory_sheets.sql": "a72f77e0faef44823f6ba5ab79183292fcb2088600c0ac3acbcb049378e1d4e9",
+      "source/migrations/003_fsrs.sql": "e089ff5aac282c6caafef696d6aa8c417f76fd2f7c108408360c2b51b038392c",
+      "source/migrations/004_browser.sql": "fe7cbb65ddf258f6c594a25db141b2ca5aab1b0fd9301285eab21f3aca9aa3ff",
+      "source/migrations/005_fiches_items.sql": "bd22468f3efde49a4c4a0dce6c9c4e60d7c4a1cafa31828e8fc972e7d94e068d",
+      "source/migrations/006_lectures.sql": "6b6413e9fa126cf5f7d750b0a5938dc830a360af3577683202ae32d298cfdc09",
+      "source/migrations/007_ecritures.sql": "bac52dc1c211c9fe5aab07e70ad74cd22a5942a68491b5227164c6d61a8bb741",
+      "source/migrations/008_import.sql": "5dc339a7e81dc7374a2432d289fd5bce20592db0cbf093eee0d3cc8e480bfc60",
+      "source/migrations/009_revision_sequentielle.sql": "ea4a534cd21dc4f163ae706acdcecb7012da913754b9057eb3cc87324e496038",
+      "source/migrations/010_consigne_revision.sql": "8d01af79729203e88ad480ab7de4a4782f6c18a8e802383cad96a35b26e767de",
+      "source/migrations/011_seances.sql": "fc66f9ea3ea0bd523079e7c60552f10de40342e238e41318da99561e5f8453ca",
+      "source/migrations/012_reprise_seances.sql": "5366e6033e715344df2b64a18384abdced5cd05acd15fe945764cc96ae6dd3ef",
+      "source/migrations/013_observations_seances.sql": "61b8bd142fe105400560489f041ea22c1c7b921b13062cc3820ce6c45d4a9cce",
+      "source/migrations/014_items_contenu.sql": "3c3d3459930b6b776774658d65063c56305db993b7e3f869aa561de42e26281f",
+      "source/migrations/015_cloture_coherente.sql": "3a8f8a50053abbe050088982b890cad552fe14ca1d1238d0d81e84af51899c70",
+      "source/migrations/016_creation_semantique.sql": "3b0130d6173c9275c04e5825a3eef049334827a54afc28aa8fc427eb354e1abd",
+      "source/migrations/017_tutorat_temps.sql": "aa74a7c5c42a39e1613526a5b5c3ccd88c630f15c11b7e1f6ce6a8f7d82fee6a",
+      "source/migrations/018_consultation.sql": "8736096537e630f820c0ad9810183870c83f07ef53da189011714ec0971e2ad0",
+      "source/migrations/019_comptes_quotas.sql": "a8fdd790a0773a6f7b18d27af4a88538b9b3b736459bf4a57a795d091f90405c",
+      "source/migrations/020_administration_invitations.sql": "d25d4776894098ced5c44b959248d24b986975bbbb1bd647d9a7fe0c67d9c6e4",
+      "source/migrations/021_droits_personnes.sql": "f7a7dedfbe43be612de3020d2b9e4959867de371de0d2f98981f8981f7cace81",
+      "source/migrations/022_exports_coherents.sql": "a8c5459cd2cb972258851bf27e41e7f8b70420cc978559a973dc04e50b6fc5f4",
+      "source/migrations/023_preavis.sql": "a3fb0c3808bfcadd9bd8f7c6e3c6c21fc2d314ae3ff750e9742bebb2e5b317e9",
+      "source/migrations/024_admission_controlee.sql": "34fbeadba0a5aeb24a8e1c7c3fd319800c135198e87d74ad8e6f2e760d6619dd",
+      "source/migrations/025_fermeture_commune.sql": "9c08fd967d4d25a44cc302d2f4b6926d19bcfaa7c7f5c723ed91511e4909f902",
+      "source/migrations/026_autorisation_admission.sql": "f2d5b06b1582ea5bdbd35ef789b87be9bc5c04b0c1f5dc0a7ff1c154b7bc5f6e",
+      "source/migrations/027_retablir_rls.sql": "e7bfdbb890402d89643d09120ee507d1e909bbe59a1f341b4f9f3942d9d4d10c",
+      "source/scripts/roles.sql": "64c6a47be55cf7686f1b02f0f4985f2ea320513f7ece47fba99ffdee42860a6c",
+      "source/tests/fixtures/postgres.sql": "43c8450b79f9ad1ed54f4b773dbc5f5f948b3cdea18060fc07a3d355cfb3ab7e",
+      "source/workers/001_courriels.sql": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093",
+      "source/workers/002_admissions.sql": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb"
+    },
+    "data_downgrade_qualified": false,
+    "vendor_sql_also_unchanged_count": 58,
+    "sql_scope": {
+      "schema_files": 33,
+      "role_script_files": 1,
+      "synthetic_fixture_files": 1,
+      "total_source_sql_files": 35
+    }
+  },
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 505.512,
+    "unchanged_recipe_after_disk_exhaustion": true,
+    "production_access": false
+  },
+  "prior_attempt": {
+    "exit_code": 1,
+    "reason": "Cloud disk exhausted; unchanged recipe rerun after byte-preserving cache deduplication",
+    "log_sha256": "3ace653921c8050e63c7c80b284c34f0a98e84f838c4cb0821c19f62b23c8c77",
+    "cache_deduplication": {
+      "operation": "deduplicate-public-cargo-cache-with-hardlinks",
+      "roots": [
+        "/workspace/shared/mrjam-declarative-build/inputs-20261030/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-repeat-20261030/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-reviewed-20261030/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-runtime-20261031-02/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-admission-20261031-01/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-admission-20261031-02/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-admission-20261031-03/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-closure-20261031-01/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-cycle-20261031-01/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-mail-20261031-01/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-workers-20261031-01/cargo-vendor",
+        "/workspace/shared/mrjam-declarative-build/inputs-vision-workers-20261031-02/cargo-vendor"
+      ],
+      "files_verified_before_and_after": 111132,
+      "content_and_metadata_index_sha256": "76f85a8afb671ad9e3c831d8fdaba3e6bcb0ee1444ae5f9619f56f8953e9b8df",
+      "new_shared_links": 101545,
+      "estimated_allocated_bytes_freed": 2552172544,
+      "all_names_retained": true,
+      "production_access": false,
+      "artifacts_modified": false,
+      "limitation": "Cache files must remain unmodified; pinned input verification still applies before every build."
+    }
+  },
+  "sources_sha256": {
+    "operations/builds/vision-mail-workers-20261031.nix": "6766fdb6092b73e8c51dddb24ed1b4e1251aaf3330ed893ba83edb62f3714ef8",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3",
+    "operations/builds/prepare.py": "59b5a518636c47bf529514c88ad47c7bb7cd04b60fcc1ee8108680d13dadf6fe"
+  },
+  "logs_sha256": {
+    "vision-mail-build-20261031-02.log": "5400ff54966314838d6dceacf5ec9311368ef24a3c64c855f5fcc94af0b1c3c3",
+    "vision-mail-build-20261031-02.json": "1d2cb0b007df786b0a099a489577ec8ad43a7b0d14440e6b75091df036396a45",
+    "vision-mail-build-20261031-02-execution.json": "393424c524a5f61123cde3f1c83fdf27ea4efc170f7300873b94de5f1e6702d4"
+  },
+  "limits": [
+    "Only admission, archive and cycle are selected from this new build",
+    "Closure and replay retain their separately qualified revisions",
+    "Public synthetic qualification is not protected approval, native IdP/MFA, snapshot coherence or deployment readiness"
+  ]
+}

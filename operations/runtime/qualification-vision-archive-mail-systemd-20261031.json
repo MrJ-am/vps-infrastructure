@@ -1,0 +1,64 @@
+{
+  "derivation": "/nix/store/7wvqdxj55z853fnk4m2i4pz6lhry6kdv-vm-test-run-mrjam-vision-archive-mail-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/z1ns3v8sgqvjkx6451988zqqqm3nwd6w-vm-test-run-mrjam-vision-archive-mail-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/7wvqdxj55z853fnk4m2i4pz6lhry6kdv-vm-test-run-mrjam-vision-archive-mail-systemd-independent.drv",
+      "narHash": "sha256-2iev5Bo00q4tjlORWvI6/oPpXbP4nD1zJVas18O1WRw=",
+      "narSize": 1360,
+      "references": [
+        "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive"
+      ],
+      "registrationTime": 1793472334,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM, selected archive ELF and unchanged declarative unit",
+    "artifact": "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive",
+    "artifact_sha256": "45751f900b70f2231856ff83f339e69595d7cc620f150d004f2d882d68a04a1c",
+    "checks": [
+      "no-implicit-start-or-state-creation",
+      "explicit-private-state-initialization-and-actual-age-readiness",
+      "actual-peer-identity-and-table-superuser-refusals",
+      "real-loadcredential-acl-and-cgroup-limits",
+      "smtp-refusal-preserves-intention-and-real-age-encrypted-queue",
+      "service-restart-preserves-pending-message-and-backoff",
+      "broadened-database-rights-refused-and-recovery",
+      "invalid-credential-refused-without-acknowledgement"
+    ],
+    "production_access": false,
+    "limits": [
+      "SMTP success is covered by the separate STARTTLS fixture, not this VM",
+      "No VPS adoption, real credential, backup, restoration or identity qualification",
+      "Public test age key is exclusively for invented fixture data"
+    ]
+  },
+  "result_sha256": "9640906876aadfded7b7972c27c596f602d171beda4f9bb20bc6caeb7b2904b5",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "validation_test_commit": "d468bb90c87043b182ca20d7998f092b1c15ab6c",
+  "duration_seconds": 219.14,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 228.998
+  },
+  "sources_sha256": {
+    "mrjam-validation/operational-review/archive-mail-systemd.nix": "b3d1fe447abc538ec221b9f9cd7cafa46d13df7eb291f345c1b3aa9e1aba28e9",
+    "vps-infrastructure/operations/nixos/mrjam-vision-archive.nix": "6f1ef254e17606c8c25d779183651f238f3f5623e6c2d73f8976c8ad6f609860",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "d8fe38f8d5954e7ad6968d43ccc30cf9c7a2c1ffda21dfbee939cf9e554d1647"
+  },
+  "qualification_helper_sha256": "b897950a09e7a3690b5ddae63e73af28f91337872d9f0d138f0afc1d682d6e49",
+  "logs_sha256": {
+    "vision-mail-archive-systemd-20261031-01.log": "f5574cef9d75bb85717bbee1e0aff21e89229f64ff4e989744ff1847efe97211",
+    "vision-mail-archive-systemd-20261031-01.json": "53bd9c63ac0c092303b7dcea123363e0c0d067fe9e1181c539baaf8fef154858",
+    "vision-mail-archive-systemd-20261031-01-execution.json": "66ca9d49814326d0321ad81225ebaf55328fdb4c52ed266223164f34c2d520d2"
+  }
+}

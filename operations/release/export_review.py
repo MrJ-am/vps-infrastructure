@@ -23,6 +23,8 @@ from urllib.parse import quote
 SELECTION = Path(__file__).with_name("review-artifacts-20261031.json")
 SELECTION_SHA256 = "17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580"
 SELECTIONS = {
+    "workers-20261031-03": (Path(__file__).with_name("review-workers-20261031-03.json"),
+                         "d915853fed6dca08f8d1b5c6b47902e52e8c39ca20e8d863af16a3ab69c82f8d"),
     "workers-20261031-02": (Path(__file__).with_name("review-workers-20261031-02.json"),
                          "28d6977898e9336691a5524b729b22e8bffdc60d95a45227ba251cddc0377256"),
     "platform-20261031": (SELECTION, SELECTION_SHA256),

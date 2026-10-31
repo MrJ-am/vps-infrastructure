@@ -1,0 +1,64 @@
+{
+  "derivation": "/nix/store/2v59k22sa0rjba233smcwgxhjh5xwbxk-vm-test-run-mrjam-vision-cycle-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/i1zjn8q7qlyfys97yyahqif13bnd6xfg-vm-test-run-mrjam-vision-cycle-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/2v59k22sa0rjba233smcwgxhjh5xwbxk-vm-test-run-mrjam-vision-cycle-systemd-independent.drv",
+      "narHash": "sha256-8KGNoAe4n+g/kn6gKUZUPIRgDoRl+SnE99teZeNeA5M=",
+      "narSize": 1448,
+      "references": [
+        "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle"
+      ],
+      "registrationTime": 1793472615,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM and actual notice-cycle ELF",
+    "artifact": "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle",
+    "artifact_sha256": "61b94d0f0fabf7e5854cb38d25f176b053f41bb96ecff343c48d15d743f7be41",
+    "checks": [
+      "exact-artifact-no-automatic-start-or-implicit-state-creation",
+      "explicit-private-initialization-and-valid-empty-pass",
+      "peer-cross-database-superuser-and-content-journal-refusals",
+      "actual-loadcredential-acl-and-cgroup-budgets",
+      "smtp-refusal-no-deadline-no-erasure-and-durable-retry",
+      "due-notice-requires-archive-then-idempotent-erasure-preserves-other",
+      "broadened-content-or-journal-rights-refused-and-recovery",
+      "invalid-credential-closed-error-and-no-implicit-schema-repair"
+    ],
+    "production_access": false,
+    "limits": [
+      "SMTP success, date advance and archive acceptance are not real deliveries in this VM",
+      "Native cancellation and same-message successful retry use invented IdP/SMTP traits separately",
+      "No VPS generation, real IdP compatibility, account/state/credential adoption or production data"
+    ]
+  },
+  "result_sha256": "1c53f1f93b36624c8b4d06c9a71849be560015e36d43ff08f694d07651f200b8",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "validation_test_commit": "d468bb90c87043b182ca20d7998f092b1c15ab6c",
+  "duration_seconds": 265.9,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 275.438
+  },
+  "sources_sha256": {
+    "mrjam-validation/operational-review/cycle-systemd.nix": "0eef8b9f003132d2e248212f2b9027f36976fa205b7e0bb76e319b99e1a68e36",
+    "vps-infrastructure/operations/nixos/mrjam-vision-cycle.nix": "8892ad4927794ca08d1cae8b6881ad2e26e06a120d0800c80f516fabec56b216",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "d8fe38f8d5954e7ad6968d43ccc30cf9c7a2c1ffda21dfbee939cf9e554d1647"
+  },
+  "qualification_helper_sha256": "b897950a09e7a3690b5ddae63e73af28f91337872d9f0d138f0afc1d682d6e49",
+  "logs_sha256": {
+    "vision-mail-cycle-systemd-20261031-01.log": "ea5697b48ffb9d51389896612c228278fd1f3d5254aa5592511d1881ffb8ff35",
+    "vision-mail-cycle-systemd-20261031-01.json": "10f02be804aafc6306c264e5f93bdbced3ff0aa97803e3add47386d562924427",
+    "vision-mail-cycle-systemd-20261031-01-execution.json": "a8f49d94ec92fe500992d63928e9f1100a16b503d76296588e8aa13869188699"
+  }
+}

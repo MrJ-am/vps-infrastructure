@@ -1,6 +1,16 @@
 #+title: Cycle des préavis — exécutable, état privé et droits déclaratifs
 #+language: fr
 
+* Révision actuelle : lecteur de courrier corrigé
+
+L’artefact sélectionné pour ce service vient désormais de =vision@7d87768b=.
+[[file:vision-mail-compatibilite.org][La qualification commune]] donne ses SHA-256/NAR exacts, 40 tests Nix,
+43 tests natifs et les quatre suites système réussies. Les preuves antérieures
+ci-dessous restent conservées ; elles ne qualifient pas les enveloppes repliées.
+
+* Qualification antérieure conservée
+
+
 Le candidat =vision@47286a8a808b74909bfc647ff8d10e281b4982e4= fournit
 =vision-cycle=. Les 37 tests natifs, formatage et Clippy passent ; voir
 =vision/docs/qualification-cycle-cli-20261031.json=. Le build verrouillé et

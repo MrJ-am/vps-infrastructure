@@ -14,8 +14,8 @@ Un contrôle complémentaire =vision@b7d58104ddaeba2d601f1acfcd287fc3fe7eea2d=
 a reproduit le refus d'une adresse historique valide dont Python replie =To=.
 Le lecteur de courrier partagé concerne admission, cycle et archiviste. Le
 correctif =7d87768bd141ec6a2a41b4ec9f3277639fcba67f= passe 43 tests natifs,
-fmt et clippy ; ses trois artefacts et tests système sont en cours de
-qualification. Les remises précédentes restent intactes et ne prouvent pas la
+fmt et clippy. Ses trois artefacts passent 40 tests Nix et quatre suites
+système de huit groupes chacune ; voir [[file:runtime/vision-mail-compatibilite.org][les preuves exactes]]. Les remises précédentes restent intactes et ne prouvent pas la
 compatibilité avec ces enveloppes repliées. Aucun schéma ni dépendance n'est
 modifié par ce correctif.
 
@@ -98,8 +98,8 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    distincts, voir =runtime/vision-archive.org= et =runtime/vision-replay.org=.
    Le cycle et la fermeture ont aussi leurs exécutables et qualifications
    NixOS distincts : =runtime/vision-cycle.org= et =runtime/vision-closure.org=.
-   L'admission corrigée =0d33bd70= a sa construction, ses tests natifs,
-   son module et sa qualification système : =runtime/vision-admission.org=.
+   Les consommateurs de courrier =7d87768b= ont leurs trois artefacts et
+   qualifications système : =runtime/vision-mail-compatibilite.org=.
    L'adoption des deux états historiques est traitée séparément.
    Les artefacts restent locaux.
 4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
@@ -164,6 +164,7 @@ autre binaire :
 | Admission durable 718a8188, preuve antérieure conservée | 38 tests Nix, 41 natifs distincts, 22 assertions Nix et 97 régressions, 8 groupes système | =runtime/qualification-vision-admission-systemd-20261031.json= ; modes fermé/ouvert/fermé, refus et reprise ; ancienne révision 6ae96aea écartée après reproduction d'une famine |
 | Adoption des deux états SQLite d'admission | 18 tests natifs puis Nix, 17 assertions de module, 8 groupes système | =migrations/admission/qualification-systemd-20261031.json= ; lecture par le même ELF Rust sans perte, dérivation Git/local identique ; aucun snapshot réel, acquisition/cohérence et retour après nouvelles écritures encore bloquants |
 | Admission corrigée 0d33bd70 | 38 tests Nix, 41 natifs, fmt/clippy, 8 groupes système rejoués et 8 groupes adoption/reprise ouverte | =runtime/qualification-vision-admission-legacy-systemd-20261031.json= et =migrations/admission/qualification-resume-systemd-20261031.json= ; IdP/SMTP synthétiques, aucune cohérence de données réelles déduite |
+| Courriers compatibles 7d87768b : admission, archiviste et cycle | 40 tests Nix, 43 natifs, fmt/clippy et quatre suites de 8 groupes système | =runtime/vision-mail-compatibilite.org= ; mêmes schémas et dépendances, nouvelles sorties précisément vérifiées |
 
 La reprise ouverte de l'adoption passe aussi huit groupes sur =0d33bd70= :
 =migrations/admission/qualification-resume-systemd-20261031.json=.
@@ -234,7 +235,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
 | Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
-| État historique d'admission | Adoption puis reprise ouverte 0d33bd70 qualifiées localement ; adoption réelle bloquante | Snapshots scellés cohérents avec PostgreSQL/IdP réel, arrêt des anciens émetteurs et stratégie de retour après nouvelles écritures | Composant local borné côté opérateur pour l'existant ; aucun contenu de snapshot transmis aux agents |
+| État historique d'admission | Adoption puis reprise ouverte 7d87768b et enveloppes repliées qualifiées localement ; adoption réelle bloquante | Snapshots scellés cohérents avec PostgreSQL/IdP réel, arrêt des anciens émetteurs et stratégie de retour après nouvelles écritures | Composant local borné côté opérateur pour l'existant ; aucun contenu de snapshot transmis aux agents |
 | Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
 | Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
 | Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |
