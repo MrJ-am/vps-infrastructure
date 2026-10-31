@@ -1,0 +1,45 @@
+#+title: Qualification complète Forgejo et compilateur — fixture Cloud
+#+language: fr
+
+Cette suite prépare un essai bout en bout distinct des preuves antérieures :
+Forgejo 17.0.1, runner spécialisé 13.2.0, collecteur réel, worker réel et
+vérificateur Rust/Elm. Elle n'installe rien sur le VPS. Aucun résultat positif
+n'est encore déclaré dans cette première révision de la suite.
+
+=tests/prepare_complete_chain.py= crée un commit Git orphelin local à partir
+des octets de =mrjam-validation@eb71ffe5944943474c5ee483e66c270b5976ab90= et du
+workflow manuel épinglé. Ce commit n'est ni publié ni adopté comme règle de
+production. Les 815 fichiers du candidat de la qualification complète précédente
+restent identiques ; seule la référence des règles change dans un nouveau
+manifeste, avec une nouvelle empreinte. L'ancien manifeste reste conservé.
+
+Le paquet du vérificateur est construit avec cette politique explicite.
+=tests/stage_complete_chain.py= vérifie sa dérivation et sa fermeture, puis
+copie les seuls codes déclarés dans une fixture détenue par root et en lecture
+seule. Les sources du candidat sont à nouveau vérifiées. Les deux conteneurs
+jetables utilisent le volume Nix local en lecture seule et aucune socket Docker.
+
+=tests/launch_complete_chain.py= lance le worker dans un conteneur hors réseau,
+limité à un CPU, 2 Gio et 256 tâches. Le processus worker utilise l'UID 59990 ;
+son code et ses namespaces ne sont pas substitués. Les répertoires du candidat,
+la politique et la fermeture sont imposés. Un second conteneur hors réseau,
+limité à un CPU, 1 Gio et 256 tâches, contient Forgejo, le runner et le collecteur
+sous l'UID 59991. Les listeners locaux root transmettent seulement une socket
+acceptée aux programmes fixes ; ils remplacent l'activation systemd dans cet essai.
+L'isolation du candidat reste celle des namespaces et filtres du worker et du
+vérificateur ; les options Docker nécessaires à userns sont explicites dans
+le lanceur et ne constituent pas une configuration proposée pour le VPS.
+
+Le scénario importe le commit de règles exact dans la forge jetable, protège
+main, inscrit le runner limité au dépôt de validation puis déclenche le workflow.
+Il exige les trois vrais artefacts et vérifie leurs tailles et empreintes.
+Un second déclenchement doit utiliser le cache vérifié sans deuxième compilation.
+Une autre branche, une entrée ressemblant à une commande et un workflow modifié
+doivent être refusés avant le collecteur. Les sources, politiques et preuves
+anciennes ne sont pas modifiées pour satisfaire cet essai.
+
+Les jetons et identités inventés restent dans le conteneur jetable. Seuls les
+artefacts de code, leurs reçus et les résultats de contrôle sortent. Cela ne
+qualifie ni PostgreSQL/SSO de production, ni l'autorité protégée des règles,
+ni une attestation de livraison, ni les capacités du VPS. Les modules systemd
+ont leur qualification distincte ; cette fixture ne prétend pas les exécuter.
