@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-31",
+  "scope": "Inactive VPS inventory candidate using received UID/GID and supplied public key",
+  "observation_authority": "unverified_observation",
+  "report_sha256": "5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4",
+  "nixpkgs_commit": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "checks": {
+    "observed": {
+      "allServicesStayDisabled": true,
+      "enabledFixturePreservesIdentity": true,
+      "enabledFixtureRestrictsAccount": true,
+      "fixtureAssertionsPass": true,
+      "noAccountOrGroupCreated": true,
+      "noExecutionReadinessInferred": true,
+      "noKeyOrSshServiceCreated": true,
+      "noSourceOrFullGenerationInvented": true,
+      "noStateVersionInference": true,
+      "observationRemainsUnauthenticated": true,
+      "observedIdsArePinned": true,
+      "packagePinsApprovedPublicKey": true,
+      "packagePinsObservedIdentity": true,
+      "reportBytesBound": true,
+      "standalonePackageMatchesModule": true
+    },
+    "generic": {
+      "absentIdsRejected": true,
+      "absentKeyRejected": true,
+      "accountRestricted": true,
+      "disabledHasNoAccount": true,
+      "disabledHasNoGroup": true,
+      "disabledHasNoKeyFile": true,
+      "disabledHasNoMatch": true,
+      "existingHomePreserved": true,
+      "fixedCommandInMatch": true,
+      "immutableLockRule": true,
+      "immutableLogin": true,
+      "keyRestrictsCommand": true,
+      "observedIdsRetained": true,
+      "otherGroupMemberRejected": true,
+      "rootOwnedKeyFile": true,
+      "sshDisabledRejected": true,
+      "stateVersionUnchanged": true,
+      "supplementaryGroupRejected": true,
+      "userEnvironmentDisabled": true,
+      "validFixturePasses": true
+    }
+  },
+  "artifact": {
+    "derivation": "/nix/store/xvbcgy7mnhnsnxxrchwn0wz48zpmjkpw-mrjam-inventory-v1.drv",
+    "store_path": "/nix/store/nllch0vmhkby2vszlbzpbkrp5izb5kkd-mrjam-inventory-v1",
+    "nar_hash": "sha256-UI9eWtXWw8BVMc8LI5YGzT5UuO2Df/jOoRX0gf5WEho=",
+    "nar_size": 67168,
+    "closure_paths": 28,
+    "total_nar_bytes": 220908864
+  },
+  "runtime_check": {
+    "uid": 980,
+    "gid": 980,
+    "approved_public_key_matches": true,
+    "original_v1_probe_bytes_unchanged": true,
+    "recursive_content_verification": "passed"
+  },
+  "source_sha256": {
+    "nixos/vps-preparation.nix": "fa521adec7981f94ef164f7b6bd401b94d06c39f1960b589c018272ceb961618",
+    "nixos/mrjam-inventory.nix": "08bd9fdd77a692822bd39b7d78df21fb222e8301580853a7c8298a15010e5531",
+    "targets/inventory-candidate.nix": "305da1bd60b70bf187275cc419343c918b095ff7fb07dbb3474e525be611190f",
+    "targets/mrjam-vps.json": "0cbebe11c83d8d1c9b08e553e57b92370bcec01b4167934d3dee4ed32a33622a",
+    "tests/vps-preparation-evaluation.nix": "934f075f01914237802e8513fd9dc6ca6d75a2327c17747d9746c7d607548ab0",
+    "tests/inventory-evaluation.nix": "30ad3b113583006c1d2e4bbe814da99e3c20d8665638081c761cdfb2759983c8",
+    "inventory/package.nix": "ef1321550f7277e9a440ac98065300d0f4679d43fcbd6a760db18e8b0ea690bd",
+    "inventory/adoption.py": "0b624c34ff9a6c433022d234be2dbbea9d2c45491ab7ece6413528598f19603e",
+    "inventory/runner.py": "cff6afeb12a2a36c549a39da01f3276834c853f02f27e7f87bee5b0b6378efda",
+    "targets/keys/mrjam-inventory.pub": "f4590e8f1417499cc995e68d77958b54b2502e5142ab819f0bee4ad3e9f2d554"
+  },
+  "local_log_sha256": {
+    "inventory-observed-qualification-20261031.log": "1664fbe79f1a19c767174a1f3977717f295873a6da1439b4c292cb89243fcfdd",
+    "inventory-observed-qualification-20261031-02.log": "7883abdffbecabf4bd591aa92a991aef985422e538b86d3a1595fb7475eae76d"
+  },
+  "preserved_failure": {
+    "attempt": 1,
+    "exit_code": 1,
+    "cause": "Test tried builtins.fromJSON on a string carrying Nix dependency context",
+    "correction": "Discard context only when inspecting JSON in evaluation test; package dependency context and assertions unchanged"
+  },
+  "production_access": false,
+  "production_activation": false,
+  "production_adoption_preflight_executed": false,
+  "limits": [
+    "No complete VPS generation built",
+    "No proof of installed public key match or active source revision",
+    "No new independent approval of this configured package",
+    "A report accepted by the filter is not an authenticated observation"
+  ]
+}

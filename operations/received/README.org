@@ -11,6 +11,14 @@ Il reste =unverified_observation= : ce dossier ne contient ni identifiant
 d'accès, ni secret, ni donnée métier, ni preuve de la génération installée.
 Le commit de base de la remise ne prouve pas la publication de ses ajouts.
 
+Le retour ultérieur =20261031/adoption-v2.json= est conservé dans ses 1 529
+octets reçus. =provenance-adoption-v2-20261031.json= trace le SHA-256 calculé à
+réception et l'acceptation par le filtre V2 épinglé. Aucun SHA-256 séparé ni
+signature n'accompagnait cette pièce jointe. Elle reste non authentifiée ; le
+contrôle de format ne prouve ni l'import Nix ni la vérification NAR précédents.
+L'exploitation limitée de ses métadonnées est décrite dans
+[[file:../targets/ADOPTION-OBSERVEE-20261031.org][le rapprochement de la cible]].
+
 L'installateur impératif est conservé uniquement comme source à relire. Ne pas
 le relancer. Les commandes SSH de la remise ne sont pas autorisées à Cloud.
 La proposition qui remplace l'accès se trouve dans =../inventory/= ; les

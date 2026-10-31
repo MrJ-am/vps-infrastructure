@@ -19,20 +19,32 @@
   "observed_report_sha256": "10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898",
   "observation_authority": "unverified_observation",
   "inventory_adoption": {
-    "uid": null,
-    "gid": null,
+    "uid": 980,
+    "gid": 980,
     "public_key_reference": "operations/targets/keys/mrjam-inventory.pub",
     "public_key_file_sha256": "f4590e8f1417499cc995e68d77958b54b2502e5142ab819f0bee4ad3e9f2d554",
     "public_key_fingerprint": "SHA256:AvujivIzSpqQ2pK/6N1+0pHvC0/JOueFytetRf7Jg7A",
     "public_key_source": "Complete public key supplied by the user on 2026-10-30; format validated locally",
     "installed_public_key_match": "not-verified; requires the bounded adoption preflight",
     "private_key_location": "Spectre only, never requested or read",
-    "enable": false
+    "enable": false,
+    "identity_basis": "adoption_observation: unverified UID/GID and metadata; exact adoption preflight still required"
   },
   "application_enable": false,
   "forgejo_enable": false,
   "runner_on_vps_allowed": false,
   "qualified_complete_system_generation": null,
   "independent_approval_reference": null,
-  "blocked_by": "operations/dossier-deploiement.org"
+  "blocked_by": "operations/dossier-deploiement.org",
+  "adoption_observation": {
+    "report_reference": "operations/received/20261031/adoption-v2.json",
+    "provenance_reference": "operations/received/provenance-adoption-v2-20261031.json",
+    "report_sha256": "5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4",
+    "authority": "unverified_observation",
+    "current_store_hash": "jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9",
+    "profile_number": 56,
+    "profile_store_hash": "jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9",
+    "profile_matches_current": true,
+    "complete_generation_identity": false
+  }
 }

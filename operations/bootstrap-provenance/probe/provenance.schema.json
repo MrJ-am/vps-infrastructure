@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "operation": {
+      "type": "string",
+      "const": "mrjam-system-provenance-v1"
+    },
+    "authority": {
+      "type": "string",
+      "const": "unverified_observation"
+    },
+    "generation_store_hash": {
+      "type": "string",
+      "pattern": "[0-9abcdfghijklmnpqrsvwxyz]{32}",
+      "maxLength": 32
+    },
+    "configuration_revision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "[0-9a-f]{40}",
+              "maxLength": 40
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "value"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "INVALID_OUTPUT"
+              ]
+            },
+            "value": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "value"
+          ]
+        }
+      ]
+    },
+    "nixpkgs_revision": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "observed"
+            },
+            "code": {
+              "type": "string",
+              "const": "OK"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "[0-9a-f]{40}",
+              "maxLength": 40
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "value"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "state": {
+              "type": "string",
+              "const": "unknown"
+            },
+            "code": {
+              "type": "string",
+              "enum": [
+                "UNAVAILABLE",
+                "INVALID_OUTPUT"
+              ]
+            },
+            "value": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "state",
+            "code",
+            "value"
+          ]
+        }
+      ]
+    },
+    "state_version": {
+      "type": "null"
+    }
+  },
+  "$defs": {},
+  "required": [
+    "schema_version",
+    "operation",
+    "authority",
+    "generation_store_hash",
+    "configuration_revision",
+    "nixpkgs_revision",
+    "state_version"
+  ]
+}

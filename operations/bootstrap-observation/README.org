@@ -71,6 +71,12 @@ Son résultat ne démontre pas les droits du client daemon non trusted de Spectr
 
 * Mise à disposition humaine
 
+Le retour utilisateur =../received/20261031/adoption-v2.json= a maintenant été
+reçu et accepté par le filtre V2 inchangé. Il indique UID/GID =980:980= et le
+profil =56= concordant avec le lien courant. Voir
+[[file:../targets/ADOPTION-OBSERVEE-20261031.org][le rapprochement documenté]]. Sa validation n'authentifie pas la collecte
+et ne fournit pas un reçu de l'import ou de la vérification NAR sur le VPS.
+
 La directive actuelle autorise l'objectif de mise en service. Ce lot reste un
 amorçage précisément identifié, pas une délégation générale. Après réussite de
 la qualification et identification du commit, du chemin store, du NAR hash et

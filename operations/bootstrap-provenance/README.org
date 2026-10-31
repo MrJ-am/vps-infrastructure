@@ -1,0 +1,98 @@
+#+title: Provenance du système NixOS — observation distincte et bornée
+#+language: fr
+
+* Décision à éclairer
+
+Spectre a déjà cherché le checkout VPS dans son périmètre local autorisé sans
+le retrouver. Le retour V2 reçu fixe UID/GID =980:980= et une identité partielle
+de génération, mais pas la révision de sa configuration. Cette nouvelle
+opération cherche uniquement les deux références que le programme NixOS
+=nixos-version= peut publier. Elle ne refait ni la recherche locale, ni V1, ni V2.
+
+Les références amont consultées sont celles de =NixOS/nixpkgs= au commit
+=6f06d204d8f2d8761d9da78778745974a3216381= :
+- =nixos/modules/installer/tools/nixos-version.sh=, blob
+  =39e34a3718cb1e8e2d18ba28c2b1a8cc7f373445= ;
+- =nixos/modules/installer/tools/tools.nix=, blob
+  =d0885bc9046c8015b5a3d09d7e24a3a20bb698eb= ;
+- =nixos/modules/misc/version.nix=, blob
+  =a8087925f9fe411397db97ead5be86e54db3c394=.
+
+Ce code indique que =--configuration-revision= désigne la valeur déclarée de
+=system.configurationRevision=, et =--revision= celle de nixpkgs. La première
+est facultative et peut manquer. Aucune de ces valeurs n'est =stateVersion=.
+Ces sources amont ne prouvent pas la révision des exécutables actuellement
+installés sur le VPS.
+
+* Interface fermée et limites
+
+Le paquet =mrjam-observe-provenance-v1= expose une seule commande sans argument,
+=bin/mrjam-observe-provenance=, destinée à l'administrateur humain. Ce paquet
+ne donne pas un accès root, un shell ou une ACL aux agents. L'accès SSH V1 et
+le paquet d'observation d'adoption restent inchangés.
+
+Le lanceur reprend les propriétés du lanceur d'adoption qualifié, avec un nom
+d'unité, de verrou et de paquet distinct. Il refuse une copie mutable, un
+argument, un appel non root ou une unité préexistante, puis lance la collecte
+avec le compte existant =mrjam-inventory= : réseau privé vide, aucune capability,
+aucun privilège nouveau, fichiers protégés, mémoire 192 Mio, CPU 20 %, 12 tâches.
+Les temps restent 20 s de démarrage, 60 s d'exécution, 2 s d'arrêt, 90 s de
+capture extérieure. Le paquet fixe Python, systemd, Bash et coreutils depuis
+le même nixpkgs verrouillé que la première remise.
+
+Le collecteur non privilégié utilise seulement :
+1. le lien fixe =/run/current-system=, lu avant et après les deux requêtes ;
+2. le programme fixe =/run/current-system/sw/bin/nixos-version=, résolu vers
+   un fichier exécutable root:root non modifiable dans le store ;
+3. les deux arguments constants =--configuration-revision= et =--revision=.
+
+Chaque sous-processus a deux secondes et 64 octets de stdout maximum. Son stderr
+est supprimé et le groupe de processus est terminé/récolté par le superviseur
+déjà qualifié. La collecte garde la limite interne de cinq secondes et les
+plafonds de l'aide V2 réutilisée. Aucun argument, environnement ou chemin fourni
+par le demandeur ne choisit une requête. Un changement du lien courant refuse
+tout le rapport ; cela ne constitue pas une photographie atomique de la machine.
+
+Seul un SHA Git complet de 40 caractères hexadécimaux minuscules est admis.
+Une sortie absente, partielle, libre, trop longue, un échec ou un timeout reste
+=unknown=, sans réémettre la sortie. Un suffixe =-dirty= n'est pas tronqué pour
+obtenir une révision acceptable. Le filtre séparé puis le lanceur revalident le
+document fermé, limité à 2 Kio, contre le nouveau schéma épinglé. Le rapport
+conserve =authority=unverified_observation= et =state_version=null=.
+
+Une révision déclarée n'est ni une signature, ni une preuve que le checkout
+était propre, ni une preuve exhaustive du graphe de construction. Les valeurs
+permettent de rechercher des références de code dans les seuls dépôts autorisés,
+sans conclure à un alignement parfait. L'absence de cette métadonnée ne prouve
+pas l'absence de NixOS ou d'une configuration versionnée.
+
+* Tests et remise
+
+Les tests natifs utilisent uniquement des sorties fabriquées et des fonctions
+simulées. La suite externe =mrjam-validation/operational-review/provenance-systemd.nix=
+utilise une VM NixOS TCG synthétique avec les deux valeurs explicitement fixées.
+Elle ne présume ni KVM ni une VM supplémentaire disponible sur le VPS. Les
+résultats effectifs et les essais échoués sont conservés dans les reçus ; un
+build de paquet n'est pas à lui seul une qualification système.
+
+#+begin_src bash
+python3 -B -m unittest discover -s operations/bootstrap-provenance/tests -v
+#+end_src
+
+=export_delta.py= est un producteur Cloud uniquement. Après vérification du
+reçu système réussi et des sources exactes, il n'exporte que la nouvelle racine.
+Il exige que toutes ses dépendances soient identiques à celles de la première
+remise. Dans un store temporaire vierge, il importe d'abord l'export original
+inchangé, puis ce delta, et vérifie tous les NAR, tailles et références.
+Le delta seul n'est pas une fermeture autonome. Aucune signature ou politique
+de confiance Nix n'est modifiée pour réussir l'import.
+
+Le dossier livré doit identifier la révision, les octets, le NAR, la fermeture
+et les résultats effectivement obtenus avant tout geste humain. Spectre relit
+cette extension distincte avant de préparer la commande fixe. Ce partage de
+code et ces tests ne constituent pas une autorité d'approbation protégée.
+
+Après observation, le paquet reste inerte dans le store et le verrou vide peut
+rester sous =/run= jusqu'au redémarrage. Aucune génération, donnée, règle SSH,
+identité ou configuration persistante de service n'est modifiée. Ne pas lancer
+un nettoyage global ou un retour applicatif pour retirer une observation.

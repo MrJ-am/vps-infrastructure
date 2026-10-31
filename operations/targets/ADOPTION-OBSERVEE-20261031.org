@@ -1,0 +1,82 @@
+#+title: Rapprochement du retour adoption-v2 avec la préparation du VPS
+#+date: 2026-10-31
+#+language: fr
+
+* Retour reçu et provenance
+
+Le fichier joint =adoption-v2.json= mesure 1 529 octets et a pour SHA-256
+=5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4=.
+Il est conservé octet pour octet dans =../received/20261031/adoption-v2.json=.
+Le manifeste des sources V2 et le schéma épinglé ont été vérifiés avant
+l'exécution du filtre ; celui-ci accepte le rapport avec le code de sortie 0.
+Le [[file:../received/provenance-adoption-v2-20261031.json][reçu de réception]] distingue le hachage local d'une empreinte fournie
+séparément par l'émetteur, absente ici.
+
+L'autorité reste =unverified_observation=. Ni signature, ni date de collecte
+authentifiée, ni reçu des contrôles Nix précédents ne sont fournis. Un JSON
+valide n'établit pas comment le fichier a été produit. Aucun accès de production
+n'a été effectué depuis Cloud et aucune donnée métier n'est contenue dans ce
+rapport fermé de métadonnées.
+
+* Ce que le retour permet de préparer
+
+| Élément | Valeur reçue | Utilisation et limite |
+|---------+--------------+-----------------------|
+| UID/GID mrjam-inventory | 980:980 | Paramètres fixes du candidat ; pas d'allocation automatique |
+| Groupe primaire, home, shell V1 | Concordants | Pas une lecture du contenu du shell ni du mot de passe |
+| Groupes supplémentaires | Absents selon NSS borné | Ne recherche pas d'autres comptes partageant le GID |
+| Sept chemins impératifs | Type, propriétaire, groupe et mode conformes | Ne vérifie ni contenu, ACL ni absence de courses après l'observation |
+| Destination de clé déclarative | Absente | Aucun conflit observé à cet instant ; à revérifier avant adoption |
+| Profil sélectionné | 56 | Numéro observé, pas une référence de livraison |
+| Champ store du système courant et du profil | jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9 | Identiques ; ni chemin complet, ni NAR hash, ni révision Git |
+
+=mrjam-vps.json= lie ces valeurs au SHA-256 du rapport et garde la distinction
+entre observation partielle et identité complète. =installed_source_commit=,
+=installed_generation= et =system_state_version= restent =null=.
+=production_execution_ready= reste =false=.
+
+=../nixos/vps-preparation.nix= reprend UID/GID et la clé publique déjà fournie,
+avec les quatre services toujours désactivés. Le paquet exposé par
+=packages.x86_64-linux.inventory-vps-candidate= contient la configuration
+=980:980= et cette clé publique. Les trois fichiers V1, la politique de tailles
+et empreintes, le runner et les restrictions SSH ne sont pas modifiés.
+Il s'agit d'un paquet à examiner, sans activation ou installation implicite.
+
+* Contrôles Cloud exécutés
+
+Les 15 contrôles de la composition avec le retour reçu et les 20 contrôles du
+module générique passent avec le nixpkgs verrouillé. Ils vérifient notamment
+l'absence d'activation, d'allocation de compte et d'inférence de =stateVersion=,
+puis l'identité du paquet construit avec celle du module dans une fixture.
+Le premier essai a échoué dans le test de décodage d'une chaîne Nix portant
+son contexte de dépendances. Le second corrige cette inspection du test,
+sans retirer le contexte du paquet ni modifier les attentes ; l'échec est conservé.
+
+| Artefact réellement construit | Référence |
+|------------------------------+-----------|
+| Dérivation | /nix/store/xvbcgy7mnhnsnxxrchwn0wz48zpmjkpw-mrjam-inventory-v1.drv |
+| Sortie | /nix/store/nllch0vmhkby2vszlbzpbkrp5izb5kkd-mrjam-inventory-v1 |
+| NAR | sha256-UI9eWtXWw8BVMc8LI5YGzT5UuO2Df/jOoRX0gf5WEho= |
+| Fermeture | 28 chemins ; 220908864 octets NAR |
+
+La vérification récursive du contenu réussit. Le contrôle du =runtime.json=
+construit confirme UID/GID, clé publique et conservation exacte des trois
+blobs V1. Voir [[file:qualification-inventory-observed-20261031.json][le reçu]]. Ce paquet configuré n'a pas encore de nouvelle
+approbation indépendante, de précontrôle réel ou de génération VPS complète.
+
+* Prochaines preuves nécessaires
+
+1. Retrouver la référence Git et la cible NixOS de la dernière construction du
+   VPS. Cette référence doit concerner le VPS, jamais la configuration de
+   Spectre. Rapprocher ensuite le graphe de configuration et =stateVersion=
+   existant ; ne les inférer ni de la version Nix ni du profil 56.
+2. Qualifier le paquet configuré et son adoption dans la génération complète.
+   La V2 ne remplace pas le précontrôle =mrjam-inventory-adoption= : octets du
+   runner/login anciens, clé publique exacte, conflits de fichiers et identité
+   doivent être revérifiés par la capacité autorisée immédiatement avant mutation.
+3. Vérifier la politique SSH effective et le retour depuis l'accès déclaratif
+   avec un canal humain indépendant. Ne pas relancer l'installateur impératif.
+
+La collecte V2 n'est pas à recommencer pour ces trois points : ils nécessitent
+des preuves différentes. Les références de secrets et les données persistantes
+restent côté opérateur. La réception ne déclenche aucun déploiement.
