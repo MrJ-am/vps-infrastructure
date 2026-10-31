@@ -53,6 +53,7 @@ def main():
             input=data, env=environment, stderr=subprocess.DEVNULL, timeout=30)
     source = root/'rules-source'
     records = []
+    expected_tree = {}
     for entry in git('-C', str(VALIDATION), 'ls-tree', '-r', '-z', BASE_RULES).split(b'\0'):
         if not entry:
             continue
@@ -69,9 +70,12 @@ def main():
         put(source/name, raw)
         (source/name).chmod(0o755 if mode == '100755' else 0o644)
         records.append({'path': name, 'blob': blob, 'sha256': sha(raw)})
+        expected_tree[name] = (mode, 'blob', blob)
     workflow = 'operations/forgejo/independent-validation.yml'
     raw = (INFRA/workflow).read_bytes()
     put(source/'.forgejo/workflows/independent-validation.yml', raw)
+    expected_tree['.forgejo/workflows/independent-validation.yml'] = (
+        '100644', 'blob', hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest())
     git('init', '--bare', str(root/'rules.git'))
     args = ('--git-dir', str(root/'rules.git'), '--work-tree', str(source))
     git(*args, 'add', '--all')
@@ -80,6 +84,12 @@ def main():
         'Offline synthetic workflow integration; validation bytes from '+BASE_RULES+'\n').encode()).decode().strip()
     git(*args, 'update-ref', 'refs/heads/main', revision)
     git(*args, 'symbolic-ref', 'HEAD', 'refs/heads/main')
+    actual_tree = {}
+    for entry in git(*args, 'ls-tree', '-r', '-z', revision).split(b'\0'):
+        if entry:
+            metadata, name = entry.split(b'\t', 1)
+            actual_tree[name.decode()] = tuple(metadata.decode().split())
+    require(actual_tree == expected_tree, 'FIXTURE_GIT_TREE_CHANGED')
     original = (SOURCE/'manifest.json').read_bytes()
     require(sha(original) == BASE_PROPOSAL, 'BASE_PROPOSAL_CHANGED')
     manifest = json.loads(original)
