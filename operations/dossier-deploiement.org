@@ -118,8 +118,10 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    spécialisé refuse les workflows non admis avant exécution. Les unités du
    contrôleur, du worker et du collecteur ont des qualifications système
    distinctes ; les VM du worker et du runner utilisent un vérificateur inventé.
-   Le pipeline Rust/Elm complet passe séparément dans le worker local à UID
-   distinct. Leur intégration avec une attestation protégée reste à qualifier.
+   Le pipeline Rust/Elm complet passe aussi de bout en bout avec Forgejo,
+   runner, collecteur et worker réels : 17 contrôles et 74 étapes du
+   vérificateur réussis, voir =forgejo/INTEGRATION-COMPLETE.org=. Le staging
+   de confiance et l’attestation protégée restent à raccorder.
    Le contrôleur de mise en service reste en chantier. Un plan ou un statut
    Actions ne constitue pas une preuve authentifiée de qualification.
 7. =runtime/= lie configuration publique, manifeste serveur et manifestes Elm,
@@ -157,6 +159,7 @@ autre binaire :
 | Conditionnement Nix des mêmes octets | Huit sorties et fermeture vérifiées, aucun rebuild/strip | =release/qualification-artifacts-20261031-03.json= ; pas de génération VPS |
 | Même ELF, sept sites, navigateurs et systemd | 442 ressources HTTP exactes ; 10 groupes navigateur ; 7 groupes système | =runtime/qualification-runtime-complete-systemd-20261031.json= et reçus navigateur/static de mrjam-validation ; identité synthétique |
 | Forgejo et runner complets sous systemd | 7 groupes réussis, 25 assertions runner et 17 worker | =forgejo/forgejo-runner-systemd-pass-20261031.json= ; compilateur inventé dans cette VM, pipeline réel testé séparément |
+| Chaîne Forgejo/runner/collecteur/worker avec compilateur réel | 17 contrôles et 74 étapes du vérificateur réussis ; un seul build, second dispatch servi depuis cache vérifié | =forgejo/qualification-complete-chain-20261031.json= ; deux conteneurs Cloud hors réseau, entrées scellées au préalable, pas d’autorité protégée |
 | Rejeu normal Vision 51e7bcd6 et module | 32 tests Nix, 35 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-replay-systemd-20261031.json= ; clients privés inventés, restauration complète distincte |
 | Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
 | Cycle de préavis 47286a8a et module | 34 tests Nix, 37 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-cycle-systemd-20261031.json= ; annulations/reprises natives, SMTP refusé en VM, acceptation/délai/archive simulés explicitement |
@@ -192,6 +195,11 @@ Le premier paquet travailleurs contient encore l'admission =718a8188= : il est
 conservé pour revue historique. Le [[file:release/REVUE-TRAVAILLEURS-20261031-02.org][nouveau paquet distinct]] sélectionne
 =0d33bd70=, avec treize preuves et dix-sept membres contrôlés. Il ne remplace
 pas les préconditions de cohérence de l'existant et d'installation.
+La [[file:release/REVUE-TRAVAILLEURS-20261031-03.org][remise courante distincte]] sélectionne maintenant les trois lecteurs de
+courrier =7d87768b=, la fermeture et l'adopteur inchangés : cinq composants,
+27 chemins, treize preuves et dix-sept membres vérifiés, avec import local
+vierge. Elle remplace aussi l'ancien archiviste du premier paquet dans la
+sélection, sans modifier les anciennes archives.
 
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256

@@ -9,6 +9,10 @@ champs de gel décrivent leur protocole initial, pas une nouvelle demande
 d'autorisation. Les frontières Cloud et les qualifications restent exigées.
 Le maillon nouveau qui conserve exactement les artefacts du validateur est
 décrit dans [[file:IMPORT-ARTEFACTS.org][IMPORT-ARTEFACTS.org]].
+La [[file:../forgejo/INTEGRATION-COMPLETE.org][chaîne complète Forgejo/runner/collecteur/worker]] a aussi exécuté le
+compilateur réel sur données synthétiques. La [[file:REVUE-TRAVAILLEURS-20261031-03.org][sélection courante des travailleurs]]
+inclut les trois lecteurs de courrier corrigés. Ces preuves ne fournissent
+pas encore la génération du VPS ni le contrôleur de bascule/retour.
 
 * Livrable et état
 Ce répertoire prépare les objets de revue de la livraison Rust/Elm et les
@@ -29,8 +33,11 @@ restent à fournir et qualifier. Aucun workflow ancien n'est réintroduit.
 Le dossier ne prouve pas l'état installé du VPS. =vps-infrastructure= est la
 source de configuration désignée par l'utilisateur ; l'alignement de sa future
 cible NixOS avec la génération en cours demande encore une preuve bornée. Le
-binaire Rust garde =/readyz= à =503 NOT_READY= tant que les raccordements ne sont
-pas qualifiés. Une livraison métier est donc bloquée à ce stade.
+binaire d’amorçage gardait =/readyz= à =503 NOT_READY=. Le serveur courant
+=4e65423c= a maintenant une qualification HTTP, navigateur et systemd sur
+données synthétiques, décrite dans =../runtime/=. Sa readiness est limitée aux
+capacités configurées ; elle ne remplace pas les contrôles d’identité, de
+compatibilité des données et de bascule de production encore manquants.
 
 * Fichiers et commandes locales
 | Fichier | Fonction |

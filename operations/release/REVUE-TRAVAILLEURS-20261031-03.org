@@ -1,0 +1,34 @@
+#+title: Remise de revue — trois lecteurs de courrier corrigés
+#+language: fr
+#+date: 2026-10-31
+
+Archive : =/workspace/shared/mrjam-travailleurs-revue-20261031-03.tar=.
+Taille : 107653120 octets. SHA-256 :
+=08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c=.
+
+Cinq composants sont sélectionnés : admission, archiviste et cycle de
+=vision@7d87768b=, fermeture =e067f8c7= et adopteur =sc6zj2w7=.
+Les 27 chemins transitifs représentent 256375848 octets NAR ; la limite reste
+268435456 octets. Treize pièces de preuve et les dix-sept membres du tar sont
+vérifiés. Le même export a été importé dans un store vierge local, sans exécuter
+les programmes ni modifier la confiance Nix. Les huit tests de l'exporteur passent.
+
+[[file:qualification-review-workers-20261031-03.json][Le reçu]] lie sources, sélection, manifeste, export, compression et archive.
+[[file:review-workers-20261031-03.json][La sélection]] conserve les preuves de chaque composant.
+Les trois nouveaux exécutables ont 40 tests Nix, 43 tests natifs, fmt/clippy
+et quatre suites de huit groupes système : [[file:../runtime/vision-mail-compatibilite.org][qualification du courrier]].
+Les schémas, dépendances et empreintes des messages historiques restent inchangés.
+
+L'archive travailleurs précédente =6d9233dc402342c1311ae81b4e755cf260c08be7051bbb3f2db6566488ce0ae4=
+reste intacte. Ses artefacts admission =0d33bd70= et cycle =47286a8a= sont
+remplacés dans la sélection courante. Le premier paquet plateforme reste lui
+aussi inchangé : ses sorties plateforme, rejeu et SQL004 restent distinctes ;
+son archiviste =9b6cbe74= est remplacé par celui de cette remise.
+Aucune nouvelle empreinte n'est attribuée à un ancien paquet.
+
+Vérifier le SHA-256 du tar avant extraction dans un nouveau dossier, puis toutes
+les entrées de =SHA256SUMS=. Consulter [[file:IMPORT-ARTEFACTS.org][la procédure d'import de revue]] et ne jamais
+exécuter ce code ou l'importer sur le VPS au seul motif que l'archive est valide.
+Ce lot ne contient ni génération système, ni données persistantes, ni secret,
+ni capacité d'installation, ni preuve de retour après migration de données.
+Les préconditions exactes restent dans le [[file:../dossier-deploiement.org][dossier courant]].
