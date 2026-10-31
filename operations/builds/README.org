@@ -111,7 +111,7 @@ Les attributs sont =verifiedInputs=, =rustToolchain=, =nodeToolchain=,
 serveur ; sa qualification fonctionnelle et son adoption restent séparées.
 Il est absent (=null=) pour les anciens instantanés qui ne le contiennent pas.
 Une erreur de hash est fatale. Rust utilise
-=cargo build --release --frozen --offline= et =cargo test --workspace
+=cargo build --release --frozen --offline= et =cargo test --workspace --release
 --frozen --offline= sur le vendor intégral ; aucun résolveur ne met le verrou
 à jour. Les tests PostgreSQL nécessitant la feature d'intégration restent un
 contrôle séparé : ce build n'instancie pas de base de données.

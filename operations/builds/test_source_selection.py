@@ -69,6 +69,15 @@ class Sources(unittest.TestCase):
             with self.subTest(revision=revision), self.assertRaisesRegex(prepare.Refused, "EXACT_SOURCE_COMMIT_REQUIRED"):
                 select_sources.propose(self.platform, revision, self.baseline)
 
+    def test_only_explicit_embedded_catalogue_is_selected(self):
+        selected = "crates/server/contracts/audition-catalogue.json"
+        self.write(self.platform, selected, '{"outils":[]}\n')
+        self.write(self.platform, "crates/server/contracts/unreviewed.json", '{"synthetic":"excluded"}\n')
+        revision = self.commit(self.platform)
+        files = select_sources.propose(self.platform, revision, self.baseline)["sources"]["platform"]["files"]
+        self.assertEqual(files[selected], prepare.digest(b'{"outils":[]}\n'))
+        self.assertNotIn("crates/server/contracts/unreviewed.json", files)
+
     def test_gitlink_must_match_checked_out_component(self):
         self.write(self.vision, "src/next.rs", "pub fn next() {}\n")
         self.commit(self.vision)
