@@ -1,0 +1,11 @@
+{
+  "archive": "mrjam-observation-provenance-20261031.tar",
+  "bytes": 430080,
+  "files_verified": 37,
+  "infra_commit": "65d28822b7ae05ee7350cfee417e56cb44dd4e11",
+  "reproducible_tar_metadata": true,
+  "review_commit": "d1f5997a6320feb7bc3c2e7c4076f4c8a82226ec",
+  "sha256": "e9167d1024528806a624bf99ae70b983717b0a3a182bd7fb0d2e946ead38669f",
+  "sha256sums_sha256": "9e2a4eedb37146f917c57630eee7c3a63a057b5541839d4a16d8cd1d0d2644d0",
+  "source_selection_from_git_objects": true
+}
