@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "derivation": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+  "output": "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a",
+  "path_info": {
+    "/nix/store/0qwbdzhp9bn81yzq0xmnsqmvc4w5z4jb-mrjam-qualified-artifacts-8bf05fb9065a-log": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-zB2YJlh1RPG0zLRAqdBk8hKVtUAJt3ZuAQGoIUNo1Mw=",
+      "narSize": 552760,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/4q27zxfwwb8mwycxglmnwiqy8203wib6-mrjam-qualified-artifacts-8bf05fb9065a-audition": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-nqYQI5NsuDBXOEON7T3NP7g7qDmfDkf89nASBoCWiOo=",
+      "narSize": 3727672,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/6zrdrs6gpzng37iy858kk6j8kl603l09-mrjam-qualified-artifacts-8bf05fb9065a-logique": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-ygIDE18yv298o3P8JdInG8yGq4d6V34JjXwqMFEMvxQ=",
+      "narSize": 4053448,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/9y499yg6jwbn3l93nkqhgv99z481bbj3-mrjam-qualified-artifacts-8bf05fb9065a-vision": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-BE2eR2JQdrIC5uTSep4jmDwiaVybTgL7iNm05u0mwy4=",
+      "narSize": 1122464,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
+      "narSize": 60858624,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/mbfhdq690mris1dbfbw36j0czaiqf0wq-mrjam-qualified-artifacts-8bf05fb9065a-style": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-5VTNi5DrvbDf+hEA9T67O1tJV5HswJXzJUrHCQVnO9A=",
+      "narSize": 4257992,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/n8y0whg3w2kfv8lhly654rmdxkjwmyh0-mrjam-qualified-artifacts-8bf05fb9065a-logo": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-wa+4R3BXS6BLp8d+h9Sw/8yZiHdz6vmesDPNfK1CLfE=",
+      "narSize": 6060888,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/yi2jsgkbp302l6hqp7cxpq0lnv05k7pd-mrjam-qualified-artifacts-8bf05fb9065a-mateval": {
+      "ca": null,
+      "deriver": "/nix/store/2na02f2xmwximpcra54px2w83z2x8y1d-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "narHash": "sha256-FNRjIXqN3bltfjGxuGa2Bq2T7RbNAS3CNzReE866vH8=",
+      "narSize": 3831400,
+      "references": [],
+      "registrationTime": 1793458771,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "frontend_manifest_sha256": {
+    "audition": "84566064ce474a93e5fb22e4b965a08a76795e1cafaf57c59ef77dfcae97b57b",
+    "log": "b8da221d13a43415ba4c55b790a48608b473e2ebaf8c81436bada4205360abaf",
+    "logique": "a67d1531adee8287e2cda658856b4374e49586ab8cedc4f7831526319a99fb4a",
+    "mateval": "0ca95c9a2631b492ab141f155fea43b6c540618f9c5f6a0702fc013714604b02",
+    "style": "82c319fe4eea245dbf1fd54576ce940694c0f591f4b2352b654222aec8e41e22",
+    "style-logo": "934424cc5d944e27bafeecea43777e3e84e3006d0705a1b9c6375d5aede40a64",
+    "vision": "a0dfbd1c1674277adfe4606ba16f5919a731fc3c98d8d8672a8dce85a6d5815a"
+  },
+  "frontend_payload_counts": {
+    "audition": 95,
+    "log": 8,
+    "logique": 124,
+    "mateval": 107,
+    "style": 48,
+    "style-logo": 37,
+    "vision": 23
+  },
+  "server_sha256": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd",
+  "frontend_tar_sha256": "0723f0298455d59d94c63ce5099b82cbb56db8409733a1ad7cd8d0ec4f0d402a",
+  "verification_sha256": "f5b95fc01cc69a461c0ac016ddc1141cfb761eea50ff0b629b70a56a659cd7bd",
+  "artifact_lock_sha256": "3bf6461c54472b0091e77e530706d6d30628167f60075c5bbc76eeafa5cbd670",
+  "all_frontend_members_identical": true,
+  "nix_recursive_content_verified": true,
+  "production_access": false,
+  "production_ready": false,
+  "logs_sha256": {
+    "qualified-artifacts-build-20261031-03.json": "859c1fd36adaaa15ebca2e15957aa03b7d485fc065bcbd63e440fab5b1cb05ff",
+    "qualified-artifacts-build-20261031-03.log": "c364a10fe6fe19b8ef6a19bea92cf32ce4eb704f880e49ff4d9a020e72bcabef",
+    "qualified-artifacts-verify-20261031-03.log": "a39c3c68c944aa9e8099de01b21fdfab7845f1da45a86eb800da57e0ba09ca12"
+  },
+  "sources_sha256": {
+    "operations/release/import_qualified.py": "3f049224a87b3b7aea87fc82d6f99de5c628205d6b46fb5dbcf0ed9c80b5be11",
+    "operations/release/qualified-artifacts.nix": "54d0dc7aacea97358606106cdc92b1e67f27518f235f14a1db502acd023017cb"
+  },
+  "limits": [
+    "Exact 8-output Nix import; no compilation, strip or patchelf of qualified bytes",
+    "Browser and seven static-site successes recorded separately; systemd result still pending",
+    "No whole VPS generation, protected rules adoption or production installation"
+  ]
+}

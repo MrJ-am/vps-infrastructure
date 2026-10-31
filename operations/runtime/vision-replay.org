@@ -1,0 +1,89 @@
+#+title: Rejeu Vision — passage normal déclaratif et restauration distincte
+#+language: fr
+
+Le candidat =vision@51e7bcd63f4ab36ddadd14fa8cf531e336a076ce= ajoute
+=vision-replay=. Les 35 tests Rust natifs, formatage et Clippy passent ; le reçu
+est =vision/docs/qualification-rejeu-cli-20261031.json=. Les sources et les
+178 dépendances Cargo sont exportées sans suivre une branche mobile ; le
+manifeste a pour SHA-256
+=ba585b4e5a4ded40c8f268732f8dbafc6a5581cb162ac833108eca48ced04651=.
+Le build Nix passe 32 tests hors réseau et produit l'ELF de SHA-256
+=5afcb57458af7c627012677e38961adc532ad62fa99048bdb746c8d069f4caae=,
+sous =/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a=.
+Le reçu est =../builds/qualification-vision-replay-build-20261031.json=.
+Les 35 tests natifs incluent trois tests PostgreSQL/TLS distincts du build.
+L'essai NixOS TCG de ce même rejeu passe huit groupes en 266,98 secondes :
+=qualification-vision-replay-systemd-20261031.json=. Le gitlink de la plateforme
+ne change pas par cette préparation séparée. L'ELF archiviste contenu dans
+ce nouveau paquet n'est pas substitué à l'archiviste déjà qualifié séparément.
+
+Le test système applique explicitement la migration distincte 004 de
+=vision@c7056949832a4b00939c7ec62617bf3d64d3d2ce=. Elle impose l'ordre ASCII
+du protocole aux deux fonctions de pagination, indépendamment de la locale
+PostgreSQL. Les migrations 001 à 003 restent identiques. L'artefact SQL a son
+propre reçu =../builds/qualification-vision-replay-ordering-20261031.json= ;
+sa construction n'exécute aucun SQL. Les contretests natifs parcourent 112 clés
+et appliquent deux fois 004 sans changement du journal ou de sa révision.
+
+* Comportement borné
+
+=check-config --config FICHIER= valide la configuration publique sans lire un
+credential ni se connecter. =check-local= vérifie les deux credentials d'unité
+et les trois capacités SQL ; il ne certifie pas la disponibilité de l'IdP.
+=run-once= applique au plus cent intentions dont l'archive est acquittée, puis
+acquitte chacune avec l'empreinte exacte de cette archive. Les fermetures communes
+attendent au moins 120 secondes pour laisser finir le hook natif.
+
+Le passage retire les contenus concernés, purge les demandes d'admission par
+le protocole privé fixe, puis retire l'identité auprès du client historique de
+fermeture Keycloak. Une panne après un effet partiel laisse l'intention durable
+non acquittée ; la reprise est idempotente. Aucune suppression d'un compte tiers
+ni lecture brute du contenu par les rôles de cycle/fermeture n'est admise.
+Le seul résultat public est un statut fermé. Il ne contient ni identifiant,
+journal, donnée SQL, credential, chemin en erreur ou réponse d'IdP.
+
+* Déclaration et adoption
+
+=../nixos/mrjam-vision-replay.nix= est désactivé par défaut et n'ajoute aucun
+démarrage automatique. Il définit un compte système verrouillé sans groupe
+supplémentaire, deux références LoadCredential, une configuration publique dans
+le store, une unité oneshot avec échéance 900 secondes, 256 Mio, 32 tâches et
+20 % d'un CPU. Le CLI abandonne à 840 secondes. Aucun nouvel état SQLite,
+répertoire de données, rôle SQL ou schéma n'est créé par l'unité.
+
+Les mappings Unix peer sont explicitement déclarés :
+
+| Identité Unix | Base | Rôle fixe |
+|---------------+------+-----------|
+| mrjam-vision-replay | journal privé distinct | vision_journal_rejeu |
+| mrjam-vision-replay | contenu Vision | vision_cycle |
+| mrjam-vision-replay | contenu Vision | vision_fermeture |
+
+Le module conserve les anciennes règles HBA et refuse les ajouts sous son nom
+de mapping réservé. Il ne change pas le paquet PostgreSQL, les bases ou le
+répertoire de données. Le contexte de construction d'un artefact est refusé :
+la configuration attend un chemin de fermeture déjà construite et qualifiée.
+
+Avant adoption, rapprocher l'identité Unix et les noms des deux bases sans
+contenu, appliquer seulement les migrations et droits précédemment qualifiés,
+installer les mêmes artefacts, puis résoudre localement les deux références de
+credentials. La compatibilité Keycloak/SSO n'est pas déduite de l'observation
+Kanidm. Les ports fixes 3027 et 8085 décrivent le candidat historique, pas une
+observation du VPS. Le timer doit rester désactivé tant que ces dépendances,
+l'archiviste et les services d'admission/fermeture ne sont pas qualifiés ensemble.
+
+* Restauration
+
+Le CLI refuse tout verbe de restauration. Le mode normal ne revisite pas une
+intention déjà acquittée ; il ne peut donc pas autoriser la réouverture après
+restauration. La bibliothèque =RejoueurVision::executer= relit l'ensemble du
+journal et refuse de conclure s'il change. Le scénario synthétique qualifie
+la réapparition de trois comptes, profils et fiches, les pannes d'identité,
+l'émetteur erroné, le journal incomplet et la préservation d'un compte tiers.
+
+Le futur contrôleur de restauration doit prouver la quiescence de tous les
+producteurs, conserver le journal privé hors de l'ancienne sauvegarde, contrôler
+l'adoption et la cohérence des bases, exécuter le rejeu complet avant ouverture,
+puis rendre uniquement un reçu fermé. Il reste à implémenter et qualifier avec
+le mécanisme de sauvegarde autorisé. Une génération NixOS antérieure ne rétablit
+ni n'annule les contenus effacés. Aucune sauvegarde réelle n'est accessible à Cloud.

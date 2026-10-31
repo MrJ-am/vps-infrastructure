@@ -24,7 +24,7 @@ inactif ; il n'est ni importé ni présenté comme un système activable. Il res
 dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
 
 Le =flake.nix= exporte les modules Rust, inventaire, Forgejo, passerelle,
-politique Forgejo, runner, worker, collecteur, archiviste et accès PostgreSQL.
+politique Forgejo, runner, worker, collecteur, archiviste, rejeu et accès PostgreSQL.
 =nixos/vps-preparation.nix= conserve une composition préparatoire désactivée.
 Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
 de test sont des fixtures, sans cible de production dans =nixosConfigurations=.
@@ -80,10 +80,14 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    sources frontend sont inchangées. Voir =builds/qualification-frontends-operationnel-20261030.json=.
    Le serveur opérationnel de =mrjam-plateforme@e920cd59e07b8371a564cd7041ee014748f50d7f=
    a sa construction Nix distincte : =builds/qualification-runtime-20261031.json=.
-   Le CLI archiviste a désormais son build et sa qualification système distincts,
-   voir =runtime/vision-archive.org=. Les autres workers de cycle de vie restent
-   à terminer et à qualifier. Les sorties
-   réservées restent locales.
+   Le pipeline complet de =mrjam-plateforme@4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8=
+   produit désormais les sorties réellement qualifiées :
+   =release/qualification-artifacts-20261031-03.json=. Il remplace le serveur
+   e920cd59 comme candidat courant ; les preuves de celui-ci restent historiques.
+   Les CLI archiviste et rejeu ont leurs builds et qualifications système
+   distincts, voir =runtime/vision-archive.org= et =runtime/vision-replay.org=.
+   Admission, cycle et fermeture n'ont pas encore leurs exécutables et unités
+   qualifiés. Les artefacts restent locaux.
 4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
    dans le store, identité explicite, verrou de concurrence root, entrée/sortie
    bornées, nettoyage des descendants et filtre final. Aucun nouveau rapport
@@ -99,8 +103,9 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    et testé sur Forgejo 17.0.1 réel avec dépôts et identités inventés. Le runner
    spécialisé refuse les workflows non admis avant exécution. Les unités du
    contrôleur, du worker et du collecteur ont des qualifications système
-   distinctes ; celle du worker utilise un vérificateur inventé. Le pipeline
-   Rust/Elm complet et l'unité systemd du runner restent à qualifier.
+   distinctes ; les VM du worker et du runner utilisent un vérificateur inventé.
+   Le pipeline Rust/Elm complet passe séparément dans le worker local à UID
+   distinct. Leur intégration avec une attestation protégée reste à qualifier.
    Le contrôleur de mise en service reste en chantier. Un plan ou un statut
    Actions ne constitue pas une preuve authentifiée de qualification.
 7. =runtime/= lie configuration publique, manifeste serveur et manifestes Elm,
@@ -128,6 +133,27 @@ Les preuves du 31 octobre complètent le relevé initial sans le remplacer :
 | Forgejo réel et runner spécialisé | 16 contrôles réussis | =forgejo/qualification-forgejo-reel-20261031.json= ; collecteur inventé, pas de preuve de compilation complète |
 | Worker/collecteur sous systemd | 7 groupes et 16 assertions Nix réussis | =forgejo/qualification-worker-systeme-20261031.json= ; artefacts inventés, inutilisables pour déployer |
 | Archiviste Rust et unité NixOS | 30 tests du build, 33 natifs distincts, 8 groupes système et 16 assertions Nix réussis | =runtime/qualification-vision-archive-systemd-20261031.json= ; age réel sur fixture, SMTP refusé, aucune adoption des fichiers réels |
+
+Le lot courant complète ces preuves sans réattribuer leurs résultats à un
+autre binaire :
+
+| Objet courant | Résultat établi | Preuve et limite |
+|---------------+-----------------+-----------------|
+| Pipeline complet plateforme 4e65423c, règles eb71ffe5 | Réussi en 1153,449 s sous 2 Gio, 256 tâches, un CPU | =mrjam-validation/workflow-runner/qualification-complete-pass-20261031-06.json= ; pas d'attestation protégée |
+| Conditionnement Nix des mêmes octets | Huit sorties et fermeture vérifiées, aucun rebuild/strip | =release/qualification-artifacts-20261031-03.json= ; pas de génération VPS |
+| Même ELF, sept sites, navigateurs et systemd | 442 ressources HTTP exactes ; 10 groupes navigateur ; 7 groupes système | =runtime/qualification-runtime-complete-systemd-20261031.json= et reçus navigateur/static de mrjam-validation ; identité synthétique |
+| Forgejo et runner complets sous systemd | 7 groupes réussis, 25 assertions runner et 17 worker | =forgejo/forgejo-runner-systemd-pass-20261031.json= ; compilateur inventé dans cette VM, pipeline réel testé séparément |
+| Rejeu normal Vision 51e7bcd6 et module | 32 tests Nix, 35 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-replay-systemd-20261031.json= ; clients privés inventés, restauration complète distincte |
+| Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
+
+Le serveur courant est =f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd=.
+Il est installé dans =/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a=
+du store Cloud uniquement, avec NAR =sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II==.
+Les 442 ressources comprennent les sept sites, dont style et logo ; les dix
+groupes navigateur exercent les quatre applications avec 233 ressources.
+Les anciennes anomalies de manifeste Vision et de fichiers statiques sont
+corrigées et leurs échecs conservés. Aucun compte de contrôles n'additionne
+les relectures d'une même suite.
 
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256

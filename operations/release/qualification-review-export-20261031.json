@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "scope": "Public artifact review export and fresh local store import",
+  "export": {
+    "authority": "unverified-local-export-result",
+    "checks": {
+      "evidence_before_after_unchanged": true,
+      "fresh_store_import": true,
+      "recursive_integrity": true,
+      "same_paths_nar_hashes_sizes_references": true
+    },
+    "closure": {
+      "/nix/store/0qwbdzhp9bn81yzq0xmnsqmvc4w5z4jb-mrjam-qualified-artifacts-8bf05fb9065a-log": {
+        "nar_hash": "sha256-zB2YJlh1RPG0zLRAqdBk8hKVtUAJt3ZuAQGoIUNo1Mw=",
+        "nar_size": 552760,
+        "references": []
+      },
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+        "nar_hash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+        "nar_size": 197672,
+        "references": []
+      },
+      "/nix/store/4q27zxfwwb8mwycxglmnwiqy8203wib6-mrjam-qualified-artifacts-8bf05fb9065a-audition": {
+        "nar_hash": "sha256-nqYQI5NsuDBXOEON7T3NP7g7qDmfDkf89nASBoCWiOo=",
+        "nar_size": 3727672,
+        "references": []
+      },
+      "/nix/store/6zrdrs6gpzng37iy858kk6j8kl603l09-mrjam-qualified-artifacts-8bf05fb9065a-logique": {
+        "nar_hash": "sha256-ygIDE18yv298o3P8JdInG8yGq4d6V34JjXwqMFEMvxQ=",
+        "nar_size": 4053448,
+        "references": []
+      },
+      "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a": {
+        "nar_hash": "sha256-eS3zVoScOd+TLSkO09IVF/g9bVGW0HShCk1MC59kkoc=",
+        "nar_size": 16525336,
+        "references": [
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+        ]
+      },
+      "/nix/store/9y499yg6jwbn3l93nkqhgv99z481bbj3-mrjam-qualified-artifacts-8bf05fb9065a-vision": {
+        "nar_hash": "sha256-BE2eR2JQdrIC5uTSep4jmDwiaVybTgL7iNm05u0mwy4=",
+        "nar_size": 1122464,
+        "references": []
+      },
+      "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a": {
+        "nar_hash": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
+        "nar_size": 60858624,
+        "references": [
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+        ]
+      },
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+        "nar_hash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+        "nar_size": 35073152,
+        "references": [
+          "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+          "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+        ]
+      },
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+        "nar_hash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+        "nar_size": 2078944,
+        "references": [
+          "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+        ]
+      },
+      "/nix/store/mbfhdq690mris1dbfbw36j0czaiqf0wq-mrjam-qualified-artifacts-8bf05fb9065a-style": {
+        "nar_hash": "sha256-5VTNi5DrvbDf+hEA9T67O1tJV5HswJXzJUrHCQVnO9A=",
+        "nar_size": 4257992,
+        "references": []
+      },
+      "/nix/store/n8y0whg3w2kfv8lhly654rmdxkjwmyh0-mrjam-qualified-artifacts-8bf05fb9065a-logo": {
+        "nar_hash": "sha256-wa+4R3BXS6BLp8d+h9Sw/8yZiHdz6vmesDPNfK1CLfE=",
+        "nar_size": 6060888,
+        "references": []
+      },
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+        "nar_hash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+        "nar_size": 368176,
+        "references": [
+          "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+          "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+        ]
+      },
+      "/nix/store/ssw764qad599i6v2kw8p0v0lgqszaj6q-mrjam-vision-journal-ordering-004-c7056949832a": {
+        "nar_hash": "sha256-GmDK6bVkDMNq8UPRAIv4GIDSHLqX7apUNpCuvmQFjCI=",
+        "nar_size": 3704,
+        "references": []
+      },
+      "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144": {
+        "nar_hash": "sha256-qmAtrXsp7/wBuv8SPkXeJTxiMNmet2MHB65OUmA3mvs=",
+        "nar_size": 10341264,
+        "references": [
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+        ]
+      },
+      "/nix/store/yi2jsgkbp302l6hqp7cxpq0lnv05k7pd-mrjam-qualified-artifacts-8bf05fb9065a-mateval": {
+        "nar_hash": "sha256-FNRjIXqN3bltfjGxuGa2Bq2T7RbNAS3CNzReE866vH8=",
+        "nar_size": 3831400,
+        "references": []
+      }
+    },
+    "closure_paths": 15,
+    "exports": {
+      "public-artifacts.nix-export": {
+        "bytes": 149057376,
+        "sha256": "0972ed260101216b264b289969942adcdc2358e08c9b04dc930693843aeef879"
+      },
+      "public-artifacts.nix-export.gz": {
+        "bytes": 48554126,
+        "sha256": "cb08b0b4c3a8e0c1d332fd23bdfa674ab55e3bf41044295ae4158bdcb401d830"
+      }
+    },
+    "fresh_import_uid": 0,
+    "imported_program_executed": false,
+    "limits": [
+      "VPS system generation and configuration",
+      "Secrets and persistent state",
+      "Archive encryption/SMTP unit dependencies outside the archive ELF closure",
+      "Protected signature and deployment approval"
+    ],
+    "nix_trust_settings_modified": false,
+    "nix_version": "nix (Nix) 2.34.8",
+    "production_access": false,
+    "production_authorized": false,
+    "production_ready": false,
+    "schema_version": 1,
+    "scope": "public-review-only",
+    "selected_roots": 11,
+    "selection_sha256": "17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580",
+    "total_nar_bytes": 149053496
+  },
+  "package": {
+    "all_members_verified": true,
+    "archive": "/workspace/shared/mrjam-artefacts-revue-20261031.tar",
+    "bytes": 48640000,
+    "compressed_stream_matches_imported_stream": true,
+    "members": 14,
+    "production_ready": false,
+    "sha256": "5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff"
+  },
+  "unit_tests_passed": 7,
+  "sources_sha256": {
+    "operations/release/export_review.py": "2529c104456f5d7f0d16998ac8fa16ae80a32a38e18203553c104d4eeb70dfb8",
+    "operations/release/package_review_20261031.py": "e8effc52cdbdb3dd7742171e07ef06c26f58686a4773cd8cb1a01e4023a00599",
+    "operations/release/review-artifacts-20261031.json": "17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580",
+    "operations/release/tests/test_export_review.py": "28e35d3fa1efe9561f9d6c933cc8499df8c2491b310e10e416f0620cc03ad86a"
+  },
+  "logs_sha256": {
+    "review-export-tests-20261031-01.log": "7d3a19fcd0cc8f3d26934f5c9bcbea584f1e8291f705a0b68c2a56fa176ff23c",
+    "review-export-20261031-01.log": "07d5818726b4f68f4c3db460d6ec85c8b0b1067dadad86a152f0c2b2f7a8d7fa",
+    "review-package-20261031-01.json": "69dc3b1ab6c5bf1252d02068db3a6216797641e303eb78279e720550df9d0100"
+  },
+  "production_access": false,
+  "production_ready": false,
+  "limits": [
+    "No VPS generation or production identity; only selected public artifacts",
+    "Fresh import performed by local UID 0; untrusted daemon import rights are not qualified",
+    "No protected signatures or deployment approval; no trust setting disabled",
+    "Archive cipher/SMTP and other host service dependencies are not this ELF closure"
+  ]
+}
