@@ -1,0 +1,58 @@
+{
+  "derivation": "/nix/store/5ig71cp68nwaswp3zbyhg1x76a6d0bmq-vm-test-run-mrjam-vision-closure-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/43g257drnrkdf42s7zg18z268w61b8hg-vm-test-run-mrjam-vision-closure-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/5ig71cp68nwaswp3zbyhg1x76a6d0bmq-vm-test-run-mrjam-vision-closure-systemd-independent.drv",
+      "narHash": "sha256-lkYCHIGhLxJmvkyQzFcW5ir1HR3aCMVOSvgfNEp/m2s=",
+      "narSize": 1448,
+      "references": [
+        "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195"
+      ],
+      "registrationTime": 1793462624,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM and actual private common-identity closure ELF",
+    "artifact": "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195",
+    "artifact_sha256": "a38d798172ca3291e4b4c01e4f5fa94dad259eadedbdb561495f12a83b600bfe",
+    "checks": [
+      "exact-elf-no-automatic-start-or-migration",
+      "actual-running-elf-loadcredential-acl-budgets-and-loopback-listener",
+      "peer-cross-database-superuser-and-raw-content-refusals",
+      "unauthorized-malformed-oversize-and-query-refusals-without-effect",
+      "unarchived-closure-remains-pending-with-durable-owner-list",
+      "partial-purge-failure-service-restart-and-idempotent-completion-preserve-journal",
+      "broadened-sql-rights-block-listener-and-recover",
+      "invalid-credential-blocks-listener-with-closed-error"
+    ],
+    "production_access": false,
+    "limits": [
+      "Archive acceptance is simulated by the VM fixture; admissions purge uses an invented HTTP service",
+      "Native IdP hook, consent and lifecycle interoperability remain separate",
+      "No VPS generation, real credential/account adoption, backups or production data"
+    ]
+  },
+  "result_sha256": "187011da5c3b93097a512e654e15851ff4c89525d2f7a6c7b68fe673543c6d62",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "sources_sha256": {
+    "mrjam-validation/operational-review/closure-systemd.nix": "3c22af71f85c797c77220f482c505def9cba74e244e771d62eb6515d047aed4c",
+    "mrjam-validation/operational-review/fixtures/closure-purge-synthetic.py": "e3c311ff30a51cdfc15d7878ef1d674bcb34d9dec33da04437a239711ab0cbd5",
+    "vps-infrastructure/operations/nixos/mrjam-vision-closure.nix": "7f19f9cdf8ed71f3586af0a8f7523b3d9527efd9cb6c4768e9ff4b7eb572c709",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "04283fa27f02ee11b6f711d58a3b97b64f6714d8453feee6c89bbe2119780a66"
+  },
+  "logs_sha256": {
+    "closure-systemd-20261031-01.log": "773a92f52d26d255d1328fc486bb04c95e16454136f693c343c295a8bf3d86e0",
+    "closure-systemd-20261031-01.json": "a4028a34fed228ec6bf2775553dd452bf05b05955bf07b5c1685e15007131daa",
+    "closure-systemd-verify-20261031-01.log": "a39419c1e3d181d5283fc264c5b49ceb0364e8bcc6d53dbd37a9e72776cd736e"
+  }
+}

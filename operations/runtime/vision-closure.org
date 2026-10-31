@@ -1,0 +1,65 @@
+#+title: Fermeture commune — hook privé qualifié sur données inventées
+#+date: 2026-10-31
+#+language: fr
+
+* Artefact et preuves
+Source =MrJ-am/vision@e067f8c741958335bc5c12858ea41d61a093f07e=.
+Le paquet installe seulement =bin/vision-closure= :
+=/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195=.
+Son ELF a pour SHA-256
+=a38d798172ca3291e4b4c01e4f5fa94dad259eadedbdb561495f12a83b600bfe=.
+NAR : =sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk==.
+
+- [[file:../builds/qualification-vision-closure-build-20261031.json][Construction]] : 36 tests sans PostgreSQL, entrées verrouillées et
+  vérification récursive du contenu ; 39 tests natifs séparés avec PostgreSQL.
+- [[file:qualification-vision-closure-module-20261031.json][Évaluation]] : 20 contrôles du module et 77 régressions archive/rejeu/cycle/peer.
+- [[file:qualification-vision-closure-systemd-20261031.json][Exécution NixOS]] : huit groupes réussis en VM TCG, 233,69 secondes.
+  L'ELF vivant est vérifié via =/proc/PID/exe= ; le résultat et la dérivation
+  ont été revérifiés après la fin du test. Le paquet de revue d'artefacts
+  antérieur ne contient pas ce binaire.
+
+Ces reçus sont des résultats locaux non authentifiés, pas une adoption protégée
+des règles ni une preuve de déploiement. Chaque autre travailleur conserve ses
+propres révisions et artefacts qualifiés.
+
+* Contrat déclaratif
+[[file:../nixos/mrjam-vision-closure.nix][Le module]] reste désactivé par défaut, sans =WantedBy= ni redémarrage automatique.
+Il crée le seul compte/groupe =mrjam-vision-closure=, verrouillé, sans groupe
+supplémentaire, et deux correspondances peer vers =vision_fermeture= dans la base
+de contenu et =vision_journal_fermeture= dans une base de journal distincte.
+Il ne crée ni schéma, ni rôle, ni base de données.
+
+La configuration fermée contient les noms des bases et la référence
+=/run/credentials/mrjam-vision-closure.service/admissions=. Le credential vient
+d'un emplacement externe au store ; aucune valeur ne figure dans Git. Le service
+vérifie ses droits SQL et son credential avant d'écouter =127.0.0.1:3028=.
+Budgets proposés : 256 Mio, 20 % d'un CPU, 32 tâches ; aucun droit réseau hors
+loopback ni capacité hôte.
+
+L'API accepte seulement =POST /fermer= avec le bearer privé et sans Origin,
+un émetteur fixé, un sujet et la confirmation exacte =FERMER MON COMPTE=.
+Elle refuse commandes, chemins, paramètres de requête et JSON ambigus.
+Le transport limite corps, en-têtes, connexions et délais. Le bearer ne remplace
+pas la vérification du consentement dans l'IdP : ce raccord reste à qualifier.
+
+* Effets, adoption et retour
+Avant archivage confirmé, la réponse reste 202 et les données sont conservées.
+Le journal garde la liste initiale des propriétaires. Après archivage,
+l'effacement du contenu peut précéder une panne du service de purge d'admission ;
+cette panne retourne une erreur. La répétition reprend la purge sans perdre
+le journal. Le test vérifie un redémarrage réel, deux répétitions et le contenu
+inchangé d'un autre compte inventé.
+
+La VM simule explicitement l'accusé d'archive et le service de purge. Elle ne
+prouve ni le raccord IdP réel, ni les droits du VPS, ni l'adoption de ses secrets.
+=check-local= vérifie seulement les prérequis locaux.
+
+La future génération devra référencer cet artefact, les deux bases existantes
+vérifiées et le credential par =LoadCredential=. L'installation ne démarre pas
+le hook. Le contrôleur devra qualifier IdP → fermeture → admission, archivage,
+quiescence et retour de chaque dépendance avant la première demande réelle.
+
+Après un effet partiel, conserver le journal et reprendre avec une version
+compatible. Ne pas restaurer aveuglément des données de comptes fermés. Un
+retour à une ancienne génération NixOS ne restaure pas les contenus effacés et
+ne démontre pas la réversibilité des migrations. Aucune action VPS n'a eu lieu.
