@@ -1,0 +1,27 @@
+{
+  "checks_passed": {
+    "gateway": 24,
+    "peer": 21,
+    "rust": 21
+  },
+  "exit_code": 0,
+  "input_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/nixos/mrjam-gateway.nix": "af37802920e0949acab401802bb0323bcae92db178b7bd4cd60a0bcd6be544f8",
+    "operations/nixos/mrjam-postgresql-access.nix": "d46c2f7aa259d0a50339e03b2109721aebae487140e2f262a7a7196df636f186",
+    "operations/nixos/mrjam-rust.nix": "7bf7745c5609221286bf1067c1f84685844ed4f7db3bae051fe256e67f0ed351",
+    "operations/tests/gateway-evaluation.nix": "2470fdc4627dc880d458868d8b9d88fa23d0cad1874dcfe686122170c3e632bd",
+    "operations/tests/module-evaluation.nix": "02767435d7a8d6baeeaa8823e18dbfce94543897b54d7877973d862eae4de6f8",
+    "operations/tests/postgresql-access-evaluation.nix": "5ff2c945f4d0820b22ad28385aca5ad21483677885d8368f1d544812e8e624ee"
+  },
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "not_established": [
+    "VPS generation or active PostgreSQL HBA",
+    "Actual service credentials or production resource reserve",
+    "Peer authentication system test is separate and pending"
+  ],
+  "production_activated": false,
+  "recorded_at_utc": "2026-10-30T19:18:19.057647+00:00",
+  "schema_version": 1,
+  "scope": "Pure Nix evaluation; Rust budgets, peer access and gateway"
+}

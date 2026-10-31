@@ -1,0 +1,69 @@
+{
+  "all_evaluations_passed": true,
+  "authority": "unverified-local-test-result",
+  "evaluations": {
+    "gateway": 24,
+    "peer": 21,
+    "rust": 22
+  },
+  "input_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/nixos/mrjam-postgresql-access.nix": "d46c2f7aa259d0a50339e03b2109721aebae487140e2f262a7a7196df636f186",
+    "operations/nixos/mrjam-rust.nix": "2c0048ce7553df575e84c9421ac5f6f983e3c57cde673a2ad7c3f356ff740bb1",
+    "operations/runtime/postgresql-peer-systemd.nix": "e8d75e8b2b3bfad10136ed2e00468aee2416e904a7616852ac1a0bccc830b828",
+    "operations/runtime/test_configuration_binding.py": "cdc28c8ad77cddcdc200894e80628e162c8595a3a35e423f1936efdd754978d8",
+    "operations/runtime/verify_configuration.py": "ddf2f12c3d1744a928a8678824332f82371df2e1221db7b90b0db3c479bbfd65",
+    "operations/tests/module-evaluation.nix": "2e55231298335d6bdc133b74fec24681ef9a15d5f4b2c658c2ec0a3a44297575",
+    "operations/tests/postgresql-access-evaluation.nix": "5ff2c945f4d0820b22ad28385aca5ad21483677885d8368f1d544812e8e624ee"
+  },
+  "limitations": [
+    "No runtime Rust program was started in this peer VM",
+    "No installed VPS HBA, identities, schema or resource margin is inferred",
+    "The LoadCredential reader and final Nix Rust binary require separate integration qualification"
+  ],
+  "peer_system_test": {
+    "current_fixture_derivation_matches": true,
+    "drv_path": "/nix/store/d7azzs8920wq2ls9yqf4wn4pmmzd8pan-vm-test-run-mrjam-postgresql-peer-synthetic.drv",
+    "output": "/nix/store/sccz94jiggd8r2ymr1fvsd5c71ganpls-vm-test-run-mrjam-postgresql-peer-synthetic",
+    "path_info": {
+      "/nix/store/sccz94jiggd8r2ymr1fvsd5c71ganpls-vm-test-run-mrjam-postgresql-peer-synthetic": {
+        "ca": null,
+        "deriver": "/nix/store/d7azzs8920wq2ls9yqf4wn4pmmzd8pan-vm-test-run-mrjam-postgresql-peer-synthetic.drv",
+        "narHash": "sha256-kIK5vKMmsAXBqFa2CAHFFPy79im4/YOoqH27BJrV0r4=",
+        "narSize": 704,
+        "references": [],
+        "registrationTime": 1793437163,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 1
+      }
+    },
+    "result": {
+      "checks": [
+        "both-declared-uids-authenticate-with-peer",
+        "cross-slot-role-refused",
+        "foreign-uid-refused",
+        "foreign-database-and-superuser-refused",
+        "no-implicit-rust-start-or-tcp-listener"
+      ],
+      "limitations": [
+        "No application schema, real credential, installed VPS rule or resource reserve tested"
+      ],
+      "postgresql": "17.11",
+      "production_qualification": false,
+      "schema_version": 1,
+      "scope": "synthetic-nixos-vm-tcg"
+    }
+  },
+  "preserved_failures": [
+    "Earlier cache misses and fixture setup race remain in local logs",
+    "First run on31October passed access checks but failed writing its receipt because placeholder out named the test-script output; fixed to use the driver out environment, then the full suite was rerun"
+  ],
+  "production_access": false,
+  "production_activation": false,
+  "recorded_on": "2026-10-31",
+  "runtime_binding_tests_passed": 7,
+  "schema_version": 1,
+  "scope": "Synthetic Nix evaluation and PostgreSQL peer VM; no production configuration"
+}

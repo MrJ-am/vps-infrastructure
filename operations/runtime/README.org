@@ -14,7 +14,7 @@ de disponibilité testent les raccordements effectivement implémentés.
 
 Les seuls noms LoadCredential acceptés par le module sont :
 =db-mateval=, =db-mateval-admin=, =mateval-activation-sha256=, =db-vision=,
-=db-vision-journal=, =db-vision-admin=, =db-audition=.
+=db-vision-journal=, =db-vision-admin=, =db-audition=, =admission-approval=.
 Leur valeur déclarative est un chemin de fichier existant sous /run/secrets,
 /run/keys ou /var/lib/mrjam/secrets, jamais son contenu. Aucun chemin parent,
 contexte de dérivation ou secret dans le store n'est admis. La gestion des
@@ -25,6 +25,17 @@ Dans runtime.json, le mot de passe du slot blue désigne par exemple
 privé au seul service. Le suffixe =.service= fait partie du nom de répertoire.
 La simple présence d'une référence ne prouve ni l'existence ni les droits de la
 source ; le contrôleur doit vérifier ce prérequis sans transférer sa valeur.
+
+Le transport PostgreSQL Unix peut déclarer =password_file: null= (ou omettre
+ce champ optionnel) pour utiliser peer. Le serveur refuse cette absence avec
+TCP et n'utilise ni .pgpass ni variable PG*. La liaison du paquet n'invente
+alors aucun credential ; les UID et couples base/rôle restent à autoriser
+explicitement par =mrjam-postgresql-access.nix=.
+
+=vision.admission_approval_credential_file= désigne, lorsqu'il est activé,
+le seul credential =admission-approval= de ce slot. Il sert au raccord privé
+borné du worker d'admission, après vérification de l'identité de gestion ;
+aucune URL ou commande libre n'est ajoutée au JSON.
 
 Les identités de base doivent être dédiées et non privilégiées, avec les droits
 fermés de chaque composant. La collecte Mateval, son administration scientifique,
@@ -44,8 +55,9 @@ de chemins sont ouverts sans suivre de liens ; les lectures sont bornées.
 La sortie =configuration-manifest.json= identifie configuration, assets,
 serveur et références de credentials. Elle ne constitue ni une approbation ni
 une preuve que les secrets, certificats ou services de production existent.
-Les cinq tests de frontière de =test_configuration_binding.py= vérifient les
-confusions de slot/rôle, clés JSON dupliquées, liens, FIFO et tailles excessives.
+Les sept tests de frontière de =test_configuration_binding.py= vérifient les
+confusions de slot/rôle, le mode peer, le credential d'admission distinct,
+les clés JSON dupliquées, liens, FIFO et tailles excessives.
 La construction avec le serveur Nix final reste nécessaire pour chaque JSON
 de livraison ; aucun exemple synthétique ne la remplace.
 

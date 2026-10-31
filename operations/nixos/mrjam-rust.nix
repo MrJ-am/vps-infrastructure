@@ -6,6 +6,7 @@ let
   credentialNames = [
     "db-mateval" "db-mateval-admin" "mateval-activation-sha256"
     "db-vision" "db-vision-journal" "db-vision-admin" "db-audition"
+    "admission-approval"
   ];
   credentialPathType = lib.types.strMatching "/(run/secrets|run/keys|var/lib/mrjam/secrets)/[A-Za-z0-9._/-]+";
   slotType = port: lib.types.submodule {
@@ -61,12 +62,12 @@ in
       };
       instanceMemoryMiB = lib.mkOption {
         type = lib.types.ints.positive;
-        default = 256;
-        description = "Plafond mémoire par instance, à calibrer sur ressources constatées.";
+        default = 512;
+        description = "Plafond proposé après mesure synthétique transport/JSON ; à qualifier avec assets, crypto et SQL, sans présumer la réserve du VPS.";
       };
       aggregateMemoryMiB = lib.mkOption {
         type = lib.types.ints.positive;
-        default = 512;
+        default = 1024;
         description = "Plafond mémoire partagé ; ne prouve pas la marge du VPS.";
       };
       instanceTasks = lib.mkOption {

@@ -24,6 +24,31 @@ class ConfigurationBinding(unittest.TestCase):
         with self.assertRaises(ValueError):
             credential_bindings({"audition": {"password_file": "/run/secrets/audition"}}, "blue")
 
+    def test_explicit_unix_peer_needs_no_password_binding(self):
+        database = {"transport": "unix", "password_file": None}
+        config = {"mateval": {"database": database, "administration_database": database},
+                  "vision": {"database": database, "administration_database": database,
+                             "deletion_journal": database}, "audition": database}
+        self.assertEqual(credential_bindings(config, "blue"), [])
+        # Rust validates the complete transport/configuration first. This layer
+        # must also preserve the equivalent absent optional field.
+        del database["password_file"]
+        self.assertEqual(credential_bindings(config, "green"), [])
+
+    def test_admission_approval_is_a_distinct_selected_unit_credential(self):
+        config = {"vision": {"database": {"password_file": None},
+                             "admission_approval_credential_file":
+                             "/run/credentials/mrjam-rust-blue.service/admission-approval"}}
+        self.assertEqual(credential_bindings(config, "blue"), ["admission-approval"])
+        with self.assertRaises(ValueError):
+            credential_bindings(config, "green")
+        for path in ("/run/secrets/admission-approval",
+                     "/run/credentials/mrjam-rust-blue.service/db-vision",
+                     "/run/credentials/mrjam-rust-blue.service/../admission-approval"):
+            config["vision"]["admission_approval_credential_file"] = path
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                credential_bindings(config, "blue")
+
     def test_duplicate_json_binding_refused_at_any_depth(self):
         for raw in ('{"assets":[],"assets":[]}', '{"mateval":{"database":1,"database":2}}'):
             with self.subTest(raw=raw), self.assertRaises(ValueError):
