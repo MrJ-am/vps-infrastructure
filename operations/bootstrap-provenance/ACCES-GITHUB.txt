@@ -1,0 +1,85 @@
+Prompt pour Codex sur Spectre — observation de provenance MRJ.am
+
+Cloud a intégré adoption-v2.json. La recherche locale du checkout VPS a déjà
+été faite sur Spectre et n'a pas retrouvé les sources complètes. L'utilisateur
+ne sait pas d'où la dernière mise à jour a été lancée. Ne lui redemande pas
+cette information ; ne recommence pas la recherche locale ou l'inventaire V2.
+
+Prépare maintenant cette observation distincte et bornée des deux révisions
+déclarées par NixOS. Elle permettra à Cloud de rechercher les références de
+code dans les dépôts autorisés. Un champ absent restera inconnu ; aucune
+configuration matérielle, donnée, clé privée ou sauvegarde n'est demandée.
+
+Téléchargement public exact, sans authentification GitHub :
+https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/9885278bff4af859f70140aeb0fc2e66171387b0/operations/bootstrap-provenance/remise-20261031/mrjam-observation-provenance-20261031.tar
+
+Nom : mrjam-observation-provenance-20261031.tar
+Taille : 430080 octets
+SHA-256 : e9167d1024528806a624bf99ae70b983717b0a3a182bd7fb0d2e946ead38669f
+
+Les sources de la remise sont dans MrJ-am/vps-infrastructure au commit
+65d28822b7ae05ee7350cfee417e56cb44dd4e11 ; les preuves et le contrat dans
+MrJ-am/mrjam-validation au commit d1f5997a6320feb7bc3c2e7c4076f4c8a82226ec.
+Les AGENTS.md de ces révisions s'appliquent. Cette publication de code et
+d'artefacts d'observation n'est pas une activation de production.
+
+Effectue ces vérifications sur Spectre, dans un dossier neuf :
+
+set -euo pipefail
+task_dir=$(mktemp -d -t mrjam-provenance.XXXXXXXX)
+cd "$task_dir"
+curl --fail --location --proto '=https' --proto-redir '=https' --output mrjam-observation-provenance-20261031.tar 'https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/9885278bff4af859f70140aeb0fc2e66171387b0/operations/bootstrap-provenance/remise-20261031/mrjam-observation-provenance-20261031.tar'
+printf '%s\n' 'e9167d1024528806a624bf99ae70b983717b0a3a182bd7fb0d2e946ead38669f  mrjam-observation-provenance-20261031.tar' | sha256sum --check --strict -
+python3 -I -S - <<'PY'
+from pathlib import Path
+import tarfile
+archive = Path('mrjam-observation-provenance-20261031.tar')
+if archive.stat().st_size != 430080:
+    raise SystemExit('ARCHIVE_REFUSED')
+with tarfile.open(archive, 'r:') as stream:
+    members = stream.getmembers()
+    if len(members) != 37 or len({m.name for m in members}) != 37:
+        raise SystemExit('ARCHIVE_REFUSED')
+    for member in members:
+        if not member.isfile() or Path(member.name).is_absolute() or '..' in Path(member.name).parts:
+            raise SystemExit('ARCHIVE_REFUSED')
+    Path('remise').mkdir()
+    stream.extractall('remise', filter='data')
+PY
+cd remise
+sha256sum --check --strict SHA256SUMS
+python3 -I -S verify_delivery.py --transfer-directory .
+
+Toute différence arrête l'utilisation du fichier. Ne modifie aucune empreinte.
+Le vérificateur doit rendre DELIVERY_VALID. Aucun import Nix sur Spectre n'est
+nécessaire. Ne modifie ni trusted-users ni les exigences de signature de Nix.
+
+Lis ensuite SPECTRE-RELAIS.txt, EXECUTION-HUMAINE.org, REMISE.json et les sources
+et preuves jointes. Relis cette nouvelle sonde avant adoption. Elle a passé
+13 tests natifs et 8 groupes en VM synthétique ; le transfert a passé 5 tests,
+un import dans un store vierge et la comparaison des 83 chemins de fermeture.
+Ces preuves ne constituent pas une approbation protégée indépendante.
+
+Prépare pour l'administrateur humain le transfert des seuls fichiers publics
+et le bloc fixe d'EXECUTION-HUMAINE.org par son canal existant. Les 82 dépendances
+de la première remise doivent être présentes ; ce delta de 16209 octets gzip
+n'exporte que le nouveau paquet. Arrêter si une dépendance manque, sans fetch
+implicite ni affaiblissement des contrôles.
+
+Tu n'obtiens aucun shell général/root du VPS. Aucun installer.py, connect.sh,
+SQL, lecture de secret ou donnée, activation NixOS, redémarrage applicatif ou
+bascule n'est autorisé par ce relais. Le geste humain lance uniquement le
+programme immuable sans argument après vérification du transfert et des NAR.
+
+Après le geste humain, valide seulement provenance-v1.json avec :
+python3 -I -S filter/probe/validate_report.py < provenance-v1.json
+
+Retourne uniquement provenance-v1.json à Cloud après succès. En cas d'échec,
+retourne seulement l'étape et le code fermé de la procédure, sans sortie brute.
+Ne retourne pas le JSON de fermeture Nix, les chemins importés ou un journal.
+Si une révision manque, conserve unknown. Si le champ de génération diffère
+de jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9, ne le rattache pas au profil 56 de V2.
+
+L'autorisation générale de poursuivre la migration existe déjà. Ce prompt
+prépare un seul geste humain borné ; il ne transforme pas Codex en administrateur
+général et ne déclare pas la migration prête.
