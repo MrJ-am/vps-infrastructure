@@ -2,8 +2,8 @@
 let
   pkgs = import nixpkgs { system = "x86_64-linux"; };
   toolchains = pkgs.callPackage ./toolchains.nix { };
-  expected = "ed0c1d0218a52817b46f4926eb30f78f446d3db6e306e2a607516c0a82e5e49b";
-  revision = "6ae96aeab516335a7c009672069f09e69959d29c";
+  expected = "fc0b637b9da76157de6546ab46f52388ac3a42239666ac30352aad99272a2217";
+  revision = "718a81880090609b7730a27c4fb37f32bbb7e3d1";
   inputs = builtins.path { path = materialized; name = "mrjam-vision-workers-inputs"; };
   support = builtins.path {
     path = ./.; name = "mrjam-vision-workers-build-support";
