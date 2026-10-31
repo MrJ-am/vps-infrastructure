@@ -31,6 +31,7 @@ def main():
     output.mkdir(mode=0o700)
     ipc = output/'ipc'
     ipc.mkdir(mode=0o755)
+    ipc.chmod(0o755)  # The Cloud account's 0077 umask must not hide the socket from its dedicated GID.
     artifacts = output/'public-results'
     artifacts.mkdir(mode=0o700)
     environment = {k:v for k,v in os.environ.items() if not k.startswith('DOCKER_')}
