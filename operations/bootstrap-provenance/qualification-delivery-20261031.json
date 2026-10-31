@@ -1,0 +1,41 @@
+{
+  "actual_metadata_paths": 83,
+  "actual_nix_metadata_verified": true,
+  "explicit_nix_command_flag": true,
+  "fresh_store_recursive_nar_verification": true,
+  "json_format": 1,
+  "limitations": [
+    "Local fresh import does not establish the rights or current closure of the VPS",
+    "Human procedure parsed but not executed on production",
+    "The delta alone is not a full runtime closure"
+  ],
+  "local_evidence_sha256": {
+    "provenance-closure-verifier-20261031.log": "0dd025d3bd42c165c2916f169ae40dd7dc4a02daf7def0f8b6cef45f156b9d84",
+    "provenance-delivery-20261031.log": "5220eb02b5a0969ef79042adfda0906db168b77229c246f2037ff3969661070f",
+    "provenance-store-info-20261031.json": "8ea41a49d73bc698939b2698e19de4f027f8d0289a73ad0413c7868b881542e1",
+    "provenance-transfer-tests-20261031.log": "f8c84f4c712cbd931f1ef1c5769474a5d20d0a37b5a59e8285c81d0393354dda"
+  },
+  "manifest_sha256": "7837ed37c41f9c6c6c2280c73aaf425d9df0c49057284471aa3add9f1c8a4b96",
+  "original_export_then_delta_fresh_import_verified": true,
+  "original_runtime_dependencies_unchanged": true,
+  "overall_passed": true,
+  "package": "/nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1",
+  "package_nar_hash": "sha256-oI+O7woK+EDl6XrWuAiuweAst2Ggzvf4kK9HTfv4gD0=",
+  "production_access": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "recorded_on": "2026-10-31",
+  "schema_version": 1,
+  "scope": "Local delivery verification; no production observation or activation",
+  "source_sha256": {
+    "EXECUTION-HUMAINE.org": "ec5db064b2750a73a252127fd116ed84b14e269511bf65fe888fad37795c0f5a",
+    "SPECTRE-RELAIS.txt": "bd11e0e4a0778a1a3c87b30ec35c5cd402197d57d76d66512511256ab6f5fb06",
+    "export_delta.py": "a725d7bce1846ebe0de90c87226686c9012e41aab10b65121914b9cc91dc11c9",
+    "prepare_handoff.py": "d4d850ff6c75407702e3256949c675326009db3deec5d31915bf935d63d17b35",
+    "tests/test_delivery.py": "07d0a3d6b4c1aa74636315fa549e958900608c7332fb231e4183ec2439caaae9",
+    "verify_delivery.py": "f27faa16162db5c35388d34229e695cb55f0d546a2c8ff2a15b1f4bc912d216e"
+  },
+  "system_qualification_sha256": "f16e5a09e217f43a83eb47062400bc91eb6517bb170d0a7a9eca5888c769ef7e",
+  "transfer_bytes_verified": true,
+  "transfer_verifier_tests_passed": 5
+}

@@ -1,0 +1,51 @@
+Reprends le relais MRJ.am sur Spectre pour cette seule observation de provenance.
+
+Contexte acquis : ta recherche locale bornée du checkout VPS a déjà été faite,
+sans retrouver la configuration complète. Cloud a reçu et validé adoption-v2.json
+(SHA-256 5228416a82502d68f881728d9c5aa1a3bf71fd2cd76a27088cf9bd6196d8b1f4).
+Le compte observé est 980:980 ; le profil 56 et le système courant ont le même
+champ store jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9. Cela ne révèle pas leur code source.
+L'utilisateur ne sait pas d'où la dernière mise à jour a été lancée : ne lui
+redemande pas cette information, et ne recommence pas la recherche locale.
+
+Ce complément est distinct de V1 et V2. Il ne modifie aucune de leurs empreintes.
+Lis les AGENTS.md des révisions de REMISE.json, EXECUTION-HUMAINE.org, les sources
+sélectionnées et la qualification. Vérifie toutes les entrées de SHA256SUMS.
+Relis l'extension avant de la proposer à l'administrateur : commandes fixes,
+compte non privilégié, limites, filtrage côté VPS, erreurs sans sortie brute,
+absence de donnée métier et de mutation de génération ou service applicatif.
+Les tests Cloud sont une qualification synthétique, pas une approbation protégée.
+Si ta revue trouve un écart, arrête ce relais et rapporte le fichier et le motif.
+
+Le delta ne contient que le nouveau paquet. Les dépendances de la première
+remise doivent déjà être présentes sur le VPS. Vérifie ses octets localement
+avec python3 -I -S verify_delivery.py --transfer-directory . ; aucun import Nix
+sur Spectre n'est nécessaire. N'ajoute pas trusted-users, ne désactive pas les
+exigences de signature de l'import et ne demande aucune clé privée.
+
+Prépare le transfert de ces seuls fichiers publics et les commandes fixes
+d'EXECUTION-HUMAINE.org pour l'administrateur humain, par son canal existant.
+Cette étape ne t'attribue pas un shell général/root du VPS. N'utilise pas
+installer.py, connect.sh, une commande SSH libre, SQL, ni un autre inventaire.
+N'active aucune génération et ne redémarre aucun service applicatif.
+
+Le programme immuable n'a aucun argument. Il demande seulement les deux
+révisions déclarées par nixos-version (--configuration-revision et --revision).
+Seuls des SHA Git complets sont acceptés ; toute autre sortie reste inconnue.
+stateVersion reste null. Le JSON n'est publié qu'après filtrage côté VPS.
+
+Après succès humain, revalide localement le seul fichier provenance-v1.json :
+python3 -I -S filter/probe/validate_report.py < provenance-v1.json
+Retourne uniquement provenance-v1.json. N'envoie ni fermeture-installee.json,
+ni chemins-importes.txt, ni sortie brute, journal, fichier Nix local, secret,
+sauvegarde ou donnée réelle. En cas d'échec, conserve le fichier hors retour
+et rapporte seulement l'étape et le code fermé décrits dans la procédure.
+
+Si une révision manque, conserve unknown : ne la déduis pas de la branche
+GitHub actuelle. Cloud rapprochera les références reçues des dépôts autorisés.
+Un changement du champ de génération depuis V2 doit être signalé comme tel ;
+ne rattache pas automatiquement la nouvelle observation au profil 56.
+
+L'autorisation générale de poursuivre la migration est déjà donnée. Ce relais
+prépare une seule observation humaine bornée ; il ne qualifie pas la mise en
+service applicative et ne transforme pas une commande fixe en ACL SSH.

@@ -67,9 +67,11 @@ approbation indépendante, de précontrôle réel ou de génération VPS complè
 * Prochaines preuves nécessaires
 
 1. Retrouver la référence Git et la cible NixOS de la dernière construction du
-   VPS. Cette référence doit concerner le VPS, jamais la configuration de
-   Spectre. Rapprocher ensuite le graphe de configuration et =stateVersion=
-   existant ; ne les inférer ni de la version Nix ni du profil 56.
+   VPS. La recherche locale sur Spectre a déjà été faite sans trouver de checkout.
+   Le complément [[file:../bootstrap-provenance/README.org][de provenance]] qualifié demande seulement les deux références
+   déclarées par le système installé, via une opération humaine bornée distincte.
+   Rapprocher ensuite le graphe de configuration et =stateVersion= existant ;
+   ne les inférer ni de la version Nix ni du profil 56, ni d'un SHA déclaré seul.
 2. Qualifier le paquet configuré et son adoption dans la génération complète.
    La V2 ne remplace pas le précontrôle =mrjam-inventory-adoption= : octets du
    runner/login anciens, clé publique exacte, conflits de fichiers et identité

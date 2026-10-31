@@ -75,6 +75,13 @@ Elle ne présume ni KVM ni une VM supplémentaire disponible sur le VPS. Les
 résultats effectifs et les essais échoués sont conservés dans les reçus ; un
 build de paquet n'est pas à lui seul une qualification système.
 
+Le [[file:qualification-systemd-20261031.json][reçu du 31 octobre]] atteste 13 tests natifs et huit groupes passés dans
+une VM froide TCG. Le paquet est
+=/nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1=,
+NAR =sha256-oI+O7woK+EDl6XrWuAiuweAst2Ggzvf4kK9HTfv4gD0==.
+Les six essais précédents et les corrections de fixture sont décrits dans
+=mrjam-validation/operational-review/provenance-revue-20261031.org=.
+
 #+begin_src bash
 python3 -B -m unittest discover -s operations/bootstrap-provenance/tests -v
 #+end_src

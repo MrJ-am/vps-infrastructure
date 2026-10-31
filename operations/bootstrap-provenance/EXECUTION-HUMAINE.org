@@ -1,0 +1,140 @@
+#+title: Observation humaine des références déclarées par le système NixOS
+#+date: 2026-10-31
+#+language: fr
+
+* Objet et préconditions
+
+Cette opération importe un paquet d'observation inerte puis lance une seule
+commande sans argument. L'administrateur humain utilise son canal existant.
+Spectre vérifie les fichiers publics et prépare le geste ; aucun shell général
+ou root du VPS n'est délégué à un agent. Aucun =installer.py= n'est exécuté.
+
+L'observation demande uniquement =nixos-version --configuration-revision= et
+=nixos-version --revision= sous le compte existant =mrjam-inventory=, dans une
+unité transitoire confinée et bornée. Elle ne lit aucun fichier de configuration
+local, donnée métier, secret, journal ou sauvegarde. Elle retourne seulement des
+SHA Git complets ou des codes inconnus après filtrage côté VPS.
+
+La revue Spectre de cette extension et de ses preuves précède le geste humain.
+Le compte doit exister et les dépendances de la première remise doivent déjà
+être installées. Ce delta ne remplace pas une fermeture absente : en cas de
+dépendance manquante, arrêter et rapporter le code fermé, sans fetch, relâchement
+de confiance Nix ou modification de service. Aucun import sur Spectre n'est requis.
+
+* Identité de la remise qualifiée
+
+| Élément | Référence |
+|---------+-----------|
+| Paquet | /nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1 |
+| NAR | sha256-oI+O7woK+EDl6XrWuAiuweAst2Ggzvf4kK9HTfv4gD0= |
+| Export gzip | mrjam-observe-provenance-v1.nix-export.gz ; 16209 octets |
+| SHA-256 gzip | a2a040719705444f1b2b99e58fa157487f88e3317b0b95ccd453f9392f08f45c |
+| Export brut | 52048 octets |
+| SHA-256 brut | 5dc4b1fd388b9f2b1f43549cd1db1ab9b410b85efb1476a079d27bfa907ae343 |
+| SHA-256 manifeste | 7837ed37c41f9c6c6c2280c73aaf425d9df0c49057284471aa3add9f1c8a4b96 |
+| Fermeture totale | 83 chemins ; 345803656 octets NAR |
+| SHA-256 preuve système | f16e5a09e217f43a83eb47062400bc91eb6517bb170d0a7a9eca5888c769ef7e |
+
+Les 82 dépendances sont identiques à celles du paquet d'adoption V2 initial.
+Le manifeste original conserve le SHA-256
+=04c0dc51cbe4ca88daac24a180ccb8c19ae71781a36e0de07581e686f5b9d7d8=.
+Treize tests natifs et huit groupes VM passent. L'export original, puis le
+nouveau delta, ont été importés dans un store Cloud vierge ; les 83 NAR, tailles
+et références correspondent, avec vérification récursive de contenu réussie.
+Ce succès local ne préjuge pas des droits ou de la configuration réelle du VPS.
+
+Le reçu =qualification-systemd-20261031.json= conserve les essais échoués.
+=REMISE.json= identifie les commits sources et le contrat. Ces fichiers de
+preuve ne constituent pas une signature ni une autorité d'approbation protégée.
+
+* Vérifications sur Spectre
+
+Vérifier l'empreinte de l'archive publique avant extraction dans un nouveau
+dossier. Vérifier les membres réguliers, sans lien, chemin absolu ou traversée,
+puis toutes les entrées de =SHA256SUMS=. Ne jamais remplacer une attente pour
+obtenir un succès. Depuis le dossier extrait :
+
+#+begin_src bash
+sha256sum --check --strict SHA256SUMS
+python3 -I -S verify_delivery.py --transfer-directory .
+#+end_src
+
+La deuxième commande doit rendre =DELIVERY_VALID=. Aucun import dans le daemon
+de Spectre, aucune lecture de clé privée et aucun accès de production ne sont
+nécessaires à ces vérifications et à la revue du code.
+
+* Commandes fixes de l'administrateur sur le VPS
+
+Transférer seulement cette remise publique dans un nouveau dossier sous contrôle
+de l'administrateur. Le conserver non modifiable par les agents et les comptes
+non privilégiés pendant les vérifications et l'import. Depuis ce dossier et
+la session humaine d'administration existante, exécuter le bloc ci-dessous.
+Chaque étape doit réussir avant la suivante. Les fichiers de sortie ne sont
+pas écrasés ; utiliser un dossier nouveau pour une reprise explicitement revue.
+
+#+begin_src bash
+set -euo pipefail
+set -C
+umask 077
+step=operator
+trap 'rc=$?; printf "{\"step\":\"%s\",\"code\":\"COMMAND_FAILED\",\"exit_code\":%s}\n" "$step" "$rc" >&2' ERR
+test "$(id -u)" -eq 0
+step=delivery_hashes
+sha256sum --check --strict SHA256SUMS
+printf '%s\n' 'a2a040719705444f1b2b99e58fa157487f88e3317b0b95ccd453f9392f08f45c  mrjam-observe-provenance-v1.nix-export.gz' | sha256sum --check --strict -
+step=export_decompression
+gzip --decompress --stdout mrjam-observe-provenance-v1.nix-export.gz > mrjam-observe-provenance-v1.nix-export
+step=export_hash
+printf '%s\n' '5dc4b1fd388b9f2b1f43549cd1db1ab9b410b85efb1476a079d27bfa907ae343  mrjam-observe-provenance-v1.nix-export' | sha256sum --check --strict -
+step=store_import
+nix-store --import < mrjam-observe-provenance-v1.nix-export > chemins-importes.txt
+step=nar_verification
+nix --extra-experimental-features nix-command store verify --offline --no-trust --recursive /nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1
+step=closure_metadata
+nix --extra-experimental-features nix-command path-info --offline --json --json-format 1 --recursive /nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1 > fermeture-installee.json
+step=closure_comparison
+/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S verify_delivery.py --store-info fermeture-installee.json
+step=provenance_observation
+/nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1/bin/mrjam-observe-provenance > provenance-v1.json
+trap - ERR
+#+end_src
+
+La comparaison doit rendre =STORE_METADATA_MATCH=. L'option =--no-trust= est
+limitée au contrôle de contenu : elle ne modifie aucune politique de confiance
+persistante et ne désactive pas les exigences de signature de l'import.
+=--extra-experimental-features nix-command= est explicite sur les deux commandes
+qui le nécessitent ; ne pas modifier =nix.conf= pour les faire passer.
+
+Le programme immuable refuse arguments, copie mutable, unité préexistante ou
+protection indisponible. Il n'émet aucun JSON partiel en cas de refus. Ne pas
+arrêter une unité préexistante, agrandir un budget ou utiliser un autre programme
+pour contourner une erreur. L'observation est la seule invocation du paquet.
+
+* Retour fermé et fin
+
+Après succès, transférer seulement =provenance-v1.json= à Spectre. Revalider :
+
+#+begin_src bash
+python3 -I -S filter/probe/validate_report.py < provenance-v1.json
+#+end_src
+
+Ce filtre ne fait aucune collecte. Il refuse champs supplémentaires, types,
+SHA incomplet, autorité différente et =state_version= non nul. Après succès,
+retourner uniquement ce JSON à Cloud. Une valeur =unknown= valide reste inconnue.
+En cas d'échec du filtre local, retourner seulement :
+={"step":"spectre_validation","code":"REPORT_REFUSED"}=.
+
+En cas d'échec humain, retourner uniquement le dernier objet fermé généré par
+le bloc (étape, =COMMAND_FAILED=, code numérique). Ne pas transmettre les
+sorties précédentes, les chemins importés, le JSON de fermeture ou un journal.
+Un fichier vide ou un succès d'import seul n'est pas un rapport d'observation.
+
+Le champ de génération peut être rapproché de V2 seulement s'il vaut encore
+=jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9=. Une autre valeur signale un changement ;
+elle ne peut être rattachée d'office au profil 56. Les révisions sont déclarées,
+non authentifiées, et =stateVersion= reste inconnu.
+
+Le paquet reste inerte dans le store et le verrou vide sous =/run= peut rester
+jusqu'au reboot. Aucune génération, donnée, règle SSH ou unité applicative n'a
+été modifiée : aucun retour applicatif n'est nécessaire pour cette observation.
+Ne pas lancer de garbage-collect global ni effacer un compte pour nettoyer.
