@@ -1,0 +1,92 @@
+#+title: Reprise après l'échec nar_verification
+#+date: 2026-10-31
+#+language: fr
+
+* Correction et limite du diagnostic
+
+Le retour reçu est :
+
+#+begin_src json
+{"step":"nar_verification","code":"COMMAND_FAILED","exit_code":1}
+#+end_src
+
+L'utilisateur indique une tentative depuis Spectre par SSH vers le VPS. Ce
+retour ne contient pas la cause détaillée et ne prouve pas un import réussi.
+
+La procédure originale omettait l'activation explicite de =nix-command= pour
+=nix store verify= et =nix path-info=. Cloud l'activait implicitement. Sur
+Nix 2.34.8, sa désactivation reproduit le code 1 pour chacune de ces commandes.
+Ajouter =--extra-experimental-features nix-command= corrige ce cas pour cette
+seule invocation, sans modifier =nix.conf=, les signatures ou les droits.
+La cause de l'échec réel reste à confirmer par la reprise ; un code 1 seul
+ne démontre ni cette cause ni une corruption du paquet.
+
+Les cinq essais réels dans le conteneur Cloud sans réseau réussissent : version
+Nix verrouillée, deux refus sans l'option, vérification récursive et comparaison
+des 83 chemins livrés avec l'option, puis refus d'un contenu synthétique altéré
+dans un autre store temporaire. Les cinq tests du vérificateur de livraison
+réussissent aussi. Voir [[file:qualification-nix-command-20261031.json][le reçu de qualification]].
+Ce sont des contrôles Cloud ; aucun succès sur le VPS n'est annoncé.
+
+* Consigne à transmettre à Codex sur Spectre
+
+Utilise cette correction séparément de la remise d'origine. Conserve l'archive,
+son extraction et son =SHA256SUMS= intacts ; ne remplace aucun fichier de la
+remise et ne recalcule aucune attente. L'archive TAR conserve son SHA-256
+=0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
+Il n'est pas nécessaire de télécharger ou de reconstruire le paquet à nouveau.
+
+Prépare les commandes fixes ci-dessous pour l'administrateur humain sur le
+VPS, dans le dossier de remise déjà transféré. Cette reprise ne donne pas à
+l'agent un shell général de production. Elle ne lance aucun import, installation,
+réparation du store, activation NixOS ou changement de service applicatif.
+Si l'import précédent a réussi, on reprend directement à la vérification.
+S'il n'a pas réussi, ces commandes doivent refuser le chemin absent ; ne pas
+transformer ce refus en import ou en réparation improvisée.
+
+#+begin_src bash
+set -euo pipefail
+test "$(id -u)" -eq 0
+sha256sum --check SHA256SUMS
+nix --extra-experimental-features nix-command store verify --offline --no-trust --recursive /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2
+nix --extra-experimental-features nix-command path-info --offline --json --recursive /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2 > fermeture-installee.json
+/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S verify_delivery.py --store-info fermeture-installee.json
+/nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2/bin/mrjam-observe-adoption > adoption-v2.json
+#+end_src
+
+Chaque commande doit réussir avant la suivante. La comparaison du manifeste
+doit produire =STORE_METADATA_MATCH= avant de lancer l'observateur. L'option
+=--no-trust= est inchangée : cette vérification contrôle le contenu ; les NAR,
+tailles et références doivent toujours correspondre au manifeste épinglé.
+Le programme final reste l'observateur déjà qualifié, sans argument, sous le
+compte non privilégié existant et ses limites. Ne pas lui substituer une sonde.
+
+En cas de succès, retourner uniquement =adoption-v2.json= après validation
+locale par le filtre V2 livré. Conserver le premier échec dans le suivi : il
+ne devient pas rétroactivement un succès.
+
+* Si la vérification échoue encore
+
+Arrêter avant =path-info= et l'observateur. Ne pas modifier les empreintes,
+=trusted-users=, =require-sigs= ou SSH et ne pas lancer =--repair=.
+L'administrateur peut lire sur place le diagnostic de cette commande Nix fixe,
+sans le transmettre à un agent. Il peut retourner une seule catégorie :
+
+| Code | Condition observée sur place |
+|------+-----------------------------|
+| NIX_COMMAND_DISABLED | Le message indique explicitement que nix-command est désactivé |
+| STORE_PATH_MISSING | Le message indique explicitement un chemin manquant ou non enregistré |
+| CONTENT_MISMATCH | Le message indique explicitement un contenu modifié ou une empreinte divergente |
+| STORE_ACCESS_DENIED | Le message indique explicitement un refus d'accès au store ou à son daemon |
+| UNCLASSIFIED | La cause ne correspond pas sans ambiguïté à une des conditions ci-dessus |
+
+Retour fermé, avec le code de sortie effectivement observé et la catégorie
+choisie ; exemple de forme, qui n'est pas une observation réelle :
+
+#+begin_src json
+{"step":"nar_verification_retry","code":"COMMAND_FAILED","exit_code":1,"diagnostic":"UNCLASSIFIED"}
+#+end_src
+
+Aucun journal brut, contenu du store, sortie libre, fichier de configuration,
+secret ou donnée applicative n'est à transmettre. Le classement humain n'est
+pas une preuve authentifiée et ne remplace aucun contrôle d'intégrité.
