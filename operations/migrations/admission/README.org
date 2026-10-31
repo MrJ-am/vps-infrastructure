@@ -121,10 +121,33 @@ retenu : vrais montages en lecture seule, refus root/arguments/permissions,
 fusion exacte, idempotence, cible différente refusée, verrou concurrent et deux
 fenêtres d'interruption. Le binaire Rust =718a8188= ouvre ensuite cet état sans
 initialisation et devient disponible en mode fermé, sans perte de preuve.
-Ce contrôle porte sur l'ouverture et la conservation de l'état. Il ne fait pas
-progresser les demandes historiques en mode ouvert : une fixture cohérente avec
-leurs réservations PostgreSQL et étapes IdP doit encore qualifier cette reprise
-métier avant ouverture, en plus des tests natifs du traitement Rust courant.
+Ce contrôle antérieur porte sur la lecture fermée. La reprise ouverte a ensuite
+révélé un blocage de =718a8188= après notification finale historique durable.
+Ses preuves restent conservées ; cet ancien artefact n'est plus sélectionné
+pour ouvrir l'adoption.
+
+[[file:qualification-resume-systemd-20261031.json][La reprise ouverte séparée]] passe huit groupes en 249,75 secondes avec
+=vision@0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709=, le même adopteur et des
+allocations PostgreSQL cohérentes entièrement inventées. Les courriels Python
+en attente, acceptés et vidés par rétention restent inchangés ; aucun condensat
+sémantique n'est inventé. Un destinataire incohérent bloque avant effet IdP.
+La reprise après redémarrage ne répète ni finalisation du compte ni consommation
+d'invitation. Une interruption avant la notification finale produit au contraire
+la finalisation nécessaire puis le nouveau courrier. L'IdP HTTP et les accusés
+historiques sont inventés ; le relais vivant refuse. L'acquisition et la
+cohérence des snapshots réels restent des préconditions, de même que le retour
+après nouvelles écritures. Le retour au mode fermé n'est pas une conversion
+inverse des données.
+
+La disponibilité HTTP du runtime vérifie ses prérequis de service, pas la
+cohérence individuelle de toutes les demandes. La fixture démarre et répond à
+la disponibilité en mode fermé avec une demande au destinataire incohérent ;
+cette demande reste ensuite bloquée lors du traitement en mode ouvert.
+Ni =adopted= ni une réponse de disponibilité positive ne lèvent donc le contrôle
+de cohérence préalable à l'ouverture. Ce contrôle de l'existant doit être
+réalisé par une capacité locale bornée et autorisée, sans remonter les demandes,
+adresses, messages ou réponses IdP vers Cloud ; il n'est pas encore fourni par
+l'adopteur hors ligne.
 La dérivation et les contenus ont été revérifiés après succès.
 Le premier essai ne capturait pas stderr pour vérifier le refus root ; sa trace
 reste conservée et le critère de refus n'a pas été réduit. Ces contrôles locaux

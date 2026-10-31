@@ -89,7 +89,7 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    distincts, voir =runtime/vision-archive.org= et =runtime/vision-replay.org=.
    Le cycle et la fermeture ont aussi leurs exécutables et qualifications
    NixOS distincts : =runtime/vision-cycle.org= et =runtime/vision-closure.org=.
-   L'admission corrigée =718a8188= a sa construction, ses tests natifs,
+   L'admission corrigée =0d33bd70= a sa construction, ses tests natifs,
    son module et sa qualification système : =runtime/vision-admission.org=.
    L'adoption des deux états historiques est traitée séparément.
    Les artefacts restent locaux.
@@ -152,8 +152,17 @@ autre binaire :
 | Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
 | Cycle de préavis 47286a8a et module | 34 tests Nix, 37 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-cycle-systemd-20261031.json= ; annulations/reprises natives, SMTP refusé en VM, acceptation/délai/archive simulés explicitement |
 | Fermeture commune e067f8c7 et module | 36 tests Nix, 39 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-closure-systemd-20261031.json= ; refus avant archive, reprise après panne partielle de purge, conservation du journal et d'un compte tiers ; hook IdP réel distinct |
-| Admission durable 718a8188 | 38 tests Nix, 41 natifs distincts, 22 assertions Nix et 97 régressions, 8 groupes système | =runtime/qualification-vision-admission-systemd-20261031.json= ; modes fermé/ouvert/fermé, refus et reprise ; ancienne révision 6ae96aea écartée après reproduction d'une famine |
+| Admission durable 718a8188, preuve antérieure conservée | 38 tests Nix, 41 natifs distincts, 22 assertions Nix et 97 régressions, 8 groupes système | =runtime/qualification-vision-admission-systemd-20261031.json= ; modes fermé/ouvert/fermé, refus et reprise ; ancienne révision 6ae96aea écartée après reproduction d'une famine |
 | Adoption des deux états SQLite d'admission | 18 tests natifs puis Nix, 17 assertions de module, 8 groupes système | =migrations/admission/qualification-systemd-20261031.json= ; lecture par le même ELF Rust sans perte, dérivation Git/local identique ; aucun snapshot réel, acquisition/cohérence et retour après nouvelles écritures encore bloquants |
+| Admission corrigée 0d33bd70 | 38 tests Nix, 41 natifs, fmt/clippy, 8 groupes système rejoués et 8 groupes adoption/reprise ouverte | =runtime/qualification-vision-admission-legacy-systemd-20261031.json= et =migrations/admission/qualification-resume-systemd-20261031.json= ; IdP/SMTP synthétiques, aucune cohérence de données réelles déduite |
+
+La reprise ouverte de l'adoption passe aussi huit groupes sur =0d33bd70= :
+=migrations/admission/qualification-resume-systemd-20261031.json=.
+Le contretest =vision@cff103224c7f7b986eb2a7a7ae23d3e7095e1fa7= a écarté
+=718a8188= de ce périmètre : sa reprise restait bloquée après notification
+historique déjà durable. Le nouveau binaire conserve les octets, empreintes et
+réessais des messages, sans répéter la finalisation IdP. Les 33 fichiers SQL,
+Cargo.lock et le graphe des 178 dépendances restent inchangés.
 
 Le serveur courant est =f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd=.
 Il est installé dans =/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a=
@@ -169,6 +178,9 @@ fermeture, admission et adoption, 26 chemins transitifs et douze pièces de
 preuve. Export/import dans un store vierge et seize membres du tar ont été
 vérifiés. L'ancien paquet plateforme/archive/rejeu/SQL004 reste inchangé.
 Aucun des deux paquets ne constitue une génération système ni un installateur.
+Le premier paquet travailleurs contient encore l'admission =718a8188= : il est
+conservé pour revue historique et doit être complété par le nouvel artefact
+qualifié avant toute sélection d'ouverture historique.
 
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256
@@ -212,7 +224,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
 | Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
-| État historique d'admission | Outil hors ligne qualifié localement ; adoption réelle bloquante | Reprise métier des demandes historiques en mode ouvert sur fixture PostgreSQL/IdP cohérente ; snapshots scellés, arrêt des anciens émetteurs et stratégie de retour après nouvelles écritures | Poursuite des tests Cloud inventés ; composant local borné côté opérateur pour l'existant, aucun contenu de snapshot transmis aux agents |
+| État historique d'admission | Adoption puis reprise ouverte 0d33bd70 qualifiées localement ; adoption réelle bloquante | Snapshots scellés cohérents avec PostgreSQL/IdP réel, arrêt des anciens émetteurs et stratégie de retour après nouvelles écritures | Composant local borné côté opérateur pour l'existant ; aucun contenu de snapshot transmis aux agents |
 | Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
 | Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
 | Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |

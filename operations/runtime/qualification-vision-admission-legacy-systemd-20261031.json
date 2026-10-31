@@ -1,0 +1,67 @@
+{
+  "derivation": "/nix/store/8bcyyiqlzzjn2ba2832xb0asw7g3zki2-vm-test-run-mrjam-vision-admission-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/dlm4513zazxhgcnsrr8kvdb8giqpg9h0-vm-test-run-mrjam-vision-admission-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/8bcyyiqlzzjn2ba2832xb0asw7g3zki2-vm-test-run-mrjam-vision-admission-systemd-independent.drv",
+      "narHash": "sha256-yCo4pic+/04+luKtdS/vkadQ+TlpglIgi6Zyy0a7/bE=",
+      "narSize": 1640,
+      "references": [
+        "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1"
+      ],
+      "registrationTime": 1793469035,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM, exact admission ELF and declarative open/closed modes",
+    "artifact": "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1",
+    "artifact_sha256": "ada217cef9ffe1b3f60942038160c4da9ec3e6bb931b20cb47c03b410017caec",
+    "checks": [
+      "exact-elf-no-automatic-start-or-implicit-state-creation",
+      "explicit-private-initialization-and-closed-declarative-mode",
+      "actual-elf-credential-acls-cgroups-process-lock-and-peer-refusals",
+      "open-declarative-mode-http-refusals-and-smtp-failure-without-identity",
+      "restart-preserves-exact-mail-and-private-purge-cancels-pending-admission",
+      "broadened-sql-capabilities-block-readiness-and-recover",
+      "shared-or-invalid-credential-refused-without-secret-echo",
+      "declarative-return-to-closed-mode-and-no-implicit-schema-repair"
+    ],
+    "production_access": false,
+    "limits": [
+      "SMTP always refuses in this VM; successful messages and account provisioning use separate native invented adapters",
+      "IdP here only resolves one invented verified address; native provider/MFA and historical state adoption remain separate",
+      "VM specialisation switches do not qualify the VPS generation or whole-platform deployment/rollback",
+      "No real credentials, account, backup, data or network service"
+    ]
+  },
+  "result_sha256": "3c14d9063a25d26b49136fd77be4756d667971ae8118c84aa2c0ed36bd134b4f",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "validation_test_commit": "c8650d972cfc43814cb71f17019b3139f1e300de",
+  "duration_seconds": 373.53,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 388.244
+  },
+  "sources_sha256": {
+    "mrjam-validation/operational-review/admission-systemd.nix": "6de19c203d0746e941b4a281ae97605b38430d89c8f39dc425dcf601d551b4f9",
+    "mrjam-validation/operational-review/fixtures/admission-private-synthetic.py": "c2047c1679eec7e0f929206867e3a7015a63a83989f6eb6bd525ab5069b8d28a",
+    "vps-infrastructure/operations/nixos/mrjam-vision-admission.nix": "8bf97e6cfd78d3dcfdb44d2521d9653d8abbb0f0127d5d591d37eb830b2e92cb",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "d8fe38f8d5954e7ad6968d43ccc30cf9c7a2c1ffda21dfbee939cf9e554d1647"
+  },
+  "logs_sha256": {
+    "admission-systemd-20261031-05.log": "8116ad99405418c05dd6c0c82bfb6863a07714a44a9b67791ce48828ab819a26",
+    "admission-systemd-20261031-05.json": "6fec0d45fab817eeac76c9be895611f01f7ad0aa319f9e148fe499abf882c20f",
+    "admission-systemd-20261031-05-execution.json": "2703a5b6b28357b5860869f981d32700fb59c395464def892bc1353b0b0402f9",
+    "admission-legacy-qualification-20261031-01.log": "98e29a5bd920a89a3bf4cbefff39a4bdba513e2c040b9a2508d798706b9148b0"
+  },
+  "qualification_helper_sha256": "bc737b73cf5020e976e096d3ac7de07f78933f4cc97572f567853d33808c1d3a"
+}

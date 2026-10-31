@@ -1,0 +1,71 @@
+{
+  "derivation": "/nix/store/b25k53k1f0lj0nwmisvz61fspjqw0vvy-vm-test-run-mrjam-admission-resume-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/csziffszamfn6zizpk33iw77wqbc18xx-vm-test-run-mrjam-admission-resume-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/b25k53k1f0lj0nwmisvz61fspjqw0vvy-vm-test-run-mrjam-admission-resume-systemd-independent.drv",
+      "narHash": "sha256-lZXj+9m3Et417Cuw6iKDVWPxXE+99UXTaMR51lLoGuw=",
+      "narSize": 2024,
+      "references": [
+        "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1",
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1"
+      ],
+      "registrationTime": 1793468636,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented coherent PostgreSQL allocations and historical SQLite, actual Rust ELF and fixed fake IdP HTTP",
+    "artifact": "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1",
+    "code_sha256": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "admission_artifact": "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1",
+    "admission_sha256": "ada217cef9ffe1b3f60942038160c4da9ec3e6bb931b20cb47c03b410017caec",
+    "checks": [
+      "exact-prebuilt-adopter-and-runtime-with-coherent-invented-sql-allocations",
+      "sealed-adoption-and-closed-mode-preserve-all-source-bytes-without-identity-effects",
+      "actual-open-worker-resumes-pending-accepted-and-retained-python-notices-without-reencoding",
+      "before-notice-crash-finalizes-once-and-creates-new-mail-without-double-sql-allocation",
+      "misbound-legacy-notice-refused-before-identity-and-unconfirmed-request-remains-inactive",
+      "restart-recovers-consistent-fixture-without-repeated-password-action-mail",
+      "second-restart-does-not-reprovision-or-consume-another-invitation",
+      "return-to-closed-mode-preserves-new-state-without-claiming-data-downgrade"
+    ],
+    "production_access": false,
+    "limits": [
+      "No real snapshots, backup, data, secret, native IdP or delivered mail",
+      "SMTP refuses; accepted legacy notices represent durable invented historical acknowledgements",
+      "The fixture repair is not an authorized procedure to edit production state",
+      "SQL/IdP/source coherence, snapshot acquisition, native MFA and whole VPS deployment remain external requirements",
+      "Return to closed mode is not a reverse migration or restoration proof"
+    ]
+  },
+  "result_sha256": "2692836e320fd4cd2224417f07dc5a5bcec11a97f80023762a28087d1f37cc13",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "validation_test_commit": "c8650d972cfc43814cb71f17019b3139f1e300de",
+  "duration_seconds": 249.75,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 267.579
+  },
+  "sources_sha256": {
+    "mrjam-validation/operational-review/admission-resume-systemd.nix": "76af9024bfc7ea6762a31dc31cfdb9dbc827b56526d71147e943963fb4ad8021",
+    "mrjam-validation/operational-review/fixtures/admission-resume-synthetic.py": "ca7156c8ff52a2a7eac4f511e60ccc9c0085b5353afe4e93a0628cde66d7db54",
+    "vps-infrastructure/operations/nixos/mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795",
+    "vps-infrastructure/operations/nixos/mrjam-vision-admission.nix": "8bf97e6cfd78d3dcfdb44d2521d9653d8abbb0f0127d5d591d37eb830b2e92cb",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "d8fe38f8d5954e7ad6968d43ccc30cf9c7a2c1ffda21dfbee939cf9e554d1647"
+  },
+  "logs_sha256": {
+    "admission-resume-systemd-20261031-01.log": "251a30418beedb8bcf9ef220108739f7f66fd1c248f69cf633b83c7b4a1220ee",
+    "admission-resume-systemd-20261031-01.json": "102ff76972b2d3cc2d769f082bb9f558a887f4f3d05a6d3eef2b46b7c85eb284",
+    "admission-resume-systemd-20261031-01-execution.json": "50ba6fc89db298801aafea8592e6c886d6984dd0a8689fd32c9befbbfa63a761"
+  },
+  "qualification_helper_sha256": "bc737b73cf5020e976e096d3ac7de07f78933f4cc97572f567853d33808c1d3a"
+}
