@@ -21,6 +21,8 @@ let
     visionCycleJournal = workerIdentities.visionCycle;
     visionClosure = { user = "mrjam-vision-closure"; enabled = config.services.mrjamVisionClosure.enable or false; };
     visionClosureJournal = workerIdentities.visionClosure;
+    visionAdmission = { user = "mrjam-vision-admission"; enabled = config.services.mrjamVisionAdmission.enable or false; };
+    visionAdmissionAdministration = workerIdentities.visionAdmission;
   };
   slotType = lib.types.submodule {
     options = lib.genAttrs capabilities (_: lib.mkOption {

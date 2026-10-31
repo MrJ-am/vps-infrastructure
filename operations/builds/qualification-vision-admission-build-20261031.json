@@ -1,0 +1,64 @@
+{
+  "decision": "verified-public-build",
+  "derivation": "/nix/store/d57y15jsvszvybncjzqb50nhkm7gzlm3-mrjam-vision-admission-0.1.0-718a81880090.drv",
+  "artifact": {
+    "artifact": "vision-admission",
+    "deployment_authorized": false,
+    "input_manifest_sha256": "fc0b637b9da76157de6546ab46f52388ac3a42239666ac30352aad99272a2217",
+    "payload_sha256": {
+      "bin/vision-admission": "754a86b2f062be287777cdffc4211a39f60e43a18601ef9d3dfca0a547cbfc1f"
+    },
+    "schema_version": 1,
+    "source_commit": "718a81880090609b7730a27c4fb37f32bbb7e3d1"
+  },
+  "path_info": {
+    "/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090": {
+      "ca": null,
+      "deriver": "/nix/store/d57y15jsvszvybncjzqb50nhkm7gzlm3-mrjam-vision-admission-0.1.0-718a81880090.drv",
+      "narHash": "sha256-yymebb8Drty1Ku1Ya2WddOleUKLMph6MjOENloYde4M=",
+      "narSize": 11926936,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793464128,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "recursive_content_verified": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 38,
+  "separate_native_suite_tests": 41,
+  "sources_sha256": {
+    "operations/builds/vision-admission-20261031.nix": "6b784f764ac342356d839a5549e26b1678fb01f738c7f2e830013036d14e2087",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3"
+  },
+  "logs_sha256": {
+    "vision-admission-build-20261031-02.log": "742db1f7cb47e104bdba6f528ae53739746ea81b77721606ac2032ce7ee6037b",
+    "vision-admission-build-20261031-02.json": "e7b30e7d865f53d8846f055a76478e5c691c08ab477d5b99650d47959d9db1a0",
+    "vision-admission-build-verify-20261031-02.log": "0b83c22978fd6f6a842fb505d9376c153d4783e1fb96e4e0242b0d2060081dec",
+    "vision-admission-inputs-20261031-02.json": "846582a8ea2e3e36f947d40fe031ef35a1329b21f9622ca8669de9c586c82a83",
+    "vision-admission-all-20261031-05.log": "5bff9bf413036eb6b8b5c9f3f8c5deeb5f07446ba1d84b7fd639fa94bb2017b1",
+    "vision-admission-clippy-20261031-05.log": "ad31915200e7234d984c62cfd7d517b0e827f349ae2f3d6d883e137b2aee0490"
+  },
+  "retired_build": {
+    "source_commit": "6ae96aeab516335a7c009672069f09e69959d29c",
+    "recipe_infrastructure_commit": "305c00aea6011d27ebe417a624804a9ad328f8fc",
+    "reason": "Native negative control reproduces starvation after 101 older permanently failing requests; replaced by rotating actionable batches in 718a81880090609b7730a27c4fb37f32bbb7e3d1",
+    "negative_control_log_sha256": "4fe31cf76b77ec5553176f577f95a940b366ec2f4ffd68b59915c7c957b24e3f"
+  },
+  "limits": [
+    "Only the exact admission ELF is selected; other workers retain their distinct qualified revisions",
+    "Native positive IdP/mail adapters are invented; real provider/MFA, credentials and historical state adoption require separate qualification"
+  ],
+  "verification_helper_later_step": {
+    "vm_attempt": "02",
+    "result": "failed-before-VM-missing-public-cache-dependencies",
+    "artifact_content_verification_completed": true
+  }
+}

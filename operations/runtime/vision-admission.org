@@ -1,0 +1,87 @@
+#+title: Admission durable — artefact et unités déclaratives
+#+date: 2026-10-31
+#+language: fr
+
+* Révision sélectionnée et qualification
+Source =MrJ-am/vision@718a81880090609b7730a27c4fb37f32bbb7e3d1=.
+Paquet :
+=/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090=.
+ELF =bin/vision-admission=, SHA-256
+=754a86b2f062be287777cdffc4211a39f60e43a18601ef9d3dfca0a547cbfc1f= ;
+NAR =sha256-yymebb8Drty1Ku1Ya2WddOleUKLMph6MjOENloYde4M==.
+
+[[file:../builds/qualification-vision-admission-build-20261031.json][La construction]] contient 38 tests sans PostgreSQL. La suite native séparée
+avec PostgreSQL inventé passe 41 tests, ainsi que fmt et clippy. Le contrôle
+négatif sur =6ae96aeab516335a7c009672069f09e69959d29c= reproduit une famine :
+101 demandes anciennes en échec empêchaient une demande valide ultérieure
+d'avancer. Cet artefact initial est écarté. Les lots tournants de la révision
+sélectionnée corrigent ce défaut ; les anciennes recettes et traces restent
+conservées, sans réécriture de leurs empreintes.
+
+[[file:qualification-vision-admission-module-20261031.json][L'évaluation Nix]] passe 22 contrôles admission et 97 régressions des autres
+travailleurs et mappings peer. Ces reçus locaux ne constituent ni une adoption
+protégée des règles ni une preuve de mise en service.
+[[file:qualification-vision-admission-systemd-20261031.json][La qualification NixOS]] passe huit groupes en 395,56 secondes, avec contrôle
+du processus réel, des credentials, cgroups, rôles peer, concurrence, refus
+HTTP/SMTP, reprise et purge. Les spécialisations NixOS passent réellement de
+fermé à ouvert puis à fermé dans la seule VM inventée. La dérivation et les
+contenus ont été revérifiés après succès. Les essais précédents, arrêtés par
+des dépendances publiques manquantes puis deux imports Python inutilisés,
+restent documentés ; les attentes de sécurité n'ont pas été réduites.
+
+* Fonctionnement et configuration
+[[file:../nixos/mrjam-vision-admission.nix][Le module]] est désactivé par défaut. Même sélectionné, il ne démarre aucune
+unité automatiquement et garde les admissions publiques fermées. Les commandes
+sont =check-config=, =check-local=, =initialize-state= et =serve=, avec une
+configuration fermée. Aucun shell, SQL ou chemin libre n'est exposé par HTTP.
+
+Le compte =mrjam-vision-admission= est verrouillé, sans groupe supplémentaire.
+Son état est =/var/lib/mrjam-vision-admission/admissions.sqlite=, fichier 0600
+dans un répertoire 0700. Un verrou exclusif sur ce répertoire exclut deux
+processus coopérants ; il n'est pas une ACL contre un processus compromis du
+même UID. Le démarrage normal exige un état existant et ne crée aucun schéma.
+L'unité d'initialisation est explicite, sans réseau et avec le seul credential
+SMTP ; elle ne doit pas remplacer l'adoption des demandes historiques.
+
+Le service normal utilise quatre références =LoadCredential= externes au store :
+SMTP, client Keycloak, fermeture et approbation. Les quatre chemins doivent être
+distincts ; le binaire refuse aussi des valeurs identiques pour fermeture et
+approbation. Le module ne crée ni clé ni secret. Les deux rôles SQL fixes,
+=vision_admission= et =vision_administration=, sont mappés par peer au compte,
+dans la base explicitement sélectionnée. Aucun rôle, table ou base n'est créé.
+
+L'écoute est fixée à =127.0.0.1:3027=. En mode fermé, création, confirmation et
+approbation sont refusées ; disponibilité, quiescence et purge privées restent
+accessibles avec leurs capacités distinctes. En mode ouvert, le même processus
+traite au plus 100 demandes actionnables et 20 courriels par passage, avec une
+borne de 840 secondes puis une pause de 60 secondes. Les lots tournent selon
+=(cree,id)= avec collation BINARY. Ce curseur est en mémoire ; les demandes,
+preuves, étapes IdP et courriels restent durables. Les opérations concurrentes
+incompatibles répondent 503 et les lignes sont relues sous verrou avant effet.
+
+Budgets proposés : 256 Mio, 20 % d'un CPU, 32 tâches. Les délais et plafonds ne
+prouvent pas un débit ni une réserve du VPS. Une erreur structurelle ou un
+dépassement du passage arrête le service ; aucun redémarrage automatique ne
+masque cet état. Le contrôleur d'exploitation doit traiter ce refus.
+Le SMTP nécessite des sorties TLS : les familles AF_INET/AF_INET6 permises ne
+constituent pas une ACL de destination. Le profil Proton et le raccord Keycloak
+historique sont des contrats candidats, pas une observation des services actifs.
+
+* Reprise de l'existant et retour
+[[file:../migrations/admission/README.org][L'adoption séparée]] conserve les demandes, preuves et messages des deux
+fichiers historiques dans le nouvel état. Elle exige arrêt des anciens
+émetteurs, snapshots cohérents et concordance avec PostgreSQL/IdP. Une
+initialisation vide n'est jamais une migration des demandes existantes.
+
+Avant ouverture, qualifier l'IdP réel, le client et ses droits, les secrets,
+le raccord du hook de fermeture, le routage public, le contrôle administratif,
+la cohérence des réservations et la capacité SMTP. Les tests positifs natifs
+utilisent des adaptateurs inventés ; ils ne prouvent pas ces raccordements.
+
+Un retour avant toute écriture nouvelle peut réutiliser les états historiques
+conservés après preuve de quiescence. Après une demande, confirmation, opération
+IdP ou émission nouvelle, une ancienne génération NixOS ne sait pas restituer
+ces effets ni convertir automatiquement l'état. Conserver l'état et utiliser
+une version compatible ; tout retour vers les deux anciens fichiers demande
+une conversion et une qualification distinctes. Aucun effet de production
+n'est autorisé par ces reçus locaux seuls et aucun accès VPS n'a été effectué.
