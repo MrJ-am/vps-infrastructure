@@ -10,6 +10,15 @@ deviennent pas pour autant prêtes à déployer : les blocages techniques recens
 ci-dessous restent à résoudre. Les preuves antérieures conservent leurs conditions
 et empreintes ; aucune activation ou migration réelle n'est encore réalisée.
 
+Un contrôle complémentaire =vision@b7d58104ddaeba2d601f1acfcd287fc3fe7eea2d=
+a reproduit le refus d'une adresse historique valide dont Python replie =To=.
+Le lecteur de courrier partagé concerne admission, cycle et archiviste. Le
+correctif =7d87768bd141ec6a2a41b4ec9f3277639fcba67f= passe 43 tests natifs,
+fmt et clippy ; ses trois artefacts et tests système sont en cours de
+qualification. Les remises précédentes restent intactes et ne prouvent pas la
+compatibilité avec ces enveloppes repliées. Aucun schéma ni dépendance n'est
+modifié par ce correctif.
+
 Les branches préparatoires exactes ont été publiées le 30 octobre : voir
 =mise-en-service/publication-initiale.json=. Les développements en cours peuvent
 précéder leur publication suivante ; ne pas assimiler HEAD local au HEAD distant.
