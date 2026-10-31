@@ -1,0 +1,112 @@
+{
+  "derivation": "/nix/store/30h7xz1d5q08m52fb4jpj4sfixsl3w58-mrjam-admission-adoption-1.drv",
+  "path_info": {
+    "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1": {
+      "ca": null,
+      "deriver": "/nix/store/30h7xz1d5q08m52fb4jpj4sfixsl3w58-mrjam-admission-adoption-1.drv",
+      "narHash": "sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI=",
+      "narSize": 18096,
+      "references": [
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1"
+      ],
+      "registrationTime": 1793465847,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "payload_sha256": {
+    "bin/mrjam-admission-adopt": "a718997189ee655a208d75fb31e382336a6190a5122c33bce1eb84ada38fe55f",
+    "libexec/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "libexec/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "libexec/schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+    "libexec/schemas/legacy-requests.sql": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d",
+    "libexec/schemas/target-mail.sql": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093",
+    "libexec/schemas/target-requests.sql": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb"
+  },
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "native_tests": 18,
+  "nix_build_tests": 18,
+  "nixos_module_checks": {
+    "absentIdentityRefused": true,
+    "buildContextRefused": true,
+    "disabledInert": true,
+    "emptyRootStaging": true,
+    "finiteBudgets": true,
+    "fixedNoArguments": true,
+    "fixtureValid": true,
+    "noAutomaticInitialization": true,
+    "noAutomaticStart": true,
+    "noConcurrentInitializationOrRuntime": true,
+    "noHostCapabilities": true,
+    "noNetwork": true,
+    "openAdmissionsRefused": true,
+    "privateDirectories": true,
+    "sealedReadOnlyInputs": true,
+    "stateVersionPreserved": true,
+    "unprivilegedSameIdentity": true
+  },
+  "flake_evaluation": {
+    "flake_derivation": "/nix/store/30h7xz1d5q08m52fb4jpj4sfixsl3w58-mrjam-admission-adoption-1.drv",
+    "qualified_derivation": "/nix/store/30h7xz1d5q08m52fb4jpj4sfixsl3w58-mrjam-admission-adoption-1.drv",
+    "derivations_equal": true,
+    "checks": {
+      "absentIdentityRefused": true,
+      "buildContextRefused": true,
+      "disabledInert": true,
+      "emptyRootStaging": true,
+      "finiteBudgets": true,
+      "fixedNoArguments": true,
+      "fixtureValid": true,
+      "noAutomaticInitialization": true,
+      "noAutomaticStart": true,
+      "noConcurrentInitializationOrRuntime": true,
+      "noHostCapabilities": true,
+      "noNetwork": true,
+      "openAdmissionsRefused": true,
+      "privateDirectories": true,
+      "sealedReadOnlyInputs": true,
+      "stateVersionPreserved": true,
+      "unprivilegedSameIdentity": true
+    }
+  },
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "sources_sha256": {
+    "operations/migrations/admission/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "operations/migrations/admission/test_adopt.py": "db9136e4461b2913b80377f621425bf13bff0f4c583a074a0acb5179f67a3a13",
+    "operations/migrations/admission/package.nix": "657158eae65af58ff1fa54fe7eaff581a32c05aed43e546e5a55bb4907de9289",
+    "operations/migrations/admission/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "operations/nixos/mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795",
+    "operations/tests/admission-adoption-evaluation.nix": "eba83139c211d8e4f50a0a1f29a990f3ba1dc9bb1506cffa9fea0b6ff0de9721"
+  },
+  "logs_sha256": {
+    "admission-adoption-native-20261031-01.log": "f9d38b8d06ea224ba6a0cb9af5a666d6d6da3058107ed6afbb6392d06132ada8",
+    "admission-adoption-build-20261031-02.log": "10f11fd727b2481549723ebfe62ecd43e53f811f9dde3207499c18579cc0030e",
+    "admission-adoption-build-20261031-02.json": "6c31830c1c297f04c9db629946f325dd2e6bd1a326e0fc3c6dcf6e755068e06c",
+    "admission-adoption-module-20261031-02.json": "ee36da046a331c658a142db166600a9514547b1128a7d68bff7c4c1e7b0f8a9f",
+    "admission-adoption-build-verify-20261031-02.log": "58f3c57350832a7e497185a13bb6589ba2bdea9b6c5c49618472716b86a3a2c3",
+    "admission-adoption-flake-20261031-02.json": "624f526b36b7354156543c7605e4361c1d86ba764e8e2b69a7e2c0e7e3babfbf",
+    "admission-adoption-source-difference-20261031-01.json": "7f11a41b9d0e6433211f0dbad09d25db7aa4a9c4967413ea58859fd81934a744"
+  },
+  "retired_build": {
+    "artifact": "/nix/store/2jr547z5kdsl4qcacg9066sb6bimcyli-mrjam-admission-adoption-1",
+    "reason": "An empty __pycache__ directory changed the workspace input tree while Git omitted it; explicit source file set now gives identical derivations. Source file contents were identical.",
+    "original_recipe": "operations/migrations/admission/package-first-attempt-20261031.nix",
+    "original_receipt": "operations/migrations/admission/qualification-build-20261031.json",
+    "mismatched_flake_log_sha256": "09c845a3649f3daaf727a454b543644cbc13622e9f5db8b591dad676009d2e7f",
+    "system_vm_attempt_02_completed_seconds": 250.26,
+    "system_vm_attempt_02_log_sha256": "8138ad84ded16df79d4d434d066452383bea7f2a9fc36edcd08e0a860b55290b"
+  },
+  "limits": [
+    "Only invented data; acquisition, quiescence, PostgreSQL/IdP coherence and backup/retention are separate preconditions",
+    "NixOS execution and Rust interoperability are bound to a separate system test receipt",
+    "No downgrade converter for new Rust writes; peak resources at maximum input limits unmeasured"
+  ]
+}

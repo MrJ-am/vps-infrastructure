@@ -21,6 +21,7 @@
       visionCycleEvaluation = import ./operations/tests/vision-cycle-evaluation.nix { inherit nixpkgs; };
       visionClosureEvaluation = import ./operations/tests/vision-closure-evaluation.nix { inherit nixpkgs; };
       visionAdmissionEvaluation = import ./operations/tests/vision-admission-evaluation.nix { inherit nixpkgs; };
+      admissionAdoptionEvaluation = import ./operations/tests/admission-adoption-evaluation.nix { inherit nixpkgs; };
     in {
       nixosModules = {
         rust = import ./operations/nixos/mrjam-rust.nix;
@@ -37,6 +38,7 @@
         visionCycle = import ./operations/nixos/mrjam-vision-cycle.nix;
         visionClosure = import ./operations/nixos/mrjam-vision-closure.nix;
         visionAdmission = import ./operations/nixos/mrjam-vision-admission.nix;
+        admissionAdoption = import ./operations/nixos/mrjam-admission-adoption.nix;
         vpsPreparation = import ./operations/nixos/vps-preparation.nix;
       };
       # Deliberately no production nixosConfiguration or default deployable image.
@@ -52,6 +54,7 @@
       lib.qualification.visionCycle = visionCycleEvaluation;
       lib.qualification.visionClosure = visionClosureEvaluation;
       lib.qualification.visionAdmission = visionAdmissionEvaluation;
+      lib.qualification.admissionAdoption = admissionAdoptionEvaluation;
       lib.qualification.inventorySshConfig = toString inventoryFixture.config.environment.etc."ssh/sshd_config".source;
       lib.qualification.inventoryAssertions = builtins.all
         (entry: entry.assertion) inventoryFixture.config.assertions;
@@ -61,6 +64,7 @@
         inventory-sshd-config = inventoryFixture.config.environment.etc."ssh/sshd_config".source;
         openssh-qualified = pkgs.openssh;
         forgejo-preparation = pkgs.callPackage ./operations/forgejo/package.nix { };
+        admission-adoption = pkgs.callPackage ./operations/migrations/admission/package.nix { };
         received-tests-profile = pkgs.buildEnv {
           name = "mrjam-received-synthetic-test-profile";
           paths = [ pkgs.bash pkgs.coreutils pkgs.openssh pkgs.python3 ];
@@ -112,6 +116,12 @@
       '';
       vision-admission-module = pkgs.runCommand "mrjam-vision-admission-module-evaluation" {
         result = builtins.toJSON visionAdmissionEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      admission-adoption-module = pkgs.runCommand "mrjam-admission-adoption-module-evaluation" {
+        result = builtins.toJSON admissionAdoptionEvaluation;
       } ''
         mkdir -p "$out"
         printf '%s\n' "$result" > "$out/result.json"
