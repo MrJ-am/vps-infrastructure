@@ -31,8 +31,9 @@ def require(value, code):
         raise RuntimeError(code)
 
 
-def main(*, diagnostic=False, candidate_diagnostics=False):
+def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False, output_directory=None):
     require(not candidate_diagnostics or diagnostic, "DIAGNOSTIC_MODE_REQUIRED")
+    require(not http_diagnostic or candidate_diagnostics, "DIAGNOSTIC_MODE_REQUIRED")
     require(len(sys.argv) == 2 and os.getuid() != 0, "CLOUD_FIXTURE_REQUIRED")
     exported = Path(sys.argv[1]).absolute()
     require(re.fullmatch(r"/workspace/shared/mrjam-declarative-nix/worker-[A-Za-z0-9_-]+", str(exported)), "INVALID_FIXTURE_ROOT")
@@ -55,10 +56,17 @@ def main(*, diagnostic=False, candidate_diagnostics=False):
         paths.append(entry["path"])
     require(len(paths) == len(set(paths)) and configuration["validator_store"] in paths, "INVALID_EXPORT")
     source = worker.verify_input(exported / "input", record["proposal_sha256"], configuration["rules_revision"])
+    destination = exported.parent if output_directory is None else Path(output_directory)
+    if output_directory is not None:
+        require(destination == exported.parent / "qualifier-uid-59990" and os.getuid() == 59990,
+                "ISOLATED_UID_FIXTURE_REQUIRED")
+        metadata = os.lstat(destination)
+        require(stat.S_ISDIR(metadata.st_mode) and metadata.st_uid == 59990 and metadata.st_mode & 0o777 == 0o700,
+                "ISOLATED_UID_OUTPUT_REFUSED")
     if diagnostic:
-        output_root = Path(tempfile.mkdtemp(prefix=exported.name + "-diagnostic-", dir=exported.parent))
+        output_root = Path(tempfile.mkdtemp(prefix=exported.name + "-diagnostic-", dir=destination))
     else:
-        output_root = exported.parent / (exported.name + "-outputs")
+        output_root = destination / (exported.name + "-outputs")
         output_root.mkdir(mode=0o700) # Never replace an earlier receipt or artifact.
     if diagnostic:
         # Same explicit synthetic-only technique as the VM diagnostic variant.
@@ -87,6 +95,34 @@ def main(*, diagnostic=False, candidate_diagnostics=False):
             overlay.write_text(changed)
             overlay.chmod(0o400)
             overlays.extend(("--ro-bind", str(overlay), target))
+        if http_diagnostic:
+            binary = Path("/workspace/shared/mrjam-declarative-nix/runtime-export-20261031-02/mrjam-server")
+            require(hashlib.sha256(binary.read_bytes()).hexdigest() == "7d91514354a124ea2e1e72b3841d6d9870dd7e8db6e700f07a3e59612a20b30c", "DIAGNOSTIC_BINARY_CHANGED")
+            start, end = runner.index("    def rust(self):"), runner.index("    def http(self):")
+            replacement = '''    def rust(self):
+        self.server_source = self.source("platform")
+        self.server_job = self.job("rust")
+        self.server = self.private / "server"
+        shutil.copyfile("/work/diagnostic-server", self.server)
+        self.server.chmod(0o500)
+
+'''
+            runner = runner[:start] + replacement + runner[end:]
+            runner = runner.replace("stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL", "stdout=None, stderr=None")
+            runner = runner.replace("stdout=subprocess.DEVNULL,\n                                 stderr=subprocess.DEVNULL", "stdout=None,\n                                 stderr=None")
+            require(runner.count("    verifier.elm()") == 1, "DIAGNOSTIC_MAIN_CHANGED")
+            runner = runner.replace("    verifier.elm()", '    raise Refused("DIAGNOSTIC_HTTP_FINISHED_NO_QUALIFICATION")')
+            overlays.extend(("--ro-bind", str(binary), "/work/diagnostic-server"))
+        marker = '        require(code == 0, "CHECK_FAILED_" + name.upper().replace("-", "_"))'
+        require(runner.count(marker) == 1, "DIAGNOSTIC_CHECK_CHANGED")
+        measurement = ('        space = os.statvfs(WORK)\n'
+                       '        print(json.dumps({"diagnostic_storage": {"step": name, "returncode": code, '
+                       '"capacity_bytes": space.f_blocks * space.f_frsize, '
+                       '"available_bytes": space.f_bavail * space.f_frsize}}), file=sys.stderr)\n')
+        overlay = output_root / "diagnostic-runner.py"
+        overlay.write_text(runner.replace(marker, measurement + marker))
+        overlay.chmod(0o400)
+        overlays.extend(("--ro-bind", str(overlay), library + "/runner.py"))
     outputs = {name: os.memfd_create("mrjam-qualified-" + name, os.MFD_CLOEXEC | os.MFD_ALLOW_SEALING) for name, _ in worker.ARTIFACTS}
     started = time.monotonic()
     try:
@@ -109,7 +145,8 @@ def main(*, diagnostic=False, candidate_diagnostics=False):
         passed = worker.run_with_artifacts(command, outputs)
         if diagnostic:
             print(json.dumps({"decision": "diagnostic-only", "supervisor_returned_success": passed,
-                              "qualification_passed": False, "production_access": False}))
+                              "qualification_passed": False, "production_access": False,
+                              "http_only_reused_binary": http_diagnostic}))
             return 2
         require(passed, "NIX_VALIDATOR_REFUSED")
         artifacts = worker.seal_artifacts(outputs)
@@ -127,7 +164,8 @@ def main(*, diagnostic=False, candidate_diagnostics=False):
                    "validator_store": configuration["validator_store"], "export_sha256": hashlib.sha256(raw).hexdigest(),
                    "worker_sha256": hashlib.sha256((Path(__file__).parents[1] / "worker.py").read_bytes()).hexdigest(),
                    "host_bwrap_sha256": BWRAP_SHA256, "artifacts": artifacts, "duration_seconds": round(time.monotonic() - started, 3),
-                   "limitations": ["Host bwrap 0.12.0 substitutes only the launcher and exported mount origins", "No NixOS socket, cgroup or production authority is inferred", "Source and closure fixtures remain root-owned read-only for the entire run"]}
+                   "fixture_uid": os.getuid(), "isolated_uid_fixture": output_directory is not None,
+                   "limitations": [("Pinned Nix bwrap runs under a dedicated local container UID; only exported mount origins change" if output_directory is not None else "Host bwrap 0.12.0 substitutes only the launcher and exported mount origins"), "No NixOS socket, cgroup or production authority is inferred", "Source and closure fixtures remain root-owned read-only for the entire run"]}
         with (output_root / "qualification.json").open("x") as stream:
             json.dump(receipt, stream, sort_keys=True)
             stream.write("\n")
