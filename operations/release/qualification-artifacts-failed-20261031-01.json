@@ -1,0 +1,11 @@
+{
+  "authority": "unverified-local-test-result",
+  "cause": "Nix string interpolation emitted shell $$ and reused a PID-based directory instead of distinct output variables",
+  "correction": "Interpolate a literal dollar sign and the exact output name; retain copied bytes and all immutable checks",
+  "decision": "failed",
+  "derivation": "/nix/store/k18ddc546r4590adc5ynimg6v9m6nns4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+  "log_sha256": "ca587d16ffa5e5c568ccdac33e4440b62cb20f738d7a3d18dd9c86a09da47257",
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1
+}
