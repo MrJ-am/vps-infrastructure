@@ -1,0 +1,56 @@
+#+title: Archiviste Vision — artefact et unité déclarative proposés
+#+language: fr
+
+Le CLI de =MrJ-am/vision@9b6cbe74014428f0898f0e683dbfd74abf8fcacb= est construit
+par =../builds/vision-workers-20261031.nix=. Les 78 fichiers source et 178 paquets
+Cargo viennent d'un manifeste fermé ; les archives et leurs empreintes sont
+vérifiées avant construction hors réseau. La préparation ne déplace aucun gitlink
+de la plateforme. Les deux constructions ont le même ELF et le même NAR ; leurs
+dérivations diffèrent par le helper de préparation. Le reçu exact est
+[[file:../builds/qualification-vision-workers-20261031.json][qualification-vision-workers-20261031.json]].
+
+La sortie courante est
+=/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144=,
+NAR =sha256-qmAtrXsp7/wBuv8SPkXeJTxiMNmet2MHB65OUmA3mvs==.
+Le build passe 30 tests sans PostgreSQL. Les 33 tests natifs avec PostgreSQL et
+STARTTLS synthétique sont une qualification séparée, conservée dans Vision.
+
+=../nixos/mrjam-vision-archive.nix= exporte deux unités inactives par défaut :
+=mrjam-vision-archive-initialize.service= pour l'initialisation explicitement
+demandée et =mrjam-vision-archive.service= pour un traitement borné. Le timer
+reste désactivé. Le module ne crée aucun rôle, base ou schéma PostgreSQL.
+
+Le compte système dédié n'a aucun groupe supplémentaire. La file SQLite reste
+sous =/var/lib/mrjam-vision-archive=, propriétaire dédié, répertoire 0700 et
+umask 0077. Le CLI exige le schéma existant au démarrage ordinaire ; il ne le
+répare pas. Le fichier principal est limité à 32 768 pages de 4096 octets ;
+ce plafond ne remplace pas un quota global incluant WAL, temporaires et autres
+services. Ce quota global demeure à établir. Les contenus de messages acceptés
+ou annulés sont purgés après trente jours, leurs empreintes et clés restent
+disponibles ; les messages en attente ne sont pas silencieusement supprimés.
+
+Les paramètres SMTP et l'adresse de destination sont des références
+=LoadCredential=. Seul le destinataire age public est déclaré dans Nix. Aucune
+clé privée de restauration ne figure dans le module, son JSON ni ses arguments.
+Le rôle =vision_journal_archiviste= est relié au seul UID de l'unité par Unix
+peer. Le CLI refuse les droits SQL élargis, notamment la lecture directe des
+tables. Les plafonds sont 256 Mio, 20 % CPU, 32 tâches et 900 secondes par unité.
+
+Avant adoption réelle, il faut rapprocher l'identité existante, les chemins,
+permissions, expéditeur, destinataire public age et références de credentials ;
+qualifier la migration explicite de la file et du journal ; conserver les octets,
+clés de déduplication et messages déjà en attente. Aucune création automatique
+d'un compte de remplacement ou réattribution récursive de fichiers existants
+n'est autorisée par ce module. Les contenus ne remontent jamais dans Cloud.
+
+Le journal 003 ajoute les empreintes d'archives/rejeux et invalide les anciennes
+dates d'acquittement sans empreinte afin d'imposer un nouvel archivage. Ce changement
+n'est pas annulé par un retour de génération NixOS. La compatibilité d'un ancien
+worker avec ce schéma et la procédure de récupération restent à qualifier avant
+activation. Les migrations historiques 001/002 et 001–027 ne sont pas modifiées.
+
+Les seize assertions Nix du module et les vingt-et-une de l'accès PostgreSQL
+passent. Le test système réel est préparé séparément dans
+=mrjam-validation/operational-review/archive-systemd.nix= ; seul son reçu final
+peut établir sa réussite. Aucun build n'établit la livraison SMTP réelle,
+l'identité Kanidm/Keycloak, la réserve du VPS ni la restauration de ses données.

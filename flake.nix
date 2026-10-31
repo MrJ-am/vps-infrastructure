@@ -16,6 +16,7 @@
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
       forgejoRunnerEvaluation = import ./operations/forgejo/tests/runner-module-evaluation.nix { inherit nixpkgs; };
       validationWorkerEvaluation = import ./operations/forgejo/tests/worker-module-evaluation.nix { inherit nixpkgs; };
+      visionArchiveEvaluation = import ./operations/tests/vision-archive-evaluation.nix { inherit nixpkgs; };
     in {
       nixosModules = {
         rust = import ./operations/nixos/mrjam-rust.nix;
@@ -27,6 +28,7 @@
         validationWorker = import ./operations/nixos/mrjam-validation-worker.nix;
         validationCollector = import ./operations/nixos/mrjam-validation-collector.nix;
         postgresqlAccess = import ./operations/nixos/mrjam-postgresql-access.nix;
+        visionArchive = import ./operations/nixos/mrjam-vision-archive.nix;
         vpsPreparation = import ./operations/nixos/vps-preparation.nix;
       };
       # Deliberately no production nixosConfiguration or default deployable image.
@@ -37,6 +39,7 @@
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
       lib.qualification.forgejoRunner = forgejoRunnerEvaluation;
       lib.qualification.validationWorker = validationWorkerEvaluation;
+      lib.qualification.visionArchive = visionArchiveEvaluation;
       lib.qualification.inventorySshConfig = toString inventoryFixture.config.environment.etc."ssh/sshd_config".source;
       lib.qualification.inventoryAssertions = builtins.all
         (entry: entry.assertion) inventoryFixture.config.assertions;

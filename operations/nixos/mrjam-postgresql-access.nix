@@ -23,7 +23,11 @@ let
     inherit slot capability;
     inherit (connection) database role;
     user = "mrjam-rust-${slot}";
-  }) (lib.filterAttrs (_: value: value != null) cfg.slots.${slot})) [ "blue" "green" ];
+  }) (lib.filterAttrs (_: value: value != null) cfg.slots.${slot})) [ "blue" "green" ]
+  ++ lib.optional (cfg.workers.visionArchive != null) {
+    slot = null; capability = "visionArchive"; user = "mrjam-vision-archive";
+    inherit (cfg.workers.visionArchive) database role;
+  };
   safeName = name: !(lib.hasPrefix "pg_" name)
     && !(builtins.elem name [ "postgres" "template0" "template1" "root" "nobody" "all" "replication" ]);
   mapName = "mrjam_rust_slots";
@@ -39,11 +43,12 @@ let
 in {
   imports = [ ./mrjam-rust.nix ];
   options.services.mrjamPostgresqlAccess = {
-    enable = lib.mkEnableOption "explicit peer mappings for prebuilt Rust slots";
+    enable = lib.mkEnableOption "explicit peer mappings for prebuilt Rust slots and lifecycle workers";
     slots = {
       blue = lib.mkOption { type = slotType; default = { }; };
       green = lib.mkOption { type = slotType; default = { }; };
     };
+    workers.visionArchive = lib.mkOption { type = lib.types.nullOr connectionType; default = null; };
   };
   config = lib.mkIf cfg.enable {
     assertions = [
@@ -58,8 +63,9 @@ in {
       { assertion = lib.all (row: builtins.length (lib.unique (map (other: other.database)
             (builtins.filter (other: other.role == row.role) rows))) == 1) rows;
         message = "mrjamPostgresqlAccess requires each SQL role to belong to one declared database, preventing cross-slot database access."; }
-      { assertion = lib.all (row: config.services.mrjamRust.enable
-            && config.services.mrjamRust.slots.${row.slot}.enable) rows;
+      { assertion = lib.all (row: if row.slot == null
+          then (config.services.mrjamVisionArchive.enable or false)
+          else config.services.mrjamRust.enable && config.services.mrjamRust.slots.${row.slot}.enable) rows;
         message = "mrjamPostgresqlAccess requires each declared local Rust identity."; }
       { assertion = lib.hasPrefix hbaBlock config.services.postgresql.authentication;
         message = "mrjamPostgresqlAccess rules must precede existing catch-all rules; conflicting overrides are refused."; }
