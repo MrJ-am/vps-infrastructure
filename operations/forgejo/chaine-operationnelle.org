@@ -67,11 +67,13 @@ refus de quota de Bubblewrap ; le test antérieur attendait seulement =EPERM=.
 Le test exige toujours un échec et conserve désormais son errno réel. Les essais
 antérieurs restent disponibles. Le diagnostic séparé n'est jamais livré.
 
-Restent la qualification de l'unité complète du runner et de ses règles réseau,
-le vrai pipeline Rust/Elm dans le worker, l'adoption protégée des règles, les ACL
-effectives, l'observation de la génération du VPS, ses ressources disponibles,
-le SSO et la migration/restauration. Aucun succès de cette liste n'est inféré
-du voyant Actions. Les reçus locaux ne sont pas une autorité de déploiement.
+L'unité complète du runner et ses règles réseau ont maintenant un essai VM
+réussi ; le vrai pipeline Rust/Elm a un essai distinct dans le worker local.
+Restent leur intégration avec une identité de preuve authentifiée, l'adoption
+protégée des règles, les ACL effectives, l'observation de la génération du VPS,
+ses ressources disponibles, le SSO et la migration/restauration. Aucun succès
+de cette liste n'est inféré du voyant Actions. Les reçus locaux ne sont pas
+une autorité de déploiement.
 
 Le module du runner passe maintenant 25 assertions d'évaluation, consignées dans
 =qualification-runner-module-20261031-03.json=. Les essais système ont corrigé
@@ -97,7 +99,18 @@ de cette VM et ses artefacts sont explicitement inventés. Le vrai pipeline
 Rust/Elm a réussi séparément dans le worker local à UID distinct, sous ses
 limites ; les contrôles de ses sorties ont ensuite détecté un manifeste Vision
 manquant et deux types de fichiers statiques refusés par Rust. Ces corrections
-doivent repasser la qualification complète et les parcours navigateur.
+passent désormais le pipeline complet, les dix groupes navigateur, les 442
+ressources des sept frontends et les sept groupes du serveur sous systemd.
+Le reçu =mrjam-validation/workflow-runner/qualification-complete-pass-20261031-06.json=
+lie la plateforme =4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8=, les règles
+=eb71ffe5944943474c5ee483e66c270b5976ab90= et la proposition
+=8bf05fb9065a4c91e565ec0d37f24f2c556f315109823ccdef95c6354b423d6a=.
+Le passage de 1153,449 secondes est limité à 2 Gio, 256 tâches et un CPU.
+Le collecteur puis =../release/qualified-artifacts.nix= conservent les octets
+du serveur, de l'archive et du reçu, sans recompilation. Le contrôle des huit
+sorties Nix est consigné dans =../release/qualification-artifacts-20261031-03.json=.
+Les échecs précédents restent conservés. Ces deux essais complémentaires
+ne constituent pas encore un job Forgejo de compilation avec attestation protégée.
 
 * Reproduction locale
 

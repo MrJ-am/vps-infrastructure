@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "scope": "public-review-only",
+  "production_authorized": false,
+  "roots": {
+    "/nix/store/0qwbdzhp9bn81yzq0xmnsqmvc4w5z4jb-mrjam-qualified-artifacts-8bf05fb9065a-log": "sha256-zB2YJlh1RPG0zLRAqdBk8hKVtUAJt3ZuAQGoIUNo1Mw=",
+    "/nix/store/4q27zxfwwb8mwycxglmnwiqy8203wib6-mrjam-qualified-artifacts-8bf05fb9065a-audition": "sha256-nqYQI5NsuDBXOEON7T3NP7g7qDmfDkf89nASBoCWiOo=",
+    "/nix/store/6zrdrs6gpzng37iy858kk6j8kl603l09-mrjam-qualified-artifacts-8bf05fb9065a-logique": "sha256-ygIDE18yv298o3P8JdInG8yGq4d6V34JjXwqMFEMvxQ=",
+    "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a": "sha256-eS3zVoScOd+TLSkO09IVF/g9bVGW0HShCk1MC59kkoc=",
+    "/nix/store/9y499yg6jwbn3l93nkqhgv99z481bbj3-mrjam-qualified-artifacts-8bf05fb9065a-vision": "sha256-BE2eR2JQdrIC5uTSep4jmDwiaVybTgL7iNm05u0mwy4=",
+    "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
+    "/nix/store/mbfhdq690mris1dbfbw36j0czaiqf0wq-mrjam-qualified-artifacts-8bf05fb9065a-style": "sha256-5VTNi5DrvbDf+hEA9T67O1tJV5HswJXzJUrHCQVnO9A=",
+    "/nix/store/n8y0whg3w2kfv8lhly654rmdxkjwmyh0-mrjam-qualified-artifacts-8bf05fb9065a-logo": "sha256-wa+4R3BXS6BLp8d+h9Sw/8yZiHdz6vmesDPNfK1CLfE=",
+    "/nix/store/ssw764qad599i6v2kw8p0v0lgqszaj6q-mrjam-vision-journal-ordering-004-c7056949832a": "sha256-GmDK6bVkDMNq8UPRAIv4GIDSHLqX7apUNpCuvmQFjCI=",
+    "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144": "sha256-qmAtrXsp7/wBuv8SPkXeJTxiMNmet2MHB65OUmA3mvs=",
+    "/nix/store/yi2jsgkbp302l6hqp7cxpq0lnv05k7pd-mrjam-qualified-artifacts-8bf05fb9065a-mateval": "sha256-FNRjIXqN3bltfjGxuGa2Bq2T7RbNAS3CNzReE866vH8="
+  },
+  "evidence_sha256": {
+    "mrjam-validation/operational-review/runtime-browser-complete-pass-20261031-03.json": "21b5ea63830012c96ddd1701bd95ab65e06dd6255ae8098d50775a76ebab76f5",
+    "mrjam-validation/operational-review/static-complete-pass-20261031-02.json": "8c5dc12dcf2df0de19e71d74d5799a6edaffa5247a2145ab14603b35ca726f7c",
+    "mrjam-validation/workflow-runner/qualification-complete-pass-20261031-06.json": "6226fa48b4b935f2541082042dcb3613191a6534ff1c88982ac62d2af0e55236",
+    "vps-infrastructure/operations/builds/qualification-vision-replay-build-20261031.json": "8211d2eadf3ebf8f95c2f979a854005caa5df776826064703c335a4b93ba576e",
+    "vps-infrastructure/operations/builds/qualification-vision-replay-ordering-20261031.json": "dc9307e7ac440a377b70744382cf0c68be6cc083057d767235e4356f3adc0530",
+    "vps-infrastructure/operations/builds/qualification-vision-workers-20261031.json": "ba6a09224d26411b38c939c596d793708967f91805963405a415ab0749cc4a9d",
+    "vps-infrastructure/operations/release/qualification-artifacts-20261031-03.json": "4121f9915cdb84a6936924f89fe5679d27c8c020dff4fbd28687f90bf34c031b",
+    "vps-infrastructure/operations/runtime/qualification-runtime-complete-systemd-20261031.json": "2cbc39560bff81faabb1ed672dfaa913ca38027144eb7cfd72aaab2dd29b1d16",
+    "vps-infrastructure/operations/runtime/qualification-vision-archive-systemd-20261031.json": "adee67ebae10adcd06d6cb1977b4dc84a22bace9e251e0d09b4dd23067fc9371",
+    "vps-infrastructure/operations/runtime/qualification-vision-replay-systemd-20261031.json": "ae01817bc6a138b0e0f53de498730b291d0bb6e7f7d3b473443ad5c955edbf48"
+  },
+  "limits": {
+    "max_closure_paths": 64,
+    "max_total_nar_bytes": 268435456
+  },
+  "not_included": [
+    "VPS system generation and configuration",
+    "Secrets and persistent state",
+    "Archive encryption/SMTP unit dependencies outside the archive ELF closure",
+    "Protected signature and deployment approval"
+  ],
+  "notes": [
+    "The older archive ELF is selected for archive-systemd evidence; the newer package archive ELF is not substituted",
+    "Journal ordering 004 is a separate data artifact compatible with replay ELF 51e7bcd",
+    "A review export imports code in a fresh local store only and never executes an imported program"
+  ]
+}

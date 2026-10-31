@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-10-31T14:46:40.724881+00:00",
+  "scope": "NixOS replay, existing peer and archive evaluations",
+  "authority": "unverified-local-test-result",
+  "nixpkgs_commit": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "checks": {
+    "replay": {
+      "budgets": true,
+      "buildContextRefused": true,
+      "changedRoleRefused": true,
+      "credentialsAreReferences": true,
+      "disabledInert": true,
+      "fixedLoopbackNetwork": true,
+      "fixtureValid": true,
+      "noAdditionalPersistentState": true,
+      "noAutomaticStart": true,
+      "noDatabaseOrRoleCreation": true,
+      "noHostCapabilities": true,
+      "normalReplayOnly": true,
+      "oldHbaPreserved": true,
+      "otherIdentityRefused": true,
+      "privateUser": true,
+      "privilegedDatabaseRefused": true,
+      "sharedDatabaseRefused": true,
+      "stateVersionPreserved": true,
+      "threeExactPeerMappings": true,
+      "traversalRefused": true
+    },
+    "archive": {
+      "credentialsAreReferences": true,
+      "dedicatedUserNoExtraGroups": true,
+      "disabledInert": true,
+      "explicitInitialisation": true,
+      "fixtureValid": true,
+      "limits": true,
+      "mismatchedDatabaseRefused": true,
+      "noAutomaticStart": true,
+      "noDatabaseOrRoleCreation": true,
+      "noHostCapabilities": true,
+      "noPrivateKeyReference": true,
+      "oldHbaPreserved": true,
+      "peerOnlyFixedRole": true,
+      "privateDurableState": true,
+      "privilegedDatabaseRefused": true,
+      "stateVersionPreserved": true
+    },
+    "peer": {
+      "bothSlotsMapped": true,
+      "dataDirectoryPreserved": true,
+      "databasesPreserved": true,
+      "disabledCreatesNoRole": true,
+      "disabledKeepsPostgresqlOff": true,
+      "existingAuthenticationPreserved": true,
+      "existingIdentityPreserved": true,
+      "extraHbaRejected": true,
+      "extraIdentityRejected": true,
+      "fixtureValid": true,
+      "noSqlMigrationAdded": true,
+      "noTcpAccessAdded": true,
+      "packageMajorPreserved": true,
+      "privilegedRoleRejected": true,
+      "replacedHbaRejected": true,
+      "rolesPreserved": true,
+      "sharedHbaRuleOnlyOnce": true,
+      "sharedRoleAcrossDatabasesRejected": true,
+      "stateVersionPreserved": true,
+      "tcpListenerUnchanged": true,
+      "unavailableSlotRejected": true
+    }
+  },
+  "sources_sha256": {
+    "flake.nix": "8ab3f7d97309807d0b87ed25d13bb1e9942596e48fef2b952736f2a1472d391f",
+    "operations/nixos/mrjam-vision-replay.nix": "be1cc1a871fb469fba4323c0ac6ed88b10703210fcf2f68fece30fb33ce9cc32",
+    "operations/nixos/mrjam-postgresql-access.nix": "936878814b1ce4338e02a523eb404af890489c0edaced912825bc4f6bc7ad4ad",
+    "operations/tests/vision-replay-evaluation.nix": "f59c93923fb9f2f0ff7a4f6d63a90d90c999b812522591903603279d1246da53",
+    "operations/tests/vision-archive-evaluation.nix": "a7b724633dbf6bee5e6cb21368d7e24e3b7f91da2eee25f735f644b47845ae41",
+    "operations/tests/postgresql-access-evaluation.nix": "5ff2c945f4d0820b22ad28385aca5ad21483677885d8368f1d544812e8e624ee"
+  },
+  "logs_sha256": {
+    "vision-replay-module-20261031-01.json": "797e904e62b33460a4940be080824fcecb5583cb209781297817dc2ed200d877",
+    "replay-peer-regression-20261031.json": "b09b2a3c5e56ea6cd880607257f1f9649df5ca43b5eda398d3f011d2bc96c24f"
+  },
+  "limits": [
+    "Evaluation only; real service still requires its exact built ELF and NixOS VM execution",
+    "No production accounts, peer mappings, credentials or database mutation"
+  ],
+  "production_access": false,
+  "production_ready": false
+}

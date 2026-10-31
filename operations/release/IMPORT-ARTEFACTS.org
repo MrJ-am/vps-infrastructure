@@ -54,7 +54,27 @@ n'est ajouté par ce mécanisme local.
 Les dix tests de =tests/test_import_qualified.py= utilisent un faux en-tête ELF,
 des pages et des reçus entièrement inventés. Ils qualifient la copie et les
 refus, pas Rust/Elm, la provenance, la signature ou une application exécutable.
-Le conditionnement réel Nix reste à consigner après succès du pipeline complet.
+Le conditionnement réel est consigné dans
+=qualification-artifacts-20261031-03.json= : huit sorties Nix vérifiées
+récursivement, mêmes octets du serveur et de l'archive, 442 ressources publiques
+et sept manifestes. Le serveur a pour SHA-256
+=f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd= ;
+la sortie principale est
+=/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a=,
+NAR =sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II==.
+Le verrou a pour SHA-256
+=3bf6461c54472b0091e77e530706d6d30628167f60075c5bbc76eeafa5cbd670=.
+La référence runtime ELF est la glibc exacte recensée dans le reçu.
+
+Ce même serveur passe dix groupes navigateur et sept groupes sous systemd ;
+les sept sites passent le contrôle HTTP des 442 ressources, de leurs empreintes,
+types MIME et refus d'un fichier privé. Les reçus distincts sont sous
+=mrjam-validation/operational-review/= : =runtime-browser-complete-pass-20261031-03.json=,
+=static-complete-pass-20261031-02.json= et
+=runtime-systemd-complete-pass-20261031-01.json=. Leurs fixtures sont inventées.
+Le paquet n'est ni une génération complète du VPS ni un manifeste autorisé
+d'installation. [[file:REVUE-ARTEFACTS-20261031.org][L'export de revue distinct]] a été importé et revérifié dans un store vierge ;
+ses onze sorties comprennent aussi les workers retenus et la migration 004.
 
 La revue indépendante doit examiner ensemble le verrou choisi hors candidat,
 le reçu du collecteur, les sources du vérificateur, ces deux programmes, les

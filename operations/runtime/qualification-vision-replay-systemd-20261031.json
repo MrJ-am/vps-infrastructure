@@ -1,0 +1,62 @@
+{
+  "derivation": "/nix/store/7r13hk7l13r72ssrnvx1h3hk4n2iwrim-vm-test-run-mrjam-vision-replay-systemd-independent.drv",
+  "path_info": {
+    "/nix/store/vvfqpmzm0swdib27biqsxwycfjqnrfr1-vm-test-run-mrjam-vision-replay-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/7r13hk7l13r72ssrnvx1h3hk4n2iwrim-vm-test-run-mrjam-vision-replay-systemd-independent.drv",
+      "narHash": "sha256-mZGRJ3GItjXW88/5MiMp52NrzBxb7gLz6zD4tWqvq8w=",
+      "narSize": 1544,
+      "references": [
+        "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a"
+      ],
+      "registrationTime": 1793459254,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM and actual normal replay ELF",
+    "artifact": "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a",
+    "artifact_sha256": "5afcb57458af7c627012677e38961adc532ad62fa99048bdb746c8d069f4caae",
+    "ordering_migration_sha256": "7cc54d48e53c1a32712234bd17ed88f7da8da7807c4a8181f94908021710e0e8",
+    "ordering_migration_revision": "c7056949832a4b00939c7ec62617bf3d64d3d2ce",
+    "checks": [
+      "exact-artifact-and-no-automatic-start-or-migration",
+      "actual-peer-cross-database-and-content-journal-refusals",
+      "actual-loadcredential-acl-and-cgroup-limits",
+      "purge-refusal-keeps-journal-pending-and-preserves-other-unarchived-accounts",
+      "identity-refusal-never-acknowledges-partial-replay",
+      "mixed-case-punctuation-order-independent-of-database-locale",
+      "successful-retry-exact-archive-ack-and-idempotent-next-pass",
+      "broadened-database-rights-and-invalid-credential-refused"
+    ],
+    "production_access": false,
+    "limits": [
+      "Private identity and archive acceptance are explicitly invented",
+      "Normal replay only; restoration quiescence and backup recovery remain separate",
+      "No VPS generation, identity compatibility, secret or data adoption"
+    ]
+  },
+  "result_sha256": "27d9a641523dfd98d226c1513acf2bb75cfbd2fb4e70cf39d87f9bc575fcd56a",
+  "recursive_content_verification": true,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "decision": "passed",
+  "production_access": false,
+  "production_ready": false,
+  "current_derivation_matches": true,
+  "duration_seconds": 266.98,
+  "current_source_sha256": {
+    "mrjam-validation/operational-review/replay-systemd.nix": "c4c39e92d2173a68b837e3a212d7490f0d6c43a9d59921f3b1787aea3fda3211",
+    "mrjam-validation/operational-review/fixtures/replay-identity-synthetic.py": "9c47da4cd1ae4e14508d49c65052f76e3227d5eacf0136188a7c8b7192aaec8f",
+    "vps-infrastructure/operations/nixos/mrjam-vision-replay.nix": "be1cc1a871fb469fba4323c0ac6ed88b10703210fcf2f68fece30fb33ce9cc32",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "936878814b1ce4338e02a523eb404af890489c0edaced912825bc4f6bc7ad4ad"
+  },
+  "logs_sha256": {
+    "replay-systemd-20261031-02.log": "b3567becf0b8c10757c3724a15688b071e1d7e3f1b2742cbfd116a2ee3f73c6c",
+    "systemd-complete-verify-20261031-01.log": "5c8bc2a9fb8912935677a595614c0855671909a588f764f3d8e0c2f01b54a380",
+    "systemd-complete-derivations-20261031-01.log": "b54f4eb84e417b5fdc6bc6b5c278a3ea9017854e1113d4ab9314d6c26dce9caf"
+  }
+}

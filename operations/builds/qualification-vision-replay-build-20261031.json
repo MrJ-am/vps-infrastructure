@@ -1,0 +1,53 @@
+{
+  "decision": "verified-public-build",
+  "artifact": {
+    "artifact": "vision-workers",
+    "deployment_authorized": false,
+    "input_manifest_sha256": "ba585b4e5a4ded40c8f268732f8dbafc6a5581cb162ac833108eca48ced04651",
+    "payload_sha256": {
+      "bin/vision-archive": "7b3329b06da07658b036c18d7499841759b2d3bc6fd53c4a0d36ba674d98e092",
+      "bin/vision-replay": "5afcb57458af7c627012677e38961adc532ad62fa99048bdb746c8d069f4caae"
+    },
+    "schema_version": 1,
+    "source_commit": "51e7bcd63f4ab36ddadd14fa8cf531e336a076ce"
+  },
+  "path_info": {
+    "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a": {
+      "ca": null,
+      "deriver": "/nix/store/gvcghq25idypq2l5jad7fbdgwj78ai31-mrjam-vision-workers-0.1.0-51e7bcd63f4a.drv",
+      "narHash": "sha256-eS3zVoScOd+TLSkO09IVF/g9bVGW0HShCk1MC59kkoc=",
+      "narSize": 16525336,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793458262,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_authorized": false,
+  "schema_version": 1,
+  "scope": "Locked offline Nix build of archive and normal replay executables",
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 32,
+  "postgresql_tests": "35-test separate native suite includes synthetic replay; not executed by this Nix build",
+  "production_access": false,
+  "production_ready": false,
+  "limits": [
+    "Actual replay unit still awaiting VM qualification",
+    "This package archive ELF differs from the earlier systemd-qualified archive package; that old package and proof remain separate",
+    "No production IdP compatibility, credential adoption or restoration gate"
+  ],
+  "sources_sha256": {
+    "operations/builds/vision-workers-replay-20261031.nix": "70d15c2094e316b283f407334f41ad87a16d11a53a81da290f7eb3b3ce18f6ae",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3"
+  },
+  "logs_sha256": {
+    "vision-replay-build-20261031-01.log": "85f9c72267f5e9425ba4a1216e147d65c658be5689174a22247e4502ed4dfba3",
+    "vision-replay-build-20261031-01.json": "acc48e5eb60d79644774a3544038328e2bb36cd9bd3c19980d8b79e417131af1",
+    "vision-replay-build-verify-20261031.log": "791afb1d18030abc74d95c22d6a3ebc9ee621ee0096cf4ba64958b1097975918",
+    "vision-replay-inputs-20261031.json": "d42a3a2add5924988c6b223a1d67f1d236b30285ff1e4260c4cd9988fcaced62"
+  }
+}

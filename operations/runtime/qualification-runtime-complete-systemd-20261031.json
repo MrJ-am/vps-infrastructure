@@ -1,0 +1,58 @@
+{
+  "derivation": "/nix/store/w6692rzw1rybxxd9khycxi6zdxskb4jz-vm-test-run-mrjam-rust-credentials-peer-independent.drv",
+  "path_info": {
+    "/nix/store/29nfvyhhm51qqvf8pv1lg2z907lmar3r-vm-test-run-mrjam-rust-credentials-peer-independent": {
+      "ca": null,
+      "deriver": "/nix/store/w6692rzw1rybxxd9khycxi6zdxskb4jz-vm-test-run-mrjam-rust-credentials-peer-independent.drv",
+      "narHash": "sha256-xx43QFmdbqwMnzqdrxbYcBCnfvqx0+riT8QHs/cEH4Y=",
+      "narSize": 1160,
+      "references": [
+        "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a"
+      ],
+      "registrationTime": 1793459237,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented NixOS VM, actual Nix ELF and unchanged service modules",
+    "artifact": "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a",
+    "artifact_sha256": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd",
+    "checks": [
+      "no-implicit-start",
+      "actual-elf-loadcredential-scram",
+      "actual-elf-unix-peer-without-password",
+      "credential-acl-real-and-cross-uid-refused",
+      "undeclared-peer-and-superuser-refused",
+      "changed-invalid-credential-does-not-open-http",
+      "failed-blue-does-not-stop-green"
+    ],
+    "production_access": false,
+    "limits": [
+      "Identity is a fixed negative fixture, not SSO",
+      "No real data, VPS generation, reserve, full application or lifecycle qualification",
+      "Two slots are exercised in the VM only, not proposed as VPS capacity proof"
+    ]
+  },
+  "result_sha256": "0a47a93482c8f3dd754d5da5511cac4ea3782c4c0b0cdcf2a5a3468f5d715e26",
+  "recursive_content_verification": true,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "decision": "passed",
+  "production_access": false,
+  "production_ready": false,
+  "current_derivation_matches": true,
+  "duration_seconds": 209.17,
+  "current_source_sha256": {
+    "mrjam-validation/operational-review/runtime-systemd.nix": "eec4e554c776a75cedfe01f3d5fde3e527cd7d0c5a960161ec781d54fbe04f08",
+    "vps-infrastructure/operations/nixos/mrjam-rust.nix": "2c0048ce7553df575e84c9421ac5f6f983e3c57cde673a2ad7c3f356ff740bb1",
+    "vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "936878814b1ce4338e02a523eb404af890489c0edaced912825bc4f6bc7ad4ad"
+  },
+  "logs_sha256": {
+    "runtime-systemd-complete-20261031-01.log": "d10353b33b25f7c542e40081dc76d5daa9ecd736134da3f999fd2dc89a575f37",
+    "systemd-complete-verify-20261031-01.log": "5c8bc2a9fb8912935677a595614c0855671909a588f764f3d8e0c2f01b54a380",
+    "systemd-complete-derivations-20261031-01.log": "b54f4eb84e417b5fdc6bc6b5c278a3ea9017854e1113d4ab9314d6c26dce9caf"
+  }
+}

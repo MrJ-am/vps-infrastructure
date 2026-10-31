@@ -1,0 +1,59 @@
+#+title: Artefacts exacts à revoir — 31 octobre 2026
+#+language: fr
+
+Ce paquet de code public prépare la livraison. Il n'est pas une génération
+NixOS complète, un installateur ou une autorisation de bascule.
+[[file:qualification-review-export-20261031.json][Le reçu]] consigne onze sorties sélectionnées, quinze chemins dans leur fermeture,
+149053496 octets NAR, export et import dans un store local vierge. Les chemins,
+narHash, tailles, références transitives et contenus ont été comparés. Aucun
+programme importé n'a été exécuté ; aucun réglage de confiance Nix n'a été changé.
+
+* Octets remis et reproduction
+
+=/workspace/shared/mrjam-artefacts-revue-20261031.tar= : 48640000 octets,
+SHA-256 =5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff=.
+L'archive contient quatorze fichiers réguliers : export Nix compressé,
+sélection, manifeste, dix reçus et leur SHA256SUMS. Les quatorze entrées ont
+été relues depuis le tar et vérifiées sans extraction. Le flux décompressé
+correspond à celui effectivement importé ; l'archive ne transporte pas sa
+copie non compressée. Ces empreintes sont du contenu, pas une signature protégée.
+
+Les sources reproductibles sont =export_review.py=,
+=review-artifacts-20261031.json= et =package_review_20261031.py=.
+L'exporteur exige les dépôts montés en lecture seule et un dossier de sortie
+neuf. Le conditionneur daté refuse un paquet existant au lieu de l'écraser.
+Les sept contretests couvrent pins incorrects, champs répétés, périmètre de
+production, traversée, liens/FIFO, fermeture incomplète/altérée/trop grosse
+et maintien des refus avec Python optimisé.
+
+Depuis le dépôt d'infrastructure, dans Cloud uniquement :
+
+#+begin_src sh
+python3 -B -m unittest discover -s operations/release/tests -p test_export_review.py -v
+bash operations/tools/nix-local.sh --offline-container env MRJAM_SYNTHETIC_CONTAINER=1 /nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 /workspace/vps-infrastructure/operations/release/export_review.py --destination /workspace/shared/mrjam-declarative-nix/review-export-NOUVEAU-NOM
+#+end_src
+
+Choisir un nouveau suffixe en minuscules/chiffres/tirets ; la sortie initiale
+est =review-export-20261031-01=. La qualification de l'import en UID 0 local
+ne prouve pas que Spectre peut importer dans son daemon Nix non privilégié.
+Ne pas désactiver la vérification des signatures pour contourner un refus.
+
+* Périmètre à examiner indépendamment
+
+| Artefact | Révision source | Preuve à rapprocher |
+|----------+-----------------+--------------------|
+| Serveur et sept frontends | plateforme 4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8 ; règles eb71ffe5944943474c5ee483e66c270b5976ab90 | Pipeline complet, 8 sorties identiques, navigateur 10 groupes, HTTP 442 ressources, systemd 7 groupes |
+| Archiviste retenu | vision 9b6cbe74014428f0898f0e683dbfd74abf8fcacb | Ancien ELF ff09c358 et VM 8 groupes ; le nouvel ELF archiviste du paquet de rejeu n'est pas substitué |
+| Rejeu normal | vision 51e7bcd63f4ab36ddadd14fa8cf531e336a076ce | ELF 5afcb574, build 32 tests, 35 natifs distincts, VM 8 groupes |
+| Migration 004 | vision c7056949832a4b00939c7ec62617bf3d64d3d2ce | Donnée SQL séparée, 112 clés sans perte, double application sans changement du journal, compatible avec le même ELF de rejeu |
+
+Examiner les refus et les échecs conservés avec leurs correctifs, les références
+de dépendances et la distinction entre artefact applicatif et service complet.
+La fermeture de l'ELF archiviste ne contient pas les dépendances age/SMTP de son
+unité. Les modules NixOS et leur future génération doivent les fournir et les
+qualifier séparément. Les reçus de revue restent hors identité protégée.
+
+Pour la mise en service, [[file:../dossier-deploiement.org][le dossier général]] conserve les blocages : rapprochement
+de l'hôte et de son stateVersion, SSO, ACL/provenance, ressources, autres workers,
+sauvegarde/restauration, contrôleur borné, bascule et retour. Ce paquet ne lève
+aucun de ces blocages et n'est pas à installer sur le VPS en l'état.

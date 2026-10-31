@@ -1,0 +1,63 @@
+{
+  "derivation": "/nix/store/pdac5sx8dz2b5hq6nnw8aqlxzvjsl99f-mrjam-vision-journal-ordering-004-c7056949832a.drv",
+  "path_info": {
+    "/nix/store/ssw764qad599i6v2kw8p0v0lgqszaj6q-mrjam-vision-journal-ordering-004-c7056949832a": {
+      "ca": null,
+      "deriver": "/nix/store/pdac5sx8dz2b5hq6nnw8aqlxzvjsl99f-mrjam-vision-journal-ordering-004-c7056949832a.drv",
+      "narHash": "sha256-GmDK6bVkDMNq8UPRAIv4GIDSHLqX7apUNpCuvmQFjCI=",
+      "narSize": 3704,
+      "references": [],
+      "registrationTime": 1793459144,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "artifact": "vision-journal-ordering-004",
+    "compatible_replay_elf_sha256": "5afcb57458af7c627012677e38961adc532ad62fa99048bdb746c8d069f4caae",
+    "data_rewrite": false,
+    "deployment_authorized": false,
+    "execution_supported": false,
+    "payload_sha256": {
+      "share/mrjam/vision-journal/004_ordre_rejeu.sql": "7cc54d48e53c1a32712234bd17ed88f7da8da7807c4a8181f94908021710e0e8"
+    },
+    "required_prior_migrations": [
+      "001_effacements.sql",
+      "002_reprise.sql",
+      "003_archivage_rejeu.sql"
+    ],
+    "schema_version": 1,
+    "source_path": "journal/004_ordre_rejeu.sql",
+    "source_revision": "c7056949832a4b00939c7ec62617bf3d64d3d2ce"
+  },
+  "result_sha256": "6c3cf07c32838c4e2a36e4825185bd9d71efcec7af17688b60a434d97525fce0",
+  "recursive_content_verification": true,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "decision": "verified-data-artifact",
+  "production_access": false,
+  "production_ready": false,
+  "execution_performed": false,
+  "source_sha256": {
+    "operations/builds/vision-replay-ordering-20261031.nix": "8e882bc7f7a8224c7d856016103fbd31bcd9b31832dca90e47ccc08261ffe753"
+  },
+  "logs_sha256": {
+    "vision-replay-ordering-build-20261031.log": "7588ac58c22e899b6bb417f35a6d053039e84f12c25813cd32e12053c5909186",
+    "vision-replay-ordering-build-20261031.json": "ca9ef9392758ecda7258d69bfd67423b0093439d8e471a9cad8465734c4df082",
+    "systemd-complete-verify-20261031-01.log": "5c8bc2a9fb8912935677a595614c0855671909a588f764f3d8e0c2f01b54a380"
+  },
+  "checks": {
+    "exact_git_sql_bytes": "c7056949832a4b00939c7ec62617bf3d64d3d2ce:journal/004_ordre_rejeu.sql",
+    "payload_sha256_verified": true,
+    "references_empty": true,
+    "native_test_evidence": "vision/docs/qualification-rejeu-ordre-20261031.json",
+    "systemd_test_evidence": "operations/runtime/qualification-vision-replay-systemd-20261031.json"
+  },
+  "limits": [
+    "Data artifact only; no SQL runner or production migration",
+    "Prior deployed journal version remains unknown",
+    "Keep 004 when rolling back the compatible application; Nix generation rollback does not roll back data"
+  ]
+}
