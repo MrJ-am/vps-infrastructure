@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "scope": "public-review-only",
+  "production_authorized": false,
+  "roots": {
+    "/nix/store/9fh4qghrha92ir6zfqkc6vk2clxiqja8-mrjam-vision-admission-0.1.0-0d33bd70f3b1": "sha256-RWjDmYEwBXDeZ4P1/JR6JoOGZteJDJe0/gxh1u4xEJc=",
+    "/nix/store/phrp20jmipdai9z3c3k13fq8srcvh734-mrjam-vision-cycle-0.1.0-47286a8a808b": "sha256-aNncD6EjEDjaEo/qGLM/Fh7IlcA1Ar8YYUkuzubsH+4=",
+    "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1": "sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI=",
+    "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195": "sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk="
+  },
+  "evidence_sha256": {
+    "vps-infrastructure/operations/builds/qualification-vision-admission-legacy-build-20261031.json": "53998aa0bc5567297f36e87a26df57a5da45242b8b71c446821761b4bb9722b9",
+    "vps-infrastructure/operations/builds/qualification-vision-closure-build-20261031.json": "4695937742f92bd11f1a383a1a78e8eaa22ab9a648608e7e5b0fdc0e7f25ae23",
+    "vps-infrastructure/operations/builds/qualification-vision-cycle-build-20261031.json": "255ecf77e3fcafa241e0fcfb42798a053c827489abb3f40db7822f03ca3fd311",
+    "vps-infrastructure/operations/migrations/admission/qualification-build-20261031-02.json": "205611b624869ddf240272f44c67c038bdac189a1f8960dafa95d75feb3acdba",
+    "vps-infrastructure/operations/migrations/admission/qualification-resume-systemd-20261031.json": "e90274f566887f986f7c7d6293c42155193c641f939377e1a832deb4a2d8cf76",
+    "vps-infrastructure/operations/migrations/admission/qualification-systemd-20261031.json": "f10edc2a685ee03f5a256431df04f3b3314fa8b9c2afe8f89e4a0661bcbd24ee",
+    "vps-infrastructure/operations/migrations/admission/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "vps-infrastructure/operations/runtime/qualification-vision-admission-legacy-systemd-20261031.json": "17f4d74ce3756b68183d5ac2e5bb05c3aa97cbb11c8d487a629e2e16c9aa8493",
+    "vps-infrastructure/operations/runtime/qualification-vision-admission-module-20261031.json": "ee12f19eedb2bd61f6ebd07a37ca25a4059c095f833b57e39d7d1d4f17a0fca8",
+    "vps-infrastructure/operations/runtime/qualification-vision-closure-module-20261031.json": "c57f8b9c19e19c575d74234163be2ed182b6cc3ef9bcd4ec429c3f0e29527467",
+    "vps-infrastructure/operations/runtime/qualification-vision-closure-systemd-20261031.json": "bc8114a85cf878075adcf6fd0237a157ebec98fcb175bed126af3c8b2fff6893",
+    "vps-infrastructure/operations/runtime/qualification-vision-cycle-module-20261031.json": "155e81239cdba366920c928157f682ac12a4477d32b2be22d52c92c9f554cd32",
+    "vps-infrastructure/operations/runtime/qualification-vision-cycle-systemd-20261031.json": "7f2dfea4d1729d8c4f7023b5b7eb4d8a31cd713c59769d7fe29e40efc5e2ab39"
+  },
+  "limits": {
+    "max_closure_paths": 64,
+    "max_total_nar_bytes": 268435456
+  },
+  "not_included": [
+    "The separate platform/archive/replay/SQL004 review bundle; its original bytes and pins remain unchanged",
+    "VPS generation and full NixOS service dependencies",
+    "Secrets, snapshots, persistent state and backups",
+    "Protected signatures, adopted review authority and deployment controller"
+  ],
+  "notes": [
+    "Selected cycle 47286a8a, closure e067f8c7, admission 0d33bd70 and unchanged offline adopter sc6zj2w7; each has separate evidence",
+    "Admission 718a8188 is retired for open historical adoption after a reproduced crash-window defect; its original archive and receipts remain unchanged",
+    "The older closed-adoption proof remains evidence for the unchanged adopter; the new resume proof binds that same adopter to admission 0d33bd70 through actual open processing",
+    "No retired 6ae96aea or 718a8188 admission binary, or first workspace adopter package is selected",
+    "A local review import verifies identical content and never executes imported code; it does not qualify production trust or activation"
+  ]
+}
