@@ -23,8 +23,9 @@ inactif ; il n'est ni importé ni présenté comme un système activable. Il res
 à réconcilier la génération effectivement installée et un assemblage complet
 dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
 
-Les modules exportés par le nouveau =flake.nix= sont =rust=, =inventory= et
-=forgejo=. =nixos/vps-preparation.nix= compose ces propositions désactivées.
+Le =flake.nix= exporte les modules Rust, inventaire, Forgejo, passerelle,
+politique Forgejo, runner, worker, collecteur et accès PostgreSQL.
+=nixos/vps-preparation.nix= conserve une composition préparatoire désactivée.
 Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
 de test sont des fixtures, sans cible de production dans =nixosConfigurations=.
 
@@ -73,10 +74,14 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    La branche 26.05 a servi à sélectionner ce candidat cohérent avec la
    référence historique. Ce choix n'établit pas la version installée.
    Aucun module proposé n'augmente =stateVersion=.
-3. Les dérivations construisent Rust et les quatre entrées Elm Mateval,
-   l'accès d'inventaire et les configurations/assets Forgejo préparatoires.
-   Les autres frontends gardent leurs preuves historiques distinctes ; ils
-   ne sont pas annoncés construits par cette nouvelle recette.
+3. Les dérivations du premier lot construisent Rust et les quatre entrées Elm
+   Mateval. Le lot opérationnel ajoute les artefacts Vision, Log et Audition,
+   reconstruits hors réseau ; Mateval est réutilisé après preuve que ses
+   sources frontend sont inchangées. Voir =builds/qualification-frontends-operationnel-20261030.json=.
+   Le serveur opérationnel de =mrjam-plateforme@e920cd59e07b8371a564cd7041ee014748f50d7f=
+   a sa construction Nix distincte : =builds/qualification-runtime-20261031.json=.
+   Les workers de cycle de vie restent à terminer et à qualifier. Les sorties
+   réservées restent locales.
 4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
    dans le store, identité explicite, verrou de concurrence root, entrée/sortie
    bornées, nettoyage des descendants et filtre final. Aucun nouveau rapport
@@ -88,10 +93,20 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    n'est pas importé comme adoption neutre. Le runner n'est pas autorisé sur
    le VPS ; aucune capacité d'exécution isolée n'y est supposée.
 6. =release/= vérifie les octets des artefacts d'un manifeste fermé et génère
-   un plan de livraison/retour. Le diff de dépôts/règles Forgejo est local,
-   idempotent et à périmètre limité ; ses gabarits de workflows sont inactifs.
-   L'applicateur API et le contrôleur de déploiement restent à implémenter et
-   qualifier. Les preuves/approbations ne sont pas authentifiées par ce planneur.
+   un plan de livraison/retour. L'applicateur API Forgejo est maintenant écrit
+   et testé sur Forgejo 17.0.1 réel avec dépôts et identités inventés. Le runner
+   spécialisé refuse les workflows non admis avant exécution. Les unités du
+   contrôleur, du worker et du collecteur ont des qualifications système
+   distinctes ; celle du worker utilise un vérificateur inventé. Le pipeline
+   Rust/Elm complet et l'unité systemd du runner restent à qualifier.
+   Le contrôleur de mise en service reste en chantier. Un plan ou un statut
+   Actions ne constitue pas une preuve authentifiée de qualification.
+7. =runtime/= lie configuration publique, manifeste serveur et manifestes Elm,
+   avec références de credentials propres à chaque unité. =gateway/= qualifie
+   le proxy Nginx réel en conteneur synthétique (13 groupes HTTP/TLS et
+   24 assertions Nix). Le même serveur Nix passe sept groupes sous systemd réel,
+   dont LoadCredential/SCRAM, PostgreSQL Unix peer, refus d'un autre UID,
+   credential erroné et indépendance des slots. Ces essais restent synthétiques.
 
 Les paramètres de ressources sont des plafonds proposés, pas une réservation
 mesurée. Les emplacements et références des données/secrets sont décrits dans
@@ -100,6 +115,23 @@ hors Git, du store et de Cloud. Les références encore inconnues restent null ;
 on ne crée aucun mot de passe, jeton ou rôle de production pour les remplir.
 
 * Qualification et limites de l'atelier
+
+Les preuves du 31 octobre complètent le relevé initial sans le remplacer :
+
+| Objet exact | Résultat | Preuve et limite |
+|-------------+----------+-----------------|
+| Serveur Nix e920cd59 | 109 tests réussis, 1 ignoré ; 10 contretests CLI | =builds/qualification-runtime-20261031.json= ; tests PostgreSQL complets distincts |
+| Même ELF, navigateurs Rust/Elm | Deux passages de 10 groupes réussis | =mrjam-plateforme/docs/qualification-runtime-nix-20261031.json= ; une expiration antérieure reste inexpliquée, IdP inventé |
+| Même ELF, systemd et PostgreSQL | 7 groupes réussis | =mrjam-validation/operational-review/runtime-systemd-pass-20261031.json= ; aucune identité réelle |
+| Forgejo réel et runner spécialisé | 16 contrôles réussis | =forgejo/qualification-forgejo-reel-20261031.json= ; collecteur inventé, pas de preuve de compilation complète |
+| Worker/collecteur sous systemd | 7 groupes et 16 assertions Nix réussis | =forgejo/qualification-worker-systeme-20261031.json= ; artefacts inventés, inutilisables pour déployer |
+
+La préparation de l'observation V2 du VPS est qualifiée et publiée :
+=bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256
+=0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
+Le retour =adoption-v2.json= n'a pas encore été reçu. Le retour Spectre du
+31 octobre ne contient pas cette observation ; aucun alignement de la génération
+installée avec Git n'en est déduit.
 
 =qualification/declaratif-20261030.json= est le relevé des contrôles exécutés,
 des artefacts construits et des limites. Les reçus des sous-lots gardent leurs
@@ -134,7 +166,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Assemblage complet du VPS | Inconnu/bloquant | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | Métadonnées bornées ; export sélectif des seules sources de configuration par l'administrateur, si nécessaire, jamais matériel de Spectre ni fichiers de données |
 | Builds en cours Forgejo/Kanidm/runner | Inconnu/bloquant pour changement de service | Versions/builds des services ciblés et compatibilité de migration | Nouveau contrôle fermé approuvé, lié aux unités fixes ; pas de shell/chemin/processus arbitraire |
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
-| Serveur Rust exploitable | Établi incomplet/bloquant | Auth, pool, fichiers statiques, domaines et administration portés ; readiness réelle | Développement et tests Cloud sur données inventées ; CLI actuel readyz=503 |
+| Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
 | Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
 | Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
 | Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
