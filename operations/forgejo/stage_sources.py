@@ -226,6 +226,14 @@ def publish_locked(configuration, root, owner, store):
         stage.mkdir(mode=0o700)
         # One view per proposal permits the unchanged worker to verify it.
         for proposal, source, raw, value in prepared:
+            if proposal in existing:
+                # checked_published already verified every destination byte with
+                # the unchanged worker. Recheck the selected store bytes too,
+                # but do not copy/fsync and verify the same tree a third time.
+                for entry in value["files"]:
+                    content = source_bytes(source/entry["path"], entry["bytes"], owner)
+                    require(len(content) == entry["bytes"] and hashlib.sha256(content).hexdigest() == entry["sha256"], "FILE_HASH_MISMATCH")
+                continue
             view = stage/proposal
             view.mkdir(mode=0o700)
             target = view/proposal

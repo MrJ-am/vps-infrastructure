@@ -95,6 +95,18 @@ class Publication(unittest.TestCase):
         self.assertEqual((before.st_ino,before.st_mtime_ns,before.st_ctime_ns),(after.st_ino,after.st_mtime_ns,after.st_ctime_ns))
         self.assertEqual((result["created"],result["retired"]),(0,0))
 
+    def test_repeat_rechecks_selected_store_bytes_without_changing_publication(self):
+        e, root = self.bundle({"code": b"ORIGINAL"})
+        self.run_config(e)
+        target = self.root/e["sha256"]/"code"
+        before = target.stat()
+        (root/"code").chmod(0o644)
+        (root/"code").write_bytes(b"MODIFIED")
+        (root/"code").chmod(0o444)
+        self.reject("FILE_HASH_MISMATCH", e)
+        self.assertEqual(target.read_bytes(), b"ORIGINAL")
+        self.assertEqual((target.stat().st_ino, target.stat().st_mtime_ns), (before.st_ino, before.st_mtime_ns))
+
     def test_store_hardlinks_are_copied_to_single_links(self):
         e, root = self.bundle({"a":b"SAME", "b":b"SAME"})
         root.chmod(0o755)
