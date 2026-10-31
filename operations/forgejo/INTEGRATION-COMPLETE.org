@@ -3,8 +3,9 @@
 
 Cette suite prépare un essai bout en bout distinct des preuves antérieures :
 Forgejo 17.0.1, runner spécialisé 13.2.0, collecteur réel, worker réel et
-vérificateur Rust/Elm. Elle n'installe rien sur le VPS. Aucun résultat positif
-n'est encore déclaré dans cette première révision de la suite.
+vérificateur Rust/Elm. Elle n'installe rien sur le VPS.
+[[file:qualification-complete-chain-20261031.json][Le reçu exécuté]] établit 17 contrôles d'intégration réussis et les 74 étapes
+du vérificateur réussies, en 1318,196 secondes pour le lancement complet.
 
 =tests/prepare_complete_chain.py= crée un commit Git orphelin local à partir
 des octets de =mrjam-validation@eb71ffe5944943474c5ee483e66c270b5976ab90= et du
@@ -43,3 +44,57 @@ artefacts de code, leurs reçus et les résultats de contrôle sortent. Cela ne
 qualifie ni PostgreSQL/SSO de production, ni l'autorité protégée des règles,
 ni une attestation de livraison, ni les capacités du VPS. Les modules systemd
 ont leur qualification distincte ; cette fixture ne prétend pas les exécuter.
+
+* Résultat et reproduction
+
+Le workflow réel a transmis le digest au collecteur réel, puis au worker réel.
+Le worker a compilé et testé Rust/Elm une seule fois sous l’UID 59990, un CPU,
+2 Gio et 256 tâches. Le second déclenchement a renvoyé les trois artefacts
+conservés et revérifiés par le collecteur UID 59991. Les trois demandes
+interdites n’ont pas atteint le collecteur. Les protections de main,
+l’inscription du runner et leur idempotence sont vérifiées sur Forgejo réel.
+
+Le commit de règles local est =93bd67666a3b4be9657c333931fa25b2359e165b=.
+La préparation a été refaite dans un autre dossier : mêmes 208 fichiers et
+modes Git, même workflow supplémentaire, même commit et même manifeste.
+Les deux recettes donnent les mêmes dérivations. Le vérificateur est
+=/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate= ; sa fermeture,
+celle de Forgejo et celle du runner ont été revérifiées après l’exécution.
+
+Le serveur est strictement identique à celui déjà qualifié : SHA-256
+=f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd=.
+Les 442 fichiers frontend servis sont également identiques, avec les mêmes
+métadonnées de tar. Seuls les sept =artifact.json= changent le champ
+=input_manifest_sha256= pour lier cette nouvelle qualification.
+L’ancien tar garde =0723f0298455d59d94c63ce5099b82cbb56db8409733a1ad7cd8d0ec4f0d402a= ;
+le nouveau garde =174b6b9715f649c6714d9ba2eac9ce33e8f284c3cef682b15309ea03462f169d=.
+Aucune empreinte n’a été normalisée ou remplacée. Les sorties Nix runtime
+précédentes et leurs manifestes restent sélectionnés ; le nouveau transport
+n’est pas substitué silencieusement à ces sorties.
+
+Les premiers essais restent consignés : une évaluation Nix locale appelée
+avec --expr a été refusée en mode pur ; l’appel explicite --file conserve la
+même dérivation. Le premier essai intégré n’a fait aucune compilation :
+l’umask 0077 de Cloud avait rendu le répertoire IPC non traversable par le
+collecteur. Le lanceur fixe maintenant son mode 0755 prévu ; les sockets restent
+root:group 0660. Le diagnostic ne conserve que des codes fermés. Les anciens
+répertoires, réponses et empreintes restent inchangés.
+
+Les pilotes =tests/prepare_complete_chain.py=, =stage_complete_chain.py=,
+=launch_complete_chain.py=, =verify_complete_chain_store.py= et
+=record_complete_chain.py= décrivent les étapes reproductibles locales.
+La fixture et les sorties utilisent des noms neufs à chaque tentative.
+Les programmes worker/collecteur et leurs octets scellés correspondent aux
+sources versionnées ; aucune sortie inventée ne remplace le compilateur.
+
+* Frontières encore ouvertes
+
+Les sources ont été préparées et scellées avant le dispatch par les outils
+versionnés ; cet essai n’automatise pas leur transfert depuis une forge de
+production. Le staging de confiance, l’adoption protégée des règles et l’identité
+d’attestation restent à raccorder au backend autorisé. Les écarts de génération,
+UID/GID, stateVersion et builds du VPS restent inconnus. Le retour borné
+=adoption-v2.json= est toujours attendu. L’IdP/SSO réel, les références de secrets,
+la marge CI, les sauvegardes et la bascule/retour après migration de données
+ne sont pas qualifiés par cet essai. Il ne prouve pas une infrastructure de
+production opérationnelle.

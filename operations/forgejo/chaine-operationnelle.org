@@ -1,6 +1,15 @@
 #+title: Chaîne Forgejo préparée — état du 31 octobre 2026
 #+language: fr
 
+* Intégration complète exécutée le 31 octobre
+[[file:INTEGRATION-COMPLETE.org][Le scénario complet]] passe maintenant sur Forgejo, runner, collecteur,
+worker et compilateur réels : 17 contrôles d’intégration et 74 étapes du
+vérificateur, sans réseau externe. Serveur et 442 fichiers frontend servis
+identiques à la qualification précédente ; seuls les liens de provenance des
+sept manifestes frontend changent. Les qualifications antérieures ci-dessous
+restent conservées. Les listeners Cloud remplacent systemd dans ce scénario ;
+les modules, l’autorité de production et le staging de confiance restent distincts.
+
 * Sources exécutables et frontières
 
 =reconcile.py= applique les ressources déclarées des neuf dépôts avec plan,
@@ -110,7 +119,9 @@ Le collecteur puis =../release/qualified-artifacts.nix= conservent les octets
 du serveur, de l'archive et du reçu, sans recompilation. Le contrôle des huit
 sorties Nix est consigné dans =../release/qualification-artifacts-20261031-03.json=.
 Les échecs précédents restent conservés. Ces deux essais complémentaires
-ne constituent pas encore un job Forgejo de compilation avec attestation protégée.
+ne constituaient pas un job Forgejo de compilation. L’essai complet décrit en
+tête de ce document ajoute maintenant cette preuve locale ; l’attestation
+protégée de production reste distincte et non établie.
 
 * Reproduction locale
 
