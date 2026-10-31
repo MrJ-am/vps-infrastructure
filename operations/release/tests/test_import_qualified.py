@@ -79,6 +79,7 @@ class ImportTests(unittest.TestCase):
         for name in ("frontend.tar", "verification.json"):
             self.assertEqual((self.root / "output/share/mrjam" / name).read_bytes(), (self.inputs / name).read_bytes())
         self.assertEqual((self.root / "output/share/mrjam/import.lock.json").read_bytes(), self.lock_path.read_bytes())
+        self.assertEqual((self.root / "output/artifact.json").read_bytes(), (self.inputs / "verification.json").read_bytes())
 
     def test_equal_length_payload_substitution_refused(self):
         p = self.inputs / "server"

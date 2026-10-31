@@ -28,6 +28,14 @@ strip, patchelf ou minificateur n'est exécuté. Le paquet contient :
 - =share/mrjam/frontend.tar=, l'archive qualifiée originale ;
 - =share/mrjam/verification.json= et =import.lock.json=, les liaisons de contenu.
 
+La sortie principale contient aussi =artifact.json=, copie exacte du reçu de
+vérification, compatible avec le lieur de configuration runtime existant. Les
+sept sorties Nix =audition=, =log=, =logique=, =mateval=, =style=, =logo= et =vision=
+contiennent chacune le frontend correspondant et son manifeste produit par le
+vérificateur. =logo= correspond au site =style-logo=. Le lieur runtime reçoit
+ainsi des racines immuables du store, sans ouvrir son contrat à des chemins
+arbitraires. La copie ne réécrit aucun manifeste ni ressource.
+
 Les arguments =materialized=, =artifactLock= et =expectedLockSha256= doivent
 désigner une sortie réellement réussie et immuable du collecteur. L'argument
 =runtimeReferences= doit contenir les dépendances Nix exactes du binaire ;

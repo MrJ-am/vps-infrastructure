@@ -170,6 +170,9 @@ def install(source, lock_path, expected_lock, destination):
         require(sha(read_file(target, max(len(data), 1))) == sha(data), "OUTPUT_HASH_MISMATCH")
 
     put("bin/mrjam-server", files["server"], 0o555)
+    # The existing runtime configuration binder pins artifact.json. Use the
+    # unchanged verifier receipt, which already binds this exact server hash.
+    put("artifact.json", files["verification.json"], 0o444)
     for name in ("frontend.tar", "verification.json"):
         put("share/mrjam/" + name, files[name], 0o444)
     put("share/mrjam/import.lock.json", lock_raw, 0o444)
