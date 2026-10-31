@@ -1,0 +1,35 @@
+{
+  "artifact_bytes_changed": false,
+  "authority": "unverified-local-test-result",
+  "cause": "Elapsed seconds are fractional metadata; the initial generic integer-only parser refused the completed qualification receipt",
+  "correction": "Only duration_seconds accepts a bounded decimal; artifact locks, sizes, UIDs and verifier receipts remain integer-only",
+  "export": {
+    "decision": "exported-public-qualified-code",
+    "directory": "worker-complete-20261031-09-qualified-public",
+    "lock_sha256": "e0b8630f5fa610225e3bb1b45ccceb0b9384e5e1f75beeca4ae2c0a1d28ced67",
+    "production_authorized": false
+  },
+  "preceding_refusals": [
+    {
+      "log_sha256": "88cda63fb9207cccfe34dc4926f6d22ecedf0b1d8f4f9c54bbd0a03fcd4caf18",
+      "reported_code": null
+    },
+    {
+      "log_sha256": "d0d5ec3eb3d8872d8fe32c3c580d03b1a746ffca11793c9e125f0f503c72c194",
+      "reported_code": "JSON_NUMBER_REFUSED"
+    }
+  ],
+  "production_access": false,
+  "production_authorized": false,
+  "qualification_log_sha256": "be59ee4cacc51b63c65ec6ee23d780de6e13bea6f29587ec69f7f1f0be014761",
+  "schema_version": 1,
+  "scope": "Export of a completed dedicated UID Cloud run; no production collector capability",
+  "sources_sha256": {
+    "operations/forgejo/tests/collect_local_outputs.py": "d8228407d30587eda872e8308b088f7f0f1cbd1328e9755a8b3ebb00a30272a7",
+    "operations/forgejo/tests/test_collect_local_outputs.py": "36d82f25c0ce34f716ae1d36192bc173952a207c3ee6d4af95d442c079806d36"
+  },
+  "tests": {
+    "log_sha256": "e2a1d6c373fcd8c3695836fd9d3904ab1e0fe2ee6002be1ff9ccb4eed2bbbaa5",
+    "metadata_refusal_tests_passed": 5
+  }
+}

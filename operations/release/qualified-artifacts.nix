@@ -33,9 +33,9 @@ runCommandNoCC "mrjam-qualified-artifacts-${builtins.substring 0 12 lock.proposa
     # Runtime configuration accepts immutable store roots, not arbitrary paths.
     # Each frontend therefore has its own output containing its exact manifest.
     test -f "$out/share/mrjam/frontends/${site}/artifact.json"
-    mkdir -p "$${output}"
-    cp -R "$out/share/mrjam/frontends/${site}/." "$${output}/"
-    cmp "$out/share/mrjam/frontends/${site}/artifact.json" "$${output}/artifact.json"
+    mkdir -p "${"$" + output}"
+    cp -R "$out/share/mrjam/frontends/${site}/." "${"$" + output}/"
+    cmp "$out/share/mrjam/frontends/${site}/artifact.json" "${"$" + output}/artifact.json"
   '') frontendOutputs)}
   # runCommandNoCC has no strip, patchelf, minifier or compiler phase.
 ''

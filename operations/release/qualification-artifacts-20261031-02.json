@@ -1,0 +1,133 @@
+{
+  "all_frontend_members_identical": true,
+  "artifact_lock_sha256": "e0b8630f5fa610225e3bb1b45ccceb0b9384e5e1f75beeca4ae2c0a1d28ced67",
+  "authority": "unverified-local-test-result",
+  "derivation": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+  "frontend_manifest_sha256": {
+    "audition": "202b439d1c488c1a6e26fda5ed618549859d63411b3dfad5dd5e550651a0cc2a",
+    "log": "03c5a6e42820f6e1ea29c4d5df699284e45d0ffc458673aa234c306ceb87a67c",
+    "logique": "eea3079eb1eacb3acaf391a3bd81278f01ed5ed3b9e18ac4c02ac57688fc7832",
+    "mateval": "e52d58b2dd71ac93bfbf9c10e976ca2a0973eb97804068d7edf47bf5b6c5e61f",
+    "style": "fd3a84471d2cfc848de0a35fd1d6b3d44ead0aee9b665e1e9f6cb1784df8fdd5",
+    "style-logo": "08ae9f1c3e9f661b0f9fb37bd6bdb921be7ac0d52ab8242a68630cac014cbeba",
+    "vision": "01bf5af736c03383d069e58902b24d90f7de0eb6b55e3203569bf01af90609d2"
+  },
+  "frontend_tar_sha256": "757a1f34d501d2db3a7001ad42642295c0e9d00cdf7573a52c68b1575a7ca9e5",
+  "limits": [
+    "Packaging preserves qualified bytes but does not qualify runtime availability",
+    "Browser resource completeness fails because Vision public manifest is missing",
+    "Static startup refuses Logique LICENSE and style-logo .nojekyll; corrected outputs require new qualification",
+    "No protected policy adoption or production authority"
+  ],
+  "log_sha256": "0440cc07571c949e62218e82a7deeb002a7b19e0ff3ce78d30b88a0ae82e1f8c",
+  "nix_recursive_content_verified": true,
+  "path_info": {
+    "/nix/store/4mk2di2158qlh3f0yzaakc7jmz8jnn91-mrjam-qualified-artifacts-42cf8b9a690d-log": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-fEvaCAJaDP95pL2BMAIypnFtLo/garGpRKTauD0TdUo=",
+      "narSize": 552760,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/53ifx4749wl967sa9wz799kc8vqd3969-mrjam-qualified-artifacts-42cf8b9a690d-logique": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-bQkaL2YOD3vswNF+KfxbTTcINkZHL1lFocHT+XftMuk=",
+      "narSize": 4053448,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/58755hlk36mi348w9ihsqli8w2fx9nwl-mrjam-qualified-artifacts-42cf8b9a690d-mateval": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-hATAga8/PVgOFjX6MNWlkWrRmcEEJBOYhaCIUF4g3mw=",
+      "narSize": 3831400,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/aaar30ixmrazi5xlvkxbfymkh0zxh4sm-mrjam-qualified-artifacts-42cf8b9a690d-audition": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-1bUsBwwDsZmh8qq+Yu3z453D1UGSKENatWcTkjEiISU=",
+      "narSize": 3727672,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/b4js3b7ny01y03s86iivy2yg7pz4y8b6-mrjam-qualified-artifacts-42cf8b9a690d-logo": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-fRA1ejNv87CXSejcl1zTFR/SdgD6VFi4b8y+b3tossw=",
+      "narSize": 6060888,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/bgxgm8g63dhpm6f2jk27awhq3vfdafpn-mrjam-qualified-artifacts-42cf8b9a690d-style": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-wEEmPjyGpv1M9Tl7ib5IhKtl8Ov7nDEweE8ly37VN6Q=",
+      "narSize": 4257992,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/sd8a7bdwl1jrpbavpzhjzps9ncd30g31-mrjam-qualified-artifacts-42cf8b9a690d": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-NSz+JaPuR/VxPBW87sKrl3gKtgIZXpcwOUu4qv56tAA=",
+      "narSize": 60845288,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/xfsf3c35fi7w4ly3sm1rivvkzr5v4cca-mrjam-qualified-artifacts-42cf8b9a690d-vision": {
+      "ca": null,
+      "deriver": "/nix/store/2hgd78bribywcg9ylnd29pqk1a4cd4f4-mrjam-qualified-artifacts-42cf8b9a690d.drv",
+      "narHash": "sha256-O2I1yks/U+3/SuLN0hLWbuvJO1TMlJhcfQt0ah2LuBw=",
+      "narSize": 1119624,
+      "references": [],
+      "registrationTime": 1793456389,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "server_sha256": "99c51cdbf07ec42bd40916f1f786886efc5b1a5e2e3b168a560721cf3e4f7585",
+  "sources_sha256": {
+    "/workspace/vps-infrastructure/operations/release/import_qualified.py": "3f049224a87b3b7aea87fc82d6f99de5c628205d6b46fb5dbcf0ed9c80b5be11",
+    "/workspace/vps-infrastructure/operations/release/qualified-artifacts.nix": "54d0dc7aacea97358606106cdc92b1e67f27518f235f14a1db502acd023017cb"
+  },
+  "verification_sha256": "aa6cfca107988514cdb4b342758fd4dc820c95bcfaf97ef05a987997a8ba4997"
+}

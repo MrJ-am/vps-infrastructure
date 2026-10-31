@@ -5,6 +5,7 @@ Run in the offline Cloud Nix fixture. No production collector or filesystem is
 accepted; diagnostics and incomplete runs can never supply this export.
 """
 import hashlib
+from decimal import Decimal
 import importlib.util
 import json
 import os
@@ -18,6 +19,33 @@ SCRIPT = Path(__file__).resolve().parents[2] / 'release/import_qualified.py'
 spec = importlib.util.spec_from_file_location('qualified_import', SCRIPT)
 pack = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(pack)
+
+
+def qualification_json(raw):
+    # The completed local receipt records fractional elapsed seconds. That is
+    # metadata, never an artifact size, UID, revision or authority decision.
+    # Keep integer-only parsing for the export, artifact lock and verifier.
+    def pairs(items):
+        value = {}
+        for key, item in items:
+            pack.require(key not in value, 'DUPLICATE_FIELD')
+            value[key] = item
+        return value
+
+    def invalid(_):
+        raise pack.Refused('QUALIFICATION_NUMBER_REFUSED')
+
+    value = json.loads(raw, object_pairs_hook=pairs, parse_float=Decimal, parse_constant=invalid)
+    pack.require(type(value) is dict and 'duration_seconds' in value, 'QUALIFICATION_DURATION_REQUIRED')
+    duration = value.pop('duration_seconds')
+    pack.require(type(duration) in (int, Decimal) and 0 < duration <= 1860, 'QUALIFICATION_DURATION_REFUSED')
+    # Decimal elsewhere cannot be serialized: fractional security fields fail.
+    try:
+        result = pack.parse(json.dumps(value, allow_nan=False).encode())
+    except (TypeError, ValueError):
+        raise pack.Refused('QUALIFICATION_NUMBER_REFUSED') from None
+    result['duration_seconds'] = duration
+    return result
 
 
 def main():
@@ -35,7 +63,7 @@ def main():
     raw = pack.read_file(exported / 'export.json', 1048576)
     export = pack.parse(raw)
     qualification_raw = pack.read_file(output / 'qualification.json', 65536)
-    qualification = pack.parse(qualification_raw)
+    qualification = qualification_json(qualification_raw)
     pack.require(qualification['decision'] == 'passed' and qualification['fixture_uid'] == 59990
                  and qualification['isolated_uid_fixture'] is True
                  and qualification['export_sha256'] == pack.sha(raw)
@@ -78,6 +106,8 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except Exception:
-        print('{"decision":"refused","production_authorized":false}')
+    except Exception as error:
+        # Public local fixtures only; never echo a path, response or traceback.
+        code = str(error) if type(error) is pack.Refused and re.fullmatch(r'[A-Z_]{1,80}', str(error)) else 'LOCAL_EXPORT_FAILED'
+        print(json.dumps({'decision': 'refused', 'code': code, 'production_authorized': False}, sort_keys=True))
         raise SystemExit(2) from None
