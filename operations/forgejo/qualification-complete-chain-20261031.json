@@ -1,0 +1,795 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "production_access": false,
+  "production_ready": false,
+  "execution": {
+    "exit_code": 0,
+    "wall_seconds": 1318.196,
+    "fixture": "/workspace/shared/mrjam-declarative-nix/complete-chain-fixture-20261031-02",
+    "production_access": false,
+    "production_ready": false
+  },
+  "result": {
+    "checks": {
+      "actions_enabled_only_after_pinned_main_protection": true,
+      "actual_workflow_compiles_rust_elm_and_collects_identified_artifacts": true,
+      "bootstrap_repeat_no_mutation": true,
+      "changed_candidate_step_never_executes": true,
+      "direct_write_to_main_refused_even_for_admin": true,
+      "existing_public_visibility_preserved": true,
+      "forgejo_running_as_unprivileged_user": true,
+      "nine_main_protections_applied_and_read_back": true,
+      "nine_private_repositories_created_actions_disabled": true,
+      "pinned_runner_authenticates_with_credential_reference": true,
+      "pinned_swagger_mapping": true,
+      "protected_main_deletion_refused": true,
+      "protection_repeat_no_mutation": true,
+      "repeat_uses_verified_cache_without_second_worker_run": true,
+      "repository_scoped_registration_and_idempotence": true,
+      "same_workflow_same_label_other_branch_refused": true,
+      "shell_input_is_data_and_refused_before_collector": true
+    },
+    "controller_sha256": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+    "decision": "passed",
+    "forgejo_store_path": "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+    "forgejo_version": "17.0.1",
+    "integration_evidence": {
+      "observed_worker_limits": {
+        "network_interfaces": [
+          "lo"
+        ],
+        "production_access": false,
+        "worker_cgroup": {
+          "cpu.max": "100000 100000",
+          "memory.max": "2147483648",
+          "pids.max": "256"
+        },
+        "worker_uid": 59990
+      },
+      "receipt": {
+        "artifacts": [
+          {
+            "bytes": 13376592,
+            "name": "server",
+            "sha256": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd"
+          },
+          {
+            "bytes": 23859200,
+            "name": "frontend.tar",
+            "sha256": "174b6b9715f649c6714d9ba2eac9ce33e8f284c3cef682b15309ea03462f169d"
+          },
+          {
+            "bytes": 6591,
+            "name": "verification.json",
+            "sha256": "7ce50a7e0f4adfb8af3f11af2fbc57fa37140060e146528517f58ca9b3d84587"
+          }
+        ],
+        "authority": "local-controller-receipt",
+        "decision": "passed",
+        "proposal_sha256": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+        "rules_revision": "93bd67666a3b4be9657c333931fa25b2359e165b",
+        "schema_version": 1
+      },
+      "verification": {
+        "artifacts": [
+          {
+            "bytes": 13376592,
+            "name": "server",
+            "sha256": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd"
+          },
+          {
+            "bytes": 23859200,
+            "name": "frontend.tar",
+            "sha256": "174b6b9715f649c6714d9ba2eac9ce33e8f284c3cef682b15309ea03462f169d"
+          }
+        ],
+        "authority": "local-verifier-content-receipt",
+        "decision": "passed",
+        "independent_adoption_established": false,
+        "not_established": [
+          "production ACL and signing identity",
+          "real SSO and production database state",
+          "backup restoration",
+          "etp-vise: source inventory and qualification remain outside the migrated VPS scope"
+        ],
+        "policy_sha256": "5a44dde8bd4c6e36eddb41f11250d3b8c0b07093ce46d646880cc2652f96cf91",
+        "production_authorized": false,
+        "proposal_sha256": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+        "rules_revision": "93bd67666a3b4be9657c333931fa25b2359e165b",
+        "schema_version": 1,
+        "sources": [
+          {
+            "id": "logique",
+            "repository": "MrJ-am/apprendre-a-demontrer",
+            "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+            "tree_sha": "2c1f7bf92d01e326eaf4a17fb0d37a98609b548f"
+          },
+          {
+            "id": "style",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+            "tree_sha": "c0800e787d855dd4e720506a849711b24e55ed15"
+          },
+          {
+            "id": "style-log",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+            "tree_sha": "a6a2dfc33b3f7717c2f47c6ecea0c4384f6a8e76"
+          },
+          {
+            "id": "style-mateval",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+            "tree_sha": "1d7e3d02b207d7ef37fd1b8a1d0935c43766d618"
+          },
+          {
+            "id": "style-logique",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
+            "tree_sha": "4c7142c0ad646ae01747665a8bfb8eb369e35706"
+          },
+          {
+            "id": "vision",
+            "repository": "MrJ-am/vision",
+            "revision": "99eace9df76777c89bbd992952738b3f57608801",
+            "tree_sha": "648afcd54cc477f38c399ba64c28ece2b605b0a0"
+          },
+          {
+            "id": "mateval",
+            "repository": "MrJ-am/matheval",
+            "revision": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+            "tree_sha": "7ab94c27479d061a1f29214913fe5e97a59f4b26"
+          },
+          {
+            "id": "infrastructure",
+            "repository": "MrJ-am/vps-infrastructure",
+            "revision": "3836559dd79c053d2f6a4c7aaa2b4c1add6575b6",
+            "tree_sha": "d63baf2c0e2b6921e35f2c0b9e329483a7203d8d"
+          },
+          {
+            "id": "platform",
+            "repository": "MrJ-am/mrjam-plateforme",
+            "revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+            "tree_sha": "66bb111ad4af6d7ddf659be0bd8da0cda03cc8f9"
+          }
+        ],
+        "steps": [
+          {
+            "name": "complete-trees-submodules-and-locked-tools",
+            "status": "passed"
+          },
+          {
+            "name": "rust-format",
+            "status": "passed"
+          },
+          {
+            "name": "rust-clippy-all-features",
+            "status": "passed"
+          },
+          {
+            "name": "rust-http-postgres-rls-tls-tests",
+            "status": "passed"
+          },
+          {
+            "name": "rust-release",
+            "status": "passed"
+          },
+          {
+            "name": "independent-http-release-bytes",
+            "status": "passed"
+          },
+          {
+            "name": "elm-rules-208",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-audition",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-audition",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-audition",
+            "status": "passed"
+          },
+          {
+            "name": "elm-tests-audition",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-audition-elm",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-audition",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-audition",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-log",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-log",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-log",
+            "status": "passed"
+          },
+          {
+            "name": "elm-tests-log",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-log-elm",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-log",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-log",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-logique",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-logique",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-logique",
+            "status": "passed"
+          },
+          {
+            "name": "logique-curriculum",
+            "status": "passed"
+          },
+          {
+            "name": "logique-corrector",
+            "status": "passed"
+          },
+          {
+            "name": "logique-proof-workshop",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-logique-app",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-logique",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-logique",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "elm-tests-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-mateval-administration",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-mateval-demo-card",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-mateval-main",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-mateval-survey",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-mateval",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-style",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-style",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-style",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Bibliotheque",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Blocs",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Contextes",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Galerie",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Geometrie",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Lecture",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Medias",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-Scientifique",
+            "status": "passed"
+          },
+          {
+            "name": "elm-bundle-style",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-style",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-style",
+            "status": "passed"
+          },
+          {
+            "base_sha256": "4579e7b79073670a805c54012be78aa847b696a50f50bb5d5674bcfa4b760f8c",
+            "corrected_sha256": "3612d675a47423c81b79dcf33d350a79f50a23f7b55daea72889ca7f33138fd3",
+            "name": "explicit-manifest-overlay-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-tests-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-logo-exporter",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-logo-main",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-logo-palette",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-style-logo-philosophie",
+            "status": "passed"
+          },
+          {
+            "name": "elm-bundle-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "logo-public-vector-exports",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-style-logo",
+            "status": "passed"
+          },
+          {
+            "name": "elm-compile-vision",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-prepare-vision",
+            "status": "passed"
+          },
+          {
+            "name": "elm-review-vision",
+            "status": "passed"
+          },
+          {
+            "name": "elm-tests-vision",
+            "status": "passed"
+          },
+          {
+            "name": "elm-entrypoint-vision-app",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-resource-closure-vision",
+            "status": "passed"
+          },
+          {
+            "name": "frontend-runtime-manifest-vision",
+            "status": "passed"
+          }
+        ]
+      },
+      "worker_status": {
+        "calls": 1,
+        "error": false,
+        "exit_codes": [
+          0
+        ],
+        "uid": 59990
+      }
+    },
+    "limitations": [
+      "SQLite fixture only; production PostgreSQL and installed Forgejo build not observed",
+      "No real user/repository/identity/secret accessed",
+      "No SSO, production ACL or NixOS runner-service qualification",
+      "Actual collector and compiler run in separate offline containers; local socket listeners replace NixOS activation",
+      "The rule commit is a public-code local fixture, not a protected production authority",
+      "API readback is not a distributed compare-and-swap"
+    ],
+    "production_access": false,
+    "production_ready": false,
+    "registrar_sha256": "78514cf4b71c44dd9bf40ee0d79b07fef444be58621ce0c3f4b16788031397a3",
+    "runner_store_path": "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+    "scope": "entirely synthetic local Forgejo",
+    "swagger_sha256": "9e6e453e631793e47c01b2b1391274c3a78296aab8fd192d029484304ddd4bc9"
+  },
+  "collector_status": {
+    "calls": 2,
+    "error": false,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "fixed_errors": [],
+    "uid": 59991
+  },
+  "payload_comparison": {
+    "server_identical_bytes": true,
+    "frontend_payload_files_identical_bytes_and_metadata": 442,
+    "total_tar_members": 449,
+    "changed_manifests": [
+      "audition/artifact.json",
+      "log/artifact.json",
+      "logique/artifact.json",
+      "mateval/artifact.json",
+      "style-logo/artifact.json",
+      "style/artifact.json",
+      "vision/artifact.json"
+    ],
+    "only_changed_manifest_field": "input_manifest_sha256",
+    "previous_frontend_tar_sha256": "0723f0298455d59d94c63ce5099b82cbb56db8409733a1ad7cd8d0ec4f0d402a",
+    "current_frontend_tar_sha256": "174b6b9715f649c6714d9ba2eac9ce33e8f284c3cef682b15309ea03462f169d",
+    "previous_proposal": "8bf05fb9065a4c91e565ec0d37f24f2c556f315109823ccdef95c6354b423d6a",
+    "current_proposal": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+    "original_archive_and_hashes_preserved": true,
+    "new_archive_automatically_selected_for_runtime": false
+  },
+  "nix": {
+    "current_derivations_match": true,
+    "repeated_preparation_derivations_match": true,
+    "recursive_contents_verified": true,
+    "path_info": {
+      "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0": {
+        "ca": null,
+        "deriver": "/nix/store/alh902iw1y15535d0mpkjc4xqws8amq6-mrjam-forgejo-runner-13.2.0.drv",
+        "narHash": "sha256-lRFr865p1pgGE43d/i5+TngPeklfNtVn6zy07fZL9vM=",
+        "narSize": 33208096,
+        "references": [
+          "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+          "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+          "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/ngx7v0gbiqp14vcbgd5s9218pdyyf1lh-git-minimal-2.54.0",
+          "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e"
+        ],
+        "registrationTime": 1793442728,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 1
+      },
+      "/nix/store/pkp7nrgbabcgxbfkkdm5bdg3gv5dy93k-closure-info": {
+        "ca": null,
+        "deriver": "/nix/store/fxh8k2qkpx5m7prwzayzc5xbfaj84kma-closure-info.drv",
+        "narHash": "sha256-qUYqFhdHrYIGQMJNBZqTx3Bap5+729cmKBT4tHrd3Yg=",
+        "narSize": 50856,
+        "references": [
+          "/nix/store/0592hadxldzhhd3ppc6nskslzd39fwlz-gcc-wrapper-15.3.0",
+          "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+          "/nix/store/0bchm5z0mbr7agdjg40yj778marg93rw-gcc-15.3.0",
+          "/nix/store/0bxwvycymkb9jxjgn5n4aq0w5gic42cn-glibc-2.42-103-dev",
+          "/nix/store/10d0lpvg6pxnzlgnrdpm3xjyki00zgah-gdbm-1.26-lib",
+          "/nix/store/10psfl320cvkha5m17kmizfwwvvnlrwn-mrjam-elm-validation-cache",
+          "/nix/store/124ca9b7djjkzidqdqzd93mcwqvbpidg-ada-3.4.4",
+          "/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9",
+          "/nix/store/1d733bdg61s0qwwr04xiyrqz4wydv3ym-xz-5.8.4",
+          "/nix/store/1hmhhga06lnf0k90j0bm4m5pp6acnm59-postgresql-17.11-man",
+          "/nix/store/26qr08ambmn7g5dccqbr8q7aqkvcd92f-check_git_tree.py",
+          "/nix/store/2fsyrjgfff212x1giwf8981adsl3iwhr-libmpc-1.4.0",
+          "/nix/store/2l6kf3nfwb4k9c5dsdg8k1fs2jr5qikb-brotli-1.2.1-lib",
+          "/nix/store/31f225xam9v06jnm4878id3ch2wjkgkl-keyutils-1.6.3-lib",
+          "/nix/store/3cxvp1557n7hyz4imh2rhkyl64zl7vlw-binutils-2.46",
+          "/nix/store/3yhivr3h6801yk7sy3skzj4f2j86i68r-readline-8.3p3",
+          "/nix/store/41xwpwwpg8jxqgar1jf9lww0xkfy9mjc-ngtcp2-1.22.1",
+          "/nix/store/484kx0fvz6xl3wfa07m2n692223y1qwa-mrjam-rust-toolchain-1.99.1",
+          "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+          "/nix/store/4k9dyzhafi9dn1qss1aikjrn1flkbvq9-zlib-1.3.2-static",
+          "/nix/store/4qqwpd1f34k9505ljggkh07p5a9pllsz-sqlite-3.53.3",
+          "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6",
+          "/nix/store/4x5fryy0wsxlhsa4bpfdnqh5fxr9mp0a-policy.json",
+          "/nix/store/56vgzbxd1k167sq900dnlp7lldcmznl3-libxml2-2.15.4",
+          "/nix/store/5lqvbgf40v78y7i5d1kcyzz23jky5yqp-simdutf-6.5.0",
+          "/nix/store/68abz6vn5rla742qz1wg1k699pzjy7rh-isl-0.20",
+          "/nix/store/6p2dj5zcmj3bi55na180nf68zjqn2n3n-expand-response-params",
+          "/nix/store/6qr55y5rlrdvm3qy9fpa2pks7xa50yl3-libselinux-3.10",
+          "/nix/store/709kghqbswlhrfshjmrh9sn566gjbwdd-nodejs-24.22.1",
+          "/nix/store/7348w7xcmpri6ajymnp136w2hkz1mdwx-zstd-1.5.7",
+          "/nix/store/7b063z98zcilpmzj2sz7sl56gl84zf02-zlib-1.3.2",
+          "/nix/store/7vbcc5c5fy1ff8hmaca05px0n0l1gj1x-db-4.8.30",
+          "/nix/store/859np4rbi567gdx0k28gxkklq2qahldy-nghttp2-1.69.0",
+          "/nix/store/87ygcks0lay6r3bxn8sn6m6lpwxz3ywk-ngtcp2-1.22.1-dev",
+          "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+          "/nix/store/8xgfczp5w79qxq7pwxdc15zfmcx2bvxf-postgresql-17.11-lib",
+          "/nix/store/9ldbnd0p3q858l2yznakj63hz3rj10p0-expand-response-params",
+          "/nix/store/9wdq1zinil9w64n9asv6haxyis1php6c-publicsuffix-list-0-unstable-2026-05-13",
+          "/nix/store/a3al4xgkxqp4w718d5ai4nhrk4blm6am-simdjson-4.6.4",
+          "/nix/store/a6d8x05xvrafdg2l8v118sv8jcg25x01-json-c-0.18",
+          "/nix/store/acyqmf1mm0r2hq8xv2sckficwp3dg9qb-icu4c-78.3-dev",
+          "/nix/store/ai689c7gfx1ka7fwarc4vc0cm70ahdfp-icu4c-78.3",
+          "/nix/store/akmhgr98bcg2nrnls89gl7xz282h1mzf-mpdecimal-4.0.1",
+          "/nix/store/c1a2l64csn5lrwjqqnaman6hdici70vq-binutils-wrapper-2.46",
+          "/nix/store/c37jpglrjhdp4y3dkq7g5s8qshv43jnj-elfutils-0.194",
+          "/nix/store/cdilc0zq2gxyjpgcynnwrgr6hxfv5r38-mrjam-elm-validation-tools",
+          "/nix/store/cg5lp7fwxzib30f6b2lm63p5bd791j6h-acl-2.4.0",
+          "/nix/store/d2vjl55mqymp5pqk9nshrdx89965fcxx-nghttp3-1.15.0",
+          "/nix/store/d3f8rpj3iy1wx2p2d8fxqab8kdygyi9f-util-linux-minimal-2.42.4-lib",
+          "/nix/store/ddfagd4llkbv8p3cblpa3bxvn6l538yl-systemd-minimal-libs-260.5",
+          "/nix/store/dj6hfwqfynzvy7fp6qc9dwhwxvl71ixd-pcre2-10.49",
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+          "/nix/store/dqrkz95azb8947is7y6mjfgc0h418s83-linux-headers-6.18.7",
+          "/nix/store/f0lcjigadrvilgw2fprzdd96fw055q0b-openssl-3.6.5-dev",
+          "/nix/store/f2bsh1n6snqdldnjdshdy1lw3hnlfxwi-bubblewrap-0.12.0",
+          "/nix/store/ffrfb5cybny94sn2gsxxxvg8rqzl2adv-libcap-ng-0.9.3",
+          "/nix/store/fx80b11kzb83zwrz7z5av7bsz02gqip1-libev-4.33",
+          "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+          "/nix/store/ghmsmds9fr37yq40r84q12n2q80bnnh8-nodejs-slim-24.22.1-corepack",
+          "/nix/store/gi9gff3ir00m9j7z801w5fxi9r91axjw-brotli-1.2.1",
+          "/nix/store/h4pqd20idzp9vn5hywrq9kfzmjdzgjsr-mrjam-node-build-tool-24.19.0",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/hfk2znm53zp4x7hjjh35didm9znjw8jn-postgresql-17.11",
+          "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+          "/nix/store/hmqgi0grd4ckdyj81bbry6kgqkkha9vs-brotli-1.2.1-dev",
+          "/nix/store/hy66nai3pdjgzhv584c0j6di0y087kdb-krb5-1.22.2-lib",
+          "/nix/store/i4w1mj6rawirh6m26k8d9hpcjmrgd3pp-zlib-1.3.2-dev",
+          "/nix/store/ifpnqj76y16xh8rzxprl0linflgamhdp-mrjam-pinned-browser-resources",
+          "/nix/store/ilc04wmg2xh5jncdbc4v5zc0jdzag4mz-pkg-config-wrapper-0.29.2",
+          "/nix/store/iw7ljvmirxgjxpii7zhkxikiaq5vbqz9-gmp-with-cxx-6.3.0",
+          "/nix/store/j1axc9lgzg1gx08z3vmjrwkvyib9a0l5-nghttp2-1.69.0-lib",
+          "/nix/store/jq0mamb7v8ly6gxyrq8fnrs7al0l3cdp-libssh2-1.11.1",
+          "/nix/store/jrrpgnp20h73s728qqw4p256qx45v5z4-mrjam-verifier-runtime.json",
+          "/nix/store/jw892rjnjdqv6kxg0slx7ipc9wx41z3a-mpfr-4.2.2",
+          "/nix/store/k0qnrn1rz01rvc2ys7vcll4wa80qcrdi-expat-2.9.0",
+          "/nix/store/k41vs2nqfvjqv0k91r0xl5iv0nicv2yl-libxcrypt-4.5.2",
+          "/nix/store/kdnbkivxcszycbn8fqm0hi1d77gfqlnc-mrjam-protected-http-contract",
+          "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+          "/nix/store/kvdgx9r3ssdsnyrvg2wfv6il4pgvazi5-curl-8.23.0",
+          "/nix/store/kwc34h21my8mf7xbqm9gxs1xfx07xb4i-coreutils-9.11",
+          "/nix/store/kymjrr0lbkbjxzlz0pphdazryyklg754-merve-1.2.2",
+          "/nix/store/l6c4bjcvy4r6yyh2fyj4y7347dxzv6vg-overrides",
+          "/nix/store/l7qh6kfw0i3i3prf7acq1wd34ax8k8lx-pgvector-0.8.2",
+          "/nix/store/lrq4wadw7ry4vh0rsnhv7ylshnbld7px-audit-4.2.1-lib",
+          "/nix/store/m07vjyxxxvaly7rzshw0yf18jmpr5bcr-icu4c-76.1",
+          "/nix/store/mhdban9k5rif6n21v9wqnxpbh9kbq647-libffi-3.8.0",
+          "/nix/store/mjxf7qs56s2qyaa309m5634xg73142yc-simdutf-9.0.0",
+          "/nix/store/n56d9xz7m3sc1gvyr2hi9v082abq5sdb-pkg-config-0.29.2",
+          "/nix/store/nnqg2qvmax2dd36679aplxgs5zn072qv-uvwasi-0.0.23",
+          "/nix/store/pbxald1gihb1bl9l30j764q0ibb55421-gnugrep-3.12",
+          "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+          "/nix/store/pf4b257d72pp3ynm834rihif0xk4hlvr-glibc-2.42-103-bin",
+          "/nix/store/phlf36lhfwaafls84mxvffp8wpz741jn-attr-2.6.0",
+          "/nix/store/pilsssjjdxvdphlg2h19p0bfx5q0jzkn-strip.sh",
+          "/nix/store/pqv9xk93w9pkpj2s5w373nmisr65jm5c-c-ares-1.34.9-dev",
+          "/nix/store/q0kvfykalwya20s1ab635ldwbk1r0336-mrjam-verifier-support",
+          "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5",
+          "/nix/store/qdm1gxkdmb5jdcv72mjql8j9h54j84sn-sqlite-3.53.3-dev",
+          "/nix/store/qvf742ivj35rgzp9g8kcnjhx9993wvia-c-ares-1.34.9",
+          "/nix/store/rxc6g0q5nkjpr2m85ppdkbiabp01c8g0-gmp-6.3.0",
+          "/nix/store/s45snyx4414z3q1ycj63qh40hqhhs5yr-gmp-with-cxx-6.3.0",
+          "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+          "/nix/store/syxzf7s3381x9jcjq2g9sl9n8clcbv4x-binutils-2.46-lib",
+          "/nix/store/v3n5aklhc7s1nhj053r6c2lnz7q3nfzy-linux-pam-1.7.2",
+          "/nix/store/v8izrc2pmwnmfm4ariisf2jh0gf5wpvi-mrjam-canonical-review-rules",
+          "/nix/store/wcrbb004ci15dp5d3chhk5kzfdbc22g9-libuv-1.52.1",
+          "/nix/store/wkkvmvz3vnbfl3rkf85gp5p5mgp34ak3-gcc-15.3.0-libgcc",
+          "/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate",
+          "/nix/store/wxviinn45m625y2ja34dv8q0b9bxwk0w-numactl-2.0.18",
+          "/nix/store/wzng3jzfjfk4j0i2y4w6crknydhmx588-c-ares-1.34.9",
+          "/nix/store/x735fzw5abldd4sk10lasz1dkayi3bwr-zstd-1.5.7-dev",
+          "/nix/store/x8ahakmx4pb07rikx4zi25daih9wrsyf-bzip2-1.0.8",
+          "/nix/store/x8vjw40svsx50rfpapnnc9clxpprynfm-llhttp-9.4.3-dev",
+          "/nix/store/xjfr4p44v9hsw80dss844pn1szcaw2ha-libcap-2.77-lib",
+          "/nix/store/xnyn6xlh1kk09parg7sgsqcc7sa7hh28-libuv-1.52.1-dev",
+          "/nix/store/y18rr9k4yw3qyrd2ca0p4s5g565wpd92-elm-0.19.1",
+          "/nix/store/y2s34m9wa7d29acbzpbhvw3d8hxh8bzc-nghttp3-1.15.0-dev",
+          "/nix/store/y3ffb695c582gx3cbd0s2jhs990bkd8z-util-linux-minimal-2.42.4-login",
+          "/nix/store/ybmv0g5xva0wn18zdgxz25bm939lmwlq-lz4-1.10.0-lib",
+          "/nix/store/yishn4jrfiyvh63w7cb1wl01mq4wclag-libpsl-0.21.5",
+          "/nix/store/ys0n6cqchpfk8hc7nlwq3p5qpxby4vs2-nghttp2-1.69.0-dev",
+          "/nix/store/yw17brhraxrgq2wj4j6ibhhincxkz6bc-zstd-1.5.7-bin",
+          "/nix/store/z0gvz1ynawnkvrrlh2c69x3l255jf0rd-mrjam-pinned-build-inputs",
+          "/nix/store/z52pmb1ih6bqgc1yparljbx380da4vhk-mrjam-protected-frontend-support",
+          "/nix/store/zbr55rvh2hqw6a7mwjsk43y5g9qmlnrx-llhttp-9.4.3",
+          "/nix/store/zfq4xfj25ja11vik413zb66bl0ykqlkz-nodejs-slim-24.22.1-npm",
+          "/nix/store/zijdg15hs3x3svcqajaagqf8hfgz7qv6-postgresql-and-plugins-17.11",
+          "/nix/store/zkkfmzdlzwj06fi70qfwx6ky8f8xh670-sqlite-3.53.3-bin",
+          "/nix/store/zv7jk9knz9g176az3rcm8wyxc68nms8a-nodejs-slim-24.22.1"
+        ],
+        "registrationTime": 1793470957,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 1
+      },
+      "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1": {
+        "ca": null,
+        "deriver": "/nix/store/1y3hr828hrb5fqlqz9jl78hinvs729w1-forgejo-17.0.1.drv",
+        "narHash": "sha256-db1IPEdtfTwUFLFdB250mTLG3f8c33GoHQgLCSseiPc=",
+        "narSize": 132597872,
+        "references": [
+          "/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9",
+          "/nix/store/3sdq2wcfzvl8ivww35iv5vwzf374xfn6-gzip-1.14",
+          "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+          "/nix/store/bcjp3pf5gldhjcgk752293h6x8ipgfzi-forgejo-17.0.1-data",
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+          "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+          "/nix/store/gy266y3ax8xvblz36m6an7h8mi485mf1-git-2.54.0",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/iz0ak6l9rzczmbh6qkanfk0z7hijbypk-openssh-10.6p1",
+          "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+          "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1"
+        ],
+        "registrationTime": 1793382899,
+        "signatures": [
+          "cache.nixos.org-1:mWjbYEDpktyj3LjHVZHpaIHoRSiho0vpS/eoxrz5AlMVxBe/dnK+eTa/iVCxEtup6/A6seIyi6sZgkjJAKUHCg=="
+        ],
+        "storeDir": "/nix/store",
+        "ultimate": false,
+        "version": 1
+      },
+      "/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate": {
+        "ca": null,
+        "deriver": "/nix/store/zds5r7q12q7f3np19cy6p2zm04fwxxhq-mrjam-validate.drv",
+        "narHash": "sha256-shcQwaMMjlC0x4A8nDp1q9gXfN1E171tYsxXtv+s5H4=",
+        "narSize": 64992,
+        "references": [
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/jrrpgnp20h73s728qqw4p256qx45v5z4-mrjam-verifier-runtime.json",
+          "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+          "/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate"
+        ],
+        "registrationTime": 1793470957,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 1
+      }
+    },
+    "production_access": false
+  },
+  "preparation_repeat": {
+    "decision": "repeated-preparation-identical",
+    "rules_revision": "93bd67666a3b4be9657c333931fa25b2359e165b",
+    "rules_tree": "f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b",
+    "proposal_sha256": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+    "all_rule_git_blobs_and_modes_verified": true,
+    "rule_files": 208,
+    "preparation_sha256": "993c68dba8b2cc8bee019540da9e3006d675ba82bb4b80c31baacd004104a2cc",
+    "production_access": false
+  },
+  "runtime_sha256": "2b55f3bca03c74e6d4ffdc269c3746fe9f3d8bad8e6d3cd070b66c6711976d31",
+  "exercised_sources_sha256": {
+    "independent-validation.yml": "cd01f21d4df118d1c52d9e76ab600e6bebbd746415c4f57cc744c8d5f6f2b5de",
+    "reconcile.py": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+    "register_runner.py": "78514cf4b71c44dd9bf40ee0d79b07fef444be58621ce0c3f4b16788031397a3",
+    "submit.py": "db5349ad78199e15405a5e0d48170eeab8178d5226734a30ca18a9fbb8a84a85",
+    "tests/complete_chain_services.py": "c46452cd3e504fb61eed2d2bb1f414de4107ef3c3e8e2318386aa925ac170e3f",
+    "tests/qualify_complete_chain.py": "e7d73c291519e2503ee8eee073cbd86ed3e77b882a6081ec9285d8e5bc7e7d65",
+    "worker.py": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5"
+  },
+  "fixture_launcher_revision": "bbe3df6f3ce0e5d3bc1ab6488314e243ab0fb4f7",
+  "control_sources_sha256": {
+    "prepare_complete_chain.py": "58eac8ec0da8f13a64c4f007a5ee1c2a3d3ecbedb5198ce472268a3b6ac64124",
+    "stage_complete_chain.py": "f51e2106f0a4a9b79cf2e2371ff9a5f74e8a1a4b8ba9bd085f16551247b45a93",
+    "launch_complete_chain.py": "0f9338b0ac628ce0a793cfa39226bd2f6fc85d45a1cc18ce79aaef9a2bd91a1b",
+    "verify_complete_chain_store.py": "eea7e41605c1c7847a3277e363acd1b267d5bf1852dc02fb8c5e23b1d8e9c4e9",
+    "record_complete_chain.py": "5d1cfd21d75d1f013f2bbe73225e4d212bc8834f3d8f87bf6f859fa40affea9e"
+  },
+  "earlier_failures_preserved": [
+    {
+      "stage": "Nix evaluation of local expression",
+      "reason": "Pure --expr evaluation refused the absolute local path; corrected to explicit --file, without changing the derivation",
+      "log_sha256": "f28ac3eeca5adb91e81d4d0b03b3a8a2609d66530f9437ead3d922c5c4bcae08"
+    },
+    {
+      "stage": "First integration",
+      "execution": {
+        "exit_code": 1,
+        "wall_seconds": 74.757,
+        "fixture": "/workspace/shared/mrjam-declarative-nix/complete-chain-fixture-20261031-01",
+        "production_access": false,
+        "production_ready": false
+      },
+      "diagnosis": {
+        "observed_ipc_directory_mode": "0o700",
+        "expected_fixture_mode": "0o755",
+        "worker_requests": 0,
+        "reason": "Host umask 0077 removed the directory traversal bits requested by mkdir; non-root collector could not reach the worker socket",
+        "fix": "Explicit chmod on the new synthetic IPC directory; old directory, result and logs unchanged",
+        "production_access": false
+      },
+      "result_sha256": "1e3b81f10de8a960fbc46e903024273dfc6e4fdc0005fd12c6a8f09dfcd391cf"
+    }
+  ],
+  "logs_sha256": {
+    "complete-chain-run-20261031-02/result.jsonl": "ed5d5674cb491271f2f8c8b0e91b79c70c2639f9c77a6cdc860662a14562a729",
+    "complete-chain-run-20261031-02/execution.json": "ab83bd3fc4a0f6a47c3ac47a81489b663319e0a8a77d346096973d6252f59e3c",
+    "complete-chain-run-20261031-02/execution.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "complete-chain-stage-20261031-02.json": "7a84a1e6e9d7dadc103668fcfd70d7e5314cf8b7e934595b79bdaa0296afd199",
+    "complete-chain-stage-20261031-03.json": "de347a3400689c5d29453e16457846218a2467b45d3d960637961baf29a465dd",
+    "complete-chain-nix-verification-20261031-01.log": "6a06984edf8c902516895c92672ed28ba549652563620f44bea725b4ad8badb2"
+  },
+  "limits": [
+    "Entirely synthetic Forgejo/SQLite, identities and credentials; no production connection or native SSO/MFA",
+    "Root socket listeners in offline disposable containers replace systemd activation; the NixOS service tests remain distinct",
+    "Forgejo and runner share UID 65534 only in this fixture; collector and worker use distinct 59991 and 59990",
+    "The rule commit is reproducible local public code, not protected production adoption or signing authority",
+    "Existing Nix runtime artifacts and their original manifests remain selected; the new frontend transport archive retains its different provenance hash",
+    "VPS reconciliation, quotas, secret references, coherent data migration, backup/restore and deployment/rollback controller still require qualification"
+  ]
+}
