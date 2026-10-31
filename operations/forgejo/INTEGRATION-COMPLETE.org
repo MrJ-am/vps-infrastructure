@@ -23,8 +23,8 @@ jetables utilisent le volume Nix local en lecture seule et aucune socket Docker.
 limité à un CPU, 2 Gio et 256 tâches. Le processus worker utilise l'UID 59990 ;
 son code et ses namespaces ne sont pas substitués. Les répertoires du candidat,
 la politique et la fermeture sont imposés. Un second conteneur hors réseau,
-limité à un CPU, 1 Gio et 256 tâches, contient Forgejo, le runner et le collecteur
-sous l'UID 59991. Les listeners locaux root transmettent seulement une socket
+limité à un CPU, 1 Gio et 256 tâches, contient Forgejo et le runner sous l'UID
+65534 ; le collecteur utilise l'UID distinct 59991. Les listeners locaux root transmettent seulement une socket
 acceptée aux programmes fixes ; ils remplacent l'activation systemd dans cet essai.
 L'isolation du candidat reste celle des namespaces et filtres du worker et du
 vérificateur ; les options Docker nécessaires à userns sont explicites dans

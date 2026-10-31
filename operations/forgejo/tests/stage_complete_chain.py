@@ -37,8 +37,8 @@ def main():
     validator = next(p for p in paths if p.endswith('-mrjam-validate'))
     closure = next(p for p in paths if p.endswith('-closure-info'))
     subprocess.run(['nix', 'store', 'verify', '--offline', '--recursive', '--no-trust', *paths], check=True)
-    current = json.loads(subprocess.check_output(['nix', 'eval', '--offline', '--json', '--expr',
-        'map (p: p.drvPath) (import '+str(source/'package.nix')+')']))
+    current = json.loads(subprocess.check_output(['nix', 'eval', '--offline', '--json',
+        '--file', str(source/'package.nix'), '--apply', 'map (p: p.drvPath)']))
     require(set(current) == {item['drvPath'] for item in build}, 'CURRENT_DERIVATION_CHANGED')
     configuration = {'schema_version': 1, 'rules_revision': prepared['fixture_rules_revision'],
         'validator_store': validator, 'closure_file': closure+'/store-paths',
