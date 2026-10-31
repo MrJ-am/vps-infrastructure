@@ -50,7 +50,7 @@ def selected_path(component: str, name: str, baseline: dict) -> bool:
     if name in {"Cargo.toml", "Cargo.lock", "rust-toolchain.toml"}:
         return True
     if component == "platform":
-        if name in {".gitmodules", "tools/mateval-browser-synthetic/bank.json"}:
+        if name in {".gitmodules", "tools/mateval-browser-synthetic/bank.json", "crates/server/contracts/audition-catalogue.json"}:
             return True
         return any(name.startswith(f"crates/{crate}/") for crate in ("server", "audition", "log")) and (
             name.endswith(".rs") or name.endswith(".sql") or name.endswith("/Cargo.toml"))

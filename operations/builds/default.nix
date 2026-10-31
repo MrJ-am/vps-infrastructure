@@ -81,7 +81,9 @@ rec {
     doCheck = true;
     checkPhase = ''
       runHook preCheck
-      cargo test --workspace --frozen --offline
+      # Reuse the qualified optimization profile rather than retaining a second
+      # debug compilation of every dependency in the constrained build space.
+      cargo test --workspace --release --frozen --offline
       runHook postCheck
     '';
     installPhase = ''

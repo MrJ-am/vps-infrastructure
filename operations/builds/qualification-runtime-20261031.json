@@ -1,0 +1,199 @@
+{
+  "authority": "unverified-local-tests",
+  "build": {
+    "drvPath": "/nix/store/blmpz2k4yji7k3qn02ym99s9lr07hk78-mrjam-server-preparation-0.1.0-e920cd59e07b.drv",
+    "outputs": {
+      "out": "/nix/store/ngknip6hn5iihmyv6bb732znz740176z-mrjam-server-preparation-0.1.0-e920cd59e07b"
+    }
+  },
+  "build_command": "nix build --offline --impure --no-link --json --print-build-logs --expr '(import /workspace/vps-infrastructure/operations/builds/runtime-20261031.nix { nixpkgs = /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source; materialized = /workspace/shared/mrjam-declarative-build/inputs-runtime-20261031-02; }).rustServer'",
+  "checks": {
+    "build_log_sha256": "627c3d09444ec0b5af4f26d340b4229d207d1ad25833ae4d64df0cf2734bf803",
+    "command": "cargo test --workspace --release --frozen --offline",
+    "failed": 0,
+    "ignored": 1,
+    "passed": 109,
+    "result_suites": 26
+  },
+  "export": {
+    "artifact_manifest": {
+      "bytes": 725,
+      "sha256": "f161e5e4aabbc609a08944a7e48e9d954889ffa343ae87c663fedd4a7ecb3366"
+    },
+    "authority": "unverified-local-export",
+    "closure": {
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+        "ca": null,
+        "deriver": "/nix/store/1gww6q70xcxbyw14p69cb8angxpmk23p-xgcc-15.3.0.drv",
+        "narHash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+        "narSize": 197672,
+        "references": [],
+        "registrationTime": 1793376713,
+        "signatures": [
+          "cache.nixos.org-1:dvyEp2wM22nn7K4Pau98rfu0vrURzX4nnkL+cxVsY6lDZw0P0KjyBySayUf2g34yRZ88jiHzgc4Pm2g7WrpzDA=="
+        ],
+        "storeDir": "/nix/store",
+        "ultimate": false,
+        "version": 1
+      },
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+        "ca": null,
+        "deriver": "/nix/store/3ph3j89ph6pmn741pzpds0qzkfqny9qc-glibc-2.42-103.drv",
+        "narHash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+        "narSize": 35073152,
+        "references": [
+          "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+          "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+        ],
+        "registrationTime": 1793376715,
+        "signatures": [
+          "cache.nixos.org-1:YEghuHrB2o/RBGePS5vOfBSKtwU3vyi3iyJHheGDv4gjJGZ2tjoOQ0WGzlZFzHZS1c0fLTxLQsjcs1GBkRvDAA=="
+        ],
+        "storeDir": "/nix/store",
+        "ultimate": false,
+        "version": 1
+      },
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+        "ca": null,
+        "deriver": "/nix/store/fz1y7yyav434wlpzq9xzqa31rs7znx4c-libunistring-1.4.2.drv",
+        "narHash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+        "narSize": 2078944,
+        "references": [
+          "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+        ],
+        "registrationTime": 1793376714,
+        "signatures": [
+          "cache.nixos.org-1:75x2AgcdvTifWGCS3gxCHFmwIbhcKM7bW+6moWZQSHCB15O72hJPnI5isP5hVRrr6P2qLs8+ECOBLlO76+zmDQ=="
+        ],
+        "storeDir": "/nix/store",
+        "ultimate": false,
+        "version": 1
+      },
+      "/nix/store/ngknip6hn5iihmyv6bb732znz740176z-mrjam-server-preparation-0.1.0-e920cd59e07b": {
+        "ca": null,
+        "deriver": "/nix/store/blmpz2k4yji7k3qn02ym99s9lr07hk78-mrjam-server-preparation-0.1.0-e920cd59e07b.drv",
+        "narHash": "sha256-SsJRj5933nyyYvYKyeL8ET7hPMiHReScetVVO4EWSwM=",
+        "narSize": 13453248,
+        "references": [
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+        ],
+        "registrationTime": 1793442781,
+        "signatures": [],
+        "storeDir": "/nix/store",
+        "ultimate": true,
+        "version": 1
+      },
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+        "ca": null,
+        "deriver": "/nix/store/n7338hh4fm6lhzik25k2w570nph7dzhb-libidn2-2.3.8.drv",
+        "narHash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+        "narSize": 368176,
+        "references": [
+          "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+          "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+        ],
+        "registrationTime": 1793376714,
+        "signatures": [
+          "cache.nixos.org-1:EGpCAdXfJ3JRybgFm32yBBj28PBhbBo7WIq0US5V+T78gSroIdFVYQ9H2Tk6vs3HIzTM+7KwWonh6eRJhXjICg=="
+        ],
+        "storeDir": "/nix/store",
+        "ultimate": false,
+        "version": 1
+      }
+    },
+    "copies": {
+      "libraries/ld-linux-x86-64.so.2": {
+        "bytes": 263000,
+        "sha256": "9199653ccd8669d42e9ac388f8349029ad27858ceae77e8841ec0ddd31aea88e",
+        "source": "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103/lib/ld-linux-x86-64.so.2"
+      },
+      "libraries/libc.so.6": {
+        "bytes": 2404928,
+        "sha256": "e839a02d6727334929b261961e696a73c49a58dc1415f92f17e95da636c01570",
+        "source": "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103/lib/libc.so.6"
+      },
+      "libraries/libgcc_s.so.1": {
+        "bytes": 196888,
+        "sha256": "ae2bd6022e9a79c88e58327b50f3f2f78bf70ad26ceedd238b9f3e218379740c",
+        "source": "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc/lib/libgcc_s.so.1"
+      },
+      "libraries/libm.so.6": {
+        "bytes": 1102240,
+        "sha256": "41dc31cc65d1460e10bcf6ecfb2c158ed2e31157cf66aead6586c4da9c36e88f",
+        "source": "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103/lib/libm.so.6"
+      },
+      "mrjam-server": {
+        "bytes": 13451840,
+        "sha256": "7d91514354a124ea2e1e72b3841d6d9870dd7e8db6e700f07a3e59612a20b30c",
+        "source": "/nix/store/ngknip6hn5iihmyv6bb732znz740176z-mrjam-server-preparation-0.1.0-e920cd59e07b/bin/mrjam-server"
+      }
+    },
+    "exports": {
+      "mrjam-runtime.nix-export": {
+        "bytes": 51172648,
+        "sha256": "f9b44e816393c96eb5e8aaaf851a6bda07f2332c1690b07348e33bc7a94c72fd"
+      },
+      "mrjam-runtime.nix-export.gz": {
+        "bytes": 18661075,
+        "sha256": "85d311080f9c83910c3a25fe3041d25b95be18596f39b27dbfc9ad872bb4a403"
+      }
+    },
+    "production_access": false,
+    "recursive_content_verification": true,
+    "root": "/nix/store/ngknip6hn5iihmyv6bb732znz740176z-mrjam-server-preparation-0.1.0-e920cd59e07b",
+    "schema_version": 1,
+    "scope": "unchanged Nix bytes for local tests; explicit copied ELF loader; not a deployment approval"
+  },
+  "independent_cli": {
+    "authority": "unverified-local-test-result",
+    "binary_unchanged": true,
+    "candidate_binary": "/nix/store/ngknip6hn5iihmyv6bb732znz740176z-mrjam-server-preparation-0.1.0-e920cd59e07b/bin/mrjam-server",
+    "errors": 0,
+    "failures": 0,
+    "limits": [
+      "No PostgreSQL, IdP, Kanidm or actual Forgejo tested here",
+      "No deployed NixOS generation or global migration readiness inferred",
+      "The executable hash identifies tested bytes, not a protected source-to-build attestation"
+    ],
+    "passed": true,
+    "production_access_used": false,
+    "qualification_source_sha256": "d6f18f03f992dc3e797fadc39e57594d0a9fd5f8f333c7da56dd8103ee88d4c7",
+    "schema_version": 1,
+    "scope": "local executable, wholly synthetic files and ephemeral loopback HTTP",
+    "sha256_after": "7d91514354a124ea2e1e72b3841d6d9870dd7e8db6e700f07a3e59612a20b30c",
+    "sha256_before": "7d91514354a124ea2e1e72b3841d6d9870dd7e8db6e700f07a3e59612a20b30c",
+    "tests_run": 10
+  },
+  "limits": [
+    "Nix checkPhase does not run optional PostgreSQL feature suites; 123 native all-feature tests are separate proof",
+    "Nix sandbox=false in offline network-none Cloud helper is not a qualified production runner",
+    "Native readiness does not qualify systemd, SSO, lifecycle workers, data migration or deployment"
+  ],
+  "materialization_sha256": "6c4c957933bac12ded038377f3346a800366201a0ae743bce06dd21f87ab50b8",
+  "materialized_inputs": {
+    "cargo_packages": 225,
+    "elm_packages": 17,
+    "source_files": 463,
+    "status": "prepared"
+  },
+  "path_info": {
+    "ca": null,
+    "deriver": "/nix/store/blmpz2k4yji7k3qn02ym99s9lr07hk78-mrjam-server-preparation-0.1.0-e920cd59e07b.drv",
+    "narHash": "sha256-SsJRj5933nyyYvYKyeL8ET7hPMiHReScetVVO4EWSwM=",
+    "narSize": 13453248,
+    "references": [
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+    ],
+    "registrationTime": 1793442781,
+    "signatures": [],
+    "storeDir": "/nix/store",
+    "ultimate": true,
+    "version": 1
+  },
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "source_commit": "e920cd59e07b8371a564cd7041ee014748f50d7f",
+  "source_lock_sha256": "af9df75eef457f0cdab52779f04f51c47725b06ac836a6a25c064215b504c7d8"
+}
