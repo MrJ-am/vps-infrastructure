@@ -1,0 +1,76 @@
+#+title: Courriers historiques — trois exécutables corrigés et qualifiés
+#+date: 2026-10-31
+#+language: fr
+
+La révision =vision@7d87768bd141ec6a2a41b4ec9f3277639fcba67f= corrige le
+lecteur partagé des en-têtes From/To repliés par Python. Le contretest
+=b7d58104= reproduit le refus sur =0d33bd70=. Les adresses valides sont
+désormais reconnues sans réencoder les messages, réaffecter leurs empreintes,
+modifier les schémas ou changer les politiques de déduplication/rétention.
+Les doublons From/To, secondes adresses, continuations orphelines, mauvais
+expéditeurs et en-têtes mal formés restent refusés.
+
+* Construction et compatibilité
+
+La [[file:../builds/qualification-vision-mail-build-20261031.json][preuve de construction]] lie la recette, les trois sorties et le catalogue.
+La recette =../builds/vision-mail-workers-20261031.nix= sélectionne 95 fichiers
+source et 178 dépendances verrouillées. Les 40 tests Nix hors PostgreSQL passent ;
+les 43 tests natifs distincts, fmt et clippy passent également.
+Les 33 fichiers de schéma, le script des rôles, la fixture SQL, Cargo.lock et
+le graphe Cargo sont identiques à =0d33bd70=. Seul le fichier matérialisé
+=src/workers/courrier.rs= change.
+
+La première construction a échoué faute d’espace disque Cloud. Les traces
+sont conservées. Les doublons du cache Cargo ont été partagés par liens durs
+après vérification de 111132 fichiers avant et après, sans retirer de nom ni
+modifier de contenu ou de manifeste. La même dérivation a ensuite réussi.
+Les caches doivent rester immuables ; la vérification des pins précède toujours
+la construction. Aucune confiance Nix ni limite de qualification n’a été réduite.
+
+* Artefacts précisément sélectionnés
+
+- =admission= : =/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission=
+  ELF SHA-256 =78812f981f0698674217c3677622d671b594c4677f2905ecaa28598c146a6112= ;
+  NAR =sha256-+tmjtOs7Nq5/9ldSHapUilatZ7zBb31fges7OYk3Xd4==.
+- =archive= : =/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive=
+  ELF SHA-256 =45751f900b70f2231856ff83f339e69595d7cc620f150d004f2d882d68a04a1c= ;
+  NAR =sha256-5U+xUqIRsUePuMEegBvgSodJkWK3OUC86LAxUmI31Zw==.
+- =cycle= : =/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle=
+  ELF SHA-256 =61b94d0f0fabf7e5854cb38d25f176b053f41bb96ecff343c48d15d743f7be41= ;
+  NAR =sha256-sVPudG8E/1k0HNOF5ZGmBKczUH/v7zS0g1R2CGrhsC8==.
+
+La fermeture =e067f8c7= et le rejeu =51e7bcd6= gardent leurs artefacts
+distincts : leurs points d’entrée runtime ne lisent pas cette file de courrier.
+Les anciens artefacts et archives restent conservés pour leur périmètre
+historique ; ils ne sont plus sélectionnés pour les enveloppes repliées.
+
+* Exécution système
+
+| Scénario et reçu | Groupes réussis | Durée du test |
+|------------------+-----------------+---------------|
+| [[file:../migrations/admission/qualification-resume-folded-systemd-20261031.json][Adoption et reprise ouverte, destinataire replié]] | 8 | 293.47 s |
+| [[file:qualification-vision-admission-mail-systemd-20261031.json][Admission ordinaire, HTTP, droits et modes fermé/ouvert/fermé]] | 8 | 442.49 s |
+| [[file:qualification-vision-archive-mail-systemd-20261031.json][Archiviste, age, droits et reprise]] | 8 | 219.14 s |
+| [[file:qualification-vision-cycle-mail-systemd-20261031.json][Cycle, préavis, annulation et seuil d’effacement]] | 8 | 265.9 s |
+
+Chaque suite utilise l’ELF exact sélectionné, les unités NixOS réelles et
+PostgreSQL inventé. Les dérivations et contenus transitifs sont revérifiés
+après succès. Le scénario d’adoption conserve les refus de notification liée
+au mauvais destinataire, les empreintes historiques et les reprises après
+interruption ; sa réparation volontaire concerne uniquement la fixture.
+L’IdP HTTP et les credentials sont inventés, le relais SMTP refuse.
+
+Les pilotes réellement utilisés sont versionnés sous
+=../builds/qualify_vision_mail_20261031.py= et
+=../builds/record_vision_mail_20261031.py=. Ils emploient les entrées matérialisées
+et chemins datés de l’atelier ; ils ne sont pas des outils d’exploitation VPS.
+Leurs sorties nouvelles utilisent une création exclusive et ne remplacent
+aucune preuve antérieure.
+
+* Limites restantes
+
+La disponibilité locale ne certifie pas chaque état historique, l’IdP réel,
+MFA, la livraison SMTP, la cohérence des snapshots ou un retour après de
+nouvelles écritures. Aucune donnée réelle n’est utilisée. Ces reçus locaux
+restent non authentifiés et ne constituent ni une génération complète, ni
+une approbation protégée, ni une mise en service. Voir le [[file:../dossier-deploiement.org][dossier courant]].

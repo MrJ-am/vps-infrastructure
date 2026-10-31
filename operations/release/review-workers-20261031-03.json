@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "scope": "public-review-only",
+  "production_authorized": false,
+  "roots": {
+    "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive": "sha256-5U+xUqIRsUePuMEegBvgSodJkWK3OUC86LAxUmI31Zw=",
+    "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1": "sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI=",
+    "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195": "sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk=",
+    "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle": "sha256-sVPudG8E/1k0HNOF5ZGmBKczUH/v7zS0g1R2CGrhsC8=",
+    "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission": "sha256-+tmjtOs7Nq5/9ldSHapUilatZ7zBb31fges7OYk3Xd4="
+  },
+  "evidence_sha256": {
+    "vps-infrastructure/operations/builds/qualification-vision-closure-build-20261031.json": "4695937742f92bd11f1a383a1a78e8eaa22ab9a648608e7e5b0fdc0e7f25ae23",
+    "vps-infrastructure/operations/builds/qualification-vision-mail-build-20261031.json": "f90b912ed3ba34f9b5fb58eee30b699791156ccbc88baacc30e84e758bd15778",
+    "vps-infrastructure/operations/migrations/admission/qualification-build-20261031-02.json": "205611b624869ddf240272f44c67c038bdac189a1f8960dafa95d75feb3acdba",
+    "vps-infrastructure/operations/migrations/admission/qualification-resume-folded-systemd-20261031.json": "72b603b8b08ec665e1dd7d1c92205cf2c48f8bf2ab616016c802aacf2c9046e1",
+    "vps-infrastructure/operations/migrations/admission/qualification-systemd-20261031.json": "f10edc2a685ee03f5a256431df04f3b3314fa8b9c2afe8f89e4a0661bcbd24ee",
+    "vps-infrastructure/operations/migrations/admission/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "vps-infrastructure/operations/runtime/qualification-vision-admission-mail-systemd-20261031.json": "6699b1b9c544d31655380adba05baf511ecf9b40ccde57d946ebb1252f5b4c70",
+    "vps-infrastructure/operations/runtime/qualification-vision-admission-module-20261031.json": "ee12f19eedb2bd61f6ebd07a37ca25a4059c095f833b57e39d7d1d4f17a0fca8",
+    "vps-infrastructure/operations/runtime/qualification-vision-archive-mail-systemd-20261031.json": "db5a6cc9ae1ac839c5635d7ad890c75f07a0bf3406ad5bf654150e1518743696",
+    "vps-infrastructure/operations/runtime/qualification-vision-closure-module-20261031.json": "c57f8b9c19e19c575d74234163be2ed182b6cc3ef9bcd4ec429c3f0e29527467",
+    "vps-infrastructure/operations/runtime/qualification-vision-closure-systemd-20261031.json": "bc8114a85cf878075adcf6fd0237a157ebec98fcb175bed126af3c8b2fff6893",
+    "vps-infrastructure/operations/runtime/qualification-vision-cycle-mail-systemd-20261031.json": "7814b378a5c7bad4f195efc4d9fd44a85bbebdfcdd89c8e5fa59bf21f31613b9",
+    "vps-infrastructure/operations/runtime/qualification-vision-cycle-module-20261031.json": "155e81239cdba366920c928157f682ac12a4477d32b2be22d52c92c9f554cd32"
+  },
+  "limits": {
+    "max_closure_paths": 64,
+    "max_total_nar_bytes": 268435456
+  },
+  "not_included": [
+    "The unchanged platform, replay and SQL004 artifacts remain in the separate platform bundle",
+    "Whole VPS generation, service dependency closure and protected deployment authority",
+    "Secrets, persistent state, snapshots and backups"
+  ],
+  "notes": [
+    "Admission, archive and cycle are selected from Vision 7d87768bd141ec6a2a41b4ec9f3277639fcba67f; closure e067f8c7 and the offline adopter sc6zj2w7 retain their distinct evidence",
+    "These three new mail consumers supersede admission 0d33bd70, cycle 47286a8a and archive 9b6cbe74 for folded historical envelopes; original archives and receipts remain unchanged",
+    "New build: 40 Nix tests, 43 separate native tests and fmt/clippy; four independent systemd scenarios each bind the actual new executable",
+    "The original platform review archive includes the older archive worker; only its platform, replay and SQL004 artifacts remain selected alongside this bundle",
+    "No historical MIME bytes, content hashes, schema bytes or dependency pins are reassigned",
+    "Fresh-store content verification is not protected trust, production installation or data rollback qualification"
+  ]
+}

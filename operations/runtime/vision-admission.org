@@ -2,7 +2,15 @@
 #+date: 2026-10-31
 #+language: fr
 
-* Révision corrigée qualifiée localement
+* Révision actuelle : lecteur de courrier corrigé
+
+L’artefact sélectionné pour ce service vient désormais de =vision@7d87768b=.
+[[file:vision-mail-compatibilite.org][La qualification commune]] donne ses SHA-256/NAR exacts, 40 tests Nix,
+43 tests natifs et les quatre suites système réussies. Les preuves antérieures
+ci-dessous restent conservées ; elles ne qualifient pas les enveloppes repliées.
+
+
+* Correction antérieure de la reprise finale
 
 La révision =718a8188= ci-dessous reste une preuve de son périmètre, mais ne
 doit plus être sélectionnée pour ouvrir une adoption historique. Le contretest
