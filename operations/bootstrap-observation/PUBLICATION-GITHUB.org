@@ -1,0 +1,34 @@
+#+title: Accès externe au paquet d'observation depuis Spectre
+#+language: fr
+
+Le paquet exact est distribué par la branche
+=remise-observation-adoption-v2-20261031= du dépôt public
+=MrJ-am/vps-infrastructure=, commit
+=b3eec91ecea6b98a2d176188478f82768bca7d41=.
+
+Téléchargement sans authentification, vérifié avec HTTP 200 :
+https://github.com/MrJ-am/vps-infrastructure/archive/b3eec91ecea6b98a2d176188478f82768bca7d41.zip
+
+Ce ZIP de transfert contient trois parties, leurs empreintes et =assemble.py=.
+Il mesure 135353494 octets ; SHA-256 observé :
+=1b7269f1c7f33f523da11e1ef8bd9cd072f4c8c391ce549b73e1ae43e45c5f5b=.
+Après vérification et extraction dans un dossier nouveau, lancer localement
+=python3 -I -S assemble.py= puis =sha256sum --check archive.sha256=.
+
+L'archive originale reconstruite mesure 136396800 octets et garde le SHA-256 :
+=0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
+La séparation des fichiers est un transport Git, sans modification de la sonde,
+de sa qualification ou du paquet. Le programme refuse les parties altérées et
+n'écrase pas un fichier existant. Il n'exécute ni extraction, ni import Nix.
+
+Le téléchargement public a été réassemblé dans un autre dossier et comparé
+au paquet original ; les neuf fichiers GitHub correspondent aux octets publiés.
+Voir [[file:publication-github-20261031.json][le reçu de transfert]]. L'assemblage, sa répétition, le refus d'une partie
+corrompue et la conservation d'un fichier de sortie préexistant ont été exercés.
+
+Après validation de l'archive originale, l'extraire dans un autre dossier neuf,
+vérifier =SHA256SUMS=, puis suivre =SPECTRE-RELAIS-OBSERVATION.txt= et
+=EXECUTION-HUMAINE.org=. Le geste VPS reste celui de l'administrateur humain
+avec le composant borné qualifié. Le retour attendu est uniquement
+=adoption-v2.json= ; cette publication ne réalise aucune observation ni
+activation sur le VPS.

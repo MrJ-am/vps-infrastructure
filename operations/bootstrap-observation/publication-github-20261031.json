@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "repository": "MrJ-am/vps-infrastructure",
+  "branch": "remise-observation-adoption-v2-20261031",
+  "revision": "b3eec91ecea6b98a2d176188478f82768bca7d41",
+  "url": "https://github.com/MrJ-am/vps-infrastructure/archive/b3eec91ecea6b98a2d176188478f82768bca7d41.zip",
+  "download_http_status": 200,
+  "download_sent_authentication_header": false,
+  "github_zip_bytes": 135353494,
+  "all_nine_files_match_uploaded_sources": true,
+  "files_sha256": {
+    ".gitignore": "dab1d6743794a96008e7897790e4e7b73ade0397fee31f23081c4131022c85d7",
+    "README.org": "0076e01dba2b94c46fc6b99dc5c8b55ec1d4ea7ba7ddeb1199561f4ad55a9e0e",
+    "SHA256SUMS": "91f0ed1dbf45244dcaecdbec608a4182f5f6f0c168f472fda604b5ea4480069b",
+    "archive.sha256": "f75a5ce92391321adbab0780e521e8c0be0916818125aad1515986c03d69b9f8",
+    "assemble.py": "cede4d21c2357eed27c793d01beeeb15664f9d8259b4aba3e19e8988571cf486",
+    "mrjam-observation-adoption-20261031.tar.part-01": "94eb8d5eb46b884c127c1f7cdc4097988451de7da5c84a2367e133113451c27c",
+    "mrjam-observation-adoption-20261031.tar.part-02": "643fbbc4a48de15da89213aedc2c268add6230dd16d5a484d202b1cb34efa629",
+    "mrjam-observation-adoption-20261031.tar.part-03": "bab070794559e2f0f794f64bc099fa8ee120d64ed6b5e5123ee8887d60138c8a",
+    "publication.json": "0a0f2df10a7084ddad08e94dcec997c8ae157c88433d5b7ec1db1dcf0ebf485a"
+  },
+  "assembled_archive_bytes": 136396800,
+  "assembled_archive_sha256": "0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa",
+  "production_activation": false,
+  "github_zip_sha256": "1b7269f1c7f33f523da11e1ef8bd9cd072f4c8c391ce549b73e1ae43e45c5f5b"
+}
