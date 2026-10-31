@@ -1,0 +1,144 @@
+{
+  "authority": "unverified-local-tests",
+  "embedded_sources": {
+    "derivation": "/nix/store/alh902iw1y15535d0mpkjc4xqws8amq6-mrjam-forgejo-runner-13.2.0.drv",
+    "source_matches": {
+      "independent-validation.yml": {
+        "embedded_source": "/nix/store/aj0zyhlc6fkpmi0xq1nk55j19kjg7iw5-independent-validation.yml",
+        "sha256": "cd01f21d4df118d1c52d9e76ab600e6bebbd746415c4f57cc744c8d5f6f2b5de"
+      },
+      "runner-admission.go": {
+        "embedded_source": "/nix/store/v71l80nrdmj3mggdn408vdgw01s7wd7p-runner-admission.go",
+        "sha256": "552e234e6c390298b420a6ad0e5a0844e9e829d96371848c41f167b345842658"
+      },
+      "runner-admission.patch": {
+        "embedded_source": "/nix/store/401mgf309qfsygxdwss0mx2jn970bimx-runner-admission.patch",
+        "sha256": "cab844e82b1a22823108b99756897415323528cb7cbfc7bca3774ff247110838"
+      },
+      "runner-admission_test.go": {
+        "embedded_source": "/nix/store/scz74jvzl3zfqi7hp72qgmijfb96hvz9-runner-admission_test.go",
+        "sha256": "04129e8a34826ac1e55e4e87abe4c109f9877b185f27938237a7cb0b1ae45da0"
+      }
+    }
+  },
+  "limits": [
+    "Worker systemd correction still under qualification",
+    "Collector in real Forgejo test produces invented metadata, not build artifacts",
+    "Runner NixOS unit, real full Rust/Elm workflow, independent protected adoption, production ACL and VPS capacity not qualified",
+    "No VPS access or first commissioning"
+  ],
+  "module_assertions": 48,
+  "module_evaluations": {
+    "policy": {
+      "credentialByReferenceOnly": true,
+      "disabledInert": true,
+      "duplicateReposRejected": true,
+      "fixedLocalNetwork": true,
+      "fixedResourceLimits": true,
+      "immutableEntrypoint": true,
+      "noAutomaticStart": true,
+      "noCandidateWorkspace": true,
+      "noImplicitForgejoProvisioning": true,
+      "noPlanApplyRejected": true,
+      "noPrivilegedIdentity": true,
+      "planFixturePasses": true,
+      "traversalCredentialRejected": true
+    },
+    "runner": {
+      "boundedCoordinator": true,
+      "credentialTraversalRejected": true,
+      "disabledInert": true,
+      "fixedCollectorSocketOnly": true,
+      "fixedNftDestination": true,
+      "fixturePasses": true,
+      "mismatchedRulesRejected": true,
+      "missingCollectorRejected": true,
+      "missingFirewallRejected": true,
+      "missingWorkerRejected": true,
+      "noArbitraryNetwork": true,
+      "noAutomaticStart": true,
+      "noContainerGroup": true,
+      "noRegistrationTokenInDaemon": true,
+      "privateCredentialsByReference": true,
+      "rootContainsOnlyPublicRuntime": true,
+      "separateArtifactOwner": true,
+      "separateIdentities": true,
+      "specializedAdmissionBeforeCandidate": true
+    },
+    "worker": {
+      "automaticTemplateInstance": true,
+      "bubblewrapKernelParametersReadOnly": true,
+      "credentialsInaccessible": true,
+      "dedicatedUnprivilegedAccount": true,
+      "disabledInert": true,
+      "enforcedBudgets": true,
+      "exactIndependentRulesReference": true,
+      "fixedLocalSocket": true,
+      "namespaceNetwork": true,
+      "noAutomaticStart": true,
+      "noCallerMembersAssigned": true,
+      "noDockerSocket": true,
+      "noHostCapabilities": true,
+      "processTreeKill": true,
+      "singleJob": true,
+      "sourceOnlyRoot": true
+    }
+  },
+  "production_access": false,
+  "production_ready": false,
+  "real_forgejo": {
+    "checks": 16,
+    "receipt": "qualification-forgejo-reel-20261031.json",
+    "sha256": "1bd30f902eb411137740410150adf21f86585370214efe8e93dafa88fd812e22"
+  },
+  "runner_build": {
+    "drvPath": "/nix/store/alh902iw1y15535d0mpkjc4xqws8amq6-mrjam-forgejo-runner-13.2.0.drv",
+    "outputs": {
+      "out": "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0"
+    }
+  },
+  "runner_path_info": {
+    "ca": null,
+    "deriver": "/nix/store/alh902iw1y15535d0mpkjc4xqws8amq6-mrjam-forgejo-runner-13.2.0.drv",
+    "narHash": "sha256-lRFr865p1pgGE43d/i5+TngPeklfNtVn6zy07fZL9vM=",
+    "narSize": 33208096,
+    "references": [
+      "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+      "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+      "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+      "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+      "/nix/store/ngx7v0gbiqp14vcbgd5s9218pdyyf1lh-git-minimal-2.54.0",
+      "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e"
+    ],
+    "registrationTime": 1793442728,
+    "signatures": [],
+    "storeDir": "/nix/store",
+    "ultimate": true,
+    "version": 1
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/forgejo/independent-validation.yml": "cd01f21d4df118d1c52d9e76ab600e6bebbd746415c4f57cc744c8d5f6f2b5de",
+    "operations/forgejo/package.nix": "c0eb15821a118f0f0517499aebaea4377ffedbbe4632947ab2792a6c0f113db0",
+    "operations/forgejo/reconcile.py": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+    "operations/forgejo/register_runner.py": "78514cf4b71c44dd9bf40ee0d79b07fef444be58621ce0c3f4b16788031397a3",
+    "operations/forgejo/request_validation.py": "4fa7d85578b7417c0c7e1ee559f31e13d37e38ec88a73b78040895607a2e9dfa",
+    "operations/forgejo/runner-admission.go": "552e234e6c390298b420a6ad0e5a0844e9e829d96371848c41f167b345842658",
+    "operations/forgejo/runner-admission.nix": "d0ce71e1bb7bb23c3b178565403e712c291e1f7162ae58da1b99e3a6f0597fc1",
+    "operations/forgejo/runner-admission.patch": "cab844e82b1a22823108b99756897415323528cb7cbfc7bca3774ff247110838",
+    "operations/forgejo/runner-admission_test.go": "04129e8a34826ac1e55e4e87abe4c109f9877b185f27938237a7cb0b1ae45da0",
+    "operations/forgejo/settings.nix": "74edce15a2852008b5a4ba4896f2ccd006bad93271740ca43850f7a25d9fc604",
+    "operations/forgejo/submit.py": "db5349ad78199e15405a5e0d48170eeab8178d5226734a30ca18a9fbb8a84a85",
+    "operations/forgejo/worker.py": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5",
+    "operations/nixos/mrjam-forgejo-policy.nix": "6d9da5a5bf7ef69a9150d30d36c5f3ab882a2f9e47aad16837f9f599853c5eab",
+    "operations/nixos/mrjam-forgejo-runner.nix": "66ed24e0b7412fdeee066b512f7698f0b96d99f03551108db167f60fc80959a0",
+    "operations/nixos/mrjam-validation-collector.nix": "3dfc0d0dd4499b9cd8f4755ed4191ee2b46414fdc912af6f25c563df68d18285",
+    "operations/nixos/mrjam-validation-worker.nix": "cff2b7ee89e758f37ed87ce5b848c0357a707d6119d315e4af4c85689e004619"
+  },
+  "unit_tests": {
+    "command": "python3 -B -m unittest discover -s operations/forgejo/tests -p 'test_*.py' -v",
+    "failed": 0,
+    "log_sha256": "06b8a2c0f44e04a4c3d3137d8130de1081a6240cc7e07cbf288c61d9b344d485",
+    "passed": 62
+  }
+}

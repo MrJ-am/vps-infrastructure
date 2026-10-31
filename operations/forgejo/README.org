@@ -1,6 +1,14 @@
 #+title: Forgejo et runner — préparation déclarative, activation bloquée
 #+language: fr
 
+* État courant au 31 octobre
+
+La chaîne exécutable ajoutée après ce premier paquet est décrite dans
+[[file:chaine-operationnelle.org][chaine-operationnelle.org]]. Les paragraphes suivants décrivent le paquet
+préparatoire antérieur. Le contrôleur, le runner spécialisé et les modules
+worker/collecteur ont maintenant des sources séparées et des qualifications
+locales ; leur présence ne rend pas le VPS opérationnel.
+
 * Résultat préparé
 
 =../nixos/mrjam-forgejo.nix= expose un paquet de configuration immuable via

@@ -1,0 +1,21 @@
+--- a/internal/app/run/runner.go
++++ b/internal/app/run/runner.go
+@@ -140,6 +140,10 @@
+ }
+ 
+ func (r *Runner) Run(ctx context.Context, task *runnerv1.Task) {
++	if task == nil || task.Context == nil {
++		log.Error("MRJAM_TASK_CONTEXT_REFUSED")
++		return
++	}
+ 	if _, loaded := r.runningTasks.LoadOrStore(task.Id, struct{}{}); loaded {
+ 		// Normally the responsibility of Run() is to ensure that, no matter what occurs within running the job, a
+ 		// reporter is created that will report the job status to the server. But in this case, for some reason another
+@@ -170,7 +174,9 @@
+ 	}()
+ 	reporter.RunDaemon()
+-	runErr = r.run(ctx, task, reporter)
++	// This specialized runner never interprets a job's shell/actions payload.
++	// Admission and the sole collector request precede all candidate execution.
++	runErr = mrjamRun(ctx, task, reporter)
+ }
