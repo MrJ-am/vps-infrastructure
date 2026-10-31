@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "production_access": false,
+  "build": {
+    "drvPath": "/nix/store/hvy8ykls7z7lj0jkxz2c14c64j0lcnjn-vm-test-run-mrjam-worker-systemd-independent.drv",
+    "outputs": {
+      "out": "/nix/store/ymnj640zzc98bvzwrdshih8gxp9mckyv-vm-test-run-mrjam-worker-systemd-independent"
+    }
+  },
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/ymnj640zzc98bvzwrdshih8gxp9mckyv-vm-test-run-mrjam-worker-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/hvy8ykls7z7lj0jkxz2c14c64j0lcnjn-vm-test-run-mrjam-worker-systemd-independent.drv",
+      "narHash": "sha256-kBf+Oik0hBlsqjpznLlUfmAdWcgjv98LZ9TZPHeC6Ag=",
+      "narSize": 1280,
+      "references": [
+        "/nix/store/0m1lbk9w4a8mgmqikhhaalfsa5s3a0ha-mrjam-synthetic-validator-not-for-deployment",
+        "/nix/store/f2bsh1n6snqdldnjdshdy1lw3hnlfxwi-bubblewrap-0.12.0"
+      ],
+      "registrationTime": 1793447188,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "disposable synthetic NixOS VM; invented verifier only",
+    "checks": [
+      "no-implicit-worker",
+      "socket-acl-enforced",
+      "actual-cgroup-resource-limits",
+      "actual-pinned-bwrap-outer-inner-network-filesystem-fd-seccomp-boundaries",
+      "actual-fifo-artifact-collection-and-byte-hashes",
+      "collector-socket-and-cache-uid-separation",
+      "cache-revalidated-and-corruption-refused"
+    ],
+    "fixture_validator": "/nix/store/0m1lbk9w4a8mgmqikhhaalfsa5s3a0ha-mrjam-synthetic-validator-not-for-deployment",
+    "bubblewrap": "/nix/store/f2bsh1n6snqdldnjdshdy1lw3hnlfxwi-bubblewrap-0.12.0",
+    "nested_userns_refusal_errno": 28,
+    "production_access_used": false,
+    "real_rust_elm_qualification": false,
+    "limits": [
+      "No full workflow, real repository ACL or promotion authority was qualified",
+      "The invented output artifacts are deliberately unusable for deployment",
+      "The target VPS generation and isolation capabilities remain unobserved"
+    ]
+  },
+  "current_source_sha256": {
+    "/workspace/mrjam-validation/operational-review/worker-systemd.nix": "6776576e3efdc808a96a0e2facb1d0525968bc955cee745915c6599d6886850d",
+    "/workspace/mrjam-validation/operational-review/worker-validator-fixture.py": "84cc28d47765d2dd51d27a50949c02e1cca0a29f59a6d20ec4592afe409617ce",
+    "/workspace/mrjam-validation/operational-review/worker-client-fixture.py": "d22e1bf981c963cee1c7956288b95be2b4c1d513ad3a126181c0fcbbed858549",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-worker.nix": "dd245777c8d2a25b891e63a9484a9ed93be8f30ddb09ef804ebe09092542ad7e",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-collector.nix": "3dfc0d0dd4499b9cd8f4755ed4191ee2b46414fdc912af6f25c563df68d18285",
+    "/workspace/vps-infrastructure/operations/forgejo/worker.py": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5",
+    "/workspace/vps-infrastructure/operations/forgejo/submit.py": "db5349ad78199e15405a5e0d48170eeab8178d5226734a30ca18a9fbb8a84a85"
+  },
+  "recursive_content_verification": true,
+  "module_evaluation": {
+    "automaticTemplateInstance": true,
+    "composedPidBoundary": true,
+    "credentialsInaccessible": true,
+    "dedicatedUnprivilegedAccount": true,
+    "disabledInert": true,
+    "enforcedBudgets": true,
+    "exactIndependentRulesReference": true,
+    "fixedLocalSocket": true,
+    "namespaceNetwork": true,
+    "noAutomaticStart": true,
+    "noCallerMembersAssigned": true,
+    "noDockerSocket": true,
+    "noHostCapabilities": true,
+    "processTreeKill": true,
+    "singleJob": true,
+    "sourceOnlyRoot": true
+  },
+  "scope": "Actual systemd worker/collector with invented validator; full compiler pipeline remains separate"
+}

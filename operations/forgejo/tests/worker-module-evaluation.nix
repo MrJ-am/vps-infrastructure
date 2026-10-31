@@ -32,7 +32,7 @@ let
     credentialsInaccessible = builtins.elem "-/run/credentials" service.InaccessiblePaths && !(service ? LoadCredential);
     noDockerSocket = builtins.elem "-/var/run/docker.sock" service.InaccessiblePaths;
     noHostCapabilities = service.CapabilityBoundingSet == "" && service.NoNewPrivileges;
-    bubblewrapKernelParametersReadOnly = service.ProcSubset == "all" && service.ProtectKernelTunables && service.ProtectProc == "invisible";
+    composedPidBoundary = service.PrivatePIDs && service.ProcSubset == "all" && service.ProtectProc == "default" && service.CapabilityBoundingSet == "" && service.NoNewPrivileges;
     enforcedBudgets = service.MemoryMax == "2G" && service.CPUQuota == "100%" && service.TasksMax == 256 && service.RuntimeMaxSec == 1830;
     processTreeKill = service.KillMode == "control-group";
     exactIndependentRulesReference = policy.rules_revision == "1111111111111111111111111111111111111111" && lib.hasSuffix "-mrjam-validate" policy.validator_store;
