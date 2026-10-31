@@ -1,0 +1,127 @@
+#+title: Adoption hors ligne de l'état privé d'admission
+#+date: 2026-10-31
+#+language: fr
+
+* Périmètre exact
+Cet outil auxiliaire Python est distinct du service Rust. Le paquet Nix verrouille
+son interpréteur, ses quatre schémas et ses dépendances. Il ne fournit aucun
+accès Cloud à une base, une sauvegarde ou des données, même chiffrées.
+
+Les schémas historiques viennent de deux fichiers source publics précisément
+identifiés dans [[file:schema-provenance.json][la provenance]]. Seules leurs chaînes SQL littérales ont été
+extraites ; aucun ancien programme n'a été importé ou exécuté. Une ancienne
+copie locale d'admission.py comportait un LF final supplémentaire : son usage
+a été arrêté, ses octets et son empreinte conservés, et une copie exacte du
+blob Git a été obtenue séparément. Les quatre schémas sont vérifiés à la
+construction sans réviser les empreintes attendues.
+
+Les entrées admises sont exclusivement les formats DELETE historiques de
+=demandes= et =courriels=, ce dernier avec ou sans colonne =empreinte=. Tout
+objet SQL supplémentaire, état inconnu, type invalide, empreinte incohérente,
+base WAL ou intégrité défaillante bloque l'opération. Les états de demandes
+=attente=, =provisionnee=, =admise= et =expiree= sont conservés. Un courriel actif
+ou non vide sans demande correspondante est refusé ; une métadonnée ancienne
+déjà vidée et inactive est conservée avec son empreinte d'origine.
+
+Les preuves, jetons hachés, dates, sujets, indicateurs, octets MIME, compteurs,
+états et dates de réessai sont copiés sans réencodage ni remise à zéro.
+=contenu_sha256= reste NULL pour les messages historiques : aucune empreinte
+de contenu métier n'est inventée à partir du MIME. L'absence d'une empreinte
+historique reste une absence, pas une nouvelle certification.
+
+* Capacité d'exécution déclarative
+[[file:../../nixos/mrjam-admission-adoption.nix][Le module]] reste désactivé, sans démarrage automatique ni réseau. Il requiert
+l'identité déclarative d'admission et le mode public fermé. Il s'exécute sous
+=mrjam-vision-admission=, jamais root, sans argument, credential, SQL libre,
+commande ou chemin venant de l'appelant. Il est en conflit avec le service et
+l'initialisation Rust ; leur arrêt ne prouve pas l'arrêt des anciens émetteurs.
+
+Deux fichiers doivent préexister dans le staging root 0700 :
+=/var/lib/mrjam-admission-adoption-input/requests.sqlite= et =mail.sqlite=,
+chacun root:groupe-mrjam-vision-admission, mode 0440, lien unique.
+Ce répertoire vide est déclaré par tmpfiles ; aucun contenu n'est créé en Git
+ou dans le store. systemd monte les deux fichiers en lecture seule aux chemins
+fixes =/run/mrjam-admission-adoption/{requests,mail}.sqlite=, dans un répertoire
+0700. L'exécutable vérifie réellement le drapeau de montage en lecture seule,
+les propriétaires, modes, liens et tailles. Aucun argument ne peut changer ces
+chemins. Hors de cette unité, le compte ne peut traverser le staging root.
+
+Le résultat unique est
+=/var/lib/mrjam-vision-admission/admissions.sqlite=, en 0600. L'outil prend le
+même verrou de répertoire que Rust. Il construit en mémoire, synchronise un
+fichier temporaire puis publie par lien sans remplacement. Une cible existante
+doit avoir exactement les mêmes lignes et le même schéma ; elle n'est alors
+pas réécrite. Tout écart bloque l'adoption.
+
+Une interruption laissant un temporaire complet ou les deux noms du même inode
+peut être reprise après comparaison exacte. Un temporaire partiel, différent,
+un lien inattendu ou une permission élargie est conservé et refusé. Sa remise en
+état nécessite une opération de récupération distincte ; l'outil n'efface pas
+automatiquement une pièce ambiguë. Cette publication ne prouve pas la tenue
+du stockage du VPS à une coupure matérielle.
+
+Bornes : 64 Mio par entrée, 128 Mio sérialisés en sortie, 10000 lignes par table,
+131072 octets par message, budget d'instructions/délai SQLite ; unité limitée
+à 512 Mio, 20 % d'un CPU, huit tâches et 90 secondes. Un dépassement est un refus,
+pas une troncature. Le débit et le pic mémoire aux bornes restent à mesurer.
+Les seules sorties du programme sont ={"status":"adopted"}= ou l'erreur fixe
+=ADMISSION_ADOPTION_REFUSED= ; aucun contenu ni empreinte de données privées
+n'est prévu pour un reçu destiné à Cloud.
+
+* Préconditions encore extérieures à cet outil
+1. Identifier la révision, les deux états réellement utilisés et leurs schémas
+   par un composant borné autorisé. Le code historique ne prouve pas leur état.
+   Vérifier aussi l'absence de collision du staging et du nouvel état, ainsi
+   que les UID/GID attendus, avant installation/démarrage des unités : tmpfiles
+   et StateDirectory peuvent normaliser des propriétaires et permissions avant
+   les contrôles du programme. Ce contrôle ne doit pas être remplacé par une
+   réattribution récursive d'un répertoire existant non identifié.
+2. Fermer les admissions, drainer et arrêter tous les émetteurs concernés,
+   y compris les anciens services, puis établir la cohérence avec PostgreSQL/IdP.
+3. Obtenir les deux snapshots complets via un mécanisme local de sauvegarde
+   cohérent et vérifié. Une copie d'un fichier ouvert ou privé de son journal
+   n'est pas un snapshot qualifié. Aucune sauvegarde ne parvient aux agents.
+4. Sceller le staging, conserver la référence de récupération et sa politique
+   de rétention côté opérateur. L'acquisition, l'attestation de quiescence, le
+   nettoyage du staging et sa rétention ne sont pas encore automatisés ici.
+5. Sélectionner le paquet qualifié dans la génération, lancer explicitement
+   l'unité, contrôler le résultat fermé, puis vérifier Rust en mode fermé avant
+   tout routage ou traitement nouveau. Ne pas lancer l'initialisation vide.
+6. Dans la génération d'ouverture ultérieure, désactiver explicitement le module
+   d'adoption avant d'activer =admissionsOpen=. L'assertion interdit ces deux
+   modes simultanés. Le retrait de l'unité ne supprime ni état ni staging ;
+   leur conservation et leur nettoyage suivent la procédure de retour approuvée.
+
+Avant toute nouvelle écriture, le retour nécessite une preuve que les snapshots
+historiques sont toujours cohérents. Après ouverture, la conversion inverse des
+nouvelles demandes/étapes Rust n'est pas fournie ; restaurer les anciens fichiers
+perdrait des écritures. Un retour de génération ne suffit pas. Cette limite
+bloque la première mise en service tant que son traitement n'est pas qualifié.
+
+* Qualifications
+[[file:qualification-build-20261031-02.json][La construction retenue]] passe les 18 tests unitaires, également réussis
+localement ; 17 assertions du module passent avec nixpkgs
+=6f06d204d8f2d8761d9da78778745974a3216381=.
+Paquet : =/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1=,
+NAR =sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI==.
+Le code =libexec/adopt.py= a pour SHA-256
+=01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5=.
+La fermeture verrouille Python 3.13.17 et ses bibliothèques ; ni canal flottant
+ni interpréteur du profil système n'intervient dans l'exécution.
+
+Le premier paquet local =2jr547z5kdsl4qcacg9066sb6bimcyli= n'est pas retenu.
+Un répertoire =__pycache__= vide entrait dans sa source locale mais pas dans
+Git ; aucun fichier source ne différait. La sélection explicite des sept fichiers
+supprime cette dépendance ambiante : construction directe et entrée de flake
+produisent désormais exactement la même dérivation. La première recette et
+son reçu restent conservés, sans changement d'empreinte.
+
+[[file:qualification-systemd-20261031.json][La suite NixOS distincte]] passe huit groupes en 240,10 secondes sur le paquet
+retenu : vrais montages en lecture seule, refus root/arguments/permissions,
+fusion exacte, idempotence, cible différente refusée, verrou concurrent et deux
+fenêtres d'interruption. Le binaire Rust =718a8188= ouvre ensuite cet état sans
+initialisation et devient disponible en mode fermé, sans perte de preuve.
+La dérivation et les contenus ont été revérifiés après succès.
+Le premier essai ne capturait pas stderr pour vérifier le refus root ; sa trace
+reste conservée et le critère de refus n'a pas été réduit. Ces contrôles locaux
+sur données inventées ne créent aucune autorité indépendante de déploiement.

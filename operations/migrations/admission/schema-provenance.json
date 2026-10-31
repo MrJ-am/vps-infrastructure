@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "services/mrjam-admission/admission.py",
+      "blob": "56135557bfe305626c506005aed9e3437804b733",
+      "source_sha256": "411c4f8375a59ad30e23f748a879382bf3895927c3d148713f2a74d4c0504128",
+      "extraction": "AST string literal only; legacy code never imported or executed",
+      "schema": "legacy-requests.sql",
+      "schema_sha256": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d"
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "services/mrjam-courriel/courriel.py",
+      "blob": "6e9a1cb8fb7596e51766c60b376299a495dfa2a7",
+      "source_sha256": "bf3576f61472de88ec4c9db022f4cb57bfe97769330b07a39b8b6890dc03fdde",
+      "extraction": "AST string literal only; legacy code never imported or executed",
+      "schema": "legacy-mail.sql",
+      "schema_sha256": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561"
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "718a81880090609b7730a27c4fb37f32bbb7e3d1",
+      "path": "workers/001_courriels.sql",
+      "schema": "target-mail.sql",
+      "schema_sha256": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093"
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "718a81880090609b7730a27c4fb37f32bbb7e3d1",
+      "path": "workers/002_admissions.sql",
+      "schema": "target-requests.sql",
+      "schema_sha256": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb"
+    }
+  ],
+  "cached_reference_difference": {
+    "path": "/workspace/shared/vision-reference-c6459ae/admission.py",
+    "old_sha256": "bf05cca1383d9c32412c9e42d278e16f5272c2de8142c317269c6d7834342788",
+    "difference": "One extra trailing LF; use stopped on mismatch. Verified exact GitHub bytes stored separately; old file and prior hashes unchanged."
+  },
+  "production_data_access": false
+}

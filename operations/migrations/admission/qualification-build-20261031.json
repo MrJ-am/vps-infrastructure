@@ -1,0 +1,77 @@
+{
+  "derivation": "/nix/store/k492h6wf2l7ifrbjwn7lya1mfcm70ifh-mrjam-admission-adoption-1.drv",
+  "path_info": {
+    "/nix/store/2jr547z5kdsl4qcacg9066sb6bimcyli-mrjam-admission-adoption-1": {
+      "ca": null,
+      "deriver": "/nix/store/k492h6wf2l7ifrbjwn7lya1mfcm70ifh-mrjam-admission-adoption-1.drv",
+      "narHash": "sha256-1a6Vnv+kUZQ+At52aQRPwPh1pnrFv47J8BGVXeBBjHo=",
+      "narSize": 18096,
+      "references": [
+        "/nix/store/2jr547z5kdsl4qcacg9066sb6bimcyli-mrjam-admission-adoption-1",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "registrationTime": 1793464797,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "payload_sha256": {
+    "bin/mrjam-admission-adopt": "e7707e36d2a2c5fffd6ebb9e947314bab30c1983608d760f19cf0415ceb9d875",
+    "libexec/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "libexec/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "libexec/schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+    "libexec/schemas/legacy-requests.sql": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d",
+    "libexec/schemas/target-mail.sql": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093",
+    "libexec/schemas/target-requests.sql": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb"
+  },
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "native_tests": 18,
+  "nix_build_tests": 18,
+  "nixos_module_checks": {
+    "absentIdentityRefused": true,
+    "buildContextRefused": true,
+    "disabledInert": true,
+    "emptyRootStaging": true,
+    "finiteBudgets": true,
+    "fixedNoArguments": true,
+    "fixtureValid": true,
+    "noAutomaticInitialization": true,
+    "noAutomaticStart": true,
+    "noConcurrentInitializationOrRuntime": true,
+    "noHostCapabilities": true,
+    "noNetwork": true,
+    "openAdmissionsRefused": true,
+    "privateDirectories": true,
+    "sealedReadOnlyInputs": true,
+    "stateVersionPreserved": true,
+    "unprivilegedSameIdentity": true
+  },
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "sources_sha256": {
+    "operations/migrations/admission/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "operations/migrations/admission/test_adopt.py": "db9136e4461b2913b80377f621425bf13bff0f4c583a074a0acb5179f67a3a13",
+    "operations/migrations/admission/package.nix": "8a0bffcb3fb96d227baf5a2831f870c8d0ead1a40fe38e8b96844f23734aca03",
+    "operations/migrations/admission/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+    "operations/nixos/mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795",
+    "operations/tests/admission-adoption-evaluation.nix": "eba83139c211d8e4f50a0a1f29a990f3ba1dc9bb1506cffa9fea0b6ff0de9721"
+  },
+  "logs_sha256": {
+    "admission-adoption-native-20261031-01.log": "f9d38b8d06ea224ba6a0cb9af5a666d6d6da3058107ed6afbb6392d06132ada8",
+    "admission-adoption-build-20261031-01.log": "88410303c11bb0d260679f868ac4aa0c1b535b6527d00934cf79090383200da8",
+    "admission-adoption-build-20261031-01.json": "b5e928383156bd890837249721fd00e6fa71e47163e3939923adff11ef0d2c76",
+    "admission-adoption-module-20261031-01.json": "ee36da046a331c658a142db166600a9514547b1128a7d68bff7c4c1e7b0f8a9f",
+    "admission-adoption-build-verify-20261031-01.log": "1e7ec08fa5068c71933fc10e551f51506043307011fe34dd00d81d0726a13f6b"
+  },
+  "limits": [
+    "Only invented data; source acquisition, quiescence, PostgreSQL/IdP coherence and backup/retention are separate preconditions",
+    "NixOS execution and Rust interoperability require a separate system test result",
+    "No downgrade converter for new Rust writes; resource peak at maximum limits unmeasured"
+  ]
+}

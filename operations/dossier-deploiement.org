@@ -24,7 +24,8 @@ inactif ; il n'est ni importé ni présenté comme un système activable. Il res
 dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
 
 Le =flake.nix= exporte les modules Rust, inventaire, Forgejo, passerelle,
-politique Forgejo, runner, worker, collecteur, archiviste, rejeu, cycle et accès PostgreSQL.
+politique Forgejo, runner, worker, collecteur, archiviste, rejeu, cycle,
+fermeture, admission, adoption d'admission et accès PostgreSQL.
 =nixos/vps-preparation.nix= conserve une composition préparatoire désactivée.
 Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
 de test sont des fixtures, sans cible de production dans =nixosConfigurations=.
@@ -86,9 +87,12 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    e920cd59 comme candidat courant ; les preuves de celui-ci restent historiques.
    Les CLI archiviste et rejeu ont leurs builds et qualifications système
    distincts, voir =runtime/vision-archive.org= et =runtime/vision-replay.org=.
-   Le cycle a aussi son exécutable et sa qualification NixOS distincts :
-   =runtime/vision-cycle.org=. Admission et fermeture n'ont pas encore leurs
-   unités qualifiées. Les artefacts restent locaux.
+   Le cycle et la fermeture ont aussi leurs exécutables et qualifications
+   NixOS distincts : =runtime/vision-cycle.org= et =runtime/vision-closure.org=.
+   L'admission corrigée =718a8188= a sa construction, ses tests natifs,
+   son module et sa qualification système : =runtime/vision-admission.org=.
+   L'adoption des deux états historiques est traitée séparément.
+   Les artefacts restent locaux.
 4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
    dans le store, identité explicite, verrou de concurrence root, entrée/sortie
    bornées, nettoyage des descendants et filtre final. Aucun nouveau rapport
@@ -147,6 +151,9 @@ autre binaire :
 | Rejeu normal Vision 51e7bcd6 et module | 32 tests Nix, 35 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-replay-systemd-20261031.json= ; clients privés inventés, restauration complète distincte |
 | Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
 | Cycle de préavis 47286a8a et module | 34 tests Nix, 37 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-cycle-systemd-20261031.json= ; annulations/reprises natives, SMTP refusé en VM, acceptation/délai/archive simulés explicitement |
+| Fermeture commune e067f8c7 et module | 36 tests Nix, 39 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-closure-systemd-20261031.json= ; refus avant archive, reprise après panne partielle de purge, conservation du journal et d'un compte tiers ; hook IdP réel distinct |
+| Admission durable 718a8188 | 38 tests Nix, 41 natifs distincts, 22 assertions Nix et 97 régressions, 8 groupes système | =runtime/qualification-vision-admission-systemd-20261031.json= ; modes fermé/ouvert/fermé, refus et reprise ; ancienne révision 6ae96aea écartée après reproduction d'une famine |
+| Adoption des deux états SQLite d'admission | 18 tests natifs puis Nix, 17 assertions de module, 8 groupes système | =migrations/admission/qualification-systemd-20261031.json= ; lecture par le même ELF Rust sans perte, dérivation Git/local identique ; aucun snapshot réel, acquisition/cohérence et retour après nouvelles écritures encore bloquants |
 
 Le serveur courant est =f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd=.
 Il est installé dans =/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a=
@@ -199,6 +206,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
 | Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
+| État historique d'admission | Outil hors ligne préparé ; adoption réelle bloquante | Snapshots scellés cohérents avec PostgreSQL/IdP, arrêt des anciens émetteurs, conservation des preuves/messages et stratégie de retour après nouvelles écritures | Composant local borné côté opérateur ; tests Cloud sur état inventé uniquement, aucun contenu de snapshot transmis aux agents |
 | Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
 | Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
 | Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |

@@ -1,0 +1,67 @@
+{
+  "derivation": "/nix/store/isvhqvmnj40w9caj45kznql2yrnkncxv-vm-test-run-mrjam-admission-adoption-systemd-independent.drv",
+  "current_derivation_matches": true,
+  "path_info": {
+    "/nix/store/05z2zi7shgl3gmm9yhs6wdj13641m8vp-vm-test-run-mrjam-admission-adoption-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/isvhqvmnj40w9caj45kznql2yrnkncxv-vm-test-run-mrjam-admission-adoption-systemd-independent.drv",
+      "narHash": "sha256-Yq6nKAW1f8I1OHyfY47gFzfRsFBw/7+NjzY2jl7oW+E=",
+      "narSize": 1760,
+      "references": [
+        "/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090",
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1"
+      ],
+      "registrationTime": 1793466227,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "scope": "invented legacy snapshots, actual NixOS read-only binds and selected Rust reader",
+    "artifact": "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1",
+    "code_sha256": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "admission_artifact": "/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090",
+    "admission_sha256": "754a86b2f062be287777cdffc4211a39f60e43a18601ef9d3dfca0a547cbfc1f",
+    "checks": [
+      "exact-packaged-code-no-automatic-start-root-arguments-and-missing-input-refusals",
+      "root-staging-unreadable-outside-unit-and-owner-mode-refusals",
+      "real-read-only-bind-mounts-and-lossless-private-atomic-merge",
+      "idempotent-adoption-without-rewriting-target-or-sources",
+      "modified-destination-refused-without-overwrite-or-data-in-journal",
+      "concurrent-directory-lock-refuses-migration",
+      "both-complete-publication-interruption-windows-recover-identical-state",
+      "qualified-rust-runtime-opens-adopted-state-without-initialization-or-proof-loss"
+    ],
+    "production_access": false,
+    "limits": [
+      "No real snapshots, backup, data or secret",
+      "Actual CPU/memory peak at maximum input limits remains unmeasured",
+      "Source acquisition, whole-system quiescence and PostgreSQL/IdP coherence are external preconditions",
+      "No downgrade after new Rust writes; no VPS generation or deployment controller qualified"
+    ]
+  },
+  "result_sha256": "4d17331eca22c0d84daefca28c409b38616b2c4e4b91c988e071673aeaff8270",
+  "recursive_content_verification": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "duration_seconds": 240.1,
+  "sources_sha256": {
+    "mrjam-validation/operational-review/admission-adoption-systemd.nix": "3521b05d46b4d008ef3c43df3f3c0ba057b55f1a502d1e6580fe7e125d4a86d6",
+    "mrjam-validation/operational-review/fixtures/admission-state-synthetic.py": "f2d29d7bc15fc9cd854a2209d9c96938b83578fe2cb8290c422fc88aefb10963",
+    "vps-infrastructure/operations/nixos/mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795",
+    "vps-infrastructure/operations/nixos/mrjam-vision-admission.nix": "8bf97e6cfd78d3dcfdb44d2521d9653d8abbb0f0127d5d591d37eb830b2e92cb",
+    "vps-infrastructure/operations/migrations/admission/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "vps-infrastructure/operations/migrations/admission/package.nix": "657158eae65af58ff1fa54fe7eaff581a32c05aed43e546e5a55bb4907de9289"
+  },
+  "logs_sha256": {
+    "admission-adoption-systemd-20261031-03.log": "58e4369ea440d95213726bc6892193c79a4ee99b302dd224ab8f99bc539403b1",
+    "admission-adoption-systemd-20261031-03.json": "5562565f35fc9a15f5f15ae61a42ac89b0092a12f2772bf3a8fbc1a93b9f8e66",
+    "admission-adoption-systemd-verify-20261031-03.log": "1b711a53b755460cc5a7da09dd744a48d155a1a23976a6ee54eb2b3149864c31"
+  },
+  "previous_failed_attempt": "mrjam-validation/operational-review/admission-adoption-systemd-failed-20261031-01.json",
+  "previous_success_not_selected": "Attempt 02 passed on the earlier workspace package; attempt 03 qualifies the package identical to the Git flake output."
+}
