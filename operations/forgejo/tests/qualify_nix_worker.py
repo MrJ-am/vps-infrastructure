@@ -9,12 +9,14 @@ separate systemd VM, not inferred from this host test.
 """
 import hashlib
 import importlib.util
+import inspect
 import json
 import os
 from pathlib import Path
 import re
 import stat
 import sys
+import tempfile
 import time
 
 spec = importlib.util.spec_from_file_location("worker", Path(__file__).parents[1] / "worker.py")
@@ -29,7 +31,8 @@ def require(value, code):
         raise RuntimeError(code)
 
 
-def main():
+def main(*, diagnostic=False, candidate_diagnostics=False):
+    require(not candidate_diagnostics or diagnostic, "DIAGNOSTIC_MODE_REQUIRED")
     require(len(sys.argv) == 2 and os.getuid() != 0, "CLOUD_FIXTURE_REQUIRED")
     exported = Path(sys.argv[1]).absolute()
     require(re.fullmatch(r"/workspace/shared/mrjam-declarative-nix/worker-[A-Za-z0-9_-]+", str(exported)), "INVALID_FIXTURE_ROOT")
@@ -52,8 +55,38 @@ def main():
         paths.append(entry["path"])
     require(len(paths) == len(set(paths)) and configuration["validator_store"] in paths, "INVALID_EXPORT")
     source = worker.verify_input(exported / "input", record["proposal_sha256"], configuration["rules_revision"])
-    output_root = exported.parent / (exported.name + "-outputs")
-    output_root.mkdir(mode=0o700) # Never replace an earlier receipt or artifact.
+    if diagnostic:
+        output_root = Path(tempfile.mkdtemp(prefix=exported.name + "-diagnostic-", dir=exported.parent))
+    else:
+        output_root = exported.parent / (exported.name + "-outputs")
+        output_root.mkdir(mode=0o700) # Never replace an earlier receipt or artifact.
+    if diagnostic:
+        # Same explicit synthetic-only technique as the VM diagnostic variant.
+        # Expose only the pinned supervisor's stderr; candidate commands still
+        # discard stdout/stderr. Never turn this run into qualification evidence.
+        diagnostic_source = inspect.getsource(worker.execute)
+        require(diagnostic_source.count("stderr=subprocess.DEVNULL") == 1, "DIAGNOSTIC_SOURCE_CHANGED")
+        namespace = dict(vars(worker))
+        exec(compile(diagnostic_source.replace("stderr=subprocess.DEVNULL", "stderr=None"), "<synthetic-worker-diagnostic>", "exec"), namespace)
+        worker.execute = namespace["execute"]
+    overlays = []
+    if candidate_diagnostics:
+        # Public source and invented test data only. Keep the original closure
+        # immutable and make the deviation explicit; this path always returns 2.
+        library = configuration["validator_store"] + "/lib"
+        runner = (exported / library.removeprefix("/") / "runner.py").read_text()
+        match = re.search(r'^RUNTIME = Path\("(/nix/store/[a-z0-9]{32}-mrjam-verifier-runtime.json)"\)$', runner, re.M)
+        require(match is not None, "DIAGNOSTIC_RUNTIME_CHANGED")
+        runtime = worker.parse((exported / match[1].removeprefix("/")).read_bytes())
+        require(worker.STORE.fullmatch(runtime["support"]), "DIAGNOSTIC_SUPPORT_CHANGED")
+        for index, target in enumerate((library + "/sandbox.py", runtime["support"] + "/sandbox.py", runtime["support"] + "/pg_stage.py")):
+            original = (exported / target.removeprefix("/")).read_text()
+            require("stderr=subprocess.DEVNULL" in original, "DIAGNOSTIC_SOURCE_CHANGED")
+            changed = original.replace("stdout=subprocess.DEVNULL", "stdout=None").replace("stderr=subprocess.DEVNULL", "stderr=None")
+            overlay = output_root / ("diagnostic-" + str(index) + ".py")
+            overlay.write_text(changed)
+            overlay.chmod(0o400)
+            overlays.extend(("--ro-bind", str(overlay), target))
     outputs = {name: os.memfd_create("mrjam-qualified-" + name, os.MFD_CLOEXEC | os.MFD_ALLOW_SEALING) for name, _ in worker.ARTIFACTS}
     started = time.monotonic()
     try:
@@ -69,8 +102,15 @@ def main():
                         arguments[index + 1] = str(source)
                     else:
                         raise RuntimeError("UNEXPECTED_MOUNT")
+            if overlays:
+                position = arguments.index(configuration["validator_store"] + "/bin/mrjam-validate")
+                arguments[position:position] = overlays
             return arguments
         passed = worker.run_with_artifacts(command, outputs)
+        if diagnostic:
+            print(json.dumps({"decision": "diagnostic-only", "supervisor_returned_success": passed,
+                              "qualification_passed": False, "production_access": False}))
+            return 2
         require(passed, "NIX_VALIDATOR_REFUSED")
         artifacts = worker.seal_artifacts(outputs)
         for entry in artifacts:
