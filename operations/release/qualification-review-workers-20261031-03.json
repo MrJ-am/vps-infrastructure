@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "production_access": false,
+  "production_ready": false,
+  "sources": {
+    "infrastructure": "5caaa040bc1b472daeb5ebd156fe79d9da78dcdc",
+    "validation": "834090da4a325f847ed1e8020f2aafde27fb4e46",
+    "vision": "7d87768bd141ec6a2a41b4ec9f3277639fcba67f"
+  },
+  "selection_sha256": "d915853fed6dca08f8d1b5c6b47902e52e8c39ca20e8d863af16a3ab69c82f8d",
+  "manifest_sha256": "a164c1189176f9b5cff87e751cbb65ba37ccd128d1860550fbbef31f65089643",
+  "export": {
+    "closure_paths": 27,
+    "decision": "exported-and-import-checked",
+    "exports": {
+      "public-artifacts.nix-export": {
+        "bytes": 256384928,
+        "sha256": "f2dfb7a60b4655dfb572e68c6e61326a796f1d16c8133f68fa46333c86f33b9f"
+      },
+      "public-artifacts.nix-export.gz": {
+        "bytes": 107547628,
+        "sha256": "165576f50141b0a7247683a0b4374ae1ed8fa0d38159ea61fc7295d95ba0c467"
+      }
+    },
+    "manifest_sha256": "a164c1189176f9b5cff87e751cbb65ba37ccd128d1860550fbbef31f65089643",
+    "selected_roots": 5
+  },
+  "archive": {
+    "all_members_verified": true,
+    "archive": "/workspace/shared/mrjam-travailleurs-revue-20261031-03.tar",
+    "bytes": 107653120,
+    "compressed_stream_matches_imported_stream": true,
+    "members": 17,
+    "production_ready": false,
+    "sha256": "08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c"
+  },
+  "exporter_tests": 8,
+  "sources_sha256": {
+    "export_review.py": "04aebf2ac158ea1de5382a642be7381533801afdaa41d0cd8a4b10ab981f7d34",
+    "select_workers_review_20261031_03.py": "a0186aa588c08eab7b7a262f6ca336d49a88e5657718fa4b38d1d10faaf5c48b",
+    "package_workers_review_20261031_03.py": "daebbe51159d66e73621ca05b5f5566dc9f1d86cc304fc45c65bb81506f0eac9"
+  },
+  "logs_sha256": {
+    "review-export-workers-tests-20261031-03.log": "d6d2156d0a35bd7582ce7bb0f35a6ce52c1b403d5dea9f95b9a2a76cf00f2b4c",
+    "review-export-workers-20261031-03.log": "2ece47e9fc6285308715dd341df1feeee9ff594a865234a7ca470eccfbdc050f",
+    "review-export-workers-20261031-03-02.log": "218e7cda3a43d0ba3bcd2b6719a0d1184fa920924f7da3c297737fd43e1fb063",
+    "review-export-workers-20261031-03-02.json": "0797dd2aecda3fa27c081f2d6d60d66e3413a9272f649353907546152e3f7a01",
+    "review-package-workers-20261031-03.json": "307d4f7298f97d6b506f96737c8bafeda8fb9308478ba72ecce0c92831a2104b"
+  },
+  "earlier_attempt": {
+    "exit_code": 1,
+    "code": "CLOUD_FIXTURE_REQUIRED",
+    "reason": "The first call omitted the mandatory offline synthetic fixture marker. No destination was created. The corrected invocation supplied it; guards and hashes stayed unchanged."
+  },
+  "limits": [
+    "Five public components are not a complete VPS generation or an installer",
+    "Archive 9b6cbe74, cycle 47286a8a and admission 0d33bd70 are superseded for folded historical envelopes; original archives and receipts remain unchanged",
+    "The separate platform package still supplies its platform, replay and SQL004 artifacts; its older archive binary is no longer selected",
+    "Fresh-store verification checks content and references, not protected trust, real-state coherence, backup restoration or deployment authority"
+  ]
+}
