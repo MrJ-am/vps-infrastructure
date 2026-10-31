@@ -1,0 +1,28 @@
+#+title: Paquet d'observation MRJ.am — relais Spectre
+#+language: fr
+
+Cette branche distribue le paquet d'observation V2 déjà qualifié. Le découpage
+en trois fichiers permet son transfert par GitHub sans modifier un seul octet
+de l'archive originale. Il ne constitue pas une nouvelle version de la sonde.
+
+Depuis une copie de cette branche, avec Python 3.11 ou supérieur :
+
+#+begin_src sh
+python3 -I -S assemble.py
+sha256sum --check archive.sha256
+#+end_src
+
+Le résultat attendu est =ARCHIVE_VERIFIED=, suivi de l'empreinte :
+=0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
+L'archive =mrjam-observation-adoption-20261031.tar= mesure 136396800 octets.
+L'assemblage refuse toute partie altérée et n'écrase aucun fichier existant.
+Il n'extrait, n'importe et n'exécute pas le paquet Nix.
+
+Après ce succès, extraire l'archive dans un dossier nouveau, vérifier toutes
+les entrées de =SHA256SUMS=, puis lire =SPECTRE-RELAIS-OBSERVATION.txt= et
+=EXECUTION-HUMAINE.org=. Le vérificateur livré doit rendre =DELIVERY_VALID=.
+Le relais humain décrit dans ces fichiers conserve les frontières de production.
+
+Le retour à transmettre à Cloud est uniquement =adoption-v2.json=, filtré et
+borné. Aucun compte rendu d'observation du VPS n'est contenu dans cette branche :
+elle fournit le programme qui permet de produire ce retour.

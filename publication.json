@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "archive": "mrjam-observation-adoption-20261031.tar",
+  "bytes": 136396800,
+  "sha256": "0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa",
+  "parts": [
+    {
+      "file": "mrjam-observation-adoption-20261031.tar.part-01",
+      "bytes": 50331648,
+      "sha256": "94eb8d5eb46b884c127c1f7cdc4097988451de7da5c84a2367e133113451c27c"
+    },
+    {
+      "file": "mrjam-observation-adoption-20261031.tar.part-02",
+      "bytes": 50331648,
+      "sha256": "643fbbc4a48de15da89213aedc2c268add6230dd16d5a484d202b1cb34efa629"
+    },
+    {
+      "file": "mrjam-observation-adoption-20261031.tar.part-03",
+      "bytes": 35733504,
+      "sha256": "bab070794559e2f0f794f64bc099fa8ee120d64ed6b5e5123ee8887d60138c8a"
+    }
+  ],
+  "source_revision": "e0edf7fd7201f0443f5d4b4acef8420f11cb097d",
+  "review_revision": "93828871fc79c2b98d128b5672bcccf8b6dbd466",
+  "production_activation": false
+}
