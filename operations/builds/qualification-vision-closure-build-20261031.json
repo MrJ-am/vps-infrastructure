@@ -1,0 +1,51 @@
+{
+  "decision": "verified-public-build",
+  "derivation": "/nix/store/nxhlyygm7b4zr1k7dcrjbgh128ghda3g-mrjam-vision-closure-0.1.0-e067f8c74195.drv",
+  "artifact": {
+    "artifact": "vision-closure",
+    "deployment_authorized": false,
+    "input_manifest_sha256": "e1b6797cc00a272cb30a3e9b32e44ca4205128260fe6413da63d12770df8804f",
+    "payload_sha256": {
+      "bin/vision-closure": "a38d798172ca3291e4b4c01e4f5fa94dad259eadedbdb561495f12a83b600bfe"
+    },
+    "schema_version": 1,
+    "source_commit": "e067f8c741958335bc5c12858ea41d61a093f07e"
+  },
+  "path_info": {
+    "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195": {
+      "ca": null,
+      "deriver": "/nix/store/nxhlyygm7b4zr1k7dcrjbgh128ghda3g-mrjam-vision-closure-0.1.0-e067f8c74195.drv",
+      "narHash": "sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk=",
+      "narSize": 11977128,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793462296,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "recursive_content_verified": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 36,
+  "separate_native_suite_tests": 39,
+  "sources_sha256": {
+    "operations/builds/vision-closure-20261031.nix": "e76fc63f6a732ee9583e9a68d573c180fe45fa9b80b5f34302d514655f690574",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3"
+  },
+  "logs_sha256": {
+    "vision-closure-build-20261031-01.log": "1e5aded89f06db785e8507ff2fc5f2ff73a02ae2c5a28b6fd98cb17986baf9e6",
+    "vision-closure-build-20261031-01.json": "792dcac683a9fedc254dbf123102f4fbd18163873c13a73200f93d79143c15ab",
+    "vision-closure-build-verify-20261031-01.log": "30f68360c897501463de2bf07f73be7d2c9091e1c3249fd71837efb5ed2a6822",
+    "vision-closure-inputs-20261031-01.json": "24593dde942cb7c35675ec8e96ba31bd17194baf47fb980674e19ddce222f150"
+  },
+  "limits": [
+    "Only the exact closure ELF is installed; earlier archive, replay and cycle proofs remain separate",
+    "No real native IdP hook, consent, data or production credential adoption"
+  ]
+}

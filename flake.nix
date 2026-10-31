@@ -19,6 +19,7 @@
       visionArchiveEvaluation = import ./operations/tests/vision-archive-evaluation.nix { inherit nixpkgs; };
       visionReplayEvaluation = import ./operations/tests/vision-replay-evaluation.nix { inherit nixpkgs; };
       visionCycleEvaluation = import ./operations/tests/vision-cycle-evaluation.nix { inherit nixpkgs; };
+      visionClosureEvaluation = import ./operations/tests/vision-closure-evaluation.nix { inherit nixpkgs; };
     in {
       nixosModules = {
         rust = import ./operations/nixos/mrjam-rust.nix;
@@ -33,6 +34,7 @@
         visionArchive = import ./operations/nixos/mrjam-vision-archive.nix;
         visionReplay = import ./operations/nixos/mrjam-vision-replay.nix;
         visionCycle = import ./operations/nixos/mrjam-vision-cycle.nix;
+        visionClosure = import ./operations/nixos/mrjam-vision-closure.nix;
         vpsPreparation = import ./operations/nixos/vps-preparation.nix;
       };
       # Deliberately no production nixosConfiguration or default deployable image.
@@ -46,6 +48,7 @@
       lib.qualification.visionArchive = visionArchiveEvaluation;
       lib.qualification.visionReplay = visionReplayEvaluation;
       lib.qualification.visionCycle = visionCycleEvaluation;
+      lib.qualification.visionClosure = visionClosureEvaluation;
       lib.qualification.inventorySshConfig = toString inventoryFixture.config.environment.etc."ssh/sshd_config".source;
       lib.qualification.inventoryAssertions = builtins.all
         (entry: entry.assertion) inventoryFixture.config.assertions;
@@ -94,6 +97,12 @@
       '';
       vision-cycle-module = pkgs.runCommand "mrjam-vision-cycle-module-evaluation" {
         result = builtins.toJSON visionCycleEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      vision-closure-module = pkgs.runCommand "mrjam-vision-closure-module-evaluation" {
+        result = builtins.toJSON visionClosureEvaluation;
       } ''
         mkdir -p "$out"
         printf '%s\n' "$result" > "$out/result.json"

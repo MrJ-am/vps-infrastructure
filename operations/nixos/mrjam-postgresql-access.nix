@@ -19,6 +19,8 @@ let
     visionReplayClosure = workerIdentities.visionReplayJournal;
     visionCycle = { user = "mrjam-vision-cycle"; enabled = config.services.mrjamVisionCycle.enable or false; };
     visionCycleJournal = workerIdentities.visionCycle;
+    visionClosure = { user = "mrjam-vision-closure"; enabled = config.services.mrjamVisionClosure.enable or false; };
+    visionClosureJournal = workerIdentities.visionClosure;
   };
   slotType = lib.types.submodule {
     options = lib.genAttrs capabilities (_: lib.mkOption {
