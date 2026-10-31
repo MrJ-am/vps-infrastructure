@@ -24,7 +24,7 @@ inactif ; il n'est ni importé ni présenté comme un système activable. Il res
 dans ce dépôt. La configuration de Spectre n'est pas celle du VPS.
 
 Le =flake.nix= exporte les modules Rust, inventaire, Forgejo, passerelle,
-politique Forgejo, runner, worker, collecteur, archiviste, rejeu et accès PostgreSQL.
+politique Forgejo, runner, worker, collecteur, archiviste, rejeu, cycle et accès PostgreSQL.
 =nixos/vps-preparation.nix= conserve une composition préparatoire désactivée.
 Il ne définit ni matériel, ni réseau, ni =system.stateVersion=. Les configurations
 de test sont des fixtures, sans cible de production dans =nixosConfigurations=.
@@ -86,8 +86,9 @@ La réponse 403 antérieure de l'endpoint public Forgejo n'a fourni aucune versi
    e920cd59 comme candidat courant ; les preuves de celui-ci restent historiques.
    Les CLI archiviste et rejeu ont leurs builds et qualifications système
    distincts, voir =runtime/vision-archive.org= et =runtime/vision-replay.org=.
-   Admission, cycle et fermeture n'ont pas encore leurs exécutables et unités
-   qualifiés. Les artefacts restent locaux.
+   Le cycle a aussi son exécutable et sa qualification NixOS distincts :
+   =runtime/vision-cycle.org=. Admission et fermeture n'ont pas encore leurs
+   unités qualifiées. Les artefacts restent locaux.
 4. =inventory/= reprend le protocole V1 exact avec fichiers et interpréteurs
    dans le store, identité explicite, verrou de concurrence root, entrée/sortie
    bornées, nettoyage des descendants et filtre final. Aucun nouveau rapport
@@ -145,6 +146,7 @@ autre binaire :
 | Forgejo et runner complets sous systemd | 7 groupes réussis, 25 assertions runner et 17 worker | =forgejo/forgejo-runner-systemd-pass-20261031.json= ; compilateur inventé dans cette VM, pipeline réel testé séparément |
 | Rejeu normal Vision 51e7bcd6 et module | 32 tests Nix, 35 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-replay-systemd-20261031.json= ; clients privés inventés, restauration complète distincte |
 | Migration journal 004 c7056949 | 112 clés sans perte ni doublon ; double application sans changement du journal ; artefact SQL vérifié | =builds/qualification-vision-replay-ordering-20261031.json= ; migrations 001–003 inchangées, aucune exécution VPS |
+| Cycle de préavis 47286a8a et module | 34 tests Nix, 37 natifs distincts, 20 assertions Nix, 8 groupes système | =runtime/qualification-vision-cycle-systemd-20261031.json= ; annulations/reprises natives, SMTP refusé en VM, acceptation/délai/archive simulés explicitement |
 
 Le serveur courant est =f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd=.
 Il est installé dans =/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a=

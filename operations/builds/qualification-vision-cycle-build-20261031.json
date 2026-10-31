@@ -1,0 +1,51 @@
+{
+  "decision": "verified-public-build",
+  "derivation": "/nix/store/axnlxcsk4n1ylanyj8s0bhdq1ycfyg5q-mrjam-vision-cycle-0.1.0-47286a8a808b.drv",
+  "artifact": {
+    "artifact": "vision-cycle",
+    "deployment_authorized": false,
+    "input_manifest_sha256": "22b85f2ee5e353d03ced1b76b5700a8396dd0f84557561430a03e6f4944556cd",
+    "payload_sha256": {
+      "bin/vision-cycle": "ac414571e3141c9c3f88094504401b5789bbb21984151dab34405c2306aed45a"
+    },
+    "schema_version": 1,
+    "source_commit": "47286a8a808b74909bfc647ff8d10e281b4982e4"
+  },
+  "path_info": {
+    "/nix/store/phrp20jmipdai9z3c3k13fq8srcvh734-mrjam-vision-cycle-0.1.0-47286a8a808b": {
+      "ca": null,
+      "deriver": "/nix/store/axnlxcsk4n1ylanyj8s0bhdq1ycfyg5q-mrjam-vision-cycle-0.1.0-47286a8a808b.drv",
+      "narHash": "sha256-aNncD6EjEDjaEo/qGLM/Fh7IlcA1Ar8YYUkuzubsH+4=",
+      "narSize": 11473280,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "registrationTime": 1793461106,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "recursive_content_verified": true,
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "tests_without_postgresql": 34,
+  "separate_native_suite_tests": 37,
+  "sources_sha256": {
+    "operations/builds/vision-cycle-20261031.nix": "7dd18ba00c5006b0eb0d0a208a1eee28031b931312e4256022a72f0d93944659",
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3"
+  },
+  "logs_sha256": {
+    "vision-cycle-build-20261031-01.log": "51e63cb85a7d4e1456674f3b3e48e25ea827e965cb469eaeb8eeed059d0ff40b",
+    "vision-cycle-build-20261031-01.json": "e1402b6f5a1586527d0b14009d654280ce0c21e3bc7a5b803e4831e450f17ef4",
+    "vision-cycle-build-verify-20261031-01.log": "76c790c76a01e0985b7349220418fa1527d94e4bf0dd3fe46b258669819f864d",
+    "vision-cycle-inputs-20261031-01.json": "a14e2b3c1c52440f9a6f838bab9675790681ec9a4d12b31a94b5b708efded8f7"
+  },
+  "limits": [
+    "The packaged cycle ELF is distinct from the previously qualified archive and replay artifacts",
+    "No production IdP/SMTP delivery or state adoption"
+  ]
+}

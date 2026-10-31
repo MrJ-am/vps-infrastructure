@@ -12,6 +12,14 @@ let
   };
   capabilities = [ "mateval" "matevalAdministration" "vision"
     "visionAdministration" "visionJournal" "audition" ];
+  workerIdentities = {
+    visionArchive = { user = "mrjam-vision-archive"; enabled = config.services.mrjamVisionArchive.enable or false; };
+    visionReplayJournal = { user = "mrjam-vision-replay"; enabled = config.services.mrjamVisionReplay.enable or false; };
+    visionReplayCycle = workerIdentities.visionReplayJournal;
+    visionReplayClosure = workerIdentities.visionReplayJournal;
+    visionCycle = { user = "mrjam-vision-cycle"; enabled = config.services.mrjamVisionCycle.enable or false; };
+    visionCycleJournal = workerIdentities.visionCycle;
+  };
   slotType = lib.types.submodule {
     options = lib.genAttrs capabilities (_: lib.mkOption {
       type = lib.types.nullOr connectionType;
@@ -26,7 +34,7 @@ let
   }) (lib.filterAttrs (_: value: value != null) cfg.slots.${slot})) [ "blue" "green" ]
   ++ lib.mapAttrsToList (capability: connection: {
     slot = null; inherit capability;
-    user = if capability == "visionArchive" then "mrjam-vision-archive" else "mrjam-vision-replay";
+    user = workerIdentities.${capability}.user;
     inherit (connection) database role;
   }) (lib.filterAttrs (_: connection: connection != null) cfg.workers);
   safeName = name: !(lib.hasPrefix "pg_" name)
@@ -49,7 +57,7 @@ in {
       blue = lib.mkOption { type = slotType; default = { }; };
       green = lib.mkOption { type = slotType; default = { }; };
     };
-    workers = lib.genAttrs [ "visionArchive" "visionReplayJournal" "visionReplayCycle" "visionReplayClosure" ]
+    workers = lib.genAttrs (builtins.attrNames workerIdentities)
       (_: lib.mkOption { type = lib.types.nullOr connectionType; default = null; });
   };
   config = lib.mkIf cfg.enable {
@@ -66,8 +74,7 @@ in {
             (builtins.filter (other: other.role == row.role) rows))) == 1) rows;
         message = "mrjamPostgresqlAccess requires each SQL role to belong to one declared database, preventing cross-slot database access."; }
       { assertion = lib.all (row: if row.slot == null
-          then (if row.capability == "visionArchive" then (config.services.mrjamVisionArchive.enable or false)
-            else (config.services.mrjamVisionReplay.enable or false))
+          then workerIdentities.${row.capability}.enabled
           else config.services.mrjamRust.enable && config.services.mrjamRust.slots.${row.slot}.enable) rows;
         message = "mrjamPostgresqlAccess requires each declared local Rust identity."; }
       { assertion = lib.hasPrefix hbaBlock config.services.postgresql.authentication;
