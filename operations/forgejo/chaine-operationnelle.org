@@ -73,6 +73,19 @@ effectives, l'observation de la génération du VPS, ses ressources disponibles,
 le SSO et la migration/restauration. Aucun succès de cette liste n'est inféré
 du voyant Actions. Les reçus locaux ne sont pas une autorité de déploiement.
 
+Le module du runner passe maintenant 25 assertions d'évaluation, consignées dans
+=qualification-runner-module-20261031-03.json=. Les essais système ont corrigé
+le PATH privé, les points de montage exigés par les protections systemd, et le
+choix numérique des UID pour les règles nftables. Les UID du coordinateur et du
+registrar doivent être explicitement réservés ou rapprochés des comptes
+existants ; les valeurs de la VM ne sont jamais des allocations proposées au VPS.
+La politique d'admission est une copie NixOS root en 0444, montée seule en
+lecture dans la racine privée. La déduplication du store ne doit pas transformer
+ce fichier en lien multiple : le contrôle de refus du runner reste intact.
+L'essai système 10 confirme l'inscription, les credentials, la racine privée,
+les limites et les refus réseau ; le job atteint le collecteur puis est refusé
+par le worker. Ce résultat partiel ne qualifie pas encore la chaîne complète.
+
 * Reproduction locale
 
 Les fixtures sont sous =tests/= et =mrjam-validation/operational-review/=.

@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   cfg = config.services.mrjamForgejoRunner;
+  nftUid = value: if value == null then throw "mrjamForgejoRunner: explicit service UIDs required before building firewall rules" else toString value;
   boundedRunner = pkgs.callPackage ../forgejo/runner-admission.nix { };
   admissionPolicy = pkgs.writeText "mrjam-runner-admission.json" (builtins.toJSON {
     schema_version = 1;
@@ -30,7 +31,9 @@ let
   # which could expose machine configuration or unrelated confidential sources.
   root = pkgs.runCommand "mrjam-forgejo-coordinator-root" { } ''
     mkdir -p "$out/nix/store" "$out/bin" "$out/usr/bin" "$out/etc" \
-      "$out/proc" "$out/dev" "$out/tmp" "$out/run/mrjam-validation-collector" \
+      "$out/proc" "$out/sys/fs/cgroup" "$out/dev" "$out/tmp" "$out/run/mrjam-validation-collector" \
+      "$out/var/tmp" "$out/home" "$out/root" "$out/run/user" \
+      "$out/run/credentials/mrjam-forgejo-runner.service" \
       "$out/var/lib/mrjam-forgejo-runner" "$out/etc/mrjam-forgejo-runner"
     while IFS= read -r path; do
       cp -a --reflink=auto "$path" "$out/nix/store/"
@@ -38,9 +41,9 @@ let
     ln -s ${pkgs.bash}/bin/bash "$out/bin/sh"
     ln -s ${pkgs.coreutils}/bin/env "$out/usr/bin/env"
     touch "$out/run/mrjam-validation-collector/request.sock"
-    # A regular immutable file inside the private root, not an /etc symlink.
-    cp ${admissionPolicy} "$out/etc/mrjam-forgejo-runner/admission.json"
-    chmod 0444 "$out/etc/mrjam-forgejo-runner/admission.json"
+    # Nix deduplication may hardlink store files. Mount the explicit root-owned
+    # /etc copy below; keep the runner's single-link policy check unchanged.
+    touch "$out/etc/mrjam-forgejo-runner/admission.json"
     printf '%s\n' 'root:x:0:0:root:/var/empty:/bin/sh' > "$out/etc/passwd"
     printf '%s\n' 'root:x:0:' > "$out/etc/group"
   '';
@@ -74,6 +77,14 @@ in {
   options.services.mrjamForgejoRunner = {
     enable = lib.mkEnableOption "repository-scoped Forgejo coordinator with a distinct isolated validation worker";
     rulesRevision = lib.mkOption { type = lib.types.strMatching "[0-9a-f]{40}"; };
+    coordinatorUid = lib.mkOption {
+      type = lib.types.nullOr (lib.types.ints.between 1 4294967294); default = null;
+      description = "Explicit existing or reserved UID, reconciled before adoption; shared with the nftables policy.";
+    };
+    registrarUid = lib.mkOption {
+      type = lib.types.nullOr (lib.types.ints.between 1 4294967294); default = null;
+      description = "Distinct existing or reserved registration UID, reconciled before adoption.";
+    };
     registrationTokenFile = lib.mkOption {
       type = lib.types.strMatching "/(run|var/lib)/[A-Za-z0-9_./-]+";
       description = "Existing local API credential reference for the separate registrar. Never visible to the daemon or worker.";
@@ -83,6 +94,8 @@ in {
   };
   config = lib.mkIf cfg.enable {
     assertions = [
+      { assertion = cfg.coordinatorUid != null && cfg.registrarUid != null && cfg.coordinatorUid != cfg.registrarUid;
+        message = "mrjamForgejoRunner: two distinct explicit service UIDs are required; never infer them from the build host."; }
       { assertion = config.services.mrjamValidationWorker.enable;
         message = "mrjamForgejoRunner: the distinct validation worker must be configured."; }
       { assertion = config.services.mrjamValidationWorker.rulesRevision == cfg.rulesRevision;
@@ -100,11 +113,13 @@ in {
     users.groups.mrjam-forgejo-runner = { };
     users.users.mrjam-forgejo-registration = {
       isSystemUser = true;
+      uid = cfg.registrarUid;
       group = "mrjam-forgejo-registration";
       home = "/var/empty";
     };
     users.users.mrjam-forgejo-runner = {
       isSystemUser = true;
+      uid = cfg.coordinatorUid;
       group = "mrjam-forgejo-runner";
       extraGroups = [ "mrjam-validation-requesters" ];
       home = "/var/empty";
@@ -112,6 +127,10 @@ in {
     environment.etc."mrjam-forgejo-registration/policy.json" = {
       text = builtins.toJSON { rules_revision = cfg.rulesRevision; };
       mode = "0444";
+    };
+    environment.etc."mrjam-forgejo-runner/admission.json" = {
+      source = admissionPolicy;
+      mode = "0444"; # NixOS copies this file instead of creating a store symlink.
     };
     systemd.tmpfiles.rules = [
       "d /var/lib/mrjam-forgejo-runner/work 0700 mrjam-forgejo-runner mrjam-forgejo-runner -"
@@ -121,10 +140,10 @@ in {
       content = ''
         chain bounded_output {
           type filter hook output priority 10; policy accept;
-          meta skuid "mrjam-forgejo-runner" ip daddr 127.0.0.1 tcp dport 3004 accept
-          meta skuid "mrjam-forgejo-runner" reject
-          meta skuid "mrjam-forgejo-registration" ip daddr 127.0.0.1 tcp dport 3004 accept
-          meta skuid "mrjam-forgejo-registration" reject
+          meta skuid ${nftUid cfg.coordinatorUid} ip daddr 127.0.0.1 tcp dport 3004 accept
+          meta skuid ${nftUid cfg.coordinatorUid} reject
+          meta skuid ${nftUid cfg.registrarUid} ip daddr 127.0.0.1 tcp dport 3004 accept
+          meta skuid ${nftUid cfg.registrarUid} reject
         }
       '';
     };
@@ -160,7 +179,9 @@ in {
       after = [ "nftables.service" "mrjam-validation-collector.socket" ];
       requires = [ "nftables.service" "mrjam-validation-collector.socket" ];
       environment = {
-        PATH = "${runtime}/bin";
+        # NixOS also defines PATH from service.path. This private root contains
+        # only the coordinator runtime; force that exact path, no host fallback.
+        PATH = lib.mkForce "${runtime}/bin";
         HOME = "/var/lib/mrjam-forgejo-runner";
         USER = "mrjam-forgejo-runner";
       };
@@ -172,7 +193,7 @@ in {
         SupplementaryGroups = [ "mrjam-validation-requesters" ];
         RootDirectory = root;
         MountAPIVFS = true;
-        BindReadOnlyPaths = [ "/run/mrjam-validation-collector/request.sock" ];
+        BindReadOnlyPaths = [ "/run/mrjam-validation-collector/request.sock" "/etc/mrjam-forgejo-runner/admission.json" ];
         StateDirectory = "mrjam-forgejo-runner";
         StateDirectoryMode = "0700";
         WorkingDirectory = "/var/lib/mrjam-forgejo-runner";

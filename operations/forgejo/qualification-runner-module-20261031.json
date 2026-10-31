@@ -1,0 +1,47 @@
+{
+  "assertions": 23,
+  "authority": "unverified-local-test-result",
+  "checks": {
+    "boundedCoordinator": true,
+    "credentialTraversalRejected": true,
+    "disabledInert": true,
+    "duplicateUidsRejected": true,
+    "fixedCollectorSocketOnly": true,
+    "fixedNftDestination": true,
+    "fixturePasses": true,
+    "mismatchedRulesRejected": true,
+    "missingCollectorRejected": true,
+    "missingFirewallRejected": true,
+    "missingUidRejected": true,
+    "missingWorkerRejected": true,
+    "noArbitraryNetwork": true,
+    "noAutomaticStart": true,
+    "noContainerGroup": true,
+    "noRegistrationTokenInDaemon": true,
+    "numericFirewallUidMatchesAccount": true,
+    "privateCredentialsByReference": true,
+    "renderedUnitKeepsPrivatePath": true,
+    "rootContainsOnlyPublicRuntime": true,
+    "separateArtifactOwner": true,
+    "separateIdentities": true,
+    "specializedAdmissionBeforeCandidate": true
+  },
+  "fixed_issues": [
+    "Use only the private coordinator PATH; NixOS conflicting default resolved",
+    "Numeric firewall service UIDs are required and shared with declared system users; ruleset validation preserved"
+  ],
+  "limits": [
+    "UIDs 61230 and 61231 belong to invented fixtures only",
+    "Existing production UIDs/GIDs, collision checks and service identities still require bounded adoption evidence",
+    "No actual runtime result inferred from this evaluation"
+  ],
+  "production_access": false,
+  "result_sha256": "d2ad599e39788e3320b6b3e763ea1496585c74392c41c59171718cc7cd48256c",
+  "schema_version": 1,
+  "scope": "Nix module and rendered unit evaluation, not running service qualification",
+  "sources_sha256": {
+    "operations/forgejo/tests/runner-module-evaluation.nix": "f5c6b344c26c6ea94e44bcd413ee9354395735c0b203dfa2fb0d77aecb46ef7b",
+    "operations/nixos/mrjam-forgejo-runner.nix": "c5bf1844d501d7a23d6728ca60d452b0e7f535822cd6a47af24a01f4815950d4"
+  },
+  "systemd_runner_qualified": false
+}
