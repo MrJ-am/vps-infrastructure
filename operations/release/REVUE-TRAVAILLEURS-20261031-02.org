@@ -1,0 +1,39 @@
+#+title: Remise de revue — travailleurs et admission corrigée
+#+language: fr
+#+date: 2026-10-31
+
+Archive Cloud : =/workspace/shared/mrjam-travailleurs-revue-20261031-02.tar=.
+Taille : 103536640 octets. SHA-256 :
+=6d9233dc402342c1311ae81b4e755cf260c08be7051bbb3f2db6566488ce0ae4=.
+
+Quatre artefacts : cycle =47286a8a=, fermeture =e067f8c7=, admission
+=0d33bd70= et adopteur hors ligne =sc6zj2w7=. Treize pièces de preuve,
+26 chemins transitifs et dix-sept membres du tar sont vérifiés. Le même export
+a été importé dans un store vierge local, sans exécuter les programmes ni
+modifier les règles de confiance Nix. L'exporteur passe huit tests.
+
+[[file:qualification-review-workers-20261031-02.json][Le reçu]] lie sources, sélection, manifeste, export, compression et archive.
+[[file:review-workers-20261031-02.json][La sélection]] conserve les preuves propres à chaque artefact. Le
+[[file:../runtime/vision-admission.org][runtime d'admission]] possède 38 tests Nix, 41 tests natifs, fmt/clippy,
+huit groupes système et huit groupes d'adoption/reprise ouverte. Les messages
+historiques et leurs empreintes ne sont pas réaffectés.
+
+L'ancienne archive travailleurs du même jour reste conservée avec son SHA
+=e6a635c033cbda82e33322293e61f5bf014057ad07ee461f6684863110bae28f=.
+Elle contient l'admission =718a8188=, écartée pour l'ouverture historique après
+reproduction du blocage. Aucune empreinte ancienne n'a été changée. Le premier
+paquet plateforme/archive/rejeu/SQL004 reste lui aussi distinct et inchangé.
+
+Pour examiner ce lot, vérifier l'empreinte du tar avant extraction dans un
+nouveau répertoire, puis chacune des entrées de =SHA256SUMS=. Les attentes
+sont celles de cette révision Git, jamais recalculées pour accepter un écart.
+Voir [[file:IMPORT-ARTEFACTS.org][la procédure d'import de revue]] pour un store local séparé. Ne pas
+exécuter le contenu ni l'importer dans le store VPS sur la seule base de cette
+remise. Aucune génération hôte, capacité d'installation, approbation protégée
+ou récupération de données réelles n'est établie par cet import local.
+
+Avant mise en service : réconcilier le host installé, qualifier l'IdP réel et
+les secrets référencés, la cohérence des états et leur retour après écritures,
+la chaîne Forgejo/compilateur intégrée et l'autorité protégée des reçus. La
+[[file:../dossier-deploiement.org][matrice de blocages et la procédure]] restent applicables ; ces paquets
+contiennent du code public et des preuves synthétiques, aucune donnée réelle.

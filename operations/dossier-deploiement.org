@@ -179,8 +179,9 @@ preuve. Export/import dans un store vierge et seize membres du tar ont été
 vérifiés. L'ancien paquet plateforme/archive/rejeu/SQL004 reste inchangé.
 Aucun des deux paquets ne constitue une génération système ni un installateur.
 Le premier paquet travailleurs contient encore l'admission =718a8188= : il est
-conservé pour revue historique et doit être complété par le nouvel artefact
-qualifié avant toute sélection d'ouverture historique.
+conservé pour revue historique. Le [[file:release/REVUE-TRAVAILLEURS-20261031-02.org][nouveau paquet distinct]] sélectionne
+=0d33bd70=, avec treize preuves et dix-sept membres contrôlés. Il ne remplace
+pas les préconditions de cohérence de l'existant et d'installation.
 
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256

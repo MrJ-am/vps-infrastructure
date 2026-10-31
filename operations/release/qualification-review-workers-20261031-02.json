@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "production_access": false,
+  "production_ready": false,
+  "sources": {
+    "infrastructure": "7a1065ebb57f972095f2a9066d2700d799e32208",
+    "validation": "b6d78b20e6bd5a13d7ba3a07a3e350141de9f4ce",
+    "vision": "0d33bd70f3b1b4f33f340ffc1ef9376bd63c0709"
+  },
+  "selection_sha256": "28d6977898e9336691a5524b729b22e8bffdc60d95a45227ba251cddc0377256",
+  "manifest_sha256": "8299c081d29d4f0301c873307d3fb0d4ecc2a67fd40d2033b3f0c6f7ec3ebdff",
+  "export": {
+    "closure_paths": 26,
+    "decision": "exported-and-import-checked",
+    "exports": {
+      "public-artifacts.nix-export": {
+        "bytes": 246030312,
+        "sha256": "a7ea4b305e358f41a8964747d9bd967bf71842868a3cbbdc42f2a11eba7670dc"
+      },
+      "public-artifacts.nix-export.gz": {
+        "bytes": 103448590,
+        "sha256": "f62daf20183c7e623c8bf8ae0a8999fabd11749be5e9a993b52ed3473520b704"
+      }
+    },
+    "manifest_sha256": "8299c081d29d4f0301c873307d3fb0d4ecc2a67fd40d2033b3f0c6f7ec3ebdff",
+    "selected_roots": 4
+  },
+  "archive": {
+    "all_members_verified": true,
+    "archive": "/workspace/shared/mrjam-travailleurs-revue-20261031-02.tar",
+    "bytes": 103536640,
+    "compressed_stream_matches_imported_stream": true,
+    "members": 17,
+    "production_ready": false,
+    "sha256": "6d9233dc402342c1311ae81b4e755cf260c08be7051bbb3f2db6566488ce0ae4"
+  },
+  "exporter_tests": 8,
+  "sources_sha256": {
+    "export_review.py": "63b33eacd95e81b816849bde4b1fa961cfb71b431459ec8b9c76541210b6bb85",
+    "package_workers_review_20261031_02.py": "dbf70c89ca57e71316783b3f68e158b27566ae252eb30ab9a20669fe1f27b2b8"
+  },
+  "logs_sha256": {
+    "review-export-workers-tests-20261031-02.log": "2dbe2ca4b5d97e5e7591b4f4335c92ce9b2fd21f3fdef4f2d61b5c923231194c",
+    "review-export-workers-20261031-02.log": "1247e4f71e6bb1fd4833c4ae8d55647873ff1e1f8a8987737efe84be8b194359",
+    "review-export-workers-20261031-02.json": "625165df7a6737950527dfd4bc0d03a73e4daea1a594a8ba2e59f9a85811813e",
+    "review-package-workers-20261031-02.json": "f10cd20158cc666a2d3f2c85407f7d500d5b09f3935ec74d91b966eebdaab438"
+  },
+  "limits": [
+    "The admission 718a8188 archive stays unchanged but is not selected for open legacy adoption",
+    "Local fresh-store import verifies bytes and references, not protected trust or activation",
+    "Four component roots do not constitute a full VPS generation or deployment/rollback controller",
+    "No production identity, real state coherence, backup restoration or protected signing authority established"
+  ]
+}
