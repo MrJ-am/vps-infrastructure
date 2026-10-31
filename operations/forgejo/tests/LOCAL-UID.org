@@ -44,7 +44,18 @@ Les noms sont explicites et chaque tentative garde son propre journal. Le mode
 inventées dans une superposition distincte ; il ne peut jamais rendre un succès
 de qualification. =diagnose-http= réutilise en plus un ancien ELF épinglé et
 interrompt le pipeline après HTTP : il ne qualifie ni compilation ni artefact.
+=diagnose-frontends= réutilise ce même ancien ELF, vérifie HTTP puis tous les
+frontends et s'interrompt avant l'émission des artefacts. Ce diagnostic permet
+de localiser un échec d'assemblage sans présenter l'ancien ELF comme une nouvelle
+compilation réussie.
 Leurs sorties portent explicitement =qualification_passed=false=.
+
+Après un succès complet seulement, =collect_local_outputs.py worker-NOM=, lancé
+dans le même conteneur Nix hors réseau avec =MRJAM_SYNTHETIC_CONTAINER=1, copie
+les trois artefacts publics et leur reçu dans un nouveau dossier immuable
+=worker-NOM-qualified-public=. Il recoupe l'export, les règles, les hashes, les
+droits et le reçu de toutes les étapes. Les diagnostics sont refusés. Le verrou
+d'import est une métadonnée locale de contenu ; il ne signe aucune approbation.
 
 =export_nix_worker.py= accepte un précédent export immuable pour économiser le
 disque local. Chaque chemin Nix original, puis chaque NAR réutilisé et recopié

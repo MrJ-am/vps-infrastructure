@@ -17,7 +17,7 @@ PYTHON = '/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python
 
 
 def main():
-    if os.getuid() == 0 or len(sys.argv) != 4 or sys.argv[1] not in {'qualify', 'diagnose', 'diagnose-http'} \
+    if os.getuid() == 0 or len(sys.argv) != 4 or sys.argv[1] not in {'qualify', 'diagnose', 'diagnose-http', 'diagnose-frontends'} \
             or not re.fullmatch(r'qualifier-code-[0-9-]+', sys.argv[2]) \
             or not re.fullmatch(r'worker-[A-Za-z0-9_-]+', sys.argv[3]):
         raise RuntimeError('LOCAL_FIXTURE_ARGUMENTS_REQUIRED')
@@ -46,7 +46,7 @@ def main():
         '--mount', f'type=bind,src={code},dst=/qualification,readonly',
         '--mount', f'type=bind,src={exported},dst={exported},readonly',
         '--mount', f'type=bind,src={ROOT}/qualifier-uid-59990,dst={ROOT}/qualifier-uid-59990']
-    if mode == 'diagnose-http':
+    if mode in ('diagnose-http', 'diagnose-frontends'):
         arguments += ['--mount', f'type=bind,src={code}/diagnostic-server,dst={ROOT}/runtime-export-20261031-02/mrjam-server,readonly']
     arguments += ['--entrypoint', PYTHON, IMAGE, '-I', '-S', '/qualification/forgejo/tests/run_isolated_uid.py', mode, str(exported)]
     return subprocess.run(arguments, env=environment, stdin=subprocess.DEVNULL).returncode

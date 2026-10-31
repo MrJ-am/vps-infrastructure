@@ -31,9 +31,10 @@ def require(value, code):
         raise RuntimeError(code)
 
 
-def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False, output_directory=None):
+def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False, frontend_diagnostic=False, output_directory=None):
     require(not candidate_diagnostics or diagnostic, "DIAGNOSTIC_MODE_REQUIRED")
     require(not http_diagnostic or candidate_diagnostics, "DIAGNOSTIC_MODE_REQUIRED")
+    require(not frontend_diagnostic or (candidate_diagnostics and not http_diagnostic), "DIAGNOSTIC_MODE_REQUIRED")
     require(len(sys.argv) == 2 and os.getuid() != 0, "CLOUD_FIXTURE_REQUIRED")
     exported = Path(sys.argv[1]).absolute()
     require(re.fullmatch(r"/workspace/shared/mrjam-declarative-nix/worker-[A-Za-z0-9_-]+", str(exported)), "INVALID_FIXTURE_ROOT")
@@ -95,7 +96,7 @@ def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False
             overlay.write_text(changed)
             overlay.chmod(0o400)
             overlays.extend(("--ro-bind", str(overlay), target))
-        if http_diagnostic:
+        if http_diagnostic or frontend_diagnostic:
             binary = Path("/workspace/shared/mrjam-declarative-nix/runtime-export-20261031-02/mrjam-server")
             require(hashlib.sha256(binary.read_bytes()).hexdigest() == "7d91514354a124ea2e1e72b3841d6d9870dd7e8db6e700f07a3e59612a20b30c", "DIAGNOSTIC_BINARY_CHANGED")
             start, end = runner.index("    def rust(self):"), runner.index("    def http(self):")
@@ -110,8 +111,10 @@ def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False
             runner = runner[:start] + replacement + runner[end:]
             runner = runner.replace("stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL", "stdout=None, stderr=None")
             runner = runner.replace("stdout=subprocess.DEVNULL,\n                                 stderr=subprocess.DEVNULL", "stdout=None,\n                                 stderr=None")
-            require(runner.count("    verifier.elm()") == 1, "DIAGNOSTIC_MAIN_CHANGED")
-            runner = runner.replace("    verifier.elm()", '    raise Refused("DIAGNOSTIC_HTTP_FINISHED_NO_QUALIFICATION")')
+            stop = "    verifier.elm()" if http_diagnostic else "    verifier.outputs()"
+            code = "DIAGNOSTIC_HTTP_FINISHED_NO_QUALIFICATION" if http_diagnostic else "DIAGNOSTIC_FRONTENDS_FINISHED_NO_QUALIFICATION"
+            require(runner.count(stop) == 1, "DIAGNOSTIC_MAIN_CHANGED")
+            runner = runner.replace(stop, '    raise Refused("' + code + '")')
             overlays.extend(("--ro-bind", str(binary), "/work/diagnostic-server"))
         marker = '        require(code == 0, "CHECK_FAILED_" + name.upper().replace("-", "_"))'
         require(runner.count(marker) == 1, "DIAGNOSTIC_CHECK_CHANGED")
@@ -146,7 +149,7 @@ def main(*, diagnostic=False, candidate_diagnostics=False, http_diagnostic=False
         if diagnostic:
             print(json.dumps({"decision": "diagnostic-only", "supervisor_returned_success": passed,
                               "qualification_passed": False, "production_access": False,
-                              "http_only_reused_binary": http_diagnostic}))
+                              "http_only_reused_binary": http_diagnostic, "frontends_reused_binary": frontend_diagnostic}))
             return 2
         require(passed, "NIX_VALIDATOR_REFUSED")
         artifacts = worker.seal_artifacts(outputs)

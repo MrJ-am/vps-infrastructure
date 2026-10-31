@@ -1,0 +1,22 @@
+{
+  "authority": "unverified-local-test-result",
+  "limits": [
+    "Invented ELF header, assets and receipts only in packaging unit tests",
+    "Actual Nix packaging and collector export remain unexecuted until the full Rust/Elm pipeline succeeds",
+    "No independent policy adoption or production authority established"
+  ],
+  "production_authorized": false,
+  "schema_version": 1,
+  "sources_sha256": {
+    "operations/forgejo/tests/collect_local_outputs.py": "6e3c23bef76e80b8baa002e9a1b231b53cc87852ed9434e1136cef29b7a247b3",
+    "operations/release/import_qualified.py": "f6775a18d69b5980d0a3256484092016f4dd5bed480feabba71976445191be99",
+    "operations/release/qualified-artifacts.nix": "f69aa749d62d516f614ab671a2250b1055abc6a94de4eade817e960969d2e17a",
+    "operations/release/tests/test_import_qualified.py": "905d568a118395708782d9185a2a336a039d42350161743aebaafe38d248e099"
+  },
+  "tests": {
+    "command": "python3 -B -m unittest discover -s operations/release/tests -v",
+    "log_sha256": "d911de0cea098021ca21646cf1a29e7b06eae53db1115ed150161c98054dc2cc",
+    "new_packaging_tests": 10,
+    "passed": 68
+  }
+}
