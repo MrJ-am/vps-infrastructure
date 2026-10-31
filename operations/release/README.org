@@ -1,5 +1,14 @@
-#+title: Livraison déclarative MRJ.am — dossier et plans locaux, gel maintenu
+#+title: Livraison déclarative MRJ.am — dossier et plans locaux
 #+language: fr
+
+* Directive courante et conditionnement nouveau
+La directive =../mise-en-service/mandat.org= autorise l'achèvement jusqu'à la
+première mise en service ; l'ancien gel général n'est plus un motif d'arrêt.
+Les lecteurs et gabarits historiques ci-dessous restent non exécutants : leurs
+champs de gel décrivent leur protocole initial, pas une nouvelle demande
+d'autorisation. Les frontières Cloud et les qualifications restent exigées.
+Le maillon nouveau qui conserve exactement les artefacts du validateur est
+décrit dans [[file:IMPORT-ARTEFACTS.org][IMPORT-ARTEFACTS.org]].
 
 * Livrable et état
 Ce répertoire prépare les objets de revue de la livraison Rust/Elm et les

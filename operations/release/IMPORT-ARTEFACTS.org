@@ -1,0 +1,55 @@
+#+title: Conditionnement des octets qualifiés, sans reconstruction
+#+language: fr
+
+La directive courante reste =../mise-en-service/mandat.org=. Ce maillon prépare
+un paquet Nix de code public ; il n'active aucun service et ne constitue pas
+une autorité d'approbation. Les reçus des tests restent liés à leur révision.
+
+=import_qualified.py= attend les trois sorties du vérificateur complet :
+=server=, =frontend.tar= et =verification.json=. Un verrou séparé fixe leurs
+tailles et SHA-256, la proposition, les règles et la politique. L'empreinte des
+octets de ce verrou doit elle-même être fournie explicitement au paquet Nix.
+Un reçu inventé ou modifiable avec son verrou ne devient jamais une preuve
+authentifiée : le circuit d'adoption indépendant reste obligatoire.
+
+Le programme vérifie les octets, les liens entre documents et la présence des
+étapes obligatoires Rust, PostgreSQL, HTTP et des sept frontends. Il conserve
+le binaire, le tar et le reçu à l'identique. L'archive est parcourue sans
+=extractall= ; chemins traversants, doublons, liens, types spéciaux, conflits
+fichier/répertoire et dépassements de limites sont refusés avant création de
+la sortie. Les fichiers publics extraits conservent leurs octets, en lecture
+seule. Le programme ne lance jamais le binaire fourni.
+
+=qualified-artifacts.nix= utilise =runCommandNoCC= : aucun Cargo, compilateur,
+strip, patchelf ou minificateur n'est exécuté. Le paquet contient :
+
+- =bin/mrjam-server=, exactement le serveur qualifié ;
+- =share/mrjam/frontends/=, les sept ensembles de ressources ;
+- =share/mrjam/frontend.tar=, l'archive qualifiée originale ;
+- =share/mrjam/verification.json= et =import.lock.json=, les liaisons de contenu.
+
+Les arguments =materialized=, =artifactLock= et =expectedLockSha256= doivent
+désigner une sortie réellement réussie et immuable du collecteur. L'argument
+=runtimeReferences= doit contenir les dépendances Nix exactes du binaire ;
+il n'a pas de valeur par défaut. Une étiquette de version ne suffit pas.
+Il faut ensuite contrôler les références transitives et narHash du paquet,
+comparer à nouveau le SHA-256 du serveur et de l'archive, puis exécuter les
+contrôles du service sur ces mêmes octets. Le module de service recevra ce
+paquet préconstruit, sans recompilation pendant la mise en service.
+
+Pour le harnais Cloud à UID distinct, le seul export prévu est décrit dans
+=../forgejo/tests/LOCAL-UID.org=. Il refuse les diagnostics et sorties
+incomplètes, lit uniquement les fichiers publics connus, compare leur reçu à
+l'export Nix initial et crée un dossier neuf. Aucun accès au collecteur du VPS
+n'est ajouté par ce mécanisme local.
+
+Les dix tests de =tests/test_import_qualified.py= utilisent un faux en-tête ELF,
+des pages et des reçus entièrement inventés. Ils qualifient la copie et les
+refus, pas Rust/Elm, la provenance, la signature ou une application exécutable.
+Le conditionnement réel Nix reste à consigner après succès du pipeline complet.
+
+La revue indépendante doit examiner ensemble le verrou choisi hors candidat,
+le reçu du collecteur, les sources du vérificateur, ces deux programmes, les
+références Nix effectives et les refus. Une réussite de conditionnement ne
+démontre ni compatibilité de schéma, ni restauration, ni capacité du VPS, ni
+première mise en service.
