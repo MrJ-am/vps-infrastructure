@@ -1,0 +1,72 @@
+#+title: Chaîne Forgejo préparée — état du 31 octobre 2026
+#+language: fr
+
+* Sources exécutables et frontières
+
+=reconcile.py= applique les ressources déclarées des neuf dépôts avec plan,
+empreinte du plan attendu, relecture des protections et état durable de rejeu.
+Le module =mrjam-forgejo-policy.nix= lui donne un compte DynamicUser et une
+référence LoadCredential ; aucun secret n'est incorporé à la configuration.
+=register_runner.py= sépare l'inscription par API de l'identité du daemon.
+Les modules n'ajoutent aucun démarrage automatique ni instance Forgejo.
+
+=runner-admission.nix= construit le runner amont 13.2.0 verrouillé avec une
+entrée spécialisée. Avant toute étape, celle-ci exige le dépôt de validation,
+main, la révision de règles choisie hors candidature, workflow_dispatch et le
+workflow compilé dans son paquet. Le seul paramètre est un digest SHA-256.
+La charge reçue reste analysée strictement : champs supplémentaires, aliases,
+ancres YAML, doublons, commandes modifiées et entrées libres sont refusés.
+Le moteur d'exécution des steps candidats n'est pas appelé. La seule opération
+admise contacte le socket fixe du collecteur ; son pair doit être root.
+
+Forgejo resérialise le job avant de le transmettre. Le gabarit compilé est donc
+normalisé avec le parseur amont épinglé avant comparaison stricte. Les deux
+essais antérieurs refusés restent dans les fichiers =echec-runner-*.ndjson=.
+Leurs sorties fermées sont conservées sans réécriture.
+
+=submit.py= collecte les trois artefacts dans un cache appartenant à une autre
+identité, revérifie leurs octets et refuse leur corruption. =worker.py= n'accepte
+que le digest d'un manifeste de code déjà préparé sous une racine fixe en lecture
+seule. Le vérificateur, ses dépendances et ses règles sont sélectionnés par Nix.
+Bubblewrap fournit les frontières de processus, montages, utilisateur et réseau ;
+les sources candidates ne choisissent pas une commande du contrôleur.
+
+* Résultats établis
+
+[[file:qualification-chaine-20261031.json][Le reçu de chaîne]] lie sources, dérivation, NAR, tests et évaluations :
+
+- 62 tests Python réussis ; 48 assertions Nix réussies.
+- Construction Nix du runner spécialisé réussie avec ses tests Go et le
+  contrôle de version amont. Les quatre sources embarquées ont été rapprochées
+  octet pour octet des entrées de sa dérivation.
+- [[file:qualification-forgejo-reel-20261031.json][16 contrôles avec Forgejo 17.0.1 réel]] sur une instance SQLite entièrement
+  inventée : création, protections, idempotence, inscription, refus d'écriture
+  directe sur main et admission du seul job autorisé. Autre branche, commande
+  injectée et step modifié n'atteignent pas le collecteur.
+- Cinq groupes systemd du contrôleur passent dans =mrjam-validation= ; ce test
+  emploie une API inventée et qualifie notamment la forme ACL de LoadCredential.
+
+Ces résultats ne qualifient pas des versions installées sur le VPS. Le collecteur
+du test Forgejo renvoie des métadonnées inventées, sans artefact déployable.
+
+* Blocages encore ouverts
+
+Le worker sous systemd a révélé une incompatibilité réelle : =ProcSubset=pid=
+masque =/proc/sys/kernel/overflowuid= nécessaire à Bubblewrap. La correction
+préserve =ProtectKernelTunables=true= et =ProtectProc=invisible= ; sa qualification
+VM est distincte des assertions d'évaluation et doit réussir avant usage.
+Le diagnostic est une variante réservée à une VM inventée, jamais livrée.
+
+Restent la qualification de l'unité complète du runner et de ses règles réseau,
+le vrai pipeline Rust/Elm dans le worker, l'adoption protégée des règles, les ACL
+effectives, l'observation de la génération du VPS, ses ressources disponibles,
+le SSO et la migration/restauration. Aucun succès de cette liste n'est inféré
+du voyant Actions. Les reçus locaux ne sont pas une autorité de déploiement.
+
+* Reproduction locale
+
+Les fixtures sont sous =tests/= et =mrjam-validation/operational-review/=.
+=qualify_runner_admission.py= exige un conteneur local isolé, un chemin exact du
+runner Nix et =MRJAM_SYNTHETIC_CONTAINER=1=. Il crée puis détruit sa forge inventée.
+Il ne doit jamais être exécuté sur le VPS. Les évaluations Nix utilisent le pin
+=6f06d204d8f2d8761d9da78778745974a3216381=. Aucun workflow actif n'est publié par ce lot.

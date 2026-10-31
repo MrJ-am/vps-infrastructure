@@ -1,0 +1,16 @@
+name: mrjam-independent-validation
+on:
+  workflow_dispatch:
+    inputs:
+      proposal_digest:
+        required: true
+        type: string
+jobs:
+  validate:
+    runs-on: mrjam-controller
+    timeout-minutes: 31
+    steps:
+      - name: Submit exact source digest
+        env:
+          MRJAM_PROPOSAL_DIGEST: ${{ inputs.proposal_digest }}
+        run: exec mrjam-submit-validation

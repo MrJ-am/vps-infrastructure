@@ -1,0 +1,2 @@
+{"synthetic_fixed_refusal_codes": ["MRJAM_WORKFLOW_REFUSED"], "status": "failure"}
+{"decision": "failed", "code": "SYNTHETIC_UNEXPECTED_RUN_STATUS", "runner_store_path": "/nix/store/3lr1dsg6f0xrzip9lnsg16lspkgzjy9b-mrjam-forgejo-runner-13.2.0", "production_access": false}
