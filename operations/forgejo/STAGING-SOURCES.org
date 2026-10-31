@@ -57,6 +57,10 @@ un fichier spécial ou un objet étranger bloque la reprise. Les copies déjà
 publiées sont vérifiées avant toute suppression. Aucun effacement de secours
 sur chemin arbitraire n'est fourni.
 
+Les états d'interruption sont construits dans les fixtures ; les tests natifs
+injectent aussi un échec de renommage. Ils ne simulent pas une coupure physique
+du disque. La durabilité après perte électrique n'est pas déclarée qualifiée.
+
 Limites : deux propositions conservées, au plus 4096 fichiers, 32 Mio de code
 et 4 Mio de manifeste chacune ; 16384 objets de fichiers/répertoires par
 proposition. Une interruption peut laisser quatre propositions publiées ; la
@@ -76,6 +80,15 @@ liens/FIFO/chemins, verrou, reprise après interruption et absence d'exécution
 des sources. Les premiers échecs de permissions sont conservés avec leurs logs.
 L'évaluation du module contrôle 17 propriétés, dont import inerte, permissions,
 limites, catalogue vide/dupliqué et absence de worker.
+
+Le premier essai système a révélé une erreur de harnais : =reset-failed= était
+appelé sur une unité réussie déjà déchargée. Le deuxième a atteint la limite de
+120 secondes à la répétition, car le composant recopiait inutilement un arbre
+déjà vérifié. Le correctif revérifie les octets du store et de la publication,
+sans refaire cette copie. Un test supplémentaire refuse une altération du
+store même si la publication conservée est valide. Les plafonds de l'unité
+restent inchangés ; seul le budget cumulé du harnais couvre désormais ses
+multiples opérations. Les anciennes tentatives restent conservées.
 
 La suite =mrjam-validation/operational-review/staging-sources-systemd.nix=
 emploie les 815 fichiers publics, 6413759 octets de code et manifeste exact
