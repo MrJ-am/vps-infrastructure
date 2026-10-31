@@ -1,0 +1,263 @@
+{
+  "authority": "unverified-local-test-result",
+  "build_helpers_tests": 44,
+  "build_tests": {
+    "failed": 0,
+    "passed": 30,
+    "postgresql_included": false
+  },
+  "builds": [
+    {
+      "artifact": {
+        "artifact": "vision-workers",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "678bb2243ec12e0741d5cc398cf4849429409fbb660381062663efaf8ff86c95",
+        "payload_sha256": {
+          "bin/vision-archive": "ff09c358132752aa727d308c6f16c088cd1f4f2a78138496e8db775ac49d9fe5"
+        },
+        "schema_version": 1,
+        "source_commit": "9b6cbe74014428f0898f0e683dbfd74abf8fcacb"
+      },
+      "closure": {
+        "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+          "ca": null,
+          "deriver": "/nix/store/1gww6q70xcxbyw14p69cb8angxpmk23p-xgcc-15.3.0.drv",
+          "narHash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+          "narSize": 197672,
+          "references": [],
+          "registrationTime": 1793376713,
+          "signatures": [
+            "cache.nixos.org-1:dvyEp2wM22nn7K4Pau98rfu0vrURzX4nnkL+cxVsY6lDZw0P0KjyBySayUf2g34yRZ88jiHzgc4Pm2g7WrpzDA=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+          "ca": null,
+          "deriver": "/nix/store/3ph3j89ph6pmn741pzpds0qzkfqny9qc-glibc-2.42-103.drv",
+          "narHash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+          "narSize": 35073152,
+          "references": [
+            "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+            "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+            "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+          ],
+          "registrationTime": 1793376715,
+          "signatures": [
+            "cache.nixos.org-1:YEghuHrB2o/RBGePS5vOfBSKtwU3vyi3iyJHheGDv4gjJGZ2tjoOQ0WGzlZFzHZS1c0fLTxLQsjcs1GBkRvDAA=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/dqhdkjicy4z5i8l5gvmz2maiilwzgc2f-mrjam-vision-workers-0.1.0-9b6cbe740144": {
+          "ca": null,
+          "deriver": "/nix/store/nhsrsfdx870yrhywcv5pk4kxd74qn67k-mrjam-vision-workers-0.1.0-9b6cbe740144.drv",
+          "narHash": "sha256-qmAtrXsp7/wBuv8SPkXeJTxiMNmet2MHB65OUmA3mvs=",
+          "narSize": 10341264,
+          "references": [
+            "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+          ],
+          "registrationTime": 1793449970,
+          "signatures": [],
+          "storeDir": "/nix/store",
+          "ultimate": true,
+          "version": 1
+        },
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+          "ca": null,
+          "deriver": "/nix/store/fz1y7yyav434wlpzq9xzqa31rs7znx4c-libunistring-1.4.2.drv",
+          "narHash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+          "narSize": 2078944,
+          "references": [
+            "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+          ],
+          "registrationTime": 1793376714,
+          "signatures": [
+            "cache.nixos.org-1:75x2AgcdvTifWGCS3gxCHFmwIbhcKM7bW+6moWZQSHCB15O72hJPnI5isP5hVRrr6P2qLs8+ECOBLlO76+zmDQ=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+          "ca": null,
+          "deriver": "/nix/store/n7338hh4fm6lhzik25k2w570nph7dzhb-libidn2-2.3.8.drv",
+          "narHash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+          "narSize": 368176,
+          "references": [
+            "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+            "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+          ],
+          "registrationTime": 1793376714,
+          "signatures": [
+            "cache.nixos.org-1:EGpCAdXfJ3JRybgFm32yBBj28PBhbBo7WIq0US5V+T78gSroIdFVYQ9H2Tk6vs3HIzTM+7KwWonh6eRJhXjICg=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        }
+      },
+      "drvPath": "/nix/store/nhsrsfdx870yrhywcv5pk4kxd74qn67k-mrjam-vision-workers-0.1.0-9b6cbe740144.drv",
+      "elf_sha256": "ff09c358132752aa727d308c6f16c088cd1f4f2a78138496e8db775ac49d9fe5",
+      "outputs": {
+        "out": "/nix/store/dqhdkjicy4z5i8l5gvmz2maiilwzgc2f-mrjam-vision-workers-0.1.0-9b6cbe740144"
+      }
+    },
+    {
+      "artifact": {
+        "artifact": "vision-workers",
+        "deployment_authorized": false,
+        "input_manifest_sha256": "678bb2243ec12e0741d5cc398cf4849429409fbb660381062663efaf8ff86c95",
+        "payload_sha256": {
+          "bin/vision-archive": "ff09c358132752aa727d308c6f16c088cd1f4f2a78138496e8db775ac49d9fe5"
+        },
+        "schema_version": 1,
+        "source_commit": "9b6cbe74014428f0898f0e683dbfd74abf8fcacb"
+      },
+      "closure": {
+        "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+          "ca": null,
+          "deriver": "/nix/store/1gww6q70xcxbyw14p69cb8angxpmk23p-xgcc-15.3.0.drv",
+          "narHash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+          "narSize": 197672,
+          "references": [],
+          "registrationTime": 1793376713,
+          "signatures": [
+            "cache.nixos.org-1:dvyEp2wM22nn7K4Pau98rfu0vrURzX4nnkL+cxVsY6lDZw0P0KjyBySayUf2g34yRZ88jiHzgc4Pm2g7WrpzDA=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+          "ca": null,
+          "deriver": "/nix/store/3ph3j89ph6pmn741pzpds0qzkfqny9qc-glibc-2.42-103.drv",
+          "narHash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+          "narSize": 35073152,
+          "references": [
+            "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+            "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+            "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+          ],
+          "registrationTime": 1793376715,
+          "signatures": [
+            "cache.nixos.org-1:YEghuHrB2o/RBGePS5vOfBSKtwU3vyi3iyJHheGDv4gjJGZ2tjoOQ0WGzlZFzHZS1c0fLTxLQsjcs1GBkRvDAA=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+          "ca": null,
+          "deriver": "/nix/store/fz1y7yyav434wlpzq9xzqa31rs7znx4c-libunistring-1.4.2.drv",
+          "narHash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+          "narSize": 2078944,
+          "references": [
+            "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+          ],
+          "registrationTime": 1793376714,
+          "signatures": [
+            "cache.nixos.org-1:75x2AgcdvTifWGCS3gxCHFmwIbhcKM7bW+6moWZQSHCB15O72hJPnI5isP5hVRrr6P2qLs8+ECOBLlO76+zmDQ=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+          "ca": null,
+          "deriver": "/nix/store/n7338hh4fm6lhzik25k2w570nph7dzhb-libidn2-2.3.8.drv",
+          "narHash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+          "narSize": 368176,
+          "references": [
+            "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+            "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+          ],
+          "registrationTime": 1793376714,
+          "signatures": [
+            "cache.nixos.org-1:EGpCAdXfJ3JRybgFm32yBBj28PBhbBo7WIq0US5V+T78gSroIdFVYQ9H2Tk6vs3HIzTM+7KwWonh6eRJhXjICg=="
+          ],
+          "storeDir": "/nix/store",
+          "ultimate": false,
+          "version": 1
+        },
+        "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144": {
+          "ca": null,
+          "deriver": "/nix/store/gqx59x28dhdjgm12a0q7q47hhnw3fnqn-mrjam-vision-workers-0.1.0-9b6cbe740144.drv",
+          "narHash": "sha256-qmAtrXsp7/wBuv8SPkXeJTxiMNmet2MHB65OUmA3mvs=",
+          "narSize": 10341264,
+          "references": [
+            "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+          ],
+          "registrationTime": 1793450576,
+          "signatures": [],
+          "storeDir": "/nix/store",
+          "ultimate": true,
+          "version": 1
+        }
+      },
+      "drvPath": "/nix/store/gqx59x28dhdjgm12a0q7q47hhnw3fnqn-mrjam-vision-workers-0.1.0-9b6cbe740144.drv",
+      "elf_sha256": "ff09c358132752aa727d308c6f16c088cd1f4f2a78138496e8db775ac49d9fe5",
+      "outputs": {
+        "out": "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144"
+      }
+    }
+  ],
+  "deployment_authorized": false,
+  "evaluation": {
+    "archive_assertions": 16,
+    "existing_postgresql_assertions": 21,
+    "existing_runtime_vm_derivation_unchanged": "/nix/store/b2pcvjlq02a6ws01sa8v2i84nbasmcp7-vm-test-run-mrjam-rust-credentials-peer-independent.drv"
+  },
+  "identical_elf_between_support_revisions": true,
+  "input_manifest_sha256": "678bb2243ec12e0741d5cc398cf4849429409fbb660381062663efaf8ff86c95",
+  "inputs": {
+    "registry_crates": 178,
+    "source_files": 78
+  },
+  "limits": [
+    "No installed VPS state, real SMTP delivery, secret adoption, backup or restoration established",
+    "Private age key stays outside configuration; VM uses only a separate public disposable test key",
+    "Two build-support derivations yielded identical ELF and NAR bytes; not a clean-store independent rebuild"
+  ],
+  "logs": {
+    "build-helpers-tests-20261031-resume-04.log": {
+      "bytes": 143,
+      "sha256": "61c9db7c7ba6a31f3861c2de60e5abdbca1c0c353f6bfe53f64cffba507f30e4"
+    },
+    "postgresql-access-evaluation-20261031-archive.json": {
+      "bytes": 606,
+      "sha256": "50e144ba378174c42945ac3d93b150d1a63ace36d7ef51ecbaec5dbbd269035d"
+    },
+    "vision-archive-evaluation-20261031-01.json": {
+      "bytes": 434,
+      "sha256": "47d9d47d4b56036c7f5fcf14429d2ae52d6c1cea352b74d1104c32b165cfbe56"
+    },
+    "vision-workers-build-20261031-02.log": {
+      "bytes": 17537,
+      "sha256": "a0802ad656113cd7365cff66a9db261c18325fc14d96d1795541f5d6e7dc24bf"
+    }
+  },
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "platform_gitlink_changed": false,
+  "production_access": false,
+  "rust": "1.99.1",
+  "schema_version": 1,
+  "scope": "build and Nix evaluation only",
+  "separate_native_tests": {
+    "passed": 33,
+    "receipt": "https://github.com/MrJ-am/vision/blob/3cfe9e4da5c836de56b308f027491b058c0fe6df/docs/qualification-archive-runtime-20261031.json"
+  },
+  "source_branch": "workers-operationnels-20261030",
+  "source_commit": "9b6cbe74014428f0898f0e683dbfd74abf8fcacb",
+  "sources_sha256": {
+    "operations/builds/prepare_vision_workers.py": "c504509540db78e8fe3d579f5ffcd96e7da86eb448842a7408cf12d5bb609ba3",
+    "operations/builds/test_vision_workers_inputs.py": "c15fe59e3794385a7adb6db4faf8bc14ff770c2e7444a558e5ce30ec5e819b90",
+    "operations/builds/vision-workers-20261031.nix": "560d6e53244ba176ed6e6abcde8db667da176b7bc077b4da96d045d1ab99e0a5",
+    "operations/nixos/mrjam-postgresql-access.nix": "2f8f826823122a598ebca4bfb8218dadf6dcf3f6c1040548fcee74e49b06d11a",
+    "operations/nixos/mrjam-vision-archive.nix": "e011a7b31fa5200d3b65bc9420e532e05fc23a8a1b3f1dee4a39bbae6e3ce90d",
+    "operations/tests/vision-archive-evaluation.nix": "bdf011c79037deabd467731da3c0396d7fa3262331b6c75e1ccfd0709a0ddb89"
+  },
+  "systemd_qualification": "separate pending test, no success inferred"
+}
