@@ -16,6 +16,7 @@
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
       forgejoRunnerEvaluation = import ./operations/forgejo/tests/runner-module-evaluation.nix { inherit nixpkgs; };
       validationWorkerEvaluation = import ./operations/forgejo/tests/worker-module-evaluation.nix { inherit nixpkgs; };
+      validationStagingEvaluation = import ./operations/forgejo/tests/staging-module-evaluation.nix { inherit nixpkgs; };
       visionArchiveEvaluation = import ./operations/tests/vision-archive-evaluation.nix { inherit nixpkgs; };
       visionReplayEvaluation = import ./operations/tests/vision-replay-evaluation.nix { inherit nixpkgs; };
       visionCycleEvaluation = import ./operations/tests/vision-cycle-evaluation.nix { inherit nixpkgs; };
@@ -31,6 +32,7 @@
         forgejoPolicy = import ./operations/nixos/mrjam-forgejo-policy.nix;
         forgejoRunner = import ./operations/nixos/mrjam-forgejo-runner.nix;
         validationWorker = import ./operations/nixos/mrjam-validation-worker.nix;
+        validationStaging = import ./operations/nixos/mrjam-validation-staging.nix;
         validationCollector = import ./operations/nixos/mrjam-validation-collector.nix;
         postgresqlAccess = import ./operations/nixos/mrjam-postgresql-access.nix;
         visionArchive = import ./operations/nixos/mrjam-vision-archive.nix;
@@ -49,6 +51,7 @@
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
       lib.qualification.forgejoRunner = forgejoRunnerEvaluation;
       lib.qualification.validationWorker = validationWorkerEvaluation;
+      lib.qualification.validationStaging = validationStagingEvaluation;
       lib.qualification.visionArchive = visionArchiveEvaluation;
       lib.qualification.visionReplay = visionReplayEvaluation;
       lib.qualification.visionCycle = visionCycleEvaluation;
@@ -65,6 +68,7 @@
         openssh-qualified = pkgs.openssh;
         forgejo-preparation = pkgs.callPackage ./operations/forgejo/package.nix { };
         admission-adoption = pkgs.callPackage ./operations/migrations/admission/package.nix { };
+        validation-stage-sources = pkgs.callPackage ./operations/forgejo/staging-package.nix { };
         received-tests-profile = pkgs.buildEnv {
           name = "mrjam-received-synthetic-test-profile";
           paths = [ pkgs.bash pkgs.coreutils pkgs.openssh pkgs.python3 ];
