@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "authority": "unverified-local-test-result",
+  "production_access": false,
+  "production_ready": false,
+  "source_revisions": {
+    "infrastructure_candidate": "facbe4cf8bac29a9b098fccc9f8358cc83538807",
+    "validation_suite": "ea9178ceea306f909d3d904ce0edab0f41c88f8e"
+  },
+  "control_source_binding": "Qualification/recording drivers are bound separately by source_sha256, not claimed to belong to the candidate revision.",
+  "native_tests": 17,
+  "nix_package_tests": 17,
+  "module": {
+    "boundedResources": true,
+    "closedOutputs": true,
+    "duplicateCatalogRefused": true,
+    "emptyCatalogRefused": true,
+    "fixedNoArgumentEntry": true,
+    "inertDisabled": true,
+    "missingWorkerRefused": true,
+    "noCapabilities": true,
+    "noCollectorAccess": true,
+    "noCredentials": true,
+    "noImplicitStart": true,
+    "noNetwork": true,
+    "noWorkerAutoStart": true,
+    "oversizedCatalogRefused": true,
+    "rootReadonlyCatalog": true,
+    "rulesComeFromWorker": true,
+    "singleWritableRoot": true
+  },
+  "builds": {
+    "staging-build-20261031-02": {
+      "drvPath": "/nix/store/fxc074ycnjdbixxvph75pz3d4agr57w0-mrjam-validation-stage-sources-1.drv",
+      "outputs": {
+        "out": "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1"
+      }
+    },
+    "staging-systemd-20261031-03": {
+      "drvPath": "/nix/store/w7znyfb9zasz25p8xzwniwkahrr7a021-vm-test-run-mrjam-staging-sources-systemd-independent.drv",
+      "outputs": {
+        "out": "/nix/store/hwm0hhi3xw48h7378xhfligdcfl1h3l9-vm-test-run-mrjam-staging-sources-systemd-independent"
+      }
+    }
+  },
+  "current_derivations_match": true,
+  "recursive_contents_verified": true,
+  "path_info": {
+    "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1": {
+      "ca": null,
+      "deriver": "/nix/store/fxc074ycnjdbixxvph75pz3d4agr57w0-mrjam-validation-stage-sources-1.drv",
+      "narHash": "sha256-fCUKlHOl9o8lNw2YKTSk/ZIzjMAXXpzADx5joucYews=",
+      "narSize": 33944,
+      "references": [
+        "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "registrationTime": 1793475395,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/hwm0hhi3xw48h7378xhfligdcfl1h3l9-vm-test-run-mrjam-staging-sources-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/w7znyfb9zasz25p8xzwniwkahrr7a021-vm-test-run-mrjam-staging-sources-systemd-independent.drv",
+      "narHash": "sha256-v57eBW/Tu29k2t4jQ4D9vE6wm4ggIyBm02jddU7mgTc=",
+      "narSize": 1504,
+      "references": [
+        "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+        "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging"
+      ],
+      "registrationTime": 1793476005,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging": {
+      "ca": null,
+      "deriver": "/nix/store/q2hcwl0nc61j71am41m2n73607wr99nl-mrjam-public-source-bundle-for-staging.drv",
+      "narHash": "sha256-NKhvOw26UhjRIahtyaUSIp5ShZh+MV0lzEX01dqCebM=",
+      "narSize": 6728128,
+      "references": [],
+      "registrationTime": 1793474484,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "result": {
+    "checks": [
+      "no-implicit-publication-or-worker-start",
+      "815-exact-public-files-and-actual-cgroup-bounds",
+      "actual-account-permissions-and-closed-invocation",
+      "idempotent-full-source-publication",
+      "shared-worker-lock-refuses-concurrent-publication",
+      "wrong-catalog-digest-refused-without-replacing-old-bytes",
+      "interrupted-copy-and-rename-recovery",
+      "declarative-retention-with-no-candidate-execution"
+    ],
+    "source_files": 815,
+    "source_bytes": 6413759,
+    "source_proposal": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+    "source_bundle": "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging",
+    "package": "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+    "observed_limits": [
+      "201326592",
+      "16",
+      "20000 100000"
+    ],
+    "production_access": false,
+    "production_ready": false,
+    "compiler_executed": false,
+    "forge_fetch_or_protected_adoption_established": false,
+    "limits": [
+      "Public code from the previous complete-chain fixture only",
+      "No host quota, protected catalogue adoption, production forge fetch or production authority established"
+    ]
+  },
+  "result_sha256": "736cbc229673ee66b7471457c2450229b821ebd80636b91103ca0838c2398b7a",
+  "execution": {
+    "command": [
+      "nix",
+      "build",
+      "--offline",
+      "--no-link",
+      "--json",
+      "--file",
+      "/workspace/mrjam-validation/operational-review/staging-sources-systemd.nix",
+      "--arg",
+      "nixpkgs",
+      "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+    ],
+    "exit_code": 0,
+    "wall_seconds": 610.402,
+    "production_access": false
+  },
+  "source_sha256": {
+    "/workspace/vps-infrastructure/operations/forgejo/stage_sources.py": "7e6aad3beed4e0b75571006e8dcbff1c3497680892edd6ebf10786f8e5c39279",
+    "/workspace/vps-infrastructure/operations/forgejo/worker.py": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5",
+    "/workspace/vps-infrastructure/operations/forgejo/staging-package.nix": "6fc649c7ca8fce5a4b0a90459bd21a7e8122315f9c7e090291dc6489c3d6b995",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-staging.nix": "09ee6110b1a0d423c4dd77587aa9ef6f4237bc7359d734a86eef45dfd6770e35",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-worker.nix": "dd7c461e9dce9ed5b1c0b904663981359d789a381cca33168c2a017a701c846e",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/test_stage_sources.py": "616bfe85197dd0ddd56c053b2c35dcd610c5f27e6db9605115a5fe44fdf8c4bb",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/staging-module-evaluation.nix": "3d0c6277161ea633fc28653c432487ce9e7e847fc427413f2f50de9d05232cd6",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/qualify_staging_20261031.py": "fbee7670415a693d703314005d7d2473a4510357b5eaac4ba3feb3ed7153a097",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/record_staging_20261031.py": "88106ce2a33ee2071bbea6c6706672fd005850140e7970df28edee58450e32a8",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/qualify_staging_20261031_02.py": "d9d99c07d963b4401988486d8ef31143a08dc5ad93252997a782ade145585f5e",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/qualify_staging_vm_20261031.py": "fde2dbe83e6ccc38340fa10ada7e92e349ef23e26a9e8cf49120dd1f1fca57b5",
+    "/workspace/vps-infrastructure/operations/forgejo/tests/staging-package-local.nix": "1bc91b7b81834629dfd2c52db938f6032a0ee8413eec5ef4cfb0865ffa4e4e6e",
+    "/workspace/mrjam-validation/operational-review/STAGING-SOURCES.org": "c1d129f673ecb785610254b3e9879db87c080aa1090e9dc60df0b97e7327f7c7",
+    "/workspace/mrjam-validation/operational-review/staging-source-fixture.py": "b51cccf28a44725ce4363e54b81d1d0ef5b8dddd3f855dd2783204456558dab4",
+    "/workspace/mrjam-validation/operational-review/staging-sources-systemd.nix": "7f7a3025ab24aa80daa5c9829c6c40911c0896b95fb898993e7ad967c4d00292"
+  },
+  "logs_sha256": {
+    "staging-module-20261031-02.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staging-build-20261031-01.log": "e5a76ab684f8330153ee7ae2bff6972939708461f29d7ac34938f5d28274aa18",
+    "staging-build-20261031-02.log": "61624dda7edc6063857a4bfeec90297f945fcf42d2d7a0030a90595ef759e276",
+    "staging-native-20261031-02.log": "83389e40bb7d0e901d6a876795fae5c428d335407817c6835df87b6251ebb00f",
+    "staging-package-full-20261031-02.log": "8069c30c5cfa169a0067993aee2feae62263eb5dd66f8d60d4adc57788d1ccbe",
+    "staging-systemd-20261031-01.log": "49991ed299c585715714d8b604ab5fc5b447cb73e69d1058312c988b1602497b",
+    "staging-systemd-20261031-03.log": "e1b707c1edc03cbfbf1f7fb2b8595bcb20f561aecffc323db9ac4ae95ae5b46d",
+    "staging-module-20261031-01.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "staging-systemd-full-20261031-02.log": "4334f87c6623782db0035007b97098803d8287fdba938c92cb5698ca75454969",
+    "staging-systemd-failed-20261031-01-full.log": "de4e15ec72219ef091a58adc02dd65e25224f8d763a4ca300445ca99116ab09d",
+    "staging-systemd-20261031-02.log": "c278ed04304f61c52d1b7ec096f320f9522e4d6c884302c22f8da43da672caf6",
+    "staging-native-20261031-03.log": "5d4cfbd676ae0380defad5f001a3732d9bda33f245c4297543ad8e46594a406a",
+    "staging-native-20261031-01.log": "ebbdc034fc32a5ee266085e119e93aaa42669482ddc1718c04eafc8e02cfa2ee",
+    "staging-native-20261031-04.log": "90d2a88bbc43778810e4a0f370bc870a4e64dba6fcdaff9e1d565d3fde6a9555",
+    "staging-systemd-failed-20261031-02-full.log": "9fa84d898b3a732e3a4f3c1a3b1f35335423b06406650ee8fa22b4516d606f33"
+  },
+  "recording_failure_preserved": {
+    "log_sha256": "d06d9060508e8d6a610f0237431402503a771b0aad9b3c78a8f31ef43bb311a5",
+    "reason": "nix eval --apply selected drvPath on the uncalled fixture function. Explicit nix-instantiate applies the pinned argument and compares the same derivation; no build or expectation is changed."
+  },
+  "earlier_systemd_attempt": {
+    "command": [
+      "nix",
+      "build",
+      "--offline",
+      "--no-link",
+      "--json",
+      "--file",
+      "/workspace/mrjam-validation/operational-review/staging-sources-systemd.nix",
+      "--arg",
+      "nixpkgs",
+      "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+    ],
+    "exit_code": 1,
+    "wall_seconds": 230.366,
+    "production_access": false
+  },
+  "second_systemd_attempt": {
+    "command": [
+      "nix",
+      "build",
+      "--offline",
+      "--no-link",
+      "--json",
+      "--file",
+      "/workspace/mrjam-validation/operational-review/staging-sources-systemd.nix",
+      "--arg",
+      "nixpkgs",
+      "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+    ],
+    "exit_code": 1,
+    "wall_seconds": 451.156,
+    "production_access": false
+  },
+  "second_systemd_failure_reason": "Repeated publication unnecessarily copied and verified an already checked tree and reached the unchanged 120s unit timeout at 20% CPU. The new implementation rechecks both published and store bytes without copying an existing proposal. Unit limits are unchanged.",
+  "earlier_systemd_failure_reason": "The first three groups passed; reset-failed on an unloaded successful oneshot unit was a harness error. It is now called only for an actually failed unit.",
+  "earlier_failures_preserved": [
+    {
+      "attempt": "native-01",
+      "tests": 16,
+      "errors": 8,
+      "reason": "Cross-parent rename lacked owner-write permissions on the private parent and moved directory"
+    },
+    {
+      "attempt": "native-02",
+      "tests": 16,
+      "errors": 8,
+      "reason": "Private parent fixed; moved directory still lacked owner-write for its parent update"
+    }
+  ],
+  "limits": [
+    "No production access, signing identity, protected rule adoption or host quotas established",
+    "Recovery uses constructed interrupted-copy/rename states and injected rename errors; physical power-loss durability is not established",
+    "The full compiler integration remains a distinct prior proof; this suite checks exact publication of its 815 public input files",
+    "No remote forge fetch, target VPS generation, deployment activation or data migration executed"
+  ]
+}
