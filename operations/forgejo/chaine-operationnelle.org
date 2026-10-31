@@ -51,11 +51,21 @@ du test Forgejo renvoie des métadonnées inventées, sans artefact déployable.
 
 * Blocages encore ouverts
 
-Le worker sous systemd a révélé une incompatibilité réelle : =ProcSubset=pid=
-masque =/proc/sys/kernel/overflowuid= nécessaire à Bubblewrap. La correction
-préserve =ProtectKernelTunables=true= et =ProtectProc=invisible= ; sa qualification
-VM est distincte des assertions d'évaluation et doit réussir avant usage.
-Le diagnostic est une variante réservée à une VM inventée, jamais livrée.
+Le worker sous systemd a révélé deux incompatibilités réelles : =ProcSubset=pid=
+masque un paramètre nécessaire à Bubblewrap, puis les masques de proc empêchent
+son remontage dans un espace utilisateur non privilégié. La composition finale
+isole le worker lui-même par =PrivatePIDs=true= avant les deux couches Bubblewrap.
+Elle n'utilise plus les masques =ProtectProc=invisible=, =ProtectKernelTunables=
+et =ProtectKernelLogs=. L'UID non privilégié, l'absence de capacités hôte, les
+montages fermés et le filtre seccomp restent appliqués. Les tests vérifient le
+refus d'ouverture en écriture des paramètres noyau et de lecture du journal noyau.
+
+Les sept groupes VM passent sur cette composition : voir
+=mrjam-validation/operational-review/worker-systemd-pass-20261031.json=.
+La création d'un espace utilisateur supplémentaire échoue avec =ENOSPC=, le
+refus de quota de Bubblewrap ; le test antérieur attendait seulement =EPERM=.
+Le test exige toujours un échec et conserve désormais son errno réel. Les essais
+antérieurs restent disponibles. Le diagnostic séparé n'est jamais livré.
 
 Restent la qualification de l'unité complète du runner et de ses règles réseau,
 le vrai pipeline Rust/Elm dans le worker, l'adoption protégée des règles, les ACL

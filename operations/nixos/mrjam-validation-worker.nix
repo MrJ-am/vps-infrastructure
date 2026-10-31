@@ -77,15 +77,17 @@ in {
         PrivateNetwork = true;
         IPAddressDeny = "any";
         IPAddressAllow = "localhost";
-        ProtectProc = "invisible";
-        # Bubblewrap reads overflowuid/overflowgid before creating its user
-        # namespace. Hiding /proc/sys prevents the boundary from starting.
-        # Kernel tunables remain read-only and foreign processes invisible;
-        # both candidate layers receive fresh PID/mount namespaces.
+        # Isolate the trusted worker itself before either Bubblewrap layer.
+        # Masked submounts/hidepid on proc forbid an unprivileged fresh proc
+        # mount (kernel mount_too_revealing). Do not combine those mechanisms.
+        PrivatePIDs = true;
+        ProtectProc = "default";
         ProcSubset = "all";
-        ProtectKernelTunables = true;
+        # No root identity, host capabilities or writable host sysctl exists.
+        # Explicit negative VM tests cover kernel writes and log access.
+        ProtectKernelTunables = false;
         ProtectKernelModules = true;
-        ProtectKernelLogs = true;
+        ProtectKernelLogs = false;
         ProtectControlGroups = true;
         RestrictSUIDSGID = true;
         LockPersonality = true;
