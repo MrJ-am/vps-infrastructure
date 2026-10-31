@@ -210,6 +210,12 @@ La préparation de l'observation V2 du VPS est qualifiée et publiée :
 Le retour =adoption-v2.json= n'a pas encore été reçu. Le retour Spectre du
 31 octobre ne contient pas cette observation ; aucun alignement de la génération
 installée avec Git n'en est déduit.
+Un retour ultérieur signale =nar_verification / COMMAND_FAILED / 1= depuis
+Spectre vers le VPS. La [[file:bootstrap-observation/REPRISE-NAR-VERIFICATION.org][reprise publiée]] corrige l'activation implicite de
+=nix-command= dans la procédure. Cinq essais Nix réels et cinq tests du
+vérificateur réussissent dans Cloud, sans modifier le paquet. La cause réelle
+et le succès de la reprise sur le VPS restent à établir ; ce correctif ne
+constitue pas le retour d'observation attendu.
 
 =qualification/declaratif-20261030.json= est le relevé des contrôles exécutés,
 des artefacts construits et des limites. Les reçus des sous-lots gardent leurs

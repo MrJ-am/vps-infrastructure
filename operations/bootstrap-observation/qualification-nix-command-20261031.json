@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-31",
+  "scope": "Local offline qualification of explicit nix-command in the human observation handoff",
+  "environment": {
+    "docker_image": "nixos/nix@sha256:c03c1081ba8fb98528dee2a677dee6f42bdddb6b90e1c14c67aba8c1e31ed4bb",
+    "nix_version": "2.34.8",
+    "network": "none",
+    "persistent_configuration_modified": false,
+    "initial_experimental_features": [],
+    "per_command_extra_experimental_features": [
+      "nix-command"
+    ]
+  },
+  "reported_failure": {
+    "step": "nar_verification",
+    "code": "COMMAND_FAILED",
+    "exit_code": 1
+  },
+  "production_failure_cause": null,
+  "checks": {
+    "actual_nix_cli_tests_passed": 5,
+    "delivery_verifier_tests_passed": 5,
+    "original_verify_without_feature_exit_code": 1,
+    "original_path_info_without_feature_exit_code": 1,
+    "corrected_recursive_verify_exit_code": 0,
+    "corrected_path_info_exit_code": 0,
+    "closure_paths_compared_to_pinned_manifest": 83,
+    "nar_hashes_sizes_and_references_match": true,
+    "corrupted_content_in_separate_synthetic_store_refused": true
+  },
+  "qualified_package": "/nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2",
+  "original_archive_sha256_rechecked_unchanged": "0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa",
+  "commands": [
+    "bash operations/tools/nix-local.sh --offline-container env MRJAM_SYNTHETIC_NIX_TEST=1 /nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -B operations/bootstrap-observation/tests/qualify_nix_cli.py",
+    "python3 -B -m unittest discover -s operations/bootstrap-observation/tests -p test_delivery.py -v"
+  ],
+  "local_cli_test_log": {
+    "name": "nix-command-qualification-20261031-01.log",
+    "bytes": 711,
+    "sha256": "d7e637653b3e7089e4b3c475aac12e522e3714c6948612014eeb724febf5605f",
+    "recorded_elapsed_seconds": 1.279
+  },
+  "source_sha256": {
+    "tests/qualify_nix_cli.py": "e95e23b265f6808f6c835b0ac57ae9d21aaa7d1d22e4392b0a4d494e5d7aacea",
+    "tests/test_delivery.py": "07d0a3d6b4c1aa74636315fa549e958900608c7332fb231e4183ec2439caaae9",
+    "verify_delivery.py": "7ffc847cbf5390b8ece57efb9e5841eac2d6a965bab4716bfeed74a04cc0083a",
+    "delivery-manifest-20261031.json": "04c0dc51cbe4ca88daac24a180ccb8c19ae71781a36e0de07581e686f5b9d7d8",
+    "EXECUTION-HUMAINE.org": "796a54e111d440c550c414f435ed302bbc8be5aaf7c15e9bfe1279860926cb91",
+    "REPRISE-NAR-VERIFICATION.org": "2311c814c1fa0ae3e07663024b5b4e43aa1b7304e5977a6bb57a8c53cb41dfe9",
+    "SPECTRE-RELAIS-OBSERVATION.txt": "ea3af815f8d8bacc0b763e9d7c458bf7b1e70cc46501350b96e0d2265af6a03f"
+  },
+  "production_access": false,
+  "production_activation": false,
+  "limits": [
+    "Exit code 1 alone does not identify the real production failure cause",
+    "No production import, verification or observation performed by Cloud",
+    "This is local qualification, not a new independent approval or system VM qualification",
+    "The original qualified observer, archive, manifest and expected hashes remain unchanged"
+  ]
+}

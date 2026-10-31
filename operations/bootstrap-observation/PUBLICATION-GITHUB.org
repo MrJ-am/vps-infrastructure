@@ -32,3 +32,8 @@ vérifier =SHA256SUMS=, puis suivre =SPECTRE-RELAIS-OBSERVATION.txt= et
 avec le composant borné qualifié. Le retour attendu est uniquement
 =adoption-v2.json= ; cette publication ne réalise aucune observation ni
 activation sur le VPS.
+
+Correction de procédure postérieure à cette archive : lire
+[[file:REPRISE-NAR-VERIFICATION.org][la reprise après nar_verification]]. Les commandes =nix store verify= et
+=nix path-info= doivent activer explicitement =nix-command= pour leur invocation.
+Les octets du paquet publié, son archive et leurs empreintes restent inchangés.

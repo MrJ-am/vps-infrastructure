@@ -6,6 +6,10 @@ Ne recommence pas cette recherche sur forge.mrj.am et ne demande aucune clé.
 Cloud fournit maintenant la remise de l'observation d'adoption V2 : paquet
 préconstruit exact, fermeture exportée, manifeste, vérificateur et preuve de VM.
 Lis EXECUTION-HUMAINE.org et les AGENTS.md des références indiquées par la remise.
+Pour une remise téléchargée avant la correction de nix-command, lire aussi
+REPRISE-NAR-VERIFICATION.org dans le dépôt : les deux commandes Nix exigent
+--extra-experimental-features nix-command. Conserver la remise et ses empreintes
+intactes ; cette correction de procédure ne remplace aucun fichier du paquet.
 Vérifie les empreintes de transfert et SHA256SUMS dans un dossier nouveau. Le
 vérificateur local doit rendre DELIVERY_VALID. Aucun import dans le daemon Nix
 de Spectre n'est nécessaire et aucune règle trusted-users ne doit être modifiée.
