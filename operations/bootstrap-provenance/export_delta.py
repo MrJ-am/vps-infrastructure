@@ -34,7 +34,7 @@ def run(argv, **kwargs):
 
 
 def closure(package, store=None):
-    argv = [*NIX, "path-info", "--offline", "--json", "--json-format", "2", "--recursive"]
+    argv = [*NIX, "path-info", "--offline", "--json", "--json-format", "1", "--recursive"]
     if store:
         argv += ["--store", store]
     result = json.loads(run([*argv, package]).stdout)

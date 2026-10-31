@@ -1,0 +1,91 @@
+{
+  "candidate_commit": "2d8b5e2f48bab885459abe1c44f37019a3c9f63c",
+  "candidate_derivation": "/nix/store/cvlkgml3ckinljjm611iz6q8agxyq0ll-mrjam-observe-provenance-v1.drv",
+  "candidate_nar_hash": "sha256-oI+O7woK+EDl6XrWuAiuweAst2Ggzvf4kK9HTfv4gD0=",
+  "candidate_package": "/nix/store/jg09160604wr7nv4z00f02vn48ssxayh-mrjam-observe-provenance-v1",
+  "candidate_repository": "MrJ-am/vps-infrastructure",
+  "contract_commit": "51f4a4a288cd55595498557717fac2919cc215e7",
+  "contract_repository": "MrJ-am/mrjam-validation",
+  "groups_passed": [
+    "arguments-and-unprivileged-entry-refused",
+    "mutable-wrapper-refused",
+    "actual-transient-observation-and-no-persistent-unit",
+    "failed-metadata-command-stays-unknown",
+    "arbitrary-metadata-text-filtered",
+    "oversized-metadata-output-refused",
+    "existing-unit-preserved",
+    "repetition-without-account-or-generation-mutation"
+  ],
+  "limits": [
+    "Separate test repository is not a protected approval authority",
+    "This VM does not establish active VPS versions or margins",
+    "The new code returns declared revisions, not authenticated build provenance",
+    "No stateVersion is inferred",
+    "Original observation archive and probe remain unchanged"
+  ],
+  "log_sha256": {
+    "provenance-native-20261031-01.log": "23d82ff05ade72ea8a2373b4512c3bf4471c6f2757365ef568a0fe19126ca7d7",
+    "provenance-systemd-full-20261031-05.log": "c512d7022fe60220069c38ef7d3be9e70e26ba8c74b501708fca436a72dd0b21",
+    "provenance-systemd-full-20261031-07.log": "feffdd6208c6c34e5cb2b869fb39da7fcab258641df427fd8e32c52dedd37f70"
+  },
+  "native_tests_passed": 13,
+  "overall_passed": true,
+  "previous_attempts": [
+    {
+      "attempt": 1,
+      "cause": "Copying individual Nix source paths into a directory retained hash-prefixed basenames; named destinations now explicit",
+      "result": "package-build-failed"
+    },
+    {
+      "attempt": 2,
+      "cause": "Unused import in the test driver, removed",
+      "result": "driver-lint-failed"
+    },
+    {
+      "attempt": 3,
+      "cause": "The NixOS test framework forced constant-nixos-revision; the candidate correctly returned unknown",
+      "result": "system-test-failed"
+    },
+    {
+      "attempt": 4,
+      "cause": "Diagnostic confirmed the framework placeholder in the actual nixos-version executable",
+      "result": "system-test-failed"
+    },
+    {
+      "attempt": 5,
+      "cause": "Partial attempt interrupted while repairing the fixture dependency on its replaced profile; not a passed qualification",
+      "exit_code": 1,
+      "result": "interrupted-by-agent"
+    },
+    {
+      "attempt": 6,
+      "cause": "The VM test transport also required timeout/base64 from its profile; synthetic profiles now retain the transport tools; candidate unchanged",
+      "exit_code": 1,
+      "result": "system-test-failed"
+    }
+  ],
+  "production_access": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "recorded_on": "2026-10-31",
+  "schema_version": 1,
+  "scope": "Cold synthetic NixOS TCG provenance observation; no production operation",
+  "source_sha256": {
+    "/workspace/mrjam-validation/operational-review/provenance-systemd.nix": "2325b87f2a3b47997d619fbbc56313a25306089439056d881e118d8df40de35d",
+    "/workspace/vps-infrastructure/flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "/workspace/vps-infrastructure/operations/bootstrap-observation/bounded.py": "cda044ad47a83a02a12a3104ac61ae75ee8433b1c198b6d0855f464b3575b5f0",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/collect.py": "1ecc031f170978c30157f0615c4ef6394e948c74d51212f0040c2b68c0654c69",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/observe.py": "27f80d246b53ce8c3bda771138552f5a706a4ba6190d808871e4c6b2fcb5ef41",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/package.nix": "83e387f7419f3b85939a2e986c60fb285b7f440c9b4fc1fec7346544eded30aa",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/probe/provenance.schema.json": "a703c5024700435655a963595eb72187d0d3eba61bb5bdb9371913a3c3ef499a",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/probe/provenance_probe.py": "594bd71cf13701399e3b48a1a6c10f56e0cc7110dd94079d64386c48ec82175a",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/probe/validate_report.py": "8eca198d69dda5903f4fe840d43aca23557c97afe67456a6f958a331aefa8209",
+    "/workspace/vps-infrastructure/operations/bootstrap-provenance/tests/test_provenance.py": "afed8084a2f2f614757e9b22b7db2c3d91b0fbf9f46506d15e4123031f27bea1",
+    "/workspace/vps-infrastructure/operations/probes/adoption-v2/adoption_probe.py": "a93b1abf4b30852b1ac844fce56c7b077a2fd1d382e0eb3ddf95d2189ef2d628",
+    "/workspace/vps-infrastructure/operations/probes/adoption-v2/validate_report.py": "c82e66018ac9f35ccb3b52a33a9ec7ab2f54f55962410a55cd8c50134e1625d1"
+  },
+  "vm_assertions_sha256": "40b6c0158651eb60bcd68924a7ecdfdaf27694d5fe3624c1315c79dc8900f29d",
+  "vm_derivation": "/nix/store/ihskq83jpb2xpwk477xysyjifplwcgjz-vm-test-run-mrjam-provenance-systemd-contract.drv",
+  "vm_nar_hash": "sha256-HyIiizcjzeiRaqQpoTVJGMrPBa+hkQBPT8ljvCEsqv4=",
+  "vm_output": "/nix/store/id8s6kvcqpsnba2vfnv0dlg6b3qypr6x-vm-test-run-mrjam-provenance-systemd-contract"
+}
