@@ -1,0 +1,53 @@
+#+title: Qualification locale du pipeline avec UID distinct
+#+language: fr
+
+Ce harnais est exclusivement destiné au Cloud synthétique. Il ne fournit aucun
+endpoint de production et ne démontre aucune réserve du VPS. Le compte Cloud
+partagé accumulait des descendants terminés non récoltés, comptés par
+=RLIMIT_NPROC=. Le même budget de 256 processus refusait donc la création d'un
+namespace avant le lancement du candidat. Aucun plafond du worker n'est augmenté.
+
+=prepare_local_uid.py= s'exécute dans le conteneur Nix local hors réseau. Il copie
+seulement les trois fichiers publics du harnais vers un nouveau dossier root
+non modifiable, conserve leurs SHA-256 et prépare un répertoire privé UID/GID
+59990. Il ne modifie aucun compte de l'hôte. Un ancien dossier ou un résultat
+de qualification existant n'est jamais remplacé.
+
+=launch_local_uid.py= vérifie ces copies contre les sources actuelles puis lance
+l'image Nix par digest avec UID 59990, un init récoltant les enfants, aucun réseau,
+aucune capacité, un processeur, 2 Gio et 256 tâches. =run_isolated_uid.py= relit les
+trois limites cgroup réelles avant d'exécuter le protocole du worker. Seuls le
+store public en lecture seule, la copie du harnais, l'export vérifié et le
+répertoire privé de résultat sont montés. Aucun socket Docker, home, identité
+ou fichier de production n'est monté dans cette exécution.
+
+Le profil Docker n'applique pas ses filtres seccomp/AppArmor ni ses masquages
+proc habituels : les masquages rendent impossible le montage proc du namespace
+non privilégié. Les frontières du worker (deux niveaux Bubblewrap, règles
+seccomp propres, capacités retirées, réseau privé et volumes fermés) restent
+inchangées. Le test NixOS/systemd séparé qualifie leur composition de production ;
+le profil de ce conteneur local ne la remplace pas.
+
+Préparation, après export Nix vérifié dans =worker-NOM= :
+
+#+begin_src sh
+bash operations/tools/nix-local.sh --offline-container env MRJAM_SYNTHETIC_CONTAINER=1 \
+  /nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S \
+  operations/forgejo/tests/prepare_local_uid.py qualifier-code-DATE-NUMERO
+python3 -B operations/forgejo/tests/launch_local_uid.py qualify \
+  qualifier-code-DATE-NUMERO worker-NOM
+#+end_src
+
+Les noms sont explicites et chaque tentative garde son propre journal. Le mode
+=qualify= ne change ni le vérificateur, ni ses attentes, ni les artefacts.
+=diagnose= expose seulement les sorties de compilation et de tests sur données
+inventées dans une superposition distincte ; il ne peut jamais rendre un succès
+de qualification. =diagnose-http= réutilise en plus un ancien ELF épinglé et
+interrompt le pipeline après HTTP : il ne qualifie ni compilation ni artefact.
+Leurs sorties portent explicitement =qualification_passed=false=.
+
+=export_nix_worker.py= accepte un précédent export immuable pour économiser le
+disque local. Chaque chemin Nix original, puis chaque NAR réutilisé et recopié
+est vérifié. Les hardlinks ne concernent que ces octets root non modifiables ;
+les sources candidates restent des copies distinctes. Aucun hash en échec
+n'est réparé. Cette optimisation n'accorde aucune autorité au cache partagé.

@@ -23,8 +23,9 @@ reste désactivé. Le module ne crée aucun rôle, base ou schéma PostgreSQL.
 Le compte système dédié n'a aucun groupe supplémentaire. La file SQLite reste
 sous =/var/lib/mrjam-vision-archive=, propriétaire dédié, répertoire 0700 et
 umask 0077. Le CLI exige le schéma existant au démarrage ordinaire ; il ne le
-répare pas. Le fichier principal est limité à 32 768 pages de 4096 octets ;
-ce plafond ne remplace pas un quota global incluant WAL, temporaires et autres
+répare pas. SQLite reçoit un plafond de 32 768 pages ; la taille des pages d'une
+file adoptée n'est pas imposée par ce code. Ce plafond ne remplace pas un quota
+en octets incluant journaux, temporaires et autres
 services. Ce quota global demeure à établir. Les contenus de messages acceptés
 ou annulés sont purgés après trente jours, leurs empreintes et clés restent
 disponibles ; les messages en attente ne sont pas silencieusement supprimés.

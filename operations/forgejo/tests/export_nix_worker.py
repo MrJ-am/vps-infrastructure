@@ -42,10 +42,17 @@ def nar_hash(path):
 
 
 def main():
-    require(len(sys.argv) == 4 and os.getuid() == 0 and os.environ.get("MRJAM_SYNTHETIC_CONTAINER") == "1"
+    require(len(sys.argv) in (4, 5) and os.getuid() == 0 and os.environ.get("MRJAM_SYNTHETIC_CONTAINER") == "1"
             and set(os.listdir("/sys/class/net")) == {"lo"}, "OFFLINE_SYNTHETIC_CONTAINER_REQUIRED")
     config_path, source = (Path(argument).absolute() for argument in sys.argv[1:3])
     name = sys.argv[3]
+    previous = None
+    if len(sys.argv) == 5:
+        require(re.fullmatch(r"worker-[A-Za-z0-9_-]+", sys.argv[4]), "INVALID_REUSE_FIXTURE")
+        previous = EXPORT / sys.argv[4]
+        metadata = os.lstat(previous)
+        require(stat.S_ISDIR(metadata.st_mode) and metadata.st_uid == 0
+                and not metadata.st_mode & 0o222, "UNTRUSTED_REUSE_FIXTURE")
     require(config_path.is_relative_to(BUILD) and source.is_relative_to(BUILD)
             and re.fullmatch(r"worker-[A-Za-z0-9_-]+", name), "INVALID_FIXTURE_PATH")
     for candidate in (config_path, source):
@@ -110,15 +117,27 @@ def main():
         Path(base).chmod(0o555)
     worker.verify_input(root / "input", proposal, configuration["rules_revision"])
     records = []
+    reused = 0
     require(shutil.disk_usage(root).free >= 2 * 1024**3, "INSUFFICIENT_FIXTURE_SPACE")
     for path in paths:
         nix(["nix-store", "--verify-path", path])
         expected = nar_hash(path)
         destination = root / path.removeprefix("/")
+        origin = Path(path)
+        copy_file = shutil.copy2
+        if previous is not None:
+            cached = previous / path.removeprefix("/")
+            if cached.exists():
+                # Root-owned immutable Nix bytes only; input source files are
+                # always copied independently above. Never repair a mismatch.
+                require(nar_hash(cached) == expected, "REUSED_CLOSURE_HASH_MISMATCH")
+                origin = cached
+                copy_file = os.link
+                reused += 1
         if Path(path).is_dir():
-            shutil.copytree(path, destination, symlinks=True)
+            shutil.copytree(origin, destination, symlinks=True, copy_function=copy_file)
         else:
-            shutil.copy2(path, destination, follow_symlinks=False)
+            copy_file(origin, destination, follow_symlinks=False)
         require(nar_hash(destination) == expected, "COPIED_CLOSURE_HASH_MISMATCH")
         records.append({"path": path, "nar_hash": expected, "verified_after_copy": True})
         require(shutil.disk_usage(root).free >= 1024**3, "INSUFFICIENT_FIXTURE_SPACE")
@@ -131,7 +150,8 @@ def main():
     (root / "nix").chmod(0o555)
     root.chmod(0o555)
     print(json.dumps({"decision": "exported", "scope": "local-public-code-fixture", "fixture": name,
-                      "proposal_sha256": proposal, "export_sha256": hashlib.sha256(encoded).hexdigest(), "store_paths": len(paths)}))
+                      "proposal_sha256": proposal, "export_sha256": hashlib.sha256(encoded).hexdigest(),
+                      "store_paths": len(paths), "reused_verified_store_paths": reused}))
     return 0
 
 
