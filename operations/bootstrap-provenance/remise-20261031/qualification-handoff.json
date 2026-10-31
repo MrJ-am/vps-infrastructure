@@ -1,0 +1,12 @@
+{
+  "archive": "mrjam-observation-provenance-20261031.tar",
+  "bytes": 430080,
+  "production_access": false,
+  "regular_members_verified": 37,
+  "schema_version": 1,
+  "sha256": "e9167d1024528806a624bf99ae70b983717b0a3a182bd7fb0d2e946ead38669f",
+  "sha256sums_entries_verified": 36,
+  "standalone_filter_synthetic_cases_passed": 3,
+  "transfer_cli_passed": true,
+  "two_archive_builds_byte_identical": true
+}
