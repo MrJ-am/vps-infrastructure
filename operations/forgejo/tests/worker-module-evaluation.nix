@@ -37,5 +37,9 @@ let
     processTreeKill = service.KillMode == "control-group";
     exactIndependentRulesReference = policy.rules_revision == "1111111111111111111111111111111111111111" && lib.hasSuffix "-mrjam-validate" policy.validator_store;
     sourceOnlyRoot = service.ReadOnlyPaths == [ "/var/lib/mrjam-validation-input" ];
+    protectedClosureCopy = enabled.environment.etc."mrjam-validation-worker/store-paths".mode == "0444"
+      && enabled.environment.etc."mrjam-validation-worker/store-paths".uid == 0
+      && builtins.unsafeDiscardStringContext enabled.environment.etc."mrjam-validation-worker/store-paths".source == policy.closure_file
+      && map builtins.unsafeDiscardStringContext service.BindReadOnlyPaths == [ "/etc/mrjam-validation-worker/store-paths:${policy.closure_file}" ];
   };
 in assert builtins.all (x: x) (builtins.attrValues results); results

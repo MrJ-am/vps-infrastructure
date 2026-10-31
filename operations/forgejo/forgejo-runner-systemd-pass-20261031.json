@@ -1,0 +1,51 @@
+{
+  "authority": "unverified-local-test-result",
+  "derivation": "/nix/store/cdk0zr11zs9w4wczv4lca5yyfyr8m0zf-vm-test-run-mrjam-forgejo-runner-systemd-independent.drv",
+  "log_sha256": "27bdf5ed2d6e4b37446ae3bb6ad651281fae654c371dfe13cc623d40134bcac6",
+  "path_info": {
+    "/nix/store/720ip99ajs3w5nif71gcag07rn7wxl9q-vm-test-run-mrjam-forgejo-runner-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/cdk0zr11zs9w4wczv4lca5yyfyr8m0zf-vm-test-run-mrjam-forgejo-runner-systemd-independent.drv",
+      "narHash": "sha256-ym9Mv2he5Y7E1tCzyU19YBl9Cn7Gu9VWO3t/iS2GmxM=",
+      "narSize": 1240,
+      "references": [],
+      "registrationTime": 1793456388,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_access": false,
+  "production_ready": false,
+  "result": {
+    "checks": [
+      "no-implicit-registration-runner-or-collector",
+      "real-registration-loadcredential-idempotence-and-identity-separation",
+      "actual-private-root-credential-mount-and-resource-limits",
+      "actual-nftables-fixed-loopback-destination",
+      "real-forgejo-job-through-actual-collector-and-worker-with-invented-validator",
+      "other-branch-input-and-changed-workflow-refused-before-steps",
+      "coordinator-clean-stop"
+    ],
+    "limits": [
+      "The validator emits invented artifacts; this is not Rust/Elm artifact qualification",
+      "Forgejo uses synthetic SQLite, not production PostgreSQL or existing identities",
+      "No real ACL adoption, backup, VPS capacity or deployment authority established"
+    ],
+    "production_access": false,
+    "rules_fixture_revision": "273101c9097c9c1a649f81918c751497b8dc9bb1",
+    "scope": "invented NixOS VM and repositories, actual specialized runner and service modules"
+  },
+  "schema_version": 1,
+  "sources_sha256": {
+    "/workspace/mrjam-validation/operational-review/forgejo-runner-fixture.py": "0f1df9ff53c57dbbc6306fdc5ea866e55923f36f12d97bba8da9f0532bb89889",
+    "/workspace/mrjam-validation/operational-review/forgejo-runner-systemd.nix": "6eccf00acad2b669b906bbd1d5c55337f3ec0269b8d1162299d80f6d479cfdc9",
+    "/workspace/mrjam-validation/operational-review/worker-validator-fixture.py": "84cc28d47765d2dd51d27a50949c02e1cca0a29f59a6d20ec4592afe409617ce",
+    "/workspace/vps-infrastructure/operations/forgejo/submit.py": "db5349ad78199e15405a5e0d48170eeab8178d5226734a30ca18a9fbb8a84a85",
+    "/workspace/vps-infrastructure/operations/forgejo/worker.py": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-forgejo-runner.nix": "309f5612091d9f86263edd4016ffd95000a53f33ffeb08a7a1a88a668a9c8d1c",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-collector.nix": "3dfc0d0dd4499b9cd8f4755ed4191ee2b46414fdc912af6f25c563df68d18285",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-validation-worker.nix": "dd7c461e9dce9ed5b1c0b904663981359d789a381cca33168c2a017a701c846e"
+  }
+}
