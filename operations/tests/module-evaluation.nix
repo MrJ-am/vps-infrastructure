@@ -63,6 +63,14 @@ let
     configRequiredBeforeStart = unitBlue.unitConfig.AssertPathExists == "${blueConfig}/runtime.json";
     secretReferencesOnly = unitBlue.serviceConfig.LoadCredential == [ "db-mateval:/run/secrets/mrjam/synthetic-mateval" ]
       && unitGreen.serviceConfig.LoadCredential == [ ];
+    admissionApprovalHasADistinctExplicitCredential = let
+      selected = (evaluate (lib.recursiveUpdate options {
+        services.mrjamRust.slots.green.credentials.admission-approval = "/run/secrets/mrjam/synthetic-admission-approval";
+      })).config;
+    in selected.systemd.services.mrjam-rust-green.serviceConfig.LoadCredential
+      == [ "admission-approval:/run/secrets/mrjam/synthetic-admission-approval" ]
+      && selected.systemd.services.mrjam-rust-blue.serviceConfig.LoadCredential
+        == unitBlue.serviceConfig.LoadCredential;
     stopDoesNotForceKill = unitBlue.serviceConfig.KillSignal == "SIGTERM"
       && unitBlue.serviceConfig.TimeoutStopSec == "infinity"
       && !unitBlue.serviceConfig.SendSIGKILL;

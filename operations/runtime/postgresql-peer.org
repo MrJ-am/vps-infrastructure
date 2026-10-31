@@ -1,0 +1,36 @@
+#+title: Raccord PostgreSQL local déclaratif
+#+language: fr
+
+Les sources historiques conservées décrivent PostgreSQL 17, sans TCP, avec
+socket /run/postgresql et authentification peer des identités Unix métier.
+Ce constat de code ne prouve pas le pg_hba.conf effectivement installé.
+Il justifie de conserver ce mode dans le runtime, en plus du mode à credential
+explicitement configuré, sans fabriquer de mot de passe de production.
+
+=../nixos/mrjam-postgresql-access.nix= ajoute uniquement les couples base/rôle
+existants explicitement sélectionnés pour les comptes blue/green déclarés.
+Une même carte pg_ident contient les deux identités : deux règles pg_hba
+successives par slot ne fonctionneraient pas, car PostgreSQL s'arrête au
+premier type/base/rôle correspondant. Les entrées précèdent les rejets finaux.
+Un mkForce concurrent qui les supprimerait, ou un ajout d'identité dans la
+carte réservée, fait échouer les assertions.
+Chaque rôle doit être associé à une seule base dans ces déclarations ; une
+réutilisation du même rôle pour une autre base est refusée, ainsi qu'une autre
+règle pg_hba qui réutiliserait la carte réservée et en élargirait la portée.
+
+Le module ne choisit pas la version de PostgreSQL, ne crée aucun rôle ou base,
+ne change ni dataDir ni secrets, n'ajoute pas d'accès TCP et n'exécute aucune
+migration. Il exige le service et les identités Rust déclarés ; il reste
+désactivé par défaut. Les noms SQL réservés sont refusés.
+
+Avant adoption, la configuration machine doit fournir les vrais couples
+base/rôle et leur compatibilité avec les schémas, sans exporter le contenu des
+bases. Les migrations et droits exacts sont un lot séparé revu ; la présence
+d'une entrée peer ne démontre pas les permissions SQL. Les tests système
+doivent vérifier qu'un autre UID ne peut pas choisir ces rôles.
+
+Les limites mémoire Rust proposées sont maintenant 512 Mio par instance et
+1024 Mio cumulés. La mesure du transport/parseur seul (~189 Mio RSS) ne justifie
+pas le précédent plafond 256 Mio avec scrypt, ressources statiques et SQL.
+Ces nouveaux plafonds restent à éprouver ensemble avec les artefacts finaux ;
+ils ne réservent aucune ressource et ne démontrent pas la cohabitation sur le VPS.

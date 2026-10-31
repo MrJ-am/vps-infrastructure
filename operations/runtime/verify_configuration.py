@@ -67,20 +67,21 @@ def credential_bindings(configuration, slot):
 
     mateval = configuration.get("mateval")
     if mateval is not None:
-        check(mateval["database"]["password_file"], "db-mateval")
+        check(mateval["database"].get("password_file"), "db-mateval")
         administration = mateval.get("administration_database")
         if administration is not None:
-            check(administration["password_file"], "db-mateval-admin")
+            check(administration.get("password_file"), "db-mateval-admin")
         check(mateval.get("activation_sha256_file"), "mateval-activation-sha256")
     vision = configuration.get("vision")
     if vision is not None:
-        check(vision["database"]["password_file"], "db-vision")
+        check(vision["database"].get("password_file"), "db-vision")
         for field, name in (("deletion_journal", "db-vision-journal"),
                             ("administration_database", "db-vision-admin")):
             if vision.get(field) is not None:
-                check(vision[field]["password_file"], name)
+                check(vision[field].get("password_file"), name)
+        check(vision.get("admission_approval_credential_file"), "admission-approval")
     if configuration.get("audition") is not None:
-        check(configuration["audition"]["password_file"], "db-audition")
+        check(configuration["audition"].get("password_file"), "db-audition")
     return sorted(names)
 
 
