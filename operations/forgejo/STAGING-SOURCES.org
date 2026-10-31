@@ -1,0 +1,90 @@
+#+title: Publication déclarative des sources du worker
+#+language: fr
+#+date: 2026-10-31
+
+=../nixos/mrjam-validation-staging.nix= et =stage_sources.py= remplacent la
+copie manuelle des entrées déjà préparées. Le module est désactivé par défaut,
+sans démarrage automatique, socket de commande ou téléchargement. Il importe
+le module du worker mais ne l'active pas. Son activation explicite exige le
+worker configuré et un catalogue de une ou deux propositions.
+
+* Entrées et résultat
+
+Chaque entrée Nix =services.mrjamValidationStaging.proposals= contient
+=sha256=, empreinte des octets exacts du manifeste, et =source=, paquet
+immuable de code public contenant =manifest.json= et les fichiers déclarés.
+La révision des règles vient de la configuration du worker. Le catalogue est
+une copie root 0444 sous =/etc/mrjam-validation-staging/catalog.json= ; ni le
+runner, ni le candidat ne choisissent les paquets, chemins ou règles.
+
+Le paquet =mrjam-validation-stage-sources= verrouille l'interpréteur par le
+même nixpkgs que la génération. Le programme refuse tout argument et ne lit
+pas de demande sur stdin. Il ne lance ni Git, ni shell candidat, ni compilateur,
+ni commande Nix. L'unité ne possède aucune capacité Linux, aucun secret et
+aucun accès réseau ; son seul espace persistant inscriptible est
+=/var/lib/mrjam-validation-input=. Le catalogue, les paquets et la génération
+doivent avoir été construits, examinés et installés par le mécanisme autorisé
+avant un éventuel démarrage explicite de cette unité.
+
+Le programme vérifie le manifeste et toutes les copies, puis appelle le
+vérificateur d'entrées du worker inchangé. Les fichiers du store peuvent avoir
+plusieurs liens physiques après optimisation ; les copies publiées ont chacune
+un seul lien et un mode 0444. Les répertoires publiés sont root 0555.
+Les octets, noms de fichiers et empreintes restent ceux du manifeste original.
+La copie ne transforme pas une source non approuvée en source de confiance.
+
+* Concurrence, interruption et rétention
+
+L'unité prend le verrou exact du worker. Un worker actif produit =BUSY= avant
+toute mutation ; aucun assouplissement du contrôle de concurrence du worker
+n'est ajouté. Tous les nouveaux contenus sont copiés et vérifiés dans
+=.staging=, privé à root, avant le premier renommage de publication.
+Les dossiers absents du catalogue ne sont retirés qu'après publication de
+toutes les copies attendues. Aucun contenu du collecteur, dépôt Git, données
+applicatives ou chemin externe n'est supprimé.
+
+Sous le verrou, le répertoire d'entrée reçoit temporairement le mode root
+0755 ; Linux exige aussi l'écriture propriétaire pour déplacer un répertoire
+entre deux parents. Les modes 0555 sont rétablis avant de rendre le verrou.
+Une interruption à cet endroit peut laisser 0755 : le worker inchangé refuse
+alors l'entrée. La reprise accepte seulement ces modes fermés, vérifie à nouveau
+chaque fichier et rétablit l'état scellé. Ce refus temporaire est préférable
+à prétendre qu'une publication interrompue est disponible.
+
+La reprise élimine seulement l'espace de copie privé, après vérification
+bornée de ses types, propriétaires, tailles et liens. Un lien symbolique,
+un fichier spécial ou un objet étranger bloque la reprise. Les copies déjà
+publiées sont vérifiées avant toute suppression. Aucun effacement de secours
+sur chemin arbitraire n'est fourni.
+
+Limites : deux propositions conservées, au plus 4096 fichiers, 32 Mio de code
+et 4 Mio de manifeste chacune ; 16384 objets de fichiers/répertoires par
+proposition. Une interruption peut laisser quatre propositions publiées ; la
+reprise en vérifie au plus quatre avant de réconcilier le catalogue. Avec les
+deux copies privées, le plafond logique de contenu est 216 Mio, hors métadonnées
+du système de fichiers et paquets du store. L'unité est limitée à 192 Mio de
+mémoire, 20 % de CPU, 16 tâches et 120 secondes. Ces plafonds ne sont ni une
+réservation, ni une preuve de quota disque ou de capacité du VPS. Désactiver le
+module ne purge pas implicitement les copies conservées.
+
+* Qualification distincte
+
+Le contrat indépendant précède l'implémentation :
+=mrjam-validation/operational-review/STAGING-SOURCES.org=.
+Les tests natifs et Nix exercent publications, rétention, altérations, refus de
+liens/FIFO/chemins, verrou, reprise après interruption et absence d'exécution
+des sources. Les premiers échecs de permissions sont conservés avec leurs logs.
+L'évaluation du module contrôle 17 propriétés, dont import inerte, permissions,
+limites, catalogue vide/dupliqué et absence de worker.
+
+La suite =mrjam-validation/operational-review/staging-sources-systemd.nix=
+emploie les 815 fichiers publics, 6413759 octets de code et manifeste exact
+=5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087=
+de l'intégration précédente. Elle n'exécute pas le compilateur. Les résultats
+effectifs sont à lire dans le reçu de cette suite, jamais déduits de son code.
+
+Ce lot ne récupère pas automatiquement les sources depuis Forgejo, n'adopte
+aucune politique protégée et ne fournit pas d'identité d'attestation. La preuve
+complète de la chaîne déjà exécutée reste attachée à ses anciens octets ; la
+publication déclarative possède sa qualification système distincte. Le raccord
+au VPS, la marge CI, les ACL et l'autorité de production restent à établir.
