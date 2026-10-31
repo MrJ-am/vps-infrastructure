@@ -92,6 +92,13 @@ class ReviewExportTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(b"REFUSAL_RETAINED", result.stderr)
 
+    def test_only_versioned_selections_can_be_exported(self):
+        self.assertEqual(export.selection_reference('platform-20261031'),
+                         (export.SELECTION, '17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580'))
+        for unknown in ('/arbitrary/path.json', '../selection', 'production', ''):
+            with self.subTest(name=unknown), self.assertRaisesRegex(export.Refused, 'UNKNOWN_REVIEW_SELECTION'):
+                export.selection_reference(unknown)
+
 
 if __name__ == "__main__":
     unittest.main()

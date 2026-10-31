@@ -1,0 +1,292 @@
+{
+  "authority": "unverified-local-export-result",
+  "checks": {
+    "evidence_before_after_unchanged": true,
+    "fresh_store_import": true,
+    "recursive_integrity": true,
+    "same_paths_nar_hashes_sizes_references": true
+  },
+  "closure": {
+    "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib": {
+      "nar_hash": "sha256-w0O32leD1Ymrd7kG3zawezUqxUdae6nUKj2HaLGEssQ=",
+      "nar_size": 10317392,
+      "references": [
+        "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/wkkvmvz3vnbfl3rkf85gp5p5mgp34ak3-gcc-15.3.0-libgcc"
+      ]
+    },
+    "/nix/store/10d0lpvg6pxnzlgnrdpm3xjyki00zgah-gdbm-1.26-lib": {
+      "nar_hash": "sha256-Y9KG7WlgCP5jKFnc4TeoeJ1Xh9sT9e/cXx/OcWIWuno=",
+      "nar_size": 459384,
+      "references": [
+        "/nix/store/10d0lpvg6pxnzlgnrdpm3xjyki00zgah-gdbm-1.26-lib",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/1d733bdg61s0qwwr04xiyrqz4wydv3ym-xz-5.8.4": {
+      "nar_hash": "sha256-05kYo04ArC8zH7b4lQCokOrjbhPdUdaQolV3oPsBars=",
+      "nar_size": 873248,
+      "references": [
+        "/nix/store/1d733bdg61s0qwwr04xiyrqz4wydv3ym-xz-5.8.4",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/3yhivr3h6801yk7sy3skzj4f2j86i68r-readline-8.3p3": {
+      "nar_hash": "sha256-diHNM/r58CuNssYho9q3nGvzAOCIFdnriIjOd4W4hd4=",
+      "nar_size": 506392,
+      "references": [
+        "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc": {
+      "nar_hash": "sha256-cMuvHKKZQ7us4kpUA40tNxZpkQQRivt6fWtZHAPVcK8=",
+      "nar_size": 197672,
+      "references": []
+    },
+    "/nix/store/4qqwpd1f34k9505ljggkh07p5a9pllsz-sqlite-3.53.3": {
+      "nar_hash": "sha256-TAfr37R52TBkGdS0pCcnpoq/GWasydiaWwabmgp6A5A=",
+      "nar_size": 6027056,
+      "references": [
+        "/nix/store/7b063z98zcilpmzj2sz7sl56gl84zf02-zlib-1.3.2",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6": {
+      "nar_hash": "sha256-sX8OaJvFfKeKcBNN9KW99ph7/tH8Q+A/sx968LS04Ro=",
+      "nar_size": 3870560,
+      "references": [
+        "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/7b063z98zcilpmzj2sz7sl56gl84zf02-zlib-1.3.2": {
+      "nar_hash": "sha256-MILyehG3c0UlwixVQ0kxbKOwPseokjTH5uWHV7lqaVg=",
+      "nar_size": 132608,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54": {
+      "nar_hash": "sha256-/2pkdgHKodEDLknYROnuSN0F17m+BZ4AymO51vBpcvU=",
+      "nar_size": 119360,
+      "references": []
+    },
+    "/nix/store/akmhgr98bcg2nrnls89gl7xz282h1mzf-mpdecimal-4.0.1": {
+      "nar_hash": "sha256-SyLWmcB5L2Vz8UoXF0Y/DZNfqM9et5RvtQEOsUazNYM=",
+      "nar_size": 226192,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/d3f8rpj3iy1wx2p2d8fxqab8kdygyi9f-util-linux-minimal-2.42.4-lib": {
+      "nar_hash": "sha256-/BSWtreLDCoY4i8FD4hWOAZ+ArpX2Stzqz/BLJ2lvqI=",
+      "nar_size": 2113280,
+      "references": [
+        "/nix/store/d3f8rpj3iy1wx2p2d8fxqab8kdygyi9f-util-linux-minimal-2.42.4-lib",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103": {
+      "nar_hash": "sha256-LPUAneSuB3kwdNrlMG/ndDOIKX5YOZi0c2CWcO6cgK4=",
+      "nar_size": 35073152,
+      "references": [
+        "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+      ]
+    },
+    "/nix/store/giyv7l6bs19qrrav660gbnziy6agclqy-mrjam-vision-admission-0.1.0-718a81880090": {
+      "nar_hash": "sha256-yymebb8Drty1Ku1Ya2WddOleUKLMph6MjOENloYde4M=",
+      "nar_size": 11926936,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9": {
+      "nar_hash": "sha256-FXftyLkftukrBzLoEXxLNSvLMGoiC8WPr6pYF42X4P4=",
+      "nar_size": 1852752,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9"
+      ]
+    },
+    "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2": {
+      "nar_hash": "sha256-9KgpD5PZV4hyk6yMdDAtFSvL3yi19d8psFgF1YrqMx8=",
+      "nar_size": 2078944,
+      "references": [
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2"
+      ]
+    },
+    "/nix/store/k0qnrn1rz01rvc2ys7vcll4wa80qcrdi-expat-2.9.0": {
+      "nar_hash": "sha256-9Bdy4cBqxU1eww2wn+V75ZRwhFLhyY5iWUlP88eRZDM=",
+      "nar_size": 343024,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/k0qnrn1rz01rvc2ys7vcll4wa80qcrdi-expat-2.9.0"
+      ]
+    },
+    "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17": {
+      "nar_hash": "sha256-1Dma+op9uMTO9xTsp15GAsF99c1S/zRdVF7sOJ62/Pc=",
+      "nar_size": 134207600,
+      "references": [
+        "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+        "/nix/store/10d0lpvg6pxnzlgnrdpm3xjyki00zgah-gdbm-1.26-lib",
+        "/nix/store/1d733bdg61s0qwwr04xiyrqz4wydv3ym-xz-5.8.4",
+        "/nix/store/3yhivr3h6801yk7sy3skzj4f2j86i68r-readline-8.3p3",
+        "/nix/store/4qqwpd1f34k9505ljggkh07p5a9pllsz-sqlite-3.53.3",
+        "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6",
+        "/nix/store/7b063z98zcilpmzj2sz7sl56gl84zf02-zlib-1.3.2",
+        "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+        "/nix/store/akmhgr98bcg2nrnls89gl7xz282h1mzf-mpdecimal-4.0.1",
+        "/nix/store/d3f8rpj3iy1wx2p2d8fxqab8kdygyi9f-util-linux-minimal-2.42.4-lib",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/k0qnrn1rz01rvc2ys7vcll4wa80qcrdi-expat-2.9.0",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/mhdban9k5rif6n21v9wqnxpbh9kbq647-libffi-3.8.0",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+        "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5",
+        "/nix/store/x8ahakmx4pb07rikx4zi25daih9wrsyf-bzip2-1.0.8"
+      ]
+    },
+    "/nix/store/mhdban9k5rif6n21v9wqnxpbh9kbq647-libffi-3.8.0": {
+      "nar_hash": "sha256-DGifSKLcBfzT4kYhwYIp7ByonQbwPgTMTBmtJdqa8q4=",
+      "nar_size": 95792,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/mhdban9k5rif6n21v9wqnxpbh9kbq647-libffi-3.8.0"
+      ]
+    },
+    "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e": {
+      "nar_hash": "sha256-cp9ZUJXOYW2GlXuFYhLHxxRVG88Xir/74uf4qalV5cA=",
+      "nar_size": 2130000,
+      "references": []
+    },
+    "/nix/store/phrp20jmipdai9z3c3k13fq8srcvh734-mrjam-vision-cycle-0.1.0-47286a8a808b": {
+      "nar_hash": "sha256-aNncD6EjEDjaEo/qGLM/Fh7IlcA1Ar8YYUkuzubsH+4=",
+      "nar_size": 11473280,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5": {
+      "nar_hash": "sha256-5Xn62eP+ZBSgyfxZPxpRfG70AcFPaLKjA2M6C74wntQ=",
+      "nar_size": 9332000,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5"
+      ]
+    },
+    "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1": {
+      "nar_hash": "sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI=",
+      "nar_size": 18096,
+      "references": [
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1"
+      ]
+    },
+    "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8": {
+      "nar_hash": "sha256-cY/Kubvge38rAcEVln8BiSfhRMwC98aRiQgiMregpVI=",
+      "nar_size": 368176,
+      "references": [
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8"
+      ]
+    },
+    "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195": {
+      "nar_hash": "sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk=",
+      "nar_size": 11977128,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ]
+    },
+    "/nix/store/wkkvmvz3vnbfl3rkf85gp5p5mgp34ak3-gcc-15.3.0-libgcc": {
+      "nar_hash": "sha256-8aeSawLWybYcM/jOKI3x3iCSWJWQNKtWh6zQM3EnYjU=",
+      "nar_size": 197752,
+      "references": []
+    },
+    "/nix/store/x8ahakmx4pb07rikx4zi25daih9wrsyf-bzip2-1.0.8": {
+      "nar_hash": "sha256-rbNi0HqNcuajEWCdYtRWv7SvfVsA+iBO6fzwXXKc8Q8=",
+      "nar_size": 88952,
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/x8ahakmx4pb07rikx4zi25daih9wrsyf-bzip2-1.0.8"
+      ]
+    }
+  },
+  "closure_paths": 26,
+  "exports": {
+    "public-artifacts.nix-export": {
+      "bytes": 246015464,
+      "sha256": "ee1714dad11f2df768359ca9ed793a2ddc4f26c36e097aa66d6c3209b9c3094e"
+    },
+    "public-artifacts.nix-export.gz": {
+      "bytes": 103450055,
+      "sha256": "4d9f70063ee15755b0ec711ddeed1c1569b77e9f08d3b006109c49e6d44e5fa0"
+    }
+  },
+  "fresh_import_uid": 0,
+  "imported_program_executed": false,
+  "limits": [
+    "The separate platform/archive/replay/SQL004 review bundle; its original bytes and pins remain unchanged",
+    "VPS generation and full NixOS service dependencies",
+    "Secrets, snapshots, persistent state and backups",
+    "Protected signatures, adopted review authority and deployment controller"
+  ],
+  "nix_trust_settings_modified": false,
+  "nix_version": "nix (Nix) 2.34.8",
+  "production_access": false,
+  "production_authorized": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "scope": "public-review-only",
+  "selected_roots": 4,
+  "selection_sha256": "e01c105674381708340c96f42ac3c0d6fba25409d6365c025741e8b50fd1f60e",
+  "total_nar_bytes": 246006728,
+  "archive": {
+    "all_members_verified": true,
+    "archive": "/workspace/shared/mrjam-travailleurs-revue-20261031.tar",
+    "bytes": 103526400,
+    "compressed_stream_matches_imported_stream": true,
+    "members": 16,
+    "production_ready": false,
+    "sha256": "e6a635c033cbda82e33322293e61f5bf014057ad07ee461f6684863110bae28f"
+  },
+  "export_result": {
+    "closure_paths": 26,
+    "decision": "exported-and-import-checked",
+    "exports": {
+      "public-artifacts.nix-export": {
+        "bytes": 246015464,
+        "sha256": "ee1714dad11f2df768359ca9ed793a2ddc4f26c36e097aa66d6c3209b9c3094e"
+      },
+      "public-artifacts.nix-export.gz": {
+        "bytes": 103450055,
+        "sha256": "4d9f70063ee15755b0ec711ddeed1c1569b77e9f08d3b006109c49e6d44e5fa0"
+      }
+    },
+    "manifest_sha256": "4bfb83c20a65d95ff655dda1bf775af10724688db153375dcc9465571b6fcff8",
+    "selected_roots": 4
+  },
+  "export_negative_tests": 8,
+  "sources_sha256": {
+    "operations/release/export_review.py": "d899c3e0ce399d3d7431bbe1cb212a51e2ff49563fc723cf1aaac4c6d5243c12",
+    "operations/release/tests/test_export_review.py": "41590a4ba712ad47539aa9c81d7d652f11827b2906ce50288a3e231678c7708c",
+    "operations/release/review-workers-20261031.json": "e01c105674381708340c96f42ac3c0d6fba25409d6365c025741e8b50fd1f60e",
+    "operations/release/package_workers_review_20261031.py": "677dd34d577bdbcdc60352c4fac399e8ce56662fa445a97fd310a103c0a64ffa"
+  },
+  "logs_sha256": {
+    "review-workers-export-tests-20261031-02.log": "f8a889f1c3ebbb3e00146b7e5a8796de7b4dd61ecb535f66c9f017c4e732b50d",
+    "review-workers-export-20261031-01.log": "08dea9c22336b64b5f100a1eefcf0f41b0ed4ab92f491f6373edaa8797662e73",
+    "review-workers-export-20261031-01.json": "128b760e66e3a35b07ce368710142a85166f78d117c99aa9e5e25a1840a3cb37",
+    "review-workers-package-20261031-01.json": "7ac3ce81181c8064e523db14f9e40828719537b54c12815b76a50481db6b65ba"
+  },
+  "code_revisions": {
+    "vps-infrastructure": "7ff7efe66b50f00ca3006c813cf2ad98bab0f69b",
+    "mrjam-validation": "132ce4f14d507bf413f7ce4a155f27219d730750",
+    "vision": "718a81880090609b7730a27c4fb37f32bbb7e3d1"
+  }
+}

@@ -22,6 +22,11 @@ from urllib.parse import quote
 
 SELECTION = Path(__file__).with_name("review-artifacts-20261031.json")
 SELECTION_SHA256 = "17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580"
+SELECTIONS = {
+    "platform-20261031": (SELECTION, SELECTION_SHA256),
+    "workers-20261031": (Path(__file__).with_name("review-workers-20261031.json"),
+                         "e01c105674381708340c96f42ac3c0d6fba25409d6365c025741e8b50fd1f60e"),
+}
 ROOTS = {name: Path("/workspace") / name for name in ("vps-infrastructure", "mrjam-validation")}
 OUTPUT_PARENT = Path("/workspace/shared/mrjam-declarative-nix")
 STORE_PATH = re.compile(r"/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+")
@@ -119,13 +124,19 @@ def validate_closure(selection: dict, closure: dict) -> None:
         require(path in closure and closure[path]["nar_hash"] == expected, "ROOT_NAR_MISMATCH")
 
 
-def produce(destination: Path) -> dict:
+def selection_reference(name: str) -> tuple[Path, str]:
+    require(name in SELECTIONS, "UNKNOWN_REVIEW_SELECTION")
+    return SELECTIONS[name]
+
+
+def produce(destination: Path, selection_name: str = "platform-20261031") -> dict:
+    selection_path, selection_hash = selection_reference(selection_name)
     require(os.environ.get("MRJAM_SYNTHETIC_CONTAINER") == "1", "CLOUD_FIXTURE_REQUIRED")
     require(all(os.statvfs(p).f_flag & os.ST_RDONLY for p in ROOTS.values()), "READ_ONLY_SOURCES_REQUIRED")
     require(destination.parent == OUTPUT_PARENT and re.fullmatch(r"review-export-[a-z0-9-]+", destination.name)
             is not None and destination.parent.resolve() == OUTPUT_PARENT, "LOCAL_NEW_DESTINATION_REQUIRED")
     require(not destination.exists() and not destination.is_symlink(), "NEW_DESTINATION_REQUIRED")
-    selection, evidence = load_selection(SELECTION, SELECTION_SHA256, ROOTS)
+    selection, evidence = load_selection(selection_path, selection_hash, ROOTS)
     closure = path_info(selection["roots"])
     validate_closure(selection, closure)
     run("nix", "store", "verify", "--offline", "--no-trust", "--recursive", *sorted(selection["roots"]))
@@ -149,7 +160,7 @@ def produce(destination: Path) -> dict:
         run("nix", "store", "verify", "--offline", "--no-trust", "--recursive", "--store", store,
             *sorted(selection["roots"]))
     # Recheck every selected input before publishing a successful manifest.
-    require(load_selection(SELECTION, SELECTION_SHA256, ROOTS)[1] == evidence, "EVIDENCE_CHANGED")
+    require(load_selection(selection_path, selection_hash, ROOTS)[1] == evidence, "EVIDENCE_CHANGED")
     for name, contents in evidence.items():
         target = destination / name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -157,7 +168,7 @@ def produce(destination: Path) -> dict:
             stream.write(contents)
     manifest = {
         "schema_version": 1, "authority": "unverified-local-export-result",
-        "scope": "public-review-only", "selection_sha256": SELECTION_SHA256,
+        "scope": "public-review-only", "selection_sha256": selection_hash,
         "closure": closure, "closure_paths": len(closure), "selected_roots": len(selection["roots"]),
         "total_nar_bytes": sum(e["nar_size"] for e in closure.values()),
         "exports": {p.name: {"bytes": p.stat().st_size, "sha256": checksum(p)} for p in (export_path, compressed)},
@@ -181,5 +192,6 @@ def produce(destination: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--destination", required=True, type=Path)
+    parser.add_argument("--selection", choices=sorted(SELECTIONS), default="platform-20261031")
     args = parser.parse_args()
-    print(json.dumps(produce(args.destination), sort_keys=True))
+    print(json.dumps(produce(args.destination, args.selection), sort_keys=True))
