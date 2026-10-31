@@ -1,0 +1,31 @@
+Reprends le relais MRJ.am sur Spectre à partir de retour-spectre.json du 31 octobre.
+
+La recherche de code local a déjà été faite. Les trois dépôts sont sur GitHub.
+Ne recommence pas cette recherche sur forge.mrj.am et ne demande aucune clé.
+
+Cloud fournit maintenant la remise de l'observation d'adoption V2 : paquet
+préconstruit exact, fermeture exportée, manifeste, vérificateur et preuve de VM.
+Lis EXECUTION-HUMAINE.org et les AGENTS.md des références indiquées par la remise.
+Vérifie les empreintes de transfert et SHA256SUMS dans un dossier nouveau. Le
+vérificateur local doit rendre DELIVERY_VALID. Aucun import dans le daemon Nix
+de Spectre n'est nécessaire et aucune règle trusted-users ne doit être modifiée.
+
+Prépare pour l'administrateur humain les commandes fixes de
+EXECUTION-HUMAINE.org et le transfert de ces seuls fichiers publics par son canal
+existant. Le geste humain consiste à importer les mêmes octets, vérifier tous
+les NAR puis lancer sans argument le chemin immuable :
+/nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2/bin/mrjam-observe-adoption
+
+Tu n'obtiens aucun accès root ou shell général de production pour cette étape.
+Ne lance pas installer.py, ne modifie ni V1 ni SSH et n'essaie aucun autre chemin
+ou argument. Les données, secrets, clés privées, journaux et sauvegardes restent
+hors des agents. Aucun service applicatif n'est activé ou basculé par ce paquet.
+
+Après le geste humain, vérifie localement le JSON avec le filtre V2 livré et
+retourne uniquement adoption-v2.json. Si une étape échoue, rapporte son nom et
+le code fermé, sans diagnostic brut. Ne considère ni la présence d'un fichier
+ni une réponse partielle comme un succès. Les inconnues restantes restent inconnues.
+
+Il n'est pas nécessaire de redemander une autorisation générale pour achever
+la migration. Cette remise rend concrète une seule étape d'observation ; elle
+ne transforme pas Codex en administrateur général du VPS.

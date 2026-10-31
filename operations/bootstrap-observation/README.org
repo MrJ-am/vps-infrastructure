@@ -1,0 +1,85 @@
+#+title: Observation d'adoption — amorçage humain immuable
+#+language: fr
+
+* Portée
+
+Ce paquet donne une opération unique à l'administrateur humain ; il ne crée
+aucun accès Cloud et n'étend pas SSH V1. Il exécute les trois fichiers V2 exacts,
+avec Python et systemd issus du nixpkgs verrouillé. Il ne modifie ni compte,
+groupe, clé, service persistant, donnée ni configuration machine.
+
+Le lanceur =bin/mrjam-observe-adoption= exige UID/EUID root, aucun argument et
+son emplacement immuable dans le store. Un verrou root exclusif sous
+=/run/mrjam-observe-adoption.lock= (vide, 0600, sans lien, durée du démarrage)
+empêche les collectes concurrentes. Ce fichier temporaire peut subsister jusqu'au
+redémarrage. Une unité =mrjam-observe-adoption.service= préexistante est refusée ;
+le programme ne l'arrête et ne la remplace jamais.
+
+Il crée une unité systemd transitoire fixe, sous le compte/groupe existant
+=mrjam-inventory=, avec réseau privé vide, IP refusées, seules sockets Unix,
+aucune capability, aucun privilège nouveau, protections des fichiers et données,
+CPU 20 %, mémoire 192 Mio, 12 tâches, 64 descripteurs et core nul. Le démarrage
+est limité à 20 s, l'exécution à 60 s et l'arrêt à 2 s ; la capture externe
+est limitée à 90 s pour englober ces trois phases. Aucune option ou chemin du
+demandeur n'est transmis à systemd.
+Le compte absent, UID root, une protection non supportée ou l'absence de systemd
+produit un échec. Le shell du compte V1 n'est pas utilisé ni modifié.
+
+La sonde et son filtre s'exécutent déprivilégiés dans cette unité. Le lanceur
+valide encore sa sortie contre le même schéma avant le seul transfert possible.
+Un échec, un dépassement de 8 Kio, un code non nul ou un délai dépassé n'émet
+aucun JSON partiel. Les erreurs brutes sont supprimées ; le seul diagnostic est
+=OBSERVATION_FAILED=. Une observation conserve =unverified_observation=.
+
+Les recherches de compte du collecteur restent soumises à NSS, mais son réseau
+est coupé. La résolution du nom User/Group par le gestionnaire systemd précède
+la création de l'unité : l'identité doit être le compte local déjà installé,
+et une erreur de résolution n'autorise aucune création ou élargissement.
+
+* Construction et qualification
+
+Le paquet est construit dans Cloud par =package.nix= avec le pin =flake.lock=.
+Les trois empreintes V2 sont vérifiées à l'évaluation ; aucune pièce originale
+n'est modifiée. Les tests locaux sont sous =tests/=. La qualification système
+indépendante est dans =MrJ-am/mrjam-validation:operational-review/bootstrap-systemd.nix=,
+avec QEMU TCG dans Cloud, sans KVM ni présomption d'une VM disponible sur le VPS.
+Une image construite n'est pas un test réussi : consulter le reçu effectivement
+produit avant de transmettre des instructions d'exécution.
+
+Le premier candidat (capture 26 s, exécution 20 s sans limite explicite de
+démarrage) a échoué dans la VM TCG, à froid et après préchauffage synthétique.
+Il ne composait pas les durées de création de l'unité, d'exécution et d'arrêt.
+Le candidat courant corrige cette composition et laisse 20/15 s aux deux
+processus Python sous le quota CPU. Les délais internes et les octets de V2
+restent inchangés. Les échecs antérieurs sont conservés dans la revue ; seul
+un nouvel essai système réussi peut qualifier ce candidat. Ces bornes ne
+démontrent pas les performances ou la marge du VPS.
+
+La suite froide complète a été retrouvée et vérifiée le 31 octobre après la
+reconnexion de Cloud : onze groupes réussis, dont huit refus à sortie 65 et
+stdout vide. Le reçu indépendant est
+=mrjam-validation/operational-review/bootstrap-tcg-cold-pass-20261031.json=,
+SHA-256 =4f89ef0d01f5af7d93bdcc189f150bf8daf7ce99ff9eee821a9e2faa971ccac5=.
+Il conserve les échecs antérieurs, les sources exactes et les limites du test.
+Les paramètres et fichiers du paquet n'ont pas changé après ce succès.
+
+=export_delivery.py= prépare dans Cloud les octets de la fermeture correspondant
+à ce reçu, vérifie leur contenu puis les importe dans un store local vierge et
+compare tous les NAR, tailles et références. Cet outil ne contacte aucun VPS,
+ne lance pas l'observation et ne modifie pas la configuration de confiance Nix.
+Son résultat ne démontre pas les droits du client daemon non trusted de Spectre.
+
+* Mise à disposition humaine
+
+La directive actuelle autorise l'objectif de mise en service. Ce lot reste un
+amorçage précisément identifié, pas une délégation générale. Après réussite de
+la qualification et identification du commit, du chemin store, du NAR hash et
+de la fermeture exportée, Spectre peut vérifier les artefacts et préparer la
+commande humaine d'import puis de lancement sans argument. Ne pas inventer ces
+identifiants ni les remplacer par une branche mobile.
+
+Aucun SSH général n'est fourni aux agents. Ne pas lancer installer.py, remplacer
+les blobs de V1, donner un shell au compte ou copier une clé privée. Les détails
+matériels, les builds actifs des autres services et la source complète du VPS
+ne sont pas établis par la seule V2 ; les contrôles complémentaires doivent
+rester distincts et justifiés.
