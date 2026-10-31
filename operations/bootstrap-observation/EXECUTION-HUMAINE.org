@@ -1,0 +1,101 @@
+#+title: Remise exacte de l'observation d'adoption — 31 octobre 2026
+#+language: fr
+
+* Objet et opérateur
+
+Cette opération humaine importe un paquet préconstruit puis lance une seule
+observation filtrée. Elle n'active aucune génération NixOS et ne déploie aucune
+application. Elle ne donne aucun accès root, shell, SQL ou données à un agent.
+Le compte mrjam-inventory et l'accès SSH V1 restent inchangés.
+
+L'administrateur utilise son canal existant pour transférer la remise sur le
+VPS puis exécuter les commandes fixes ci-dessous. Codex sur Spectre peut
+vérifier les fichiers publics localement et préparer ce geste ; il n'obtient
+pas un shell de production pour l'effectuer. Aucun installer.py n'est utilisé.
+
+* Identité des octets
+
+| Élément | Référence |
+|---------+-----------|
+| Paquet | /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2 |
+| NAR du paquet | sha256-y9318KAK+1X/f6Lo6bHTNgJJHn8AIKRQj+jNikgP5xo= |
+| Export compressé | mrjam-observe-adoption-v2.nix-export.gz |
+| Taille compressée | 136243703 octets |
+| SHA-256 compressé | 81f3d750ef24577494019e6823492fe83c57f385a6c90dcda570b959eb42b1f6 |
+| Taille export décompressé | 345829336 octets |
+| SHA-256 export décompressé | a698f4460d919ad9c4bd61de216aad17c8d9c354107934957d51e2642cfa6114 |
+| Fermeture | 83 chemins ; 345793728 octets NAR |
+| SHA-256 manifeste | 04c0dc51cbe4ca88daac24a180ccb8c19ae71781a36e0de07581e686f5b9d7d8 |
+
+La preuve système est dans MrJ-am/mrjam-validation au commit
+=93828871fc79c2b98d128b5672bcccf8b6dbd466=,
+=operational-review/bootstrap-tcg-cold-pass-20261031.json=,
+SHA-256 =4f89ef0d01f5af7d93bdcc189f150bf8daf7ce99ff9eee821a9e2faa971ccac5=.
+La suite complète de onze groupes et les huit refus a réussi sous NixOS/TCG.
+L'export a également été importé dans un store local vierge : tous les chemins,
+NAR, tailles et références concordent et la vérification récursive réussit.
+Cela ne prouve pas les permissions d'import de Spectre ou du VPS.
+
+* Vérification locale sur Spectre
+
+Extraire seulement cette remise dans un dossier nouveau, puis vérifier son
+SHA256SUMS reçu par la référence Git exacte du dossier de livraison. Ne pas
+recalculer les attentes pour accepter un écart.
+
+#+begin_src sh
+sha256sum --check SHA256SUMS
+python3 verify_delivery.py --transfer-directory .
+#+end_src
+
+Le second contrôle doit produire seulement =DELIVERY_VALID=. Aucun import
+dans le daemon de Spectre n'est requis pour préparer le transfert. Le constat
+=client_trusted=false= n'est pas une invitation à modifier trusted-users,
+require-sigs ou les clés de confiance Nix.
+
+* Commandes fixes de l'administrateur sur le VPS
+
+Ces commandes s'exécutent dans le dossier de remise transféré, depuis la
+session d'administration humaine existante. Chaque commande doit réussir
+avant la suivante. Le script de vérification est celui de la remise revue.
+Les fichiers de transfert doivent rester sous contrôle de l'administrateur
+pendant la vérification et l'import ; ils ne sont pas un canal d'écriture
+accordé aux agents sur le VPS.
+
+#+begin_src bash
+set -euo pipefail
+test "$(id -u)" -eq 0
+sha256sum --check SHA256SUMS
+printf '%s\n' '81f3d750ef24577494019e6823492fe83c57f385a6c90dcda570b959eb42b1f6  mrjam-observe-adoption-v2.nix-export.gz' | sha256sum --check --strict -
+gzip --decompress --stdout mrjam-observe-adoption-v2.nix-export.gz | nix-store --import > chemins-importes.txt
+nix store verify --offline --no-trust --recursive /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2
+nix path-info --offline --json --recursive /nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2 > fermeture-installee.json
+/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S verify_delivery.py --store-info fermeture-installee.json
+/nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2/bin/mrjam-observe-adoption > adoption-v2.json
+#+end_src
+
+=--no-trust= désactive seulement le contrôle des signatures dans cette
+vérification de contenu ; aucune politique de confiance persistante n'est
+modifiée. Les empreintes attendues de tous les chemins sont comparées au
+manifeste qualifié avant le lancement. La comparaison doit produire
+=STORE_METADATA_MATCH=.
+
+Le dernier programme n'accepte aucun argument. Il crée une unité transitoire
+fixe sous le compte existant, avec limites de temps/mémoire/tâches, sans réseau,
+et n'émet le JSON qu'après validation. Il refuse un compte absent, une unité
+préexistante ou une protection indisponible. Ne pas contourner un refus.
+
+* Retour et fin de l'opération
+
+Transmettre uniquement =adoption-v2.json= après succès. En cas d'échec, transmettre
+uniquement l'étape et le code fermé ; pas de journal brut ni sortie d'un service.
+Ne pas relancer les inventaires V1 ou l'installateur pour compléter les champs.
+
+La sortie conserve =unverified_observation=. Elle aidera à reprendre le compte,
+les répertoires et les références de génération sans inventer leurs valeurs.
+Elle ne fournit pas la configuration NixOS complète, stateVersion ou les builds
+actifs de tous les services. Les décisions complémentaires resteront bornées.
+
+Le paquet importé reste inerte dans le store après l'observation. Aucune bascule
+de service ou de données n'ayant lieu, aucun retour applicatif n'est exécuté.
+Ne pas lancer un garbage-collect global, effacer un compte ou modifier SSH pour
+« nettoyer ». Le verrou temporaire root dans /run peut subsister jusqu'au reboot.

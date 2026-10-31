@@ -1,0 +1,28 @@
+#+title: Retour Spectre du 31 octobre 2026
+#+language: fr
+
+Le fichier utilisateur retour-spectre.json contient 10 097 octets, de SHA-256
+=3b0c25720c9304482c5557fb8b9d556605bc84333562efa92f3e7d9961c3ec83=.
+Aucune empreinte attendue séparée n'était fournie : c'est une empreinte de
+réception calculée, pas une preuve d'authenticité. Le JSON a été analysé avec
+refus des clés dupliquées. Ses quatre références commit/arbre et deux blobs
+source ont été rapprochés des objets Git locaux correspondants.
+
+=retour-spectre-reference.json= conserve les faits utiles et les références
+publiques. L'original reste dans la pièce jointe ; ses chemins locaux Spectre
+ne sont pas publiés. Le reçu garde =unverified_observation=.
+
+Spectre n'a retrouvé aucune source VPS complète dans les deux emplacements
+de code inspectés. Cette absence est bornée à cette recherche. Les trois
+dépôts sont toujours sur GitHub, selon la clarification utilisateur rapportée.
+La référence historique NixOS reste inactive et ne prouve pas l'installation.
+
+Le retour ne contient aucune observation système du VPS, aucun lancement de
+V2, aucune modification de service ou mise en production. Spectre dispose
+des outils Nix ; son client daemon n'est pas trusted et l'import de la
+fermeture qualifiée reste à éprouver. Ne pas élargir trusted-users pour faire
+passer un import : la remise prévoit un geste humain précisément identifié.
+
+La suite attendue côté Cloud est la livraison du paquet immuable effectivement
+qualifié, de sa fermeture et de leurs empreintes. Aucune nouvelle recherche
+de dépôts privés sur la forge ni demande de clé n'est nécessaire pour cela.

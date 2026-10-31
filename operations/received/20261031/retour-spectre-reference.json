@@ -1,0 +1,77 @@
+{
+  "authority": "unverified_observation",
+  "bootstrap_delivery_at_handoff": {
+    "execution_performed": false,
+    "import_or_launch_ready": false,
+    "qualified_artifact_delivered": false
+  },
+  "not_established": [
+    "Authenticity of the observation",
+    "VPS resource margin or production permissions",
+    "Successful import of any qualified closure on Spectre or the VPS"
+  ],
+  "observed_at_utc": "2026-10-31 08:13:27 UTC",
+  "production_deployment_performed": false,
+  "production_observation_performed": false,
+  "published_references_reconciled_with_local_git_objects": [
+    {
+      "commit": "f763073f3436cc6e52e268455f9f8b9d1976b755",
+      "repository": "MrJ-am/vps-infrastructure",
+      "role": "socle",
+      "root_tree": "1592c05ee0f513b2f28d7a6d86b66ce18038f027"
+    },
+    {
+      "commit": "02b5378056c9df59605ae962ad3aedd29b804db9",
+      "repository": "MrJ-am/mrjam-plateforme",
+      "role": "socle",
+      "root_tree": "3ec2c306ac8d20a95c42a1c703d3e5afcc077322"
+    },
+    {
+      "commit": "3053cf79de7bd1ab1c6dd8509c96afc950e8f0af",
+      "repository": "MrJ-am/mrjam-validation",
+      "role": "socle",
+      "root_tree": "ac4fb03852f665134b85d663433eb891dbac56ab"
+    },
+    {
+      "commit": "c6c7412058af19ef0f9dd75fcf2f832bd5a622ee",
+      "repository": "MrJ-am/vps-infrastructure",
+      "role": "prompt_et_branche_publiee_observee",
+      "root_tree": "4645e8a587add9f5daebba6957c6f2675fc31ae0"
+    }
+  ],
+  "received_file": {
+    "bytes": 10097,
+    "computed_sha256": "3b0c25720c9304482c5557fb8b9d556605bc84333562efa92f3e7d9961c3ec83",
+    "expected_sha256_supplied_separately": false,
+    "name": "retour-spectre.json",
+    "raw_file_not_published": true,
+    "strict_json_no_duplicate_keys": true
+  },
+  "remaining": [
+    "Deliver exact qualified bootstrap package and closure, with human-only fixed import and invocation",
+    "Obtain bounded installation metadata; this handoff cannot supply installed generation, stateVersion, UID/GID or running builds",
+    "Recover complete VPS declarative source or prepare its explicit adoption without assuming the historical configuration is installed"
+  ],
+  "schema_version": 1,
+  "scope": "Selected non-secret code references from the Spectre handoff; no production inspection",
+  "source_findings": {
+    "absence_scope": "Only the two authorized code roots and the depth stated in the original handoff",
+    "complete_local_vps_checkout_found": false,
+    "current_system_state_version": null,
+    "generation_to_source_link_found": false,
+    "historical_configuration_active": false,
+    "historical_state_version_in_source_only": "26.05",
+    "prepared_services_enabled": false,
+    "production_nixos_configurations": [],
+    "three_repositories_still_on_github": true,
+    "vps_source_authority_requested": "MrJ-am/vps-infrastructure"
+  },
+  "spectre_import_capability": {
+    "architecture": "x86_64-linux",
+    "nix_daemon_client_trusted": false,
+    "nix_daemon_protocol_reachable": true,
+    "nix_version": "2.34.9",
+    "precise_artifact_import_tested": false
+  },
+  "updated_at_utc": "2026-10-31 08:24:07 UTC"
+}

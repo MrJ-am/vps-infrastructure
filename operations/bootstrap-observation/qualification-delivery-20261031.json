@@ -1,0 +1,41 @@
+{
+  "candidate": {
+    "nar_hash": "sha256-y9318KAK+1X/f6Lo6bHTNgJJHn8AIKRQj+jNikgP5xo=",
+    "sources_still_match_independent_receipt": true,
+    "store_path": "/nix/store/25rzj9i3jv9f1878dwgkysnc454ndr84-mrjam-observe-adoption-v2"
+  },
+  "checks": {
+    "actual_export_transfer_hashes_passed": true,
+    "actual_fresh_store_import_passed": true,
+    "closure_paths_compared": 83,
+    "each_imported_nar_size_and_reference_set_matches": true,
+    "local_bootstrap_tests": 11,
+    "local_delivery_tests": 5,
+    "recursive_store_verification_passed": true
+  },
+  "delivery_manifest_sha256": "04c0dc51cbe4ca88daac24a180ccb8c19ae71781a36e0de07581e686f5b9d7d8",
+  "independent_evidence": {
+    "commit": "93828871fc79c2b98d128b5672bcccf8b6dbd466",
+    "groups_passed": 11,
+    "path": "operational-review/bootstrap-tcg-cold-pass-20261031.json",
+    "refusals_passed": 8,
+    "repository": "MrJ-am/mrjam-validation",
+    "sha256": "4f89ef0d01f5af7d93bdcc189f150bf8daf7ce99ff9eee821a9e2faa971ccac5"
+  },
+  "limits": [
+    "No VPS operation performed",
+    "Neither the receipt nor the shared workspace provides protected approval authority",
+    "Local import uses an alternate root-owned store; Spectre daemon client permissions remain untested",
+    "Export producer directory changed from0700 to0755 after first export to make public artifacts accessible; exported bytes remain unchanged"
+  ],
+  "production_access": false,
+  "production_activation": false,
+  "recorded_on": "2026-10-31",
+  "schema_version": 1,
+  "scope": "Exact bootstrap closure, recovered independent system qualification and local transfer checks",
+  "test_source_sha256": {
+    "tests/test_bootstrap.py": "9d6a0ac8db1c239015e6d961e7d19c4521437fa29d5d4eca4ef02a7d8343b789",
+    "tests/test_delivery.py": "07d0a3d6b4c1aa74636315fa549e958900608c7332fb231e4183ec2439caaae9",
+    "verify_delivery.py": "7ffc847cbf5390b8ece57efb9e5841eac2d6a965bab4716bfeed74a04cc0083a"
+  }
+}
