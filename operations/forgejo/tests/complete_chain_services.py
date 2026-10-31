@@ -8,10 +8,12 @@ No candidate can select a command, path, UID or namespace configuration.
 import json
 import os
 from pathlib import Path
+import re
 import signal
 import socket
 import subprocess
 import sys
+import tempfile
 import threading
 
 PYTHON = '/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3'
@@ -40,7 +42,7 @@ def demote(uid):
 
 
 class SocketService:
-    def __init__(self, path, group, uid, program, *, status=None):
+    def __init__(self, path, group, uid, program, *, status=None, receipt_only=False):
         require(os.getuid() == 0 and set(os.listdir('/sys/class/net')) == {'lo'}, 'OFFLINE_FIXTURE_REQUIRED')
         self.path = Path(path)
         self.path.parent.mkdir(mode=0o755, parents=True, exist_ok=True)
@@ -52,6 +54,8 @@ class SocketService:
         self.listener.listen(2)
         self.listener.settimeout(0.2)
         self.uid, self.program, self.status = uid, program, status
+        self.receipt_only = receipt_only
+        self.fixed_errors = []
         self.calls = 0
         self.codes = []
         self.error = False
@@ -64,8 +68,10 @@ class SocketService:
     def report(self):
         if self.status is not None:
             temporary = self.status.with_suffix('.tmp')
-            temporary.write_text(json.dumps({'calls': self.calls, 'exit_codes': self.codes,
-                'error': self.error, 'uid': self.uid}, sort_keys=True)+'\n')
+            value = {'calls': self.calls, 'exit_codes': self.codes, 'error': self.error, 'uid': self.uid}
+            if self.receipt_only:
+                value['fixed_errors'] = self.fixed_errors
+            temporary.write_text(json.dumps(value, sort_keys=True)+'\n')
             temporary.chmod(0o444)
             os.replace(temporary, self.status)
 
@@ -81,11 +87,21 @@ class SocketService:
                 with connection:
                     self.calls += 1
                     self.report()
-                    self.child = subprocess.Popen([PYTHON, '-I', '-S', self.program],
-                        stdin=connection, stdout=connection, stderr=subprocess.DEVNULL,
-                        start_new_session=True, user=self.uid, group=self.uid, extra_groups=[], close_fds=True,
-                        env={'PATH': '/bin', 'LANG': 'C.UTF-8', 'HOME': '/tmp'})
-                    self.codes.append(self.child.wait(timeout=1845))
+                    with tempfile.TemporaryFile() as response:
+                        self.child = subprocess.Popen([PYTHON, '-I', '-S', self.program],
+                            stdin=connection, stdout=response if self.receipt_only else connection,
+                            stderr=subprocess.DEVNULL, start_new_session=True, user=self.uid,
+                            group=self.uid, extra_groups=[], close_fds=True,
+                            env={'PATH': '/bin', 'LANG': 'C.UTF-8', 'HOME': '/tmp'})
+                        self.codes.append(self.child.wait(timeout=1845))
+                        if self.receipt_only:
+                            response.seek(0)
+                            raw = response.read(4097)
+                            require(len(raw) <= 4096, 'COLLECTOR_RECEIPT_LIMIT')
+                            value = json.loads(raw)
+                            if value.get('decision') == 'reject' and re.fullmatch(r'[A-Z_]{1,80}', value.get('code', '')):
+                                self.fixed_errors.append(value['code'])
+                            connection.sendall(raw)
                     self.child = None
                     self.report()
         except Exception:

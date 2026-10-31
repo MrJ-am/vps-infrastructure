@@ -63,7 +63,8 @@ class RealCollector:
         self.artifacts.mkdir(mode=0o700, parents=True)
         os.chown(self.artifacts, 59991, 59991)
         self.service = SocketService('/run/mrjam-validation-collector/request.sock', group,
-                                    59991, '/fixture/code/forgejo/submit.py')
+                                    59991, '/fixture/code/forgejo/submit.py', receipt_only=True,
+                                    status=Path('/results/collector-status.json'))
     @property
     def calls(self):
         return self.service.calls
