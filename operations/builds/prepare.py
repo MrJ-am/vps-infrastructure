@@ -97,7 +97,7 @@ def put(root: Path, name: str, value: bytes):
 
 
 def git(root: Path, *arguments: str) -> str:
-    environment = {"PATH": os.environ["PATH"], "LANG": "C", "LC_ALL": "C", "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_TERMINAL_PROMPT": "0"}
+    environment = {"PATH": os.environ["PATH"], "LANG": "C", "LC_ALL": "C", "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null", "GIT_TERMINAL_PROMPT": "0", "GIT_NO_REPLACE_OBJECTS": "1"}
     return subprocess.check_output(
         ["git", "-c", "core.hooksPath=/dev/null", "-C", str(root), *arguments],
         stderr=subprocess.DEVNULL, env=environment, timeout=20, text=True,
@@ -176,8 +176,9 @@ def crate_archive(cache: Path, package: dict, download: bool) -> bytes:
     return data
 
 
-def materialize(platform: Path, style: Path, elm_home: Path, cargo_cache: Path, destination: Path, download: bool):
-    lock = json.loads((HERE / "sources.lock.json").read_text())
+def materialize(platform: Path, style: Path, elm_home: Path, cargo_cache: Path, destination: Path, download: bool, source_lock: Path = HERE / "sources.lock.json"):
+    lock_bytes = regular_bytes(source_lock.parent, source_lock.name)
+    lock = json.loads(lock_bytes)
     elm_lock = json.loads((HERE / "elm-dependencies.lock.json").read_text())
     files = verify_sources(platform, lock)
     style_lock = json.loads(files["mateval-frontend/style-mrjam.json"])
@@ -216,7 +217,7 @@ def materialize(platform: Path, style: Path, elm_home: Path, cargo_cache: Path, 
         "schema_version": 1,
         "scope": "Allowlisted build inputs only, no authority or deployment approval",
         "source_commits": {name: value["commit"] for name, value in lock["sources"].items()},
-        "source_selection_sha256": digest((HERE / "sources.lock.json").read_bytes()),
+        "source_selection_sha256": digest(lock_bytes),
         "elm_dependency_lock_sha256": digest((HERE / "elm-dependencies.lock.json").read_bytes()),
         "style_revision": style_lock["revision"],
         "source_files_sha256": {name: digest(value) for name, value in sorted(files.items())},
@@ -235,9 +236,10 @@ def main():
     for flag in ("platform", "style", "elm-home", "cargo-cache", "destination"):
         parser.add_argument("--" + flag, type=Path, required=True)
     parser.add_argument("--download-missing", action="store_true")
+    parser.add_argument("--source-lock", type=Path, default=HERE / "sources.lock.json")
     args = parser.parse_args()
     try:
-        result = materialize(args.platform, args.style, args.elm_home, args.cargo_cache, args.destination, args.download_missing)
+        result = materialize(args.platform, args.style, args.elm_home, args.cargo_cache, args.destination, args.download_missing, args.source_lock)
     except Exception as error:
         code = str(error) if isinstance(error, Refused) else "BUILD_INPUT_PREPARATION_FAILED"
         print(json.dumps({"status": "refused", "code": code}))

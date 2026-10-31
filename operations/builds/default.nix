@@ -1,6 +1,7 @@
 { lib, stdenv, runCommand, python3, callPackage, elmPackages
 , materialized
 , expectedManifestSha256
+, sourceLock ? ./sources.lock.json
 }:
 let
   toolchains = callPackage ./toolchains.nix { };
@@ -17,11 +18,12 @@ let
   };
   inputs = builtins.path { path = materialized; name = "mrjam-pinned-build-inputs"; };
   inputManifest = builtins.fromJSON (builtins.readFile (inputs + "/materialization.json"));
+  hasJournalAdoption = builtins.pathExists (inputs + "/platform-source/components/vision/src/bin/vision-journal-adoption.rs");
   # No workspace cache or Git checkout is available from these Nix builders.
   verifiedInputs = runCommand "mrjam-verified-build-inputs" {
     nativeBuildInputs = [ python3 ];
   } ''
-    python ${support}/verify_inputs.py --inputs ${inputs} --manifest-sha256 ${lib.escapeShellArg expectedManifestSha256}
+    python ${support}/verify_inputs.py --inputs ${inputs} --manifest-sha256 ${lib.escapeShellArg expectedManifestSha256} --source-lock ${sourceLock}
     mkdir -p "$out"
     cp ${inputs}/materialization.json "$out/materialization.json"
   '';
@@ -33,7 +35,7 @@ assert lib.assertMsg (builtins.hashFile "sha256" (inputs + "/materialization.jso
   "Materialized input manifest differs from the reviewed content hash.";
 assert lib.assertMsg (elmPackages.elm.version == toolsLock.elm.version)
   "Elm compiler must preserve the application compiler version.";
-{
+rec {
   inherit verifiedInputs;
   rustToolchain = toolchains.rust;
   nodeToolchain = toolchains.node;
@@ -41,6 +43,7 @@ assert lib.assertMsg (elmPackages.elm.version == toolsLock.elm.version)
   rustServer = stdenv.mkDerivation {
     pname = "mrjam-server-preparation";
     version = "0.1.0-${builtins.substring 0 12 inputManifest.source_commits.platform}";
+    outputs = [ "out" ] ++ lib.optional hasJournalAdoption "journal";
     dontUnpack = true;
     nativeBuildInputs = [ toolchains.rust python3 ];
     # Panic/source locations must not keep the entire vendor/source tree alive.
@@ -72,6 +75,7 @@ assert lib.assertMsg (elmPackages.elm.version == toolsLock.elm.version)
     buildPhase = ''
       runHook preBuild
       cargo build --release --frozen --offline -p mrjam-server
+      ${lib.optionalString hasJournalAdoption "cargo build --release --frozen --offline -p mrjam-vision --features postgres --bin vision-journal-adoption"}
       runHook postBuild
     '';
     doCheck = true;
@@ -83,11 +87,15 @@ assert lib.assertMsg (elmPackages.elm.version == toolsLock.elm.version)
     installPhase = ''
       runHook preInstall
       install -Dm755 "$CARGO_TARGET_DIR/release/mrjam-server" "$out/bin/mrjam-server"
+      ${lib.optionalString hasJournalAdoption ''install -Dm755 "$CARGO_TARGET_DIR/release/vision-journal-adoption" "$journal/bin/vision-journal-adoption"''}
       runHook postInstall
     '';
-    postFixup = record "rust-server";
+    postFixup = record "rust-server" + lib.optionalString hasJournalAdoption ''
+      python ${support}/artifact_manifest.py --output "$journal" --inputs ${inputs} --artifact vision-journal-adoption
+    '';
     meta.platforms = [ "x86_64-linux" ];
   };
+  visionJournalAdoption = if hasJournalAdoption then rustServer.journal else null;
 
   matevalElm = stdenv.mkDerivation {
     pname = "mrjam-mateval-elm-preparation";

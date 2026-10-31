@@ -1,0 +1,3576 @@
+{
+  "elm_dependency_lock_sha256": "22157531d0f5e3759bcfc87289e94e0f0941c12007f859eaeae275416af13421",
+  "files": {
+    "applications/audition/elm.json": {
+      "git_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "path": "interface-audition/elm.json",
+      "root": "infrastructure",
+      "sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0"
+    },
+    "applications/audition/index.html": {
+      "git_blob": "2ffb3678f751127d80d02bd9e3d2be263037c473",
+      "path": "interface-audition/index.html",
+      "root": "infrastructure",
+      "sha256": "45e918662159541cc321c03848390a8cd9d215abacc25bb536d079b15dc020ca"
+    },
+    "applications/audition/pont.js": {
+      "git_blob": "d48bb3bafcfefbb25d6a1c16e52d37c10c18c3c5",
+      "path": "interface-audition/pont.js",
+      "root": "infrastructure",
+      "sha256": "ebdb6e2fe9ccbb0c3038b9f6cacdf32eff551e61a7d80571aa70b23d05d7475e"
+    },
+    "applications/audition/src/Donnees.elm": {
+      "git_blob": "0cff6bac33c7b045a8d15d2dfd6bdba55b3bc01d",
+      "path": "interface-audition/src/Donnees.elm",
+      "root": "infrastructure",
+      "sha256": "c8648f9c5b6ace4e4b1e0b4292273b6e46af17797c1acabd6ca0f5312caeab83"
+    },
+    "applications/audition/src/Main.elm": {
+      "git_blob": "87131afc080763a4bd0723d3d42afed67701491b",
+      "path": "interface-audition/src/Main.elm",
+      "root": "infrastructure",
+      "sha256": "e52d9bf294477ad9af72fc2be4e76e3b99a9efbd6e7d82eaf02434192e306c57"
+    },
+    "applications/audition/tests/RepriseTest.elm": {
+      "git_blob": "f139ea92cc7426272129ad4840013982c5a70e4f",
+      "path": "interface-audition/tests/RepriseTest.elm",
+      "root": "infrastructure",
+      "sha256": "749a8bb5f9f0c4b34cd17033425ea3145f49790f402dc2b6a8593322e7639f27"
+    },
+    "applications/log/elm.json": {
+      "git_blob": "9bab07cf04c8cf5d9828e4b340697c3fcd6c48cd",
+      "path": "interface-log/elm.json",
+      "root": "infrastructure",
+      "sha256": "036940cc3b077b3168458e1abbedc367fa549dcbc219205fa3777a65bf4520f0"
+    },
+    "applications/log/index.html": {
+      "git_blob": "6ce7a8d7a5fd412423ffac2f72e4c2e0c25c3fcb",
+      "path": "interface-log/index.html",
+      "root": "infrastructure",
+      "sha256": "fa7bd0402bb96ee10f95b3d96cc4208e82eed653503cba2eac0897c381559f39"
+    },
+    "applications/log/pont.js": {
+      "git_blob": "6ed0b4287c9d03fb8a1df6edca28bd4b5d50e947",
+      "path": "interface-log/pont.js",
+      "root": "infrastructure",
+      "sha256": "142cf8373d72b464cf93ccb03d91634288286a97bc3a1597d5db5b952ff61d90"
+    },
+    "applications/log/src/Log/Protocole.elm": {
+      "git_blob": "a80e79c51454c0e3785b330ef8a77732e2045422",
+      "path": "interface-log/src/Log/Protocole.elm",
+      "root": "infrastructure",
+      "sha256": "7af2f7e20668108733d49ee09e4554ddd1c45b4d05298b13dbef994cac599c4b"
+    },
+    "applications/log/src/Main.elm": {
+      "git_blob": "68219c9bfb5832f21d5084b4940dd774bc211c1e",
+      "path": "interface-log/src/Main.elm",
+      "root": "infrastructure",
+      "sha256": "881c63a13ebb5e87938036014a741e8638cde0c414813af852def6086067d781"
+    },
+    "applications/log/tests/ProtocoleTest.elm": {
+      "git_blob": "13e235ccd55cbc7c71b34b8f5763735ce55e5564",
+      "path": "interface-log/tests/ProtocoleTest.elm",
+      "root": "infrastructure",
+      "sha256": "a1b0d2d60b6e3a98409a6098ad3d951093ee7b92f0acbd6fffc746f0cfc46faf"
+    },
+    "applications/vision/docs/mobile-live-test-openapi.json": {
+      "git_blob": "d2df55509e8c5f4e9e78c0756a292b431fb04c8b",
+      "path": "docs/mobile-live-test-openapi.json",
+      "root": "vision",
+      "sha256": "135e6bb15a66242090031e6f811de6ef53650fa56ea29f81de8b5c78f35c6b0e"
+    },
+    "applications/vision/docs/openapi.json": {
+      "git_blob": "a9783ae2b8890ed637c453e0a68bb56a87229876",
+      "path": "docs/openapi.json",
+      "root": "vision",
+      "sha256": "dd0fbda8fcfe6228c8c770e8f39942757d60798df17b999f19a57da32334ec94"
+    },
+    "applications/vision/interface/app.html": {
+      "git_blob": "63c4c84cfaaf2418800479a8e09697758015755c",
+      "path": "interface/app.html",
+      "root": "vision",
+      "sha256": "c8a1bf46b9792f4d30842c8b850c8b9ee99b41c7e9ccd7320cf4bd9e414dbc12"
+    },
+    "applications/vision/interface/compiler.py": {
+      "git_blob": "8b6a86703e2cf9df0e8f4f62afbc8c07ca736882",
+      "path": "interface/compiler.py",
+      "root": "vision",
+      "sha256": "556f6915c20e2a2725391c84d5eebda0a89c2a0e21ecdc94ed98c554fd2f3e21"
+    },
+    "applications/vision/interface/elm.json": {
+      "git_blob": "3661fc3b5dfc61fe44960ee87696c44ce1e1620a",
+      "path": "interface/elm.json",
+      "root": "vision",
+      "sha256": "e2a3c5a9d1952b4ab95ce78fd1acf208969ce594a921976150f0c4c594ac3958"
+    },
+    "applications/vision/interface/exports.js": {
+      "git_blob": "17b3ed95256aa02f95e1478e36ef258ae86dfa58",
+      "path": "interface/exports.js",
+      "root": "vision",
+      "sha256": "62aa54c505f1eb83abc164eaf06e88d5ad7a9e9c164db9e3f387126ea6e88111"
+    },
+    "applications/vision/interface/identite/EchoPoint.woff2": {
+      "git_blob": "26105a1a46b9fbeb288ce3dc3479d3c583c2b9be",
+      "path": "interface/identite/EchoPoint.woff2",
+      "root": "vision",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    "applications/vision/interface/identite/MrJamSignature.woff2": {
+      "git_blob": "f0bf416230cce723e3e6b5795fef1840605fa2e2",
+      "path": "interface/identite/MrJamSignature.woff2",
+      "root": "vision",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    "applications/vision/interface/identite/Parisienne-OFL.txt": {
+      "git_blob": "6f4c72d06b5ff3cb1ad98b0f4b5147e90d638c5f",
+      "path": "interface/identite/Parisienne-OFL.txt",
+      "root": "vision",
+      "sha256": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db"
+    },
+    "applications/vision/interface/identite/Parisienne-Regular.ttf": {
+      "git_blob": "ef2db74405c54336aab8add251e8ad9948b6c2d3",
+      "path": "interface/identite/Parisienne-Regular.ttf",
+      "root": "vision",
+      "sha256": "bc9ee17f022e20bc700797e5f557d14bfa43af0c98d9e6c9c5c1ca4ec7aacd57"
+    },
+    "applications/vision/interface/identite/Parisienne-Regular.woff2": {
+      "git_blob": "16d03822f76b88ff51d7b244f1ef0a2568b4ee07",
+      "path": "interface/identite/Parisienne-Regular.woff2",
+      "root": "vision",
+      "sha256": "12dfc24634d76dc70010417a20599eddcbb8b14c68500c3b77ee6ef01d553eea"
+    },
+    "applications/vision/interface/identite/source.json": {
+      "git_blob": "f072e39a84d8295cf301dcf394ddf8710663844a",
+      "path": "interface/identite/source.json",
+      "root": "vision",
+      "sha256": "921a700c0f4f2c0c5bd228e6df9cc47f84ef75d1e9754665bd68fcafb4123e59"
+    },
+    "applications/vision/interface/package.json": {
+      "git_blob": "ee5c016666dde9e273c208477fb5a3cce578280a",
+      "path": "interface/package.json",
+      "root": "vision",
+      "sha256": "d5aaa3453872eef9637506160a5c4db729cd2f642196f11a978b84a126413ea1"
+    },
+    "applications/vision/interface/pont.js": {
+      "git_blob": "ea32c9b022a84b4c0db031e100c864c051a87cb7",
+      "path": "interface/pont.js",
+      "root": "vision",
+      "sha256": "8aa134468e2dbe8b3f4ac06af37ecc89407c7053c20b54fd6dd35f1950d1b3a3"
+    },
+    "applications/vision/interface/src/Admission.elm": {
+      "git_blob": "e40d53303b9a0d31a8fdcd852f0159a372f34bb0",
+      "path": "interface/src/Admission.elm",
+      "root": "vision",
+      "sha256": "a15f79bb74adb346462fb4a81cc9782aee3294976b09d7496b00941fdcc895ef"
+    },
+    "applications/vision/interface/src/AutorisationMcp.elm": {
+      "git_blob": "21d4c61ee5f120737ebd85e052d587a0befbf7f4",
+      "path": "interface/src/AutorisationMcp.elm",
+      "root": "vision",
+      "sha256": "81581cb5f449ff1c99315ea1ee66408e39b0a41ce182912f12789590736648eb"
+    },
+    "applications/vision/interface/src/Compte.elm": {
+      "git_blob": "2e4a17224da6ea4cafdc7a2c2a131c39617b6f15",
+      "path": "interface/src/Compte.elm",
+      "root": "vision",
+      "sha256": "d39d972db311f5ac20fc4ef3df651ea1e9b1331e23cc0e185b828b49f0156ee4"
+    },
+    "applications/vision/interface/src/Confidentialite.elm": {
+      "git_blob": "ca1c830a4dd8f4778d34e96ed62c354557a9d30b",
+      "path": "interface/src/Confidentialite.elm",
+      "root": "vision",
+      "sha256": "a6bdfa950b697830bbd2e500028a89525134d64f9b251ee131a224cc04e10dfb"
+    },
+    "applications/vision/interface/src/Contrat.elm": {
+      "git_blob": "dd59456f53fe3d60d6c9f6ade5ee8e2efd99533d",
+      "path": "interface/src/Contrat.elm",
+      "root": "vision",
+      "sha256": "1794867ba38056cfc0745dc4e44cc9c294ae2352b74587cfb7027ec96de5e13d"
+    },
+    "applications/vision/interface/src/Gestion.elm": {
+      "git_blob": "ec75fc80fb38f8b8852c2040980526afc005dcf8",
+      "path": "interface/src/Gestion.elm",
+      "root": "vision",
+      "sha256": "b1729b8272867b0d21f8ec8ccd846c615a35b060426b3db5f3b16c6f92a2979d"
+    },
+    "applications/vision/interface/src/Informations.elm": {
+      "git_blob": "5afddf605ff6610ce5c801b75828ca48a7515bf7",
+      "path": "interface/src/Informations.elm",
+      "root": "vision",
+      "sha256": "cd424359c20ca66234abb15663b2316b5c8b32407e44f37d685afadbcca75804"
+    },
+    "applications/vision/interface/src/Main.elm": {
+      "git_blob": "3607350638d228666211056b01c005f76abed946",
+      "path": "interface/src/Main.elm",
+      "root": "vision",
+      "sha256": "054207d52258f453ecf2ffb311cb290684efec71726b0abab07698dc245f313a"
+    },
+    "applications/vision/interface/src/Presentation.elm": {
+      "git_blob": "9b6f15f3ec3a765b26f5eab22f249f0a7a28b218",
+      "path": "interface/src/Presentation.elm",
+      "root": "vision",
+      "sha256": "a6954515019c32afa83d77a94d1f069531fb101db4de53f7847f6d616e9b15ce"
+    },
+    "applications/vision/interface/src/Tutoriel.elm": {
+      "git_blob": "a883e3797b36de471e268d08bbda86ae4f691889",
+      "path": "interface/src/Tutoriel.elm",
+      "root": "vision",
+      "sha256": "7fba0c4bca706267c8d1ac2ad98efb7f8559afc63233767039e8923ef49b0dac"
+    },
+    "applications/vision/interface/src/Visuels.elm": {
+      "git_blob": "3fdb38dc3eb01a3b35be29c5db184dc782e5262f",
+      "path": "interface/src/Visuels.elm",
+      "root": "vision",
+      "sha256": "012a6dc8c71fdd2e58187aa0d6706bc9a6af84eddf8c74a6bcbef616c081af73"
+    },
+    "applications/vision/interface/style.lock.json": {
+      "git_blob": "5cdef989ab9fc285253eb631cde30f5d87bab7c0",
+      "path": "interface/style.lock.json",
+      "root": "vision",
+      "sha256": "ca5bc4fc4bf317d19715062a656c3fabed98311a76a6eee3b23d86f13c9437c9"
+    },
+    "applications/vision/interface/tests/NavigationTest.elm": {
+      "git_blob": "59a64231ee1f80132713c2e379d844a379c59772",
+      "path": "interface/tests/NavigationTest.elm",
+      "root": "vision",
+      "sha256": "67f4272f7c6a88db5edab18a1d7b1c7083a81ca3cb196b2b1d84f4f4bb13716d"
+    },
+    "applications/vision/interface/tests/architecture.py": {
+      "git_blob": "1d85e9f83183fb2934a219c8bfe14ed055a36568",
+      "path": "interface/tests/architecture.py",
+      "root": "vision",
+      "sha256": "17ec5d637052f13c5985708c4bb5ac53cf74aba68e6cd81399ae47b87973aa89"
+    },
+    "applications/vision/interface/visuels/espacement.svg": {
+      "git_blob": "db8c6459a62c534c116821b425e51d17b8de1366",
+      "path": "interface/visuels/espacement.svg",
+      "root": "vision",
+      "sha256": "8c1f26b962b88f2933777fadef98b0b71f8bf38dac97adbcd03cda92ac1cc341"
+    },
+    "applications/vision/interface/visuels/fiche.webp": {
+      "git_blob": "9f305e068e7d1af1cce8e77509fb69292502e734",
+      "path": "interface/visuels/fiche.webp",
+      "root": "vision",
+      "sha256": "ac5e8cbcbe952d2ebb154a5b040640f79c9f222065f4ecd7208aae79be987580"
+    },
+    "applications/vision/interface/visuels/items.webp": {
+      "git_blob": "6882fabcd79e611f89556ae9a8de1f67dc6bac48",
+      "path": "interface/visuels/items.webp",
+      "root": "vision",
+      "sha256": "5fd0b494dbaa8d279a054b137a15c7d509cf226e9da070d20dfe0ed40eda7375"
+    },
+    "applications/vision/interface/visuels/memoire.webp": {
+      "git_blob": "4793005ffe1d4d3e198a161d7d68b39c0e0abdc4",
+      "path": "interface/visuels/memoire.webp",
+      "root": "vision",
+      "sha256": "16efcfd7feca10cab20081e67f7c3a4037332e776c1898db9e63fee7ce79be99"
+    },
+    "applications/vision/interface/visuels/partage.svg": {
+      "git_blob": "0a49462deb227125545af68b8e57d5e8cd90718b",
+      "path": "interface/visuels/partage.svg",
+      "root": "vision",
+      "sha256": "870e2bccc099240b49b0d7d64d2125f4686e31be7c6ada64a4a5f4027ce27cd3"
+    },
+    "elm-home/0.19.1/packages/avh4/elm-color/1.0.0/elm.json": {
+      "path": "0.19.1/packages/avh4/elm-color/1.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "2ed787bc9b42ee8f75fcd1a2c2857f3474fd280ad375f28a0fb82fe01c5ff6ae"
+    },
+    "elm-home/0.19.1/packages/avh4/elm-color/1.0.0/src/Color.elm": {
+      "path": "0.19.1/packages/avh4/elm-color/1.0.0/src/Color.elm",
+      "root": "elm-home",
+      "sha256": "557499a8fda931acd45f96fd62a765b5876632792c2ee3727c3b7249b1195251"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/elm.json": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/elm.json",
+      "root": "elm-home",
+      "sha256": "29a4a42e22ad68be66843c8d369c44eb152c492b31f4218058c54b62e0229641"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/AsciiTable.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/AsciiTable.elm",
+      "root": "elm-home",
+      "sha256": "11359463fa63e6e8c5b0494bc9ada2262a067aff7e2a7a4d15370d07330691bf"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Elm/Kernel/HtmlAsJson.js": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Elm/Kernel/HtmlAsJson.js",
+      "root": "elm-home",
+      "sha256": "c08afdc02053eaddbb769273922f9cb3a255587385e47e235f40f9272d55c471"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Elm/Kernel/Test.js": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Elm/Kernel/Test.js",
+      "root": "elm-home",
+      "sha256": "1732028b856bbe59e5b256103effa7fa4e86bddbd78a5e9d761fb23c9b9f02db"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Expect.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Expect.elm",
+      "root": "elm-home",
+      "sha256": "32965a7d2580b8e24d0ae3e4074ef193f2820686fc169a7b72608315dbec5512"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz.elm",
+      "root": "elm-home",
+      "sha256": "ef5e44f4a3bea2094a892f33b511fc9fe5e497de8557027b2a7217f15e6e6500"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz/Float.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz/Float.elm",
+      "root": "elm-home",
+      "sha256": "f3d4e964a769fa964e9472a02a96c5aa086350fab7bfe8efcd2a3e399ec84e87"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz/Internal.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Fuzz/Internal.elm",
+      "root": "elm-home",
+      "sha256": "b8f5e02d4ede79d29b1880a03851dd0848a2002da70409d30ed404548b237685"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/GenResult.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/GenResult.elm",
+      "root": "elm-home",
+      "sha256": "5ea27678e1da9adde28079081040b95ab18816462a63505040ff00461f30a23d"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/MicroBitwiseExtra.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/MicroBitwiseExtra.elm",
+      "root": "elm-home",
+      "sha256": "ceca4d0f816e2f9eb4b8b28a219a30b9d44419268bc890ba24fcedec340d0d07"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/MicroDictExtra.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/MicroDictExtra.elm",
+      "root": "elm-home",
+      "sha256": "715f19e1467807e6e560eaebff8e3e2051343ee6f03ea1d0f9dc573d54788bf4"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/MicroListExtra.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/MicroListExtra.elm",
+      "root": "elm-home",
+      "sha256": "cebbfd54b35877cd5543fe7d0b2b8b7a90edc05e467a0f15324649c05f77a6eb"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/MicroMaybeExtra.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/MicroMaybeExtra.elm",
+      "root": "elm-home",
+      "sha256": "74888329abd1558d6c0c123f3a933973c2c69192299e420ffbe6363c8dcd56bc"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/PRNG.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/PRNG.elm",
+      "root": "elm-home",
+      "sha256": "086feed0832f14bc09bf841638d88e8486b1530e8bc2ab2cbe9233c217aad602"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Queue.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Queue.elm",
+      "root": "elm-home",
+      "sha256": "ae01d4c1ba50198f10e35b46681360a8df1407058ce016c8155c165190f8b05d"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/RandomRun.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/RandomRun.elm",
+      "root": "elm-home",
+      "sha256": "0b9a905394fd741dec206fc3b84303e333ae6b49df7a9f59473ae70b87b7166c"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Simplify.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Simplify.elm",
+      "root": "elm-home",
+      "sha256": "510dce8abe49de56c425515358454f456b78a812df4141c0bc9949b28afdd71e"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Simplify/Cmd.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Simplify/Cmd.elm",
+      "root": "elm-home",
+      "sha256": "ce61733a706da785599bf947e1bdad3c8a00532f885802497bfd3fc83a2e274e"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test.elm",
+      "root": "elm-home",
+      "sha256": "89537ee1f3cb9a3e0782a1979687f3457fba37510877bb2c68b0f58ea29109b1"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Distribution.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Distribution.elm",
+      "root": "elm-home",
+      "sha256": "815027e48f1ae723333aa8b263dd1aa2ee743ce73e611ada9bbd04d2d7f1bf6a"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Distribution/Internal.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Distribution/Internal.elm",
+      "root": "elm-home",
+      "sha256": "1ba0fea8483ef4a8372f9617022b840d31de55b9420af0d2e353353188df3b56"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Expectation.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Expectation.elm",
+      "root": "elm-home",
+      "sha256": "438654516acbaace5926cc136d794c9a1772e217a2fef83968e906738ae202c7"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Fuzz.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Fuzz.elm",
+      "root": "elm-home",
+      "sha256": "7f151a8e3169b85884fde2d4e92a1e4528697d5993bc915134ed6354b659138a"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Descendant.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Descendant.elm",
+      "root": "elm-home",
+      "sha256": "5655faa4afbb5f9d353b86c689e3ef86c27ee8855ef5b243e7709e8310643b98"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Event.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Event.elm",
+      "root": "elm-home",
+      "sha256": "50ffa824aea795305de7be60beeb49a46dc86029aa3659a7e2c6269a5ea2a068"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Constants.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Constants.elm",
+      "root": "elm-home",
+      "sha256": "8929e96da7572ef8c27832767a3a05321e4ac0b2b8616680f39b72d47ed2c45b"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Helpers.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Helpers.elm",
+      "root": "elm-home",
+      "sha256": "def271351e166332684779934bf99a40c69c3bb6ba2db5569f480655b1f4da35"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/InternalTypes.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/InternalTypes.elm",
+      "root": "elm-home",
+      "sha256": "946f1717b19c39bf4ecb84dd9823822619227c26c83a0978b3fa14b5d4a8c440"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Markdown.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Markdown.elm",
+      "root": "elm-home",
+      "sha256": "0be4170ac91d6915d951def87b7e7a67959f3201c10f0779898978e181e68e8a"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Query.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/Query.elm",
+      "root": "elm-home",
+      "sha256": "93118dd2daf6a967205b44ece1a1ab77950c8c99bdeb6c859e0a712faa4d39b2"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/ToString.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/ElmHtml/ToString.elm",
+      "root": "elm-home",
+      "sha256": "1e3677826d74a588dc4983b133e5fae824e4a572879efa28d6c95dc297403e6b"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/Inert.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Internal/Inert.elm",
+      "root": "elm-home",
+      "sha256": "bcbebab89d84a2b66198a3723ab2b75ca7e24e552a585455cf062ec7218b4ccb"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Query.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Query.elm",
+      "root": "elm-home",
+      "sha256": "e8a7fa1aeb5affe1bf30a3bf83ea3c26162345f7c7f971e03ca65848bd03556c"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Query/Internal.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Query/Internal.elm",
+      "root": "elm-home",
+      "sha256": "79f053e5eeda8989eab8ad9133e7214fd6ac204fcf190bffcb061c2e0e0f1969"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Selector.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Selector.elm",
+      "root": "elm-home",
+      "sha256": "f0cefd876fc17e5d4ce0a78f9171719f37f0a3e1928b68a453b0f636ee8e83d2"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Selector/Internal.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Html/Selector/Internal.elm",
+      "root": "elm-home",
+      "sha256": "85dcff2118fbbed28d2d0cc9c5cb5a9b69b99c083b7166a5c8080054fe0ec2ca"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Internal.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Internal.elm",
+      "root": "elm-home",
+      "sha256": "8dbfde1292b02b7722bb442daf1b271ba4e55bfa893e5b6e186ba66ea2906fe7"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Internal/KernelConstants.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Internal/KernelConstants.elm",
+      "root": "elm-home",
+      "sha256": "037695cd96d876274c999a2404bb57dcfb1ec9f7b4c13ad8a8bdada4a75ddaf1"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner.elm",
+      "root": "elm-home",
+      "sha256": "287945b396572616feb65b4e99879f209b971aed0633a7148734cdc3722cdf19"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner/Distribution.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner/Distribution.elm",
+      "root": "elm-home",
+      "sha256": "e2fd49a6f7a3e9a16b854f8488431c4abde36913688c6ebbfd0c6eeb4197ff4a"
+    },
+    "elm-home/0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner/Failure.elm": {
+      "path": "0.19.1/packages/elm-explorations/test/2.2.1/src/Test/Runner/Failure.elm",
+      "root": "elm-home",
+      "sha256": "c1b16477b83c17b97d346d1f692f7805ab6202eb50a35d6d2038da1267edda38"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/elm.json": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/elm.json",
+      "root": "elm-home",
+      "sha256": "f50e12cb6b89a97ef18dde0c64fa92aa78469c412c19d64ca1c56931a1fbc52f"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Browser.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Browser.elm",
+      "root": "elm-home",
+      "sha256": "2722873214de2d381a02e037dd56f764c522c0b4ccbbfb3edccce69e0c3c32a5"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Browser/AnimationManager.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Browser/AnimationManager.elm",
+      "root": "elm-home",
+      "sha256": "b5eec62b6f9e2e94f5f1b573228e332784580fddc5898c732c4f5c48f4a5a854"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Browser/Dom.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Browser/Dom.elm",
+      "root": "elm-home",
+      "sha256": "03bee2960770cea5b6ee2a208f33622432b8a1ae12e77412cf84b67a453ac2a7"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Browser/Events.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Browser/Events.elm",
+      "root": "elm-home",
+      "sha256": "b72f8970ee085dab3c7e5504f661e21ed6cefaea21890899d9cd32ebc7f2bd4f"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Browser/Navigation.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Browser/Navigation.elm",
+      "root": "elm-home",
+      "sha256": "329085431ef02615190706903d090364097ed3ddaf466370918af69379354706"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/Expando.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/Expando.elm",
+      "root": "elm-home",
+      "sha256": "c93b00af7bf99c8929db06cdfaf7c6b26b955ac576e62ee4fe2c0be6e4f01a6b"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/History.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/History.elm",
+      "root": "elm-home",
+      "sha256": "4ef4701403e4b960a902a12f20f5feb3ac8881850ba7a71ca6c50f363c60caa9"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/Main.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/Main.elm",
+      "root": "elm-home",
+      "sha256": "4513896c62d0ba2f3f27bae3cf39145af8e5ccf428abde16db782ed1c7db3b6a"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/Metadata.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/Metadata.elm",
+      "root": "elm-home",
+      "sha256": "733be27ac5b7651c55b62161f24c508c9a62cf69a481672f17a0c58068591cd8"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/Overlay.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/Overlay.elm",
+      "root": "elm-home",
+      "sha256": "cbb5380cc49af503a462d4e1c0112fe6d46653fc34d8948243f5782591094b47"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Debugger/Report.elm": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Debugger/Report.elm",
+      "root": "elm-home",
+      "sha256": "2323bbd81acaaf3b6077d66fda4fd12a15b1d9c21e9571ab21f0b7c069a5d096"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Browser.js": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Browser.js",
+      "root": "elm-home",
+      "sha256": "ae20f6a08a7926cc4f19290da136a4e39d9993076db91fa85f54d7d0f244eb0d"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Browser.server.js": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Browser.server.js",
+      "root": "elm-home",
+      "sha256": "e5e2a7ad542e5b222ac71f989e3f29a43035b44e6fcc8a7af0341585a35c9ee5"
+    },
+    "elm-home/0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Debugger.js": {
+      "path": "0.19.1/packages/elm/browser/1.0.2/src/Elm/Kernel/Debugger.js",
+      "root": "elm-home",
+      "sha256": "c74f81f8684fbafeba01b90273f575b3a66fcf317c129074b1244a07845f0c97"
+    },
+    "elm-home/0.19.1/packages/elm/bytes/1.0.8/elm.json": {
+      "path": "0.19.1/packages/elm/bytes/1.0.8/elm.json",
+      "root": "elm-home",
+      "sha256": "3e1ed5a8d9f91a44d273a84900258d637c63ba90a4662c4603d75f2cedb266c9"
+    },
+    "elm-home/0.19.1/packages/elm/bytes/1.0.8/src/Bytes.elm": {
+      "path": "0.19.1/packages/elm/bytes/1.0.8/src/Bytes.elm",
+      "root": "elm-home",
+      "sha256": "3a40eb753082a46a555d8169cb87c551f1a10e48876592c69a25a5e5ccf3bd41"
+    },
+    "elm-home/0.19.1/packages/elm/bytes/1.0.8/src/Bytes/Decode.elm": {
+      "path": "0.19.1/packages/elm/bytes/1.0.8/src/Bytes/Decode.elm",
+      "root": "elm-home",
+      "sha256": "0081a9ec6a859589b689aad1cd1cb401d8f89f6b71f7dd26a243bcf6cc1a6a4d"
+    },
+    "elm-home/0.19.1/packages/elm/bytes/1.0.8/src/Bytes/Encode.elm": {
+      "path": "0.19.1/packages/elm/bytes/1.0.8/src/Bytes/Encode.elm",
+      "root": "elm-home",
+      "sha256": "fbad353e50263bc3e8d0a563fad68ab919df0bfd249bf66697031dca033a8607"
+    },
+    "elm-home/0.19.1/packages/elm/bytes/1.0.8/src/Elm/Kernel/Bytes.js": {
+      "path": "0.19.1/packages/elm/bytes/1.0.8/src/Elm/Kernel/Bytes.js",
+      "root": "elm-home",
+      "sha256": "94ae3e965f180d7677777b74afc55ef74875b37e4fe32c655686481fa8586ab7"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/elm.json": {
+      "path": "0.19.1/packages/elm/core/1.0.5/elm.json",
+      "root": "elm-home",
+      "sha256": "db814e9f01c211e63d3b86e2546e924aaba8be2ee2b12299ab81456e9a268993"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Array.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Array.elm",
+      "root": "elm-home",
+      "sha256": "1f60be42ecfeaae7dab6e5f6887c49ecdc4089e4348b6f9694e095bd0f434eac"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Basics.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Basics.elm",
+      "root": "elm-home",
+      "sha256": "649e41513480066f951eef04931a1caea463d3b052cb4a86182c6fcd87e980f2"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Bitwise.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Bitwise.elm",
+      "root": "elm-home",
+      "sha256": "0b3c9aef28504672f08209b26e24390aa65ee8a7ae97e71ba84770ff56d25978"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Char.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Char.elm",
+      "root": "elm-home",
+      "sha256": "90db4547054916b2e71b364e3253f50f551e03627ce7e8ae53d1fb1ae667e387"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Debug.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Debug.elm",
+      "root": "elm-home",
+      "sha256": "1407cfff0d9882dc4b6557c7b99f8bbb6f19dbf345ae919c87daf0ca979fd4fe"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Dict.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Dict.elm",
+      "root": "elm-home",
+      "sha256": "2afc5fcbc080b98903d9b05a98eb0efbf65265eb42ed076b2d442d9e4aca14e5"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/JsArray.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/JsArray.elm",
+      "root": "elm-home",
+      "sha256": "bfa0bc6ae1b5b5786f1224b9c0eb476380e9818af53523fdda4b0c30eb60a0d2"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Basics.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Basics.js",
+      "root": "elm-home",
+      "sha256": "30364c4d72f08888cb16a5ecdd6f04bcf66e6a7d5902ece907c9c01f1ca4d55d"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Bitwise.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Bitwise.js",
+      "root": "elm-home",
+      "sha256": "41a1e83136e4a5222bd11dd372c508b33815fe45c8795fe4e8c78a5acfeb35d8"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Char.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Char.js",
+      "root": "elm-home",
+      "sha256": "b77e57164741ab7e5e1b78cdfdeffb125c665eb748ea5d5ac62318435b7105b7"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Debug.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Debug.js",
+      "root": "elm-home",
+      "sha256": "8371e580481da98ca6ccaed2638053ffcee4bee04e2b5c8b86e2ea5c955fc462"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/JsArray.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/JsArray.js",
+      "root": "elm-home",
+      "sha256": "888aa1150c7ef8b485f835de1cebc5f69056d547155e624a8aa77a18bf102dd3"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/List.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/List.js",
+      "root": "elm-home",
+      "sha256": "975268b3694443d66e3e68c4dac9a8bb20e6b84f324046b12222e51b64eaa687"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Platform.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Platform.js",
+      "root": "elm-home",
+      "sha256": "569148a4e6b9371214da1e54285a6a4bfdd1cb42220886f2392a46d8f84e5863"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Process.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Process.js",
+      "root": "elm-home",
+      "sha256": "50554f94246d84921109584196c7c43f90775ff4256ce4df363b44f7794065da"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Process.server.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Process.server.js",
+      "root": "elm-home",
+      "sha256": "823d7abb8d78ea9f88488d9b1eeb2d2b049544f05d8223862e7cef76c1c1db34"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Scheduler.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Scheduler.js",
+      "root": "elm-home",
+      "sha256": "bdc18efab541e63edd65173fd995e35edc0fefe182fdb46c914b56734e2dbe6a"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/String.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/String.js",
+      "root": "elm-home",
+      "sha256": "037260f1df8da6007eb54f9464167ce59e9332b804013127a5e036f0919e266b"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Utils.js": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Elm/Kernel/Utils.js",
+      "root": "elm-home",
+      "sha256": "cc6c6c94d8e8c0ba0041ab09fabf6235c2cc4ab220d54257e6c7c4ffa7876017"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/List.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/List.elm",
+      "root": "elm-home",
+      "sha256": "79e513a52ab45ab98f3a5ad9c87779c2cb29519c5adcf91ab3b70fb5de234f41"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Maybe.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Maybe.elm",
+      "root": "elm-home",
+      "sha256": "35aa285d930a4da6d918717209f230667ab127d357f69d6ea3dbab31e567f5aa"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Platform.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Platform.elm",
+      "root": "elm-home",
+      "sha256": "71d83575a51451379e81fc2712e925a5fc242286c5c971259ff1740274f7e527"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Platform/Cmd.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Platform/Cmd.elm",
+      "root": "elm-home",
+      "sha256": "015c3c2469abeb1cfcf757017d4448c0e453da972fb846f93a91768488e7dfd5"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Platform/Sub.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Platform/Sub.elm",
+      "root": "elm-home",
+      "sha256": "fdb296916f45f3ed0096959e5d727b32a05e7459ef5cc95f00e76951221499dd"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Process.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Process.elm",
+      "root": "elm-home",
+      "sha256": "a6af86afca70423a8ec9092c34f5b4b4247cb25dc67074864cdcab8c895d0455"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Result.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Result.elm",
+      "root": "elm-home",
+      "sha256": "1efa7ed54dfcfc31c35ffae770afc6b9b095e063b325d80f5e5550600ded746b"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Set.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Set.elm",
+      "root": "elm-home",
+      "sha256": "765ce399f1ed4c92bb47fe0af07808875a2377fdc89f951d513b6f55e5744f85"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/String.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/String.elm",
+      "root": "elm-home",
+      "sha256": "e7300d71211211e5e0b8b1b3bcd0d6407416a498bcfb682b26a8642fa965e4a0"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Task.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Task.elm",
+      "root": "elm-home",
+      "sha256": "f546ccb07a58b26fcf791ed45a6236e80e45aaed00c29cbaeced5dcd6da034fa"
+    },
+    "elm-home/0.19.1/packages/elm/core/1.0.5/src/Tuple.elm": {
+      "path": "0.19.1/packages/elm/core/1.0.5/src/Tuple.elm",
+      "root": "elm-home",
+      "sha256": "b970211ee185cf3184634702aa54f6ec33e2aafb8930caead713ee7929236b46"
+    },
+    "elm-home/0.19.1/packages/elm/file/1.0.5/elm.json": {
+      "path": "0.19.1/packages/elm/file/1.0.5/elm.json",
+      "root": "elm-home",
+      "sha256": "5d4cf2de2834ee996025dc82d9291e83c42c3752ebc63ddb5923014e9e724438"
+    },
+    "elm-home/0.19.1/packages/elm/file/1.0.5/src/Elm/Kernel/File.js": {
+      "path": "0.19.1/packages/elm/file/1.0.5/src/Elm/Kernel/File.js",
+      "root": "elm-home",
+      "sha256": "b77a131b0841566318c42fc8e952ca06129b5abeccf8cc3c1950e5f966e4d792"
+    },
+    "elm-home/0.19.1/packages/elm/file/1.0.5/src/File.elm": {
+      "path": "0.19.1/packages/elm/file/1.0.5/src/File.elm",
+      "root": "elm-home",
+      "sha256": "87e2d28653ec162f589d5fec45ec9d0aa0f4a040aa9d58419ac56ed15519dbd6"
+    },
+    "elm-home/0.19.1/packages/elm/file/1.0.5/src/File/Download.elm": {
+      "path": "0.19.1/packages/elm/file/1.0.5/src/File/Download.elm",
+      "root": "elm-home",
+      "sha256": "9516bec7c52dd9aba7d781410af88a63cd9e36cc3a07cd0d8d843870049f342a"
+    },
+    "elm-home/0.19.1/packages/elm/file/1.0.5/src/File/Select.elm": {
+      "path": "0.19.1/packages/elm/file/1.0.5/src/File/Select.elm",
+      "root": "elm-home",
+      "sha256": "c7d40566987ed90ab8735c16f2d6c1eb813c73e78aaa4fde18fff331e35f4a5d"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/elm.json": {
+      "path": "0.19.1/packages/elm/html/1.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "84dbb28e88ffbaf32e0e7ce11b8d14ccc97c0798b2d0945ed94668c12a0b9e25"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/src/Html.elm": {
+      "path": "0.19.1/packages/elm/html/1.0.0/src/Html.elm",
+      "root": "elm-home",
+      "sha256": "2e567c415bfeb2a743b0c6fee980383b3e378785247b3e930f77aa98e1dbb4d9"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/src/Html/Attributes.elm": {
+      "path": "0.19.1/packages/elm/html/1.0.0/src/Html/Attributes.elm",
+      "root": "elm-home",
+      "sha256": "b4ff344168f9199de2bfee5f8e3c1441c621692ddc99a5ce7e380f3014e6d367"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/src/Html/Events.elm": {
+      "path": "0.19.1/packages/elm/html/1.0.0/src/Html/Events.elm",
+      "root": "elm-home",
+      "sha256": "d633d86ecee6195d6bea6f7c8b49a5df3befecd8e9589745055dc5f30b0cef9e"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/src/Html/Keyed.elm": {
+      "path": "0.19.1/packages/elm/html/1.0.0/src/Html/Keyed.elm",
+      "root": "elm-home",
+      "sha256": "346e9fe65945ccedc250e5d5cc739fe3505dc9be37bcb93fd311527964b55ff7"
+    },
+    "elm-home/0.19.1/packages/elm/html/1.0.0/src/Html/Lazy.elm": {
+      "path": "0.19.1/packages/elm/html/1.0.0/src/Html/Lazy.elm",
+      "root": "elm-home",
+      "sha256": "e6ec7de40a8c6318a055898a144e8cc56b2c9b32f7694be1bf223e98db6cd031"
+    },
+    "elm-home/0.19.1/packages/elm/http/2.0.0/elm.json": {
+      "path": "0.19.1/packages/elm/http/2.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "a52cb6d3d4ee83e6eb9c883e28380bda8e25d640fd04b6c3316398ed3951d65b"
+    },
+    "elm-home/0.19.1/packages/elm/http/2.0.0/src/Elm/Kernel/Http.js": {
+      "path": "0.19.1/packages/elm/http/2.0.0/src/Elm/Kernel/Http.js",
+      "root": "elm-home",
+      "sha256": "0cc54240d870127251fe6f2d76bf7ec0db1701d9dacbd893d79109af3580fce6"
+    },
+    "elm-home/0.19.1/packages/elm/http/2.0.0/src/Elm/Kernel/Http.server.js": {
+      "path": "0.19.1/packages/elm/http/2.0.0/src/Elm/Kernel/Http.server.js",
+      "root": "elm-home",
+      "sha256": "014637cc6a5b20391af1f65609da5a37b1366da2b82ed21d4f2dc5a9dc1a2f4f"
+    },
+    "elm-home/0.19.1/packages/elm/http/2.0.0/src/Http.elm": {
+      "path": "0.19.1/packages/elm/http/2.0.0/src/Http.elm",
+      "root": "elm-home",
+      "sha256": "791023f4674eedb81e09d4509b5b642006f216b076480b4dac76ce49ea065009"
+    },
+    "elm-home/0.19.1/packages/elm/json/1.1.3/elm.json": {
+      "path": "0.19.1/packages/elm/json/1.1.3/elm.json",
+      "root": "elm-home",
+      "sha256": "b6c2ce9de7bd7ed70de7a111e87c449ec3aa7819bf6c48953ce7221e776f7a3e"
+    },
+    "elm-home/0.19.1/packages/elm/json/1.1.3/src/Elm/Kernel/Json.js": {
+      "path": "0.19.1/packages/elm/json/1.1.3/src/Elm/Kernel/Json.js",
+      "root": "elm-home",
+      "sha256": "17d5536d6f22be1614a73837368e2a61439ebfa9dd0ff732880ee544baa41af2"
+    },
+    "elm-home/0.19.1/packages/elm/json/1.1.3/src/Json/Decode.elm": {
+      "path": "0.19.1/packages/elm/json/1.1.3/src/Json/Decode.elm",
+      "root": "elm-home",
+      "sha256": "f68189c7da6b1fb23c08878296b0e55575480ac0632adfc6d7ba76f8617672ea"
+    },
+    "elm-home/0.19.1/packages/elm/json/1.1.3/src/Json/Encode.elm": {
+      "path": "0.19.1/packages/elm/json/1.1.3/src/Json/Encode.elm",
+      "root": "elm-home",
+      "sha256": "9cdf3d660f182aed97117205e72388e2bb0d0ad795b4749975fa2c639b808a2a"
+    },
+    "elm-home/0.19.1/packages/elm/random/1.0.0/elm.json": {
+      "path": "0.19.1/packages/elm/random/1.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "783ce1a6372ea08b75386982dc50384d4bbbc2387902f0b1f1886e467f057aa3"
+    },
+    "elm-home/0.19.1/packages/elm/random/1.0.0/src/Random.elm": {
+      "path": "0.19.1/packages/elm/random/1.0.0/src/Random.elm",
+      "root": "elm-home",
+      "sha256": "62bc5496b27a6bebfe5ad208f4b10e4d41a849a50e7bc17c7686d238e80eb98c"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/elm.json": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/elm.json",
+      "root": "elm-home",
+      "sha256": "4d3aa46f79c1f0f7d4117e827edb6791f8bd8ee59c3c23d23fdc3d7aeaa20cc7"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/src/Svg.elm": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/src/Svg.elm",
+      "root": "elm-home",
+      "sha256": "181ecb9c536a31b309069651243868faddf2485d50dd0e108a012746cb54207c"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/src/Svg/Attributes.elm": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/src/Svg/Attributes.elm",
+      "root": "elm-home",
+      "sha256": "45ebba3826dbcd28909b8297c46f87e47f6da9adc1224e4647abe8b82049cc01"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/src/Svg/Events.elm": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/src/Svg/Events.elm",
+      "root": "elm-home",
+      "sha256": "612b0ed785cfabb6ca63786063a59f02861283c4a6b2d626b8d1b3e5c2f97458"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/src/Svg/Keyed.elm": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/src/Svg/Keyed.elm",
+      "root": "elm-home",
+      "sha256": "01f8ab6cdc8b614b06bf2f1f61b5efc92e41a25f965f7cd690c55f2cfb342e9c"
+    },
+    "elm-home/0.19.1/packages/elm/svg/1.0.1/src/Svg/Lazy.elm": {
+      "path": "0.19.1/packages/elm/svg/1.0.1/src/Svg/Lazy.elm",
+      "root": "elm-home",
+      "sha256": "b44c83642f82153fa19711b937c4cf88b652c09d388348df4a94acdc9033f4ab"
+    },
+    "elm-home/0.19.1/packages/elm/time/1.0.0/elm.json": {
+      "path": "0.19.1/packages/elm/time/1.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "03445516f62e4a779b7267e25f053732f57bda580b871f99a3e53a7979b2dfa4"
+    },
+    "elm-home/0.19.1/packages/elm/time/1.0.0/src/Elm/Kernel/Time.js": {
+      "path": "0.19.1/packages/elm/time/1.0.0/src/Elm/Kernel/Time.js",
+      "root": "elm-home",
+      "sha256": "cc59eff642bd2dc98ffde4a99ed0c682821e09a4601c083338d442b15ccd5cb1"
+    },
+    "elm-home/0.19.1/packages/elm/time/1.0.0/src/Elm/Kernel/Time.server.js": {
+      "path": "0.19.1/packages/elm/time/1.0.0/src/Elm/Kernel/Time.server.js",
+      "root": "elm-home",
+      "sha256": "888d36edbd6d8fe5e69a3802c56f93a1341f0dcfa14e9be1ab10de3c188602c8"
+    },
+    "elm-home/0.19.1/packages/elm/time/1.0.0/src/Time.elm": {
+      "path": "0.19.1/packages/elm/time/1.0.0/src/Time.elm",
+      "root": "elm-home",
+      "sha256": "e4c55a925c664c25b8ffcd1510c827793d670ec159dc18af3ebd7f642ee4e638"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/elm.json": {
+      "path": "0.19.1/packages/elm/url/1.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "b2c089bbe199a8431fd53635a55fdc10e7ee4bb4a993064688f74812dc94dc5e"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Elm/Kernel/Url.js": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Elm/Kernel/Url.js",
+      "root": "elm-home",
+      "sha256": "56250d3bec1cbc6c8974514ea56040043b237b058cb8cdad54a8b32e33676922"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Url.elm": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Url.elm",
+      "root": "elm-home",
+      "sha256": "c1dad01869f5a4fe29406b3409508ec4754bf8125cc01ef5106b2e369c5c647c"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Url/Builder.elm": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Url/Builder.elm",
+      "root": "elm-home",
+      "sha256": "e4922467375bcedd187bbd811b5dfd49b7f9b6a08063b7ef411f2ad0aa6e8dad"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Url/Parser.elm": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Url/Parser.elm",
+      "root": "elm-home",
+      "sha256": "0a42ac79944c28778c0e32510cd089e7d80e6d202937238f829d4de2d942d028"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Url/Parser/Internal.elm": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Url/Parser/Internal.elm",
+      "root": "elm-home",
+      "sha256": "91cec106bc5eb47ae5b1ff86ac1589989785080805bc4e38dd187ec22dbbfc26"
+    },
+    "elm-home/0.19.1/packages/elm/url/1.0.0/src/Url/Parser/Query.elm": {
+      "path": "0.19.1/packages/elm/url/1.0.0/src/Url/Parser/Query.elm",
+      "root": "elm-home",
+      "sha256": "2b14aab77b663bef2b9434fccc3ca6c102990b9cf87dea650ae8341a9325bf4e"
+    },
+    "elm-home/0.19.1/packages/elm/virtual-dom/1.0.3/elm.json": {
+      "path": "0.19.1/packages/elm/virtual-dom/1.0.3/elm.json",
+      "root": "elm-home",
+      "sha256": "f00299c02b546533702cacd34ed0eef09bf2bbba138585bb86a79e6b0fd11a83"
+    },
+    "elm-home/0.19.1/packages/elm/virtual-dom/1.0.3/src/Elm/Kernel/VirtualDom.js": {
+      "path": "0.19.1/packages/elm/virtual-dom/1.0.3/src/Elm/Kernel/VirtualDom.js",
+      "root": "elm-home",
+      "sha256": "9246c8591d9b511468e8257b60c8495020164a5fd58f21d523722775292095db"
+    },
+    "elm-home/0.19.1/packages/elm/virtual-dom/1.0.3/src/Elm/Kernel/VirtualDom.server.js": {
+      "path": "0.19.1/packages/elm/virtual-dom/1.0.3/src/Elm/Kernel/VirtualDom.server.js",
+      "root": "elm-home",
+      "sha256": "68c145d1f3ae40618e023b4109edc3f474f12c83af9ad5a3cfa2232f7cfd0bd9"
+    },
+    "elm-home/0.19.1/packages/elm/virtual-dom/1.0.3/src/VirtualDom.elm": {
+      "path": "0.19.1/packages/elm/virtual-dom/1.0.3/src/VirtualDom.elm",
+      "root": "elm-home",
+      "sha256": "85f06afbc5f418f69c424ecc9b61969cc460444f97987054fb14d2a944d3bba8"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/elm.json": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "10306e4cd306766eb373ff3d470b0a25b2b2694e9f5f17fb8a00d531a556043e"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator.elm",
+      "root": "elm-home",
+      "sha256": "86c5efddf9de94ad1017ed7977eb841341c70943bbc3b92e532453ddbf4eb8ab"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Timeline.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Timeline.elm",
+      "root": "elm-home",
+      "sha256": "5371f9ad2263e0258e2fa435a30e02238ff77314219fbfd491f94b9af78253ad"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Transition.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Transition.elm",
+      "root": "elm-home",
+      "sha256": "1860a6e36005ee638cbdec1d1e68cd841df9237a41e5c9e2bfaadb6671fdf3ed"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Value.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/Animator/Value.elm",
+      "root": "elm-home",
+      "sha256": "78ef13f2daf7dc0ec578553099502acbbca70c1bc20b1f91596cf53be2605714"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Css/Props.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Css/Props.elm",
+      "root": "elm-home",
+      "sha256": "857a863ce9fd6c0d160975db26438f8683cbe0261a3f09efec7f41040b6890c7"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Duration.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Duration.elm",
+      "root": "elm-home",
+      "sha256": "3b353ff917d3c6efdedc05eba4140ce0beceab2423b66b74c337e1fae907c1bd"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Move.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Move.elm",
+      "root": "elm-home",
+      "sha256": "cd8ca7e5a8e76dedf8cd086fc2e174598dcc7bd8a10fbb3e8ddb60d2050b4c6a"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Property.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Property.elm",
+      "root": "elm-home",
+      "sha256": "3cb69060acb04f87bd29be53a526490d72aceba22c54514bc89397d107240d66"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Quantity.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Quantity.elm",
+      "root": "elm-home",
+      "sha256": "fe429f1e309abb9fcd9c51c37a5dfecbec75a6a7a220b4d9d0fb9726dca76a3d"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Random.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Random.elm",
+      "root": "elm-home",
+      "sha256": "484d2cbd4ae897fd5d5c6c4a6e166d572666a48adbe5747cee1fbcc19da57d82"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Render.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Render.elm",
+      "root": "elm-home",
+      "sha256": "492db1046da075ed58248467748d847d37d5da9c2e1971a6569109597b9a9858"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Render/Css.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Render/Css.elm",
+      "root": "elm-home",
+      "sha256": "18526c7ee105d891a9aaaa18266a4e661e7bf58fa000bc476dd98ef11f7df880"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Time.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Time.elm",
+      "root": "elm-home",
+      "sha256": "c7b948d6a2f4c38802f42f1d7d23ba6eb22645ea261ca4f461970887cd5ebd49"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Timeline.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Timeline.elm",
+      "root": "elm-home",
+      "sha256": "cab39bdd37608c491f1ed0e1af829b8afc1cbc11267b9815ef256423ffdfd304"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Transition.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Transition.elm",
+      "root": "elm-home",
+      "sha256": "206552e8f06b4e5070235a61ef3e4f935814ecfbb4cdf8e91014dd3d8fdd044c"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Units.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-animator/2.0.0/src/InternalAnim/Units.elm",
+      "root": "elm-home",
+      "sha256": "6364397c13569ccaf511e0e8f636cf0cbf3a1e23c20bb5e263f81e28fa1d681f"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-bezier/2.0.0/elm.json": {
+      "path": "0.19.1/packages/mdgriffith/elm-bezier/2.0.0/elm.json",
+      "root": "elm-home",
+      "sha256": "7b1813c26f5de31f301092893adb9c46a3b52b5bdc1aa73b6ae16b2f56ca987a"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-bezier/2.0.0/src/Bezier.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-bezier/2.0.0/src/Bezier.elm",
+      "root": "elm-home",
+      "sha256": "78872ae81cba8b6637153212af58eb2553f6d768bf7430b44a4da7b8b063af40"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-bezier/2.0.0/src/Bezier/Spring.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-bezier/2.0.0/src/Bezier/Spring.elm",
+      "root": "elm-home",
+      "sha256": "dfbc9dd78e8ba50cece5d3a7f698700b819d0f6e7fd79fb2ce4bf90e44c2f96d"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/elm.json": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/elm.json",
+      "root": "elm-home",
+      "sha256": "4d4486fd3afe94d769c31a63b995d2a6fda9ae9daed659cbfd47c8537540f883"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element.elm",
+      "root": "elm-home",
+      "sha256": "6f797b99dd3d1d6ff1f8498850bb4b8b960de2499672cbf7f86c2c40f6768e75"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Background.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Background.elm",
+      "root": "elm-home",
+      "sha256": "78a96f16c743961e0dfec4915873cf915a4f9b6382ff287e3c7b9e307c7ae513"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Border.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Border.elm",
+      "root": "elm-home",
+      "sha256": "1cbea164b59ab5fc93a501761ca3e973489923e5e77ab2cc8d004ac2e7d7b12a"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Events.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Events.elm",
+      "root": "elm-home",
+      "sha256": "1f8050dc9bd572366187980dca6bc0b48300b5521b60ff536afa168dd263e4b3"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Font.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Font.elm",
+      "root": "elm-home",
+      "sha256": "31d5566e1257ff62532c47b5f3f2dcb4ae826693c6ab678780c0b13a7a083638"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Input.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Input.elm",
+      "root": "elm-home",
+      "sha256": "2ef63faa892478055d7bc2b906eb24c50f0f5711b04d51091af3af19eec635e5"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Keyed.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Keyed.elm",
+      "root": "elm-home",
+      "sha256": "101e6089636d2a028b5597305815b150cd44d1c3941fdd91716a7f2c22216550"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Lazy.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Lazy.elm",
+      "root": "elm-home",
+      "sha256": "4ec07fde711f818f79c8f7d4d01554c72e43980c8cc7399232be46ab47a7a13f"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Region.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Element/Region.elm",
+      "root": "elm-home",
+      "sha256": "53b98fc578bd63e70efd1101e7d1dcc0097326d45ecc3465d48ffe52927be9a3"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Flag.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Flag.elm",
+      "root": "elm-home",
+      "sha256": "81e633801ab2f0feb781038a3c644f7c1df993e17ebdf136b39ad966bc592bda"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Grid.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Grid.elm",
+      "root": "elm-home",
+      "sha256": "50279400d5a76f3e24e0cbb965828645b3045a31d4dde90b533c9ef9ea243c30"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Model.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Model.elm",
+      "root": "elm-home",
+      "sha256": "7e5da5dfaa70f63be1213ece514d6aab01ebbbb1199ff7d7931bb488567543ad"
+    },
+    "elm-home/0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Style.elm": {
+      "path": "0.19.1/packages/mdgriffith/elm-ui/1.1.8/src/Internal/Style.elm",
+      "root": "elm-home",
+      "sha256": "13040599cd8f913e685c9fb85d90a7f4f16f2e2164cb1d462b289900e5e71c17"
+    },
+    "elm-home/0.19.1/packages/registry.dat": {
+      "path": "0.19.1/packages/registry.dat",
+      "root": "elm-home",
+      "sha256": "076c0320cd01bdb2920ca5dffc22312d9a220fabab53967023d4b5ac389f2e75"
+    },
+    "resources/audition/assets/mrjam/EchoPoint.woff2": {
+      "path": "signature/web/EchoPoint.woff2",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "26105a1a46b9fbeb288ce3dc3479d3c583c2b9be",
+        "path": "web/EchoPoint.woff2",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    "resources/audition/assets/mrjam/MrJamSignature.woff2": {
+      "path": "signature/web/MrJamSignature.woff2",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "f0bf416230cce723e3e6b5795fef1840605fa2e2",
+        "path": "web/MrJamSignature.woff2",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    "resources/audition/assets/mrjam/Parisienne-OFL.txt": {
+      "path": "signature/fonts/Parisienne-OFL.txt",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "6f4c72d06b5ff3cb1ad98b0f4b5147e90d638c5f",
+        "path": "fonts/Parisienne-OFL.txt",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db"
+    },
+    "resources/audition/assets/mrjam/Parisienne-Regular.ttf": {
+      "path": "signature/fonts/Parisienne-Regular.ttf",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "ef2db74405c54336aab8add251e8ad9948b6c2d3",
+        "path": "fonts/Parisienne-Regular.ttf",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "bc9ee17f022e20bc700797e5f557d14bfa43af0c98d9e6c9c5c1ca4ec7aacd57"
+    },
+    "resources/audition/assets/mrjam/signature.css": {
+      "path": "signature/web/signature.css",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "db7f88b0e1ddeddd93ff34603e09cd5dfdd6fb8a",
+        "path": "web/signature.css",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    "resources/audition/vendor/katex/README.md": {
+      "path": "katex-dist/README.md",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "af0825b95cb4c43317bc3864f0a5d183c247fa7d40b7e1142ad26cf7a18b83a8"
+    },
+    "resources/audition/vendor/katex/contrib/auto-render.js": {
+      "path": "katex-dist/contrib/auto-render.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "4cfb141d56e2c5644f5226e6b8709a3eadd39989fcec86a38c8150adb196d89b"
+    },
+    "resources/audition/vendor/katex/contrib/auto-render.min.js": {
+      "path": "katex-dist/contrib/auto-render.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "e5372d199bcdae8b4de71d0f7ceba72a4ba12774a27c60a6f1f77d03b3228ee4"
+    },
+    "resources/audition/vendor/katex/contrib/auto-render.mjs": {
+      "path": "katex-dist/contrib/auto-render.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "e0410e8ce6c38869bf2f703fcc3b8d192308b5f3b34264625d605d742b1309e0"
+    },
+    "resources/audition/vendor/katex/contrib/copy-tex.js": {
+      "path": "katex-dist/contrib/copy-tex.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "75d6dbee9697706dc694d9500e876a1ad392db3e8a4588213e0cc300b280eb0a"
+    },
+    "resources/audition/vendor/katex/contrib/copy-tex.min.js": {
+      "path": "katex-dist/contrib/copy-tex.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c571c49b520cb8e9040287338286b21783e39b476660b8b56d9e1c037eeaeaff"
+    },
+    "resources/audition/vendor/katex/contrib/copy-tex.mjs": {
+      "path": "katex-dist/contrib/copy-tex.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "d3a214e3f8c2de12410df5b4de45086dc54566b1919c0078e9ae947a15964283"
+    },
+    "resources/audition/vendor/katex/contrib/mathtex-script-type.js": {
+      "path": "katex-dist/contrib/mathtex-script-type.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "8c898971b4abe2fe9dadeb999617ea02cbeddd9a7b7d33e2c59e23dba922b380"
+    },
+    "resources/audition/vendor/katex/contrib/mathtex-script-type.min.js": {
+      "path": "katex-dist/contrib/mathtex-script-type.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "461b30e513fe6cffb7130f6786360d37208bb6945deaee0c520fa7fe51037795"
+    },
+    "resources/audition/vendor/katex/contrib/mathtex-script-type.mjs": {
+      "path": "katex-dist/contrib/mathtex-script-type.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "b11a5fab6ffeea4ef040f93e6f491bdbfcdec8963bc5e8c2b3642f3cb7d4799a"
+    },
+    "resources/audition/vendor/katex/contrib/mhchem.js": {
+      "path": "katex-dist/contrib/mhchem.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "b193073c57b9ba833ca09faa72013c8995eb56fd2d27d65a6814c2e75f2370ab"
+    },
+    "resources/audition/vendor/katex/contrib/mhchem.min.js": {
+      "path": "katex-dist/contrib/mhchem.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "aaf20145c0b8ecd450ccf6eb0cebece2f77d8e6a02c30d291f28c1167b57b2df"
+    },
+    "resources/audition/vendor/katex/contrib/mhchem.mjs": {
+      "path": "katex-dist/contrib/mhchem.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "d590d100ede9335bda7648d029db5510877205538af36b53d56cd8bac1de79c1"
+    },
+    "resources/audition/vendor/katex/contrib/render-a11y-string.js": {
+      "path": "katex-dist/contrib/render-a11y-string.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "f0e2259b8bb929436d0c334f32b84c40311c71e00dd1874be9c743e0480db633"
+    },
+    "resources/audition/vendor/katex/contrib/render-a11y-string.min.js": {
+      "path": "katex-dist/contrib/render-a11y-string.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "90a3049e599a1a850c9c34e44adec762a30abc72b793c272955c86888553fd9e"
+    },
+    "resources/audition/vendor/katex/contrib/render-a11y-string.mjs": {
+      "path": "katex-dist/contrib/render-a11y-string.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "34d38d2c45197666b1657ebe01f7d907510b59d741199678ea3ff586b2bac648"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_AMS-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_AMS-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "68534840bcfdd2bffb6f0e8deb48684dd01e7f04ea2813267577afb906de1d13"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_AMS-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_AMS-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "30da91e84c893f875e252689faebdc590b2871145e8adc7f9a9d4dbd8ce0b251"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_AMS-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_AMS-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Bold.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Bold.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "07d8e303ce4fc12b4bb54f1004170dd190a1f3db45d400fe68060df3e0897268"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Bold.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "1ae6bd7475590e97e7f145a89e09ccde322f7a6bc0b91607b1c8b8ee28290fed"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "ed0b74372feefcbb9c0666b2e210da37b7e49fa7fbbf3eeb11db5f693dacfbb7"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "3398dd02302557a793f2863f88e02d96ce10df2abffa07c8e9fa90775116e65c"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Bold.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Bold.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "9163df9c7122432e6495b4229fa9071cf9ae86a758ae5efc4924ec2e1a6dbce1"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Bold.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "9be7ceb88004ab8ad124082246fbfcca4091e36385d4ec6ed1df67375dad50fb"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Bold.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "1e6f9579e90e2cac37f8f60a597c436e075c114385652b7cbeb0dec0421291b3"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "5e28753be717dac97f559f49bc10be9cf3c124ddcabda6659d11cb68febc6463"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Fraktur-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Bold.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Main-Bold.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "138ac28d1663b3037e9c5f52371fa5c63d8324f4a38d22cd573e6ea3a3fd0cf8"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Bold.woff": {
+      "path": "katex-dist/fonts/KaTeX_Main-Bold.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c76c5d696297d51b9cb1639c7da4334f0e7dec81b42b11213b5e25ef671bb822"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Bold.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Main-Bold.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-BoldItalic.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Main-BoldItalic.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "70ee1f64a20f2048c21940ef46d0144fd215baa953ca69afd1e31e98544f708f"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff": {
+      "path": "katex-dist/fonts/KaTeX_Main-BoldItalic.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "a6f7ec0d846ac7ad975adb8959c37ed49b94acbc4ae436db9ce9e20287e4a64c"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Main-BoldItalic.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Italic.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Main-Italic.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "0d85ae7cc30f23790a7f1a58c4a112fdca8aae769b6ba11429af1d98b1b6cb3a"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Italic.woff": {
+      "path": "katex-dist/fonts/KaTeX_Main-Italic.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "f1d6ef86f3b11a528bd5185199bd2443ecb2b0dead96d88674b5a2c12be24bdf"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Italic.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Main-Italic.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Main-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "d0332f52868370fd83ae7fa46470f90c8f2eab2fcf12bc4f88080b340c95a830"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Main-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c6368d87e8a1a3a5d337623d83d8dc4b868f242a9ad476237d6f8d1e0f168cdc"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Main-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Main-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-BoldItalic.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Math-BoldItalic.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "f9377ab0271cda59af24bcffbd46a4d0c8a3572ffafdbb38de2ad5ea7b0d5ee5"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff": {
+      "path": "katex-dist/fonts/KaTeX_Math-BoldItalic.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "850c0af5c2238497febaf5e461d880bf458c341f42f4f330f1b1ab5698b1998e"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Math-BoldItalic.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-Italic.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Math-Italic.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "08ce98e51b04d58945a301e639e02b6998af29fdfd61a7b8afdd07bbfc479d4a"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-Italic.woff": {
+      "path": "katex-dist/fonts/KaTeX_Math-Italic.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "8a8d244581371912b8f3f5a23e2437cb2a59cd9bcaebb0346e722c05737a2571"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Math-Italic.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Math-Italic.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Bold.ttf": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Bold.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "1ece03f79f95277d57dc7f6b435a74e1379b0d46104a8530286b60ff49369ea0"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Bold.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "ece03cfd83e22c212cdef66feb8442d25a083beb988db3f1883f3f9738d750ba"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Bold.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Italic.ttf": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Italic.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "3931dd81faed86ba021bb2bbdc36f5bed9a38d6b4f4077aca59b265aa1b02083"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Italic.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "91ee67500cc0129aa0ace3ac5c61ff1692102f0f31d02b69347fba35dcb75bf2"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Italic.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "f36ea897e19f4a2e571d1e900e4e3710e438deb05a842486045ba0a3e616a4ad"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "11e4dc8a6471ff6d6ee561d53d10fde8f7489e798257ff449c5d37c197435605"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_SansSerif-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Script-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Script-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "1c67f068fea8bb09bf099c088b1cf64bd27516a6e07f4684344873564bb66a67"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Script-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Script-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "d96cdf2b3bdd4d64a8fd5f74a4c467f123a8a73931cd435889f08ffaf9bf947a"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Script-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Script-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size1-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Size1-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "95b6d2f1a50173bfedb8c63e1d1c99b10427d0a4df4201cb44513b226951a22b"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size1-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Size1-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c943cc986384f59e86bea5fd7dc50a9c4dfe567a7c05eb40d6790720dead97c9"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size1-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Size1-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size2-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Size2-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "a6b2099fb555c60e3a0db3a08842ebf1d732c6eb4e4bf44913613bed4fc4e39b"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size2-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Size2-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "2014c523c3210bcc166648c4d4cc57f05b747df07a24277bf71c51e67dc79e3d"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size2-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Size2-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size3-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Size3-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "500e04d54f0d51666332c9d2089aa803be22aa878eca539e59fa53c6e522b082"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size3-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Size3-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "6ab6b62e9b62dae2c00dd90f791bd10950be0ecc3490d7d6045f51c2e8fe0949"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size3-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Size3-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size4-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Size4-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c647367d1dd4e162468717d020e1fc0f1dc5c26ebfdffbe55261713bf88c5877"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size4-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Size4-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "99f9c6750b489c9462bf04900bd3f939df9b829339daaaaa99ef5495cdddea58"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Size4-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Size4-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Typewriter-Regular.ttf": {
+      "path": "katex-dist/fonts/KaTeX_Typewriter-Regular.ttf",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "f01f3e87d9c6a61c0c081ceb577abd864eb00a612f7ac1620dd6915fad2ef5aa"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff": {
+      "path": "katex-dist/fonts/KaTeX_Typewriter-Regular.woff",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "e14fed02b1aba7ce9f5afd5844b5d0321b22351febc720e0de8b8723527609f7"
+    },
+    "resources/audition/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2": {
+      "path": "katex-dist/fonts/KaTeX_Typewriter-Regular.woff2",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b"
+    },
+    "resources/audition/vendor/katex/katex-swap.css": {
+      "path": "katex-dist/katex-swap.css",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "48a9bb9837c5b96849b6e34086a891ea9fa111318da8f4c6fad26ed7fb76a924"
+    },
+    "resources/audition/vendor/katex/katex-swap.min.css": {
+      "path": "katex-dist/katex-swap.min.css",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "c03e1c3f55790821a71b798a989b0378dd3ee5b70c0de041910c917e44e7c68d"
+    },
+    "resources/audition/vendor/katex/katex.css": {
+      "path": "katex-dist/katex.css",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "0e37d469b6ac500727b8f15b359e21f1249fa3fadf090a8d70f4f8ad099f812a"
+    },
+    "resources/audition/vendor/katex/katex.js": {
+      "path": "katex-dist/katex.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "cc839a936054bd21629854210b55613c0c27fbc5e70185f95e7313fdbcab14bd"
+    },
+    "resources/audition/vendor/katex/katex.min.css": {
+      "path": "katex-dist/katex.min.css",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "50d9c78e03da144a021001b7de679133355179bcb06fd11e9e309223056a03dd"
+    },
+    "resources/audition/vendor/katex/katex.min.js": {
+      "path": "katex-dist/katex.min.js",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "10a91b479cd927446ceb60409fb0d72b5d0d05eaf446c9e52fafd64058c84540"
+    },
+    "resources/audition/vendor/katex/katex.mjs": {
+      "path": "katex-dist/katex.mjs",
+      "provenance": {
+        "archive_sha256": "9a80a3fba2367e99bf67b52bfff52e9534c8c7f198e4eaa12699e4f1df9a0bda",
+        "integrity": "sha512-h+UCwkZ+4Jz8WQ7MLGfj7UVFrRCizGb912fwF4luGdYsC5paYG1vx+jy+KRcC/XkpjGva/P7nAWuxNnPzRvzHw==",
+        "lock_git_blob": "ae8b37c33f1efac926f0f80e9d26f24992ec86c4",
+        "lock_path": "package-lock.json",
+        "lock_repository": "MrJ-am/apprendre-a-demontrer",
+        "lock_revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+        "package": "katex",
+        "url": "https://registry.npmjs.org/katex/-/katex-0.18.7.tgz",
+        "version": "0.18.7"
+      },
+      "root": "resources",
+      "sha256": "cc567bec51ade0dcfb0aac1bd8561fa293928386f221ad82d758d7b3643dafd5"
+    },
+    "resources/log/assets/mrjam/EchoPoint.woff2": {
+      "path": "signature/web/EchoPoint.woff2",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "26105a1a46b9fbeb288ce3dc3479d3c583c2b9be",
+        "path": "web/EchoPoint.woff2",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    "resources/log/assets/mrjam/Echologo.svg": {
+      "path": "signature/artwork/Echologo.svg",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "d0b8244f8a3a5e0d637e1ad57aedae30f2b6f2f8",
+        "path": "artwork/Echologo.svg",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    "resources/log/assets/mrjam/MrJamSignature.woff2": {
+      "path": "signature/web/MrJamSignature.woff2",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "f0bf416230cce723e3e6b5795fef1840605fa2e2",
+        "path": "web/MrJamSignature.woff2",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    "resources/log/assets/mrjam/signature.css": {
+      "path": "signature/web/signature.css",
+      "provenance": {
+        "distribution": "Existing application integration only; no public preparation archive",
+        "git_blob": "db7f88b0e1ddeddd93ff34603e09cd5dfdd6fb8a",
+        "path": "web/signature.css",
+        "repository": "MrJ-am/Signature",
+        "revision": "17194087eec9162bb5372221c43e1de0501dfe6a"
+      },
+      "root": "resources",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/Echologo.svg": {
+      "path": "public/assets/mrjam/Echologo.svg",
+      "root": "vision-style",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/animations.js": {
+      "path": "public/assets/mrjam/animations.js",
+      "root": "vision-style",
+      "sha256": "6e34281068e4e414d10a7ed5ef612fb6f7102dcee53bd7e2387b03c27e90460f"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/fenetres.js": {
+      "path": "public/assets/mrjam/fenetres.js",
+      "root": "vision-style",
+      "sha256": "b7ccc64445ef1749cf6d05ea8dc541837e8d840e6cc5f8e4f7fd8b6a46636400"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/palette/Palette-Visio.svg": {
+      "path": "public/assets/mrjam/palette/Palette-Visio.svg",
+      "root": "vision-style",
+      "sha256": "90e5bc0d1089e983eb47da8b3bb82aa39a7175729577db4ce686c073899af0fe"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/palette/palette.json": {
+      "path": "public/assets/mrjam/palette/palette.json",
+      "root": "vision-style",
+      "sha256": "48e8883cd4d3e41c924d8c7819864bc2c774c7fbe9cbf3305cc9343a1907965b"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/public/assets/mrjam/signature.css": {
+      "path": "public/assets/mrjam/signature.css",
+      "root": "vision-style",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam.elm": {
+      "path": "src/MrJam.elm",
+      "root": "vision-style",
+      "sha256": "b7b6d5cb198fece64c6a269872e94057111fc73d1b797cab65cca7719e0cdab2"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Accessibilite.elm": {
+      "path": "src/MrJam/Accessibilite.elm",
+      "root": "vision-style",
+      "sha256": "db535f7e71685b102f9f775a1a678c7d8c0366c33a59d9d96c8bcf13dd1d2bdb"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Accessibilite.elm": {
+      "path": "src/MrJam/Adaptateurs/Accessibilite.elm",
+      "root": "vision-style",
+      "sha256": "ee0a39e50f1b619d05447f27efb5b8fa9c90a105afd0ed77a9a32e9c8ca59511"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Atelier.elm": {
+      "path": "src/MrJam/Adaptateurs/Atelier.elm",
+      "root": "vision-style",
+      "sha256": "6e5e93b35166dc12a6f73ad1ac262d36979d5786e8625788c41cb03fa6dc07cf"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Axes.elm": {
+      "path": "src/MrJam/Adaptateurs/Axes.elm",
+      "root": "vision-style",
+      "sha256": "98375f890da3ff75c0dabcf0757a16f042e4956f6fd1e6c2e71f8b179541b5a9"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Complement.elm": {
+      "path": "src/MrJam/Adaptateurs/Complement.elm",
+      "root": "vision-style",
+      "sha256": "5d46e38577c6052313e18523bf13a83628fbf21818bd8dba03afc1cbe8471714"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Constructions.elm": {
+      "path": "src/MrJam/Adaptateurs/Constructions.elm",
+      "root": "vision-style",
+      "sha256": "19202537d3e57a7d1c41f1901535f2f243c23aaf14517b4a066c40d5d8a41c79"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Curseur.elm": {
+      "path": "src/MrJam/Adaptateurs/Curseur.elm",
+      "root": "vision-style",
+      "sha256": "7907940264e77f6f57249d2d6dba0f37f4124814fe7d580c800c690fbade1b15"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Dessin.elm": {
+      "path": "src/MrJam/Adaptateurs/Dessin.elm",
+      "root": "vision-style",
+      "sha256": "ff2d1a2c8be36ce7c2208316e4fd7c71422674ec9dd17e6d9540faeb5f514c6a"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Diagrammes.elm": {
+      "path": "src/MrJam/Adaptateurs/Diagrammes.elm",
+      "root": "vision-style",
+      "sha256": "82aaea054364cf97aad409f00074fc627caff81630efe0a97ab1822c33c76310"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Dialogue.elm": {
+      "path": "src/MrJam/Adaptateurs/Dialogue.elm",
+      "root": "vision-style",
+      "sha256": "653a184c67c29479eec47a37dce5df13a2dfc302a13483fb325b070d15dcf50f"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Espace.elm": {
+      "path": "src/MrJam/Adaptateurs/Espace.elm",
+      "root": "vision-style",
+      "sha256": "650537ddb25366e390191b117fa5d2ac592e5ee1f29eca1ae55ab4f5e2096dc8"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/GraphiqueSpatial.elm": {
+      "path": "src/MrJam/Adaptateurs/GraphiqueSpatial.elm",
+      "root": "vision-style",
+      "sha256": "9ca9811e1e4b5b9a30865d9d50cc3b1031591930c9640a52240dfb89961dd27e"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Manipulation.elm": {
+      "path": "src/MrJam/Adaptateurs/Manipulation.elm",
+      "root": "vision-style",
+      "sha256": "5c0d0eee910f93020aed5dfc7b01d79e2864b428436192865589aaa3d8994201"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Mathematiques.elm": {
+      "path": "src/MrJam/Adaptateurs/Mathematiques.elm",
+      "root": "vision-style",
+      "sha256": "b9a89ad6ba19de34a9291b4124608053b585699e265d6f26f31ceaf2aa47ec22"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Pictogramme.elm": {
+      "path": "src/MrJam/Adaptateurs/Pictogramme.elm",
+      "root": "vision-style",
+      "sha256": "397e86958411a69c57f2d411bd19e017c9de5848dc5920e10c7e81ad21425f93"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Saisie.elm": {
+      "path": "src/MrJam/Adaptateurs/Saisie.elm",
+      "root": "vision-style",
+      "sha256": "2c7c94993575b2105579efa2168929c68c4d76c92d8366c8e3228748dfae57e3"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Selection.elm": {
+      "path": "src/MrJam/Adaptateurs/Selection.elm",
+      "root": "vision-style",
+      "sha256": "50ef64763d5018aac7de24d78d5248a07d3576469149b26823c137562649f4a2"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Spatial.elm": {
+      "path": "src/MrJam/Adaptateurs/Spatial.elm",
+      "root": "vision-style",
+      "sha256": "62f251a8fffb0f7c9e9e76516ddbd1d7e07bced94f486b4d10838e0601c3a632"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Tableau.elm": {
+      "path": "src/MrJam/Adaptateurs/Tableau.elm",
+      "root": "vision-style",
+      "sha256": "23613e2200937d1e24d6b526680dcd9742cc6ae3fffa10700d7b78100bae4cd3"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Texte.elm": {
+      "path": "src/MrJam/Adaptateurs/Texte.elm",
+      "root": "vision-style",
+      "sha256": "69711d307b79ea7c1b30b71b13911e9cf8282548ee5e6907edb54f342a8e57c3"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Typographie.elm": {
+      "path": "src/MrJam/Adaptateurs/Typographie.elm",
+      "root": "vision-style",
+      "sha256": "3e16107944efa655c54f8ad09028cc7c87a0be4692cb98ec6df84ef8c6e9e250"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Adaptateurs/Video.elm": {
+      "path": "src/MrJam/Adaptateurs/Video.elm",
+      "root": "vision-style",
+      "sha256": "558c8fd2ce3eceb5a7e39bd87b73ffb85179494fe6dc5ace8e3d095a8c7fcf96"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Animations.elm": {
+      "path": "src/MrJam/Animations.elm",
+      "root": "vision-style",
+      "sha256": "ad6a67ca6cfa897d4189c8aeebae05680a129ec0d2a8cc3e5d8155cbc1e9141a"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Atelier.elm": {
+      "path": "src/MrJam/Atelier.elm",
+      "root": "vision-style",
+      "sha256": "e03c754d71a86be0af759fc7039c1867d483ecb072e2b94167ddd3e77dbfd79e"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/AxesSpatiaux.elm": {
+      "path": "src/MrJam/AxesSpatiaux.elm",
+      "root": "vision-style",
+      "sha256": "a893f5c4fe150f013fd0c9adef46a792d4787cb8dcbe8bf1286d9f9ce0588319"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Blocs.elm": {
+      "path": "src/MrJam/Blocs.elm",
+      "root": "vision-style",
+      "sha256": "19dcb3b7d84fe9d96117fe7bb536ef0c8ca84dd828dddf737278f368cd8251d6"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Contexte.elm": {
+      "path": "src/MrJam/Contexte.elm",
+      "root": "vision-style",
+      "sha256": "10c1fdd2e34f2900e76fb7b1e99209edc9a47fcc4915db101122ac43df6f96ff"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Controles.elm": {
+      "path": "src/MrJam/Controles.elm",
+      "root": "vision-style",
+      "sha256": "c863630a5fa75b67dfaedcc1a765c9393a6c71955fd066232860837193e0d5d0"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Curseurs.elm": {
+      "path": "src/MrJam/Curseurs.elm",
+      "root": "vision-style",
+      "sha256": "c02338c53c797362a918c9b58f602dcf8d4a148d2745886fd025fa2b93e867b3"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Dessin.elm": {
+      "path": "src/MrJam/Dessin.elm",
+      "root": "vision-style",
+      "sha256": "9f23f5d19107837434a4d09a2ebd256121162ec7c25104a0405c2f38fe1d43a1"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Dessin/Types.elm": {
+      "path": "src/MrJam/Dessin/Types.elm",
+      "root": "vision-style",
+      "sha256": "3e47dab46166ac8efb8fc37ed542e974109f882b24801d064bb5dfee6c2748d6"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Diagrammes.elm": {
+      "path": "src/MrJam/Diagrammes.elm",
+      "root": "vision-style",
+      "sha256": "3c583287966a4b078be77d8f52f0ed82f22e04435dc8cb5165849633a839c0e7"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Diagrammes/Types.elm": {
+      "path": "src/MrJam/Diagrammes/Types.elm",
+      "root": "vision-style",
+      "sha256": "f96ea14ea900a9a81abbcc8f0728318b3c25fd77d11f6061cd1b30882426c05b"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Disposition.elm": {
+      "path": "src/MrJam/Disposition.elm",
+      "root": "vision-style",
+      "sha256": "8cd780eacf38e5569efcba6fa75630f8f8ba28b632c7007280b314d65b2b9244"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Documents.elm": {
+      "path": "src/MrJam/Documents.elm",
+      "root": "vision-style",
+      "sha256": "48f79733578385b61093490950feb8f6b704c87907bd045efef990d7f03a4a18"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Donnees.elm": {
+      "path": "src/MrJam/Donnees.elm",
+      "root": "vision-style",
+      "sha256": "4799d0d70ecc0dceb5d3d95ab8f92fd48965e1fe67d1b614012be4a8c5bbcb8f"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Ecran.elm": {
+      "path": "src/MrJam/Ecran.elm",
+      "root": "vision-style",
+      "sha256": "c9cdb20e4ad45b12ebfb78f0b6ffc49c6578362bfccf151c37640a042d64874d"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Espace.elm": {
+      "path": "src/MrJam/Espace.elm",
+      "root": "vision-style",
+      "sha256": "9563660fc2a68414d05ae3453d52edc28e718715facdd74d2cb2b1dac6f7642b"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Fenetres.elm": {
+      "path": "src/MrJam/Fenetres.elm",
+      "root": "vision-style",
+      "sha256": "9c91dee8773fc8fae0c01bb3e1a10f1198b6abd264a9cf19790748ce2c8a05e5"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/GeometrieSpatiale.elm": {
+      "path": "src/MrJam/GeometrieSpatiale.elm",
+      "root": "vision-style",
+      "sha256": "fc0178f0adbd9b6db9b77fc5fff1ba79763619dd56eeea7947a7b0c6e7d8f7ba"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Identite.elm": {
+      "path": "src/MrJam/Identite.elm",
+      "root": "vision-style",
+      "sha256": "71ac5d51261674e88746a569e769cd7ae19c34521ca04a40e0df028e5a6cb397"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Lecture.elm": {
+      "path": "src/MrJam/Lecture.elm",
+      "root": "vision-style",
+      "sha256": "5fbdfd34c9a0ac3d1db1a91743647dab1d79e37d9fbc4cedfe0b085cfb7ae26c"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Lectures.elm": {
+      "path": "src/MrJam/Lectures.elm",
+      "root": "vision-style",
+      "sha256": "55537c46102bd541b8b02dab44606b53e9fb1ce8d08ce2b06c6c000042f3bfc1"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Manipulation.elm": {
+      "path": "src/MrJam/Manipulation.elm",
+      "root": "vision-style",
+      "sha256": "5689e4414373e434f66f5156a4e1ac3bc8245c31d6e0c8fd74029b2a386715ef"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Mathematiques.elm": {
+      "path": "src/MrJam/Mathematiques.elm",
+      "root": "vision-style",
+      "sha256": "980c9cff4a3679df08322f1c4450cd595583f88f171b6441fef36c4be3b0f4a8"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/OKLab.elm": {
+      "path": "src/MrJam/OKLab.elm",
+      "root": "vision-style",
+      "sha256": "f1cb4ec549cd301c2a7cfb9bcc97d15c8ee494947d8f3713a8e3b5dcfcbccc1a"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Pictogrammes.elm": {
+      "path": "src/MrJam/Pictogrammes.elm",
+      "root": "vision-style",
+      "sha256": "8cb6fd08bdc86f044d91421d5486995fd9b054a0932bd14163a0b755a1e23d70"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/TableSpatiale.elm": {
+      "path": "src/MrJam/TableSpatiale.elm",
+      "root": "vision-style",
+      "sha256": "83378da103a9ee7720b51b11250921b28e85f94d053ef6cf93469c787df8d4a6"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Tableaux.elm": {
+      "path": "src/MrJam/Tableaux.elm",
+      "root": "vision-style",
+      "sha256": "4f80c01790e08f619d6d6b00ef9f9e8d1c0a2116930cc8782333d0873e244006"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Theme.elm": {
+      "path": "src/MrJam/Theme.elm",
+      "root": "vision-style",
+      "sha256": "8b6f75174b9538ee9bd43554c57c8771ff67d34d0d357723aa388f2bb717e899"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Transitions.elm": {
+      "path": "src/MrJam/Transitions.elm",
+      "root": "vision-style",
+      "sha256": "8847df1fba1545f90dccecf57e4461badcd93c36ac56874d2255ffa2114a4065"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Videos.elm": {
+      "path": "src/MrJam/Videos.elm",
+      "root": "vision-style",
+      "sha256": "6f15bcc24f009a6b34d1985fd1289ad2042941f563de593f148252b3024fe4fd"
+    },
+    "styles/27111a95d0222c634e55fb2e3ff8e45041b40b16/src/MrJam/Vitrine.elm": {
+      "path": "src/MrJam/Vitrine.elm",
+      "root": "vision-style",
+      "sha256": "a8525c2d352e9151dfce73bce00bc955faf6dc52c5e8038d5132469e1a977da5"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/public/assets/mrjam/animations.js": {
+      "git_blob": "dce979b3f9f85f9e8c2397c8f944148db3cf8196",
+      "path": "public/assets/mrjam/animations.js",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "6e34281068e4e414d10a7ed5ef612fb6f7102dcee53bd7e2387b03c27e90460f"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam.elm": {
+      "git_blob": "0fbb9bafc299fe979e23b990e76e2efe2b39c933",
+      "path": "src/MrJam.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "b7b6d5cb198fece64c6a269872e94057111fc73d1b797cab65cca7719e0cdab2"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Accessibilite.elm": {
+      "git_blob": "4d34170a38a424ba250d839e7c65ca135df4e30f",
+      "path": "src/MrJam/Accessibilite.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "db535f7e71685b102f9f775a1a678c7d8c0366c33a59d9d96c8bcf13dd1d2bdb"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Accessibilite.elm": {
+      "git_blob": "bd5e40a2e118fb99f9b3fa27fc6c15bd047b9699",
+      "path": "src/MrJam/Adaptateurs/Accessibilite.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "ee0a39e50f1b619d05447f27efb5b8fa9c90a105afd0ed77a9a32e9c8ca59511"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Atelier.elm": {
+      "git_blob": "1931f8112ce327544506a3a6a882502153b58dac",
+      "path": "src/MrJam/Adaptateurs/Atelier.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "6e5e93b35166dc12a6f73ad1ac262d36979d5786e8625788c41cb03fa6dc07cf"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Axes.elm": {
+      "git_blob": "c0d4b1ba49716ab04edee7db930fec92c0e9170a",
+      "path": "src/MrJam/Adaptateurs/Axes.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "98375f890da3ff75c0dabcf0757a16f042e4956f6fd1e6c2e71f8b179541b5a9"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Complement.elm": {
+      "git_blob": "9e6e1b2bf13e7e07c9ce0fdc41a26dc2efcf9a14",
+      "path": "src/MrJam/Adaptateurs/Complement.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "5d46e38577c6052313e18523bf13a83628fbf21818bd8dba03afc1cbe8471714"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Constructions.elm": {
+      "git_blob": "495cfce9831feee6480358a1f14d97656b2021da",
+      "path": "src/MrJam/Adaptateurs/Constructions.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "19202537d3e57a7d1c41f1901535f2f243c23aaf14517b4a066c40d5d8a41c79"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Curseur.elm": {
+      "git_blob": "fbc314f6364ebf82f1ff0b7295120702206288cd",
+      "path": "src/MrJam/Adaptateurs/Curseur.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "7907940264e77f6f57249d2d6dba0f37f4124814fe7d580c800c690fbade1b15"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Dessin.elm": {
+      "git_blob": "0e188fa4cd717a9622c7319f6f288a9ef2094de8",
+      "path": "src/MrJam/Adaptateurs/Dessin.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "ff2d1a2c8be36ce7c2208316e4fd7c71422674ec9dd17e6d9540faeb5f514c6a"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Diagrammes.elm": {
+      "git_blob": "3bd6e5b14d771d97ef2a6cc331ff07c8d7847db2",
+      "path": "src/MrJam/Adaptateurs/Diagrammes.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "82aaea054364cf97aad409f00074fc627caff81630efe0a97ab1822c33c76310"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Dialogue.elm": {
+      "git_blob": "8f6d2c94c581ebdbd8cda9e1f78f709ae7f8c0b3",
+      "path": "src/MrJam/Adaptateurs/Dialogue.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "653a184c67c29479eec47a37dce5df13a2dfc302a13483fb325b070d15dcf50f"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Espace.elm": {
+      "git_blob": "c2709b7f72b95604bd0d687f30aab8495ede34fe",
+      "path": "src/MrJam/Adaptateurs/Espace.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "650537ddb25366e390191b117fa5d2ac592e5ee1f29eca1ae55ab4f5e2096dc8"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/GraphiqueSpatial.elm": {
+      "git_blob": "3738c476ab55af680f09a1dad3e068307de3197d",
+      "path": "src/MrJam/Adaptateurs/GraphiqueSpatial.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "9ca9811e1e4b5b9a30865d9d50cc3b1031591930c9640a52240dfb89961dd27e"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Manipulation.elm": {
+      "git_blob": "269c6fa64692c13277947d08100e1447ab866b65",
+      "path": "src/MrJam/Adaptateurs/Manipulation.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "5c0d0eee910f93020aed5dfc7b01d79e2864b428436192865589aaa3d8994201"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Mathematiques.elm": {
+      "git_blob": "0938fb41a0b186c40ba2564da91cb34ee93103d8",
+      "path": "src/MrJam/Adaptateurs/Mathematiques.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "b9a89ad6ba19de34a9291b4124608053b585699e265d6f26f31ceaf2aa47ec22"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Pictogramme.elm": {
+      "git_blob": "e9e6ccbb4e79b5972ed3869d6653a860b0d83bb0",
+      "path": "src/MrJam/Adaptateurs/Pictogramme.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "397e86958411a69c57f2d411bd19e017c9de5848dc5920e10c7e81ad21425f93"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Saisie.elm": {
+      "git_blob": "f4d6d393ee6219e8c7a4c3772a9c05418c55f2cc",
+      "path": "src/MrJam/Adaptateurs/Saisie.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "2c7c94993575b2105579efa2168929c68c4d76c92d8366c8e3228748dfae57e3"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Selection.elm": {
+      "git_blob": "ed93e9229bb6567f554b773ea739e9f0c662ed51",
+      "path": "src/MrJam/Adaptateurs/Selection.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "50ef64763d5018aac7de24d78d5248a07d3576469149b26823c137562649f4a2"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Spatial.elm": {
+      "git_blob": "2da0cfcf378d472b3d19601aa11b161e5418fd0f",
+      "path": "src/MrJam/Adaptateurs/Spatial.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "62f251a8fffb0f7c9e9e76516ddbd1d7e07bced94f486b4d10838e0601c3a632"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Tableau.elm": {
+      "git_blob": "1b1b00da513bf7754941cb96f97ddcf1122b2250",
+      "path": "src/MrJam/Adaptateurs/Tableau.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "23613e2200937d1e24d6b526680dcd9742cc6ae3fffa10700d7b78100bae4cd3"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Texte.elm": {
+      "git_blob": "ad5a5f8f4094122ca60907e913cb1fabb16b6993",
+      "path": "src/MrJam/Adaptateurs/Texte.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "69711d307b79ea7c1b30b71b13911e9cf8282548ee5e6907edb54f342a8e57c3"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Typographie.elm": {
+      "git_blob": "ad976babadbb885db1d57c623f44718990411d72",
+      "path": "src/MrJam/Adaptateurs/Typographie.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "3e16107944efa655c54f8ad09028cc7c87a0be4692cb98ec6df84ef8c6e9e250"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Adaptateurs/Video.elm": {
+      "git_blob": "48b7622178c8b55c436683c1218f61fd14bab4a9",
+      "path": "src/MrJam/Adaptateurs/Video.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "558c8fd2ce3eceb5a7e39bd87b73ffb85179494fe6dc5ace8e3d095a8c7fcf96"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Animations.elm": {
+      "git_blob": "fa390b607e364bd53994cf1ad2b432c93081b234",
+      "path": "src/MrJam/Animations.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "ad6a67ca6cfa897d4189c8aeebae05680a129ec0d2a8cc3e5d8155cbc1e9141a"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Atelier.elm": {
+      "git_blob": "ff75045d8f5f0631333aa0a253c0ba790ec108c3",
+      "path": "src/MrJam/Atelier.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "e03c754d71a86be0af759fc7039c1867d483ecb072e2b94167ddd3e77dbfd79e"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/AxesSpatiaux.elm": {
+      "git_blob": "0375425f72801be5c8b0e9ffd9a2ea3f1e7d0124",
+      "path": "src/MrJam/AxesSpatiaux.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "a893f5c4fe150f013fd0c9adef46a792d4787cb8dcbe8bf1286d9f9ce0588319"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Blocs.elm": {
+      "git_blob": "041f4f61d42464aa364eea3bfa70d44302f52987",
+      "path": "src/MrJam/Blocs.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "19dcb3b7d84fe9d96117fe7bb536ef0c8ca84dd828dddf737278f368cd8251d6"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Contexte.elm": {
+      "git_blob": "0ec36df8836ac90d4b48ac82d2d5234b15ad5ecf",
+      "path": "src/MrJam/Contexte.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "10c1fdd2e34f2900e76fb7b1e99209edc9a47fcc4915db101122ac43df6f96ff"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Controles.elm": {
+      "git_blob": "fc95cccf2c577666d60324f64ab5b812db03ec03",
+      "path": "src/MrJam/Controles.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "c863630a5fa75b67dfaedcc1a765c9393a6c71955fd066232860837193e0d5d0"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Curseurs.elm": {
+      "git_blob": "df15b970892aceb77d5639e5997cbe85e82bbe3a",
+      "path": "src/MrJam/Curseurs.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "c02338c53c797362a918c9b58f602dcf8d4a148d2745886fd025fa2b93e867b3"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Dessin.elm": {
+      "git_blob": "b70797f99472b38339d5049fad76f2cecc200fe2",
+      "path": "src/MrJam/Dessin.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "9f23f5d19107837434a4d09a2ebd256121162ec7c25104a0405c2f38fe1d43a1"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Dessin/Types.elm": {
+      "git_blob": "a94183e7b2597f1526c5b1af1d948bd05c22f5ea",
+      "path": "src/MrJam/Dessin/Types.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "3e47dab46166ac8efb8fc37ed542e974109f882b24801d064bb5dfee6c2748d6"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Diagrammes.elm": {
+      "git_blob": "c390d8d9d01fa7802628acb969228162a06f9ebf",
+      "path": "src/MrJam/Diagrammes.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "3c583287966a4b078be77d8f52f0ed82f22e04435dc8cb5165849633a839c0e7"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Diagrammes/Types.elm": {
+      "git_blob": "be858a1c85931d375af72889f1407caecbfc9cdb",
+      "path": "src/MrJam/Diagrammes/Types.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "f96ea14ea900a9a81abbcc8f0728318b3c25fd77d11f6061cd1b30882426c05b"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Disposition.elm": {
+      "git_blob": "d43cd07fb83a24e24fa041804946d0fbf6d7659b",
+      "path": "src/MrJam/Disposition.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "8cd780eacf38e5569efcba6fa75630f8f8ba28b632c7007280b314d65b2b9244"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Documents.elm": {
+      "git_blob": "e55563ba5a48be0bee279bc3110734019d005265",
+      "path": "src/MrJam/Documents.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "48f79733578385b61093490950feb8f6b704c87907bd045efef990d7f03a4a18"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Donnees.elm": {
+      "git_blob": "5e04efb48ebe76b36fd293fc353506bce3f82959",
+      "path": "src/MrJam/Donnees.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "4799d0d70ecc0dceb5d3d95ab8f92fd48965e1fe67d1b614012be4a8c5bbcb8f"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Ecran.elm": {
+      "git_blob": "262326daf61f46a53ed545bf98b702e8a9c68686",
+      "path": "src/MrJam/Ecran.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "c9cdb20e4ad45b12ebfb78f0b6ffc49c6578362bfccf151c37640a042d64874d"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Espace.elm": {
+      "git_blob": "06b20afa6ee670eae1f24150214ba1441651211e",
+      "path": "src/MrJam/Espace.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "9563660fc2a68414d05ae3453d52edc28e718715facdd74d2cb2b1dac6f7642b"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Fenetres.elm": {
+      "git_blob": "2292630bc17b3b5b6a584c1420da98cf0328015d",
+      "path": "src/MrJam/Fenetres.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "9c91dee8773fc8fae0c01bb3e1a10f1198b6abd264a9cf19790748ce2c8a05e5"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/GeometrieSpatiale.elm": {
+      "git_blob": "d2317841de893b6787921bfcb328db54dc7a0001",
+      "path": "src/MrJam/GeometrieSpatiale.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "fc0178f0adbd9b6db9b77fc5fff1ba79763619dd56eeea7947a7b0c6e7d8f7ba"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Identite.elm": {
+      "git_blob": "60dfc5c95f21fac77a8e091dfeb8a0cf5655378f",
+      "path": "src/MrJam/Identite.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "71ac5d51261674e88746a569e769cd7ae19c34521ca04a40e0df028e5a6cb397"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Lecture.elm": {
+      "git_blob": "06f7dd240926c9ef786da65418c30318312fd2a0",
+      "path": "src/MrJam/Lecture.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "5fbdfd34c9a0ac3d1db1a91743647dab1d79e37d9fbc4cedfe0b085cfb7ae26c"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Lectures.elm": {
+      "git_blob": "bd438caefddfcff2bf0e4160b63b3e269c433f81",
+      "path": "src/MrJam/Lectures.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "55537c46102bd541b8b02dab44606b53e9fb1ce8d08ce2b06c6c000042f3bfc1"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Manipulation.elm": {
+      "git_blob": "dbca4a4ad06c1efd3578e207a87e807d272ed1f7",
+      "path": "src/MrJam/Manipulation.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "5689e4414373e434f66f5156a4e1ac3bc8245c31d6e0c8fd74029b2a386715ef"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Mathematiques.elm": {
+      "git_blob": "44663e37250164b18d078d24482e8775b5ee174b",
+      "path": "src/MrJam/Mathematiques.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "980c9cff4a3679df08322f1c4450cd595583f88f171b6441fef36c4be3b0f4a8"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/OKLab.elm": {
+      "git_blob": "a354c7841e3dbdd5d4d6bfaf52c7f1e53a0cbffe",
+      "path": "src/MrJam/OKLab.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "f1cb4ec549cd301c2a7cfb9bcc97d15c8ee494947d8f3713a8e3b5dcfcbccc1a"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Pictogrammes.elm": {
+      "git_blob": "6e391c71327f9f080639ac8e4ad48732e4302a92",
+      "path": "src/MrJam/Pictogrammes.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "8cb6fd08bdc86f044d91421d5486995fd9b054a0932bd14163a0b755a1e23d70"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/TableSpatiale.elm": {
+      "git_blob": "782ab2c7e60aeb0ba6d2525d5ea24f2bd3d1d942",
+      "path": "src/MrJam/TableSpatiale.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "83378da103a9ee7720b51b11250921b28e85f94d053ef6cf93469c787df8d4a6"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Tableaux.elm": {
+      "git_blob": "7a21d73facedf6f659935d8a973aef6fdad34785",
+      "path": "src/MrJam/Tableaux.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "4f80c01790e08f619d6d6b00ef9f9e8d1c0a2116930cc8782333d0873e244006"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Theme.elm": {
+      "git_blob": "f755232ecd81aa401526090c3556b516a8331356",
+      "path": "src/MrJam/Theme.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "8b6f75174b9538ee9bd43554c57c8771ff67d34d0d357723aa388f2bb717e899"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Transitions.elm": {
+      "git_blob": "f18216705da225b1f79df1bc7a3ebf2673e1feab",
+      "path": "src/MrJam/Transitions.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "8847df1fba1545f90dccecf57e4461badcd93c36ac56874d2255ffa2114a4065"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Videos.elm": {
+      "git_blob": "9b62b636666787300e7407106dac89bdbd8826c5",
+      "path": "src/MrJam/Videos.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "6f15bcc24f009a6b34d1985fd1289ad2042941f563de593f148252b3024fe4fd"
+    },
+    "styles/a998822b21352c98f6ad90738f3123711c49834b/src/MrJam/Vitrine.elm": {
+      "git_blob": "98bd5d42b146acf70fca332be0e4afc5ad3d49bd",
+      "path": "src/MrJam/Vitrine.elm",
+      "root": "style-a998822b21352c98f6ad90738f3123711c49834b",
+      "sha256": "a8525c2d352e9151dfce73bce00bc955faf6dc52c5e8038d5132469e1a977da5"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/public/assets/mrjam/animations.js": {
+      "git_blob": "dce979b3f9f85f9e8c2397c8f944148db3cf8196",
+      "path": "public/assets/mrjam/animations.js",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "6e34281068e4e414d10a7ed5ef612fb6f7102dcee53bd7e2387b03c27e90460f"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/public/assets/mrjam/ecriture.css": {
+      "git_blob": "30568f6225b936edff3ee5e437d14bb2992bc390",
+      "path": "public/assets/mrjam/ecriture.css",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "a1c7061c33ab8eef246964e01cf90b8c6aa690a39e6f3b9026155467d4bba8cc"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/public/assets/mrjam/mathematiques.js": {
+      "git_blob": "d3ddf56165c40b26529ffe0c48bc4fa0bb20fa84",
+      "path": "public/assets/mrjam/mathematiques.js",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "4ae70b915357d25bc515f84eb7bda6af4413e16f29fe53813cd482e7f09d6e80"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/public/assets/mrjam/palette/Palette-Audio.svg": {
+      "git_blob": "8c0c0fbeb715317aee5eb67e1f0402ed2025ca7d",
+      "path": "public/assets/mrjam/palette/Palette-Audio.svg",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "806916cbfadd81694e8cffc5e22042c7402414fd0fccd0f79ce77006059fe9b1"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam.elm": {
+      "git_blob": "53482d4d643b59df91178bbd75af12e5771b6259",
+      "path": "src/MrJam.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "ca4c3ebfaaf22f530ed844210e26a533b84de8d92eb925a7c2a749735dacf6ca"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Accessibilite.elm": {
+      "git_blob": "4d34170a38a424ba250d839e7c65ca135df4e30f",
+      "path": "src/MrJam/Accessibilite.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "db535f7e71685b102f9f775a1a678c7d8c0366c33a59d9d96c8bcf13dd1d2bdb"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Accessibilite.elm": {
+      "git_blob": "bd5e40a2e118fb99f9b3fa27fc6c15bd047b9699",
+      "path": "src/MrJam/Adaptateurs/Accessibilite.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "ee0a39e50f1b619d05447f27efb5b8fa9c90a105afd0ed77a9a32e9c8ca59511"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Atelier.elm": {
+      "git_blob": "1931f8112ce327544506a3a6a882502153b58dac",
+      "path": "src/MrJam/Adaptateurs/Atelier.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "6e5e93b35166dc12a6f73ad1ac262d36979d5786e8625788c41cb03fa6dc07cf"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Axes.elm": {
+      "git_blob": "c0d4b1ba49716ab04edee7db930fec92c0e9170a",
+      "path": "src/MrJam/Adaptateurs/Axes.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "98375f890da3ff75c0dabcf0757a16f042e4956f6fd1e6c2e71f8b179541b5a9"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Complement.elm": {
+      "git_blob": "9e6e1b2bf13e7e07c9ce0fdc41a26dc2efcf9a14",
+      "path": "src/MrJam/Adaptateurs/Complement.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "5d46e38577c6052313e18523bf13a83628fbf21818bd8dba03afc1cbe8471714"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Constructions.elm": {
+      "git_blob": "495cfce9831feee6480358a1f14d97656b2021da",
+      "path": "src/MrJam/Adaptateurs/Constructions.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "19202537d3e57a7d1c41f1901535f2f243c23aaf14517b4a066c40d5d8a41c79"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Curseur.elm": {
+      "git_blob": "fbc314f6364ebf82f1ff0b7295120702206288cd",
+      "path": "src/MrJam/Adaptateurs/Curseur.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "7907940264e77f6f57249d2d6dba0f37f4124814fe7d580c800c690fbade1b15"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Dessin.elm": {
+      "git_blob": "0e188fa4cd717a9622c7319f6f288a9ef2094de8",
+      "path": "src/MrJam/Adaptateurs/Dessin.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "ff2d1a2c8be36ce7c2208316e4fd7c71422674ec9dd17e6d9540faeb5f514c6a"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Diagrammes.elm": {
+      "git_blob": "3bd6e5b14d771d97ef2a6cc331ff07c8d7847db2",
+      "path": "src/MrJam/Adaptateurs/Diagrammes.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "82aaea054364cf97aad409f00074fc627caff81630efe0a97ab1822c33c76310"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Dialogue.elm": {
+      "git_blob": "8f6d2c94c581ebdbd8cda9e1f78f709ae7f8c0b3",
+      "path": "src/MrJam/Adaptateurs/Dialogue.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "653a184c67c29479eec47a37dce5df13a2dfc302a13483fb325b070d15dcf50f"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Espace.elm": {
+      "git_blob": "c2709b7f72b95604bd0d687f30aab8495ede34fe",
+      "path": "src/MrJam/Adaptateurs/Espace.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "650537ddb25366e390191b117fa5d2ac592e5ee1f29eca1ae55ab4f5e2096dc8"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/GraphiqueSpatial.elm": {
+      "git_blob": "3738c476ab55af680f09a1dad3e068307de3197d",
+      "path": "src/MrJam/Adaptateurs/GraphiqueSpatial.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "9ca9811e1e4b5b9a30865d9d50cc3b1031591930c9640a52240dfb89961dd27e"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Manipulation.elm": {
+      "git_blob": "269c6fa64692c13277947d08100e1447ab866b65",
+      "path": "src/MrJam/Adaptateurs/Manipulation.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "5c0d0eee910f93020aed5dfc7b01d79e2864b428436192865589aaa3d8994201"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Mathematiques.elm": {
+      "git_blob": "0938fb41a0b186c40ba2564da91cb34ee93103d8",
+      "path": "src/MrJam/Adaptateurs/Mathematiques.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "b9a89ad6ba19de34a9291b4124608053b585699e265d6f26f31ceaf2aa47ec22"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Pictogramme.elm": {
+      "git_blob": "e9e6ccbb4e79b5972ed3869d6653a860b0d83bb0",
+      "path": "src/MrJam/Adaptateurs/Pictogramme.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "397e86958411a69c57f2d411bd19e017c9de5848dc5920e10c7e81ad21425f93"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Saisie.elm": {
+      "git_blob": "f4d6d393ee6219e8c7a4c3772a9c05418c55f2cc",
+      "path": "src/MrJam/Adaptateurs/Saisie.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "2c7c94993575b2105579efa2168929c68c4d76c92d8366c8e3228748dfae57e3"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Selection.elm": {
+      "git_blob": "ed93e9229bb6567f554b773ea739e9f0c662ed51",
+      "path": "src/MrJam/Adaptateurs/Selection.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "50ef64763d5018aac7de24d78d5248a07d3576469149b26823c137562649f4a2"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Spatial.elm": {
+      "git_blob": "2da0cfcf378d472b3d19601aa11b161e5418fd0f",
+      "path": "src/MrJam/Adaptateurs/Spatial.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "62f251a8fffb0f7c9e9e76516ddbd1d7e07bced94f486b4d10838e0601c3a632"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Tableau.elm": {
+      "git_blob": "1b1b00da513bf7754941cb96f97ddcf1122b2250",
+      "path": "src/MrJam/Adaptateurs/Tableau.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "23613e2200937d1e24d6b526680dcd9742cc6ae3fffa10700d7b78100bae4cd3"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Texte.elm": {
+      "git_blob": "ad5a5f8f4094122ca60907e913cb1fabb16b6993",
+      "path": "src/MrJam/Adaptateurs/Texte.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "69711d307b79ea7c1b30b71b13911e9cf8282548ee5e6907edb54f342a8e57c3"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Typographie.elm": {
+      "git_blob": "ad976babadbb885db1d57c623f44718990411d72",
+      "path": "src/MrJam/Adaptateurs/Typographie.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "3e16107944efa655c54f8ad09028cc7c87a0be4692cb98ec6df84ef8c6e9e250"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Adaptateurs/Video.elm": {
+      "git_blob": "48b7622178c8b55c436683c1218f61fd14bab4a9",
+      "path": "src/MrJam/Adaptateurs/Video.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "558c8fd2ce3eceb5a7e39bd87b73ffb85179494fe6dc5ace8e3d095a8c7fcf96"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Animations.elm": {
+      "git_blob": "fa390b607e364bd53994cf1ad2b432c93081b234",
+      "path": "src/MrJam/Animations.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "ad6a67ca6cfa897d4189c8aeebae05680a129ec0d2a8cc3e5d8155cbc1e9141a"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Atelier.elm": {
+      "git_blob": "ff75045d8f5f0631333aa0a253c0ba790ec108c3",
+      "path": "src/MrJam/Atelier.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "e03c754d71a86be0af759fc7039c1867d483ecb072e2b94167ddd3e77dbfd79e"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/AxesSpatiaux.elm": {
+      "git_blob": "0375425f72801be5c8b0e9ffd9a2ea3f1e7d0124",
+      "path": "src/MrJam/AxesSpatiaux.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "a893f5c4fe150f013fd0c9adef46a792d4787cb8dcbe8bf1286d9f9ce0588319"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Blocs.elm": {
+      "git_blob": "041f4f61d42464aa364eea3bfa70d44302f52987",
+      "path": "src/MrJam/Blocs.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "19dcb3b7d84fe9d96117fe7bb536ef0c8ca84dd828dddf737278f368cd8251d6"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Contexte.elm": {
+      "git_blob": "0ec36df8836ac90d4b48ac82d2d5234b15ad5ecf",
+      "path": "src/MrJam/Contexte.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "10c1fdd2e34f2900e76fb7b1e99209edc9a47fcc4915db101122ac43df6f96ff"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Controles.elm": {
+      "git_blob": "fc95cccf2c577666d60324f64ab5b812db03ec03",
+      "path": "src/MrJam/Controles.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "c863630a5fa75b67dfaedcc1a765c9393a6c71955fd066232860837193e0d5d0"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Curseurs.elm": {
+      "git_blob": "df15b970892aceb77d5639e5997cbe85e82bbe3a",
+      "path": "src/MrJam/Curseurs.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "c02338c53c797362a918c9b58f602dcf8d4a148d2745886fd025fa2b93e867b3"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Dessin.elm": {
+      "git_blob": "b70797f99472b38339d5049fad76f2cecc200fe2",
+      "path": "src/MrJam/Dessin.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "9f23f5d19107837434a4d09a2ebd256121162ec7c25104a0405c2f38fe1d43a1"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Dessin/Types.elm": {
+      "git_blob": "a94183e7b2597f1526c5b1af1d948bd05c22f5ea",
+      "path": "src/MrJam/Dessin/Types.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "3e47dab46166ac8efb8fc37ed542e974109f882b24801d064bb5dfee6c2748d6"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Diagrammes.elm": {
+      "git_blob": "c390d8d9d01fa7802628acb969228162a06f9ebf",
+      "path": "src/MrJam/Diagrammes.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "3c583287966a4b078be77d8f52f0ed82f22e04435dc8cb5165849633a839c0e7"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Diagrammes/Types.elm": {
+      "git_blob": "be858a1c85931d375af72889f1407caecbfc9cdb",
+      "path": "src/MrJam/Diagrammes/Types.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "f96ea14ea900a9a81abbcc8f0728318b3c25fd77d11f6061cd1b30882426c05b"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Disposition.elm": {
+      "git_blob": "d43cd07fb83a24e24fa041804946d0fbf6d7659b",
+      "path": "src/MrJam/Disposition.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "8cd780eacf38e5569efcba6fa75630f8f8ba28b632c7007280b314d65b2b9244"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Documents.elm": {
+      "git_blob": "e55563ba5a48be0bee279bc3110734019d005265",
+      "path": "src/MrJam/Documents.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "48f79733578385b61093490950feb8f6b704c87907bd045efef990d7f03a4a18"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Donnees.elm": {
+      "git_blob": "5e04efb48ebe76b36fd293fc353506bce3f82959",
+      "path": "src/MrJam/Donnees.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "4799d0d70ecc0dceb5d3d95ab8f92fd48965e1fe67d1b614012be4a8c5bbcb8f"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Ecran.elm": {
+      "git_blob": "262326daf61f46a53ed545bf98b702e8a9c68686",
+      "path": "src/MrJam/Ecran.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "c9cdb20e4ad45b12ebfb78f0b6ffc49c6578362bfccf151c37640a042d64874d"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Espace.elm": {
+      "git_blob": "06b20afa6ee670eae1f24150214ba1441651211e",
+      "path": "src/MrJam/Espace.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "9563660fc2a68414d05ae3453d52edc28e718715facdd74d2cb2b1dac6f7642b"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Fenetres.elm": {
+      "git_blob": "2292630bc17b3b5b6a584c1420da98cf0328015d",
+      "path": "src/MrJam/Fenetres.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "9c91dee8773fc8fae0c01bb3e1a10f1198b6abd264a9cf19790748ce2c8a05e5"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/GeometrieSpatiale.elm": {
+      "git_blob": "d2317841de893b6787921bfcb328db54dc7a0001",
+      "path": "src/MrJam/GeometrieSpatiale.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "fc0178f0adbd9b6db9b77fc5fff1ba79763619dd56eeea7947a7b0c6e7d8f7ba"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Identite.elm": {
+      "git_blob": "f054bb8e823df1893fd95286b59a5e9681c6eaa1",
+      "path": "src/MrJam/Identite.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "a219175340a3792a81790d50f35e7298283498d88d77576d783609417ea30de2"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Lecture.elm": {
+      "git_blob": "06f7dd240926c9ef786da65418c30318312fd2a0",
+      "path": "src/MrJam/Lecture.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "5fbdfd34c9a0ac3d1db1a91743647dab1d79e37d9fbc4cedfe0b085cfb7ae26c"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Lectures.elm": {
+      "git_blob": "bd438caefddfcff2bf0e4160b63b3e269c433f81",
+      "path": "src/MrJam/Lectures.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "55537c46102bd541b8b02dab44606b53e9fb1ce8d08ce2b06c6c000042f3bfc1"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Manipulation.elm": {
+      "git_blob": "dbca4a4ad06c1efd3578e207a87e807d272ed1f7",
+      "path": "src/MrJam/Manipulation.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "5689e4414373e434f66f5156a4e1ac3bc8245c31d6e0c8fd74029b2a386715ef"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Mathematiques.elm": {
+      "git_blob": "44663e37250164b18d078d24482e8775b5ee174b",
+      "path": "src/MrJam/Mathematiques.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "980c9cff4a3679df08322f1c4450cd595583f88f171b6441fef36c4be3b0f4a8"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/OKLab.elm": {
+      "git_blob": "a354c7841e3dbdd5d4d6bfaf52c7f1e53a0cbffe",
+      "path": "src/MrJam/OKLab.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "f1cb4ec549cd301c2a7cfb9bcc97d15c8ee494947d8f3713a8e3b5dcfcbccc1a"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Pictogrammes.elm": {
+      "git_blob": "6e391c71327f9f080639ac8e4ad48732e4302a92",
+      "path": "src/MrJam/Pictogrammes.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "8cb6fd08bdc86f044d91421d5486995fd9b054a0932bd14163a0b755a1e23d70"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/TableSpatiale.elm": {
+      "git_blob": "782ab2c7e60aeb0ba6d2525d5ea24f2bd3d1d942",
+      "path": "src/MrJam/TableSpatiale.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "83378da103a9ee7720b51b11250921b28e85f94d053ef6cf93469c787df8d4a6"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Tableaux.elm": {
+      "git_blob": "7a21d73facedf6f659935d8a973aef6fdad34785",
+      "path": "src/MrJam/Tableaux.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "4f80c01790e08f619d6d6b00ef9f9e8d1c0a2116930cc8782333d0873e244006"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Theme.elm": {
+      "git_blob": "a4b96ff982d1e85682433cc4c3aab9640a3fcd5c",
+      "path": "src/MrJam/Theme.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "25db1494170aa48c8d863b0c43d4197d8bc0e758769e5971a7f9d64f8beff25d"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Transitions.elm": {
+      "git_blob": "f18216705da225b1f79df1bc7a3ebf2673e1feab",
+      "path": "src/MrJam/Transitions.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "8847df1fba1545f90dccecf57e4461badcd93c36ac56874d2255ffa2114a4065"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Videos.elm": {
+      "git_blob": "9b62b636666787300e7407106dac89bdbd8826c5",
+      "path": "src/MrJam/Videos.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "6f15bcc24f009a6b34d1985fd1289ad2042941f563de593f148252b3024fe4fd"
+    },
+    "styles/cebba1824b6b5e939ae0155481ed87d7a98771e0/src/MrJam/Vitrine.elm": {
+      "git_blob": "98bd5d42b146acf70fca332be0e4afc5ad3d49bd",
+      "path": "src/MrJam/Vitrine.elm",
+      "root": "style-cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "sha256": "a8525c2d352e9151dfce73bce00bc955faf6dc52c5e8038d5132469e1a977da5"
+    }
+  },
+  "frontends": {
+    "audition": {
+      "repository": "MrJ-am/vps-infrastructure",
+      "signature_revision": "17194087eec9162bb5372221c43e1de0501dfe6a",
+      "source_commit": "50bbcfa65b7c068d406c2119d1d82724b1fe5aa1",
+      "style_public_files": [
+        "assets/mrjam/animations.js",
+        "assets/mrjam/mathematiques.js",
+        "assets/mrjam/ecriture.css",
+        "assets/mrjam/palette/Palette-Audio.svg"
+      ],
+      "style_revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0"
+    },
+    "log": {
+      "repository": "MrJ-am/vps-infrastructure",
+      "signature_revision": "17194087eec9162bb5372221c43e1de0501dfe6a",
+      "source_commit": "50bbcfa65b7c068d406c2119d1d82724b1fe5aa1",
+      "style_public_files": [
+        "assets/mrjam/animations.js"
+      ],
+      "style_revision": "a998822b21352c98f6ad90738f3123711c49834b"
+    },
+    "vision": {
+      "repository": "MrJ-am/vision",
+      "signature_revision": "17495b13cefa24473e37434b98336b27caec8cdf",
+      "source_commit": "99eace9df76777c89bbd992952738b3f57608801",
+      "style_revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16"
+    }
+  },
+  "resource_lock_sha256": "1bb48635b0a47ee13f502676e9e9187484e642c654a0e7951c9614754a136815",
+  "schema_version": 1,
+  "status": "proposed-source-selection-not-validation-authority"
+}

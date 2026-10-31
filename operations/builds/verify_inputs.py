@@ -7,13 +7,13 @@ import json
 from pathlib import Path
 import tomllib
 
-from prepare import HERE, REGISTRY, Refused, checked_bytes, digest
+from prepare import HERE, REGISTRY, Refused, checked_bytes, digest, regular_bytes
 
 
-def verify(root: Path, expected_manifest_sha256: str) -> dict:
+def verify(root: Path, expected_manifest_sha256: str, source_lock: Path = HERE / "sources.lock.json") -> dict:
     manifest_bytes = checked_bytes(root, "materialization.json", expected_manifest_sha256)
     manifest = json.loads(manifest_bytes)
-    sources_bytes = (HERE / "sources.lock.json").read_bytes()
+    sources_bytes = regular_bytes(source_lock.parent, source_lock.name)
     elm_bytes = (HERE / "elm-dependencies.lock.json").read_bytes()
     sources, elm = json.loads(sources_bytes), json.loads(elm_bytes)
     if manifest["source_selection_sha256"] != digest(sources_bytes) or manifest["elm_dependency_lock_sha256"] != digest(elm_bytes):
@@ -80,9 +80,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--inputs", type=Path, required=True)
     parser.add_argument("--manifest-sha256", required=True)
+    parser.add_argument("--source-lock", type=Path, default=HERE / "sources.lock.json")
     arguments = parser.parse_args()
     try:
-        result = verify(arguments.inputs, arguments.manifest_sha256)
+        result = verify(arguments.inputs, arguments.manifest_sha256, arguments.source_lock)
     except Exception as error:
         print(json.dumps({"status": "refused", "code": str(error) if isinstance(error, Refused) else "BUILD_INPUT_VERIFICATION_FAILED"}))
         return 1

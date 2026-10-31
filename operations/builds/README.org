@@ -1,7 +1,12 @@
-#+title: Construction déclarative Rust et Elm — proposition sous gel
+#+title: Construction déclarative Rust et Elm — sources et artefacts identifiés
 #+language: fr
 
 * Portée et références
+
+La directive courante est décrite dans =../mise-en-service/mandat.org=.
+Les preuves datées ci-dessous conservent leur portée d'origine : une
+autorisation de poursuivre ne transforme pas un ancien build préparatoire
+en candidat qualifié pour la mise en service.
 
 =default.nix= fournit cinq dérivations : validation de toutes les entrées,
 toolchain Rust 1.99.1, Node 24.19.0, serveur Rust et site Mateval Elm 0.19.1.
@@ -24,6 +29,25 @@ La sélection nouvelle et le verrou de contenu Elm sont des propositions à
 revoir ; ils ne constituent pas leur propre autorité de validation.
 
 * Préparation des entrées
+
+Pour une nouvelle révision, =select_sources.py= produit un nouveau verrou
+depuis les objets Git exacts du commit de plateforme et de ses deux gitlinks.
+Les catégories admissibles sont explicites ; les fichiers non suivis et les
+fichiers hors de ces catégories ne sont jamais sélectionnés. Les liens et
+types spéciaux sont refusés. La matérialisation vérifie ensuite que les
+checkouts correspondent à ces objets. Le verrou historique
+=sources.lock.json= et son =qualification.json= restent inchangés.
+
+#+begin_src sh
+python3 operations/builds/select_sources.py \
+  --platform "$PLATFORM_SOURCE" --platform-commit "$EXACT_PLATFORM_COMMIT" \
+  --destination "$NEW_SOURCE_LOCK"
+#+end_src
+
+Le nouveau verrou est une proposition à revoir, pas une autorité de test.
+Pour le transmettre, ajouter =--source-lock "$NEW_SOURCE_LOCK"= aux commandes
+=prepare.py= et =verify_inputs.py=, puis =sourceLock = newSourceLock;= aux
+arguments Nix. Sans cet argument, les commandes gardent le verrou historique.
 
 =prepare.py= exige un nouveau dossier, des checkouts aux commits et gitlinks
 exacts, l'export fermé du style, le cache source Elm et les archives Cargo.
@@ -81,7 +105,12 @@ pkgs.callPackage ./operations/builds {
 #+end_src
 
 Les attributs sont =verifiedInputs=, =rustToolchain=, =nodeToolchain=,
-=rustServer= et =matevalElm=. Une erreur de hash est fatale. Rust utilise
+=rustServer= et =matevalElm=. La sélection nouvelle fournit également
+=visionJournalAdoption=, sortie distincte du binaire opérateur explicite
+=vision-journal-adoption=. Ce binaire n'est pas lancé par le build ou par le
+serveur ; sa qualification fonctionnelle et son adoption restent séparées.
+Il est absent (=null=) pour les anciens instantanés qui ne le contiennent pas.
+Une erreur de hash est fatale. Rust utilise
 =cargo build --release --frozen --offline= et =cargo test --workspace
 --frozen --offline= sur le vendor intégral ; aucun résolveur ne met le verrou
 à jour. Les tests PostgreSQL nécessitant la feature d'intégration restent un
@@ -107,6 +136,70 @@ pas cette identification de la fermeture Nix. Le choix des artefacts doit
 implicite n'est admise lors de l'installation future.
 La génération refuse les fichiers spéciaux et un manifeste déjà présent ;
 elle ne peut pas inclure puis écraser sa propre ancienne empreinte.
+
+* Continuité des interfaces
+
+=reuse_frontend.py= vérifie l'égalité de l'arbre Git complet =frontend/= de
+Mateval et des 96 fichiers sélectionnés avant de proposer la réutilisation
+du résultat Elm existant. Un changement, y compris un nouveau fichier,
+interdit cette réutilisation. Le résultat conserve son commit de construction
+initial dans =interface.json= ; aucun commit nouveau ne lui est attribué.
+Son intégrité dans le store et sa compatibilité avec le nouveau serveur
+doivent être contrôlées séparément. Le reçu
+=elm-reuse-operationnel-20261030.json= n'affirme aucune recompilation.
+Le complément =elm-reuse-operationnel-final-20261030.json= lie aussi la
+correction des droits scientifiques au même arbre frontend inchangé.
+
+=frontends.nix= ajoute des résultats distincts Vision, Log et Audition.
+=frontend_inputs.py= vérifie leur sélection fermée, les empreintes de tous
+les fichiers et le manifeste exact. Chaque interface garde son pin Style :
+27111a95 pour Vision, a998822b pour Log, cebba182 pour Audition. La recette
+Vision appelle le =compiler.py= versionné avec Elm 0.19.1 et elm-format
+0.8.8 ; les recettes Log/Audition compilent leurs points d'entrée existants
+et embarquent leurs ponts et ressources publiques. Les manifestes de sortie
+utilisent le contrat =artifact.json= du serveur et conservent leurs propres
+révisions sources. Leur présence ne remplace pas les parcours fonctionnels
+ou la qualification indépendante des sept interfaces.
+
+Le code d'assemblage historique à c6459ae215b0e4e8b1350b02222ad21af41db836
+établit une distinction supplémentaire : Log/Audition prennent leur
+=signature.css= et leurs fontes dans Signature
+=17194087eec9162bb5372221c43e1de0501dfe6a= ; Vision conserve son propre pin
+=17495b13cefa24473e37434b98336b27caec8cdf=. Audition conserve KaTeX 0.18.7,
+épinglé par le package-lock de Logique à
+=303e80be426012740eb16c5039bd4d3ea9155640= ; la version 0.16.11 de Mateval
+ne le remplace pas. =frontend-resources-operationnel-20261030.lock.json=
+décrit les blobs Signature, l'intégrité SHA-512 de l'archive npm et chaque
+SHA-256 distribué. =fetch_frontend_resources.py= rejoue cette préparation
+dans un nouveau dossier en contrôlant le hash du verrou, sans exécuter
+d'installateur npm ni de script historique.
+
+Les ressources d'identité réservées sont intégrées uniquement aux applications
+autorisées. Elles restent hors Git et hors archives publiques de préparation.
+Les fichiers versionnés ici ne contiennent que leurs références et empreintes.
+Les ressources de KaTeX gardent leur documentation de distribution et leurs
+formats ; le README est servi comme texte brut.
+
+=select_frontends.py= lit les objets Git exacts des interfaces, vérifie les
+pins distincts et le sous-ensemble de dépendances Elm, puis produit un nouveau
+verrou et une matérialisation fermée. Il n'exporte pas les autres fichiers
+du checkout. Pour rejouer un verrou déjà revu, =prepare_frontends.py= exige
+son SHA-256, un nouveau dossier et les sept racines explicites
+=vision=, =infrastructure=, =vision-style=, =elm-home=, =resources=,
+=style-a998822b21352c98f6ad90738f3123711c49834b= et
+=style-cebba1824b6b5e939ae0155481ed87d7a98771e0=, chacune passée avec
+=--root nom=/chemin=. Il ne recalcule jamais les empreintes du verrou pour
+accepter les fichiers disponibles.
+=check_frontend_site.py= vérifie ensuite les références locales
+HTML/CSS, y compris les fontes, dans chaque résultat construit. Une ressource
+absente, un parcours hors du site ou une dépendance distante provoque un refus.
+
+=export_frontends.py= vérifie les quatre sorties du store, les NAR et fichiers,
+puis copie les sites et exporte leur fermeture pour une remise locale réservée.
+Ce programme ne publie rien. La copie de runtime conserve le manifeste à la
+racine et son préfixe =share/mrjam/<interface>/= ; le montage HTTP de Mateval
+est =/matheval/=, celui des trois autres interfaces est =/=. Une telle copie
+n'est consommable par le serveur qu'avec le SHA-256 exact de son manifeste.
 
 Les destinations de matérialisation et d'artefact doivent être détenues
 exclusivement par le constructeur, sans écrivain concurrent ; la vérification
@@ -142,9 +235,11 @@ restent identifiés dans =mrjam-validation/frontend-qualification/= et
 reste hors du lot des sept interfaces. Aucune unification de pins de style
 ni adoption des règles canoniques n'est réalisée ici.
 
-Le CLI du serveur conserve sa disponibilité fonctionnelle incomplète :
-=/readyz= reste 503, aucun pool PostgreSQL ni service statique Elm de production
-n'y est branché. Une compilation réussie ne rend pas la migration déployable.
+Le serveur du build historique avait une disponibilité fonctionnelle
+incomplète : =/readyz= restait 503 et aucun pool PostgreSQL ni service
+statique Elm n'y était branché. Les nouveaux raccords du serveur nécessitent
+leurs propres tests et artefacts ; ce reçu historique ne les qualifie pas.
+Une compilation réussie ne rend pas la migration déployable.
 L'évaluation du système NixOS complet, la continuité des services tiers, les
 migrations de données, les droits/secret refs, sauvegarde/restauration et la
 qualification indépendante restent les préconditions du dossier global.
@@ -152,7 +247,15 @@ qualification indépendante restent les préconditions du dossier global.
 * Preuve de cette reprise
 
 Les commandes exécutées, résultats, NAR hashes, fermetures runtime et limites
-de cette reprise sont consignés dans [[file:qualification.json][qualification.json]].
+du premier lot sont consignés dans [[file:qualification.json][qualification.json]].
 Cette preuve concerne des artefacts préparatoires locaux et conserve
 =deployment_authorized=false=. Elle ne désigne aucune génération NixOS
 activable ni aucune révision observée du VPS.
+
+[[file:qualification-frontends-operationnel-20261030.json][Le reçu des interfaces opérationnelles]]
+identifie les trois nouvelles compilations optimisées, leur reconstruction
+hors réseau identique, l'ancien résultat Mateval vérifié, la matérialisation
+rejouée et l'export récursif des quatre sorties. Les 39 tests de frontières
+et les hashes des journaux y sont séparés des parcours HTTP/navigateur et
+de toute décision de production. L'absence initiale du formateur dans le
+cache, son préchargement exact et le succès du replay restent explicites.

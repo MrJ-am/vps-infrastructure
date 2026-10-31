@@ -1,0 +1,22 @@
+{
+  "artifact": {
+    "artifact_manifest_sha256": "4ba21c4b0bda422be1a60e08639dd486642829b1539d6e5c8793f9fe45345816",
+    "drv_path": "/nix/store/jky92kh24490grp4j2xl07ayn50g4klh-mrjam-mateval-elm-preparation-ccde49f2a9b1.drv",
+    "nar_hash": "sha256-Z4+PwZ4hhUeZslj/CmofS8qZ9aAa6WP9PW2WrtD5eBc=",
+    "store_path": "/nix/store/3lddggf7gb8b3nwgmr8x6l52j23g3iwf-mrjam-mateval-elm-preparation-ccde49f2a9b1"
+  },
+  "artifact_store_integrity_checked_by_this_tool": false,
+  "deployment_authorized": false,
+  "previous_qualification_sha256": "3d96b41aa5f91adb16bf8f9792ca69cdef648ff92d65997606db451ea8f082dd",
+  "previous_source_lock_sha256": "f8cc5fbce40ecf2ff50e27c3dae848594143a41714ac3a9e4fa730606a4bbb87",
+  "required_separate_check": "nix-store --verify-path on the retained output, followed by runtime compatibility tests with the new backend",
+  "schema_version": 1,
+  "scope": "Reuse of an unchanged frontend; no new Elm compilation claimed",
+  "source_equivalence": {
+    "current_component_commit": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+    "frontend_build_commit_retained": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+    "frontend_tree": "5fd25e82c22f4c8f409b7b44782161e133b0d009",
+    "previous_component_commit": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+    "selected_files_verified": 96
+  }
+}
