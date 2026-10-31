@@ -121,6 +121,10 @@ retenu : vrais montages en lecture seule, refus root/arguments/permissions,
 fusion exacte, idempotence, cible différente refusée, verrou concurrent et deux
 fenêtres d'interruption. Le binaire Rust =718a8188= ouvre ensuite cet état sans
 initialisation et devient disponible en mode fermé, sans perte de preuve.
+Ce contrôle porte sur l'ouverture et la conservation de l'état. Il ne fait pas
+progresser les demandes historiques en mode ouvert : une fixture cohérente avec
+leurs réservations PostgreSQL et étapes IdP doit encore qualifier cette reprise
+métier avant ouverture, en plus des tests natifs du traitement Rust courant.
 La dérivation et les contenus ont été revérifiés après succès.
 Le premier essai ne capturait pas stderr pour vérifier le refus root ; sa trace
 reste conservée et le critère de refus n'a pas été réduit. Ces contrôles locaux

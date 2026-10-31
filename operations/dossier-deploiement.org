@@ -164,6 +164,12 @@ Les anciennes anomalies de manifeste Vision et de fichiers statiques sont
 corrigées et leurs échecs conservés. Aucun compte de contrôles n'additionne
 les relectures d'une même suite.
 
+Le [[file:release/REVUE-TRAVAILLEURS-20261031.org][paquet de revue complémentaire]] conserve les quatre artefacts cycle,
+fermeture, admission et adoption, 26 chemins transitifs et douze pièces de
+preuve. Export/import dans un store vierge et seize membres du tar ont été
+vérifiés. L'ancien paquet plateforme/archive/rejeu/SQL004 reste inchangé.
+Aucun des deux paquets ne constitue une génération système ni un installateur.
+
 La préparation de l'observation V2 du VPS est qualifiée et publiée :
 =bootstrap-observation/SPECTRE-RELAIS-OBSERVATION.txt=. Son paquet a pour SHA-256
 =0615970d94bf91bc3308bede2d21c6a9eb7150ba420816f936baa9c021f514aa=.
@@ -206,7 +212,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
 | Contrats application/schéma/sessions | Partiellement testé/bloquant | Matrice chaque domaine, ancienne/nouvelle version, coexistence, migrations et écritures conservées | Fixtures inventées, essais binaires réels, migration additive/diff qualifiés |
-| État historique d'admission | Outil hors ligne préparé ; adoption réelle bloquante | Snapshots scellés cohérents avec PostgreSQL/IdP, arrêt des anciens émetteurs, conservation des preuves/messages et stratégie de retour après nouvelles écritures | Composant local borné côté opérateur ; tests Cloud sur état inventé uniquement, aucun contenu de snapshot transmis aux agents |
+| État historique d'admission | Outil hors ligne qualifié localement ; adoption réelle bloquante | Reprise métier des demandes historiques en mode ouvert sur fixture PostgreSQL/IdP cohérente ; snapshots scellés, arrêt des anciens émetteurs et stratégie de retour après nouvelles écritures | Poursuite des tests Cloud inventés ; composant local borné côté opérateur pour l'existant, aucun contenu de snapshot transmis aux agents |
 | Dépôts/règles/CI faisant autorité | Inconnu/bloquant | ACL effectives, règles protégées hors candidat, workflows/identité runner bornés, preuves authentifiées | Préparation/adoption distincte de la politique puis essais négatifs autorisés ; CODEOWNERS/dossiers ne suffisent pas |
 | Génération/fermetures exactes et installation | Inconnu/bloquant | Génération complète construite, références et NAR hash, contrôleur installant ces octets sans reconstruire | Construire après réconciliation du host ; revue indépendante ; capacité d'installation fermée encore absente |
 | Sauvegarde/restauration réelles | Inconnu/bloquant | Reçu fermé du mécanisme autorisé, durée, cohérence, destination existante, capacité de récupération | Composant humain/déterministe conservant toutes les données et clés côté production ; rien de la sauvegarde ne remonte aux agents |

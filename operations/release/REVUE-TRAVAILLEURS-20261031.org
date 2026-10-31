@@ -1,0 +1,81 @@
+#+title: Cycle, fermeture, admission et adoption — paquet de revue exact
+#+date: 2026-10-31
+#+language: fr
+
+* Résultat livré
+[[file:qualification-review-workers-20261031.json][Le reçu]] lie quatre sorties, leurs 26 chemins transitifs et 246006728 octets
+NAR. L'export a été importé dans un store local vierge ; chemins, NAR hash,
+tailles, références et contenus ont été revérifiés. Les douze pièces de preuve
+sont identiques avant et après export. Aucun programme importé n'a été exécuté
+et aucun réglage de confiance Nix n'a été modifié.
+
+Archive locale publique :
+=/workspace/shared/mrjam-travailleurs-revue-20261031.tar=,
+103526400 octets, SHA-256
+=e6a635c033cbda82e33322293e61f5bf014057ad07ee461f6684863110bae28f=.
+Ses seize fichiers réguliers ont été relus et vérifiés depuis le tar, y compris
+le SHA256SUMS des seuls membres transportés. Le flux Nix décompressé a le même
+SHA-256 que celui effectivement importé :
+=ee1714dad11f2df768359ca9ed793a2ddc4f26c36e097aa66d6c3209b9c3094e=.
+Le manifeste d'export a pour empreinte
+=4bfb83c20a65d95ff655dda1bf775af10724688db153375dcc9465571b6fcff8=.
+
+Ce paquet complète [[file:REVUE-ARTEFACTS-20261031.org][le paquet antérieur plateforme/archive/rejeu/SQL004]], dont les
+octets et empreintes restent inchangés. Il ne contient aucune génération VPS,
+secret, donnée persistante, snapshot, sauvegarde ou autorisation d'activation.
+L'import local en UID 0 ne qualifie pas la confiance du daemon Nix de Spectre.
+Il ne faut pas désactiver ses vérifications de signatures pour contourner un refus.
+
+* Sélection à examiner
+| Fonction | Révision de code | Qualification séparée et limites |
+|----------+------------------+----------------------------------|
+| Cycle des préavis | vision 47286a8a808b74909bfc647ff8d10e281b4982e4 | 37 tests natifs, 34 Nix, 8 groupes NixOS ; acceptation SMTP/délai/archive simulés dans la VM |
+| Fermeture commune | vision e067f8c741958335bc5c12858ea41d61a093f07e | 39 tests natifs, 36 Nix, 8 groupes NixOS ; IdP réel et consentement distincts |
+| Admission durable | vision 718a81880090609b7730a27c4fb37f32bbb7e3d1 | 41 tests natifs, 38 Nix, 8 groupes NixOS ; contrôle négatif reproduisant la famine de 6ae96aea, artefact antérieur écarté |
+| Adoption privée d'admission | infrastructure, paquet sc6zj2w7gpkqr08yhdyfdisyqlg64ax1 | 18 tests unitaires, 17 assertions Nix, 8 groupes système ; entrée scellée et état conservé, acquisition/retour après nouvelles écritures distincts |
+
+[[file:review-workers-20261031.json][La sélection]] fige les chemins store et NAR hash exacts, ainsi que les douze
+empreintes de preuves. Les qualifications applicatives, système et de migration
+ne sont pas réattribuées à un autre binaire. Les premiers essais et recettes
+écartés restent consultables dans Git. Une simple réussite de compilation n'est
+pas considérée comme une preuve de disponibilité ou de déploiement.
+
+Pour la revue indépendante, rapprocher les refus des exigences, les octets
+exécutés des builds, les rôles peer et les quatre credentials d'admission,
+le verrou et l'absence de réparation implicite, les deux transitions de mode,
+la reprise de purge après effet partiel et la conservation des preuves privées.
+Examiner aussi les limites explicites des fixtures IdP, SMTP et d'archivage.
+Le dépôt partagé et ces reçus ne constituent pas une ACL ni une attestation
+émise par une identité de validation protégée.
+
+* Reproduction dans Cloud
+L'exporteur conserve sa sélection plateforme originale par défaut ; l'option
+nouvelle ne choisit que parmi deux noms versionnés et épinglés, jamais un chemin
+de manifeste arbitraire. Les huit contretests passent, y compris refus de
+périmètre production, traversée, liens, FIFO, pin erroné et fermeture incomplète.
+Les plafonds initiaux de 64 chemins et 256 Mio NAR sont conservés.
+
+#+begin_src sh
+python3 -B -m unittest discover -s operations/release/tests -p test_export_review.py -v
+bash operations/tools/nix-local.sh --offline-container env MRJAM_SYNTHETIC_CONTAINER=1 /nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 /workspace/vps-infrastructure/operations/release/export_review.py --selection workers-20261031 --destination /workspace/shared/mrjam-declarative-nix/review-export-workers-NOUVEAU-NOM
+#+end_src
+
+Le dossier de sortie doit être neuf. =package_workers_review_20261031.py=
+conditionne uniquement l'export qualifié original et refuse d'écraser le tar.
+L'exporteur exige des sources montées en lecture seule. Le marqueur de fixture
+et le programme local ne sont pas présentés comme une capacité de production.
+
+* Porte vers la mise en service
+[[file:../dossier-deploiement.org][Le dossier général]] conserve la matrice, les préconditions et l'ordre candidat.
+L'autorisation d'objectif jusqu'à la mise en service existe déjà. Il reste à
+identifier la génération installée et son stateVersion, compléter le graphe
+réel et les références de secrets, qualifier les droits et raccords IdP/Forgejo,
+la chaîne intégrée avec compilateur réel et attestation protégée, les ressources,
+les sauvegardes/restaurations et le contrôleur borné de bascule/retour.
+
+Le retour =adoption-v2.json= du relais Spectre reste attendu. Cette observation
+ne suffira pas à elle seule à résoudre tous ces points. Après leur résolution,
+la revue portera sur une génération complète, ces artefacts précisément
+sélectionnés, les migrations, les droits, les références de secrets, les
+préconditions et le retour. Aucun artefact de ce paquet ne doit être activé
+isolément sur le VPS en déduisant une permission d'un reçu local.
