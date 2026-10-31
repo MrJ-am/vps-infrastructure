@@ -55,3 +55,20 @@ passent. Le test système réel est préparé séparément dans
 =mrjam-validation/operational-review/archive-systemd.nix= ; seul son reçu final
 peut établir sa réussite. Aucun build n'établit la livraison SMTP réelle,
 l'identité Kanidm/Keycloak, la réserve du VPS ni la restauration de ses données.
+
+* Qualification système achevée
+
+Le reçu [[file:qualification-vision-archive-systemd-20261031.json][du test système]] constate huit groupes réussis dans une VM NixOS TCG,
+sur cet ELF exact et le module corrigé. Sa dérivation réévaluée reste
+=/nix/store/1wjlp96dlii2nvbis3yaa0v5cm02ym5c-vm-test-run-mrjam-vision-archive-systemd-independent.drv=.
+Le dossier de revue est publié dans
+[[https://github.com/MrJ-am/mrjam-validation/blob/1096bed27e95f7ef9f84bb6ee746821bd9cc0737/operational-review/archive-systemd-pass-20261031.json][mrjam-validation@1096bed27e95]].
+
+Le test exerce initialisation explicite, credentials réels systemd, droits SQL
+limités, cgroups, chiffrement et déchiffrement age de messages inventés, refus
+SMTP sans acquittement, reprise persistante et refus de droits excessifs ou
+d'un credential invalide. Il a révélé que RuntimeMaxSec est ignoré pour une
+unité oneshot : TimeoutStartSec=900 est maintenant utilisé et observé. Le CLI
+conserve son échéance de 840 secondes ; le délai d'arrêt forcé est de 30 secondes.
+Les échecs antérieurs restent dans le dossier de revue. La clé privée synthétique
+du test est volontairement publique et ne doit jamais protéger de données réelles.

@@ -49,8 +49,9 @@ let
       MemoryMax = "256M";
       CPUQuota = "20%";
       TasksMax = 32;
-      RuntimeMaxSec = 900;
-      TimeoutStartSec = 905;
+      # RuntimeMaxSec is ignored for Type=oneshot. Bound its actual execution
+      # with the startup timeout; the CLI has an earlier 840-second deadline.
+      TimeoutStartSec = 900;
       TimeoutStopSec = 30;
       KillMode = "control-group";
       LimitCORE = 0;

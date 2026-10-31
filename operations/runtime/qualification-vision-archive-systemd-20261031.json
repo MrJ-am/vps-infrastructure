@@ -1,0 +1,81 @@
+{
+  "authority": "unverified-local-test-result",
+  "corrections": [
+    "Type=oneshot bounded by actual TimeoutStartSec=900; RuntimeMaxSec removed because ignored",
+    "Fixture resets only failed units, not unloaded successful oneshots"
+  ],
+  "decision": "passed",
+  "derivation": "/nix/store/1wjlp96dlii2nvbis3yaa0v5cm02ym5c-vm-test-run-mrjam-vision-archive-systemd-independent.drv",
+  "earlier_failures_preserved": [
+    "archive-systemd-attempt1-20261031.json",
+    "archive-systemd-attempt2-20261031.json"
+  ],
+  "log_sha256": "a5bf9ae0b32956af602166ad5a14ebdf181d02afd7abff6d269d17089a03ca72",
+  "nix_assertions": {
+    "credentialsAreReferences": true,
+    "dedicatedUserNoExtraGroups": true,
+    "disabledInert": true,
+    "explicitInitialisation": true,
+    "fixtureValid": true,
+    "limits": true,
+    "mismatchedDatabaseRefused": true,
+    "noAutomaticStart": true,
+    "noDatabaseOrRoleCreation": true,
+    "noHostCapabilities": true,
+    "noPrivateKeyReference": true,
+    "oldHbaPreserved": true,
+    "peerOnlyFixedRole": true,
+    "privateDurableState": true,
+    "privilegedDatabaseRefused": true,
+    "stateVersionPreserved": true
+  },
+  "output": "/nix/store/avcax77i6r6in20rhymc3d0qqk3p5slq-vm-test-run-mrjam-vision-archive-systemd-independent",
+  "path_info": {
+    "/nix/store/avcax77i6r6in20rhymc3d0qqk3p5slq-vm-test-run-mrjam-vision-archive-systemd-independent": {
+      "ca": null,
+      "deriver": "/nix/store/1wjlp96dlii2nvbis3yaa0v5cm02ym5c-vm-test-run-mrjam-vision-archive-systemd-independent.drv",
+      "narHash": "sha256-4brKpkCSIg8pUe8dFjbtWzAtKPPEBsQvirJqrriNFsY=",
+      "narSize": 1248,
+      "references": [
+        "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144"
+      ],
+      "registrationTime": 1793452239,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_access": false,
+  "result": {
+    "artifact": "/nix/store/x5cfbdyys74vyyjchans4fkrqqph8h5a-mrjam-vision-workers-0.1.0-9b6cbe740144",
+    "checks": [
+      "no-implicit-start-or-state-creation",
+      "explicit-private-state-initialization-and-actual-age-readiness",
+      "actual-peer-identity-and-table-superuser-refusals",
+      "real-loadcredential-acl-and-cgroup-limits",
+      "smtp-refusal-preserves-intention-and-real-age-encrypted-queue",
+      "service-restart-preserves-pending-message-and-backoff",
+      "broadened-database-rights-refused-and-recovery",
+      "invalid-credential-refused-without-acknowledgement"
+    ],
+    "limits": [
+      "SMTP success is covered by the separate STARTTLS fixture, not this VM",
+      "No VPS adoption, real credential, backup, restoration or identity qualification",
+      "Public test age key is exclusively for invented fixture data"
+    ],
+    "production_access": false,
+    "scope": "invented NixOS VM, unchanged archive ELF and declarative unit"
+  },
+  "result_sha256": "9667433da100e60b9a720550eac972bfacb20872f976ce81c912621a8733e2eb",
+  "schema_version": 1,
+  "source_sha256": {
+    "/workspace/mrjam-validation/operational-review/archive-inspect-fixture.py": "53c1ba25eeaac3709a0b5f330315e7584452de3bf979f2180d93b090ac0cd95a",
+    "/workspace/mrjam-validation/operational-review/archive-systemd.nix": "20eab233165d983ed9e2cb53e5081accf0d30cb641114209df010bb1d84c1be2",
+    "/workspace/mrjam-validation/operational-review/fixtures/archive-public-test-key.txt": "ff71db47840443b5d10580626d15c8da1dd7611e18ab5a71cb4f5aecc53f8df7",
+    "/workspace/mrjam-validation/operational-review/fixtures/archive-public-test-recipient.txt": "8c8d31d1d2e8c15a6dfd745842784a69aa61c98f453d884f60e489bd39a5ac59",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-postgresql-access.nix": "2f8f826823122a598ebca4bfb8218dadf6dcf3f6c1040548fcee74e49b06d11a",
+    "/workspace/vps-infrastructure/operations/nixos/mrjam-vision-archive.nix": "6f1ef254e17606c8c25d779183651f238f3f5623e6c2d73f8976c8ad6f609860",
+    "/workspace/vps-infrastructure/operations/tests/vision-archive-evaluation.nix": "a7b724633dbf6bee5e6cb21368d7e24e3b7f91da2eee25f735f644b47845ae41"
+  }
+}
