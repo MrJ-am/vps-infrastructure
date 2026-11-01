@@ -35,6 +35,11 @@ avec les UID/GID du rapport vérifié, sans activer les services. Les deux autre
 comptes restent documentés dans le rapport. Ce rapprochement ne modifie pas les
 déclarations historiques de =received-profile.json= ni les fixtures.
 
+L'intégration des identités passe maintenant les 29 contrôles du host avec
+chacune des deux entrées nixpkgs. Le [[file:../../runtime/FORGEJO-MIGRATION-16-17.org][parcours Forgejo migration/restauration]]
+passe également ses 17 groupes ; cela n'active pas la composition et ne qualifie
+pas les états réels ni le retour après réouverture des écritures.
+
 * Conservation des services
 
 | Composant | Déclaration reçue ou travail existant | Nouveau travail et limite |

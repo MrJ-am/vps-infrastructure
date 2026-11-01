@@ -20,7 +20,7 @@ vérifié le contenu NAR de leurs exécutables.
 
 | Service | Sortie observée | Suite utile |
 |---------+-----------------+-------------|
-| Forgejo | 16.0.3 | La cible impose 17.0.1. Qualifier explicitement migration et retour 16.0.3 vers 17.0.1 ; ne pas remplacer par simple redémarrage. |
+| Forgejo | 16.0.3 | La cible impose 17.0.1. Migration et retour avant réouverture testés en VM ; voir ../runtime/FORGEJO-MIGRATION-16-17.org. L'adoption de production reste distincte. |
 | Kanidm | 1.11.2 | Version nominale conservée ; comparer l'artefact candidat exact et qualifier l'adoption de l'état existant. |
 | PHP-FPM Nextcloud | PHP 8.4.27 | Version nominale conservée. Ce processus n'identifie pas le webroot Nextcloud ni ses applications. |
 | PostgreSQL | 17.11 | Majeure 17 conservée ; préserver l'instance partagée et qualifier droits et schémas. |
@@ -66,6 +66,8 @@ ce canal. Ne pas inventer d'empreinte ni déplacer le binaire pour obtenir 7/7.
 
 1. Exploiter ce retour dans le dépôt, sans refaire le relais services V2 :
    identités candidates, comparaison des sorties/NAR et migration Forgejo.
+   Le départ Forgejo correspond maintenant au paquet local vérifié ; les 17
+   groupes de migration/restauration et les contrôles des identités passent.
 2. Fermer la composition et qualifier les migrations, SSO, sauvegardes et
    restaurations dans les essais synthétiques. Conserver le contrat autonome
    de ViSe et son registre d'effacement lors du retour.
