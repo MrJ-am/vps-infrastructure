@@ -1,0 +1,115 @@
+#+title: Relais humain — identités et exécutables des services MRJ.am
+#+date: 2026-11-01
+#+language: fr
+
+* Portée et revue
+
+L'objectif de déploiement est autorisé. Cette étape fournit les références
+nécessaires à l'adoption ; elle ne déploie pas les applications. L'administrateur
+utilise son canal existant. Aucun accès root ou shell général n'est transmis à
+Cloud ou à un agent Spectre. L'accès SSH d'inventaire n'est pas élargi.
+
+Lire =README.org=, les sources et les preuves de la remise avant le geste.
+Le nouveau collecteur utilise root avec la seule capacité =CAP_SYS_PTRACE= pour
+les liens d'exécutables de sept processus. Aucun appel ptrace ni lecture de
+mémoire, cmdline, environnement, journal, secret ou donnée n'est demandé.
+Les fichiers sensibles sont masqués, le réseau IP et les écritures système
+refusés. L'unité dure au plus 120 s, avec 25 % CPU et 256 Mio. Les tests isolés
+ont vérifié ces protections. La revue Spectre doit vérifier ce périmètre précis.
+
+Le rapport contient les six UID/GID fixés, les états de sept unités, leurs
+exécutables Nix et métadonnées NAR, ainsi que la génération courante. L'autorité
+reste =unverified_observation=. Les métadonnées locales ne prouvent pas le
+contenu d'un processus ni une révision source authentifiée.
+
+* Octets qualifiés
+
+| Élément | Valeur |
+|---------+--------|
+| Paquet | /nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1 |
+| NAR | sha256-sxMdAqhRy0e9obyHXHdM7Kmxtiz3acE1xDdpR4rXgis= |
+| Export gzip | 30798015 octets ; 8996d32451bb44140cb4fc9c1b2d975601dad356b0ad821ffa02824703c9262d |
+| Export brut | 87401392 octets ; 9c9509b8207667ba855454aac3e73383039abe11fbde78cea4f6d9985da72749 |
+| Manifeste | f0db3f36e2d3b1412dbcfbfd04e65d25a835596f46538cbb10cb9cd830e0209a |
+| Preuve système | a7d08f9f93d4382f37a446ec5da1de1420b257a63bc16aade889f37bf23a843a |
+
+Le delta contient 37 chemins nouveaux. Les 82 autres dépendances sont identiques
+à la remise V2 originale, qui doit être déjà présente sur le VPS. Les 119 chemins
+et leurs références ont été vérifiés après import de l'original puis du delta
+dans un store vierge. Aucun paquet système n'est remplacé, aucun service Nix
+n'est installé. Une dépendance absente impose un arrêt, sans téléchargement
+flottant ou changement de confiance. Le client Nix du collecteur reste privé à
+sa fermeture. Les 18 tests natifs et les cinq groupes VM ne valent pas approbation.
+
+* Préparation Spectre
+
+Vérifier le SHA externe de l'archive, ses membres réguliers sans liens ni
+traversée, puis toutes les entrées de =SHA256SUMS= dans un nouveau dossier.
+Ne jamais remplacer une empreinte attendue. Aucun import sur Spectre n'est requis.
+
+#+begin_src bash
+sha256sum --check --strict SHA256SUMS
+python3 -I -S verify_delivery.py --transfer-directory .
+#+end_src
+
+Attendu : =DELIVERY_VALID=. Transférer uniquement la remise publique vérifiée
+dans un nouveau dossier de l'administrateur, non modifiable par les agents ou
+comptes non privilégiés. Préserver cette propriété pendant import et contrôle.
+
+* Commandes fixes de l'administrateur sur le VPS
+
+Depuis ce dossier, dans sa session humaine existante :
+
+#+begin_src bash
+set -euo pipefail
+set -C
+umask 077
+step=operator
+trap 'rc=$?; printf "{\"step\":\"%s\",\"code\":\"COMMAND_FAILED\",\"exit_code\":%s}\n" "$step" "$rc" >&2' ERR
+test "$(id -u)" -eq 0
+step=delivery_hashes
+sha256sum --check --strict SHA256SUMS
+printf '%s\n' '8996d32451bb44140cb4fc9c1b2d975601dad356b0ad821ffa02824703c9262d  mrjam-observe-services-v1.nix-export.gz' | sha256sum --check --strict -
+step=export_decompression
+gzip --decompress --stdout mrjam-observe-services-v1.nix-export.gz > mrjam-observe-services-v1.nix-export
+step=export_hash
+printf '%s\n' '9c9509b8207667ba855454aac3e73383039abe11fbde78cea4f6d9985da72749  mrjam-observe-services-v1.nix-export' | sha256sum --check --strict -
+step=store_import
+nix-store --import < mrjam-observe-services-v1.nix-export > chemins-importes.txt
+step=nar_verification
+nix --extra-experimental-features nix-command store verify --offline --no-trust --recursive /nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1
+step=closure_metadata
+nix --extra-experimental-features nix-command path-info --offline --json --json-format 1 --recursive /nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1 > fermeture-installee.json
+step=closure_comparison
+/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S verify_delivery.py --store-info fermeture-installee.json
+step=services_observation
+/nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1/bin/mrjam-observe-services > services-v1.json
+trap - ERR
+#+end_src
+
+La comparaison doit rendre =STORE_METADATA_MATCH=. =--no-trust= concerne
+uniquement la vérification de contenu ; aucune politique d'import ou de
+signature n'est changée. L'activation explicite de =nix-command= évite l'erreur
+d'interface rencontrée lors d'un relais précédent ; ne pas modifier =nix.conf=.
+Si l'unité transitoire existe déjà ou une protection manque, ne pas contourner
+le refus, arrêter une unité existante ou lancer une autre sonde.
+
+* Retour fermé
+
+Transférer uniquement =services-v1.json= à Spectre, puis valider :
+
+#+begin_src bash
+python3 -I -S filter/validate_report.py < services-v1.json
+#+end_src
+
+Après succès, retourner ce seul JSON à Cloud. Ne transmettre ni journaux,
+sorties brutes, fichiers Nix locaux, chemins-importes.txt, fermeture-installee.json,
+secret, sauvegarde ou donnée. Une valeur inconnue reste inconnue. En cas d'échec
+humain, retourner uniquement le dernier objet fermé du bloc ; en cas d'échec
+du filtre Spectre : ={"step":"spectre_validation","code":"REPORT_REFUSED"}=.
+
+La génération doit être rapprochée du champ précédent
+=jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9= seulement si elle correspond encore.
+Aucun service applicatif, compte, droit SSH ou génération n'est modifié. Le
+paquet inerte et le verrou vide sous /run peuvent rester ; aucun nettoyage
+global du store ni retour applicatif n'est nécessaire pour cette observation.

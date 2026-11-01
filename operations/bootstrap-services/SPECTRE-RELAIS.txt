@@ -1,0 +1,40 @@
+Reprends le relais MRJ.am sur Spectre pour cette observation précise.
+
+La recherche des sources VPS est terminée : Cloud a reçu et vérifié les sources
+revues. Ne recommence pas cette recherche et ne redemande pas à l'utilisateur
+d'où provenait la dernière activation. L'objectif est désormais d'achever le
+déploiement, autorisé par l'utilisateur ; il reste à conserver les identités
+Unix et à comparer les exécutables réellement actifs aux artefacts candidats.
+
+Lis REMISE.json, README.org, EXECUTION-HUMAINE.org, les sources et les preuves.
+Vérifie l'empreinte externe avant extraction, les membres et toutes les entrées
+de SHA256SUMS. Revois cette extension distincte de V1/V2/provenance : aucun
+argument, six comptes et sept unités fixés, métadonnées de code seulement,
+aucune donnée ni secret. La capacité CAP_SYS_PTRACE est nouvelle et ne sert
+qu'aux liens /proc/PID/exe sous confinement ; elle n'est pas accordée à un agent
+ni au compte SSH d'inventaire. Les tests locaux ne constituent pas ta revue.
+
+Si la revue révèle un écart, rapporte le fichier et le motif sans contourner.
+Sinon prépare la remise publique et les commandes EXACTES d'EXECUTION-HUMAINE.org
+pour l'administrateur humain, par son canal existant. Aucun import sur Spectre
+n'est nécessaire. N'utilise pas un shell général/root du VPS en tant qu'agent,
+installer.py, connect.sh, un SQL libre ou une commande choisie dynamiquement.
+Ne modifie aucune clé, ACL SSH, génération ou unité applicative.
+
+Le delta ajoute 37 chemins ; les 82 dépendances partagées avec V2 doivent être
+déjà présentes sur le VPS. Ne désactive aucune exigence de signature, n'ajoute
+aucun trusted-user, ne récupère aucune clé privée. Respecte les flags explicites
+nix-command et json-format 1 de la procédure. Un échec impose un retour fermé,
+pas une modification improvisée des commandes ou empreintes.
+
+Après le geste humain, revalide uniquement services-v1.json avec :
+python3 -I -S filter/validate_report.py < services-v1.json
+Puis retourne ce seul fichier à Cloud. N'envoie ni sortie brute ni journal ni
+fermeture-installee.json. Si le filtre refuse, retourne seulement
+{"step":"spectre_validation","code":"REPORT_REFUSED"}.
+Pour un échec humain, retourne seulement l'objet step/code/exit_code du bloc.
+
+Ce relais d'observation ne réalise pas la mise en service. Cloud continue les
+tests des services, la composition déclarative et le contrôleur de bascule.
+La réponse permettra de remplacer les valeurs inconnues par les faits observés,
+sans inventer les UID ou déduire les builds actifs de versions du profil système.

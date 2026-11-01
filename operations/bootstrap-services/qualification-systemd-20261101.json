@@ -1,0 +1,56 @@
+{
+  "candidate_commit": "1545ec6874ae594d73f4dccff9be8faf0f30597a",
+  "candidate_derivation": "/nix/store/xrfj8fignbzs7bf0k7yzzgpc64bg1fyy-mrjam-observe-services-v1.drv",
+  "candidate_nar_hash": "sha256-sxMdAqhRy0e9obyHXHdM7Kmxtiz3acE1xDdpR4rXgis=",
+  "candidate_package": "/nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1",
+  "candidate_repository": "MrJ-am/vps-infrastructure",
+  "groups_passed": [
+    "real-systemd-cross-uid-executable-and-nar-metadata",
+    "arguments-unprivileged-and-mutable-entrypoints-refused-without-report",
+    "existing-unit-collision-refused",
+    "kernel-enforced-file-network-and-write-denials",
+    "stopped-service-keeps-build-unknown"
+  ],
+  "limitations": [
+    "Synthetic sleep process named forgejo, not Forgejo software",
+    "NAR metadata is queried, not an authenticated attestation of running code",
+    "Human bootstrap only; existing inventory SSH interface unchanged",
+    "Review material prepared by the same Cloud agent; no independent approval claimed",
+    "CAP_SYS_PTRACE is a new human-only bounded capability; it must be reviewed before use"
+  ],
+  "log_sha256": {
+    "services-observer-runtime-20261101-01.log": "91535372f75267f8bd64b40941b05cb308e5d68c45eb80ff180acb08bcfb4dc7",
+    "services-observer-systemd-pass-20261101.log": "50b7326e1cb8381aa18acafcc635be0254ec4f0e3ed1cdbddf9b85087fecf047",
+    "services-observer-unit-20261101-02.log": "bf57036e37bee6c8f54f86639863772a1d0416824e27561c35e0eddfcc930df0"
+  },
+  "native_tests_passed": 18,
+  "overall_passed": true,
+  "previous_attempts": [
+    {
+      "attempt": 1,
+      "cause": "Generation NAR metadata remained unknown with the former query settings. The passing revision requests JSON format 1 explicitly and allows 10 seconds; the two factors were not isolated.",
+      "exit_code": 1,
+      "result": "system-test-failed"
+    }
+  ],
+  "production_access": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "recorded_on": "2026-11-01",
+  "schema_version": 1,
+  "scope": "Synthetic local NixOS TCG; fixed code/identity observation only",
+  "source_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/bootstrap-observation/bounded.py": "cda044ad47a83a02a12a3104ac61ae75ee8433b1c198b6d0855f464b3575b5f0",
+    "operations/bootstrap-services/collect.py": "1ab07f4cce0d579a836458c51c524b3803c199e89dbdffe05b3750dc227b6a88",
+    "operations/bootstrap-services/contract.py": "9eaeb8adb0774e6b6dfb03591b5332a0833bcc71f433e382e50d169ec6fd86fc",
+    "operations/bootstrap-services/observe.py": "61f5e1892fb61e4f43c7fa12ba62b2f77ae502f96e81c4a0a69d5a166ed171c0",
+    "operations/bootstrap-services/package.nix": "cf041f208b8aa8fff6f11ea6cd8231d7aab5791990324431883e9169f096bf8d",
+    "operations/bootstrap-services/systemd-test.nix": "b6c01cc465db97025d56b66e47dfcf48b191710ecbc8c3fec21bbce680ce9e07",
+    "operations/bootstrap-services/test_services.py": "359b25499275ee34276bfeeeeb93b966ac45701bfd11e008a73e632a63e1304d",
+    "operations/bootstrap-services/validate_report.py": "ff84a9bb736a7770bad11d94b588eafcdd8c525730a1ac443a22f25aa3f3c54d"
+  },
+  "vm_derivation": "/nix/store/jggv0i5nwrrwfabqn5rhn60iq2gsx7s2-vm-test-run-mrjam-services-observation-synthetic.drv",
+  "vm_nar_hash": "sha256-cIfuOmSPbMGDc157Ib7Kc9NGXlgar91TZRsDIB3fu0A=",
+  "vm_output": "/nix/store/vx55ij7igjmx2panwbfiwp664932glij-vm-test-run-mrjam-services-observation-synthetic"
+}
