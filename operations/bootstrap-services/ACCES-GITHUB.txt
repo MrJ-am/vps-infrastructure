@@ -1,4 +1,10 @@
-Reprends sur Spectre le relais MRJ.am de l'observation services V1.
+AVIS DU 1er NOVEMBRE : NE PAS EXÉCUTER CETTE REMISE V1.
+La revue Spectre a identifié un confinement mémoire insuffisant. Cette remise
+n'a pas été exécutée sur le VPS. La correction est préparée séparément sous
+operations/bootstrap-services-v2 ; attendre son relais qualifié et ses nouvelles
+empreintes. Les références et empreintes historiques ci-dessous sont conservées.
+
+Relais historique retiré : observation services V1.
 
 Le code VPS revu a déjà été reçu par Cloud : ne recommence pas sa recherche.
 L'utilisateur demande d'achever le déploiement ; ce complément ferme les inconnues

@@ -93,7 +93,7 @@
         inventory-vps-candidate = import ./operations/targets/inventory-candidate.nix { inherit pkgs; };
         observe-adoption = pkgs.callPackage ./operations/bootstrap-observation/package.nix { };
         observe-provenance = pkgs.callPackage ./operations/bootstrap-provenance/package.nix { };
-        observe-services = pkgs.callPackage ./operations/bootstrap-services/package.nix { };
+        observe-services = pkgs.callPackage ./operations/bootstrap-services-v2/package.nix { };
         forgejo-schema-check = pkgs.callPackage ./operations/forgejo/schema-check.nix { };
         preserved-nextcloud = (import ./operations/hosts/mrjam-vps/preserved-packages.nix { inherit system; }).nextcloud;
         preserved-php = (import ./operations/hosts/mrjam-vps/preserved-packages.nix { inherit system; }).php;
@@ -137,7 +137,7 @@
       forgejo-postgresql-runtime = import ./operations/runtime/forgejo-postgresql-systemd.nix { inherit nixpkgs; };
       kanidm-runtime = import ./operations/runtime/kanidm-systemd.nix { inherit nixpkgs; };
       nextcloud-runtime = import ./operations/runtime/nextcloud-systemd.nix { inherit nixpkgs; };
-      services-observer-runtime = import ./operations/bootstrap-services/systemd-test.nix { inherit nixpkgs; };
+      services-observer-runtime = import ./operations/bootstrap-services-v2/systemd-test.nix { inherit nixpkgs; };
       forgejo-host-module = pkgs.runCommand "mrjam-forgejo-host-evaluation" {
         result = builtins.toJSON forgejoHostEvaluation;
       } ''
