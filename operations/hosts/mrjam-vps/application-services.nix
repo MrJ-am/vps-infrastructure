@@ -8,6 +8,7 @@ let
   privatePath = lib.types.strMatching "/(var/lib|run)/[A-Za-z0-9_./-]+";
   sqlName = lib.types.strMatching "[a-z][a-z0-9_]{0,62}";
   names = [ "audition" "log" "logique" "logo" "mateval" "style" "vision" ];
+  requiredSites = [ "audition" "log" "logique" "mateval" "vision" ];
   workers = [ "archive" "replay" "cycle" "closure" "admission" ];
   slotNames = builtins.attrNames cfg.slots;
   units = map (slot: "mrjam-rust-${slot}") slotNames
@@ -70,7 +71,8 @@ let
     sslCertificate = "/var/lib/acme/${name}/fullchain.pem";
     sslCertificateKey = "/var/lib/acme/${name}/key.pem";
   };
-  gatewayNames = [ "audition" "logique" "logo" "style" "vision" ];
+  gatewayNames = builtins.filter (name: builtins.hasAttr name cfg.sites)
+    [ "audition" "logique" "logo" "style" "vision" ];
   roots = [ cfg.serverStorePath ] ++ map (name: cfg.frontendStorePaths.${name}) names
     ++ map (slot: cfg.slots.${slot}) slotNames
     ++ lib.optionals cfg.workers.enable (map (name: cfg.workers.artifacts.${name}) workers);
@@ -92,7 +94,7 @@ in {
     identities = lib.mkOption { type = lib.types.attrsOf identityType; default = { };
       description = "Observed/reserved numeric identities for the exact installed units; never automatic UID allocation."; };
     sites = lib.mkOption { type = lib.types.attrsOf siteType; default = { };
-      description = "Seven explicit frontend names, public hostnames and retained certificate directories."; };
+      description = "Existing application hosts and retained certificates. Style/logo demos require an explicit additional host; their seven artifact roots are retained independently."; };
     serverStorePath = lib.mkOption { type = storePath; default = locked.server.store_path; };
     frontendStorePaths = lib.genAttrs names (name: lib.mkOption {
       type = storePath; default = locked."frontend_${name}".store_path;
@@ -108,8 +110,8 @@ in {
       default = "/run/mrjam-identity/aliases.sqlite"; };
     logReadersGroup = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9-]+";
       default = "mrjam-log-readers"; };
-    principiiRoot = lib.mkOption { type = lib.types.strMatching "/srv/[A-Za-z0-9_./-]+";
-      description = "Observed static root for the existing site outside /matheval/, preserved verbatim."; };
+    principiiRoot = lib.mkOption { type = lib.types.nullOr (lib.types.strMatching "/srv/[A-Za-z0-9_./-]+");
+      description = "Observed static root, or null for the existing root redirect to /matheval/."; };
     workers = {
       enable = lib.mkEnableOption "installation of all five qualified workers, without activation";
       artifacts = lib.genAttrs workers (name: lib.mkOption { type = storePath; default = locked."vision_${name}".store_path; });
@@ -124,9 +126,10 @@ in {
       { assertion = slotNames != [ ] && lib.all (name: builtins.elem name [ "blue" "green" ]) slotNames
           && builtins.hasAttr cfg.activeSlot cfg.slots;
         message = "mrjamVpsApplications: install explicit blue/green runtime closures and select one declared slot."; }
-      { assertion = builtins.attrNames cfg.sites == names
-          && builtins.length (lib.unique (map (site: site.host) (builtins.attrValues cfg.sites))) == 7;
-        message = "mrjamVpsApplications: all seven distinct frontend hosts are required."; }
+      { assertion = lib.all (name: builtins.hasAttr name cfg.sites) requiredSites
+          && lib.all (name: builtins.elem name names) (builtins.attrNames cfg.sites)
+          && builtins.length (lib.unique (map (site: site.host) (builtins.attrValues cfg.sites))) == builtins.length (builtins.attrNames cfg.sites);
+        message = "mrjamVpsApplications: existing application hosts must be explicit and distinct; demo hosts cannot be inferred from artifact names."; }
       { assertion = cfg.sites.vision.host == "vision.mrj.am" && cfg.sites.audition.host == "audition.mrj.am"
           && cfg.sites.log.host == "log.mrj.am" && cfg.sites.mateval.host == "principiipetit.io";
         message = "mrjamVpsApplications: Rust's fixed application origins and MatEval mount must be preserved."; }
@@ -139,7 +142,8 @@ in {
         message = "mrjamVpsApplications: dedicated numeric identities cannot collide with each other or retained VPS identities."; }
       { assertion = lib.all (path: !(builtins.hasContext path)) roots;
         message = "mrjamVpsApplications: runtime references must select already-built context-free immutable roots."; }
-      { assertion = lib.all safePath [ cfg.matevalActivationCredentialFile cfg.admissionApprovalCredentialFile cfg.logAliasesDatabase cfg.principiiRoot ];
+      { assertion = lib.all safePath ([ cfg.matevalActivationCredentialFile cfg.admissionApprovalCredentialFile cfg.logAliasesDatabase ]
+          ++ lib.optional (cfg.principiiRoot != null) cfg.principiiRoot);
         message = "mrjamVpsApplications: existing state and credential references must be canonical."; }
       { assertion = cfg.logAliasesDatabase == "/run/mrjam-identity/aliases.sqlite"
           && builtins.hasAttr cfg.logReadersGroup config.users.groups
@@ -189,12 +193,15 @@ in {
       "principiipetit.io" = (tls cfg.sites.mateval.certificateName) // {
         root = cfg.principiiRoot;
         locations = {
-          "/".tryFiles = "$uri $uri/ =404";
+          "/" = if cfg.principiiRoot == null then { return = "404"; } else { tryFiles = "$uri $uri/ =404"; };
           "= /matheval".return = "308 /matheval/";
           "^~ /matheval/" = (rustLocation "principiipetit.io") // { extraConfig = forwarded "principiipetit.io" + "client_max_body_size 128k;"; };
           "= /healthz".return = "404";
           "= /readyz".return = "404";
-        };
+        } // lib.optionalAttrs (cfg.principiiRoot == null) { "= /".return = "308 /matheval/"; };
+      };
+      "www.principiipetit.io" = (tls "www.principiipetit.io") // {
+        locations."/".return = "308 https://principiipetit.io$request_uri";
       };
       "log.mrj.am" = {
         # Exact overrides of core's native fallback; native API/OIDC boundaries

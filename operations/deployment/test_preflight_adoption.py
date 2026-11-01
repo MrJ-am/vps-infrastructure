@@ -333,5 +333,30 @@ class AdoptionPreflightTests(unittest.TestCase):
             self.assertFalse(output["matching_unique_pair"])
 
 
+    def test_23_layout_catalog_rejects_free_outputs_and_command_failure(self):
+        for value in (None, (1, ""), (0, CONTACT), (0, "t|f"), (0, "t|" * 8),
+                      (0, "|".join(["t"] * 7 + [SECRET]))):
+            with patch.object(target, "run", return_value=value):
+                self.assertEqual(target.catalog_layout(), target.UNKNOWN)
+        with patch.object(target, "run", return_value=(0, "|".join(["t"] * 8))) as call:
+            result = target.catalog_layout()
+        self.assertEqual(set(result["catalog_only"]), set(target.LAYOUT_FIELDS))
+        self.assertTrue(all(result["catalog_only"].values()))
+        command = call.call_args[0][0]
+        self.assertIn("--dbname=vision", command)
+        self.assertEqual(command[-1], target.LAYOUT_SQL)
+        self.assertIn("BEGIN READ ONLY;", command[-1])
+        self.assertIn("ROLLBACK;", command[-1])
+        self.assertNotIn("FROM audition.", command[-1])
+        self.assertNotIn("FROM vision_gestion.", command[-1])
+
+    def test_24_hostname_only_accepts_a_machine_label(self):
+        for value in (CONTACT, SECRET + "/private", "bad.name", "a" * 64, "", "bad\nname"):
+            with patch.object(target.socket, "gethostname", return_value=value):
+                self.assertEqual(target.public_hostname(), target.UNKNOWN)
+        with patch.object(target.socket, "gethostname", return_value="synthetic-vps"):
+            self.assertEqual(target.public_hostname(), {"state": "observed", "value": "synthetic-vps"})
+
+
 if __name__ == "__main__":
     unittest.main()

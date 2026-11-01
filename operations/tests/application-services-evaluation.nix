@@ -60,10 +60,23 @@ let
   colliding = evaluate { mrjamVpsApplications.identities.mrjam-rust-blue.uid = lib.mkForce 982; };
   promotedWorker = evaluate { systemd.services.mrjam-vision-admission.wantedBy = [ "multi-user.target" ]; };
   duplicatedAcme = evaluate { security.acme.certs."other.example.invalid" = { }; };
+  existingSites = evaluate {
+    mrjamVpsApplications.sites = lib.mkForce (builtins.removeAttrs synthetic.sites [ "style" "logo" ]);
+    mrjamVpsApplications.principiiRoot = lib.mkForce null;
+  };
   refused = prefix: value: lib.any (assertion: !assertion.assertion && lib.hasPrefix prefix assertion.message) value.assertions;
   result = {
     validComposition = lib.all (assertion: assertion.assertion) cfg.assertions;
     exactSevenFrontends = builtins.length (builtins.attrNames cfg.mrjamVpsApplications.sites) == 7;
+    existingSitesWithoutInventedDemoDomains = lib.all (a: a.assertion) existingSites.assertions
+      && !(existingSites.services.nginx.virtualHosts ? "style.example.invalid")
+      && !(existingSites.services.nginx.virtualHosts ? "logo.example.invalid");
+    allSevenArtifactsRetained = lib.all (name: builtins.elem
+      (builtins.storePath existingSites.mrjamVpsApplications.frontendStorePaths.${name})
+      existingSites.system.extraDependencies) [ "audition" "log" "logique" "logo" "mateval" "style" "vision" ];
+    originalRootRedirectPreserved = existingSites.services.nginx.virtualHosts."principiipetit.io".root == null
+      && existingSites.services.nginx.virtualHosts."principiipetit.io".locations."= /".return == "308 /matheval/";
+    wwwAliasPreserved = vhost."www.principiipetit.io".locations."/".return == "308 https://principiipetit.io$request_uri";
     noVise = !(cfg.systemd.services ? vise) && !(vhost ? "vise.mrj.am");
     allApplicationIdentitiesFixed = lib.all (name: cfg.users.users.${name}.uid == synthetic.identities.${name}.uid
       && cfg.users.groups.${name}.gid == synthetic.identities.${name}.gid) identityNames;

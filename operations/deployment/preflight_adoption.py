@@ -35,7 +35,8 @@ ADOPTION_NAMES = ("mrjam-rust-blue", "mrjam-rust-green", "mrjam-vision-archive",
 NAMES = KNOWN_NAMES + ADOPTION_NAMES
 UNITS = ("mrjam-metier", "vision", "vision-embeddings-backfill", "matheval", "vision-cycle",
          "vision-archive", "vision-replay", "vision-closure", "vision-admission", "forgejo-backup",
-         "nextcloud-backup", "nextcloud-cron")
+         "nextcloud-backup", "nextcloud-cron", "mrjam-sauvegarde", "mrjam-courriel",
+         "vision-purge", "postgresqlBackup-matheval", "postgresqlBackup-nextcloud")
 PATHS = {
     "identity_sessions": "/var/lib/mrjam-metier/log/sessions.sqlite",
     "kanidm_client_secret": "/var/lib/mrjam-identite/kanidm-vision.secret",
@@ -45,6 +46,11 @@ PATHS = {
     "archive_mail_state": "/var/lib/mrjam-vision-archive/courriels.sqlite",
     "cycle_mail_state": "/var/lib/mrjam-vision-cycle/courriels.sqlite",
     "admission_state": "/var/lib/mrjam-vision-admission/admissions.sqlite",
+    "legacy_mail_state": "/var/lib/mrjam-metier/courriel/file.sqlite",
+    "legacy_admission_requests": "/var/lib/mrjam-metier/admission/demandes.sqlite",
+    "legacy_deletion_ledger": "/var/lib/mrjam-metier/effacements/demandes.jsonl",
+    "legacy_cycle_configuration": "/var/lib/mrjam-identite/cycle.json",
+    "closure_hook": "/var/lib/mrjam-identite/fermeture-hook.secret",
 }
 DATABASES = ("matheval", "vision", "vision_journal", "audition")
 ROLES = ("matheval_app", "matheval_administration", "vision", "vision_administration", "vision_cycle",
@@ -72,6 +78,20 @@ SELECT
  EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='vision_journal_rejeu'),
  EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='vision_journal_fermeture'),
  EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='audition');
+ROLLBACK;"""
+LAYOUT_FIELDS = ("audition_app_role", "matheval_admin_role", "audition_schema", "audition_objects",
+                 "audition_versions", "native_principal_function", "vision_gestion_schema", "vector_extension")
+LAYOUT_SQL = """BEGIN READ ONLY;
+SET LOCAL statement_timeout='3s';
+SELECT
+ EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='audition_app'),
+ EXISTS(SELECT 1 FROM pg_catalog.pg_roles WHERE rolname='matheval_admin'),
+ pg_catalog.to_regnamespace('audition') IS NOT NULL,
+ pg_catalog.to_regclass('audition.objets') IS NOT NULL,
+ pg_catalog.to_regclass('audition.versions') IS NOT NULL,
+ pg_catalog.to_regprocedure('vision_gestion.identifier(text,text)') IS NOT NULL,
+ pg_catalog.to_regnamespace('vision_gestion') IS NOT NULL,
+ EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname='vector');
 ROLLBACK;"""
 # Constants transcribed from the received code declaration; comparisons only.
 EXPECTED_HOSTNAME = "nixos"
@@ -287,6 +307,26 @@ def host_comparisons():
             except ValueError:
                 pass
     return result
+
+
+def catalog_layout():
+    result = run(["runuser", "-u", "postgres", "--", "/run/current-system/sw/bin/psql",
+                  "-X", "-w", "-q", "-A", "-t", "--set=ON_ERROR_STOP=1", "--host=/run/postgresql",
+                  "--port=5432", "--dbname=vision", "--command", LAYOUT_SQL])
+    if result is None or result[0] != 0:
+        return dict(UNKNOWN)
+    values = result[1].split("|")
+    if len(values) != len(LAYOUT_FIELDS) or any(value not in ("t", "f") for value in values):
+        return dict(UNKNOWN)
+    return {"state": "observed", "catalog_only": dict(zip(LAYOUT_FIELDS, (x == "t" for x in values)))}
+
+
+def public_hostname():
+    # Static machine metadata, never an account/person field.
+    value = socket.gethostname()
+    if re.fullmatch(r"[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?", value):
+        return {"state": "observed", "value": value}
+    return dict(UNKNOWN)
 
 
 def properties(unit, names):
@@ -698,7 +738,8 @@ def collect():
     return {"schema_version": 1, "authority": "bounded-read-only-adoption-observation",
             "recorded_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "accounts": accounts(), "paths": {name: metadata(path) for name, path in PATHS.items()},
-            "postgres_catalog": catalog(), "received_profile_comparisons": host_comparisons(),
+            "postgres_catalog": catalog(), "postgres_layout": catalog_layout(),
+            "received_profile_comparisons": host_comparisons(), "hostname": public_hostname(),
             "units": unit_states(), "embeddings": embeddings_metadata(), "nginx": nginx,
             "acme_domain_selection_state": nginx["state"], "acme": {domain: acme_metadata(domain) for domain in domains},
             "application_data_read": False, "secret_contents_read": False, "logs_read": False,
