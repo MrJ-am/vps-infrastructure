@@ -1,0 +1,20 @@
+{
+  "archive_bytes": 31856640,
+  "archive_sha256": "24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee",
+  "branch": "remise-observation-services-v2-20261101",
+  "commit": "b25fbe4a6fb5978ba8d94365605749bbe37beb4b",
+  "download_sha256": "24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee",
+  "download_without_authorization_or_cookie_header_verified": true,
+  "extractor_sha256": "b3f474d7d056e23b6e6652bbd67fbd3dc5422c83b1419f4b982facfb0c32ad9b",
+  "files_verified": 53,
+  "legacy_manifests_proofs_and_publication_unchanged": true,
+  "production_action": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "public_archive_url": "https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b25fbe4a6fb5978ba8d94365605749bbe37beb4b/mrjam-observation-services-v2-20261101.tar",
+  "review_commit": "2a118c0ee739d729f9b8fdf5692b82a58f1fa77b",
+  "schema_version": 1,
+  "source_commit": "2a8db4401f47c9671a4b4bf74bdbd4cf9555427f",
+  "tree": "807ad4daef565c82eee29b8d48f78693b83ad048",
+  "two_archives_byte_identical": true
+}
