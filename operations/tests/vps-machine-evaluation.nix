@@ -46,15 +46,18 @@ let
       { candidate = cfg.services.mrjamForgejoHost; account = "forgejo"; }
       { candidate = cfg.services.mrjamKanidmHost; account = "kanidm"; }
       { candidate = cfg.services.mrjamNextcloudHost; account = "nextcloud"; }
-      { candidate = cfg.services.mrjamVise.adoption; account = "etp_carnet"; }
     ];
     observedIdentitiesDoNotActivateServices = !cfg.services.mrjamForgejoHost.enable
       && !cfg.services.mrjamKanidmHost.enable && !cfg.services.mrjamNextcloudHost.enable;
     observedIdentitiesDoNotCreateAccounts = builtins.all (name: !(builtins.hasAttr name cfg.users.users))
       [ "forgejo" "kanidm" "nextcloud" "etp_carnet" ];
     observedBuildsAreNotQualifiedArtifacts = cfg.services.mrjamForgejoHost.artifactStorePath == null
-      && cfg.services.mrjamKanidmHost.artifactStorePath == null && cfg.services.mrjamVise.artifactRoot == null;
-    rustForgejoAndViseStillStaged = !cfg.services.mrjamRust.enable && !cfg.services.mrjamForgejo.enable && !cfg.services.mrjamVise.enable;
+      && cfg.services.mrjamKanidmHost.artifactStorePath == null;
+    rustAndForgejoStillStaged = !cfg.services.mrjamRust.enable && !cfg.services.mrjamForgejo.enable;
+    viseOutsideFirstDeployment = !(cfg.services ? mrjamVise)
+      && !(cfg.systemd.services ? vise) && !(cfg.users.users ? etp_carnet);
+    noVisePolicyOrRoute = !(cfg.services.mrjamPostgresqlPolicy.blocks ? vise)
+      && !(cfg.services.nginx.virtualHosts ? "vise.mrj.am");
     noDatabaseProvisioning = !cfg.services.postgresql.enable && cfg.services.postgresql.ensureDatabases == [ ];
     noWebServerOrViseBackupEnabled = !cfg.services.nginx.enable && !(cfg.systemd.services ? vise-backup);
     noRunningGenerationClaim = facts.generation_binding == "unverified" && !facts.hardware_correspondence_verified

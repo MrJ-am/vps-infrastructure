@@ -4,9 +4,12 @@
 let
   facts = builtins.fromJSON (builtins.readFile ./received-profile.json);
   received = ../../received/20261101/vps-reviewed-sources/extracted/source;
+  # Machine/network facts do not depend on the independently received ViSe adapter.
+  machineSources = builtins.filter (name: name != "etc/nixos/vise-hosting/module.nix")
+    (builtins.attrNames facts.source_hashes);
   sourcesMatch = lib.all (name:
     builtins.hashFile "sha256" (received + "/${name}") == facts.source_hashes.${name}
-  ) (builtins.attrNames facts.source_hashes);
+  ) machineSources;
 in {
   imports = [ (modulesPath + "/profiles/qemu-guest.nix") ];
   assertions = [

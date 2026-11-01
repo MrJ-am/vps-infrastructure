@@ -4,6 +4,10 @@
 
 * Résultat utilisable
 
+Priorité utilisateur du 1 novembre : ViSe ne bloque jamais le premier
+déploiement. Son identification et sa qualification sont reportées à sa
+réintégration. Le profil principal l'exclut tout en conservant ses données.
+
 Le retour filtré du collecteur V2 est conservé octet pour octet dans
 =../received/20261101/services-v1.json=. Ses 2 376 octets ont pour SHA-256
 =b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2=.
@@ -26,7 +30,7 @@ vérifié le contenu NAR de leurs exécutables.
 | PostgreSQL | 17.11 | Majeure 17 conservée ; préserver l'instance partagée et qualifier droits et schémas. |
 | Nginx | 1.30.4 | Préserver le routage ; qualifier le graphe complet avant bascule. |
 | mrjam-metier | suffixe fb5b7e217822 | Identité store/NAR disponible. Le suffixe seul n'authentifie pas un commit ni la compatibilité du remplaçant. |
-| ViSe | inconnu, unité active | Identifier le seul exécutable installé dans le précontrôle ciblé, avec le retour et les schémas ; inutile de répéter l'observation générale. |
+| ViSe | inconnu, unité active | Hors prérequis du premier déploiement ; identification, adoption et retour reportés à la réintégration. |
 
 La génération a un chemin et des métadonnées NAR dans ce retour. Son préfixe
 store correspond à ceux des observations antérieures ; cela ne prouve ni
@@ -37,16 +41,17 @@ continuité de génération, ni lien avec les sources remises, ni authenticité.
 
 | Compte | UID | GID | Utilisation |
 |--------+-----+-----+-------------|
-| etp_carnet | 981 | 981 | Paramètres du module ViSe désactivé |
+| etp_carnet | 981 | 981 | Profil optionnel de réintégration ViSe uniquement |
 | forgejo | 982 | 982 | Paramètres du module Forgejo désactivé |
 | kanidm | 983 | 983 | Paramètres du module Kanidm désactivé |
 | mrjam-metier | 984 | 984 | Conservés dans le rapport ; pas assimilés aux nouveaux slots Rust |
 | nextcloud | 990 | 990 | Paramètres du module Nextcloud désactivé |
 | postgres | 71 | 71 | Conservés dans le rapport ; aucune recréation de l'instance partagée |
 
-=../hosts/mrjam-vps/observed-service-identities.nix= lit ces quatre identités
-directement dans le rapport après contrôle de son empreinte. Le point d'entrée
-préparatoire l'importe. Aucun paquet actif n'est adopté comme artefact qualifié
+=../hosts/mrjam-vps/observed-service-identities.nix= lit les trois identités
+Forgejo, Kanidm et Nextcloud directement dans le rapport après contrôle de son
+empreinte. Le point d'entrée principal l'importe. Seul le profil optionnel
+=configuration-with-vise.nix= lit l'identité ViSe. Aucun paquet actif n'est adopté comme artefact qualifié
 sur la seule foi du rapport. Les déclarations historiques du profil reçu
 restent intactes ; les valeurs inventées des fixtures restent synthétiques.
 
@@ -86,12 +91,13 @@ il n'est pas nécessaire de solliciter un nouveau relais pour ce seul numéro.
    identités candidates, comparaison des sorties/NAR et migration Forgejo.
    Le départ Forgejo correspond maintenant au paquet local vérifié ; les 17
    groupes de migration/restauration et les contrôles des identités passent.
-2. Fermer la composition et qualifier les migrations, SSO, sauvegardes et
-   restaurations dans les essais synthétiques. Conserver le contrat autonome
-   de ViSe et son registre d'effacement lors du retour.
+2. Fermer la composition sans ViSe et qualifier les migrations, SSO, sauvegardes
+   et restaurations du socle dans les essais synthétiques. Conserver les données
+   de ViSe, notamment sa base et son registre d'effacement, pour sa réintégration.
 3. Regrouper les seules inconnues de production restantes dans le précontrôle
-   opérateur fixe : identité ViSe, adoption des états, génération, identités
-   et sauvegardes. Concevoir, tester et revoir ce contrôle avant exécution.
+   opérateur fixe du socle : adoption des états, génération, identités et
+   sauvegardes. Concevoir, tester et revoir ce contrôle avant exécution.
+   L'identité ViSe reste hors de ce précontrôle du premier déploiement.
 4. Livrer les artefacts exacts et la procédure de bascule/retour qualifiée.
 
 Ce lot n'est pas une génération déployable. L'autorisation SSH précédente

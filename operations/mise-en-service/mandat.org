@@ -37,3 +37,26 @@ Forgejo/validation/livraison, essais indépendants puis première mise en servic
 Ne pas déclarer l'ensemble opérationnel à partir d'une fixture ou d'un simple
 build. Signaler les prérequis externes concrets tout en poursuivant le travail
 indépendant ; ne pas proposer de reprendre les projets comme substitut.
+
+* Priorité explicite du 1 novembre : ViSe ne bloque pas le déploiement
+
+#+begin_quote
+ViSe ne doit sous aucun prétexte bloquer le déploiement. Si pour une raison
+ou pour une autre, il représente un obstacle, on déploiera sans lui et on le
+réintègrera après.
+#+end_quote
+
+Le premier déploiement se prépare donc avec le profil sans ViSe
+=../hosts/mrjam-vps/configuration.nix=. Son exécutable inconnu, sa construction,
+ses tests, son adoption SQL, ses sauvegardes propres et sa disponibilité ne
+sont pas des prérequis du socle. Si ViSe rencontre un obstacle, poursuivre
+sans lui et reporter ces travaux à sa réintégration. Le profil optionnel
+=configuration-with-vise.nix= et les contrôles séparés restent disponibles.
+
+Cette directive autorise l'absence temporaire du service et de sa route.
+Elle n'autorise pas la destruction de sa base, de son registre d'effacement,
+de ses fichiers persistants ou de ses sauvegardes. Leur conservation ne doit
+pas devenir un prétexte pour exiger la qualification complète de ViSe avant
+le socle. Les contrôles nécessaires aux autres services et au retour de la
+génération restent applicables. Les preuves historiques conservent leur
+périmètre d'origine ; aucun accès VPS n'est créé par ce changement de priorité.

@@ -3,6 +3,17 @@
 
 * Décision actuelle
 
+Directive utilisateur du 1 novembre : *ViSe ne bloque jamais le déploiement*.
+Le profil principal =hosts/mrjam-vps/configuration.nix= l'exclut. Son exécutable,
+sa construction, ses tests, son adoption, ses sauvegardes propres et sa
+disponibilité sont hors des prérequis du premier déploiement. Les travaux et
+contrôles séparés préparent sa réintégration ultérieure. Conserver sa base,
+son registre d'effacement, ses fichiers persistants et ses sauvegardes ;
+son service et sa route pourront être absents temporairement. Cette priorité
+prévaut sur les passages historiques ci-dessous qui incluaient ViSe dans
+l'ensemble à qualifier. Aucun changement de service n'est effectué sur le VPS
+par cette réorganisation du dépôt.
+
 Le retour services V2 est intégré et la transition Forgejo 16.0.3 vers 17.0.1,
 puis le retour avant réouverture par restauration SQL/fichiers, passent leurs
 17 groupes synthétiques. Les identités candidates passent 29 contrôles sur
