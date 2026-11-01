@@ -1,0 +1,19 @@
+{
+  "checks": {
+    "all_member_hashes_verified": true,
+    "altered_export_refused_without_output": true,
+    "two_byte_identical_archives": true
+  },
+  "handoff": {
+    "archive": "mrjam-observation-services-20261101.tar",
+    "bytes": 31088640,
+    "files_verified": 33,
+    "infra_commit": "c96b947ed6bb4e818769d7c666447acb336548ca",
+    "reproducible_tar_metadata": true,
+    "review_commit": "ea116c3f5f4f1ed2e1454702932eaed10ef29288",
+    "sha256": "5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e",
+    "sha256sums_sha256": "12e1a4ddeb49a8fa490053df50ed3d6b6b3d30e83363b5621dc27dc845cd22f0",
+    "source_selection_from_git_objects": true
+  },
+  "production_access": false
+}
