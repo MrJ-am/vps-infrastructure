@@ -1,0 +1,20 @@
+Codex sur Spectre poursuit l'assemblage et prendra en charge le déploiement.
+Il manque les octets de ces deux exports déjà documentés :
+
+1. /workspace/shared/mrjam-artefacts-revue-20261031.tar
+   Taille : 48640000 octets
+   SHA-256 : 5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff
+
+2. /workspace/shared/mrjam-travailleurs-revue-20261031-03.tar
+   Taille : 107653120 octets
+   SHA-256 : 08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c
+
+Sont-ils publiés dans Forgejo ? Donne les liens de téléchargement exacts et
+les SHA-256 constatés. Sinon, rends les exports existants téléchargeables par
+un canal accessible depuis Spectre. Un chemin /workspace/shared seul ne
+constitue pas un téléchargement depuis le poste local.
+
+Ne fournis aucun secret, donnée de production ou sauvegarde. Ne reconstruis
+pas silencieusement les archives sous leurs anciennes empreintes : si un
+export a disparu, indique-le et conserve l'identité distincte d'un nouvel export.
+Aucune intervention VPS n'est demandée à Cloud pour cette remise.
