@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "scope": "Compatibility evaluation only; not an installed host or a deployment selection",
+  "observation_reference": "operations/received/20261101/provenance-v1.json",
+  "observation_sha256": "31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac",
+  "upstream_git_tree": "84e89b1b71abdbefcaf99ca2d5787d3dbed600a2",
+  "input": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "nixpkgs",
+    "rev": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+    "narHash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+    "lastModified": 1787962033
+  },
+  "store_source": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "source_archive": {
+    "url": "https://github.com/NixOS/nixpkgs/archive/c5c4a43b0e8056328ec4529f735cabdb8f1942bb.tar.gz",
+    "bytes": 51095482,
+    "sha256": "aef99370f33b531a099dbebec6dfe6d191b29563717d54c8ba1ffdbf687f5cbb"
+  },
+  "production_activation": false
+}

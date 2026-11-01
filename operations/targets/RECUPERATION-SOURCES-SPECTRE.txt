@@ -1,0 +1,78 @@
+Relais Codex sur Spectre — retrouver la référence du code de configuration VPS
+
+Cloud a validé provenance-v1.json (SHA-256
+31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac).
+Le champ de génération reste jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9.
+Le système déclare nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb mais ne
+fournit aucune révision de configuration. stateVersion reste inconnu.
+
+Ne recommence ni la recherche locale déjà faite sur Spectre, ni V1, V2 ou la
+sonde de provenance. Ne demande pas à l'utilisateur de se rappeler d'où la
+dernière mise à jour a été lancée. Ce n'est plus la pièce recherchée.
+
+L'objectif est une référence non secrète du code NixOS réellement utilisé :
+dépôt, commit exact, point d'entrée et éventuels ajouts locaux. Le dépôt faisant
+autorité pour le futur est MrJ-am/vps-infrastructure. Les sources historiques
+de c6459ae215b0e4e8b1350b02222ad21af41db836 sont des indices, pas une preuve
+d'alignement. Leur stateVersion=26.05 ne doit pas être adopté par déduction.
+
+Prépare la démarche suivante pour l'administrateur humain, dans son canal
+d'administration existant. Ce prompt ne t'attribue pas un shell général/root
+de production. N'exécute aucune commande SSH libre ou outil d'administration
+de production depuis Codex ; l'accès d'inventaire actuel demeure inchangé.
+
+1. L'administrateur peut vérifier localement le point d'entrée NixOS usuel,
+   sans lancer de construction ni d'activation :
+
+   test -f /etc/nixos/configuration.nix
+   readlink -f /etc/nixos/configuration.nix
+
+   Ces sorties restent chez lui. Si ce fichier n'existe pas, il indique
+   seulement ENTRYPOINT_NOT_FOUND ; ne lance pas une recherche globale du VPS.
+
+2. L'administrateur examine lui-même ce fichier Nix et ses imports de code.
+   Il ne transmet pas leur contenu brut à un agent. Il repère le dépôt de
+   configuration, s'il existe, et la déclaration de system.stateVersion avec
+   son fichier d'origine. Il peut suivre un lien de code qu'il connaît ; cela
+   n'étend pas l'accès des agents aux fichiers de production.
+
+3. Si /etc/nixos est le checkout identifié, les commandes de métadonnées
+   suivantes sont réservées à l'administrateur humain :
+
+   GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 git -C /etc/nixos rev-parse --show-toplevel
+   GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 git -C /etc/nixos rev-parse --verify HEAD
+
+   Aucune commande git remote -v, aucun historique de shell et aucun fichier
+   d'identifiants n'est demandé. Les chemins locaux restent côté humain.
+   La présence de modifications est appréciée par sa revue du code ; aucune
+   commande status/diff pouvant lancer des filtres Git locaux n'est prescrite.
+   L'absence de checkout ne signifie pas absence
+   de configuration. Un checkout propre ne prouve pas à lui seul qu'il a servi
+   à construire le système en cours.
+
+4. Après cette vérification humaine, retourne seulement ces références de code :
+   - dépôt (MrJ-am/vps-infrastructure, ou autre référence non secrète confirmée) ;
+   - commit complet de 40 caractères, ou « aucun commit retrouvé » ;
+   - chemin du point d'entrée relatif à ce dépôt, ou « source non versionnée » ;
+   - présence de modifications locales et d'import de code hors dépôt :
+     oui / non / inconnu, d'après la revue humaine ;
+   - valeur de stateVersion lue dans le code et son fichier relatif, ou inconnu.
+
+   Ne présente pas ces déclarations comme une preuve authentifiée du système
+   installé. Cloud doit encore rapprocher le graphe de sources et la génération.
+
+5. Si le code indispensable n'existe que localement, prépare un dossier de
+   récupération pour l'humain : liste précise des seuls fichiers de code à
+   relire, secrets remplacés par leurs références, puis branche de travail
+   révisable dans vps-infrastructure. La revue humaine de confidentialité doit
+   précéder leur transfert aux agents ou leur publication. Ne crée pas une
+   archive globale de /etc/nixos, /etc, /var/lib ou du VPS, et ne récupère pas
+   d'archive historique privée pour compléter le dossier.
+
+Ne lance ni nixos-rebuild, activation, installation, migration SQL, lecture de
+base, journal, sauvegarde ou clé privée. Aucun ancien workflow ou connect.sh
+ne doit être réactivé. L'autorisation générale de poursuivre la migration
+existe ; ce relais cherche le code manquant et ne qualifie pas un déploiement.
+
+Explique à l'utilisateur la prochaine action humaine concrète et le résultat
+attendu, sans lui redemander une connaissance technique qu'il a dit ne pas avoir.

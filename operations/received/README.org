@@ -19,6 +19,13 @@ contrôle de format ne prouve ni l'import Nix ni la vérification NAR précéden
 L'exploitation limitée de ses métadonnées est décrite dans
 [[file:../targets/ADOPTION-OBSERVEE-20261031.org][le rapprochement de la cible]].
 
+Le retour =20261101/provenance-v1.json= est également conservé à l'identique
+(361 octets). =provenance-system-20261101.json= lie sa validation aux fichiers
+exacts du filtre livré. Il fournit une révision nixpkgs et le même champ de
+génération que V2 ; la révision de configuration et =stateVersion= restent
+inconnus. Voir [[file:../targets/PROVENANCE-OBSERVEE-20261101.org][le rapprochement de provenance]]. Aucune signature, continuité de
+génération ou réussite des opérations Nix précédentes n'en est déduite.
+
 L'installateur impératif est conservé uniquement comme source à relire. Ne pas
 le relancer. Les commandes SSH de la remise ne sont pas autorisées à Cloud.
 La proposition qui remplace l'accès se trouve dans =../inventory/= ; les

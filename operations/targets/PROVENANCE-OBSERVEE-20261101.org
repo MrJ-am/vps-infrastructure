@@ -1,0 +1,98 @@
+#+title: Retour de provenance et réconciliation des sources du VPS
+#+date: 2026-11-01
+#+language: fr
+
+* Retour reçu
+
+=provenance-v1.json= contient 361 octets. SHA-256 calculé à réception :
+=31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac=.
+Les trois fichiers du filtre livré ont été vérifiés contre leurs empreintes
+qualifiées avant l'exécution ; le filtre accepte le rapport avec le code 0.
+Les octets reçus sont conservés dans =../received/20261101/=, avec leur
+[[file:../received/provenance-system-20261101.json][reçu de réception]]. Aucune signature ni empreinte séparée de l'émetteur
+n'accompagnait la pièce jointe.
+
+| Champ | Résultat | Ce qu'il établit et sa limite |
+|-------+----------+-------------------------------|
+| Autorité | unverified_observation | Format accepté, origine non authentifiée |
+| Génération, champ store | jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9 | Même champ que V2 ; ni identité NAR complète ni continuité prouvée |
+| Révision de configuration | unknown / UNAVAILABLE | Aucune référence récupérée par ce canal ; ne démontre pas l'absence de sources |
+| Révision nixpkgs | c5c4a43b0e8056328ec4529f735cabdb8f1942bb | Métadonnée déclarée par l'exécutable ; ne décrit pas tous les builds actifs |
+| stateVersion | null | Inconnu ; ne se déduit ni de nixpkgs ni du profil 56 |
+
+Ce rapport n'atteste pas les étapes d'import/vérification NAR exécutées avant
+la collecte. Les champs =installed_source_commit=, =installed_generation= et
+=system_state_version= restent donc =null= dans =mrjam-vps.json=.
+
+* Rapprochement du code autorisé
+
+Les références inactives conservées depuis =vps-infrastructure@c6459ae215b0e4e8b1350b02222ad21af41db836=
+contiennent le même pin nixpkgs dans =assemblage/forgejo/versions.json= et
+=assemblage/kanidm/dependances.json=. Leurs blobs Git et le blob de
+=hosts/hostinger/configuration.nix= ont été revérifiés. Ce rapprochement
+n'établit pas qu'ils constituent le système en cours ; cette collection reste
+incomplète et inactive. Aucune configuration matérielle de Spectre n'est copiée.
+
+Le commit amont nixpkgs désigne l'arbre
+=84e89b1b71abdbefcaf99ca2d5787d3dbed600a2=. La reconstruction de tout cet arbre
+à partir de l'archive publique, puis à partir du store immuable, correspond :
+52834 fichiers, 37106 répertoires et 3 liens symboliques. La source est maintenant
+verrouillée séparément dans [[file:../compatibility/nixpkgs-vps-observed.lock.json][le verrou de compatibilité]], avec NAR
+=sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y==.
+
+Un premier contrôle de =.version= a été suspendu : l'API de contenu renvoie
+la cible du lien mais annonce le blob Git du lien. La vérification du mode
+=120000= et des octets =lib/.version= explique cet écart ; l'arbre complet
+correspond à l'empreinte attendue initiale. Aucune attente n'a été changée.
+La source amont désigne bien la série 26.05 ; ce fait de code n'est pas une
+observation de =system.stateVersion= sur le VPS.
+
+Le =flake.lock= principal reste inchangé, à
+=6f06d204d8f2d8761d9da78778745974a3216381=, pour les artefacts déjà qualifiés.
+Introduire le verrou de compatibilité ne sélectionne pas automatiquement une
+nouvelle distribution ni une nouvelle génération de production.
+
+* Travaux concrets et limite de compatibilité
+
+Le module [[file:../nixos/mrjam-system-provenance.nix][mrjam-system-provenance.nix]] ajoute, lorsqu'il sera explicitement
+sélectionné dans une génération revue, la révision complète à
+=system.configurationRevision= et un document fermé sous
+=/etc/mrjam/system-provenance.json=. Il exige des références complètes,
+la concordance du pin nixpkgs et une valeur de compatibilité déjà établie.
+Il ne fixe ni ne relève =stateVersion= ; un désaccord est refusé.
+
+Le document décrit les entrées de code, sans secret, donnée ni identité NAR
+de sa propre sortie : cette dernière créerait une boucle de hachage. Les
+empreintes de la génération restent dans le manifeste de livraison externe.
+L'autorité déclarée reste =declared_build_metadata=, jamais une approbation.
+Le module est désactivé dans la composition VPS préparatoire.
+
+Les 33 contrôles de ce module passent avec chacun des deux nixpkgs. Les
+21 contrôles de composition VPS incluent maintenant le retour reçu et vérifient
+que les inconnues n'ont pas été remplacées. La matrice détaillée et les reçus
+de construction sont dans [[file:../compatibility/README.org][le dossier de compatibilité]].
+
+La matrice sur la base observée est globalement NON compatible : le paquet de
+préparation Forgejo exige 17.0.1 et cette base fournit 16.0.3. Le contrôle de
+version refuse la substitution. Il n'est ni retiré ni affaibli ; les builds
+actifs Forgejo/runner/Kanidm restent inconnus, et leur migration doit être
+qualifiée séparément. Le succès des autres modules n'efface pas ce blocage.
+
+* Preuve manquante et prochain relais
+
+La recherche locale de checkout sur Spectre et les observations V1, V2 et
+provenance sont terminées. Les répéter ne restituera pas une révision qui
+n'est pas fournie par ce canal. La prochaine pièce utile est une référence
+du code de la configuration réellement utilisée : dépôt, commit et point
+d'entrée, avec les éventuels ajouts non versionnés identifiés côté opérateur.
+
+Le [[file:RECUPERATION-SOURCES-SPECTRE.txt][prompt de récupération des références]] prépare cette recherche pour
+l'administrateur humain, à partir du point d'entrée NixOS connu. Il ne délègue
+aucun shell de production à un agent et ne demande aucun transfert de données,
+secret, sauvegarde ou configuration brute. Seuls des éléments de code relus
+peuvent ensuite être proposés sur une branche de travail.
+
+Les autres blocages du [[file:../dossier-deploiement.org][dossier de déploiement]] restent ouverts : génération
+complète, adoption effective, identité, versions actives, isolation/quotas,
+autorité des règles, sauvegarde/restauration et bascule/retour. Aucune activation
+de production n'a eu lieu dans cette intégration.

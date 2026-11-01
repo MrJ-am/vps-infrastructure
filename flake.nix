@@ -12,6 +12,7 @@
       rustEvaluation = import ./operations/tests/module-evaluation.nix { inherit nixpkgs; };
       inventoryEvaluation = import ./operations/tests/inventory-evaluation.nix { inherit nixpkgs; };
       vpsPreparationEvaluation = import ./operations/tests/vps-preparation-evaluation.nix { inherit nixpkgs; };
+      systemProvenanceEvaluation = import ./operations/tests/system-provenance-evaluation.nix { inherit nixpkgs; };
       forgejoEvaluation = import ./operations/forgejo/tests/module-evaluation.nix { inherit nixpkgs; };
       gatewayEvaluation = import ./operations/tests/gateway-evaluation.nix { inherit nixpkgs; };
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
@@ -43,11 +44,13 @@
         visionAdmission = import ./operations/nixos/mrjam-vision-admission.nix;
         admissionAdoption = import ./operations/nixos/mrjam-admission-adoption.nix;
         vpsPreparation = import ./operations/nixos/vps-preparation.nix;
+        systemProvenance = import ./operations/nixos/mrjam-system-provenance.nix;
       };
       # Deliberately no production nixosConfiguration or default deployable image.
       lib.qualification.rust = rustEvaluation;
       lib.qualification.inventory = inventoryEvaluation;
       lib.qualification.vpsPreparation = vpsPreparationEvaluation;
+      lib.qualification.systemProvenance = systemProvenanceEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
       lib.qualification.gateway = gatewayEvaluation;
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
@@ -79,6 +82,13 @@
         };
       };
       checks.${system} = {
+      system-provenance-module = pkgs.runCommand "mrjam-system-provenance-module-evaluation" {
+        result = builtins.toJSON systemProvenanceEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      system-provenance-render = import ./operations/tests/system-provenance-build.nix { inherit nixpkgs; };
       rust-module = pkgs.runCommand "mrjam-rust-module-evaluation" {
         result = builtins.toJSON rustEvaluation;
       } ''
