@@ -1,0 +1,108 @@
+#+title: Assemblage et précontrôle local du premier déploiement sans ViSe
+#+date: 2026-11-01
+#+language: fr
+
+* Travail effectué sur Spectre
+
+La directive utilisateur « Va jusqu'au bout » poursuit le mandat de première
+mise en service. Spectre conserve la responsabilité de l'assemblage, des essais
+et de la bascule. Aucune nouvelle délégation root n'est demandée à Codex Cloud.
+
+=hosts/mrjam-vps/core-services.nix= rassemble les modules d'adoption Forgejo,
+Kanidm et Nextcloud avec PostgreSQL 17 et Nginx. Il conserve les identités
+observées, les chemins de données, les secrets référencés, TLS vérifié et les
+refus d'administration publique de Kanidm. PostgreSQL refuse un cluster absent
+avant tout initdb ; les migrations et promotions restent explicites. ViSe est
+absent de cette composition, ses données ne sont pas touchées.
+
+Ce module constitue une partie du futur hôte : il ne remplace pas à lui seul
+la machine, les applications Rust/Elm, les workers, le renouvellement ACME,
+les sauvegardes d'exploitation ou la chaîne protégée Forgejo/CI. Il n'est pas
+importé par le point d'entrée de production ; la génération complète ne peut
+pas encore être activée. Les services d'adoption restent sans démarrage au boot
+tant que leur promotion n'a pas été explicitement assemblée et vérifiée.
+
+* Résultats vérifiés
+
+Les trois paquets préservés sont construits localement : Nextcloud 34.0.4,
+PHP 8.4.27 et Kanidm 1.11.2. Les 23 assertions de composition passent sur chacun
+des deux pins nixpkgs. La VM KVM avec les vrais paquets passe six groupes :
+refus d'un état absent, installation explicite des fixtures, trois services
+HTTPS, refus SQL croisés/TLS/mot de passe local/API privée, capture cohérente,
+restauration des fichiers et du cluster puis reprise des trois services.
+
+La capture synthétique inclut PostgreSQL, Forgejo, Kanidm, Nextcloud et Redis
+Nextcloud. L'essai a détecté que =systemctl stop postgresql.target= retourne
+avant la fin de l'arrêt de PostgreSQL : un simple refus de =is-active= accepte
+encore l'état =deactivating=. La séquence corrigée attend explicitement le
+service, contrôle =ActiveState=inactive=, =MainPID=0= et l'absence de
+=postmaster.pid= avant la copie. La première tentative de copie incohérente
+a échoué ; elle n'est pas présentée comme une sauvegarde valide.
+
+La restauration n'est qualifiée qu'avant réouverture des écritures. Ce test ne
+qualifie ni une migration d'identité réelle, ni la restauration de l'ensemble
+du VPS, ni la continuité après des écritures en production. L'essai précédent
+Forgejo 16 vers 17 conserve sa preuve distincte.
+
+Le reçu =qualification-core-services-20261101.json= lie les sources, sorties
+Nix, résultats et empreintes des journaux locaux. Ces essais ne constituent
+pas une revue indépendante ou une autorité protégée de déploiement.
+
+* Précontrôle SSH en lecture seule
+
+=preflight.py= n'accepte aucun argument. Exécuté par le Python déjà remis au
+VPS, il produit uniquement des champs fermés : génération, UID/GID, métadonnées
+de fichiers, version majeure PostgreSQL, unités sélectionnées, domaines et
+webroot Nextcloud dans la configuration Nginx immuable. Les requêtes d'identité
+n'envoient aucun cookie, jeton ou mot de passe et ne conservent aucun corps HTTP.
+Les huit contretests locaux vérifient les frontières de lecture et de sortie.
+
+Le contrôle final confirme la génération précédemment observée, PostgreSQL 17,
+les identités et la présence des fichiers attendus. Le webroot Nextcloud actif
+est =/nix/store/l9xw3zmd1ad2a26z0lng0bsiq1ia5s02-nextcloud-34.0.4-with-apps=.
+Aucune donnée SQL, aucun contenu de secret ni journal applicatif n'est exporté.
+Aucun paquet, fichier de production ou service n'est modifié par cette étape.
+
+Le filtre de domaines ne retient que =mrj.am= : il ne permet aucune conclusion
+sur l'absence de =principiipetit.io= ou d'autres domaines. Un chemin store ou
+une présence de fichier n'atteste pas une migration, un SSO ou une restauration.
+
+* Deux points concrets en cours
+
+Les archives qualifiées sont documentées dans =release/=, mais leurs octets
+ne sont pas disponibles dans les dossiers locaux vérifiés ou les publications
+GitHub examinées. L'API Forgejo renvoie 403 avec exigence de connexion et son
+explorateur redirige vers login. Leur absence dans Forgejo n'est donc pas établie.
+Le fichier =DEMANDE-EXPORTS-CLOUD.txt= contient les deux identités exactes à
+demander à Cloud ; il ne lui transfère pas le déploiement du VPS.
+
+Le raccord d'identité attendu par le serveur Rust n'existe pas sous la forme
+supposée dans sa configuration : les trois routes de vérification sur
+=127.0.0.1:3002= sont injoignables, =mrj-auth.service= n'est pas chargé et Nginx
+n'expose pas ce listener dans sa configuration sélectionnée. La source reçue
+=payload/vps/modules/log.nix= désactive explicitement mrj-auth et confie
+=/verify=, =/verify-gestion=, =/verify-mcp= ainsi que les parcours OAuth au
+socket de l'ancien monolithe. La nouvelle plateforme contient un client de ce
+contrat, pas son remplacement complet. Son pont de présentation Kanidm ne
+remplace pas ces sessions, contrôles CSRF, élévations et autorisations MCP.
+
+Il faut fermer et tester ce raccord avec le contrat natif Kanidm avant de
+retirer l'ancien service. Ne pas simuler un succès d'identité, réactiver l'ancien
+Python Keycloak ou réintroduire SBCL comme dépendance du nouveau système. Les
+archives applicatives seules ne résolvent pas cette différence d'architecture.
+
+Après ces points : terminer la composition globale, qualifier les migrations
+et retours correspondants, effectuer sa revue indépendante, puis seulement
+construire la livraison finale et appliquer la bascule locale bornée. Le VPS
+reste sur sa génération initiale ; aucune mise en service nouvelle n'est annoncée.
+
+* Reproduction des contrôles locaux
+
+#+begin_src sh
+python3 -B -m unittest discover -s operations/deployment -p 'test_*.py' -v
+nix-instantiate --eval --strict --json operations/tests/core-services-evaluation.nix --arg nixpkgs /source/nixpkgs-verrouillee
+nix build --no-link --json --max-jobs 1 --cores 2 --builders '' --file operations/runtime/core-services-systemd.nix --arg nixpkgs /source/nixpkgs-verrouillee --argstr acceleration kvm
+#+end_src
+
+Le paramètre KVM concerne Spectre. L'accélération par défaut du test reste TCG.
+Ces commandes sont des essais locaux ; aucune commande switch n'est fournie.
