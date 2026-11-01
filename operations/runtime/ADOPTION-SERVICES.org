@@ -10,10 +10,18 @@ encore une génération complète installable : les builds et identités actifs,
 l'adoption des données, la chaîne d'approbation protégée et le contrôleur de
 bascule doivent être rapprochés des artefacts effectivement testés.
 
+ViSe est exclu du premier déploiement par la directive explicite du 1 novembre.
+Son exécutable, sa construction, ses schémas, ses tests, ses sauvegardes propres
+et sa disponibilité ne bloquent jamais le socle. Le profil séparé
+=../hosts/mrjam-vps/configuration-with-vise.nix= prépare sa réintégration.
+Conserver sa base, son registre d'effacement, ses fichiers et ses sauvegardes ;
+le service et sa route peuvent être temporairement absents.
+
 Le [[file:../targets/SERVICES-OBSERVES-20261101.org][retour services V2]] fournit désormais les six UID/GID, six identités
-d'exécutables/NAR et sept unités actives. Les quatre modules d'adoption reçoivent
-les identités observées dans la composition préparatoire, avec vérification de
-l'empreinte du rapport. ViSe reste inconnu ; PHP-FPM n'identifie pas le webroot
+d'exécutables/NAR et sept unités actives. Les trois modules d'adoption du socle
+reçoivent les identités observées, avec vérification de l'empreinte du rapport.
+L'identité ViSe est lue seulement par le profil optionnel. Son exécutable reste
+inconnu, sans bloquer le socle ; PHP-FPM n'identifie pas le webroot
 Nextcloud. Le rapport ne prouve pas la disponibilité fonctionnelle des services.
 
 Les trois modules =mrjam-forgejo-host.nix=, =mrjam-kanidm-host.nix= et
@@ -99,7 +107,12 @@ réparation de base sont retirés de ce chemin de démarrage. La fixture initial
 explicitement sa base inventée, puis adopte cette instance. L'essai OIDC complet
 avec Kanidm et le contrôle de restauration Nextcloud restent distincts.
 
-* ViSe et le registre des suppressions
+* Réintégration ultérieure de ViSe et registre des suppressions
+
+Les exigences ci-dessous s'appliquent à la réintégration de ViSe uniquement.
+Les contrôles flake correspondants sont sous =lib.optionalChecks.x86_64-linux.vise=,
+hors de =checks= et de la qualification par défaut. Les assertions restent
+inchangées ; une erreur dans cette qualification reporte ViSe, pas le socle.
 
 La nouvelle entrée =CARNET_SCHEMA_MODE=existing-v1= ne lance aucun CREATE TABLE.
 Elle exige le schéma v1 et un journal régulier existant. Le précontrôle NixOS
@@ -137,8 +150,10 @@ python3 operations/compatibility/check_components.py \
   --nixpkgs "$NIXPKGS_SOURCE" --destination "$NEW_EVALUATION_DIRECTORY"
 #+end_src
 
-L'évaluation séquentielle conserve tous les composants et toutes les assertions
-de la matrice. Elle évite de conserver simultanément leurs graphes en mémoire.
+L'évaluation séquentielle conserve toutes les assertions du périmètre retenu.
+ViSe et sa composition PostgreSQL sont exclus par défaut ; =--include-vise=
+les ajoute pour leur qualification ultérieure. Elle évite de conserver
+simultanément les graphes des composants en mémoire.
 Une tentative monolithique en concurrence avec une VM a été tuée par manque
 de mémoire ; elle n'est pas comptée comme un succès ou un échec de contrat.
 
@@ -153,7 +168,7 @@ peut être retenu. Aucun reçu local ne remplace une revue indépendante protég
 |-----------------------------+-------------------------------------|
 | Identités et builds actifs | Retour V2 reçu : six UID/GID et six sorties/NAR. Paramètres candidats renseignés, autorité non authentifiée conservée. Rapprocher les artefacts exacts et revalider les préconditions lors de l'adoption, sans répéter le relais général. |
 | Forgejo 16.0.3 vers 17.0.1 | Migration et retour avant réouverture testés sur les deux vrais paquets, avec données synthétiques. Restent état initial réel, capture/restauration autorisée et contrôleur de bascule ; le simple retour de binaire est refusé par l'ancien migrateur. |
-| ViSe, exécutable inconnu | Le code reçu prévoit une release hors store, exclue du contrat V2. Le retour ne confirme pas le chemin effectif. Identifier le seul exécutable ViSe par un contrôle fixe intégré au futur précontrôle opérateur. |
+| ViSe, exécutable inconnu — hors prérequis du socle | Le code reçu prévoit une release hors store. Reporter l'identification de cet exécutable et les contrôles d'adoption à sa réintégration ; déployer sans ViSe en cas d'obstacle. |
 | Nextcloud et ses applications | PHP 8.4.27 est observé ; le webroot et les applications ne sont pas identifiés par l'exécutable PHP-FPM. Rapprocher leurs références dans le précontrôle d'adoption. |
 | Schémas et droits existants | Contrôles fixes exécutés localement par la future capacité bornée, retour de codes seulement ; aucun SQL arbitraire transmis à Cloud. |
 | Sauvegardes et restaurations réelles | Reçu fermé du mécanisme autorisé, capture cohérente avec écritures arrêtées, destination et clés conservées côté opérateur. Aucune sauvegarde ne quitte la production vers les agents. |
