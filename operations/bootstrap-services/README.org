@@ -1,0 +1,46 @@
+#+title: Observation bornée des identités et exécutables nécessaires à l'adoption
+#+date: 2026-11-01
+#+language: fr
+
+Cette extension distincte ne modifie ni V1, ni V2, ni l'accès SSH existant.
+Elle répond à deux inconnues bloquantes : conserver les UID/GID existants et
+comparer les exécutables réellement sélectionnés par systemd aux candidats.
+Elle ne déduit pas un build à partir d'un nom de version dans le profil système.
+
+Le programme immuable n'accepte aucun argument. Six noms de comptes et sept
+noms d'unités sont fixés dans =contract.py=. Il relève seulement les UID/GID,
+l'état des unités, le lien =exe= de leurs PID principaux et les métadonnées NAR
+du store local. Le PID et les propriétés privées ne sont jamais retournés.
+Le lien =/run/current-system= donne la génération courante. Les lectures Nix
+sont hors réseau ; une réponse manquante reste inconnue. Un NAR interrogé dans
+la base locale n'est pas une attestation de contenu ni une preuve authentifiée.
+
+L'amorçage humain crée une unité transitoire root, avec seulement
+=CAP_SYS_PTRACE= pour les liens =/proc/PID/exe= entre identités Unix.
+Les appels ptrace/mémoire sont exclus par le filtre système. Cette capacité
+supplémentaire doit être revue explicitement : elle n'est jamais attribuée au
+compte SSH d'inventaire, à Spectre ou à Cloud. Les données, journaux, sauvegardes,
+secrets et sockets applicatifs sont masqués ; réseau IP et écritures système
+sont refusés. Les limites sont 25 % CPU, 256 Mio, 16 tâches et 120 secondes.
+Le lanceur filtre de nouveau le résultat avant sa seule sortie, de 16 Kio au
+maximum. Une erreur, collision d'unité, copie mutable ou argument rend un refus
+sans JSON partiel. Aucun service applicatif ni génération n'est modifié.
+
+Les tests natifs couvrent les contrats, courses de PID/exécutable et refus.
+La VM TCG vérifie réellement les lectures entre UID, les métadonnées Nix, les
+refus d'entrée et les protections du noyau avec des fichiers synthétiques.
+Son service nommé forgejo est un processus sleep : cette suite ne teste pas
+Forgejo. La suite séparée =../runtime/forgejo-postgresql-systemd.nix= utilise
+le logiciel réel. Les preuves locales ne sont pas une approbation indépendante.
+
+=export_delta.py= est un producteur Cloud, jamais un outil VPS : il vérifie la
+remise originale inchangée, exporte uniquement les nouveaux chemins et importe
+l'original puis le delta dans un store vierge. Les contenus récursifs, tailles
+et références de toute la fermeture sont comparés avant livraison. Le client
+Nix épinglé du paquet ne remplace pas le Nix du système.
+
+La revue indépendante porte sur les lectures exactes, les limites, le nouveau
+besoin CAP_SYS_PTRACE, les résultats des tests et les empreintes de livraison.
+Le retour attendu garde =authority=unverified_observation=. Un exécutable absent
+du rapport ne démontre pas l'absence du logiciel. Aucun SQL ni accès applicatif
+n'est ajouté à cette observation.
