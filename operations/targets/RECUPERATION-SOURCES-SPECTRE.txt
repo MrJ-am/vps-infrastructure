@@ -1,5 +1,10 @@
 Relais Codex sur Spectre — retrouver la référence du code de configuration VPS
 
+Actualisation après les retours du 1er novembre 2026 : les quatre commandes de
+métadonnées ci-dessous ont déjà été exécutées. Ne pas les répéter. La suite
+courante est operations/source-recovery/SPECTRE.txt, remise des copies de code
+après revue humaine. Le texte historique ci-dessous explique le relais passé.
+
 Cloud a validé provenance-v1.json (SHA-256
 31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac).
 Le champ de génération reste jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9.
