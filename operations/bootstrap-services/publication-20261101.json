@@ -1,0 +1,16 @@
+{
+  "anonymous_archive_download_verified": true,
+  "archive_bytes": 31088640,
+  "archive_sha256": "5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e",
+  "branch": "remise-observation-services-v1-20261101",
+  "commit": "6decfa22471dc9d7ae38c6061b7f56ffc2d982ba",
+  "download_sha256": "5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e",
+  "extractor_sha256": "29450698155672b07d6a5728c5373d894f95ef9776adbd69e3c9004b86701a33",
+  "production_action": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "public_archive_url": "https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/6decfa22471dc9d7ae38c6061b7f56ffc2d982ba/mrjam-observation-services-20261101.tar",
+  "review_commit": "ea116c3f5f4f1ed2e1454702932eaed10ef29288",
+  "source_commit": "c96b947ed6bb4e818769d7c666447acb336548ca",
+  "tree": "755bb580f6c3fec353083dbe9ec950d8ba4b7ece"
+}

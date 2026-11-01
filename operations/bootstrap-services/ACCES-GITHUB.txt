@@ -1,0 +1,42 @@
+Reprends sur Spectre le relais MRJ.am de l'observation services V1.
+
+Le code VPS revu a déjà été reçu par Cloud : ne recommence pas sa recherche.
+L'utilisateur demande d'achever le déploiement ; ce complément ferme les inconnues
+sur les identités Unix et exécutables actifs nécessaires à l'adoption.
+Aucun secret, donnée ou clé privée ne doit être récupéré ou envoyé à Cloud.
+
+Remise publique figée : MrJ-am/vps-infrastructure@6decfa22471dc9d7ae38c6061b7f56ffc2d982ba
+Archive : https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/6decfa22471dc9d7ae38c6061b7f56ffc2d982ba/mrjam-observation-services-20261101.tar
+Taille : 31088640 octets
+SHA-256 : 5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e
+Extracteur local : https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/6decfa22471dc9d7ae38c6061b7f56ffc2d982ba/extract.py
+SHA-256 extracteur : 29450698155672b07d6a5728c5373d894f95ef9776adbd69e3c9004b86701a33
+
+Depuis un NOUVEAU dossier sur Spectre, télécharger uniquement ces fichiers publics :
+
+curl --fail --location --output mrjam-observation-services-20261101.tar 'https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/6decfa22471dc9d7ae38c6061b7f56ffc2d982ba/mrjam-observation-services-20261101.tar'
+curl --fail --location --output extract.py 'https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/6decfa22471dc9d7ae38c6061b7f56ffc2d982ba/extract.py'
+printf '%s\n' '5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e  mrjam-observation-services-20261101.tar' '29450698155672b07d6a5728c5373d894f95ef9776adbd69e3c9004b86701a33  extract.py' | sha256sum --check --strict -
+
+Lire l'extracteur local avant exécution. Il vérifie le SHA externe, les 33 membres
+réguliers et toutes les entrées SHA256SUMS AVANT d'extraire dans le dossier neuf :
+
+python3 -I -S extract.py mrjam-observation-services-20261101.tar remise-services
+
+Puis lire remise-services/SPECTRE-RELAIS.txt, README.org, EXECUTION-HUMAINE.org,
+REMISE.json et les sources/preuves sélectionnées. Respecter ce relais exact.
+Ne modifier aucune empreinte pour faire passer un contrôle. Les 18 tests natifs,
+cinq groupes VM et l'import vierge vérifié sont des preuves Cloud, pas ta revue.
+
+Revoir explicitement cette nouvelle capacité : lancement humain d'un programme
+immuable, root avec seulement CAP_SYS_PTRACE pour sept liens /proc/PID/exe,
+confinement fichiers/réseau, ressources limitées et double filtrage côté VPS.
+Il ne lit ni mémoire, ni cmdline, ni environnement, ni donnée ou secret.
+Elle n'accorde aucun accès root/shell général à un agent, et ne modifie pas l'ACL
+SSH mrjam-inventory. Préparer le geste EXACT pour l'administrateur humain.
+Aucune activation NixOS ou modification de service applicatif dans ce relais.
+
+Après le geste humain, revalider uniquement services-v1.json avec le filtre de
+la remise, puis retourner ce seul fichier à Cloud. Un échec retourne seulement
+l'objet fermé étape/code/exit_code de la procédure, jamais une sortie brute.
+Ne transmettre ni chemins-importes.txt ni fermeture-installee.json.
