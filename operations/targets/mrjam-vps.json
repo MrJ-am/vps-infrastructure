@@ -142,5 +142,19 @@
     },
     "functional_availability_verified": false,
     "production_execution_ready": false
+  },
+  "public_health_observation": {
+    "reference": "operations/runtime/public-health-observation-20261101.json",
+    "sha256": "3091963fde3a52394d3d6d17b2311f8e6ec70d28db13260367dc0a88c2b3db8f",
+    "authority": "public-unauthenticated-health-observation",
+    "services": [
+      "vise",
+      "nextcloud",
+      "forgejo",
+      "kanidm"
+    ],
+    "tls_verified": true,
+    "end_to_end_qualification": false,
+    "installed_artifact_identity_proven": false
   }
 }

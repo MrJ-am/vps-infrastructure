@@ -64,6 +64,24 @@ ce canal. Ne pas inventer d'empreinte ni déplacer le binaire pour obtenir 7/7.
 
 * Travail restant regroupé
 
+Les [[file:../runtime/public-health-observation-20261101.json][contrôles HTTPS publics]] du 1 novembre, entre 19:35 et 19:36 UTC, ajoutent
+une observation distincte, sans SSH, authentification, redirection ni données
+applicatives. Seuls le code HTTP et les champs fermés de santé/version ont été
+conservés ; les certificats TLS ont été vérifiés.
+
+| Service | Contrôle | Résultat |
+|---------+----------+----------|
+| ViSe | /api/health | HTTP 200, contrat status=ok et prototype=true exact |
+| Nextcloud | /status.php | HTTP 200, version 34.0.4 (34.0.4.1), installé, maintenance=false, needsDbUpgrade=false |
+| Forgejo | /api/healthz | HTTP 200, status=pass |
+| Kanidm | /status | HTTP 200 ; aucune connexion SSO de compte n'est testée |
+
+Ces réponses confirment les endpoints contrôlés au moment indiqué. Elles ne
+donnent pas l'empreinte du binaire ViSe ni du webroot Nextcloud, et ne prouvent
+ni parcours applicatif complet, ni sauvegarde, ni conformité générale du VPS.
+La version nominale Nextcloud est maintenant également déclarée par le serveur ;
+il n'est pas nécessaire de solliciter un nouveau relais pour ce seul numéro.
+
 1. Exploiter ce retour dans le dépôt, sans refaire le relais services V2 :
    identités candidates, comparaison des sorties/NAR et migration Forgejo.
    Le départ Forgejo correspond maintenant au paquet local vérifié ; les 17

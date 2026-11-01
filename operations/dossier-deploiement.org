@@ -3,6 +3,14 @@
 
 * Décision actuelle
 
+Le retour services V2 est intégré et la transition Forgejo 16.0.3 vers 17.0.1,
+puis le retour avant réouverture par restauration SQL/fichiers, passent leurs
+17 groupes synthétiques. Les identités candidates passent 29 contrôles sur
+chacune des deux entrées nixpkgs ; voir [[file:runtime/FORGEJO-MIGRATION-16-17.org][la qualification courante]]. Les
+[[file:targets/SERVICES-OBSERVES-20261101.org][observations courantes des services]] incluent aussi quatre endpoints publics
+HTTPS répondant 200. Ce sont des acquis distincts de l'adoption et de la bascule
+réelles ; ils ne lèvent pas la barrière de génération complète.
+
 La reprise du 1 novembre a intégré les 137 fichiers VPS remis par Spectre et
 vérifié leur manifeste. Le [[file:hosts/mrjam-vps/README.org][dossier du host reconstruit]] est la référence
 courante pour la machine, ViSe, les protections Nextcloud et les règles
