@@ -1,0 +1,27 @@
+{
+  "archives": [
+    {
+      "name": "mrjam-artefacts-revue-20261031.tar",
+      "bytes": 48640000,
+      "sha256": "5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff",
+      "members": 14,
+      "manifest_sha256": "cbc2c154310f8d3764158272c95a593dc3ea85328675903c8d11bb6f02c15da4",
+      "all_members_verified": true,
+      "raw_export_hash_verified": true,
+      "existing_receipt": "qualification-review-export-20261031.json",
+      "rebuilt": false
+    },
+    {
+      "name": "mrjam-travailleurs-revue-20261031-03.tar",
+      "bytes": 107653120,
+      "sha256": "08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c",
+      "members": 17,
+      "manifest_sha256": "a164c1189176f9b5cff87e751cbb65ba37ccd128d1860550fbbef31f65089643",
+      "all_members_verified": true,
+      "raw_export_hash_verified": true,
+      "existing_receipt": "qualification-review-workers-20261031-03.json",
+      "rebuilt": false
+    }
+  ],
+  "production_action": false
+}

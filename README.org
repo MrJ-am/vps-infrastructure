@@ -1,0 +1,24 @@
+#+title: Exports existants de revue MRJ.am — 31 octobre 2026
+#+language: fr
+
+Les deux archives originales sont publiées sans reconstruction ni modification.
+Leurs noms et SHA-256 sont fixés dans SHA256SUMS. Les fichiers volumineux sont
+stockés dans Git LFS ; un pointeur Git LFS n'est pas l'archive à importer.
+Les liens directs de téléchargement utilisent media.githubusercontent.com,
+avec un commit précis et le nom complet de chaque archive.
+
+Les empreintes externes, les 14 et 17 membres réguliers, les SHA256SUMS internes,
+les manifestes et les flux Nix décompressés ont été revérifiés avant publication.
+Aucun code de ces exports n'a été exécuté ou reconstruit pour cette publication.
+
+Vérifier les SHA-256 avant extraction dans deux dossiers distincts, puis toutes
+les entrées SHA256SUMS internes. Les archives partagent certains noms de membres.
+La sélection travailleurs 03 remplace l'ancien archiviste du paquet plateforme ;
+les autres sorties plateforme, rejeu et SQL004 restent distinctes.
+Ces exports de revue ne sont pas une génération NixOS complète.
+
+Le déploiement reste à la charge de Spectre. Cette publication ne touche pas le
+VPS et ne modifie pas les reçus historiques ou leur autorité.
+Références de revue : vps-infrastructure@af81b5f73006b764b4ca69131994bb6bb512313a,
+operations/release/REVUE-ARTEFACTS-20261031.org et
+operations/release/REVUE-TRAVAILLEURS-20261031-03.org.
