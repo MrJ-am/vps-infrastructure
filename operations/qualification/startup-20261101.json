@@ -1,0 +1,33 @@
+{
+  "configured_production_capabilities": [],
+  "configured_secret_bindings": [],
+  "first_attempt": {
+    "directory": "/workspace/vps-infrastructure/environment",
+    "reason": "This source checkout has no local runtime caches; prepared environment is in the shared directory",
+    "result": "incomplete"
+  },
+  "installation_performed": false,
+  "prepared_environment": "/workspace/shared/mrjam-environment",
+  "production_access": false,
+  "recorded_on": "2026-11-01",
+  "repository_sources_and_six_locks_or_scripts_match": true,
+  "result": {
+    "checks": {
+      "browser": true,
+      "clippy": true,
+      "elm": true,
+      "elm_review": true,
+      "elm_test": true,
+      "images": true,
+      "local_docker": true,
+      "node": true,
+      "npm": true,
+      "npm_lock": true,
+      "npm_packages": true,
+      "playwright": true,
+      "rust": true,
+      "rustfmt": true
+    },
+    "status": "ok"
+  }
+}

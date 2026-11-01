@@ -1,0 +1,41 @@
+{
+  "archive": {
+    "bytes": 51095482,
+    "sha256": "aef99370f33b531a099dbebec6dfe6d191b29563717d54c8ba1ffdbf687f5cbb",
+    "url": "https://github.com/NixOS/nixpkgs/archive/c5c4a43b0e8056328ec4529f735cabdb8f1942bb.tar.gz"
+  },
+  "git_commit_metadata_url": "https://api.github.com/repos/NixOS/nixpkgs/git/commits/c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "immutable_tree_check": {
+    "bytes": 189451760,
+    "directories": 37106,
+    "files": 52834,
+    "matches_expected": true,
+    "symlinks": 3,
+    "tree": "84e89b1b71abdbefcaf99ca2d5787d3dbed600a2"
+  },
+  "initial_check": {
+    "cause": "Compared followed symlink target to the link Git blob",
+    "expected_link_blob": "a408b4d1748c30a263859d2c789804aa17f155e0",
+    "git_mode": "120000",
+    "link_bytes": "lib/.version",
+    "original_expectation_changed": false,
+    "resolution": "Verified the link object and entire immutable Git tree against the original upstream tree",
+    "result": "rejected-before-use"
+  },
+  "limits": [
+    "Public source identity only, not an installed configuration or active service build"
+  ],
+  "nar_bytes": 206319880,
+  "nar_hash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+  "nix_content_verification_exit_code": 0,
+  "production_access": false,
+  "recorded_on": "2026-11-01",
+  "schema_version": 1,
+  "source_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "source_verifier_tests_passed": 4,
+  "store_path": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "tests_log_sha256": "6ee35512c6039e989ea1f5694d25d6ff4dfdf1f0288cb3c4670d31c239b87edd",
+  "tests_sha256": "b52d30296a23bed109fe90895278d6d0d4c6171d1b5edc9ec8ec7552a2758f0d",
+  "upstream_tree": "84e89b1b71abdbefcaf99ca2d5787d3dbed600a2",
+  "verifier_sha256": "8646a0e265602f07e188ebfca73f9e8603ea775a648033fc7a5a2f47e086b8e1"
+}

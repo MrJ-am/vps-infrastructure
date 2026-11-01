@@ -1,0 +1,103 @@
+#+title: Base nixpkgs observée et traçabilité des futures générations
+#+date: 2026-11-01
+#+language: fr
+
+* Deux entrées distinctes
+
+Le verrou principal reste inchangé et construit les candidats déjà qualifiés.
+=nixpkgs-vps-observed.lock.json= fixe séparément la source publique correspondant
+à la révision déclarée dans le retour de provenance :
+
+| Usage | Révision | Statut |
+|-------+----------+--------|
+| Outillage et candidats courants | 6f06d204d8f2d8761d9da78778745974a3216381 | Verrou principal inchangé |
+| Évaluation de compatibilité | c5c4a43b0e8056328ec4529f735cabdb8f1942bb | Source Git/NAR vérifiée, pas une configuration de machine |
+
+Le second verrou ne choisit pas une distribution à déployer. L'observation reste
+non authentifiée ; les builds actifs des services et =stateVersion= restent
+inconnus. Les mentions de versions ci-dessous concernent le code verrouillé.
+
+L'archive publique de la seconde entrée a été contrôlée par reconstruction de
+l'arbre Git complet, puis le même contrôle a été effectué dans le store Nix
+immuable. =verify_git_source.py= traite les liens comme objets Git, sans suivre
+leur cible, préserve la distinction exécutable et refuse les fichiers spéciaux.
+Ses quatre tests utilisent =git write-tree= comme comparaison indépendante.
+Le contrôle de =.version= doit porter sur le lien =lib/.version=, dont le mode
+Git est =120000= ; comparer le contenu suivi au SHA du lien est incorrect.
+
+* Résultats exécutés
+
+| Contrat sur la base observée | Résultat |
+|-----------------------------+----------|
+| Accès d'inventaire | 20 contrôles passent |
+| Composition VPS préparatoire | 21 contrôles passent |
+| Module Rust | 22 contrôles passent |
+| Gateway | 24 contrôles passent |
+| Métadonnées de génération | 33 contrôles passent |
+| Préparation Forgejo | REFUS : candidat 17.0.1, paquet de cette base 16.0.3 |
+
+La matrice retourne explicitement =overall_compatible=false=,
+=failed_components=["forgejoGate"]= et =production_ready=false=.
+Le refus Forgejo existant n'est ni modifié ni omis. Les champs =accepted=false=
+et =checks=null= signifient que l'évaluation de ce composant a échoué ; ils ne
+sont pas un succès vide. Le premier essai strict et son diagnostic sont conservés.
+
+Les 33 contrôles de métadonnées et les 21 contrôles de composition passent aussi
+avec l'entrée principale. Deux constructions réelles de la fixture fabriquent
+le document et exécutent =nixos-version --configuration-revision= et =--revision=.
+Leurs sorties correspondent aux références synthétiques attendues sur les deux
+entrées. Ce sont des artefacts de test, sans génération complète ou activation.
+Les identités exactes et les limites sont dans =qualification-20261101.json=.
+
+La réception du rapport ne change aucun binaire Rust/Elm : leurs qualifications
+antérieures ne sont pas répétées ni présentées comme de nouveaux tests.
+L'environnement préparé sous =/workspace/shared/mrjam-environment= passe ses
+contrôles de démarrage ; ses sources et verrous correspondent au dépôt. Le
+premier contrôle lancé dans le checkout sans caches locaux avait échoué.
+Aucune réinstallation n'a été nécessaire.
+
+* Reproduction locale, jamais sur le VPS
+
+Avec Nix et les entrées autorisées disponibles :
+
+#+begin_src bash
+python3 -B -m unittest discover -s operations/compatibility/tests -v
+nix --extra-experimental-features 'nix-command flakes' eval --json --expr 'import ./operations/compatibility/evaluation.nix {}'
+nix --extra-experimental-features 'nix-command flakes' build --no-link --json \
+  --file operations/tests/system-provenance-build.nix \
+  --arg nixpkgs 'import ./operations/compatibility/nixpkgs-vps-observed.nix' \
+  --argstr revision c5c4a43b0e8056328ec4529f735cabdb8f1942bb
+#+end_src
+
+Le helper fixe révision et NAR et rapproche le pin du rapport reçu. Il peut
+télécharger uniquement cette source publique si elle n'est pas disponible.
+Pour une évaluation sans téléchargement, fournir à =nix-instantiate --eval
+--strict --json operations/compatibility/evaluation.nix --arg nixpkgs= le chemin
+source préalablement vérifié. Le producteur Cloud utilise le Docker local avec
+le proxy et le certificat fournis, sans réseau de production. Ces commandes
+ne sont pas des commandes de déploiement.
+
+* Intégration du module de provenance et revue requise
+
+=../nixos/mrjam-system-provenance.nix= est exporté par le flake, désactivé par
+défaut et dans la composition préparatoire. Son activation future requiert :
+- commit source complet, propre et rapproché du manifeste d'entrées ;
+- SHA-256 de ce manifeste de code, sans secrets ni identité de sa propre sortie ;
+- pin nixpkgs correspondant à celui déclaré par NixOS ;
+- cible et nom de configuration fermés ;
+- =stateVersion= établi séparément, identique à celui de la configuration.
+
+Le module refuse les références absentes, branches, suffixes dirty, chaînes
+malformées, dépendances Nix cachées dans les paramètres, désaccord nixpkgs,
+changement de compatibilité et conflit avec une autre révision du host.
+Il ne crée ni compte ni service et ne fixe pas =system.stateVersion=.
+
+Son document root:root 0444 est une déclaration de build. Une chaîne indépendante
+devra encore vérifier le commit propre, le manifeste complet et la signature
+de la livraison, puis lier la génération et son NAR à cette déclaration.
+Ce module ne prouve ni l'absence de fichiers non versionnés dans un build tiers,
+ni l'origine du système actuel. L'installation effective, les permissions sur
+le VPS et une autorité protégée n'ont pas été vérifiées ici.
+
+Le [[file:../targets/RECUPERATION-SOURCES-SPECTRE.txt][relais Spectre suivant]] cherche les références de code manquantes
+par l'administrateur humain. Aucun inventaire V1/V2/provenance n'est à relancer.

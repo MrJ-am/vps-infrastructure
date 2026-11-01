@@ -5,6 +5,8 @@ let
   target = builtins.fromJSON (builtins.readFile ../targets/mrjam-vps.json);
   reportFile = ../received/20261031/adoption-v2.json;
   report = builtins.fromJSON (builtins.readFile reportFile);
+  provenanceFile = ../received/20261101/provenance-v1.json;
+  provenance = builtins.fromJSON (builtins.readFile provenanceFile);
   evaluate = extra: (import (nixpkgs + "/nixos/lib/eval-config.nix") {
     system = "x86_64-linux";
     modules = [ ../nixos/vps-preparation.nix {
@@ -39,6 +41,18 @@ let
     noSourceOrFullGenerationInvented = target.installed_source_commit == null && target.installed_generation == null
       && !target.adoption_observation.complete_generation_identity;
     noExecutionReadinessInferred = !target.production_execution_ready && !target.inventory_adoption.enable;
+    provenanceBytesBound = builtins.hashFile "sha256" provenanceFile == target.provenance_observation.report_sha256;
+    provenanceIsOnlyObservation = provenance.authority == "unverified_observation"
+      && !target.provenance_observation.complete_generation_identity
+      && !target.provenance_observation.continuous_generation_identity_proven;
+    missingConfigurationRevisionStaysUnknown = provenance.configuration_revision.state == "unknown"
+      && provenance.configuration_revision.value == null && target.installed_source_commit == null;
+    observedNixpkgsIsRecordedWithoutSubstitution = target.provenance_observation.nixpkgs_revision == provenance.nixpkgs_revision
+      && provenance.nixpkgs_revision.value == "c5c4a43b0e8056328ec4529f735cabdb8f1942bb";
+    generationHashComparisonIsExplicit = target.provenance_observation.same_store_hash_as_adoption_v2
+      && provenance.generation_store_hash == report.generation.current.store_hash;
+    noBuildMetadataInvented = !disabled.mrjam.systemProvenance.enable
+      && !(disabled.environment.etc ? "mrjam/system-provenance.json");
     fixtureAssertionsPass = builtins.all (entry: entry.assertion) enabled.assertions;
     enabledFixturePreservesIdentity = enabled.users.users.mrjam-inventory.uid == 980
       && enabled.users.groups.mrjam-inventory.gid == 980;

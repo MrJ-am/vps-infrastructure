@@ -46,5 +46,26 @@
     "profile_store_hash": "jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9",
     "profile_matches_current": true,
     "complete_generation_identity": false
+  },
+  "provenance_observation": {
+    "report_reference": "operations/received/20261101/provenance-v1.json",
+    "provenance_reference": "operations/received/provenance-system-20261101.json",
+    "report_sha256": "31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac",
+    "authority": "unverified_observation",
+    "generation_store_hash": "jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9",
+    "same_store_hash_as_adoption_v2": true,
+    "configuration_revision": {
+      "code": "UNAVAILABLE",
+      "state": "unknown",
+      "value": null
+    },
+    "nixpkgs_revision": {
+      "code": "OK",
+      "state": "observed",
+      "value": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb"
+    },
+    "state_version": null,
+    "complete_generation_identity": false,
+    "continuous_generation_identity_proven": false
   }
 }

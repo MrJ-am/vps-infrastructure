@@ -3,7 +3,9 @@
 { lib, ... }:
 let target = builtins.fromJSON (builtins.readFile ../targets/mrjam-vps.json);
 in {
-  imports = [ ./mrjam-inventory.nix ./mrjam-rust.nix ./mrjam-forgejo.nix ./mrjam-gateway.nix ];
+  imports = [ ./mrjam-inventory.nix ./mrjam-rust.nix ./mrjam-forgejo.nix ./mrjam-gateway.nix
+    ./mrjam-system-provenance.nix ];
+  mrjam.systemProvenance.enable = false;
   services.mrjamInventory.enable = false;
   # Observed identity pins the inactive candidate. The report is unauthenticated;
   # the exact adoption preflight and the complete host qualification still apply.

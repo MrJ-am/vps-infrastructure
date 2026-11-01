@@ -1,0 +1,28 @@
+{
+  "authenticated": false,
+  "authority": "unverified_observation",
+  "bytes": 361,
+  "delivery_commit": "9885278bff4af859f70140aeb0fc2e66171387b0",
+  "filename": "provenance-v1.json",
+  "hash_basis": "Computed on receipt; no separately supplied sender hash or signature",
+  "limits": [
+    "Valid format does not authenticate its production or previous NAR verification",
+    "Configuration revision remains unknown; stateVersion remains null",
+    "The same store hash in two unauthenticated observations does not prove continuity or complete generation identity",
+    "Nixpkgs revision is declared metadata, not an observed active service build"
+  ],
+  "production_access_from_cloud": false,
+  "production_activation_from_cloud": false,
+  "received_on": "2026-11-01",
+  "same_store_hash_as_adoption_v2": true,
+  "schema_version": 1,
+  "sender_sha256": null,
+  "sha256": "31e1f11d98f4c998fab447fe5a8e6e2fd5a0bc77e8c6911f3995601ac86d24ac",
+  "validator_exit_code": 0,
+  "validator_files": {
+    "probe/provenance.schema.json": "a703c5024700435655a963595eb72187d0d3eba61bb5bdb9371913a3c3ef499a",
+    "probe/validate_report.py": "8eca198d69dda5903f4fe840d43aca23557c97afe67456a6f958a331aefa8209",
+    "schema_core.py": "c82e66018ac9f35ccb3b52a33a9ec7ab2f54f55962410a55cd8c50134e1625d1"
+  },
+  "validator_source_commit": "2d8b5e2f48bab885459abe1c44f37019a3c9f63c"
+}
