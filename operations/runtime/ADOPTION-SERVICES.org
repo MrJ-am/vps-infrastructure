@@ -27,7 +27,7 @@ constitue pas une capacité de bascule indépendante de Nginx.
 
 | Composant | Cible préparée | Justification et limite |
 |-----------+----------------+-------------------------|
-| Forgejo | 17.0.1, nixpkgs applicatif 6f06d204 | Le retour V2 indique une sortie Forgejo 16.0.3. La migration 16.0.3 vers 17.0.1 et son retour exigent une qualification distincte. |
+| Forgejo | 17.0.1, nixpkgs applicatif 6f06d204 | Le retour V2 indique une sortie Forgejo 16.0.3. Migration et retour avant réouverture passent sur fixture ; l'adoption et le retour de production restent à qualifier. |
 | PostgreSQL | majeure 17, tests avec 17.11 | Majeure observée et partagée, sans création d'une seconde instance ni changement de dataDir par les modules. |
 | Kanidm | 1.11.2, même entrée applicative | Version déclarée et sortie 1.11.2 observée ; identité exacte du candidat à comparer. Aucun renommage de domaine ni provisioning automatique. |
 | Nextcloud | 34.0.4 | Archive et empreinte conservées depuis le code reçu ; assemblage fondé sur l'entrée c5c4a43b. |
@@ -37,11 +37,18 @@ constitue pas une capacité de bascule indépendante de Nginx.
 
 =stateVersion= reste =26.05= dans le socle VPS. Les ressources observées
 (2 CPU et environ 8 Go de mémoire) ne prouvent ni réserve CI, ni quotas, ni
-capacité de coexistence. Les VM ci-dessous tournent exclusivement dans Cloud,
-en TCG, sans réseau du conteneur constructeur ; elles ne supposent aucun KVM
-ou droit de virtualisation sur le VPS.
+capacité de coexistence. Les qualifications initiales des VM ont été exécutées
+dans Cloud en TCG. Le nouveau parcours Forgejo 16.0.3 vers 17.0.1 et retour a
+été exécuté sur Spectre en KVM, dans le bac à sable Nix. Aucun de ces essais ne
+suppose KVM ou un droit de virtualisation sur le VPS.
 
 * Forgejo : séparer exécution et migration
+
+Le [[file:FORGEJO-MIGRATION-16-17.org][parcours 16.0.3 vers 17.0.1 et retour]] passe 17 groupes dans une VM
+locale avec dépôt, commit, ticket et identités synthétiques conservés. Les
+anciennes qualifications d'une instance neuve restent distinctes. Le retour
+testé restaure ensemble SQL et fichiers avant toute réouverture des écritures ;
+il ne qualifie pas un retour après de nouvelles écritures en production.
 
 Le module ne lance pas l'amorçage du module Forgejo amont. Il conserve les trois
 références de secrets sous =/var/lib/forgejo/custom/conf/= et prépare une
@@ -145,7 +152,7 @@ peut être retenu. Aucun reçu local ne remplace une revue indépendante protég
 | Inconnue ou contrôle manquant | Preuve minimale et chemin autorisé |
 |-----------------------------+-------------------------------------|
 | Identités et builds actifs | Retour V2 reçu : six UID/GID et six sorties/NAR. Paramètres candidats renseignés, autorité non authentifiée conservée. Rapprocher les artefacts exacts et revalider les préconditions lors de l'adoption, sans répéter le relais général. |
-| Forgejo 16.0.3 vers 17.0.1 | Qualifier migration et retour sur ces deux versions ; les seuls tests d'une instance neuve 17.0.1 ne prouvent pas la transition. |
+| Forgejo 16.0.3 vers 17.0.1 | Migration et retour avant réouverture testés sur les deux vrais paquets, avec données synthétiques. Restent état initial réel, capture/restauration autorisée et contrôleur de bascule ; le simple retour de binaire est refusé par l'ancien migrateur. |
 | ViSe, exécutable inconnu | Le code reçu prévoit une release hors store, exclue du contrat V2. Le retour ne confirme pas le chemin effectif. Identifier le seul exécutable ViSe par un contrôle fixe intégré au futur précontrôle opérateur. |
 | Nextcloud et ses applications | PHP 8.4.27 est observé ; le webroot et les applications ne sont pas identifiés par l'exécutable PHP-FPM. Rapprocher leurs références dans le précontrôle d'adoption. |
 | Schémas et droits existants | Contrôles fixes exécutés localement par la future capacité bornée, retour de codes seulement ; aucun SQL arbitraire transmis à Cloud. |

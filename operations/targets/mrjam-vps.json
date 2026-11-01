@@ -135,7 +135,10 @@
     "forgejo_transition": {
       "observed_store_version_label": "16.0.3",
       "target_version": "17.0.1",
-      "migration_and_return_qualified": false
+      "migration_and_return_qualified": false,
+      "synthetic_migration_and_prewrite_return_qualified": true,
+      "synthetic_qualification_reference": "operations/runtime/qualification-forgejo-migration-20261101.json",
+      "production_qualification": false
     },
     "functional_availability_verified": false,
     "production_execution_ready": false

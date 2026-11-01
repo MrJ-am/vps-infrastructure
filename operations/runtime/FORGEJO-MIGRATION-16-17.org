@@ -1,0 +1,86 @@
+#+title: Migration Forgejo 16.0.3 vers 17.0.1 et retour avant réouverture
+#+date: 2026-11-01
+#+language: fr
+
+* Périmètre
+
+Les 17 groupes du parcours complet passent sous NixOS/PostgreSQL 17.11, dans
+une VM KVM locale sur Spectre. Les 29 contrôles du host préparatoire passent
+avec chacune des deux entrées nixpkgs. Le reçu
+=qualification-forgejo-migration-20261101.json= lie les résultats, les sorties
+NAR, les sources testées et les tentatives précédentes.
+
+Le scénario =forgejo-postgresql-systemd.nix= part du paquet 16.0.3 fourni par
+l'entrée nixpkgs =c5c4a43b0e8056328ec4529f735cabdb8f1942bb=. Il impose que
+son chemin soit celui du retour services V2 et vérifie l'empreinte du rapport.
+La cible 17.0.1 provient du verrou applicatif =6f06d204=. Les paquets, les
+bases PostgreSQL, les comptes, le dépôt, le ticket et les credentials de cet
+essai sont exclusivement locaux et synthétiques. Aucun accès VPS n'est requis.
+
+| Paquet | Identité |
+|--------+----------|
+| Départ | /nix/store/vnvfyysx00aysmv86yqzxq02i3sccvlb-forgejo-16.0.3 |
+| NAR du départ | sha256-ZmPnUZoGSr7+V2vQo/ySl32Wpall2s8HMiNa/It3TVo= ; 130283240 octets |
+| Cible | /nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1 |
+| NAR de la cible | sha256-db1IPEdtfTwUFLFdB250mTLG3f8c33GoHQgLCSseiPc= ; 132597872 octets |
+
+Le chemin, le NAR et la taille du paquet de départ récupéré du cache Nix
+correspondent au rapport. Les deux sorties ont été vérifiées localement avec
+=nix store verify --no-trust=. Cela vérifie leur contenu local, sans transformer
+l'observation du VPS en attestation authentifiée de ses fichiers.
+
+* Scénario
+
+1. Initialiser explicitement 16.0.3 dans la VM, créer un compte fictif, un
+   jeton, un dépôt Git privé avec commit et un ticket ; vérifier leur lecture.
+2. Vider les files de tâches puis arrêter l'ancien service. Les deux versions
+   sont mutuellement exclusives. Capturer SQL et fichiers pendant cet arrêt.
+3. Migrer explicitement avec 17.0.1, séparer le rôle propriétaire du rôle
+   d'exécution, vérifier le contrat exact des migrations et le refus du DDL.
+4. Démarrer le vrai module candidat et vérifier la conservation du compte,
+   du jeton, du dépôt, du commit, du ticket, des credentials et de la confidentialité.
+   Conserver les contrôles existants de schéma, permissions, refus et redémarrage.
+5. Utiliser le collecteur corrigé V2 pour vérifier le paquet réellement lancé.
+6. Arrêter le candidat. Vérifier que l'ancien migrateur refuse le nouveau
+   schéma sans le modifier, puis restaurer ensemble SQL et fichiers capturés.
+7. Relancer 16.0.3, revérifier les mêmes objets et l'accès, et vérifier que
+   l'instance PostgreSQL partagée reste active après l'arrêt de Forgejo.
+
+Le retour testé s'arrête à la phase précédant la réouverture des écritures.
+Aucune écriture applicative nouvelle n'est effectuée sous 17.0.1 dans ce
+scénario. Restaurer cette capture après de nouvelles écritures les perdrait :
+ce cas n'est pas qualifié, et un ancien système NixOS ne restaure pas la base.
+Le [[https://forgejo.org/docs/v17.0/admin/upgrade/][guide officiel de mise à niveau]] confirme la nécessité de sauvegarder avant
+une version majeure et le refus d'utiliser une base plus récente avec un
+ancien binaire. Le nettoyage facultatif des fichiers historiques n'est pas
+nécessaire à cette transition et n'est pas inclus.
+
+* Reproduction
+
+Dans un atelier Nix local, avec les sources verrouillées disponibles :
+
+#+begin_src sh
+nix build --no-link --json --max-jobs 1 --cores 2 \
+  --file operations/runtime/forgejo-postgresql-systemd.nix \
+  --arg nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source \
+  --argstr acceleration kvm
+#+end_src
+
+La VM utilise 1536 Mio de RAM. Le paramètre facultatif =acceleration= conserve
+TCG par défaut pour les ateliers sans KVM ; la qualification présente utilise
+explicitement KVM sur Spectre. La première tentative TCG a été interrompue
+pour passer à cette accélération, sans résultat de qualification. Cela ne
+suppose aucune capacité de virtualisation sur le VPS. L'essai est exécuté dans
+le bac à sable Nix et n'est pas une procédure à lancer en production.
+
+Le premier essai KVM a échoué lors du retour, après restauration SQL/fichiers :
+=reset-failed forgejo-previous.service= refuse une unité inactive déjà déchargée
+par systemd. Le shell du test s'arrêtait avant =start=. Le helper remet
+désormais les états d'échec à zéro sans exiger cette unité chargée ; le second
+essai KVM repasse l'ensemble, jusqu'à la lecture effective des objets restaurés.
+Cet échec de fixture n'a modifié ni contrat de schéma ni attendu de conservation.
+
+L'adoption réelle reste conditionnée au contrôle de l'état initial, à une
+capture/restauration locale qualifiée, au raccord SSO, à la revue indépendante
+et au contrôleur de bascule. Les résultats des fixtures ne lèvent pas ces
+conditions et ne prouvent pas la disponibilité de la forge réelle.
