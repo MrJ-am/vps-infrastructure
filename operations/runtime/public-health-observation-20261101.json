@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "checks": [
+    {
+      "service": "vise",
+      "url": "https://vise.mrj.am/api/health",
+      "checked_utc": "2026-11-01T19:35:31.916275+00:00",
+      "authority": "public-unauthenticated-health-observation",
+      "http_status": 200,
+      "expected_health_contract_matches": true
+    },
+    {
+      "service": "nextcloud",
+      "url": "https://cloud.mrj.am/status.php",
+      "checked_utc": "2026-11-01T19:35:32.065159+00:00",
+      "authority": "public-unauthenticated-health-observation",
+      "http_status": 200,
+      "installed": true,
+      "maintenance": false,
+      "needs_db_upgrade": false,
+      "version": "34.0.4.1",
+      "version_string": "34.0.4"
+    },
+    {
+      "service": "forgejo",
+      "url": "https://forge.mrj.am/api/healthz",
+      "checked_utc": "2026-11-01T19:36:35.197971+00:00",
+      "authority": "public-unauthenticated-health-observation",
+      "http_status": 200,
+      "health_status": "pass"
+    },
+    {
+      "service": "kanidm",
+      "url": "https://log.mrj.am/status",
+      "checked_utc": "2026-11-01T19:36:35.328827+00:00",
+      "authority": "public-unauthenticated-health-observation",
+      "http_status": 200
+    }
+  ],
+  "tls_verification": true,
+  "authentication_sent": false,
+  "redirects_followed": false,
+  "response_fields_filtered": true,
+  "limits": [
+    "Public endpoint responses are not executable identities or end-to-end account tests",
+    "No installed code hash, backup, SSO state or production conformity is established"
+  ]
+}
