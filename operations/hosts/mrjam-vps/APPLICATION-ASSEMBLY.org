@@ -1,0 +1,129 @@
+#+title: Composition applicative et renouvellement conservant l’état
+#+date: 2026-11-01
+#+language: fr
+
+* Périmètre préparé
+
+=application-services.nix= compose les modules Rust, passerelle et cinq
+travailleurs déjà qualifiés. Les sorties par défaut viennent exclusivement de
+=application-artifacts.json= : copie à NAR identique, serveur et Elm inchangés,
+archiveur corrigé =7d87768b= du second export. Le module ne reconstruit pas
+ces exécutables. Les racines deviennent des dépendances de la génération.
+
+Le registre exige les sept présentations =audition/log/logique/logo/mateval/
+style/vision=, chaque hôte et certificat explicitement liés. Les origines
+contractuelles Rust sont fixes pour Audition, Log, Vision et MatEval. Les noms
+des autres domaines ne sont pas déduits de noms de dépôts. MatEval conserve
+=https://principiipetit.io/matheval/= et une racine publique distincte pour
+le reste du site. Log sert sa présentation Elm et garde les API Kanidm
+=/v1/=, =/oauth2/= avec TLS vérifié et les refus administratifs du socle.
+Les entrées exactes =/ui/oauth2= et =/ui/reset= pointent sur =index.html= sans
+retirer la query. La révocation OAuth MCP reste explicitement routée.
+
+Chaque slot/travailleur exige UID et GID explicites, distincts des identités
+conservées. Les couples base/rôle sont des droits peer déclarés, jamais une
+instruction de création SQL. Les références de credentials ne sont pas lues
+par Nix. Le hash d’activation MatEval conserve sa référence source connue.
+
+Les slots lisent uniquement la projection =/run/mrjam-identity/aliases.sqlite=
+via le groupe =mrjam-log-readers=, à fournir par l’adaptateur d’identité.
+L’état sessions/MCP original ne leur est pas monté. La projection est encore
+un raccord à qualifier avec l’adaptateur, notamment son actualisation.
+
+Aucune unité applicative ni minuterie n’est promue implicitement. Le verrou
+dur de =machine.nix= et =configuration.nix= restent inchangés. Ces fichiers
+ne sont pas une génération complète activable, ni une preuve de conformité
+de données réelles, ni une validation indépendante protégée.
+
+* Contrats encore requis pour l’assemblage réel
+
+- Les racines =slots.blue/green= doivent contenir =runtime.json= construit par
+  =operations/runtime/package.nix=, lié aux SHA des manifestes du serveur et
+  des sept présentations. Le test structurel ne fabrique pas de faux runtime.
+- Les observations bornées doivent fixer UID/GID disponibles, hôtes/certificats,
+  racine publique principale, couples SQL et présence/modes des credentials.
+  Ne pas remplacer une observation absente par un nom ou un numéro plausible.
+- Les credentials SMTP, archive, approbation et fermeture doivent désigner
+  des fichiers existants/adoptés compatibles. Les états SQLite des travailleurs
+  se trouvent sous =/var/lib/mrjam-vision-{archive,cycle,admission}/= ; leur
+  adoption ne se confond pas avec l’initialisation d’une nouvelle file vide.
+- Le fournisseur embeddings attendu par Vision HTTP/MCP est une dépendance
+  séparée : les sources reçues indiquent =127.0.0.1:39004/embedding=, mais il
+  reste à lier son exécutable, son modèle, ses dimensions et sa disponibilité.
+
+* Écart IdP avéré des trois travailleurs
+
+Le code =vision@7d87768bd141ec6a2a41b4ec9f3277639fcba67f=,
+=src/workers/keycloak.rs=, fixe le port =8085=, l’émetteur
+=https://log.mrj.am/realms/mrjam= et le protocole administratif Keycloak.
+Admission, cycle et rejeu utilisent token client_credentials, recherche/lecture
+de compte, création/modification/suppression et execute-actions-email.
+Le dépôt d’admission vérifie également cet émetteur. Un renommage du credential
+ou le broker de session =3002= ne rend pas ces ELF compatibles avec Kanidm.
+
+Les trois unités peuvent être installées pour revue, mais leur promotion est
+refusée dans cette composition. Le port natif requiert une nouvelle source,
+des exécutables et des tests distincts, en conservant la correspondance des
+sujets, les états métier, les files de courrier et les garde-fous d’effacement.
+Archiveur et service de fermeture ne contiennent pas cette dépendance IdP.
+ViSe n’est déclaré ni comme unité ni comme route et ne conditionne rien ici.
+
+* Renouvellement ACME sans export du contact
+
+Le module NixOS amont calcule son répertoire de compte depuis serveur,
+keyType et email ; il ne propose pas d’option accountPath/hash. Fournir
+email=null sélectionnerait une autre identité. =renewal.nix= utilise donc
+explicitement les deux hashes de répertoire observés et appelle seulement
+=lego renew= avec le compte conservé monté en lecture seule. Aucun bootstrap,
+=lego run=, inscription, remplacement de clé de compte ou certificat auto-signé.
+
+Le contact est déterminé uniquement à l’exécution privée par le nom exact de
+la clé du compte existant. Le chemin doit correspondre à la CA configurée et
+au format =accounts/CA/CONTACT/keys/CONTACT.key= avec =account.json= présent.
+Aucune valeur de contact ni contenu privé ne passe dans l’évaluation Nix,
+les résultats de l’atelier ou les journaux. La CA, keyType, domaine/SAN,
+webroot, intervalle et jitter doivent tous venir des métadonnées publiques
+observées. Les configurations DNS ou options spéciales nécessitent une
+adaptation explicite ; elles ne sont pas converties silencieusement en HTTP.
+
+Cette disposition suit les contrats de
+[[https://raw.githubusercontent.com/go-acme/lego/v4.35.2/cmd/accounts_storage.go][stockage des comptes lego 4.35.2]],
+[[https://raw.githubusercontent.com/go-acme/lego/v4.35.2/cmd/flags.go][LEGO_EMAIL]] et
+[[https://raw.githubusercontent.com/go-acme/lego/v4.35.2/cmd/cmd_renew.go][renouvellement sans inscription]].
+La publication locale valide expiration, nom DNS et correspondance de la
+clé avant de remplacer les fichiers, puis recharge Nginx/Kanidm si configuré.
+UID acme =996= et GID acme =995= restent ceux observés ; les certificats sont
+écrits =0640= avec le groupe Nginx. Les clés de compte restent intouchables.
+
+* Vérifications locales reproductibles
+
+Sur les pins hôte =c5c4a43b0e8056328ec4529f735cabdb8f1942bb= et applicatif
+=6f06d204d8f2d8761d9da78778745974a3216381= :
+
+- 26 assertions d’évaluation passent, dont identités, sept présentations,
+  MatEval, séparation Log/API, absence de ViSe, refus de promotion des workers
+  incompatibles et refus de double propriétaire ACME.
+- Huit groupes synthétiques exécutent le vrai wrapper de renouvellement avec
+  un faux client ACME : compte existant, idempotence, compte absent/ambigu,
+  inscription absente, mauvaise CA, lien symbolique, certificat absent.
+  Les refus surviennent avant tout appel du faux client et sans publication.
+- Le premier essai a révélé un =test A && test B= qui ne quittait pas sur
+  inscription absente malgré =set -e=. Les vérifications sont désormais des
+  commandes séparées ; les deux exécutions suivantes passent.
+
+Commandes, avec =PIN= vers la source Nixpkgs locale choisie :
+
+#+begin_src sh
+nix-instantiate --eval --strict --json operations/tests/application-services-evaluation.nix --arg nixpkgs "$PIN"
+nix-build operations/tests/application-services-evaluation.nix --arg nixpkgs "$PIN" --argstr output renewalRuntime --no-out-link --max-jobs 1 --cores 2
+#+end_src
+
+Sorties du test exécutable :
+=/nix/store/lacdgzpgravdjfdii0s66ljnzmcvw54w-mrjam-retained-acme-wrapper-synthetic=
+(pin hôte),
+=/nix/store/47zj2zqqf6k5x61bfk68sa5ds9cr2h77-mrjam-retained-acme-wrapper-synthetic=
+(pin applicatif).
+Ces tests n’appellent aucune CA et ne prouvent ni une émission TLS réelle ni
+la validité des comptes installés. Le test des query OAuth décrit la
+déclaration Nginx ; sa traversée HTTP effective appartient à la qualification
+intégrée. Aucun accès VPS n’a été utilisé pour produire ces quatre fichiers.

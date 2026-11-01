@@ -13,6 +13,11 @@ assert lib.assertMsg (stdenv.hostPlatform.system == lock.target)
     buildInputs = [ stdenv.cc.cc.lib zlib ];
     dontConfigure = true;
     dontBuild = true;
+    # The upstream installer uses /usr/bin/env, which is absent in a Nix
+    # sandbox. Patch only its interpreter; keep the locked Rust archive intact.
+    postPatch = ''
+      patchShebangs ./install.sh
+    '';
     installPhase = ''
       runHook preInstall
       ./install.sh --prefix="$out" --disable-ldconfig \

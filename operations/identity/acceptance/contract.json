@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "scope": "independent-synthetic-wire-contracts-for-native-log-broker",
+  "candidate_source_consulted": false,
+  "protected_authority": false,
+  "production_access": false,
+  "reference_repository": "MrJ-am/vps-infrastructure",
+  "reference_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "reference_paths": [
+    "lisp/identite/log-sessions.lisp",
+    "lisp/identite/log-oauth.lisp",
+    "lisp/identite/oidc-token.lisp",
+    "lisp/identite/oidc-transactions.lisp",
+    "lisp/identite/oidc-transport.lisp",
+    "lisp/serveur/log-http.lisp",
+    "lisp/serveur/main.lisp",
+    "tests/log-kanidm.lisp"
+  ],
+  "launch_interface": ["mrjam-identity", "serve", "--config", "/absolute/config.json"],
+  "contracts": {
+    "existing_state": "Start requires the existing historical SQLite schema; startup must not create it or alter retained rows/schema.",
+    "negative_verification": "Unauthenticated verify, management and MCP requests return 401 without X-Mrj-User. Caller identity headers never grant authority.",
+    "browser_login": "GET auth/connexion creates a durable single-use host/client-bound transaction, a host-only HttpOnly Secure SameSite=Lax binding cookie and S256 authorization request.",
+    "pkce_and_cookie_binding": "Callback uses the server-owned PKCE verifier; wrong browser binding or host never yields a session. Concurrent tabs retain distinct binding cookies.",
+    "jwt_profile": "Only ES256 signed by the trusted TLS JWKS, correct issuer/audience/azp/nonce, valid time bounds and optional matching at_hash can establish identity. Injected JWK/JKU and ambiguous JSON are rejected.",
+    "transaction_consumption": "A correct callback consumes its transaction before any upstream token request. Neither retry after upstream failure nor concurrent replay can duplicate a session.",
+    "business_mapping": "Each access resolves issuer and immutable subject through vision_gestion.identifier; inactive/unknown or changed principals cannot retain authority. Email claims are never an account mapping.",
+    "session_isolation": "A browser session is bound to its host. Browser responses contain neither upstream access/refresh/id tokens nor nonce.",
+    "csrf": "Unsafe original methods require exact same-origin and the session CSRF token, including consent/logout/revoke-other operations.",
+    "management": "Management requires a business administrator, operator-qualified MFA policy, and signed auth_time newer than qualified_after and less than 900 seconds old. An amr claim alone cannot establish MFA.",
+    "refresh_outage": "Provider errors/truncated responses preserve the browser session and yield recoverable unavailability. Definitive invalid_grant on refresh removes the local session; a mismatched refreshed subject is refused.",
+    "logout": "Logout removes the local session even when provider revocation fails. Unrelated sessions remain usable.",
+    "mcp_metadata": "Vision and Audition publish distinct resource URLs, scopes and authorization-server metadata.",
+    "mcp_registration": "Only bounded exact HTTPS redirect registrations and auth method none are accepted; registration must never fetch a caller URL.",
+    "mcp_consent": "A request is bound to its browser session, exact registered redirect, audience, state and S256 challenge. Another session cannot read or consume it. Refusal emits access_denied without a code.",
+    "mcp_token_binding": "Authorization code is single-use, requires matching client/redirect/PKCE, and cannot be used across resource audiences. Access tokens require an unrevoked live parent browser session.",
+    "mcp_refresh_replay": "A refresh rotates tokens. Reusing a consumed refresh commits revocation of the entire family, including the newly issued access/refresh pair.",
+    "tls_and_redirects": "Native transport uses loopback TLS with SNI log.mrj.am and trusted CA; wrong certificates and HTTP redirects are not accepted.",
+    "bounded_parsing": "Duplicated credential/host headers, duplicate form/JSON members, overlarge bodies and unsafe redirect targets cannot produce a successful identity.",
+    "diagnostics": "Neither stdout/stderr nor HTTP error responses disclose provider tokens, client secrets, browser bindings or fixture identity documents. Verification success may disclose only its contractually required username."
+  },
+  "limits": [
+    "A synthetic TLS OIDC server is not the actual Kanidm implementation or production SSO.",
+    "SQL and SQLite fixtures are invented; no production state is copied.",
+    "Separate real-Kanidm qualification, host isolation, resource/traffic and full cutover tests remain necessary.",
+    "This local independent test author does not create protected forge policy or deployment approval."
+  ]
+}
