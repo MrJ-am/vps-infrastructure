@@ -1,0 +1,18 @@
+#+title: Remise publique services V1 — MRJ.am
+#+date: 2026-11-01
+
+Archive de code et de binaires d'observation uniquement, sans secret ni donnée.
+Aucune activation de génération ou application. Lire la procédure humaine et
+faire la revue de cette nouvelle capacité avant son exécution bornée sur le VPS.
+
+Archive : mrjam-observation-services-20261101.tar
+Taille : 31088640 octets
+SHA-256 : 5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e
+SHA-256 du SHA256SUMS intérieur : 12e1a4ddeb49a8fa490053df50ed3d6b6b3d30e83363b5621dc27dc845cd22f0
+33 fichiers vérifiés. REMISE.json contient les révisions sources et de revue.
+
+Extraction locale dans un dossier inexistant, après vérification externe :
+python3 -I -S extract.py mrjam-observation-services-20261101.tar remise-services
+
+Ensuite lire remise-services/SPECTRE-RELAIS.txt et EXECUTION-HUMAINE.org.
+Le retour attendu est services-v1.json, filtré sur VPS puis validé sur Spectre.
