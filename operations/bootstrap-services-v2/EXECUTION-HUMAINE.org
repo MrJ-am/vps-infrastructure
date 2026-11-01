@@ -1,0 +1,122 @@
+#+title: Relais humain V2 — identités et exécutables des services MRJ.am
+#+date: 2026-11-01
+#+language: fr
+
+* Portée et revue
+
+L'objectif de déploiement est autorisé. Cette étape fournit les références
+nécessaires à l'adoption ; elle ne déploie pas les applications. L'administrateur
+utilise son canal existant. Aucun accès root ou shell général n'est transmis à
+Cloud ou à un agent Spectre. L'accès SSH d'inventaire n'est pas élargi.
+
+Lire =README.org=, les sources et les preuves de la remise avant le geste.
+Le collecteur V2 corrige le confinement insuffisant de V1. L'ancienne remise
+est retirée ; ses empreintes restent inchangées. Lire la revue Spectre jointe.
+L'entrée C sépare un lecteur sans capacités sous Landlock et un auxiliaire
+strictement limité aux liens exe, avec CAP_SYS_PTRACE et seccomp à refus par
+défaut. L'unité exclut explicitement les appels de mémoire interprocessus.
+Les lectures de fichiers proc mem/environ/cmdline, y compris les alias testés,
+sont refusées. Landlock ABI >=3 est obligatoire : aucun repli si indisponible.
+Les témoins positifs/négatifs, 24 refus de l'auxiliaire, protections après exec
+et limites du protocole sont qualifiés sur des processus synthétiques seulement.
+Les fichiers sensibles sont masqués, le réseau IP et les écritures système
+refusés. Limites : 120 s, 25 % CPU, 256 Mio, 16 tâches, 64 fd. La revue Spectre
+doit vérifier ce périmètre précis, notamment les deux programmes et leurs filtres.
+
+Le rapport contient les six UID/GID fixés, les états de sept unités, leurs
+exécutables Nix et métadonnées NAR, ainsi que la génération courante. L'autorité
+reste =unverified_observation=. Les métadonnées locales ne prouvent pas le
+contenu d'un processus ni une révision source authentifiée.
+
+* Octets qualifiés
+
+| Élément | Valeur |
+|---------+--------|
+| Paquet | /nix/store/qz86qisjf3za2r93jcxhplpy6c3sa1gm-mrjam-observe-services-v2 |
+| NAR | sha256-qd3/ehZPxSZrkQ6e/l7yKaOwAf2uaOL3s+xY3Ay525I= |
+| Export gzip | 30804205 octets ; 31539d9cb2238a4d1a367b423e19fc17e7e8a4910fbb07bd40d1df328aad5ebc |
+| Export brut | 87419648 octets ; addecf99d5b3b6062aba61f2b841d42cf84871483597198b4199b42fb4131b38 |
+| Manifeste | 08b2e6a4a8e59cef0aba1f88147499e5cb037fdaf1d249965ff428cd01e9dfad |
+| Preuve système | 1dc2e81f2f8da10420f2876304aa83a3883dbe1ab2580e7eb03651348499582f |
+
+Le delta contient 37 chemins nouveaux. Les 82 autres dépendances sont identiques
+à la remise V2 originale, qui doit être déjà présente sur le VPS. Les 119 chemins
+et leurs références ont été vérifiés après import de l'original puis du delta
+dans un store vierge. Aucun paquet système n'est remplacé, aucun service Nix
+n'est installé. Une dépendance absente impose un arrêt, sans téléchargement
+flottant ou changement de confiance. Le client Nix du collecteur reste privé à
+sa fermeture. Les 21 tests natifs et les 12 groupes VM ne valent pas approbation.
+
+* Préparation Spectre
+
+Vérifier le SHA externe de l'archive, ses membres réguliers sans liens ni
+traversée, puis toutes les entrées de =SHA256SUMS= dans un nouveau dossier.
+Ne jamais remplacer une empreinte attendue. Aucun import sur Spectre n'est requis.
+
+#+begin_src bash
+sha256sum --check --strict SHA256SUMS
+python3 -I -S verify_delivery.py --transfer-directory .
+#+end_src
+
+Attendu : =DELIVERY_VALID=. Transférer uniquement la remise publique vérifiée
+dans un nouveau dossier de l'administrateur, non modifiable par les agents ou
+comptes non privilégiés. Préserver cette propriété pendant import et contrôle.
+
+* Commandes fixes de l'administrateur sur le VPS
+
+Depuis ce dossier, dans sa session humaine existante :
+
+#+begin_src bash
+set -euo pipefail
+set -C
+umask 077
+step=operator
+trap 'rc=$?; printf "{\"step\":\"%s\",\"code\":\"COMMAND_FAILED\",\"exit_code\":%s}\n" "$step" "$rc" >&2' ERR
+test "$(id -u)" -eq 0
+step=delivery_hashes
+sha256sum --check --strict SHA256SUMS
+printf '%s\n' '31539d9cb2238a4d1a367b423e19fc17e7e8a4910fbb07bd40d1df328aad5ebc  mrjam-observe-services-v2.nix-export.gz' | sha256sum --check --strict -
+step=export_decompression
+gzip --decompress --stdout mrjam-observe-services-v2.nix-export.gz > mrjam-observe-services-v2.nix-export
+step=export_hash
+printf '%s\n' 'addecf99d5b3b6062aba61f2b841d42cf84871483597198b4199b42fb4131b38  mrjam-observe-services-v2.nix-export' | sha256sum --check --strict -
+step=store_import
+nix-store --import < mrjam-observe-services-v2.nix-export > chemins-importes.txt
+step=nar_verification
+nix --extra-experimental-features nix-command store verify --offline --no-trust --recursive /nix/store/qz86qisjf3za2r93jcxhplpy6c3sa1gm-mrjam-observe-services-v2
+step=closure_metadata
+nix --extra-experimental-features nix-command path-info --offline --json --json-format 1 --recursive /nix/store/qz86qisjf3za2r93jcxhplpy6c3sa1gm-mrjam-observe-services-v2 > fermeture-installee.json
+step=closure_comparison
+/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3 -I -S verify_delivery.py --store-info fermeture-installee.json
+step=services_observation
+/nix/store/qz86qisjf3za2r93jcxhplpy6c3sa1gm-mrjam-observe-services-v2/bin/mrjam-observe-services > services-v1.json
+trap - ERR
+#+end_src
+
+La comparaison doit rendre =STORE_METADATA_MATCH=. =--no-trust= concerne
+uniquement la vérification de contenu ; aucune politique d'import ou de
+signature n'est changée. L'activation explicite de =nix-command= évite l'erreur
+d'interface rencontrée lors d'un relais précédent ; ne pas modifier =nix.conf=.
+Si l'unité transitoire existe déjà ou une protection manque, ne pas contourner
+le refus, arrêter une unité existante ou lancer une autre sonde.
+
+* Retour fermé
+
+Transférer uniquement =services-v1.json= à Spectre, puis valider :
+
+#+begin_src bash
+python3 -I -S filter/validate_report.py < services-v1.json
+#+end_src
+
+Après succès, retourner ce seul JSON à Cloud. Le nom services-v1.json conserve
+la version du schéma ; le programme utilisé est bien V2. Ne transmettre ni journaux,
+sorties brutes, fichiers Nix locaux, chemins-importes.txt, fermeture-installee.json,
+secret, sauvegarde ou donnée. Une valeur inconnue reste inconnue. En cas d'échec
+humain, retourner uniquement le dernier objet fermé du bloc ; en cas d'échec
+du filtre Spectre : ={"step":"spectre_validation","code":"REPORT_REFUSED"}=.
+
+La génération doit être rapprochée du champ précédent
+=jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9= seulement si elle correspond encore.
+Aucun service applicatif, compte, droit SSH ou génération n'est modifié. Le
+paquet inerte et le verrou vide sous /run peuvent rester ; aucun nettoyage
+global du store ni retour applicatif n'est nécessaire pour cette observation.
