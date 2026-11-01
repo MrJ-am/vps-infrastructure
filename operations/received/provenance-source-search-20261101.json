@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-11-01",
+  "authority": "unverified_observation",
+  "attachments": [
+    {
+      "reference": "operations/received/20261101/RETOUR-SOURCES-SPECTRE.txt",
+      "bytes": 186,
+      "sha256": "6b197db827c6b2ce5b60b530c9b256b1d530af2b54eaab63a3b58be7faca2639"
+    },
+    {
+      "reference": "operations/received/20261101/RESULTAT-COMMANDES-SPECTRE.txt",
+      "bytes": 2214,
+      "sha256": "33c57e4f0633272b095ee1ade027bfa0531eaceb05fa9f04df82207162a7a8e7"
+    }
+  ],
+  "sender_provided_digest": false,
+  "signature_provided": false,
+  "verification": "SHA-256 calculated on receipt and exact byte copies checked; no authentication of reported production commands",
+  "reported_checks": [
+    {
+      "operation": "entrypoint_exists",
+      "path": "/etc/nixos/configuration.nix",
+      "exit_code": 0,
+      "result": true
+    },
+    {
+      "operation": "entrypoint_resolves_to_itself",
+      "exit_code": 0,
+      "result": true
+    },
+    {
+      "operation": "git_worktree_root",
+      "exit_code": 128,
+      "result": "not-a-repository-at-this-location"
+    },
+    {
+      "operation": "git_head",
+      "exit_code": 128,
+      "result": "not-a-repository-at-this-location"
+    }
+  ],
+  "reported_authorization": "User authorized Codex on Spectre as root for exactly the four completed commands in the attached report; no further command or Cloud capability follows",
+  "content_of_configuration_read": false,
+  "imports_read": false,
+  "source_repository": null,
+  "source_commit": null,
+  "relative_entrypoint": null,
+  "local_changes": null,
+  "external_imports": null,
+  "state_version": null,
+  "candidate_file_is_installed_build_entrypoint_proven": false,
+  "future_repository_authority": "MrJ-am/vps-infrastructure",
+  "cloud_production_access": false,
+  "production_activation": false,
+  "next_step": "Recover only code explicitly reviewed for sharing, preserving unknowns and references; do not repeat metadata commands or provenance probes"
+}

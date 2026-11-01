@@ -12,6 +12,7 @@ let
     rust = inspect (import ../tests/module-evaluation.nix { inherit nixpkgs; });
     gateway = inspect (import ../tests/gateway-evaluation.nix { inherit nixpkgs; });
     forgejoGate = inspect (import ../forgejo/tests/module-evaluation.nix { inherit nixpkgs; });
+    forgejoPinnedToolchain = inspect (import ../forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; });
   };
 in {
   inherit components;

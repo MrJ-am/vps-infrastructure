@@ -1,0 +1,109 @@
+Relais Codex sur Spectre — remettre le code de configuration VPS relu
+
+Lis ce fichier et operations/source-recovery/README.org depuis la même révision
+GitHub exacte. L'outil reviewed_sources.py et ses tests se trouvent dans ce même
+dossier. N'utilise pas une branche flottante à la place de cette révision.
+
+Contexte acquis, à ne pas refaire
+
+Les retours du 1er novembre indiquent que /etc/nixos/configuration.nix existe,
+se résout sur lui-même et n'appartient pas à un dépôt Git à cet emplacement.
+Son contenu n'a pas été lu. Aucun commit ni stateVersion n'a été identifié.
+Ce fichier est un candidat à examiner, pas une entrée de build installée prouvée.
+Le dépôt faisant autorité pour l'avenir est MrJ-am/vps-infrastructure.
+
+Ne répète ni les quatre commandes de métadonnées, ni la recherche locale déjà
+faite sur Spectre, ni les sondes V1/V2/provenance. Ne demande pas à l'utilisateur
+de retrouver de mémoire la dernière mise à jour du VPS.
+
+L'utilisateur avait autorisé Codex sur Spectre en root pour exactement les
+quatre commandes déjà exécutées. Ce relais n'étend pas cette autorisation à
+une lecture de fichiers bruts ou à d'autres commandes de production. Cloud
+ne reçoit aucun accès, identifiant ou clé privée.
+
+Travail local que tu peux faire immédiatement
+
+1. Récupère uniquement les trois fichiers de code publics de cette révision :
+   operations/source-recovery/reviewed_sources.py,
+   operations/source-recovery/tests/test_reviewed_sources.py,
+   operations/source-recovery/README.org.
+   Préserve leur disposition. Si tu disposes déjà du checkout exact, utilise-le.
+   Lis les AGENTS.md applicables et vérifie la révision. Empreintes du code :
+   reviewed_sources.py : 9cb0d84767caa8e13b1e71fb74bd1f2bc8aade415024957b0fc613b4cfe23549
+   tests/test_reviewed_sources.py : 58bc06d60a9f517d4ab82fd366f06b63ac1ca234686b22dac37a9e3bcdca1cae
+   Exécute localement les tests synthétiques avec Python 3 :
+
+   python3 -B -m unittest discover -s operations/source-recovery/tests -v
+
+   Ce code ne fait ni SSH ni évaluation Nix. N'installe rien sur le VPS. Aucun
+   Nix local, import NAR ou changement de trusted-users n'est nécessaire.
+
+2. Explique à l'administrateur l'unique étape humaine préalable ci-dessous.
+   Cette revue protège la frontière explicite fixée par l'utilisateur : aucun
+   agent ne lit les secrets, données, sauvegardes ou configurations brutes
+   susceptibles d'en contenir. Le manifeste ne remplace pas cette revue.
+
+Étape réservée à l'administrateur, hors lecture des agents
+
+- Dans sa session d'administration personnelle du VPS, ouvrir en lecture seule
+  /etc/nixos/configuration.nix. Par exemple, dans son terminal personnel :
+
+  cat -- /etc/nixos/configuration.nix
+
+  Cette sortie reste dans son terminal privé. Codex ne lance pas cette commande
+  et ne reçoit ni sa sortie brute, ni capture d'écran, ni journal de session.
+
+- Examiner ce fichier et les seuls fichiers de code importés, y compris la
+  configuration matérielle du VPS si elle est importée. Ne pas chercher dans
+  tout le VPS. Ne pas utiliser la configuration matérielle de Spectre.
+
+- Préparer des COPIES destinées au partage, sans modifier les fichiers actifs.
+  Retirer de ces copies toute valeur de mot de passe, jeton, clé privée, donnée
+  personnelle ou contenu chiffré de secrets. Conserver les références de secrets
+  (chemins, noms, propriétaires et permissions). Un import de données ou secrets
+  reste une dépendance à décrire, pas un fichier à copier. Déclarer les copies
+  expurgées comme telles. Ne pas envoyer une archive globale de /etc/nixos.
+
+- Repérer system.stateVersion et son fichier source si possible ; sinon laisser
+  cette information inconnue. Ne pas écrire 26.05 par déduction de nixpkgs.
+
+- Remettre uniquement les copies approuvées, avec les chemins relatifs
+  conservés, dans un dossier local neuf « code-vps-relu » et confirmer que ces
+  fichiers précis peuvent être lus par les agents et partagés dans le dépôt.
+  Ne jamais donner à l'agent le dossier privé d'avant revue.
+
+Après réception explicite des fichiers approuvés
+
+3. Lis uniquement ces copies. Produis review.json selon README.org, avec la
+   liste exacte des fichiers, tailles et SHA-256 calculés sur leurs octets.
+   Déclare change=unchanged/redacted/unknown selon les indications humaines.
+   Conserve les inconnues ; generation_binding reste toujours unverified.
+   N'évalue pas le Nix, ne suis pas un import vers une source non approuvée,
+   ne recherche pas de secret manquant. Une déclaration de revue ne prouve pas
+   que le fichier a construit la génération en cours.
+
+4. Depuis le checkout de l'outillage, exécute localement, avec les vrais chemins :
+
+   python3 -I -S operations/source-recovery/reviewed_sources.py pack ./code-vps-relu ./sources-vps-revues.tar
+   python3 -I -S operations/source-recovery/reviewed_sources.py verify ./sources-vps-revues.tar SHA256_RETOURNE_PAR_PACK
+
+   Ne place pas l'archive dans le dossier d'entrée. Aucun fichier ne doit être
+   ajouté implicitement ; aucune empreinte ne doit être changée pour masquer
+   un échec. Si une limite est atteinte, rapporte le code fermé à Cloud au lieu
+   de modifier l'outil ou de transmettre une archive plus large.
+
+5. Remets à l'utilisateur sources-vps-revues.tar et son SHA-256, la révision
+   exacte de l'outillage, les résultats locaux et la liste des imports de code
+   encore absents. Les références sont suffisantes pour les dépendances de
+   données ou de secrets ; ne demande jamais leur contenu.
+
+Si l'humain n'a pas encore remis de copies partageables, dis concrètement que
+cette étape reste à faire. Ne renvoie pas un nouveau questionnaire sur l'origine
+Git et ne fabrique pas une archive de fixtures présentée comme la configuration
+du VPS. Ne masque pas ce blocage par un nouveau rapport contenant seulement des
+« inconnu » déjà connus.
+
+Ce relais ne lance ni nixos-rebuild, construction sur le VPS, activation,
+installation, redémarrage, migration SQL, lecture de base/journal/sauvegarde,
+ni ancien workflow/connect.sh. L'objectif de mise en service reste autorisé ;
+ses qualifications et les frontières de production restent nécessaires.

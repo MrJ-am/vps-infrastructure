@@ -7,6 +7,7 @@ let
   report = builtins.fromJSON (builtins.readFile reportFile);
   provenanceFile = ../received/20261101/provenance-v1.json;
   provenance = builtins.fromJSON (builtins.readFile provenanceFile);
+  search = target.source_search_observation;
   evaluate = extra: (import (nixpkgs + "/nixos/lib/eval-config.nix") {
     system = "x86_64-linux";
     modules = [ ../nixos/vps-preparation.nix {
@@ -53,6 +54,19 @@ let
       && provenance.generation_store_hash == report.generation.current.store_hash;
     noBuildMetadataInvented = !disabled.mrjam.systemProvenance.enable
       && !(disabled.environment.etc ? "mrjam/system-provenance.json");
+    sourceSearchReportsBound = builtins.all (item:
+      builtins.hashFile "sha256" (../.. + "/${item.reference}") == item.sha256
+      && builtins.stringLength (builtins.readFile (../.. + "/${item.reference}")) == item.bytes
+    ) search.report_references;
+    sourceSearchIsStillUnauthenticated = search.authority == "unverified_observation"
+      && !search.candidate_file_bound_to_running_generation && !search.candidate_file_content_reviewed;
+    candidatePathDoesNotInventSource = search.candidate_entrypoint == "/etc/nixos/configuration.nix"
+      && search.candidate_file_exists && search.candidate_file_resolves_to_itself
+      && !search.git_checkout_at_candidate_directory && search.source_commit == null
+      && search.source_repository == null && search.relative_entrypoint == null;
+    sourceSearchDoesNotInventCompatibility = search.state_version == null && search.imports == null
+      && target.system_state_version == null;
+    noCloudAccessFromSpectreReport = !search.cloud_access_authorized;
     fixtureAssertionsPass = builtins.all (entry: entry.assertion) enabled.assertions;
     enabledFixturePreservesIdentity = enabled.users.users.mrjam-inventory.uid == 980
       && enabled.users.groups.mrjam-inventory.gid == 980;

@@ -1,6 +1,17 @@
 #+title: Sources remises depuis Spectre, conservées octet pour octet
 #+language: fr
 
+Les retours =20261101/RETOUR-SOURCES-SPECTRE.txt= et
+=20261101/RESULTAT-COMMANDES-SPECTRE.txt= sont conservés octet pour octet.
+=provenance-source-search-20261101.json= lie leurs empreintes calculées à
+réception et les quatre résultats rapportés. Aucune signature ni empreinte
+séparée n'accompagnait ces textes. Le fichier usuel de configuration existe,
+sans checkout Git à cet emplacement ; son contenu et ses imports n'ont pas
+été lus. Cette observation n'identifie pas le code du système installé.
+L'autorisation root rapportée concernait ces quatre commandes déjà effectuées
+sur Spectre ; elle ne crée aucun accès supplémentaire depuis Cloud.
+La suite est le [[file:../source-recovery/SPECTRE.txt][relais de remise du code relu]], sans répéter les sondes.
+
 Le sous-dossier =20261030/= contient les 21 fichiers du manifeste remis et ce
 manifeste intact. Les deux pièces jointes, l'archive originale et les 9 entrées
 du manifeste imbriqué ont été vérifiés avant utilisation. La provenance est

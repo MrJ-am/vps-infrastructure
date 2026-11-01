@@ -1,0 +1,39 @@
+Résultat de l'exécution autorisée — 1er novembre 2026
+
+L'utilisateur a explicitement autorisé Codex à accéder au VPS en administrateur
+pour exécuter exactement les commandes du relais. Les quatre commandes ci-dessous
+ont été exécutées via l'alias SSH existant vps, configuré pour le compte root.
+L'authentification existante et la vérification de la clé d'hôte ont été utilisées.
+
+1. test -f /etc/nixos/configuration.nix
+   Code de retour : 0.
+   Résultat : le fichier existe.
+
+2. readlink -f /etc/nixos/configuration.nix
+   Code de retour : 0.
+   Résultat : le chemin se résout sur lui-même.
+
+3. GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 git -C /etc/nixos rev-parse --show-toplevel
+   Code de retour : 128.
+   Résultat : fatal: not a git repository (or any of the parent directories): .git
+
+4. GIT_CONFIG_NOSYSTEM=1 GIT_CONFIG_GLOBAL=/dev/null GIT_TERMINAL_PROMPT=0 git -C /etc/nixos rev-parse --verify HEAD
+   Code de retour : 128.
+   Résultat : fatal: not a git repository (or any of the parent directories): .git
+
+Aucun checkout Git ni commit n'a été identifié à cet emplacement. Ce constat
+n'exclut pas une origine versionnée ailleurs. Le chemin du point d'entrée relatif
+à un dépôt ne peut donc pas encore être renseigné. Le retour conserve « inconnu »
+pour le dépôt, ce chemin, les modifications, les imports hors dépôt et stateVersion.
+
+Le contenu de configuration.nix et de ses imports n'a pas été lu. La prochaine
+étape prévue par le relais est leur revue humaine, notamment pour identifier
+le dépôt d'origine et la déclaration system.stateVersion avec son fichier source.
+Si le code indispensable existe seulement localement, sa revue de confidentialité
+doit précéder son transfert et son intégration dans une branche de travail.
+
+Ces commandes ne prouvent pas le lien entre ce fichier et la génération installée.
+Aucune autre commande de production n'a été exécutée par Codex dans cette session.
+Le relais initial reste la fiche de référence pour la revue humaine du code ;
+sa réserve d'exécution humaine des quatre commandes a été remplacée par
+l'autorisation explicite de l'utilisateur consignée ici.

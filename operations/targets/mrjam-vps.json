@@ -67,5 +67,34 @@
     "state_version": null,
     "complete_generation_identity": false,
     "continuous_generation_identity_proven": false
+  },
+  "source_search_observation": {
+    "provenance_reference": "operations/received/provenance-source-search-20261101.json",
+    "report_references": [
+      {
+        "reference": "operations/received/20261101/RETOUR-SOURCES-SPECTRE.txt",
+        "bytes": 186,
+        "sha256": "6b197db827c6b2ce5b60b530c9b256b1d530af2b54eaab63a3b58be7faca2639"
+      },
+      {
+        "reference": "operations/received/20261101/RESULTAT-COMMANDES-SPECTRE.txt",
+        "bytes": 2214,
+        "sha256": "33c57e4f0633272b095ee1ade027bfa0531eaceb05fa9f04df82207162a7a8e7"
+      }
+    ],
+    "authority": "unverified_observation",
+    "candidate_entrypoint": "/etc/nixos/configuration.nix",
+    "candidate_file_exists": true,
+    "candidate_file_resolves_to_itself": true,
+    "git_checkout_at_candidate_directory": false,
+    "candidate_file_content_reviewed": false,
+    "candidate_file_bound_to_running_generation": false,
+    "source_repository": null,
+    "source_commit": null,
+    "relative_entrypoint": null,
+    "state_version": null,
+    "imports": null,
+    "reported_spectre_root_authorization_scope": "Only the four already completed metadata commands",
+    "cloud_access_authorized": false
   }
 }

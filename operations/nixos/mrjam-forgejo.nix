@@ -8,11 +8,15 @@ in {
     preparation = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = pkgs.callPackage ../forgejo/package.nix { };
+      default = import ../forgejo/locked-preparation.nix {
+        system = pkgs.stdenv.hostPlatform.system;
+      };
       description = ''
         Reviewable settings and static assets only. Installing this output does
         not install a service, create a database, register a runner or authorize
-        migration. No secret is read while evaluating or building it.
+        migration. No secret is read while evaluating or building it. This
+        package uses the explicitly locked candidate toolchain, independently
+        of the host's package set; it does not replace the host's nixpkgs.
       '';
     };
   };
