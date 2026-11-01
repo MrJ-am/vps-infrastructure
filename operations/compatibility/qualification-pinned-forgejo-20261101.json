@@ -1,0 +1,526 @@
+{
+  "authority": "local-unverified-test-report",
+  "candidate_commit": "7389af672cf7c34c581bd59f0f0b89e6a5e172dd",
+  "candidate_tree": "a70c30d3fa342d871275b8bb91ecb9a54027604f",
+  "current_startup_check": {
+    "checks": {
+      "browser": true,
+      "clippy": true,
+      "elm": true,
+      "elm_review": true,
+      "elm_test": true,
+      "images": true,
+      "local_docker": true,
+      "node": true,
+      "npm": true,
+      "npm_lock": true,
+      "npm_packages": true,
+      "playwright": true,
+      "rust": true,
+      "rustfmt": true
+    },
+    "status": "ok"
+  },
+  "earlier_attempts": [
+    {
+      "attempts": [
+        1,
+        2
+      ],
+      "reason": "fetchTree required a Git cache discarded with the container. Fixed-output fetchTarball reuses the exact same NAR and revision from the store; expected hashes unchanged.",
+      "result": "failed"
+    },
+    {
+      "attempt": "input-cache-1",
+      "reason": "nix eval pure mode refused an absolute local lock path; the explicit impure metadata invocation succeeded for this fixed public input.",
+      "result": "failed"
+    },
+    {
+      "attempt": 3,
+      "reason": "Test incorrectly assumed upstream NixOS selects pkgs.forgejo; its default is forgejo-lts. Compare against the unmodified NixOS host instead. Candidate activation gates and version assertions unchanged.",
+      "result": "failed"
+    },
+    {
+      "attempt": 4,
+      "reason": "154 module checks, 18 transport tests, actual package build and identical top-level rebuild; container network disabled.",
+      "result": "passed"
+    }
+  ],
+  "flake_evaluation": {
+    "pinned-forgejo-flake-evaluation-20261101-04.json": {
+      "changedForgejoVersionRejected": true,
+      "changedRendererVersionRejected": true,
+      "changedRunnerVersionRejected": true,
+      "helperKeepsExactCandidate": true,
+      "hostNixpkgsIsPreserved": true,
+      "hostOverridesCannotSubstituteTools": true,
+      "hostPackageIsPreserved": true,
+      "hostSubstitutionStillRejectedIfVersionsDiffer": true,
+      "moduleKeepsExactCandidateDerivation": true,
+      "moduleKeepsExactCandidateOutput": true,
+      "noForgejoService": true,
+      "noNewSystemPackage": true,
+      "stateVersionIsPreserved": true,
+      "unsupportedPlatformRejected": true
+    },
+    "source-recovery-composition-20261101-04.json": {
+      "allServicesStayDisabled": true,
+      "candidatePathDoesNotInventSource": true,
+      "enabledFixturePreservesIdentity": true,
+      "enabledFixtureRestrictsAccount": true,
+      "fixtureAssertionsPass": true,
+      "generationHashComparisonIsExplicit": true,
+      "missingConfigurationRevisionStaysUnknown": true,
+      "noAccountOrGroupCreated": true,
+      "noBuildMetadataInvented": true,
+      "noCloudAccessFromSpectreReport": true,
+      "noExecutionReadinessInferred": true,
+      "noKeyOrSshServiceCreated": true,
+      "noSourceOrFullGenerationInvented": true,
+      "noStateVersionInference": true,
+      "observationRemainsUnauthenticated": true,
+      "observedIdsArePinned": true,
+      "observedNixpkgsIsRecordedWithoutSubstitution": true,
+      "packagePinsApprovedPublicKey": true,
+      "packagePinsObservedIdentity": true,
+      "provenanceBytesBound": true,
+      "provenanceIsOnlyObservation": true,
+      "reportBytesBound": true,
+      "sourceSearchDoesNotInventCompatibility": true,
+      "sourceSearchIsStillUnauthenticated": true,
+      "sourceSearchReportsBound": true,
+      "standalonePackageMatchesModule": true
+    }
+  },
+  "forgejo_evaluation": {
+    "baseline": {
+      "evaluation": {
+        "changedForgejoVersionRejected": true,
+        "changedRendererVersionRejected": true,
+        "changedRunnerVersionRejected": true,
+        "helperKeepsExactCandidate": true,
+        "hostNixpkgsIsPreserved": true,
+        "hostOverridesCannotSubstituteTools": true,
+        "hostPackageIsPreserved": true,
+        "hostSubstitutionStillRejectedIfVersionsDiffer": true,
+        "moduleKeepsExactCandidateDerivation": true,
+        "moduleKeepsExactCandidateOutput": true,
+        "noForgejoService": true,
+        "noNewSystemPackage": true,
+        "stateVersionIsPreserved": true,
+        "unsupportedPlatformRejected": true
+      },
+      "gate": {
+        "actionsFrozen": true,
+        "disabledPasses": true,
+        "forgejoEnableRejected": true,
+        "noForgejoIdentity": true,
+        "noForgejoService": true,
+        "noLocalAuthenticationFallback": true,
+        "noNginxProvisioning": true,
+        "noPostgresProvisioning": true,
+        "noRunnerService": true,
+        "noRuntimeInstalled": true,
+        "noSSOOrBackupUnits": true,
+        "privateHTTP": true,
+        "privateRepositoryDefault": true,
+        "runnerEnableRejected": true,
+        "sanitizedOrg": true
+      }
+    },
+    "current": {
+      "evaluation": {
+        "changedForgejoVersionRejected": true,
+        "changedRendererVersionRejected": true,
+        "changedRunnerVersionRejected": true,
+        "helperKeepsExactCandidate": true,
+        "hostNixpkgsIsPreserved": true,
+        "hostOverridesCannotSubstituteTools": true,
+        "hostPackageIsPreserved": true,
+        "hostSubstitutionStillRejectedIfVersionsDiffer": true,
+        "moduleKeepsExactCandidateDerivation": true,
+        "moduleKeepsExactCandidateOutput": true,
+        "noForgejoService": true,
+        "noNewSystemPackage": true,
+        "stateVersionIsPreserved": true,
+        "unsupportedPlatformRejected": true
+      },
+      "gate": {
+        "actionsFrozen": true,
+        "disabledPasses": true,
+        "forgejoEnableRejected": true,
+        "noForgejoIdentity": true,
+        "noForgejoService": true,
+        "noLocalAuthenticationFallback": true,
+        "noNginxProvisioning": true,
+        "noPostgresProvisioning": true,
+        "noRunnerService": true,
+        "noRuntimeInstalled": true,
+        "noSSOOrBackupUnits": true,
+        "privateHTTP": true,
+        "privateRepositoryDefault": true,
+        "runnerEnableRejected": true,
+        "sanitizedOrg": true
+      }
+    }
+  },
+  "historical_artifact_comparison": {
+    "complete_nar_identical": false,
+    "different_files": [
+      "review/README.org"
+    ],
+    "files_each": 1239,
+    "identical_files": 1238,
+    "old": {
+      "closure_nar_bytes": 371378584,
+      "closure_paths": 38,
+      "nar_bytes": 69484920,
+      "nar_hash": "sha256-GctXioV+pnk0gd05r3q/eCAJa51cgABsMHb3YfhhmuY=",
+      "output": "/nix/store/3yjs3bqb274mcz8fqjb7485ycs0gxzgr-mrjam-forgejo-preparation-20261030",
+      "recursive_content_verification_passed": true,
+      "signature_trust_checked": false
+    },
+    "reason": "README changed before this lot; configuration, renderer references and static assets are identical"
+  },
+  "limits": [
+    "A review declaration and file extension do not prove confidentiality",
+    "The packer is a local integrity tool, not a production capability or an ACL",
+    "NixOS module evaluation does not demonstrate full-host compatibility or activation",
+    "A store path and local content verification do not authenticate an approval",
+    "Local Docker sandbox=false qualification is not protected CI isolation"
+  ],
+  "log_sha256": {
+    "pinned-forgejo-diagnostic-20261101.log": "3009e6afae882bb22acaf8ea054b2fe4155cbd13fd17ba63273a7efc6f2e1d37",
+    "pinned-forgejo-flake-derivation-before-20261101.txt": "73a6afa2c62e44839f262d08a888783b3502085fa5137aa5bb7fd27ddc105d76",
+    "pinned-forgejo-input-cache-20261101-02.log": "1b482a8b9cf0a22a6b97ca2f2e76ce1650c0bf33fd8790243dc3ff9e2c362d10",
+    "pinned-forgejo-input-cache-20261101.log": "c959673d04221e56ea6a557580596253df95ab2f7c5c2b2a76c35db977afd927",
+    "pinned-forgejo-qualification-20261101-01.log": "3affa41861d00dac216805474d73d77fbd87036b7848c661e33ab9a8594c954a",
+    "pinned-forgejo-qualification-20261101-02.log": "be5116e0bb1c2e06d4b52b15156963d69b7fa044deb0a1d1055300e527465506",
+    "pinned-forgejo-qualification-20261101-03.log": "56cf6832261ed0812357bbe463a267fd92726055ce940837231b5f4d8e023607",
+    "pinned-forgejo-qualification-20261101-04.log": "2e1958d2ba040ad710754fc58c16a4ad6a6751f388c9d94af92def50d89ca5bd",
+    "pinned-forgejo-rebuild-20261101-04.log": "7feacbca06fc9cc04fd79173f63e96e25f15311bfff05f4dd0d65b95bbdb51df",
+    "source-recovery-tests-locked-20261101-04.log": "fbc31f7c51084c511bd7b1c9ff5f5d1d99d29911cd4501dc9b9c85f5308f35fa",
+    "startup-source-recovery-20261101.log": "37401231ac7a03b4d4a92042604092dbec92d6a0b690b2d94a4cecde57185d0f"
+  },
+  "module_checks_passed": 154,
+  "not_executed": [
+    "Human confidentiality review or recovery of actual VPS code",
+    "Complete VPS generation, installed source binding and effective service adoption",
+    "Production SSO, isolation/quotas, backup/restore, migrations and cutover",
+    "Unchanged Rust/Elm suites and previously qualified Forgejo integration were not rerun"
+  ],
+  "observed_baseline_module_matrix": {
+    "components": {
+      "forgejoGate": {
+        "accepted": true,
+        "checks": {
+          "actionsFrozen": true,
+          "disabledPasses": true,
+          "forgejoEnableRejected": true,
+          "noForgejoIdentity": true,
+          "noForgejoService": true,
+          "noLocalAuthenticationFallback": true,
+          "noNginxProvisioning": true,
+          "noPostgresProvisioning": true,
+          "noRunnerService": true,
+          "noRuntimeInstalled": true,
+          "noSSOOrBackupUnits": true,
+          "privateHTTP": true,
+          "privateRepositoryDefault": true,
+          "runnerEnableRejected": true,
+          "sanitizedOrg": true
+        }
+      },
+      "forgejoPinnedToolchain": {
+        "accepted": true,
+        "checks": {
+          "changedForgejoVersionRejected": true,
+          "changedRendererVersionRejected": true,
+          "changedRunnerVersionRejected": true,
+          "helperKeepsExactCandidate": true,
+          "hostNixpkgsIsPreserved": true,
+          "hostOverridesCannotSubstituteTools": true,
+          "hostPackageIsPreserved": true,
+          "hostSubstitutionStillRejectedIfVersionsDiffer": true,
+          "moduleKeepsExactCandidateDerivation": true,
+          "moduleKeepsExactCandidateOutput": true,
+          "noForgejoService": true,
+          "noNewSystemPackage": true,
+          "stateVersionIsPreserved": true,
+          "unsupportedPlatformRejected": true
+        }
+      },
+      "gateway": {
+        "accepted": true,
+        "checks": {
+          "absentNginxRejected": true,
+          "absentRustRejected": true,
+          "authLoopRejected": true,
+          "canonicalHost": true,
+          "cookieAndCsrfForwarded": true,
+          "disabledCreatesNoRustUnits": true,
+          "disabledKeepsNginxOff": true,
+          "fixtureValid": true,
+          "foreignHostRejected": true,
+          "identityHeadersRemoved": true,
+          "internalHealthNotPublished": true,
+          "matevalAuthNotRerouted": true,
+          "matevalBodyLimitPreserved": true,
+          "noFirewallMutation": true,
+          "oauthDelegationIsClosed": true,
+          "oauthDiscoveryPreserved": true,
+          "oauthWithoutIdentityRejected": true,
+          "originAndBearerForwarded": true,
+          "preservedCertificateReferences": true,
+          "privateProxy": true,
+          "requestLogsSuppressed": true,
+          "separateAuthBridge": true,
+          "sourceVersionPreserved": true,
+          "tlsRequired": true
+        }
+      },
+      "inventory": {
+        "accepted": true,
+        "checks": {
+          "absentIdsRejected": true,
+          "absentKeyRejected": true,
+          "accountRestricted": true,
+          "disabledHasNoAccount": true,
+          "disabledHasNoGroup": true,
+          "disabledHasNoKeyFile": true,
+          "disabledHasNoMatch": true,
+          "existingHomePreserved": true,
+          "fixedCommandInMatch": true,
+          "immutableLockRule": true,
+          "immutableLogin": true,
+          "keyRestrictsCommand": true,
+          "observedIdsRetained": true,
+          "otherGroupMemberRejected": true,
+          "rootOwnedKeyFile": true,
+          "sshDisabledRejected": true,
+          "stateVersionUnchanged": true,
+          "supplementaryGroupRejected": true,
+          "userEnvironmentDisabled": true,
+          "validFixturePasses": true
+        }
+      },
+      "rust": {
+        "accepted": true,
+        "checks": {
+          "absentArtifactRejected": true,
+          "absentRuntimeConfigurationRejected": true,
+          "admissionApprovalHasADistinctExplicitCredential": true,
+          "buildContextRejected": true,
+          "configRequiredBeforeStart": true,
+          "disabledCreatesNoIdentity": true,
+          "disabledCreatesNoSlice": true,
+          "disabledCreatesNoUnits": true,
+          "duplicatePortsRejected": true,
+          "enabledHasNoAutomaticRestart": true,
+          "enabledHasNoImplicitStarts": true,
+          "nginxUntouched": true,
+          "parentCredentialReferenceRejected": true,
+          "postgresqlUntouched": true,
+          "prebuiltBinaryOnly": true,
+          "privateDistinctListeners": true,
+          "runtimeBuildContextRejected": true,
+          "secretReferencesOnly": true,
+          "sharedBudget": true,
+          "stopDoesNotForceKill": true,
+          "validConfigurationPasses": true,
+          "workersDisabled": true
+        }
+      },
+      "systemProvenance": {
+        "accepted": true,
+        "checks": {
+          "assertionsPass": true,
+          "declarationIsNotApproval": true,
+          "disabledCreatesNoRecord": true,
+          "disabledDoesNotSetRevision": true,
+          "hostRevisionConflictRefused": true,
+          "noAccountsAdded": true,
+          "noRevisionFallback": true,
+          "noUnitsAdded": true,
+          "preservesStateVersion": true,
+          "recordHasClosedFields": true,
+          "recordIsRootOwnedReadOnly": true,
+          "recordsFullSourceCommit": true,
+          "recordsInputManifestOnly": true,
+          "recordsMatchingNixpkgs": true,
+          "rejectsBranch": true,
+          "rejectsConfigurationDependencyContext": true,
+          "rejectsDirtyRevision": true,
+          "rejectsMalformedManifest": true,
+          "rejectsManifestDependencyContext": true,
+          "rejectsNixpkgsDependencyContext": true,
+          "rejectsNixpkgsMismatch": true,
+          "rejectsRevisionDependencyContext": true,
+          "rejectsStateVersionChange": true,
+          "rejectsStateVersionDependencyContext": true,
+          "rejectsTargetDependencyContext": true,
+          "rejectsUppercaseRevision": true,
+          "rejectsZeroManifest": true,
+          "rejectsZeroRevision": true,
+          "requiresConfigurationName": true,
+          "requiresManifestHash": true,
+          "requiresNixpkgsRevision": true,
+          "requiresStateVersionEvidence": true,
+          "requiresTarget": true
+        }
+      },
+      "vpsPreparation": {
+        "accepted": true,
+        "checks": {
+          "allServicesStayDisabled": true,
+          "candidatePathDoesNotInventSource": true,
+          "enabledFixturePreservesIdentity": true,
+          "enabledFixtureRestrictsAccount": true,
+          "fixtureAssertionsPass": true,
+          "generationHashComparisonIsExplicit": true,
+          "missingConfigurationRevisionStaysUnknown": true,
+          "noAccountOrGroupCreated": true,
+          "noBuildMetadataInvented": true,
+          "noCloudAccessFromSpectreReport": true,
+          "noExecutionReadinessInferred": true,
+          "noKeyOrSshServiceCreated": true,
+          "noSourceOrFullGenerationInvented": true,
+          "noStateVersionInference": true,
+          "observationRemainsUnauthenticated": true,
+          "observedIdsArePinned": true,
+          "observedNixpkgsIsRecordedWithoutSubstitution": true,
+          "packagePinsApprovedPublicKey": true,
+          "packagePinsObservedIdentity": true,
+          "provenanceBytesBound": true,
+          "provenanceIsOnlyObservation": true,
+          "reportBytesBound": true,
+          "sourceSearchDoesNotInventCompatibility": true,
+          "sourceSearchIsStillUnauthenticated": true,
+          "sourceSearchReportsBound": true,
+          "standalonePackageMatchesModule": true
+        }
+      }
+    },
+    "failed_components": [],
+    "overall_compatible": true,
+    "production_ready": false,
+    "scope": "Module evaluation against the observed nixpkgs input; not a complete host"
+  },
+  "preparation_artifact": {
+    "closure_nar_bytes": 371379016,
+    "closure_paths": 38,
+    "derivation": "/nix/store/yq4c7g10j06a45g0xhnhd5pcly66pzif-mrjam-forgejo-preparation-20261030.drv",
+    "identical_flake_package_derivation": true,
+    "identical_to_direct_current_pin_expression": true,
+    "nar_bytes": 69485352,
+    "nar_hash": "sha256-slAKp43FVIX/PSF5tcjBABq3u5IjZkPE76dzT8WV73M=",
+    "output": "/nix/store/v5fcia1xn12p0lszqzf5nfq5rwl7lg8n-mrjam-forgejo-preparation-20261030",
+    "recursive_content_verification_passed": true,
+    "signature_trust_checked": false,
+    "top_level_rebuild_passed": true
+  },
+  "production_access": false,
+  "production_activation": false,
+  "production_ready": false,
+  "protected_independent_approval": false,
+  "received_reports": {
+    "attachments": [
+      {
+        "bytes": 186,
+        "reference": "operations/received/20261101/RETOUR-SOURCES-SPECTRE.txt",
+        "sha256": "6b197db827c6b2ce5b60b530c9b256b1d530af2b54eaab63a3b58be7faca2639"
+      },
+      {
+        "bytes": 2214,
+        "reference": "operations/received/20261101/RESULTAT-COMMANDES-SPECTRE.txt",
+        "sha256": "33c57e4f0633272b095ee1ade027bfa0531eaceb05fa9f04df82207162a7a8e7"
+      }
+    ],
+    "authority": "unverified_observation",
+    "candidate_file_is_installed_build_entrypoint_proven": false,
+    "cloud_production_access": false,
+    "content_of_configuration_read": false,
+    "external_imports": null,
+    "future_repository_authority": "MrJ-am/vps-infrastructure",
+    "imports_read": false,
+    "local_changes": null,
+    "next_step": "Recover only code explicitly reviewed for sharing, preserving unknowns and references; do not repeat metadata commands or provenance probes",
+    "production_activation": false,
+    "recorded_on": "2026-11-01",
+    "relative_entrypoint": null,
+    "reported_authorization": "User authorized Codex on Spectre as root for exactly the four completed commands in the attached report; no further command or Cloud capability follows",
+    "reported_checks": [
+      {
+        "exit_code": 0,
+        "operation": "entrypoint_exists",
+        "path": "/etc/nixos/configuration.nix",
+        "result": true
+      },
+      {
+        "exit_code": 0,
+        "operation": "entrypoint_resolves_to_itself",
+        "result": true
+      },
+      {
+        "exit_code": 128,
+        "operation": "git_worktree_root",
+        "result": "not-a-repository-at-this-location"
+      },
+      {
+        "exit_code": 128,
+        "operation": "git_head",
+        "result": "not-a-repository-at-this-location"
+      }
+    ],
+    "schema_version": 1,
+    "sender_provided_digest": false,
+    "signature_provided": false,
+    "source_commit": null,
+    "source_repository": null,
+    "state_version": null,
+    "verification": "SHA-256 calculated on receipt and exact byte copies checked; no authentication of reported production commands"
+  },
+  "recorded_on": "2026-11-01",
+  "recorder_sha256": "523a8af7d48cbc17933e9a838d637693ea70c16fc9b99dd8586a5a42928f887d",
+  "schema_version": 1,
+  "scope": "Reviewed-source transport and inert Forgejo preparation; not a complete VPS",
+  "source_handoff_tests": {
+    "data": "synthetic only",
+    "python": "3.13.17",
+    "python_executable": "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17/bin/python3",
+    "tests_passed": 18
+  },
+  "source_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "flake.nix": "ba502498f8a9ce8c162edae7cdaf926e3dbe2617361463d85251e1c70c2c3395",
+    "operations/compatibility/evaluation.nix": "48f08d929d785674286070549401c627665a76622077d5f595785a9b845883e7",
+    "operations/compatibility/nixpkgs-vps-observed.lock.json": "03e330ae05e217d18712c3201df5303f404f99385e450a5e46fc8b50826a4366",
+    "operations/compatibility/nixpkgs-vps-observed.nix": "be4e7927620721e5dadd544f00f898cf1647a2ee7d21c58dcd03d6dbe07399a8",
+    "operations/forgejo/README.org": "942bd0c0ab167318d250951f44279658847f032ebe0ed610c03ac48b5f1e64d3",
+    "operations/forgejo/assets/config.js": "ad6570e15600ee9036401b820bbd5f368cd213d6a0c5afe5a0e2444d2960ddb5",
+    "operations/forgejo/assets/footer.tmpl": "2446903db4dd611955cfcb1937eabff7e9fb530be59f0ae7e6a0e751f466ee22",
+    "operations/forgejo/assets/org.css": "9dc497eb0bffb10b69b0d11af59047ca83c2a7dd47e2b9c89a24ef4278526111",
+    "operations/forgejo/locked-preparation.nix": "ff2ec534c821b7cde7e2e4f7b37c6594520e1e1e8ced389846788b48564e1703",
+    "operations/forgejo/org-links.lua": "007f3eb954ec8e081b34ec1943a397077ca0da6fc19bb6da98142399171f7bb2",
+    "operations/forgejo/package.nix": "c0eb15821a118f0f0517499aebaea4377ffedbbe4632947ab2792a6c0f113db0",
+    "operations/forgejo/runner-policy.json": "c888c9b9fce810ca5d6bc591491207950f9590ec4e3f5a03911c517e9537735e",
+    "operations/forgejo/runtime-references.json": "5eb62cee6823bb8ea72a945ff910ba7b6652bf7810862875fefae510c3902de0",
+    "operations/forgejo/settings.nix": "74edce15a2852008b5a4ba4896f2ccd006bad93271740ca43850f7a25d9fc604",
+    "operations/forgejo/sources.lock.json": "7cd0e674a5c4a8ce5b6aa58cd77c20233645fc071126a1af8b7a58e1e56568a1",
+    "operations/forgejo/tests/check_output.py": "d7639259486bc269eae0746ccf7e2ef0668d2b1d382af4ed625afb822254a446",
+    "operations/forgejo/tests/locked-preparation-evaluation.nix": "566edeb4b29ffa3cb260659413d503395edccb2f4d54360d12ead38b7fd1d168",
+    "operations/forgejo/tests/module-evaluation.nix": "f8bcb60c5da98beeceb2b8355fed14e432209e2f22e40c46c4813363f255b9f5",
+    "operations/forgejo/versions.lock.json": "59e5b69e94294d602678c27a309bfa785cc9d8d08b2918bc18893d1752746720",
+    "operations/nixos/mrjam-forgejo.nix": "30c463137a91d83f5dd3a05b8e5e64687bea3fbc59c0208ff24f64c9fae997e8",
+    "operations/nixos/vps-preparation.nix": "9bf4c5bf2353ad95554421cfd464aae7a349f39fc9da1c2da343007287749e4b",
+    "operations/received/20261101/RESULTAT-COMMANDES-SPECTRE.txt": "33c57e4f0633272b095ee1ade027bfa0531eaceb05fa9f04df82207162a7a8e7",
+    "operations/received/20261101/RETOUR-SOURCES-SPECTRE.txt": "6b197db827c6b2ce5b60b530c9b256b1d530af2b54eaab63a3b58be7faca2639",
+    "operations/received/provenance-source-search-20261101.json": "b603d913dce0eb3e9da652062e0025864b4f91dd636d8943288689d915fa22ef",
+    "operations/source-recovery/README.org": "6ccad9fe760bc6e2d0335e7609dbc3b8a91015c54a3a7c1ef55dccfab97d9eee",
+    "operations/source-recovery/SPECTRE.txt": "26e9b64d11e0b1601760790634fc3258c5e8a1e6b38d9f9be7e440a6313bd76b",
+    "operations/source-recovery/reviewed_sources.py": "9cb0d84767caa8e13b1e71fb74bd1f2bc8aade415024957b0fc613b4cfe23549",
+    "operations/source-recovery/tests/test_reviewed_sources.py": "58bc06d60a9f517d4ab82fd366f06b63ac1ca234686b22dac37a9e3bcdca1cae",
+    "operations/targets/mrjam-vps.json": "a1a8e921ed5b661badc9b4776fe10901e0a56991a746a69144425c481c69de74",
+    "operations/tests/vps-preparation-evaluation.nix": "732bbd92b6b37a2a46be7df26aa83ce10d94ede736a1756ad72d3807de2deda9"
+  }
+}
