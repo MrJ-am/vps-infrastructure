@@ -85,6 +85,18 @@ extraction. Ils ne vérifient pas la confidentialité du code remis.
 
 * Reproduction locale, jamais sur le VPS
 
+Pour la matrice élargie, préférer l'exécution par composants, hors des tests VM :
+
+#+begin_src sh
+python3 operations/compatibility/check_components.py \
+  --nixpkgs "$NIXPKGS_SOURCE" --destination "$NEW_EVALUATION_DIRECTORY"
+#+end_src
+
+Elle énumère tous les composants dans =evaluation.nix= puis les évalue dans
+des processus distincts, sans omettre d'assertion. Le reçu conserve les résultats
+et échecs séparément. L'essai monolithique simultané avec une VM a dépassé la
+mémoire disponible ; cela n'est pas un résultat de compatibilité.
+
 Avec Nix et les entrées autorisées disponibles :
 
 #+begin_src bash

@@ -1,0 +1,105 @@
+#+title: ViSe autonome — construction et adoption déclaratives
+#+date: 2026-11-01
+#+language: fr
+
+ViSe reste indépendant du monolithe, du SSO et des thèmes communs.
+=sources.lock.json= conserve les 42 fichiers de compilation/test sélectionnés
+à =65bbd8c53a1f6d2efda453a5c82d66c49df26699=. Le second verrou,
+=sources-adoption-20261101.lock.json=, pointe vers
+=8c8ef66f943c10cb1397868bd1c5ed1962a97b5c= ; le seul fichier de compilation
+différent est =backend/src/main.rs=. Les ponts cryptographiques, le catalogue,
+Elm, Cargo.lock, package-lock.json et la migration SQL v1 restent identiques.
+Ni l'une ni l'autre référence ne prouve la révision installée du VPS.
+
+* Entrées et construction
+
+=prepare.py= exige les octets du verrou, des archives Cargo dont les SHA-256
+correspondent au Cargo.lock et les contenus Elm déjà verrouillés dans
+=../builds/elm-dependencies.lock.json=. Aucun autre fichier du checkout n'entre.
+Les 221 archives Cargo sont vérifiées avant extraction ; le helper commun
+refuse liens, traversées et types spéciaux. npm utilise son verrou avec
+=ci --ignore-scripts --no-audit --no-fund= ; seules les URL du registre public
+npm avec intégrité SHA-512 sont admises. Aucun script de livraison du dépôt
+applicatif n'entre dans la sélection ou n'est exécuté.
+
+La première matérialisation complète a pour SHA-256 de manifeste :
+=f119430d6c3163faece432c1c4cc84449f3e9cd0ffc9866b2136f9b4dcccdfc6=.
+=prepare_adoption.py= réutilise ses dépendances uniquement après vérification
+de tous les fichiers et égalité des manifestes Cargo/Elm/npm. Il vérifie
+séparément les nouveaux octets source. Le nouveau manifeste est :
+=b0c8a52571c4e1c3b89b5c72b82f15a55bb968d4d1a1a95ca3c433c9ef2b651f=.
+Les anciens verrous et empreintes restent inchangés. Les répertoires locaux
+doivent rester sans écrivain concurrent ; leur import dans le store donne
+les entrées immuables du build.
+
+#+begin_src sh
+python3 operations/vise/prepare.py \
+  --source "$SOURCE_65BBD8C5" --cargo-cache "$PUBLIC_CRATE_CACHE" \
+  --elm-home "$VERIFIED_ELM_CACHE" --destination "$NEW_BASE_INPUTS" \
+  --npm-cache "$NEW_NPM_CACHE" --download-missing
+python3 operations/vise/prepare_adoption.py \
+  --baseline "$NEW_BASE_INPUTS" --source "$SOURCE_8C8EF66F" \
+  --destination "$NEW_ADOPTION_INPUTS"
+nix build -L --offline --no-link --json \
+  --file operations/vise/adoption-build.nix \
+  --arg nixpkgs "$NIXPKGS_SOURCE" --arg materialized "$NEW_ADOPTION_INPUTS"
+#+end_src
+
+=package.nix= conserve Rust 1.99.1, Node 24.19.0 et Elm 0.19.1 des outils
+verrouillés. Rust utilise =--release --frozen --offline= ; le frontend utilise
+les scripts du projet, sans téléchargement de compilateur npm. Le résultat
+principal contient =server=, =dist/=, les licences et =artifact.json=. La sortie
+=tests= contient le bundle des neuf tests HTTP, séparé du runtime. Le runtime
+GNU/Nix porte sa fermeture explicite ; il n'est pas présenté comme l'ancien
+exécutable musl ni comme une reproduction de ses octets. Aucune compilation
+ne doit être relancée lors de la bascule.
+
+La recette exécute TypeScript et les quinze tests existants de crypto, contenu,
+images et sondages après compilation du site. Les huit tests =test_inputs.py=
+vérifient les refus de modification, ajout, suppression, substitution du
+manifeste/verrou, lien sortant, FIFO et mode exécutable. Le test de contenu
+nécessite =dist/index.html= : une exécution native avant build a produit
+14 succès et cet échec, conservé comme tel. Ne pas supprimer ce contrôle
+ni lui fournir un faux site.
+
+* Adoption et droits
+
+=check_adoption.py= a un protocole fermé sans argument. Il interroge seulement
+les métadonnées nécessaires du schéma v1 et les droits du rôle, puis vérifie
+les attributs de =/var/lib/etp-carnet/deletions.log=. Aucun contenu du journal
+ou des tables métier n'est exporté. Les limites et métadonnées attendues
+figurent dans =schema-contract.json=. =schema-v1.sql= est la copie exacte de
+la migration publique épinglée ; elle sert aux fixtures ou à une initialisation
+explicitement choisie, jamais au précontrôle.
+
+=adopt-runtime-role.sql= sépare le rôle applicatif =etp_carnet= du propriétaire
+NOLOGIN =mrjam_vise_schema=. Il ne s'exécute ni dans une activation NixOS ni
+dans un démarrage applicatif. Son emploi réel nécessite une opération bornée
+avec capture cohérente et retour qualifiés. Les privilèges et appartenances
+inattendus provoquent un refus ; aucun rôle préexistant n'est supprimé.
+
+Le serveur neuf accepte =CARNET_SCHEMA_MODE=existing-v1=, utilisé par le module
+NixOS. Il exige la version 1 sans DDL et refuse un journal absent/non régulier.
+Le mode =initialize-v1= reste le comportement initial pour les installations
+autonomes explicites et les fixtures. Un essai PostgreSQL 17 local a confirmé
+que =CREATE TABLE IF NOT EXISTS= exige CREATE même si la table existe :
+retirer le droit sans séparer ces modes empêcherait tout redémarrage.
+
+SIGTERM et SIGINT déclenchent le drainage HTTP. L'unité attend sans SIGKILL ;
+une connexion prolongée peut donc retarder l'arrêt. Le contrôleur doit observer
+cet état et ne pas présenter un arrêt forcé comme transparent.
+
+* Qualification et retour
+
+=../runtime/vise-postgresql-systemd.nix= reste un test d'unité avec exécutable
+shell synthétique ; sa réussite ne prouve pas l'application réelle.
+=../runtime/vise-application-systemd.nix= utilise le vrai binaire et le site
+construits. Il exerce les refus, l'API avec enveloppes inventées, le redémarrage,
+un vrai dump/restore PostgreSQL local et le rejeu du journal courant avant
+réouverture. Les sauvegardes de cette fixture ne sortent pas de la VM et ne
+contiennent aucun état de production.
+
+L'ancienne génération NixOS et l'ancien binaire ne constituent pas un retour
+qualifié avec les nouveaux droits SQL. Il faut identifier l'ancien code,
+traiter ses exigences DDL et conserver le journal le plus récent.
+Les préconditions globales figurent dans =../runtime/ADOPTION-SERVICES.org=.

@@ -38,6 +38,9 @@ let
     noAutostartOrAutomaticRestart = unit.wantedBy == [ ] && !unit.restartIfChanged && !unit.stopIfChanged;
     noBootstrapSql = enabled.services.postgresql.ensureDatabases == [ ] && enabled.services.postgresql.ensureUsers == [ ]
       && !(enabled.systemd.services ? vise-provision);
+    schemaAndLedgerPreflight = lib.hasInfix "/bin/mrjam-vise-check-adoption" unit.preStart;
+    existingSchemaWithoutDdl = unit.environment.CARNET_SCHEMA_MODE == "existing-v1";
+    gracefulStopWithoutForcedKill = unit.serviceConfig.TimeoutStopSec == "infinity" && !unit.serviceConfig.SendSIGKILL;
     noBackupOrTimer = !(enabled.systemd.services ? vise-backup) && !(enabled.systemd.timers ? vise-backup);
     noRouteOpened = !enabled.services.nginx.enable
       && builtins.attrNames enabled.services.nginx.virtualHosts == builtins.attrNames baseline.services.nginx.virtualHosts;

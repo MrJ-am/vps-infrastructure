@@ -1,8 +1,10 @@
 # ViSe remains independent: no monolith, SSO, common theme or shared identities.
 # Installs a staged unit only; no automatic start, SQL or backup operation.
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   cfg = config.services.mrjamVise;
+  locked = import ../forgejo/locked-toolchain.nix { system = pkgs.stdenv.hostPlatform.system; };
+  adoptionCheck = locked.callPackage ../vise/adoption-check.nix { };
   storeRoot = value: value != null && !builtins.hasContext value &&
     builtins.match "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+" value != null;
   hba = ''
@@ -55,12 +57,19 @@ in {
         description = "ViSe — independent encrypted ETP notebook (staged)";
         after = [ "postgresql.service" ]; requires = [ "postgresql.service" ];
         wantedBy = [ ]; restartIfChanged = false; stopIfChanged = false;
+        # The qualified adoption binary accepts an existing schema without DDL.
+        # Require that schema and its restricted runtime role, and never create
+        # a missing deletion ledger during adoption of persistent state.
+        preStart = ''
+          ${adoptionCheck}/bin/mrjam-vise-check-adoption
+        '';
         environment = {
           CARNET_BIND = "127.0.0.1:3017";
           CARNET_DIST = "${if cfg.artifactRoot == null then "/INVALID" else cfg.artifactRoot}/dist";
           CARNET_DB_HOST = "/run/postgresql";
           CARNET_DB_NAME = "etp_carnet"; CARNET_DB_USER = "etp_carnet";
           CARNET_DB_PASSWORD = "";
+          CARNET_SCHEMA_MODE = "existing-v1";
           CARNET_PUBLIC_URL = "https://vise.mrj.am"; CARNET_SECURE_COOKIE = "true";
           CARNET_DELETION_LEDGER = "/var/lib/etp-carnet/deletions.log";
         };
@@ -73,6 +82,7 @@ in {
           RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" "AF_INET6" ];
           CapabilityBoundingSet = [ ]; AmbientCapabilities = [ ];
           Restart = "on-failure"; MemoryMax = "512M"; TasksMax = 128;
+          TimeoutStopSec = "infinity"; SendSIGKILL = false;
           StandardOutput = "null"; StandardError = "null";
         };
       };

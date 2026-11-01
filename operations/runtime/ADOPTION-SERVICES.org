@@ -1,0 +1,152 @@
+#+title: Adoption déclarative des services conservés — qualification locale
+#+date: 2026-11-01
+#+language: fr
+
+* Mandat et limite actuelle
+
+La mise en service est autorisée par =../mise-en-service/mandat.org=. Il ne
+reste pas de gel général à lever. La présente préparation ne constitue pas
+encore une génération complète installable : les builds et identités actifs,
+l'adoption des données, la chaîne d'approbation protégée et le contrôleur de
+bascule doivent être rapprochés des artefacts effectivement testés.
+
+Les trois modules =mrjam-forgejo-host.nix=, =mrjam-kanidm-host.nix= et
+=mrjam-nextcloud-host.nix= sont inertes par défaut. Ils imposent les UID/GID
+existants à l'activation. Les unités applicatives sont installées sans démarrage
+au boot tant que =startAtBoot= n'est pas choisi. Les changements du vhost
+Nextcloud appartiennent à la future génération complète revue ; ce module ne
+constitue pas une capacité de bascule indépendante de Nginx.
+
+* Versions et paramètres conservés
+
+| Composant | Cible préparée | Justification et limite |
+|-----------+----------------+-------------------------|
+| Forgejo | 17.0.1, nixpkgs applicatif 6f06d204 | Candidat Forgejo/runner déjà verrouillé ; le build installé reste à observer. Une éventuelle montée depuis 16.x exige une qualification distincte. |
+| PostgreSQL | majeure 17, tests avec 17.11 | Majeure observée et partagée, sans création d'une seconde instance ni changement de dataDir par les modules. |
+| Kanidm | 1.11.2, même entrée applicative | Version déclarée par le code remis ; ce n'est pas une observation du processus. Aucun renommage de domaine ni provisioning automatique. |
+| Nextcloud | 34.0.4 | Archive et empreinte conservées depuis le code reçu ; assemblage fondé sur l'entrée c5c4a43b. |
+| PHP | 8.4.27 | Préserve le correctif déclaré, avec les extensions du module Nextcloud. |
+| user_oidc | 8.10.1 | Paquet de l'entrée c5c4a43b ; PKCE et absence d'auto-provisioning conservés. |
+| ViSe | source d'origine 65bbd8c5, adoption 8c8ef66f | Service autonome, aucun raccord SSO/monolithe ; les sources cryptographiques et SQL v1 sont inchangées. |
+
+=stateVersion= reste =26.05= dans le socle VPS. Les ressources observées
+(2 CPU et environ 8 Go de mémoire) ne prouvent ni réserve CI, ni quotas, ni
+capacité de coexistence. Les VM ci-dessous tournent exclusivement dans Cloud,
+en TCG, sans réseau du conteneur constructeur ; elles ne supposent aucun KVM
+ou droit de virtualisation sur le VPS.
+
+* Forgejo : séparer exécution et migration
+
+Le module ne lance pas l'amorçage du module Forgejo amont. Il conserve les trois
+références de secrets sous =/var/lib/forgejo/custom/conf/= et prépare une
+configuration d'exécution privée en =0400=, lue sous l'identité Forgejo.
+Il refuse un secret absent ou un lien, ainsi qu'un répertoire de dépôts absent
+ou remplacé par un lien. Aucun secret n'est généré ni mis dans le store.
+
+=AUTO_MIGRATION=false= n'interdit pas l'initialisation d'une base vide dans
+Forgejo 17.0.1. Le contrôle préalable fixe vérifie donc les trois ensembles
+de métadonnées de migration et l'absence de droits DDL du rôle applicatif.
+Il refuse les droits CREATE/TEMP, la propriété d'objets, les appartenances à
+des rôles et les fonctions SECURITY DEFINER accessibles hors catalogues.
+Il ne lit aucune table métier et ne constitue pas une attestation de tout
+le contenu de la base.
+
+=../forgejo/adopt-runtime-role.sql= est une opération explicite, jamais lancée
+à l'activation NixOS ou au démarrage du service. Elle sépare le propriétaire
+NOLOGIN du rôle d'exécution et accorde les opérations de données requises.
+Elle doit faire partie d'une opération bornée avec sauvegarde et retour
+qualifiés avant utilisation réelle. Le contrôleur de migration de production
+n'est pas fourni par ce simple fichier SQL.
+
+La redirection de la page d'accueil exige =server.LANDING_PAGE=login= ;
+=REQUIRE_SIGNIN_VIEW= seul laisse une page d'accueil publique. Actions reste
+désactivé. Le travail antérieur sur règles de dépôts et runner ne devient pas
+une configuration de droits effectivement appliquée par ce module.
+
+* Kanidm et Nextcloud : adoption sans amorçage implicite
+
+Kanidm exige une base existante non vide et charge les deux références TLS
+ACME par credentials systemd. La configuration fixe l'origine =log.mrj.am=.
+La sauvegarde périodique interne est explicitement désactivée par
+=online_backup.enabled=false= ; =versions=0= n'est pas un interrupteur.
+Le choix de la sauvegarde de production reste distinct de l'essai synthétique.
+
+La version 1.11.2 choisit la compression de sauvegarde dans la configuration,
+mais le décodeur de restauration à partir du suffixe du fichier. Le test utilise
+donc explicitement gzip et =.json.gz=. Il restaure dans une autre base locale,
+vérifie celle-ci, redémarre le service restauré puis le service original.
+Ces étapes ne certifient pas une sauvegarde réelle ni la conservation de tous
+les comptes et clients SSO existants.
+
+Nextcloud conserve le webroot et les extensions PHP du module NixOS, Redis,
+les applications user_oidc/spreed et les protections PHP existantes. Son
+=nextcloud-setup= exige =config.php= puis exécute seulement =occ status
+--exit-code=. Install, upgrade, activation automatique d'applications et
+réparation de base sont retirés de ce chemin de démarrage. La fixture initialise
+explicitement sa base inventée, puis adopte cette instance. L'essai OIDC complet
+avec Kanidm et le contrôle de restauration Nextcloud restent distincts.
+
+* ViSe et le registre des suppressions
+
+La nouvelle entrée =CARNET_SCHEMA_MODE=existing-v1= ne lance aucun CREATE TABLE.
+Elle exige le schéma v1 et un journal régulier existant. Le précontrôle NixOS
+vérifie les métadonnées de tables, colonnes, clés, droits SQL et attributs du
+journal ; il ne lit ni contenu de carnet ni contenu du journal. Il refuse un
+journal absent, lié, partagé par hardlink, trop permissif ou supérieur à 64 Mio.
+Cette limite est une politique candidate à rapprocher de l'existant, pas une
+mesure du journal installé.
+
+Le serveur rejoue les suppressions avant d'ouvrir HTTP. Le test de restauration
+conserve le journal courant séparément du dump SQL. Revenir à une génération
+NixOS antérieure ne restaure pas cette propriété. L'ancien binaire qui exécute
+du DDL à chaque démarrage n'est pas qualifié avec les nouveaux droits SQL ; un
+retour vers lui doit traiter explicitement cette incompatibilité.
+
+Les tests unitaires cryptographiques existants, les neuf tests HTTP et les
+tests d'entrée sont conservés. Le paquet contient le vrai Rust et le vrai site
+Elm ; les tests HTTP sont une sortie Nix séparée et ne font pas partie du
+runtime de production. Voir =../vise/README.org= pour les entrées verrouillées.
+
+* Reproduction et lecture des preuves
+
+Les commandes suivantes s'exécutent dans l'atelier synthétique, avec l'entrée
+Nixpkgs exacte du flake et les dépendances déjà présentes. Ne pas les lancer
+sur le VPS : elles créent des VM et des données inventées.
+
+#+begin_src sh
+nix build -L --offline --no-link --json \
+  --file operations/runtime/forgejo-postgresql-systemd.nix --arg nixpkgs "$NIXPKGS_SOURCE"
+nix build -L --offline --no-link --json \
+  --file operations/runtime/kanidm-systemd.nix --arg nixpkgs "$NIXPKGS_SOURCE"
+nix build -L --offline --no-link --json \
+  --file operations/runtime/nextcloud-systemd.nix --arg nixpkgs "$NIXPKGS_SOURCE"
+python3 operations/compatibility/check_components.py \
+  --nixpkgs "$NIXPKGS_SOURCE" --destination "$NEW_EVALUATION_DIRECTORY"
+#+end_src
+
+L'évaluation séquentielle conserve tous les composants et toutes les assertions
+de la matrice. Elle évite de conserver simultanément leurs graphes en mémoire.
+Une tentative monolithique en concurrence avec une VM a été tuée par manque
+de mémoire ; elle n'est pas comptée comme un succès ou un échec de contrat.
+
+Les reçus finaux doivent lier commit, empreintes de sources, commandes,
+codes de sortie, dérivations, NAR et journaux synthétiques. Une tentative échouée
+reste identifiée séparément ; seul le dernier essai réussi des mêmes octets
+peut être retenu. Aucun reçu local ne remplace une revue indépendante protégée.
+
+* Conditions de passage en production
+
+| Inconnue ou contrôle manquant | Preuve minimale et chemin autorisé |
+|-----------------------------+-------------------------------------|
+| Identités et builds actifs | Retour =services-v1.json= du paquet =../bootstrap-services/= publié, sans commandes libres ni données. Autorité toujours observation non authentifiée. |
+| ViSe installé hors store | Identité du code à établir par un contrôle fixe du seul exécutable ViSe, intégré au futur précontrôle opérateur. Le rapport V1 ne lit pas ce binaire et retournera un build inconnu. |
+| Schémas et droits existants | Contrôles fixes exécutés localement par la future capacité bornée, retour de codes seulement ; aucun SQL arbitraire transmis à Cloud. |
+| Sauvegardes et restaurations réelles | Reçu fermé du mécanisme autorisé, capture cohérente avec écritures arrêtées, destination et clés conservées côté opérateur. Aucune sauvegarde ne quitte la production vers les agents. |
+| SSO, droits des dépôts et CI | Parcours synthétiques de bout en bout puis contrôles bornés des droits effectifs, dans une autorité distincte du candidat. |
+| Génération complète et bascule | Composition du host, artefacts exacts, tests de bascule/drainage/retour, approbation liée aux octets, puis installation de ces mêmes octets sans rebuild. |
+
+L'ordre reste : réconcilier les observations → qualifier les compatibilités
+requises → construire la génération complète → revoir les octets et le retour
+→ installer par capacité bornée → contrôler la disponibilité réelle. Le relais
+Spectre est une étape technique d'accès à l'existant, pas une nouvelle demande
+d'autorisation générale de déployer.
