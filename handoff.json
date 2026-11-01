@@ -1,0 +1,11 @@
+{
+  "archive": "mrjam-observation-services-v2-20261101.tar",
+  "bytes": 31856640,
+  "files_verified": 53,
+  "infra_commit": "2a8db4401f47c9671a4b4bf74bdbd4cf9555427f",
+  "reproducible_tar_metadata": true,
+  "review_commit": "2a118c0ee739d729f9b8fdf5692b82a58f1fa77b",
+  "sha256": "24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee",
+  "sha256sums_sha256": "ff6d963902c6ac8e4a7ec293aec5a9833b61ed786226c168db29382047d78470",
+  "source_selection_from_git_objects": true
+}

@@ -1,0 +1,38 @@
+#+title: Remise publique — observation services V2 corrigée
+#+date: 2026-11-01
+#+language: fr
+
+La revue Spectre a établi un défaut de confinement mémoire dans V1. Cette
+nouvelle remise corrige ce défaut ; les anciennes archives restent retirées
+et leurs empreintes inchangées. Aucun accès VPS ou déploiement depuis Cloud.
+
+Archive : =mrjam-observation-services-v2-20261101.tar=
+Taille : 31856640 octets
+SHA-256 : =24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee=
+Extracteur : =extract.py=
+SHA-256 : =b3f474d7d056e23b6e6652bbd67fbd3dc5422c83b1419f4b982facfb0c32ad9b=
+
+Lire l'extracteur avant exécution ; il vérifie l'archive, les 53 membres
+réguliers et toutes les entrées SHA256SUMS avant toute extraction. Utiliser
+un nouveau dossier. Aucun import Nix sur Spectre n'est requis.
+
+#+begin_src sh
+python3 -I -S extract.py mrjam-observation-services-v2-20261101.tar remise-services-v2
+#+end_src
+
+Lire ensuite SPECTRE-RELAIS.txt, README.org, EXECUTION-HUMAINE.org et REMISE.json,
+puis examiner les sources et preuves. La revue doit contrôler l'auxiliaire
+seccomp à refus par défaut et le collecteur sans capacités sous Landlock.
+Le noyau doit supporter Landlock ABI >=3 ; absence ou refus entraîne un échec
+sans rapport, jamais un repli. Les tests restent synthétiques : 12 groupes VM,
+21 tests du contrat, 5 tests de livraison, import vierge des 119 chemins.
+
+L'utilisateur a autorisé l'objectif de déploiement. Cette étape n'effectue
+qu'une observation humaine bornée, après revue séparée, sans étendre les accès
+SSH ou accorder root à un agent. Le retour attendu reste services-v1.json,
+nom du schéma inchangé. Ne transmettre aucun journal, donnée ou secret.
+Les sources VPS sont déjà acquises : ne pas recommencer leur recherche.
+
+Source : MrJ-am/vps-infrastructure@2a8db4401f47c9671a4b4bf74bdbd4cf9555427f
+Revue préparée : MrJ-am/mrjam-validation@2a118c0ee739d729f9b8fdf5692b82a58f1fa77b
+Aucune approbation indépendante protégée n'est prétendue.
