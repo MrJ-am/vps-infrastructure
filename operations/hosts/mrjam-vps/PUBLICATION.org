@@ -1,0 +1,26 @@
+#+title: Références de la reprise du host VPS — 1 novembre 2026
+#+language: fr
+
+Le code qualifié est =MrJ-am/vps-infrastructure@71beb70e52ebc73ff733583a7fc63e7d75215eca=,
+arbre =c567d37c5894bb688d438c88f4b9fb22c7982db2=, sur =declaratif-20261030=.
+Cette révision contient les sources reçues vérifiées, les modules reconstruits,
+l'analyse reproductible, les tests et le [[file:README.org][dossier de mise en service]].
+
+Le [[file:qualification-20261101.json][reçu de qualification]] est copié sans modification depuis
+=MrJ-am/mrjam-validation@494ce8cb980c0ed1b3dd15563e3fe7a127a4e258:operational-review/reviewed-host-qualification-20261101.json=.
+SHA-256 : =2370d42887023fcfef99a70bf81843a559bf2e80cab02e05237202fc6c7f1d2b=,
+83457 octets. Cette révision de validation contient aussi le producteur, le
+dossier de revue indépendante proposée et les 14 journaux synthétiques liés.
+
+La présente publication ajoute les preuves du candidat ; elle ne change pas
+ses sources de modules ou ses verrous. Les 273 contrôles de la base observée,
+les 145 contrôles des six suites du lot sur l'entrée applicative, les 21 tests
+de remise, les 21 tests statiques et les huit groupes VM ont réussi dans leurs
+périmètres déclarés. Les tests de remise passent sous les deux Python indiqués
+dans le reçu ; cela reste 21 contrats, pas 42 contrats différents.
+
+La génération complète de production n'est pas construite. Le fragment de
+host refuse son évaluation en système activable. Aucun accès ou changement du
+VPS n'a eu lieu ; aucune restauration réelle ou adoption protégée n'est déduite
+de ces résultats. La revue de la remise Spectre était déléguée et est achevée ;
+la revue indépendante de cette nouvelle composition reste distincte.
