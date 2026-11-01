@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "authority": "local-synthetic-qualification",
+  "source_repository": "MrJ-am/vps-infrastructure",
+  "source_commit": "23b84775237cc8bb682209841c8e2de955366ff4",
+  "source_tree": "5beca80967fcf5b4cf216e9f85cef4e6f46f8a2b",
+  "parent_commit": "555ea31e1609df89c7c3e76bb30bf2314f76a7f0",
+  "recorded_at_utc": "2026-11-01T19:55:06.651117+00:00",
+  "purpose": "Prove that first-deployment preparation and default qualification do not depend on ViSe; preserve explicit later reintegration.",
+  "authorization_reference": "operations/mise-en-service/mandat.org",
+  "deployment_profile": "operations/hosts/mrjam-vps/configuration.nix",
+  "optional_profile": "operations/hosts/mrjam-vps/configuration-with-vise.nix",
+  "default_vise_included": false,
+  "production_access": false,
+  "complete_generation_built_or_activated": false,
+  "production_ready": false,
+  "persistent_production_data_changed": false,
+  "environment": {
+    "host": "Spectre",
+    "nix_version": "nix (Nix) 2.34.9",
+    "python_version": "3.14.8"
+  },
+  "nixpkgs_inputs": [
+    {
+      "revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+      "source": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+      "nar_hash": "sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE=",
+      "checks": "default matrix and ViSe-independence counter-test"
+    },
+    {
+      "revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+      "source": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+      "nar_hash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+      "checks": "ViSe-independence counter-test; no claim of a new full matrix run"
+    }
+  ],
+  "commands": [
+    {
+      "command": "python3 -B operations/compatibility/check_components.py --nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source --destination \"$NEW_MATRIX_DIRECTORY\"",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B operations/tests/check_vise_optional.py --nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source --destination \"$NEW_COUNTERTEST_DIRECTORY\"",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -B operations/tests/check_vise_optional.py --nixpkgs /nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source --destination \"$NEW_COUNTERTEST_DIRECTORY\"",
+      "exit_code": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "nix-instantiate --parse flake.nix",
+      "exit_code": 0
+    }
+  ],
+  "matrix": {
+    "overall_compatible": true,
+    "assertions_passed": 280,
+    "components_executed": 12,
+    "optional_vise_included": false,
+    "excluded_optional_components": [
+      "vise",
+      "postgresqlComposition"
+    ],
+    "scope": "Sequential synthetic module evaluation; no generation built or activated",
+    "source_files_unchanged_since_test": 540,
+    "local_receipt_sha256": "d698ee153b275c7388d8e9a80947d4a5ca456451a291aa98c69921f2d8dc37ea",
+    "components": {
+      "forgejoGate": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 15,
+        "stdout_sha256": "32c8945b7d05b15547b0ab70e9119be29184d1f170c3b2ce8becfef4c9be75ce",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forgejoHost": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 28,
+        "stdout_sha256": "0cdf4f40f684923319b3fe92d51fd70f956dcc495bb05935c32601a584d651ba",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "forgejoPinnedToolchain": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 14,
+        "stdout_sha256": "ed5299f7b9471c3f26a7900c2c476667001b244333c4dc736b77d94f0b06e0fc",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "gateway": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 24,
+        "stdout_sha256": "d08edbd95d21243b8ec9103cae4badc45d0b5ef702437f14fd5bf02f3bcbd3ad",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "inventory": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 20,
+        "stdout_sha256": "318202d13c29e258de7ba3eb1b42976e8544d850a3b0e01758f365a380c16dbc",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "nextcloudGuards": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 16,
+        "stdout_sha256": "402d99a170eda05b7238ff9dd0fb57f58936fd1b345af650cd46e43422dcae50",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "postgresqlAccess": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 21,
+        "stdout_sha256": "1df39394ac32adaeda06597f94883799a4921ccc7b71be5e645486d7c493929d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "preservedServices": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 26,
+        "stdout_sha256": "a155d7c01fff3a9fbed61e3b49b95858b75de0dce28eca4306d6fa31e22fc32d",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "rust": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 22,
+        "stdout_sha256": "788fb67acecc95b1562159369cbfd3c5850c96e4247c73dd48636edbf7101a2e",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "systemProvenance": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 33,
+        "stdout_sha256": "83ae2575145db2d0933969333925783cd51662a5523aefaa5cbf5b991fcea6a0",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "vpsMachine": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 31,
+        "stdout_sha256": "82e274114430f4c7dfadc2d57849d5fcac1efea7663783450c7e7c29f3dc28eb",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "vpsPreparation": {
+        "accepted": true,
+        "exit_code": 0,
+        "assertions_passed": 30,
+        "stdout_sha256": "24233ac497ac6e432306645c948c47f4d4ce9bf5864d68958ac6b20279abd7f3",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "independence": {
+    "6f06d204": {
+      "all_passed": true,
+      "local_receipt_sha256": "ac1267b2ad70e3cec23c378592fdc15073e3a8897c1eecfd885f0c21eeb0cfb8",
+      "cases": {
+        "default-selection-with-broken-vise": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 7,
+          "stdout_sha256": "2d65f574fca248f5f1c6c92a45e4ee69c9c28a85872052bc7c391355e7248870",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "host-with-broken-vise-and-unknown-identity": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 31,
+          "stdout_sha256": "80a53bd12e28c287b535ccb8cadeeb072829c284d7db914b0743cef746eaed09",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optional-failure-postgresql-composition-module": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "ca2477cc99a2be1f3e27c7751e1a07ea71bec227fa4c05bf0e7a3779c08cd7cb"
+        },
+        "optional-failure-vise-module": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "48a10a8b657d302db21bc2b3cf4442efe3529177b169f1b8ee8aabe802a75ba7"
+        },
+        "optional-failure-vise-postgresql-runtime": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "127b0de581c1fd362cf674101819d7974fa06dd8f55fa7d995172eb0deab6e25"
+        },
+        "optional-profile-retained": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 6,
+          "stdout_sha256": "3e088d1cce54e76c767e8934bfb6d636ca1277ea8c650b85ff88458206679a9c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "original-host": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 31,
+          "stdout_sha256": "80a53bd12e28c287b535ccb8cadeeb072829c284d7db914b0743cef746eaed09",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "c5c4a43b": {
+      "all_passed": true,
+      "local_receipt_sha256": "7eca2eaff3b740bd33e8b1ca32a393c6a4f180f8eefe41677753d66780f4dd0a",
+      "cases": {
+        "default-selection-with-broken-vise": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 7,
+          "stdout_sha256": "2d65f574fca248f5f1c6c92a45e4ee69c9c28a85872052bc7c391355e7248870",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "host-with-broken-vise-and-unknown-identity": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 31,
+          "stdout_sha256": "80a53bd12e28c287b535ccb8cadeeb072829c284d7db914b0743cef746eaed09",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "optional-failure-postgresql-composition-module": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "75f7dfb007e6d3be7027e563806a7607985bd68e216e1d498bef297f9f1616af"
+        },
+        "optional-failure-vise-module": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "327b170276694e5d75cb4ed68c9ff29c4edb080c70914aea95f9e51d41428573"
+        },
+        "optional-failure-vise-postgresql-runtime": {
+          "accepted": true,
+          "exit_code": 1,
+          "expected_failure": true,
+          "assertions_passed": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_sha256": "27627133ba4e9af85ae0da0b14469db73dd09c1eaeb14153f6090c57cffb01fe"
+        },
+        "optional-profile-retained": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 6,
+          "stdout_sha256": "3e088d1cce54e76c767e8934bfb6d636ca1277ea8c650b85ff88458206679a9c",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "original-host": {
+          "accepted": true,
+          "exit_code": 0,
+          "expected_failure": false,
+          "assertions_passed": 31,
+          "stdout_sha256": "80a53bd12e28c287b535ccb8cadeeb072829c284d7db914b0743cef746eaed09",
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "countertest_mutations": [
+    "Only a temporary local copy is modified; original reports and received sources remain byte-identical.",
+    "ViSe module, package, module test, PostgreSQL composition test and runtime test throw OPTIONAL_VISE_INTENTIONALLY_UNAVAILABLE.",
+    "The received ViSe adapter file is absent.",
+    "ViSe account identity and service state become unknown in the copied observation; only the copy's target SHA is updated.",
+    "All 31 host assertions and the core host check derivation still evaluate.",
+    "Three explicitly selected optional checks must fail with the expected marker; these are successful negative tests, not passing ViSe qualification."
+  ],
+  "prior_attempts": [
+    {
+      "result": "counter-test harness failed before evaluating the intended modules",
+      "reason": "Nix path suffixes were accidentally emitted as absolute path literals. Corrected to string suffixes; all seven cases rerun with the unchanged expected contracts.",
+      "exit_code": 1,
+      "local_receipt_sha256": "8afb6f3617db5af71538bcc0eafd2111289e433bcb1248c6126852ded7beac8c"
+    }
+  ],
+  "source_files": {
+    "AGENTS.md": {
+      "git_blob_sha": "17da67489139a4deb3715c864cdf8f6ee9c197af",
+      "sha256": "0abdaf3748c11134bcd49c4fc1df1c808827696dd6890eb498806a484076c5d7",
+      "bytes": 1809
+    },
+    "flake.nix": {
+      "git_blob_sha": "d83ba94ff2c06f9c422ebf9d82250a9a2d7de7bb",
+      "sha256": "ea0e77aad1b274eff4190e870f29f82c3787eee49974e8c59e39d637a6aeafe7",
+      "bytes": 13602
+    },
+    "operations/AGENTS.md": {
+      "git_blob_sha": "92966a11299a337b1f44fbf3030078984be7f528",
+      "sha256": "827af9493ea8931e04b762fd7011a5256204b942374d3f6e9a4cb394d6033bd4",
+      "bytes": 1565
+    },
+    "operations/compatibility/README.org": {
+      "git_blob_sha": "e1ebbddf7e5ace7614167c97997e0a715438b07c",
+      "sha256": "f2cd939ea83f66a46f4ab8ca438ede847504e6c8773e66ded3c90bdac3db5bbf",
+      "bytes": 10924
+    },
+    "operations/compatibility/check_components.py": {
+      "git_blob_sha": "dbc60eddd1c2d97caaf2b5f0a3eabcb99b6e770b",
+      "sha256": "46db3342bf52abdf0b560a0a974478590ae0fefacafd9b49bbdbb29238cbb834",
+      "bytes": 3974
+    },
+    "operations/compatibility/component.nix": {
+      "git_blob_sha": "d9cd990113581589204e87b7fba4a0af6f071ede",
+      "sha256": "26388199d0ebbf7afff0905376cfb10e9b609f648f0145b15591b8802bcd80b4",
+      "bytes": 310
+    },
+    "operations/compatibility/evaluation.nix": {
+      "git_blob_sha": "0432750918c3b7127664a4dc284cb688cd80c073",
+      "sha256": "197494afc23ee77459c6167d2327725ba3fc5d98f9f3c1e992d843d23b9ebf1d",
+      "bytes": 2298
+    },
+    "operations/dossier-deploiement.org": {
+      "git_blob_sha": "980aebae3a6c687c3b8a8dc7f4978e8113e4d9ce",
+      "sha256": "369f7d10995fbfd26f1373ab7f19dcd6df769bd15f79bf564fe7e6b526e5fb5e",
+      "bytes": 37580
+    },
+    "operations/hosts/mrjam-vps/README.org": {
+      "git_blob_sha": "d2270dd805b46e7218420f0f2a585297b0b5a4b5",
+      "sha256": "71321ccab4d678a508b96b6884c7c6cee87aeaa13bb3696946c6820cf3f0d8c3",
+      "bytes": 15728
+    },
+    "operations/hosts/mrjam-vps/configuration.nix": {
+      "git_blob_sha": "be2f1ad72684cf4537fa39f256c54621b6aad614",
+      "sha256": "60e99cce96840d37290f2f6df1d4ace0666907aefdb5d220059624da58452a88",
+      "bytes": 487
+    },
+    "operations/hosts/mrjam-vps/machine.nix": {
+      "git_blob_sha": "d283ca437c34404e3ee4dc40e0cdc10f9ee6e0f5",
+      "sha256": "2d48328547a21887dbb60576865b187e2bbab7c26a1ab9094ca6eeef78d79ee6",
+      "bytes": 3396
+    },
+    "operations/hosts/mrjam-vps/observed-service-identities.nix": {
+      "git_blob_sha": "906cfd6703e205006a5b7a25cfdfbfda56033ce5",
+      "sha256": "a7f758a5a09918c5eca8dbd256be2b3504f7fe7564c6b0ad16ebd85e7bff2cac",
+      "bytes": 976
+    },
+    "operations/mise-en-service/mandat.org": {
+      "git_blob_sha": "edb492b0d020e709af605ee9d916e355d0e15ad5",
+      "sha256": "e6d40b20e1315b1ba4d6b51cad90aab53d8a4c99076d5a0784097d0791494a81",
+      "bytes": 3554
+    },
+    "operations/runtime/ADOPTION-SERVICES.org": {
+      "git_blob_sha": "c8ca87dbf69a6ae8cdc6baa2ef176042034bec85",
+      "sha256": "0039a8c70b87a9c7018b26bed051191ad5de3f2b0d4174b505ffab00e8e22f6c",
+      "bytes": 12735
+    },
+    "operations/targets/SERVICES-OBSERVES-20261101.org": {
+      "git_blob_sha": "358293da7f693190139c392b0e1b84d55be8df8a",
+      "sha256": "a7884f921f9457b5cea596115136c6d618a187d043a9deed77e834dc67ef9acc",
+      "bytes": 6624
+    },
+    "operations/targets/mrjam-vps.json": {
+      "git_blob_sha": "ffacb9188a20451b28def579817d990c4277cfdc",
+      "sha256": "6ef86176e78d7c008e3cc4e9ce590110b16311592cd57ec04e8c28448b4cbd63",
+      "bytes": 7677
+    },
+    "operations/tests/vps-machine-evaluation.nix": {
+      "git_blob_sha": "e90b7f903372a2469fb111713a65183d1f224593",
+      "sha256": "a6198d7308e59bd8d6687b433e53c0e696b62a8efababc96abcd120bfc1da3a1",
+      "bytes": 4996
+    },
+    "operations/hosts/mrjam-vps/configuration-with-vise.nix": {
+      "git_blob_sha": "50d4413799f526dcc19c9acf317c7f579a7c70c0",
+      "sha256": "dd5d719fe2a96cd5b4f198204f61ab4ab7e462306888863f8ee88d06b66c07fc",
+      "bytes": 773
+    },
+    "operations/tests/check_vise_optional.py": {
+      "git_blob_sha": "f6314eab1fc7efabf18e1db7cef873e8dd2842bd",
+      "sha256": "36b110eadc8fffe7a31bf00feb5e5ce7471b6c13c585f572a91c4193910223d9",
+      "bytes": 7459
+    }
+  },
+  "limits": [
+    "The first-deployment profile remains a preparation with its full-host activation gate; no deployable generation is claimed.",
+    "Other services, state adoption, complete generation cutover and return still require their own qualification.",
+    "ViSe availability may be deferred. Its database, deletion ledger, persistent files and backups must be retained.",
+    "No ViSe runtime, Forgejo migration VM or production availability check was rerun for this scope-only change.",
+    "Local tests do not constitute independent protected production approval."
+  ]
+}

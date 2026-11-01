@@ -90,6 +90,14 @@ défaut : ils ne bloquent jamais le premier déploiement. Les autres composants
 et leurs assertions sont conservés. Les reçus historiques ci-dessus gardent
 leur périmètre d'origine et ne sont pas réécrits.
 
+La [[file:qualification-vise-optional-20261101.json][qualification du périmètre sans ViSe]] passe 280 assertions sur les
+12 composants de la matrice principale. Le contre-test d'indépendance passe
+ses sept cas sur chacune des deux entrées nixpkgs : les 31 assertions du host
+passent aussi avec ViSe défaillant, et ses trois contrôles optionnels échouent
+isolément comme attendu. Aucune génération complète n'a été construite ou
+activée. Le premier essai du contre-test avait une erreur de chemin dans son
+harnais ; le reçu distingue cet échec corrigé des exécutions finales réussies.
+
 Pour la matrice élargie, préférer l'exécution par composants, hors des tests VM :
 
 #+begin_src sh

@@ -12,6 +12,11 @@ La base, le registre d'effacement, les fichiers persistants et les sauvegardes
 ViSe doivent être conservés. Le service et sa route pourront être absents
 temporairement. Ce changement de préparation n'a modifié aucun service du VPS.
 
+La [[file:../../compatibility/qualification-vise-optional-20261101.json][qualification de cette séparation]] passe 280 assertions sur les 12
+composants du socle. Le contre-test passe sur les deux pins nixpkgs : le host
+reste évaluable avec un module ViSe défaillant, son adaptateur reçu absent et
+son identité inconnue. Les contrôles ViSe restent sélectionnables à part.
+
 La configuration du VPS est désormais disponible comme code reçu vérifié.
 Le socle matériel/réseau est reconstruit dans =machine.nix= à partir de ce code,
 et non de Spectre. Douze faits sont rapprochés automatiquement des littéraux
