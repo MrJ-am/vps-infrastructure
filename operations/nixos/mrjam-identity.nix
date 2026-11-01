@@ -92,9 +92,9 @@ in {
         message = "mrjamIdentity: no additional peer identity may use the reserved SQL map."; }
     ];
     system.extraDependencies = [ (builtins.storePath root) ];
-    users.groups.mrjam-metier.gid = cfg.gid;
+    users.groups.mrjam-ingress.gid = cfg.gid;
     users.groups.mrjam-log-readers.gid = cfg.readersGid;
-    users.users.mrjam-metier = { uid = cfg.uid; group = "mrjam-metier";
+    users.users.mrjam-metier = { uid = cfg.uid; group = "mrjam-ingress";
       isSystemUser = true; createHome = false; hashedPassword = "!"; };
     services.mrjamPostgresqlPolicy.blocks.identity = hba;
     services.postgresql.identMap = lib.mkBefore (identityMap + "\n");

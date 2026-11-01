@@ -358,5 +358,22 @@ class AdoptionPreflightTests(unittest.TestCase):
             self.assertEqual(target.public_hostname(), {"state": "observed", "value": "synthetic-vps"})
 
 
+    def test_25_code_metadata_never_exports_non_store_or_raw_output(self):
+        with patch.object(target, "run", return_value=(0, SECRET)):
+            result = target.embedding_code_metadata()
+        self.assertTrue(all(item == target.UNKNOWN for item in result.values()))
+        self.assertNotIn(SECRET, json.dumps(result))
+        root = next(iter(target.EMBEDDING_ROOTS.values()))
+        with patch.object(target, "run", side_effect=[(0, "sha256:" + "0" * 52),
+                (0, root + ".drv"), (0, "/var/lib/mrjam-metier/log/sessions.sqlite")] * 3) as call:
+            result = target.embedding_code_metadata()
+        self.assertTrue(all(item == target.UNKNOWN for item in result.values()))
+        self.assertTrue(all(args[0][0][-1] in target.EMBEDDING_ROOTS.values() for args in call.call_args_list))
+
+    def test_26_generation_refuses_arbitrary_targets(self):
+        with patch.object(target.os.path, "realpath", return_value="/var/lib/private"):
+            self.assertEqual(target.generation_metadata(), target.UNKNOWN)
+
+
 if __name__ == "__main__":
     unittest.main()

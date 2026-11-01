@@ -25,7 +25,8 @@ let
   refused = prefix: candidate: lib.any (a: !a.assertion && lib.hasPrefix prefix a.message) candidate.assertions;
   result = {
     validComposition = lib.all (a: a.assertion) cfg.assertions;
-    stateOwnerRetained = cfg.users.users.mrjam-metier.uid == 984 && cfg.users.groups.mrjam-metier.gid == 984;
+    stateOwnerRetained = cfg.users.users.mrjam-metier.uid == 984 && cfg.users.groups.mrjam-ingress.gid == 984
+      && cfg.users.users.mrjam-metier.group == "mrjam-ingress";
     noImplicitPromotion = svc.wantedBy == [ ] && aliases.wantedBy == [ ] && timer.wantedBy == [ ];
     explicitPromotion = enabled.systemd.services.mrjam-identity.wantedBy == [ "multi-user.target" ]
       && enabled.systemd.timers.mrjam-identity-aliases.wantedBy == [ "timers.target" ];

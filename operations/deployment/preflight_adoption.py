@@ -28,7 +28,7 @@ STORE_OBJECT = r"/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+"
 STORE = re.compile(STORE_OBJECT + r"\Z")
 STORE_PUBLIC = re.compile(STORE_OBJECT + r"(?:/[A-Za-z0-9._+@=-]+)*/?\Z")
 HASH = re.compile(r"[0-9a-f]{20}\Z")
-KNOWN_NAMES = ("postgres", "forgejo", "kanidm", "nextcloud", "nginx", "acme", "vision-auth",
+KNOWN_NAMES = ("postgres", "forgejo", "kanidm", "nextcloud", "nginx", "acme", "vision-auth", "mrjam-ingress",
                "vision", "vision-embeddings", "matheval", "audition")
 ADOPTION_NAMES = ("mrjam-rust-blue", "mrjam-rust-green", "mrjam-vision-archive", "mrjam-vision-replay",
                   "mrjam-vision-cycle", "mrjam-vision-closure", "mrjam-vision-admission", "mrjam-metier", "mrj-auth")
@@ -48,6 +48,12 @@ PATHS = {
     "admission_state": "/var/lib/mrjam-vision-admission/admissions.sqlite",
     "legacy_mail_state": "/var/lib/mrjam-metier/courriel/file.sqlite",
     "legacy_admission_requests": "/var/lib/mrjam-metier/admission/demandes.sqlite",
+    "native_admission_requests": "/var/lib/mrjam-metier/admission/admissions.sqlite",
+    "native_admission_mail": "/var/lib/mrjam-metier/admission/courriels.sqlite",
+    "native_cycle_mail": "/var/lib/mrjam-metier/cycle/courriels.sqlite",
+    "native_cycle_ledger": "/var/lib/mrjam-metier/cycle/effacements.jsonl",
+    "native_closure_mail": "/var/lib/mrjam-metier/fermeture/courriels.sqlite",
+    "native_closure_ledger": "/var/lib/mrjam-metier/fermeture/effacements.jsonl",
     "legacy_deletion_ledger": "/var/lib/mrjam-metier/effacements/demandes.jsonl",
     "legacy_cycle_configuration": "/var/lib/mrjam-identite/cycle.json",
     "closure_hook": "/var/lib/mrjam-identite/fermeture-hook.secret",
@@ -101,6 +107,12 @@ EXPECTED_MAC = "d4:e8:d4:c3:50:d5"
 EXPECTED_ADDRESSES = {"187.77.95.158/24", "2a02:4780:41:cf57::1/48"}
 EXPECTED_GATEWAYS = {"187.77.95.254", "2a02:4780:41::1"}
 EXPECTED_DNS = {"153.92.2.6", "1.1.1.1", "8.8.4.4"}
+# Code/model roots observed by the preceding published metadata-only probe.
+EMBEDDING_ROOTS = {
+    "python": "/nix/store/dbnsh65c9fir9psk7waq3swb3mdh18cr-python3-3.13.15-env",
+    "source": "/nix/store/20nds4zvi1pcnljpwnwzcsysvyk15g11-vision-fournisseur-c0bfcac",
+    "model": "/nix/store/mwwjyy4vlrwp59a7srjy53x24viksa6z-vision-modele-multilingue-e8f8c211226b",
+}
 
 
 def run(arguments):
@@ -385,6 +397,34 @@ def embeddings_metadata():
                 "python": tokens[0], "script": tokens[1], "model": tokens[3]}
     except (OSError, ValueError, KeyError, TypeError):
         return dict(UNKNOWN)
+
+
+def embedding_code_metadata():
+    result = {}
+    for name, path in EMBEDDING_ROOTS.items():
+        queries = [run(["nix-store", "--query", option, path])
+                   for option in ("--hash", "--deriver", "--references")]
+        if any(value is None or value[0] != 0 for value in queries):
+            result[name] = dict(UNKNOWN)
+            continue
+        nar_hash, deriver, references = [value[1] for value in queries]
+        references = references.splitlines()
+        if (not re.fullmatch(r"sha256:[0-9a-df-np-sv-z]{52}", nar_hash)
+                or not STORE.fullmatch(deriver) or not deriver.endswith(".drv")
+                or len(references) > 512 or len(set(references)) != len(references)
+                or any(not STORE.fullmatch(item) for item in references)):
+            result[name] = dict(UNKNOWN)
+            continue
+        result[name] = {"state": "observed", "path": path, "nar_hash": nar_hash,
+                        "deriver": deriver, "references": sorted(references)}
+    return result
+
+
+def generation_metadata():
+    value = os.path.realpath("/run/current-system")
+    if STORE.fullmatch(value) and "-nixos-system-" in value:
+        return {"state": "observed", "path": value}
+    return dict(UNKNOWN)
 
 
 def nginx_tokens(text):
@@ -741,6 +781,7 @@ def collect():
             "postgres_catalog": catalog(), "postgres_layout": catalog_layout(),
             "received_profile_comparisons": host_comparisons(), "hostname": public_hostname(),
             "units": unit_states(), "embeddings": embeddings_metadata(), "nginx": nginx,
+            "embedding_code": embedding_code_metadata(), "generation": generation_metadata(),
             "acme_domain_selection_state": nginx["state"], "acme": {domain: acme_metadata(domain) for domain in domains},
             "application_data_read": False, "secret_contents_read": False, "logs_read": False,
             "production_mutation": False, "discovered_scripts_executed": False}
