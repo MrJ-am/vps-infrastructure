@@ -49,7 +49,8 @@
         validationCollector = import ./operations/nixos/mrjam-validation-collector.nix;
         postgresqlAccess = import ./operations/nixos/mrjam-postgresql-access.nix;
         postgresqlPolicy = import ./operations/nixos/mrjam-postgresql-policy.nix;
-        vise = import ./operations/nixos/mrjam-vise.nix;
+        # Keep the optional module lazy even when flake outputs are inspected.
+        vise = { config, lib, pkgs, ... }@args: import ./operations/nixos/mrjam-vise.nix args;
         nextcloudGuards = import ./operations/nixos/mrjam-nextcloud-guards.nix;
         visionArchive = import ./operations/nixos/mrjam-vision-archive.nix;
         visionReplay = import ./operations/nixos/mrjam-vision-replay.nix;
@@ -65,10 +66,10 @@
       lib.qualification.inventory = inventoryEvaluation;
       lib.qualification.vpsPreparation = vpsPreparationEvaluation;
       lib.qualification.vpsMachine = vpsMachineEvaluation;
-      lib.qualification.vise = viseEvaluation;
+      lib.optionalQualification.vise = viseEvaluation;
       lib.qualification.nextcloudGuards = nextcloudGuardsEvaluation;
       lib.qualification.postgresqlAccess = postgresqlAccessEvaluation;
-      lib.qualification.postgresqlComposition = postgresqlCompositionEvaluation;
+      lib.optionalQualification.postgresqlComposition = postgresqlCompositionEvaluation;
       lib.qualification.systemProvenance = systemProvenanceEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
       lib.qualification.forgejoPinnedToolchain = forgejoPinnedEvaluation;
@@ -108,15 +109,25 @@
           paths = [ pkgs.bash pkgs.coreutils pkgs.openssh pkgs.python3 ];
         };
       };
+      # Explicit opt-in: a ViSe failure must never block the first deployment.
+      lib.optionalChecks.${system}.vise = {
+        vise-module = pkgs.runCommand "mrjam-vise-module-evaluation" {
+          result = builtins.toJSON viseEvaluation;
+        } ''
+          mkdir -p "$out"
+          printf '%s\n' "$result" > "$out/result.json"
+        '';
+        postgresql-composition-module = pkgs.runCommand "mrjam-postgresql-composition-evaluation" {
+          result = builtins.toJSON postgresqlCompositionEvaluation;
+        } ''
+          mkdir -p "$out"
+          printf '%s\n' "$result" > "$out/result.json"
+        '';
+        vise-postgresql-runtime = import ./operations/runtime/vise-postgresql-systemd.nix { inherit nixpkgs; };
+      };
       checks.${system} = {
       vps-machine-module = pkgs.runCommand "mrjam-vps-received-machine-evaluation" {
         result = builtins.toJSON vpsMachineEvaluation;
-      } ''
-        mkdir -p "$out"
-        printf '%s\n' "$result" > "$out/result.json"
-      '';
-      vise-module = pkgs.runCommand "mrjam-vise-module-evaluation" {
-        result = builtins.toJSON viseEvaluation;
       } ''
         mkdir -p "$out"
         printf '%s\n' "$result" > "$out/result.json"
@@ -127,13 +138,6 @@
         mkdir -p "$out"
         printf '%s\n' "$result" > "$out/result.json"
       '';
-      postgresql-composition-module = pkgs.runCommand "mrjam-postgresql-composition-evaluation" {
-        result = builtins.toJSON postgresqlCompositionEvaluation;
-      } ''
-        mkdir -p "$out"
-        printf '%s\n' "$result" > "$out/result.json"
-      '';
-      vise-postgresql-runtime = import ./operations/runtime/vise-postgresql-systemd.nix { inherit nixpkgs; };
       forgejo-postgresql-runtime = import ./operations/runtime/forgejo-postgresql-systemd.nix { inherit nixpkgs; };
       kanidm-runtime = import ./operations/runtime/kanidm-systemd.nix { inherit nixpkgs; };
       nextcloud-runtime = import ./operations/runtime/nextcloud-systemd.nix { inherit nixpkgs; };

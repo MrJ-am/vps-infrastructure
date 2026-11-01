@@ -4,6 +4,14 @@
 
 * Résultat et portée
 
+Le premier déploiement se prépare sans ViSe, conformément à la priorité du
+1 novembre. Aucun binaire, test, schéma, sauvegarde propre ou contrôle de
+disponibilité ViSe ne bloque le socle. =configuration-with-vise.nix= conserve
+le profil de réintégration ultérieure ; il reste désactivé par défaut.
+La base, le registre d'effacement, les fichiers persistants et les sauvegardes
+ViSe doivent être conservés. Le service et sa route pourront être absents
+temporairement. Ce changement de préparation n'a modifié aucun service du VPS.
+
 La configuration du VPS est désormais disponible comme code reçu vérifié.
 Le socle matériel/réseau est reconstruit dans =machine.nix= à partir de ce code,
 et non de Spectre. Douze faits sont rapprochés automatiquement des littéraux
@@ -22,20 +30,22 @@ Le flake expose les modules et leurs tests ; aucune =nixosConfiguration= de
 production partielle n'est publiée. L'objectif de mise en service est autorisé
 par [[file:../../mise-en-service/mandat.org][le mandat courant]] ; aucun nouveau gel général n'est invoqué.
 
-Le lot suivant ajoute les modules exécutables Forgejo, Kanidm et Nextcloud,
+Le lot précédent ajoute les modules exécutables Forgejo, Kanidm et Nextcloud,
 ainsi que la construction ViSe et son adoption sans DDL au redémarrage.
+Ces derniers travaux relèvent désormais de la réintégration optionnelle.
 Le détail courant, les refus et les limites de leurs essais sont dans
 [[file:../../runtime/ADOPTION-SERVICES.org][le dossier d'adoption des services]]. Les qualifications historiques
 ci-dessous conservent leurs références ; elles ne sont pas réattribuées aux
 nouveaux fichiers.
 
 Le [[file:../../targets/SERVICES-OBSERVES-20261101.org][retour services V2]] est maintenant intégré. Le point d'entrée importe
-=observed-service-identities.nix= : il renseigne les quatre modules d'adoption
-avec les UID/GID du rapport vérifié, sans activer les services. Les deux autres
+=observed-service-identities.nix= : il renseigne les trois modules Forgejo,
+Kanidm et Nextcloud avec les UID/GID du rapport vérifié, sans les activer.
+L'identité ViSe est lue seulement par =configuration-with-vise.nix=. Les autres
 comptes restent documentés dans le rapport. Ce rapprochement ne modifie pas les
 déclarations historiques de =received-profile.json= ni les fixtures.
 
-L'intégration des identités passe maintenant les 29 contrôles du host avec
+L'intégration initiale des identités a passé les 29 contrôles du host avec
 chacune des deux entrées nixpkgs. Le [[file:../../runtime/FORGEJO-MIGRATION-16-17.org][parcours Forgejo migration/restauration]]
 passe également ses 17 groupes ; cela n'active pas la composition et ne qualifie
 pas les états réels ni le retour après réouverture des écritures.
@@ -46,14 +56,14 @@ pas les états réels ni le retour après réouverture des écritures.
 |-----------+---------------------------------------+--------------------------|
 | Machine, SSH administrateur, cloud-init | Code machine et matériel sous vision-semantique | Socle explicite ; aucune clé privée, aucun réglage matériel de Spectre ; correspondance active à vérifier avant activation |
 | Accès mrjam-inventory | V2 et paquet déclaratif déjà préparés | Identité 980:980 et clé publique conservées ; aucun changement à la commande forcée ni à ses trois fichiers autorisés |
-| PostgreSQL | Instance partagée, version majeure 17 | Composition ordonnée des règles Rust/ViSe ; aucun changement de paquet, dataDir, rôle ou base par ces modules |
+| PostgreSQL | Instance partagée, version majeure 17 | Règles Rust ; règles ViSe ajoutées seulement lors de sa réintégration ; aucun changement de paquet, dataDir, rôle ou base par ces modules |
 | Forgejo, rendu Org/MathJax et runner | Préparation et contrats déjà qualifiés dans les lots précédents | Paquet préparatoire verrouillé séparément du host conservé ; builds actifs, SSO et adoption protégée encore distincts |
 | Kanidm et identité commune | Code de service remis ; artefact déclaré dans le code | Conserver états, origines et références ; pas de copie ni exécution des anciens scripts SSO d'amorçage |
 | Nextcloud | Source déclarant Nextcloud 34.0.4 et correctif PHP 8.4.27 | Nouveau module de protections, désactivé par défaut ; ne sélectionne ni ne reconstruit PHP/Nextcloud, ne retire aucun marqueur de confinement |
-| ViSe | Adaptateur etc/nixos/vise-hosting, port 3017, identité et base etp_carnet | Module autonome sans monolithe/SSO, artefact immuable exigé, UID/GID requis, unité sans démarrage automatique ; routage et sauvegarde non activés |
+| ViSe, optionnel | Adaptateur etc/nixos/vise-hosting, port 3017, identité et base etp_carnet | Exclu du premier déploiement ; données conservées, service potentiellement indisponible ; module et qualifications réservés à la réintégration |
 | Rust/Elm et workers | Artefacts et qualifications précédentes exactes | Applications inchangées dans ce lot ; aucun résultat antérieur rebaptisé « nouveau test » |
 
-La composition PostgreSQL conserve exactement la politique hôte après les
+Lors de la réintégration de ViSe, la composition PostgreSQL conserve exactement la politique hôte après les
 blocs dédiés. Les modules ne peuvent plus se disputer la première position.
 Le rôle et la base =etp_carnet= sont refusés dans les capacités Rust. ViSe
 utilise le socket Unix et peer, rejette les autres bases pour son rôle et
@@ -122,9 +132,10 @@ tourne en TCG dans Cloud ; rien n'en déduit une capacité de virtualisation VPS
 | stateVersion 26.05, matériel/réseau du code | Établi comme déclaration | Oui pour leur adoption active | Comparaison locale de champs fermés par un composant borné qualifié, ou vérification administrative locale ; aucun dump de configuration |
 | Correspondance avec génération active | Inconnue | Oui | Manifeste fermé liant génération/NAR et révision d'adoption ; ne pas inventer un ancien commit introuvable |
 | Graphe complet des services préservés | Incomplet | Oui | Fermer les nouvelles déclarations avec sources Git autorisées et références de secrets ; ne pas récupérer en bloc les JSON/archives historiques |
-| UID/GID et artefact ViSe installé | Identité observée 981:981 ; exécutable inconnu | Oui pour adoption ViSe | Identité candidate renseignée ; identifier le seul exécutable dans le précontrôle opérateur. Les UID des tests restent inventés |
+| UID/GID et artefact ViSe installé | Identité observée 981:981 ; exécutable inconnu | Non pour le premier déploiement | Reporter l'identification et l'adoption à la réintégration de ViSe ; poursuivre sans lui |
 | Builds actifs Forgejo/Kanidm/PHP/Nextcloud | Sorties Forgejo 16.0.3, Kanidm 1.11.2 et PHP 8.4.27 observées ; webroot Nextcloud inconnu | Oui pour leur remplacement | Rapport V2 intégré ; comparer les artefacts exacts, qualifier migration/retour Forgejo vers 17.0.1 et adoption Nextcloud. Ne pas refaire le relais général |
-| Paquets cibles PHP/Nextcloud et ViSe | Déclarations/source contractuelles disponibles | Oui | Construire les révisions retenues, contrôler dépendances et migrations, qualifier leurs artefacts réels |
+| Paquets cibles PHP/Nextcloud | Déclarations/source contractuelles disponibles | Oui | Construire les révisions retenues, contrôler dépendances et migrations, qualifier leurs artefacts réels |
+| Paquet et qualification ViSe | Travaux conservés à part | Non pour le premier déploiement | Reprendre après mise en service du socle, sans affaiblir les contrôles propres à ViSe |
 | Quotas/isolation CI et capacité de cohabitation | Non établis sur VPS | Oui | Qualification limitée des capacités nécessaires ; les 2 CPU/8 Go et tests Cloud ne prouvent pas une réserve |
 | Authentification et autorité Forgejo protégée | Tests locaux disponibles, adoption réelle inconnue | Oui | Règles, identités, droits et retours signés indépendants du candidat ; aucune lecture de jeton par Cloud |
 | Sauvegarde/restauration cohérente | Non qualifiée pour cet assemblage | Oui | Répétition synthétique, puis mécanisme local autorisé à sortie fermée ; aucun contenu de sauvegarde aux agents |
@@ -138,8 +149,9 @@ nom de service libre. Ne pas relancer V1/V2/provenance pour obtenir ces champs.
 
 * Ordre exact des étapes et retour
 
-1. Fermer et évaluer la nouvelle composition complète dans ce dépôt. Préserver
-   PostgreSQL, Nextcloud, Kanidm, Forgejo, ViSe et leurs états ; remplacer les
+1. Fermer et évaluer la nouvelle composition sans ViSe dans ce dépôt. Préserver
+   PostgreSQL, Nextcloud, Kanidm, Forgejo et leurs états, ainsi que les données
+   persistantes de ViSe pour sa réintégration ultérieure ; remplacer les
    dépendances historiques par les sources et artefacts retenus. Les champs
    expurgés doivent devenir des références de gestion locale, pas des valeurs
    factices ou des secrets dans le store.
@@ -162,8 +174,9 @@ nom de service libre. Ne pas relancer V1/V2/provenance pour obtenir ces champs.
 6. Pour la migration initiale : fermer les écritures et tâches concernées,
    drainer, produire la capture cohérente qualifiée, appliquer uniquement les
    migrations prévues, vérifier le candidat sur ressources synthétiques isolées,
-   puis effectuer le changement de route explicite. ViSe conserve son contrat
-   autonome ; sa base et son registre d'effacement forment une unité cohérente.
+   puis effectuer le changement de route explicite. Lors de sa réintégration
+   ultérieure seulement, ViSe conserve son contrat autonome ; sa base et son
+   registre d'effacement forment une unité cohérente.
 7. Contrôler états, refus, contrats HTTP et drainage par sorties fermées. Ne
    retirer l'ancienne fermeture qu'après expiration de la période de retour.
    Si un critère échoue avant l'échéance d'abandon, exécuter le retour qualifié.

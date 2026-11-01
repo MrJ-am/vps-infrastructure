@@ -8,6 +8,15 @@
   "production_authorized": true,
   "authorization_reference": "operations/mise-en-service/mandat.org",
   "production_execution_ready": false,
+  "first_deployment": {
+    "profile": "operations/hosts/mrjam-vps/configuration.nix",
+    "excluded_optional_services": ["vise"],
+    "vise_can_block_deployment": false,
+    "vise_unavailability_accepted": true,
+    "vise_persistent_state_must_be_retained": true,
+    "later_vise_profile": "operations/hosts/mrjam-vps/configuration-with-vise.nix",
+    "authorization_reference": "operations/mise-en-service/mandat.org"
+  },
   "authorization_limit": "Goal of first commissioning authorized; no general production access, unqualified artifact or data access authorized",
   "proposed_module": "operations/nixos/vps-preparation.nix",
   "production_nixos_configuration": null,

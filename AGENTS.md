@@ -1,6 +1,7 @@
 # Préparer et qualifier l'infrastructure Rust/Elm
 
 - La directive utilisateur du 30 octobre demande d'achever la migration jusqu'à la première mise en service ; voir `operations/mise-en-service/mandat.org`. L'ancien gel d'objectif est remplacé par cette autorisation, sans déclarer une révision qualifiée par défaut.
+- Directive du 1 novembre : ViSe ne doit jamais bloquer le premier déploiement. Le profil principal l'exclut ; reporter sa qualification et sa réintégration si nécessaire, en conservant ses données. Ne pas exiger son exécutable, ses tests ou sa disponibilité pour déployer le socle.
 - Depuis Cloud : aucun SSH général/root, SQL de production, secret ou donnée réelle. Une intervention VPS exige une capacité techniquement bornée ou un amorçage humain précisément identifié, avec artefacts qualifiés et retour vérifié.
 - Lire la documentation de `environment/` avant ses commandes ; Rust 1.99.1, Elm et les outils verrouillés font référence.
 - Préserver les frontends Log/Audition, leurs contrats et styles. Les propositions de règles canoniques Elm sont dans `mrjam-validation/review` ; leur adoption protégée reste à réaliser.

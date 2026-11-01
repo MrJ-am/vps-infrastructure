@@ -2,7 +2,8 @@
 """Run the unchanged module assertions in separate local Nix evaluations.
 
 No activation, build or production access. Run apart from memory-heavy VM tests.
-All component names come from the versioned matrix; none is silently omitted.
+All component names come from the selected versioned matrix. ViSe is an explicit
+optional qualification and is excluded from the first-deployment matrix.
 """
 import argparse
 import hashlib
@@ -14,7 +15,7 @@ import time
 SOURCE = Path(__file__).with_name("component.nix")
 
 
-def check(nixpkgs, destination):
+def check(nixpkgs, destination, include_vise=False):
     if not nixpkgs.is_dir() or destination.exists() or destination.is_symlink():
         raise ValueError("NEW_OUTPUT_AND_NIXPKGS_DIRECTORY_REQUIRED")
     repository = SOURCE.parents[2]
@@ -25,7 +26,8 @@ def check(nixpkgs, destination):
         and "__pycache__" not in path.parts
     }
     command = ["nix-instantiate", "--eval", "--strict", "--json", str(SOURCE),
-               "--arg", "nixpkgs", str(nixpkgs.resolve())]
+               "--arg", "nixpkgs", str(nixpkgs.resolve()),
+               "--arg", "includeVise", "true" if include_vise else "false"]
     discovery = subprocess.run(command, stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                stderr=subprocess.PIPE, timeout=60, check=True)
     names = json.loads(discovery.stdout)
@@ -54,6 +56,8 @@ def check(nixpkgs, destination):
         "assertions_passed": sum(sum(v is True for v in (r["checks"] or {}).values()) for r in results.values()),
         "overall_compatible": all(r["accepted"] and r["exit_code"] == 0 for r in results.values()),
         "production_ready": False, "production_access": False,
+        "optional_vise_included": include_vise,
+        "excluded_optional_components": [] if include_vise else ["vise", "postgresqlComposition"],
         "scope": "Sequential synthetic module evaluation; no generation built or activated",
     }
     (destination / "result.json").write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
@@ -64,5 +68,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--nixpkgs", type=Path, required=True)
     parser.add_argument("--destination", type=Path, required=True)
+    parser.add_argument("--include-vise", action="store_true",
+                        help="Also qualify optional ViSe; never required for the first deployment")
     args = parser.parse_args()
-    raise SystemExit(0 if check(args.nixpkgs, args.destination) else 1)
+    raise SystemExit(0 if check(args.nixpkgs, args.destination, args.include_vise) else 1)
