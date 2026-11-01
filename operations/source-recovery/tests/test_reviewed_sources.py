@@ -74,6 +74,19 @@ class SourcesTest(unittest.TestCase):
         self.refuse_pack("CONTENT_MISMATCH")
         self.assertEqual((self.root / "review.json").read_bytes(), original)
 
+    def test_user_authorized_agent_review_roundtrip_preserves_authority(self):
+        self.value["authority"] = "user-authorized-agent-reviewed-code-only-declaration"
+        self.value["files"][0]["change"] = "redacted"
+        self.write_review()
+        result = tool.pack(self.root, self.output)
+        self.assertEqual(tool.verify(self.output, result["sha256"]), result)
+        self.assertFalse(result["confidentiality_verified_by_tool"])
+        self.assertFalse(result["production_ready"])
+        with tarfile.open(self.output) as archive:
+            review = json.load(archive.extractfile("review.json"))
+            self.assertEqual(review["authority"], self.value["authority"])
+            self.assertEqual(review["files"][0]["change"], "redacted")
+
     def test_no_overwrite(self):
         self.output.write_bytes(b"existing artifact")
         with self.assertRaises(FileExistsError):
@@ -108,6 +121,8 @@ class SourcesTest(unittest.TestCase):
 
     def test_wrong_scope_or_approval_claim_refused(self):
         for field, bad in (("target", "spectre"), ("authority", "authenticated"),
+                           ("authority", "agent-reviewed-code-only-declaration"),
+                           ("authority", []), ("authority", None),
                            ("generation_binding", "verified"), ("schema_version", True),
                            ("declared_graph_complete", "true")):
             with self.subTest(field=field):
