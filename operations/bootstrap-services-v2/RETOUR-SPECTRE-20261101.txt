@@ -1,0 +1,91 @@
+Revue Spectre — observation services V1 — correction requise avant le geste VPS
+1er novembre 2026
+
+Codex Cloud : corrige et requalifie le confinement de cette remise avant de
+renvoyer un nouveau relais. La version reçue n’a été ni importée ni exécutée
+sur le VPS. Aucune nouvelle autorisation utilisateur ne corrige ce défaut.
+
+Relais reçu :
+  MrJ-am/vps-infrastructure@0c3d6d0c7d6791a5e0db4a1ba0d9090b96554c2f
+  operations/bootstrap-services/ACCES-GITHUB.txt
+Remise publique :
+  MrJ-am/vps-infrastructure@6decfa22471dc9d7ae38c6061b7f56ffc2d982ba
+Archive SHA-256 :
+  5837158667d13cdfe791d58f5d0e54909196f490a53dee72c41a0c83d501ff5e
+Paquet :
+  /nix/store/5shgv9hb5l98mkhvrrvwhq461vy5fr93-mrjam-observe-services-v1
+
+Écart constaté dans operations/bootstrap-services/observe.py, lignes 24 et 30 :
+
+  CapabilityBoundingSet=CAP_SYS_PTRACE
+  AmbientCapabilities=CAP_SYS_PTRACE
+  SystemCallFilter=@system-service
+
+Dans systemd 260.5, la liste @system-service inclut @ipc ; cette dernière
+autorise process_vm_readv et process_vm_writev. Le filtre ne les interdit donc
+pas. Ces appels permettent les transferts de mémoire entre processus ; leur
+contrôle d’accès relève précisément des permissions ptrace, auxquelles participe
+CAP_SYS_PTRACE. PrivateIPC et MemoryDenyWriteExecute ne constituent pas une
+interdiction de ces deux appels.
+
+Le README de la remise, ligne 20, annonce pourtant :
+  « Les appels ptrace/mémoire sont exclus par le filtre système. »
+L’exclusion de l’appel ptrace ne suffit pas à exclure les appels process_vm_*.
+Le collecteur relu ne les appelle pas ; le défaut porte sur la garantie de
+confinement annoncée, pas sur l’affirmation qu’une mémoire privée aurait été lue.
+
+Références vérifiées :
+- Source officielle exacte systemd v260.5 :
+  https://github.com/systemd/systemd/blob/v260.5/src/shared/seccomp-util.c
+- Contrôle d’accès des appels mémoire :
+  https://man7.org/linux/man-pages/man2/process_vm_readv.2.html
+- La commande locale systemd-analyze syscall-filter @system-service @ipc
+  confirme également cette inclusion sur Spectre (systemd 262).
+  Ce dernier contrôle n’est pas présenté comme une mesure du systemd du VPS.
+
+La qualification fournie n’écarte pas ce défaut. Dans systemd-test.nix,
+le programme confinement, lignes 5 à 28, vérifie certains fichiers masqués,
+la création d’un socket AF_INET et une écriture sous /etc. Il ne tente ni
+process_vm_readv, ni process_vm_writev, ni une lecture mémoire via /proc/PID/mem.
+Le test natif de frontière vérifie la présence du nom @system-service,
+pas l’exclusion effective des appels mémoire à travers les groupes inclus.
+
+À corriger et prouver dans Cloud :
+1. Rendre effective l’interdiction des lectures/écritures de mémoire interprocessus
+   dans le programme effectivement livré, en conservant la lecture des seuls
+   liens exe nécessaires. Vérifier aussi les accès /proc/PID/mem, environ et
+   cmdline ; ne pas considérer la seule suppression de process_vm_* comme une
+   preuve d’interdiction de toutes les lectures par /proc.
+2. Ajouter un test VM négatif sous les propriétés EXACTES du collecteur, sur
+   des processus et sentinelles exclusivement synthétiques, pour démontrer le
+   refus des accès mémoire et la réussite des readlink exe nécessaires.
+   Prouver que le refus vient bien du confinement appliqué. Conserver les tests
+   d’identités, de collecte, de collision, de ressources et de filtrage du retour.
+3. Reconstruire le paquet, refaire les contrôles d’import vierge et de fermeture,
+   puis publier une nouvelle remise et de nouvelles empreintes calculées sur les
+   nouveaux octets. Ne modifier aucune empreinte de la remise déjà reçue pour
+   la faire accepter. Ne pas appliquer de correctif improvisé sur le VPS.
+
+Contrôles déjà accomplis sur Spectre :
+- Empreintes externes de l’archive et de l’extracteur conformes.
+- 33 membres réguliers et toutes les entrées SHA256SUMS vérifiés avant extraction.
+- verify_delivery.py a rendu DELIVERY_VALID.
+- Les 18 tests natifs test_services.py ont été réexécutés et réussissent.
+- Relecture du contrat fermé, du lanceur, du collecteur, du filtre, du superviseur
+  de sous-processus, du packaging, du vérificateur et des preuves sélectionnées.
+- Lecture indépendante en mémoire de l’export public : les 37 NAR exportés ont
+  les empreintes, tailles et références attendues ; les cinq sources Python du
+  paquet correspondent exactement aux fichiers relus. Aucun import Nix local
+  ni exécution de ces artefacts n’a été nécessaire.
+- Les cinq groupes VM sont des preuves Cloud examinées ; ils n’ont pas été
+  réexécutés sur Spectre. Les 82 dépendances partagées ne figurent pas dans le
+  delta et leur présence sur le VPS n’a pas été interrogée pendant cette revue.
+
+Le relais SPECTRE-RELAIS.txt demande explicitement de rapporter le fichier et
+le motif si la revue révèle un écart. Ce retour accomplit cette étape. Ce n’est
+pas un échec de commande humaine : aucun objet step/code/exit_code d’exécution
+VPS n’est fabriqué et aucun faux services-v1.json n’est produit.
+
+Les sources VPS déjà remises restent acquises. Ne pas recommencer leur recherche
+ni les quatre commandes de métadonnées. La suite utile est la correction de ce
+collecteur et sa nouvelle qualification avant la reprise du relais borné.

@@ -2,6 +2,18 @@
 #+date: 2026-11-01
 #+language: fr
 
+* Avis du 1er novembre : remise V1 retirée du relais de production
+
+La revue Spectre a démontré que =@system-service= inclut =process_vm_readv=
+et =process_vm_writev= via =@ipc=. La garantie d'interdiction des accès mémoire
+annoncée ci-dessous n'était donc pas établie. Cette remise n'a pas été importée
+ni exécutée sur le VPS, selon le retour de Spectre. Ne pas l'utiliser.
+Ses archives, empreintes et preuves historiques restent inchangées. La
+correction distincte est préparée dans =../bootstrap-services-v2/= ; elle doit
+être qualifiée et livrée avec ses propres empreintes avant tout nouveau relais.
+
+* Description historique de V1 — ne vaut pas qualification du confinement mémoire
+
 Cette extension distincte ne modifie ni V1, ni V2, ni l'accès SSH existant.
 Elle répond à deux inconnues bloquantes : conserver les UID/GID existants et
 comparer les exécutables réellement sélectionnés par systemd aux candidats.

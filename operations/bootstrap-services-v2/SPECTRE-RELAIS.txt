@@ -1,0 +1,49 @@
+Reprends le relais MRJ.am sur Spectre avec cette NOUVELLE observation services V2.
+
+Ton retour du 1er novembre a identifié un défaut réel du confinement V1.
+La remise précédente reste retirée, ses empreintes ne sont pas modifiées.
+Les sources VPS déjà reçues restent acquises : ne recommence ni leur recherche
+ni les anciennes commandes de métadonnées. L'objectif de mise en service est
+autorisé ; cette observation fournit seulement les identités et builds utiles.
+
+Vérifie les empreintes externes puis tous les membres/SHA256SUMS avant extraction
+dans un nouveau dossier. Lis REMISE.json, README.org, EXECUTION-HUMAINE.org,
+les sources et le dossier review. Aucun import Nix sur Spectre n'est requis.
+Tu peux rejouer les tests natifs depuis l'extrait :
+python3 -I -B sources/operations/bootstrap-services-v2/test_services.py
+python3 -I -B sources/operations/bootstrap-services-v2/test_delivery.py
+Le manifeste et le vérificateur nécessaires sont inclus à côté du second test.
+
+Revois particulièrement la correction demandée :
+- Exclusions effectives process_vm_*, ptrace, pidfd_getfd et io_uring.
+- Collecteur sans capacités, Landlock ABI >=3 appliqué avant exec, refus des
+  fichiers proc mem/environ/cmdline et des alias ; aucun repli si indisponible.
+- Petit auxiliaire C distinct : CAP_SYS_PTRACE, filtre seccomp par défaut
+  restrictif, aucune ouverture de fichier, seuls liens exe ; canal privé et
+  au plus 14 requêtes. Pas d'interface SSH ou de PID/chemin fourni par l'appelant.
+- Témoins positifs entièrement synthétiques, 24 refus de l'auxiliaire,
+  protections persistantes après exec, ressource/identité/collision/filtrage.
+- Même objet C compilé dans les sondes VM et le lanceur livré ; sondes/victimes
+  absentes de la fermeture de production. Import vierge et contenu récursif.
+Les résultats Cloud sont des preuves à examiner, pas ta revue indépendante.
+
+Si tu identifies un écart, retourne seulement le fichier, le motif et la preuve
+non sensible. Ne contourne rien, ne fabrique pas de services-v1.json et ne
+modifie pas les empreintes. Sinon prépare exactement le geste décrit dans
+EXECUTION-HUMAINE.org pour l'administrateur humain, via son canal existant.
+Aucun agent n'utilise un shell root/général du VPS. N'utilise ni installer.py,
+connect.sh, SQL, autre sonde ou commande improvisée. Aucun changement d'ACL SSH,
+clé, compte, unité applicative ou génération dans ce relais. Ne change pas la
+politique de signatures Nix et ne récupère aucune clé privée.
+
+Après le geste humain, revalide uniquement le rapport fermé :
+python3 -I -S filter/validate_report.py < services-v1.json
+Puis retourne ce seul fichier à Cloud. Le suffixe v1 désigne le schéma JSON
+inchangé ; le programme et la remise sont bien V2.
+Ne transmets aucun journal, sortie brute, chemins-importes.txt ou
+fermeture-installee.json. Si le filtre refuse, retourne seulement :
+{"step":"spectre_validation","code":"REPORT_REFUSED"}
+Pour une erreur humaine, retourne seulement l'objet step/code/exit_code prévu.
+
+L'inconnu reste inconnu ; une métadonnée NAR n'est pas une attestation du
+processus. Cette remise ne constitue ni une activation ni une bascule.

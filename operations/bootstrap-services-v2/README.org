@@ -1,0 +1,115 @@
+#+title: Observation services V2 — mémoire interdite, liens exe conservés
+#+date: 2026-11-01
+#+language: fr
+
+* Motif et périmètre
+
+La revue Spectre du 1er novembre a identifié un défaut réel de V1 :
+=@system-service= inclut =process_vm_readv/writev= via =@ipc=. Avec
+=CAP_SYS_PTRACE=, ces appels permettaient des transferts de mémoire. La remise
+V1 n'a été ni importée ni exécutée sur le VPS selon ce retour, conservé dans
+=sources/operations/bootstrap-services-v2/RETOUR-SPECTRE-20261101.txt=.
+L'ancienne archive et ses empreintes restent inchangées et retirées du relais.
+Cette V2 possède ses propres sources, qualifications, artefacts et empreintes.
+
+L'entrée publique est immuable, sans argument. Le contrat de sortie reste
+=schema_version=1=, =authority=unverified_observation= : six identités Unix,
+sept unités fixées, génération et métadonnées de code Nix. Aucun PID, argument
+de processus, environnement, contenu applicatif, secret ou journal ne sort.
+Le collecteur ne demande aucune de ces lectures. Un build inconnu reste inconnu.
+Les métadonnées de la base Nix ne prouvent pas le contenu vivant d'un processus.
+
+* Confinement appliqué
+
+Le lanceur immuable démarre une unité transitoire root. La seule capacité
+initiale est =CAP_SYS_PTRACE= ; elle sert à lire les liens exe entre UID.
+Le filtre systemd conserve =@system-service= et exclut explicitement ptrace,
+process_vm_readv/writev, pidfd_getfd, process_madvise/mrelease, kcmp,
+get_robust_list et les trois appels io_uring. Le réseau IP, les écritures
+système, données, journaux, sauvegardes et secrets sont interdits/masqués.
+Limites : 25 % CPU, 256 Mio, 16 tâches, 64 descripteurs et 120 secondes.
+
+L'entrée C sépare deux rôles avant le lancement de Python :
+
+- L'auxiliaire C conserve la capacité de traçage. Son filtre seccomp refuse
+  par défaut tout appel sauf readlinkat, recvfrom sur son descripteur privé 3,
+  sendto sur ce descripteur sans destination et exit/exit_group. Il ne peut
+  ouvrir aucun fichier, lire/écrire de la mémoire interprocessus, exécuter un
+  programme, dupliquer un descripteur, créer un socket ou lire un fd arbitraire.
+  Son code construit exclusivement =/proc/PID/exe= à partir de quatre octets.
+  Il refuse les tailles/PID invalides et sert au plus 14 requêtes. Les réponses
+  sont de taille fixe, initialisées à zéro. Les descripteurs hérités et stdio
+  sont fermés. La mort du parent le tue. Le filtre cible x86_64-linux seulement.
+- Le collecteur abandonne toutes ses capacités et applique Landlock ABI >= 3
+  avant exec de l'interpréteur verrouillé. Il autorise la lecture/exécution du
+  store et quelques fichiers système non secrets précis : passwd, group,
+  nsswitch.conf, machine-id, ld.so.cache, os-release ; /dev/null est utilisable.
+  Tout autre contenu de fichier est refusé. Les fichiers procfs mem, environ,
+  cmdline et leurs alias restent inaccessibles. Les descripteurs hérités sont
+  fermés sauf sorties et canal privé ; stdin devient /dev/null. Les appels Nix
+  ignorent la configuration système/utilisateur et restent hors réseau.
+
+Landlock interdit également l'inspection de processus hors de son domaine,
+y compris leurs liens exe : c'est la raison de cet auxiliaire distinct. Une
+liaison magique procfs résolvant vers un fichier autorisé du store peut encore
+ouvrir ce fichier de code ; ceci n'autorise pas le contenu des fichiers procfs.
+Le canal privé n'est ni un socket de fichiers, ni une commande SSH, ni une API
+pour l'appelant. Les PID proviennent seulement des sept requêtes systemd fixes.
+Les accès aux sockets systemd/Nix nécessaires aux métadonnées sont conservés ;
+les commandes exactes sont dans collect.py, sans commande fournie par un tiers.
+
+Si Landlock est absent, trop ancien, interdit, ou si une protection échoue,
+l'entrée échoue sans rapport et sans repli moins protégé. L'unité et le
+superviseur bornent temps et sortie ; le filtre JSON fermé est appliqué deux
+fois. Les collisions d'unité, copies mutables et arguments sont refusés.
+Cette capacité reste un amorçage humain : aucun agent et aucun compte SSH ne
+reçoit root, CAP_SYS_PTRACE ou une nouvelle interface de production.
+
+* Qualification et causalité
+
+La VM utilise exclusivement deux victimes synthétiques : une sous un UID
+distinct, une root sans capacité. Celle-ci autorise explicitement le traçage
+pour neutraliser Yama dans le témoin ; ce réglage n'existe que dans la fixture.
+Le témoin V1 lit/écrit la sentinelle par process_vm_* et lit les fichiers proc
+de la victime root. Le témoin avec seul filtre système V2 refuse les appels
+mémoire mais lit encore ces fichiers, même après abandon des capacités.
+Le cas complet, après exec, refuse les fichiers directs, task, root et fd,
+sans perdre les liens exe. Ainsi un refus Unix/Yama préexistant ne remplace
+pas la preuve de confinement. Aucun contenu privé réel n'est utilisé.
+
+Le test spécifique de l'auxiliaire applique le même objet compilé broker.o :
+24 opérations interdites, avec témoins positifs avant confinement et lien exe
+fonctionnel après. Il s'exécute sous les propriétés exactes V2 et dans un
+témoin distinct qui retire seulement la liste explicite d'appels interdits,
+pour isoler l'effet du filtre propre à l'auxiliaire. Son protocole réel
+est testé avec messages malformés, PID invalides et limite de 14 requêtes.
+Les sondes et victimes sont dans une sortie Nix de tests distincte, exclue
+de la fermeture livrée. Le service synthétique nommé forgejo ne teste pas
+le logiciel Forgejo ; ses qualifications applicatives restent séparées.
+
+La preuve qualification-systemd-v2-20261101.json lie sources, révision,
+paquet, NAR, VM, journaux synthétiques, résultats et essais antérieurs.
+Le dossier review contient les éléments de revue ; il est préparé dans Cloud
+et ne prétend pas constituer une approbation indépendante protégée.
+
+* Livraison et limites restantes
+
+export_delta.py vérifie la remise d'adoption originale inchangée, exporte
+seulement les chemins supplémentaires et réimporte original + delta dans un
+store vierge. Il compare empreintes, tailles, références et contenu récursif.
+prepare_handoff.py sélectionne des objets Git précis et produit un tar
+déterministe. verify_delivery.py refuse toute divergence ; aucune empreinte
+ancienne n'est remplacée pour obtenir un succès.
+
+| Question | État / preuve minimale |
+|----------+-------------------------|
+| Défaut V1 et correction locale | Essais synthétiques avec témoins causaux ; voir preuve |
+| Présence Landlock ABI >=3 sur le VPS | Inconnue ; l'entrée fixe refuse si indisponible |
+| UID/GID et exécutables actuellement actifs | Inconnus ; services-v1.json filtré après relais humain |
+| Dépendances partagées présentes/intactes sur VPS | À vérifier par fermeture et contenu avant exécution |
+| Authenticité de l'observation | Non établie ; authority reste unverified_observation |
+| Activation et mise en service | Non effectuées par cette remise |
+
+Lire EXECUTION-HUMAINE.org et SPECTRE-RELAIS.txt. Le retour attendu est seulement
+services-v1.json ou un objet fermé d'échec. Ne relancer ni la recherche des
+sources VPS déjà acquises, ni un installateur impératif, ni une sonde libre.
