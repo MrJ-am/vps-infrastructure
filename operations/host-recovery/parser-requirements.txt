@@ -1,0 +1,2 @@
+tree-sitter==0.25.2 --hash=sha256:b43a9e4c89d4d0839de27cd4d6902d33396de700e9ff4c5ab7631f277a85ead9
+tree-sitter-nix==0.1.0 --hash=sha256:58c07f788bc6d24b7a90aff49431de57c3933c5c54d1008125da2073f1bc45de

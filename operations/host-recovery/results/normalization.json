@@ -1,0 +1,4268 @@
+{
+  "activatable": false,
+  "authority": "user-authorized-agent-reviewed-code-only-declaration",
+  "complete_dependency_graph": false,
+  "declared_state_version": {
+    "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+    "value": "26.05"
+  },
+  "entrypoint": "etc/nixos/configuration.nix",
+  "evaluated": false,
+  "files": [
+    {
+      "normalized_sha256": "5660da3e917a0408bd3e11b3f5646dd834e9a64b226b3e9ca4e6b522c20b844a",
+      "path": "etc/nixos/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./vise-base.nix",
+          "resolved": "/etc/nixos/vise-base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./vise-hosting/module.nix",
+          "resolved": "/etc/nixos/vise-hosting/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5660da3e917a0408bd3e11b3f5646dd834e9a64b226b3e9ca4e6b522c20b844a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7896ff976913b8f917598d3b0b53eb861018baef2bde90f73b458e135226ea05",
+      "path": "etc/nixos/vise-base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+          "resolved": "/root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [
+        {
+          "kind": "remaining-text-reference-needs-review",
+          "line": 1
+        }
+      ],
+      "source_sha256": "91d3ce049ec81c023a1139adc41a104c8a3ab2f4f3d110dbc199b779c025bb7c",
+      "substitutions": [
+        {
+          "after": "../../root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+          "before": "/root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+          "end_byte": 130,
+          "start_byte": 14,
+          "target": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "57247b5da4d52df3806b18f14162a8ba1205e08adde2eebea4b12011d0e0b1ae",
+      "path": "etc/nixos/vise-hosting/backup.sh",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "57247b5da4d52df3806b18f14162a8ba1205e08adde2eebea4b12011d0e0b1ae",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "3137dc044e95fc49401691abbfad6c9c6c830dd24315d40c5e567ac97b1a7b6b",
+      "path": "etc/nixos/vise-hosting/module.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 4,
+          "literal": "./target.json",
+          "resolved": "/etc/nixos/vise-hosting/target.json",
+          "target_type": "uncollected"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 7,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 23,
+          "literal": "./provision.sh",
+          "resolved": "/etc/nixos/vise-hosting/provision.sh",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 64,
+          "literal": "./backup.sh",
+          "resolved": "/etc/nixos/vise-hosting/backup.sh",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "3137dc044e95fc49401691abbfad6c9c6c830dd24315d40c5e567ac97b1a7b6b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "61e9524d5562ca9cd1178ac2b91e531306938cc9df664d9f6b774bc0ad7f4aa3",
+      "path": "etc/nixos/vise-hosting/provision.sh",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "61e9524d5562ca9cd1178ac2b91e531306938cc9df664d9f6b774bc0ad7f4aa3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "3da441555a594063cb2e126cd8f5bb058e3dea749b8cc7d18603f6b9e1ca9bd8",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix\"",
+          "resolved": "/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix\"",
+          "resolved": "/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "fa1eb8ad0c1dc2950b7b8f7d345e888eeccc8e2c6aec383552268e120648ab47",
+      "substitutions": [
+        {
+          "after": "(toString ../../vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix)",
+          "before": "\"/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix\"",
+          "end_byte": 87,
+          "start_byte": 14,
+          "target": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix"
+        },
+        {
+          "after": "./payload/vps/scripts/monolithe-evaluation.nix",
+          "before": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix",
+          "end_byte": 205,
+          "start_byte": 96,
+          "target": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix"
+        },
+        {
+          "after": "(toString ../../vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix)",
+          "before": "\"/root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix\"",
+          "end_byte": 295,
+          "start_byte": 222,
+          "target": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/databases.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/journal-http.conf",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/virtual-hosts.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/admission.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-admission/admission.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-admission/admission.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/courriel.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 18,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/fermeture.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-fermeture/fermeture.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-fermeture/fermeture.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "afb68cb6656b8769794c49298021fdb34fbe99efffcb93c91632f28c543b5e49",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/gateway.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./mrj-auth.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./journal-http.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/journal-http.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./identite.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-gestion.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-gestion.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./courriel.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/courriel.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-cycle.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-cycle.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./admission.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/admission.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./fermeture.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/fermeture.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./metier.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/metier.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 45,
+          "literal": "../projects.json",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 66,
+          "literal": "../lib/virtual-hosts.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/virtual-hosts.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "afb68cb6656b8769794c49298021fdb34fbe99efffcb93c91632f28c543b5e49",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0e0597a85259d6e9756643e1a01ee09ccd71a05ddffefb2957ce6c0f42cc1741",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 9,
+          "literal": "../services/keycloak-mrjam/paquet.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/paquet.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 10,
+          "literal": "../services/keycloak-mrjam",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 11,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/keycloak-mrjam/theme",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/theme",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 17,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 184,
+          "literal": "../scripts/sauvegarde-externe.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/sauvegarde-externe.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "0e0597a85259d6e9756643e1a01ee09ccd71a05ddffefb2957ce6c0f42cc1741",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/journal-http.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 38,
+          "literal": "../lib/journal-http.conf",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/journal-http.conf",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/matheval.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/metier.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "../services/mrj-auth/server.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "../services/mrj-auth/oauth.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/oauth.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 11,
+          "literal": "../services/mrj-auth/oidc.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/oidc.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 12,
+          "literal": "../services/mrj-auth/mcp.html",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/mcp.html",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 13,
+          "literal": "../services/mrj-auth/mcp.js",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/mcp.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/mrj-auth/style.css",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/style.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/postgresql.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 4,
+          "literal": "../lib/databases.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/databases.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 23,
+          "literal": "../databases.json",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/databases.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-cycle.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/vision-cycle/cycle.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/vision-cycle/cycle.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-gestion.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 5,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../services/vision-gestion/server.py",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/vision-gestion/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 58,
+          "literal": "../vendor/vision-multiutilisateur-source.tar.gz",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/vendor/vision-multiutilisateur-source.tar.gz",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "e0534f985e8090460904138827a84f59270be705b4c2c6d1ea8882f2b18f3bdf",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 5,
+          "literal": "<nixpkgs>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 8,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 18,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 19,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 20,
+          "literal": "../modules/matheval.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/matheval.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 26,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 27,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 28,
+          "literal": "../modules/matheval.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/matheval.nix",
+          "target_type": "file"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 40,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "e0534f985e8090460904138827a84f59270be705b4c2c6d1ea8882f2b18f3bdf",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/paquet.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.path",
+          "line": 6,
+          "literal": "./.",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 22,
+          "literal": "../scripts",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 23,
+          "literal": "../modules",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 24,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../operations/identite/profil.json",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/profil.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 26,
+          "literal": "../lib/keycloak-optimise.nix",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/keycloak-optimise.nix",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 27,
+          "literal": "../licenses/AGPL-3.0.txt",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/licenses/AGPL-3.0.txt",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 28,
+          "literal": "../licenses/SERVICES-MRJAM.md",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/licenses/SERVICES-MRJAM.md",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "1417ef36228b1cd10f1b706d3fe5ff2eeeba79aef2d895af6c4b4f317bf2da3d",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix\"",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix\"",
+          "resolved": "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ddef97ab18c27a5a62856fc6048ecf961af3a8307c64cbf5f55575454a59af7c",
+      "substitutions": [
+        {
+          "after": "(toString ../185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix)",
+          "before": "\"/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix\"",
+          "end_byte": 108,
+          "start_byte": 14,
+          "target": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix"
+        },
+        {
+          "after": "./payload/vps/scripts/log-evaluation.nix",
+          "before": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix",
+          "end_byte": 220,
+          "start_byte": 117,
+          "target": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix"
+        },
+        {
+          "after": "(toString ../185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix)",
+          "before": "\"/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix\"",
+          "end_byte": 331,
+          "start_byte": 237,
+          "target": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "0e56d8cdca1cdc0dc38c0577ceef2c4db5385e115e6d1f9a19e0bce4c9228707",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/artefact.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 3,
+          "literal": "./paquet.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/paquet.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "0e56d8cdca1cdc0dc38c0577ceef2c4db5385e115e6d1f9a19e0bce4c9228707",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/paquet.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "d42979b191da1f8210ed977655b26ef4f98905b4f0a17d28a68e5a61dbf12188",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/service.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 14,
+          "literal": "./paquet.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/paquet.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "d42979b191da1f8210ed977655b26ef4f98905b4f0a17d28a68e5a61dbf12188",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/databases.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/journal-http.conf",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/virtual-hosts.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/admission.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-admission/admission.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-admission/admission.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/courriel.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 18,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/fermeture.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-fermeture/fermeture.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-fermeture/fermeture.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "6056986eed823705c371fdedb7f45c24777f8ab256ad7f33b3b590ed49004c0f",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/gateway.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./mrj-auth.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./journal-http.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/journal-http.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./identite.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-gestion.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-gestion.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./courriel.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/courriel.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-cycle.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-cycle.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./admission.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/admission.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./fermeture.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/fermeture.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./metier.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/metier.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./log.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/log.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 45,
+          "literal": "../projects.json",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 66,
+          "literal": "../lib/virtual-hosts.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/virtual-hosts.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "6056986eed823705c371fdedb7f45c24777f8ab256ad7f33b3b590ed49004c0f",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "20675d361cfc952fef545166c3ceb6bc20f57bb027955d260d9223a59255396c",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 9,
+          "literal": "../services/keycloak-mrjam/paquet.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/paquet.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 10,
+          "literal": "../services/keycloak-mrjam",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 11,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/keycloak-mrjam/theme",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/theme",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 17,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 199,
+          "literal": "../scripts/sauvegarde-externe.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/sauvegarde-externe.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "20675d361cfc952fef545166c3ceb6bc20f57bb027955d260d9223a59255396c",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/journal-http.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 38,
+          "literal": "../lib/journal-http.conf",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/journal-http.conf",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5f26ebccfa5705062dfab98bdf16f51e845998c2197c3c03ab221bf42e4a2c0b",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/log.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 32,
+          "literal": "../assemblage/kanidm/service.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/service.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5f26ebccfa5705062dfab98bdf16f51e845998c2197c3c03ab221bf42e4a2c0b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/matheval.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/metier.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "../services/mrj-auth/server.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "../services/mrj-auth/oauth.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/oauth.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 11,
+          "literal": "../services/mrj-auth/oidc.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/oidc.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 12,
+          "literal": "../services/mrj-auth/mcp.html",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/mcp.html",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 13,
+          "literal": "../services/mrj-auth/mcp.js",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/mcp.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/mrj-auth/style.css",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/style.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/postgresql.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 4,
+          "literal": "../lib/databases.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/databases.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 23,
+          "literal": "../databases.json",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/databases.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-cycle.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/vision-cycle/cycle.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/vision-cycle/cycle.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-gestion.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 5,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../services/vision-gestion/server.py",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/vision-gestion/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 58,
+          "literal": "../vendor/vision-multiutilisateur-source.tar.gz",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/vendor/vision-multiutilisateur-source.tar.gz",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "778efcdbee3f76c106696ab35b082ab6befb85b6948531b5fcac2a4e520ba8d6",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 3,
+          "literal": "<nixpkgs>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 5,
+          "literal": "../assemblage/kanidm/artefact.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/artefact.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "./monolithe-evaluation.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/monolithe-evaluation.nix",
+          "target_type": "file"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 29,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "778efcdbee3f76c106696ab35b082ab6befb85b6948531b5fcac2a4e520ba8d6",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0d40f0dd322d622d939814cdafe569670f2657483f0cc311e78510eb73dba043",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/monolithe-evaluation.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 5,
+          "literal": "<nixpkgs>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 8,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 18,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 19,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 20,
+          "literal": "../modules/matheval.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/matheval.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 26,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 27,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 28,
+          "literal": "../modules/matheval.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/matheval.nix",
+          "target_type": "file"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 42,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "0d40f0dd322d622d939814cdafe569670f2657483f0cc311e78510eb73dba043",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/paquet.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.path",
+          "line": 6,
+          "literal": "./.",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 22,
+          "literal": "../scripts",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 23,
+          "literal": "../modules",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 24,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../operations/identite/profil.json",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/profil.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 26,
+          "literal": "../lib/keycloak-optimise.nix",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/keycloak-optimise.nix",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 27,
+          "literal": "../licenses/AGPL-3.0.txt",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/licenses/AGPL-3.0.txt",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 28,
+          "literal": "../licenses/SERVICES-MRJAM.md",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/licenses/SERVICES-MRJAM.md",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "e81732b485753406c5993618deb48634504bb9df5c9c8b8ebcb2d1c8aa250251",
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 1,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix",
+          "resolved": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix\"",
+          "resolved": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.path",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/site\"",
+          "resolved": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/site",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [
+        {
+          "kind": "remaining-text-reference-needs-review",
+          "line": 1
+        }
+      ],
+      "source_sha256": "0098448af5e4b92a893d06dc835f5af837d8276af9dfc87b96dd6401fb7f7dd9",
+      "substitutions": [
+        {
+          "after": "(toString ../../log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix\"",
+          "end_byte": 174,
+          "start_byte": 76,
+          "target": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix"
+        },
+        {
+          "after": "(toString ../../log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix\"",
+          "end_byte": 304,
+          "start_byte": 206,
+          "target": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix"
+        },
+        {
+          "after": "./payload/module.nix",
+          "before": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix",
+          "end_byte": 405,
+          "start_byte": 313,
+          "target": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix"
+        },
+        {
+          "after": "(toString ./payload/audition.nix)",
+          "before": "\"/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix\"",
+          "end_byte": 636,
+          "start_byte": 540,
+          "target": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "e30a670160f9a0c995f2bafa94e4061c216f74162c7c93c57489450ea2cbe1ce",
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "e30a670160f9a0c995f2bafa94e4061c216f74162c7c93c57489450ea2cbe1ce",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "function-default-not-necessarily-used",
+          "line": 1,
+          "literal": "../../modules/audition.nix",
+          "resolved": "/root/mrjam-corrections/audition/modules/audition.nix",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "3f38d5fab5adda92f243908ca032a523763b725860efbe2becf2918bb8526c6b",
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+          "resolved": "/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.path",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/site\"",
+          "resolved": "/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/site",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [
+        {
+          "kind": "remaining-text-reference-needs-review",
+          "line": 1
+        }
+      ],
+      "source_sha256": "7a7fc7c90cc1cf662144020c5c5e5c55035c4afb60f25612d2bf8c159f1c1f81",
+      "substitutions": [
+        {
+          "after": "(toString ../../audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix\"",
+          "end_byte": 116,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix"
+        },
+        {
+          "after": "../../reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+          "before": "/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+          "end_byte": 220,
+          "start_byte": 125,
+          "target": "root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "82620eae8c2b4a1a4e1c1a19c7cc37bfdf3c63c73b4236a4b3db0a60bde2834b",
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "./payload/integration.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/integration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "82620eae8c2b4a1a4e1c1a19c7cc37bfdf3c63c73b4236a4b3db0a60bde2834b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "./assets/config.js",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/config.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "./assets/org.css",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/org.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "624c922c6852befd8fc9564405cfc671627b88571fdeacdf071a1015771e5935",
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/integration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 6,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 10,
+          "literal": "./module.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "624c922c6852befd8fc9564405cfc671627b88571fdeacdf071a1015771e5935",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ba772835d3bd360ba26fa9a58210a1e676df25b09e66fdc442a79fccfcaa79a0",
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 5,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "./assets.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 44,
+          "literal": "./verify-backup.py",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/verify-backup.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 115,
+          "literal": "./assets/footer.tmpl",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/footer.tmpl",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ba772835d3bd360ba26fa9a58210a1e676df25b09e66fdc442a79fccfcaa79a0",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "1dd204a0ddc293459e46f8408dc753c4b637d52e69fa2c76d78c06c2c11cabb1",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "83f9b487c1060986b6de9a018b1f69737fe35955d3c2d8bde48a25fa8b7ef51a",
+      "substitutions": [
+        {
+          "after": "(toString ../f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix\"",
+          "end_byte": 115,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "db052493b738e01506df88f2b7a3bb24e91319cc45325ec16ae3ff624c271ba1",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "./payload/integration.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/integration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/kanidm-api-privee.py",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "70a9e83a8eddad5e2df71339b8909aafc4c06adc7ea117ab3e1713a3fa889a8b",
+      "substitutions": [
+        {
+          "after": "../95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "before": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "end_byte": 160,
+          "start_byte": 79,
+          "target": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "./assets/config.js",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/config.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "./assets/org.css",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/org.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/integration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "function-default-not-necessarily-used",
+          "line": 3,
+          "literal": "../../scripts/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py",
+          "target_type": "uncollected"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 6,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 9,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 13,
+          "literal": "./module.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/kanidm-api-privee.py",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "9823f7720375ed7a30f644097d89865ceae8fa21b7790fba2ec04de4a2e5c063",
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "function-default-not-necessarily-used",
+          "line": 1,
+          "literal": "../../scripts/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 5,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "./assets.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 21,
+          "literal": "./sso.py",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/sso.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 53,
+          "literal": "./verify-backup.py",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/verify-backup.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 150,
+          "literal": "./assets/footer.tmpl",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/footer.tmpl",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "9823f7720375ed7a30f644097d89865ceae8fa21b7790fba2ec04de4a2e5c063",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "73d1a82f2370e3040f646ba4ec5d4045a9bde83310bf5401ef2e5e70748c48db",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "7d291cb8359ef2e4697e759d85bd575b96e0e5046f10d186c543933e4bfdd04e",
+      "substitutions": [
+        {
+          "after": "(toString ../ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix\"",
+          "end_byte": 115,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "db052493b738e01506df88f2b7a3bb24e91319cc45325ec16ae3ff624c271ba1",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "./payload/integration.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/integration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/kanidm-api-privee.py",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "70a9e83a8eddad5e2df71339b8909aafc4c06adc7ea117ab3e1713a3fa889a8b",
+      "substitutions": [
+        {
+          "after": "../95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "before": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "end_byte": 160,
+          "start_byte": 79,
+          "target": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "./assets/config.js",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/config.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "./assets/org.css",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/org.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/integration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "function-default-not-necessarily-used",
+          "line": 3,
+          "literal": "../../scripts/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py",
+          "target_type": "uncollected"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 6,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 9,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 13,
+          "literal": "./module.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/kanidm-api-privee.py",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "2692cbaede4873e30771f7bdf93b476840c39346cbce476e868897d5c70ca0d8",
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "function-default-not-necessarily-used",
+          "line": 1,
+          "literal": "../../scripts/kanidm-api-privee.py",
+          "resolved": "/root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 5,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "./assets.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 12,
+          "literal": "./org-links.lua",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/org-links.lua",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 22,
+          "literal": "./sso.py",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/sso.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 54,
+          "literal": "./verify-backup.py",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/verify-backup.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 151,
+          "literal": "./assets/footer.tmpl",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/footer.tmpl",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "2692cbaede4873e30771f7bdf93b476840c39346cbce476e868897d5c70ca0d8",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8d0f946450f42b1f932115b6909858713d51beaa58d30b71c9c9423bfdcc2e18",
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "72f2192d8600f2579ee73f847e7fd80f0b29a4a778a18fea6ad49fe82a114c64",
+      "substitutions": [
+        {
+          "after": "(toString ../95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix\"",
+          "end_byte": 115,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "4b2220c456f8e34f065ff4d734326a5195a0f452b2e9707550b13b623b4a4032",
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "./payload/integration.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/integration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/base.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "f5d6748248ec94fdcf7d590f0d4ee0e9e63d789e32fc7b4fa31d6227ee5ef21b",
+      "substitutions": [
+        {
+          "after": "../95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "before": "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+          "end_byte": 160,
+          "start_byte": 79,
+          "target": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "./assets/config.js",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/config.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "./assets/org.css",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/org.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "92f33fdb195dd958cbc50338395cb7a74fd1fd21a317bcc398daafa7340bc361",
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/integration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 6,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 9,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 13,
+          "literal": "./module.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "92f33fdb195dd958cbc50338395cb7a74fd1fd21a317bcc398daafa7340bc361",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "9c45280c654cbc427a3304c41c0414fe14ebd88d89151300f9a584b4673d6d2f",
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 5,
+          "literal": "./versions.json",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/versions.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "./assets.nix",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 44,
+          "literal": "./verify-backup.py",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/verify-backup.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 115,
+          "literal": "./assets/footer.tmpl",
+          "resolved": "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/footer.tmpl",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "9c45280c654cbc427a3304c41c0414fe14ebd88d89151300f9a584b4673d6d2f",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8008b0880c676c966181f1fd4dd08249eb7141ec28faf97ec1ec0177d96359a5",
+      "path": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix\"",
+          "resolved": "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix\"",
+          "resolved": "/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "1f79d21fbf9454c7394780547488cb4dce65b709b6b48878ad8fce31b59a7292",
+      "substitutions": [
+        {
+          "after": "(toString ../../../mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix)",
+          "before": "\"/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix\"",
+          "end_byte": 111,
+          "start_byte": 14,
+          "target": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix"
+        },
+        {
+          "after": "(toString ./log-referrer.nix)",
+          "before": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix\"",
+          "end_byte": 209,
+          "start_byte": 112,
+          "target": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "2103a97da807ec67d9e5d76eb3ba874341da920ba2fb8469cd0645ca33a5a830",
+      "path": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "2103a97da807ec67d9e5d76eb3ba874341da920ba2fb8469cd0645ca33a5a830",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "2788e1203b29df26a6554dc74661095a55486049cbc1097842ff15b0c658dc26",
+      "path": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 1,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix",
+          "resolved": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.path",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/site\"",
+          "resolved": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/site",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [
+        {
+          "kind": "remaining-text-reference-needs-review",
+          "line": 1
+        }
+      ],
+      "source_sha256": "ae71036085ac122569ceb912d34d12beaadcd191519589a4be3e246d9d955410",
+      "substitutions": [
+        {
+          "after": "(toString ../../log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix\"",
+          "end_byte": 174,
+          "start_byte": 76,
+          "target": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix"
+        },
+        {
+          "after": "(toString ../../log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix\"",
+          "end_byte": 304,
+          "start_byte": 206,
+          "target": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix"
+        },
+        {
+          "after": "./payload/module.nix",
+          "before": "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix",
+          "end_byte": 410,
+          "start_byte": 313,
+          "target": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
+      "path": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7a8de60fb0a20645709c404ae40e89b767ffd9afd736ea6fef9e66066cdbd733",
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+          "resolved": "/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "d6ace5a61793c97560c363be0fa3d1cc70c0f0a535acea11b653885c6b52a614",
+      "substitutions": [
+        {
+          "after": "../../vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+          "before": "/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+          "end_byte": 121,
+          "start_byte": 14,
+          "target": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "74af08c5bf364540cb4b65feb2884d56f5019eeb1f7e993c8c5b0d03850b51b9",
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/guard.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/guard.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/module.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "74af08c5bf364540cb4b65feb2884d56f5019eeb1f7e993c8c5b0d03850b51b9",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "00748a668a37427978d56bd00a8c0555469c0c3c6d8d0e62b96c9319c929582f",
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/guard.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "00748a668a37427978d56bd00a8c0555469c0c3c6d8d0e62b96c9319c929582f",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "474bee60c40bb7f6d8c8ebd4d4a517968cc47ad1967ca02c4a7f0e4f086683e0",
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 26,
+          "literal": "./filter-test-cgi.sh",
+          "resolved": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/filter-test-cgi.sh",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "474bee60c40bb7f6d8c8ebd4d4a517968cc47ad1967ca02c4a7f0e4f086683e0",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "476e56a321590fbe49cb7b6f9aecf69493cfac255edd04aec096d5a871747ee8",
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/nextcloud-contacts-20261017/configuration.nix",
+          "resolved": "/root/nextcloud-contacts-20261017/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "2bbff7b4fa8bf1c638cc61c3e445697c0b82d83029ffcb93110d41d2e2c586db",
+      "substitutions": [
+        {
+          "after": "../../../nextcloud-contacts-20261017/configuration.nix",
+          "before": "/root/nextcloud-contacts-20261017/configuration.nix",
+          "end_byte": 74,
+          "start_byte": 23,
+          "target": "root/nextcloud-contacts-20261017/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "4d888df852959ae02ab44f24099b7d18a18b4a6d5634b442d01f38caaa641080",
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 1,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/module.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "4d888df852959ae02ab44f24099b7d18a18b4a6d5634b442d01f38caaa641080",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ae0309d810537c2719d403ce22d45c52fc4d843c11aeb3e0da305a7972df3899",
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "ae0309d810537c2719d403ce22d45c52fc4d843c11aeb3e0da305a7972df3899",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "e77db94c769b0064aca8030e548d3da8c5245e7d5faf6603e9c50344d34a8b94",
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/assemblage/php-upload-progress/module.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "e77db94c769b0064aca8030e548d3da8c5245e7d5faf6603e9c50344d34a8b94",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "21dc9d256d69307fe62ac902679967fa3d0f98f8eee3a67033df666e8b01c605",
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "1177408c9b54818779bc0b45f417be54fc2d7ac40f562ba10988d81cf808ed05",
+      "substitutions": [
+        {
+          "after": "../../../nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+          "before": "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+          "end_byte": 113,
+          "start_byte": 14,
+          "target": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "f7114bbb9e227858f86b9e17a9de2066ee32a20cf19df5808362787c5397febb",
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./assemblage/php-upload-progress/module.nix",
+          "resolved": "/root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/assemblage/php-upload-progress/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "f7114bbb9e227858f86b9e17a9de2066ee32a20cf19df5808362787c5397febb",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "a82d296daf74c4b0967489213402474404133fae24d136dacb27afbd9e6c9d14",
+      "path": "root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "a82d296daf74c4b0967489213402474404133fae24d136dacb27afbd9e6c9d14",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "dadb1768f0830a68f102943bbfc94b54d66723db94c1bd8fe8c2762e9438d00b",
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+          "resolved": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "854e715451bce71dd9bbfd7279150fdffd3da1d3087e0997df6461373ecd7238",
+      "substitutions": [
+        {
+          "after": "../../nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+          "before": "/root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+          "end_byte": 119,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "ae53b001c5ac3df13944573b2ac6a8e0b688a70246d54ddc4ff665ff2f9dc588",
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./base.nix",
+          "resolved": "/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/base.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "./payload/module.nix",
+          "resolved": "/root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/payload/module.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ae53b001c5ac3df13944573b2ac6a8e0b688a70246d54ddc4ff665ff2f9dc588",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "9eb42be4529af34fe6cf4f35819f5565fcd64fcc87a45769e152846ca4c5cf26",
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/payload/module.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "9eb42be4529af34fe6cf4f35819f5565fcd64fcc87a45769e152846ca4c5cf26",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "a419a2602c64ba68c623cf685a49928091929d3e45ff4bcec45d28cc0017a1b0",
+      "path": "root/nextcloud-contacts-20261017/base.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix\"",
+          "resolved": "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "06cfa7aa479ad343fa242808be3b34ac7de2c0f2c03e4a28547da6884f297601",
+      "substitutions": [
+        {
+          "after": "(toString ../mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix)",
+          "before": "\"/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix\"",
+          "end_byte": 115,
+          "start_byte": 23,
+          "target": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "8a23c38708534d1a60b29d850f0a3565bf28f0471f99a935245b1f765e59e717",
+      "path": "root/nextcloud-contacts-20261017/configuration.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 2,
+          "literal": "./base.nix",
+          "resolved": "/root/nextcloud-contacts-20261017/base.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8a23c38708534d1a60b29d850f0a3565bf28f0471f99a935245b1f765e59e717",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/databases.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/journal-http.conf",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/virtual-hosts.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/admission.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-admission/admission.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-admission/admission.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/courriel.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 18,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/fermeture.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/mrjam-fermeture/fermeture.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-fermeture/fermeture.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "32279975a008ceeac5f1d87577791478dbfcc105a84f976269b973c1c1ed9546",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/gateway.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./mrj-auth.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./journal-http.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/journal-http.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./identite.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-gestion.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-gestion.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./courriel.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/courriel.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./vision-cycle.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-cycle.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./admission.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/admission.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./fermeture.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/fermeture.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 45,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 66,
+          "literal": "../lib/virtual-hosts.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/virtual-hosts.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "32279975a008ceeac5f1d87577791478dbfcc105a84f976269b973c1c1ed9546",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "b07ab895d20bd9a6757d326a938e12010a1ef5848bf4868fd2c16c92e4c986e9",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 4,
+          "literal": "../services/keycloak-mrjam/paquet.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/paquet.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 5,
+          "literal": "../services/keycloak-mrjam",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 6,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "../services/keycloak-mrjam/theme",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/theme",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 12,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 172,
+          "literal": "../scripts/sauvegarde-externe.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/sauvegarde-externe.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "b07ab895d20bd9a6757d326a938e12010a1ef5848bf4868fd2c16c92e4c986e9",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/journal-http.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 38,
+          "literal": "../lib/journal-http.conf",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/journal-http.conf",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "../services/mrj-auth/server.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "../services/mrj-auth/oauth.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/oauth.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 11,
+          "literal": "../services/mrj-auth/oidc.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/oidc.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 12,
+          "literal": "../services/mrj-auth/mcp.html",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/mcp.html",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 13,
+          "literal": "../services/mrj-auth/mcp.js",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/mcp.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/mrj-auth/style.css",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/style.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "2b42358074d965320fb65c79e8dcdf282fde053beecf92dbbe51324aae68db4a",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/postgresql.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 4,
+          "literal": "../lib/databases.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/databases.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 22,
+          "literal": "../databases.json",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/databases.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "2b42358074d965320fb65c79e8dcdf282fde053beecf92dbbe51324aae68db4a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-cycle.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 7,
+          "literal": "../services/vision-cycle/cycle.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/vision-cycle/cycle.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrjam-courriel/courriel.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-courriel/courriel.py",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-gestion.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 5,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../services/vision-gestion/server.py",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/vision-gestion/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 58,
+          "literal": "../vendor/vision-multiutilisateur-source.tar.gz",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/vendor/vision-multiutilisateur-source.tar.gz",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "9e1b71023b964a2037be7994aa6850891363ae22a6b7a18f8ad25c59dfed78ec",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 4,
+          "literal": "<nixpkgs>",
+          "resolved": null
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 7,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 15,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 16,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 35,
+          "literal": "../modules/gateway.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 36,
+          "literal": "../modules/postgresql.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/postgresql.nix",
+          "target_type": "file"
+        },
+        {
+          "kind": "search-path-requires-a-lock",
+          "line": 78,
+          "literal": "<nixpkgs/nixos/lib/eval-config.nix>",
+          "resolved": null
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "9e1b71023b964a2037be7994aa6850891363ae22a6b7a18f8ad25c59dfed78ec",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/paquet.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.path",
+          "line": 6,
+          "literal": "./.",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 22,
+          "literal": "../scripts",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 23,
+          "literal": "../modules",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 24,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../operations/identite/profil.json",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/profil.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 26,
+          "literal": "../lib/keycloak-optimise.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/keycloak-optimise.nix",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 27,
+          "literal": "../licenses/AGPL-3.0.txt",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/licenses/AGPL-3.0.txt",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 28,
+          "literal": "../licenses/SERVICES-MRJAM.md",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/licenses/SERVICES-MRJAM.md",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "65f66112fd414fa59057612de9e0d74b4adf89b5ea05705c36b11007bd353ca1",
+      "path": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix\"",
+          "resolved": "/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 1,
+          "literal": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix\"",
+          "resolved": "/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/vision\"",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/vision",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/interface\"",
+          "resolved": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/interface",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [
+        {
+          "kind": "remaining-text-reference-needs-review",
+          "line": 1
+        }
+      ],
+      "source_sha256": "12a91230beb4458cdb80bc71c6046faef623105adbc49038e61c895665dee48a",
+      "substitutions": [
+        {
+          "after": "(toString ../../vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix)",
+          "before": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix\"",
+          "end_byte": 105,
+          "start_byte": 14,
+          "target": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix"
+        },
+        {
+          "after": "../../vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+          "before": "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+          "end_byte": 234,
+          "start_byte": 115,
+          "target": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix"
+        },
+        {
+          "after": "(toString ../../vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix)",
+          "before": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix\"",
+          "end_byte": 344,
+          "start_byte": 253,
+          "target": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "0a5ad940d9852256e2931c379713c6936cccbbcc35acbe0d96ac821beefeaf40",
+      "path": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+      "substitutions": [
+        {
+          "after": "../../vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+          "before": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+          "end_byte": 123,
+          "start_byte": 14,
+          "target": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "7259357a6e9a0346d5511f8d563344403ba558f4c61a6c0e9dc7ce3cc649f18e",
+      "path": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix\"",
+          "resolved": "/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 1,
+          "literal": "\"/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix\"",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "4f70c7d0126f654f6368f8629ca4db7e487000a7b71333f2c2f860485ff8413e",
+      "substitutions": [
+        {
+          "after": "(toString ./configuration-avant.nix)",
+          "before": "\"/root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix\"",
+          "end_byte": 132,
+          "start_byte": 28,
+          "target": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix"
+        },
+        {
+          "after": "(toString ../../vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix)",
+          "before": "\"/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix\"",
+          "end_byte": 254,
+          "start_byte": 133,
+          "target": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix"
+        }
+      ]
+    },
+    {
+      "normalized_sha256": "3d8a2a849085c6241e793da0f34a0fe51945ce616c45cc69349a5baf72f0c084",
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/lib/keycloak-optimise.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 11,
+          "literal": "../services/keycloak-mrjam/paquet.nix",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/paquet.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 13,
+          "literal": "../services/keycloak-mrjam",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam",
+          "target_type": "partial-directory"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "3d8a2a849085c6241e793da0f34a0fe51945ce616c45cc69349a5baf72f0c084",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "82071f0410fc94f2f2b132fafe7e69dc6c971de1021eb1f32083177f00a72207",
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 9,
+          "literal": "../lib/keycloak-optimise.nix",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/lib/keycloak-optimise.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 14,
+          "literal": "../services/keycloak-mrjam/theme",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/theme",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 16,
+          "literal": "../services/sources-mrjam.nix",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 39,
+          "literal": "../scripts/identite-amorcage-postgresql.sh",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts/identite-amorcage-postgresql.sh",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 43,
+          "literal": "../scripts/identite-amorcage-postgresql.sh",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts/identite-amorcage-postgresql.sh",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 72,
+          "literal": "../scripts/identite-amorcage-demarrer.sh",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts/identite-amorcage-demarrer.sh",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "82071f0410fc94f2f2b132fafe7e69dc6c971de1021eb1f32083177f00a72207",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/paquet.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.path",
+          "line": 6,
+          "literal": "./.",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 22,
+          "literal": "../scripts",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 23,
+          "literal": "../modules",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules",
+          "target_type": "partial-directory"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 24,
+          "literal": "../operations/identite/realm.json",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/operations/identite/realm.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 25,
+          "literal": "../operations/identite/profil.json",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/operations/identite/profil.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 26,
+          "literal": "../lib/keycloak-optimise.nix",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/lib/keycloak-optimise.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 27,
+          "literal": "../licenses/AGPL-3.0.txt",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/licenses/AGPL-3.0.txt",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 28,
+          "literal": "../licenses/SERVICES-MRJAM.md",
+          "resolved": "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/licenses/SERVICES-MRJAM.md",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "78b71cabba689dd47185aa5ccfa5fd561286d9dd4c094db29ea79503aaa03cb4",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "../operations/logique-site.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/operations/logique-site.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 12,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "78b71cabba689dd47185aa5ccfa5fd561286d9dd4c094db29ea79503aaa03cb4",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "11ef2b8049d98e17e5501cf6c50944c15fb7348410467fb0e06bb970a4f8c7c7",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/matheval.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 5,
+          "literal": "../vendor/matheval/matheval.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/matheval/matheval.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "11ef2b8049d98e17e5501cf6c50944c15fb7348410467fb0e06bb970a4f8c7c7",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "1808bddb80c49a952aa63f3dc949ae6e6fd7a43d33a36c202cdd6c09709520c7",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/nextcloud.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 84,
+          "literal": "../scripts/nextcloud-backup.sh",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/scripts/nextcloud-backup.sh",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "1808bddb80c49a952aa63f3dc949ae6e6fd7a43d33a36c202cdd6c09709520c7",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "60183921c8c3631c133349f18ae163e99d7488edcaa849cd376c0ebf249a7442",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision-interface.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "60183921c8c3631c133349f18ae163e99d7488edcaa849cd376c0ebf249a7442",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5e3fe3d6f4a9ad40af38edfd91d63f05986b8bfc3660656899e3d0a5c7480fd7",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 8,
+          "literal": "../vendor/vision/vision.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/vision.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 23,
+          "literal": "../vendor/vision/source",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/source",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5e3fe3d6f4a9ad40af38edfd91d63f05986b8bfc3660656899e3d0a5c7480fd7",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 5,
+          "literal": "./hardware-configuration.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 6,
+          "literal": "../../apps/matheval.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/matheval.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 7,
+          "literal": "../../apps/vision.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 8,
+          "literal": "../../apps/vision-interface.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision-interface.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 9,
+          "literal": "../../apps/nextcloud.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/nextcloud.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 10,
+          "literal": "../../modules/gateway.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/gateway.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 11,
+          "literal": "../../modules/postgresql.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/postgresql.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "659b857f9aae66a1cb59c3bea467b48408f1e498c6a9606344f784837e395ae3",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/logique.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 2,
+          "literal": "./configuration.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 2,
+          "literal": "../../apps/logique.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "659b857f9aae66a1cb59c3bea467b48408f1e498c6a9606344f784837e395ae3",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "dac75e499ea3681370ade274265d03743de6567cad0801e1e44298ae85d03a05",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 3,
+          "literal": "./logique.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/logique.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 3,
+          "literal": "../../vendor/vision-embeddings/embeddings.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/embeddings.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.path",
+          "line": 8,
+          "literal": "/srv/vision/releases/c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+          "resolved": "/srv/vision/releases/c0bfcac66b9ee52e282bb895ec6aed3921a86266",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "dac75e499ea3681370ade274265d03743de6567cad0801e1e44298ae85d03a05",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/databases.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/journal-http.conf",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "024dcd4df9c1c77a421990a4360418c05c515e1c1a7615b157d1ddaf7daa74d5",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/virtual-hosts.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "024dcd4df9c1c77a421990a4360418c05c515e1c1a7615b157d1ddaf7daa74d5",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ed6cf8109c26b5b00cb987d17a7425ee6cd8876bee5a4e13ba70c67b2ff3e3d4",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/gateway.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./mrj-auth.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix",
+          "target_type": "file"
+        },
+        {
+          "available": true,
+          "kind": "module-import-expression",
+          "line": 42,
+          "literal": "./journal-http.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/journal-http.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 45,
+          "literal": "../projects.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json",
+          "target_type": "uncollected"
+        },
+        {
+          "available": true,
+          "kind": "import",
+          "line": 66,
+          "literal": "../lib/virtual-hosts.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/virtual-hosts.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ed6cf8109c26b5b00cb987d17a7425ee6cd8876bee5a4e13ba70c67b2ff3e3d4",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/journal-http.nix",
+      "received_change": "redacted",
+      "references": [
+        {
+          "available": true,
+          "kind": "builtins.readFile",
+          "line": 38,
+          "literal": "../lib/journal-http.conf",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/journal-http.conf",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "f27dec0aafb41b710e303e76b409ccc7315b24d4d1597e823ba1b568237f4dbc",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 8,
+          "literal": "../services/mrj-auth/server.py",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/server.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 9,
+          "literal": "../services/mrj-auth/oauth.py",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/oauth.py",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 10,
+          "literal": "../services/mrj-auth/mcp.html",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/mcp.html",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 11,
+          "literal": "../services/mrj-auth/mcp.js",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/mcp.js",
+          "target_type": "uncollected"
+        },
+        {
+          "available": false,
+          "kind": "source-path-expression-not-an-established-import",
+          "line": 12,
+          "literal": "../services/mrj-auth/style.css",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/style.css",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "f27dec0aafb41b710e303e76b409ccc7315b24d4d1597e823ba1b568237f4dbc",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "ac81de8c27b3098f5e3bb962f16a001b74cfa6c5af5bfc93b30574cbb5412131",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/postgresql.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 4,
+          "literal": "../lib/databases.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/databases.nix",
+          "target_type": "file"
+        },
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 16,
+          "literal": "../databases.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/databases.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "ac81de8c27b3098f5e3bb962f16a001b74cfa6c5af5bfc93b30574cbb5412131",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "df92e9e7b270381565725c16e873e236d6fad8e1b24a9f768166250a1c6cc680",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/scripts/nextcloud-backup.sh",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "df92e9e7b270381565725c16e873e236d6fad8e1b24a9f768166250a1c6cc680",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/matheval/matheval.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "5e05b99699f4216ca268cd53959be6daa08067d512cc8cb03045b1719d296e48",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/embeddings.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": true,
+          "kind": "import",
+          "line": 14,
+          "literal": "./modele.nix",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.nix",
+          "target_type": "file"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "5e05b99699f4216ca268cd53959be6daa08067d512cc8cb03045b1719d296e48",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.nix",
+      "received_change": "unchanged",
+      "references": [
+        {
+          "available": false,
+          "kind": "builtins.readFile",
+          "line": 3,
+          "literal": "./modele.lock.json",
+          "resolved": "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.lock.json",
+          "target_type": "uncollected"
+        }
+      ],
+      "residual_text_references": [],
+      "source_sha256": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032",
+      "substitutions": []
+    },
+    {
+      "normalized_sha256": "42768b636987e6056f90dbaa7469d0f8a7bcede96606423d4a73d41d166c76ed",
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/vision.nix",
+      "received_change": "unchanged",
+      "references": [],
+      "residual_text_references": [],
+      "source_sha256": "42768b636987e6056f90dbaa7469d0f8a7bcede96606423d4a73d41d166c76ed",
+      "substitutions": []
+    }
+  ],
+  "generation_binding": "unverified",
+  "limits": [
+    "Literal references include function defaults and inactive branches",
+    "Dynamic imports, interpolated paths and runtime scripts require separate review",
+    "No missing file, directory, archive, secret or data is fetched or opened",
+    "Path relocation is analysis, not proof of semantic equivalence or deployment readiness"
+  ],
+  "nix_files_parsed": 128,
+  "normalization_changes": 35,
+  "operation": "mrjam-reviewed-source-normalization-v1",
+  "review_sha256": "f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8",
+  "schema_version": 1
+}

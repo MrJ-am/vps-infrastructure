@@ -3,6 +3,13 @@
 
 * Décision actuelle
 
+La reprise du 1 novembre a intégré les 137 fichiers VPS remis par Spectre et
+vérifié leur manifeste. Le [[file:hosts/mrjam-vps/README.org][dossier du host reconstruit]] est la référence
+courante pour la machine, ViSe, les protections Nextcloud et les règles
+PostgreSQL composées. Il distingue les déclarations reçues de l'état installé.
+La remise de code et sa revue déléguée sont achevées ; ne pas relancer leur
+ancien relais. La composition complète et sa mise en service restent à qualifier.
+
 L'utilisateur demande désormais d'achever les quatre chantiers jusqu'à la première
 mise en service : voir [[file:mise-en-service/mandat.org][la directive courante]]. L'ancien gel général
 est remplacé par cette autorisation d'objectif. Les révisions déjà préparées ne

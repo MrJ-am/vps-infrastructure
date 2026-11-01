@@ -1,0 +1,95 @@
+#+title: Reprise des sources VPS reçues le 1 novembre 2026
+#+language: fr
+
+* Réception achevée
+
+La remise Spectre est reçue et vérifiée. Il n'y a pas à refaire la recherche
+Git, les observations V1/V2/provenance ou la revue de confidentialité déjà
+déléguée. =../received/20261101/vps-reviewed-sources/= conserve les deux pièces
+jointes exactes, le reçu et les 139 membres vérifiés de l'archive.
+
+| Objet | SHA-256 |
+|-------+---------|
+| sources-vps-revues.tar, 552960 octets | 1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb |
+| REPRISE-CODEX-CLOUD.txt | 5df110460d385138fee763f09ccd46b03bb02fffc7db979e65a941047bcf23e5 |
+| review.json | f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8 |
+
+La révision de l'outil de remise est
+=b7cf819c611171d68028b3e32bacfadcb9932d5c=. Les modifications des PR 98/99 ont
+été rapprochées du dépôt avant utilisation : limite arbitraire de 128 fichiers
+retirée, budgets d'octets conservés, autorité de revue explicitée. Les 21 tests
+du transport passent. Aucune empreinte attendue n'a été modifiée pour accepter
+une différence.
+
+L'autorité est =user-authorized-agent-reviewed-code-only-declaration= : revue
+par Codex Spectre sous délégation utilisateur, et non revue humaine. Elle ne
+certifie ni l'origine du système en cours ni une génération déployable.
+Les 137 fichiers comprennent 128 Nix, deux Python, trois shell et quatre
+configurations Nginx ; 122 sont déclarés inchangés et 15 expurgés.
+Les placeholders expurgés sont des références inactives, jamais des valeurs à
+installer. Aucun script reçu, ancien workflow ou installateur n'a été exécuté.
+
+* Analyse reproductible, sans évaluation du code reçu
+
+=normalize_sources.py= vérifie le manifeste épinglé et chaque fichier avant
+lecture de sa syntaxe. Il refuse les liens et les sorties existantes. Il crée
+un nouvel arbre d'analyse sans modifier l'original. Ses 35 substitutions,
+réparties dans 21 fichiers, remplacent les chemins source absolus présents par
+des chemins relatifs ancrés au fichier. Les chaînes deviennent =toString= d'un
+chemin ancré ; un simple texte relatif aurait changé leur sens.
+
+Les chemins de données, scripts incorporés, interpolations et entrées absentes
+ne sont pas exécutés ou complétés. Une présence de répertoire signifie seulement
+qu'une partie a été remise. La normalisation ne prouve pas l'équivalence de
+l'assemblage et le résultat reste =activatable=false=.
+
+=analyze.py= classe 333 références littérales, 22 références de recherche Nix
+non verrouillées et 15 références de répertoires partiels. Les 114 cibles
+littérales non remises ne sont pas 114 imports actifs manquants. Notamment :
+
+- les défauts Audition et =forgejoKanidmApi= signalés dans le relais sont
+  remplacés par les arguments de leurs appels ;
+- =modulesPath + "/profiles/qemu-guest.nix"= désigne le profil du nixpkgs
+  sélectionné, pas un fichier VPS absent sous =/profiles= ;
+- les JSON, archives, branches inactives et chemins d'exécution ne sont pas
+  récupérés pour « fermer » artificiellement le graphe.
+
+34 fichiers remis sont identiques octet pour octet à du code de
+=reference-nixos/=. Ce rapprochement ne transforme pas un identifiant de
+répertoire en commit authentifié. =verify_profile.py= vérifie séparément douze
+faits du socle matériel/réseau contre les littéraux Nix reçus, sans import,
+appel de fonction ou lecture d'une dépendance. Il refuse les expressions
+dynamiques. Les résultats détaillés sont versionnés sous =results/=.
+
+* Reproduction dans Cloud
+
+CPython 3.12.14 a exécuté l'analyse ; les deux roues Linux x86_64 sont épinglées
+par version, ABI, URL, longueur et SHA-256 dans =parser.lock.json= et
+=parser-requirements.txt=. Installer ces seules dépendances dans un répertoire
+local dédié, jamais dans le VPS :
+
+#+begin_src bash
+python3 -m pip install --no-deps --require-hashes --target /tmp/mrjam-source-parser \
+  -r operations/host-recovery/parser-requirements.txt
+export PYTHONPATH=/tmp/mrjam-source-parser
+python3 -B -m unittest discover -s operations/host-recovery/tests -v
+python3 -B operations/host-recovery/normalize_sources.py \
+  --extracted operations/received/20261101/vps-reviewed-sources/extracted \
+  --review-sha256 f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8 \
+  --output /tmp/mrjam-vps-normalized-new
+python3 -B operations/host-recovery/analyze.py \
+  --extracted operations/received/20261101/vps-reviewed-sources/extracted \
+  --review-sha256 f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8 \
+  --reference-code reference-nixos
+python3 -B operations/host-recovery/verify_profile.py \
+  --extracted operations/received/20261101/vps-reviewed-sources/extracted \
+  --review-sha256 f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8 \
+  --profile operations/hosts/mrjam-vps/received-profile.json
+#+end_src
+
+Le dossier de sortie doit ne pas exister. Le rapport de normalisation a été
+reproduit à l'identique après durcissement du lecteur ; les 21 tests statiques
+passent. L'outil est local à l'atelier et n'est pas une nouvelle capacité SSH.
+
+Le [[file:../hosts/mrjam-vps/README.org][dossier du host]] décrit les modules reconstruits, les qualifications,
+les limites et la suite de la mise en service.

@@ -42,7 +42,7 @@ let
     inherit (connection) database role;
   }) (lib.filterAttrs (_: connection: connection != null) cfg.workers);
   safeName = name: !(lib.hasPrefix "pg_" name)
-    && !(builtins.elem name [ "postgres" "template0" "template1" "root" "nobody" "all" "replication" ]);
+    && !(builtins.elem name [ "postgres" "template0" "template1" "root" "nobody" "all" "replication" "etp_carnet" ]);
   mapName = "mrjam_rust_slots";
   hbaLines = lib.unique (map (row: ''local "${row.database}" "${row.role}" peer map=${mapName}'') rows);
   hbaBlock = lib.concatStringsSep "\n" hbaLines + "\n";
@@ -54,7 +54,7 @@ let
   effectiveHba = builtins.filter (line: lib.hasInfix "map=${mapName}" line)
     (lib.splitString "\n" config.services.postgresql.authentication);
 in {
-  imports = [ ./mrjam-rust.nix ];
+  imports = [ ./mrjam-rust.nix ./mrjam-postgresql-policy.nix ];
   options.services.mrjamPostgresqlAccess = {
     enable = lib.mkEnableOption "explicit peer mappings for prebuilt Rust slots and lifecycle workers";
     slots = {
@@ -73,7 +73,7 @@ in {
       { assertion = rows != [ ];
         message = "mrjamPostgresqlAccess requires explicit existing database/role pairs."; }
       { assertion = lib.all (row: safeName row.role && safeName row.database) rows;
-        message = "mrjamPostgresqlAccess refuses reserved or privileged database/role names."; }
+        message = "mrjamPostgresqlAccess refuses reserved or privileged database/role names, including the independent ViSe database and role."; }
       { assertion = lib.all (row: builtins.length (lib.unique (map (other: other.database)
             (builtins.filter (other: other.role == row.role) rows))) == 1) rows;
         message = "mrjamPostgresqlAccess requires each SQL role to belong to one declared database, preventing cross-slot database access."; }
@@ -81,8 +81,8 @@ in {
           then workerIdentities.${row.capability}.enabled
           else config.services.mrjamRust.enable && config.services.mrjamRust.slots.${row.slot}.enable) rows;
         message = "mrjamPostgresqlAccess requires each declared local Rust identity."; }
-      { assertion = lib.hasPrefix hbaBlock config.services.postgresql.authentication;
-        message = "mrjamPostgresqlAccess rules must precede existing catch-all rules; conflicting overrides are refused."; }
+      { assertion = config.services.mrjamPostgresqlPolicy.blocks.rust == hbaBlock;
+        message = "mrjamPostgresqlAccess refuses an altered or extended generated HBA block."; }
       { assertion = lib.sort builtins.lessThan effectiveMap == lib.sort builtins.lessThan identLines;
         message = "mrjamPostgresqlAccess refuses another identity mapping under its reserved map name."; }
       { assertion = lib.sort builtins.lessThan effectiveHba == lib.sort builtins.lessThan hbaLines;
@@ -90,7 +90,7 @@ in {
     ];
     # One shared map is necessary: duplicate HBA entries for blue/green would
     # cause the second slot to be rejected after the first matching HBA rule.
-    services.postgresql.authentication = lib.mkBefore hbaBlock;
+    services.mrjamPostgresqlPolicy.blocks.rust = hbaBlock;
     services.postgresql.identMap = lib.mkBefore identBlock;
   };
 }

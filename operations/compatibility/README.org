@@ -14,8 +14,9 @@ Le verrou principal reste inchangé et construit les candidats déjà qualifiés
 | Évaluation de compatibilité | c5c4a43b0e8056328ec4529f735cabdb8f1942bb | Source Git/NAR vérifiée, pas une configuration de machine |
 
 Le second verrou ne choisit pas une distribution à déployer. L'observation reste
-non authentifiée ; les builds actifs des services et =stateVersion= restent
-inconnus. Les mentions de versions ci-dessous concernent le code verrouillé.
+non authentifiée ; les builds actifs des services restent inconnus. La remise
+ultérieure établit =stateVersion=26.05= dans le code, sans authentifier la
+génération active. Les mentions de versions ci-dessous concernent le code verrouillé.
 
 L'archive publique de la seconde entrée a été contrôlée par reconstruction de
 l'arbre Git complet, puis le même contrôle a été effectué dans le store Nix
@@ -63,7 +64,7 @@ verrouillée 6f06d204, indépendamment de la base hôte. La substitution directe
 du paquet hôte reste refusée ; aucun attendu de version n'est assoupli.
 Les quinze contrôles du module Forgejo d'origine restent inchangés et passent.
 
-La matrice courante comprend 154 contrôles positifs : inventaire 20,
+La matrice de ce lot précédent comprend 154 contrôles positifs : inventaire 20,
 composition VPS 26, provenance 33, Rust 22, gateway 24, Forgejo 15 et
 indépendance du paquet préparatoire 14. Ces quatorze derniers contrôles et les
 quinze contrôles Forgejo passent aussi sur l'entrée applicative principale.
@@ -125,6 +126,20 @@ Ce module ne prouve ni l'absence de fichiers non versionnés dans un build tiers
 ni l'origine du système actuel. L'installation effective, les permissions sur
 le VPS et une autorité protégée n'ont pas été vérifiées ici.
 
-Le [[file:../source-recovery/SPECTRE.txt][relais Spectre suivant]] prépare la remise des copies de code après
-revue humaine. La recherche Git précédente a rendu son résultat ; aucun
-inventaire V1/V2/provenance ni commande de métadonnées n'est à relancer.
+* Réception des sources et qualification de leur reprise
+
+Le [[file:../host-recovery/README.org][relais Spectre a été exécuté]] avec revue par l'agent explicitement
+déléguée par l'utilisateur. Aucune nouvelle revue humaine de cette même remise,
+recherche Git ou observation V1/V2/provenance n'est demandée.
+
+La matrice étendue du présent lot passe 273 contrôles : inventaire 20,
+composition VPS 30, provenance 33, Rust 22, gateway 24, Forgejo 15,
+indépendance du paquet 14, socle machine 25, ViSe 35, Nextcloud 16,
+accès PostgreSQL 21 et composition PostgreSQL 18. Les six suites du lot passent
+aussi 145 contrôles sur le pin applicatif. La matrice conserve
+=production_ready=false= et n'autorise pas la composition partielle comme host.
+
+La nouvelle VM TCG qualifie huit groupes avec PostgreSQL 17.11 et une unité
+ViSe factice. Les sources applicatives Rust/Elm sont inchangées et leurs suites
+ne sont pas annoncées comme réexécutées. Le [[file:../hosts/mrjam-vps/README.org][dossier courant]] précise les
+limites et les contrôles encore nécessaires avant la première mise en service.

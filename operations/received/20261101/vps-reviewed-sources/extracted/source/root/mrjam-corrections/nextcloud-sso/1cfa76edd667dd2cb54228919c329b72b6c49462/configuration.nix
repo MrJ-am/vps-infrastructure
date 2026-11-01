@@ -1,0 +1,1 @@
+{lib,pkgs,...}: let staged=(import <nixpkgs/nixos/lib/eval-config.nix> {system="x86_64-linux";modules=[./base.nix];}).config; in { imports = [ ./base.nix ./payload/module.nix ]; services.nextcloud.extraApps=lib.mkForce ((builtins.removeAttrs staged.services.nextcloud.extraApps ["contacts"]) // {user_oidc=pkgs.nextcloud34Packages.apps.user_oidc;}); }

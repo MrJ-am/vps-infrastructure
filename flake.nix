@@ -12,6 +12,11 @@
       rustEvaluation = import ./operations/tests/module-evaluation.nix { inherit nixpkgs; };
       inventoryEvaluation = import ./operations/tests/inventory-evaluation.nix { inherit nixpkgs; };
       vpsPreparationEvaluation = import ./operations/tests/vps-preparation-evaluation.nix { inherit nixpkgs; };
+      vpsMachineEvaluation = import ./operations/tests/vps-machine-evaluation.nix { inherit nixpkgs; };
+      viseEvaluation = import ./operations/tests/vise-evaluation.nix { inherit nixpkgs; };
+      nextcloudGuardsEvaluation = import ./operations/tests/nextcloud-guards-evaluation.nix { inherit nixpkgs; };
+      postgresqlAccessEvaluation = import ./operations/tests/postgresql-access-evaluation.nix { inherit nixpkgs; };
+      postgresqlCompositionEvaluation = import ./operations/tests/postgresql-composition-evaluation.nix { inherit nixpkgs; };
       systemProvenanceEvaluation = import ./operations/tests/system-provenance-evaluation.nix { inherit nixpkgs; };
       forgejoEvaluation = import ./operations/forgejo/tests/module-evaluation.nix { inherit nixpkgs; };
       forgejoPinnedEvaluation = import ./operations/forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; };
@@ -38,6 +43,9 @@
         validationStaging = import ./operations/nixos/mrjam-validation-staging.nix;
         validationCollector = import ./operations/nixos/mrjam-validation-collector.nix;
         postgresqlAccess = import ./operations/nixos/mrjam-postgresql-access.nix;
+        postgresqlPolicy = import ./operations/nixos/mrjam-postgresql-policy.nix;
+        vise = import ./operations/nixos/mrjam-vise.nix;
+        nextcloudGuards = import ./operations/nixos/mrjam-nextcloud-guards.nix;
         visionArchive = import ./operations/nixos/mrjam-vision-archive.nix;
         visionReplay = import ./operations/nixos/mrjam-vision-replay.nix;
         visionCycle = import ./operations/nixos/mrjam-vision-cycle.nix;
@@ -51,6 +59,11 @@
       lib.qualification.rust = rustEvaluation;
       lib.qualification.inventory = inventoryEvaluation;
       lib.qualification.vpsPreparation = vpsPreparationEvaluation;
+      lib.qualification.vpsMachine = vpsMachineEvaluation;
+      lib.qualification.vise = viseEvaluation;
+      lib.qualification.nextcloudGuards = nextcloudGuardsEvaluation;
+      lib.qualification.postgresqlAccess = postgresqlAccessEvaluation;
+      lib.qualification.postgresqlComposition = postgresqlCompositionEvaluation;
       lib.qualification.systemProvenance = systemProvenanceEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
       lib.qualification.forgejoPinnedToolchain = forgejoPinnedEvaluation;
@@ -84,6 +97,31 @@
         };
       };
       checks.${system} = {
+      vps-machine-module = pkgs.runCommand "mrjam-vps-received-machine-evaluation" {
+        result = builtins.toJSON vpsMachineEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      vise-module = pkgs.runCommand "mrjam-vise-module-evaluation" {
+        result = builtins.toJSON viseEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      nextcloud-guards-module = pkgs.runCommand "mrjam-nextcloud-guards-evaluation" {
+        result = builtins.toJSON nextcloudGuardsEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      postgresql-composition-module = pkgs.runCommand "mrjam-postgresql-composition-evaluation" {
+        result = builtins.toJSON postgresqlCompositionEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      vise-postgresql-runtime = import ./operations/runtime/vise-postgresql-systemd.nix { inherit nixpkgs; };
       system-provenance-module = pkgs.runCommand "mrjam-system-provenance-module-evaluation" {
         result = builtins.toJSON systemProvenanceEvaluation;
       } ''

@@ -1,0 +1,1058 @@
+{
+  "authority": "local-static-code-analysis",
+  "counts": {
+    "distinct_received_source_hashes": 100,
+    "files_with_substitutions": 21,
+    "literal_references": 333,
+    "nix_files_parsed": 128,
+    "partial_directory_references": 15,
+    "substitutions": 35,
+    "uncollected_literal_targets": 114,
+    "unlocked_search_references": 22
+  },
+  "exact_byte_matches": {
+    "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/databases.nix": [
+      "lib/databases.nix"
+    ],
+    "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/journal-http.conf": [
+      "lib/journal-http.conf"
+    ],
+    "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/virtual-hosts.nix": [
+      "lib/virtual-hosts.nix"
+    ],
+    "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix": [
+      "modules/mrj-auth.nix"
+    ],
+    "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/paquet.nix": [
+      "services/keycloak-mrjam/paquet.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/artefact.nix": [
+      "assemblage/kanidm/artefact.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/paquet.nix": [
+      "assemblage/kanidm/paquet.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/service.nix": [
+      "assemblage/kanidm/service.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/databases.nix": [
+      "lib/databases.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/journal-http.conf": [
+      "lib/journal-http.conf"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/virtual-hosts.nix": [
+      "lib/virtual-hosts.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix": [
+      "modules/mrj-auth.nix"
+    ],
+    "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/paquet.nix": [
+      "services/keycloak-mrjam/paquet.nix"
+    ],
+    "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix": [
+      "assemblage/forgejo/assets.nix"
+    ],
+    "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix": [
+      "assemblage/forgejo/assets.nix"
+    ],
+    "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/kanidm-api-privee.py": [
+      "scripts/kanidm-api-privee.py"
+    ],
+    "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix": [
+      "assemblage/forgejo/assets.nix"
+    ],
+    "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/kanidm-api-privee.py": [
+      "scripts/kanidm-api-privee.py"
+    ],
+    "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix": [
+      "assemblage/forgejo/assets.nix"
+    ],
+    "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/guard.nix": [
+      "assemblage/nextcloud-php-security/guard.nix"
+    ],
+    "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/module.nix": [
+      "assemblage/nextcloud-php-security/module.nix"
+    ],
+    "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/payload/module.nix": [
+      "assemblage/nextcloud-sso/module.nix"
+    ],
+    "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/assemblage/php-upload-progress/module.nix": [
+      "assemblage/php-upload-progress/module.nix"
+    ],
+    "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/journal-http.conf": [
+      "lib/journal-http.conf"
+    ],
+    "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/virtual-hosts.nix": [
+      "lib/virtual-hosts.nix"
+    ],
+    "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix": [
+      "modules/mrj-auth.nix"
+    ],
+    "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/paquet.nix": [
+      "services/keycloak-mrjam/paquet.nix"
+    ],
+    "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/lib/keycloak-optimise.nix": [
+      "lib/keycloak-optimise.nix"
+    ],
+    "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/paquet.nix": [
+      "services/keycloak-mrjam/paquet.nix"
+    ],
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix": [
+      "apps/logique.nix"
+    ],
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix": [
+      "hosts/hostinger/hardware-configuration.nix"
+    ],
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/logique.nix": [
+      "hosts/hostinger/logique.nix"
+    ],
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/journal-http.conf": [
+      "lib/journal-http.conf"
+    ],
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/scripts/nextcloud-backup.sh": [
+      "scripts/nextcloud-backup.sh"
+    ]
+  },
+  "generation_binding": "unverified",
+  "limits": [
+    "A literal target is not necessarily an active dependency",
+    "A default may be overridden at its call site",
+    "A directory in the receipt is only partially collected",
+    "An exact file match does not establish a Git revision",
+    "No uncollected target is opened or retrieved",
+    "No received module or script is evaluated or executed"
+  ],
+  "matched_files": 34,
+  "received_authority": "user-authorized-agent-reviewed-code-only-declaration",
+  "received_files": 137,
+  "reference_code_extensions": [
+    ".nix",
+    ".py",
+    ".sh",
+    ".conf"
+  ],
+  "review_sha256": "f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8",
+  "schema_version": 1,
+  "source_commit_authenticated": false,
+  "uncollected_literal_targets": {
+    "/etc/nixos/vise-hosting/target.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 4,
+        "source": "etc/nixos/vise-hosting/module.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/databases.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 23,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/postgresql.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/keycloak-optimise.nix": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 26,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/licenses/AGPL-3.0.txt": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 27,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/licenses/SERVICES-MRJAM.md": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 28,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/profil.json": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/realm.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 17,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 24,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/projects.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 45,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/gateway.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/sauvegarde-externe.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 184,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/theme": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/mcp.html": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 12,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/mcp.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 13,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/oauth.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/oidc.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 11,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrj-auth/style.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-admission/admission.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/admission.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-courriel/courriel.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/admission.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 18,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/courriel.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/fermeture.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/mrjam-fermeture/fermeture.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/fermeture.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/vision-cycle/cycle.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/vision-gestion/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/vendor/vision-multiutilisateur-source.tar.gz": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 58,
+        "source": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/databases.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 23,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/postgresql.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/keycloak-optimise.nix": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 26,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/licenses/AGPL-3.0.txt": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 27,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/licenses/SERVICES-MRJAM.md": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 28,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/profil.json": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/realm.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 17,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 24,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/projects.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 45,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/gateway.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/sauvegarde-externe.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 199,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/theme": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/mcp.html": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 12,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/mcp.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 13,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/oauth.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/oidc.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 11,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrj-auth/style.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-admission/admission.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/admission.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-courriel/courriel.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/admission.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 18,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/courriel.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/fermeture.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/mrjam-fermeture/fermeture.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/fermeture.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/vision-cycle/cycle.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/vision-gestion/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/vendor/vision-multiutilisateur-source.tar.gz": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 58,
+        "source": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/site": [
+      {
+        "kind": "builtins.path",
+        "line": 1,
+        "source": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix"
+      }
+    ],
+    "/root/mrjam-corrections/audition/modules/audition.nix": [
+      {
+        "kind": "function-default-not-necessarily-used",
+        "line": 1,
+        "source": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/config.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/footer.tmpl": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 115,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets/org.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/verify-backup.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 44,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/versions.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 5,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/config.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/footer.tmpl": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 150,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets/org.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/sso.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 21,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/verify-backup.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 53,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/versions.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 5,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/config.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/footer.tmpl": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 151,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets/org.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/org-links.lua": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 12,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/sso.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 22,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/verify-backup.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 54,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/versions.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 5,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/config.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/footer.tmpl": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 115,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets/org.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/verify-backup.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 44,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/versions.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 5,
+        "source": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py": [
+      {
+        "kind": "function-default-not-necessarily-used",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/integration.nix"
+      },
+      {
+        "kind": "function-default-not-necessarily-used",
+        "line": 1,
+        "source": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix"
+      },
+      {
+        "kind": "function-default-not-necessarily-used",
+        "line": 3,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/integration.nix"
+      },
+      {
+        "kind": "function-default-not-necessarily-used",
+        "line": 1,
+        "source": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/site": [
+      {
+        "kind": "builtins.path",
+        "line": 1,
+        "source": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix"
+      }
+    ],
+    "/root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/filter-test-cgi.sh": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 26,
+        "source": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/module.nix"
+      }
+    ],
+    "/root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/site": [
+      {
+        "kind": "builtins.path",
+        "line": 1,
+        "source": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/interface": [
+      {
+        "kind": "module-import-expression",
+        "line": 1,
+        "source": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/databases.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 22,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/postgresql.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/keycloak-optimise.nix": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 26,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/licenses/AGPL-3.0.txt": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 27,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/licenses/SERVICES-MRJAM.md": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 28,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/profil.json": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/realm.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 12,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 24,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/projects.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 45,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/gateway.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/sauvegarde-externe.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 172,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/theme": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/mcp.html": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 12,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/mcp.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 13,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/oauth.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/oidc.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 11,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrj-auth/style.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-admission/admission.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/admission.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-courriel/courriel.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/admission.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 18,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/courriel.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/fermeture.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/mrjam-fermeture/fermeture.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/fermeture.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/vision-cycle/cycle.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 7,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-cycle.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/vision-gestion/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/vendor/vision-multiutilisateur-source.tar.gz": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 58,
+        "source": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-gestion.nix"
+      }
+    ],
+    "/root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/vision": [
+      {
+        "kind": "module-import-expression",
+        "line": 1,
+        "source": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/licenses/AGPL-3.0.txt": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 27,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/licenses/SERVICES-MRJAM.md": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 28,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/operations/identite/profil.json": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 25,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/operations/identite/realm.json": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 24,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 22,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts/identite-amorcage-demarrer.sh": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 72,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/scripts/identite-amorcage-postgresql.sh": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 39,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix"
+      },
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 43,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix"
+      }
+    ],
+    "/root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/theme": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 14,
+        "source": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/databases.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 16,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/postgresql.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/operations/logique-site.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 12,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/matheval.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/nextcloud.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix"
+      },
+      {
+        "kind": "builtins.readFile",
+        "line": 45,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/gateway.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/mcp.html": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 10,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/mcp.js": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 11,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/oauth.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 9,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/server.py": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 8,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/services/mrj-auth/style.css": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 12,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.lock.json": [
+      {
+        "kind": "builtins.readFile",
+        "line": 3,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.nix"
+      }
+    ],
+    "/root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/source": [
+      {
+        "kind": "source-path-expression-not-an-established-import",
+        "line": 23,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix"
+      }
+    ],
+    "/srv/vision/releases/c0bfcac66b9ee52e282bb895ec6aed3921a86266": [
+      {
+        "kind": "builtins.path",
+        "line": 8,
+        "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix"
+      }
+    ]
+  }
+}

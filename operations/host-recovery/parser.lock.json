@@ -1,0 +1,21 @@
+{
+  "python_abi": "cp312-linux-x86_64",
+  "packages": [
+    {
+      "package": "tree-sitter",
+      "version": "0.25.2",
+      "wheel": "tree_sitter-0.25.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "b43a9e4c89d4d0839de27cd4d6902d33396de700e9ff4c5ab7631f277a85ead9",
+      "url": "https://files.pythonhosted.org/packages/39/d1/b95f545e9fc5001b8a78636ef942a4e4e536580caa6a99e73dd0a02e87aa/tree_sitter-0.25.2-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
+      "bytes": 635418
+    },
+    {
+      "package": "tree-sitter-nix",
+      "version": "0.1.0",
+      "wheel": "tree_sitter_nix-0.1.0-cp310-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "58c07f788bc6d24b7a90aff49431de57c3933c5c54d1008125da2073f1bc45de",
+      "url": "https://files.pythonhosted.org/packages/6d/2f/0dc49a8b3683bdf9cf8542d0d4eb2c508e9f01f4234574f4ad7f859a1d0b/tree_sitter_nix-0.1.0-cp310-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "bytes": 43798
+    }
+  ]
+}

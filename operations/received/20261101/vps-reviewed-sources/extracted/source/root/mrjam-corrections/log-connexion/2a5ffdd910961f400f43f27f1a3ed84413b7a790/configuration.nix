@@ -1,0 +1,1 @@
+{ imports = [ "/root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix" "/root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix" ]; }
