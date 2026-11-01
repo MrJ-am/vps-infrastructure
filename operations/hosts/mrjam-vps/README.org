@@ -29,6 +29,17 @@ Le détail courant, les refus et les limites de leurs essais sont dans
 ci-dessous conservent leurs références ; elles ne sont pas réattribuées aux
 nouveaux fichiers.
 
+Le [[file:../../targets/SERVICES-OBSERVES-20261101.org][retour services V2]] est maintenant intégré. Le point d'entrée importe
+=observed-service-identities.nix= : il renseigne les quatre modules d'adoption
+avec les UID/GID du rapport vérifié, sans activer les services. Les deux autres
+comptes restent documentés dans le rapport. Ce rapprochement ne modifie pas les
+déclarations historiques de =received-profile.json= ni les fixtures.
+
+L'intégration des identités passe maintenant les 29 contrôles du host avec
+chacune des deux entrées nixpkgs. Le [[file:../../runtime/FORGEJO-MIGRATION-16-17.org][parcours Forgejo migration/restauration]]
+passe également ses 17 groupes ; cela n'active pas la composition et ne qualifie
+pas les états réels ni le retour après réouverture des écritures.
+
 * Conservation des services
 
 | Composant | Déclaration reçue ou travail existant | Nouveau travail et limite |
@@ -111,8 +122,8 @@ tourne en TCG dans Cloud ; rien n'en déduit une capacité de virtualisation VPS
 | stateVersion 26.05, matériel/réseau du code | Établi comme déclaration | Oui pour leur adoption active | Comparaison locale de champs fermés par un composant borné qualifié, ou vérification administrative locale ; aucun dump de configuration |
 | Correspondance avec génération active | Inconnue | Oui | Manifeste fermé liant génération/NAR et révision d'adoption ; ne pas inventer un ancien commit introuvable |
 | Graphe complet des services préservés | Incomplet | Oui | Fermer les nouvelles déclarations avec sources Git autorisées et références de secrets ; ne pas récupérer en bloc les JSON/archives historiques |
-| UID/GID et artefact ViSe installé | Inconnus | Oui pour adoption ViSe | Nouvel observateur distinct : seuls UID/GID et identifiants de code/NAR ; 978 dans les tests est inventé |
-| Builds actifs Forgejo/Kanidm/PHP/Nextcloud | Inconnus | Oui pour leur remplacement | Métadonnées bornées des exécutables/unités, filtrées avant transfert ; une version de profil ne suffit pas |
+| UID/GID et artefact ViSe installé | Identité observée 981:981 ; exécutable inconnu | Oui pour adoption ViSe | Identité candidate renseignée ; identifier le seul exécutable dans le précontrôle opérateur. Les UID des tests restent inventés |
+| Builds actifs Forgejo/Kanidm/PHP/Nextcloud | Sorties Forgejo 16.0.3, Kanidm 1.11.2 et PHP 8.4.27 observées ; webroot Nextcloud inconnu | Oui pour leur remplacement | Rapport V2 intégré ; comparer les artefacts exacts, qualifier migration/retour Forgejo vers 17.0.1 et adoption Nextcloud. Ne pas refaire le relais général |
 | Paquets cibles PHP/Nextcloud et ViSe | Déclarations/source contractuelles disponibles | Oui | Construire les révisions retenues, contrôler dépendances et migrations, qualifier leurs artefacts réels |
 | Quotas/isolation CI et capacité de cohabitation | Non établis sur VPS | Oui | Qualification limitée des capacités nécessaires ; les 2 CPU/8 Go et tests Cloud ne prouvent pas une réserve |
 | Authentification et autorité Forgejo protégée | Tests locaux disponibles, adoption réelle inconnue | Oui | Règles, identités, droits et retours signés indépendants du candidat ; aucune lecture de jeton par Cloud |

@@ -111,5 +111,36 @@
     "files": 137,
     "redacted_files": 15,
     "cloud_production_access_authorized": false
+  },
+  "services_observation": {
+    "report_reference": "operations/received/20261101/services-v1.json",
+    "provenance_reference": "operations/received/provenance-services-20261101.json",
+    "report_sha256": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2",
+    "authority": "unverified_observation",
+    "generation": {
+      "nar_hash": "sha256-ety23BZuKSrZ3Gfltw4q3Fa4hZSkMviYv6GclodXkOk=",
+      "nar_size": 200488,
+      "store_path": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80"
+    },
+    "same_store_hash_as_previous_observations": true,
+    "continuous_generation_identity_proven": false,
+    "source_generation_binding": "unverified",
+    "accounts_observed": 6,
+    "services_active": 7,
+    "services_with_executable_and_nar": 6,
+    "unknown_executables": [
+      "vise"
+    ],
+    "candidate_identity_module": "operations/hosts/mrjam-vps/observed-service-identities.nix",
+    "forgejo_transition": {
+      "observed_store_version_label": "16.0.3",
+      "target_version": "17.0.1",
+      "migration_and_return_qualified": false,
+      "synthetic_migration_and_prewrite_return_qualified": true,
+      "synthetic_qualification_reference": "operations/runtime/qualification-forgejo-migration-20261101.json",
+      "production_qualification": false
+    },
+    "functional_availability_verified": false,
+    "production_execution_ready": false
   }
 }
