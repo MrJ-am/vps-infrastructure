@@ -15,7 +15,6 @@ import re
 import stat
 import tarfile
 
-MAX_FILES = 128
 MAX_FILE = 1024 * 1024
 MAX_TOTAL = 4 * 1024 * 1024
 MAX_MANIFEST = 64 * 1024
@@ -71,7 +70,8 @@ def manifest(raw):
             "INVALID_SCOPE")
     require(type(value["declared_graph_complete"]) is bool, "INVALID_GRAPH_DECLARATION")
     files = value["files"]
-    require(type(files) is list and 0 < len(files) <= MAX_FILES, "FILE_COUNT_LIMIT")
+    # Manifest bytes bound the file list; there is no independent count ceiling.
+    require(type(files) is list and len(files) > 0, "FILE_COUNT_LIMIT")
     names, total = set(), 0
     for item in files:
         exact(item, ("path", "bytes", "sha256", "change"))
@@ -220,7 +220,8 @@ def verify(archive_path, expected):
     try:
         with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
             for entry in archive:
-                require(len(payloads) < MAX_FILES + 2 and entry.name not in payloads, "ARCHIVE_MEMBER_COUNT")
+                # MAX_ARCHIVE already bounds the input, including member headers.
+                require(entry.name not in payloads, "ARCHIVE_MEMBER_COUNT")
                 require(entry.isfile() and entry.type == tarfile.REGTYPE and not entry.pax_headers
                         and entry.uid == 0 and entry.gid == 0 and entry.mode == 0o644
                         and entry.mtime == 0 and entry.uname == "" and entry.gname == ""

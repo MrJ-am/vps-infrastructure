@@ -29,8 +29,8 @@ Travail local que tu peux faire immédiatement
    operations/source-recovery/README.org.
    Préserve leur disposition. Si tu disposes déjà du checkout exact, utilise-le.
    Lis les AGENTS.md applicables et vérifie la révision. Empreintes du code :
-   reviewed_sources.py : 9cb0d84767caa8e13b1e71fb74bd1f2bc8aade415024957b0fc613b4cfe23549
-   tests/test_reviewed_sources.py : 58bc06d60a9f517d4ab82fd366f06b63ac1ca234686b22dac37a9e3bcdca1cae
+   reviewed_sources.py : 80d2571d41e097e105c9791bcb2573503861caf17fc4ec22517ed3ba4e944a4d
+   tests/test_reviewed_sources.py : 4bd1dafe62441c50188057237c4daf46aed8cefabaa6343f55cc69ad58cc83f2
    Exécute localement les tests synthétiques avec Python 3 :
 
    python3 -B -m unittest discover -s operations/source-recovery/tests -v

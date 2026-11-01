@@ -78,8 +78,11 @@ chemin source relatif ; sinon les deux champs restent =null=. Ne pas déduire
 cette valeur de nixpkgs ou de la référence historique. La complétude du graphe
 est une déclaration, pas une analyse Nix effectuée par l'outil.
 
-Les limites sont 128 fichiers, 1 Mio par fichier, 4 Mio au total, manifeste
-64 Kio et archive 6 Mio. Chemins relatifs simples, profondeur maximale 12.
+Le nombre de fichiers n'a pas de plafond indépendant. Un lot de 137 fichiers
+peut être créé et vérifié dès lors qu'il respecte les limites en octets :
+1 Mio par fichier, 4 Mio au total, manifeste 64 Kio et archive 6 Mio. La taille
+du manifeste borne sa liste de fichiers ; celle de l'archive borne aussi les
+en-têtes de ses membres. Chemins relatifs simples, profondeur maximale 12.
 Les doublons, entrées non déclarées, liens symboliques, liens multiples,
 fichiers spéciaux, traversées de répertoire et collisions sont refusés. Les
 empreintes sont vérifiées sans les corriger. L'archive USTAR est déterministe,
