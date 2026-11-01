@@ -1,0 +1,50 @@
+Reprends le relais MRJ.am sur Spectre avec la nouvelle observation services V2.
+
+Le défaut mémoire que tu as signalé est corrigé dans une remise distincte.
+L'ancienne remise services V1 reste retirée, avec ses empreintes inchangées.
+Les sources VPS sont déjà acquises. Ne recommence pas leur recherche.
+L'objectif de mise en service est autorisé ; ne redemande pas un accord global.
+Ce relais reste une observation bornée exécutée par l'administrateur humain,
+sans shell/root délégué à un agent ni changement de l'ACL SSH d'inventaire.
+
+Remise publique figée : MrJ-am/vps-infrastructure@b25fbe4a6fb5978ba8d94365605749bbe37beb4b
+Archive : https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b25fbe4a6fb5978ba8d94365605749bbe37beb4b/mrjam-observation-services-v2-20261101.tar
+Taille : 31856640 octets
+SHA-256 : 24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee
+Extracteur local : https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b25fbe4a6fb5978ba8d94365605749bbe37beb4b/extract.py
+SHA-256 extracteur : b3f474d7d056e23b6e6652bbd67fbd3dc5422c83b1419f4b982facfb0c32ad9b
+
+Depuis un NOUVEAU dossier sur Spectre, télécharger ces deux fichiers publics :
+
+curl --fail --location --output mrjam-observation-services-v2-20261101.tar 'https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b25fbe4a6fb5978ba8d94365605749bbe37beb4b/mrjam-observation-services-v2-20261101.tar'
+curl --fail --location --output extract.py 'https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b25fbe4a6fb5978ba8d94365605749bbe37beb4b/extract.py'
+printf '%s\n' '24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee  mrjam-observation-services-v2-20261101.tar' 'b3f474d7d056e23b6e6652bbd67fbd3dc5422c83b1419f4b982facfb0c32ad9b  extract.py' | sha256sum --check --strict -
+
+Lire l'extracteur avant de l'exécuter. Il vérifie l'archive, les 53 membres
+réguliers et toutes les entrées SHA256SUMS AVANT extraction :
+
+python3 -I -S extract.py mrjam-observation-services-v2-20261101.tar remise-services-v2
+
+Lis ensuite remise-services-v2/SPECTRE-RELAIS.txt, README.org,
+EXECUTION-HUMAINE.org, REMISE.json, les sources et preuves. Aucun import sur
+Spectre n'est requis. Les 12 groupes VM, 21 tests du contrat, 5 tests de remise
+et l'import vierge vérifié des 119 chemins sont des preuves Cloud à examiner.
+
+Revois l'interdiction effective process_vm_*/ptrace, les fichiers proc et
+leurs alias, le collecteur sans capacités sous Landlock et le petit auxiliaire
+C avec seccomp à refus par défaut. Les témoins sont synthétiques ; 24 opérations
+sont refusées, les liens exe restent accessibles, le protocole privé est limité
+à 14 requêtes et les protections persistent après exec. Landlock ABI >=3 est
+obligatoire ; un refus n'autorise aucun repli ou correctif improvisé sur le VPS.
+
+Si la revue révèle un écart, retourne son motif et le fichier concerné.
+Sinon prépare les commandes EXACTES d'EXECUTION-HUMAINE.org pour l'administrateur
+humain, par son canal existant. Ne modifie aucune empreinte, clé, compte,
+ACL SSH, politique Nix, unité applicative ou génération. Ne relance ni
+installer.py, connect.sh, sonde libre, SQL ou recherche de sources déjà reçues.
+
+Après le geste humain, revalide services-v1.json avec le filtre de la remise,
+puis retourne ce seul fichier à Cloud. « v1 » désigne le schéma JSON conservé ;
+le programme exécuté est bien services V2. Un échec retourne seulement l'objet
+fermé étape/code/exit_code de la procédure, jamais un journal ou une sortie brute.
+Ne transmets pas chemins-importes.txt ni fermeture-installee.json.

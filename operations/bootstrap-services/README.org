@@ -9,8 +9,8 @@ et =process_vm_writev= via =@ipc=. La garantie d'interdiction des accès mémoir
 annoncée ci-dessous n'était donc pas établie. Cette remise n'a pas été importée
 ni exécutée sur le VPS, selon le retour de Spectre. Ne pas l'utiliser.
 Ses archives, empreintes et preuves historiques restent inchangées. La
-correction distincte est préparée dans =../bootstrap-services-v2/= ; elle doit
-être qualifiée et livrée avec ses propres empreintes avant tout nouveau relais.
+correction distincte est qualifiée dans =../bootstrap-services-v2/= ; consulter
+son =ACCES-GITHUB.txt= pour le nouveau relais et ses propres empreintes.
 
 * Description historique de V1 — ne vaut pas qualification du confinement mémoire
 

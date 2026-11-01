@@ -138,7 +138,7 @@ peut être retenu. Aucun reçu local ne remplace une revue indépendante protég
 
 | Inconnue ou contrôle manquant | Preuve minimale et chemin autorisé |
 |-----------------------------+-------------------------------------|
-| Identités et builds actifs | Retour =services-v1.json= du paquet =../bootstrap-services/= publié, sans commandes libres ni données. Autorité toujours observation non authentifiée. |
+| Identités et builds actifs | Retour =services-v1.json= du paquet corrigé =../bootstrap-services-v2/= (V1 retirée après revue mémoire), sans commandes libres ni données. Autorité toujours observation non authentifiée. |
 | ViSe installé hors store | Identité du code à établir par un contrôle fixe du seul exécutable ViSe, intégré au futur précontrôle opérateur. Le rapport V1 ne lit pas ce binaire et retournera un build inconnu. |
 | Schémas et droits existants | Contrôles fixes exécutés localement par la future capacité bornée, retour de codes seulement ; aucun SQL arbitraire transmis à Cloud. |
 | Sauvegardes et restaurations réelles | Reçu fermé du mécanisme autorisé, capture cohérente avec écritures arrêtées, destination et clés conservées côté opérateur. Aucune sauvegarde ne quitte la production vers les agents. |

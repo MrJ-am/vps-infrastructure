@@ -1,3 +1,8 @@
+AVIS : REMISE SERVICES V1 RETIRÉE. Ne pas exécuter les commandes historiques
+ci-dessous : confinement mémoire insuffisant signalé par Spectre. Utiliser
+le relais distinct ../bootstrap-services-v2/ACCES-GITHUB.txt. Les archives et
+empreintes historiques restent inchangées.
+
 Reprends le relais MRJ.am sur Spectre pour cette observation précise.
 
 La recherche des sources VPS est terminée : Cloud a reçu et vérifié les sources

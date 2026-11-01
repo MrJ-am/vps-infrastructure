@@ -1,7 +1,7 @@
 AVIS DU 1er NOVEMBRE : NE PAS EXÉCUTER CETTE REMISE V1.
 La revue Spectre a identifié un confinement mémoire insuffisant. Cette remise
 n'a pas été exécutée sur le VPS. La correction est préparée séparément sous
-operations/bootstrap-services-v2 ; attendre son relais qualifié et ses nouvelles
+operations/bootstrap-services-v2/ACCES-GITHUB.txt avec ses propres preuves et
 empreintes. Les références et empreintes historiques ci-dessous sont conservées.
 
 Relais historique retiré : observation services V1.
