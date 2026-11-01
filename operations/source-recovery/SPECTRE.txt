@@ -4,11 +4,12 @@ Lis ce fichier et operations/source-recovery/README.org depuis la même révisio
 GitHub exacte. L'outil reviewed_sources.py et ses tests se trouvent dans ce même
 dossier. N'utilise pas une branche flottante à la place de cette révision.
 
-Contexte acquis, à ne pas refaire
+Contexte des deux retours initiaux, à ne pas refaire
 
 Les retours du 1er novembre indiquent que /etc/nixos/configuration.nix existe,
 se résout sur lui-même et n'appartient pas à un dépôt Git à cet emplacement.
-Son contenu n'a pas été lu. Aucun commit ni stateVersion n'a été identifié.
+Ces retours ne rapportent ni lecture du contenu, ni commit, ni stateVersion.
+Une remise ultérieure peut compléter ces observations : utilise ses résultats.
 Ce fichier est un candidat à examiner, pas une entrée de build installée prouvée.
 Le dépôt faisant autorité pour l'avenir est MrJ-am/vps-infrastructure.
 
@@ -18,8 +19,11 @@ de retrouver de mémoire la dernière mise à jour du VPS.
 
 L'utilisateur avait autorisé Codex sur Spectre en root pour exactement les
 quatre commandes déjà exécutées. Ce relais n'étend pas cette autorisation à
-une lecture de fichiers bruts ou à d'autres commandes de production. Cloud
-ne reçoit aucun accès, identifiant ou clé privée.
+une lecture de fichiers bruts ou à d'autres commandes de production. Une
+instruction ultérieure explicite de l'utilisateur peut toutefois déléguer à
+l'agent local la revue des seuls fichiers de code identifiés. Respecte cette
+instruction et son périmètre sans redemander une autorisation déjà donnée.
+Cloud ne reçoit aucun accès, identifiant ou clé privée.
 
 Travail local que tu peux faire immédiatement
 
@@ -29,8 +33,8 @@ Travail local que tu peux faire immédiatement
    operations/source-recovery/README.org.
    Préserve leur disposition. Si tu disposes déjà du checkout exact, utilise-le.
    Lis les AGENTS.md applicables et vérifie la révision. Empreintes du code :
-   reviewed_sources.py : 80d2571d41e097e105c9791bcb2573503861caf17fc4ec22517ed3ba4e944a4d
-   tests/test_reviewed_sources.py : 4bd1dafe62441c50188057237c4daf46aed8cefabaa6343f55cc69ad58cc83f2
+   reviewed_sources.py : 9dfeddbcd81b39e2f77573c0f48eef20d2d8f6fbde20c67ad97532eee466c420
+   tests/test_reviewed_sources.py : 00f76b0667886d9b50e73f554dee7c8ad236c5be9b44d4edafaf249a9c82414f
    Exécute localement les tests synthétiques avec Python 3 :
 
    python3 -B -m unittest discover -s operations/source-recovery/tests -v
@@ -38,12 +42,14 @@ Travail local que tu peux faire immédiatement
    Ce code ne fait ni SSH ni évaluation Nix. N'installe rien sur le VPS. Aucun
    Nix local, import NAR ou changement de trusted-users n'est nécessaire.
 
-2. Explique à l'administrateur l'unique étape humaine préalable ci-dessous.
-   Cette revue protège la frontière explicite fixée par l'utilisateur : aucun
-   agent ne lit les secrets, données, sauvegardes ou configurations brutes
-   susceptibles d'en contenir. Le manifeste ne remplace pas cette revue.
+2. Effectue la revue préalable selon l'autorisation réellement reçue. Par défaut,
+   l'administrateur suit l'étape ci-dessous. Si l'utilisateur a explicitement
+   délégué cette revue à l'agent local, celui-ci reste limité au code identifié,
+   prépare les copies expurgées et déclare une revue par agent, jamais humaine.
+   Aucun fichier de secret, donnée, journal ou sauvegarde n'est lu. Le manifeste
+   et les détecteurs automatiques ne remplacent pas la revue du code.
 
-Étape réservée à l'administrateur, hors lecture des agents
+Revue par défaut : administrateur, hors lecture des agents
 
 - Dans sa session d'administration personnelle du VPS, ouvrir en lecture seule
   /etc/nixos/configuration.nix. Par exemple, dans son terminal personnel :
@@ -72,11 +78,15 @@ Travail local que tu peux faire immédiatement
   fichiers précis peuvent être lus par les agents et partagés dans le dépôt.
   Ne jamais donner à l'agent le dossier privé d'avant revue.
 
-Après réception explicite des fichiers approuvés
+Après remise humaine ou préparation sous délégation explicite
 
 3. Lis uniquement ces copies. Produis review.json selon README.org, avec la
    liste exacte des fichiers, tailles et SHA-256 calculés sur leurs octets.
-   Déclare change=unchanged/redacted/unknown selon les indications humaines.
+   Déclare change=unchanged/redacted/unknown selon la revue réellement effectuée.
+   Réserve authority=human-reviewed-code-only-declaration à la revue humaine.
+   Pour la revue déléguée à l'agent, utilise exclusivement
+   authority=user-authorized-agent-reviewed-code-only-declaration et rappelle
+   l'autorisation reçue dans le relais joint, sans contenu privé.
    Conserve les inconnues ; generation_binding reste toujours unverified.
    N'évalue pas le Nix, ne suis pas un import vers une source non approuvée,
    ne recherche pas de secret manquant. Une déclaration de revue ne prouve pas
@@ -97,7 +107,7 @@ Après réception explicite des fichiers approuvés
    encore absents. Les références sont suffisantes pour les dépendances de
    données ou de secrets ; ne demande jamais leur contenu.
 
-Si l'humain n'a pas encore remis de copies partageables, dis concrètement que
+Sans copies partageables ni délégation explicite de revue, dis concrètement que
 cette étape reste à faire. Ne renvoie pas un nouveau questionnaire sur l'origine
 Git et ne fabrique pas une archive de fixtures présentée comme la configuration
 du VPS. Ne masque pas ce blocage par un nouveau rapport contenant seulement des
