@@ -85,6 +85,11 @@ extraction. Ils ne vérifient pas la confidentialité du code remis.
 
 * Reproduction locale, jamais sur le VPS
 
+La matrice courante exclut ViSe et la composition PostgreSQL Rust/ViSe par
+défaut : ils ne bloquent jamais le premier déploiement. Les autres composants
+et leurs assertions sont conservés. Les reçus historiques ci-dessus gardent
+leur périmètre d'origine et ne sont pas réécrits.
+
 Pour la matrice élargie, préférer l'exécution par composants, hors des tests VM :
 
 #+begin_src sh
@@ -92,10 +97,40 @@ python3 operations/compatibility/check_components.py \
   --nixpkgs "$NIXPKGS_SOURCE" --destination "$NEW_EVALUATION_DIRECTORY"
 #+end_src
 
-Elle énumère tous les composants dans =evaluation.nix= puis les évalue dans
-des processus distincts, sans omettre d'assertion. Le reçu conserve les résultats
+Elle énumère les composants du périmètre sélectionné dans =evaluation.nix= puis
+les évalue dans des processus distincts, sans omettre d'assertion dans ce
+périmètre. Le reçu indique =optional_vise_included= et les composants optionnels
+exclus, et conserve les résultats
 et échecs séparément. L'essai monolithique simultané avec une VM a dépassé la
 mémoire disponible ; cela n'est pas un résultat de compatibilité.
+
+Pour la réintégration ultérieure de ViSe uniquement, ajouter =--include-vise=
+à cette commande, ou =--arg includeVise true= à l'évaluation Nix. Les trois
+contrôles ViSe du flake sont désormais sous
+=lib.optionalChecks.x86_64-linux.vise= ; ils ne font plus partie de =checks= :
+
+#+begin_src sh
+nix build --no-link .#lib.optionalChecks.x86_64-linux.vise.vise-module
+nix build --no-link .#lib.optionalChecks.x86_64-linux.vise.postgresql-composition-module
+nix build --no-link .#lib.optionalChecks.x86_64-linux.vise.vise-postgresql-runtime
+#+end_src
+
+Les résultats Nix seuls sont accessibles par =lib.optionalQualification.vise=
+et =lib.optionalQualification.postgresqlComposition=. Leurs contrats restent
+inchangés ; leur échec reporte ViSe, jamais le déploiement du socle.
+
+Le contre-test =../tests/check_vise_optional.py= évalue le host original puis
+une copie temporaire dont le module, le paquet et les tests ViSe échouent
+volontairement, dont l'adaptateur reçu est absent, et dont l'identité ViSe est
+inconnue. Le host et sa dérivation de contrôle doivent encore s'évaluer ; les
+trois contrôles optionnels doivent échouer séparément avec le diagnostic prévu.
+Le profil optionnel intact conserve 981:981 et reste désactivé. Les rapports
+originaux ne sont jamais modifiés par cet essai :
+
+#+begin_src sh
+python3 operations/tests/check_vise_optional.py \
+  --nixpkgs "$NIXPKGS_SOURCE" --destination "$NEW_OPTIONAL_VISE_TEST_DIRECTORY"
+#+end_src
 
 Avec Nix et les entrées autorisées disponibles :
 

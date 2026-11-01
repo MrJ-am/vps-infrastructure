@@ -1,4 +1,4 @@
-{ nixpkgs ? import ./nixpkgs-vps-observed.nix }:
+{ nixpkgs ? import ./nixpkgs-vps-observed.nix, includeVise ? false }:
 let
   lock = builtins.fromJSON (builtins.readFile ./nixpkgs-vps-observed.lock.json);
   lib = import (nixpkgs + "/lib");
@@ -16,13 +16,16 @@ let
     forgejoHost = inspect (import ../forgejo/tests/host-module-evaluation.nix { inherit nixpkgs; });
     preservedServices = inspect (import ../tests/preserved-services-evaluation.nix { inherit nixpkgs; });
     vpsMachine = inspect (import ../tests/vps-machine-evaluation.nix { inherit nixpkgs; });
-    vise = inspect (import ../tests/vise-evaluation.nix { inherit nixpkgs; });
     nextcloudGuards = inspect (import ../tests/nextcloud-guards-evaluation.nix { inherit nixpkgs; });
     postgresqlAccess = inspect (import ../tests/postgresql-access-evaluation.nix { inherit nixpkgs; });
+  } // lib.optionalAttrs includeVise {
+    vise = inspect (import ../tests/vise-evaluation.nix { inherit nixpkgs; });
     postgresqlComposition = inspect (import ../tests/postgresql-composition-evaluation.nix { inherit nixpkgs; });
   };
 in {
   inherit components;
+  optional_vise_included = includeVise;
+  excluded_optional_components = if includeVise then [ ] else [ "vise" "postgresqlComposition" ];
   scope = "Module evaluation against the observed nixpkgs input; not a complete host";
   overall_compatible = lib.all (value: value.accepted) (builtins.attrValues components);
   failed_components = lib.attrNames (lib.filterAttrs (_: value: !value.accepted) components);
