@@ -1,0 +1,122 @@
+{
+  "candidate_commit": "90e75b94d1caa8648d6a9ba45af33e09937616c3",
+  "candidate_derivation": "/nix/store/wd4a05rhn1j08729qfsas9djcpl8p0li-mrjam-observe-services-v2.drv",
+  "candidate_derivation_recomputed_matches": true,
+  "candidate_nar_hash": "sha256-qd3/ehZPxSZrkQ6e/l7yKaOwAf2uaOL3s+xY3Ay525I=",
+  "candidate_package": "/nix/store/qz86qisjf3za2r93jcxhplpy6c3sa1gm-mrjam-observe-services-v2",
+  "candidate_repository": "MrJ-am/vps-infrastructure",
+  "command": [
+    "nix",
+    "build",
+    "-L",
+    "--offline",
+    "--no-link",
+    "--json",
+    "--file",
+    "operations/bootstrap-services-v2/systemd-test.nix",
+    "--arg",
+    "nixpkgs",
+    "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+  ],
+  "contract_and_filter_unchanged_from_v1": true,
+  "groups_passed": [
+    "v1-defect-reproduced-cross-uid-syscalls-and-same-uid-proc-sentinels",
+    "seccomp-causal-control-separates-syscalls-from-proc-file-access",
+    "kernel-enforced-memory-proc-alias-file-network-and-write-denials-with-exe-readlink",
+    "actual-root-capability-cgroup-limits-and-lifetime-match-production-properties",
+    "reader-zero-capabilities-and-landlock-persist-after-exec",
+    "landlock-unavailable-refused-without-report-or-degraded-fallback",
+    "broker-default-deny-24-syscall-probes-causal-controls-and-exe-readlink",
+    "broker-private-protocol-malformed-requests-refused-and-14-request-limit",
+    "shipped-landlocked-collector-cross-uid-executable-identities-nar-and-filtering",
+    "arguments-unprivileged-and-mutable-entrypoints-refused-without-report",
+    "existing-unit-collision-refused",
+    "stopped-service-keeps-build-unknown"
+  ],
+  "limitations": [
+    "Dedicated synthetic memory victim named forgejo, not Forgejo software",
+    "Landlock ABI >=3 required; VPS support remains unobserved and absence must fail closed",
+    "NAR metadata is not an authenticated attestation of running code",
+    "Human bootstrap only; existing inventory SSH interface unchanged",
+    "Review material prepared by the same Cloud agent; no protected independent approval claimed",
+    "Exact VPS kernel/systemd compatibility remains to be observed; no degraded confinement fallback",
+    "UID 0 retains access to metadata sockets through fixed reviewed invocations, not a caller-selectable command API"
+  ],
+  "log_sha256": {
+    "services-v2-native-20261101-04.log": "49da5706572052ef2f96e1993692244b907d6f0206ea3025e2fa1905a4156328",
+    "services-v2-pinned-python-20261101-04.log": "9b95f446d8d317de3b1074a764d67fc3f8fb76144c77a746568fc2afb3831794",
+    "services-v2-systemd-20261101-01.log": "918f0cec3345bc5a0411e52fe0c36eb7f0642a32256e96b7c2f414303a888ad1",
+    "services-v2-systemd-20261101-02.log": "48da2ef4614a51d51d77c0eede4d0fc2904a8e82e12bd3d3c4e52e792d05caa4",
+    "services-v2-systemd-20261101-03.log": "4eb5afec40b84abaf2f04cf12a763dd2fd45d511d5a811fbbf87e8a1e0480325",
+    "services-v2-systemd-20261101-04.log": "c3327c7db7daa485eb7dabc10a9f2e0eda02a5a1cf1103edd3c978bcadf1ac48",
+    "services-v2-systemd-20261101-05.log": "ed8f8da790eec6d1b664f499fc3a5cc0691c59ebcdb95a8decb68e0d855c35f0"
+  },
+  "native_test_interpreters": [
+    "Cloud Python 3.12.14",
+    "Pinned Python 3.13.17"
+  ],
+  "native_tests_passed": 21,
+  "overall_passed": true,
+  "previous_attempts": [
+    {
+      "attempt": 1,
+      "cause": "The initial positive control tried proc files of a foreign UID. DAC denied them before confinement; a separate root synthetic victim was required to prove causality.",
+      "exit_code": 1,
+      "wall_seconds": 95.253
+    },
+    {
+      "attempt": 2,
+      "cause": "Landlock also denied cross-domain exe readlink. The design was changed to a finite exe-only broker with default-deny seccomp and a capability-free Landlocked reader.",
+      "exit_code": 1,
+      "wall_seconds": 113.879
+    },
+    {
+      "attempt": 3,
+      "cause": "Nine groups passed for the preliminary split design; additional broker syscall/protocol and post-exec tests were subsequently added.",
+      "exit_code": 0,
+      "wall_seconds": 158.469
+    },
+    {
+      "attempt": 4,
+      "cause": "The broker negative canary under V1 properties was killed by outer systemd SIGSYS for an already excluded syscall. Its separate causal control now retains V2 EPERM and removes only the explicit syscall deny list; the exact V2 case remains unchanged.",
+      "exit_code": 1,
+      "wall_seconds": 144.533
+    }
+  ],
+  "production_access": false,
+  "production_activation": false,
+  "protected_independent_approval": false,
+  "recorded_on": "2026-11-01",
+  "schema_version": 1,
+  "scope": "Synthetic local NixOS TCG, fixed service/code observation only",
+  "source_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/bootstrap-observation/bounded.py": "cda044ad47a83a02a12a3104ac61ae75ee8433b1c198b6d0855f464b3575b5f0",
+    "operations/bootstrap-services-v2/broker-probe.c": "de324f384410fe5aabf12d2a317db61706c11e867a73cb68de3b0e8f30023214",
+    "operations/bootstrap-services-v2/broker.c": "d072609daf329114e21caca304cb4640c58ac56247c5fb64e1ff837e5ae0225f",
+    "operations/bootstrap-services-v2/broker.h": "1ccf8f6db3541e0c0eb6c6295ed8d0f7aab908af8c0e7a24f3ce09df1f533cc9",
+    "operations/bootstrap-services-v2/collect.py": "d371344f0032a69a391e08837d236ea8f174ce5f88d9260b8e254c8b9ed7b448",
+    "operations/bootstrap-services-v2/confinement.c": "c9e1d1a87f2a2ad30ad05903b6810468f97466b0767caf79ff9eb0822f47bf2e",
+    "operations/bootstrap-services-v2/confinement.h": "3af977224ebde595e9bba5af6f13f97cb461090c6d74c9a1ede7e013eef37d24",
+    "operations/bootstrap-services-v2/contract.py": "9eaeb8adb0774e6b6dfb03591b5332a0833bcc71f433e382e50d169ec6fd86fc",
+    "operations/bootstrap-services-v2/launch.c": "14176bf5bf70d810f75c970f3f27b78397df9af081f8f63404e6da6b4699e148",
+    "operations/bootstrap-services-v2/observe.py": "7eaa3ac3253efdf95130b5046d72811fc2ee5e8c19c3d1e213fa4ffd92ae33cf",
+    "operations/bootstrap-services-v2/package.nix": "e94ce0a0b51c3d8b0c5e7b783d7de43c2f873b3a531e856d17a74eb207e0b809",
+    "operations/bootstrap-services-v2/probe.c": "aa361002ab866538fb2376a8a32832345a7b9079ea8bf807ca56f6650e762e91",
+    "operations/bootstrap-services-v2/systemd-test.nix": "858243a1cfaaafddb6d7806c3775a74278357487c3e14b66c4be38cf5b3114b1",
+    "operations/bootstrap-services-v2/test_services.py": "40daad96e0ca4e8a6d199a7b03d3a42962805483876a394c26eed54f460e6c74",
+    "operations/bootstrap-services-v2/validate_report.py": "ff84a9bb736a7770bad11d94b588eafcdd8c525730a1ac443a22f25aa3f3c54d",
+    "operations/bootstrap-services-v2/victim.c": "41d696b3649a471739c1faefed7c84b3b5dcda7d08d7f6da54638dc800e0da18",
+    "operations/bootstrap-services/collect.py": "1ab07f4cce0d579a836458c51c524b3803c199e89dbdffe05b3750dc227b6a88",
+    "operations/bootstrap-services/contract.py": "9eaeb8adb0774e6b6dfb03591b5332a0833bcc71f433e382e50d169ec6fd86fc",
+    "operations/bootstrap-services/observe.py": "61f5e1892fb61e4f43c7fa12ba62b2f77ae502f96e81c4a0a69d5a166ed171c0",
+    "operations/bootstrap-services/package.nix": "cf041f208b8aa8fff6f11ea6cd8231d7aab5791990324431883e9169f096bf8d",
+    "operations/bootstrap-services/validate_report.py": "ff84a9bb736a7770bad11d94b588eafcdd8c525730a1ac443a22f25aa3f3c54d"
+  },
+  "spectre_return_sha256": "a7885f4c65e67e9c7062d54dbc56f0d3b0ff1fedb4dde6720fd7e9f73a05aac3",
+  "test_executables_excluded_from_production_closure": true,
+  "vm_derivation": "/nix/store/cm3whxmvgf4ri7b1gk5a4n10b87my6q3-vm-test-run-mrjam-services-observation-v2-synthetic.drv",
+  "vm_nar_hash": "sha256-4FEspGoyDxMVIfVe5Zb5RAVyVtY3nCdFB06bZIyqJoM=",
+  "vm_output": "/nix/store/qb40n7fd8n72khlbsp8hf22ivd8hx7v1-vm-test-run-mrjam-services-observation-v2-synthetic",
+  "wall_seconds": 183.058
+}
