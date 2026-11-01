@@ -1,0 +1,74 @@
+#+title: Paquet préparatoire Forgejo indépendant de la base hôte
+#+date: 2026-11-01
+#+language: fr
+
+* Correction
+
+Sur la base nixpkgs déclarée par le VPS, la préparation précédente utilisait
+=pkgs.callPackage package.nix= et rencontrait Forgejo 16.0.3 au lieu du candidat
+17.0.1. Ce refus de substitution était correct. Imposer le pin 6f06d204 à tout
+le système pour construire des ressources préparatoires aurait mélangé deux
+décisions distinctes : le candidat applicatif et la base du host.
+
+=locked-preparation.nix= construit désormais le paquet de préparation depuis
+le pin exact de =flake.lock=, rapproché de =versions.lock.json= et de son NAR
+attendu. L'archive de code publique a la même révision et le même NAR que
+l'entrée du flake. Le fetch à sortie fixe permet la réutilisation hors réseau
+du store, sans dépendre d'un cache Git personnel éphémère. Aucun pin, version
+ou SHA attendu n'a été modifié.
+
+=mrjam-forgejo.nix= utilise cette expression pour son option de préparation.
+Il ne remplace pas =nixpkgs.pkgs=, ne pose aucun overlay dans l'hôte et ne
+modifie pas la valeur de compatibilité =system.stateVersion=. Les overlays
+de l'hôte ne peuvent substituer Forgejo, runner ou Pandoc au paquet préparé.
+Seule la plateforme x86_64-linux qualifiée est acceptée.
+
+Ce paquet contient l'INI de revue, les ressources Org/MathJax, les références
+publiques et le renderer verrouillé. Son identité ne prouve pas celle d'un
+service Forgejo en cours. Les binaires Forgejo/runner de la chaîne synthétique
+ont leurs qualifications distinctes ; voir =INTEGRATION-COMPLETE.org=.
+
+* Contrats conservés
+
+Les assertions de =package.nix= refusent toujours une autre version de
+Forgejo, runner ou Pandoc et toute modification des sources statiques épinglées.
+La substitution directe des paquets de la base observée reste refusée.
+Les options d'activation Forgejo et runner du module restent bloquées par le
+code, sans option d'approbation contrôlée par le candidat.
+
+Le test compare le paquet préparé avec l'appel original utilisant le pin
+qualifié : dérivation et chemin de sortie doivent être identiques. Il compare
+aussi l'hôte à une configuration NixOS identique sans notre module. Cette
+comparaison porte sur le vrai paquet par défaut du module NixOS amont,
+=forgejo-lts=, plutôt que de supposer qu'il s'agit de =pkgs.forgejo=.
+Ces noms de paquets amont ne sont pas des observations du service installé.
+
+Les tests ajoutent des overlays host qui lèvent une erreur s'ils sont utilisés,
+essaient une autre architecture et substituent chaque version attendue à tour
+de rôle. La préparation doit ignorer les overlays host et refuser les trois
+substitutions de version. Les quinze contrôles du module initial restent
+inchangés, dont les deux refus d'activation et l'absence de service installé.
+
+* Reproduction et limites
+
+Les commandes ci-dessous s'exécutent dans Cloud ou un atelier local, jamais
+sur le VPS. Remplacer le chemin d'entrée par celui de la source déjà vérifiée :
+
+#+begin_src sh
+nix-instantiate --eval --strict --json operations/forgejo/tests/locked-preparation-evaluation.nix \
+  --arg nixpkgs /chemin/source/nixpkgs-verrouillee
+nix-instantiate --eval --strict --json operations/forgejo/tests/module-evaluation.nix \
+  --arg nixpkgs /chemin/source/nixpkgs-verrouillee
+nix build --offline --no-link --json --file operations/forgejo/locked-preparation.nix
+#+end_src
+
+La source et les dépendances exactes doivent être présentes pour le mode hors
+réseau. =--rebuild= permet ensuite de reconstruire le paquet supérieur et de
+comparer ses octets, sans reconstruire toutes les dépendances.
+
+Le reçu de qualification lie les sources, les deux matrices d'évaluation et
+la sortie construite/vérifiée. Il distingue le refus initial de la nouvelle
+composition. Un succès d'évaluation ne qualifie pas une génération VPS entière,
+son installation, le SSO, les quotas, les migrations ou la restauration. Le
+code complet du host et son =stateVersion= restent à récupérer par le relais
+=../source-recovery/SPECTRE.txt=. Aucune activation n'est réalisée par ce lot.

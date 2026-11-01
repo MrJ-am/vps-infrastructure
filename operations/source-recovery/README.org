@@ -1,0 +1,123 @@
+#+title: Remise locale du code de configuration relu
+#+date: 2026-11-01
+#+language: fr
+
+* Pièce manquante
+
+Les deux retours Spectre reçus le 1er novembre sont conservés dans
+=../received/20261101/=. Ils rapportent l'existence de
+=/etc/nixos/configuration.nix=, résolu sur lui-même, sans dépôt Git à cet
+emplacement. Ils ne rapportent aucune lecture de son contenu ou de ses imports.
+Ils ne prouvent ni son utilisation pour le système en cours, ni une origine
+non versionnée ailleurs. =stateVersion= demeure inconnu.
+
+La suite utile consiste à récupérer les copies partageables de ce code et de
+ses dépendances de code. Répéter Git, V1, V2 ou la sonde de provenance ne résout
+pas cette lacune. [[file:SPECTRE.txt][Le relais Spectre]] décrit l'étape humaine puis le traitement local.
+
+* Deux responsabilités différentes
+
+La revue de confidentialité précède tout accès des agents aux copies. Cette
+frontière vient de la consigne utilisateur interdisant aux agents la lecture
+de secrets, données, journaux et sauvegardes, même chiffrés. L'autorisation
+rapportée des quatre commandes root de métadonnées est épuisée ; elle ne
+permet pas à un agent de lire maintenant le contenu brut.
+
+L'administrateur examine les sources dans son canal privé. Il remet ensuite
+explicitement les seuls fichiers qu'il a approuvés pour partage. Il conserve
+les références de secrets, leurs chemins et leurs droits, mais aucun contenu
+secret ni fichier chiffré de secrets. Une copie expurgée est déclarée
+=redacted= ; on ne prétend pas que ses octets sont ceux du fichier installé.
+Le système courant n'est ni modifié ni évalué pendant cette opération.
+
+Le manifeste est une déclaration de cette remise, pas une ACL ni une signature.
+Un agent ne peut pas s'accorder lui-même une autorisation en le remplissant.
+Une extension de fichier, un scanner de chaînes ou un JSON bien formé ne
+prouve pas l'absence de secrets. Aucun détecteur de secrets n'est présenté ici
+comme remplaçant la revue. Si la revue humaine n'est pas disponible, ce point
+reste bloqué ; il faut le dire, pas lancer une lecture plus large.
+
+* Outil local, sans nouvelle capacité de production
+
+=reviewed_sources.py= utilise Python 3 et sa bibliothèque standard, sous Linux
+POSIX. Il n'a ni transport SSH, ni accès réseau, ni sous-processus, ni évaluation
+Nix, ni résolution d'import. Il n'est installé ni dans l'accès d'inventaire,
+ni sur le VPS. Les chemins d'entrée sont des fichiers locaux déjà partageables ;
+cet outil n'est pas une interface d'exécution distante ou une isolation de CI.
+
+Préparer un dossier neuf ne contenant que les fichiers approuvés et
+=review.json=. Ce dernier contient exactement :
+
+#+begin_src json
+{
+  "schema_version": 1,
+  "operation": "mrjam-reviewed-configuration-sources-v1",
+  "authority": "human-reviewed-code-only-declaration",
+  "target": "mrjam-vps",
+  "entrypoint": "configuration.nix",
+  "declared_state_version": {"value": null, "source": null},
+  "declared_graph_complete": false,
+  "generation_binding": "unverified",
+  "files": [
+    {
+      "path": "configuration.nix",
+      "bytes": 0,
+      "sha256": "REMPLACER_PAR_LE_SHA256_DES_OCTETS_REELLEMENT_REMIS",
+      "change": "unknown"
+    }
+  ]
+}
+#+end_src
+
+Cet exemple est intentionnellement invalide jusqu'au renseignement des octets,
+tailles et empreintes réels. Spectre peut produire le manifeste après réception
+des copies approuvées. =change= vaut =unchanged=, =redacted= ou =unknown= selon
+la déclaration humaine, jamais par supposition. Chaque fichier est listé.
+La valeur de =declared_state_version= est celle lue dans le code remis et son
+chemin source relatif ; sinon les deux champs restent =null=. Ne pas déduire
+cette valeur de nixpkgs ou de la référence historique. La complétude du graphe
+est une déclaration, pas une analyse Nix effectuée par l'outil.
+
+Les limites sont 128 fichiers, 1 Mio par fichier, 4 Mio au total, manifeste
+64 Kio et archive 6 Mio. Chemins relatifs simples, profondeur maximale 12.
+Les doublons, entrées non déclarées, liens symboliques, liens multiples,
+fichiers spéciaux, traversées de répertoire et collisions sont refusés. Les
+empreintes sont vérifiées sans les corriger. L'archive USTAR est déterministe,
+sans propriétaire réel, timestamp ni mode exécutable. Ses modes normalisés
+ne prétendent pas représenter les permissions du VPS. La sortie locale est
+créée en 0600, sans écrasement. Ne placer aucune sortie dans le dossier d'entrée.
+
+#+begin_src sh
+python3 -B -m unittest discover -s operations/source-recovery/tests -v
+#+end_src
+
+Avec le dossier approuvé nommé =code-vps-relu=, et la sortie située à côté :
+
+#+begin_src sh
+python3 -I -S operations/source-recovery/reviewed_sources.py pack ./code-vps-relu ./sources-vps-revues.tar
+python3 -I -S operations/source-recovery/reviewed_sources.py verify ./sources-vps-revues.tar SHA256_RETOURNE_PAR_PACK
+#+end_src
+
+L'archive contient =review.json=, =source/<chemin>= et =SHA256SUMS=. =verify=
+contrôle d'abord le SHA-256 extérieur, puis tous les membres et empreintes,
+sans extraction. Un TAR modifié, additionnel, avec liens ou membres répétés
+est refusé. Un échec produit seulement un code fermé, sans contenu ni chemin
+provenant d'une exception. Aucun JSON de succès ne déclare le VPS prêt.
+
+* Après réception dans Cloud
+
+1. Vérifier l'empreinte annoncée et le manifeste avec la même version de l'outil,
+   sans extraire ni exécuter les sources avant acceptation du contrôle.
+2. Enregistrer les octets dans une branche révisable de =vps-infrastructure=,
+   comme sources reçues inactives. Rapprocher les sources publiques historiques
+   sans importer celles-ci dans une configuration active par défaut.
+3. Examiner les imports, les références de dépendances et secrets, le matériel,
+   le réseau, les services persistants et la déclaration de =stateVersion=.
+   Une dépendance de données n'est jamais rapatriée pour compléter le graphe.
+4. Construire un assemblage complet verrouillé en Cloud, avec les données
+   synthétiques et les qualifications de services requises. Établir séparément
+   le lien à la génération installée et les écarts volontaires de la migration.
+
+La remise n'effectue aucune activation et ne remplace pas les contrôles
+d'adoption, de sauvegarde/restauration, de compatibilité et de bascule. Aucun
+retour de données, de secret ou de sauvegarde ne fait partie de ce protocole.

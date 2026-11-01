@@ -253,7 +253,7 @@ restauration. Il ne qualifie ni ancien binaire complet ni sauvegarde réelle.
 | Blocage | État | Preuve minimale | Obtention autorisée/proposée |
 |---------+------+----------------+------------------------------|
 | Adoption du compte existant | Identité et métadonnées observées ; adoption encore bloquante | Précontrôle exact avec UID/GID 980:980, clé/public code et politique SSH conformes, absence de conflit d'identité et continuité du retour | Paquet candidat lié au retour V2 ; préflight et essais administrateur bornés, sans export de secrets ; aucune nouvelle V2 demandée |
-| Assemblage complet du VPS | Profil 56 et nixpkgs c5c4a43b observés ; révision de configuration inconnue, assemblage bloquant | Lien génération → sources, graphe complet, paramètres de compatibilité et stateVersion existant | La sonde de provenance a rendu son résultat ; ne pas la répéter. Récupération humaine des références de code selon targets/RECUPERATION-SOURCES-SPECTRE.txt, sans configuration brute ni données transmises aux agents |
+| Assemblage complet du VPS | Profil 56 et nixpkgs c5c4a43b observés ; configuration.nix existe sans dépôt Git à cet emplacement, contenu non examiné ; assemblage bloquant | Code relu, graphe complet, paramètres de compatibilité, stateVersion existant, puis lien génération → sources | Ne pas répéter les sondes ni la recherche Git. Relais source-recovery/SPECTRE.txt : copies de code explicitement approuvées au partage, remise locale vérifiée ; aucune donnée ou configuration brute transmise aux agents |
 | Builds en cours Forgejo/Kanidm/runner | Inconnu/bloquant pour changement de service | Versions/builds des services ciblés et compatibilité de migration | Nouveau contrôle fermé approuvé, lié aux unités fixes ; pas de shell/chemin/processus arbitraire |
 | Ressources et isolation runner | Inconnu/bloquant | Limites cgroups/quota disque/réseau/montages effectives et refus d'échappement sous charge synthétique | Job isolé revu sur capacité déjà disponible ; aucune VM ou instance VPS supplémentaire présumée |
 | Serveur Rust exploitable | Candidat raccordé, qualification complète encore bloquante | Artefact final, domaines, administration, MCP des deux sites, workers et readiness de toutes les capacités requises | Tests Cloud et navigateur sur données inventées ; le CLI configuré a une readiness limitée à ses capacités déclarées |
@@ -377,14 +377,49 @@ vérification de tout son arbre Git et de son NAR. Le verrou principal et les
 artefacts antérieurs restent inchangés. Le [[file:compatibility/README.org][dossier de compatibilité]] enregistre
 120 contrôles positifs et un refus Forgejo : la préparation exige 17.0.1 tandis
 que cette base fournit 16.0.3. Cela ne prouve pas la version du service actif.
-La matrice globale reste non compatible ; aucun contrôle n'est assoupli.
+La matrice globale de ce premier lot restait non compatible ; son reçu est
+conservé. La correction de composition suivante est décrite plus bas.
 
 Le nouveau module de provenance, désactivé par défaut, a 33 contrôles positifs
 sur chacune des deux entrées et deux constructions de contrôle réussies.
 Il conserve =stateVersion= et enregistre seulement les références de code
 déclarées. Une déclaration de build ne remplace pas la revue indépendante.
 
-Le [[file:targets/RECUPERATION-SOURCES-SPECTRE.txt][prochain relais Spectre]] porte sur les références du code NixOS,
+Le [[file:targets/RECUPERATION-SOURCES-SPECTRE.txt][relais Spectre de ce lot]] portait sur les références du code NixOS,
 avec revue humaine locale des sources éventuelles. Les sources historiques
 restent inactives ; aucun import de leur configuration matérielle ou de leurs
 anciens services n'est ajouté à une génération déployable.
+
+* Retour de la recherche de sources, le 1er novembre
+
+Deux textes reçus précisent que =/etc/nixos/configuration.nix= existe, se résout
+sur lui-même et n'est pas dans un dépôt Git à cet emplacement. Les quatre
+commandes ont été rapportées comme explicitement autorisées sur Spectre ;
+aucune autorisation de commande supplémentaire ou d'accès Cloud n'en découle.
+Le contenu et les imports restent non lus, =stateVersion= inconnu. Cela ne
+prouve pas l'absence de sources versionnées ailleurs ni l'usage de ce fichier
+pour la génération active. Les octets et leurs SHA-256 sont conservés dans
+=received/provenance-source-search-20261101.json=, avec autorité non authentifiée.
+
+Le [[file:source-recovery/SPECTRE.txt][relais suivant]] ne répète aucune sonde. Il demande les copies du code
+après revue humaine de confidentialité, selon la frontière de données fixée
+par l'utilisateur. =source-recovery/reviewed_sources.py= vérifie localement un
+manifeste fermé et fabrique une archive déterministe ; il ne fait ni SSH, ni
+évaluation, ni extraction. Ses contrôles d'intégrité ne certifient pas la revue
+humaine et ne lient pas les copies à la génération installée. Les copies
+expurgées et les inconnues restent explicitement marquées.
+
+* Paquet Forgejo et base hôte séparés
+
+La préparation Forgejo utilise maintenant son entrée 6f06d204 verrouillée,
+indépendamment des paquets hôtes. =stateVersion=, le pin global et les versions
+candidates ne changent pas. L'appel direct avec les paquets 16.0.3 demeure
+refusé. Les 15 contrôles Forgejo et 14 contrôles de séparation passent sur les
+deux entrées ; aucun service ou runner n'est activé.
+
+La matrice courante de compatibilité compte 154 contrôles positifs, dont
+26 pour la composition VPS et les retours reçus. Son succès porte sur les
+modules évalués, avec =production_ready=false=. Le reçu exact est
+=compatibility/qualification-pinned-forgejo-20261101.json=. Les tests de remise
+du code relu comptent 18 succès avec Python 3.13.17. Les contrôles de production
+du tableau des blocages restent ouverts ; cette correction ne les remplace pas.

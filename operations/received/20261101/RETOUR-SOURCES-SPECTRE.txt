@@ -1,0 +1,7 @@
+depot : inconnu
+commit : aucun commit retrouvé
+point_entree : inconnu
+modifications_locales : inconnu
+imports_hors_depot : inconnu
+stateVersion : inconnu
+fichier_stateVersion : inconnu

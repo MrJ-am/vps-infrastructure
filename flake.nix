@@ -14,6 +14,7 @@
       vpsPreparationEvaluation = import ./operations/tests/vps-preparation-evaluation.nix { inherit nixpkgs; };
       systemProvenanceEvaluation = import ./operations/tests/system-provenance-evaluation.nix { inherit nixpkgs; };
       forgejoEvaluation = import ./operations/forgejo/tests/module-evaluation.nix { inherit nixpkgs; };
+      forgejoPinnedEvaluation = import ./operations/forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; };
       gatewayEvaluation = import ./operations/tests/gateway-evaluation.nix { inherit nixpkgs; };
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
       forgejoRunnerEvaluation = import ./operations/forgejo/tests/runner-module-evaluation.nix { inherit nixpkgs; };
@@ -52,6 +53,7 @@
       lib.qualification.vpsPreparation = vpsPreparationEvaluation;
       lib.qualification.systemProvenance = systemProvenanceEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
+      lib.qualification.forgejoPinnedToolchain = forgejoPinnedEvaluation;
       lib.qualification.gateway = gatewayEvaluation;
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
       lib.qualification.forgejoRunner = forgejoRunnerEvaluation;
@@ -73,7 +75,7 @@
         observe-provenance = pkgs.callPackage ./operations/bootstrap-provenance/package.nix { };
         inventory-sshd-config = inventoryFixture.config.environment.etc."ssh/sshd_config".source;
         openssh-qualified = pkgs.openssh;
-        forgejo-preparation = pkgs.callPackage ./operations/forgejo/package.nix { };
+        forgejo-preparation = import ./operations/forgejo/locked-preparation.nix { inherit system; };
         admission-adoption = pkgs.callPackage ./operations/migrations/admission/package.nix { };
         validation-stage-sources = pkgs.callPackage ./operations/forgejo/staging-package.nix { };
         received-tests-profile = pkgs.buildEnv {

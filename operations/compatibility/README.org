@@ -25,7 +25,7 @@ Ses quatre tests utilisent =git write-tree= comme comparaison indépendante.
 Le contrôle de =.version= doit porter sur le lien =lib/.version=, dont le mode
 Git est =120000= ; comparer le contenu suivi au SHA du lien est incorrect.
 
-* Résultats exécutés
+* Résultats du premier lot (candidat 66038399)
 
 | Contrat sur la base observée | Résultat |
 |-----------------------------+----------|
@@ -36,7 +36,7 @@ Git est =120000= ; comparer le contenu suivi au SHA du lien est incorrect.
 | Métadonnées de génération | 33 contrôles passent |
 | Préparation Forgejo | REFUS : candidat 17.0.1, paquet de cette base 16.0.3 |
 
-La matrice retourne explicitement =overall_compatible=false=,
+La matrice de ce premier lot retournait explicitement =overall_compatible=false=,
 =failed_components=["forgejoGate"]= et =production_ready=false=.
 Le refus Forgejo existant n'est ni modifié ni omis. Les champs =accepted=false=
 et =checks=null= signifient que l'évaluation de ce composant a échoué ; ils ne
@@ -55,6 +55,32 @@ L'environnement préparé sous =/workspace/shared/mrjam-environment= passe ses
 contrôles de démarrage ; ses sources et verrous correspondent au dépôt. Le
 premier contrôle lancé dans le checkout sans caches locaux avait échoué.
 Aucune réinstallation n'a été nécessaire.
+
+* Correction de composition et qualification suivante
+
+Le [[file:../forgejo/PIN-INDEPENDANT.org][paquet préparatoire Forgejo]] utilise désormais l'entrée applicative
+verrouillée 6f06d204, indépendamment de la base hôte. La substitution directe
+du paquet hôte reste refusée ; aucun attendu de version n'est assoupli.
+Les quinze contrôles du module Forgejo d'origine restent inchangés et passent.
+
+La matrice courante comprend 154 contrôles positifs : inventaire 20,
+composition VPS 26, provenance 33, Rust 22, gateway 24, Forgejo 15 et
+indépendance du paquet préparatoire 14. Ces quatorze derniers contrôles et les
+quinze contrôles Forgejo passent aussi sur l'entrée applicative principale.
+Les cinq contrôles supplémentaires de composition lient les textes Spectre
+reçus sans leur attribuer une autorité, un commit ou un stateVersion absent.
+
+Cette nouvelle matrice retourne =overall_compatible=true= pour ces seuls
+contrats d'évaluation, =failed_components=[]= et toujours
+=production_ready=false=. Le résultat antérieur demeure dans son reçu original.
+=qualification-pinned-forgejo-20261101.json= lie les nouveaux tests, les sources
+et le paquet préparatoire exact. Aucune génération complète, activation,
+migration de données ou restauration du VPS n'est qualifiée par cette matrice.
+
+Les 18 tests de la remise locale de code relu passent avec Python 3.13.17
+verrouillé. Ils vérifient notamment la non-évaluation des sources, les refus
+des chemins sortants/liens/membres additionnels et l'intégrité avant toute
+extraction. Ils ne vérifient pas la confidentialité du code remis.
 
 * Reproduction locale, jamais sur le VPS
 
@@ -99,5 +125,6 @@ Ce module ne prouve ni l'absence de fichiers non versionnés dans un build tiers
 ni l'origine du système actuel. L'installation effective, les permissions sur
 le VPS et une autorité protégée n'ont pas été vérifiées ici.
 
-Le [[file:../targets/RECUPERATION-SOURCES-SPECTRE.txt][relais Spectre suivant]] cherche les références de code manquantes
-par l'administrateur humain. Aucun inventaire V1/V2/provenance n'est à relancer.
+Le [[file:../source-recovery/SPECTRE.txt][relais Spectre suivant]] prépare la remise des copies de code après
+revue humaine. La recherche Git précédente a rendu son résultat ; aucun
+inventaire V1/V2/provenance ni commande de métadonnées n'est à relancer.
