@@ -1,0 +1,182 @@
+{
+  "authority": "source-selection-proposal-not-installed-revision",
+  "baseline_revision": "65bbd8c53a1f6d2efda453a5c82d66c49df26699",
+  "changed_build_sources": [
+    "backend/src/main.rs"
+  ],
+  "crypto_contract": "v1 unchanged; no SSO or platform integration",
+  "files": {
+    "COPYING": {
+      "bytes": 34674,
+      "sha256": "fb981668c18a279e285fc4d83fba1e836cc84dd4daa73c9697d3cfd2d8aca6e0"
+    },
+    "LICENSE": {
+      "bytes": 42098,
+      "sha256": "996af0513df21f7496288951c41428a03c174e9e4a9d63665c57d670f845ccb1"
+    },
+    "backend/Cargo.lock": {
+      "bytes": 53949,
+      "sha256": "97c81f565e71deecd585ae96b96c4bf44f7d38446b61a532007ac8127c2785b1"
+    },
+    "backend/Cargo.toml": {
+      "bytes": 450,
+      "sha256": "0ee5873b4a9a08a530c913da9de8dc2cb08708a08c6ece5f6ebdf4220e794b77"
+    },
+    "backend/migrations/001.sql": {
+      "bytes": 1570,
+      "sha256": "d62096032a02d0af1f617fb9de30cdd567a7b841e6da1daa420cd164ce8a2776"
+    },
+    "backend/src/main.rs": {
+      "bytes": 32501,
+      "sha256": "87e7c5483d88ef3cfa3ca03f78cc5bbf2f8723d4b51a0c909b1590077fcf45d9"
+    },
+    "bridge/bridge.ts": {
+      "bytes": 37226,
+      "sha256": "ba69cc0284e89bd9476f49cdf7511eae02505efefc1c41e16c4ad7cd894e8e88"
+    },
+    "bridge/continuite.ts": {
+      "bytes": 4141,
+      "sha256": "1f27f3bc4f803ef04f1e640e67968ec2021fcc346795f8bc2e54c1317524cd94"
+    },
+    "bridge/crypto.ts": {
+      "bytes": 12438,
+      "sha256": "5d74dbd68b90d9756cf2173b3096687f7e831e65b756f200d8b313b5ddd73547"
+    },
+    "bridge/glissement.ts": {
+      "bytes": 5303,
+      "sha256": "ca91a0fa1c2892148617149379149940429ea5b47ec5a269f7a404c9f7238d07"
+    },
+    "bridge/image.ts": {
+      "bytes": 2120,
+      "sha256": "d916fdb06c5387ff44b1c084e8fb51049bf991f020d6fb1202b6e6975a110fcd"
+    },
+    "bridge/poll-crypto.ts": {
+      "bytes": 3842,
+      "sha256": "7fb14528bedca225c9c32f6c4b29a4027eb5f6434587bdf6fca59b168152401b"
+    },
+    "bridge/sondage.ts": {
+      "bytes": 5747,
+      "sha256": "a3a6de11cea9882c864ebf60844109541ac258ff622b29682f69b183e53c80a8"
+    },
+    "bridge/worker.ts": {
+      "bytes": 3600,
+      "sha256": "a7e792dad42173fe14518da6eef5550376bdb5310c0661deb432224cbbb2df49"
+    },
+    "content/parcours.json": {
+      "bytes": 31058,
+      "sha256": "75af8bfc66e7b79872d57de20c57860f85b277f68f7c8f7577ce09c48a1d6cb8"
+    },
+    "elm.json": {
+      "bytes": 723,
+      "sha256": "04fc7cd2eefd1bd77b0865cd075d575f8188da104700c81aa4a451228e3d68ac"
+    },
+    "frontend/favicon.svg": {
+      "bytes": 243,
+      "sha256": "7d2f0de5bc8aece5b87d7f8e9c50af4595da9dbc3ac6fe0b7b84cb5e2f431b25"
+    },
+    "frontend/icon-192.png": {
+      "bytes": 722,
+      "sha256": "e00b0abba462dd989e3ec23c49c23326f59ec3f30549fc2c6c4c607fb2efc367"
+    },
+    "frontend/icon-512.png": {
+      "bytes": 3658,
+      "sha256": "08f337fb0b3caae2060e047c9a09b6bb35be1b00b8d0b255fad807de0770431d"
+    },
+    "frontend/index.html": {
+      "bytes": 1281,
+      "sha256": "c0f5d4b4e13edd9a5fe2c9b745733c021a7bb962918ef915437beca39173f54e"
+    },
+    "frontend/manifest.webmanifest": {
+      "bytes": 351,
+      "sha256": "ab2ae699c93550e09bce74fbcf43c53927f0ceac711032f8791d120986b93e05"
+    },
+    "frontend/sondage.html": {
+      "bytes": 2522,
+      "sha256": "374e10a032372e908f90f513099d622c4441855831177d43f93cca20057efa68"
+    },
+    "frontend/src/Carnet.elm": {
+      "bytes": 8186,
+      "sha256": "72c6d83abe6f05f57736d650e04770fe79d26580719241fb27d06cd6204aa89f"
+    },
+    "frontend/src/Contenu.elm": {
+      "bytes": 1603,
+      "sha256": "0c193b84909c829dcf5d0c36cc2df0e3c4831ced0bf7a086c952d202eabccb59"
+    },
+    "frontend/src/Main.elm": {
+      "bytes": 128110,
+      "sha256": "7f499c9998240418c7dadde4a119a1dc1538fd97febe36e6249fc1993f6992b0"
+    },
+    "package-lock.json": {
+      "bytes": 48470,
+      "sha256": "3e4aef259750fd0a818928c25bc01d96a789d3cd529c334055be0e35e25833db"
+    },
+    "package.json": {
+      "bytes": 749,
+      "sha256": "2fd82bc4cc9f429475379c3778eef808eb4be6ed7231c6d439aee6b80ce5519c"
+    },
+    "scripts/build.mjs": {
+      "bytes": 1625,
+      "sha256": "6ec53dc57be1ed7533ccac3954728abfac353dc111266cd4bdf251ddec675930"
+    },
+    "scripts/courses.mjs": {
+      "bytes": 1942,
+      "sha256": "c8d011c04d60dd6bb6be27071006a90cd6ef818d3a7e9da0db13e58c15bbf5b3"
+    },
+    "scripts/pwa.mjs": {
+      "bytes": 1778,
+      "sha256": "7c9258ea062075b598da319c4720755b3b7a493bc3f876215000594c8eb1b201"
+    },
+    "shared/assets/carnet.css": {
+      "bytes": 18063,
+      "sha256": "2f6ea5f09181a5d382e874173c3d9cc7062394232c1c3fd57b734ad178c08f62"
+    },
+    "shared/elm/MrJam/Carnet.elm": {
+      "bytes": 7423,
+      "sha256": "a688f14ef9f312707dae54704476cfbe18e93f2b75ad80ce8fc0fd213a0f1b1b"
+    },
+    "shared/elm/MrJam/Continuite.elm": {
+      "bytes": 17434,
+      "sha256": "22aa3a6fbe5f44123639cf19c9a132dfa465110b55a8890bd62fd77a0b3982a3"
+    },
+    "tests/api.test.ts": {
+      "bytes": 8998,
+      "sha256": "1e851f433161fc91d2ecb7d51930a391fee4bcdce61c1ee41ce4cc598cf41820"
+    },
+    "tests/browser/affichage.spec.ts": {
+      "bytes": 1253,
+      "sha256": "3d2db88d40888f6c056d10bc871ece96c99ddf6de605ec09de4f7fbaec1f7f14"
+    },
+    "tests/browser/pwa.spec.ts": {
+      "bytes": 9616,
+      "sha256": "2bd578f115f9e2f89e73bdf16d1f8495c129e0e3d3bf3d10430829ce165838e2"
+    },
+    "tests/contenu.test.ts": {
+      "bytes": 1698,
+      "sha256": "b12ec3a870b7d9ea08f06404f33e840450b529c12dd034a24111bbd02560ebcf"
+    },
+    "tests/crypto.test.ts": {
+      "bytes": 5367,
+      "sha256": "cba66848562c7a42b9a048e763cb045ac5244e872cc922fdc9f262c3d2c53c32"
+    },
+    "tests/fixtures.ts": {
+      "bytes": 339,
+      "sha256": "e1f9706c56f1ef895d9fa45aad609dfb5c4d9f9c7722cf09d712a9a6b4f60aa1"
+    },
+    "tests/image.test.ts": {
+      "bytes": 732,
+      "sha256": "5586e211dfb67b42e40bfb61fb06f5da7861cc2c63937dd45c364ba4200b7ed1"
+    },
+    "tests/poll.test.ts": {
+      "bytes": 1971,
+      "sha256": "c3a1015de73495196b4d597602d829d26e078291f954c6154ea088bff7fd698a"
+    },
+    "tsconfig.json": {
+      "bytes": 244,
+      "sha256": "2ff3a1a3208cd357f3fa977ff59d34996c08c8ee9c7a36b0dc4583650ca210e5"
+    }
+  },
+  "production_authority": false,
+  "repository": "https://github.com/MrJ-am/etp-vie-affective",
+  "revision": "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c",
+  "schema_version": 1
+}

@@ -22,6 +22,13 @@ Le flake expose les modules et leurs tests ; aucune =nixosConfiguration= de
 production partielle n'est publiée. L'objectif de mise en service est autorisé
 par [[file:../../mise-en-service/mandat.org][le mandat courant]] ; aucun nouveau gel général n'est invoqué.
 
+Le lot suivant ajoute les modules exécutables Forgejo, Kanidm et Nextcloud,
+ainsi que la construction ViSe et son adoption sans DDL au redémarrage.
+Le détail courant, les refus et les limites de leurs essais sont dans
+[[file:../../runtime/ADOPTION-SERVICES.org][le dossier d'adoption des services]]. Les qualifications historiques
+ci-dessous conservent leurs références ; elles ne sont pas réattribuées aux
+nouveaux fichiers.
+
 * Conservation des services
 
 | Composant | Déclaration reçue ou travail existant | Nouveau travail et limite |

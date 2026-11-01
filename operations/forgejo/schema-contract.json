@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "forgejo": "17.0.1",
+  "authority": "source-derived-contract",
+  "metadata": {
+    "gitea": [
+      {
+        "id": 1,
+        "version": 305
+      }
+    ],
+    "forgejo": [
+      {
+        "id": 1,
+        "version": 44
+      }
+    ],
+    "migrations": [
+      "v14a_actions-approval-and-trust",
+      "v14a_add-action_task-index",
+      "v14a_add-foreign-keys-collaboration",
+      "v14a_add-foreign-keys-forgejo_auth_token",
+      "v14a_add-foreign-keys-pull_request-1",
+      "v14a_add-forgejo-migrations-table",
+      "v14a_ap-change-fedi-handle-structure",
+      "v14a_migrate_task_secrets",
+      "v14a_migrate_webhook_authorization",
+      "v14a_remove-is-deleted-column-from-activity-action-table",
+      "v14a_rework-notification",
+      "v14a_rm-repository-issue-stat-fields",
+      "v14a_set_remote_user_prohibit_login",
+      "v14b_action-reindexing",
+      "v14b_action-run-add-workflow-directory",
+      "v14b_add-action_run-preexecutionerrorcode",
+      "v14b_rm-repository-actionrun-stat-fields",
+      "v15a_remove-softdelete-action_runner_token",
+      "v15b_add-access_token-owned-repos",
+      "v15b_add-access_token_resource",
+      "v15b_add-ephemeral_runner",
+      "v15b_add-foreign-keys-action_runner_token",
+      "v15b_add-runner_request_key",
+      "v15c_add_job_handle",
+      "v15c_add_mirror_remoteaddressauth",
+      "v15c_add_schedule_spec_time_zones",
+      "v15c_fix-project-sorting-unique-constraints",
+      "v16a_add_authorized_integration",
+      "v16a_add_oidcsubjectformat_actions_unit_config",
+      "v16b_add-login-source-id-to-forgejo-auth-token",
+      "v16b_add_comment_line_count",
+      "v16b_authorized_integration_name_description",
+      "v16c_action_run_priority",
+      "v16c_add_team_invite_invited_id",
+      "v16c_authorized_integration_ui",
+      "v16c_cleanup_package_blob_indexes",
+      "v16d_action_run_warnings",
+      "v16e_add-granular-watch",
+      "v17a_add-action-run-workflow-source-commit",
+      "v17a_add_action_task_step_summary",
+      "v17a_add_invite_expiry_date",
+      "v17a_add_job_namespace",
+      "v17a_add_package_cleanup_based_on_last_download",
+      "v17a_add_package_version_last_downloaded",
+      "v17a_add_package_version_total_size"
+    ],
+    "runtime_ddl_forbidden": true
+  }
+}

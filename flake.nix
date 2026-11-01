@@ -20,6 +20,8 @@
       systemProvenanceEvaluation = import ./operations/tests/system-provenance-evaluation.nix { inherit nixpkgs; };
       forgejoEvaluation = import ./operations/forgejo/tests/module-evaluation.nix { inherit nixpkgs; };
       forgejoPinnedEvaluation = import ./operations/forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; };
+      forgejoHostEvaluation = import ./operations/forgejo/tests/host-module-evaluation.nix { inherit nixpkgs; };
+      preservedServicesEvaluation = import ./operations/tests/preserved-services-evaluation.nix { inherit nixpkgs; };
       gatewayEvaluation = import ./operations/tests/gateway-evaluation.nix { inherit nixpkgs; };
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
       forgejoRunnerEvaluation = import ./operations/forgejo/tests/runner-module-evaluation.nix { inherit nixpkgs; };
@@ -36,6 +38,9 @@
         rust = import ./operations/nixos/mrjam-rust.nix;
         inventory = import ./operations/nixos/mrjam-inventory.nix;
         forgejo = import ./operations/nixos/mrjam-forgejo.nix;
+        forgejoHost = import ./operations/nixos/mrjam-forgejo-host.nix;
+        kanidmHost = import ./operations/nixos/mrjam-kanidm-host.nix;
+        nextcloudHost = import ./operations/nixos/mrjam-nextcloud-host.nix;
         gateway = import ./operations/nixos/mrjam-gateway.nix;
         forgejoPolicy = import ./operations/nixos/mrjam-forgejo-policy.nix;
         forgejoRunner = import ./operations/nixos/mrjam-forgejo-runner.nix;
@@ -67,6 +72,8 @@
       lib.qualification.systemProvenance = systemProvenanceEvaluation;
       lib.qualification.forgejo = forgejoEvaluation;
       lib.qualification.forgejoPinnedToolchain = forgejoPinnedEvaluation;
+      lib.qualification.forgejoHost = forgejoHostEvaluation;
+      lib.qualification.preservedServices = preservedServicesEvaluation;
       lib.qualification.gateway = gatewayEvaluation;
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
       lib.qualification.forgejoRunner = forgejoRunnerEvaluation;
@@ -86,6 +93,11 @@
         inventory-vps-candidate = import ./operations/targets/inventory-candidate.nix { inherit pkgs; };
         observe-adoption = pkgs.callPackage ./operations/bootstrap-observation/package.nix { };
         observe-provenance = pkgs.callPackage ./operations/bootstrap-provenance/package.nix { };
+        observe-services = pkgs.callPackage ./operations/bootstrap-services/package.nix { };
+        forgejo-schema-check = pkgs.callPackage ./operations/forgejo/schema-check.nix { };
+        preserved-nextcloud = (import ./operations/hosts/mrjam-vps/preserved-packages.nix { inherit system; }).nextcloud;
+        preserved-php = (import ./operations/hosts/mrjam-vps/preserved-packages.nix { inherit system; }).php;
+        preserved-kanidm = (import ./operations/hosts/mrjam-vps/preserved-packages.nix { inherit system; }).kanidm;
         inventory-sshd-config = inventoryFixture.config.environment.etc."ssh/sshd_config".source;
         openssh-qualified = pkgs.openssh;
         forgejo-preparation = import ./operations/forgejo/locked-preparation.nix { inherit system; };
@@ -122,6 +134,22 @@
         printf '%s\n' "$result" > "$out/result.json"
       '';
       vise-postgresql-runtime = import ./operations/runtime/vise-postgresql-systemd.nix { inherit nixpkgs; };
+      forgejo-postgresql-runtime = import ./operations/runtime/forgejo-postgresql-systemd.nix { inherit nixpkgs; };
+      kanidm-runtime = import ./operations/runtime/kanidm-systemd.nix { inherit nixpkgs; };
+      nextcloud-runtime = import ./operations/runtime/nextcloud-systemd.nix { inherit nixpkgs; };
+      services-observer-runtime = import ./operations/bootstrap-services/systemd-test.nix { inherit nixpkgs; };
+      forgejo-host-module = pkgs.runCommand "mrjam-forgejo-host-evaluation" {
+        result = builtins.toJSON forgejoHostEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      preserved-services-module = pkgs.runCommand "mrjam-preserved-services-evaluation" {
+        result = builtins.toJSON preservedServicesEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
       system-provenance-module = pkgs.runCommand "mrjam-system-provenance-module-evaluation" {
         result = builtins.toJSON systemProvenanceEvaluation;
       } ''

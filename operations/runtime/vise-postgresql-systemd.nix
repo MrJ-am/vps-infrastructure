@@ -56,6 +56,8 @@ in pkgs.testers.runNixOSTest {
       '';
     };
     environment.systemPackages = [ pkgs.postgresql_17 pkgs.util-linux syntheticVise ];
+    environment.etc."synthetic-vise-schema.sql".source = ../vise/schema-v1.sql;
+    environment.etc."synthetic-vise-adopt-role.sql".source = ../vise/adopt-runtime-role.sql;
   };
   testScript = ''
     import json
@@ -103,6 +105,10 @@ in pkgs.testers.runNixOSTest {
         checks.append("no-automatic-application-start-or-vise-backup")
 
     with subtest("explicit fixture start exercises the declared identity and private state"):
+        machine.fail("systemctl start vise.service")
+        machine.succeed("runuser -u postgres -- psql -X -w -h /run/postgresql -d etp_carnet -v ON_ERROR_STOP=1 -f /etc/synthetic-vise-schema.sql")
+        machine.succeed("runuser -u postgres -- psql -X -w -h /run/postgresql -d etp_carnet -v ON_ERROR_STOP=1 -f /etc/synthetic-vise-adopt-role.sql")
+        machine.succeed("install -d -m 0700 -o etp_carnet -g etp_carnet /var/lib/etp-carnet; install -m 0600 -o etp_carnet -g etp_carnet /dev/null /var/lib/etp-carnet/deletions.log; systemctl reset-failed")
         machine.succeed("systemctl start vise.service")
         machine.wait_for_unit("vise.service")
         machine.wait_until_succeeds("test -f /var/lib/etp-carnet/deletions.log")
