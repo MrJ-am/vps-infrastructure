@@ -1,0 +1,837 @@
+{
+  "schema_version": 1,
+  "operation": "mrjam-reviewed-configuration-sources-v1",
+  "authority": "user-authorized-agent-reviewed-code-only-declaration",
+  "target": "mrjam-vps",
+  "entrypoint": "etc/nixos/configuration.nix",
+  "declared_state_version": {
+    "value": "26.05",
+    "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+  },
+  "declared_graph_complete": false,
+  "generation_binding": "unverified",
+  "files": [
+    {
+      "path": "etc/nixos/configuration.nix",
+      "bytes": 61,
+      "sha256": "5660da3e917a0408bd3e11b3f5646dd834e9a64b226b3e9ca4e6b522c20b844a",
+      "change": "unchanged"
+    },
+    {
+      "path": "etc/nixos/vise-base.nix",
+      "bytes": 136,
+      "sha256": "91d3ce049ec81c023a1139adc41a104c8a3ab2f4f3d110dbc199b779c025bb7c",
+      "change": "unchanged"
+    },
+    {
+      "path": "etc/nixos/vise-hosting/backup.sh",
+      "bytes": 718,
+      "sha256": "57247b5da4d52df3806b18f14162a8ba1205e08adde2eebea4b12011d0e0b1ae",
+      "change": "unchanged"
+    },
+    {
+      "path": "etc/nixos/vise-hosting/module.nix",
+      "bytes": 3225,
+      "sha256": "3137dc044e95fc49401691abbfad6c9c6c830dd24315d40c5e567ac97b1a7b6b",
+      "change": "unchanged"
+    },
+    {
+      "path": "etc/nixos/vise-hosting/provision.sh",
+      "bytes": 996,
+      "sha256": "61e9524d5562ca9cd1178ac2b91e531306938cc9df664d9f6b774bc0ad7f4aa3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/configuration-candidate.nix",
+      "bytes": 606,
+      "sha256": "fa1eb8ad0c1dc2950b7b8f7d345e888eeccc8e2c6aec383552268e120648ab47",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/databases.nix",
+      "bytes": 1986,
+      "sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/journal-http.conf",
+      "bytes": 1169,
+      "sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/lib/virtual-hosts.nix",
+      "bytes": 4228,
+      "sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/admission.nix",
+      "bytes": 3006,
+      "sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/courriel.nix",
+      "bytes": 1717,
+      "sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/fermeture.nix",
+      "bytes": 3293,
+      "sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/gateway.nix",
+      "bytes": 4344,
+      "sha256": "afb68cb6656b8769794c49298021fdb34fbe99efffcb93c91632f28c543b5e49",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/identite.nix",
+      "bytes": 11547,
+      "sha256": "0e0597a85259d6e9756643e1a01ee09ccd71a05ddffefb2957ce6c0f42cc1741",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/journal-http.nix",
+      "bytes": 1295,
+      "sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/matheval.nix",
+      "bytes": 5310,
+      "sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/metier.nix",
+      "bytes": 11477,
+      "sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/mrj-auth.nix",
+      "bytes": 5533,
+      "sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/postgresql.nix",
+      "bytes": 4017,
+      "sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-cycle.nix",
+      "bytes": 3207,
+      "sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/modules/vision-gestion.nix",
+      "bytes": 5651,
+      "sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/scripts/monolithe-evaluation.nix",
+      "bytes": 4487,
+      "sha256": "e0534f985e8090460904138827a84f59270be705b4c2c6d1ea8882f2b18f3bdf",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam/paquet.nix",
+      "bytes": 480,
+      "sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/sources-mrjam.nix",
+      "bytes": 1802,
+      "sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/configuration-log-candidat.nix",
+      "bytes": 704,
+      "sha256": "ddef97ab18c27a5a62856fc6048ecf961af3a8307c64cbf5f55575454a59af7c",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/artefact.nix",
+      "bytes": 548,
+      "sha256": "0e56d8cdca1cdc0dc38c0577ceef2c4db5385e115e6d1f9a19e0bce4c9228707",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/paquet.nix",
+      "bytes": 508,
+      "sha256": "e3a7a03afeab79f0823a0df6ea07dc25850512cfd3684fc48c3e91282559fc52",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/assemblage/kanidm/service.nix",
+      "bytes": 1303,
+      "sha256": "d42979b191da1f8210ed977655b26ef4f98905b4f0a17d28a68e5a61dbf12188",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/databases.nix",
+      "bytes": 1986,
+      "sha256": "5646d8b9c107ee79d4249ae0fefaee0cc97087176b529d541a0a8512fcbb9ea9",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/journal-http.conf",
+      "bytes": 1169,
+      "sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/lib/virtual-hosts.nix",
+      "bytes": 4228,
+      "sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/admission.nix",
+      "bytes": 3006,
+      "sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/courriel.nix",
+      "bytes": 1717,
+      "sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/fermeture.nix",
+      "bytes": 3293,
+      "sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/gateway.nix",
+      "bytes": 4354,
+      "sha256": "6056986eed823705c371fdedb7f45c24777f8ab256ad7f33b3b590ed49004c0f",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/identite.nix",
+      "bytes": 12729,
+      "sha256": "20675d361cfc952fef545166c3ceb6bc20f57bb027955d260d9223a59255396c",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/journal-http.nix",
+      "bytes": 1295,
+      "sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/log.nix",
+      "bytes": 7137,
+      "sha256": "5f26ebccfa5705062dfab98bdf16f51e845998c2197c3c03ab221bf42e4a2c0b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/matheval.nix",
+      "bytes": 5310,
+      "sha256": "62b9261d8b6700d734df7d1278c87e2c35f76ab415ac4e26d98096450c261282",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/metier.nix",
+      "bytes": 11477,
+      "sha256": "7360dc57112b75025e1824e726b9014cad2d62b2d0f034eb0468aa7d7b82cb61",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/mrj-auth.nix",
+      "bytes": 5533,
+      "sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/postgresql.nix",
+      "bytes": 4017,
+      "sha256": "eef518d76b6ef71da7605739894f1fb0c48520eb3b712b3f524758c04df496d6",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-cycle.nix",
+      "bytes": 3207,
+      "sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/modules/vision-gestion.nix",
+      "bytes": 5651,
+      "sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/log-evaluation.nix",
+      "bytes": 3959,
+      "sha256": "778efcdbee3f76c106696ab35b082ab6befb85b6948531b5fcac2a4e520ba8d6",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/scripts/monolithe-evaluation.nix",
+      "bytes": 4595,
+      "sha256": "0d40f0dd322d622d939814cdafe569670f2657483f0cc311e78510eb73dba043",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam/paquet.nix",
+      "bytes": 480,
+      "sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/sources-mrjam.nix",
+      "bytes": 1802,
+      "sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/configuration.nix",
+      "bytes": 893,
+      "sha256": "0098448af5e4b92a893d06dc835f5af837d8276af9dfc87b96dd6401fb7f7dd9",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/audition.nix",
+      "bytes": 4019,
+      "sha256": "e30a670160f9a0c995f2bafa94e4061c216f74162c7c93c57489450ea2cbe1ce",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/module.nix",
+      "bytes": 1342,
+      "sha256": "e5565e90af2b4b480925d3bfa057a6ce5b0be240242206ef63b0a232612399a5",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/base.nix",
+      "bytes": 484,
+      "sha256": "7a7fc7c90cc1cf662144020c5c5e5c55035c4afb60f25612d2bf8c159f1c1f81",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/configuration.nix",
+      "bytes": 99,
+      "sha256": "82620eae8c2b4a1a4e1c1a19c7cc37bfdf3c63c73b4236a4b3db0a60bde2834b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/assets.nix",
+      "bytes": 482,
+      "sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/integration.nix",
+      "bytes": 1274,
+      "sha256": "624c922c6852befd8fc9564405cfc671627b88571fdeacdf071a1015771e5935",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/module.nix",
+      "bytes": 8011,
+      "sha256": "ba772835d3bd360ba26fa9a58210a1e676df25b09e66fdc442a79fccfcaa79a0",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/base.nix",
+      "bytes": 121,
+      "sha256": "83f9b487c1060986b6de9a018b1f69737fe35955d3c2d8bde48a25fa8b7ef51a",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/configuration.nix",
+      "bytes": 247,
+      "sha256": "70a9e83a8eddad5e2df71339b8909aafc4c06adc7ea117ab3e1713a3fa889a8b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/assets.nix",
+      "bytes": 482,
+      "sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/integration.nix",
+      "bytes": 1588,
+      "sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/kanidm-api-privee.py",
+      "bytes": 9316,
+      "sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix",
+      "bytes": 11931,
+      "sha256": "9823f7720375ed7a30f644097d89865ceae8fa21b7790fba2ec04de4a2e5c063",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/base.nix",
+      "bytes": 121,
+      "sha256": "7d291cb8359ef2e4697e759d85bd575b96e0e5046f10d186c543933e4bfdd04e",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/configuration.nix",
+      "bytes": 247,
+      "sha256": "70a9e83a8eddad5e2df71339b8909aafc4c06adc7ea117ab3e1713a3fa889a8b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/assets.nix",
+      "bytes": 482,
+      "sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/integration.nix",
+      "bytes": 1588,
+      "sha256": "45427a2c464cba833b6dc873f6a0e1e908b87953a954a18755d66c3b19087f95",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/kanidm-api-privee.py",
+      "bytes": 9316,
+      "sha256": "c4e3b7932e5f144b1b32d82de849d4b4243a108278b38b3a02400c41ac7f3ce1",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix",
+      "bytes": 11971,
+      "sha256": "2692cbaede4873e30771f7bdf93b476840c39346cbce476e868897d5c70ca0d8",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/base.nix",
+      "bytes": 121,
+      "sha256": "72f2192d8600f2579ee73f847e7fd80f0b29a4a778a18fea6ad49fe82a114c64",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/configuration.nix",
+      "bytes": 203,
+      "sha256": "f5d6748248ec94fdcf7d590f0d4ee0e9e63d789e32fc7b4fa31d6227ee5ef21b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/assets.nix",
+      "bytes": 482,
+      "sha256": "ba768618f17be75504ea018f575a75148ec83ceb6c927890fb0ef71c97084ef3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/integration.nix",
+      "bytes": 1451,
+      "sha256": "92f33fdb195dd958cbc50338395cb7a74fd1fd21a317bcc398daafa7340bc361",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/module.nix",
+      "bytes": 8026,
+      "sha256": "9c45280c654cbc427a3304c41c0414fe14ebd88d89151300f9a584b4673d6d2f",
+      "change": "redacted"
+    },
+    {
+      "path": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/configuration.nix",
+      "bytes": 215,
+      "sha256": "1f79d21fbf9454c7394780547488cb4dce65b709b6b48878ad8fce31b59a7292",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/log-connexion/2a5ffdd910961f400f43f27f1a3ed84413b7a790/log-referrer.nix",
+      "bytes": 909,
+      "sha256": "2103a97da807ec67d9e5d76eb3ba874341da920ba2fb8469cd0645ca33a5a830",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/configuration.nix",
+      "bytes": 742,
+      "sha256": "ae71036085ac122569ceb912d34d12beaadcd191519589a4be3e246d9d955410",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/module.nix",
+      "bytes": 1950,
+      "sha256": "bb3c3e67e1161d514d21ee7a32a85ede85733aeb1a8067c6d027e44a110da6b8",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/base.nix",
+      "bytes": 127,
+      "sha256": "d6ace5a61793c97560c363be0fa3d1cc70c0f0a535acea11b653885c6b52a614",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/patched.nix",
+      "bytes": 71,
+      "sha256": "74af08c5bf364540cb4b65feb2884d56f5019eeb1f7e993c8c5b0d03850b51b9",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/guard.nix",
+      "bytes": 323,
+      "sha256": "00748a668a37427978d56bd00a8c0555469c0c3c6d8d0e62b96c9319c929582f",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-php-security/ba49a07931a20e3730b2085b2a7922330acf1979/payload/module.nix",
+      "bytes": 1487,
+      "sha256": "474bee60c40bb7f6d8c8ebd4d4a517968cc47ad1967ca02c4a7f0e4f086683e0",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/base.nix",
+      "bytes": 80,
+      "sha256": "2bbff7b4fa8bf1c638cc61c3e445697c0b82d83029ffcb93110d41d2e2c586db",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/configuration.nix",
+      "bytes": 352,
+      "sha256": "4d888df852959ae02ab44f24099b7d18a18b4a6d5634b442d01f38caaa641080",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/nextcloud-sso/1cfa76edd667dd2cb54228919c329b72b6c49462/payload/module.nix",
+      "bytes": 1595,
+      "sha256": "ae0309d810537c2719d403ce22d45c52fc4d843c11aeb3e0da305a7972df3899",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/assemblage/php-upload-progress/module.nix",
+      "bytes": 450,
+      "sha256": "e77db94c769b0064aca8030e548d3da8c5245e7d5faf6603e9c50344d34a8b94",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/base.nix",
+      "bytes": 119,
+      "sha256": "1177408c9b54818779bc0b45f417be54fc2d7ac40f562ba10988d81cf808ed05",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/php-upload-progress/986f2a909ae4d54a2b76cc532be2191d177ede87/39982585355-apply/candidate.nix",
+      "bytes": 74,
+      "sha256": "f7114bbb9e227858f86b9e17a9de2066ee32a20cf19df5808362787c5397febb",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/module.nix",
+      "bytes": 183,
+      "sha256": "a82d296daf74c4b0967489213402474404133fae24d136dacb27afbd9e6c9d14",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/base.nix",
+      "bytes": 125,
+      "sha256": "854e715451bce71dd9bbfd7279150fdffd3da1d3087e0997df6461373ecd7238",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/configuration.nix",
+      "bytes": 51,
+      "sha256": "ae53b001c5ac3df13944573b2ac6a8e0b688a70246d54ddc4ff665ff2f9dc588",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/mrjam-corrections/vision-mcp-configuration/178a781317f09bd6d588d3cde3177d35c11bb435/payload/module.nix",
+      "bytes": 229,
+      "sha256": "9eb42be4529af34fe6cf4f35819f5565fcd64fcc87a45769e152846ca4c5cf26",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/nextcloud-contacts-20261017/base.nix",
+      "bytes": 121,
+      "sha256": "06cfa7aa479ad343fa242808be3b34ac7de2c0f2c03e4a28547da6884f297601",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/nextcloud-contacts-20261017/configuration.nix",
+      "bytes": 129,
+      "sha256": "8a23c38708534d1a60b29d850f0a3565bf28f0471f99a935245b1f765e59e717",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/databases.nix",
+      "bytes": 1840,
+      "sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/journal-http.conf",
+      "bytes": 1169,
+      "sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/lib/virtual-hosts.nix",
+      "bytes": 4228,
+      "sha256": "4754b437a484a5329fab4380532cf25703ba9b41d4081d34093ae7fc016d91d2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/admission.nix",
+      "bytes": 3006,
+      "sha256": "8b17ba5ca59ea60b293e8c45e4932dd31723c8cd7f12c91b6ff13bed64d51146",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/courriel.nix",
+      "bytes": 1717,
+      "sha256": "5c0ef74c7d58ade0b16b32f8da7cd163f403391c5c503211c0f9efced9521dfe",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/fermeture.nix",
+      "bytes": 3293,
+      "sha256": "61bc84a5e04fdb8e3e28bcf07613d19c90a8e7a4e245985a0c6b7fd0efffcceb",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/gateway.nix",
+      "bytes": 4331,
+      "sha256": "32279975a008ceeac5f1d87577791478dbfcc105a84f976269b973c1c1ed9546",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/identite.nix",
+      "bytes": 10657,
+      "sha256": "b07ab895d20bd9a6757d326a938e12010a1ef5848bf4868fd2c16c92e4c986e9",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/journal-http.nix",
+      "bytes": 1295,
+      "sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/mrj-auth.nix",
+      "bytes": 5533,
+      "sha256": "8383402f2d9e9e54a3eda25bbd2c763d3f645f3633c0d397c708713250de1357",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/postgresql.nix",
+      "bytes": 3706,
+      "sha256": "2b42358074d965320fb65c79e8dcdf282fde053beecf92dbbe51324aae68db4a",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-cycle.nix",
+      "bytes": 3207,
+      "sha256": "db6a845f6f20202570308a539fdf22246d424ea4307ad06efafd24e981ad57cd",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/modules/vision-gestion.nix",
+      "bytes": 5651,
+      "sha256": "4edafeb45986d28d8736f903c1b98bf24355c588cf05d730c5b7677579368e72",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/scripts/vision-bascule-evaluation.nix",
+      "bytes": 5242,
+      "sha256": "9e1b71023b964a2037be7994aa6850891363ae22a6b7a18f8ad25c59dfed78ec",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam/paquet.nix",
+      "bytes": 480,
+      "sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/sources-mrjam.nix",
+      "bytes": 1802,
+      "sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-essais/008671ee6eedf8bcb983b7a0435732f43f630441/entree.nix",
+      "bytes": 689,
+      "sha256": "12a91230beb4458cdb80bc71c6046faef623105adbc49038e61c895665dee48a",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/configuration-avant.nix",
+      "bytes": 129,
+      "sha256": "410a496d5c6c7b6bee33d5fd64210c7b7941011360b5e1b5df11bc55c8fd4525",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-identite-amorcage-essais/ac3d8e0ab466a536c9ac3190d360e163d364b8fb/entree.nix",
+      "bytes": 449,
+      "sha256": "4f70c7d0126f654f6368f8629ca4db7e487000a7b71333f2c2f860485ff8413e",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/lib/keycloak-optimise.nix",
+      "bytes": 1406,
+      "sha256": "3d8a2a849085c6241e793da0f34a0fe51945ce616c45cc69349a5baf72f0c084",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/modules/identite-amorcage.nix",
+      "bytes": 7880,
+      "sha256": "82071f0410fc94f2f2b132fafe7e69dc6c971de1021eb1f32083177f00a72207",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam/paquet.nix",
+      "bytes": 480,
+      "sha256": "81d6f87e8173ddc4815045315114eceb7f4a2a0afb42934fff294d209decab0b",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/sources-mrjam.nix",
+      "bytes": 1802,
+      "sha256": "7663a4ecb681faf937cae7a56472e7e51c84f1f18da65194eedf7ffa519f98b2",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/logique.nix",
+      "bytes": 1296,
+      "sha256": "78b71cabba689dd47185aa5ccfa5fd561286d9dd4c094db29ea79503aaa03cb4",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/matheval.nix",
+      "bytes": 782,
+      "sha256": "11ef2b8049d98e17e5501cf6c50944c15fb7348410467fb0e06bb970a4f8c7c7",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/nextcloud.nix",
+      "bytes": 3223,
+      "sha256": "1808bddb80c49a952aa63f3dc949ae6e6fd7a43d33a36c202cdd6c09709520c7",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision-interface.nix",
+      "bytes": 1016,
+      "sha256": "60183921c8c3631c133349f18ae163e99d7488edcaa849cd376c0ebf249a7442",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix",
+      "bytes": 6745,
+      "sha256": "5e3fe3d6f4a9ad40af38edfd91d63f05986b8bfc3660656899e3d0a5c7480fd7",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+      "bytes": 2355,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix",
+      "bytes": 591,
+      "sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/logique.nix",
+      "bytes": 106,
+      "sha256": "659b857f9aae66a1cb59c3bea467b48408f1e498c6a9606344f784837e395ae3",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/vision-semantique.nix",
+      "bytes": 837,
+      "sha256": "dac75e499ea3681370ade274265d03743de6567cad0801e1e44298ae85d03a05",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/databases.nix",
+      "bytes": 1840,
+      "sha256": "722b7a34d30af7dc744e720ebe60e2b67689811aefec6a92575e7aff0dc3e204",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/journal-http.conf",
+      "bytes": 1169,
+      "sha256": "0bff989632d9434274c10a6d61c2664f278652327c73588fee242388e74fda92",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/lib/virtual-hosts.nix",
+      "bytes": 3990,
+      "sha256": "024dcd4df9c1c77a421990a4360418c05c515e1c1a7615b157d1ddaf7daa74d5",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/gateway.nix",
+      "bytes": 4071,
+      "sha256": "ed6cf8109c26b5b00cb987d17a7425ee6cd8876bee5a4e13ba70c67b2ff3e3d4",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/journal-http.nix",
+      "bytes": 1295,
+      "sha256": "ab9adc73f2a38c1cf6cf66426d880f0eafc0bccb097d2e885a28956697c73e0a",
+      "change": "redacted"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/mrj-auth.nix",
+      "bytes": 4828,
+      "sha256": "f27dec0aafb41b710e303e76b409ccc7315b24d4d1597e823ba1b568237f4dbc",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/modules/postgresql.nix",
+      "bytes": 2702,
+      "sha256": "ac81de8c27b3098f5e3bb962f16a001b74cfa6c5af5bfc93b30574cbb5412131",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/scripts/nextcloud-backup.sh",
+      "bytes": 1035,
+      "sha256": "df92e9e7b270381565725c16e873e236d6fad8e1b24a9f768166250a1c6cc680",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/matheval/matheval.nix",
+      "bytes": 5031,
+      "sha256": "8959538472392c6bff39cf91e3eeaa125b6814f0af15d63381258a51baf20086",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/embeddings.nix",
+      "bytes": 2926,
+      "sha256": "5e05b99699f4216ca268cd53959be6daa08067d512cc8cb03045b1719d296e48",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.nix",
+      "bytes": 621,
+      "sha256": "88893dc303043c51c849ca0f5ec4003d3a923ab567a1d7e7a3e8c32727b6b032",
+      "change": "unchanged"
+    },
+    {
+      "path": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/vision.nix",
+      "bytes": 11863,
+      "sha256": "42768b636987e6056f90dbaa7469d0f8a7bcede96606423d4a73d41d166c76ed",
+      "change": "unchanged"
+    }
+  ]
+}

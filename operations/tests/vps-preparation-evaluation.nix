@@ -8,6 +8,7 @@ let
   provenanceFile = ../received/20261101/provenance-v1.json;
   provenance = builtins.fromJSON (builtins.readFile provenanceFile);
   search = target.source_search_observation;
+  received = builtins.fromJSON (builtins.readFile ../received/20261101/vps-reviewed-sources/extracted/review.json);
   evaluate = extra: (import (nixpkgs + "/nixos/lib/eval-config.nix") {
     system = "x86_64-linux";
     modules = [ ../nixos/vps-preparation.nix {
@@ -38,7 +39,9 @@ let
     noAccountOrGroupCreated = !(disabled.users.users ? mrjam-inventory) && !(disabled.users.groups ? mrjam-inventory);
     noKeyOrSshServiceCreated = !(disabled.environment.etc ? "ssh/mrjam-inventory-authorized-keys")
       && !disabled.services.openssh.enable;
-    noStateVersionInference = target.system_state_version == null && disabled.system.stateVersion == "24.11";
+    receivedStateVersionDoesNotChangeComposition = target.system_state_version == "26.05"
+      && received.declared_state_version.value == target.system_state_version
+      && !target.installed_state_version_verified && disabled.system.stateVersion == "24.11";
     noSourceOrFullGenerationInvented = target.installed_source_commit == null && target.installed_generation == null
       && !target.adoption_observation.complete_generation_identity;
     noExecutionReadinessInferred = !target.production_execution_ready && !target.inventory_adoption.enable;
@@ -65,8 +68,15 @@ let
       && !search.git_checkout_at_candidate_directory && search.source_commit == null
       && search.source_repository == null && search.relative_entrypoint == null;
     sourceSearchDoesNotInventCompatibility = search.state_version == null && search.imports == null
-      && target.system_state_version == null;
+      && !target.installed_state_version_verified;
     noCloudAccessFromSpectreReport = !search.cloud_access_authorized;
+    reviewedArchiveBound = builtins.hashFile "sha256" ../received/20261101/vps-reviewed-sources/sources-vps-revues.tar
+      == target.received_configuration.archive_sha256;
+    reviewedCodeAuthorityPreserved = received.authority == "user-authorized-agent-reviewed-code-only-declaration"
+      && target.received_configuration.authority == received.authority;
+    sourceGraphStillIncomplete = !received.declared_graph_complete && received.generation_binding == "unverified"
+      && !target.received_configuration.cloud_production_access_authorized;
+    noSourceFileOmittedToFitOldLimit = builtins.length received.files == 137;
     fixtureAssertionsPass = builtins.all (entry: entry.assertion) enabled.assertions;
     enabledFixturePreservesIdentity = enabled.users.users.mrjam-inventory.uid == 980
       && enabled.users.groups.mrjam-inventory.gid == 980;

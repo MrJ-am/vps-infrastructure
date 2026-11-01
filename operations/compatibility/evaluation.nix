@@ -13,6 +13,11 @@ let
     gateway = inspect (import ../tests/gateway-evaluation.nix { inherit nixpkgs; });
     forgejoGate = inspect (import ../forgejo/tests/module-evaluation.nix { inherit nixpkgs; });
     forgejoPinnedToolchain = inspect (import ../forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; });
+    vpsMachine = inspect (import ../tests/vps-machine-evaluation.nix { inherit nixpkgs; });
+    vise = inspect (import ../tests/vise-evaluation.nix { inherit nixpkgs; });
+    nextcloudGuards = inspect (import ../tests/nextcloud-guards-evaluation.nix { inherit nixpkgs; });
+    postgresqlAccess = inspect (import ../tests/postgresql-access-evaluation.nix { inherit nixpkgs; });
+    postgresqlComposition = inspect (import ../tests/postgresql-composition-evaluation.nix { inherit nixpkgs; });
   };
 in {
   inherit components;

@@ -1,0 +1,161 @@
+#+title: VPS MRJ.am — socle reconstruit et dossier de revue
+#+date: 2026-11-01
+#+language: fr
+
+* Résultat et portée
+
+La configuration du VPS est désormais disponible comme code reçu vérifié.
+Le socle matériel/réseau est reconstruit dans =machine.nix= à partir de ce code,
+et non de Spectre. Douze faits sont rapprochés automatiquement des littéraux
+originaux. =stateVersion = "26.05"= provient de la ligne 16 du fichier machine
+reçu ; il n'est pas déduit d'une version NixOS ou d'un pin nixpkgs. Les UUID,
+MAC, adresses, routes, résolveurs, périphérique GRUB et clé publique root sont
+des déclarations du code remis, sans prétendre authentifier l'état courant.
+
+=configuration.nix= est un point d'entrée explicite de préparation. Il ne
+constitue pas encore l'ensemble des services du VPS. Son assertion bloquante
+interdit toute construction de =system.build.toplevel= jusqu'à fermeture et
+qualification de cette composition. Supprimer cette assertion ou ajouter un
+booléen « approuvé » ne remplace pas les contrôles manquants.
+
+Le flake expose les modules et leurs tests ; aucune =nixosConfiguration= de
+production partielle n'est publiée. L'objectif de mise en service est autorisé
+par [[file:../../mise-en-service/mandat.org][le mandat courant]] ; aucun nouveau gel général n'est invoqué.
+
+* Conservation des services
+
+| Composant | Déclaration reçue ou travail existant | Nouveau travail et limite |
+|-----------+---------------------------------------+--------------------------|
+| Machine, SSH administrateur, cloud-init | Code machine et matériel sous vision-semantique | Socle explicite ; aucune clé privée, aucun réglage matériel de Spectre ; correspondance active à vérifier avant activation |
+| Accès mrjam-inventory | V2 et paquet déclaratif déjà préparés | Identité 980:980 et clé publique conservées ; aucun changement à la commande forcée ni à ses trois fichiers autorisés |
+| PostgreSQL | Instance partagée, version majeure 17 | Composition ordonnée des règles Rust/ViSe ; aucun changement de paquet, dataDir, rôle ou base par ces modules |
+| Forgejo, rendu Org/MathJax et runner | Préparation et contrats déjà qualifiés dans les lots précédents | Paquet préparatoire verrouillé séparément du host conservé ; builds actifs, SSO et adoption protégée encore distincts |
+| Kanidm et identité commune | Code de service remis ; artefact déclaré dans le code | Conserver états, origines et références ; pas de copie ni exécution des anciens scripts SSO d'amorçage |
+| Nextcloud | Source déclarant Nextcloud 34.0.4 et correctif PHP 8.4.27 | Nouveau module de protections, désactivé par défaut ; ne sélectionne ni ne reconstruit PHP/Nextcloud, ne retire aucun marqueur de confinement |
+| ViSe | Adaptateur etc/nixos/vise-hosting, port 3017, identité et base etp_carnet | Module autonome sans monolithe/SSO, artefact immuable exigé, UID/GID requis, unité sans démarrage automatique ; routage et sauvegarde non activés |
+| Rust/Elm et workers | Artefacts et qualifications précédentes exactes | Applications inchangées dans ce lot ; aucun résultat antérieur rebaptisé « nouveau test » |
+
+La composition PostgreSQL conserve exactement la politique hôte après les
+blocs dédiés. Les modules ne peuvent plus se disputer la première position.
+Le rôle et la base =etp_carnet= sont refusés dans les capacités Rust. ViSe
+utilise le socket Unix et peer, rejette les autres bases pour son rôle et
+rejette son rôle sur IPv4/IPv6 TCP. Les qualifications ne prétendent pas
+remplacer l'analyse des privilèges SQL existants ou du reste de la politique.
+
+Le module Nextcloud conserve la désactivation de l'upload progress dans PHP
+global, CLI et le pool FPM, ainsi que les conditions persistantes de FPM/cron
+sur =/var/lib/nextcloud-php-security/blocked=. Il refuse PHP antérieur à 8.4.27
+ou d'une autre branche que 8.4. Ce minimum préserve le correctif déclaré ; ce
+n'est pas une preuve du build PHP actif. Les tests utilisent explicitement
+une étiquette de version synthétique et ne construisent pas ce paquet.
+
+Le contrat ViSe consulté est celui de
+=MrJ-am/etp-vie-affective@65bbd8c53a1f6d2efda453a5c82d66c49df26699:deployment/CONTRAT-VPS.md=.
+Il confirme l'indépendance et la persistance SQL + registre d'effacement.
+La version de l'application installée ne découle pas de cette référence.
+Le module neuf supprime l'import flottant =<nixpkgs>= et l'import dynamique
+=target.baselineConfiguration= du précédent adaptateur. Il n'exécute pas
+=vise-provision= et n'utilise pas les cibles privées non remises.
+
+Le script de sauvegarde reçu effectue un dump puis une copie du registre,
+utilise =set -eu= sans =pipefail= et vérifie seulement la liste du dump.
+Cela ne prouve ni une capture cohérente, ni une restauration. Une sauvegarde
+ViSe nouvelle reste donc refusée par le module tant que ces contrats ne sont
+pas qualifiés ; aucune sauvegarde existante n'a été touchée.
+
+* Qualifications exécutées
+
+| Contrôle | Résultat | Limite |
+|----------+----------+--------|
+| Démarrage Cloud | 14 contrôles OK, aucune réinstallation | État de l'atelier |
+| Remise de sources | SHA externe, 139 membres, SHA256SUMS et 137 contenus vérifiés ; 21 tests du transport | Déclaration de revue déléguée, pas une attestation du VPS |
+| Analyse statique | 128 Nix parsés, 21 tests ; 12 faits du profil liés aux sources | Aucune évaluation du graphe historique |
+| Matrice sur nixpkgs c5c4a43b | 273 contrôles positifs | Compatibilité des modules/fixtures seulement |
+| Six suites modifiées/ajoutées sur nixpkgs 6f06d204 | 145 contrôles positifs | Même périmètre synthétique |
+| VM NixOS locale TCG, PostgreSQL 17.11 | Huit groupes réussis : peer, refus croisés, autre base, autre UID, TCP, inertie, permissions systemd, arrêt sans arrêt PostgreSQL | Exécutable ViSe factice, aucune application ou donnée réelle |
+| Ancienne VM des slots Rust | Dérivation identique à la preuve du 31 octobre : d7azzs8920wq2ls9yqf4wn4pmmzd8pan | Résultat antérieur réutilisable, pas une nouvelle exécution annoncée |
+
+L'artefact du nouveau test est
+=/nix/store/yhnh62b6fydbq2psd8db30lzk3iliirs-vm-test-run-mrjam-vise-postgresql-composition-synthetic=,
+dérivation =/nix/store/v3yjfn28dgmb0jww8j8msf4q26z2lnlv-vm-test-run-mrjam-vise-postgresql-composition-synthetic.drv=.
+Son NAR, les résultats, les entrées et les commits sont liés dans le reçu de
+qualification publié avec ce dossier. Il ne s'agit pas d'un système VPS.
+
+Les premières erreurs de fixture sont conservées : comparaison erronée avec
+des options Nginx/HBA supposées vides, puis =dbtype= Nextcloud non défini.
+Les contrôles comparent désormais le vrai host témoin et déclarent la base
+synthétique. Aucun résultat de production ni attendu de sécurité n'a été
+inventé pour les faire passer.
+
+Reproduction locale des évaluations :
+#+begin_src bash
+nix-instantiate --eval --strict --json operations/compatibility/evaluation.nix
+nix-instantiate --eval --strict --json operations/tests/vps-machine-evaluation.nix --arg nixpkgs /source/nixpkgs-verrouillee
+nix build --offline --no-link --json --file operations/runtime/vise-postgresql-systemd.nix --arg nixpkgs /source/nixpkgs-verrouillee
+#+end_src
+Les deux pins/NAR sont décrits dans =../../compatibility/README.org=. La VM
+tourne en TCG dans Cloud ; rien n'en déduit une capacité de virtualisation VPS.
+
+* Matrice de décision avant mise en service
+
+| Sujet | Statut | Bloquant | Preuve minimale et voie autorisée |
+|-------+--------+----------+---------------------------------|
+| Code remis, empreintes et revue déléguée | Établi pour les octets reçus | Non | Reçu versionné ; ne pas redemander la même revue |
+| stateVersion 26.05, matériel/réseau du code | Établi comme déclaration | Oui pour leur adoption active | Comparaison locale de champs fermés par un composant borné qualifié, ou vérification administrative locale ; aucun dump de configuration |
+| Correspondance avec génération active | Inconnue | Oui | Manifeste fermé liant génération/NAR et révision d'adoption ; ne pas inventer un ancien commit introuvable |
+| Graphe complet des services préservés | Incomplet | Oui | Fermer les nouvelles déclarations avec sources Git autorisées et références de secrets ; ne pas récupérer en bloc les JSON/archives historiques |
+| UID/GID et artefact ViSe installé | Inconnus | Oui pour adoption ViSe | Nouvel observateur distinct : seuls UID/GID et identifiants de code/NAR ; 978 dans les tests est inventé |
+| Builds actifs Forgejo/Kanidm/PHP/Nextcloud | Inconnus | Oui pour leur remplacement | Métadonnées bornées des exécutables/unités, filtrées avant transfert ; une version de profil ne suffit pas |
+| Paquets cibles PHP/Nextcloud et ViSe | Déclarations/source contractuelles disponibles | Oui | Construire les révisions retenues, contrôler dépendances et migrations, qualifier leurs artefacts réels |
+| Quotas/isolation CI et capacité de cohabitation | Non établis sur VPS | Oui | Qualification limitée des capacités nécessaires ; les 2 CPU/8 Go et tests Cloud ne prouvent pas une réserve |
+| Authentification et autorité Forgejo protégée | Tests locaux disponibles, adoption réelle inconnue | Oui | Règles, identités, droits et retours signés indépendants du candidat ; aucune lecture de jeton par Cloud |
+| Sauvegarde/restauration cohérente | Non qualifiée pour cet assemblage | Oui | Répétition synthétique, puis mécanisme local autorisé à sortie fermée ; aucun contenu de sauvegarde aux agents |
+| Fenêtre, drainage, migrations et retour avec écritures | Non qualifiés sur la composition finale | Oui | Répétition complète avec échéance d'abandon et compatibilité anciens/nouveaux binaires/schémas |
+
+La capacité SSH actuelle n'accepte que l'inventaire V1 épinglé. Les observations
+complémentaires ci-dessus sont des propositions de contrats, pas des commandes
+à lui transmettre. Une extension doit être un nouveau paquet fermé, testé,
+relu et adopté séparément. Elle n'accepte aucun chemin, shell, requête SQL ou
+nom de service libre. Ne pas relancer V1/V2/provenance pour obtenir ces champs.
+
+* Ordre exact des étapes et retour
+
+1. Fermer et évaluer la nouvelle composition complète dans ce dépôt. Préserver
+   PostgreSQL, Nextcloud, Kanidm, Forgejo, ViSe et leurs états ; remplacer les
+   dépendances historiques par les sources et artefacts retenus. Les champs
+   expurgés doivent devenir des références de gestion locale, pas des valeurs
+   factices ou des secrets dans le store.
+2. Construire les artefacts et la génération dans Cloud, puis qualifier la
+   même fermeture, les règles, les budgets, les migrations et le retour. Lier
+   commit propre, arbre, verrous, NAR, manifeste des migrations, ressources Elm
+   et références de secrets dans une livraison immuable.
+3. Réaliser la revue indépendante de cette livraison. Le dossier actuel la
+   prépare ; les résultats locaux ne sont ni une signature protégée ni cette
+   revue. L'approbation opérationnelle porte sur ces identifiants exacts, la
+   cible, les effets, la fenêtre maximale de trois heures et le retour.
+4. Avant installation, vérifier sur place la correspondance de génération,
+   les identités adoptées et l'accès d'administration existant. Conserver une
+   session administrative et un chemin de retour contrôlé sur Spectre ; Cloud
+   n'en reçoit pas l'accès. Ne pas relancer l'installateur impératif.
+5. Installer exactement les fermetures qualifiées par le mécanisme borné retenu.
+   Toute divergence d'identifiant, NAR, état initial ou précondition arrête la
+   procédure. Aucun build candidat, téléchargement flottant ou script libre
+   ne s'exécute pendant la bascule.
+6. Pour la migration initiale : fermer les écritures et tâches concernées,
+   drainer, produire la capture cohérente qualifiée, appliquer uniquement les
+   migrations prévues, vérifier le candidat sur ressources synthétiques isolées,
+   puis effectuer le changement de route explicite. ViSe conserve son contrat
+   autonome ; sa base et son registre d'effacement forment une unité cohérente.
+7. Contrôler états, refus, contrats HTTP et drainage par sorties fermées. Ne
+   retirer l'ancienne fermeture qu'après expiration de la période de retour.
+   Si un critère échoue avant l'échéance d'abandon, exécuter le retour qualifié.
+8. Le retour applicatif réinstalle le binaire et le routage compatibles avec le
+   schéma courant. Si une migration n'est pas compatible en arrière, appliquer
+   la procédure de données séparée déjà répétée, en préservant les écritures
+   et effacements intervenus. Une ancienne génération NixOS seule ne suffit pas.
+
+Les identifiants de génération complète, de livraison et de contrôleur de
+production n'existent pas encore pour cette composition. Il serait trompeur
+de donner maintenant une commande =switch= ou une procédure de restauration
+exécutable avec des placeholders. Le travail restant est explicite ci-dessus ;
+aucune de ces opérations de production n'a été lancée dans Cloud.

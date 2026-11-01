@@ -1,0 +1,82 @@
+{
+  "authority": "local-static-code-check",
+  "checks": {
+    "addresses": {
+      "line": 32,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "dns": {
+      "line": 34,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "gateways": {
+      "line": 36,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "grub_device": {
+      "line": 18,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "hostname": {
+      "line": 17,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "interface": {
+      "line": 31,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "mac_address": {
+      "line": 31,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "root_device": {
+      "line": 12,
+      "matches": true,
+      "sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix"
+    },
+    "root_fs_type": {
+      "line": 13,
+      "matches": true,
+      "sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix"
+    },
+    "root_public_key": {
+      "line": 65,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "state_version": {
+      "line": 16,
+      "matches": true,
+      "sha256": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+    },
+    "system": {
+      "line": 16,
+      "matches": true,
+      "sha256": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+      "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix"
+    }
+  },
+  "generation_binding": "unverified",
+  "nix_evaluated": false,
+  "production_access": false,
+  "review_sha256": "f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8",
+  "schema_version": 1
+}

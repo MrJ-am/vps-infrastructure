@@ -1,0 +1,234 @@
+Reprise pour Codex Cloud d’OpenAI — remise réelle des sources VPS
+1er novembre 2026
+
+Poursuis le travail pour rendre le VPS fonctionnel et conforme à la forge
+MrJ-am/vps-infrastructure, selon le mandat de mise en service du dépôt.
+La préparation locale des sources est terminée. Tu reçois cette fiche et
+sources-vps-revues.tar ; commence par vérifier cette archive, puis exploite
+les copies comme références inactives pour reconstruire et qualifier la cible.
+
+AUTORISATION ET ORIGINE DE LA REVUE
+
+L’utilisateur a explicitement autorisé Codex sur Spectre à effectuer les
+vérifications du relais avec l’accès administrateur disponible sur son poste.
+Il a ensuite demandé de supprimer le plafond de 128 fichiers et d’aller au bout
+de la préparation de la remise pour Codex Cloud. Cette revue a été effectuée
+par l’agent local sous cette délégation, pas personnellement par un humain.
+
+Le manifeste indique donc :
+  authority = user-authorized-agent-reviewed-code-only-declaration
+
+Cette déclaration décrit l’auteur de la revue ; elle ne s’accorde aucun droit
+supplémentaire et ne prouve pas automatiquement la confidentialité. La délégation
+locale ne fournit à Cloud aucun accès root, clé, identifiant ou contenu privé.
+Ne redemande pas les vérifications déjà effectuées ni une revue humaine comme
+si l’utilisateur n’avait jamais donné cette délégation.
+
+FICHIERS REMIS ET VÉRIFICATION
+
+Archive : sources-vps-revues.tar
+Taille : 552960 octets
+SHA-256 : 1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb
+
+Révision exacte de l’outil de création et de vérification :
+  b7cf819c611171d68028b3e32bacfadcb9932d5c
+Dépôt : https://github.com/MrJ-am/vps-infrastructure
+Branche de travail au moment de la remise : declaratif-20261030
+La branche main n’est pas la référence de cette remise.
+
+Outil public, à récupérer depuis cette révision exacte :
+https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b7cf819c611171d68028b3e32bacfadcb9932d5c/operations/source-recovery/reviewed_sources.py
+SHA-256 de reviewed_sources.py :
+  9dfeddbcd81b39e2f77573c0f48eef20d2d8f6fbde20c67ad97532eee466c420
+SHA-256 de tests/test_reviewed_sources.py :
+  00f76b0667886d9b50e73f554dee7c8ad236c5be9b44d4edafaf249a9c82414f
+
+Depuis le checkout de cette révision et avec l’archive dans le dossier courant :
+
+  python3 -I -S operations/source-recovery/reviewed_sources.py verify ./sources-vps-revues.tar 1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb
+
+La vérification contrôle l’archive sans l’extraire et sans exécuter ses sources.
+Ne pas utiliser l’ancien outil épinglé en 8d355050 : le plafond a été supprimé
+par la PR 98 et la déclaration de revue déléguée ajoutée par la PR 99.
+https://github.com/MrJ-am/vps-infrastructure/pull/98
+https://github.com/MrJ-am/vps-infrastructure/pull/99
+
+Résultats locaux obtenus, pas seulement des commandes proposées :
+- 21 tests synthétiques réussis, dont pack/verify de 137 fichiers et conservation
+  de l’autorité de revue déléguée ; les déclarations non reconnues sont refusées.
+- Pack de l’archive réelle : integrity-checked.
+- Verify de cette même archive avec le SHA-256 ci-dessus : integrity-checked.
+- Inspection indépendante des 139 membres TAR : uniquement review.json,
+  SHA256SUMS et les 137 fichiers déclarés ; tailles et empreintes concordantes.
+- Aucun membre extrait pour cette vérification, aucun Nix évalué.
+
+CE QUE CONTIENT L’ARCHIVE
+
+137 chemins : 128 fichiers Nix, 2 scripts Python, 3 scripts shell, 4 fichiers
+de configuration Nginx. Les copies représentent 382242 octets, dont 122 fichiers
+inchangés et 15 fichiers expurgés. Aucun chemin de l’inventaire n’a été supprimé
+pour contourner l’ancienne limite. Le manifeste fait 35880 octets.
+
+Les 137 fichiers ont été relus sur les chemins précisément inventoriés ; leurs
+empreintes avant expurgation concordent toutes avec l’inventaire précédent.
+Les seuls appels distants de cette préparation étaient des lectures ciblées.
+Les copies expurgées et leurs métadonnées ont été écrites localement.
+
+Expurgations : 1 hachage de mot de passe, 16 occurrences d’adresses de contact
+et 2 commentaires de clés publiques. Les clés publiques, destinataires publics
+age, empreintes de paquets, références de secrets, propriétaires et permissions
+déclarés dans le code sont conservés. Les fichiers privés référencés n’ont pas
+été ouverts. Les expurgations sont visibles et déclarées dans review.json.
+
+Le hachage retiré se trouvait dans mobileLiveTestPasswordHash, ligne 5 de :
+  root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/apps/vision.nix
+Son remplacement __REDACTED_REFERENCE_... désigne une valeur absente ; ce n’est
+pas un secret utilisable. Les coordonnées de remplacement utilisent
+example.invalid. Ne jamais déployer ces marqueurs comme des valeurs réelles.
+
+La revue a combiné l’inspection structurelle précédente, les expurgations avant
+affichage, la lecture contextuelle des 38 groupes distincts de références
+sensibles et un contrôle complémentaire des chaînes à forte entropie. Les
+derniers candidats étaient des noms de sources avec empreintes et des
+destinataires age publics. Ces contrôles statiques ne sont pas une preuve
+mathématique d’absence de toute information sensible.
+
+CHEMINS ET OBSERVATIONS ACQUISES
+
+Dans source/, chaque chemin reproduit le chemin VPS sans le / initial.
+Entrée : source/etc/nixos/configuration.nix
+Elle importe ./vise-base.nix et ./vise-hosting/module.nix. Les wrappers mènent
+à plusieurs assemblages et corrections hors de /etc/nixos. Les chemins absolus
+dans le code sont conservés pour comprendre cette provenance ; l’archive n’est
+pas directement évaluable dans Cloud. Les normaliser dans une copie de travail
+distincte et traçable, après vérification de la remise.
+
+Le fichier /etc/nixos/configuration.nix existe et se résout sur lui-même.
+Il ne fait pas partie d’un dépôt Git à cet emplacement. Ces constats ont déjà
+été vérifiés ; ne pas répéter les quatre commandes ni les sondes V1/V2/provenance.
+Ne pas demander à l’utilisateur de retrouver de mémoire la dernière mise à jour.
+
+system.stateVersion = "26.05" a été lu dans la configuration de machine :
+  root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix
+Ligne 16. Cette valeur a aussi été retrouvée dans les octets de l’archive.
+Elle n’est pas déduite de la version de nixpkgs. Le fichier matériel importé
+figure dans le même dossier : hardware-configuration.nix. Il vient du VPS,
+pas de Spectre ; sa correspondance au matériel actif n’a pas été testée.
+
+Aucun commit Git des sources actives n’a été authentifié. Les identifiants
+hexadécimaux dans les noms de répertoires sont des indices, pas des preuves.
+L’archive reste explicitement :
+  declared_graph_complete = false
+  generation_binding = unverified
+  production_ready = false
+
+DEPENDANCES À RECONSTITUER
+
+L’archive est la remise des fichiers inspectés, pas un système fermé et déjà
+qualifié. La liste précise des chemins non collectés figure en annexe ci-dessous.
+
+- Les deux chemins de code par défaut absents sont surchargés aux points d’appel
+  observés : moduleAudition reçoit payload/audition.nix et kanidmApi reçoit
+  payload/kanidm-api-privee.py, tous deux présents dans les copies concernées.
+  Ne pas les présenter comme deux imports actifs certainement manquants.
+- Des répertoires de services, sites, sources applicatives et références Nix
+  store ne sont pas dans la remise. Les reconstituer depuis les dépôts autorisés
+  et des dépendances verrouillées ; un chemin store seul ne prouve pas un build.
+- 18 chemins JSON et 3 chemins d’archives sont référencés mais n’ont pas été lus.
+  Leur extension ne prouve pas leur caractère public ou privé. Chercher leurs
+  équivalents autorisés dans la forge ; utiliser des données synthétiques pour
+  qualifier. Ne pas demander ni rapatrier des données ou archives privées.
+- Les références <nixpkgs> et modulesPath + "/profiles/qemu-guest.nix" exigent
+  une résolution verrouillée. /profiles/qemu-guest.nix seul n’était pas le bon
+  chemin : une ancienne lecture infructueuse de ce suffixe ne prouve pas que le
+  module nixpkgs réel est absent.
+- Les expressions dynamiques et imports conditionnels n’ont pas été évalués.
+
+SUITE ATTENDUE DE CODEX CLOUD
+
+1. Lire les AGENTS.md applicables et le mandat courant, vérifier le SHA extérieur
+   et les membres avec l’outil épinglé, puis conserver les copies comme références
+   inactives et traçables dans une branche de travail révisable.
+2. Rapprocher ces sources des dépôts faisant autorité ; normaliser les chemins
+   et reconstruire le graphe nécessaire à la cible. Résoudre les dépendances
+   de code depuis les sources autorisées, sans réintroduire d’archive privée.
+3. Préparer un assemblage complet et verrouillé ; qualifier les services avec
+   des données synthétiques. Établir séparément le lien à la génération installée
+   et documenter les écarts voulus par la migration, notamment pour stateVersion.
+4. Poursuivre vers la mise en service selon le mandat du dépôt, avec ses contrôles
+   de sauvegarde/restauration, compatibilité et bascule. Si une intervention locale
+   précise reste nécessaire, fournir une opération bornée et concrète, avec
+   artefact qualifié, résultat attendu et retour vérifiable.
+
+La remise des sources est accomplie : ne pas revenir à un questionnaire sur leur
+origine ou à l’ancien plafond de fichiers. Ce qui reste appartient maintenant
+à la reconstruction et à la qualification de la cible dans Cloud. Aucun build,
+activation, redémarrage, SQL, accès aux bases, journaux ou sauvegardes n’a été
+effectué par cette préparation ; aucun ancien workflow/connect.sh n’a été relancé.
+Les sources VPS ne sont pas publiées par les PR 98 et 99 : elles sont remises
+dans l’archive jointe. La production n’est pas déclarée conforme par cette remise.
+
+ANNEXE — CHEMINS RÉFÉRENCÉS HORS REMISE
+
+Arguments de code par défaut non collectés :
+  /root/mrjam-corrections/forgejo/scripts/kanidm-api-privee.py
+  /root/mrjam-corrections/audition/modules/audition.nix
+
+Répertoires de sources référencés :
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/services/keycloak-mrjam
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/services/keycloak-mrjam
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/services/keycloak-mrjam
+  /root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services
+  /root/vision-identite-amorcage-operations/25f685900a9b65cb7cef872f0b55bcb21e35567d/source/services/keycloak-mrjam
+  /root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision/source
+
+Autres chemins de sources cités littéralement :
+  /root/mrjam-corrections/audition/9feac618022a310de4f61cf2ce992ebe35e2f6dc/payload/site
+  /root/mrjam-corrections/log-interface/5023f4ed3599827eeeeaa119d0babbc370c14d82/payload/site
+  /root/mrjam-corrections/reconnexion/08e1d2d87e6e3c3290171436f6f5fb2acb8b5147/payload/site
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/interface
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/vision
+
+Chemins Nix store cités, contenus non collectés :
+  /nix/store/0aqnq3k20yq30hf0bch64ghy3nj9bd66-kanidm-1.11.2
+  /nix/store/20nds4zvi1pcnljpwnwzcsysvyk15g11-vision-fournisseur-c0bfcac
+  /nix/store/aa1xv9qh341vn2rdqcyz8grzay7dybhg-mrjam-metier-33a90baf854b
+  /nix/store/dv109y63kv9cvpmnkqkcvcyjiqh1ssi2-mrjam-metier-29ebb727a104
+  /nix/store/nq8729macji666smhhddvf9i4xqzkdy4-mrjam-metier-158e4a52e012
+  /nix/store/rn5p0a81blf81m85vx1s7v2cvzsc54l4-mrjam-metier-77129dd9b98e
+  /nix/store/v2zss0pfglkl8ba1g6lwxwkx5az29jbq-mrjam-metier-fb5b7e217822
+
+Chemins JSON non ouverts :
+  /etc/nixos/vise-hosting/target.json
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/databases.json
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/operations/identite/realm.json
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/projects.json
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/databases.json
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/operations/identite/realm.json
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/projects.json
+  /root/mrjam-corrections/forgejo/95b33d038c5652b4d23d30b8ccee21b8989f06c8/payload/versions.json
+  /root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/versions.json
+  /root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/versions.json
+  /root/mrjam-corrections/forgejo/f79bcaddf7ddaa637350d04bec01d30629e49c29/payload/versions.json
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/databases.json
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/operations/identite/realm.json
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/projects.json
+  /root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/databases.json
+  /root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/operations/logique-site.json
+  /root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/projects.json
+  /root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/vendor/vision-embeddings/modele.lock.json
+
+Chemins d’archives non ouverts :
+  /root/mrjam-assemblages/185f9316d6b208f12ef8279a52947a9789ee870d/payload/vps/vendor/vision-multiutilisateur-source.tar.gz
+  /root/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/payload/vps/vendor/vision-multiutilisateur-source.tar.gz
+  /root/vision-bascule-preparations/008671ee6eedf8bcb983b7a0435732f43f630441/source/vendor/vision-multiutilisateur-source.tar.gz
+
+Références dynamiques sous les dossiers services :
+  mrj-auth, vision-gestion, vision-cycle, mrjam-admission, mrjam-fermeture, mrjam-courriel, keycloak-mrjam
+
+Le détail par fichier des empreintes des copies est dans review.json.
+Les métadonnées locales de provenance et d’expurgation sont conservées dans
+preuves-remise.json ; elles ne contiennent aucune valeur retirée.

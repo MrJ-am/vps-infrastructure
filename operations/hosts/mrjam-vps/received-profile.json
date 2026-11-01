@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "authority": "received-code-declaration-not-authenticated-generation",
+  "archive_sha256": "1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb",
+  "state_version": "26.05",
+  "state_version_source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+  "state_version_line": 16,
+  "hostname": "nixos",
+  "system": "x86_64-linux",
+  "grub_device": "/dev/sda",
+  "root_device": "/dev/disk/by-uuid/f222513b-ded1-49fa-b591-20ce86a2fe7f",
+  "root_fs_type": "ext4",
+  "interface": "eth0",
+  "mac_address": "d4:e8:d4:c3:50:d5",
+  "addresses": [
+    "187.77.95.158/24",
+    "2a02:4780:41:cf57::1/48"
+  ],
+  "gateways": [
+    "187.77.95.254",
+    "2a02:4780:41::1"
+  ],
+  "dns": [
+    "153.92.2.6",
+    "1.1.1.1",
+    "8.8.4.4"
+  ],
+  "root_public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMXMNrDpVvr2nl2yn2VgxTtKByqcg4iPR4N/oxUsLAPR",
+  "source_hashes": {
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix": "ea1429f9dc754e6add3c689efc25a80924e01e6e954dc6147ab890a52f4c6f67",
+    "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/hardware-configuration.nix": "530d087d26b68ff9ab6f79f4ab2334a25c56db92f5bf8978c53e12b7b7024455",
+    "etc/nixos/configuration.nix": "5660da3e917a0408bd3e11b3f5646dd834e9a64b226b3e9ca4e6b522c20b844a",
+    "etc/nixos/vise-hosting/module.nix": "3137dc044e95fc49401691abbfad6c9c6c830dd24315d40c5e567ac97b1a7b6b"
+  },
+  "generation_binding": "unverified",
+  "hardware_correspondence_verified": false,
+  "network_correspondence_verified": false,
+  "code_directory_ids_are_authenticated_git_commits": false,
+  "vise": {
+    "hostname": "vise.mrj.am",
+    "port": 3017,
+    "user": "etp_carnet",
+    "group": "etp_carnet",
+    "database": "etp_carnet",
+    "role": "etp_carnet",
+    "state_directory": "/var/lib/etp-carnet",
+    "deletion_ledger": "/var/lib/etp-carnet/deletions.log",
+    "uid": null,
+    "gid": null,
+    "installed_artifact_sha256": null,
+    "target_json_collected": false
+  }
+}

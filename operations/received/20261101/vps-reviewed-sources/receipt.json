@@ -1,0 +1,25 @@
+{
+  "archive_sha256": "1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb",
+  "relay_sha256": "5df110460d385138fee763f09ccd46b03bb02fffc7db979e65a941047bcf23e5",
+  "review_sha256": "f00c3fe7eb794e4e1e4b1518b437b7d44faa6804577428b332a889a05fc095f8",
+  "members": 139,
+  "files": 137,
+  "source_bytes": 382242,
+  "authority": "user-authorized-agent-reviewed-code-only-declaration",
+  "entrypoint": "etc/nixos/configuration.nix",
+  "declared_state_version": {
+    "value": "26.05",
+    "source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix"
+  },
+  "declared_graph_complete": false,
+  "generation_binding": "unverified",
+  "changes": {
+    "unchanged": 122,
+    "redacted": 15,
+    "unknown": 0
+  },
+  "all_member_hashes_verified": true,
+  "extracted_after_verification": true,
+  "nix_evaluation_performed": false,
+  "production_access": false
+}

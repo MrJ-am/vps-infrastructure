@@ -13,7 +13,7 @@
   "production_nixos_configuration": null,
   "installed_source_commit": null,
   "installed_generation": null,
-  "system_state_version": null,
+  "system_state_version": "26.05",
   "change_state_version": false,
   "copy_hardware_from_spectre": false,
   "observed_report_sha256": "10b715d88958c531ebfde7c2c6e7d10486e003d9d602ed84f0e96a655121b898",
@@ -96,5 +96,20 @@
     "imports": null,
     "reported_spectre_root_authorization_scope": "Only the four already completed metadata commands",
     "cloud_access_authorized": false
+  },
+  "system_state_version_basis": "Explicit declaration in received machine source; not inferred from nixpkgs and not authenticated against the running generation",
+  "installed_state_version_verified": false,
+  "received_configuration": {
+    "receipt": "operations/received/20261101/vps-reviewed-sources/receipt.json",
+    "archive_sha256": "1163b09a85c37a158ca787100b792b85da12acc0398b76bc7ce91201a610abdb",
+    "authority": "user-authorized-agent-reviewed-code-only-declaration",
+    "entrypoint": "etc/nixos/configuration.nix",
+    "state_version": "26.05",
+    "state_version_source": "root/vision-semantique/32a4c3d2ad0e39568fe16d7acdb2472a7f095fc2/source/hosts/hostinger/configuration.nix",
+    "declared_graph_complete": false,
+    "generation_binding": "unverified",
+    "files": 137,
+    "redacted_files": 15,
+    "cloud_production_access_authorized": false
   }
 }
