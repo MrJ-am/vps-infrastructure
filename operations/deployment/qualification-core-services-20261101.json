@@ -1,0 +1,374 @@
+{
+  "authority": "local-tests-and-bounded-ssh-observation",
+  "evaluation": {
+    "6f": {
+      "dedicatedPeerBlocksPresent": true,
+      "exactCoreRoutes": true,
+      "exactPostgresqlMajorAndDirectory": true,
+      "executableClosuresRetained": true,
+      "existingCertificatesReferenced": true,
+      "forgejoAssetsRetained": true,
+      "forgejoProxy": true,
+      "identityAdministrationNotPublished": true,
+      "identityTlsVerified": true,
+      "localOnlyPostgres": true,
+      "nextcloudUpgradeRemainsExplicit": true,
+      "noImplicitServicePromotion": true,
+      "noImplicitSqlProvisioning": true,
+      "noVise": true,
+      "postgresCannotInitializeEmptyState": true,
+      "postgresTerminalReject": true,
+      "retainedForgejoIdentity": true,
+      "retainedKanidmIdentity": true,
+      "retainedNextcloudIdentity": true,
+      "retainedPostgresIdentity": true,
+      "sqlBootstrapRefused": true,
+      "unknownHostRefused": true,
+      "validComposition": true
+    },
+    "c5": {
+      "dedicatedPeerBlocksPresent": true,
+      "exactCoreRoutes": true,
+      "exactPostgresqlMajorAndDirectory": true,
+      "executableClosuresRetained": true,
+      "existingCertificatesReferenced": true,
+      "forgejoAssetsRetained": true,
+      "forgejoProxy": true,
+      "identityAdministrationNotPublished": true,
+      "identityTlsVerified": true,
+      "localOnlyPostgres": true,
+      "nextcloudUpgradeRemainsExplicit": true,
+      "noImplicitServicePromotion": true,
+      "noImplicitSqlProvisioning": true,
+      "noVise": true,
+      "postgresCannotInitializeEmptyState": true,
+      "postgresTerminalReject": true,
+      "retainedForgejoIdentity": true,
+      "retainedKanidmIdentity": true,
+      "retainedNextcloudIdentity": true,
+      "retainedPostgresIdentity": true,
+      "sqlBootstrapRefused": true,
+      "unknownHostRefused": true,
+      "validComposition": true
+    }
+  },
+  "failed_attempts": [
+    {
+      "number": 1,
+      "reason": "unused import rejected by test-script lint before guest execution"
+    },
+    {
+      "number": 2,
+      "reason": "synthetic Forgejo parent directory ownership missing"
+    },
+    {
+      "number": 3,
+      "reason": "postgresql.target stop returned while checkpoint was still running; tar refused changed files"
+    }
+  ],
+  "independent_review": false,
+  "limits": [
+    "No complete VPS generation or cutover controller is qualified",
+    "No real SSO, account or application data adoption is inferred",
+    "The paired return only applies before reopening production writes",
+    "Rust/Elm and worker archives remain unavailable locally; Forgejo requires sign-in",
+    "Current identity verification is provided by the legacy monolith, not the expected loopback mrj-auth-v1 listener",
+    "ACME renewal, full service graph and protected Forgejo/CI adoption remain to be composed and qualified",
+    "ViSe is excluded; its persistent data is preserved"
+  ],
+  "local_log_sha256": {
+    "core-and-packages-path-info.json": "d280688a348849846d024b6ba485975cc8c61fb9cc2f3b38c42fd9c873590e6e",
+    "core-and-packages-verify.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-runtime-attempt1.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-runtime-attempt1.log": "2fd3a547beda5f270544e684991e876fcb220d0356fb7dc91ddedb5f89da7c9c",
+    "core-runtime-attempt2.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-runtime-attempt2.log": "b4ed9913cdccc6fd9a35b7765ba0ee39e8de38d6dcb309b9b6c112f89c637394",
+    "core-runtime-attempt3.json": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-runtime-attempt3.log": "3237fefc277a6a771b8c0d957caf98d9edd337992adb04e3ccf4a4a913ce95c0",
+    "core-runtime-attempt4.json": "67fe4e07d3d2dce6f961a78f8be3c30ea81cada868e4a8b0568addbf19167dc7",
+    "core-runtime-attempt4.log": "006907d349d13db5aa7d8af2899909bb4bfe888b93296b58254b0c33988054aa",
+    "core-runtime-success.log": "77a70dc003b5ff4ba36b93b677dc2be69b26f3ffaba48caea51ce107cc376c91",
+    "core-services-evaluation-6f-final.json": "c948206839b89ad81c5c2f44ffada484b680538c3fa962d382fdab971311e4cd",
+    "core-services-evaluation-6f-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-services-evaluation-6f.json": "3d083d45d28d8f665cb197b707d31fc569486c979a13c6b1ebdc09d0fa888ebb",
+    "core-services-evaluation-6f.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-services-evaluation-c5-final.json": "c948206839b89ad81c5c2f44ffada484b680538c3fa962d382fdab971311e4cd",
+    "core-services-evaluation-c5-final.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-services-evaluation-c5.json": "3d083d45d28d8f665cb197b707d31fc569486c979a13c6b1ebdc09d0fa888ebb",
+    "core-services-evaluation-c5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-services-flake.json": "c948206839b89ad81c5c2f44ffada484b680538c3fa962d382fdab971311e4cd",
+    "core-services-flake.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "preflight-tests.log": "2580d468aa4a624cf8b3bcda622ce559a59dd8c548a23914e124efde9c703574",
+    "preserved-packages-online-build.json": "9ae02b71d4ec3aaddc6cd6f9e7bb3fa0b728db5d2b13e7f98b1eaac6710e385a",
+    "preserved-packages-online-build.log": "812c63b519abe2549a3621d1c5d603123168a2920c4d66996f8d81ae064f934e"
+  },
+  "local_path_info": {
+    "/nix/store/1si82c0hc3nrdmikgjfv3lkbddxa82dn-php-with-extensions-8.4.27": {
+      "ca": null,
+      "deriver": "/nix/store/04zzx3gb3x4pmb6ih8g0xayxf9bai548-php-with-extensions-8.4.27.drv",
+      "narHash": "sha256-pNiLNGWzvIu/hBaP6Hq4OfFBBqv3cs1Z70Oh8p3KNas=",
+      "narSize": 126976,
+      "references": [
+        "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+        "/nix/store/1si82c0hc3nrdmikgjfv3lkbddxa82dn-php-with-extensions-8.4.27",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/ja62hs5llcw4vjmnpsw8m1h8b6jm73sk-php-8.4.27",
+        "/nix/store/s5kqacb2kd47lz616p8n5lknq04mjy9l-php-extra-init-8.4.27.ini"
+      ],
+      "registrationTime": 1793563551,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/3yy7xd3k8h4b27kk00hb48hd2inhsw5q-vm-test-run-mrjam-core-services-coherent-return-synthetic": {
+      "ca": null,
+      "deriver": "/nix/store/b6fr7lxf7c6bnhqqpishlclpriq4p1zr-vm-test-run-mrjam-core-services-coherent-return-synthetic.drv",
+      "narHash": "sha256-2/TS6iYKE3XbGRQa5KWhBlGtrbeyMaIIRaGbIoxL8Ow=",
+      "narSize": 992,
+      "references": [],
+      "registrationTime": 1793564888,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/5p389x8g97plrfvfrcdjzvz8rmy6ip1y-nextcloud-34.0.4": {
+      "ca": null,
+      "deriver": "/nix/store/v9qysnpjszwni0iiaanzcpnlvygmbkxc-nextcloud-34.0.4.drv",
+      "narHash": "sha256-xWlepVHUHGG5UNETFPtizIUI8UyzCWB4Pxvvct7hW0I=",
+      "narSize": 782958976,
+      "references": [],
+      "registrationTime": 1793563620,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2": {
+      "ca": null,
+      "deriver": "/nix/store/4w9wxwqqdvkdqn2dgxgqrwzmnm82bl85-kanidm-1.11.2.drv",
+      "narHash": "sha256-xrEAG1GGtqg/JC1Y/3iBNBIsq+a7bfp4nK2IyuUra8g=",
+      "narSize": 175489248,
+      "references": [
+        "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+        "/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/ddfagd4llkbv8p3cblpa3bxvn6l538yl-systemd-minimal-libs-260.5",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/v3n5aklhc7s1nhj053r6c2lnz7q3nfzy-linux-pam-1.7.2"
+      ],
+      "registrationTime": 1793563555,
+      "signatures": [
+        "cache.nixos.org-1:w9kXK0I5xR0pjueAdshNPN45Zn9yRgeyFVqOEiApQVUPYd9X/u0Tbc2nMEU1mRJcL8H0wojqJOOqNIzi+5Q/BQ=="
+      ],
+      "storeDir": "/nix/store",
+      "ultimate": false,
+      "version": 1
+    }
+  },
+  "nixpkgs": {
+    "application": {
+      "nar_hash": "sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE=",
+      "rev": "6f06d204d8f2d8761d9da78778745974a3216381"
+    },
+    "host": {
+      "nar_hash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+      "rev": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb"
+    }
+  },
+  "observed": {
+    "accounts": {
+      "acme": {
+        "gid": 995,
+        "state": "observed",
+        "uid": 996
+      },
+      "audition": {
+        "state": "absent"
+      },
+      "forgejo": {
+        "gid": 982,
+        "state": "observed",
+        "uid": 982
+      },
+      "kanidm": {
+        "gid": 983,
+        "state": "observed",
+        "uid": 983
+      },
+      "matheval": {
+        "gid": 994,
+        "state": "observed",
+        "uid": 995
+      },
+      "mrj-auth": {
+        "gid": 991,
+        "state": "observed",
+        "uid": 991
+      },
+      "nextcloud": {
+        "gid": 990,
+        "state": "observed",
+        "uid": 990
+      },
+      "nginx": {
+        "gid": 60,
+        "state": "observed",
+        "uid": 60
+      },
+      "postgres": {
+        "gid": 71,
+        "state": "observed",
+        "uid": 71
+      },
+      "vision": {
+        "gid": 993,
+        "state": "observed",
+        "uid": 993
+      },
+      "vision-auth": {
+        "state": "absent"
+      },
+      "vision-embeddings": {
+        "gid": 64611,
+        "state": "observed",
+        "uid": 64611
+      }
+    },
+    "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+    "generation_matches_previous": true,
+    "identity_unauthenticated_http_status": {
+      "verify": null,
+      "verify-gestion": null,
+      "verify-mcp": null
+    },
+    "nginx": {
+      "identity_port_3002_declared": false,
+      "nextcloud_webroots": [
+        "/nix/store/l9xw3zmd1ad2a26z0lng0bsiq1ia5s02-nextcloud-34.0.4-with-apps"
+      ],
+      "public_domains": [
+        "audition.mrj.am",
+        "cloud.mrj.am",
+        "forge.mrj.am",
+        "log.mrj.am",
+        "vise.mrj.am",
+        "vision.mrj.am"
+      ],
+      "state": "observed"
+    },
+    "postgres_major_17": true,
+    "production_data_read": false,
+    "production_mutation": false,
+    "recorded_at_utc": "2026-11-01T20:27:50.045491+00:00",
+    "secrets_read": false,
+    "units": {
+      "forgejo-backup": {
+        "active": false,
+        "loaded": true,
+        "state": "observed"
+      },
+      "mrj-auth": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      },
+      "nextcloud-backup": {
+        "active": false,
+        "loaded": true,
+        "state": "observed"
+      },
+      "vision-admission": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      },
+      "vision-archive": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      },
+      "vision-closure": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      },
+      "vision-cycle": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      },
+      "vision-embeddings": {
+        "active": true,
+        "loaded": true,
+        "state": "observed"
+      },
+      "vision-replay": {
+        "active": false,
+        "loaded": false,
+        "state": "observed"
+      }
+    }
+  },
+  "preflight_boundary_tests": {
+    "passed": 8,
+    "production_access": false
+  },
+  "preflight_report_sha256": "31c447809a537a027b2d60cf19950d4c07073ab7e51f6ae44c65616c8847d4e8",
+  "production_deployed": false,
+  "production_qualification": false,
+  "runtime": {
+    "acceleration": "kvm",
+    "derivation": "/nix/store/b6fr7lxf7c6bnhqqpishlclpriq4p1zr-vm-test-run-mrjam-core-services-coherent-return-synthetic.drv",
+    "duration_seconds": 65.02,
+    "groups": 6,
+    "output": "/nix/store/3yy7xd3k8h4b27kk00hb48hd2inhsw5q-vm-test-run-mrjam-core-services-coherent-return-synthetic",
+    "result": {
+      "checks": [
+        "no-cluster-or-application-bootstrap",
+        "explicit-fixtures-for-three-real-applications",
+        "three-https-services-shared-database-and-cross-role-refusals",
+        "tls-verification-and-local-password-refusals",
+        "quiescent-cluster-and-files-capture",
+        "paired-offline-state-return-before-reopening-writes"
+      ],
+      "limits": [
+        "No full VPS machine or Rust application generation",
+        "No positive SSO or real account adoption",
+        "Return is qualified only while production writes remain closed",
+        "Certificates, SQL and files are invented"
+      ],
+      "production_access": false,
+      "production_qualification": false,
+      "schema_version": 1,
+      "scope": "synthetic-common-host-with-real-packages",
+      "vise_included": false
+    }
+  },
+  "schema_version": 1,
+  "scope": "shared-core-services-preparation-without-vise",
+  "source_commit": "17374ce6c21ee0c20dee11d22219deed4b943cb0",
+  "source_sha256": {
+    "flake.nix": "8f51ffc929c52e73980eb62dd1b94730fc6730fb0722394a3b71d45e61c7481f",
+    "operations/deployment/DEMANDE-EXPORTS-CLOUD.txt": "3aeb2e36d57e81e938b3b688255764b9242b2665275ce7b8a1139b9f9a9230fe",
+    "operations/deployment/ETAT-20261101.org": "d325bf5cce44b43fb9765fef85d85c1fb935ae80bb14c743e71b268a7431dbff",
+    "operations/deployment/preflight.py": "162a14b0f026f923174c88990ac6e9179f051fb83230d1bf01c7dd8748edcc29",
+    "operations/deployment/test_preflight.py": "fc4bfb2c2a2a78ec8e73a60b7e78b5551921c1d8189aefc4fbb518ea5752248e",
+    "operations/hosts/mrjam-vps/README.org": "d869da644432279478a42d7ac76ed86703cad6b6579d4dc60650eb17b2f52465",
+    "operations/hosts/mrjam-vps/core-services.nix": "930c6f2ca2c80371591208efe5df583acbcabe876c14d66118ff1f99a1ebc2d9",
+    "operations/runtime/core-services-systemd.nix": "a3e2ef38538cdd67879150d8208534f92cad3b38bfbed0a9a72f6dd26f4814e5",
+    "operations/tests/core-services-evaluation.nix": "06d08bcdcbb42f9ed501b7060089a2fcc3a802e8f71f43f105b40f2422b06c18"
+  },
+  "source_tree": "6c76218aa9baa4b236d5232837fd77b738f9340b",
+  "store_contents_verification": {
+    "command": "nix-store --verify-path",
+    "paths": [
+      "/nix/store/3yy7xd3k8h4b27kk00hb48hd2inhsw5q-vm-test-run-mrjam-core-services-coherent-return-synthetic",
+      "/nix/store/5p389x8g97plrfvfrcdjzvz8rmy6ip1y-nextcloud-34.0.4",
+      "/nix/store/1si82c0hc3nrdmikgjfv3lkbddxa82dn-php-with-extensions-8.4.27",
+      "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2"
+    ],
+    "status": "passed"
+  }
+}
