@@ -1,6 +1,18 @@
 #+title: Sources remises depuis Spectre, conservées octet pour octet
 #+language: fr
 
+Le retour =20261101/services-v1.json= du collecteur corrigé V2 est conservé
+dans ses 2 376 octets exacts. =provenance-services-20261101.json= lie son
+empreinte et sa validation au filtre livré. Les sept unités sont rapportées
+actives, avec six identités d'exécutables/NAR et les six UID/GID ; l'exécutable
+ViSe reste inconnu. Les identités alimentent les modules candidats désactivés.
+Voir [[file:../targets/SERVICES-OBSERVES-20261101.org][le rapprochement des services]] pour la migration Forgejo 16.0.3 vers
+17.0.1 et les limites ViSe/Nextcloud. Ce retour reste une observation non
+authentifiée, pas une preuve de disponibilité ni une génération qualifiée.
+La commande V2 a été exécutée sur Spectre par l'agent avec l'autorisation
+explicite de l'utilisateur pour cette seule commande ; les étapes rapportées
+par l'agent ne constituent pas une attestation indépendante.
+
 Les retours =20261101/RETOUR-SOURCES-SPECTRE.txt= et
 =20261101/RESULTAT-COMMANDES-SPECTRE.txt= sont conservés octet pour octet.
 =provenance-source-search-20261101.json= lie leurs empreintes calculées à

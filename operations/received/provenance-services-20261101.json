@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "received_on": "2026-11-01",
+  "authority": "unverified_observation",
+  "authenticated": false,
+  "filename": "20261101/services-v1.json",
+  "bytes": 2376,
+  "sha256": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2",
+  "delivery_commit": "b25fbe4a6fb5978ba8d94365605749bbe37beb4b",
+  "delivery_archive_sha256": "24e7e18db366343b82bd65652903cbf586d50d5db7105b10e69a7877c635efee",
+  "validator_source_commit": "d2c6cede051e9c04515c32d19b0ff8560d2c53db",
+  "validator_files": {
+    "contract.py": "9eaeb8adb0774e6b6dfb03591b5332a0833bcc71f433e382e50d169ec6fd86fc",
+    "validate_report.py": "ff84a9bb736a7770bad11d94b588eafcdd8c525730a1ac443a22f25aa3f3c54d"
+  },
+  "validator_exit_code": 0,
+  "canonical_output_matches_received_bytes": true,
+  "execution": {
+    "authority": "agent-reported-execution-not-independent-attestation",
+    "authorized_scope": "Only the exact prepared V2 command; already completed",
+    "exit_code": 0,
+    "command_sha256": "96e132843673747a5be3c09085e608b0b445eb6d52b9602abe60339ce0cedd02",
+    "launcher_sha256": "842799ea3d7fef63e91b3ad0e706053b732576ad174323bdb231242a78b10bb6",
+    "collector_closure_check": "STORE_METADATA_MATCH reported by the authorized execution",
+    "application_nar_contents_verified": false,
+    "production_activation": false
+  },
+  "limits": [
+    "Format, hashes and agent execution receipts are not independent authentication",
+    "Active systemd units are not application health or end-to-end tests",
+    "Six executable identities are observations of store paths and NAR registry metadata, not qualified replacement artifacts",
+    "ViSe executable remains unknown; the received code suggests an external-store release but the live path was not observed",
+    "PHP-FPM identity does not identify Nextcloud webroot or extensions",
+    "No source-to-running-generation binding or continuous generation identity is established",
+    "No further production access is authorized by this report"
+  ]
+}

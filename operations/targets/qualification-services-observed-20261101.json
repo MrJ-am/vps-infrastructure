@@ -1,0 +1,31 @@
+{
+  "base_commit": "d2c6cede051e9c04515c32d19b0ff8560d2c53db",
+  "report_sha256": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2",
+  "checks": {
+    "report_filter": "passed, exact canonical bytes",
+    "validator_git_blob_identities": "both match pinned source commit",
+    "identity_module_evaluation": "passed, four UID/GID pairs match report",
+    "no_enable_or_artifact_setting_in_identity_module": "passed",
+    "altered_report_hash_rejected": "passed",
+    "configuration_nix_parse": "passed",
+    "json_syntax": "passed"
+  },
+  "not_run": [
+    "full NixOS host evaluation",
+    "VM tests",
+    "production activation",
+    "application health tests"
+  ],
+  "tooling_note": "nix-instantiate does not accept --offline on this workstation; corrected invocation evaluates only local data and builtins without fetching or building",
+  "files": {
+    "operations/runtime/ADOPTION-SERVICES.org": "a1e33d913cad9e86038977ebd8f1ed7104a88c860ab1c20e668219083985348a",
+    "operations/received/README.org": "8f5f41bff1e92fcd3252e1d9de05b0c181525e0a3e34941a6e7407d0c09f5209",
+    "operations/targets/mrjam-vps.json": "8060882ebc2336a31e7de9a7bccb8620da2480cc7efada25126536adbb5d33c1",
+    "operations/hosts/mrjam-vps/configuration.nix": "0fdbef3ea93ad4e7277aaa82b672ce339d433a63f4501e0cc0fe9bc9b29757b7",
+    "operations/hosts/mrjam-vps/README.org": "29249fcca8f23155b2a5e65481ad87f52832036fdd462be7f278702028054f62",
+    "operations/hosts/mrjam-vps/observed-service-identities.nix": "49561595fde0343b7667eb6435704ea1e9de27eab2c10302baf5d87420332f6e",
+    "operations/targets/SERVICES-OBSERVES-20261101.org": "8f51bae2df1d6ba388e85665c29ddf8ea7850cb28e524ca49edc32a21530908e",
+    "operations/received/20261101/services-v1.json": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2",
+    "operations/received/provenance-services-20261101.json": "3105e75df11930da88c3253206403536a39d085e5cb8a21b31f6b53ddc2826ef"
+  }
+}

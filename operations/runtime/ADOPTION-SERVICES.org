@@ -10,6 +10,12 @@ encore une génération complète installable : les builds et identités actifs,
 l'adoption des données, la chaîne d'approbation protégée et le contrôleur de
 bascule doivent être rapprochés des artefacts effectivement testés.
 
+Le [[file:../targets/SERVICES-OBSERVES-20261101.org][retour services V2]] fournit désormais les six UID/GID, six identités
+d'exécutables/NAR et sept unités actives. Les quatre modules d'adoption reçoivent
+les identités observées dans la composition préparatoire, avec vérification de
+l'empreinte du rapport. ViSe reste inconnu ; PHP-FPM n'identifie pas le webroot
+Nextcloud. Le rapport ne prouve pas la disponibilité fonctionnelle des services.
+
 Les trois modules =mrjam-forgejo-host.nix=, =mrjam-kanidm-host.nix= et
 =mrjam-nextcloud-host.nix= sont inertes par défaut. Ils imposent les UID/GID
 existants à l'activation. Les unités applicatives sont installées sans démarrage
@@ -21,11 +27,11 @@ constitue pas une capacité de bascule indépendante de Nginx.
 
 | Composant | Cible préparée | Justification et limite |
 |-----------+----------------+-------------------------|
-| Forgejo | 17.0.1, nixpkgs applicatif 6f06d204 | Candidat Forgejo/runner déjà verrouillé ; le build installé reste à observer. Une éventuelle montée depuis 16.x exige une qualification distincte. |
+| Forgejo | 17.0.1, nixpkgs applicatif 6f06d204 | Le retour V2 indique une sortie Forgejo 16.0.3. La migration 16.0.3 vers 17.0.1 et son retour exigent une qualification distincte. |
 | PostgreSQL | majeure 17, tests avec 17.11 | Majeure observée et partagée, sans création d'une seconde instance ni changement de dataDir par les modules. |
-| Kanidm | 1.11.2, même entrée applicative | Version déclarée par le code remis ; ce n'est pas une observation du processus. Aucun renommage de domaine ni provisioning automatique. |
+| Kanidm | 1.11.2, même entrée applicative | Version déclarée et sortie 1.11.2 observée ; identité exacte du candidat à comparer. Aucun renommage de domaine ni provisioning automatique. |
 | Nextcloud | 34.0.4 | Archive et empreinte conservées depuis le code reçu ; assemblage fondé sur l'entrée c5c4a43b. |
-| PHP | 8.4.27 | Préserve le correctif déclaré, avec les extensions du module Nextcloud. |
+| PHP | 8.4.27 | Préserve le correctif déclaré et la version nominale du processus PHP-FPM observé ; cela n'identifie pas Nextcloud ni ses applications. |
 | user_oidc | 8.10.1 | Paquet de l'entrée c5c4a43b ; PKCE et absence d'auto-provisioning conservés. |
 | ViSe | source d'origine 65bbd8c5, adoption 8c8ef66f | Service autonome, aucun raccord SSO/monolithe ; les sources cryptographiques et SQL v1 sont inchangées. |
 
@@ -138,8 +144,10 @@ peut être retenu. Aucun reçu local ne remplace une revue indépendante protég
 
 | Inconnue ou contrôle manquant | Preuve minimale et chemin autorisé |
 |-----------------------------+-------------------------------------|
-| Identités et builds actifs | Retour =services-v1.json= du paquet corrigé =../bootstrap-services-v2/= (V1 retirée après revue mémoire), sans commandes libres ni données. Autorité toujours observation non authentifiée. |
-| ViSe installé hors store | Identité du code à établir par un contrôle fixe du seul exécutable ViSe, intégré au futur précontrôle opérateur. Le rapport V1 ne lit pas ce binaire et retournera un build inconnu. |
+| Identités et builds actifs | Retour V2 reçu : six UID/GID et six sorties/NAR. Paramètres candidats renseignés, autorité non authentifiée conservée. Rapprocher les artefacts exacts et revalider les préconditions lors de l'adoption, sans répéter le relais général. |
+| Forgejo 16.0.3 vers 17.0.1 | Qualifier migration et retour sur ces deux versions ; les seuls tests d'une instance neuve 17.0.1 ne prouvent pas la transition. |
+| ViSe, exécutable inconnu | Le code reçu prévoit une release hors store, exclue du contrat V2. Le retour ne confirme pas le chemin effectif. Identifier le seul exécutable ViSe par un contrôle fixe intégré au futur précontrôle opérateur. |
+| Nextcloud et ses applications | PHP 8.4.27 est observé ; le webroot et les applications ne sont pas identifiés par l'exécutable PHP-FPM. Rapprocher leurs références dans le précontrôle d'adoption. |
 | Schémas et droits existants | Contrôles fixes exécutés localement par la future capacité bornée, retour de codes seulement ; aucun SQL arbitraire transmis à Cloud. |
 | Sauvegardes et restaurations réelles | Reçu fermé du mécanisme autorisé, capture cohérente avec écritures arrêtées, destination et clés conservées côté opérateur. Aucune sauvegarde ne quitte la production vers les agents. |
 | SSO, droits des dépôts et CI | Parcours synthétiques de bout en bout puis contrôles bornés des droits effectifs, dans une autorité distincte du candidat. |

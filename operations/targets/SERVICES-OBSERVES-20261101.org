@@ -1,0 +1,79 @@
+#+title: Services observés et suite de l'adoption
+#+date: 2026-11-01
+#+language: fr
+
+* Résultat utilisable
+
+Le retour filtré du collecteur V2 est conservé octet pour octet dans
+=../received/20261101/services-v1.json=. Ses 2 376 octets ont pour SHA-256
+=b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2=.
+Le reçu =../received/provenance-services-20261101.json= lie les octets au filtre
+livré et distingue l'exécution rapportée par l'agent d'une preuve signée.
+L'autorité reste =unverified_observation=.
+
+Les sept unités sont rapportées actives. Six exécutables ont un chemin store
+et des métadonnées NAR ; ViSe reste inconnu. L'état systemd =active= ne prouve
+ni disponibilité HTTP, ni fonctionnement SSO, ni conformité de la production.
+Les noms des sorties store donnent les versions ci-dessous ; le collecteur
+n'a pas exécuté les applications pour demander leur version et n'a pas
+vérifié le contenu NAR de leurs exécutables.
+
+| Service | Sortie observée | Suite utile |
+|---------+-----------------+-------------|
+| Forgejo | 16.0.3 | La cible impose 17.0.1. Qualifier explicitement migration et retour 16.0.3 vers 17.0.1 ; ne pas remplacer par simple redémarrage. |
+| Kanidm | 1.11.2 | Version nominale conservée ; comparer l'artefact candidat exact et qualifier l'adoption de l'état existant. |
+| PHP-FPM Nextcloud | PHP 8.4.27 | Version nominale conservée. Ce processus n'identifie pas le webroot Nextcloud ni ses applications. |
+| PostgreSQL | 17.11 | Majeure 17 conservée ; préserver l'instance partagée et qualifier droits et schémas. |
+| Nginx | 1.30.4 | Préserver le routage ; qualifier le graphe complet avant bascule. |
+| mrjam-metier | suffixe fb5b7e217822 | Identité store/NAR disponible. Le suffixe seul n'authentifie pas un commit ni la compatibilité du remplaçant. |
+| ViSe | inconnu, unité active | Identifier le seul exécutable installé dans le précontrôle ciblé, avec le retour et les schémas ; inutile de répéter l'observation générale. |
+
+La génération a un chemin et des métadonnées NAR dans ce retour. Son préfixe
+store correspond à ceux des observations antérieures ; cela ne prouve ni
+continuité de génération, ni lien avec les sources remises, ni authenticité.
+=installed_generation= et =installed_source_commit= restent inconnus.
+
+* Identités utilisées dans la préparation
+
+| Compte | UID | GID | Utilisation |
+|--------+-----+-----+-------------|
+| etp_carnet | 981 | 981 | Paramètres du module ViSe désactivé |
+| forgejo | 982 | 982 | Paramètres du module Forgejo désactivé |
+| kanidm | 983 | 983 | Paramètres du module Kanidm désactivé |
+| mrjam-metier | 984 | 984 | Conservés dans le rapport ; pas assimilés aux nouveaux slots Rust |
+| nextcloud | 990 | 990 | Paramètres du module Nextcloud désactivé |
+| postgres | 71 | 71 | Conservés dans le rapport ; aucune recréation de l'instance partagée |
+
+=../hosts/mrjam-vps/observed-service-identities.nix= lit ces quatre identités
+directement dans le rapport après contrôle de son empreinte. Le point d'entrée
+préparatoire l'importe. Aucun paquet actif n'est adopté comme artefact qualifié
+sur la seule foi du rapport. Les déclarations historiques du profil reçu
+restent intactes ; les valeurs inventées des fixtures restent synthétiques.
+
+* Pourquoi ViSe n'est pas identifié
+
+Le code remis =etc/nixos/vise-hosting/module.nix= construit son ExecStart avec
+=/var/lib/vise/releases/${target.sha256}/server=. Le contrat de l'observateur
+n'accepte que les exécutables sous =/nix/store/=. Le dossier d'adoption
+prévoyait déjà cette limite avant l'exécution.
+
+C'est une explication cohérente avec les sources, pas une lecture du chemin
+réel du processus : plusieurs causes peuvent produire les champs =null=.
+Ni =target.json=, ni le binaire, ni les données ViSe n'ont été récupérés par
+ce canal. Ne pas inventer d'empreinte ni déplacer le binaire pour obtenir 7/7.
+
+* Travail restant regroupé
+
+1. Exploiter ce retour dans le dépôt, sans refaire le relais services V2 :
+   identités candidates, comparaison des sorties/NAR et migration Forgejo.
+2. Fermer la composition et qualifier les migrations, SSO, sauvegardes et
+   restaurations dans les essais synthétiques. Conserver le contrat autonome
+   de ViSe et son registre d'effacement lors du retour.
+3. Regrouper les seules inconnues de production restantes dans le précontrôle
+   opérateur fixe : identité ViSe, adoption des états, génération, identités
+   et sauvegardes. Concevoir, tester et revoir ce contrôle avant exécution.
+4. Livrer les artefacts exacts et la procédure de bascule/retour qualifiée.
+
+Ce lot n'est pas une génération déployable. L'autorisation SSH précédente
+concernait l'unique commande du relais V2 déjà exécutée ; ce retour ne crée
+aucun nouvel accès de production.
