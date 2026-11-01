@@ -65,7 +65,8 @@ def manifest(raw):
                   "declared_state_version", "declared_graph_complete", "generation_binding", "files"))
     require(type(value["schema_version"]) is int and value["schema_version"] == 1, "INVALID_VERSION")
     require(value["operation"] == "mrjam-reviewed-configuration-sources-v1"
-            and value["authority"] == "human-reviewed-code-only-declaration"
+            and value["authority"] in ("human-reviewed-code-only-declaration",
+                                       "user-authorized-agent-reviewed-code-only-declaration")
             and value["target"] == "mrjam-vps" and value["generation_binding"] == "unverified",
             "INVALID_SCOPE")
     require(type(value["declared_graph_complete"]) is bool, "INVALID_GRAPH_DECLARATION")
