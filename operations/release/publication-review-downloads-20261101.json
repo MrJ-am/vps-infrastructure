@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-11-01",
+  "scope": "Publication of existing public review exports; deployment remains with Spectre",
+  "repository": "MrJ-am/vps-infrastructure",
+  "branch": "exports-revue-20261031-files",
+  "commit": "b829cbdc5795097f88baff33e1a6edc6d45b40b4",
+  "storage": "GitHub LFS",
+  "forgejo_checks": [
+    {
+      "method": "HEAD",
+      "url": "https://forge.mrj.am/",
+      "http_status": 200
+    },
+    {
+      "method": "HEAD",
+      "url": "https://forge.mrj.am/api/v1/repos/MrJ-am/vps-infrastructure/releases?limit=1",
+      "http_status": 403
+    }
+  ],
+  "github_release_attempt": {
+    "upload_http_status": 401,
+    "release_id": 430844521,
+    "empty_unpublished_draft_removed": true
+  },
+  "archives": [
+    {
+      "url": "https://media.githubusercontent.com/media/MrJ-am/vps-infrastructure/b829cbdc5795097f88baff33e1a6edc6d45b40b4/mrjam-artefacts-revue-20261031.tar",
+      "bytes": 48640000,
+      "sha256": "5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff",
+      "curl_exit_code": 0,
+      "diagnostic": "",
+      "authorization_header_supplied": false,
+      "name": "mrjam-artefacts-revue-20261031.tar",
+      "original_receipt_sha256_match": true,
+      "tar_members_verified": 14,
+      "internal_checksums_verified": true,
+      "manifest_and_decompressed_export_verified": true
+    },
+    {
+      "url": "https://media.githubusercontent.com/media/MrJ-am/vps-infrastructure/b829cbdc5795097f88baff33e1a6edc6d45b40b4/mrjam-travailleurs-revue-20261031-03.tar",
+      "bytes": 107653120,
+      "sha256": "08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c",
+      "curl_exit_code": 0,
+      "diagnostic": "",
+      "authorization_header_supplied": false,
+      "name": "mrjam-travailleurs-revue-20261031-03.tar",
+      "original_receipt_sha256_match": true,
+      "tar_members_verified": 17,
+      "internal_checksums_verified": true,
+      "manifest_and_decompressed_export_verified": true
+    }
+  ],
+  "rebuild_performed": false,
+  "production_access": false,
+  "production_activation": false,
+  "deployment_owner": "Spectre"
+}

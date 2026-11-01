@@ -1,0 +1,44 @@
+#+title: Téléchargement des exports de revue du 31 octobre 2026
+#+language: fr
+#+date: 2026-11-01
+
+Les exports originaux sont disponibles dans Git LFS, sans reconstruction ou
+modification. Leurs téléchargements complets ont été vérifiés contre les SHA-256
+des reçus d'origine. Le déploiement reste à la charge de Spectre.
+
+Forgejo répond 200 sur l'accueil, mais son API de releases répond 403 depuis
+Cloud : la disponibilité des archives sur Forgejo n'est pas établie.
+L'envoi de pièces jointes GitHub Release a renvoyé 401 ; le brouillon vide créé
+pour cet essai a été supprimé. Git LFS a permis la publication des deux fichiers,
+dont celui des travailleurs dépasse la limite d'un blob Git ordinaire.
+
+* Liens figés et empreintes
+
+- [[https://media.githubusercontent.com/media/MrJ-am/vps-infrastructure/b829cbdc5795097f88baff33e1a6edc6d45b40b4/mrjam-artefacts-revue-20261031.tar][mrjam-artefacts-revue-20261031.tar]] — 48640000 octets.
+  SHA-256 : =5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff=.
+- [[https://media.githubusercontent.com/media/MrJ-am/vps-infrastructure/b829cbdc5795097f88baff33e1a6edc6d45b40b4/mrjam-travailleurs-revue-20261031-03.tar][mrjam-travailleurs-revue-20261031-03.tar]] — 107653120 octets.
+  SHA-256 : =08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c=.
+
+Sommes externes :
+[[https://raw.githubusercontent.com/MrJ-am/vps-infrastructure/b829cbdc5795097f88baff33e1a6edc6d45b40b4/SHA256SUMS][SHA256SUMS]].
+
+Ces URL media.githubusercontent.com livrent les octets des archives ;
+un pointeur Git LFS téléchargé depuis un autre endpoint n'est pas une archive.
+
+* Contrôle avant utilisation
+
+Vérifier les empreintes externes avant toute extraction dans deux dossiers
+distincts, puis toutes les entrées SHA256SUMS de chaque archive. Les archives
+contiennent des noms de membres communs : ne pas les fusionner.
+
+Les 14 et 17 membres, les manifestes et les flux Nix décompressés ont également
+été revérifiés avant publication. Les preuves d'import d'origine n'ont pas été
+réexécutées pour cette simple mise à disposition. Aucune activation n'a été
+effectuée depuis Cloud.
+
+[[file:publication-review-downloads-20261101.json][Le reçu de publication]] conserve les liens et résultats de téléchargement.
+Les sources et limites des exports restent dans
+[[file:REVUE-ARTEFACTS-20261031.org][la revue des artefacts]] et
+[[file:REVUE-TRAVAILLEURS-20261031-03.org][la revue des travailleurs 03]].
+La sélection travailleurs 03 remplace l'ancien archiviste du premier paquet ;
+les autres sorties plateforme, rejeu et SQL004 restent distinctes.
