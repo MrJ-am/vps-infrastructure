@@ -1,0 +1,312 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-01",
+  "scope": "synthetic-migration-and-prewrite-paired-restore-on-Spectre",
+  "authority": "local-qualification-not-independent-production-approval",
+  "source_commit": "a8628d2185337b63cbffddcb4dcf9f3cdfa8de1a",
+  "source_tree": "84847d9f42932ae525312ed9bf5b73cba5c23955",
+  "source_sha256": {
+    "flake.lock": "5f64c74f7702c13e438fd5adc27de85422d1d6cba6fb6ae7375532aebb73a4f0",
+    "operations/runtime/forgejo-postgresql-systemd.nix": "c75ca396b6a53cb2ac4662eaae1fb52f6b37822baac2ce140c20d3c4e60aef4c",
+    "operations/tests/vps-machine-evaluation.nix": "fdec866c2f55c3ac8cf28dec8ef5dfc67358c5b117ed3a38679428c356fe4a82",
+    "operations/hosts/mrjam-vps/configuration.nix": "0fdbef3ea93ad4e7277aaa82b672ce339d433a63f4501e0cc0fe9bc9b29757b7",
+    "operations/hosts/mrjam-vps/machine.nix": "672fd5b145ba90e6718f22064a80363f34c60c4dd4763bc05ef99430fe2e97ff",
+    "operations/hosts/mrjam-vps/observed-service-identities.nix": "49561595fde0343b7667eb6435704ea1e9de27eab2c10302baf5d87420332f6e",
+    "operations/nixos/mrjam-forgejo-host.nix": "4144d04094e00af7433b6f2794eb74058c8acb2d06098b1f5d1b1d5286d8823e",
+    "operations/forgejo/locked-toolchain.nix": "a55760ecaa73c388a109b67a4413b83ad8bb25fa0182261e47d9ad4b408ddecc",
+    "operations/forgejo/schema-contract.json": "677942467ae6f81be5ef1bdff28b0b337c11e7f874425d6fa505b70680dea2e7",
+    "operations/forgejo/check_schema.py": "0f08e18b2a84f286c82a77927d9cfda3271ec0daa802eb25dbb38f5f2290a0e7",
+    "operations/forgejo/schema-check.nix": "a11d76b1188bf8c3dc2b0bb426a0296fb2f4b8e8ca6f37f752c2adaa502864ed",
+    "operations/forgejo/adopt-runtime-role.sql": "4775d8ecfb5bff71b2bbf5bc4ab4ea0c8ba01bf601915d5df09b4bf9c71b4334",
+    "operations/forgejo/settings.nix": "74edce15a2852008b5a4ba4896f2ccd006bad93271740ca43850f7a25d9fc604",
+    "operations/compatibility/nixpkgs-vps-observed.nix": "be4e7927620721e5dadd544f00f898cf1647a2ee7d21c58dcd03d6dbe07399a8",
+    "operations/compatibility/nixpkgs-vps-observed.lock.json": "03e330ae05e217d18712c3201df5303f404f99385e450a5e46fc8b50826a4366",
+    "operations/received/20261101/services-v1.json": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2"
+  },
+  "command": [
+    "nix",
+    "build",
+    "-L",
+    "--no-link",
+    "--json",
+    "--max-jobs",
+    "1",
+    "--cores",
+    "2",
+    "--builders",
+    "",
+    "--file",
+    "operations/runtime/forgejo-postgresql-systemd.nix",
+    "--arg",
+    "nixpkgs",
+    "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+    "--argstr",
+    "acceleration",
+    "kvm"
+  ],
+  "exit_code": 0,
+  "vm": {
+    "derivation": "/nix/store/lk1nfz7lh1wg2nxxp4q0smi4hprsfr88-vm-test-run-mrjam-forgejo-16-to-17-adoption-return-synthetic.drv",
+    "output": "/nix/store/zcdg1xpzxqabphwhbzjw0dxvq74l55cl-vm-test-run-mrjam-forgejo-16-to-17-adoption-return-synthetic",
+    "nar_hash": "sha256-bm+WZiMUW9doFkFjArTSYh8JSc+7KQ1R0cozOxMJh0k=",
+    "nar_size": 2200,
+    "result_sha256": "e7bdbf063295c4a8e5eed19619c6e0aa17eb1c80e1e2db9a49ecee00dab298f9",
+    "content_verification_exit_code": 0,
+    "same_derivation_after_final_source_recheck": true,
+    "duration_seconds": 52.66,
+    "result": {
+      "candidate_store_path": "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+      "checks": [
+        "staged-and-no-implicit-secret-bootstrap",
+        "empty-database-refused-without-schema-write",
+        "observed-forgejo-16-0-3-with-private-repository-issue-and-token",
+        "quiescent-synthetic-database-and-files-captured-before-migration",
+        "real-16-0-3-to-17-0-1-migration-matches-source-derived-contract",
+        "missing-or-symlink-secret-refused-with-compatible-schema",
+        "runtime-ddl-and-schema-owner-impersonation-refused",
+        "missing-or-symlink-repository-directory-refused",
+        "cross-schema-ddl-and-security-definer-capabilities-refused",
+        "older-and-newer-migration-levels-refused",
+        "missing-and-extra-library-migrations-refused",
+        "real-forgejo-17-0-1-on-postgresql-17-with-stable-schema",
+        "private-credentials-and-closed-peer-identity",
+        "immutable-code-only-observation-and-entrypoint-refusals",
+        "restart-retains-state-and-stop-preserves-postgresql",
+        "old-migrator-refuses-new-schema-without-changing-it",
+        "paired-restore-recovers-16-0-3-repository-issue-identity-token-and-secrets"
+      ],
+      "forgejo": "17.0.1",
+      "limitations": [
+        "Synthetic migration and paired restore only; no real credentials, installed schema or SSO identity adopted",
+        "Return qualified only before reopening application writes, not after post-cutover writes",
+        "No production backup, release controller or full system cutover qualified",
+        "Explicit schema migrations require a separate local operator; the runtime role has no DDL privilege"
+      ],
+      "postgresql": "17.11",
+      "previous_forgejo": "16.0.3",
+      "previous_schema_sha256": "f1528eb110e9214043e37a80860ee13f851757fbd56066cd3f19d51d328ab3bb",
+      "previous_store_path": "/nix/store/vnvfyysx00aysmv86yqzxq02i3sccvlb-forgejo-16.0.3",
+      "production_qualification": false,
+      "schema_sha256": "8ea3d99fd7cc4ca0d0473f83faff55351d94fcb29f34ea5ad04b83007f3d6bef",
+      "schema_version": 1,
+      "scope": "synthetic-nixos-vm-kvm"
+    }
+  },
+  "machine_evaluations": {
+    "schema_version": 1,
+    "scope": "local-NixOS-evaluation-no-activation",
+    "source_file": "operations/tests/vps-machine-evaluation.nix",
+    "source_sha256": "fdec866c2f55c3ac8cf28dec8ef5dfc67358c5b117ed3a38679428c356fe4a82",
+    "runs": [
+      {
+        "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+        "source": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+        "command": [
+          "nix-instantiate",
+          "--eval",
+          "--strict",
+          "--json",
+          "operations/tests/vps-machine-evaluation.nix",
+          "--arg",
+          "nixpkgs",
+          "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+        ],
+        "exit_code": 0,
+        "checks": {
+          "bootDevicePreserved": true,
+          "bothAddressesPreserved": true,
+          "bothRoutesPreserved": true,
+          "cloudInitDoesNotEmitKeys": true,
+          "cloudInitDoesNotRestartOnChange": true,
+          "completeHostActivationRefused": true,
+          "inventoryStillStaged": true,
+          "networkUsesReceivedInterface": true,
+          "noCompatibilityIncrease": true,
+          "noDatabaseProvisioning": true,
+          "noDhcpIntroduced": true,
+          "noOtherFailedAssertion": true,
+          "noRunningGenerationClaim": true,
+          "noSwapInvented": true,
+          "noWebServerOrViseBackupEnabled": true,
+          "observedBuildsAreNotQualifiedArtifacts": true,
+          "observedIdentitiesDoNotActivateServices": true,
+          "observedIdentitiesDoNotCreateAccounts": true,
+          "observedServiceIdentitiesUsed": true,
+          "passwordSshStillDenied": true,
+          "preserveDeclaredStateVersion": true,
+          "qemuProfileFromPinnedNixpkgs": true,
+          "resolverPreserved": true,
+          "rootDeviceFromVps": true,
+          "rootFilesystemAndGrowthPreserved": true,
+          "rootPublicIdentityPreserved": true,
+          "rustForgejoAndViseStillStaged": true,
+          "sourceBytesMatch": true,
+          "x86Platform": true
+        },
+        "count": 29
+      },
+      {
+        "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+        "source": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+        "command": [
+          "nix-instantiate",
+          "--eval",
+          "--strict",
+          "--json",
+          "operations/tests/vps-machine-evaluation.nix",
+          "--arg",
+          "nixpkgs",
+          "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source"
+        ],
+        "exit_code": 0,
+        "checks": {
+          "bootDevicePreserved": true,
+          "bothAddressesPreserved": true,
+          "bothRoutesPreserved": true,
+          "cloudInitDoesNotEmitKeys": true,
+          "cloudInitDoesNotRestartOnChange": true,
+          "completeHostActivationRefused": true,
+          "inventoryStillStaged": true,
+          "networkUsesReceivedInterface": true,
+          "noCompatibilityIncrease": true,
+          "noDatabaseProvisioning": true,
+          "noDhcpIntroduced": true,
+          "noOtherFailedAssertion": true,
+          "noRunningGenerationClaim": true,
+          "noSwapInvented": true,
+          "noWebServerOrViseBackupEnabled": true,
+          "observedBuildsAreNotQualifiedArtifacts": true,
+          "observedIdentitiesDoNotActivateServices": true,
+          "observedIdentitiesDoNotCreateAccounts": true,
+          "observedServiceIdentitiesUsed": true,
+          "passwordSshStillDenied": true,
+          "preserveDeclaredStateVersion": true,
+          "qemuProfileFromPinnedNixpkgs": true,
+          "resolverPreserved": true,
+          "rootDeviceFromVps": true,
+          "rootFilesystemAndGrowthPreserved": true,
+          "rootPublicIdentityPreserved": true,
+          "rustForgejoAndViseStillStaged": true,
+          "sourceBytesMatch": true,
+          "x86Platform": true
+        },
+        "count": 29
+      }
+    ]
+  },
+  "artifact_comparison": {
+    "schema_version": 1,
+    "scope": "local-artifact-comparison-not-production-attestation",
+    "report_sha256": "b8b7784fe85aa863669a0b097398e7bb007cd4d9df22a0bbc188e8c130d30db2",
+    "observed_16_0_3_matches_local_path_nar_and_size": true,
+    "local_content_verification": {
+      "command": [
+        "nix",
+        "store",
+        "verify",
+        "--no-trust",
+        "/nix/store/vnvfyysx00aysmv86yqzxq02i3sccvlb-forgejo-16.0.3",
+        "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1"
+      ],
+      "exit_code": 0
+    },
+    "packages": {
+      "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1": {
+        "deriver": "/nix/store/1y3hr828hrb5fqlqz9jl78hinvs729w1-forgejo-17.0.1.drv",
+        "nar_hash": "sha256-db1IPEdtfTwUFLFdB250mTLG3f8c33GoHQgLCSseiPc=",
+        "nar_size": 132597872,
+        "references": [
+          "/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9",
+          "/nix/store/3sdq2wcfzvl8ivww35iv5vwzf374xfn6-gzip-1.14",
+          "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+          "/nix/store/bcjp3pf5gldhjcgk752293h6x8ipgfzi-forgejo-17.0.1-data",
+          "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+          "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+          "/nix/store/gy266y3ax8xvblz36m6an7h8mi485mf1-git-2.54.0",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/iz0ak6l9rzczmbh6qkanfk0z7hijbypk-openssh-10.6p1",
+          "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+          "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1"
+        ]
+      },
+      "/nix/store/vnvfyysx00aysmv86yqzxq02i3sccvlb-forgejo-16.0.3": {
+        "deriver": "/nix/store/46cayqlp64jnc7nd4bpfxzbsn5kj62y5-forgejo-16.0.3.drv",
+        "nar_hash": "sha256-ZmPnUZoGSr7+V2vQo/ySl32Wpall2s8HMiNa/It3TVo=",
+        "nar_size": 130283240,
+        "references": [
+          "/nix/store/2722ncq58c1amdv6g6nv5d1wvab30p0r-gzip-1.14",
+          "/nix/store/28hprrw9sdi4iarzyxa3r1a22b3dq5pn-openssh-10.5p1",
+          "/nix/store/4m1xqjrzb4rigyv0hn92zb55b9i518g2-forgejo-16.0.3-data",
+          "/nix/store/9mikxas901qn0r2j1baqfv7pdd36n23m-mailcap-2.1.54",
+          "/nix/store/d5jj34synqyn1bc5n362pric9a695a0h-iana-etc-20251215",
+          "/nix/store/m07h00fl6538s4gavrp66a20ka4hg7fy-glibc-2.42-67",
+          "/nix/store/m2sv1rizzbnsb35hv3ii0dnf3rvfy3n3-tzdata-2026c",
+          "/nix/store/nly4cml071i82515r89rpdw38z55wjqd-git-2.54.0",
+          "/nix/store/pkf547jp8a92k4wmxikkyby58w10pysr-bash-interactive-5.3p9",
+          "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+          "/nix/store/vnvfyysx00aysmv86yqzxq02i3sccvlb-forgejo-16.0.3"
+        ]
+      }
+    },
+    "upstream_17_migrations": {
+      "v17a_add-action-run-workflow-source-commit.go": "73ab934d43d0a2a7fbea5c9d118d8c671650ae95486f71311d0ae9ebe52ff992",
+      "v17a_add_action_task_step_summary.go": "8ecf44000d4c9d3bfe627b79e49b58cd5c0f1d26c6d485789459109fee17f68d",
+      "v17a_add_invite_expiry_date.go": "0cb718d6dc0c8d3f2c12b6dca27caf2747908315c1126e5d5f114e07ebb0f542",
+      "v17a_add_job_namespace.go": "0a1ce762b7621aecc8c1f8e03b41b626f862f75243faa29c89203b4f14188b52",
+      "v17a_add_package_cleanup_based_on_last_download.go": "4965654d14d872929a9930626ab637b106b35c45eb4c3d3874408edeac637f6c",
+      "v17a_add_package_version_last_downloaded.go": "e3a22d3c7e221c942406cb8077147e9ebeec6a5e78f1106451136251bec61819",
+      "v17a_add_package_version_total_size.go": "0cc62ea7d034ee26efd56a166e8aa73437ea7b65bff906f24f628a6c1ab425b2"
+    },
+    "previous_migrator_source": {
+      "path": "/nix/store/wy517nb34jqwi1y1xfcdp0lx3isxrlg4-source/models/forgejo_migrations/migrate.go",
+      "sha256": "ba9ba7b604668f1101029640762917456af5925cbfa86b211fcf1f4ed2151b14",
+      "rejects_unknown_migration_ids": true
+    },
+    "source_url": "https://forgejo.org/docs/v17.0/admin/upgrade/",
+    "limitations": [
+      "This comparison does not authenticate the VPS report or inspect its executable bytes",
+      "Same version labels for other services do not establish identical artifacts"
+    ]
+  },
+  "attempts": [
+    {
+      "number": 1,
+      "acceleration": "tcg",
+      "status": "interrupted-by-agent-to-use-local-hardware-acceleration",
+      "derivation": "/nix/store/93f556as1b5cfd2lqd9ml1s3bfkipwpq-vm-test-run-mrjam-forgejo-16-to-17-adoption-return-synthetic.drv",
+      "qualification": false
+    },
+    {
+      "number": 2,
+      "acceleration": "kvm",
+      "status": "failed",
+      "derivation": "/nix/store/r71sskbk9asyjlj0qs6ywjj5d3dfc1ad-vm-test-run-mrjam-forgejo-16-to-17-adoption-return-synthetic.drv",
+      "reason": "Fixture used targeted reset-failed on an unloaded old unit; test shell exited before start after paired restoration",
+      "qualification": false
+    },
+    {
+      "number": 3,
+      "acceleration": "kvm",
+      "status": "passed",
+      "derivation": "/nix/store/lk1nfz7lh1wg2nxxp4q0smi4hprsfr88-vm-test-run-mrjam-forgejo-16-to-17-adoption-return-synthetic.drv",
+      "groups": 17,
+      "qualification_scope": "synthetic-only"
+    }
+  ],
+  "synthetic_log_sha256": {
+    "forgejo-migration-build-01.log": "83a62b651895510a47b78c9541b392bade469017f4e78c43825da67223be0387",
+    "forgejo-migration-build-02.log": "cfa19220f5ffad749fdbb6c57e86c65d52113f3390934aa852ec0f917d4152f4",
+    "forgejo-migration-build-03.log": "a0b9e6498d49d24ae2d2cdce40ed04b2b4b0b68699d80dab49eb88f14ed740be"
+  },
+  "production_activation": false,
+  "production_execution_ready": false,
+  "limits": [
+    "Synthetic migration and paired restore only; no real credentials, installed schema or SSO identity adopted",
+    "Return qualified only before reopening application writes, not after post-cutover writes",
+    "No production backup, release controller or full system cutover qualified",
+    "Explicit schema migrations require a separate local operator; the runtime role has no DDL privilege",
+    "No full VPS service composition or production preflight has been qualified",
+    "KVM is a local workstation facility; no VPS virtualization capability is inferred",
+    "The default TCG path remains available but this revision has no completed TCG test"
+  ]
+}
