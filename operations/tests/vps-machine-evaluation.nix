@@ -2,6 +2,7 @@
 let
   lib = import (nixpkgs + "/lib");
   facts = builtins.fromJSON (builtins.readFile ../hosts/mrjam-vps/received-profile.json);
+  servicesReport = builtins.fromJSON (builtins.readFile ../received/20261101/services-v1.json);
   eval = extra: (import (nixpkgs + "/nixos/lib/eval-config.nix") {
     system = "x86_64-linux";
     modules = [ ../hosts/mrjam-vps/configuration.nix extra ];
@@ -38,6 +39,21 @@ let
       && !cfg.services.openssh.settings.KbdInteractiveAuthentication
       && cfg.services.openssh.settings.PermitRootLogin == "prohibit-password";
     inventoryStillStaged = !cfg.services.mrjamInventory.enable;
+    observedServiceIdentitiesUsed = builtins.all (pair:
+      pair.candidate.uid == servicesReport.accounts.${pair.account}.uid
+      && pair.candidate.gid == servicesReport.accounts.${pair.account}.gid
+    ) [
+      { candidate = cfg.services.mrjamForgejoHost; account = "forgejo"; }
+      { candidate = cfg.services.mrjamKanidmHost; account = "kanidm"; }
+      { candidate = cfg.services.mrjamNextcloudHost; account = "nextcloud"; }
+      { candidate = cfg.services.mrjamVise.adoption; account = "etp_carnet"; }
+    ];
+    observedIdentitiesDoNotActivateServices = !cfg.services.mrjamForgejoHost.enable
+      && !cfg.services.mrjamKanidmHost.enable && !cfg.services.mrjamNextcloudHost.enable;
+    observedIdentitiesDoNotCreateAccounts = builtins.all (name: !(builtins.hasAttr name cfg.users.users))
+      [ "forgejo" "kanidm" "nextcloud" "etp_carnet" ];
+    observedBuildsAreNotQualifiedArtifacts = cfg.services.mrjamForgejoHost.artifactStorePath == null
+      && cfg.services.mrjamKanidmHost.artifactStorePath == null && cfg.services.mrjamVise.artifactRoot == null;
     rustForgejoAndViseStillStaged = !cfg.services.mrjamRust.enable && !cfg.services.mrjamForgejo.enable && !cfg.services.mrjamVise.enable;
     noDatabaseProvisioning = !cfg.services.postgresql.enable && cfg.services.postgresql.ensureDatabases == [ ];
     noWebServerOrViseBackupEnabled = !cfg.services.nginx.enable && !(cfg.systemd.services ? vise-backup);
