@@ -22,6 +22,7 @@
       forgejoPinnedEvaluation = import ./operations/forgejo/tests/locked-preparation-evaluation.nix { inherit nixpkgs; };
       forgejoHostEvaluation = import ./operations/forgejo/tests/host-module-evaluation.nix { inherit nixpkgs; };
       preservedServicesEvaluation = import ./operations/tests/preserved-services-evaluation.nix { inherit nixpkgs; };
+      coreServicesEvaluation = import ./operations/tests/core-services-evaluation.nix { inherit nixpkgs; };
       gatewayEvaluation = import ./operations/tests/gateway-evaluation.nix { inherit nixpkgs; };
       forgejoPolicyEvaluation = import ./operations/forgejo/tests/policy-module-evaluation.nix { inherit nixpkgs; };
       forgejoRunnerEvaluation = import ./operations/forgejo/tests/runner-module-evaluation.nix { inherit nixpkgs; };
@@ -41,6 +42,7 @@
         forgejoHost = import ./operations/nixos/mrjam-forgejo-host.nix;
         kanidmHost = import ./operations/nixos/mrjam-kanidm-host.nix;
         nextcloudHost = import ./operations/nixos/mrjam-nextcloud-host.nix;
+        vpsCoreServices = import ./operations/hosts/mrjam-vps/core-services.nix;
         gateway = import ./operations/nixos/mrjam-gateway.nix;
         forgejoPolicy = import ./operations/nixos/mrjam-forgejo-policy.nix;
         forgejoRunner = import ./operations/nixos/mrjam-forgejo-runner.nix;
@@ -75,6 +77,7 @@
       lib.qualification.forgejoPinnedToolchain = forgejoPinnedEvaluation;
       lib.qualification.forgejoHost = forgejoHostEvaluation;
       lib.qualification.preservedServices = preservedServicesEvaluation;
+      lib.qualification.coreServices = coreServicesEvaluation;
       lib.qualification.gateway = gatewayEvaluation;
       lib.qualification.forgejoPolicy = forgejoPolicyEvaluation;
       lib.qualification.forgejoRunner = forgejoRunnerEvaluation;
@@ -126,6 +129,13 @@
         vise-postgresql-runtime = import ./operations/runtime/vise-postgresql-systemd.nix { inherit nixpkgs; };
       };
       checks.${system} = {
+      core-services-module = pkgs.runCommand "mrjam-core-services-evaluation" {
+        result = builtins.toJSON coreServicesEvaluation;
+      } ''
+        mkdir -p "$out"
+        printf '%s\n' "$result" > "$out/result.json"
+      '';
+      core-services-runtime = import ./operations/runtime/core-services-systemd.nix { inherit nixpkgs; };
       vps-machine-module = pkgs.runCommand "mrjam-vps-received-machine-evaluation" {
         result = builtins.toJSON vpsMachineEvaluation;
       } ''

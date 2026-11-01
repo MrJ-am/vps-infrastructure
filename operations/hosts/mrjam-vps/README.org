@@ -4,6 +4,13 @@
 
 * Résultat et portée
 
+L'[[file:../../deployment/ETAT-20261101.org][étape locale d'assemblage du 1 novembre]] ajoute une composition testée de
+Forgejo/Kanidm/Nextcloud/PostgreSQL et son retour cohérent sur données fictives.
+Elle confirme la génération, les identités et le webroot Nextcloud par un
+précontrôle SSH borné en lecture seule. Elle documente aussi le raccord
+d'identité manquant et les exports Cloud à récupérer ; aucune bascule du VPS
+n'a eu lieu. Les tableaux ci-dessous conservent le contexte des lots antérieurs.
+
 Le premier déploiement se prépare sans ViSe, conformément à la priorité du
 1 novembre. Aucun binaire, test, schéma, sauvegarde propre ou contrôle de
 disponibilité ViSe ne bloque le socle. =configuration-with-vise.nix= conserve
