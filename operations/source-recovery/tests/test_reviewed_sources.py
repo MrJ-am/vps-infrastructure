@@ -164,8 +164,34 @@ class SourcesTest(unittest.TestCase):
         self.write_review()
         self.refuse_pack("DIRECTORY_REQUIRED")
 
-    def test_file_count_total_size_and_individual_size_limits(self):
-        cases = [([dict(self.value["files"][0], path="f%d.nix" % i) for i in range(129)], "FILE_COUNT_LIMIT"),
+    def test_pack_and_verify_137_files(self):
+        (self.root / "modules").mkdir()
+        for index in range(136):
+            name = "modules/source-%03d.nix" % index
+            (self.root / name).write_bytes(self.content)
+            self.value["files"].append(dict(self.value["files"][0], path=name))
+        self.write_review()
+        result = tool.pack(self.root, self.output)
+        self.assertEqual(result["files"], 137)
+        self.assertEqual(tool.verify(self.output, result["sha256"]), result)
+        with tarfile.open(self.output) as archive:
+            self.assertEqual(set(archive.getnames()), {"review.json", "SHA256SUMS"} |
+                             {"source/" + item["path"] for item in self.value["files"]})
+            self.assertEqual(len(archive.getmembers()), 139)
+
+    def test_manifest_byte_limit_bounds_large_file_lists(self):
+        self.value["files"].extend(dict(self.value["files"][0], path="f%d.nix" % i)
+                                   for i in range(1024))
+        self.write_review()
+        raw = (self.root / "review.json").read_bytes()
+        self.assertGreater(len(raw), tool.MAX_MANIFEST)
+        self.assertLess(sum(item["bytes"] for item in self.value["files"]), tool.MAX_TOTAL)
+        self.refuse_pack("FILE_SIZE_LIMIT")
+        with self.assertRaisesRegex(tool.Refused, "MANIFEST_LIMIT"):
+            tool.manifest(raw)
+
+    def test_nonempty_file_list_total_size_and_individual_size_limits(self):
+        cases = [([], "FILE_COUNT_LIMIT"),
                  ([dict(self.value["files"][0], bytes=tool.MAX_FILE + 1)], "FILE_SIZE_LIMIT"),
                  ([dict(self.value["files"][0], path="f%d.nix" % i, bytes=tool.MAX_FILE) for i in range(5)], "TOTAL_SIZE_LIMIT")]
         for files, code in cases:
