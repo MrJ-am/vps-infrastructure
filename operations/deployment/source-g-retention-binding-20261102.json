@@ -1,0 +1,14 @@
+{
+  "changed_constants": {
+    "ARCHIVE": "previous-1c7b4ee-20261102",
+    "BYTES": 3954678447,
+    "SHA256": "f4dfc2589083a8a60516fe03b81d2ef619066e983cf9a3e338af26e295c19c87"
+  },
+  "execution_performed": false,
+  "only_three_constants_changed": true,
+  "receiver": "operations/deployment/retain-source-g-infrastructure-bundle-20261102.py",
+  "receiver_sha256": "e198ec9e130c35e9eae14eddf370c434eca349227c12626e1946ed9aecd7ac6b",
+  "schema_version": 1,
+  "source": "operations/deployment/retain-source-e-infrastructure-bundle-20261102.py",
+  "source_sha256": "27a7cf2f1b94cbce0ff5ea23d1f401b3b7a6ea638010b9bf3250e37e12f34e67"
+}

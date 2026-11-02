@@ -1,0 +1,14 @@
+[package]
+name = "mrjam-mateval-corpus-classifier"
+version = "1.0.0"
+edition = "2024"
+rust-version = "1.99.1"
+publish = false
+
+[dependencies]
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = { version = "=1.0.154", features = ["preserve_order"] }
+
+[lints.rust]
+unsafe_code = "forbid"
+

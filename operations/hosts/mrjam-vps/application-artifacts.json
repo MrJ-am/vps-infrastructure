@@ -66,12 +66,12 @@
     },
     "server": {
       "executable_sha256": {
-        "bin/mrjam-server": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd"
+        "bin/mrjam-server": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e"
       },
-      "manifest_sha256": "f5b95fc01cc69a461c0ac016ddc1141cfb761eea50ff0b629b70a56a659cd7bd",
-      "nar_hash": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
-      "original_store_path": "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a",
-      "store_path": "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a"
+      "manifest_sha256": "f7cda8e104eff8ba50591e2630fb06f0bdd610bc6e0c901e09d4c24e97a00128",
+      "nar_hash": "sha256-eETe99kc3MW2SpSErTEESkPA6NheCgLhB1qeqeRJFf8=",
+      "origin": "locally-rebuilt-from-qualified-source-with-reviewed-patch",
+      "store_path": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
     },
     "vision_admission": {
       "executable_sha256": {

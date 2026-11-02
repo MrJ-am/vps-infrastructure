@@ -1,0 +1,27 @@
+{
+  "author_test_source_sha256": "047d345cb6e7c09681ee82170846fec55a266ca1b8a549ad22df773f798430bd",
+  "checks": [
+    "Fixed previous generation, hostname and no-argument root gate.",
+    "Two fixed credential sources read bounded with no symlink in any component; only format and ownership/mode/link booleans exported.",
+    "Credential format predicates match runtime LF stripping/control rejection, lowercase 64hex activation and 32..512 ASCII alphanumeric/underscore/hyphen approval.",
+    "Public corpus input is fixed immutable config, manifest and bank each bound by SHA256.",
+    "SQL reads catalogue columns/role presence and EXISTS equality of the public corpus only; no participation, answer, interaction, administrator or session rows selected.",
+    "READ ONLY transaction plus read-only connection defaults; fixed psql -X invocation with null password/service files and timeouts.",
+    "Output parser accepts exactly ten named Boolean catalogue predicates; errors and stderr never exported.",
+    "Result explicitly denies observation of candidate HBA/UID/systemd credential namespace and post-adoption privileges."
+  ],
+  "limits": [
+    "This is a restored-generation projection, not candidate readiness or credential namespace qualification.",
+    "Matching required column names does not prove types, role ACLs, data migrations or actual application startup.",
+    "Only the two named secret values are processed locally; their values and derived hashes are never output.",
+    "Author five-test native qualification is separate; reviewer performed no new PostgreSQL, systemd or production execution."
+  ],
+  "private_application_rows_read_by_reviewer": false,
+  "probe_executed_by_reviewer": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent source review of fixed read-only restored-generation diagnostic",
+  "source": "operations/deployment/preflight_rust_initialization_004.py",
+  "source_sha256": "6490d61ceda1fb377339bc35a1524a6827984a2f9ce9723c89020b3631cd3ddc",
+  "status": "PASS"
+}

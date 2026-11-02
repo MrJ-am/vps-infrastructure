@@ -1,0 +1,33 @@
+{
+  "artifact_manifest_sha256": "f7cda8e104eff8ba50591e2630fb06f0bdd610bc6e0c901e09d4c24e97a00128",
+  "author_qualification_sha256": "ac93a8df9a6b45d77eea97ffd0884c43e2ae59f81fb3eb7ff81ff66998873d5f",
+  "checks": [
+    "Actual derivation source consists exactly of three selected code trees bound by accepted proposal8bf; no other source or types changes.",
+    "Actual derivation applies only patch90d22, requires fmt/build/native PostgreSQL workspace tests and strict clippy before install.",
+    "Production delta confined to bounded single-version bank SELECT and a pure comparison of validated exact native Bank models.",
+    "Public JSON must remain canonical under current type; new public fields fail instead of being silently dropped.",
+    "Historical unknown fields are ignored for comparison only; database bank/digest/codebook/version/participations are never rewritten.",
+    "Missing version/null/oversize/malformed/invalid IDs/different known fields and vector order remain refused.",
+    "Targeted tests cover both two-question and production order, all known fields, missing version, oversize, public unknown field and complete corpus/participation preservation.",
+    "Log contains33 successful suites,128pass,0fail,1explicitly ignored historical memory measurement; new4Bank tests and runtimePostgreSQL included.",
+    "ELF/artifact manifest/NAR/deriver and five-path closure match final receipt; content verification passes.",
+    "Compiler reconstruction provenance is separately bound to reviewed exact archive/version and interpreter-only installation repair."
+  ],
+  "database_mutation_performed": false,
+  "executable_sha256": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e",
+  "limits": [
+    "One pre-existing dense JSON/concurrent maximum-body memory measurement remains ignored; no new memory qualification claimed.",
+    "Readiness validates native collection semantics, not scientific meaning of unknown historical metadata or the private codebook.",
+    "No migration, frontend, capability or ViSe addition; candidate composition and real readiness remain separate gates.",
+    "New server provenance remains explicit; old ELF receipts are not relabelled."
+  ],
+  "package": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+  "patch_sha256": "90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4",
+  "production_access": false,
+  "publication_sha256": "fd71d026ac159855845bbe0423b51568bec91f49b85713f52c5b8b96e9369e50",
+  "schema_version": 1,
+  "scope": "independent final source, artifact and qualification binding review; no test rerun or production access",
+  "source_files_checked": 266,
+  "status": "PASS",
+  "tests_reexecuted_by_reviewer": false
+}

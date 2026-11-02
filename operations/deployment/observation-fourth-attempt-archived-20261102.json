@@ -1,0 +1,21 @@
+{
+  "archive_receiver_sha256": "e197354160449fb0251aa885b5382c1cc3ea672bbf0b8529f5824738b075c219",
+  "archive_result": {
+    "application_data_modified": false,
+    "attempt": 4,
+    "code": "FIRST_RELEASE_ATTEMPT_ARCHIVED",
+    "failure_record_preserved": true,
+    "new_deployment_started": false,
+    "prior_archives_preserved": true,
+    "runtime_directories_retained": 4,
+    "same_transaction_lock": true,
+    "schema_version": 1,
+    "secret_contents_read": false,
+    "snapshot_restored": false
+  },
+  "archive_review_sha256": "e89cb0914ce61f5d7c47a9e74f34afa2f4cbf19150056b90f4942b5c22d8e9f9",
+  "attempt": 4,
+  "new_deployment_started": false,
+  "schema_version": 1,
+  "source_g_retention_performed": false
+}

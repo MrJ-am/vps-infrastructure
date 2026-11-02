@@ -1,0 +1,34 @@
+{
+  "activation_performed": false,
+  "all_other_artifact_bindings_unchanged": true,
+  "application_artifacts_sha256": "41a0e905de4a1eb1540a0b46021529ac0123785a8cb5c6bde7d92de31c70b6bf",
+  "current": {
+    "executable_sha256": {
+      "bin/mrjam-server": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e"
+    },
+    "manifest_sha256": "f7cda8e104eff8ba50591e2630fb06f0bdd610bc6e0c901e09d4c24e97a00128",
+    "nar_hash": "sha256-eETe99kc3MW2SpSErTEESkPA6NheCgLhB1qeqeRJFf8=",
+    "origin": "locally-rebuilt-from-qualified-source-with-reviewed-patch",
+    "store_path": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+  },
+  "previous": {
+    "executable_sha256": {
+      "bin/mrjam-server": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd"
+    },
+    "manifest_sha256": "f5b95fc01cc69a461c0ac016ddc1141cfb761eea50ff0b629b70a56a659cd7bd",
+    "nar_hash": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
+    "original_store_path": "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a",
+    "store_path": "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a"
+  },
+  "public_runtime_json_sha256": {
+    "blue": "96813c225a279cb96be091ed055871f92af61c9a8928238c9c9e604fcc424ca1",
+    "green": "0ab1edeb133feff676121699344814ea468857a7cd8a9e52f3a4dee5d910e9f1"
+  },
+  "qualification": {
+    "path": "operations/runtime/mateval-readiness-v1/qualification-20261102.json",
+    "sha256": "ac93a8df9a6b45d77eea97ffd0884c43e2ae59f81fb3eb7ff81ff66998873d5f"
+  },
+  "schema_version": 1,
+  "scope": "local-immutable-server-binding-replacement",
+  "status": "passed"
+}

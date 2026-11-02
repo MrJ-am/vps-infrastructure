@@ -1,0 +1,15 @@
+{
+  "catalogue_sha256": {
+    "version_1": "fcfa01b661be51ac9b79aa519e727f6c69c7b2422de565c8e8cc64b1afdd633d",
+    "version_2": "e4c4b629fb1c6f15fad4257a9b1fd65afb90407d4fe8f54c511c3d3d2cc5159b"
+  },
+  "compiled_source_revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+  "files": {
+    "001-reference.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
+    "002-additive.sql": "183a44c605ee3e6ddcc4ee7737f042b65c17262ed4cd89d8c674acd98e761ab9",
+    "catalogue.sql": "d48bb48b4b8165f6da89a8989dea91dce93b4fc1c3dad6224c01caf64243bfcc"
+  },
+  "postgresql_major": 17,
+  "schema_version": 1,
+  "source_repository": "MrJ-am/mrjam-plateforme"
+}

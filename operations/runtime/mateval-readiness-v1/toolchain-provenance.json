@@ -1,0 +1,38 @@
+{
+  "additional_existing_proofs": [
+    {
+      "path": "operations/forgejo/qualification-artifact-recovery-20261102.json",
+      "sha256": "081008ab5c15d26ce4c40eb13a04f5a3e1fc357a5de71f303f1262da2a1e7844"
+    },
+    {
+      "path": "operations/forgejo/review-artifact-recovery-20261102.json",
+      "sha256": "6ab60e63f77189b0c73a78ca9b81998fa12e8d6fdbd040cfcaeaf1f0d1de81e1"
+    }
+  ],
+  "derivation": "/nix/store/nhxf57rnvcw71zwk6zzcbd3n7snwlwcn-mrjam-rust-toolchain-1.99.1.drv",
+  "historical_recipe_sha256": "d3f8c20761216ac22b426d41d10e817a2583ab8ebf866cdb63ac7c2a92de0fb4",
+  "lock": "operations/builds/toolchains.lock.json",
+  "lock_sha256": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae",
+  "nixpkgs": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+  "observed_versions": {
+    "cargo": "cargo 1.99.1 (5f94df478 2026-08-27)",
+    "clippy-driver": "clippy 0.1.99 (58cf8f9c35 2026-10-13)",
+    "rustc": "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "rustfmt": "rustfmt 1.10.0-stable (58cf8f9c35 2026-10-13)"
+  },
+  "only_recipe_delta": "patchShebangs ./install.sh; pinned Rust archive and component list unchanged",
+  "output": "/nix/store/2va2x1g4ncjhaih1dk0zxvi97s832pw9-mrjam-rust-toolchain-1.99.1",
+  "recipe": "operations/builds/toolchains.nix",
+  "recipe_output_reevaluation_equal": true,
+  "recipe_sha256": "db61fe0a3290316212580ceaa2f73144121f9f5d398b32249e1fff265fbf1fdf",
+  "rust_archive": {
+    "manifest_sha256": "fb152be80975c194aa5fc684b2aec3a6e14e2b855efe2faa4e5f8ae6e590f463",
+    "manifest_url": "https://static.rust-lang.org/dist/channel-rust-1.99.1.toml",
+    "provenance": "Existing environment/toolchains.lock.json, matching rust-toolchain.toml and workspace rust-version",
+    "sha256": "231fcae47ee950621374725b5fc3b5441d2fbda2955ac45dd7dc816d8876cfe7",
+    "url": "https://static.rust-lang.org/dist/2026-10-15/rust-1.99.1-x86_64-unknown-linux-gnu.tar.xz",
+    "version": "1.99.1"
+  },
+  "schema_version": 1,
+  "scope": "reconstruction dependency of typed Matheval readiness server; no CI activation"
+}

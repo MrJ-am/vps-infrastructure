@@ -44,9 +44,9 @@ let
       && !(staged.services.nginx.virtualHosts ? "logo.mrj.am");
     sevenFrontendClosuresRetained = lib.all (name: builtins.elem lock."frontend_${name}".store_path roots)
       [ "audition" "log" "logique" "logo" "mateval" "style" "vision" ];
-    unchangedServerRetained = staged.services.mrjamRust.slots.blue.artifactStorePath == lock.server.store_path;
-    bothQualifiedRuntimes = staged.services.mrjamRust.slots.blue.runtimeConfigStorePath == "/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue"
-      && staged.services.mrjamRust.slots.green.runtimeConfigStorePath == "/nix/store/qp7jys8wcvyc2w611y6acl206n5yq2vg-mrjam-runtime-green";
+    qualifiedServerBound = staged.services.mrjamRust.slots.blue.artifactStorePath == lock.server.store_path;
+    bothQualifiedRuntimes = staged.services.mrjamRust.slots.blue.runtimeConfigStorePath == "/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue"
+      && staged.services.mrjamRust.slots.green.runtimeConfigStorePath == "/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green";
     fourNativeWorkersUnchanged = lib.all (name: staged.mrjamVpsApplications.workers.artifacts.${name} ==
       "/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101")
       [ "archive" "cycle" "closure" "admission" ];

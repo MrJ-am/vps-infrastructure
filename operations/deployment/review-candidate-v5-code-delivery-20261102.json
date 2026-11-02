@@ -1,0 +1,47 @@
+{
+  "delta_export_regenerated_exactly": true,
+  "delta_is_full_closure_minus_known_plus_validator_anchors": true,
+  "existing_provisioner_v3_unit_preserved_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "export_bytes": 14376800,
+  "export_paths": 17,
+  "export_sha256": "f2171435d0a2bb84d5c18c15c89cbe8c7e0ce5e87071726559ca48cca2eba1cb",
+  "full_closure_count": 1297,
+  "generation_composition_review_sha256": "8f79bc2d62482396e1825db316bc1917462523afaf45e2ddd797c3502ebea7c9",
+  "limits": [
+    "Inactive store reception only; no generation activation, SQL or service start.",
+    "Receiver real-import VM and template tests reused through exact byte equivalence; no repeated VM.",
+    "Production availability and readiness remain the responsibility of the next controlled cutover and independent postflight."
+  ],
+  "linked_qualification_hashes_verified": 24,
+  "manifest_sha256": "19940cdcdb566afcba44545da0910a6d79d0f2169558dc5313103d515a2ac7ad",
+  "omitted_dependencies_all_previously_observed_or_delivered": true,
+  "passed": true,
+  "prior_delivery_manifests": {
+    "operations/deployment/archive-v3-delivery-20261102.json": "dda4f1a0e101fd53fb2a74721b21942cbfdd1ead81c03ece3389aa5ae679a513",
+    "operations/deployment/candidate-code-delivery-20261102.json": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+    "operations/deployment/candidate-v3-code-delivery-20261102.json": "67228e849196c2ca8398a338d828e18e935554807ac28e2f46c591d2252b3643",
+    "operations/deployment/candidate-v4-code-delivery-20261102.json": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005",
+    "operations/deployment/final-code-delivery-002-20261102.json": "239c65435e78b2d0a90d721473b75bd5e50e5f113dafad6eb0f296d46971269e",
+    "operations/deployment/final-code-delivery-003-20261102.json": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4",
+    "operations/deployment/final-code-delivery-004-20261102.json": "39a038ccc1520cb98e8af5d828608789c5c1392d8e159906ed43c5bbb08ddb75",
+    "operations/deployment/final-code-delivery-20261102.json": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+    "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec",
+    "operations/deployment/passkey-correction-delivery-20261102.json": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724",
+    "operations/deployment/passkey-delivery-20261102.json": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000"
+  },
+  "production_access": false,
+  "qualification_sha256": "63cd8c1627eb173ceca141fb4141f0823452e4d0783ec201d64b94076f8b8917",
+  "receiver_only_release_and_directory_assignment_lines_changed_byte_for_byte": true,
+  "receiver_sha256": "c8264c453100c9165063ed32adc1d2597066ea42f13c69e0a05838b20df37f62",
+  "reused_dependencies": 1280,
+  "roots": {
+    "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+    "staged": "/nix/store/hbfh9zzrv35kxck3p56yv7pxxw22fb3y-nixos-system-srv1982677-26.05pre-git",
+    "unit": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1,
+  "storage_reserve_recomputed": true,
+  "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+  "validator_accepts_manifest": true
+}

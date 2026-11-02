@@ -1,0 +1,75 @@
+{
+  "connections": [
+    {
+      "blue_ident_mapping_present": true,
+      "component": "mateval",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    },
+    {
+      "blue_ident_mapping_present": true,
+      "component": "mateval_administration",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    },
+    {
+      "blue_ident_mapping_present": true,
+      "component": "vision",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    },
+    {
+      "blue_ident_mapping_present": true,
+      "component": "vision_administration",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    },
+    {
+      "blue_ident_mapping_present": true,
+      "component": "vision_journal",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    },
+    {
+      "blue_ident_mapping_present": true,
+      "component": "audition",
+      "first_matching_hba_is_expected_peer": true,
+      "unix_socket_matches_postgresql": true
+    }
+  ],
+  "credential_names_match_runtime": true,
+  "decision": "STATIC_BINDINGS_MATCH",
+  "limits": [
+    "No observation of live PostgreSQL catalogues or runtime permissions",
+    "No proof of production connection success",
+    "No production mutation or candidate change"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "sources": {
+    "generation_unit": {
+      "path": "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git/etc/systemd/system/mrjam-rust-blue.service",
+      "sha256": "167ba31e0aa7a56bd771787a963e6dad13baefecbcedcfaeb87368fac8855543"
+    },
+    "hba": {
+      "path": "/nix/store/7i184rdm90kn4h9wh89g66i60lfsly3j-pg_hba.conf",
+      "sha256": "4930c07c7833db76135363da82833f46fd41c0e2c6e6a593bd1ca6683913b658"
+    },
+    "ident": {
+      "path": "/nix/store/qdf1mqqs7zq7bbviz0bfclzphw71hyvk-pg_ident.conf",
+      "sha256": "12e0ae6c8265fa74347ad7c4f2832a819b6aa3b3baccf6dbf2366a3e6f2f0e80"
+    },
+    "postgresql_configuration": {
+      "path": "/nix/store/ajk3pfg27lypy99s35nhxjq2xsji7xfj-postgresql.conf/postgresql.conf",
+      "sha256": "3e044f4d9f621b01c5ffdf1477d03993cc2ec585fa32af659820f2d1c58c5ae7"
+    },
+    "postgresql_prestart": {
+      "path": "/nix/store/4a0ll3lcj49x5clwjirhkcnjz14hsmpm-unit-script-postgresql-pre-start/bin/postgresql-pre-start",
+      "sha256": "6ea152617f756b972ba0b84e40b8bce3c8b94ab2a98c9461a9b1329f78a14ae0"
+    },
+    "runtime": {
+      "path": "/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue/runtime.json",
+      "sha256": "96813c225a279cb96be091ed055871f92af61c9a8928238c9c9e604fcc424ca1"
+    }
+  }
+}

@@ -2,42 +2,41 @@
 #+date: 2026-11-02
 #+language: fr
 
-* État courant — retour de la troisième tentative et correction Forgejo
+* État courant — quatrième tentative revenue, diagnostic Rust
 
-La tentative 003 a franchi la sauvegarde, l'installation privée et les adoptions
-SQL avec les deux corrections de droits. Le helper de gouvernance Forgejo a
-ensuite refusé =DEFAULT_BRANCH_ADOPTION_REQUIRED= avant toute ouverture
-publique. Le retour automatique est terminé : résultat
-=CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED=, contrôleur arrêté, génération
-précédente restaurée. Les huit domaines HTTPS répondent après ce retour.
-Voir [[file:observation-third-cutover-return-20261102.json][le constat de production]].
+La tentative 004 a franchi les adoptions SQL et la gouvernance Forgejo corrigée.
+Le serveur Rust a quitté trois fois avec le code 2 avant d'ouvrir son port.
+Le contrôleur a refusé la disponibilité du frontend, puis restauré la génération
+précédente. Le retour est terminé ; les huit contrôles HTTPS ont passé à
+22:10:51 UTC. Aucun cinquième déploiement n'est lancé.
 
-La cause est identifiée dans Forgejo 17.0.1 : lors du premier import dans un
-dépôt vide, la première branche traitée devient sa branche par défaut. La
-priorité de main ne s'applique qu'à chaque lot de 30 branches du hook.
-Le push atomique des historiques peut présenter une branche d'archive avant
-=main=. Le nouveau helper de [[file:forgejo-governance-v2/core.py][gouvernance v2]] prépare une adoption explicite
-de =main= limitée aux dépôts initialement vides, après vérification du commit
-et des références importées. Le réconciliateur partagé reste strict et les
-branches conservées ne sont pas supprimées. La VM réelle avec 48 branches a reproduit le refus, puis validé l'adoption
-des neuf dépôts, le maintien des protections après drainage des files et la
-nouvelle exécution sans changement. Les sources et reçus exacts doivent encore
-être liés à la nouvelle livraison ; aucune quatrième tentative n'est lancée.
+Les quatre tentatives sont archivées séparément, avec leurs états d'échec et
+le même verrou de transaction. L'archivage 004 n'a restauré aucune donnée ni
+lancé de déploiement. Le bundle G reste à son emplacement canonique ; les
+bundles A, C et E sont retenus séparément. Les huit autres bundles sont inchangés.
 
-Les trois tentatives et leurs captures restent archivées séparément. Le fichier
-fermé =failure.json= de la troisième est conservé. L'archivage n'a restauré
-aucune donnée et le verrou de transaction garde son inode. Le bundle source E
-est retenu sous =previous-12d1beb-20261102=, à côté des bundles A et C ; son
-emplacement canonique attend la prochaine remise. Les huit autres bundles
-sont inchangés. Voir [[file:observation-third-attempt-archived-20261102.json][le résultat d'archivage et de rétention]].
+Le diagnostic en lecture seule identifie un écart entre la banque Matheval
+approuvée et le corpus enregistré sous la même version 0.3.0. Le corpus et son
+codebook non vide restent intacts. La comparaison typée complémentaire confirme que tous les champs métier et
+l’ordre des questions et productions sont identiques ; seuls des champs
+supplémentaires restent dans la banque historique. Le correctif de readiness
+compare le contrat typé validé, sans réécrire ce corpus. Son nouveau serveur
+est qualifié : 128 tests passent, aucun échec, un test de mesure mémoire
+historique ignoré ; formatage et analyse statique passent également.
+Les témoins Vision correspondent au contexte SQL réellement utilisé par le
+runtime ; leur résultat négatif dans le premier probe venait du contexte de
+qualification des noms. Audition a ses droits SELECT et USAGE, mais seulement
+la migration 1 : la migration 2 reste à adopter. Le préflight en lecture seule reconnaît
+exactement le schéma 001 et confirme ses propriétaires et droits ; la migration
+gardée est applicable.
+Voir [[file:DIAGNOSTIC-RUST-004-20261102.org][le diagnostic et ses limites]].
 
-La dernière livraison documentaire publiée est
-=df61adc9b5c759002ba03138fa16e4ff3be37b6f=, liée à la source E
-=12d1bebb2edce1cb46cd8cb10dc8542a809d08bc=. La correction Forgejo aura sa
-propre publication et sa propre liaison ; ces références ne sont pas modifiées
-rétroactivement. Les générations corrigées 006 et le backend qualifié 009
-restent inchangés. Les corrections SQL devront être réappliquées par l'adoption
-après la prochaine sauvegarde, car le retour restaure l'état précédent.
+La source de la tentative 004 est G,
+=1c7b4eedf05396900ab05953b09bb98c0dfe522a= ; sa livraison documentaire H
+est =b792956c98ea6b1da168fa83142307e2354c4bcc=.
+Les nouvelles observations ne changent pas rétroactivement ces références.
+Les corrections SQL déjà qualifiées devront être réappliquées par la prochaine
+adoption, car le retour restaure l'état précédent.
 
 Kanidm et les trois accès techniques sont réparés et vérifiés. Le portail
 administratif temporaire est fermé. ViSe reste exclu avec ses données conservées.

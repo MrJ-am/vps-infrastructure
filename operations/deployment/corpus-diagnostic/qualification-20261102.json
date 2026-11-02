@@ -1,0 +1,53 @@
+{
+  "corpus_or_codebook_received_from_production": false,
+  "derivation": "/nix/store/lj1l2r6indfzlmsmvmfl29lla44h4c77-mrjam-mateval-corpus-classifier-1.drv",
+  "executable_sha256": "d1a4d2419c025b202a21c492973d2864f882a07fb272e0682bce2dbbaffc9a59",
+  "full_export": {
+    "sha256": "f268a266ab6412adbaaef1c781e756c4d8144974616079a16dad0dfe31746fdd",
+    "size": 38429920,
+    "store_paths": [
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+      "/nix/store/anvdal9pag7qh6w13cn88mw1pdlyiky2-mrjam-mateval-corpus-classifier-1"
+    ]
+  },
+  "historical_fixture_failure": "initial native PostgreSQL fixture SQL_ASCII rejected the public Unicode bank; fixture changed to UTF8 only, no production code changed",
+  "limitations": [
+    "Pure classification only; no mutation or corpus import.",
+    "No codebook selected or validated.",
+    "Synthetic local native PostgreSQL pipeline; execution on VPS is the parent responsibility."
+  ],
+  "mutation_performed": false,
+  "package": "/nix/store/anvdal9pag7qh6w13cn88mw1pdlyiky2-mrjam-mateval-corpus-classifier-1",
+  "private_production_access": false,
+  "qualification": "mateval-exact-types-private-local-classification-004",
+  "schema_version": 1,
+  "sources": {
+    "Cargo.lock": "273bc71970e6e9416675b473ee77135229dbfa415538780db6a003d7437874cd",
+    "Cargo.toml": "b59a1406328dfd5802fd6c31a2faed5857b004c4becd1b6714b3e96b4d2c4499",
+    "README.org": "9d35c2e6029f13bcfb74a66aab74b8c239fb773ed798a4f003ab1dd0a3f46178",
+    "package.nix": "afa575f1a08c85ccfc49fcb68839ddb96363f215f43e5a85f9489c444bb06ed6",
+    "probe.py": "f5cd5374193fd9facf01d8e9b1a47a2037065b26ad87664b5960c6888d189889",
+    "src/main.rs": "c6253605875bb6d0a10da09681eb3aef6589aae264925751ca111d5ab9ef52bf",
+    "src/types.rs": "aed36e3ab6058d6756f3e8a6198b5a5df4c4af32e5d1eeef3f95eeed4312674c",
+    "test_classifier.py": "1fc329e8cda26e3274da25c8c2ec773161fc5f992db255663f1fa331bc88cded",
+    "test_probe.py": "96854e898309d82f9630d7afc7e8cffe66a91707421d5057539e755f0e0e06eb"
+  },
+  "tests": [
+    {
+      "failed": 0,
+      "file": "test_classifier.py",
+      "passed": 5,
+      "seconds": 0.029
+    },
+    {
+      "failed": 0,
+      "file": "test_probe.py",
+      "passed": 2,
+      "seconds": 3.651
+    }
+  ],
+  "types_source_exact_locked": true
+}

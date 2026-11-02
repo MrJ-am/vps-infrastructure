@@ -1,4 +1,4 @@
-# Bind the complete public application configuration to received immutable bytes.
+# Bind the complete public application configuration to qualified immutable bytes.
 # This builds no application and performs no SQL, credential read or activation.
 { pkgs }:
 let

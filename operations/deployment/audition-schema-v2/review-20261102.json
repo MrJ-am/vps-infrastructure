@@ -1,0 +1,43 @@
+{
+  "author_qualification_sha256": "7fe065e2234df4925a21c0f141973554a351765bb59514687afbd9cde5aeff5c",
+  "checks": [
+    "Migration001/002 bytes match exact accepted platform runtime source lock.",
+    "Builder output equals actual immutable package files and verified Nix store content.",
+    "Catalogue guard binds relations/columns/defaults/constraints/indexes/RLS/policies/functions/triggers/sequences/types in both source states.",
+    "Expected policy role arrays PUBLIC[0] avoid variable role OID dependence.",
+    "One transaction with explicit table locks; separate unprivileged runtime role, consistent owners, PG17/database/version/schema required before mutation.",
+    "Only exact002 policy replacements and marker insertion execute; no application DML/row read or role change.",
+    "Exact already002 path leaves policy objects unchanged; postcondition must match exact002 and versions1,2.",
+    "Ten native author scenarios cover invented row preservation/idempotence and eight catalogue/role/owner refusals.",
+    "Module differs from accepted sourceG by exactly package import and one fixed invocation in existing explicit bootstrap unit; no automatic activation or new unit."
+  ],
+  "closed_live_applicability_receipt_sha256": "eba98ec1f52c2375da9696ff2549736e23595ba83d4fb320ba490c5b26791fc5",
+  "generated_sql_sha256": {
+    "adopt.sql": "1cd818b225bc7fe0f9706f62c6dbdf3d9369a6109fd532a5900970d64057023f",
+    "preflight.sql": "78ceef1515a7c380ad664d717b1a528631d41a0c908514833faa2d236b6fe787"
+  },
+  "limits": [
+    "Root executes only within the normal cutover transaction after paired snapshot; reviewer performs no migration or VPS action.",
+    "Unknown schema hashes must be diagnosed, not regenerated to match unknown production state.",
+    "This adopts the reviewed existing migration, not arbitrary SQL or an application-triggered upgrade."
+  ],
+  "package": "/nix/store/nn4sx38x6snsq4jm4hv13j2w8nrki5jk-mrjam-audition-schema-adoption-2",
+  "probe_review_sha256": "2c173ebcd76ccee1868b0ff053ea6e733117ee929a2b61004e5883337b94414b",
+  "production_access_by_reviewer": false,
+  "production_migration_performed_by_reviewer": false,
+  "schema_version": 1,
+  "scope": "independent guarded migration source/build/wiring and synthetic qualification review",
+  "source_hashes": {
+    "operations/deployment/audition-schema-v2/001-reference.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
+    "operations/deployment/audition-schema-v2/002-additive.sql": "183a44c605ee3e6ddcc4ee7737f042b65c17262ed4cd89d8c674acd98e761ab9",
+    "operations/deployment/audition-schema-v2/build_sql.py": "6e44492cf51c7d7daf511758a33a355f0780c0d4b89a125f45df23de3bb743ae",
+    "operations/deployment/audition-schema-v2/catalogue.sql": "d48bb48b4b8165f6da89a8989dea91dce93b4fc1c3dad6224c01caf64243bfcc",
+    "operations/deployment/audition-schema-v2/package.nix": "7f4d0ba6f59340f8037ee33ba0096481f5b4c21285c1d6c7d0587e982a217fe1",
+    "operations/deployment/audition-schema-v2/source.json": "fbbbbe9ef70b3a5169f74ffc1ab6c444ee40a1719abad48ceaad1b046785da96",
+    "operations/deployment/audition-schema-v2/test_adoption.py": "30dda12b73e4a1fec2b6ef0976614e6bfe56415c65f4793617746550ab9a18ab",
+    "operations/deployment/audition-schema-v2/test_preflight.py": "6d3770dc74ba40615051ba32a3f15ca1b4e5fd24d75675cdcfdcdb3866253742",
+    "operations/deployment/database-adoption.nix": "676d4bb1f95968676a877d1fdf385f70976f038d1c346f76d2f7cdce9b77eb0f",
+    "operations/deployment/preflight_audition_schema_004.py": "c3997ec851d51d3e16ec0bbf37970fe1aa258900170906000847594ebf9c2a91"
+  },
+  "status": "PASS"
+}

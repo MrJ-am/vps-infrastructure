@@ -5,6 +5,7 @@ let
   psql = "${config.services.postgresql.package}/bin/psql -X -w -q --set=ON_ERROR_STOP=1 --host=/run/postgresql";
   journal = ./journal-bootstrap;
   sources = builtins.fromJSON (builtins.readFile (journal + "/source.json"));
+  auditionSchema = import ./audition-schema-v2/package.nix { inherit pkgs; };
   forgejo = config.services.mrjamForgejoHost.artifactStorePath;
   ini = (pkgs.formats.ini { }).generate "forgejo-explicit-migration.ini" config.services.mrjamForgejoHost.settings;
   common = {
@@ -73,6 +74,7 @@ in {
     ${psql} --dbname=vision_journal --file=${journal}/bootstrap-journal/03-schema.psql
     ${psql} --dbname=vision_journal --file=${./journal-public-schema-usage.sql}
     ${psql} --dbname=vision --file=${./vision-admin-public-schema-usage.sql}
+    ${psql} --dbname=vision --file=${auditionSchema}/adopt.sql
   '') // { conflicts = [ "mrjam-rust-blue.service" "mrjam-rust-green.service"
     "mrjam-vision-admission.service" "mrjam-vision-cycle.service" "mrjam-vision-closure.service"
     "mrjam-vision-archive.service" "mrjam-vision-replay.service" ]; };

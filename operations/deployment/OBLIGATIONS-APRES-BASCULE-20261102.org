@@ -5,11 +5,11 @@
 Ce registre conserve le travail restant du [[file:../mise-en-service/mandat.org][mandat]] et de
 l'[[file:AUTORISATION-ADMIN-20261102.org][autorisation d'achever le déploiement puis de vérifier les barrières]].
 Il complète [[file:ETAT-20261102.org][l'état courant]] sans modifier les anciens reçus.
-La tentative 003 est revenue à l'ancienne génération après le refus
-=DEFAULT_BRANCH_ADOPTION_REQUIRED= dans la gouvernance Forgejo. Les corrections
-SQL ont franchi leur étape, mais aucun point ci-dessous ne présente cette
-tentative comme un déploiement réussi. La correction Forgejo et la nouvelle
-bascule restent prioritaires.
+La tentative 004 est revenue à l'ancienne génération après le refus de
+readiness du serveur Rust. La gouvernance Forgejo a franchi ses contrôles,
+mais ses imports ont été annulés par le retour. Le corpus Matheval et la
+migration Audition manquante sont en cours de qualification. Aucune tentative
+n'est présentée comme un déploiement réussi.
 
 * 1. Constater la réussite de la prochaine bascule
 
@@ -40,7 +40,7 @@ toutes les autorisations applicatives ou un futur accès de validation.
 
 * 3. Achever la chaîne de travail sur la forge
 
-Le candidat des tentatives 002 et 003 conserve =actions.ENABLED=false=. L'import des
+Le candidat des tentatives 002 à 004 conserve =actions.ENABLED=false=. L'import des
 historiques et la protection de =main= ne constituent pas un exécuteur de CI,
 une revue humaine ni une livraison future protégée.
 

@@ -1,0 +1,29 @@
+{
+  "application_or_secret_contents_read": false,
+  "ast_identical_except_two_assignments": true,
+  "binding_equals_exact_production_probe": true,
+  "binding_probe": ".local/deployment-20261101/fourth-release-archive-preflight-001.json",
+  "binding_probe_sha256": "844a96e99a118933df0a8c6d50b06e110eee286ee2dc7eca698a941d3b33cbb4",
+  "bound_attempt": 4,
+  "changed_assignments_only": [
+    "OPERATION",
+    "BINDING"
+  ],
+  "closed_failure_bytes_match_observed_canonical_record": true,
+  "previous001_002_identities_unchanged_from_previous_probe": true,
+  "prior_archive_set": [
+    "001",
+    "002",
+    "003"
+  ],
+  "production_access": false,
+  "production_archive_executed_by_reviewer": false,
+  "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "return_observation_sha256": "2993d2b1bdac2810331cf4eb8f19f509428bb004d672356c484639b79dfcab53",
+  "reverse_substitution_byte_identical": true,
+  "schema_version": 1,
+  "sealed_sha256": "e197354160449fb0251aa885b5382c1cc3ea672bbf0b8529f5824738b075c219",
+  "sealed_source": "operations/deployment/archive-first-release-attempt-004-20261102.py",
+  "status": "PASS",
+  "template_sha256": "f9c47d44a19b9f0e227d833dda7f0bab2f2f6ce095cb01049f9d55f92ae38c5c"
+}

@@ -1,0 +1,45 @@
+{
+  "bundle_binding_matches_source_g_and_successful_receipt004": true,
+  "bundle_bytes": 3954678447,
+  "bundle_sha256": "f4dfc2589083a8a60516fe03b81d2ef619066e983cf9a3e338af26e295c19c87",
+  "checks": [
+    "Same existing transaction.lock and source-directory flock; active state must contain only lock after archive004.",
+    "Previous current and boot profiles required; no service, SQL, application, profile or Git action.",
+    "Exact single infrastructure bundle hash/size verified before same-filesystem rename; root0600 single-link file and exclusive root0700 destination.",
+    "No old source archive, transaction archive or other bundle modified."
+  ],
+  "destination": "/var/lib/mrjam-source-import/previous-1c7b4ee-20261102/vps-infrastructure.bundle",
+  "exact_reverse_assignment_lines_restore_previous_bytes": true,
+  "limits": [
+    "No private bundle contents reread by reviewer; metadata/previous exact stream verification reused.",
+    "Nine invariant tests reused through exact function byte identity, no duplicate suite.",
+    "Root executes only after archive004 and replacement source is ready; no execution performed by reviewer."
+  ],
+  "linked_receipts": {
+    ".local/deployment-20261101/forgejo-binding-source-g-20261102/governance-final-receipt.json": "1db051666eab3bbf074e46cb90ffbbc16ac93fc9522108e3795c75d285e1c42f",
+    ".local/deployment-20261101/forgejo-binding-source-g-20261102/infrastructure-bundle-verification.json": "7b8bbdbdfda2b09adccb6c8e3341798b22ef3725dd6c3e5519d51b10440e6ca5",
+    ".local/deployment-20261101/source-bundles-delivery-result-004.json": "ac963fcbf3199a632f6342e33cae4e429ae45ca82632db90954db1afd56ef527",
+    "operations/deployment/qualification-retain-previous-infrastructure-bundle-20261102.json": "37c45cbe943eb544e526f60863b997d4b62674763b83391cbba90b2404a5d1c7",
+    "operations/deployment/review-retain-source-e-infrastructure-bundle-20261102.json": "e983742398e97a524c508d2475fb12b09e2abe97752175487891312a6c291dfa",
+    "operations/deployment/source-bundles-delivery-004-20261102.json": "a63de2c9215af07437c961729e14bf74813bfbf0458bec84d25b6baee7ad8d40",
+    "operations/deployment/source-g-retention-binding-20261102.json": "f5e43101dfe9b07452c375b20e398ee421d28db946bf10901f7ac1823e95c08e"
+  },
+  "only_bindings_changed": [
+    "ARCHIVE",
+    "BYTES",
+    "SHA256"
+  ],
+  "passed": true,
+  "previous_destinations_preserved_and_distinct": [
+    "previous-e65a42e-20261102",
+    "previous-12d1beb-20261102"
+  ],
+  "production_access": false,
+  "production_executed": false,
+  "qualified_previous_copy": "operations/deployment/retain-source-e-infrastructure-bundle-20261102.py",
+  "qualified_previous_copy_sha256": "27a7cf2f1b94cbce0ff5ea23d1f401b3b7a6ea638010b9bf3250e37e12f34e67",
+  "schema_version": 1,
+  "sealed": "operations/deployment/retain-source-g-infrastructure-bundle-20261102.py",
+  "sealed_sha256": "e198ec9e130c35e9eae14eddf370c434eca349227c12626e1946ed9aecd7ac6b",
+  "source_revision": "1c7b4eedf05396900ab05953b09bb98c0dfe522a"
+}

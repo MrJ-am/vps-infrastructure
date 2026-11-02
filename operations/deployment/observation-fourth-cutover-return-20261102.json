@@ -1,0 +1,37 @@
+{
+  "application_body_read": false,
+  "attempt": 4,
+  "controller_release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "controller_unit": {
+    "ActiveState": "failed",
+    "ExecMainCode": 1,
+    "ExecMainStatus": 1,
+    "LoadState": "loaded",
+    "MainPID": 0,
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "eight_public_https_passed": true,
+  "failure": {
+    "code": "SEALED_OPERATION_REFUSED",
+    "component": "vision-frontend",
+    "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+    "schema_version": 1,
+    "step": "readiness"
+  },
+  "local_evidence_sha256": {
+    "first-release-failure-004.json": "96a7585c22593283ef06e4cc34c37c3c2afef366b2c4df6655d9e160e6240763",
+    "first-release-launch-004.json": "050dbc0b0608c634159f1b5182c9039aa73895fd75b310870a0cb5e50335854d",
+    "first-release-observations-004.jsonl": "d113f5eaa81933d5e8e3114327c01c42bd9e140ae456171278f1d03b4530a507",
+    "public-https-after-004.json": "c07679e64e729b7493db2685731083d1ee359af4c44b59dc5db7691b5c137ae5"
+  },
+  "public_https_observed_at": "2026-11-02T22:10:51.576851+00:00",
+  "schema_version": 1,
+  "snapshot_restoration_requested": false,
+  "terminal_observed_at": "2026-11-02T22:09:49.886006+00:00",
+  "terminal_result": {
+    "code": "CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED",
+    "phase": "previous-generation-restored",
+    "schema_version": 1
+  }
+}

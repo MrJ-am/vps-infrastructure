@@ -1,0 +1,113 @@
+#+title: Initialisation Rust — incident de la quatrième bascule
+#+date: 2026-11-02
+#+language: fr
+
+Le parent a observé trois sorties de =mrjam-rust-blue= avec le code 2 et
+aucun signal. Le binaire charge le runtime avant d'ouvrir le port 38101.
+=Type=simple= ne fait donc pas du succès du job systemd une preuve de cette
+initialisation. La sortie d'erreur est actuellement dirigée vers =null=.
+
+* Banque Matheval : prédicat exact
+
+Dans le source qualifié de =platform/crates/server/src/runtime.rs=,
+=data/bank.json= est analysé comme =SansDoublons= puis conservé comme
+=Arc<serde_json::Value>=. Seule la présence d'une version non vide est
+vérifiée à cette étape. Aucune structure typée ne filtre ses champs.
+Ce =Value= est transmis à =database::mateval_ready=, qui utilise :
+
+#+begin_src sql
+SELECT EXISTS (SELECT 1 FROM corpus WHERE version=$1 AND bank=$2)
+#+end_src
+
+Les paramètres sont la version du document et =sqlx::types::Json(bank)=.
+La comparaison du premier probe est donc le même prédicat JSONB complet.
+Un résultat faux entraîne =MATEVAL_CORPUS_MISMATCH=, puis la sortie 2,
+avant la lecture des deux credentials et avant l'initialisation Vision.
+
+Le parent a observé cette égalité fausse sur le système revenu. Les colonnes
+Matheval et la séquence attendues étaient présentes. Le format du hash
+d'activation était accepté. Le credential d'admission absent après retour
+n'est pas une preuve de son absence dans le candidat adopté.
+
+Le probe [[file:preflight_mateval_corpus_004.py][de version]] distingue absence de version, collision de contenu et égalité.
+Il ne reçoit ni n'exporte de banque enregistrée, codebook, participation,
+réponse, administrateur ou session. Les seuls contrôles du codebook et du
+digest sont leur forme : aucune référence de codebook approuvée n'a été reçue.
+Une égalité de codebook ou du digest combiné n'est donc pas revendiquée.
+
+L'adopteur =adopt-matheval.sql= change uniquement propriétaires et droits.
+Il ne charge aucun corpus. L'importeur Rust séparé exige des octets approuvés
+de banque et de codebook, puis refuse une version existante dont le digest
+diffère. Aucun remplacement, renommage ou effacement de corpus n'a été réalisé.
+
+* Autres gardes et limites des observations
+
+Le vrai binaire =hf08…= avec le runtime =i6si…= et les cinq artefacts publics
+exacts a dépassé tous les contrôles d'assets localement. Le test impose ensuite
+un sélecteur PostgreSQL sentinelle pour s'arrêter avant tout accès SQL.
+
+Les tests PostgreSQL natifs appliquent les deux migrations Matheval exactes,
+puis l'adopteur exact, et exécutent les prédicats des deux rôles, de la collecte
+et de l'administration. Ils passent sur des objets et lignes inventés.
+Cela prouve la cohérence de cette adoption dans cette fixture, pas la présence
+du corpus requis sur le VPS.
+
+Le [[file:preflight_rust_contracts_004.py][premier probe des témoins]] utilise =search_path=pg_catalog=. Le runtime
+utilise =public,pg_catalog=. =pg_get_functiondef= peut dépendre de ce contexte
+pour la qualification des types. Un témoin faux dans ce probe ne suffit donc
+pas à conclure à une modification réelle : une projection distincte du contexte
+exact est nécessaire. Les anciens reçus restent conservés. Les fonctions
+applicatives ne sont jamais appelées par ce probe.
+
+Le résultat Audition du premier probe combine version maximale égale à 2 et
+droit SELECT. Leur séparation relève du complément de diagnostic. Aucun
+rejeu de migrations ni recalcul de témoin n'est autorisé par une observation
+négative seule.
+
+Le parent a depuis exécuté le complément v2 : les deux témoins Vision
+correspondent au contexte exact du runtime. Aucun recalcul n'est nécessaire.
+Audition est exactement à la version 1, avec USAGE et SELECT présents :
+la migration additive 002 manque réellement. L'agent hôte prépare son adoption
+gardée, séparément de la collision de corpus Matheval.
+
+Les observations après retour ne représentent ni les UID/HBA du candidat,
+ni son namespace de credentials, ni les droits créés par l'adoption annulée.
+Le banc systemd séparé de l'agent hôte a validé le lecteur exact de credentials
+avec systemd 260.2 ; il ne révèle pas de défaut général du format ACL mesuré.
+
+* Preuves locales
+
+- [[file:qualification-rust-initialization-projections-004-20261102.json][Sept tests des deux premiers probes]], dont PostgreSQL 17 réel.
+- [[file:qualification-mateval-corpus-projection-004-20261102.json][Deux tests de la projection de corpus]], absence, collision, égalité et sortie fermée.
+- Aucune connexion de cet agent au VPS, aucune mutation de production.
+
+* Résultat de la classification en lecture seule
+
+Le classifieur construit avec les types Rust exacts a été livré et exécuté sur
+le VPS. La désérialisation, la validation et l'égalité des deux =Bank= passent.
+Toutes les comparaisons de champs connus, identifiants, textes et ordres passent.
+La banque historique possède des champs supplémentaires aux niveaux racine,
+question et production. Aucun contenu de banque ou de codebook n'a été exporté.
+
+Le correctif retenu modifie le contrôle de disponibilité : comparer les deux
+=Bank= validés en mémoire, avec une lecture SQL bornée, et exiger que la banque
+publique soit entièrement représentée par ce modèle. Il conserve la banque
+historique, son digest, son codebook, sa version et les participations. Il ne
+certifie pas la sémantique des champs supplémentaires ni celle du codebook.
+
+La seconde projection des témoins Vision confirme les deux corps attendus
+dans le contexte =public,pg_catalog= utilisé par le runtime. Le contrôle précis
+des noms exclut toute fonction ou relation homonyme ; les opérateurs publics
+sont exclusivement ceux des types attendus de pgvector. Aucun témoin ni aucune
+migration Vision ne doit être régénéré pour cet incident.
+
+Audition possède exactement la migration 1 et les droits requis. Le préflight
+d'adoption reconnaît l'empreinte du schéma 001 ainsi que ses propriétaires et
+rôles. La migration 002 exacte change deux politiques de portée des versions
+et ajoute son marqueur dans une transaction gardée. Elle sera exécutée par
+l'adoption explicite après sauvegarde, avant le démarrage de Rust.
+
+Les résultats sont liés dans
+[[file:observation-rust-initialization-diagnosis-004-20261102.json][l'observation fermée de cet incident]].
+La qualification des correctifs et la prochaine mise en service restent des
+étapes séparées ; aucun résultat ci-dessus ne vaut succès de déploiement.

@@ -1,0 +1,27 @@
+{
+  "application_mutation_performed": false,
+  "author_qualification_sha256": "11cfa40dc4fd156a09a5e28b10d665bcbe5c6d734c5a493afa2e6fbeb8f320c9",
+  "author_test_source_sha256": "6ea5d7c9a00e860794a9506a1d6e56bfa2d8dc64341c0025649be1b2b1db6160",
+  "checks": [
+    "Fixed previous-generation/root/hostname/noargs guard.",
+    "Fixed immutable public bank path and byte hash verified independently; no input path supplied at runtime.",
+    "One fixed READ ONLY PostgreSQL query, default read-only connection, pg_catalog search path, bounded command and statement deadlines.",
+    "Only corpus metadata and JSON comparisons are evaluated inside PostgreSQL; no participant, answer or session tables referenced.",
+    "Exactly nine literal-named Boolean predicates accepted; no version, bank, codebook or digest values output.",
+    "Absent version, nonunique version, unequal bank and codebook/digest shapes are distinct observations.",
+    "No approved codebook reference or combined-digest equality is claimed."
+  ],
+  "limitations": [
+    "Raw JSONB equality is not alone proof of a runtime initialization failure; actual application guard must be checked.",
+    "Codebook and digest values are inspected only inside PostgreSQL to compute declared shapes; this is not independent content validation.",
+    "No type/schema/ACL/adoption or full startup guarantee follows from this restored-state probe.",
+    "Author two native tests are source/result reviewed, not rerun by this reviewer."
+  ],
+  "probe_executed_by_reviewer": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent source review of fixed public-corpus comparison and private-reference shape projection",
+  "source": "operations/deployment/preflight_mateval_corpus_004.py",
+  "source_sha256": "6cc8d5599888b2ba7e9cb1c720432934a3bc7229463d13ff14b27fe541c5c8ff",
+  "status": "PASS"
+}

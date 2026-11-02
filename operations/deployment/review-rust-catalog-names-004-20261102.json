@@ -1,0 +1,22 @@
+{
+  "author_qualification_sha256": "2be88487fc4002c5db86f87ac5c4ff5f1b2ff76a7449d2fd4026114142bbe079",
+  "checks": [
+    "Eight fixed catalogue-only queries use pg_catalog search path throughout.",
+    "Main execution engine byte/AST semantics retained from reviewed e6603e8c except fixed output labels/schema and metadata flag.",
+    "Global deadline cannot be swallowed by per-query errors; output exact t/f or unobserved only.",
+    "No application function call, function body read/export, private application row read or secret access.",
+    "Public equality existence separated from relevant oid/name/text homonyms and exact vector extension membership/operand types.",
+    "Author native PG17 plus actual pgvector0.8.2 and hostile homonym fixtures bound, not rerun."
+  ],
+  "database_mutation_performed": false,
+  "limits": [
+    "Presence of a public vector equality operator alone does not imply a witness name collision.",
+    "Extension metadata classification is descriptive and does not approve arbitrary extension behaviour.",
+    "No migration or witness regeneration authorized by this read-only diagnostic."
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent source and qualification review; no production probe execution",
+  "source_sha256": "641e14aeb43d8a490595bab6324c39958cb8ffe797d9d1702b778c0d4c12fa9d",
+  "status": "PASS"
+}

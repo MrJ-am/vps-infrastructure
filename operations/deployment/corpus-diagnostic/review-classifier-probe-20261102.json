@@ -1,0 +1,29 @@
+{
+  "activation_performed": false,
+  "author_qualification_sha256": "00ef07bca17c0a7da419d9745abe466dfbb28f62693562f231ff85872d089301",
+  "checks": [
+    "Exact types.rs matches accepted runtime lock and selected native source byte-for-byte.",
+    "Every dependency version/checksum matches the existing runtime Cargo lock; build source files match derivation input.",
+    "Rust processes at most5MiB stdin; embedded public bank fixed; no file/database/network API in classification; closed errors and suppressed panic output.",
+    "Sixteen Boolean fields distinguish raw equality, accepted native types/validation, known scientific fields/order and extra-field presence.",
+    "Fixed root/old-generation probe verifies exact ELF before SQL; fixed readonly role matheval_app query selects version0.3.0 bank only, not codebook/participant/answer/session rows.",
+    "PG output at most two5MiB rows, rejected beyond5MiB before classifier; valid output strictly schema/field/type constrained.",
+    "Author five classifier plus two native PostgreSQL pipeline tests bound; no repeat or relabelled full application qualification.",
+    "Actual closure exactly5paths and full exported NAR reconstructed byte-exact; content verification passes."
+  ],
+  "classifier_elf_sha256": "d1a4d2419c025b202a21c492973d2864f882a07fb272e0682bce2dbbaffc9a59",
+  "classifier_package": "/nix/store/anvdal9pag7qh6w13cn88mw1pdlyiky2-mrjam-mateval-corpus-classifier-1",
+  "database_mutation_performed": false,
+  "limits": [
+    "Classification does not import or repair a corpus and does not approve changed scientific content.",
+    "Typed equality ignores only fields ignored by the exact native Bank structs; production readiness currently compares raw JSON separately.",
+    "No codebook selected, no combined digest verified, no actual production data available to reviewer.",
+    "Delivery imports code only; root must separately execute the fixed probe after installation."
+  ],
+  "probe_sha256": "f5cd5374193fd9facf01d8e9b1a47a2037065b26ad87664b5960c6888d189889",
+  "production_access": false,
+  "production_corpus_received": false,
+  "schema_version": 1,
+  "scope": "independent source, derivation/input and delivery binding review; no production corpus received",
+  "status": "PASS"
+}

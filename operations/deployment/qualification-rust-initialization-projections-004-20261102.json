@@ -1,0 +1,35 @@
+{
+  "evidence_origin": "completed local exec outputs retained in conversation; no separate process log captured",
+  "limitations": [
+    "No candidate UID/HBA or live credentials namespace represented by production baseline probe.",
+    "Witness metadata comparison does not invoke application functions.",
+    "No full application deployment qualification."
+  ],
+  "private_production_access": false,
+  "qualification": "rust-initialization-readonly-projections-incident-004",
+  "real_postgresql_major": 17,
+  "runs": [
+    {
+      "command": "python3 operations/deployment/test_rust_initialization_004.py",
+      "elapsed_seconds": 3.911,
+      "exit_code": 0,
+      "failed": 0,
+      "tests": 5
+    },
+    {
+      "command": "python3 operations/deployment/test_rust_contracts_004.py",
+      "elapsed_seconds": 3.856,
+      "exit_code": 0,
+      "failed": 0,
+      "tests": 2
+    }
+  ],
+  "schema_version": 1,
+  "sources": {
+    "preflight_rust_contracts_004.py": "be25c90154e6f7ddad856f3be801abbfa389d07d6c33f34126fd23e4c2e7390d",
+    "preflight_rust_initialization_004.py": "6490d61ceda1fb377339bc35a1524a6827984a2f9ce9723c89020b3631cd3ddc",
+    "test_rust_contracts_004.py": "a2e5266133064bc1f72cbbe1eaba624671f100eae2323c93ca00641d9da11264",
+    "test_rust_initialization_004.py": "047d345cb6e7c09681ee82170846fec55a266ca1b8a549ad22df773f798430bd"
+  },
+  "synthetic_credentials_and_rows_only": true
+}

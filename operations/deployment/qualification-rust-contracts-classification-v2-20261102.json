@@ -1,0 +1,59 @@
+{
+  "checks": [
+    "Only fixed boolean outputs and fixed contexts/queries accepted",
+    "Witness SQL literal matches exact migration16/17",
+    "Genuine witnesses with public type are accepted under runtime context but refused under catalogue-only context",
+    "Exact Audition001/002 version metadata classified independently of SELECT permission",
+    "Real function drift still refused under both contexts",
+    "EXECUTE and function-local search_path are separate predicates",
+    "Unknown Audition version not classified as1or2",
+    "Public pg_get_functiondef homonym throwing an error and public.pg_proc view are not called/read; shadowing itself reportsfalse",
+    "Public equality operators for oid/text/name raise exceptions in the fixture and are never called by the probe",
+    "Dedicated whole-operation deadline is not swallowed as a per-query OSError; no remaining query runs and unknown exception content is not exported"
+  ],
+  "conclusions": [
+    "The original catalogue-only witness projection can produce false negatives due solely to public type deparsing context",
+    "The new projection separates context, function shape and permissions; it does not authorize witness regeneration or a migration",
+    "Audition migration002 changes two policies and adds marker2, but its applicability to production requires separate known-schema validation"
+  ],
+  "decision": "PASSED",
+  "limits": [
+    "Synthetic functions use a public composite type to reproduce deparser context dependence; no production body was read/exported",
+    "The native test calls only invented witness functions; the production probe never invokes application functions",
+    "No actual production code contract result claimed until root executes this separately reviewed probe",
+    "No existing migration rerun or database mutation performed"
+  ],
+  "probe_contract": {
+    "application_functions_invoked": false,
+    "each_query_statement_timeout_seconds": 2,
+    "each_subprocess_timeout_seconds": 4,
+    "function_bodies_exported": false,
+    "metadata_tables": [
+      "public.vision_schema_migrations",
+      "audition.schema_migrations",
+      "PostgreSQL system catalogues"
+    ],
+    "predicates": 17,
+    "private_application_rows_read": false,
+    "read_only": true,
+    "secret_contents_read": false,
+    "whole_operation_timeout_seconds": 45
+  },
+  "production_access": false,
+  "schema_version": 1,
+  "source_sha256": {
+    ".local/mrjam-plateforme-identity/components/vision/migrations/016_creation_semantique.sql": "3b0130d6173c9275c04e5825a3eef049334827a54afc28aa8fc427eb354e1abd",
+    ".local/mrjam-plateforme-identity/components/vision/migrations/017_tutorat_temps.sql": "aa74a7c5c42a39e1613526a5b5c3ccd88c630f15c11b7e1f6ce6a8f7d82fee6a",
+    ".local/mrjam-plateforme-identity/crates/audition/migrations/001-schema.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
+    ".local/mrjam-plateforme-identity/crates/audition/migrations/002-version-scope.sql": "183a44c605ee3e6ddcc4ee7737f042b65c17262ed4cd89d8c674acd98e761ab9",
+    "operations/deployment/preflight_rust_contracts_004_v2.py": "e6603e8c888fa40f9d2e6952aeb577ee9868350e3a6a7d3e27cab95effaf876c",
+    "operations/deployment/test_rust_contracts_004_v2.py": "8330ea20b071c898b986f5978d26732851ca76e8219deca26e07af1882d4d550"
+  },
+  "tests": {
+    "elapsed_seconds": 4.805,
+    "log_sha256": "d905d77e9f4dc3c786d383de3795e24c0a5006b333681cbe38f42e38b2c4a2c7",
+    "native_postgresql_scenarios": 6,
+    "postgresql": "17.11",
+    "unittest_methods": 4
+  }
+}

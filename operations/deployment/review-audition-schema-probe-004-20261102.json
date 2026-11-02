@@ -1,0 +1,16 @@
+{
+  "author_qualification_sha256": "7fe065e2234df4925a21c0f141973554a351765bb59514687afbd9cde5aeff5c",
+  "builder_sha256": "6e44492cf51c7d7daf511758a33a355f0780c0d4b89a125f45df23de3bb743ae",
+  "checks": [
+    "Nine fixed strict Boolean outputs only; schema digest and role/version comparisons stay in database.",
+    "System catalogues and migration markers only under explicit pg_catalog; no application function invoked or application row selected.",
+    "Fixed previous-generation/root/hostname/noargs gate, READ ONLY plus connection defaults and5s/10s/15s bounds."
+  ],
+  "closed_live_applicability_receipt_sha256": "eba98ec1f52c2375da9696ff2549736e23595ba83d4fb320ba490c5b26791fc5",
+  "mutation_performed": false,
+  "production_access_by_reviewer": false,
+  "readonly_sql_matches_packaged_preflight": true,
+  "schema_version": 1,
+  "source_sha256": "c3997ec851d51d3e16ec0bbf37970fe1aa258900170906000847594ebf9c2a91",
+  "status": "PASS"
+}
