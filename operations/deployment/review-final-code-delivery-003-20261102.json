@@ -1,0 +1,29 @@
+{
+  "all_1676_release_artifacts_covered": true,
+  "all_dependencies_previously_observed_or_delivered": true,
+  "all_linked_qualification_hashes_valid": true,
+  "export_bytes": 452080,
+  "export_path_count": 6,
+  "export_sha256": "f731de0f84a8e15130315eff15b4e6d37ee3fcb04bd662314e96588b736a8734",
+  "export_stream_independently_recreated_byte_for_byte": true,
+  "final_release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "full_delivery_closure_count": 250,
+  "limits": [
+    "Local verification only; no Nix import, service start or VPS access.",
+    "Receiver import VM reused through exact source identity; code reception does not demonstrate deployment success.",
+    "357 old generation paths remain bound to the closed VPS observation; live preflight rechecks the whole release."
+  ],
+  "manifest_sha256": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4",
+  "old_observation_only_hashes_compared": 357,
+  "only_release_and_directory_assignment_lines_changed_byte_for_byte": true,
+  "original_validator_passed": true,
+  "passed": true,
+  "prior_successful_delivery_receipts_verified": 9,
+  "production_access": false,
+  "receiver_sha256": "8340955c5da8d864a4df3cea6e3cc6c41a327372e9935cdb432f1d313191b25c",
+  "registered_nar_hashes_compared": 1319,
+  "reused_dependency_count": 244,
+  "schema_version": 1,
+  "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+  "v3_existing_unit_exactly_preserved": true
+}
