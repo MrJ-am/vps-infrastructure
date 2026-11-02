@@ -1,0 +1,41 @@
+{
+  "accepted_source_revision": "e65a42e303f75467adeb86adca7e2382983d51bd",
+  "date": "2026-11-02",
+  "limits": [
+    "The namespace checks are read-only booleans; no organization or repository was created by this probe.",
+    "Retaining the first input bundle preserves its inode and bytes; the updated input is received separately."
+  ],
+  "observations": {
+    "forgejo-namespace-before-attempt-002.json": {
+      "result": {
+        "checks": {
+          "namespace_absent": true,
+          "namespace_unique_organization": false,
+          "no_existing_destinations": true,
+          "no_person_collision": true,
+          "private_source_visibility_compatible": true
+        },
+        "code": "FORGEJO_NAMESPACE_OBSERVED",
+        "mutation_performed": false,
+        "private_values_exported": false,
+        "schema_version": 1
+      },
+      "sha256": "944c6f89c2a1ffc78075876d6d952db3a41b134ed52f94bb21447aa0b804b3ae"
+    },
+    "source-infrastructure-retention-001.json": {
+      "result": {
+        "application_changes": false,
+        "bytes": 3954248105,
+        "code": "PREVIOUS_INFRASTRUCTURE_BUNDLE_RETAINED",
+        "new_bundle_received": false,
+        "other_bundles_opened": false,
+        "same_inode": true,
+        "same_transaction_lock": true,
+        "schema_version": 1,
+        "sha256": "30366563add7d04387905f6db97fe7a012fa1f981b7df6ce38cf4c3a8a6a1c48"
+      },
+      "sha256": "ec209132943d77d26d7eaf835b2de8ea4f136e00422822406e235be2689a7a42"
+    }
+  },
+  "schema_version": 1
+}

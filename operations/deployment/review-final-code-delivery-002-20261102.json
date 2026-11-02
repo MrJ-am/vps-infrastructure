@@ -1,0 +1,106 @@
+{
+  "ast_identical_except_exact_release_and_directory": true,
+  "coverage": {
+    "all_comparable_nar_hashes_match": true,
+    "artifacts_covered_before_this_stream": 1672,
+    "delivery_roots_closure_paths": 249,
+    "delivery_roots_uncovered_dependencies": 0,
+    "final_artifact_nar_hashes_available_only_from_old_vps_observation": 357,
+    "final_artifact_nar_hashes_compared_to_local_registration": 1317,
+    "final_artifacts_added_by_this_stream": 2,
+    "final_release_artifacts": 1674,
+    "final_release_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+    "missing_final_artifacts": 0,
+    "observed_old_paths": 1190,
+    "observed_old_receipt_sha256": "e399d64d097d60993ca552d9aabe30b279a3f6a08ae1918dae2d734e4909f15d",
+    "old_artifact_nar_conflicts": 0,
+    "previous_deliveries": [
+      {
+        "manifest": "operations/deployment/provision-delivery-20261102.json",
+        "manifest_sha256": "2b356ae28f56fcaee2ab9fac30d2185eb3de0bed2b9dee6e487a408c341d07a7",
+        "paths": 161,
+        "result": ".local/deployment-20261101/provision-delivery-result-001.json",
+        "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce"
+      },
+      {
+        "manifest": "operations/deployment/passkey-delivery-20261102.json",
+        "manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+        "paths": 183,
+        "result": ".local/deployment-20261101/passkey-delivery-result-001.json",
+        "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce"
+      },
+      {
+        "manifest": "operations/deployment/passkey-correction-delivery-20261102.json",
+        "manifest_sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724",
+        "paths": 6,
+        "result": ".local/deployment-20261101/passkey-correction-delivery-result-001.json",
+        "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce"
+      },
+      {
+        "manifest": "operations/deployment/candidate-code-delivery-20261102.json",
+        "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+        "paths": 394,
+        "result": ".local/deployment-20261101/candidate-code-delivery-result-001.json",
+        "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79"
+      },
+      {
+        "manifest": "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json",
+        "manifest_sha256": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec",
+        "paths": 3,
+        "result": ".local/deployment-20261101/kanidm-local-bootstrap-delivery-result-001.json",
+        "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79"
+      },
+      {
+        "manifest": "operations/deployment/final-code-delivery-20261102.json",
+        "manifest_sha256": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+        "paths": 9,
+        "result": ".local/deployment-20261101/final-code-delivery-result-001.json",
+        "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc"
+      },
+      {
+        "manifest": "operations/deployment/archive-v3-delivery-20261102.json",
+        "manifest_sha256": "dda4f1a0e101fd53fb2a74721b21942cbfdd1ead81c03ece3389aa5ae679a513",
+        "paths": 3,
+        "result": ".local/deployment-20261101/archive-v3-delivery-result-001.json",
+        "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc"
+      },
+      {
+        "manifest": "operations/deployment/candidate-v3-code-delivery-20261102.json",
+        "manifest_sha256": "67228e849196c2ca8398a338d828e18e935554807ac28e2f46c591d2252b3643",
+        "paths": 10,
+        "result": ".local/deployment-20261101/candidate-v3-code-delivery-result-001.json",
+        "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc"
+      }
+    ]
+  },
+  "date": "2026-11-02",
+  "export": {
+    "bytes": 425808,
+    "local_nix_store_verify_path_passed": true,
+    "reexport_byte_identical": true,
+    "sha256": "dfc3d691e1197983072df3a755140b975425a10f764f4fe858ac8101332101d6",
+    "store_paths": 6
+  },
+  "inactive_unit": {
+    "path": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+    "preserves_v3_unit": true,
+    "sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+    "v2_package_only_validator_anchor": true
+  },
+  "limits": [
+    "Local bytes and recorded deliveries reviewed; no fresh VPS observation by this agent.",
+    "357 old generation closure paths are not installed on the review host: their hashes are bound to the earlier read-only VPS observation; the production preflight must verify all exact artifacts again.",
+    "Receiver imports code and reloads an unchanged inactive V3 provisioning unit; it does not run the controller or select/activate a generation.",
+    "Final release manifest/controller has a separate independent review; receiving code is not deployment success."
+  ],
+  "original_validator_passed": true,
+  "passed": true,
+  "release_literal_equals_json": true,
+  "schema_version": 1,
+  "scope": "Independent local final002 code delivery review; no SSH or import",
+  "source_sha256": {
+    "operations/deployment/deliver_provision.py": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+    "operations/deployment/final-code-delivery-002-20261102.json": "239c65435e78b2d0a90d721473b75bd5e50e5f113dafad6eb0f296d46971269e",
+    "operations/deployment/final-code-delivery-002-20261102.py": "a1f84a5c044db6669e2233e612b55f90bbf26c1063eb5b66e85a0ce886092f46"
+  }
+}
