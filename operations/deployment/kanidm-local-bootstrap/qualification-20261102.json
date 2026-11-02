@@ -1,0 +1,149 @@
+{
+  "date": "2026-11-02",
+  "fixed_operations": [
+    "Validate old generation, root, observed database metadata, absent human portal/cache and shared opener lock.",
+    "Recheck both exact builtin UUIDs: service_account, not person, disabled, absent ordinary/attested passkeys.",
+    "RecoverAccount idm_admin and admin via exact Unix socket with983:983 inode and peer credentials; authenticate by loopback TLS using pinned CA.",
+    "Resolve the unique person in mrjam-proprietaire-policy; require account_policy and high privilege membership, preserve credential status/person attributes and all other idm_admins members.",
+    "Add only that person to idm_admins if absent. Call unchanged provision_workers/Api/TokenFiles from immutable13qs6 V3.",
+    "Finally close token files, logout dedicated sessions, disable both builtin accounts and re-observe their disabled/passkey-free state."
+  ],
+  "limits": [
+    "Synthetic local provider, persons, passkeys and credentials only. Root separately observed production builtin eligibility; this agent made no production access.",
+    "VM changes only six fixed binding constants: generation, provisioner CA variant, Unix socket/database paths and synthetic service UID/GID; helper functions/classes remain byte-identical.",
+    "Application V3 source is unchanged; helper does not invoke its LoadCredential entrypoint because its two freshly recovered sessions are already private in memory.",
+    "Finally handles ordinary exceptions and configured SIGTERM/SIGINT/deadline interruption. SIGKILL or host power loss cannot run Python cleanup; an execution wrapper may add a separately reviewed fixed cleanup action.",
+    "Read-only probe and tests are frozen; source was authored and tested here and requires parent independent review before production execution."
+  ],
+  "native": {
+    "check_count": 9,
+    "result": {
+      "bootstrap_source_sha256": "624ced6158f5d01af61adf1338d833b3acebbb0462704396fd1f161ed8ec902e",
+      "checks": [
+        "native-disable-invalidates-builtin-sessions-and-readonly-probe-accepts-only-disabled-rescue-accounts",
+        "exact-helper-recovers-only-two-builtin-service-accounts-and-finally-disables-both",
+        "same-human-passkey-and-existing-session-survive-role-addition-with-identical-credential-status",
+        "unchanged-v3-functions-create-and-verify-two-fixed-worker-tokens-preserving-admission",
+        "repeat-helper-is-idempotent-for-owner-role-and-existing-worker-capabilities",
+        "injected-provision-failure-still-revokes-and-disables-rescue-accounts",
+        "failure-between-two-recoveries-still-disables-both-builtins",
+        "human-sessions-survive-success-repeat-and-error-cleanup",
+        "ambiguous-owner-policy-refused-without-role-or-worker-write-and-builtins-reclosed"
+      ],
+      "limits": [
+        "Invented provider state and persons only. TokenFiles is an in-memory sink here; its unchanged actual file implementation was separately qualified in the V3 systemd VM.",
+        "Socket path/UID/GID and API port are synthetic parameters of execute/AdminSocket; production main has fixed observed bindings and no runtime arguments.",
+        "Credential status and successful authentication with the original passkey are observed; no private key or credential contents leave the fixture."
+      ],
+      "passed": true,
+      "production_access": false,
+      "real_kanidm": true,
+      "real_software_p256_passkeys": true,
+      "schema_version": 1
+    },
+    "result_sha256": "f2fd500a28c479203ca2f7d1e7afd4373614e190054ba8ede40768917f66d566"
+  },
+  "native_implementation": {
+    "admin_protocol_sha256": "0725296445162da8a2a9d928008bdc3eade1c74a6c07bed20e5cca522f69ae5f",
+    "alternative": "Native admin socket exposes no arbitrary account creation or account-inspection operation. Direct fixed socket requests avoid CLI password logging and keep returned credentials in process memory.",
+    "disable_effect": "DisableAccount sets account expiry to now; native tests confirm old sessions become unauthorized.",
+    "provider": "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+    "recovery_effect": "RecoverAccount removes passkeys/primary credential of its selected account, replaces it with a generated password, clears expiry and sets validity from now. Consequently only fixed disabled builtin service accounts without any passkey are eligible here; the human owner is never a recovery target.",
+    "recovery_implementation_sha256": "a1d0464e491c7457d0916f8cf6b7eb3fa7b052da33d8afff5451ee1f1871b0b1",
+    "source_root": "/nix/store/07a0mn5dkz2fx7wd4dh6jj7qnrz7a4ds-source"
+  },
+  "package": "/nix/store/y7viyzl5v93ac9jr1pzavjqx0n3knlnw-mrjam-kanidm-local-bootstrap-1",
+  "package_info": {
+    "/nix/store/y7viyzl5v93ac9jr1pzavjqx0n3knlnw-mrjam-kanidm-local-bootstrap-1": {
+      "ca": null,
+      "deriver": "/nix/store/h0vv0i79yxaavf46xfry0rnv02c5k124-mrjam-kanidm-local-bootstrap-1.drv",
+      "narHash": "sha256-/mwMkgYzGEOGzOvJqA7BSLE1bCIJeCI/p6LtgwxQyOM=",
+      "narSize": 18056,
+      "references": [
+        "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15",
+        "/nix/store/y7viyzl5v93ac9jr1pzavjqx0n3knlnw-mrjam-kanidm-local-bootstrap-1"
+      ],
+      "registrationTime": 1793645846,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "passed": true,
+  "prior_failures": [
+    {
+      "attempt": "native001",
+      "cause": "Control API initially used a dict-only JSON parser for successful null mutation/logout bodies. Replaced with bounded generic JSON parsing that rejects duplicate keys and non-finite constants before successful native002."
+    },
+    {
+      "attempt": "vm001/002",
+      "cause": "Synthetic daemon created SQLite0640 under the test driver umask; production is independently observed0600 and main correctly refused. Fixture now sets its invented database0600; no production guard was weakened."
+    }
+  ],
+  "production_access": false,
+  "readonly_projection": {
+    "fixed_builtin_uuids": [
+      "00000000-0000-0000-0000-000000000000",
+      "00000000-0000-0000-0000-000000000018"
+    ],
+    "queries": "Two UUID equality index lookups and two id2entry projections; query_only and mode=ro, no raw entry, password hash, passkey material, owner name or general table dump returned.",
+    "tests_passed": 6
+  },
+  "reproduce": {
+    "native": "python3 -I operations/deployment/kanidm-local-bootstrap/qualify.py",
+    "projection": "python3 -I -m unittest discover -s operations/deployment/kanidm-local-bootstrap -p test_builtin_probe.py -v",
+    "vm": "nix build --no-link --print-out-paths --max-jobs 1 --cores 2 --builders '' --file operations/deployment/kanidm-local-bootstrap/systemd-test.nix --arg nixpkgs /nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source"
+  },
+  "root_vm": {
+    "check_count": 8,
+    "derivation": "/nix/store/wi90xi7cg5qz268wj6cdd515676w67mi-vm-test-run-mrjam-kanidm-local-bootstrap-fixed-main.drv",
+    "output": "/nix/store/50kyy575x4z2adybdi83zj1sam5bch87-vm-test-run-mrjam-kanidm-local-bootstrap-fixed-main",
+    "result": {
+      "actual_proton_pass_browser": false,
+      "bootstrap_source_sha256": "624ced6158f5d01af61adf1338d833b3acebbb0462704396fd1f161ed8ec902e",
+      "checks": [
+        "fixed-main-wrong-generation-refuses-before-recovery",
+        "fixed-main-concurrent-opener-lock-refuses-before-recovery",
+        "fixed-main-existing-portal-runtime-is-preserved-and-refused",
+        "fixed-main-real-unix-recovery-and-v3-tokenfiles-complete-with-rescue-accounts-disabled",
+        "actual-three-root-private-token-files-have-exact-modes-and-admission-is-preserved",
+        "sole-owner-role-added-with-other-members-same-passkey-and-existing-session-preserved",
+        "fixed-main-repeat-preserves-token-inodes-and-role-idempotence",
+        "no-human-cache-created-and-closed-outputs-exclude-invented-secrets"
+      ],
+      "fixture_source_sha256": "f31ea86cc23c8141f9e0ff16fa4669631b79884d608cb6acde0da6aee4744311",
+      "functions_and_classes_unchanged": true,
+      "invented_binding_constants": [
+        "ADMIN_SOCKET",
+        "DATABASE",
+        "PREVIOUS",
+        "PROVISION",
+        "SERVICE_GID",
+        "SERVICE_UID"
+      ],
+      "passed": true,
+      "probe_source_sha256": "ce1832ffc9e857af28a3082aaf08d0da76950026f878d3a26de38477ff35e02f",
+      "production_access": false,
+      "provision_package": "/nix/store/0j2wjix22x7b45akcrxcwzvlwrfxyb32-mrjam-kanidm-worker-provision-3",
+      "real_token_files": true,
+      "schema_version": 1,
+      "test_source_sha256": "3837f88a797b841496c93c88b6f00e0e01f99e35e6a3fd0769d3775b06e9b664"
+    },
+    "result_sha256": "36f36e1c08c357efafef8263924cfa55b1572572a0a578c332ced275112ea453"
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/deployment/kanidm-local-bootstrap/bootstrap.py": "624ced6158f5d01af61adf1338d833b3acebbb0462704396fd1f161ed8ec902e",
+    "operations/deployment/kanidm-local-bootstrap/build.nix": "4b04ba3fe40f74274d5c3470fe8ce46a228f123c8de003144320d908f35583fd",
+    "operations/deployment/kanidm-local-bootstrap/builtin_probe.py": "ce1832ffc9e857af28a3082aaf08d0da76950026f878d3a26de38477ff35e02f",
+    "operations/deployment/kanidm-local-bootstrap/package.nix": "45fd3c3a4a1061eb3e66196356013d58dd14b051a7a6a4a5f7a6ffab103e4260",
+    "operations/deployment/kanidm-local-bootstrap/qualify.py": "1ce2fbc7fc17384d640752e4430c919018ae01eb2344a35ace74dff01e789910",
+    "operations/deployment/kanidm-local-bootstrap/systemd-test.nix": "3837f88a797b841496c93c88b6f00e0e01f99e35e6a3fd0769d3775b06e9b664",
+    "operations/deployment/kanidm-local-bootstrap/test_builtin_probe.py": "696751e77321a6fa1da31912c82c24d591d8d4df3eec3e6c78f50ab015cce694",
+    "operations/deployment/kanidm-local-bootstrap/vm_fixture.py": "f31ea86cc23c8141f9e0ff16fa4669631b79884d608cb6acde0da6aee4744311"
+  },
+  "subject": "Fixed local recovery of inactive builtin service accounts, sole owner role, and unchanged V3 worker provisioning"
+}
