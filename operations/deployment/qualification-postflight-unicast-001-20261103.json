@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "prior_probe_sha256": "a319f94479abc13606f745c9e44091b8f4e1d7c62d1decba06d728d4a1228095",
+  "probe_sha256": "c5d80ff88680c73c2bf05d2f43d2876c0bc5a44a7205816ed6325ea0ecf27eeb",
+  "only_changed_constant": "PROMOTED",
+  "all_other_ast_identical": true,
+  "prior_qualification": "qualification-postflight-barriers-v5-20261103.json",
+  "generation_delta_review": "../hosts/mrjam-vps/review-resolver-unicast-generation-20261103-001.json",
+  "production_execution": false,
+  "new_tests_required": false,
+  "reason": "Only the expected generation changes; all measured application units, SSH, nginx and firewall declarations remain byte-identical."
+}

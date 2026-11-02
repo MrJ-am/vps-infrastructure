@@ -1,0 +1,33 @@
+{
+  "launch": {
+    "controller_argument_vector_fixed": true,
+    "detached_transient_service": true,
+    "only_exact_literal_bindings_description_and_output_codes_changed": true,
+    "path": "operations/deployment/launch-resolver-update-001-20261103.py",
+    "previous_qualified_launcher": "operations/deployment/launch-first-release-attempt-005-20261102.py",
+    "sha256": "8cadb39bb2d95ac76d41516a05aedac3c348c5e9326e7debc8ba28a34d73037e",
+    "status_directory_and_result_exclusive": true
+  },
+  "limits": [
+    "The launcher is single use and refuses an existing unit/status directory. If recovery is needed, this launcher must not be reused as a generic restart; invoke the same sealed controller through a separately reviewed fixed recovery launch.",
+    "Observer is a sequential read of PID1, result and checkpoint, not an atomic system snapshot; pending/changed observations do not establish success.",
+    "No live resolved reload, DNS response or runtime job delta is proved by source review."
+  ],
+  "observation": {
+    "checkpoint_read_bound_to_both_generation_pins": true,
+    "fixed_seven_systemd_fields_only": true,
+    "immutable_adapter_import_does_not_run_main": true,
+    "no_application_data_or_logs_read": true,
+    "path": "operations/deployment/observe-resolver-update-001-20261103.py",
+    "sha256": "533986db88a72f4006812733220507e47015142452a33fadcc3b2027bf778265",
+    "success_requires_closed_result_complete_phase_and_current_boot_candidate": true
+  },
+  "passed": true,
+  "schema_version": 1,
+  "scope": "local independent source review only; no systemd-run, activation or VPS access",
+  "switch_transient_unit_handling": {
+    "finding": "collect_unit_changes skips FragmentPath outside the NixOS managed /etc/systemd/system directory; detached /run/systemd/transient service is not stopped as a removed NixOS unit.",
+    "sha256": "54c288f7969e9dfda8e55c2da871105c9166c92a5c2d47de55de77e4b4c6aa10",
+    "source": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source/pkgs/by-name/sw/switch-to-configuration-ng/src/main.rs"
+  }
+}

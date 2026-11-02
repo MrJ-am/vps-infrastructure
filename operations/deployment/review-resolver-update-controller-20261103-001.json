@@ -1,0 +1,40 @@
+{
+  "author_tests_reviewed_not_rerun": 14,
+  "fixed_isolated_entrypoint_checked": true,
+  "independent_entrypoint_probe": {
+    "extra_argument_exit": 64,
+    "generation_operation_invoked": false,
+    "output_empty": true,
+    "untrusted_cwd_pythonpath_pythonhome_sitecustomize_not_imported": true
+  },
+  "limits": [
+    "Service, DNS and activation operations were substituted in the author adapter tests; this review does not claim a real DNS reload or VPS execution.",
+    "Crash recovery requires invocation of the same immutable tool; the state machine alone is not a restart supervisor.",
+    "NixOS test/boot operations retain the already qualified Generations timeout behavior.",
+    "Code import needs the new post005 import-only receiver; historical deliver_provision-based receivers are not approved."
+  ],
+  "package": "/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001",
+  "package_nar_hash": "sha256-vEjC0G9hFgxSXCaiNDlrabJG/T7dz7tj0IILEVNiH4k=",
+  "packaged_python_modules_equal_reviewed_sources": true,
+  "passed": true,
+  "qualification_sha256": "b8133747123627654b009c8b1616a361daafb4b0640f257b727c515c749d8339",
+  "reviewed_invariants": [
+    "Only dc09 and phi68 accepted as live/boot states; no generic candidate input.",
+    "Existing global transaction.lock opened without replacement, locked exclusively through terminal result.",
+    "Checkpoint is root-only, bound to both pins and published with fsync plus atomic replacement; interrupted temporary retained.",
+    "Candidate health precedes boot selection and terminal checkpoint; interruption checkpoints drive only previous007 return on next invocation.",
+    "Fixed resolved configuration hashes, one is-active check per named service, fixed DNS query, bounded TCP/UDP5355 observation.",
+    "Existing Generations helper unchanged; no application restore, SQL, credentials or CI authority operations.",
+    "Terminal returned state never retries candidate automatically."
+  ],
+  "schema_version": 1,
+  "scope": "independent local source and immutable package review; administrative operation not executed",
+  "source_sha256": {
+    "operations/deployment/configuration_update.py": "e9e05877834c840f3b829d8ba8d69f2b5bed485c601f226a51b7e1e63fa9269a",
+    "operations/deployment/generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "operations/deployment/resolver-update-package.nix": "05cb54747c7c2ad15040acb2386e7f7f6d2a1a4b3acf35b3a1b5dc4a8d2749f9",
+    "operations/deployment/resolver_update_adapter.py": "090c85854ba9d78adb97f0248ff82a612b21d5dc95bc4e41d2d27237bf9756f1",
+    "operations/deployment/test_configuration_update.py": "e3bd907d28c3b83307da6e9c10e902c8ef2133965225dc3c355d735d7cb709e6",
+    "operations/deployment/test_resolver_update_adapter.py": "11a961443571d3f8787d3e3f5a66b877a3dd1eeb1a0c03ddc3f2cd36904c100b"
+  }
+}
