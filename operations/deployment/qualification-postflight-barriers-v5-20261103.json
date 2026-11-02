@@ -1,0 +1,55 @@
+{
+  "changed_functions": [
+    "worker",
+    "ssh",
+    "nginx"
+  ],
+  "checks": [
+    "Real filesystem promoted symlink to exact existing store unit accepted.",
+    "Fixed /etc alias accepted only after resolution to exact target; old store target, private path and traversal refused.",
+    "Masked green reports unavailable live measurements, expected stopped state and exact declaration hash separately.",
+    "Loaded inactive green with wrong user/capabilities/protection still returns false.",
+    "Replay correct symlink accepted; foreign dropins still refuse its no-provider-credential observation.",
+    "Expected declaration hash mismatch remains visible.",
+    "SSH parser/firewall/process metadata/output secrecy regressions retained."
+  ],
+  "expected_worker_declarations_bound": 9,
+  "findings": [
+    "v4 compared PID1 FragmentPath spelling with the canonical immutable target and could falsely refuse an exact /etc or /run symlink.",
+    "v4 replay token flag included this same spelling comparison; false did not establish presence of a provider token.",
+    "A masked or not-found inactive green slot has no loaded service-property observation; v5 reports null live-unit checks and separately verifies the exact immutable declaration."
+  ],
+  "limits": [
+    "Actual FragmentPath aliases and green manager state remain observations for root to collect with this corrected probe.",
+    "Network-listener classification remains unchanged and is being investigated separately; no false flag is silently forced true.",
+    "No active process proof is inferred for stopped workers or green.",
+    "No service action, SQL, application records, logs or secret contents."
+  ],
+  "new_function": "fragment_matches_promoted",
+  "new_tests": 6,
+  "prior_probe_sha256": "3328685e8db048d286eaa209caa74dc607a22a02dac651434ce7833bace2d9f3",
+  "prior_tests_included": 9,
+  "probe_sha256": "a319f94479abc13606f745c9e44091b8f4e1d7c62d1decba06d728d4a1228095",
+  "production_access": false,
+  "production_probe_executed": false,
+  "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+  "schema_version": 1,
+  "scope": "closed read-only measurement correction after release005, not a production repair",
+  "status": "PASS",
+  "test_log_sha256": "6ff6fd2b7a1d3efba7b614771969574e46280351dee4ff9dc0295d8d34e25c0f",
+  "tests_passed": 15,
+  "tests_sha256": "c7d790f16a5c2877561fc32e62f03158adea5ffdffb17eaed94346eb000b0635",
+  "unchanged_functions": [
+    "collect",
+    "firewall_family",
+    "listeners",
+    "main",
+    "optional",
+    "parse_units",
+    "process_barriers",
+    "protected",
+    "read_public",
+    "run",
+    "stopped"
+  ]
+}

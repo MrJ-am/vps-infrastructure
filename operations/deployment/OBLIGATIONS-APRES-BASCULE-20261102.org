@@ -5,11 +5,12 @@
 Ce registre conserve le travail restant du [[file:../mise-en-service/mandat.org][mandat]] et de
 l'[[file:AUTORISATION-ADMIN-20261102.org][autorisation d'achever le déploiement puis de vérifier les barrières]].
 Il complète [[file:ETAT-20261102.org][l'état courant]] sans modifier les anciens reçus.
-La tentative 004 est revenue à l'ancienne génération après le refus de
-readiness du serveur Rust. La gouvernance Forgejo a franchi ses contrôles,
-mais ses imports ont été annulés par le retour. Le corpus Matheval et la
-migration Audition manquante sont en cours de qualification. Aucune tentative
-n'est présentée comme un déploiement réussi.
+La tentative 005 a réussi : génération 007 active et au démarrage, résultat
+=CUTOVER_VERIFIED=, huit contrôles HTTPS passés. Le postflight v5 confirme
+les unités et protections observables ; le port 5355 reste à fermer de manière
+déclarative, sans exception correspondante dans le pare-feu actuel.
+La chaîne CI, la revue et la livraison protégée restent à terminer.
+Les contrôles ci-dessous distinguent les preuves acquises des travaux restants.
 
 * 1. Constater la réussite de la prochaine bascule
 

@@ -1,0 +1,42 @@
+#+title: Correction de mesure après la réussite de la bascule 005
+#+language: fr
+
+=postflight_barriers_v5.py= reste lié à la génération promue
+=dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git=.
+Il corrige seulement la mesure des unités. Il ne modifie aucun service,
+configuration, donnée applicative ou droit.
+
+* Chemins des unités
+
+PID1 peut exposer =/etc/systemd/system/unite.service= comme FragmentPath,
+alors que le fichier promu résout vers un chemin immutable du store. La v4
+comparait directement ces deux écritures. La v5 résout uniquement des chemins
+publics bornés pour le nom exact de l'unité et exige la cible promue exacte.
+Une cible ancienne, un chemin privé ou une surcharge restent refusés.
+
+Le booléen de replay comportait cette même égalité de chemin. Son résultat
+faux en v4 ne démontrait donc pas la présence d'un jeton fournisseur.
+
+* Unité de secours inactive
+
+Une unité green masquée ou absente n'a pas de propriétés de service chargé
+à mesurer. La v5 expose ces mesures comme =null=, vérifie séparément son
+arrêt attendu et compare les octets de sa déclaration au hash qualifié.
+Elle ne déduit aucune protection d'un processus absent.
+Une unité green chargée reste évaluée strictement, même si elle est inactive.
+Les propriétés incorrectes restent alors =false=.
+
+* Preuves et limites
+
+Quinze tests passent : neuf régressions conservées et six cas ajoutés,
+dont lien réel vers le store, chemins étrangers, unité masquée, unité chargée
+mal confinée, surcharge replay et hash de déclaration divergent.
+Les fonctions réseau, processus, secrets, sauvegardes et collecte sont
+inchangées. Le classement TCP complémentaire distingue l'écoute non locale
+de l'accessibilité au travers du pare-feu ; le postflight ne neutralise aucun
+port inattendu dans son résultat.
+
+Les anciennes sorties v4 restent conservées comme observations historiques.
+La nouvelle mesure doit être exécutée séparément par l'opérateur autorisé.
+Elle ne constitue toujours pas une preuve de CI, d'autorisation applicative
+complète ou de restauration de sauvegarde.

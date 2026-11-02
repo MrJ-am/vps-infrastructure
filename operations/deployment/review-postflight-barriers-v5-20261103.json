@@ -1,0 +1,33 @@
+{
+  "added_function": "fragment_matches_promoted",
+  "changed_functions": [
+    "nginx",
+    "ssh",
+    "worker"
+  ],
+  "limits": [
+    "Source and focused AST review only; native unit metadata must be observed separately on the VPS.",
+    "Inherited public TCP predicate distinguishes bindings, not firewall reachability; separate closed TCP classifier diagnoses5355."
+  ],
+  "other_functions_ast_identical": true,
+  "passed": true,
+  "previous_sha256": "3328685e8db048d286eaa209caa74dc607a22a02dac651434ce7833bace2d9f3",
+  "previous_source": "operations/deployment/postflight_barriers_v4.py",
+  "production_execution": false,
+  "qualification": {
+    "path": "operations/deployment/qualification-postflight-barriers-v5-20261103.json",
+    "sha256": "30cc484d5480d7aa689c86558c3cee1df6b0b9cf632136b6ea0e5a0f06bf3852"
+  },
+  "review": {
+    "arbitrary_fragment_contents_not_read": true,
+    "fragment_allowlist_fixed_and_exact_promoted_target_required": true,
+    "green_masked_or_absent_is_unavailable_not_passed": true,
+    "immutable_declaration_hash_checked": true,
+    "loaded_units_with_wrong_barriers_still_false": true,
+    "replay_token_predicate_preserved_with_resolved_fragment": true
+  },
+  "schema_version": 1,
+  "sha256": "a319f94479abc13606f745c9e44091b8f4e1d7c62d1decba06d728d4a1228095",
+  "source": "operations/deployment/postflight_barriers_v5.py",
+  "tests_rerun": false
+}

@@ -1,0 +1,23 @@
+{
+  "author_qualification_sha256": "6c32eb43f83ca8e6772f7d29de472aea0e2eacf91cc0ea8ec248c6ab3df5f9a1",
+  "author_tests_bound": 6,
+  "checks": [
+    "Exact promoted current+boot and closed successful release005 result are checked before kernel socket reads.",
+    "Only three fixed files are read with byte limits; no command, process directory, command line, journal, socket connection or application content.",
+    "Only TCP LISTEN rows are classified by protocol family and enumerated address class; address strings and ignored columns never leave the process.",
+    "At most64 ports and2048 rows per address family; ten-second deadline and closed failure output.",
+    "Port5355 remains a port classification, not an assertion of process ownership or network reachability.",
+    "Real local IPv4/IPv6 kernel fixture, mapped addresses, malformed bounds, gate and exception tests are bound by their exact log."
+  ],
+  "limits": [
+    "Nonloopback binding does not establish external reachability; existing firewall evidence remains distinct.",
+    "LLMNR process attribution is still unobserved; this review does not assert the resolved hypothesis.",
+    "Generation and result checks plus two kernel tables are successive observations, not an atomic snapshot."
+  ],
+  "probe_sha256": "949ba64d1c63ffbb3b9febd9d0ed323613d4fa00ac24d9b8a2df567784ef9787",
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent source and evidence review of fixed readonly TCP projection",
+  "status": "PASS",
+  "tests_reexecuted": false
+}

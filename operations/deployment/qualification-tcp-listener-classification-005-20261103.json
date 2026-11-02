@@ -1,0 +1,35 @@
+{
+  "hypothesis": {
+    "description": "systemd-resolved may bind TCP5355 for LLMNR while the observed firewall only admits22/80/443/2222.",
+    "promoted_resolved_configuration_llmnr_override_absent": true,
+    "source": "https://www.freedesktop.org/software/systemd/man/latest/systemd-resolved.service.html#IP%20Ports",
+    "status": "not_yet_observed_on_vps"
+  },
+  "limits": [
+    "Nonloopback socket binding is distinct from inbound firewall reachability.",
+    "TCP5355 is classified by port only; process ownership is not asserted.",
+    "No process directory, command arguments, application data, journal or secret is read.",
+    "No production mutation, socket connection or service action is performed."
+  ],
+  "schema_version": 1,
+  "scope": "local tests of closed readonly listener classification; no VPS execution",
+  "sources": {
+    "operations/deployment/classify_tcp_listeners_005.py": "949ba64d1c63ffbb3b9febd9d0ed323613d4fa00ac24d9b8a2df567784ef9787",
+    "operations/deployment/test_classify_tcp_listeners_005.py": "80729d27cf827323a846542c3c5b4321df728efd5bba0b17794b11a7757cd858"
+  },
+  "status": "passed",
+  "test_log": {
+    "path": ".local/deployment-20261101/tcp-listener-classification-005-tests.log",
+    "sha256": "af7e98f953cc317a1069a5d8d195fa97b055d777c413bec1b9ad0f1eb3b06758"
+  },
+  "tests": {
+    "elapsed_seconds": 0.005,
+    "failed": 0,
+    "malformed_bounded_inputs_refused": true,
+    "passed": 6,
+    "real_local_kernel_ipv4_and_ipv6_loopback_listeners": true,
+    "synthetic_ipv6_word_order_mapped_loopback_nonloopback_and_llmnr": true,
+    "unknown_exception_text_not_exported": true,
+    "wrong_generation_refuses_before_read": true
+  }
+}
