@@ -1,0 +1,29 @@
+{
+  "attempt": 10,
+  "authority": "Spectre-synthetic-systemd",
+  "checks": [
+    "quiescence",
+    "paired-return",
+    "opening-failure",
+    "public-verification-failure",
+    "successful-open",
+    "storage-boundaries",
+    "corrupt-archive"
+  ],
+  "cutover_sha256": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+  "elapsed_seconds": 310.88,
+  "limitations": [
+    "No VPS data, credentials, storage capacity or maintenance-window duration tested",
+    "Generation switching is a sequencing model; the sealed production backend is separate",
+    "No snapshot, SQL row, application file or command diagnostics exported"
+  ],
+  "output": "/nix/store/q0qg3i276s945i102crsyyvhmcfm3242-vm-test-run-mrjam-paired-offline-snapshot-synthetic",
+  "passed": true,
+  "postgresql": "17.11",
+  "production_qualification": false,
+  "recorded_date": "2026-11-02",
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg",
+  "snapshot_sha256": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+  "supersedes": "qualification-snapshot-systemd-20261102-02.json"
+}

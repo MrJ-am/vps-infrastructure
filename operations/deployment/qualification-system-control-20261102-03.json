@@ -1,0 +1,31 @@
+{
+  "authority": "Spectre-synthetic-systemd",
+  "boot_guard_sha256": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+  "changes": [
+    "Portable runtime generator with exact private mask set and early priority",
+    "Actual start refusal after freeze, daemon-reload and daemon-reexec",
+    "Targeted PostgreSQL release leaves application masked; foreign mask retained",
+    "Legacy UID egress boundary enlarged",
+    "Generator directory mode independent from restrictive backend umask"
+  ],
+  "checks": [
+    "network",
+    "live",
+    "stale",
+    "reboot-holds-writers-keeps-ssh",
+    "open",
+    "malformed",
+    "malformed-masks"
+  ],
+  "fixture_sha256": "e2a51f00b83ad9eeb7f5419de5015191cfe6cd2b62abce7bb45c57367edee949",
+  "generator": "/nix/store/11gb9i2v7b3980zylx4pnr3wh7hd8djf-mrjam-first-cutover-boot-guard/bin/mrjam-first-cutover-guard",
+  "limits": [
+    "Synthetic listeners and network namespace only",
+    "No actual generation switch"
+  ],
+  "output": "/nix/store/h6hhpmsrfqzv7igf0mc4xbf2p02pqc66-vm-test-run-mrjam-cutover-network-and-boot-guard",
+  "production_access": false,
+  "recorded_date": "2026-11-02",
+  "schema_version": 1,
+  "system_control_sha256": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+}

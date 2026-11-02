@@ -13,7 +13,8 @@ import subprocess
 
 ROOTS = ("postgresql/17", "forgejo", "kanidm", "nextcloud", "redis-nextcloud",
          "mrjam-metier", "mrjam-identite", "acme", "mrjam-vision-admission",
-         "mrjam-vision-cycle", "mrjam-vision-archive", "mrjam-worker-credentials")
+         "mrjam-vision-cycle", "mrjam-vision-archive", "mrjam-worker-credentials",
+         "mrjam-forgejo-bootstrap")
 REQUIRED = frozenset(ROOTS[:8])
 
 
@@ -120,7 +121,11 @@ class FrozenSnapshot:
             raise SnapshotRefused("EXTERNAL_WAL_REFUSED")
 
     def sync_root(self):
-        descriptor = os.open(self.root, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+        self.sync_directory(self.root)
+
+    @staticmethod
+    def sync_directory(path):
+        descriptor = os.open(path, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
         try:
             os.fsync(descriptor)
         finally:
@@ -147,8 +152,27 @@ class FrozenSnapshot:
     def restore(self):
         value = self.verify()
         self.verify_storage([name for name in ROOTS if self.source(name) is not None])
-        quarantine = self.root / "candidate-state-retained"
-        quarantine.mkdir(mode=0o700)
+        # A process may die during a move or extraction. Each retry retains
+        # whatever is currently present in a fresh private directory, then
+        # extracts the SAME verified archive in full. Never overwrite a prior
+        # retained attempt or assume a previous tar completed. The release
+        # controller still refuses every restore after public writes opened.
+        quarantine = None
+        for attempt in range(1, 33):
+            suffix = "" if attempt == 1 else "-" + str(attempt).zfill(2)
+            candidate = self.root / ("candidate-state-retained" + suffix)
+            try:
+                candidate.mkdir(mode=0o700)
+            except FileExistsError:
+                item = candidate.lstat()
+                if not stat.S_ISDIR(item.st_mode) or item.st_uid != self.owner or stat.S_IMODE(item.st_mode) != 0o700:
+                    raise SnapshotRefused("SNAPSHOT_QUARANTINE_REFUSED") from None
+            else:
+                quarantine = candidate
+                break
+        if quarantine is None:
+            raise SnapshotRefused("SNAPSHOT_RECOVERY_ATTEMPTS_EXHAUSTED")
+        self.sync_root()
         # Every old and newly introduced root is retained, not deleted. This
         # includes originally absent worker roots, which must not survive return.
         for name in ROOTS:
@@ -156,7 +180,15 @@ class FrozenSnapshot:
             if source is not None:
                 destination = quarantine / name
                 destination.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+                # Persist the newly created postgresql parent BEFORE moving
+                # its cluster; otherwise retention could lose that parent on
+                # power loss between the rename and the final root fsync.
+                self.sync_directory(quarantine)
                 os.rename(source, destination)
+                self.sync_directory(destination.parent)
+                self.sync_directory(source.parent)
+        self.sync_directory(quarantine)
+        self.sync_root()
         self.command(["--acls", "--xattrs", "--numeric-owner", "-C", str(self.state_root),
                       "-xpf", str(self.archive)], 1800)
         if any(self.source(name) is None for name in value["roots"]):

@@ -88,12 +88,23 @@ class TransactionTests(unittest.TestCase):
             self.assertEqual(backend.calls, [])
 
     def test_new_instance_cannot_restore_after_durable_reopening(self):
-        for phase in (module.Phase.OPENING,module.Phase.OPEN,module.Phase.HELD):
+        for phase in (module.Phase.OPENING,module.Phase.OPEN,module.Phase.HELD,module.Phase.RETURNED):
             self.checkpoint.write(phase, 40)
             backend = InventedBackend()
             with self.assertRaisesRegex(module.Refused, "RESTORE_AFTER_PUBLIC_WRITES_REFUSED"):
                 module.Cutover(backend, self.checkpoint).return_before_opening()
             self.assertEqual(backend.calls, [])
+
+    def test_returned_boundary_is_durable_before_old_boot_or_writes_reopen(self):
+        backend=InventedBackend('verify_private_services')
+        def reopen():
+            self.assertEqual(self.checkpoint.read(),module.Phase.RETURNED)
+        backend.reopen_previous_services=reopen
+        subject=module.Cutover(backend,self.checkpoint)
+        with self.assertRaisesRegex(module.Refused,'PREVIOUS_GENERATION_RESTORED'):
+            subject.execute()
+        with self.assertRaisesRegex(module.Refused,'RESTORE_AFTER_PUBLIC_WRITES_REFUSED'):
+            subject.return_before_opening()
 
     def test_return_margin_exhaustion_returns_before_candidate_install(self):
         times = iter([0, 0, 1, 5401, 5402, 5403])

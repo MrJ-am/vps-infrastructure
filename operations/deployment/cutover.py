@@ -39,6 +39,7 @@ class Checkpoint:
         if not stat.S_ISDIR(metadata.st_mode) or metadata.st_uid != uid or stat.S_IMODE(metadata.st_mode) != 0o700:
             raise Refused("CHECKPOINT_DIRECTORY_REFUSED")
         self.path = self.directory / "phase.json"
+        self.owner = uid
 
     def write(self, phase, elapsed):
         # No application values, arbitrary diagnostics, paths or subprocess output.
@@ -64,13 +65,22 @@ class Checkpoint:
         descriptor = os.open(self.path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
         with os.fdopen(descriptor, "rb") as stream:
             metadata = os.fstat(stream.fileno())
-            if not stat.S_ISREG(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o600 or metadata.st_nlink != 1:
+            if not stat.S_ISREG(metadata.st_mode) or metadata.st_uid != self.owner or stat.S_IMODE(metadata.st_mode) != 0o600 or metadata.st_nlink != 1:
                 raise Refused("CHECKPOINT_FILE_REFUSED")
             data = stream.read(1025)
         if len(data) > 1024:
             raise Refused("CHECKPOINT_FILE_REFUSED")
-        value = json.loads(data)
-        if set(value) != {"schema_version", "phase", "elapsed_seconds"} or value["schema_version"] != 1:
+        def pairs(items):
+            result = {}
+            for key, value in items:
+                if key in result:
+                    raise Refused("CHECKPOINT_FILE_REFUSED")
+                result[key] = value
+            return result
+        value = json.loads(data, object_pairs_hook=pairs)
+        if (not isinstance(value, dict) or set(value) != {"schema_version", "phase", "elapsed_seconds"}
+                or type(value["schema_version"]) is not int or value["schema_version"] != 1
+                or type(value["elapsed_seconds"]) is not int or value["elapsed_seconds"] < 0):
             raise Refused("CHECKPOINT_FILE_REFUSED")
         return Phase(value["phase"])
 
@@ -154,8 +164,8 @@ class Cutover:
 
     def return_before_opening(self):
         durable_phase = self.checkpoint.read()
-        if self.reopening_started or self.phase in (Phase.OPENING, Phase.OPEN, Phase.HELD) \
-                or durable_phase in (Phase.OPENING, Phase.OPEN, Phase.HELD):
+        if self.reopening_started or self.phase in (Phase.OPENING, Phase.OPEN, Phase.HELD, Phase.RETURNED) \
+                or durable_phase in (Phase.OPENING, Phase.OPEN, Phase.HELD, Phase.RETURNED):
             raise Refused("RESTORE_AFTER_PUBLIC_WRITES_REFUSED")
         if self.started is None or durable_phase != self.phase:
             raise Refused("INTERRUPTED_TRANSACTION_REQUIRES_RECOVERY")
@@ -170,8 +180,11 @@ class Cutover:
                 self.backend.restore_snapshot()
             self.backend.restore_previous_generation()
             self.backend.verify_previous_private_services()
-            self.backend.reopen_previous_services()
+            # Keep staged as the default boot until old state and services
+            # have been verified. Once the old boot can accept new writes,
+            # another snapshot restore must already be forbidden durably.
             self.transition(Phase.RETURNED)
+            self.backend.reopen_previous_services()
         except Exception:
             self.backend.hold_current_state()
             self.transition(Phase.HELD)
