@@ -99,6 +99,43 @@ SELECT
  pg_catalog.to_regnamespace('vision_gestion') IS NOT NULL,
  EXISTS(SELECT 1 FROM pg_catalog.pg_extension WHERE extname='vector');
 ROLLBACK;"""
+VISION_SCHEMA_FIELDS = ("migration_table", "admission_authorization_function", "closure_function",
+                       "profile_rls", "profile_forced_rls")
+VISION_SCHEMA_SQL = """BEGIN READ ONLY;
+SET LOCAL statement_timeout='3s';
+SELECT pg_catalog.to_regclass('public.vision_schema_migrations') IS NOT NULL,
+ pg_catalog.to_regprocedure('vision_gestion.autoriser_admission(text)') IS NOT NULL,
+ pg_catalog.to_regprocedure('vision_gestion.engager_fermeture_identite(text,text,text)') IS NOT NULL,
+ coalesce((SELECT relrowsecurity FROM pg_catalog.pg_class WHERE oid=pg_catalog.to_regclass('public.vision_profils')),false),
+ coalesce((SELECT relforcerowsecurity FROM pg_catalog.pg_class WHERE oid=pg_catalog.to_regclass('public.vision_profils')),false);
+ROLLBACK;"""
+# Only migration metadata is read, never a business row or caller-selected table.
+VISION_VERSIONS_SQL = """BEGIN READ ONLY;
+SET LOCAL statement_timeout='3s';
+SELECT string_agg(CASE WHEN EXISTS(SELECT 1 FROM public.vision_schema_migrations m WHERE m.version=v) THEN '1' ELSE '0' END,'' ORDER BY v),
+ NOT EXISTS(SELECT 1 FROM public.vision_schema_migrations WHERE version IS NULL OR version NOT BETWEEN 1 AND 27),
+ NOT EXISTS(SELECT 1 FROM public.vision_schema_migrations GROUP BY version HAVING count(*)<>1)
+ FROM generate_series(1,27) v;
+ROLLBACK;"""
+MATHEVAL_SCHEMA_FIELDS = ("corpus", "participations", "answers", "interaction_events", "administrators",
+                         "administrator_sessions", "session_activity_column", "application_role_restricted", "admin_role_restricted")
+MATHEVAL_SCHEMA_SQL = """BEGIN READ ONLY;
+SET LOCAL statement_timeout='3s';
+SELECT pg_catalog.to_regclass('public.corpus') IS NOT NULL,
+ pg_catalog.to_regclass('public.participations') IS NOT NULL,
+ pg_catalog.to_regclass('public.answers') IS NOT NULL,
+ pg_catalog.to_regclass('public.interaction_events') IS NOT NULL,
+ pg_catalog.to_regclass('public.administrators') IS NOT NULL,
+ pg_catalog.to_regclass('public.administrator_sessions') IS NOT NULL,
+ EXISTS(SELECT 1 FROM pg_catalog.pg_attribute WHERE attrelid=pg_catalog.to_regclass('public.administrator_sessions')
+        AND attname='last_seen' AND atttypid='timestamptz'::regtype AND NOT attisdropped AND attnotnull),
+ EXISTS(SELECT 1 FROM pg_catalog.pg_roles r WHERE rolname='matheval_app'
+        AND NOT(rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls)
+        AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_auth_members WHERE member=r.oid)),
+ EXISTS(SELECT 1 FROM pg_catalog.pg_roles r WHERE rolname='matheval_admin'
+        AND NOT(rolsuper OR rolcreatedb OR rolcreaterole OR rolreplication OR rolbypassrls)
+        AND NOT EXISTS(SELECT 1 FROM pg_catalog.pg_auth_members WHERE member=r.oid));
+ROLLBACK;"""
 # Constants transcribed from the received code declaration; comparisons only.
 EXPECTED_HOSTNAME = "nixos"
 EXPECTED_SYSTEM = "x86_64"
@@ -331,6 +368,27 @@ def catalog_layout():
     if len(values) != len(LAYOUT_FIELDS) or any(value not in ("t", "f") for value in values):
         return dict(UNKNOWN)
     return {"state": "observed", "catalog_only": dict(zip(LAYOUT_FIELDS, (x == "t" for x in values)))}
+
+
+def schema_metadata():
+    output = {}
+    prefix = ["runuser", "-u", "postgres", "--", "/run/current-system/sw/bin/psql",
+              "-X", "-w", "-q", "-A", "-t", "--set=ON_ERROR_STOP=1", "--host=/run/postgresql", "--port=5432"]
+    for database, sql, fields in (("vision", VISION_SCHEMA_SQL, VISION_SCHEMA_FIELDS),
+                                  ("matheval", MATHEVAL_SCHEMA_SQL, MATHEVAL_SCHEMA_FIELDS)):
+        result = run(prefix + ["--dbname=" + database, "--command", sql])
+        values = result[1].split("|") if result is not None and result[0] == 0 else []
+        output[database] = ({"state": "observed", "catalog_only": dict(zip(fields, (v == "t" for v in values)))}
+                            if len(values) == len(fields) and all(v in ("t", "f") for v in values) else dict(UNKNOWN))
+    output["vision_migration_metadata"] = dict(UNKNOWN)
+    if output["vision"].get("catalog_only", {}).get("migration_table") is True:
+        result = run(prefix + ["--dbname=vision", "--command", VISION_VERSIONS_SQL])
+        if result is not None and result[0] == 0 and re.fullmatch(r"[01]{27}\|[tf]\|[tf]", result[1]):
+            versions, bounded, unique = result[1].split("|")
+            output["vision_migration_metadata"] = {"state": "observed", "known_versions_present":
+                [index + 1 for index, value in enumerate(versions) if value == "1"],
+                "only_known_versions": bounded == "t", "unique_versions": unique == "t"}
+    return output
 
 
 def public_hostname():
@@ -778,7 +836,7 @@ def collect():
     return {"schema_version": 1, "authority": "bounded-read-only-adoption-observation",
             "recorded_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "accounts": accounts(), "paths": {name: metadata(path) for name, path in PATHS.items()},
-            "postgres_catalog": catalog(), "postgres_layout": catalog_layout(),
+            "postgres_catalog": catalog(), "postgres_layout": catalog_layout(), "schema_metadata": schema_metadata(),
             "received_profile_comparisons": host_comparisons(), "hostname": public_hostname(),
             "units": unit_states(), "embeddings": embeddings_metadata(), "nginx": nginx,
             "embedding_code": embedding_code_metadata(), "generation": generation_metadata(),

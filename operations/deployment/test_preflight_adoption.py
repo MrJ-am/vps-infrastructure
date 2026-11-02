@@ -374,6 +374,33 @@ class AdoptionPreflightTests(unittest.TestCase):
         with patch.object(target.os.path, "realpath", return_value="/var/lib/private"):
             self.assertEqual(target.generation_metadata(), target.UNKNOWN)
 
+    def test_27_schema_probe_emits_only_closed_catalog_and_migration_metadata(self):
+        with patch.object(target, "run", side_effect=[(0,"|".join(["t"]*5)),
+                (0,"|".join(["t"]*9)), (0,"1"*25+"00|t|t")]) as calls:
+            output = target.schema_metadata()
+        self.assertEqual(output["vision_migration_metadata"]["known_versions_present"], list(range(1,26)))
+        self.assertTrue(output["matheval"]["catalog_only"]["session_activity_column"])
+        self.assertEqual([call.args[0][-1] for call in calls.call_args_list],
+                         [target.VISION_SCHEMA_SQL,target.MATHEVAL_SCHEMA_SQL,target.VISION_VERSIONS_SQL])
+        for call in calls.call_args_list:
+            self.assertTrue(call.args[0][-1].startswith("BEGIN READ ONLY;"))
+            self.assertTrue(call.args[0][-1].endswith("ROLLBACK;"))
+
+    def test_28_schema_probe_never_reads_business_rows_and_refuses_unbounded_output(self):
+        for sql in (target.VISION_SCHEMA_SQL,target.MATHEVAL_SCHEMA_SQL):
+            self.assertNotRegex(sql, r"FROM (public|vision_gestion|audition)\.")
+        for response in (SECRET, "1"*28+"|t|t", "1"*27+"|t|"+CONTACT, "1"*27+"|t|t\n"):
+            with patch.object(target, "run", side_effect=[(0,"|".join(["t"]*5)),
+                    (0,"|".join(["f"]*9)),(0,response)]):
+                output=target.schema_metadata()
+            self.assertEqual(output["vision_migration_metadata"],target.UNKNOWN)
+            self.assertNotIn(SECRET,json.dumps(output))
+            self.assertNotIn(CONTACT,json.dumps(output))
+        with patch.object(target,"run",return_value=(0,SECRET)) as calls:
+            output=target.schema_metadata()
+        self.assertEqual(calls.call_count,2)
+        self.assertTrue(all(item==target.UNKNOWN for item in output.values()))
+
 
 if __name__ == "__main__":
     unittest.main()
