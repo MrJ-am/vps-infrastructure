@@ -1,0 +1,33 @@
+{
+  "all_nine_names_sizes_digests_match_private_transfer_plan": true,
+  "binding_matches_all_bundle_destinations_and_digests": true,
+  "binding_sha256": "30ad190db4a29a8b8011a6fc4c69bb9309818ff4a11671e094049cc2041863d8",
+  "bundle_count": 9,
+  "eight_original_bundles_unchanged": true,
+  "governance_receipt_sha256": "9683a3c4f6de5546384567e7f0891737523edad52607294d2e8fcf7a491ad86e",
+  "infrastructure_pin": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd",
+  "input_stream_independently_verified_segment_by_segment": true,
+  "input_stream_private_regular_single_link_and_unchanged_during_read": true,
+  "limits": [
+    "Local byte verification only; no VPS access or reception performed by this reviewer.",
+    "Governance bundle autonomy and reference inventory are covered by the separate host receipt, not rerun here.",
+    "Receiver functions are unchanged; existing strict file and bounded stream semantics are reused."
+  ],
+  "literal_reversal_restores_exact_template_bytes": true,
+  "manifest_sha256": "1c8d69dc5e1d49b48d94cd15a5dc7efbdc37026de47d129beb340c1b373663dc",
+  "no_git_import_or_activation": true,
+  "only_release_constant_changed": true,
+  "original_validator_passed": true,
+  "passed": true,
+  "prior_infrastructure_retention_binding_matches_received_source_g": true,
+  "private_contents_or_references_output": false,
+  "private_transfer_plan_sha256": "9105673659fe7a1855260ea72438423988f8c7816f276b914c769ae6cc96fbd4",
+  "production_access": false,
+  "qualified_template_ast_identical": true,
+  "receiver_sha256": "7357b92a98962f7a0898508f2cc543d6a0ebee80364ad36b150676846804234a",
+  "root_private_modes_bound": true,
+  "schema_version": 1,
+  "stream_bytes": 4051045134,
+  "stream_sha256": "26c4ddc513abc33a68642f0d6aae86bbd5a56b3b00e6ab3b8b3da64b2c57a771",
+  "template_sha256": "11d0b4a0451cee79c48b6dbf710a246bf412d6808c199697113b1f821c75be37"
+}

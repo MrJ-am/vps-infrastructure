@@ -1,0 +1,327 @@
+{
+  "capacity": {
+    "allocated_closure_bytes": 528384,
+    "allocation_method": "lstat st_blocks*512, recursively without following symlinks, deduplicated by device/inode across closure",
+    "apparent_inode_bytes": 443286,
+    "minimum_double_export_plus_gib": 1074652016,
+    "minimum_export_plus_allocated_closure_plus_gib": 1074725304,
+    "required_free_bytes": 1074725304,
+    "unique_inode_count": 44
+  },
+  "date": "2026-11-02",
+  "export": {
+    "all_local_closure_paths_verified_by_nix_store": true,
+    "all_reused_dependencies_in_observed_old_closure_or_prior_successful_deliveries": true,
+    "bytes": 455096,
+    "full_closure_count": 250,
+    "path": ".local/deployment-20261101/final-code-delivery-005-20261102.nar",
+    "previous_delivery_manifest": "operations/deployment/passkey-delivery-20261102.json",
+    "previous_delivery_manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+    "reused_dependency_count": 244,
+    "sha256": "a15ea48a5921e06c051b29d76a2d812e416e8107071d6d5d7a3a4dbe11532a56",
+    "store_path_count": 6
+  },
+  "final_release_coverage": {
+    "all_artifacts_covered": true,
+    "artifacts": 1677,
+    "local_nar_hashes_verified": 1320,
+    "old_only_nar_hashes_verified_against_observation": 357,
+    "path": "operations/deployment/final-release-005-20261102.json",
+    "sha256": "9fd41d93000fb058397fa49db73d4e0e0c45bb4888fa3ec6a52c148f8ec83341"
+  },
+  "limits": [
+    "This exact incremental code export was built, hashed and verified locally; it has not been imported into the VPS by this task.",
+    "The unchanged receiver functions were previously qualified with a real synthetic Nix import; no second identical import VM was run.",
+    "Delivery imports only the final controller, governance binding and read-only probes, and preserves the already-upgraded inactive V3 unit exactly. The V2 package is retained solely as the unchanged receiver validator anchor; no V2 unit is installed and no service is started.",
+    "The final manifest and entrypoint are independently reviewed separately. Import does not select or activate a generation and does not migrate any application data."
+  ],
+  "passed": true,
+  "prior_successful_deliveries": [
+    {
+      "manifest": "operations/deployment/passkey-delivery-20261102.json",
+      "manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+      "result": ".local/deployment-20261101/passkey-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 183,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/passkey-correction-delivery-20261102.json",
+      "manifest_sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724",
+      "result": ".local/deployment-20261101/passkey-correction-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 6,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-code-delivery-20261102.json",
+      "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+      "result": ".local/deployment-20261101/candidate-code-delivery-result-001.json",
+      "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+      "store_paths": 394,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-20261102.json",
+      "manifest_sha256": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+      "result": ".local/deployment-20261101/final-code-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "store_paths": 9,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/archive-v3-delivery-20261102.json",
+      "manifest_sha256": "dda4f1a0e101fd53fb2a74721b21942cbfdd1ead81c03ece3389aa5ae679a513",
+      "result": ".local/deployment-20261101/archive-v3-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "store_paths": 3,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v3-code-delivery-20261102.json",
+      "manifest_sha256": "67228e849196c2ca8398a338d828e18e935554807ac28e2f46c591d2252b3643",
+      "result": ".local/deployment-20261101/candidate-v3-code-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "store_paths": 10,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json",
+      "manifest_sha256": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec",
+      "result": ".local/deployment-20261101/kanidm-local-bootstrap-delivery-result-001.json",
+      "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+      "store_paths": 3,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-002-20261102.json",
+      "manifest_sha256": "239c65435e78b2d0a90d721473b75bd5e50e5f113dafad6eb0f296d46971269e",
+      "result": ".local/deployment-20261101/final-code-delivery-result-002.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "store_paths": 6,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v4-code-delivery-20261102.json",
+      "manifest_sha256": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005",
+      "result": ".local/deployment-20261101/candidate-v4-code-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 12,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-003-20261102.json",
+      "manifest_sha256": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4",
+      "result": ".local/deployment-20261101/final-code-delivery-result-003.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 6,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-004-20261102.json",
+      "manifest_sha256": "39a038ccc1520cb98e8af5d828608789c5c1392d8e159906ed43c5bbb08ddb75",
+      "result": ".local/deployment-20261101/final-code-delivery-result-004.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 6,
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v5-code-delivery-20261102.json",
+      "manifest_sha256": "19940cdcdb566afcba44545da0910a6d79d0f2169558dc5313103d515a2ac7ad",
+      "result": ".local/deployment-20261101/candidate-v5-code-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "store_paths": 17,
+      "success": true
+    }
+  ],
+  "qualifications": {
+    "operations/deployment/../hosts/mrjam-vps/qualification-candidate-build-20261102-007.json": {
+      "sha256": "226b3faae4676b0369afb5a2202019b7b42524fe9f9cc3dfc90f60105bf88d03"
+    },
+    "operations/deployment/../hosts/mrjam-vps/review-candidate-build-20261102-007.json": {
+      "sha256": "8f79bc2d62482396e1825db316bc1917462523afaf45e2ddd797c3502ebea7c9"
+    },
+    "operations/deployment/backend-integration/qualification-20261102-009.json": {
+      "sha256": "b43f32ff0b9bc38e084d000656dcfbc11c32199eabb5fd76ea1f65bde02e6ccc"
+    },
+    "operations/deployment/candidate-code-delivery-20261102.json": {
+      "sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2"
+    },
+    "operations/deployment/candidate-v4-code-delivery-20261102.json": {
+      "sha256": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005"
+    },
+    "operations/deployment/candidate-v5-code-delivery-20261102.json": {
+      "sha256": "19940cdcdb566afcba44545da0910a6d79d0f2169558dc5313103d515a2ac7ad"
+    },
+    "operations/deployment/final-code-delivery-002-20261102.json": {
+      "sha256": "239c65435e78b2d0a90d721473b75bd5e50e5f113dafad6eb0f296d46971269e"
+    },
+    "operations/deployment/final-code-delivery-003-20261102.json": {
+      "sha256": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4"
+    },
+    "operations/deployment/final-code-delivery-004-20261102.json": {
+      "sha256": "39a038ccc1520cb98e8af5d828608789c5c1392d8e159906ed43c5bbb08ddb75"
+    },
+    "operations/deployment/forgejo-governance-v2/qualification-20261102-002.json": {
+      "sha256": "ed22ba06329eca870dc8a6c57846724deb9876b9897946fa4350495268a6e79e"
+    },
+    "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json": {
+      "sha256": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec"
+    },
+    "operations/deployment/observation-candidate-v4-delivery-20261102.json": {
+      "sha256": "3f3d84ed9e13a1b65ee028a2be42553f081da4cff5547a32c3f8bb0b477992c3"
+    },
+    "operations/deployment/observation-previous-closure-20261102.json": {
+      "sha256": "e399d64d097d60993ca552d9aabe30b279a3f6a08ae1918dae2d734e4909f15d"
+    },
+    "operations/deployment/passkey-correction-delivery-20261102.json": {
+      "sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724"
+    },
+    "operations/deployment/passkey-correction-upgrade-20261102.json": {
+      "sha256": "1d8d772cc6e1235e982541598e77f0e1ccd425fb595ada971e0da571a9f22081"
+    },
+    "operations/deployment/passkey-nginx/qualification-integration-20261102-001.json": {
+      "sha256": "d3400cfa356120ce382ac47ddb7e3387fce12763a3dd8d154b9a071ef6627eb6"
+    },
+    "operations/deployment/passkey-nginx/qualification-route-20261102.json": {
+      "sha256": "ecf1384d643d01db1309320a8cc15c64b236fb3d8f0d5590fd56c166a1d28639"
+    },
+    "operations/deployment/passkey-portal/publication.json": {
+      "sha256": "cec412b19a3e23f0097d1f5afec805eb803a1e734395e35e5be1750fa1d9c14a"
+    },
+    "operations/deployment/passkey-portal/qualification-author-20261102.json": {
+      "sha256": "2ee97668bf8942aebeac64ca0d7fccb40d540f469c1bc25371037463798bcc84"
+    },
+    "operations/deployment/qualification-provision-delivery-systemd-20261102.json": {
+      "sha256": "dbec4274b50b3582795675937fa0bd1ee701a802d3db6ac5d87bb907b2077e16"
+    },
+    "operations/deployment/review-candidate-v5-code-delivery-20261102.json": {
+      "sha256": "0e05e952753cf7e18d105194160e1411b79b77c8b5d3bb80cf3fc69c5f61f994"
+    },
+    "operations/deployment/review-final-release-package-005-20261102.json": {
+      "sha256": "ffab903e71cf7a70217c39c1016b9bb08db7d2ea9bc7f745fea94489f9db2b94"
+    },
+    "operations/deployment/review-forgejo-governance-v2-20261102.json": {
+      "sha256": "2110e0db67971e8fb05e79dba564f97cf4384a460da8dd9e7bb449c4738bf473"
+    }
+  },
+  "receiver": {
+    "directory": "/var/lib/mrjam-deployment-delivery/final-code-005-20261102",
+    "manifest": "operations/deployment/final-code-delivery-005-20261102.json",
+    "manifest_sha256": "b27b3744f9b500b35758637b4decee72db4fb24c435a6866bee8b4732f8e99a0",
+    "no_function_modified": true,
+    "no_service_started": true,
+    "only_release_and_directory_assignments_differ_byte_for_byte": true,
+    "path": "operations/deployment/final-code-delivery-005-20261102.py",
+    "python_compile_passed": true,
+    "release_equals_manifest": true,
+    "release_passes_original_validator": true,
+    "same_existing_inactive_provisioner_unit_only": true,
+    "sha256": "f03be5c3d07c6355bb45378116bd16f39e92595e39228bbb76fcecc80ffc33c6",
+    "template": "operations/deployment/deliver_provision.py",
+    "template_matches_independent_import_vm": true,
+    "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c"
+  },
+  "root_store_information": {
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2": {
+      "ca": null,
+      "deriver": "/nix/store/x8mp0q2hj4klq7jjz1rnng59i3h1wi5d-mrjam-kanidm-worker-provision-2.drv",
+      "narHash": "sha256-1MT0OzZWjKJa1BCO+P1Uj7QFV+pyI+N6YesxIs8/AdE=",
+      "narSize": 44568,
+      "references": [
+        "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793633708,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/aclk4gzc77q0g4mjp6r1i18l06a6ks4w-mrjam-first-release-controller-1": {
+      "ca": null,
+      "deriver": "/nix/store/8ycncnis8rz00x13n13rzfhc9nwawh06-mrjam-first-release-controller-1.drv",
+      "narHash": "sha256-cLaNn3bkJunmr8S8JVKkm2qmBs/bmgnNBT2MaquIHso=",
+      "narSize": 121856,
+      "references": [
+        "/nix/store/aclk4gzc77q0g4mjp6r1i18l06a6ks4w-mrjam-first-release-controller-1",
+        "/nix/store/cxwc18hl4scrsqmq77n29ny8f7gx21wy-mrjam-first-release-binding-1",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+      ],
+      "registrationTime": 1793661046,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/hjddprzd2dz5n2hv2kj5kzmk615szjpl-mrjam-first-release-governance-2": {
+      "ca": null,
+      "deriver": "/nix/store/d165rxbapwmsai3np5b4smqxjn858n10-mrjam-first-release-governance-2.drv",
+      "narHash": "sha256-dDbLeCFT+uRrgimRjFgzLF6J1x/GMwp0rOF46exIBSg=",
+      "narSize": 60456,
+      "references": [
+        "/nix/store/2981hbvmlvsdqmf315j72xqlf95hfdnw-mrjam-first-source-binding.json",
+        "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+        "/nix/store/hjddprzd2dz5n2hv2kj5kzmk615szjpl-mrjam-first-release-governance-2",
+        "/nix/store/nly4cml071i82515r89rpdw38z55wjqd-git-2.54.0",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+      ],
+      "registrationTime": 1793660960,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/nz0f6kmcf3wz0q6k4iwyhmk3q703ixf1-mrjam-first-release-read-only-probes-1": {
+      "ca": null,
+      "deriver": "/nix/store/sg3yhqh9rgh6j4prgypp4dqjz7vyyhn8-mrjam-first-release-read-only-probes-1.drv",
+      "narHash": "sha256-ui1eu20GyyghzyE7cPgp+P1n/+nRhKeTEEIciKrKl0Y=",
+      "narSize": 25944,
+      "references": [],
+      "registrationTime": 1793635851,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service": {
+      "ca": null,
+      "deriver": "/nix/store/f97gf0ggiz064dfh8hl0507r669ams98-unit-mrjam-kanidm-worker-provision.service.drv",
+      "narHash": "sha256-PqTAP2gux3bsnaxFBbhj0uQlo0Y1zsT6+/yrdUaT3Tc=",
+      "narSize": 2104,
+      "references": [
+        "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+        "/nix/store/1y3zm9j2w0za51ckdy6qzx4ygvvw50yv-findutils-4.10.0",
+        "/nix/store/7c57qdfwri1vx6ywbadk30wplcmxb06q-glibc-locales-2.42-103",
+        "/nix/store/kwc34h21my8mf7xbqm9gxs1xfx07xb4i-coreutils-9.11",
+        "/nix/store/pbxald1gihb1bl9l30j764q0ibb55421-gnugrep-3.12",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+        "/nix/store/rqpz5lc9g53hda7k5fyzqjvra4cck2fv-gnused-4.10",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793641854,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "roots": {
+    "controller": "/nix/store/aclk4gzc77q0g4mjp6r1i18l06a6ks4w-mrjam-first-release-controller-1",
+    "governance": "/nix/store/hjddprzd2dz5n2hv2kj5kzmk615szjpl-mrjam-first-release-governance-2",
+    "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "probes": "/nix/store/nz0f6kmcf3wz0q6k4iwyhmk3q703ixf1-mrjam-first-release-read-only-probes-1",
+    "unit": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1,
+  "scope": "local code closure construction only; no SSH, publication or service activation",
+  "source_expression": {
+    "path": "operations/deployment/final-code-delivery-005.nix",
+    "sha256": "4b264445a9384e53928b4b583692af06233fc1d6c8dd9b61ccf58cb598735246"
+  }
+}
