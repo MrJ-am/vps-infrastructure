@@ -1,0 +1,111 @@
+#+title: Portail temporaire d’authentification humaine par passkey
+#+language: fr
+
+Le portail prépare les deux accès techniques manquants avec une nouvelle
+authentification humaine. Il fonctionne exclusivement sur
+=https://log.mrj.am/_mrjam-worker-provision/=. L’utilisateur ouvre ce lien dans
+son navigateur personnel disposant de Proton Pass et valide lui-même sa passkey.
+Le navigateur de l’agent et les profils personnels ne sont jamais partagés.
+
+* Parcours et données
+
+Le protocole natif Kanidm 1.11.2 =init2= demande =issue: token= et
+=privileged: true=. Seule la méthode =passkey= est acceptée. Le backend conserve
+le nouvel en-tête de session et les nouveaux jetons ; la page reçoit uniquement
+le défi WebAuthn et les statuts fermés. L’origine et le RP ID sont tous deux
+fixés à =log.mrj.am=. Les défis du fournisseur conservent leurs exigences de
+vérification de l’utilisateur.
+
+Un second compte est demandé uniquement si l’utilisateur sélectionne des droits
+séparés. Après authentification, le bouton « Créer les accès techniques » lance
+l’opération fixe. Les sessions ne sont pas lues dans les cookies, le stockage
+web ou un cache préexistant. Les fetch utilisent =credentials: omit= ; les
+en-têtes Cookie/Authorization reçus ne sont jamais transmis au fournisseur.
+Aucun jeton ne figure dans une URL, le DOM, la console ou la sortie du processus.
+
+La nouvelle session est vérifiée par signature ES256, avec la JWK publique du
+serveur Kanidm interrogé en TLS vérifié, puis par =GET /v1/self=. Le cache dédié
+a le format accepté par le provisioner v2 ; il n’est pas présenté comme un
+cache produit par la CLI. Sa compatibilité a été éprouvée avec de vraies
+sessions passkey et le provisioner v2.
+
+* Frontières du service
+
+- Aucun WantedBy, timer d’activation ou Restart automatique dans =unit.nix=.
+- Service root avec CAP_CHOWN, afin de créer le socket root:groupe nginx 0660
+  et son répertoire root:groupe nginx 0750. Le pair Unix doit être nginx ou root.
+- Socket =/run/mrjam-kanidm-passkey-portal/http.sock= ; Nginx conserve le préfixe
+  HTTP et impose Host =log.mrj.am=. Le raccord et son retour sont un artefact
+  séparé, à qualifier avant toute activation.
+- Les POST exigent l’origine exacte, JSON, les quatre chemins fermés
+  =api/begin=, =api/assert=, =api/commit= et =api/cancel=. Après begin, une valeur
+  imprévisible de 256 bits lie chaque requête à la transaction. Aucun cookie
+  n’autorise une action. Les redirections ne sont pas suivies.
+- Au plus quatre transactions, deux assertions par transaction, 80 opérations,
+  cinq minutes par transaction, quinze minutes d’ouverture. Les lectures HTTP
+  ont une échéance globale de cinq secondes, un en-tête de 8192 octets au plus
+  et un corps de 32768 octets au plus. Requête unique par connexion.
+- Amont fixe =127.0.0.1:8443=, SNI/Host =log.mrj.am=, CA publique épinglée ;
+  seuls auth, JWK, self et logout sont accessibles par ce transport.
+- Création exclusive de =/run/mrjam-kanidm-worker-login/= root0700 et de ses
+  seuls fichiers =identity.json= et =access.json= root0600. Un répertoire
+  existant est refusé et préservé. L’unité v2 reçoit ensuite ses LoadCredential
+  root0400 déjà qualifiés.
+- Une seule commande peut être invoquée : chemin systemctl immuable, arguments
+  =start mrjam-kanidm-worker-provision.service=. Pas de shell, argument humain,
+  chemin, commande ou URL arbitraire. Sorties du sous-processus supprimées.
+- Le provisioner révoque ses sessions ; le portail les révoque aussi en cas
+  d’abandon/échec. Une révocation indisponible reste en mémoire pour réessai.
+  Le cache temporaire est effacé ; les références aux secrets sont retirées.
+  Ceci ne prétend pas garantir l’effacement physique de la mémoire Python.
+- SIGTERM laisse finir une invocation fixe déjà commencée avant révocation.
+  Le délai d’arrêt de 240 secondes couvre le job borné et le nettoyage. La route
+  Nginx peut être retirée à quinze minutes pendant ce drainage.
+
+ProtectSystem est strict ; =/run= reste writable pour les créations exclusives
+de ces deux répertoires. Cette portée du système de fichiers et l’accès root au
+bus systemd sont explicites : la restriction repose aussi sur le programme
+fermé, qui n’expose ni shell ni opération D-Bus arbitraire. Les familles réseau
+sont Unix et IPv4 loopback uniquement, le home et les périphériques sont isolés,
+les dumps mémoire sont interdits. Le retrait doit arrêter le portail et supprimer
+son unité runtime ainsi que le raccord temporaire.
+
+* Résultat final sans journal nominatif
+
+=result-probe.nix= construit un outil séparé, sans arguments et root seulement.
+Il ouvre les trois chemins fixes =/var/lib/mrjam-identite/kanidm-ROLE.token=
+en lecture stricte root0600, prend le verrou existant en lecture partagée sans
+le créer, puis fait exactement trois =GET /v1/self=. Il réemploie les lecteurs,
+la CA et les validateurs du paquet provisioner v2 immuable. Il n’interroge aucun
+compte humain, attribut administratif ou journal.
+
+La réponse JSON ne contient que version de schéma et booléens : présence,
+distinction, authentification de chaque compte de service et appartenance
+exacte aux groupes attendus. =write_authorization_proved= reste =false= : une
+observation en lecture ne prouve pas une autorisation d’écriture. Aucun rôle ou
+jeton amont plus large ne devient une capacité DELETE restreinte du seul fait
+de ce probe ; le socket/UID et l’adaptateur qualifié restent nécessaires.
+
+Pour un paquet existant, fournir =provisionPackage = builtins.storePath
+"/nix/store/...-mrjam-kanidm-worker-provision-2"= ; un chemin Nix nu est refusé
+afin de ne pas recopier et renommer le paquet qualifié.
+
+* Qualification et limites
+
+=test_portal.py= contient neuf contrôles de bornes HTTP, origine, transport,
+nettoyage, conservation d’un répertoire tiers et invocation systemctl exacte.
+=qualify.py= démarre un vrai Kanidm 1.11.2 jetable. Il y enregistre des passkeys
+P-256 synthétiques avec python-fido2/cryptography, signe réellement les défis,
+vérifie le rejet fournisseur d’une signature altérée, exerce comptes séparés et
+compte unique, provisionnement v2/idempotence, révocation, annulation et
+conservation des sessions tierces. Les secrets du test sont inventés et ne
+figurent pas dans son reçu booléen.
+
+Le reçu auteur ne prétend pas qualifier la livraison systemd, Nginx ou
+l’extension Proton Pass réelle : ces points sont distincts. La preuve
+indépendante doit utiliser les unités réelles et comparer les sources du paquet
+production à celles de sa variante avec CA synthétique. Aucune passkey personnelle,
+réinitialisation de mot de passe ou activation n’a été effectuée par l’auteur.
+
+Le code ne modifie ni les quatre autres workers, ni le broker, ni les artefacts
+DELETE/replay/provisioner déjà gelés. ViSe reste hors du prérequis de déploiement.

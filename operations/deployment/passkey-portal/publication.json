@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/portal.py",
+      "sha256": "9667e293165b33b193902e6202a1f8a648fe73bd6f67b720eec4f511b7a24b43"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/index.html",
+      "sha256": "8ee7f308f453858900bec71b14da65383954d61376bc62df831975c5a254fcb6"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/portal.js",
+      "sha256": "98fa67b40a418c7f9cf188c1c2c403643c31cb87f7b23c3a7bdc1dff2931d7a7"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/style.css",
+      "sha256": "0495a8a4db46ef0815cb0764ba4a77f430037cf6e895110c87a4f7ecfa2a6e39"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/package.nix",
+      "sha256": "ead026c5148e73ccf3d09fa40cd9aa196cf23ae0443d7201ec6900bad1c135d9"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/unit.nix",
+      "sha256": "d8ccfe88e58761f8cbfc958d30cc6e4bf5813f01838cf09b3c8b3a207b5099a3"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/test_portal.py",
+      "sha256": "77a90d4c2eb230888c08c08433181fc4e17bb4917f2d86ea215f83a8f2ba91fb"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/qualify.py",
+      "sha256": "b1f16dafab2c9f8c81ecaf5d12b9d35a359e293b7285aa7bd7d7bedcd71e3700"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/result_probe.py",
+      "sha256": "14f05d3038e8ba4388843de63380505c5272484daccd1362ad4345cf06e8d00c"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/result-probe.nix",
+      "sha256": "45870d5decc5c4ee368df34e3e45897565244a7086b802ccbbd370e96660feaf"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/README.org",
+      "sha256": "5e836b3ccda669410c44eb18b3077386d2dba1b0b07004b1120ae653ac74f613"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/result-author-001.json",
+      "sha256": "18328db02d1b9e8c302653ac9426d5ea3b9c08c4270d5c3056b1b528e13b28d3"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal/qualification-author-20261102.json",
+      "sha256": "2ee97668bf8942aebeac64ca0d7fccb40d540f469c1bc25371037463798bcc84"
+    }
+  ],
+  "publisher": "root only",
+  "schema_version": 1,
+  "scope": "Temporary passkey portal and separate read-only result probe; independent activation proof still required"
+}

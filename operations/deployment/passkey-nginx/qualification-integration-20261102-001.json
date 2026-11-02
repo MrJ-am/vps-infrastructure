@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-02",
+  "derivation": "/nix/store/0shbgqs98jyydvkj68s6wfxr8mrj573f-vm-test-run-mrjam-passkey-nginx-real-provider-private-unit.drv",
+  "nar_hash": "sha256-3zHQ/s2NQXdEGBAgpDzV4ZkRYpFCoB8l4d1LhqERLgs=",
+  "output": "/nix/store/yy948ssj7xlsbnfd5lzqmpr0rixqxdqw-vm-test-run-mrjam-passkey-nginx-real-provider-private-unit",
+  "passed": true,
+  "prior_attempts": [
+    {
+      "attempts": [
+        1
+      ],
+      "finding": "qualification helper acquired extra result_probe.py import; fixture closure missing that test dependency; corrected"
+    },
+    {
+      "attempts": [
+        2
+      ],
+      "finding": "ten groups pass with real cryptographic provider, HTTPS/Unix transport and private systemd credential unit"
+    }
+  ],
+  "production_binding_sha256": "a885912c944b7559cb398cf672ec3665f470b2fa1ae5177e03e67ca2ac02f3af",
+  "production_route_package": "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+  "production_route_unit": "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service/mrjam-passkey-nginx-route.service",
+  "production_route_unit_sha256": "034249d696a7eef43a834b95a678ac0275326f9a05523d70a8b67ad15eb32b7b",
+  "result": {
+    "actual_proton_pass_browser": false,
+    "checks": [
+      "exact-real-portal-assets-over-tls-with-strict-csp-no-cookie",
+      "cross-origin-and-unknown-csrf-refused-before-private-unit",
+      "real-provider-p256-signatures-for-separate-privileged-accounts",
+      "real-loadcredential-systemd-v2-created-worker-capabilities-and-preserved-admission",
+      "fresh-administrative-sessions-revoked-and-login-cache-removed",
+      "real-closed-result-probe-validates-three-tokens-without-writing",
+      "completed-transaction-replay-refused-with-credentials-unchanged",
+      "single-account-new-session-and-real-v2-idempotence",
+      "browser-and-journal-exclude-private-values-unrelated-sessions-retained",
+      "route-restored-and-portal-runtime-cleaned-with-no-generation-switch"
+    ],
+    "fixture_sha256": "56136b372428e81e4d9c230247c9bfe8c3b5f7872f71882368ab3342612ba426",
+    "limits": [
+      "Invented accounts and software P-256 credentials only; no real Proton Pass browser",
+      "Production code sources/modules with invented CA and route binding",
+      "Enrollment/signing fixture helpers reused; HTTP and systemd observations independent"
+    ],
+    "passed": true,
+    "portal_module_sha256": "d8ccfe88e58761f8cbfc958d30cc6e4bf5813f01838cf09b3c8b3a207b5099a3",
+    "portal_package": "/nix/store/x2zp3y9h1bsgy84dq8wh26sczp9zmdjp-mrjam-kanidm-passkey-portal-1",
+    "portal_source_sha256": "9667e293165b33b193902e6202a1f8a648fe73bd6f67b720eec4f511b7a24b43",
+    "probe_source_sha256": "14f05d3038e8ba4388843de63380505c5272484daccd1362ad4345cf06e8d00c",
+    "production_access": false,
+    "provision_module_sha256": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a",
+    "provision_package": "/nix/store/nn4j4p44pi56aj3nal62fj94mqvgaapg-mrjam-kanidm-worker-provision-2",
+    "real_https_unix_portal": true,
+    "real_kanidm": true,
+    "real_loadcredential_provisioner": true,
+    "result_probe_package": "/nix/store/af318s286hfy07ppby8zswk766gf8lns-mrjam-kanidm-worker-result-probe-1",
+    "route_module_sha256": "866be2c2c1b92e6b0e1c8090ba7dde105448a18e1e3409a5028c0560be2643df",
+    "route_sha256": "a16bf9bb3c7653feca08e0d638a2894e1120a02e35e9cc9a725438a05e453438",
+    "schema_version": 1,
+    "software_webauthn": true,
+    "test_sha256": "da8aa96fcbb6cd01b9fe743d14e392cbaf9298b8ff723228e6df4495dec3f2df"
+  },
+  "result_sha256": "e1b9dd67760971faa13875eb70efb306d39a11d45551808459832d3b6b6451f5",
+  "schema_version": 1,
+  "scope": "independent local synthetic VM only; no SSH or remote publication",
+  "seconds": 17.74,
+  "source_identity": {
+    "portal_assets_equal_production_package": "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1",
+    "public_CA_and_binding_synthetic": true,
+    "result_probe_equal_production_package": "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1"
+  },
+  "vm_stopped": true
+}

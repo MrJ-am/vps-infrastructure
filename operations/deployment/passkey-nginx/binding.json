@@ -1,0 +1,10 @@
+{
+  "configuration": "/nix/store/g0v9ji72630xhgg5q3alz0883m7pjbkb-nginx.conf",
+  "configuration_sha256": "8e540ab2d53da5b03132176e5947eb40cc17866e1dba939725b77901b8155857",
+  "executable": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx",
+  "executable_sha256": "f7c5db5009c76a4dda6ac06312b312eb13586b5aa524a6c7eb1bf9fda19e8a62",
+  "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "tls_server_sha256": "3bae594c59fd12f4a31ffabd8842c27f5c7ecc700b27f05a7ffbdfb9160a356c",
+  "unit": "/nix/store/l37hs05jhlfwwwyn7iplh2g5061y811b-unit-nginx.service/nginx.service",
+  "unit_sha256": "2b5bba58916fc08413b7ca2c2fdbeffdc03bccac48585e02af579d573ced1263"
+}

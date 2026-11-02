@@ -1,0 +1,46 @@
+{
+  "actual_proton_pass_browser_tested": false,
+  "author_publication_manifest": "operations/deployment/passkey-portal/publication.json",
+  "author_publication_manifest_sha256": "cec412b19a3e23f0097d1f5afec805eb803a1e734395e35e5be1750fa1d9c14a",
+  "author_sources_unchanged": true,
+  "date": "2026-11-02",
+  "delivery": {
+    "path": "operations/deployment/qualification-passkey-delivery-20261102.json",
+    "sha256": "707254c687ba9f1ae39bc884f866175f7419635cc3688cb4157cb6b7ecf43e4e"
+  },
+  "independent_integration": {
+    "path": "operations/deployment/passkey-nginx/qualification-integration-20261102-001.json",
+    "sha256": "d3400cfa356120ce382ac47ddb7e3387fce12763a3dd8d154b9a071ef6627eb6",
+    "test_groups": 10
+  },
+  "independent_route": {
+    "path": "operations/deployment/passkey-nginx/qualification-route-20261102.json",
+    "sha256": "ecf1384d643d01db1309320a8cc15c64b236fb3d8f0d5590fd56c166a1d28639",
+    "test_groups": 9
+  },
+  "limits": [
+    "Independent tests used invented accounts, synthetic TLS trust and real software P-256 signatures, not the human Proton Pass extension.",
+    "Historical author receipt and its publication manifest remain byte-for-byte unchanged; their pending independent qualification state is superseded by this binding.",
+    "Code delivery does not activate the portal or route; the separate opener and actual human authentication remain required."
+  ],
+  "passed": true,
+  "production_access": false,
+  "production_portal_asset_sha256": {
+    "index.html": "8ee7f308f453858900bec71b14da65383954d61376bc62df831975c5a254fcb6",
+    "portal.js": "98fa67b40a418c7f9cf188c1c2c403643c31cb87f7b23c3a7bdc1dff2931d7a7",
+    "portal.py": "9667e293165b33b193902e6202a1f8a648fe73bd6f67b720eec4f511b7a24b43",
+    "style.css": "0495a8a4db46ef0815cb0764ba4a77f430037cf6e895110c87a4f7ecfa2a6e39"
+  },
+  "production_result_probe_sha256": "14f05d3038e8ba4388843de63380505c5272484daccd1362ad4345cf06e8d00c",
+  "qualification": "Frozen author implementation plus independent real TLS/Nginx/Unix/Kanidm/systemd integration and automatic route restoration",
+  "roots": {
+    "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "portalPackage": "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1",
+    "portalUnit": "/nix/store/k7gjq9hsvfayhikb9vmwybznr1rp4d8w-unit-mrjam-kanidm-passkey-portal.service",
+    "resultProbe": "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1",
+    "routePackage": "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+    "routeUnit": "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service",
+    "unit": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1
+}
