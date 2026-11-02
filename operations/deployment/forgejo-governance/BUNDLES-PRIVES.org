@@ -1,0 +1,103 @@
+#+title: Historiques Git privés nécessaires à l'adoption initiale dans Forgejo
+#+date: 2026-11-02
+#+language: fr
+
+* Résultat déjà établi
+
+Les historiques publics de =apprendre-a-demontrer= (12 références, 49 commits),
+=etp-vie-affective= (3, 17), =style-mrjam= (21, 100) et =vps-infrastructure=
+(240, 1 094) sont reçus localement, sans authentification et sans modification
+distante. Ces nombres décrivent la réception ; ils ne fixent pas une révision
+à adopter. Le checkout infrastructure occupe environ 3,7 Go.
+
+Les cinq dépôts ci-dessous sont privés, confirmé par l'API GitHub connectée.
+Git HTTPS sans credential et l'identité SSH déjà disponible ne permettent pas
+de les cloner. Le VPS ne possède aucun des neuf dépôts attendus sous le
+propriétaire =mrj-am= dans son repo-root historique ; les 17 emplacements de
+checkouts explicitement catalogués ne contiennent pas de =.git=. Cela ne
+constitue pas un inventaire des dépôts d'autres propriétaires.
+
+Les arbres et artefacts déjà transmis restent utilisables pour le système,
+mais ne contiennent pas les objets Git nécessaires à la préservation de
+l'historique. Il ne faut pas créer des commits orphelins pour les remplacer.
+
+* Livrables demandés à Cloud
+
+Produire un bundle Git autonome par dépôt, à partir de son accès déjà
+authentifié. Inclure toutes les branches et tous les tags, avec leurs objets
+et ancêtres. Conserver les tags annotés. Ne modifier aucune référence distante,
+ne réécrire aucun historique et ne déployer aucun service.
+
+| Dépôt privé | Archive | Commits qualifiés qui doivent être présents |
+|-------------+---------+---------------------------------------------|
+| MrJ-am/Signature | Signature.bundle | 17194087eec9162bb5372221c43e1de0501dfe6a ; 17495b13cefa24473e37434b98336b27caec8cdf |
+| MrJ-am/matheval | matheval.bundle | 91b5b33541a39faade0c40792bfed5ad35ae80a1 |
+| MrJ-am/mrjam-plateforme | mrjam-plateforme.bundle | 2a34dac722ff1dab9a63aec56e407dd996de0719 |
+| MrJ-am/mrjam-validation | mrjam-validation.bundle | eb71ffe5944943474c5ee483e66c270b5976ab90 |
+| MrJ-am/vision | vision.bundle | 61cf80bddc5e1f6e7b330af319e0c9ecf742dc93 |
+
+Pour chaque bundle, fournir un manifeste privé JSON : propriétaire/dépôt,
+branche par défaut réellement observée, mapping complet =refs/heads/*= et
+=refs/tags/*= vers leurs identifiants Git, taille du bundle et SHA-256,
+présence de chacun des commits demandés, vérification d'autonomie dans un
+dépôt vide. Un commit demandé qui n'est plus atteint par une branche/tag peut
+être attaché à une référence =refs/heads/spectre-export/<sha>= dans la copie
+locale de préparation uniquement, en signalant cette référence supplémentaire.
+Ne pas présenter ces références locales comme des branches GitHub existantes.
+Fournir aussi =refs_sha256=, SHA-256 du JSON canonique ASCII de ce mapping
+(clés triées, séparateurs =,= et =:= sans espaces). Seul ce digest, les chemins
+fixes et les commits qualifiés entreront dans le store ; le mapping privé
+reste dans le canal privé et sera relu directement du bundle par le helper.
+
+La création du bundle doit employer les branches et tags explicites ; ne pas
+inclure =HEAD= comme pseudo-référence de bundle, ni =refs/replace/*=. Une copie
+locale de travail complète peut être préparée avec =git clone --mirror=, puis
+=git bundle create <archive> --branches --tags=. Les seules commandes de
+modification concernent cette copie locale, jamais un push, force ou prune
+distant. Ne pas imprimer ni copier de token, URL avec credential, configuration
+personnelle, clé SSH, cookie, auteur ou message de commit dans la réponse.
+
+Avant une lecture massive des contenus historiques, inventorier seulement les
+catégories de risque et signaler les éventuelles données métier/personnelles,
+credentials, objets LFS et gros fichiers opaques. Le bundle conserve l'histoire
+dans un canal privé ; les diagnostics ne doivent pas recopier ces contenus.
+Les sous-modules restent des gitlinks : signaler leurs dépendances sans
+remplacer leurs commits ou prétendre que le bundle contient leurs objets.
+
+* Canal de retour privé
+
+Ne déposer aucun de ces cinq bundles sur le dépôt public =vps-infrastructure=,
+sur son LFS, dans une release publique ou dans un lien public non authentifié.
+
+Le mandat impose un budget supplémentaire nul. Ne déclencher aucun nouveau
+workflow potentiellement facturé pour produire ou publier ces archives.
+Privilégier un chemin local ou un transfert privé déjà disponible. Un artefact
+Actions n'est utilisable que dans des ressources existantes dont l'absence de
+surcoût est démontrée ; la seule disponibilité du connecteur n'autorise ni un
+nouveau workflow ni une dépense.
+
+Si un tel artefact privé existe déjà, retourner le =repo_full_name= et
+l'=artifact_id=, avec la taille et le SHA-256 du bundle intérieur. Le connecteur
+GitHub sait télécharger son ZIP authentifié via
+=github_download_workflow_artifact=. Aucun token n'est demandé.
+
+* Adoption et limites
+
+La branche par défaut observée n'est pas automatiquement le commit accepté.
+L'adoption initiale doit fixer séparément la tête voulue de chaque =main=,
+les références historiques conservées et la révision des règles. La révision
+=93bd67666a3b4be9657c333931fa25b2359e165b= est une fixture orpheline de test et
+ne doit pas devenir l'autorité réelle des règles.
+
+Le helper en préparation conserve toutes les références Forgejo existantes,
+archive les branches/tags importés sous un espace lié au SHA-256 du bundle,
+et n'avance =main= que par fast-forward. Il refuse une divergence ou une
+protection préexistante qui interdit cette avance. Il ne contourne aucune
+protection et n'invente aucun résultat de validation indépendante.
+
+Les objets LFS, issues, PR, pièces jointes, releases, wikis, packages et webhooks
+ne sont pas compris dans un bundle Git. Leurs contenus existants restent sur
+leurs hébergements d'origine ; les métadonnées Forgejo existantes sont
+préservées. Leur inventaire et les éléments pertinents à migrer doivent être
+documentés séparément. La réception des bundles n'atteste ni le fonctionnement
+des runners, ni une identité humaine de revue, ni une livraison protégée.

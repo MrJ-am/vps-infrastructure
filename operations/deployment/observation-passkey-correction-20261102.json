@@ -1,0 +1,211 @@
+{
+  "application_generation_changed": false,
+  "code_delivery_verified": true,
+  "date": "2026-11-02",
+  "human_v3_provision_result": "user reports missing identity_services and identity_admins; no success",
+  "inactive_units_upgraded": true,
+  "limits": [
+    "First corrected opener SSH return was not received before turn interruption; the closed resume probe established that its route had run and expired.",
+    "The second invocation returned PASSKEY_PORTAL_OPEN at 18:30:24 UTC. The subsequent three public asset reads were byte-identical to the qualified V2 package.",
+    "No successful V3 human provisioning is claimed until the separate fixed result probe confirms all three service tokens."
+  ],
+  "observations": {
+    "passkey-correction-closed-001.json": {
+      "result": {
+        "code": "PASSKEY_PORTAL_STOPPED",
+        "schema_version": 1
+      },
+      "sha256": "901349ea3df1b80ca80de60e937a71a114b52fe11853d6abb6f5b42fb46f2094"
+    },
+    "passkey-correction-delivery-result-001.json": {
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      },
+      "sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce"
+    },
+    "passkey-correction-opening-result-002.json": {
+      "result": {
+        "application_generation_changed": false,
+        "code": "PASSKEY_PORTAL_OPEN",
+        "credential_creation": false,
+        "expires_after_seconds": 900,
+        "schema_version": 1,
+        "url": "https://log.mrj.am/_mrjam-worker-provision/"
+      },
+      "sha256": "10c49d45de6d8caf9f4d7d5a0be11293e76fddd1a3124032a55565ea4135c7ec"
+    },
+    "passkey-correction-public-readiness-002.json": {
+      "result": {
+        "assets": {
+          "index.html": {
+            "csp_present": true,
+            "exact_v2_bytes": true,
+            "http_status": 200,
+            "no_store": true
+          },
+          "portal.js": {
+            "csp_present": true,
+            "exact_v2_bytes": true,
+            "http_status": 200,
+            "no_store": true
+          },
+          "style.css": {
+            "csp_present": true,
+            "exact_v2_bytes": true,
+            "http_status": 200,
+            "no_store": true
+          }
+        },
+        "observed_utc_epoch": 1793644236,
+        "ready": true,
+        "schema_version": 1
+      },
+      "sha256": "d90a232bb5359dbc7004dc03a9e5cd416464edf9687bd6b80c9716307f431933"
+    },
+    "passkey-correction-resume-probe-001.json": {
+      "result": {
+        "closed_codes_last_20_minutes": {
+          "KANIDM_WORKER_PROVISION_REFUSED": 0,
+          "KANIDM_WORKER_PROVISION_SESSION_CLEANUP_REQUIRED": 0
+        },
+        "closed_stages_last_20_minutes": {
+          "ACCESS_RIGHTS": 0,
+          "ADMIN_CACHE": 0,
+          "ADMISSION": 0,
+          "CLEANUP": 0,
+          "CREDENTIAL_STATE": 0,
+          "EXISTING_STATE": 0,
+          "FINAL_CONSISTENCY": 0,
+          "GROUP_CHANGE": 0,
+          "IDENTITY_RIGHTS": 0,
+          "INITIALIZE": 0,
+          "SERVICE_CREATE": 0,
+          "TOKEN_CREATE": 0,
+          "TOKEN_VERIFY": 0,
+          "TOKEN_WRITE": 0
+        },
+        "human_cache_read": false,
+        "journal_messages_exported": false,
+        "provision_process_started": true,
+        "provision_started_after_portal": false,
+        "provision_success_observed": false,
+        "read_only": true,
+        "schema_version": 1,
+        "units": {
+          "mrjam-kanidm-passkey-portal.service": {
+            "ActiveState": "inactive",
+            "ExecMainCode": 0,
+            "ExecMainExitTimestampMonotonic": 0,
+            "ExecMainStartTimestampMonotonic": 0,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "success",
+            "SubState": "dead"
+          },
+          "mrjam-kanidm-worker-provision.service": {
+            "ActiveState": "failed",
+            "ExecMainCode": 1,
+            "ExecMainExitTimestampMonotonic": 1361934175613,
+            "ExecMainStartTimestampMonotonic": 1361933996462,
+            "ExecMainStatus": 1,
+            "LoadState": "loaded",
+            "Result": "exit-code",
+            "SubState": "failed"
+          },
+          "mrjam-passkey-nginx-route.service": {
+            "ActiveState": "failed",
+            "ExecMainCode": 1,
+            "ExecMainExitTimestampMonotonic": 1364873801432,
+            "ExecMainStartTimestampMonotonic": 1363972778512,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "timeout",
+            "SubState": "failed"
+          },
+          "nginx.service": {
+            "ActiveState": "active",
+            "ExecMainCode": 0,
+            "ExecMainExitTimestampMonotonic": 0,
+            "ExecMainStartTimestampMonotonic": 1364873748140,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "success",
+            "SubState": "running"
+          }
+        },
+        "worker_lock_contents_read": false,
+        "worker_lock_metadata_valid": true,
+        "worker_lock_present": true
+      },
+      "sha256": "7d4f016373b906ce747f9dda0b21c223f9d5e0f1f65b0aa0b9dcfaf6a7bce631"
+    },
+    "passkey-correction-upgrade-result-001.json": {
+      "result": {
+        "application_generation_changed": false,
+        "code": "PASSKEY_INACTIVE_UNITS_UPDATED",
+        "credential_creation": false,
+        "schema_version": 1,
+        "services_started": false
+      },
+      "sha256": "ade74d9108dd68dbd04d7e0d4303d45867c709c79b9f634ac7b1e94b1910a159"
+    },
+    "passkey-worker-result-003.json": {
+      "result": {
+        "admission": {
+          "authenticated_service": true,
+          "expected_memberships": true,
+          "present": true
+        },
+        "all_expected_memberships": false,
+        "all_tokens_present": false,
+        "cycle": {
+          "authenticated_service": false,
+          "expected_memberships": false,
+          "present": false
+        },
+        "read_only": true,
+        "replay": {
+          "authenticated_service": false,
+          "expected_memberships": false,
+          "present": false
+        },
+        "schema_version": 1,
+        "tokens_distinct": false,
+        "write_authorization_proved": false
+      },
+      "sha256": "dfef82f56d125822ae4d6e04f0511cecf3807a3fcf090c610e16d23ccb7b402f"
+    },
+    "preflight-passkey-nginx-restored-002.json": {
+      "result": {
+        "code": "PASSKEY_NGINX_CODE_OBSERVED",
+        "configuration": "/nix/store/g0v9ji72630xhgg5q3alz0883m7pjbkb-nginx.conf",
+        "configuration_sha256": "8e540ab2d53da5b03132176e5947eb40cc17866e1dba939725b77901b8155857",
+        "executable": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx",
+        "executable_sha256": "f7c5db5009c76a4dda6ac06312b312eb13586b5aa524a6c7eb1bf9fda19e8a62",
+        "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+        "logs_read": false,
+        "origin": "https://log.mrj.am",
+        "private_configuration_read": false,
+        "production_mutation": false,
+        "rp_id": "log.mrj.am",
+        "runtime_overrides_absent": true,
+        "schema_version": 1,
+        "temporary_prefix": "/_mrjam-worker-provision/",
+        "tls_server_sha256": "3bae594c59fd12f4a31ffabd8842c27f5c7ecc700b27f05a7ffbdfb9160a356c",
+        "unique_tls_server": true,
+        "unit": "/nix/store/l37hs05jhlfwwwyn7iplh2g5061y811b-unit-nginx.service/nginx.service",
+        "unit_sha256": "2b5bba58916fc08413b7ca2c2fdbeffdc03bccac48585e02af579d573ced1263"
+      },
+      "sha256": "9f717f134f3612ddf4d773db87d0bdd0e6e9ac9e2958e1c3f32b7a0480cec828"
+    }
+  },
+  "public_v2_assets_exact": true,
+  "schema_version": 1,
+  "source_commit": "534f4d52879dfdf1b374845a7377793c27992449",
+  "source_tree": "b2b20fc696caff3f972295ddb409bd3a01f7b689",
+  "subsequent_user_authorization": "VPS administrator access until full deployment; see AUTORISATION-ADMIN-20261102.org",
+  "temporary_portal_now_closed": true
+}

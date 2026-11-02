@@ -1,0 +1,38 @@
+{
+  "actual_human_proton_pass_tested_with_new_versions": false,
+  "author_receipt": {
+    "path": "operations/deployment/qualification-passkey-correction-author-20261102.json",
+    "sha256": "c47995954f5dc8315b7417390b80ef00d99688ef420cdc3fcf6e9d0e8d5d8ac8"
+  },
+  "date": "2026-11-02",
+  "independent_integration": {
+    "path": "operations/deployment/passkey-nginx/qualification-integration-v2-20261102.json",
+    "sha256": "a56051774267044f5e69d866900b0ec61cc23f8848400b9fe16c01125b7e3447",
+    "test_groups": 24
+  },
+  "limits": [
+    "Native permissions and complete credential provisioning were proved on invented accounts and software P-256 keys.",
+    "Actual production memberships remain unobserved; the new UI prechecks its own fresh human session.",
+    "ACCESS_REQUIRED continuation is a synthetic state-machine branch, not claimed as a native built-in group policy.",
+    "Historical author pending-integration text is retained byte-for-byte and superseded by this final binding."
+  ],
+  "native_permissions_receipt": {
+    "path": "operations/deployment/passkey-nginx/qualification-native-capabilities-20261102.json",
+    "sha256": "78408277737431c9cf912ea151d347d5a24d7d614b718e3955782cad32966593"
+  },
+  "passed": true,
+  "production_access": false,
+  "publication_manifest": {
+    "all_22_frozen_sources_unchanged": true,
+    "path": "operations/deployment/passkey-correction-publication-20261102.json",
+    "sha256": "a01937108686c4ea4e76e93af4429a18a4557ce168b884847e61a2d554978ca6"
+  },
+  "roots": {
+    "portalPackage": "/nix/store/an04ifkrx986xh8j2ynlmgbqh10vdibi-mrjam-kanidm-passkey-portal-2",
+    "portalUnit": "/nix/store/chvy4yb5hv24av8wvxxqqjz4yhqn62f3-unit-mrjam-kanidm-passkey-portal.service",
+    "provisionPackage": "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+    "provisionUnit": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1,
+  "scope": "Versioned portal2/provisioner3 correction, local synthetic qualification only"
+}
