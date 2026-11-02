@@ -227,6 +227,13 @@ def baseline(scenario):
 def checkpoint_observer(backend,scenario):
     original=backend.checkpoint.write
     def write(value,elapsed):
+        if (scenario=='private-failure' and value==Phase.RETURNING) or (scenario=='opening-failure' and value==Phase.HELD):
+            diagnostic=B.private_read(B.STATE/'failure.json',maximum=1024)
+            require(diagnostic=={'schema_version':1,'release_sha256':backend.release.digest,
+                'step':'readiness' if scenario=='private-failure' else 'verify-public-services',
+                'component':'vision-backend' if scenario=='private-failure' else 'none',
+                'code':'PRIVATE_READINESS_REFUSED' if scenario=='private-failure' else 'PROMOTED_PUBLIC_SERVICE_UNAVAILABLE'},
+                'FIRST_FAILURE_NOT_PRESERVED_BEFORE_RETURN_OR_HOLD')
         if value==Phase.RETURNED:
             require(ctl('show','vision-cycle.service','--property=ActiveState','--value') in ('inactive','failed')
                     and ctl('show','vision-cycle.service','--property=MainPID','--value')=='0','OLD_PERIODIC_STARTED_BEFORE_RETURNED')
@@ -319,6 +326,7 @@ def verify(scenario):
             except Refused as failure:require(str(failure)=='INTERRUPTED_STATE_NOT_AUTOMATICALLY_RESTORABLE','WRONG_HELD_RECOVERY_CODE')
             else:raise RuntimeError('HELD_AUTO_RECOVERY_ACCEPTED')
     elif scenario=='success':
+        require(not (B.STATE/'failure.json').exists(),'SUCCESS_RECORDED_A_FAILURE')
         require(phase()==Phase.OPEN,'EXPECTED_OPEN')
         pair('synthetic-public-write')
         require(os.path.realpath('/run/current-system')==sealed.generations['promoted'],'PROMOTED_LIVE_MISSING')

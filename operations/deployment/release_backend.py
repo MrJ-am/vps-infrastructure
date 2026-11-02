@@ -7,6 +7,8 @@ SQL, service names, URLs, paths, generations or environment overrides at runtime
 All subprocess diagnostics stay private; only closed engine codes may leave.
 """
 import fcntl
+from contextlib import contextmanager
+from functools import wraps
 import grp
 import hashlib
 import json
@@ -22,10 +24,10 @@ import subprocess
 import time
 from types import MappingProxyType
 
-from cutover import Checkpoint, Phase
-from generation import Generations, STORE
-from snapshot import FrozenSnapshot, ROOTS, REQUIRED
-from system_control import SystemControl, ALLOWED, DATABASE, BACKUPS, TIMERS, ACME_SERVICES, GATE_NAME, GENERATOR, GENERATOR_DIRECTORY, GENERATOR_NAME
+from cutover import Checkpoint, Phase, Refused as CutoverRefused
+from generation import Generations, STORE, Refused as GenerationRefused
+from snapshot import FrozenSnapshot, ROOTS, REQUIRED, SnapshotRefused
+from system_control import SystemControl, ALLOWED, DATABASE, BACKUPS, TIMERS, ACME_SERVICES, GATE_NAME, GENERATOR, GENERATOR_DIRECTORY, GENERATOR_NAME, Refused as SystemRefused
 import stage_adoption
 import stage_credentials
 
@@ -86,7 +88,138 @@ REQUIRED_PRIVATE = ("kanidm-admission.token", "kanidm-cycle.token", "kanidm-repl
 SOURCE_REPOSITORIES = ("Signature", "apprendre-a-demontrer", "etp-vie-affective", "matheval", "mrjam-plateforme",
                        "mrjam-validation", "style-mrjam", "vision", "vps-infrastructure")
 STAGING_DIRECTORIES = (stage_credentials.OUTPUT,) + tuple(Path("/run")/name for name in sorted(stage_adoption.PROFILES))
+FAILURE_STEPS = frozenset(("backend", "freeze", "verify-quiescent", "snapshot", "verify-snapshot",
+    "install-candidate", "adopt-private-state", "start-private-services", "verify-private-services",
+    "open-public-writes", "verify-public-services", "restore-snapshot", "restore-previous-generation",
+    "verify-previous-private-services", "reopen-previous-services", "hold-current-state",
+    "systemd-start", "helper", "readiness", "http-health"))
+FAILURE_COMPONENTS = ALLOWED | frozenset(HELPERS) | frozenset(("none", "vision-backend", "vision-frontend", "forgejo", "nextcloud"))
 
+
+# Static code membership, copied from qualified source literals at review time.
+# No exception text, regular-expression-only filter or runtime source discovery.
+GOVERNANCE_FAILURE_CODES = frozenset((
+    'ADOPTED_CHECKPOINT_REQUIRED', 'API_FIELD_MISSING', 'API_FIELD_TYPE',
+    'API_FIELD_VALUE', 'API_REJECTED', 'ARCHIVE_REFERENCE_LIMIT',
+    'BINDING_BUNDLE_REFUSED', 'BINDING_DUPLICATE_KEY', 'BINDING_FIELDS_REFUSED',
+    'BINDING_HASH_REFUSED', 'BINDING_MAIN_REFUSED', 'BINDING_METADATA_DISPOSITION_REFUSED',
+    'BINDING_REFS_REFUSED', 'BINDING_REPOSITORIES_REFUSED', 'BINDING_REVISION_REFUSED',
+    'BINDING_RULES_REFUSED', 'BINDING_SOURCE_FIELDS_REFUSED', 'BINDING_TARGET_REFUSED',
+    'BUNDLE_CHANGED', 'BUNDLE_DIRECTORY_REFUSED', 'BUNDLE_FILE_REFUSED',
+    'BUNDLE_HASH_REFUSED', 'BUNDLE_PATH_REFUSED', 'BUNDLE_REFERENCES_CHANGED',
+    'CONTENT_ENCODING_REFUSED', 'CONVERGENCE_FAILED', 'DEADLINE',
+    'DEFAULT_BRANCH_ADOPTION_REQUIRED', 'DUPLICATE_KEY', 'DUPLICATE_REPOSITORY',
+    'EXISTING_POLICY_REQUIRES_ADOPTION', 'EXISTING_REFERENCE_CONFLICT', 'GENERATED_OPERATION_REFUSED',
+    'GIT_OPERATION_REFUSED', 'GOVERNANCE_INTERRUPTED', 'GOVERNANCE_OPERATION_REFUSED',
+    'INPUT_CHANGED', 'INPUT_LIMIT', 'INPUT_UNAVAILABLE',
+    'INVALID_CREDENTIAL', 'INVALID_FIELDS', 'INVALID_JSON',
+    'INVALID_NUMBER', 'INVALID_OBSERVATION', 'INVALID_PLAN_HASH',
+    'INVALID_PROTECTION', 'INVALID_REVISION', 'INVALID_SYNTHETIC_PORT',
+    'ORGANIZATION_IDENTITY_REFUSED', 'PLAN_ALREADY_USED', 'PLAN_EXPIRED',
+    'PRIVATE_SOURCE_PUBLIC_TARGET_REFUSED', 'PROTECTED_POLICY_READBACK_FAILED', 'READBACK_FAILED',
+    'RECONCILE_PLAN_REPLAY', 'RECONCILIATION_DRIFT_REFUSED', 'REDIRECT_REFUSED',
+    'REFERENCE_LIMIT', 'REFERENCE_OBSERVATION_CHANGED', 'REFERENCE_READBACK_FAILED',
+    'REFERENCE_SHAPE_REFUSED', 'REPLAY_JOURNAL_LIMIT', 'REPOSITORY_ADOPTION_REFUSED',
+    'REPOSITORY_IDENTITY_CHANGED', 'REPOSITORY_MISSING', 'REPOSITORY_REFUSED',
+    'REQUEST_LIMIT', 'RESPONSE_LIMIT', 'RULES_MAIN_CHANGED',
+    'SOURCE_IMPORT_REQUIRED', 'SOURCE_METADATA_NOT_CONVERGED', 'SOURCE_REPOSITORY_MISSING',
+    'STALE_OR_CHANGED_PLAN', 'STATE_CHANGED_BEFORE_WRITE', 'STRONGER_EXISTING_POLICY',
+    'SYNTHETIC_RULES_REFUSED', 'TRANSPORT_FAILED', 'UNEXPECTED_CONTENT_TYPE',
+    'UNEXPECTED_STATUS', 'UNMANAGED_ENDPOINT', 'UNMANAGED_OPERATION',
+    'UNMANAGED_PHASE', 'UNMANAGED_REPOSITORY', 'UNQUALIFIED_FORGEJO_VERSION',
+    'UNQUALIFIED_PROTECTION', 'UNQUALIFIED_RULES_HEAD', 'UNSAFE_CREDENTIAL',
+    'UNSAFE_FILE', 'UNSAFE_STATE', 'UNSUPPORTED_TARGET',
+    'VALIDATION_REPOSITORY_REQUIRED', 'WRONG_BRANCH', 'WRONG_WORKING_DIRECTORY',
+))
+HELPER_FAILURE_CODES = {"forgejo_governance":GOVERNANCE_FAILURE_CODES,"forgejo_sources":GOVERNANCE_FAILURE_CODES}
+FAILURE_CODES = frozenset((
+    'ACTIVE_FOREIGN_MASK_REFUSED', 'ADOPTED_CHECKPOINT_REQUIRED', 'ADOPTION_MARKER_REFUSED',
+    'API_FIELD_MISSING', 'API_FIELD_TYPE', 'API_FIELD_VALUE',
+    'API_REJECTED', 'ARCHIVE_REFERENCE_LIMIT', 'ARTIFACT_CLOSURE_CHANGED',
+    'ARTIFACT_CLOSURE_REFUSED', 'ARTIFACT_DUPLICATE_METADATA_REFUSED', 'ARTIFACT_HASH_CHANGED',
+    'ARTIFACT_METADATA_REFUSED', 'ARTIFACT_SET_CHANGED', 'BINDING_BUNDLE_REFUSED',
+    'BINDING_DUPLICATE_KEY', 'BINDING_FIELDS_REFUSED', 'BINDING_HASH_REFUSED',
+    'BINDING_MAIN_REFUSED', 'BINDING_METADATA_DISPOSITION_REFUSED', 'BINDING_REFS_REFUSED',
+    'BINDING_REPOSITORIES_REFUSED', 'BINDING_REVISION_REFUSED', 'BINDING_RULES_REFUSED',
+    'BINDING_SOURCE_FIELDS_REFUSED', 'BINDING_TARGET_REFUSED', 'BOOT_PROFILE_MISMATCH',
+    'BUNDLE_CHANGED', 'BUNDLE_DIRECTORY_REFUSED', 'BUNDLE_FILE_REFUSED',
+    'BUNDLE_HASH_REFUSED', 'BUNDLE_PATH_REFUSED', 'BUNDLE_REFERENCES_CHANGED',
+    'CANDIDATE_CHECKPOINT_REQUIRED', 'CHECKPOINT_DIRECTORY_REFUSED', 'CHECKPOINT_FILE_REFUSED',
+    'COHERENT_RETURN_CAPACITY_REQUIRED', 'COHERENT_RETURN_REQUIRES_RECOVERY', 'CONCURRENT_SERVICE_OPERATION',
+    'CONTENT_ENCODING_REFUSED', 'CONVERGENCE_FAILED', 'CREDENTIAL_DIRECTORY_REFUSED',
+    'CREDENTIAL_NAME_REFUSED', 'CREDENTIAL_SOURCE_CHANGED', 'CREDENTIAL_SOURCE_REFUSED',
+    'CREDENTIAL_STAGING_IDENTITY_REFUSED', 'CROSS_FILESYSTEM_RETURN_REFUSED', 'CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED',
+    'CUTOVER_TIME_BUDGET_EXHAUSTED', 'DEADLINE', 'DEFAULT_BRANCH_ADOPTION_REQUIRED',
+    'DOCUMENT_DUPLICATE_KEY', 'DOCUMENT_FORMAT_REFUSED', 'DOCUMENT_NUMBER_REFUSED',
+    'DOCUMENT_SIZE_REFUSED', 'DUPLICATE_KEY', 'DUPLICATE_REPOSITORY',
+    'DURABLE_OPENING_REQUIRED', 'DURABLE_RETURNED_REQUIRED', 'EARLY_MASK_NOT_EFFECTIVE',
+    'EARLY_PHASE_ADOPTION_CONFLICT', 'EXISTING_ADOPTION_STAGING_REFUSED', 'EXISTING_INGRESS_BOUNDARY_REFUSED',
+    'EXISTING_POLICY_REQUIRES_ADOPTION', 'EXISTING_REFERENCE_CONFLICT', 'EXISTING_RELEASE_STATE_REFUSED',
+    'EXISTING_SNAPSHOT_REFUSED', 'EXISTING_TRANSACTION_REQUIRES_RECOVERY', 'EXTERNAL_TABLESPACE_REFUSED',
+    'EXTERNAL_WAL_REFUSED', 'FOREIGN_RUNTIME_GENERATOR_REFUSED', 'FORGEJO_PRIVATE_HEALTH_REFUSED',
+    'FORGEJO_RELEASE_AUTHORITY_NOT_ESTABLISHED', 'FORGEJO_SOURCE_INPUTS_NOT_VERIFIED', 'FORGEJO_SOURCE_STAGING_CHANGED',
+    'FORGEJO_SSO_CONTINUITY_REFUSED', 'FORGEJO_TECHNICAL_BOOTSTRAP_REFUSED', 'GENERATED_OPERATION_REFUSED',
+    'GENERATION_BINDING_REFUSED', 'GENERATION_GUARD_BINDING_CHANGED', 'GENERATION_INCOMPLETE',
+    'GENERATION_MISSING', 'GENERATION_OPERATION_REFUSED', 'GENERATION_TARGET_REFUSED',
+    'GENERATOR_BINDING_REFUSED', 'GIT_OPERATION_REFUSED', 'GOVERNANCE_INTERRUPTED',
+    'GOVERNANCE_OPERATION_REFUSED', 'GUARD_ANCESTOR_REFUSED', 'GUARD_DIRECTORY_REFUSED',
+    'HELPER_REFUSED', 'HISTORICAL_JOURNAL_REQUIRES_ADOPTION', 'HISTORICAL_OBLIGATION_PROBE_REFUSED',
+    'HISTORICAL_OBLIGATION_REQUIRES_ADOPTION', 'HOST_TARGET_CHANGED', 'HTTP_STATUS_REFUSED',
+    'HTTP_TARGET_REFUSED', 'IMAGE_INTEGRITY_REFUSED', 'IMAGE_LIMIT_REFUSED',
+    'IMAGE_OPERATION_REFUSED', 'INCOMPLETE_CLOSURE_REQUIRES_ADOPTION', 'INEFFECTIVE_FOREIGN_MASK_REFUSED',
+    'INGRESS_BOUNDARY_REQUIRED', 'INITIAL_STATE_REQUIRED', 'INPUT_CHANGED',
+    'INPUT_LIMIT', 'INPUT_UNAVAILABLE', 'INTERRUPTED_TRANSACTION_REQUIRES_RECOVERY',
+    'INVALID_CREDENTIAL', 'INVALID_FIELDS', 'INVALID_JSON',
+    'INVALID_NUMBER', 'INVALID_OBSERVATION', 'INVALID_PLAN_HASH',
+    'INVALID_PROTECTION', 'INVALID_REVISION', 'INVALID_SYNTHETIC_PORT',
+    'LEASE_DOCUMENT_REFUSED', 'LEASE_PROCESS_REFUSED', 'LIVE_TRANSACTION_LEASE_REFUSED',
+    'MASK_RECORD_REFUSED', 'MASK_SET_REFUSED', 'MOUNT_INVENTORY_REFUSED',
+    'NESTED_STATE_MOUNT_REFUSED', 'NEXTCLOUD_CONTAINMENT_ACTIVE', 'NEXTCLOUD_PRIVATE_HEALTH_REFUSED',
+    'OPENING_FAILED_CURRENT_STATE_PRESERVED', 'ORGANIZATION_IDENTITY_REFUSED', 'PLAN_ALREADY_USED',
+    'PLAN_EXPIRED', 'POSTGRESQL_FINAL_STOP_REQUIRED', 'PREFLIGHT_PENDING_METADATA_REFUSED',
+    'PREFLIGHT_SNAPSHOT_EXISTS', 'PREFLIGHT_STATE_CONTENT_REFUSED', 'PREFLIGHT_TRANSACTION_EFFECT_REFUSED',
+    'PREVIOUS_GENERATION_CHANGED', 'PREVIOUS_HTTP_OBSERVATION_REFUSED', 'PREVIOUS_PRIVATE_HTTP_NOT_RESTORED',
+    'PRIVATE_ANCESTOR_REFUSED', 'PRIVATE_DIRECTORY_REFUSED', 'PRIVATE_FILE_REFUSED',
+    'PRIVATE_METADATA_REPLACEMENT_REFUSED', 'PRIVATE_METADATA_SIZE_REFUSED', 'PRIVATE_PATH_REFUSED',
+    'PRIVATE_READINESS_REFUSED', 'PRIVATE_SERVICE_NOT_RUNNING', 'PRIVATE_SOURCE_PUBLIC_TARGET_REFUSED',
+    'PROMOTED_GENERATION_NOT_SELECTED', 'PROMOTED_PUBLIC_SERVICE_UNAVAILABLE', 'PROMOTED_TIMER_NOT_RUNNING',
+    'PROTECTED_POLICY_READBACK_FAILED', 'PUBLIC_OPEN_CHECKPOINT_REQUIRED', 'PUBLIC_TIMER_STARTED_EARLY',
+    'READBACK_FAILED', 'READINESS_TARGET_REFUSED', 'RECONCILE_PLAN_REPLAY',
+    'RECONCILIATION_DRIFT_REFUSED', 'RECOVERY_CONTEXT_REFUSED', 'RECOVERY_GENERATION_CHANGED',
+    'RECOVERY_HTTP_RECORD_REFUSED', 'RECOVERY_MASK_INTENT_CHANGED', 'RECOVERY_MASK_RECORD_CONFLICT',
+    'RECOVERY_PHASE_REFUSED', 'RECOVERY_RELEASE_MISMATCH', 'RECOVERY_UNIT_RECORD_REFUSED',
+    'REDIRECT_REFUSED', 'REFERENCE_LIMIT', 'REFERENCE_OBSERVATION_CHANGED',
+    'REFERENCE_READBACK_FAILED', 'REFERENCE_SHAPE_REFUSED', 'RELEASE_ARTIFACT_REFUSED',
+    'RELEASE_ARTIFACT_SET_REFUSED', 'RELEASE_CA_REFUSED', 'RELEASE_FIELDS_REFUSED',
+    'RELEASE_FORGEJO_BINDING_REFUSED', 'RELEASE_GENERATIONS_REFUSED', 'RELEASE_GENERATOR_REFUSED',
+    'RELEASE_HASH_REFUSED', 'RELEASE_IMMUTABILITY_REFUSED', 'RELEASE_LOCATION_REFUSED',
+    'RELEASE_PROGRAMS_REFUSED', 'RELEASE_PROGRAM_REFUSED', 'RELEASE_TARGET_REFUSED',
+    'REPLAY_JOURNAL_LIMIT', 'REPOSITORY_ADOPTION_REFUSED', 'REPOSITORY_IDENTITY_CHANGED',
+    'REPOSITORY_MISSING', 'REPOSITORY_REFUSED', 'REQUEST_LIMIT',
+    'REQUIRED_CREDENTIAL_REFERENCE_REFUSED', 'REQUIRED_SNAPSHOT_SOURCE_MISSING', 'REQUIRED_STATE_MISSING',
+    'RESERVED_IDENTITY_ALREADY_PRESENT', 'RESPONSE_LIMIT', 'RESTORE_AFTER_PUBLIC_WRITES_REFUSED',
+    'RETAINED_IDENTITY_CHANGED', 'RETAINED_IDENTITY_MISSING', 'RETURN_CHECKPOINT_REQUIRED',
+    'RETURN_MARGIN_REQUIRED', 'ROOT_IDENTITY_REQUIRED', 'RULES_MAIN_CHANGED',
+    'RUNNING_GENERATION_MISMATCH', 'SEALED_OPERATION_REFUSED', 'SEALED_RELEASE_REQUIRED',
+    'SEALED_RESULT_SIZE_REFUSED', 'SNAPSHOT_CHECKPOINT_REQUIRED', 'SNAPSHOT_DESTINATION_REQUIRED',
+    'SNAPSHOT_DIRECTORY_REFUSED', 'SNAPSHOT_FILE_REFUSED', 'SNAPSHOT_INTEGRITY_REFUSED',
+    'SNAPSHOT_MANIFEST_REFUSED', 'SNAPSHOT_OPERATION_FAILED', 'SNAPSHOT_QUARANTINE_REFUSED',
+    'SNAPSHOT_RECOVERY_ATTEMPTS_EXHAUSTED', 'SNAPSHOT_RETURN_INCOMPLETE', 'SNAPSHOT_SOURCE_REFUSED',
+    'SOURCE_DIRECTORY_REFUSED', 'SOURCE_IMAGE_REFUSED', 'SOURCE_IMPORT_REQUIRED',
+    'SOURCE_LIMIT_REFUSED', 'SOURCE_METADATA_NOT_CONVERGED', 'SOURCE_REPOSITORY_MISSING',
+    'STAGING_IDENTITY_REFUSED', 'STALE_OR_CHANGED_PLAN', 'STATE_CAPACITY_SCAN_LIMIT',
+    'STATE_CAPACITY_UNREADABLE', 'STATE_CHANGED_BEFORE_WRITE', 'STATE_ROOT_REFUSED',
+    'STRONGER_EXISTING_POLICY', 'SYNTHETIC_RULES_REFUSED', 'SYSTEM_OPERATION_REFUSED',
+    'SYSTEM_RESULT_REFUSED', 'TRANSACTION_CONTEXT_REQUIRED', 'TRANSACTION_LOCK_REFUSED',
+    'TRANSPORT_FAILED', 'UNEXPECTED_CONTENT_TYPE', 'UNEXPECTED_STATUS',
+    'UNIT_OBSERVATION_REPLAY_REFUSED', 'UNIT_OBSERVATION_REQUIRED', 'UNIT_REFUSED',
+    'UNKNOWN_FAILURE', 'UNMANAGED_ENDPOINT', 'UNMANAGED_OPERATION',
+    'UNMANAGED_PHASE', 'UNMANAGED_REPOSITORY', 'UNQUALIFIED_FORGEJO_VERSION',
+    'UNQUALIFIED_PROTECTION', 'UNQUALIFIED_RULES_HEAD', 'UNSAFE_CREDENTIAL',
+    'UNSAFE_FILE', 'UNSAFE_STATE', 'UNSUPPORTED_TARGET',
+    'VALIDATION_REPOSITORY_REQUIRED', 'WORKER_CREDENTIALS_MISSING', 'WORKER_CREDENTIAL_CAPABILITY_REFUSED',
+    'WRITERS_NOT_QUIESCENT', 'WRONG_BRANCH', 'WRONG_WORKING_DIRECTORY',
+))
 
 class Refused(RuntimeError):
     pass
@@ -95,6 +228,17 @@ class Refused(RuntimeError):
 def require(value, code):
     if not value:
         raise Refused(code)
+
+
+def observed_failure(step):
+    """Observe the original exception before the unchanged transaction sees it."""
+    def decorate(operation):
+        @wraps(operation)
+        def observed(self, *args, **kwargs):
+            with self.failure_step(step):
+                return operation(self, *args, **kwargs)
+        return observed
+    return decorate
 
 
 def strict_json(raw, maximum=1048576):
@@ -262,6 +406,8 @@ class Backend:
         self.holding = False
         self.signal_before = None
         self.source_archive_bytes = 0
+        self.diagnostics_enabled = False
+        self.failure_recorded = False
 
     def __enter__(self):
         require(os.geteuid() == 0, "ROOT_IDENTITY_REQUIRED")
@@ -282,9 +428,11 @@ class Backend:
             os.close(self.lock)
             self.lock = None
             raise
+        self.diagnostics_enabled = True
         return self
 
     def __exit__(self,*_):
+        self.diagnostics_enabled = False
         signal.setitimer(signal.ITIMER_REAL,0)
         if self.signal_before is not None:
             signal.signal(signal.SIGALRM,self.signal_before)
@@ -303,6 +451,39 @@ class Backend:
     @staticmethod
     def timeout(*_):
         raise Refused("CUTOVER_TIME_BUDGET_EXHAUSTED")
+
+    @contextmanager
+    def failure_step(self, step, component="none"):
+        try:
+            yield
+        except Exception as error:
+            self.record_failure(step, component, error)
+            raise
+
+    def record_failure(self, step, component, error):
+        # No preflight-only attempt creates transaction evidence. Once freeze
+        # starts, retain the first fault before return/containment can hide it.
+        if not getattr(self,"diagnostics_enabled",False) or self.started is None or self.failure_recorded:
+            return
+        self.failure_recorded = True
+        try:
+            digest=self.release.digest
+            if type(digest) is not str or not HEX.fullmatch(digest):
+                return
+            code="UNKNOWN_FAILURE"
+            if type(error) in (Refused,CutoverRefused,GenerationRefused,SnapshotRefused,SystemRefused,
+                               stage_adoption.Refused,stage_credentials.Refused) \
+                    and len(error.args)==1 and type(error.args[0]) is str and error.args[0] in FAILURE_CODES:
+                code=error.args[0]
+            value={"schema_version":1,"release_sha256":digest,
+                "step":step if type(step) is str and step in FAILURE_STEPS else "backend",
+                "component":component if type(component) is str and component in FAILURE_COMPONENTS else "none",
+                "code":code}
+            publish_private(STATE/"failure.json",value)
+        except Exception:
+            # An observation failure must not replace the original fault or
+            # prevent its existing return/containment sequence. No fallback log.
+            pass
 
     @staticmethod
     def lease():
@@ -355,14 +536,38 @@ class Backend:
         remaining=self.remaining()
         if remaining is not None:
             kwargs["timeout"]=min(kwargs.get("timeout",30),remaining)
-        return self.run(args,**kwargs)
+        unit=None
+        if type(args) in (tuple,list) and len(args)==3 and args[0]==self.release.tools["systemctl"] \
+                and args[1]=="start" and type(args[2]) is str and args[2] in ALLOWED:
+            unit=args[2]
+        try:
+            result=self.run(args,**kwargs)
+        except Exception as error:
+            if unit is not None:
+                observed=SystemRefused("SYSTEM_OPERATION_REFUSED") if isinstance(error,(OSError,subprocess.TimeoutExpired)) else error
+                self.record_failure("systemd-start",unit,observed)
+            raise
+        if unit is not None and result.returncode!=0:
+            self.record_failure("systemd-start",unit,SystemRefused("SYSTEM_OPERATION_REFUSED"))
+        return result
 
-    def command(self,args,timeout=30,capture=False,maximum=65536):
+    def command(self,args,timeout=30,capture=False,maximum=65536,failure_helper=None):
         try:
             process=self.timed_run(args,stdin=subprocess.DEVNULL,stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
                                    stderr=subprocess.DEVNULL,env={"LANG":"C","LC_ALL":"C"},timeout=timeout,check=False)
         except (OSError,subprocess.TimeoutExpired):
             raise Refused("SEALED_OPERATION_REFUSED") from None
+        if process.returncode!=0 and failure_helper is not None:
+            code="UNKNOWN_FAILURE"
+            try:
+                value=strict_json(process.stdout,maximum)
+                if type(value) is dict and set(value)=={"schema_version","code"} \
+                        and type(value["schema_version"]) is int and value["schema_version"]==1 \
+                        and type(value["code"]) is str and value["code"] in HELPER_FAILURE_CODES.get(failure_helper,()):
+                    code=value["code"]
+            except Exception:
+                pass
+            raise Refused(code)
         require(process.returncode==0,"SEALED_OPERATION_REFUSED")
         if capture:
             require(len(process.stdout)<=maximum,"SEALED_RESULT_SIZE_REFUSED")
@@ -370,10 +575,12 @@ class Backend:
         return None
 
     def helper(self,name):
-        require(name in HELPERS,"HELPER_REFUSED")
-        path=self.release.helpers[name]
-        args=[self.release.tools["python"],"-I","-S",path] if path.endswith(".py") else [path]
-        return strict_json(self.command(args,timeout=1800 if name=="forgejo_governance" else 240,capture=True),65536)
+        with self.failure_step("helper",name):
+            require(name in HELPERS,"HELPER_REFUSED")
+            path=self.release.helpers[name]
+            args=[self.release.tools["python"],"-I","-S",path] if path.endswith(".py") else [path]
+            return strict_json(self.command(args,timeout=1800 if name=="forgejo_governance" else 240,
+                                           capture=True,failure_helper=name),65536)
 
     def verify_artifacts(self):
         closure=self.command([self.release.tools["nix_store"],"--query","--requisites",*sorted(self.release.roots)],
@@ -620,6 +827,7 @@ class Backend:
         publish_private(STATE/"initial.json",self.original,replace=replace_initial)
         self.claim_lease()
 
+    @observed_failure("freeze")
     def freeze(self):
         require(self.original is not None,"INITIAL_STATE_REQUIRED")
         if self.started is None:
@@ -631,6 +839,7 @@ class Backend:
             self.boot_selected=True
         self.control.freeze()
 
+    @observed_failure("verify-quiescent")
     def verify_quiescent(self):
         self.control.verify_quiescent()
 
@@ -646,14 +855,17 @@ class Backend:
             path=Path("/var/lib/mrjam-metier")/relative
             require(not path.exists() and not path.is_symlink(),"HISTORICAL_JOURNAL_REQUIRES_ADOPTION")
 
+    @observed_failure("snapshot")
     def snapshot(self):
         self.verify_quiescent()
         self.verify_obligations()
         self.saved.create()
 
+    @observed_failure("verify-snapshot")
     def verify_snapshot(self):
         self.saved.verify()
 
+    @observed_failure("install-candidate")
     def install_candidate(self):
         require(self.checkpoint.read()==Phase.SNAPSHOT,"SNAPSHOT_CHECKPOINT_REQUIRED")
         publish_private(STATE/"adoption-started.json",{"schema_version":1,"release_sha256":self.release.digest})
@@ -663,6 +875,7 @@ class Backend:
             self.control.close_ingress()
         self.verify_quiescent()
 
+    @observed_failure("adopt-private-state")
     def adopt_private_state(self):
         require(self.checkpoint.read()==Phase.CANDIDATE,"CANDIDATE_CHECKPOINT_REQUIRED")
         self.verify_quiescent()
@@ -674,6 +887,7 @@ class Backend:
         self.control.start(("postgresql.service",))
         self.control.start(SQL_ADOPTIONS)
 
+    @observed_failure("start-private-services")
     def start_private_services(self):
         require(self.checkpoint.read()==Phase.ADOPTED,"ADOPTED_CHECKPOINT_REQUIRED")
         self.control.start(PRIVATE_SERVICES)
@@ -692,20 +906,25 @@ class Backend:
         self.helper("forgejo_cleanup")
 
     def ready(self,port,host,expected):
-        require((port,host) in ((3002,"vision.mrj.am"),(38101,"vision.mrj.am")),"READINESS_TARGET_REFUSED")
-        raw=self.command([self.release.tools["curl"],"--silent","--show-error","--fail","--noproxy","*",
-                          "--max-time","10","--header","Host: "+host,"http://127.0.0.1:"+str(port)+"/readyz"],
-                         timeout=12,capture=True,maximum=8192)
-        require(strict_json(raw,8192)==expected,"PRIVATE_READINESS_REFUSED")
+        component="vision-backend" if port==3002 else "vision-frontend" if port==38101 else "none"
+        with self.failure_step("readiness",component):
+            require((port,host) in ((3002,"vision.mrj.am"),(38101,"vision.mrj.am")),"READINESS_TARGET_REFUSED")
+            raw=self.command([self.release.tools["curl"],"--silent","--show-error","--fail","--noproxy","*",
+                              "--max-time","10","--header","Host: "+host,"http://127.0.0.1:"+str(port)+"/readyz"],
+                             timeout=12,capture=True,maximum=8192)
+            require(strict_json(raw,8192)==expected,"PRIVATE_READINESS_REFUSED")
 
+    @observed_failure("verify-private-services")
     def verify_private_services(self):
         self.ready(3002,"vision.mrj.am",{"status":"ready"})
         self.ready(38101,"vision.mrj.am",{"status":"ready","scope":"configured-capabilities-only","capabilities":list(READY_CAPABILITIES)})
         sso=self.helper("forgejo_sso")
         require(type(sso) is dict and sso.get("passed") is True and sso.get("mutation_performed") is False
                 and sso.get("private_values_exported") is False,"FORGEJO_SSO_CONTINUITY_REFUSED")
-        require(self.closed_status("forge.mrj.am","/api/healthz")==200,"FORGEJO_PRIVATE_HEALTH_REFUSED")
-        require(self.closed_status("cloud.mrj.am","/status.php")==200,"NEXTCLOUD_PRIVATE_HEALTH_REFUSED")
+        with self.failure_step("http-health","forgejo"):
+            require(self.closed_status("forge.mrj.am","/api/healthz")==200,"FORGEJO_PRIVATE_HEALTH_REFUSED")
+        with self.failure_step("http-health","nextcloud"):
+            require(self.closed_status("cloud.mrj.am","/status.php")==200,"NEXTCLOUD_PRIVATE_HEALTH_REFUSED")
         for unit in PRIVATE_SERVICES:
             # Projection/setup units may be successful inactive oneshots.
             values=self.control.properties(unit)
@@ -715,6 +934,7 @@ class Backend:
         for unit in PUBLIC_TIMERS:
             require(self.control.properties(unit)["ActiveState"] in ("inactive","failed"),"PUBLIC_TIMER_STARTED_EARLY")
 
+    @observed_failure("open-public-writes")
     def open_public_writes(self):
         require(self.checkpoint.read()==Phase.OPENING,"DURABLE_OPENING_REQUIRED")
         self.generations.select_boot(self.generations.promoted)
@@ -731,6 +951,7 @@ class Backend:
         self.control.start(PUBLIC_TIMERS)
         self.control.open_ingress()
 
+    @observed_failure("verify-public-services")
     def verify_public_services(self):
         require(self.checkpoint.read()==Phase.OPEN,"PUBLIC_OPEN_CHECKPOINT_REQUIRED")
         require(all(status in (200,301,302,303,307,308) for status in self.previous_http().values()),
@@ -741,11 +962,13 @@ class Backend:
         for unit in PUBLIC_TIMERS:
             require(self.control.properties(unit)["ActiveState"]=="active","PROMOTED_TIMER_NOT_RUNNING")
 
+    @observed_failure("restore-snapshot")
     def restore_snapshot(self):
         require(self.checkpoint.read()==Phase.RETURNING,"RETURN_CHECKPOINT_REQUIRED")
         self.verify_quiescent()
         self.saved.restore()
 
+    @observed_failure("restore-previous-generation")
     def restore_previous_generation(self):
         require(self.checkpoint.read()==Phase.RETURNING,"RETURN_CHECKPOINT_REQUIRED")
         # Keep the guarded staged boot until the old state is verified and
@@ -756,6 +979,7 @@ class Backend:
         finally:
             self.control.close_ingress()
 
+    @observed_failure("verify-previous-private-services")
     def verify_previous_private_services(self):
         require(self.checkpoint.read()==Phase.RETURNING,"RETURN_CHECKPOINT_REQUIRED")
         active=self.control.active_before
@@ -768,6 +992,7 @@ class Backend:
         self.control.start(tuple(unit for unit in safe if unit not in DATABASE))
         self.wait_previous_http()
 
+    @observed_failure("reopen-previous-services")
     def reopen_previous_services(self):
         require(self.checkpoint.read()==Phase.RETURNED,"DURABLE_RETURNED_REQUIRED")
         self.generations.select_boot(self.generations.previous)
@@ -788,6 +1013,7 @@ class Backend:
         self.control.start(tuple(sorted(workers)))
         self.control.start(timers)
 
+    @observed_failure("hold-current-state")
     def hold_current_state(self):
         self.holding=True
         signal.setitimer(signal.ITIMER_REAL,0)

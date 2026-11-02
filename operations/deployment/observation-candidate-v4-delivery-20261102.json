@@ -1,0 +1,20 @@
+{
+  "application_activation": false,
+  "code": "CANDIDATE_V4_RECEIVED_WITHOUT_ACTIVATION",
+  "credential_creation": false,
+  "export_bytes": 864408,
+  "export_sha256": "287176fc0d146cd3b9b280e37658a00eb2f8e607491add4bd206cf43fc0929cc",
+  "manifest_sha256": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005",
+  "note": "The receiver name is historical. This invocation imports the two inactive generations and retains the existing inactive provisioner V3 unit; it does not run SQL or change generation.",
+  "receiver_sha256": "738219097a4824dfc5e60582730701e6dff695fa86c988f8981d6fadf4b2afc7",
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "review_sha256": "8b4c2c2a97babc310997aced817ec200e0f0bded4b67d589ec6c1d4f6f6dc529",
+  "schema_version": 1,
+  "source_revision_binding_pending": true,
+  "store_paths": 12
+}

@@ -1,0 +1,16 @@
+{
+  "author_qualification_sha256": "8d496748408eea098d945cd827ff2b8516b4513a4c5ef19d24e46836c9f16b29",
+  "document_points_to_correct_generation": true,
+  "limits": [
+    "Same closed metadata observations and exclusions as v2; no secret/application contents, network request or service action.",
+    "No future CI, authenticated application authorization, external reachability or backup restoration claimed."
+  ],
+  "only_promoted_binding_changed_byte_for_byte": true,
+  "passed": true,
+  "prior_probe_sha256": "d22b8861cd627a412946b0bee89ca8302f25fec90182bb8db1f451e0ec4a51c7",
+  "probe_sha256": "4bce908edb495ae4144769b9d5906d5bff0d4127dbe442b966104369eb7de2c0",
+  "production_access": false,
+  "promoted": "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+  "public_units_compared_equal": 12,
+  "schema_version": 1
+}

@@ -1,0 +1,41 @@
+{
+  "author_tests": {
+    "closure_catalog_probe": 3,
+    "journal_namespace": 3,
+    "remaining_lifecycle_catalog_probe": 3,
+    "vision_administration_namespace": 3
+  },
+  "date": "2026-11-02",
+  "files": {
+    "operations/deployment/database-adoption.nix": "3150ea7b0cd490c3c4cdc391635be7c177d0437797798b703f12274f45fe7880",
+    "operations/deployment/journal-public-schema-usage.sql": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "operations/deployment/preflight_closure_catalog.py": "de08ebc3ae085c84598a91a289fe365f42be8da74d4567e0075099f145132dda",
+    "operations/deployment/preflight_lifecycle_catalog.py": "4296fb6ae0274e61fce6eb2df55681c214f6f6d444d886b8fac82eb95e40e492",
+    "operations/deployment/test_journal_public_schema_usage.py": "f326818cb18e8796299255fb9c054043cd1ef7a98c68070fe7ff329bee4884f0",
+    "operations/deployment/test_preflight_closure_catalog.py": "1178e937d77958fb3b6257bcd173256995b48575288ab9c167699055a3365c36",
+    "operations/deployment/test_preflight_lifecycle_catalog.py": "ab1afaeadeaee5aef63aea217a6590737ea788e30a5a409f6dc1175c539f5abb",
+    "operations/deployment/test_vision_admin_public_schema_usage.py": "f50b111f807355e68f92ca0e86b2941271301d356468040a7bb9aa5947ab7ff4",
+    "operations/deployment/vision-admin-public-schema-usage.sql": "c355bf1d930042cc99e59ee4235597298fa51ff7426625f5ed6da68d94cdbf9e"
+  },
+  "historical_journal_source_manifest_sha256": "1777b5ab2f79751f5ddc9564c09bbd7372b0719fd8df2620433c76267ab0b597",
+  "historical_journal_sources_unchanged": true,
+  "independent_evidence": {
+    "operations/deployment/qualification-journal-closure-systemd-20261102-003.json": "a10962d0d193f4d1fad818dcd0664d3b91c447d1686ef45fef3e9c49c0513c29",
+    "operations/deployment/review-vision-admin-public-schema-usage-20261102.json": "824c184f2183314eabdfb8aaf131ee40f1270d069c1073379a411cd67d440d51"
+  },
+  "limits": [
+    "Read-only production observations were performed by root separately; no production query or mutation by this task.",
+    "The corrections grant schema USAGE only to fixed roles, never CREATE, object privileges, ownership, memberships or grant option.",
+    "Catalogue probes do not execute application functions, read application rows or prove full application readiness. Migration marker contents are deliberately unobserved.",
+    "Native author database fixtures contain invented objects; real closure ELF/unit/config/credential handling is covered by the separately linked independent NixOS VM."
+  ],
+  "native_predicates": {
+    "catalog_probes": "Native clean cases and separate negative privilege/ownership/missing-function/RLS cases; arbitrary output values rejected.",
+    "journal_roles": "Exact frozen Rust verifier queries for closure/archive/replay/writer, plus locked Rust runtime verify_role writer predicate. Historical bootstrap refuses all five; correction accepts all five.",
+    "vision_administration": "Locked runtime verify_role is false before and true after only USAGE public; catalog state for roles, memberships, object privileges/owners and RLS policies remains unchanged."
+  },
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "Minimal namespace USAGE corrections and fixed read-only catalogue diagnosis; native PostgreSQL17 author tests"
+}

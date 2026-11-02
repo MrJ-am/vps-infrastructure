@@ -1,0 +1,42 @@
+{
+  "checks_passed": 6,
+  "earlier_fixture_failures": [
+    "001: systemd /etc entry collision; fixture changed to systemd.units.text",
+    "002: original worker/config paths absent because Nix path literals copied them; fixture changed to builtins.storePath"
+  ],
+  "limits": [
+    "Invented data and credential. Exact unchanged production closure unit/ELF/config, peer auth and systemd sandbox.",
+    "Full Rust readiness, production activation and pending vision_administration public USAGE correction are not proved."
+  ],
+  "output_path": "/nix/store/9qj34p6wpcf0bs9w7ka3gbqk0rmi74r9-vm-test-run-mrjam-journal-namespace-closure-regression",
+  "passed": true,
+  "production_access": false,
+  "result": {
+    "checks": [
+      "exact-production-unit-config-credential-path",
+      "historical-bootstrap-execstartpre-exit1-no-server",
+      "corrected-bootstrap-check-local-serve-loopback",
+      "no-create-no-direct-tables-no-importer-or-public-expansion",
+      "idempotent-correction-wrong-database-refused",
+      "actual-writer-predicate-peer-no-broad-table-rights"
+    ],
+    "closure_config_sha256": "a6694f245df033100bf9b3eef3a12ea3b3f11e4e4a2708967b637846e4fba8a1",
+    "closure_unit_sha256": "0caa29228a2a2fccfb05a4830b5be8c8c0b5ef4d5c164471822bd1caf4cac390",
+    "correction_sha256": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "fixture_sha256": "3bbf8dec243faeb1fdeb49ec8041b7ac549d1ff55e033270bc9224eb8f4900d3",
+    "limits": [
+      "Invented database and credential only",
+      "Exact writer SQL predicate, not full Rust readiness or SSO",
+      "No external SMTP or generation switch"
+    ],
+    "production_access": false,
+    "schema_version": 1,
+    "test_sha256": "8a7400ccd09177ac61b935c3842434fa7211650db9065b5dd0b2d573c1dd8072"
+  },
+  "schema_version": 1,
+  "source_hashes": {
+    "operations/deployment/journal-closure-systemd.nix": "8a7400ccd09177ac61b935c3842434fa7211650db9065b5dd0b2d573c1dd8072",
+    "operations/deployment/journal-public-schema-usage.sql": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "operations/deployment/journal_closure_fixture.py": "3bbf8dec243faeb1fdeb49ec8041b7ac549d1ff55e033270bc9224eb8f4900d3"
+  }
+}

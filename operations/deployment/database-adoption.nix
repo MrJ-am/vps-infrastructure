@@ -71,6 +71,8 @@ in {
     ${psql} --dbname=postgres --file=${journal}/bootstrap-journal/01-roles.sql
     ${psql} --dbname=postgres --file=${journal}/bootstrap-journal/02-database.sql
     ${psql} --dbname=vision_journal --file=${journal}/bootstrap-journal/03-schema.psql
+    ${psql} --dbname=vision_journal --file=${./journal-public-schema-usage.sql}
+    ${psql} --dbname=vision --file=${./vision-admin-public-schema-usage.sql}
   '') // { conflicts = [ "mrjam-rust-blue.service" "mrjam-rust-green.service"
     "mrjam-vision-admission.service" "mrjam-vision-cycle.service" "mrjam-vision-closure.service"
     "mrjam-vision-archive.service" "mrjam-vision-replay.service" ]; };

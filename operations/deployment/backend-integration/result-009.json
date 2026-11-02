@@ -1,0 +1,31 @@
+{
+  "backend_sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+  "checks": [
+    "initial-before-prepared-full-preflight-retry-without-effects",
+    "private-failure-real-paired-return-and-periodic-writer-after-returned",
+    "interrupt-return-before-snapshot-real-recovery",
+    "interrupt-after-adoption-real-recovery",
+    "real-public-write-then-held-without-snapshot-or-generation-restore",
+    "real-promoted-live-boot-timers-and-ingress-after-opening"
+  ],
+  "cutover_sha256": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+  "fixture_sha256": "8d9ac86f02868261bf932f83a52dfd7587361a1e8aa743bca20cbf262010072d",
+  "generation_sha256": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+  "limits": [
+    "Invented application services and helper contracts; not full application qualification",
+    "HOST and PREVIOUS constants bound to this invented VM; backend functions unchanged",
+    "Interruptions injected only at exact durable boundaries; no production entrypoint used in this first fixture",
+    "Offline single-user PostgreSQL observation after HELD reads the retained invented logical row"
+  ],
+  "passed": true,
+  "production_access": false,
+  "real_nft_namespace_ingress": true,
+  "real_nixos_generations": true,
+  "real_postgresql": true,
+  "real_systemd_and_generator": true,
+  "recovery_sha256": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+  "schema_version": 1,
+  "snapshot_sha256": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+  "system_control_sha256": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+  "test_sha256": "08912c7554f85ca63665419da2bf0abdc6d38f7048e94328cc55815c1d139802"
+}

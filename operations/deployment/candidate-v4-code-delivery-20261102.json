@@ -1,0 +1,23 @@
+{
+  "export_bytes": 864408,
+  "export_sha256": "287176fc0d146cd3b9b280e37658a00eb2f8e607491add4bd206cf43fc0929cc",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1079890072,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/0l1mh3n7xa0a4xv7wzzbgm794xcg49y7-vision-admin-public-schema-usage.sql",
+    "/nix/store/24k71d2q69v5lcnyjww3r6pxqcb6f85i-journal-public-schema-usage.sql",
+    "/nix/store/3ygj2w5qqbzn5mj9f6b96k7a9rczk1k5-unit-mrjam-bootstrap-journal.service",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/678k8rj14zijh8g4ipdxq23651cfl64a-etc",
+    "/nix/store/6jmag1wwiam0lj0gnfcq3r3y3w2kjysw-etc",
+    "/nix/store/8mllic0z8iwrhnv0khqbja7kwwmbbl1d-unit-script-mrjam-bootstrap-journal-start",
+    "/nix/store/a6piibaxg2f145yc08rn6m8jf2ag90cl-system-units",
+    "/nix/store/cxqicl1y5i8fcbclbvyrx0mdhkf2z215-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/nwyfhqa42f1c4igk6cv3pfxzkpixqsbn-system-units",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

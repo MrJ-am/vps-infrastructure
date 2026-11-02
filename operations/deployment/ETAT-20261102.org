@@ -2,7 +2,49 @@
 #+date: 2026-11-02
 #+language: fr
 
-* Production
+* État courant — corrections avant la troisième tentative
+
+L'ancienne génération assure les services. La tentative 002 s'est arrêtée au
+contrôle de démarrage du service de fermeture, puis le retour automatique a
+réussi avant toute ouverture publique du candidat. La génération active et
+celle du prochain démarrage sont =jn9rf2fg...=. Les huit domaines HTTPS et les
+huit contrôles de continuité SSO ont été vérifiés après le retour.
+
+L'incident est reproduit avec PostgreSQL 17 et les sources exactes : le bootstrap
+du journal n'accordait pas USAGE sur le schéma public aux quatre rôles dont les
+contrôles de catalogue en ont besoin. La correction séparée passe les six
+contrôles de la VM avec l'unité, le binaire et les credentials synthétiques.
+Une observation supplémentaire a constaté le même droit manquant au rôle
+=vision_administration= dans la base =vision=. Sa correction distincte a passé
+la revue indépendante avec connexion réelle du rôle, sans élargir ses droits
+sur les objets, les tables ou les données. Ces corrections seront appliquées
+par l'adoption explicite après la prochaine sauvegarde appariée.
+
+Les générations corrigées sont construites et leurs 61 contrôles déclaratifs
+passent. La répétition intégrée de la bascule et du retour avec diagnostic
+fermé a réussi ses six scénarios (qualification 009). Aucun troisième déploiement n'est encore lancé.
+Les deux tentatives et leurs captures complètes restent archivées séparément ;
+le verrou de transaction a conservé son inode. Aucun nouvel état de données
+n'a été restauré pendant leur archivage.
+
+Les neuf bundles Git sont vérifiés et livrés ; ils ne sont pas encore adoptés
+dans Forgejo. La dernière livraison documentaire publiée est
+=756ffdf19dc207a0b749ee9f1048fc48315c095c=, liée à la source C
+=e65a42e303f75467adeb86adca7e2382983d51bd=. La prochaine livraison doit lier
+explicitement les sources finales et conserver les bundles précédents.
+
+Kanidm et les trois accès techniques sont réparés et vérifiés. Le portail
+administratif temporaire est fermé. ViSe reste exclu avec ses données conservées.
+Le déploiement Rust, le contrôle final des barrières et la chaîne de travail
+protégée restent à terminer ; voir [[file:OBLIGATIONS-APRES-BASCULE-20261102.org][les obligations après la bascule]].
+
+* Historique de préparation
+
+Les sections ci-dessous conservent les constats effectués avant les tentatives
+de production. Le paragraphe courant ci-dessus prévaut sur leurs prérequis
+désormais résolus et sur leurs mentions de génération jamais activée.
+
+** Production avant la première tentative
 
 Spectre porte l'assemblage et le déploiement, conformément au mandat utilisateur
 « Va jusqu'au bout ». La nouvelle génération applicative n'est pas activée et

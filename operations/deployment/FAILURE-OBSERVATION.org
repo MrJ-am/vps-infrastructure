@@ -1,0 +1,40 @@
+#+title: Diagnostic fermé du premier échec de bascule
+#+date: 2026-11-02
+#+language: fr
+
+Le backend écrit au plus une fois
+=/var/lib/mrjam-cutover/first-deployment/failure.json= après le début du gel.
+Le fichier est privé, mode 0600, publié sans remplacement avec fsync. Il lie
+l'empreinte du manifeste à une étape, un composant et un code issus de listes
+statiques. Il ne contient ni arguments de commande, ni stdout/stderr, ni texte
+d'exception, ni réponse HTTP, ni donnée applicative.
+
+Le diagnostic précède la propagation de l'échec au moteur de retour. Le premier
+service =systemctl start= en échec est identifié sans modifier l'ordre ou le
+regroupement des démarrages. Les contrôles readiness et HTTP, ainsi que les
+helpers, utilisent des identifiants fermés. Un échec JSON de gouvernance ne
+conserve son code que si le document contient exactement schema_version=1 et
+un code présent dans la liste littérale des sources qualifiées. Les sorties
+malformées, champs supplémentaires et codes inconnus deviennent UNKNOWN_FAILURE.
+La reconnaissance d'un texte par une expression régulière ne suffit jamais.
+
+Une erreur d'écriture du diagnostic laisse l'exception d'origine poursuivre
+le retour ou le maintien en arrêt. Aucun journal de secours n'est émis.
+Une tentative arrêtée au seul préflight n'ajoute pas ce fichier. Les erreurs
+du moteur hors des appels backend, notamment une écriture de checkpoint, ne
+font pas l'objet d'une instrumentation supplémentaire. La sortie publique de
+l'entrée, les moteurs cutover/recovery et le garde restent inchangés.
+
+Après une tentative instrumentée, l'archivage doit retenir intact =failure.json=
+et, s'il existe après interruption de publication, =failure.json.next=.
+L'archivage fermé de la tentative 002 ne doit pas être réutilisé : son inventaire
+exact ne contient pas ces fichiers. Aucun nettoyage ni nouvelle restauration
+des données n'est autorisé par la présence d'un diagnostic.
+
+Les 13 tests dédiés exercent des fichiers privés réels et des commandes simulées :
+premier échec conservé, absence de fuite de texte ou valeurs, fichiers existants
+et liens non remplacés, codes JSON fermés, et séquences de retour/maintien
+identiques avec ou sans diagnostic. Ils s'ajoutent aux 96 tests existants.
+La VM intégrée finale vérifie séparément le fichier exact avant RETURNING/HELD
+et son absence sur succès, avec les vrais services de contrôle, générations,
+snapshot PostgreSQL/fichiers et frontière réseau du banc.

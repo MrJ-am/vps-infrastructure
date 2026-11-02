@@ -1,0 +1,21 @@
+#+TITLE: Barrières après la promotion corrigée
+
+Utiliser =postflight_barriers_v3.py= pour la génération promue
+=fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git=.
+La grille et les limites de =POST-BARRIERES-20261102.org= restent applicables ;
+son premier programme lié à =8b1d53= est historique.
+
+Les douze unités publiques examinées, dont les neuf identités applicatives,
+Nginx, SSH et le pare-feu, ont les mêmes octets dans les deux générations.
+La configuration SSH est également identique. Aucun nouveau chemin de secret,
+commande, requête réseau ou contrôle applicatif n'est ajouté.
+
+Le diagnostic SSH conservé de la version 2 reconnaît =-o=
+uniquement au début d'un argument. Le suffixe =-openssh= du binaire ne crée plus
+de faux négatif ; les formes =-oOption= et =-o Option= restent détectées.
+Neuf tests passent, dont le calcul réel de configuration par le binaire OpenSSH
+épinglé et cette distinction de ligne de commande. Aucun service n'est démarré
+et aucun accès production n'a été effectué par cet agent.
+
+Cette troisième version change seulement le chemin de la génération promue.
+Les observations et toutes leurs limites restent identiques à la version 2.

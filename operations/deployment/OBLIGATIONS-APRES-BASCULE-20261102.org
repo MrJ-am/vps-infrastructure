@@ -1,0 +1,82 @@
+#+title: Obligations après la première bascule MRJ.am
+#+date: 2026-11-02
+#+language: fr
+
+Ce registre conserve le travail restant du [[file:../mise-en-service/mandat.org][mandat]] et de
+l'[[file:AUTORISATION-ADMIN-20261102.org][autorisation d'achever le déploiement puis de vérifier les barrières]].
+Il complète [[file:ETAT-20261102.org][l'état courant]] sans modifier les anciens reçus.
+La tentative 002 est revenue à l'ancienne génération après l'échec de
+=mrjam-vision-closure.service=. Aucun point ci-dessous ne la présente comme
+un déploiement réussi. La correction et la nouvelle bascule restent prioritaires.
+
+* 1. Constater la réussite de la prochaine bascule
+
+Exiger le résultat terminal =CUTOVER_VERIFIED=, la phase durable =OPEN=,
+le contrôleur terminé avec succès, les générations active et de démarrage
+promues et les huit domaines HTTPS accessibles depuis l'extérieur.
+L'observateur, les probes et le manifeste doivent désigner la même révision
+exacte. Une publication documentaire ultérieure ne change pas le code déployé.
+
+Le contrôleur vérifie déjà les adoptions natives, les capacités techniques
+Kanidm, les services privés, la liaison des neuf historiques Git, les protections
+Forgejo, la révocation de l'accès temporaire et les timers publics. Conserver
+ces résultats de production ; ne pas rejouer leurs mutations pour les confirmer.
+
+* 2. Vérifier les barrières effectives après promotion
+
+Utiliser le probe fermé décrit dans [[file:POST-BARRIERES-V2-20261102.org][POST-BARRIERES-V2]], en liant explicitement
+la génération et les configurations de la nouvelle livraison. Il observe les
+UID/GID, capacités et restrictions des processus présents, les unités et leurs
+surcharges, les métadonnées des secrets, les ports, les règles IPv4/IPv6,
+SSH/Nginx et l'arrêt des anciens services et de l'administration temporaire.
+
+Un travailleur au repos permet de vérifier sa déclaration, pas un processus
+absent. =observed:false= est une preuve indisponible. Le compte root SSH reste
+une administration complète autorisée par l'utilisateur ; il ne faut pas le
+présenter comme une commande restreinte. Ces observations ne prouvent pas
+toutes les autorisations applicatives ou un futur accès de validation.
+
+* 3. Achever la chaîne de travail sur la forge
+
+Le candidat de la tentative 002 conserve =actions.ENABLED=false=. L'import des
+historiques et la protection de =main= ne constituent pas un exécuteur de CI,
+une revue humaine ni une livraison future protégée.
+
+Le [[file:forgejo-governance/README.org][helper de gouvernance]] vérifie la convergence des dépôts, des références,
+des politiques et la révocation de son jeton. Le refus effectif d'un push du
+compte administrateur a été qualifié en VM ; ce n'est pas un essai de production.
+La suite du mandat doit raccorder puis démontrer l'exécution isolée, la validation
+indépendante, l'identité de revue et l'autorité de livraison. Les preuves locales
+déjà valides restent réutilisables pour leurs octets ; aucune répétition générale
+des suites n'est nécessaire sans changement ou défaut identifié.
+
+* 4. Établir les preuves opérationnelles encore absentes
+
+La configuration SSO et les comptes techniques sont contrôlés, mais un HTTP 200
+ou le probe Forgejo ne prouve pas une authentification humaine complète.
+Les preuves locales ne démontrent pas un envoi SMTP positif, la possession de
+la clé privée de déchiffrement ou une sauvegarde hors site.
+
+Les timers de [[file:../backups/README.org][sauvegarde]] actifs ne prouvent pas une exécution réussie ni une restauration
+complète. Le nouveau format est local au VPS et =cross_component_atomic=false= ;
+le copieur mensuel historique ne le reconnaît pas. Une future restauration doit
+respecter le registre d'effacement courant. Elle ne doit pas être improvisée sur
+les données de production pour lever cette limite de preuve.
+
+* 5. Conserver un périmètre exact dans l'annonce finale
+
+ViSe est temporairement exclu par instruction explicite, avec conservation de
+ses données ; il ne bloque aucun des points précédents. Les bundles couvrent
+l'historique Git. LFS, tickets, PR, pièces jointes, releases, wikis, packages et
+webhooks restent sur leurs hébergements actuels ; leur inventaire/migration
+est distinct de l'import Git.
+
+La readiness Rust porte sur les seules capacités configurées. Le flag
+=vision-account-deletion= reste refusé dans =required_capabilities= malgré les
+preuves distinctes du parcours de suppression ; ne pas annoncer une couverture
+plus large que le contrat observé.
+
+Une bascule et un postflight réussis permettent d'annoncer le socle déployé sans
+ViSe. Pour déclarer toute la chaîne opérationnelle conformément au mandat, il
+faut également achever le point 3 et distinguer les constats du point 4 de leurs
+limites encore non démontrées.
