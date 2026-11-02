@@ -1,0 +1,1 @@
+let pkgs = import /nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source { system = "x86_64-linux"; }; in import ./release-package.nix { inherit pkgs; releaseFile = ./final-release-004-20261102.json; releaseSha256 = "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2"; }

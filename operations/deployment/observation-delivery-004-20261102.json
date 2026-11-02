@@ -1,0 +1,21 @@
+{
+  "accepted_source_revision": "1c7b4eedf05396900ab05953b09bb98c0dfe522a",
+  "application_activation": false,
+  "code": "CONTROLLER_004_RECEIVED_WITHOUT_ACTIVATION",
+  "controller": "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+  "credential_creation": false,
+  "export_bytes": 454968,
+  "export_sha256": "d1198f804d48c8894ae0ccccc5d0b99568064dd7e2d98e88299710eabadcff87",
+  "manifest_sha256": "39a038ccc1520cb98e8af5d828608789c5c1392d8e159906ed43c5bbb08ddb75",
+  "receiver_sha256": "4f3637b24a377b16818001b2fe65536fd4e6834e94dd189d6d28c84465e79396",
+  "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "review_sha256": "2e427209b4d7be87a5a65b850a1dc2410fc9502fb05548986c6a0f98756df552",
+  "schema_version": 1,
+  "store_paths": 6
+}

@@ -1,0 +1,43 @@
+{
+  "all_function_bodies_exactly_unchanged": true,
+  "controller": "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+  "exclusive_private_status_creation_and_detached_execution_preserved": true,
+  "failure_backend_hash_and_exact_allowlists_unchanged": true,
+  "failure_probe_eleven_tests_reused_by_exact_function_identity": {
+    "path": "operations/deployment/qualification-observe-first-release-failure-003-20261102.json",
+    "sha256": "cf1e78cca7a13f880eae3a90577078dd2cf23da29b575f84ba1091f95ecaa6d3"
+  },
+  "lifecycle_and_failure_outputs_remain_closed": true,
+  "limits": [
+    "This review validates fixed bindings and byte identity only; no launcher, observer or VPS command was executed.",
+    "A successful launch remains distinct from terminal CUTOVER_VERIFIED and postflight.",
+    "Failure absence is not a success claim; failure and checkpoint are separate observations."
+  ],
+  "new_private_status_directory": "/run/mrjam-first-release-status-04",
+  "new_unit": "mrjam-first-release-20261102-04.service",
+  "old_units_and_status_directories_untouched": true,
+  "passed": true,
+  "production_access": false,
+  "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "schema_version": 1,
+  "sources": {
+    "failure": {
+      "only_fixed_constants_changed_byte_for_byte": true,
+      "previous_sha256": "40c010a2b053376124bd5faad863a8da685e377a0c0b9b1c3f2947fdd38ff3d5",
+      "sha256": "f9b08d72c42273a0fdc1ea57fdfe41ccbbd98ae4f4448332210214e99d5791cb",
+      "source": "operations/deployment/observe-first-release-failure-004-20261102.py"
+    },
+    "launch": {
+      "only_fixed_constants_changed_byte_for_byte": true,
+      "previous_sha256": "9bdbb562d1c8b8439876160a074f26851c3808ebd829a5a210f9e054c6bbc79f",
+      "sha256": "569b5b0b311f8eceb2626adfa0e9f795387b9e5408c362c91079cfd9245b9c21",
+      "source": "operations/deployment/launch-first-release-attempt-004-20261102.py"
+    },
+    "observe": {
+      "only_fixed_constants_changed_byte_for_byte": true,
+      "previous_sha256": "4ba5ea91ef093457d2c33ba40eea474cefc9270051659d45ed3146ff35b03fbd",
+      "sha256": "ac3cabede8a8fe086d451cd7817d52801df77d6698a9257fc07265ee062cd5d0",
+      "source": "operations/deployment/observe-first-release-attempt-004-20261102.py"
+    }
+  }
+}

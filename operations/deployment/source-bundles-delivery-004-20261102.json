@@ -1,0 +1,53 @@
+{
+  "bundles": [
+    {
+      "bytes": 417325,
+      "name": "Signature",
+      "sha256": "241b188f6f7c8ec73fae1b21ed77ed0cd795129a7d29d4d06bb20334171adfa6"
+    },
+    {
+      "bytes": 313556,
+      "name": "apprendre-a-demontrer",
+      "sha256": "a173ffcb239eecff6c1dbb576aecc4839520468f499d88f49077a875f505c3a5"
+    },
+    {
+      "bytes": 77190157,
+      "name": "etp-vie-affective",
+      "sha256": "fbc31c486d65dfe7e65144a6a0eec3453cc21c2e84454dc2111a1559e5a6c127"
+    },
+    {
+      "bytes": 1154607,
+      "name": "matheval",
+      "sha256": "7107a68476e0b01ac640c938fecf4a5c0574598cfc593c218ebb41a4d52d7a76"
+    },
+    {
+      "bytes": 412039,
+      "name": "mrjam-plateforme",
+      "sha256": "33669679f76ef1131cc3597996ef339eae9bf4f34e17939d99be5c994c13b15a"
+    },
+    {
+      "bytes": 2716212,
+      "name": "mrjam-validation",
+      "sha256": "9713e3481bfc2a44b9f4abf86e0a54214b0bccb7ea0be409c99c64517471953b"
+    },
+    {
+      "bytes": 4449846,
+      "name": "style-mrjam",
+      "sha256": "1ddb5054c7bf5d43c27ddf276304b8c52d6dbe5860d3eb159ba98c59e9880b84"
+    },
+    {
+      "bytes": 9577065,
+      "name": "vision",
+      "sha256": "25da54614a63892ff737f8c8f928d707ffdeb9ba88aab8dc8223c3a9ea7da47d"
+    },
+    {
+      "bytes": 3954678447,
+      "name": "vps-infrastructure",
+      "sha256": "f4dfc2589083a8a60516fe03b81d2ef619066e983cf9a3e338af26e295c19c87"
+    }
+  ],
+  "required_free_bytes": 5124651078,
+  "schema_version": 1,
+  "stream_bytes": 4050909254,
+  "stream_sha256": "fc1880b91de8d5a2fa63b96b4909ac9251cd71681d1de09a5bdc6dc884721621"
+}
