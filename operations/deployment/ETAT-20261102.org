@@ -75,6 +75,24 @@ adresse, date ni contenu privé. Ce contrôle doit être répété après gel de
 
 * Travail restant
 
+** Dernière observation : Kanidm réparé
+
+Le helper local publié au commit =97c75c76ea10ae6bad0fbef9ccf6f086027ed2f4=
+a été exécuté sur le VPS après l'autorisation administrative élargie
+[[file:AUTORISATION-ADMIN-20261102.org][du 2 novembre]]. Les deux comptes de secours étaient désactivés, sans passkey
+et de classe service_account, constaté par projection ciblée avant récupération.
+Le propriétaire unique du groupe de politique a reçu =idm_admins= ; son état de
+credentials est inchangé. Les accès cycle et rejeu sont créés, admission conservé.
+Le probe séparé confirme les trois jetons distincts, authentifiés et munis des
+appartenances attendues. Les deux comptes de secours sont de nouveau désactivés.
+Le reçu courant est [[file:observation-kanidm-local-bootstrap-20261102.json][l'observation de réparation locale]].
+
+Le portail corrigé avait effectivement refusé les deux droits d'identité du
+compte humain. Il est désormais fermé ; la configuration Nginx originale est
+rétablie. Aucune nouvelle connexion Proton Pass n'est nécessaire pour ce lot.
+Les éléments ci-dessous conservent la chronologie du diagnostic ; ce paragraphe
+prévaut sur leurs mentions de droits et jetons manquants.
+
 ** État courant prioritaire : préparation des accès techniques
 
 L'authentification humaine utilise une passkey dans Proton Pass, sur le navigateur

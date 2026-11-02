@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-02",
+  "infrastructure_bundle_deferred_until_final_published_source_pin": true,
+  "private_bundles_missing": [
+    "Signature",
+    "matheval",
+    "mrjam-plateforme",
+    "mrjam-validation",
+    "vision"
+  ],
+  "production_import_performed": false,
+  "schema_version": 1,
+  "sources": [
+    {
+      "bundle": ".local/forgejo-source-history-20261102/apprendre-a-demontrer.bundle",
+      "bytes": 313556,
+      "collaboration_metadata_included": false,
+      "default_branch_observed": "refs/heads/main",
+      "lfs_objects_included": false,
+      "main_accepted": false,
+      "main_observed": "a2690c7cd6a706cada866e4aa576819c4ed20092",
+      "public_source": true,
+      "refs_count": 12,
+      "refs_sha256": "c7107096d9b7fa9c13b7fc377039d730a3582a414aadc50d38ad3589b3903706",
+      "repository": "MrJ-am/apprendre-a-demontrer",
+      "schema_version": 1,
+      "sha256": "a173ffcb239eecff6c1dbb576aecc4839520468f499d88f49077a875f505c3a5",
+      "standalone_verified": true
+    },
+    {
+      "bundle": ".local/forgejo-source-history-20261102/etp-vie-affective.bundle",
+      "bytes": 77190157,
+      "collaboration_metadata_included": false,
+      "default_branch_observed": "refs/heads/main",
+      "lfs_objects_included": false,
+      "main_accepted": false,
+      "main_observed": "65bbd8c53a1f6d2efda453a5c82d66c49df26699",
+      "public_source": true,
+      "refs_count": 3,
+      "refs_sha256": "c3ae4e718c6c67c911b4f7ed60c59c13531010889cfb88b21e953059e37ab6ec",
+      "repository": "MrJ-am/etp-vie-affective",
+      "schema_version": 1,
+      "sha256": "fbc31c486d65dfe7e65144a6a0eec3453cc21c2e84454dc2111a1559e5a6c127",
+      "standalone_verified": true
+    },
+    {
+      "bundle": ".local/forgejo-source-history-20261102/style-mrjam.bundle",
+      "bytes": 4449846,
+      "collaboration_metadata_included": false,
+      "default_branch_observed": "refs/heads/main",
+      "lfs_objects_included": false,
+      "main_accepted": false,
+      "main_observed": "2c145fb82a141d0a9a8b552577998852f574b788",
+      "public_source": true,
+      "refs_count": 21,
+      "refs_sha256": "365d6a24a2bc34e2a1304dd57646afd5df36b546937ff27d852164ab3a49a879",
+      "repository": "MrJ-am/style-mrjam",
+      "schema_version": 1,
+      "sha256": "1ddb5054c7bf5d43c27ddf276304b8c52d6dbe5860d3eb159ba98c59e9880b84",
+      "standalone_verified": true
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+#+TITLE: Qualification intégrée locale du contrôle de bascule
+
+Ce banc utilise une VM NixOS inventée. Il ne lit aucune donnée, identité,
+configuration privée ni génération du VPS et n'effectue aucun accès SSH.
+
+* Éléments réellement exécutés
+
+Les fichiers release_backend.py, cutover.py, recovery.py, generation.py,
+system_control.py, snapshot.py, stage_credentials.py, stage_adoption.py et le
+générateur sont importés sans modification de fonction. Seules les constantes
+HOST et PREVIOUS du backend prennent les valeurs exactes de cette VM.
+Les profils NixOS previous/staged/promoted et leurs activations sont réels,
+ainsi que systemd, le générateur précoce, nftables, PostgreSQL 17, les copies
+SQLite, tar avec ACL/xattrs et les captures/restaurations couplées.
+
+* Substitutions applicatives explicites
+
+Les comptes et secrets sont inventés. Les sept helpers de capacités, obligations,
+SSO, Forgejo et sources renvoient des contrats synthétiques fermés. Les unités
+applicatives sont des processus inertes, les adoptions SQL/fichiers modifient
+une ligne PostgreSQL et des marqueurs inventés. Un serveur HTTPS de fixture
+répond aux domaines et ports fixes attendus ; ce n'est ni Nextcloud, ni Kanidm,
+ni Forgejo, ni les applications Rust. Leurs preuves restent séparées.
+Le point d'entrée de production et son manifeste immuable ne sont pas qualifiés
+ici : la fixture construit un Release synthétique avec la fermeture Nix réelle.
+
+* Interruptions et assertions
+
+1. Interruption après initial.json avant PREPARED : une nouvelle préflight
+   complète reste possible sans changement de génération ni de service.
+2. Échec privé après adoption : PostgreSQL et fichiers reviennent ensemble,
+   le processus périodique ancien reste arrêté jusqu'à RETURNED durable.
+3. Interruption RETURNING avant toute capture : Recovery revient sans archive
+   et exige l'absence du marqueur d'adoption.
+4. Interruption après adoption : Recovery restaure la capture réelle puis
+   l'ancienne génération, avec la même frontière de réouverture.
+5. Écriture publique puis échec : HELD conserve les fichiers et PostgreSQL
+   récents, referme nft et les processus ; aucune restauration automatique.
+6. Succès : la génération promue est sélectionnée, les timers sont actifs et
+   l'entrée réseau est ouverte après OPENING durable.
+
+Les interruptions sont injectées dans la fixture à une frontière durable, sans
+modifier les fonctions du backend. Les tests réinitialisent uniquement leurs
+propres transactions inventées entre scénarios. Les résultats publics sont des
+codes et booléens ; aucune ligne SQL, archive, secret ou journal nominatif n'en
+sort. Ce banc ne constitue pas une qualification applicative complète.

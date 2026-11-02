@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "source": "reviewed received Nix sources; no private configuration read",
+  "declarations": {
+    "quota_enabled": true,
+    "max_repositories": -1,
+    "total_storage": "-1"
+  },
+  "received_files": {
+    "root/mrjam-corrections/forgejo/cff7b9401bb65cc93973eae68499cd0e37ad465b/payload/module.nix": "2692cbaede4873e30771f7bdf93b476840c39346cbce476e868897d5c70ca0d8",
+    "root/mrjam-corrections/forgejo/ac739eedcffc32d2fba29f4ce5b124e6c291b642/payload/module.nix": "9823f7720375ed7a30f644097d89865ceae8fa21b7790fba2ec04de4a2e5c063"
+  },
+  "overrides_in_reviewed_received_sources": false,
+  "per_account_database_quotas_modified": false,
+  "production_observation": false
+}

@@ -1,0 +1,155 @@
+#+title: Backend fermé de première bascule — préparation locale
+#+date: 2026-11-02
+#+language: fr
+
+=release_backend.py= n'a pas de CLI exécutable : son lancement direct retourne
+64. L'entrée séparée =release_entrypoint.py= et le constructeur
+=release-package.nix= lient le chemin immuable du manifeste, son SHA-256 et
+le choix fixe entre =Cutover.execute= et la récupération conservatrice.
+Aucun argument ne peut devenir une commande, une unité, un
+chemin, une génération, une URL, un SQL ou une variable d'environnement.
+
+* Contrat du manifeste
+
+JSON strict sans clé dupliquée, schéma 1, cible =srv1982677=. Champs exacts :
+=schema_version=, =target=, =generations=, =tools=, =helpers=, =ca_file=,
+=artifacts=, =generator= et =forgejo_binding_sha256=. Le fichier doit appartenir à root,
+être non modifiable et résider directement dans une sortie du store.
+
+=generations= contient exactement previous/staged/promoted. Previous reste
+lié à =jn9rf2fg…=. =tools= contient les huit exécutables déclarés dans le
+module ; =helpers= contient les sept opérations fermées. Chaque entrée est
+un chemin exact du store avec le suffixe attendu. =artifacts= associe tous
+les chemins de leur fermeture transitive commune à leur NAR SHA-256. La
+fermeture est recomputée, les hashes enregistrés comparés, puis les octets
+sont vérifiés par =nix-store --verify-path=. L'ancienne génération et ses
+dépendances font partie de ce contrôle.
+=generator= désigne exactement le wrapper =bin/mrjam-first-cutover-guard=
+du paquet lié ; il appartient lui aussi à cette fermeture.
+
+=forgejo_binding_sha256= est le digest indépendant du plan revu liant les
+sources, références et protections. Ce digest peut entrer dans la construction
+du helper sans créer une référence circulaire vers le manifeste qui contient
+son chemin. Le helper =mrjam-first-release-governance= doit réellement
+établir cette liaison et retourner uniquement :
+
+#+begin_src json
+{"schema_version":1,"binding_sha256":"<digest exact du plan>","sources_bound":true,"protected_policy_verified":true,"temporary_credentials_revoked":true}
+#+end_src
+
+Le constructeur de ce helper et du probe préalable =forgejo_sources= est
+qualifié séparément en VM réelle avec des historiques inventés ; voir
+=forgejo-governance/qualification-20261102-002.json=. Aucun binding complet
+de production n'est encore disponible. Un dépôt vide, un reçu synthétique ou
+un simple contrôle de présence des neuf noms ne satisfait pas ce contrat.
+Le bootstrap technique existant et son nettoyage ne remplacent pas la
+publication/adoption des sources et protections.
+
+* Séquence et reprise
+
+Le préflight compare la génération courante, les identités retenues et les
+UID/GID réservés ; vérifie les références privées, les trois capacités
+Kanidm et la capacité de retour ; observe les unités et les huit réponses
+HTTPS publiques. Il persiste une métadonnée root:root 0600 contenant les
+unités initialement actives, les masques étrangers, l'intention de masquage
+runtime et les seuls codes HTTP. Il refuse une unité déjà masquée et active.
+Les neuf bundles restent hors du store, dans un staging privé lié par digest.
+Leur probe est exécuté avant le gel ; leurs tailles entrent dans la réserve de
+capacité : trois fois l'état existant, deux fois les archives source et 2 GiB
+de marge. Cela couvre également les copies Git et une éventuelle recompression.
+
+Une interruption après =initial.json= mais avant PREPARED peut reprendre le
+préflight complet si l'ancien système et son profil boot sont encore actifs,
+sans phase, adoption, gate, masque, générateur portable, snapshot ni lease
+vivante. Seules les écritures de métadonnées abandonnées sont nettoyées ; le
+même manifeste est exigé et l'état courant est reobservé avant remplacement.
+
+La lease volatile associe PID et start ticks du noyau sous verrou exclusif.
+La génération staged devient le prochain boot avant le gel. Le générateur
+portable sous =/run/systemd/system-generators= produit les masques prioritaires
+=generator.early= et survit à une activation de old sans garde. Le fichier
+privé =masks.json= contient la liste fermée exacte ; sa publication atomique
+précède daemon-reload. Le contrôle exige que systemd voie réellement les unités
+comme masquées. NFT reste la frontière réseau pendant les activations privées. Les
+obligations sont relues après le gel. L'intention d'adoption est fsync avant
+le premier =test= staged ; snapshot apparié, credentials, images SQLite,
+migrations explicites et prérequis privés suivent l'ordre des unités fixé
+dans le code. Aucune minuterie métier n'est lancée avant OPENING durable.
+
+Le retour garde staged comme prochain boot pendant RETURNING. Après le
+retour des données et la vérification des anciens services, le moteur doit
+persister RETURNED avant la sélection de l'ancien boot et toute réouverture.
+Les anciens services périodiques déjà actifs avant le gel restent eux aussi
+masqués jusqu'à RETURNED, notamment cycle, courriel, cron et renouvellement.
+Après démarrage des anciens services, le contrôle HTTPS reprend uniquement
+un refus de transport pendant une fenêtre de 30 secondes, avec pauses de
+250 ms. Une observation commencée comprend au plus huit appels de huit
+secondes ; le budget global du retour reste appliqué aux appels et aux pauses.
+Tout statut HTTP reçu doit correspondre immédiatement à l'observation initiale.
+Les interruptions, épuisements de budget et refus de validation ne sont pas repris.
+Un RETURNING interrompu avant le début attesté de l'adoption peut reprendre
+sans exiger un snapshot inexistant ; un marqueur d'adoption malformé refuse.
+OPENING, OPEN, RETURNED et HELD interdisent une restauration automatique.
+
+Après interruption, la récupération exige le même manifeste et la même
+métadonnée initiale. Elle reconstruit les masques depuis son intention durable,
+conserve les masques étrangers, ferme NFT, republie la liste entière avec le
+générateur portable, reprend une lease vivante puis lance daemon-reload.
+La sortie du générateur ne sert jamais de preuve de propriété d'un masque.
+Une liste absente ou malformée ferme tout pendant une transaction ; HELD ferme
+toujours tout. OPEN et RETURNED conservent les masques restants valides même
+après la fin du contrôleur ; après reboot et disparition de /run, ces phases
+terminales n'ajoutent plus de masque.
+
+La progression dispose de 90 minutes, le retour du reste d'un budget total
+de trois heures. Les délais des sous-processus et une alarme couvrent aussi
+les opérations Python de fichiers. Une erreur après la frontière d'ouverture
+conserve l'état courant et referme les écrivains.
+
+L'entrée convertit le premier TERM ou INT en refus contrôlé avant l'ouverture,
+afin que le moteur effectue son retour. Dès OPENING, le moteur conserve les
+données et se place en HELD. Une récupération, un retour ou un confinement
+déjà engagé peut terminer ; les signaux suivants sont ignorés pendant cette
+séquence. Les handlers précédents sont restaurés ensuite, sans modifier
+SIGALRM. Une coupure brutale ou SIGKILL exige toujours la récupération fondée
+sur le checkpoint durable.
+
+* Vérifications et travail restant
+
+Une preuve VM a invalidé l'hypothèse de priorité des masques sous
+=/run/systemd/system= pendant le retour vers old sans garde. Leur priorité est
+inférieure à =/etc/systemd/system=, contrairement à =generator.early=.
+Sources primaires : [[https://www.freedesktop.org/software/systemd/man/latest/systemd.unit.html][systemd.unit]],
+[[https://raw.githubusercontent.com/systemd/systemd/v260.2/man/systemd.generator.xml][systemd.generator v260.2]].
+La correction portable passe sept groupes de contrôle et cinq groupes de
+changement réel de génération, dont old sans garde et reboot en retour privé.
+Les générations du reçu candidat 003 sont reconstruites avec ces octets ;
+les deux générations du reçu 002 restent historiques.
+
+35 tests unitaires propres au backend et 95 tests combinés des composants
+locaux passent, dont cinq contrôles de frontières écrits indépendamment.
+Le reçu unitaire 005 lie les octets vérifiés ; les reçus précédents restent
+historiques. Les opérations de ces tests unitaires sont injectées.
+Le banc indépendant =backend-integration/qualification-20261102-007.json=
+passe séparément six scénarios en 404,16 s avec les vrais contrôles systemd,
+générations, snapshot PostgreSQL/fichiers et moteurs de reprise. Il vérifie
+notamment RETURNED avant reprise des travailleurs périodiques et HELD après
+une écriture publique. Ses contrats applicatifs sont synthétiques ; les reçus
+des composants, des deux générations et de l'adoption Forgejo restent distincts.
+
+La fermeture précédente a été observée séparément : 1 190 chemins, tous leurs
+NAR et 6 577 321 816 octets. L'entrée passe 13 tests, dont sept de signaux POSIX
+réels avec opérations de services injectées. Le paquet synthétique passe ces
+tests à la construction, puis six invocations des wrappers : les arguments
+et le manifeste volontairement invalide sont refusés avant tout backend.
+Les reçus =qualification-release-entrypoint-20261102-002.json= et
+=qualification-release-package-20261102-002.json= lient ces résultats.
+Le paquet 002 contient le backend corrigé à l'octet ; le reçu 001 reste historique.
+
+Les cinq bundles Git privés sont reçus et vérifiés séparément dans un staging
+privé. Restent le bundle infrastructure après publication finale, le binding
+réel Forgejo et le manifeste immuable permettant de
+construire les commandes finales. Les tests locaux ne prouvent ni envoi SMTP,
+ni SSO humain, ni possession de la clé privée destinataire, ni autorité de
+livraison protégée de la forge. Aucun accès VPS ou déploiement n'a été effectué
+par ce lot local.

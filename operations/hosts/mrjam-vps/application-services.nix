@@ -120,6 +120,10 @@ in {
     workers = {
       enable = lib.mkEnableOption "installation of all five qualified workers, without activation";
       identityProtocol = lib.mkOption { type = lib.types.enum [ "keycloak-legacy" "kanidm-native" ]; default = "keycloak-legacy"; };
+      replayIdentityProtocol = lib.mkOption {
+        type = lib.types.enum [ "inherit" "kanidm-delete-socket" ]; default = "inherit";
+        description = "Separately qualified replay transport; inherited mode retains historical receipts.";
+      };
       kanidmCaFile = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; };
       kanidmCaSha256 = lib.mkOption { type = lib.types.nullOr (lib.types.strMatching "[0-9a-f]{64}"); default = null; };
       artifacts = lib.genAttrs workers (name: lib.mkOption { type = storePath; default = locked."vision_${name}".store_path; });
@@ -167,6 +171,8 @@ in {
           (name: cfg.workers.artifacts.${name} != locked."vision_${name}".store_path)
           workers;
         message = "mrjamVpsApplications: native identity requires all five adapted worker artifacts, including archival of both historical and native issuers."; }
+      { assertion = cfg.workers.replayIdentityProtocol != "kanidm-delete-socket" || nativeWorkers;
+        message = "mrjamVpsApplications: the bounded deletion adapter requires native admission and cycle protocols."; }
       { assertion = !cfg.workers.enable || nativeWorkers || (config.systemd.services.mrjam-vision-admission.wantedBy == [ ]
           && !config.services.mrjamVisionAdmission.admissionsOpen
           && !config.services.mrjamVisionCycle.timer.enable && !config.services.mrjamVisionReplay.timer.enable);
@@ -253,7 +259,9 @@ in {
       enable = true; artifactStorePath = cfg.workers.artifacts.replay;
       inherit (cfg.workers) visionDatabase journalDatabase;
       admissionsCredentialFile = cfg.workers.credentials.closure;
-    } // workerIdentity cfg.workers.credentials.replayIdentity);
+    } // (if cfg.workers.replayIdentityProtocol == "kanidm-delete-socket"
+      then { identityProtocol = "kanidm-delete-socket"; }
+      else workerIdentity cfg.workers.credentials.replayIdentity));
     services.mrjamVisionClosure = lib.mkIf cfg.workers.enable {
       enable = true; artifactStorePath = cfg.workers.artifacts.closure;
       inherit (cfg.workers) visionDatabase journalDatabase;

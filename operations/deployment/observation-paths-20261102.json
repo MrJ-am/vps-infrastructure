@@ -1,0 +1,232 @@
+{
+  "activation_performed": false,
+  "contents_read": false,
+  "paths": {
+    "/run/mrjam-kanidm-backup": {
+      "state": "absent"
+    },
+    "/run/mrjam-kanidm-backup/kanidm.json.gz": {
+      "state": "absent"
+    },
+    "/var/backup": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 493,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/backup/forgejo": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/backup/mrjam": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/backup/mrjam/native-v1": {
+      "state": "absent"
+    },
+    "/var/backup/nextcloud": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/backup/postgresql": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 71
+    },
+    "/var/lib/forgejo": {
+      "gid": 982,
+      "kind": "directory",
+      "mode": 488,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo-identity": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/forgejo-identity/client.json": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/forgejo/.identity-config": {
+      "gid": 982,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/.identity-config/app.ini": {
+      "gid": 982,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/custom/conf": {
+      "gid": 982,
+      "kind": "directory",
+      "mode": 488,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/custom/conf/internal_token": {
+      "gid": 982,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/custom/conf/oauth2_jwt_secret": {
+      "gid": 982,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/custom/conf/secret_key": {
+      "gid": 982,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/forgejo/repositories": {
+      "gid": 982,
+      "kind": "directory",
+      "mode": 488,
+      "state": "observed",
+      "uid": 982
+    },
+    "/var/lib/mrjam-identite": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-identite/cycle.json": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-identite/fermeture-hook.secret": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-identite/kanidm-admission.token": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-identite/kanidm-cycle.token": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-identite/kanidm-replay.token": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-identite/kanidm-vision.secret": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-identite/proton-smtp.json": {
+      "gid": 0,
+      "kind": "file",
+      "mode": 384,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/mrjam-worker-credentials": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/approval": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/archive-initialize.json": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/archive.json": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/closure": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/recipient": {
+      "state": "absent"
+    },
+    "/var/lib/mrjam-worker-credentials/v1/smtp.json": {
+      "state": "absent"
+    },
+    "/var/lib/nextcloud-php-security": {
+      "gid": 0,
+      "kind": "directory",
+      "mode": 448,
+      "state": "observed",
+      "uid": 0
+    },
+    "/var/lib/nextcloud-php-security/blocked": {
+      "state": "absent"
+    },
+    "/var/lib/nextcloud/config": {
+      "gid": 990,
+      "kind": "directory",
+      "mode": 488,
+      "state": "observed",
+      "uid": 990
+    },
+    "/var/lib/nextcloud/config/config.php": {
+      "gid": 990,
+      "kind": "file",
+      "mode": 416,
+      "state": "observed",
+      "uid": 990
+    },
+    "/var/lib/nextcloud/data": {
+      "gid": 990,
+      "kind": "directory",
+      "mode": 488,
+      "state": "observed",
+      "uid": 990
+    }
+  },
+  "provenance": {
+    "commit": "3f5ce5fd9e855a320371bda8c118e3478046a285",
+    "date": "2026-11-02",
+    "independent_review": "host_composition",
+    "script_sha256": "25e9d1bac68a30d0776f598c0cca5c91e885379260107bd02ec4ae6567ddd8d9",
+    "tests": 3
+  },
+  "schema_version": 1,
+  "scope": "fixed-lstat-only"
+}

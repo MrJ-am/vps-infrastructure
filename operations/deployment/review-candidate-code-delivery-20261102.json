@@ -1,0 +1,25 @@
+{
+  "all_linked_receipt_hashes_valid": true,
+  "both_generation_paths_match_linked_qualification": true,
+  "exact_export_path_count": 394,
+  "export_bytes": 1208825400,
+  "export_sha256": "17fbff5c2c8b6e149607f465d62fa3bc6454244b48123be505f526cc37287bf3",
+  "export_stream_independently_recreated": true,
+  "full_closure_count": 1294,
+  "functions_byte_identical_to_real_import_vm": true,
+  "limits": [
+    "Review validates import-only delivery bindings and code closure; integrated deployment-controller and live activation proofs remain separate.",
+    "No VPS operation, source bundle import, data migration or service start performed by this review."
+  ],
+  "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+  "no_activation_command_added": true,
+  "only_release_and_directory_assignments_changed": true,
+  "passed": true,
+  "production_access": false,
+  "receiver_sha256": "45e59bf2aea59c6c7be6fc75e85b4ef575e9eb055b4a177b7650d656c4469b58",
+  "reused_dependencies_previously_observed_or_delivered": true,
+  "reused_dependency_count": 900,
+  "schema_version": 1,
+  "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+  "v3_existing_unit_exactly_preserved": true
+}

@@ -1,0 +1,33 @@
+{
+  "activation_performed": false,
+  "checks": [
+    "argument-free-fixed-operation-and-exact-success-envelope",
+    "no-private-exception-diagnostics",
+    "TERM-before-PREPARED-no-freeze",
+    "real-TERM-and-INT-before-opening-return-and-ignore-repeated-stop",
+    "real-TERM-and-INT-at-opening-hold-without-restore",
+    "already-engaged-return-recovery-and-containment-not-interrupted",
+    "verified-cleanup-not-misreported-as-failure",
+    "TERM-INT-handlers-restored-and-ALRM-untouched"
+  ],
+  "combined_run_log_sha256": "63dca9bf96df9abf4360bd0ef10499549a16521ee6c22cd2414631ccb7142912",
+  "date": "2026-11-02",
+  "limits": [
+    "Backend service and generation operations invented; this is not a VM activation test",
+    "SIGKILL and power loss still require conservative durable recovery",
+    "Production manifest and wrapper package remain to be sealed separately"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "local-real-posix-signals-real-engines-and-private-invented-checkpoints-injected-service-operations",
+  "signal_tests": 7,
+  "source_sha256": {
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release_backend.py": "0c6fec7976b74abcd6eb3715e614fb4dda160ce96b95800b8f24a2631e59a4d1",
+    "release_entrypoint.py": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab",
+    "test_release_entrypoint.py": "0777db2d33930544bcc7596168a0a9e7b3cffdbc27dd5b9f82536f17df56004c"
+  },
+  "supersedes": "qualification-release-entrypoint-20261102-001.json",
+  "tests_passed": 13
+}

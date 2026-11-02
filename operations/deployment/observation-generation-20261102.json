@@ -1,0 +1,16 @@
+{
+  "application_content_read": false,
+  "code": "GENERATION_NAR_OBSERVED",
+  "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+  "nar_bytes": 200488,
+  "nar_hash": "sha256-ety23BZuKSrZ3Gfltw4q3Fa4hZSkMviYv6GclodXkOk=",
+  "production_mutation": false,
+  "schema_version": 1,
+  "provenance": {
+    "commit": "222bf0403ca6d0ee26645d07617f93beacab12cc",
+    "script_sha256": "c33721013682fb794b07fc96a3ec8d7aeb47f40bf700215349742b64ad750816",
+    "date": "2026-11-02",
+    "independent_review": "identity_acceptance_resume",
+    "tests": 3
+  }
+}

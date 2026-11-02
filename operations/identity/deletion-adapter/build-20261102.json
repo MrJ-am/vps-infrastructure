@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-02",
+  "artifacts": {
+    "adapter": {
+      "path": "/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2",
+      "derivation": "/nix/store/vigrs9pr3cxvd49xzy5hs15dyxaqnc9h-mrjam-identity-deletion-0.1.0-transport2.drv",
+      "nar_hash": "sha256-2rhGHLcq4xrlThvFz9X/v9AYfsG5K1TJZzcJ8CW6a2g=",
+      "nar_bytes": 2826424,
+      "source": "/nix/store/s3ymdzidcpr67g917z7wz1fbipqv09cv-source",
+      "source_nar_hash": "sha256-6vmeDdXrmntAF/O7eTFFbyQhle3hNWBl0dsHgdFJPkk=",
+      "binary_sha256": "9a09eabd916c91bdef45de04913921553a4276bf839365cb844138f53fe64d6a",
+      "build_test_results": [
+        "test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 2.00s"
+      ]
+    },
+    "replay": {
+      "path": "/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0",
+      "derivation": "/nix/store/rqfvk45w250b5hsb4cwf3scgvf19yryz-mrjam-vision-delete-replay-0.1.0.drv",
+      "nar_hash": "sha256-747D1x24u5ljv++iR4roEmc1NGilYuYZk/9nW/V2PSI=",
+      "nar_bytes": 6134800,
+      "source": "/nix/store/z94j6jd8kg0nwmk18ga0238jzymjnl1c-source",
+      "source_nar_hash": "sha256-2EVVgKXhco4QQd0Nzcu/BTPbKE4pwsj0aQlo1bporEA=",
+      "binary_sha256": "f6ed5a963f7c50ab713a2bd4c8ecb100cc1aaeedfd3a1a4d1b3d565bff2e6bc0",
+      "build_test_results": [
+        "test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 23 filtered out; finished in 0.00s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 24 filtered out; finished in 0.00s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s"
+      ]
+    }
+  },
+  "nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "rust_version": "1.99.1",
+  "source_repositories": [
+    {
+      "component": "adapter",
+      "repository": "MrJ-am/mrjam-plateforme",
+      "branch": "spectre-identite-native-20261101",
+      "expected_head": "b48f0ab14f37a15ce08c84248b2240e78ae5e4dc",
+      "files": [
+        {
+          "path": "Cargo.toml",
+          "mode": "100644",
+          "sha256": "1f5c2aa1108908a8741aba1e7ed5f7ee0ca485aff9eafacd87ac459b9e55abd4",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "Cargo.lock",
+          "mode": "100644",
+          "sha256": "478b8f44b772f526d4a79407f3a981df1dbd60f565b0811a1ea80fe5a3418fb6",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "nix/identity-deletion.nix",
+          "mode": "100644",
+          "sha256": "68bc889dbce71f8eee11f5b9bbb4c7cadb9534c1d3e34fdfc947c9c696d3f208",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "crates/identity-deletion/Cargo.toml",
+          "mode": "100644",
+          "sha256": "a4b5c6adfcde7b4dd70fc40492ff4c32a9f0cc8e69bcb528800c87f948a793f5",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "crates/identity-deletion/src/main.rs",
+          "mode": "100644",
+          "sha256": "caca5e9a1cddb7ad251ec4806217e37c3506a4a6be5eec868f1c54398dc1f458",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "docs/identity-deletion-20261102.org",
+          "mode": "100644",
+          "sha256": "b8148cb4bb145fa7ab309f3c1ef0b8b446dafd474c2d39ac4c5fc65f1db4a60e",
+          "matches_built_source": true,
+          "build_expression_only": false
+        }
+      ]
+    },
+    {
+      "component": "replay",
+      "repository": "MrJ-am/vision",
+      "branch": "spectre-kanidm-native-20261102",
+      "expected_head": "3c39cf5c776bf8f8b027d79daea69a825a0f337e",
+      "files": [
+        {
+          "path": "src/workers/deletion_socket.rs",
+          "mode": "100644",
+          "sha256": "0650c04effeb29a62837a9b328199f5ad78d248a9318a17bbd3bda67766b51b4",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "src/workers/mod.rs",
+          "mode": "100644",
+          "sha256": "04925f65bb48bbe21cbb6f282e8b3e6a68c86d5382c7f60f04d510f0d52503ea",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "src/workers/rejeu_runtime.rs",
+          "mode": "100644",
+          "sha256": "ed4c3fe54bff631b562ec745cd19661d50c97ffb6e9f720a315e29ff23127d6e",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "tests/replay_cli.rs",
+          "mode": "100644",
+          "sha256": "484b3d2fc92f53258b9a35997ee9441de6dc565ddcdfdcf1779d01589a6c749c",
+          "matches_built_source": true,
+          "build_expression_only": false
+        },
+        {
+          "path": "package-delete-replay.nix",
+          "mode": "100644",
+          "sha256": "cd9f06bbcdd0fd53c1885d4fe0158f0b76490c84f336e373bbe4bc0a81779390",
+          "matches_built_source": false,
+          "build_expression_only": true
+        }
+      ]
+    }
+  ],
+  "source_status": "Prepared source deltas; not yet published by this author",
+  "independent_systemd_qualification": {
+    "receipt": "operations/identity/deletion-adapter/qualification-20261102.json",
+    "sha256": "45dbfee9144761b41460f3e13b22ab1cd756ef5b236a8c9ce066b10414f3b63e",
+    "checks_passed": 7
+  },
+  "tests": {
+    "adapter_release_unit_tests": 7,
+    "replay_release_targeted_tests": 4,
+    "workspace_format_check": true,
+    "adapter_clippy": "passed --package mrjam-identity-deletion --all-targets --locked --offline -- -D warnings",
+    "workspace_clippy": "passed --workspace --all-targets --all-features --locked --offline -- -D warnings",
+    "workspace_clippy_toolchain": "/nix/store/2va2x1g4ncjhaih1dk0zxvi97s832pw9-mrjam-rust-toolchain-1.99.1",
+    "workspace_format_toolchain": "/nix/store/r2dbjwzqk67pbmih0cyz38g2rx6vnspj-mrjam-rust-toolchain-1.99.1",
+    "workspace_clippy_log_sha256": "63966001c7ebad4c6a4d209db1812a377ca1251d41a1652758eaa5db0aa5081b",
+    "workspace_format_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "superseded_adapter": "/nix/store/79ls7yx6mxh4sryiipdn7k75ls1rbii8-mrjam-identity-deletion-0.1.0",
+  "correction": "Reject unauthorised or malformed finite frames after globally bounded drain (two seconds, 64 KiB maximum, 257 retained bytes), preserving JSON plus EOF. Incomplete read timeout is Refused; upstream outage remains Unavailable. Excessive transport is aborted without an upstream document.",
+  "security_boundary": {
+    "adapter_uid": 948,
+    "adapter_gid": 944,
+    "socket_peer_uid": 944,
+    "upstream_scope": "Kanidm idm_people_admins; includes operations broader than DELETE",
+    "enforcement": "Exact Unix peer and JSON schema, fixed native issuer and canonical UUID, only DELETE /v1/person/<UUID> with explicit TLS CA",
+    "replay_has_upstream_credential": false
+  },
+  "production_data_access": false,
+  "production_activation": false,
+  "limits": [
+    "Author release builds and source bindings do not replace independent unit/TLS/provider/replay acceptance",
+    "No production provider mutation or real SMTP delivery performed",
+    "Initial 79ls7 adapter failed strict transport EOF and must not be selected for deployment"
+  ],
+  "toolchains": {
+    "adapter": {
+      "path": "/nix/store/2va2x1g4ncjhaih1dk0zxvi97s832pw9-mrjam-rust-toolchain-1.99.1",
+      "nar_hash": "sha256-mmCy2cUsZ9UM7MvxijRyLi3odAz5qCck1zvdvmEjar4=",
+      "recipe": "pkgs.callPackage operations/builds/toolchains.nix {} .rust, with nixpkgs6f06d204d8f2d8761d9da78778745974a3216381"
+    },
+    "replay": {
+      "path": "/nix/store/r2dbjwzqk67pbmih0cyz38g2rx6vnspj-mrjam-rust-toolchain-1.99.1",
+      "nar_hash": "sha256-vJ8PWvsy8HfZy9GjzBJCWbujX+qeWds6FaRPWno3TqU=",
+      "recipe": "Same pinned toolchain expression with historical postPatch append of newline + patchShebangs ./install.sh + newline; preserve this exact derivation for replay."
+    }
+  }
+}

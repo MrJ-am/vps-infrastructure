@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-original-failures-retained",
+  "findings": [
+    {
+      "derivations": [
+        "/nix/store/ygv3cdg2vkbhprjka6jz2vfpzz8kncpv-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/nqzp51pb43cnnd3hb8mfr4h5n2m4gqcc-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv"
+      ],
+      "failure": "Synthetic initial migration could not create the data directory because its fixture parent was root-owned before any StateDirectory unit start",
+      "correction": "Create only the invented Forgejo state parent with the documented owner before synthetic schema initialization",
+      "candidate_changed": false
+    },
+    {
+      "derivations": [
+        "/nix/store/wxk65am2kvc262gjspydazb5af4xygwm-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/zzwmp1x66kwv3s55hn0r90758h1sqvjk-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv"
+      ],
+      "failure": "Strict generic INI parser rejected Forgejo unsectioned global keys",
+      "correction": "Parse an isolated root section; never inherit global security defaults; add disabled-profile negative test",
+      "candidate_changed": true
+    },
+    {
+      "derivations": [
+        "/nix/store/j1qmij0vhvxx7kwxjb8zdn4hcxszmxk6-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv"
+      ],
+      "failure": "Private Forgejo profile refuses anonymous version API with HTTP403",
+      "correction": "Attest exact running immutable ELF through fixed PID path before credential issuance, then require authenticated API version17.0.1",
+      "candidate_changed": true
+    },
+    {
+      "derivations": [
+        "/nix/store/sik98lspxm7zaf2925j748x3ws0k2zfs-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/aq5wsj3gb5cfk5wsriwglqy5lzmlplxv-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/vrfzpgjg9k28v4ak5hafp8069sx06ppi-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/9xvvwfc9gvqff4hx8800p2vigzn7y08m-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv",
+        "/nix/store/96c40qy11vcswbqzncykw1shg49gkmx6-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv"
+      ],
+      "failure": "Systemd260 seccomp setup removed SETUID capability; child could clear groups and set GID but not descend to UID977",
+      "correction": "Bound required root capabilities and explicitly request ambient SETUID, cleared by child UID demotion; preserve NoNewPrivileges and other unit restrictions",
+      "candidate_changed": true,
+      "primary_source": "/nix/store/kban61mm86a1nhq05rzg771n4l7qfjgw-source/src/core/exec-invoke.c:6380"
+    },
+    {
+      "derivations": [
+        "/nix/store/0jxvhgaqg48931dn18hfljkws7wyz0db-vm-test-run-mrjam-forgejo-closed-technical-bootstrap.drv"
+      ],
+      "failure": "Invented Web-login fixture expected legacy hidden CSRF form input",
+      "correction": "Use same-origin request shape for Forgejo17 Go CrossOriginProtection; require valid local password login to receive HTTP403",
+      "candidate_changed": false
+    },
+    {
+      "failure": "Root integration review found that receipt001 used synthetic UID/GID977 while the adopted host requires982",
+      "correction": "Bind immutable package UID/GID to public ForgejoHost module options and rerun unchanged functional acceptance in982; receipt001 retained and not production-qualified",
+      "candidate_changed": true
+    }
+  ]
+}

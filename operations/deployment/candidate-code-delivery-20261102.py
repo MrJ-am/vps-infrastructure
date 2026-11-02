@@ -1,0 +1,188 @@
+"""Sealed delivery of the qualified human-login tool; no application activation.
+
+This source is a template with no operational defaults. Its final delivery
+copy embeds an exact reviewed export digest, size, store paths and unit hash.
+The entrypoint accepts only that byte stream on stdin and no arguments.
+"""
+import hashlib
+import fcntl
+import json
+import os
+from pathlib import Path
+import re
+import resource
+import signal
+import stat
+import subprocess
+import sys
+
+RELEASE = {'schema_version': 1, 'export_sha256': '17fbff5c2c8b6e149607f465d62fa3bc6454244b48123be505f526cc37287bf3', 'export_bytes': 1208825400, 'required_free_bytes': 3553977912, 'store_paths': ['/nix/store/000hh2z02mjnlnqjdk6fv95jh18y3sq6-system-units', '/nix/store/03bxlfgnknl9j2lhigypdg16r7lpy44n-unit-mrjam-cycle-mail-adopt.service', '/nix/store/07jpxsawgvm51jhcq91iq8d8fy1b2v3b-mrjam-vision-replay.json', '/nix/store/09ssc8p9is0fc7a3zbhfxf96d2jb4jkx-php.ini', '/nix/store/0cjh3z3xgx6qbfsfl2j0abvqf9qil7cd-system-units', '/nix/store/0gis0k2yvvv3czsxk6wjqsplcsv4f88p-system-sendmail-1.0', '/nix/store/0gx62yhkmbmx3wcgs5w0gf3p84ilny91-unit-script-nextcloud-setup-start', '/nix/store/0hci3iwndpvqzgma5iczwmah9y3ngi07-perl5.42.3-LWP-MediaTypes-6.04', '/nix/store/0jz7sis35ry4xm87mqp4024wcmvlj04i-nixos-system-srv1982677-26.05pre-git', '/nix/store/0kpmjj3vadbx7v7xs8arzjagg0i9zkz5-unit-mrjam-acme-renew-logique.echos.systems.timer', '/nix/store/0lfxsaw73awq0cy09a9fhb8j27yhn0cy-unit-script-mrjam-kanidm-backup-start', '/nix/store/0mx3lg1ynxbqcqhm4kgy9kdyixk2pvsz-perl5.42.3-Crypt-URandom-0.55', '/nix/store/0naq4d7b867lnnmr61c96cw5b5g8h63v-unit-phpfpm-nextcloud.service', '/nix/store/0p2b5hkyrvlcv28yrrr0g68fwjc7mbhk-pango-1.57.1', '/nix/store/0sfj9b6sxa9f7g412lsgv3a1ic03zbbn-users-groups.json', '/nix/store/0z49w0j8rc8j2p64i1zmnfdpz4ay1kjm-unit-script-mrjam-adopt-matheval-start', '/nix/store/10536wmi6cq4s60qzfiys7w33xjq3hc5-curl-8.23.0-bin', '/nix/store/11gb9i2v7b3980zylx4pnr3wh7hd8djf-mrjam-first-cutover-boot-guard', '/nix/store/12c8jhjswd2jkg6zid25gvjpwnxz838z-schema-contract.json', '/nix/store/12q3plf1hjpji1s1pwsq1sd2iqjms69d-mrjam-acme-reload-principiipetit.io', '/nix/store/13zcy8f9bki6cm30m4rpkvr53421gyps-unit-script-mrjam-acme-renew-vision.mrj.am-start', '/nix/store/15qy6gay0yjhgsriglwnqg61vp8nzfkh-unit-script-forgejo-pre-start', '/nix/store/1735f8fvyf17ss95rcwhwpqnqqrnygh0-nixos-manual-html', '/nix/store/1bxki24fm5y15ihbw2vg322ljk83hf6a-unit-mrjam-vision-replay.service', '/nix/store/1cglaxfk8953whd1brsdvxxpgn91a3v9-etc', '/nix/store/1i8n5cc73hkzfngqk1wn5psady1vyzav-forgejo-pandoc-org', '/nix/store/1lr74apa9gnrgmwp33mkda73q2zxp1b0-adopt-runtime-role.sql', '/nix/store/1n0p3fn7nfdbwvpkbqlnk7y13057mivk-mrjam-identity-0.1.0', '/nix/store/265hgk53hl438z1hgb37i0nbwg4fwqv5-etc-os-release', '/nix/store/288xy9lzpp5gdr6nmq4v9a05nzhgfqcv-unit-mrjam-vision-admission.service', '/nix/store/29c1wnbbhsh5790vfm7i0wi03yv3yyhw-libxpm-3.5.20', '/nix/store/29cnw4a27lxiy5fdwkclmgahqf8fdggn-php-calendar-8.4.27', '/nix/store/2lr646z2ml37xdixvhmf7g5j9qwy9lr3-libtool-2.5.4-lib', '/nix/store/2ryykipbqxaz4iam4bmy4r1jw2sb5agk-unit-mrjam-acme-renew-logique.echos.systems.service', '/nix/store/300rd7kbiyy32nnfbhcig5r23jvfc5f3-perl5.42.3-Net-HTTP-6.23', '/nix/store/335bgljhwfcc2yz9l5nkrmkch8qcpgk8-unit-mrjam-rust.slice', '/nix/store/3agg6q4aclaj36prbbh4lxk2nh3bf3sz-unit-script-mrjam-acme-renew-log.mrj.am-start', '/nix/store/3c2k9iw7j333inm11n3scqc130sp082q-php-tokenizer-8.4.27', '/nix/store/3g5g4m6skr13yz6b9q8cjj535hk38fzx-git-2.54.0-doc', '/nix/store/3nj1d9svgsqwy6zpqncxkplw9pk83c2a-libxft-2.3.9', '/nix/store/3ny57wigxy1c1chq8jj3ja15vi18ry1i-php-opcache-8.4.27', '/nix/store/3qk2m9y0qpmvqv7h7jcn5ikzsjgy4sq1-php-filter-8.4.27', '/nix/store/3r7q36cibjf3mjbw09rshgi4fflciz01-unit-mrjam-forgejo-bootstrap.service', '/nix/store/3rb4zwsik845yrqih25iidf3rwak48ch-libsm-1.2.6', '/nix/store/3sdq2wcfzvl8ivww35iv5vwzf374xfn6-gzip-1.14', '/nix/store/41lwx3hjsbgffaa5gi7id99by2rxq4q7-unit-mrjam-acme-runtime.service', '/nix/store/4272zfy4x0zrpwyg6r2fcs715yywngvl-etc', '/nix/store/42vhlpr631pqaqry617k85q2pczb2c2i-root-authorized_keys', '/nix/store/45psvx15frhvan5q5yafqbh4678wla1z-php-pdo-8.4.27', '/nix/store/461wwfdk294rq4r2yb6i7hq62xvd7g01-mrjam-vision-cycle.json', '/nix/store/4634xdh1chgdnlr6k21mz241zxjy7vk2-libunwind-1.8.3', '/nix/store/47lm6i23m443ps8d5kk2z4fs0zxdqmkh-gdk-pixbuf-2.44.8', '/nix/store/4a0ll3lcj49x5clwjirhkcnjz14hsmpm-unit-script-postgresql-pre-start', '/nix/store/4g8kh7qd5dy6xs8sx4dlp32k4bignliz-unit-mrjam-adopt-forgejo-role.service', '/nix/store/4gkmp7a0rx68394wb4dxb1k4lg1fnzs7-ncompress-5.0', '/nix/store/4k1lp3smywgdv4yrnd2g28vx2sryl39m-php-with-extensions-8.4.27', '/nix/store/4k5a466i6n8nvf3fyjkqj8dj1vizcz2i-gettext-1.0', '/nix/store/4k9dyzhafi9dn1qss1aikjrn1flkbvq9-zlib-1.3.2-static', '/nix/store/4nyw8mr5c9mxp915ymivhh17cqhv65zv-perl5.42.3-Try-Tiny-0.31', '/nix/store/4qakkhfnhc8n0qa4zmax2rsl6i0lxiwv-openldap-2.6.13', '/nix/store/4qvlwbcnkfwl0wwygcn2d1kynyj1hkn8-unit-nextcloud-cron.service', '/nix/store/55x1ijmjspg48a9lgyjcp9vh8hczl7jf-php-mysqlnd-8.4.27', '/nix/store/56bab4xbyk124h4yn992x9wrawggrzxn-unit-script-mrjam-adopt-forgejo-role-start', '/nix/store/5agrp3dwy4fqg0fz80qd2k2zjs3256ad-unit-nextcloud-setup.service', '/nix/store/5gy7wb8y046fr0696bwp3j7chgahafl3-perl5.42.3-Authen-SASL-2.2100', '/nix/store/5hp4jcqfl8skwm9x3zvvnbc0hgxq9lgn-nextcloud-occ', '/nix/store/5i2c76acrixxd2pii8lhi4hnxzslydyc-unit-kanidm.service', '/nix/store/5qg260nrg9zzc703q238dzinbsvm7rsc-perl5.42.3-IO-Compress-2.221', '/nix/store/5rmj9djz0x1sxqq1b42907rpa8q3wjm9-unit-mrjam-identity.service', '/nix/store/5y6hcl4hii8jxiy2w6c0iq50rqh0bkwr-tmpfiles.d', '/nix/store/5y7bprv4ia3ifih2qbsb92mbaavdy46m-php-pdo_sqlite-8.4.27', '/nix/store/5ygmawnrlk5rar4j36pk198r7awxr416-perl5.42.3-IO-Socket-SSL-2.083', '/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2', '/nix/store/63xrng4rpakryf47yhbrnyif1ljjji90-unit-mrjam-acme-renew-log.mrj.am.service', '/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision', '/nix/store/6hrsyxn56q1nngrmardzkxy3bffd429x-cyrus-sasl-2.1.28', '/nix/store/6qb5sf66rym43jbczgly219164wcb8jw-unit-script-mrjam-acme-renew-principiipetit.io-start', '/nix/store/6qr55y5rlrdvm3qy9fpa2pks7xa50yl3-libselinux-3.10', '/nix/store/6y6vabwkv5456xns701qkid8fsy8grlr-nixos-version', '/nix/store/6z8b1b5xrh8cqffczybgn42qmpbdnsx3-libxau-1.0.12', '/nix/store/6zv3i5nadhii8fip4ffcmv1f4rc1mqpj-perl5.42.3-File-Listing-6.16', '/nix/store/70a4xdd8bv83vli2mqgr97jd66a015x0-perl5.42.3-HTTP-Message-7.02', '/nix/store/77nlsswldjv7bbyl39mlykh2ly7pybh7-unit-mrjam-identity-deletion.service', '/nix/store/7bl7dcgxddb410p4cwmkp9nqqxrywxsj-perl5.42.3-Compress-Raw-Zlib-2.222', '/nix/store/7c7vsk4lbwgxlq2w74bh0v38h8g0g616-unit-mrjam-vision-cycle.timer', '/nix/store/7f1saihy68adpwxw3paxcxfbzzj6hqmv-unit-mrjam-identity-aliases.service', '/nix/store/7hmdar637aj6m80vrqma57g82pgqvbc1-mrjam-mail-native-adoption-2', '/nix/store/7i184rdm90kn4h9wh89g66i60lfsly3j-pg_hba.conf', '/nix/store/7jxrw8y0vfgq1ps0392aizjfwyy20fgb-forgejo-explicit-migration.ini', '/nix/store/7m9c9il5wyjnv08w1anda0qxhnrv6k4c-libsodium-1.0.22-unstable-2026-04-09', '/nix/store/7nqadb6qkhhx12ikwih42jh01n4hvr21-libjpeg-turbo-3.1.4', '/nix/store/7r5q383h4vnaszzi76k1qx789vadgj0c-libdatrie-2019-12-20-lib', '/nix/store/7ragj034y9pxnzw82608p1livb14mca6-unit-script-mrjam-acme-renew-logique.echos.systems-start', '/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique', '/nix/store/7rxnmfjfarylki72pjj54mw0hlx2ba0c-unit-dbus-broker.service', '/nix/store/7w5m578f3z4f4a8fpsc0ibjz8qx2kxps-libxcb-1.17.0', '/nix/store/84sfvg3ckxfls7m0z0k5ic4b91idgd0s-unit-mrjam-acme-renew-principiipetit.io.timer', '/nix/store/86i1c3wsq6bzn6k6dyasg0j65akcxi8g-unit-dbus-broker.service', '/nix/store/88qy7y54wyz3vfw1b6mg6kwxjz0bmcaa-unit-script-forgejo-backup-start', '/nix/store/8b1d53cagzriks09hwxs9yi2swnamfz9-nixos-system-srv1982677-26.05pre-git', '/nix/store/8ca9yd2kv8c5yndfbqmrrrk8jlckz49j-unit-redis-nextcloud.service', '/nix/store/8cipz0s3sp0bicmqki640rx6y0dv2yns-unit-mrjam-acme-renew-logique.echos.systems.timer', '/nix/store/8cmc8y4b9yz6v6mzll5gng8llbi2n1a9-unit-mrjam-acme-renew-cloud.mrj.am.timer', '/nix/store/8f7jh8xmk6s36h2fwrcnma92ylv5d9rg-unit-mrjam-bootstrap-journal.service', '/nix/store/8fprjvyl5f3x32rvllp3mmqhgmfhhkjy-unit-mrjam-acme-renew-audition.mrj.am.timer', '/nix/store/8hs6wvrwxwwngwa3y2lxj9zl77yy4byj-unit-postgresql-setup.service', '/nix/store/8i5kaxbw29q677d00c52hh2g7fp7kw1q-libultrahdr-1.4.0', '/nix/store/8km986k3inmpxvci3jzmcj0gjbq1bkzi-etc-hostname', '/nix/store/8lp7zkgvn42ckl6c4ad6bhqcfigq7q90-unit-script-mrjam-acme-renew-audition.mrj.am-start', '/nix/store/8np01ysqsd09l06f28z2gkn6rjsdlsdm-unit-mrjam-acme-renew-audition.mrj.am.timer', '/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1', '/nix/store/8qp716q3mpfcfgm2qykqqrws6phx2zmp-unit-script-mrjam-acme-renew-forge.mrj.am-start', '/nix/store/8sfsaxqfn36awskj8bg5dgk6an9svxzr-libxdmcp-1.1.5', '/nix/store/8v7nxzcd6gq4m7qmldjlwjmx0nz4a494-unit-postgresqlBackup-matheval.service', '/nix/store/8x0gxzq0svffdcjgrnzwqvxldxgxp59r-unit-mrjam-acme-renew-www.principiipetit.io.timer', '/nix/store/8xgfczp5w79qxq7pwxdc15zfmcx2bvxf-postgresql-17.11-lib', '/nix/store/8yadwwbvv2ab0ddkisp53lc3j8pmzd31-unit-nextcloud-backup.service', '/nix/store/93frgpih7wy2p1b2qk2qqvk9pbbqapzv-lerc-4.1.1', '/nix/store/9bzrmv3vk11q073cyzwvr09qd3sapkll-libice-1.1.2', '/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1', '/nix/store/9fyg8jiy6kr48cir2rsp3v78xfvqdval-hosts', '/nix/store/9hbply806l3nz8dy4sn3v8j2q2p8ssgd-age-1.3.2', '/nix/store/9hdrjffygqzzbrf838j4fdrazzjvhmzm-libdeflate-1.25', '/nix/store/9mhmiqk0cfy419vfkxaxhdhnf6pjd734-nginx.conf', '/nix/store/9qs7s0gk6bhwr8d15bfk55wnxmr6brx5-ldns-1.9.2', '/nix/store/9sbb8ihx7rpj80nn0yxhj1mj54zn497a-php-redis-6.3.0', '/nix/store/9xfqyl52drhqhfn03xaf65g3brrycfbm-system-path', '/nix/store/a17lg7d5z5bs24vhq2kq4s4qb945dilj-mrjam-acme-reload-cloud.mrj.am', '/nix/store/a5qip1xrrbap00pn80mxb037dbycad65-unit-postgresqlBackup-nextcloud.timer', '/nix/store/a6zidf2bphr1yrlvxi30yncm2i06cy52-mrjam-acme-reload-logique.echos.systems', '/nix/store/a77yfglskrxxmbhnnqmhb5hzygv94g61-php-gd-8.4.27', '/nix/store/a9cr94nyk5zh4j6m6iv73vsqkz9icsdn-unit-forgejo.service', '/nix/store/aaay1yrfqyhkpgq97d11gw4i35992q83-libx11-1.8.14', '/nix/store/abi28836pq4r6lfznj3v6vkfd9354bmw-unit-mrjam-acme-renew-www.principiipetit.io.timer', '/nix/store/ajk3pfg27lypy99s35nhxjq2xsji7xfj-postgresql.conf', '/nix/store/akr4k62444nn6z3gl9rw77dqb6i85wrv-unit-postgresqlBackup-nextcloud.service', '/nix/store/aqqmn5ymnd76l0hv5bfbiai9qhgb5ylz-perl5.42.3-Mozilla-CA-20230821', '/nix/store/awa22ms22hc3w5drqc35i2yqjq8gz3d8-pixman-0.46.4', '/nix/store/b4y1mxklnd7g100xqwsyp2hmq0i7wfhi-sudoers', '/nix/store/b7ac2cyknvlx6ibn3dhjvffj33r969f6-user-units', '/nix/store/bbi39z6w1j6h39wgxsbxhs036iyn9njs-unit-nextcloud-update-db.service-disabled', '/nix/store/bcc6qw6s2rpdv6s6vjclhgcq1g5sa67b-gd-2.3.3', '/nix/store/bcjp3pf5gldhjcgk752293h6x8ipgfzi-forgejo-17.0.1-data', '/nix/store/bh86ypa118y2xypwbn719wq9xkll3lll-perl5.42.3-HTTP-Date-6.08', '/nix/store/bkd76v7prrm421ac1rxj05qbd8n5mjyl-unit-nextcloud-setup.service', '/nix/store/bkjkcjkxia13dak8igdyg2jxal79fi5a-icu4c-73.2', '/nix/store/brq0jkf9a8s0340r3j1ycqz08g0938d5-perl5.42.3-Test-Fatal-0.017', '/nix/store/bwlhn98cjznc69z3z12dlzp12zamqpds-unit-mrjam-worker-credentials-adapt.service', '/nix/store/c1z4sb71pz4fkna9fqfmns632m5bwyck-perl5.42.3-libwww-perl-6.83', '/nix/store/c2z71j2hk24zw1nxdwz12bf2597qcwd7-libpng-apng-1.6.59', '/nix/store/c64nyas3p5zmnsqvzhlsjvvhbl8151qw-glib-2.88.3', '/nix/store/c8a26i0k1ipck4hh6abf83aw3kbb1lja-php-pdo_mysql-8.4.27', '/nix/store/cbvgns85m8nx3mz28hkbsxn9k1ip200a-fftw-double-3.3.11', '/nix/store/cjf7d3cl4m3qdhccq5qg1varscy8ifyx-libraw-0.22.1-lib', '/nix/store/ck4kqpd9lhxmd6zhk5c9x859y819p85x-perl5.42.3-HTTP-Negotiate-6.01', '/nix/store/cn926xnr9b9w8rb8cjih81ak7y28p3q2-libyuv-1908', '/nix/store/cnyknz9na9k2kd3rllp73dk61w6zq0y5-dbus-1', '/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0', '/nix/store/cr8aqrp2xgi7mp5gmb17scrb1lnlf9a0-unit-mrjam-acme-renew-log.mrj.am.timer', '/nix/store/cspcw39dfihhl6iy9m2hiw819snjbnbs-unit-redis-nextcloud.service', '/nix/store/cxcwzvbichfrlsv40j5clf60b9s7kp6y-perl-5.42.3', '/nix/store/cyywjz3i5dizgpckmazck0vy71hirggg-php-gettext-8.4.27', '/nix/store/d23x1lvl2ddbb0nzi2947j80zcsyfjp1-adopt-matheval.sql', '/nix/store/d72gxhazj2ddgnm544c4f7br2zpy7a7i-unit-mrjam-sauvegarde.timer', '/nix/store/dhr93r6hn987wkk0nr01h4hbn55b0i3m-unit-mrjam-adopt-matheval.service', '/nix/store/djbqhqsbmrhcaa7dx8048cyay0hg281k-imagemagick-7.1.2-34', '/nix/store/dqqk59wij76sv0iyq2ca07wxms9cd4dd-perl5.42.3-libnet-3.15', '/nix/store/dw3i0wkc9hla8f8sw9n7jfljkn7lrhv8-mrjam-identity-runtime.json', '/nix/store/dxljpiki0nvkidaim608c6jfa9n26r7y-unixodbc-2.3.14', '/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo', '/nix/store/dz36gjf5v4fi5bkgsfaixf44d3n949fb-perl5.42.3-Compress-Raw-Bzip2-2.218', '/nix/store/f33dg2dygy3f03z8llxc99m7j2jzgrm4-php-bcmath-8.4.27', '/nix/store/f5q0xmgn4swgfs48l71gr50xpcfzxw5r-unit-mrjam-acme-renew-vision.mrj.am.service', '/nix/store/f5xn32sdcfkz572rxg6n3i3xj7wqd84v-php-curl-8.4.27', '/nix/store/f73gqi9pxkzkd55irax6ky16nf84iv1x-nixos-help', '/nix/store/f9klhak7yvmq0byavzs2lkqa50zlk4bi-embeddings.py', '/nix/store/fcakk84zijsviqnb2lcrwnxxxz1pdpjs-djvulibre-3.5.29-lib', '/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style', '/nix/store/fnszdqhdqqyncgk9rp7vr9lz62wjxwsd-php-exif-8.4.27', '/nix/store/fpzhd4m3n1wbd6wgrhish08dk22s3dff-php-ctype-8.4.27', '/nix/store/fvivxdscnjjyb1yryz29l0kqs1c20njq-unit-mrjam-acme-renew-cloud.mrj.am.timer', '/nix/store/g0mazy60g93pcbjz3rg69lrx50x2vdbz-mrjam-kanidm-server.toml', '/nix/store/g0zbbkxg982s1xhb4pk3zq8v8abdlg8q-unit-nginx.service', '/nix/store/g3r9ngl032y2fpq8rhlkmp946lkknj1y-unit-mrjam-identity.service', '/nix/store/gai8jmg4pjrfln8bhb43kilx4qip05s1-libpq-18.6', '/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log', '/nix/store/gdm3v5420c0a0kaw5ndbzrdaf19mc3bz-unit-mrjam-acme-renew-www.principiipetit.io.service', '/nix/store/gf10wjnkw745qf9kz3agfximnk74v683-mrjam-worker-credential-adaptation-1', '/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215', '/nix/store/glp88anwas9ybfxlgkn461fljg4g14dl-X-Restart-Triggers-systemd-journald-', '/nix/store/gp1whdcm9q5w50km2lmbiybvcd951wga-perl5.42.3-WWW-RobotRules-6.02', '/nix/store/gq32rsnfkxrn09r63qh9pr7yh3xhvcsz-gperftools-2.17.2', '/nix/store/gxyaihbsdq6nl6lk32dpqc74k24pvx4g-imath-3.2.2', '/nix/store/gy266y3ax8xvblz36m6an7h8mi485mf1-git-2.54.0', '/nix/store/h28y1vslcrqr68hqm9c3790xv1ah8c47-unit-mrjam-vision-closure.service', '/nix/store/h3dca7jricpsyrd2dd0lmp4nzi40wr4a-perl5.42.3-TermReadKey-2.38', '/nix/store/h4r19w1vh1dp9chn8mz75w8yh07sznrn-dejavu-fonts-minimal-2.37', '/nix/store/h523nmp61kpg6miw21qvzbw5ay7fx4h4-php-intl-8.4.27', '/nix/store/h8l2wx1w687v85p1g081a96ic9in2bs0-php-ldap-8.4.27', '/nix/store/hb2bjx944k6x3nml6vap7vydzqiic4n0-unit-vision-embeddings.service', '/nix/store/hcf3bz18pvdsbg8kvkqqy2gcdjx52fcv-unit-nginx.service', '/nix/store/hcff6xrl54v8n09rcf90wb23h0dvxdk8-libvmaf-3.0.0', '/nix/store/hd8c4msd106ck6pyy4rg1anzmddnx94r-issue', '/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a', '/nix/store/hfk2znm53zp4x7hjjh35didm9znjw8jn-postgresql-17.11', '/nix/store/hhdp1qllxwxd64qnzsa0ggqhbc9r7ywf-pcre2-10.49', '/nix/store/hjqxx3998m5n03kx36nabjcvmis40mig-freetype-2.14.3', '/nix/store/hl47j83mr5sarggr500s0ydkwkl79sw1-unit-postgresqlBackup-matheval.timer', '/nix/store/hmm8xxwkmlnmamzvhxrgknc2fjdx8l2c-unit-mrjam-forgejo-probe.service', '/nix/store/hq2b9izzhss7a88b5sza7wjgdhsrn8fv-perl5.42.3-HTTP-Daemon-6.17', '/nix/store/hq9kw949rhq0a56ynqk4zaq2dmf3z5vx-unit-mrjam-vision-replay.timer', '/nix/store/hvbfafgxkwy54lfyqp72rhm26kcz745w-mrjam-native-component-backup-1', '/nix/store/i1w8acdbkxqz5nnxs4nr4rb60szcg8kc-php-extra-init-8.4.27.ini', '/nix/store/i2r15wdgpf2cf1vqsvmpa5m5s4m9zv4k-mrjam-vision-admission-initialize.json', '/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue', '/nix/store/i8yn2s9b8lxvqfrvnmsif1wzwkx5v8s2-shutdown-ramfs-contents.json', '/nix/store/ipbggkd4r747fj58k8jp27fbp842fz9p-unit-script-mrjam-acme-renew-cloud.mrj.am-start', '/nix/store/iqmx3grlhznjh0n4x112j3ivd04szngg-perl5.42.3-HTML-TagCloud-0.38', '/nix/store/ir9pvx36xz350f7zby5sy8bki5yrfmrb-unit-script-postgresql-setup-start', '/nix/store/ivsy0kysnr8zg4sp771wm8lcbrh44rah-perl5.42.3-URI-5.21', '/nix/store/iz0ak6l9rzczmbh6qkanfk0z7hijbypk-openssh-10.6p1', '/nix/store/j2pjhmrbzi3w4qvgrcyx0x4v7sql031w-perl5.42.3-HTML-Tagset-3.20', '/nix/store/j2wr16p4y9lgka6yb4q9p8jswzmh7p55-libaom-3.15.1', '/nix/store/j59h76b5kncmkkq4j1afywli12kabnnm-unit-vision-embeddings.service', '/nix/store/j79k1qh4iqsm32h5rz9p45hpg5bfna5b-mrjam-vision-admission.json', '/nix/store/j8qkafxaxh0gcqrcfia7l73f5jz09cp6-djvulibre-3.5.29', '/nix/store/ja62hs5llcw4vjmnpsw8m1h8b6jm73sk-php-8.4.27', '/nix/store/jiz9rvys118phakcf1vzvqnd2i74s52d-perl5.42.3-Test-RequiresInternet-0.05', '/nix/store/jxb53jv0q6z2y1ayl852k1sycfirhn5x-unit-mrjam-acme-renew-forge.mrj.am.timer', '/nix/store/jy6flsgjqqvix1d46kd5hryiar2bnd03-unit-postgresqlBackup-nextcloud.timer', '/nix/store/k204ck4fa469fp9j56wr7v2c44cvp72r-php-pdo_odbc-8.4.27', '/nix/store/k2cp1ar4y6k0i97004hkhyvr328h500k-dav1d-1.5.3', '/nix/store/k5zgm6937dfj3ykb9ks8zc4zszjb10as-mrjam-acme-reload-vision.mrj.am', '/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101', '/nix/store/kf94paam7dbgng5y4vwrvpwf15xwzwbv-mrjam-identity-deletion.json', '/nix/store/khwhy94np7mac2fvmvfjys0gacy0prv1-perl5.42.3-FCGI-0.82', '/nix/store/kn59farqlgldwd537lii8aawif05nfls-perl5.42.3-Encode-Locale-1.05', '/nix/store/ks2x2nhfnwyxdjaq5zr0v2rs424g24p9-unit-phpfpm-nextcloud.service', '/nix/store/kw7ip0airavlmnlmhgp1g8zsszggj64w-php-sodium-8.4.27', '/nix/store/kz7ivhc39kccpni2a7qg93dzc03hbplp-mrjam-acme-reload-log.mrj.am', '/nix/store/kz901faypf6ywaqspbbrb6c3hqsx39v3-unit-script-mrjam-bootstrap-journal-start', '/nix/store/l0avd78x86jr5swpayvz8a6z9y5g15z3-ca.pem', '/nix/store/l0gfw9rfbiqf6b7avagaki5ym8jl238z-unit-mrjam-vision-closure.service', '/nix/store/l3pccjr6sh1zj3iqaalxbad0d7x5d83x-unit-mrjam-admission-native-adopt.service', '/nix/store/l8wqx9h6yc1vvjlq43bd4q5rp4vnp1g5-php-xmlwriter-8.4.27', '/nix/store/l9q8akm8ib4qvpqdv99ak0x0ki208k24-lua-5.4.7', '/nix/store/lcqh692ifd5x7zclf63qvhgnayvlbdm7-libthai-0.1.30', '/nix/store/ldwsdr3d8q3a81hqg8533gvzxfcmkiv7-perl5.42.3-Digest-HMAC-1.05', '/nix/store/lhvsir4idcrs7wr69r5by5sqi5745fv1-php-ftp-8.4.27', '/nix/store/lhy8b96185g6kiwsqnijs40mh95h6q3j-unit-mrjam-acme-renew-principiipetit.io.service', '/nix/store/lhypqafg593j5bvy981v5qiib7xz1yr4-php-sockets-8.4.27', '/nix/store/llsn60g2l5l352dbfaasxg9rl24sdpi0-libxext-1.3.7', '/nix/store/lrmqxvywhy6m61p5rayfmbxmbjk0i8h9-mrjam-vision-closure.json', '/nix/store/lrsfryphg9rw7i2ff8blccnvifnk8ifq-php-gmp-8.4.27', '/nix/store/lvrccnjdd2j35b47j33v6jd1zn10lrjf-php-session-8.4.27', '/nix/store/lwi9pqjgzr8yhf4f61a4sksmghcfg1w9-php-xmlreader-8.4.27', '/nix/store/m07vjyxxxvaly7rzshw0yf18jmpr5bcr-icu4c-76.1', '/nix/store/m1jha0z2wh2nh9sscnkyk7dgwzfri6m6-mrjam-acme-reload-www.principiipetit.io', '/nix/store/m345il89k5ssycdljf2isq6rx057bjds-initrd-linux-6.18.48', '/nix/store/m574kz0bi92yxm1cj5p6y6dz79rydyfz-php-openssl-8.4.27', '/nix/store/m5dklgpk5xafny8csxfhddg2h6rmkn0g-php-pdo_pgsql-8.4.27', '/nix/store/m5j52xkdsw3swm3n5bindsxa2zn4q2hs-php-apcu-5.1.28', '/nix/store/m5vk77wipbz1z6cg1wh5f438w8lx7kmd-liblqr-1-0.4.3', '/nix/store/m6ksb0s06a8nnfbfp2ggg8i53dq9lfm2-php-mbstring-8.4.27', '/nix/store/m9kk3qibaqqv0k03l83z2ywiawwkz3pl-unit-mrjam-kanidm-backup.service', '/nix/store/mapsvg328a0r25pmffn71ablz1w07y90-php-systemd-0.1.2-unstable-2018-06-11', '/nix/store/mcsazg0ppmxa9ng6592y264rcbi1dk92-php-pgsql-8.4.27', '/nix/store/mdhyffjw19n65v7fj4vshjvxzygni9px-php-sqlite3-8.4.27', '/nix/store/mgqz43aqfrb3rijnh7f0rxgnamx8cbra-perl5.42.3-Net-SSLeay-1.92', '/nix/store/mlmwvr6ia2734bxzgxjzbry8ra5a4j9w-unit-mrjam-vision-cycle-initialize.service', '/nix/store/mrb0qdza9kfhyfv7sfp3614ahqslb3z0-lzo-2.10', '/nix/store/mw038bj47acdgwdxdhb87y6v3vd1vsn3-php-pcntl-8.4.27', '/nix/store/mwfydcb60d82lpv0ycjdc4g2z7426k89-mrjam-acme-reload-audition.mrj.am', '/nix/store/mwn0js2zc6qh2q83nb36g9v8r9fks1cx-perl5.42.3-Test-Needs-0.002010', '/nix/store/n21fjl0cxcl3i66bp54wn0jnhm02j8sh-mrjam-private-backup-recipient-forgejo-backup', '/nix/store/n41xknlq9gia42f8fkmr55g0q2sjz8j5-unit-mrjam-acme-renew-principiipetit.io.timer', '/nix/store/n9jnd19dxyi8nap86pxysm6ikf2izqgx-unit-systemd-tmpfiles-resetup.service', '/nix/store/nh4pcdcrr8nwng4746vb28az6n9jm75n-unit-mrjam-vision-archive.service', '/nix/store/nh86xhr7ppvw0p1djnqh8kgy25q559a9-php-bz2-8.4.27', '/nix/store/njbxv39lnkrajcys8kb55vs3m5ahyy3l-perl5.42.3-Clone-0.46', '/nix/store/nqb2b74ma23vm5k52blc4pkpq1vbvfqn-unit-mrjam-acme-renew-vision.mrj.am.timer', '/nix/store/nqqfaj5dd433kv82mh2s742pvl2q4d2w-db-5.3.28', '/nix/store/ns79nvx2hsxlrrdk2bdb5ni8yda8axsl-unit-generate-shutdown-ramfs.service', '/nix/store/nv23xbp695g5pzfwv71dsmfrgaj6893h-unit-mrjam-identity-aliases.service', '/nix/store/nz8hh56vjjj96qda6cc9srd775jvyicg-unit-mrjam-vision-admission-initialize.service', '/nix/store/p22fx4w9bh8w9kbkzx54yl6v77awgfvq-oniguruma-6.9.10-lib', '/nix/store/p6fzklfcay69gl3b69n5zb5l79wx73cr-unit-mrjam-rust-blue.service', '/nix/store/p7hsfgvd2wbvncyc9dfgsw6by88ndsjw-php-zlib-8.4.27', '/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval', '/nix/store/pf4b257d72pp3ynm834rihif0xk4hlvr-glibc-2.42-103-bin', '/nix/store/phf60ggqmcnr6xdr8rflnf4k2rk1saq2-nixos-help', '/nix/store/pi6mrkllplvfyyklb0jf2p7my7krvv4i-fontconfig-2.17.1-lib', '/nix/store/pjyig570lhyv9qh4qa1dhgzmh2kxnxsf-unit-mrjam-identity-deletion.service', '/nix/store/pk8yjv5kidny4iihcmpdppakcalsw2bq-mrjam-vision-cycle-initialize.json', '/nix/store/plk1q2nn5hdhc93rk1bwj0q7br4pazpb-libde265-1.1.3', '/nix/store/ppxfa9fj2vbvf8k4zr3awz1qfln5q8c8-unit-mrjam-identity-aliases.timer', '/nix/store/pwjk7jbpk7y93j2lqw3q59mipkyh737j-giflib-5.2.2', '/nix/store/pxvv48k3gk2i93hsqgjrb8ind8lh0dgq-libargon2-20190702', '/nix/store/pzqj4lb6ij9il9y0h2nc0j6c54dwcsf2-libwebp-1.6.0', '/nix/store/q936bhybcljxl30jbqsf7sg7cwbbc6z0-unit-mrjam-vision-archive-initialize.service', '/nix/store/qa8l46qg8gbaqrp8hhzy0s57sj11k92f-libedit-20251016-3.1', '/nix/store/qcjzgkw9q0c8iw0qm1wmqjpq71byrixg-php-mysqli-8.4.27', '/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1', '/nix/store/qd9rgv80cwyhz2hqym0gb1jmkdj0rszn-unit-postgresqlBackup-matheval.timer', '/nix/store/qdf1mqqs7zq7bbviz0bfclzphw71hyvk-pg_ident.conf', '/nix/store/qlgkxslp5cnap21wz1kll9d3zsmwz1hb-unit-script-mrjam-upgrade-forgejo-schema-pre-start', '/nix/store/qmyr4vk6cz1gjj8v2mafcp18q8b3xdr2-unit-mrjam-identity-aliases.timer', '/nix/store/qmzz5hnaang3dgknfn4ihj70i11kydw4-unit-mrjam-acme-renew-audition.mrj.am.service', '/nix/store/qp7jys8wcvyc2w611y6acl206n5yq2vg-mrjam-runtime-green', '/nix/store/qqjzdyvm0mj5vgi75sr6ijqd1r513pml-unit-mrjam-vision-admission-initialize.service', '/nix/store/qz8f3sfyvlvsxvfyhqrkw6jd1a14549v-unit-mrjam-vision-archive.timer', '/nix/store/r085lr0nlm98c382hz7v5cchfwvwpmia-cairo-1.18.4', '/nix/store/r1fxk0xprd7qkgsi8aqgnsybjvlm0vwp-unit-nextcloud-backup.timer', '/nix/store/r335ljdbg2k670phgnwrdwbrlnh3vjw1-libavif-1.4.2', '/nix/store/r673v8zxyi5g6qrv8k9f9zr50fv501li-mrjam-kanidm-backup.toml', '/nix/store/r8czpd0hzai37m2449kask23clbqyg76-fontconfig-2.17.1', '/nix/store/rlby3yy573nwfmi15ywfg6vfw08a3ji8-etc-bashrc', '/nix/store/rn3vmm9fmgyzr5in73w7xar27frsgwsv-unit-mrjam-acme-renew-forge.mrj.am.timer', '/nix/store/rpjd108rdagax0hx3nkf027k50sbvw65-libxt-1.3.1', '/nix/store/s01phjv610dwc1gs2fkbrdf0w2q1vdaq-mrjam-acme-reload-forge.mrj.am', '/nix/store/s41sjns2l69sl6f8sqq0sir6fikrsqph-x265-4.1', '/nix/store/s481wbx9xbmsil1sr9mrxp0lafb4z2bp-perl5.42.3-HTTP-CookieJar-0.014', '/nix/store/s4bhdx48vaxw00s40q6qz2frd5la6hyy-unit-systemd-journald-.service', '/nix/store/s5jn3yzw2a6gfiw780qwx2qhz9d5nb2i-unit-mrjam-rust-green.service', '/nix/store/sapcx4qn8n5h6vd1k2vbs95bi5rjy1pc-journal-bootstrap', '/nix/store/sbkyp76v7w4p8vgfaa1b9k9iaih1q7z3-nixos-tmpfiles.d', '/nix/store/sc06082incs0yardlcp26dky1n9z2737-X-Restart-Triggers-dbus-broker', '/nix/store/sd03rx2yffzrq7pynq3v93rj96fp9nbj-unit-script-nextcloud-backup-start', '/nix/store/sdrk4hszq407q59b8vibzxxj8gpb2sa5-libraqm-0.10.5', '/nix/store/sprqjpxfwrkl2rl2ngh3fphmn5y8zpx4-php-simplexml-8.4.27', '/nix/store/spwldla91swxmnd63b648d0ml8zlmmwz-php-posix-8.4.27', '/nix/store/srx8bqjn5lfzcgs31xaavpw230cmim00-php-imagick-3.8.1', '/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition', '/nix/store/sv8j8vgwiabxavw03vdrchjidmq0b5af-unit-mrjam-vision-cycle.service', '/nix/store/svff1sb2iw8sn0094780snb0w4x44bsa-pandoc-cli-3.7.0.2', '/nix/store/syq73c5cx8bqpnfqgi8p4wnsl56pp4z2-perl5.42.3-Net-SMTP-SSL-1.04', '/nix/store/szbprycid3m0r9m1r2zm3l9yj3vapai4-php-iconv-8.4.27', '/nix/store/szzwbq809v4z14pjhj2762hsfqcg3nn3-harfbuzz-13.2.1', '/nix/store/v121i57m5xj75bs38mw8snkdyry503ya-perl5.42.3-CGI-4.59', '/nix/store/v5fcia1xn12p0lszqzf5nfq5rwl7lg8n-mrjam-forgejo-preparation-20261030', '/nix/store/v5x1zqpn72jqczv1z4715anb9xj12hf3-mrjam-forgejo-schema-check-17.0.1', '/nix/store/v5z1gghnvxsq5404cdmyqvjgng0ymq3r-unit-forgejo-backup.timer', '/nix/store/vg62wld25p7z7wpkqr4zcc620wxyxlhj-unit-forgejo.service', '/nix/store/vh0z1b9hnr6ahl1pwfxyhcp677nvpg0x-unit-mrjam-acme-renew-cloud.mrj.am.service', '/nix/store/vjcmigalkf4lr5jzd5ranzbm3p364dqk-php-sysvsem-8.4.27', '/nix/store/vk01x0avwg049mgfwqf5ra31jhycdq8l-zlib-ng-2.3.3', '/nix/store/vm7dyx4k3yyyfv85mw4vbgk0bb3gr5kc-unit-postgresql.service', '/nix/store/vq5qgxf6wp4p8ql3dzr6dv7rb4wnmp5c-unit-script-nginx-pre-start', '/nix/store/vqh4kwgxbr3pkc0iza5w2jb8z9mbdhpi-unit-mrjam-acme-renew-forge.mrj.am.service', '/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2', '/nix/store/w0c7aq3jjzwl4qjfaaspr17dpxx97hb2-perl5.42.3-HTTP-Cookies-6.10', '/nix/store/w1qzplabncv6l7nc6jmc4706xbyvv6bi-libzip-1.11.4', '/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service', '/nix/store/w5bjxxwq7n9ni2i1v6n3fyxbgkpf3ijp-potrace-1.16', '/nix/store/w6pphaj46n96kl5p37g4dpakaf49ss05-unit-nextcloud-backup.timer', '/nix/store/w7042x2ymh7qwjwm044qba3h40ira3bd-openjpeg-2.5.4', '/nix/store/w7nhj8mk3h21166bvqb9gd1dqcgnyd5g-lcms2-2.18', '/nix/store/w89ghvphxhlmwm8amjdfm937ah358vav-mrjam-vision-admission-initialize.json', '/nix/store/wa07nishvqly9gs1l9h148z1d9k83xbx-unit-forgejo-backup.service', '/nix/store/wha8xws7n8rpygkmsizqc64bfv1l2fjx-php-soap-8.4.27', '/nix/store/wqv7dllazw8smpkqp7nc5nchrfm7dqkl-unit-nextcloud-cron.timer', '/nix/store/wsd2drbh8bhpd55vbpda6lb6sis43dh6-unit-mrjam-acme-renew-log.mrj.am.timer', '/nix/store/wvawlg73160s7s3dm6irr54dim2nrzn3-X-Restart-Triggers-systemd-tmpfiles-resetup', '/nix/store/wx2y93569gr42f4lxl0kzgdfga4k1rr1-perl5.42.3-CGI-Fast-2.16', '/nix/store/wxviinn45m625y2ja34dv8q0b9bxwk0w-numactl-2.0.18', '/nix/store/x4wbfm3ymlwlkz1gp5wskig5b1prp0dp-unit-mrjam-upgrade-forgejo-schema.service', '/nix/store/x9rqnmsn5iirhm39v7dzvhrfh76qwn2d-perl5.42.3-TimeDate-2.33', '/nix/store/xa48k9j05zzazww30b4rj62ny2n54p5b-libjxl-0.11.2', '/nix/store/xm41z186g4bfsh0syh8fl6pg06vrzxb9-unit-mrjam-vision-admission.service', '/nix/store/xmd06fzwdljcc751kfdaqfk2nvf0m2q1-php-dom-8.4.27', '/nix/store/xmdrnyjfbskjwp7ck0a873k1s49mfh28-perl5.42.3-IO-HTML-1.004', '/nix/store/xp4q8izf5rpjj6c4w46z1yjb6481hsb7-librsvg-2.62.4', '/nix/store/xy1wsm0zk7r3xbacqlfdjw267bx6l9xd-fribidi-1.0.17', '/nix/store/xyc1mcvll8v2fvy9if31whj4a34684hw-php-fileinfo-8.4.27', '/nix/store/y1yj0378l08bx189xzyszvsl3rq4x7ff-php-zip-8.4.27', '/nix/store/y29d0wrc4767svmvx6f7i7skg0njwnjl-graphite2-1.3.15', '/nix/store/y2wfwjg8kizc3ym5bav32z9kyaxq0ni8-libxrender-0.9.13', '/nix/store/y84914wrabln2lywdvz94lc0awhrd3dm-perl5.42.3-FCGI-ProcManager-0.28', '/nix/store/yczjzsp713wqzqjlwsf6biszl5b97sp0-mrjam-vision-admission.json', '/nix/store/yf3byfy1py12r9cda486j46shkvxpwqb-mrjam-forgejo-public-settings.ini', '/nix/store/yggg90qinfw851c5b1x6vavalf0zzdyy-unit-mrjam-rust-blue.service', '/nix/store/ygxgdzyw7i4z4k4z17v7jcysfffkh9vw-system-generators', '/nix/store/yh4895izkdai608myl4y1ld53qwy6kqz-libheif-1.23.6-lib', '/nix/store/ymwbjqwyy1m9jdhvww8kbjqp06rb4ds5-unit-script-mrjam-acme-renew-www.principiipetit.io-start', '/nix/store/ynlfj6l58sp4l1ldclhz3lj5fw0px2qw-libwebp-1.6.0', '/nix/store/yqkxnml9qjrjzg0yh9r0il8iv50d4902-libtiff-4.7.2', '/nix/store/z007liqynvwklllv37qdv8xmkjipsw7l-perl5.42.3-HTML-Parser-3.85', '/nix/store/z93gaqgqfndkpi415pscc35b7mcjr3sz-unit-kanidm.service', '/nix/store/zd6kmx4pg58pnrnbajjm5qvw9yvbnczd-php-readline-8.4.27', '/nix/store/zi0zb65j8gkra4ahp419ib2y31s0zfvs-unit-script-kanidm-pre-start', '/nix/store/ziw7qac7iyrnal6vv7618rzsvj8m5j19-unit-mrjam-archive-mail-adopt.service', '/nix/store/znh6d71099pwlib3kc91yrhfahpgjh87-unit-mrjam-acme-renew-vision.mrj.am.timer', '/nix/store/zp1lsydalfflifna2anqnxslrl2hjs6z-openexr-3.4.15', '/nix/store/zsjl15s74114v8phvvp32ilxr68q65yi-unit-mrjam-sauvegarde.service'], 'package': '/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2', 'unit_store': '/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service', 'unit_sha256': '19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc'}
+PREVIOUS = "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80"
+DIRECTORY = Path("/var/lib/mrjam-deployment-delivery/candidate-code-20261102")
+UNIT = "mrjam-kanidm-worker-provision.service"
+SYSTEMD = Path("/run/systemd/system")
+STORE = re.compile(r"/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+\Z")
+
+
+class Refused(RuntimeError):
+    pass
+
+
+def require(value):
+    if not value:
+        raise Refused("PROVISION_DELIVERY_REFUSED")
+
+
+def validate_release(value):
+    require(isinstance(value,dict) and set(value)=={
+        "schema_version","export_sha256","export_bytes","required_free_bytes","store_paths","package","unit_store","unit_sha256"})
+    require(type(value["schema_version"]) is int and value["schema_version"]==1)
+    for field in ("export_sha256","unit_sha256"):
+        require(isinstance(value[field],str) and re.fullmatch(r"[a-f0-9]{64}",value[field]))
+    require(type(value["export_bytes"]) is int and 0<value["export_bytes"]<8*1024**3)
+    require(type(value["required_free_bytes"]) is int
+            and 2*value["export_bytes"]+1024**3<=value["required_free_bytes"]<=64*1024**3)
+    paths=value["store_paths"]
+    require(isinstance(paths,list) and 0<len(paths)<10000 and len(set(paths))==len(paths))
+    require(all(isinstance(path,str) and STORE.fullmatch(path) for path in paths))
+    require(value["package"] in paths and value["unit_store"] in paths)
+    require(value["package"].endswith("-mrjam-kanidm-worker-provision-2"))
+    return value
+
+
+def protected_directory(path, create=False):
+    """No symlink traversal and no writable ancestor outside root."""
+    descriptor=os.open("/",os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
+    try:
+        for part in Path(path).parts[1:]:
+            if create:
+                try:
+                    os.mkdir(part,0o700,dir_fd=descriptor)
+                    os.fsync(descriptor)
+                except FileExistsError:
+                    pass
+            child=os.open(part,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=descriptor)
+            os.close(descriptor);descriptor=child
+            item=os.fstat(descriptor)
+            require(item.st_uid==0 and not stat.S_IMODE(item.st_mode)&0o022)
+        return descriptor
+    except Exception:
+        os.close(descriptor)
+        raise
+
+
+def receive(stream, directory, release):
+    # Only this code archive is overwritten on an interrupted transfer. The
+    # directory binding is checked before this function, never inferred from
+    # an existing arbitrary file. No secret or application data lives here.
+    fd=os.open("export.partial",os.O_WRONLY|os.O_CREAT|os.O_NOFOLLOW|os.O_CLOEXEC,0o600,dir_fd=directory)
+    try:
+        item=os.fstat(fd)
+        require(stat.S_ISREG(item.st_mode) and item.st_uid==os.geteuid() and item.st_nlink==1
+                and stat.S_IMODE(item.st_mode)==0o600)
+        os.ftruncate(fd,0)
+        digest=hashlib.sha256();total=0
+        with os.fdopen(fd,"wb",closefd=False) as output:
+            while total<=release["export_bytes"]:
+                block=stream.read(min(1024*1024,release["export_bytes"]-total+1))
+                if not block:
+                    break
+                total+=len(block)
+                require(total<=release["export_bytes"])
+                digest.update(block);output.write(block)
+            require(total==release["export_bytes"] and digest.hexdigest()==release["export_sha256"])
+            output.flush();os.fsync(fd)
+        # An existing identical complete archive is safe to replace with these
+        # just-verified identical code bytes; no unverified bytes get imported.
+        os.rename("export.partial","export.nar",src_dir_fd=directory,dst_dir_fd=directory)
+        os.fsync(directory)
+    finally:
+        os.close(fd)
+
+
+def command(args, *, source=None, capture=False):
+    result=subprocess.run(args,stdin=source if source is not None else subprocess.DEVNULL,
+                          stdout=subprocess.PIPE if capture else subprocess.DEVNULL,
+                          stderr=subprocess.DEVNULL,check=False,timeout=300,
+                          env={"LANG":"C","LC_ALL":"C","NIX_PATH":""})
+    require(result.returncode==0)
+    if capture:
+        require(len(result.stdout)<=2*1024*1024)
+        return result.stdout
+
+
+def install_unit(directory, unit_path):
+    try:
+        existing=os.readlink(UNIT,dir_fd=directory)
+    except FileNotFoundError:
+        os.symlink(str(unit_path),UNIT,dir_fd=directory)
+        os.fsync(directory)
+    else:
+        require(existing==str(unit_path))
+
+
+def deliver(release, stream):
+    release=validate_release(release)
+    require(os.geteuid()==0 and os.path.realpath("/run/current-system")==PREVIOUS)
+    work=protected_directory(DIRECTORY,create=True)
+    try:
+        # Held through receive, import, unit installation and manager reload.
+        # A concurrent stream must never mutate the inode just verified here.
+        fcntl.flock(work,fcntl.LOCK_EX|fcntl.LOCK_NB)
+        require(stat.S_IMODE(os.fstat(work).st_mode)==0o700)
+        for filesystem in (os.fstatvfs(work),os.statvfs('/nix/store')):
+            require(filesystem.f_bavail*filesystem.f_frsize>=release['required_free_bytes'])
+        # This public binding makes a resumed transfer unable to switch the
+        # allowed payload or install another unit in the same delivery slot.
+        binding=(json.dumps(release,sort_keys=True,separators=(",",":"))+"\n").encode()
+        try:
+            fd=os.open("release.json",os.O_WRONLY|os.O_CREAT|os.O_EXCL|os.O_NOFOLLOW,0o600,dir_fd=work)
+        except FileExistsError:
+            fd=os.open("release.json",os.O_RDONLY|os.O_NOFOLLOW,dir_fd=work)
+            with os.fdopen(fd,"rb") as existing:
+                meta=os.fstat(existing.fileno())
+                require(stat.S_ISREG(meta.st_mode) and meta.st_uid==0 and meta.st_nlink==1 and stat.S_IMODE(meta.st_mode)==0o600)
+                require(existing.read(len(binding)+1)==binding)
+        else:
+            with os.fdopen(fd,"wb") as output:
+                output.write(binding);output.flush();os.fsync(output.fileno())
+            os.fsync(work)
+        receive(stream,work,release)
+        fd=os.open("export.nar",os.O_RDONLY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=work)
+        with os.fdopen(fd,"rb") as archive:
+            imported=command([PREVIOUS+"/sw/bin/nix-store","--import"],source=archive,capture=True)
+        observed=imported.decode("ascii").splitlines()
+        require(len(observed)==len(set(observed)) and set(observed)==set(release["store_paths"]))
+        command([PREVIOUS+"/sw/bin/nix-store","--verify-path",*release["store_paths"]])
+        path=Path(release["unit_store"])/UNIT
+        # This is public, immutable generated unit code, never private config.
+        require(hashlib.sha256(path.read_bytes()).hexdigest()==release["unit_sha256"])
+        runtime=protected_directory(SYSTEMD)
+        try:
+            install_unit(runtime,path)
+        finally:
+            os.close(runtime)
+        command([PREVIOUS+"/sw/bin/systemctl","daemon-reload"])
+    finally:
+        os.close(work)
+    return {"schema_version":1,"code":"HUMAN_LOGIN_TOOL_INSTALLED",
+            "application_activation":False,"credential_creation":False}
+
+
+def main():
+    try:
+        require(len(sys.argv)==1)
+        resource.setrlimit(resource.RLIMIT_CORE,(0,0))
+        os.umask(0o077)
+        signal.signal(signal.SIGALRM,lambda *_: (_ for _ in ()).throw(Refused()))
+        signal.alarm(900)
+        value=deliver(RELEASE,sys.stdin.buffer)
+    except Exception:
+        print('{"schema_version":1,"code":"PROVISION_DELIVERY_REFUSED"}')
+        return 1
+    print(json.dumps(value,sort_keys=True,separators=(",",":")))
+    return 0
+
+
+if __name__=="__main__":
+    raise SystemExit(main())

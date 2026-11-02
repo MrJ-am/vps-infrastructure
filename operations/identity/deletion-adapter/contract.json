@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "basis": "Root-authorized interface, frozen without reading candidate implementation",
+  "production_access": false,
+  "command": ["mrjam-identity-deletion", "--config", "immutable absolute JSON path"],
+  "configuration_keys": ["schema_version", "kanidm_ca_file", "kanidm_ca_sha256"],
+  "process": {"uid": 948, "gid": 944},
+  "socket": {"path": "/run/mrjam-identity-deletion/delete.sock", "mode": "0660", "parent_mode": "0750", "peer_uid": 944},
+  "credential": "/run/credentials/mrjam-identity-deletion.service/kanidm",
+  "request": {
+    "maximum_bytes_including_newline": 256,
+    "fields": ["issuer", "subject"],
+    "issuer": "https://log.mrj.am/oauth2/openid/mrjam-vision",
+    "subject": "canonical lowercase UUID",
+    "framing": "One JSON line, client shutdown(SHUT_WR), one response then EOF"
+  },
+  "response": {"maximum_bytes": 32, "status": ["deleted", "absent"], "error": ["refused", "unavailable"], "read_seconds": 2, "total_seconds": 12, "write_seconds": 1},
+  "upstream": {"endpoint": "127.0.0.1:8443", "tls_name": "log.mrj.am", "method": "DELETE", "path": "/v1/person/<subject>", "ca": "exact configured digest"},
+  "acceptance": [
+    "Unit remains stopped at boot until explicit start",
+    "Systemd credential usable by adapter; replay UID cannot read upstream token or configuration secret",
+    "Correct UID and issuer delete an invented person while preserving another person",
+    "Repeat or nonexistent subject is an idempotent success; exact deleted versus absent follows actual provider response",
+    "Root and a different UID with socket group membership cannot impersonate replay",
+    "Unknown fields for reset, list, group, token, URL, method, path or credentials are refused without provider mutation",
+    "Wrong issuer, uppercase or malformed UUID, duplicate keys, multiple lines, oversized or unterminated input are refused",
+    "Provider outage reports unavailable, does not claim deletion, and succeeds after recovery",
+    "Wrong CA digest and certificate cannot silently disable TLS validation",
+    "Adapter exposes no generic HTTP operation; only exact DELETE for the validated UUID",
+    "Worker replay can complete its journal-controlled erase with this socket and no upstream credential",
+    "No raw token or private request in diagnostics; services and VM stop after test"
+  ],
+  "limits": [
+    "Upstream service token still has the broader Kanidm people_admins permission; the Unix adapter is the enforcement boundary",
+    "Invented local qualification does not establish production authority or real SMTP delivery"
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "capacity": {
+    "allocated_closure_bytes": 1271410688,
+    "allocation_method": "lstat st_blocks*512, recursively without following symlinks, deduplicated by device/inode across closure",
+    "apparent_inode_bytes": 1204493834,
+    "minimum_double_export_plus_gib": 3491392624,
+    "minimum_export_plus_allocated_closure_plus_gib": 3553977912,
+    "required_free_bytes": 3553977912,
+    "unique_inode_count": 24536
+  },
+  "date": "2026-11-02",
+  "export": {
+    "all_local_closure_paths_verified_by_nix_store": true,
+    "all_reused_dependencies_in_observed_old_closure_or_prior_successful_deliveries": true,
+    "bytes": 1208825400,
+    "full_closure_count": 1294,
+    "path": ".local/deployment-20261101/candidate-code-delivery-20261102.nar",
+    "previous_delivery_manifest": "operations/deployment/passkey-delivery-20261102.json",
+    "previous_delivery_manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+    "reused_dependency_count": 900,
+    "sha256": "17fbff5c2c8b6e149607f465d62fa3bc6454244b48123be505f526cc37287bf3",
+    "store_path_count": 394
+  },
+  "limits": [
+    "This exact incremental code export was built, hashed and verified locally; it has not been imported into the VPS by this task.",
+    "The unchanged receiver functions were previously qualified with a real synthetic Nix import; no second identical import VM was run.",
+    "Delivery imports only candidate generation code and preserves the already-upgraded inactive V3 unit exactly. The V2 package is retained solely as the unchanged receiver validator anchor; no V2 unit is installed and no service is started.",
+    "Candidate generation qualification is separate from the integrated deployment controller qualification. Import does not select or activate a generation and does not migrate any application data."
+  ],
+  "passed": true,
+  "qualifications": {
+    "operations/deployment/../hosts/mrjam-vps/qualification-candidate-build-20261102-003.json": {
+      "sha256": "dd830603d6a6eee7682fde226a5a7378c5daf06abf7690a1c53a1c1cbe9bb2ac"
+    },
+    "operations/deployment/observation-previous-closure-20261102.json": {
+      "sha256": "e399d64d097d60993ca552d9aabe30b279a3f6a08ae1918dae2d734e4909f15d"
+    },
+    "operations/deployment/passkey-correction-delivery-20261102.json": {
+      "sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724"
+    },
+    "operations/deployment/passkey-correction-upgrade-20261102.json": {
+      "sha256": "1d8d772cc6e1235e982541598e77f0e1ccd425fb595ada971e0da571a9f22081"
+    },
+    "operations/deployment/passkey-nginx/qualification-integration-20261102-001.json": {
+      "sha256": "d3400cfa356120ce382ac47ddb7e3387fce12763a3dd8d154b9a071ef6627eb6"
+    },
+    "operations/deployment/passkey-nginx/qualification-route-20261102.json": {
+      "sha256": "ecf1384d643d01db1309320a8cc15c64b236fb3d8f0d5590fd56c166a1d28639"
+    },
+    "operations/deployment/passkey-portal/publication.json": {
+      "sha256": "cec412b19a3e23f0097d1f5afec805eb803a1e734395e35e5be1750fa1d9c14a"
+    },
+    "operations/deployment/passkey-portal/qualification-author-20261102.json": {
+      "sha256": "2ee97668bf8942aebeac64ca0d7fccb40d540f469c1bc25371037463798bcc84"
+    },
+    "operations/deployment/qualification-provision-delivery-systemd-20261102.json": {
+      "sha256": "dbec4274b50b3582795675937fa0bd1ee701a802d3db6ac5d87bb907b2077e16"
+    }
+  },
+  "receiver": {
+    "directory": "/var/lib/mrjam-deployment-delivery/candidate-code-20261102",
+    "manifest": "operations/deployment/candidate-code-delivery-20261102.json",
+    "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+    "no_function_modified": true,
+    "no_service_started": true,
+    "only_release_and_directory_assignments_differ_byte_for_byte": true,
+    "path": "operations/deployment/candidate-code-delivery-20261102.py",
+    "python_compile_passed": true,
+    "release_equals_manifest": true,
+    "release_passes_original_validator": true,
+    "same_existing_inactive_provisioner_unit_only": true,
+    "sha256": "45e59bf2aea59c6c7be6fc75e85b4ef575e9eb055b4a177b7650d656c4469b58",
+    "template": "operations/deployment/deliver_provision.py",
+    "template_matches_independent_import_vm": true,
+    "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c"
+  },
+  "root_store_information": {
+    "/nix/store/0jz7sis35ry4xm87mqp4024wcmvlj04i-nixos-system-srv1982677-26.05pre-git": {
+      "ca": null,
+      "deriver": "/nix/store/azwwbf3hvdc359va9qrycjwn9yflhz9q-nixos-system-srv1982677-26.05pre-git.drv",
+      "narHash": "sha256-FkShZ1Ja3w7BVeZ3rASu2lgAjALZz45Te9j+2QxrQZE=",
+      "narSize": 202624,
+      "references": [
+        "/nix/store/0jz7sis35ry4xm87mqp4024wcmvlj04i-nixos-system-srv1982677-26.05pre-git",
+        "/nix/store/0sfj9b6sxa9f7g412lsgv3a1ic03zbbn-users-groups.json",
+        "/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2",
+        "/nix/store/1n0p3fn7nfdbwvpkbqlnk7y13057mivk-mrjam-identity-0.1.0",
+        "/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67",
+        "/nix/store/4272zfy4x0zrpwyg6r2fcs715yywngvl-etc",
+        "/nix/store/4d4gjjj8vahg1ss4y0cdfarr0m7k52l7-perl-5.42.0-env",
+        "/nix/store/4n075ll5jdwbjv142yg8ymz5f3yf4pam-util-linux-2.42.2-bin",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+        "/nix/store/71yzkzzgsm4v8ngpwya1cm00y6mhi4r6-switch-inhibitors",
+        "/nix/store/7hmdar637aj6m80vrqma57g82pgqvbc1-mrjam-mail-native-adoption-2",
+        "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+        "/nix/store/81220alzad19dzxxpx3w8wb8ica0cmm1-getent-glibc-2.42-67",
+        "/nix/store/87r6h72hqnhb2cv54zr1jrih8g2wxr8c-firmware",
+        "/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1",
+        "/nix/store/9xfqyl52drhqhfn03xaf65g3brrycfbm-system-path",
+        "/nix/store/ahni4ky7vcyga5rkfk6yil6g0293qyvk-kmod-31",
+        "/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0",
+        "/nix/store/dbnsh65c9fir9psk7waq3swb3mdh18cr-python3-3.13.15-env",
+        "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+        "/nix/store/dyx8qsmgnsz2csfzwn723gbd2jvp0j7g-update-users-groups.pl",
+        "/nix/store/f0sk5zsngp4q7wrz72m7yh5snrw3if8j-pre-switch-checks",
+        "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style",
+        "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log",
+        "/nix/store/gdalsnb0bbj02c9vbskyzg4qisdlcf3p-shadow-4.19.4",
+        "/nix/store/gf10wjnkw745qf9kz3agfximnk74v683-mrjam-worker-credential-adaptation-1",
+        "/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11",
+        "/nix/store/h80nb302p7ngby23ia4k8r0dmk1di5p7-perl-5.42.0-env",
+        "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a",
+        "/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue",
+        "/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0",
+        "/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101",
+        "/nix/store/l0avd78x86jr5swpayvz8a6z9y5g15z3-ca.pem",
+        "/nix/store/lhp8crggngs6v3qhv89rhgkmp5pz0qjp-mounts.sh",
+        "/nix/store/lwdsw9cvlpbf4vgim65p4rvh7basblpn-install-grub.sh",
+        "/nix/store/lzi4zg1ngjwqfjs0wyjf6bwrcl814mxb-glibc-2.42-67-bin",
+        "/nix/store/m07h00fl6538s4gavrp66a20ka4hg7fy-glibc-2.42-67",
+        "/nix/store/m345il89k5ssycdljf2isq6rx057bjds-initrd-linux-6.18.48",
+        "/nix/store/mhxn5kwnri3z9hdzi3x0980id65p0icn-lib.sh",
+        "/nix/store/mwwjyy4vlrwp59a7srjy53x24viksa6z-vision-modele-multilingue-e8f8c211226b",
+        "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+        "/nix/store/pkf547jp8a92k4wmxikkyby58w10pysr-bash-interactive-5.3p9",
+        "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+        "/nix/store/qix9bpv1pprfjz7r5a9cpdkhqk2s03ii-switch-to-configuration-0.1.0",
+        "/nix/store/qp7jys8wcvyc2w611y6acl206n5yq2vg-mrjam-runtime-green",
+        "/nix/store/rg5rf512szdxmnj9qal3wfdnpfsx38qi-setup-etc.pl",
+        "/nix/store/rwshpggwxjiyf4kxxpcaxklf3v6q19n3-local-cmds",
+        "/nix/store/ryhz70asgrjn7dvw5l1qvghpjgrwm2nr-linux-6.18.48",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12",
+        "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+        "/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2",
+        "/nix/store/zklx555ig7d2gsvlfdmraz6m7kl4n4rn-linux-6.18.48-modules"
+      ],
+      "registrationTime": 1793637200,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2": {
+      "ca": null,
+      "deriver": "/nix/store/x8mp0q2hj4klq7jjz1rnng59i3h1wi5d-mrjam-kanidm-worker-provision-2.drv",
+      "narHash": "sha256-1MT0OzZWjKJa1BCO+P1Uj7QFV+pyI+N6YesxIs8/AdE=",
+      "narSize": 44568,
+      "references": [
+        "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793633708,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/8b1d53cagzriks09hwxs9yi2swnamfz9-nixos-system-srv1982677-26.05pre-git": {
+      "ca": null,
+      "deriver": "/nix/store/rgwfngf2z4b64r7g5facjsf7hir0ka2v-nixos-system-srv1982677-26.05pre-git.drv",
+      "narHash": "sha256-l1OKyEGZ2kg3GPvynFwqS26EV83ScTBYVW2SAd67g9s=",
+      "narSize": 202624,
+      "references": [
+        "/nix/store/0sfj9b6sxa9f7g412lsgv3a1ic03zbbn-users-groups.json",
+        "/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2",
+        "/nix/store/1cglaxfk8953whd1brsdvxxpgn91a3v9-etc",
+        "/nix/store/1n0p3fn7nfdbwvpkbqlnk7y13057mivk-mrjam-identity-0.1.0",
+        "/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67",
+        "/nix/store/4d4gjjj8vahg1ss4y0cdfarr0m7k52l7-perl-5.42.0-env",
+        "/nix/store/4n075ll5jdwbjv142yg8ymz5f3yf4pam-util-linux-2.42.2-bin",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+        "/nix/store/71yzkzzgsm4v8ngpwya1cm00y6mhi4r6-switch-inhibitors",
+        "/nix/store/7hmdar637aj6m80vrqma57g82pgqvbc1-mrjam-mail-native-adoption-2",
+        "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+        "/nix/store/81220alzad19dzxxpx3w8wb8ica0cmm1-getent-glibc-2.42-67",
+        "/nix/store/87r6h72hqnhb2cv54zr1jrih8g2wxr8c-firmware",
+        "/nix/store/8b1d53cagzriks09hwxs9yi2swnamfz9-nixos-system-srv1982677-26.05pre-git",
+        "/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1",
+        "/nix/store/9xfqyl52drhqhfn03xaf65g3brrycfbm-system-path",
+        "/nix/store/ahni4ky7vcyga5rkfk6yil6g0293qyvk-kmod-31",
+        "/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0",
+        "/nix/store/dbnsh65c9fir9psk7waq3swb3mdh18cr-python3-3.13.15-env",
+        "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+        "/nix/store/dyx8qsmgnsz2csfzwn723gbd2jvp0j7g-update-users-groups.pl",
+        "/nix/store/f0sk5zsngp4q7wrz72m7yh5snrw3if8j-pre-switch-checks",
+        "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style",
+        "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log",
+        "/nix/store/gdalsnb0bbj02c9vbskyzg4qisdlcf3p-shadow-4.19.4",
+        "/nix/store/gf10wjnkw745qf9kz3agfximnk74v683-mrjam-worker-credential-adaptation-1",
+        "/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11",
+        "/nix/store/h80nb302p7ngby23ia4k8r0dmk1di5p7-perl-5.42.0-env",
+        "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a",
+        "/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue",
+        "/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0",
+        "/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101",
+        "/nix/store/l0avd78x86jr5swpayvz8a6z9y5g15z3-ca.pem",
+        "/nix/store/lhp8crggngs6v3qhv89rhgkmp5pz0qjp-mounts.sh",
+        "/nix/store/lwdsw9cvlpbf4vgim65p4rvh7basblpn-install-grub.sh",
+        "/nix/store/lzi4zg1ngjwqfjs0wyjf6bwrcl814mxb-glibc-2.42-67-bin",
+        "/nix/store/m07h00fl6538s4gavrp66a20ka4hg7fy-glibc-2.42-67",
+        "/nix/store/m345il89k5ssycdljf2isq6rx057bjds-initrd-linux-6.18.48",
+        "/nix/store/mhxn5kwnri3z9hdzi3x0980id65p0icn-lib.sh",
+        "/nix/store/mwwjyy4vlrwp59a7srjy53x24viksa6z-vision-modele-multilingue-e8f8c211226b",
+        "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+        "/nix/store/pkf547jp8a92k4wmxikkyby58w10pysr-bash-interactive-5.3p9",
+        "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+        "/nix/store/qix9bpv1pprfjz7r5a9cpdkhqk2s03ii-switch-to-configuration-0.1.0",
+        "/nix/store/qp7jys8wcvyc2w611y6acl206n5yq2vg-mrjam-runtime-green",
+        "/nix/store/rg5rf512szdxmnj9qal3wfdnpfsx38qi-setup-etc.pl",
+        "/nix/store/rwshpggwxjiyf4kxxpcaxklf3v6q19n3-local-cmds",
+        "/nix/store/ryhz70asgrjn7dvw5l1qvghpjgrwm2nr-linux-6.18.48",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12",
+        "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+        "/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2",
+        "/nix/store/zklx555ig7d2gsvlfdmraz6m7kl4n4rn-linux-6.18.48-modules"
+      ],
+      "registrationTime": 1793637200,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service": {
+      "ca": null,
+      "deriver": "/nix/store/f97gf0ggiz064dfh8hl0507r669ams98-unit-mrjam-kanidm-worker-provision.service.drv",
+      "narHash": "sha256-PqTAP2gux3bsnaxFBbhj0uQlo0Y1zsT6+/yrdUaT3Tc=",
+      "narSize": 2104,
+      "references": [
+        "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+        "/nix/store/1y3zm9j2w0za51ckdy6qzx4ygvvw50yv-findutils-4.10.0",
+        "/nix/store/7c57qdfwri1vx6ywbadk30wplcmxb06q-glibc-locales-2.42-103",
+        "/nix/store/kwc34h21my8mf7xbqm9gxs1xfx07xb4i-coreutils-9.11",
+        "/nix/store/pbxald1gihb1bl9l30j764q0ibb55421-gnugrep-3.12",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+        "/nix/store/rqpz5lc9g53hda7k5fyzqjvra4cck2fv-gnused-4.10",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793641854,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "roots": {
+    "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "promoted": "/nix/store/8b1d53cagzriks09hwxs9yi2swnamfz9-nixos-system-srv1982677-26.05pre-git",
+    "staged": "/nix/store/0jz7sis35ry4xm87mqp4024wcmvlj04i-nixos-system-srv1982677-26.05pre-git",
+    "unit": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1,
+  "scope": "local code closure construction only; no SSH, publication or service activation",
+  "source_expression": {
+    "path": "operations/deployment/candidate-code-delivery.nix",
+    "sha256": "2e2298ae0f28eba16862aa0feb63c82e99b0c8acd8b03864774639e46cd9b437"
+  }
+}

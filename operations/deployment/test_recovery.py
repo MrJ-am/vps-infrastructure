@@ -8,15 +8,18 @@ from recovery import recover_before_opening, PRE_SNAPSHOT, RESTORABLE
 
 
 class Backend:
-    def __init__(self, fail=None):
+    def __init__(self, fail=None, adopted=True):
         self.calls = []
         self.fail = fail
+        self.adopted = adopted
 
     def __getattr__(self, name):
         def operation():
             self.calls.append(name)
             if name == self.fail:
                 raise RuntimeError("SYNTHETIC_PRIVATE_ERROR")
+            if name == "adoption_started":
+                return self.adopted
         return operation
 
 
@@ -62,6 +65,26 @@ class RecoveryTests(unittest.TestCase):
                 recover_before_opening(backend, self.checkpoint)
             self.assertNotIn("reopen_previous_services", backend.calls)
             self.assertEqual(self.checkpoint.read(), Phase.HELD)
+
+    def test_return_interrupted_before_adoption_needs_no_snapshot(self):
+        self.checkpoint.write(Phase.RETURNING, 123)
+        backend = Backend(fail="verify_snapshot", adopted=False)
+        result = recover_before_opening(backend, self.checkpoint)
+        self.assertEqual(result["phase"], Phase.RETURNED)
+        self.assertIn("verify_adoption_not_started", backend.calls)
+        self.assertNotIn("verify_snapshot", backend.calls)
+        self.assertNotIn("restore_snapshot", backend.calls)
+        self.assertIn("reopen_previous_services", backend.calls)
+
+    def test_ambiguous_adoption_marker_never_skips_snapshot(self):
+        for backend in (Backend(fail="adoption_started"), Backend(adopted=None), Backend(adopted=0)):
+            with self.subTest(backend=backend):
+                self.checkpoint.write(Phase.RETURNING, 123)
+                with self.assertRaisesRegex(Refused, "HELD_FOR_RECOVERY"):
+                    recover_before_opening(backend, self.checkpoint)
+                self.assertNotIn("restore_previous_generation", backend.calls)
+                self.assertNotIn("reopen_previous_services", backend.calls)
+                self.assertEqual(self.checkpoint.read(), Phase.HELD)
 
     def test_release_mismatch_refuses_before_freeze_or_checkpoint_change(self):
         self.checkpoint.write(Phase.CANDIDATE, 123)

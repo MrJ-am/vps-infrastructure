@@ -14,7 +14,7 @@ let
     FORGEJO__SECURITY__INTERNAL_TOKEN__FILE = "/var/lib/forgejo/custom/conf/internal_token";
     FORGEJO__OAUTH2__JWT_SECRET__FILE = "/var/lib/forgejo/custom/conf/oauth2_jwt_secret";
   };
-  settings = lib.recursiveUpdate preparation.settings {
+  settings = lib.recursiveUpdate preparation.settings ({
     DEFAULT = { RUN_USER = "forgejo"; RUN_MODE = "prod"; WORK_PATH = "/var/lib/forgejo"; };
     database.AUTO_MIGRATION = false;
     repository.ROOT = "/var/lib/forgejo/repositories";
@@ -23,7 +23,12 @@ let
     server.LANDING_PAGE = "login";
     log.MODE = "console";
     actions.ENABLED = false;
-  };
+  } // lib.optionalAttrs (cfg.retainedQuotas != null) {
+    quota.ENABLED = true;
+    "quota.default".TOTAL = cfg.retainedQuotas.totalStorage;
+    repository = { ROOT = "/var/lib/forgejo/repositories";
+      MAX_CREATION_LIMIT = cfg.retainedQuotas.maxRepositories; };
+  });
   ini = (pkgs.formats.ini { }).generate "mrjam-forgejo-public-settings.ini" settings;
   hba = ''
     local forgejo forgejo peer
@@ -39,6 +44,14 @@ in {
     artifactStorePath = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; };
     uid = lib.mkOption { type = lib.types.nullOr lib.types.ints.positive; default = null; };
     gid = lib.mkOption { type = lib.types.nullOr lib.types.ints.positive; default = null; };
+    retainedQuotas = lib.mkOption {
+      type = lib.types.nullOr (lib.types.submodule { options = {
+        maxRepositories = lib.mkOption { type = lib.types.ints.between (-1) 2147483647; };
+        totalStorage = lib.mkOption { type = lib.types.strMatching "(-1|[0-9]+( ?(B|KiB|MiB|GiB|TiB))?)"; };
+      }; });
+      default = null;
+      description = "Explicit preservation of quota defaults from the reviewed installed source; per-account SQL overrides remain untouched.";
+    };
     settings = lib.mkOption { type = lib.types.attrs; readOnly = true; default = settings; };
   };
   config = lib.mkIf cfg.enable {

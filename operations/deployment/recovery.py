@@ -29,16 +29,23 @@ def recover_before_opening(backend, checkpoint, clock=time.monotonic):
     try:
         backend.freeze()
         backend.verify_quiescent()
-        if initial in RESTORABLE:
-            # RETURNING is only retried with a complete verified offline
-            # snapshot. Partial creation never authorises an extraction.
+        restore = initial in RESTORABLE
+        if initial == Phase.RETURNING:
+            # RETURNING can follow an error before a snapshot was created.
+            # The sealed backend validates the release-bound adoption marker;
+            # any malformed marker refuses, rather than implying no adoption.
+            restore = backend.adoption_started()
+            if type(restore) is not bool:
+                raise Refused("ADOPTION_INTENT_UNAVAILABLE")
+        if restore:
+            # Partial creation never authorises an extraction.
             backend.verify_snapshot()
         else:
             # Before the durable snapshot checkpoint the backend must prove
             # adoption was never entered, even if boot already selects staged.
             backend.verify_adoption_not_started()
         transition(Phase.RETURNING)
-        if initial in RESTORABLE:
+        if restore:
             backend.restore_snapshot()
         backend.restore_previous_generation()
         backend.verify_previous_private_services()

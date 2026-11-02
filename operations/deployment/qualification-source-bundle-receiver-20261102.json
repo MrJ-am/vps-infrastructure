@@ -1,0 +1,48 @@
+{
+  "bundle_count": 9,
+  "command": "python3 -I -m unittest discover -s operations/deployment -p test_receive_source_bundles.py -v",
+  "destination": "/var/lib/mrjam-source-import",
+  "directory_mode": "0700",
+  "file_link_count": 1,
+  "file_mode": "0600",
+  "filesystem_tests": "Actual private files, directory walking, symlink refusal, flock, no-replace links, integrity checks, interruption cleanup and inode-preserving repeat.",
+  "helper": "operations/deployment/receive_source_bundles.py",
+  "helper_sha256": "11d0b4a0451cee79c48b6dbf710a246bf412d6808c199697113b1f821c75be37",
+  "input_format": "Header-free concatenation in the fixed NAMES order; exact per-bundle byte counts and digests plus whole-stream byte count and digest; EOF required.",
+  "limits": [
+    "This receiver verifies opaque bytes; Git autonomy and exact references are verified by the separate governance importer.",
+    "Local filesystem qualification substitutes owner IDs; it does not claim a root VM or production execution.",
+    "SIGKILL or power loss can leave a root-private staging directory. A kill between link and unlink can leave a two-link final inode; subsequent receipt refuses it until a separately reviewed cleanup. No unverified final file or overwrite is authorized."
+  ],
+  "no_application_activation": true,
+  "no_git_import": true,
+  "no_network": true,
+  "no_subprocess": true,
+  "operational_copy_changes": [
+    "RELEASE"
+  ],
+  "passed": true,
+  "production_access": false,
+  "production_release_bound": false,
+  "proved": [
+    "All nine segments and overall digest/EOF verified before any new final file.",
+    "Corrupt, truncated, oversized, wrong-digest and late-invalid streams accept no new final files.",
+    "Different contents, wrong owner/group/modes, symlinks, hardlinks, FIFOs and directories refuse before input.",
+    "Concurrent lock and insufficient disk reserve refuse before input.",
+    "Foreign destination appearing during receive or immediately at installation is never replaced.",
+    "SIGTERM handler during receive cleans staged files; retry after failure between final installations succeeds.",
+    "Repeated successful input preserves pre-existing final bytes and inode metadata.",
+    "Unsealed template and extra argv refuse with a fixed JSON result, without exception or input output."
+  ],
+  "python": "/nix/store/sgd4bw41gdw6rhla06bw7knzbl9gxzcb-python3-3.14.8/bin/python3",
+  "required_owner_gid": 0,
+  "required_owner_uid": 0,
+  "schema_version": 1,
+  "synthetic_substitutions": [
+    "OWNER uses the invoking local uid/gid for filesystem tests; production root refusal is checked separately.",
+    "Complete deliver test substitutes DIRECTORY and PREVIOUS only, in addition to fixture OWNER; function implementations unchanged."
+  ],
+  "test_count": 23,
+  "tests": "operations/deployment/test_receive_source_bundles.py",
+  "tests_sha256": "e26f4624470817c271d73426842cdd0ab56788b7ca26ade192eb23d3a0397ae2"
+}
