@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "source_commit": "258f3e3ace968312058feecf7ff796c23f5f5840",
+  "sealed_script_sha256": "7ce3a2d9d2e280fd577aaf70373be4d6d55d31194234824b06f2f527b38e96d7",
+  "export_sha256": "7d7eb4d466bbb0a691f8bf39d00df4bdf446ee4b96d334c4ad524e1e01e477e9",
+  "export_bytes": 718957480,
+  "operation": "import exact qualified code and install inactive runtime unit",
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "ssh_exit_code": 0,
+  "limits": [
+    "No authentication performed",
+    "No credentials created",
+    "No application activation",
+    "Proton Pass browser portal is a separate pending operation"
+  ]
+}
