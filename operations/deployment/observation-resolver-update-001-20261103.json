@@ -1,0 +1,539 @@
+{
+  "schema_version": 1,
+  "correction_source_revision": "74edb72ca4659c73328c9466ea53ee9908ecb3ac",
+  "initial_application_source_revision": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd",
+  "generation": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "reception": {
+    "application_activation": false,
+    "code": "POSTRELEASE_CODE_IMPORTED",
+    "schema_version": 1,
+    "store_paths": 7,
+    "systemd_changes": false
+  },
+  "terminal": {
+    "time": "2026-11-02T23:52:01.183763+00:00",
+    "observation": {
+      "code": "CONFIGURATION_UPDATE_OBSERVED",
+      "configuration_verified": true,
+      "phase": "complete",
+      "result": {
+        "application_data_restored": false,
+        "code": "CONFIGURATION_VERIFIED",
+        "schema_version": 1
+      },
+      "schema_version": 1,
+      "unit": {
+        "ActiveState": "active",
+        "ExecMainCode": 1,
+        "ExecMainStatus": 0,
+        "LoadState": "loaded",
+        "MainPID": 0,
+        "Result": "success",
+        "SubState": "exited"
+      }
+    }
+  },
+  "postflight": {
+    "application_authorization_proved": false,
+    "application_records_read": false,
+    "backups": {
+      "forgejo-backup": {
+        "active_timer": true,
+        "future_elapse_scheduled": true,
+        "persistent_timer": true,
+        "successful_restore_proved": false
+      },
+      "mrjam-sauvegarde": {
+        "active_timer": true,
+        "future_elapse_scheduled": true,
+        "persistent_timer": true,
+        "successful_restore_proved": false
+      },
+      "nextcloud-backup": {
+        "active_timer": true,
+        "future_elapse_scheduled": true,
+        "persistent_timer": true,
+        "successful_restore_proved": false
+      },
+      "postgresqlBackup-matheval": {
+        "active_timer": true,
+        "future_elapse_scheduled": true,
+        "persistent_timer": true,
+        "successful_restore_proved": false
+      },
+      "postgresqlBackup-nextcloud": {
+        "active_timer": true,
+        "future_elapse_scheduled": true,
+        "persistent_timer": true,
+        "successful_restore_proved": false
+      }
+    },
+    "code": "BARRIERS_OBSERVED",
+    "firewall": {
+      "ipv4": {
+        "checks": {
+          "accept_chain_exact": true,
+          "input_enters_only_expected_chain": true,
+          "no_unrecognized_input_exception": true,
+          "public_tcp_ports_exact": true,
+          "terminal_drop_present": true
+        },
+        "observed": true
+      },
+      "ipv6": {
+        "checks": {
+          "accept_chain_exact": true,
+          "input_enters_only_expected_chain": true,
+          "no_unrecognized_input_exception": true,
+          "public_tcp_ports_exact": true,
+          "terminal_drop_present": true
+        },
+        "observed": true
+      }
+    },
+    "future_ci_proved": false,
+    "journals_read": false,
+    "legacy": {
+      "matheval": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "mrj-auth": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "mrjam-courriel": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "mrjam-metier": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vise": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vise-backup": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vise-provision": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-admission": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-archive": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-closure": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-cycle": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-embeddings-backfill": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-purge": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      },
+      "vision-replay": {
+        "not_enabled": true,
+        "not_loaded_or_masked": true,
+        "stopped": true
+      }
+    },
+    "listeners": {
+      "expected_public_tcp_present": {
+        "22": true,
+        "2222": true,
+        "443": true,
+        "80": true
+      },
+      "private_application_ports_loopback_only": true,
+      "public_tcp_only_22_80_443_2222": true
+    },
+    "nginx": {
+      "checks": {
+        "active": true,
+        "no_runtime_dropins": true,
+        "running_master_selects_promoted_configuration": true,
+        "temporary_portal_route_absent_from_promoted_configuration": true,
+        "unit_matches_promoted": true,
+        "unit_selects_promoted_configuration": true
+      },
+      "observed": true
+    },
+    "only_root_has_uid_zero": true,
+    "production_mutation": false,
+    "promoted_live_and_boot": true,
+    "schema_version": 1,
+    "secret_metadata": {
+      "admission_token": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "approval": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "archive-initialize.json": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "archive.json": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "closure": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "cycle_token": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "identity_client": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "identity_directory": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "recipient": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "replay_token": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "smtp.json": {
+        "expected_metadata": true,
+        "present": true
+      },
+      "worker_directory": {
+        "expected_metadata": true,
+        "present": true
+      }
+    },
+    "secrets_read": false,
+    "ssh": {
+      "checks": {
+        "active": true,
+        "configuration_matches_promoted": true,
+        "keyboard_interactive_disabled": true,
+        "no_runtime_dropins": true,
+        "password_disabled": true,
+        "port_22_only": true,
+        "root_key_only": true,
+        "root_ssh_is_full_administration": true,
+        "running_expected_configuration": true,
+        "unit_matches_promoted": true
+      },
+      "observed": true
+    },
+    "temporary_administration_stopped": {
+      "mrjam-kanidm-passkey-portal": true,
+      "mrjam-kanidm-worker-provision": true,
+      "mrjam-passkey-nginx-route": true
+    },
+    "vise_retained_directory": {
+      "content_preservation_proved": false,
+      "present": true
+    },
+    "workers": {
+      "mrjam-identity": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "gids_match": true,
+            "no_effective_or_ambient_caps": true,
+            "no_new_privileges": true,
+            "running_observed": true,
+            "uids_match": true
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-identity-deletion": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "gids_match": true,
+            "no_effective_or_ambient_caps": true,
+            "no_new_privileges": true,
+            "running_observed": true,
+            "uids_match": true
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-rust-blue": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "gids_match": true,
+            "no_effective_or_ambient_caps": true,
+            "no_new_privileges": true,
+            "running_observed": true,
+            "uids_match": true
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-rust-green": {
+        "checks": {
+          "fragment_matches_promoted": null,
+          "identity_matches": true,
+          "inactive_slot_expected": true,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "running_observed": false
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "masked",
+          "unit_no_capabilities": null,
+          "unit_no_new_privileges": null,
+          "unit_protected_filesystem": null,
+          "unit_user_group_match": null
+        },
+        "observed": true
+      },
+      "mrjam-vision-admission": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "gids_match": true,
+            "no_effective_or_ambient_caps": true,
+            "no_new_privileges": true,
+            "running_observed": true,
+            "uids_match": true
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-vision-archive": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "running_observed": false
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-vision-closure": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "gids_match": true,
+            "no_effective_or_ambient_caps": true,
+            "no_new_privileges": true,
+            "running_observed": true,
+            "uids_match": true
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-vision-cycle": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "running_observed": false
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": null,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      },
+      "mrjam-vision-replay": {
+        "checks": {
+          "fragment_matches_promoted": true,
+          "identity_matches": true,
+          "inactive_slot_expected": null,
+          "no_dropins": true,
+          "no_root_or_wheel_membership": true,
+          "process": {
+            "running_observed": false
+          },
+          "qualified_declaration_matches": true,
+          "replay_declaration_has_no_provider_token": true,
+          "unit_load_state": "loaded",
+          "unit_no_capabilities": true,
+          "unit_no_new_privileges": true,
+          "unit_protected_filesystem": true,
+          "unit_user_group_match": true
+        },
+        "observed": true
+      }
+    }
+  },
+  "https": {
+    "application_body_read": false,
+    "checks": [
+      {
+        "domain": "audition.mrj.am",
+        "http_status": 200,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "cloud.mrj.am",
+        "http_status": 302,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "forge.mrj.am",
+        "http_status": 303,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "log.mrj.am",
+        "http_status": 200,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "logique.echos.systems",
+        "http_status": 200,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "principiipetit.io",
+        "http_status": 308,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "vision.mrj.am",
+        "http_status": 200,
+        "passed": true,
+        "transport_exit": 0
+      },
+      {
+        "domain": "www.principiipetit.io",
+        "http_status": 308,
+        "passed": true,
+        "transport_exit": 0
+      }
+    ],
+    "observed_at": "2026-11-02T23:52:24.807475+00:00",
+    "passed": true,
+    "schema_version": 1
+  },
+  "limits": [
+    "The CI chain is not activated or fully qualified.",
+    "Root SSH remains full administration under explicit user authorization.",
+    "No human SSO, positive SMTP, or full restore evidence is inferred from these checks.",
+    "Stopped workers and masked green have no live process proof.",
+    "No application data was restored."
+  ]
+}

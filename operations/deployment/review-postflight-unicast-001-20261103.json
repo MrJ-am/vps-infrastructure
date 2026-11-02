@@ -1,0 +1,33 @@
+{
+  "application_data_restored": false,
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "closed_evidence": {
+    ".local/deployment-20261101/postflight-unicast-result-001.json": "bf8f5bd35976626775b40055b14b01110360a7e6888c67bed51eb304ef5136a9",
+    ".local/deployment-20261101/postrelease-resolver-delivery-result-001.json": "1800d68a0cc0523bb696d78f4c93879f3c746bf329ef1321518da397e1ae963f",
+    ".local/deployment-20261101/public-https-after-unicast-001.json": "9a6c80b5f624c765cefb88ea3358cf5526d3c3ae899acff767110d3798666341",
+    ".local/deployment-20261101/resolver-update-launch-001.json": "a29a020df4b933ee7aa1db8b8dcb6a7994ebf2f3e2e2e875d9009b3f02b890f7",
+    ".local/deployment-20261101/resolver-update-observations-001.jsonl": "9b695cefe9638fabaccd7ffc8fdc5de6985e00f5e0ca2ceb8ef12458d50dd1e1"
+  },
+  "controller": "/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001",
+  "current_and_boot_verified": true,
+  "eight_external_https_observed_at": "2026-11-02T23:52:24.807475+00:00",
+  "inactive_green_expected_and_only_declaration_proved": true,
+  "ipv4_ipv6_firewalls_exact": true,
+  "limits": [
+    "The original deployed application release remains sourceI; publicationL adds only the reviewed resolver correction and its proofs.",
+    "The controller verified live DNS and absence of any5355 TCP/UDP binding; the separate barriers observation measures TCP listeners and firewall declarations.",
+    "Authenticated application authorization, end-to-end SMTP, completed backup restoration, ViSe directory content preservation and future CI authority are not established by these checks.",
+    "Green is masked/inactive; periodic workers were idle when observed, so live process checks do not apply to those observations.",
+    "Previously observed resource counters with unavailable values are not reclassified as zero and no CI capacity approval is inferred."
+  ],
+  "loaded_worker_units_match_promoted": true,
+  "only_expected_public_tcp_listeners": true,
+  "passed": true,
+  "publication_commit": "74edb72ca4659c73328c9466ea53ee9908ecb3ac",
+  "replay_no_provider_token": true,
+  "schema_version": 1,
+  "scope": "read-only independent review of closed production observations; no production action by reviewer",
+  "ssh_nginx_runtime_matches_declaration": true,
+  "status": "SOCLE_AND_UNICAST_CORRECTION_VERIFIED_WITH_DECLARED_SCOPE",
+  "terminal_at": "2026-11-02T23:52:01.183763+00:00"
+}

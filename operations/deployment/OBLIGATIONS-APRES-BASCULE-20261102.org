@@ -7,8 +7,8 @@ l'[[file:AUTORISATION-ADMIN-20261102.org][autorisation d'achever le déploiement
 Il complète [[file:ETAT-20261102.org][l'état courant]] sans modifier les anciens reçus.
 La tentative 005 a réussi : génération 007 active et au démarrage, résultat
 =CUTOVER_VERIFIED=, huit contrôles HTTPS passés. Le postflight v5 confirme
-les unités et protections observables ; le port 5355 reste à fermer de manière
-déclarative, sans exception correspondante dans le pare-feu actuel.
+les unités et protections observables ; la correction déclarative LLMNR a ensuite été appliquée et vérifiée.
+La génération phi68 est active et au démarrage ; les ports publics sont exacts.
 La chaîne CI, la revue et la livraison protégée restent à terminer.
 Les contrôles ci-dessous distinguent les preuves acquises des travaux restants.
 

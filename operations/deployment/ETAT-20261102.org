@@ -2,32 +2,32 @@
 #+date: 2026-11-02
 #+language: fr
 
-* État courant — cinquième bascule réussie, contrôles après activation
+* État courant — socle déployé et correction réseau vérifiée
 
-La tentative 005 a terminé le 2 novembre à 23:23:19 UTC avec
-=CUTOVER_VERIFIED= et les écritures publiques ouvertes. La génération 007
-corrigée est active et sélectionnée au démarrage. Les huit accès HTTPS ont
-passé leurs contrôles à 23:23:29 UTC. Kanidm est réparé ; ViSe reste exclu.
-Le corpus Matheval existant est conservé et la migration Audition 002 adoptée.
+La première bascule 005 a réussi le 2 novembre à 23:23:19 UTC. Le problème
+de droits Kanidm est corrigé, les applications sont déployées et ViSe reste
+exclu. Le corpus Matheval est conservé et la migration Audition 002 adoptée.
 
-La source acceptée est =22ede22314b9dda89f11383a5d4cd9ac3c01cdcd= ;
-la livraison correspondante est =e93fea11099c1ee45c2c3f8fb9325b693682b1a8=.
-Voir [[file:observation-fifth-cutover-success-20261102.json][le résultat terminal]].
+La correction déclarative LLMNR a ensuite réussi à 23:52:01 UTC, sans rejouer
+les migrations ou restaurer les données. La génération active et de démarrage
+est désormais =phi68cwg38madbq8p805yvrsyry8g8wr=.
+Les huit contrôles HTTPS passent à 23:52:24 UTC. Les ports publics observés
+sont exactement ceux attendus ; le port 5355 n’est plus lié. DNS, pare-feu,
+SSH, Nginx et protections observables des travailleurs passent les contrôles.
+Les trois unités d’administration temporaire sont arrêtées.
+Voir [[file:observation-resolver-update-001-20261103.json][l’observation de production]].
 
-Le contrôle corrigé des chemins symboliques confirme les unités chargées,
-SSH et Nginx conformes à la génération promue. Les identités, restrictions et
-métadonnées de secrets contrôlées sont conformes. Le slot green est masqué et
-au repos : sa déclaration est vérifiée, ses propriétés de processus sont
-indisponibles. Le rejeu ne reçoit pas le jeton du fournisseur.
+Les sources applicatives initiales sont =22ede22314b9dda89f11383a5d4cd9ac3c01cdcd=,
+leur livraison documentaire =e93fea11099c1ee45c2c3f8fb9325b693682b1a8=.
+La correction réseau est publiée dans =74edb72ca4659c73328c9466ea53ee9908ecb3ac=.
+Elle ne change aucun exécutable applicatif. Les reçus antérieurs restent inchangés.
 
-Le seul port supplémentaire lié hors loopback est 5355 (port LLMNR) ; le
-pare-feu IPv4/IPv6 observé ne l'admet pas. Sa désactivation déclarative reste
-à appliquer. Le classement du port ne constitue pas une mesure d'accessibilité
-Internet ni une attribution de processus. Voir [[file:observation-postflight-005-20261103.json][le postflight corrigé et HTTPS]].
 Root SSH reste une administration complète autorisée. La chaîne CI reste
-préparée localement et doit encore être qualifiée puis activée. Les timers
-de sauvegarde ne constituent pas une preuve de restauration ; SSO humain
-et envoi SMTP positif ne sont pas attestés par ces contrôles.
+préparée localement et doit encore être qualifiée puis activée, avec revue
+et autorité de livraison distinctes. Les timers de sauvegarde ne constituent
+pas une preuve de restauration ; SSO humain et envoi SMTP positif ne sont pas
+attestés par ces contrôles. Les propriétés de processus des tâches au repos
+et du slot green masqué restent indisponibles.
 
 ** État conservé avant la cinquième tentative
 
