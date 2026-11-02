@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-02",
+  "scope": "local synthetic qualification only",
+  "package": "/nix/store/k0l2j9nxn40h9yyy16j2l70d13w9f9c0-mrjam-mail-native-adoption-1",
+  "derivation": "/nix/store/5pc8g3c1vxc1gc4a7khyi5b2za787xj4-mrjam-mail-native-adoption-1.drv",
+  "nar_hash": "sha256-Wfb9e3Qdc2BQ3F/53cIdYLxUBxSRH3GRgPqg4Bhtp2Q=",
+  "closure_bytes": 210639624,
+  "installed_source_sha256": {
+    "libexec/adopt-cycle.py": "f2bad8a6453c75bda6e839474b843143058bf448f1987868340da7285271e2cf",
+    "libexec/adopt-archive.py": "af44791a97875f32dde9b686e78a8e17bbed0eff1d92aee228e2bfd5d85dbae3"
+  },
+  "source_sha256": {
+    "adopt.py": "b5000aaa90b1a4a4ac461c7a38fce2d25e531cbe6bf4020bdfa9db0beee9469c",
+    "package.nix": "8ab1e3e767875cccc7d7e3e11fdfc296dcc4b855a906e9c73b79c7bfe5d2fae0",
+    "schema-provenance.json": "9ba847b03c7b64e6523b12b52c14e30e104be4a922a5f7a7dc96fedcf3648ea7",
+    "test_adopt.py": "154d598b0b39dfe8a1199f92eaf2e3275d03c56ac1f34698a4b93ce24a6cf4cd",
+    "schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+    "schemas/native-mail.sql": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd",
+    "schemas/target-mail.sql": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d"
+  },
+  "nixpkgs": {
+    "revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+    "source": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source"
+  },
+  "validation": {
+    "author_tests_passed_local": 23,
+    "author_tests_passed_nix": 23,
+    "failures": 0,
+    "synthetic_data_only": true,
+    "legacy_code_executed": false,
+    "production_data_access": false,
+    "independent_systemd_qualification": "pending",
+    "activation_performed": false
+  },
+  "original_admission_files_unchanged": 15
+}

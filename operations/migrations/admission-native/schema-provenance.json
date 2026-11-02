@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "services/mrjam-admission/admission.py",
+      "blob": "56135557bfe305626c506005aed9e3437804b733",
+      "source_sha256": "411c4f8375a59ad30e23f748a879382bf3895927c3d148713f2a74d4c0504128",
+      "extraction": "AST string literal only; legacy code never imported or executed",
+      "schema": "legacy-requests.sql",
+      "schema_sha256": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d"
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "services/mrjam-courriel/courriel.py",
+      "blob": "6e9a1cb8fb7596e51766c60b376299a495dfa2a7",
+      "source_sha256": "bf3576f61472de88ec4c9db022f4cb57bfe97769330b07a39b8b6890dc03fdde",
+      "extraction": "AST string literal only; legacy code never imported or executed",
+      "schema": "legacy-mail.sql",
+      "schema_sha256": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561"
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "a3cb6be33652c7f2b824af0213bd1604eb9d6d5f",
+      "path": "src/admission.lisp",
+      "blob": "cf8b23136c10dec4bc6bb0bc318bd3155e2af843",
+      "source_sha256": "e4ed8b87dedb94f836cbee4d0841690cbc02a8ab586f828a705b4f38233bed63",
+      "legacy_code_executed": false,
+      "schema": "native-requests.sql",
+      "schema_sha256": "cfdbf997698caf40c0bf15be37ec9385f2176a78a73909e9b8eb2c5bc2103c26",
+      "extraction": "Pinned literal CREATE SQL only, plus exact reviewed ALTER columns in model; never load legacy runtime"
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "lisp/courriel/file.lisp",
+      "blob": "b1f470a52e371ca55fda9d2b8e231bda16b040c8",
+      "source_sha256": "3f6158528f6d6af7acf1facbe3cefd5195327fe5abb9c24cba0e9832fa9a42da",
+      "legacy_code_executed": false,
+      "schema": "native-mail.sql",
+      "schema_sha256": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd",
+      "extraction": "Pinned literal CREATE SQL only, plus exact reviewed ALTER columns in model; never load legacy runtime"
+    },
+    {
+      "schema": "target-requests.sql",
+      "schema_sha256": "1907245e30044fab223d1a3942ee3508aebc180013fd40273ea40ae1c00e48af",
+      "target_candidate": ".local/vision-kanidm-workers/workers/002_admissions.sql",
+      "qualification": "Shared canonical contract frozen by host_composition; publication revision not yet assigned"
+    },
+    {
+      "schema": "target-mail.sql",
+      "schema_sha256": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d",
+      "target_candidate": ".local/vision-kanidm-workers/workers/001_courriels.sql",
+      "qualification": "Shared canonical contract frozen by host_composition; publication revision not yet assigned"
+    }
+  ],
+  "native_contracts": [
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "a3cb6be33652c7f2b824af0213bd1604eb9d6d5f",
+      "path": "src/admission-identite.lisp",
+      "blob": "fc7161225f8ee6357e687f9bafb75e247bff1bbf",
+      "source_sha256": "1d52b6334cdd6df21067a23f09ae07267f471605434a7b2c624f30e848c048ca",
+      "legacy_code_executed": false
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "a3cb6be33652c7f2b824af0213bd1604eb9d6d5f",
+      "path": "src/admission.lisp",
+      "blob": "cf8b23136c10dec4bc6bb0bc318bd3155e2af843",
+      "source_sha256": "e4ed8b87dedb94f836cbee4d0841690cbc02a8ab586f828a705b4f38233bed63",
+      "legacy_code_executed": false
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "lisp/courriel/file.lisp",
+      "blob": "b1f470a52e371ca55fda9d2b8e231bda16b040c8",
+      "source_sha256": "3f6158528f6d6af7acf1facbe3cefd5195327fe5abb9c24cba0e9832fa9a42da",
+      "legacy_code_executed": false
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "lisp/courriel/mime.lisp",
+      "blob": "a0e63da5422b39d3cd594b81d8688acdac74bd20",
+      "source_sha256": "c96b5e8bca15d34edb8816580e702a96e3e4d3fbf8e13d3f872b4fd614232de9",
+      "legacy_code_executed": false
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "lisp/identite/kanidm.lisp",
+      "blob": "d14a8f5b4a1646a0741340fccde29d88f687078f",
+      "source_sha256": "d3b42dff87e86de5d5e4b7dc0702170c9c190c863c83b8cc7f38d5466177673d",
+      "legacy_code_executed": false
+    }
+  ],
+  "publisher_origin": {
+    "path": "operations/migrations/admission/adopt.py",
+    "sha256": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+    "modified_in_place": false
+  },
+  "target_columns": {
+    "demandes": 25,
+    "courriels": 11
+  },
+  "business_hashes": "empreinte_metier preserved separately from contenu_sha256; Lisp array and Rust object digests differ",
+  "production_data_access": false
+}

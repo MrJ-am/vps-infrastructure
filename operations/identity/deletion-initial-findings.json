@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-fixture-corrections-with-original-failures-retained",
+  "findings": [
+    {
+      "derivation": "/nix/store/zbiyy0b9z7rj1nxsx0sh9x3kxmzx22hm-vm-test-run-mrjam-existing-server-native-deletion.drv",
+      "failed_assertion": "readiness refusal code differed from REQUIRED_CAPABILITY_MISSING",
+      "classification": "fixture used an /etc symlink parent, rejected earlier by the server's descriptor-based NOFOLLOW reader",
+      "resolution": "use the canonical immutable store path for the negative check-config command, as the real service already does",
+      "candidate_changed": false
+    },
+    {
+      "derivation": "/nix/store/3c3za4sdrzsajmrk8lw59k4w77q3ih54-vm-test-run-mrjam-existing-server-native-deletion.drv",
+      "failed_assertion": "repeat request after successful deletion expected HTTP401",
+      "classification": "the common identity remains authenticated but its removed Vision principal is forbidden (HTTP403)",
+      "resolution": "require exact HTTP403 after deletion; the broker's fixed SQL principal lookup refuses a missing user with 403",
+      "candidate_changed": false
+    }
+  ]
+}

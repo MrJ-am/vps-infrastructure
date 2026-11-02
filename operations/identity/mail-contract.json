@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scope": "independent-native-mail-adoption-and-worker-resumption",
+  "expectations": [
+    "Distinct noargs cycle and archive adopters consume only their sealed snapshots under the documented UID and GID.",
+    "Every original MIME byte, key, retry field and both historical proofs survive; no Rust semantic proof is fabricated.",
+    "Cycle completion markers and closure progress markers are retained exactly, including NULL and incomplete states; no date, issuer or erasure intention is inferred.",
+    "Identical publication preserves inode; changed markers or conflicting duplicate messages refuse publication atomically.",
+    "Real workers can resume the adopted queues without changing markers; SMTP refusal preserves queued MIME and increases retry state.",
+    "Old queue keys and marker presence alone never acknowledge or create a SQL erasure intention.",
+    "Private archive configuration is delivered by LoadCredential with its age recipient kept out of the unit and public JSON.",
+    "Diagnostics and refusal output contain only closed statuses; no synthetic private marker escapes."
+  ],
+  "limits": ["Only invented local state", "No real SMTP acceptance or off-host archival durability", "Preservation of a marker does not qualify reconciliation of an actual outstanding erasure"]
+}

@@ -1,0 +1,29 @@
+test_atomic_publication_is_private_and_idempotent_without_rewrite (test_adopt.Adoption.test_atomic_publication_is_private_and_idempotent_without_rewrite) ... ok
+test_changed_mail_hash_bad_key_and_oversize_are_refused (test_adopt.Adoption.test_changed_mail_hash_bad_key_and_oversize_are_refused) ... ok
+test_cli_refuses_arguments_root_and_never_echoes_details (test_adopt.Adoption.test_cli_refuses_arguments_root_and_never_echoes_details) ... ok
+test_concurrent_runtime_directory_lock_prevents_publication (test_adopt.Adoption.test_concurrent_runtime_directory_lock_prevents_publication) ... ok
+test_crash_after_publication_resumes_only_same_verified_inode (test_adopt.Adoption.test_crash_after_publication_resumes_only_same_verified_inode) ... ok
+test_crash_before_publication_resumes_verified_pending_image (test_adopt.Adoption.test_crash_before_publication_resumes_verified_pending_image) ... ok
+test_existing_different_state_is_never_overwritten (test_adopt.Adoption.test_existing_different_state_is_never_overwritten) ... ok
+test_extra_schema_cannot_supply_a_trigger_view_or_index (test_adopt.Adoption.test_extra_schema_cannot_supply_a_trigger_view_or_index) ... ok
+test_links_and_public_permissions_cannot_be_adopted (test_adopt.Adoption.test_links_and_public_permissions_cannot_be_adopted) ... ok
+test_old_mail_without_hash_column_does_not_invent_a_hash (test_adopt.Adoption.test_old_mail_without_hash_column_does_not_invent_a_hash) ... ok
+test_partial_pending_image_requires_separate_recovery (test_adopt.Adoption.test_partial_pending_image_requires_separate_recovery) ... ok
+test_pending_or_nonempty_orphan_mail_is_refused (test_adopt.Adoption.test_pending_or_nonempty_orphan_mail_is_refused) ... ok
+test_preserves_every_request_proof_and_opaque_mail_byte (test_adopt.Adoption.test_preserves_every_request_proof_and_opaque_mail_byte) ... ok
+test_retained_empty_mail_keeps_old_hash_and_retry_metadata (test_adopt.Adoption.test_retained_empty_mail_keeps_old_hash_and_retry_metadata) ... ok
+test_row_bound_rejects_without_truncation (test_adopt.Adoption.test_row_bound_rejects_without_truncation) ... ok
+test_schema_sources_keep_their_pinned_bytes (test_adopt.Adoption.test_schema_sources_keep_their_pinned_bytes) ... ok
+test_unknown_state_or_malformed_proof_is_refused (test_adopt.Adoption.test_unknown_state_or_malformed_proof_is_refused) ... ok
+test_wal_corrupt_or_truncated_input_is_refused (test_adopt.Adoption.test_wal_corrupt_or_truncated_input_is_refused) ... ok
+test_business_proof_is_never_converted_or_invented (test_native.NativeAdoption.test_business_proof_is_never_converted_or_invented) ... ok
+test_extra_native_objects_and_active_orphan_enrolment_fail_closed (test_native.NativeAdoption.test_extra_native_objects_and_active_orphan_enrolment_fail_closed) ... ok
+test_native_and_python_ddl_each_preserve_native_enrolment_and_opaque_mail (test_native.NativeAdoption.test_native_and_python_ddl_each_preserve_native_enrolment_and_opaque_mail) ... ok
+test_native_base_without_enrolment_is_an_explicit_null (test_native.NativeAdoption.test_native_base_without_enrolment_is_an_explicit_null) ... ok
+test_retained_empty_native_mail_keeps_both_original_proofs (test_native.NativeAdoption.test_retained_empty_native_mail_keeps_both_original_proofs) ... ok
+test_url_validation_does_not_normalize_or_fetch (test_native.NativeAdoption.test_url_validation_does_not_normalize_or_fetch) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.607s
+
+OK

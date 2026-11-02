@@ -1,0 +1,38 @@
+{
+  "activation_performed": false,
+  "application_records_exported": false,
+  "credentials_exported": false,
+  "date": "2026-11-02",
+  "observation": {
+    "administrative_prestate_observable": false,
+    "admission": {
+      "authenticated_service": true,
+      "mail_read_membership": true,
+      "onboarding_membership": true,
+      "people_admin_membership": false,
+      "present": true
+    },
+    "all_tokens_present": false,
+    "builtin_admins_disabled": false,
+    "cycle": {
+      "authenticated_service": false,
+      "mail_read_membership": false,
+      "onboarding_membership": false,
+      "people_admin_membership": false,
+      "present": false
+    },
+    "replay": {
+      "authenticated_service": false,
+      "mail_read_membership": false,
+      "onboarding_membership": false,
+      "people_admin_membership": false,
+      "present": false
+    },
+    "schema_version": 1,
+    "tokens_distinct": false,
+    "write_authorization_proved": false
+  },
+  "schema_version": 1,
+  "script_sha256": "653a1bb130852c4ddfe4580c06fcaf4c9983a442d82d53cbbc62ca71edad50de",
+  "source_commit": "8f95232fd8da03ba2ebf40f7f64b146f45d3caf5"
+}

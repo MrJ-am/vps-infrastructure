@@ -1,0 +1,107 @@
+#+title: Reprise du premier déploiement MRJ.am, sans ViSe
+#+date: 2026-11-02
+#+language: fr
+
+* Production
+
+Spectre porte l'assemblage et le déploiement, conformément au mandat utilisateur
+« Va jusqu'au bout ». Aucune activation, mutation SQL ou modification de service
+n'a encore été effectuée. Le VPS reste sur la génération
+=/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80=.
+Le nom observé est =srv1982677=. Le socle conserve le pin
+=c5c4a43b0e8056328ec4529f735cabdb8f1942bb=. ViSe est exclu de la première
+composition, sans supprimer ses données ni ses sauvegardes.
+
+* Adaptations qualifiées
+
+Les deux exports originaux reçus par GitHub LFS sont vérifiés et matérialisés
+sans élargir la confiance du daemon Nix. Les reçus du 1 novembre restent
+inchangés. Les nouveaux composants sont distingués des artefacts historiques.
+
+Le broker natif retenu est
+=/nix/store/1n0p3fn7nfdbwvpkbqlnk7y13057mivk-mrjam-identity-0.1.0=.
+Les 118 tests du workspace, 22 groupes d'acceptation indépendante, huit groupes
+Kanidm réel et neuf groupes systemd passent. Log reçoit uniquement une
+projection subject/mail ; les sessions restent privées. Le socket d'admission
+exige l'UID 947. Source : [[https://github.com/MrJ-am/mrjam-plateforme/pull/1][plateforme PR1]], commit
+=b48f0ab14f37a15ce08c84248b2240e78ae5e4dc=.
+
+Les cinq traitements Vision sont adaptés à Kanidm, avec CA explicite, capacités
+distinctes et conservation des messages/journaux historiques. Le paquet est
+=/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101=.
+Son adopteur de journaux est une sortie séparée, sans argument libre. Source :
+[[https://github.com/MrJ-am/vision/pull/18][Vision PR18]], commit =3c39cf5c776bf8f8b027d79daea69a825a0f337e=,
+base =workers-operationnels-20261030=.
+
+Les 54 tests auteur dont PostgreSQL, 34 tests Nix et neuf groupes systemd
+indépendants passent. =../identity/workers-result-001.json= lie les ELF exacts,
+le broker et les fixtures. Inscription, enrôlement, cycle, fermeture et reprise
+sont testés avec Kanidm réel. Le SMTP positif et l'archivage hors hôte restent
+simulés : aucun envoi réel n'est attesté par ces essais.
+
+Les adopteurs séparés conservent admissions/enrôlement/MIME/proofs et les trois
+files de courriels. Admission passe 24 tests. Mail version 2 passe 29 tests et
+préserve =effacements_termines= et =fermetures=. La version 1 reste historique,
+non sélectionnable pour ces tables. Copier un marqueur ne crée aucun acquittement
+ni intention de suppression.
+
+Python et le modèle d'embeddings reconstruits depuis leurs sources publiques
+ont les mêmes NAR que ceux constatés sur le VPS. Six groupes hors réseau passent,
+avec 384 dimensions et modèle fixé. La CA publique ISRG X1/X2 et les runtimes
+blue/green sont construits séparément. La migration MatEval de rôles passe six
+groupes PostgreSQL avec données inchangées avant/après et répétition refusée.
+
+* Observation des obligations
+
+Les migrations Vision 1 à 27 sont présentes, sans doublon ni version supplémentaire,
+avec RLS/FORCE RLS. Ne pas les rejouer. =vision_journal= et ses rôles sont absents ;
+le bootstrap explicite est qualifié séparément sur des données inventées.
+L'importeur reste NOLOGIN hors de son étape d'adoption temporaire.
+
+=preflight_obligations.py=, publié au commit
+=3cdd7f70c36bfc860d03ee3e5290474921142f1d= et revu indépendamment après neuf tests,
+a constaté les deux tables SQLite présentes mais vides, sans fermeture incomplète.
+Il abaisse ses privilèges vers 984 et ne renvoie que des booléens, sans sujet,
+adresse, date ni contenu privé. Ce contrôle doit être répété après gel des
+écritures avant adoption ; l'observation ne dispense pas de préserver les tables.
+
+* Travail restant
+
+La génération complète, les sauvegardes d'exploitation adaptées, les unités
+d'adoption et le backend borné de bascule sont en cours. =cutover.py= et
+=snapshot.py= préparent une capture appariée et un retour avant ouverture.
+Le checkpoint durable interdit une restauration ancienne dès le début de la
+réouverture ; une instance neuve refuse une reprise non qualifiée. Les fichiers
+candidats sont retenus en quarantaine privée. Ces modules seuls ne déploient rien.
+
+=stage_adoption.py= prépare les images SQLite par l'API backup qui inclut le
+WAL validé ; le backend doit arrêter les écrivains avant l'appel. Les 68 tests
+de déploiement passent à cette étape. La VM de capture/retour et les essais
+indépendants supplémentaires de mail version 2 sont en cours.
+
+Le probe natif =653a1bb130852c4ddfe4580c06fcaf4c9983a442d82d53cbbc62ca71edad50de=,
+publié au commit =8f95232fd8da03ba2ebf40f7f64b146f45d3caf5=, confirme le jeton
+d'admission authentifié avec onboarding et lecture mail. Les jetons cycle et
+rejeu sont absents. Le préétat des comptes intégrés n'est pas observable par
+cette capacité ; ce résultat ne signifie pas qu'ils sont actifs. L'utilisateur
+confirme disposer d'un compte administrateur Kanidm utilisable. Le provisioner
+fixe se prépare pour cette authentification humaine, sans réinitialisation de
+compte ni transmission de secret à l'agent.
+
+La VM de capture appariée passe sept groupes. Les files de courriels passent
+huit groupes indépendants et la suppression HTTP huit autres sur l'ELF reçu
+inchangé, avec Kanidm réel. Le flag =vision-account-deletion= reste toutefois
+refusé dans =required_capabilities= : le parcours métier fonctionne, la
+déclaration de readiness nécessite une correction séparée du serveur.
+
+La frontière réseau et le générateur de protection au redémarrage passent
+six groupes en VM : ports publics fermés, SSH et loopback préservés, sorties
+des identités applicatives bloquées, contrôleur vivant distingué d'un processus
+terminé, écrivains arrêtés après reboot ou checkpoint malformé. L'inventaire est
+encore complété avec les nouvelles unités d'adoption ; requalifier ces octets
+finaux avant publication comme livraison.
+
+La chaîne Forgejo dispose de qualifications synthétiques séparées. L'adoption
+protégée des règles et identités, les projets sur la forge et l'autorité réelle
+de livraison restent à établir. Les reçus locaux ne s'y substituent pas. Aucun
+succès global du déploiement, de SSO humain ou d'envoi SMTP réel n'est annoncé.

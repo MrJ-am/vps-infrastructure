@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "scope": "synthetic-fixture-corrections-with-original-failures-retained",
+  "findings": [
+    {
+      "derivation": "/nix/store/cbrmv3w7hc0xaw259dvj0v7lv381jb87-vm-test-run-mrjam-native-mail-independent.drv",
+      "failed_assertion": "archive initialize-state unexpectedly returned success on already adopted state",
+      "classification": "fixture assumed exclusive initialization, while the existing command is idempotent",
+      "resolution": "require successful initialization followed by the same strict inode and whole-file digest preservation check",
+      "candidate_changed": false
+    }
+  ]
+}

@@ -10,6 +10,11 @@ let
   names = [ "audition" "log" "logique" "logo" "mateval" "style" "vision" ];
   requiredSites = [ "audition" "log" "logique" "mateval" "vision" ];
   workers = [ "archive" "replay" "cycle" "closure" "admission" ];
+  nativeWorkers = cfg.workers.identityProtocol == "kanidm-native";
+  workerIdentity = credentialFile: {
+    inherit (cfg.workers) identityProtocol kanidmCaFile kanidmCaSha256;
+  } // (if nativeWorkers then { kanidmCredentialFile = credentialFile; }
+    else { keycloakCredentialFile = credentialFile; });
   slotNames = builtins.attrNames cfg.slots;
   units = map (slot: "mrjam-rust-${slot}") slotNames
     ++ lib.optionals cfg.workers.enable (map (name: "mrjam-vision-${name}") workers);
@@ -114,10 +119,15 @@ in {
       description = "Observed static root, or null for the existing root redirect to /matheval/."; };
     workers = {
       enable = lib.mkEnableOption "installation of all five qualified workers, without activation";
+      identityProtocol = lib.mkOption { type = lib.types.enum [ "keycloak-legacy" "kanidm-native" ]; default = "keycloak-legacy"; };
+      kanidmCaFile = lib.mkOption { type = lib.types.nullOr lib.types.str; default = null; };
+      kanidmCaSha256 = lib.mkOption { type = lib.types.nullOr (lib.types.strMatching "[0-9a-f]{64}"); default = null; };
       artifacts = lib.genAttrs workers (name: lib.mkOption { type = storePath; default = locked."vision_${name}".store_path; });
       visionDatabase = lib.mkOption { type = sqlName; };
       journalDatabase = lib.mkOption { type = sqlName; };
-      ageRecipient = lib.mkOption { type = lib.types.strMatching "age1[a-z0-9]{58}"; };
+      ageRecipient = lib.mkOption { type = lib.types.nullOr (lib.types.strMatching "age1[a-z0-9]{58}"); default = null; };
+      archiveConfigurationCredentialFile = lib.mkOption { type = lib.types.nullOr privatePath; default = null; };
+      archiveInitializeConfigurationCredentialFile = lib.mkOption { type = lib.types.nullOr privatePath; default = null; };
       credentials = lib.genAttrs [ "smtp" "archiveRecipient" "cycleIdentity" "replayIdentity" "admissionIdentity" "closure" "approval" ] (_: lib.mkOption { type = privatePath; });
     };
   };
@@ -151,9 +161,13 @@ in {
         message = "mrjamVpsApplications: Log requires the dedicated alias-only projection and explicitly bound reader group, never session-state access."; }
       { assertion = !(config.systemd.services ? vise) && !(config.services.nginx.virtualHosts ? "vise.mrj.am");
         message = "mrjamVpsApplications: the first composition deliberately excludes ViSe."; }
-      # These three unchanged executables implement a fixed Keycloak protocol on
-      # 8085 and its historical issuer. A session broker on 3002 is not a substitute.
-      { assertion = !cfg.workers.enable || (config.systemd.services.mrjam-vision-admission.wantedBy == [ ]
+      # Historical artifacts remain available for reproducing their receipts.
+      # Native protocol selection requires all five separately qualified outputs.
+      { assertion = !cfg.workers.enable || !nativeWorkers || lib.all
+          (name: cfg.workers.artifacts.${name} != locked."vision_${name}".store_path)
+          workers;
+        message = "mrjamVpsApplications: native identity requires all five adapted worker artifacts, including archival of both historical and native issuers."; }
+      { assertion = !cfg.workers.enable || nativeWorkers || (config.systemd.services.mrjam-vision-admission.wantedBy == [ ]
           && !config.services.mrjamVisionAdmission.admissionsOpen
           && !config.services.mrjamVisionCycle.timer.enable && !config.services.mrjamVisionReplay.timer.enable);
         message = "mrjamVpsApplications: legacy-protocol workers require a separately reviewed native identity adaptation before promotion."; }
@@ -225,33 +239,32 @@ in {
     services.mrjamVisionArchive = lib.mkIf cfg.workers.enable {
       enable = true; artifactStorePath = cfg.workers.artifacts.archive;
       inherit (cfg.workers) journalDatabase ageRecipient;
+      configurationCredentialFile = cfg.workers.archiveConfigurationCredentialFile;
+      initializeConfigurationCredentialFile = cfg.workers.archiveInitializeConfigurationCredentialFile;
       smtpCredentialFile = cfg.workers.credentials.smtp;
       recipientCredentialFile = cfg.workers.credentials.archiveRecipient;
     };
-    services.mrjamVisionCycle = lib.mkIf cfg.workers.enable {
+    services.mrjamVisionCycle = lib.mkIf cfg.workers.enable ({
       enable = true; artifactStorePath = cfg.workers.artifacts.cycle;
       inherit (cfg.workers) visionDatabase journalDatabase;
       smtpCredentialFile = cfg.workers.credentials.smtp;
-      keycloakCredentialFile = cfg.workers.credentials.cycleIdentity;
-    };
-    services.mrjamVisionReplay = lib.mkIf cfg.workers.enable {
+    } // workerIdentity cfg.workers.credentials.cycleIdentity);
+    services.mrjamVisionReplay = lib.mkIf cfg.workers.enable ({
       enable = true; artifactStorePath = cfg.workers.artifacts.replay;
       inherit (cfg.workers) visionDatabase journalDatabase;
-      keycloakCredentialFile = cfg.workers.credentials.replayIdentity;
       admissionsCredentialFile = cfg.workers.credentials.closure;
-    };
+    } // workerIdentity cfg.workers.credentials.replayIdentity);
     services.mrjamVisionClosure = lib.mkIf cfg.workers.enable {
       enable = true; artifactStorePath = cfg.workers.artifacts.closure;
       inherit (cfg.workers) visionDatabase journalDatabase;
       admissionsCredentialFile = cfg.workers.credentials.closure;
     };
-    services.mrjamVisionAdmission = lib.mkIf cfg.workers.enable {
+    services.mrjamVisionAdmission = lib.mkIf cfg.workers.enable ({
       enable = true; artifactStorePath = cfg.workers.artifacts.admission;
       inherit (cfg.workers) visionDatabase;
       smtpCredentialFile = cfg.workers.credentials.smtp;
-      keycloakCredentialFile = cfg.workers.credentials.admissionIdentity;
       closureCredentialFile = cfg.workers.credentials.closure;
       approvalCredentialFile = cfg.workers.credentials.approval;
-    };
+    } // workerIdentity cfg.workers.credentials.admissionIdentity);
   };
 }

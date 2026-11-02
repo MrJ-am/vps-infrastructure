@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "action": "add only; parent agent publishes",
+  "files": [
+    {
+      "path": "operations/migrations/admission-native/README.org",
+      "sha256": "d9727d305a3e0fe168c02def44aa297ceaf15663fb8f49668d234b93265924d8"
+    },
+    {
+      "path": "operations/migrations/admission-native/adopt.py",
+      "sha256": "dbdd4192473a5594eb1c8fbca625618988e3164db62b5d83d11bc4cd012fb261"
+    },
+    {
+      "path": "operations/migrations/admission-native/package.nix",
+      "sha256": "996813c89283ae551b343d226c8a955cc1b4467dd86ee7b7175c4d970b72e968"
+    },
+    {
+      "path": "operations/migrations/admission-native/qualification-build-20261102.json",
+      "sha256": "5a2c005c241f4dd992c6fadeb81c39f1668bf7d5e87b2689dd2e144ee034bfea"
+    },
+    {
+      "path": "operations/migrations/admission-native/schema-provenance.json",
+      "sha256": "dd9b744a682eb38a72a95dba60c24424ce3b2bdf24f85d16e937507c0c9dbee7"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/legacy-mail.sql",
+      "sha256": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/legacy-requests.sql",
+      "sha256": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/native-mail.sql",
+      "sha256": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/native-requests.sql",
+      "sha256": "cfdbf997698caf40c0bf15be37ec9385f2176a78a73909e9b8eb2c5bc2103c26"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/target-mail.sql",
+      "sha256": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d"
+    },
+    {
+      "path": "operations/migrations/admission-native/schemas/target-requests.sql",
+      "sha256": "1907245e30044fab223d1a3942ee3508aebc180013fd40273ea40ae1c00e48af"
+    },
+    {
+      "path": "operations/migrations/admission-native/test_adopt.py",
+      "sha256": "8753d6bbff74c76d4fea080fb0e4fa98093b3895a439b5de5fb458065c9d5454"
+    },
+    {
+      "path": "operations/migrations/admission-native/test_native.py",
+      "sha256": "ca8dcfa8d768f22ef93d2b6bab77d010f6c5f7031726fcae11084bdab35b675f"
+    }
+  ],
+  "excluded": [
+    "__pycache__",
+    "unit-tests.log",
+    "nix-build.log",
+    "nix-build.json",
+    ".legacy-files.sha256.json"
+  ],
+  "package": "/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1"
+}

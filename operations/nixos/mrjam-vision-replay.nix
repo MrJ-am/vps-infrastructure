@@ -4,13 +4,13 @@ let
   unit = "mrjam-vision-replay";
   storePath = lib.types.strMatching "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
   credentialReference = lib.types.strMatching "/(run/secrets|run/keys|var/lib)/[A-Za-z0-9_./-]+";
-  publicConfig = pkgs.writeText "mrjam-vision-replay.json" (builtins.toJSON {
+  identity = import ./vision-worker-identity.nix { inherit lib cfg; };
+  publicConfig = pkgs.writeText "mrjam-vision-replay.json" (builtins.toJSON ({
     schema_version = 1;
     vision_database = cfg.visionDatabase;
     journal_database = cfg.journalDatabase;
-    keycloak_file = "/run/credentials/${unit}.service/keycloak";
     admissions_file = "/run/credentials/${unit}.service/admissions";
-  });
+  } // identity.configuration unit));
   mappings = {
     visionReplayJournal = { database = cfg.journalDatabase; role = "vision_journal_rejeu"; };
     visionReplayCycle = { database = cfg.visionDatabase; role = "vision_cycle"; };
@@ -23,12 +23,12 @@ in {
     artifactStorePath = lib.mkOption { type = storePath; description = "Exact independently qualified closure containing bin/vision-replay; no build dependency."; };
     visionDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
     journalDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
-    keycloakCredentialFile = lib.mkOption { type = credentialReference; description = "Existing private credential for the fixed historical closure client; IdP compatibility must be established before adoption."; };
     admissionsCredentialFile = lib.mkOption { type = credentialReference; };
     timer.enable = lib.mkEnableOption "periodic normal replay after prerequisite adoption";
-  };
+  } // identity.options;
   config = lib.mkIf cfg.enable {
-    assertions = [
+    system.extraDependencies = identity.extraDependencies;
+    assertions = identity.assertions ++ [
       { assertion = !(builtins.hasContext cfg.artifactStorePath);
         message = "Vision replay requires a previously built artifact, without a Nix construction context."; }
       { assertion = cfg.visionDatabase != cfg.journalDatabase;
@@ -37,9 +37,9 @@ in {
           (name: config.services.mrjamPostgresqlAccess.workers.${name} == mappings.${name})
           (builtins.attrNames mappings);
         message = "Vision replay requires its three exact dedicated PostgreSQL peer capabilities."; }
-      { assertion = lib.all (path: !(lib.hasInfix "/../" path) && !(lib.hasInfix "/./" path)
+      { assertion = lib.all (path: path != null && !(lib.hasInfix "/../" path) && !(lib.hasInfix "/./" path)
           && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path))
-          [ cfg.keycloakCredentialFile cfg.admissionsCredentialFile ];
+          [ identity.credentialFile cfg.admissionsCredentialFile ];
         message = "Vision replay refuses ambiguous credential references."; }
     ];
     users.groups.${unit} = { };
@@ -58,7 +58,7 @@ in {
         Type = "oneshot";
         ExecStart = "${cfg.artifactStorePath}/bin/vision-replay run-once --config ${publicConfig}";
         User = unit; Group = unit;
-        LoadCredential = [ "keycloak:${cfg.keycloakCredentialFile}" "admissions:${cfg.admissionsCredentialFile}" ];
+        LoadCredential = [ identity.credential "admissions:${cfg.admissionsCredentialFile}" ];
         UMask = "0077"; StandardInput = "null"; StandardOutput = "null";
         StandardError = "journal"; # CLI emits a fixed closed code only.
         NoNewPrivileges = true; CapabilityBoundingSet = ""; AmbientCapabilities = "";

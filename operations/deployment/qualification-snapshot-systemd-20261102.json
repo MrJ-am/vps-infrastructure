@@ -1,0 +1,39 @@
+{
+  "candidate_state_retained_roots": [
+    "mrjam-vision-admission",
+    "mrjam-vision-cycle",
+    "mrjam-vision-archive",
+    "mrjam-worker-credentials"
+  ],
+  "checks": [
+    "quiescence",
+    "paired-return",
+    "opening-failure",
+    "public-verification-failure",
+    "successful-open",
+    "storage-boundaries",
+    "corrupt-archive"
+  ],
+  "cutover_sha256": "4f736381f554e3dc7f8adf2eb1ebc036ac35682ec5c3265647c77271e67fd5c5",
+  "duration_qualification": false,
+  "fixture_failures_retained": [
+    "001: PostgreSQL rate counter shared across independent invented transactions; reset between cases",
+    "002: invented external tablespace outside PostgreSQL strict sandbox; writable fixture path declared"
+  ],
+  "groups": 7,
+  "limitations": [
+    "No VPS data, credentials, storage capacity or maintenance-window duration tested",
+    "Generation switching is a sequencing model; the sealed production backend is separate",
+    "No snapshot, SQL row, application file or command diagnostics exported"
+  ],
+  "output_store_path": "/nix/store/a9krnk0s96yxib6snxr28vd6grd9jna7-vm-test-run-mrjam-paired-offline-snapshot-synthetic",
+  "passed": true,
+  "postgresql": "17.11",
+  "production_access": false,
+  "production_qualification": false,
+  "recorded_at": "2026-11-02",
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg",
+  "snapshot_sha256": "e8057e1b1beb2cd23ec999801942d3d2b0ac95e4773c19eb62d9b7708fc66ab9",
+  "test_sha256": "537d68ce61c5fbc547290b098a770cde4c898ed3d7128e39035d76e8c3dd5d1d"
+}

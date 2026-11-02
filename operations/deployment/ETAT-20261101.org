@@ -2,6 +2,10 @@
 #+date: 2026-11-01
 #+language: fr
 
+État historique du 1 novembre. La reprise courante est décrite dans
+[[file:ETAT-20261102.org][ETAT-20261102.org]] ; les travaux et attentes ci-dessous ne remplacent pas
+les résultats plus récents.
+
 * Travail effectué sur Spectre
 
 La directive utilisateur « Va jusqu'au bout » poursuit le mandat de première

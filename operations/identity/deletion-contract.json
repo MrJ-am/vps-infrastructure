@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "scope": "existing-server-http-deletion-with-real-native-identity-and-current-workers",
+  "expectations": [
+    "The unchanged server rejects vision-account-deletion as a required capability; this limitation is retained and reported.",
+    "A real native OAuth login and broker session precede the browser deletion request.",
+    "The public route refuses absent authentication, bad Origin, CSRF, confirmation and caller-selected owner.",
+    "A correct request creates one durable intention and returns 202 while preserving all content until external archive receipt.",
+    "The actual archive worker encrypts the intention; SMTP refusal cannot acknowledge it.",
+    "After explicitly simulated mail receipt, the actual archiver binds its SQL receipt and the unchanged HTTP route erases only the requesting Vision account.",
+    "Common native identity and another account survive; the native replay worker records and preserves the exact archive receipt.",
+    "No production, real delivery, protected authority or complete readiness claim follows from this local test."
+  ]
+}

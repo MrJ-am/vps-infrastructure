@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "vm_receipt": "workers-result-001.json",
+  "binding": "Current module hashes; root confirmed no edits to worker, identity or PostgreSQL access modules during the qualifying run.",
+  "modules": {
+    "mrjam-identity.nix": "0b2c5795a29a494bf9571a081d471d07be4235d5cf6c21857692382fa99cc0e2",
+    "mrjam-vision-admission.nix": "941d9242f5b2f9f3714366d0db1d6c1d354baa79802cebe1bdfe163f125b69bd",
+    "mrjam-vision-cycle.nix": "926b838e5533d7c015fb502f48f74c799fcd34de4db80e22cc8ba6cfffa91cfd",
+    "mrjam-vision-closure.nix": "7f19f9cdf8ed71f3586af0a8f7523b3d9527efd9cb6c4768e9ff4b7eb572c709",
+    "mrjam-vision-replay.nix": "e04c6d574cd28e4ae16c11787d771088b82052055e82e3f9240ea32721d90e4a",
+    "mrjam-vision-archive.nix": "6f1ef254e17606c8c25d779183651f238f3f5623e6c2d73f8976c8ad6f609860",
+    "vision-worker-identity.nix": "a58425c559bafe016fcc4bd2099c4d13715c66be62f322ea2bdd882b33ef3f39",
+    "mrjam-postgresql-access.nix": "c87cb9e86d62c9e4954fba60ddf3ddd1bfc8b5968797c7008d2e905e4fd9d437",
+    "mrjam-admission-adoption.nix": "625313e44fd5adab74da5c7f9f9f128508e409486203775e1335d3b08fcff795"
+  }
+}

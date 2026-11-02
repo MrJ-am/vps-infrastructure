@@ -1,0 +1,28 @@
+{
+  "activation_performed": false,
+  "application_records_exported": false,
+  "credentials_exported": false,
+  "date": "2026-11-02",
+  "observation": {
+    "application_data_exported": false,
+    "authority": "fixed-read-only-obligation-predicates",
+    "closure": {
+      "incomplete_present": false,
+      "marker_table_present": true,
+      "markers_present": false,
+      "state": "observed"
+    },
+    "cycle": {
+      "marker_table_present": true,
+      "markers_present": false,
+      "state": "observed"
+    },
+    "schema_version": 1,
+    "secret_contents_read": false,
+    "services_changed": false,
+    "sql_mutations": false
+  },
+  "schema_version": 1,
+  "script_sha256": "d8e47333ac5302cc0ae05ca455c32b902b3c21551ea6f46fdf5a97b3f87be374",
+  "source_commit": "3cdd7f70c36bfc860d03ee3e5290474921142f1d"
+}

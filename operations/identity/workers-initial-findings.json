@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "attempt": 1,
+      "derivation": "/nix/store/m4bs5wzj3vpv5nybsqm5cjm9prpdqcpv-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_setup_failed",
+      "stage": "prepare-sql",
+      "reason": "Synthetic operator/contact/hosting fields were not set before opening the invented admission configuration; the real configuration_check constraint correctly rejected it.",
+      "correction": "Populate the three required fields with invented values. No candidate or acceptance expectation changed."
+    },
+    {
+      "attempt": 2,
+      "derivation": "/nix/store/wj5hfbw5jyv9gv0ly3crwspn2xkiqn1s-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_setup_failed",
+      "stage": "start-admission-adoption",
+      "reason": "Artifact references intentionally discard build context; the test guest had not explicitly included the already-built outputs in its closure.",
+      "correction": "Include the exact prebuilt worker and adoption outputs through system.extraDependencies, without changing production modules or candidate permissions.",
+      "passed_before_failure": ["staged-no-start", "real-Kanidm-three-scoped-service-accounts", "adoption-unit-tests-24"]
+    },
+    {
+      "attempt": 3,
+      "derivation": "/nix/store/dk7lhvwiwbgg8cq7cyxzimiswzdhx5qk-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_client_failed",
+      "stage": "closed-admission-readiness",
+      "reason": "The helper function named http shadowed Python's imported http module.",
+      "correction": "Import HTTPConnection directly. Acceptance requirements and candidate unchanged.",
+      "passed_before_failure": ["adoption-unit-tests-24", "sealed-adoption-and-repeat-preserve-state", "real-worker-systemd-start"]
+    },
+    {
+      "attempt": 4,
+      "derivation": "/nix/store/jinws7g0qym5m3bs3hzygrhxj0qn32zg-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_comparison_failed",
+      "stage": "completed-admission-restart",
+      "reason": "Persisted JSON lists were compared with Python tuples in the in-memory expected snapshot.",
+      "correction": "Represent both message snapshots as JSON lists; all bytes, subjects, enrolment URLs and proofs are still compared exactly.",
+      "passed_before_failure": ["closed-admissions", "real-person-and-mail", "missing-broker-retriable-stage", "broker-registration-and-single-invitation", "enrolment-outbox-pair"]
+    },
+    {
+      "attempt": 5,
+      "derivation": "/nix/store/11sa8si6ib0hm4by0khsdh8xmpnii6jp-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_request_failed",
+      "stage": "closure-request",
+      "reason": "The fixture reused the admission Host header for the distinct closure port; the service correctly rejected it.",
+      "correction": "Send the historical mrjam-fermeture.internal Host for port3028. No server contract changed.",
+      "passed_before_failure": ["admission-restart-byte-preservation", "real-enrolment-redemption", "native-cycle-mail", "smtp-refusal-deadline-gate", "age-encryption-roundtrip", "cycle-archive-gate-and-scoped-erasure"]
+    },
+    {
+      "attempt": 6,
+      "derivation": "/nix/store/lxkkb26ykahafz3zsxhjn4lxi3n34g2d-vm-test-run-mrjam-native-workers-independent.drv",
+      "result": "fixture_protocol_expectation_failed",
+      "stage": "verify-native-person-absence",
+      "reason": "The fixture required404 for a missing person. Kanidm1.11.2 primary person_id_get has Result<Json<Option<ProtoEntry>>> and documents200/null.",
+      "correction": "Accept the documented null result and also require absence from the operator's complete person list and the durable replay receipt. No tolerance for a retained person.",
+      "primary_source": "/nix/store/07a0mn5dkz2fx7wd4dh6jj7qnrz7a4ds-source/server/core/src/https/v1.rs:652",
+      "passed_before_failure": ["distinct-native-token-capabilities", "native-issuer-age-roundtrip", "closure-archive-gate", "partial-closure-after-purge-outage", "admission-and-enrolment-purge"]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "actual_production_sso_qualified": false,
+  "candidate_sha256": "2bb30304f144e7d6776da0ceaa2453226f39b4028cd0a859a01ce7c0c5f6479f",
+  "checks": [
+    "real-kanidm-bootstrap-tls",
+    "invented-oauth-client-and-person",
+    "native-discovery-and-jwks"
+  ],
+  "error_class": "AssertionError",
+  "failed_stage": "native-authorization-token-signature-introspection",
+  "failure_code": "NATIVE_CODE_REPLAY_HTTP_200",
+  "human_mfa_qualified": false,
+  "kanidm": "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+  "passed": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "isolated-real-kanidm-invented-identity-wire-qualification",
+  "test_sha256": "d778b7a1c7f5e5d87168a89225e0a7cdb570feec20d1e5446b9def2c55465bd0"
+}

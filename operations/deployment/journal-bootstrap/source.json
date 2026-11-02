@@ -1,0 +1,15 @@
+{
+  "commit": "3c39cf5c776bf8f8b027d79daea69a825a0f337e",
+  "files": {
+    "bootstrap-journal/01-roles.sql": "4c25b8872d3fbb583367d4006c9efefcdf01d9562e21ca23c4c4785a94098ff4",
+    "bootstrap-journal/02-database.sql": "e692b8d7e38236b66249586c33605bd20bb1d31e1a8e15abea2247100c64b672",
+    "bootstrap-journal/03-schema.psql": "c6196df8d78caf418ea35f778795c056ba3a93d94471f0412433fbe66cae169a",
+    "journal/001_effacements.sql": "ed13dbb7fcf697ac71033337460c0b5e84eb25c32d6939e70acc8d0f1456577f",
+    "journal/002_reprise.sql": "ea4ffd5314577fd65327b9c8d163b9517e121761cd56166c6da7d3d7874e2575",
+    "journal/003_archivage_rejeu.sql": "cd618af780bd787c3ff417e442d6a3b373073aad3c6ec430e3cede56483bc315",
+    "journal/004_ordre_rejeu.sql": "7cc54d48e53c1a32712234bd17ed88f7da8da7807c4a8181f94908021710e0e8",
+    "journal/005_kanidm_issuer.sql": "13c30282dc44f1b76635b8e7238cdc20eeb41fa0ae0ed3fa68bfe3b85eae02db"
+  },
+  "repository": "MrJ-am/vision",
+  "schema_version": 1
+}
