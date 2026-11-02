@@ -3,6 +3,10 @@ let
   cfg = config.services.mrjamVisionArchive;
   storePath = lib.types.strMatching "/nix/store/[a-z0-9]{32}-[A-Za-z0-9+._?=-]+";
   credentialReference = lib.types.strMatching "/(var/lib|run)/[A-Za-z0-9_./-]+";
+  privateConfiguration = name:
+    if name == "mrjam-vision-archive-initialize"
+    then cfg.initializeConfigurationCredentialFile
+    else cfg.configurationCredentialFile;
   publicConfig = unit: pkgs.writeText "mrjam-vision-archive-${unit}.json" (builtins.toJSON {
     schema_version = 1;
     journal_database = cfg.journalDatabase;
@@ -18,12 +22,16 @@ let
     # Initialisation is never implicit and neither unit starts on module import.
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${cfg.artifactStorePath}/bin/vision-archive ${command} --config ${publicConfig name}";
+      ExecStart = "${cfg.artifactStorePath}/bin/vision-archive ${command} --config ${
+        if privateConfiguration name != null
+        then "/run/credentials/${name}.service/configuration"
+        else publicConfig name}";
       User = "mrjam-vision-archive";
       Group = "mrjam-vision-archive";
       StateDirectory = "mrjam-vision-archive";
       StateDirectoryMode = "0700";
-      LoadCredential = [ "smtp:${cfg.smtpCredentialFile}" "recipient:${cfg.recipientCredentialFile}" ];
+      LoadCredential = [ "smtp:${cfg.smtpCredentialFile}" "recipient:${cfg.recipientCredentialFile}" ]
+        ++ lib.optional (privateConfiguration name != null) "configuration:${privateConfiguration name}";
       UMask = "0077";
       StandardInput = "null";
       StandardOutput = "null";
@@ -63,7 +71,9 @@ in {
     enable = lib.mkEnableOption "prebuilt Vision archive worker";
     artifactStorePath = lib.mkOption { type = storePath; description = "Exact prebuilt independently qualified closure with bin/vision-archive."; };
     journalDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
-    ageRecipient = lib.mkOption { type = lib.types.strMatching "age1[a-z0-9]{58}"; description = "Public age recipient only; private restoration key stays outside the store and Cloud."; };
+    ageRecipient = lib.mkOption { type = lib.types.nullOr (lib.types.strMatching "age1[a-z0-9]{58}"); default = null; description = "Public age recipient when a public configuration is selected; mutually exclusive with private configuration references."; };
+    configurationCredentialFile = lib.mkOption { type = lib.types.nullOr credentialReference; default = null; description = "Complete private JSON for the archive unit, prepared locally; the age recipient stays outside the store."; };
+    initializeConfigurationCredentialFile = lib.mkOption { type = lib.types.nullOr credentialReference; default = null; description = "Complete private JSON with the exact initialize unit credential references."; };
     smtpCredentialFile = lib.mkOption { type = credentialReference; };
     recipientCredentialFile = lib.mkOption { type = credentialReference; };
     timer.enable = lib.mkEnableOption "periodic archive processing after explicit state adoption";
@@ -75,8 +85,13 @@ in {
             database = cfg.journalDatabase; role = "vision_journal_archiviste";
           };
         message = "Vision archive requires its exact dedicated PostgreSQL peer mapping."; }
+      { assertion = if cfg.configurationCredentialFile != null
+          then cfg.initializeConfigurationCredentialFile != null && cfg.ageRecipient == null
+          else cfg.initializeConfigurationCredentialFile == null && cfg.ageRecipient != null;
+        message = "Vision archive requires either both private configurations or one public age recipient."; }
       { assertion = builtins.all (path: !(lib.hasInfix "/../" path) && !(lib.hasInfix "/./" path)
-          && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path)) [ cfg.smtpCredentialFile cfg.recipientCredentialFile ];
+          && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path))
+          (builtins.filter (path: path != null) [ cfg.smtpCredentialFile cfg.recipientCredentialFile cfg.configurationCredentialFile cfg.initializeConfigurationCredentialFile ]);
         message = "Vision archive refuses ambiguous credential references."; }
     ];
     users.groups.mrjam-vision-archive = { };
