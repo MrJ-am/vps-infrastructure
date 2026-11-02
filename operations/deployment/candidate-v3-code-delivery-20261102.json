@@ -1,0 +1,21 @@
+{
+  "export_bytes": 864264,
+  "export_sha256": "1679ed3f713ac99074bf569baf83ead071d86e1844c9deedcd19867cc7751d11",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1079881736,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/23nfvlw8zhzaik7cd38k21ap5a5vrjf1-system-units",
+    "/nix/store/31fm8kqn2dlg0slkbzv9fn471d3kbq5v-etc",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/b6hfm8z5blvn9zs9j6d6yd6s1qvkiz75-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/by151pa6c2kk472mnsjpxdvvndwpvmw1-unit-mrjam-archive-mail-adopt.service",
+    "/nix/store/c9mgi6a394vsdrkymqw582837dmj5xnv-system-units",
+    "/nix/store/lm8l8pf1v5a7dy3i0vgb086ch7aik5l0-etc",
+    "/nix/store/r29y0igx6angdzqvp70fgj40j7sp8pjs-unit-mrjam-cycle-mail-adopt.service",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/wd7llvkvk7kbljk89ljk5p6mcdal1lsr-nixos-system-srv1982677-26.05pre-git"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

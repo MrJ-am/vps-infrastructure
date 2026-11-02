@@ -77,6 +77,9 @@ class BackendTests(unittest.TestCase):
         for group in (m.FILE_ADOPTIONS,m.SQL_ADOPTIONS,m.PRIVATE_SERVICES,m.PUBLIC_TIMERS,m.TIMER_SERVICES):
             self.assertLessEqual(set(group),m.ALLOWED)
         self.assertLessEqual(m.RETURN_DELAYED,m.ALLOWED)
+        self.assertEqual(set(m.RETURN_TIMER_SERVICES),set(m.TIMERS))
+        self.assertLessEqual(set(m.RETURN_TIMER_SERVICES.values()),m.ALLOWED)
+        self.assertLessEqual(m.RETURN_OPTIONAL,m.ALLOWED)
 
     def test_complete_closure_and_bytes_are_both_verified(self):
         def command(argv,**_):
@@ -180,7 +183,7 @@ class BackendTests(unittest.TestCase):
         self.phase=Phase.RETURNED
         self.backend.reopen_previous_services()
         self.assertEqual(self.trace[2],("boot",self.backend.generations.previous))
-        self.assertEqual(self.trace[-1],("open_ingress",))
+        self.assertEqual(self.trace[3],("open_ingress",))
 
     def test_neither_old_restore_nor_snapshot_restore_can_cross_open_boundary(self):
         self.backend.saved=SimpleNamespace(restore=lambda:self.fail("snapshot restored"))
@@ -216,7 +219,76 @@ class BackendTests(unittest.TestCase):
         self.trace.clear();self.phase=Phase.RETURNED
         self.backend.reopen_previous_services()
         started=set(sum([call[1] for call in self.trace if call[0]=="start"],()))
-        self.assertLessEqual(periodic,started)
+        self.assertLessEqual(periodic-{"acme-log.mrj.am.service"},started)
+        self.assertNotIn("acme-log.mrj.am.service",started)
+
+    def test_return_releases_nonstem_timer_targets_after_network_before_timer(self):
+        timer="acme-renew-audition.mrj.am.timer"
+        target="acme-order-renew-audition.mrj.am.service"
+        self.backend.control.active_before={timer,"forgejo-backup.timer","acme-setup.service",
+            "acme-audition.mrj.am.service","forgejo-backup.service"}
+        self.phase=Phase.RETURNED
+        self.backend.reopen_previous_services()
+        self.assertEqual(self.trace[1],("open_ingress",))
+        self.assertEqual(set(self.trace[2][1]),{target,"forgejo-backup.service",
+            "acme-setup.service","acme-audition.mrj.am.service"})
+        started=set(sum([call[1] for call in self.trace if call[0]=="start"],()))
+        self.assertEqual(started,{timer,"forgejo-backup.timer"})
+        self.assertNotIn("acme-renew-audition.mrj.am.service",self.trace[2][1])
+
+    def test_vise_is_not_started_or_unmasked_during_previous_return(self):
+        self.backend.control.active_before |= m.RETURN_OPTIONAL
+        self.phase=Phase.RETURNING
+        self.backend.previous_http=lambda:self.backend.original["http_status"]
+        self.backend.verify_previous_private_services()
+        self.phase=Phase.RETURNED
+        self.backend.reopen_previous_services()
+        for call in self.trace:
+            if call[0] in ("start","release_masks"):
+                self.assertFalse(set(call[1])&m.RETURN_OPTIONAL)
+
+    def test_return_does_not_remove_foreign_target_masks(self):
+        self.backend.control.active_before={"forgejo-backup.timer"}
+        self.backend.original["foreign_masks"]=["forgejo-backup.service"]
+        self.phase=Phase.RETURNED
+        self.backend.reopen_previous_services()
+        self.assertEqual(self.trace[2],("release_masks",()))
+
+    def test_adoption_staging_preflight_requires_all_four_exact_outputs_absent(self):
+        self.assertEqual(set(m.STAGING_DIRECTORIES),{m.stage_credentials.OUTPUT} |
+            {Path("/run")/name for name in m.stage_adoption.PROFILES})
+        self.assertEqual(len(m.STAGING_DIRECTORIES),4)
+        with tempfile.TemporaryDirectory() as directory:
+            paths=tuple(Path(directory)/str(index) for index in range(4))
+            with patch.object(m,"STAGING_DIRECTORIES",paths):
+                self.backend.verify_staging_absent()
+                self.assertEqual(list(Path(directory).iterdir()),[])
+                for path in paths:
+                    path.mkdir(); retained=path/"invented-private-material"
+                    retained.write_bytes(b"untouched")
+                    inode=retained.stat().st_ino
+                    with patch.object(m.os,"uname",return_value=SimpleNamespace(nodename=m.HOST)), \
+                         patch.object(self.backend,"prepare_preflight_retry",side_effect=AssertionError("later preflight reached")), \
+                         self.assertRaisesRegex(m.Refused,"EXISTING_ADOPTION_STAGING_REFUSED"):
+                        self.backend.preflight()
+                    self.assertEqual(retained.read_bytes(),b"untouched")
+                    self.assertEqual(retained.stat().st_ino,inode)
+                    retained.unlink();path.rmdir()
+                self.assertEqual(self.trace,[])
+
+    def test_adoption_staging_preflight_refuses_dangling_or_live_symlinks(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/"stage"
+            target=Path(directory)/"target"
+            with patch.object(m,"STAGING_DIRECTORIES",(path,)):
+                for live in (False,True):
+                    if live:target.mkdir()
+                    path.symlink_to(target)
+                    with self.assertRaisesRegex(m.Refused,"EXISTING_ADOPTION_STAGING_REFUSED"):
+                        self.backend.verify_staging_absent()
+                    self.assertTrue(path.is_symlink())
+                    self.assertEqual(os.readlink(path),str(target))
+                    path.unlink()
 
     def test_adoption_marker_is_exact_and_bound_with_no_error_fallback(self):
         with patch.object(m.Path,"exists",return_value=False),patch.object(m.Path,"is_symlink",return_value=False):

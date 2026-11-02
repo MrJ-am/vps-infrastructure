@@ -68,6 +68,16 @@ RETURN_DELAYED = frozenset(TIMERS) | frozenset(name+".service" for name in BACKU
     "mrjam-courriel", "vision-cycle", "vision-archive", "vision-replay", "vision-purge",
     "vision-embeddings-backfill", "mrjam-vision-cycle", "mrjam-vision-archive", "mrjam-vision-replay",
     "mrjam-identity-aliases", "nextcloud-cron"))
+# Previous NixOS ACME timers name their target explicitly; it is not the
+# default timer stem. Other units in this closed inventory use the default.
+RETURN_TIMER_SERVICES = {timer:timer.removesuffix(".timer")+".service" for timer in TIMERS}
+RETURN_TIMER_SERVICES.update({"acme-renew-"+domain+".timer":"acme-order-renew-"+domain+".service"
+                             for domain in DOMAINS+("vise.mrj.am",)})
+RETURN_TRIGGERED_ONLY = frozenset(name+".service" for name in BACKUPS+ACME_SERVICES)
+RETURN_OPTIONAL = frozenset(("vise.service", "vise.timer", "vise-provision.service", "vise-provision.timer",
+    "vise-backup.service", "vise-backup.timer", "acme-vise.mrj.am.service",
+    "acme-order-renew-vise.mrj.am.service", "acme-renew-vise.mrj.am.service", "acme-renew-vise.mrj.am.timer",
+    "mrjam-acme-renew-vise.mrj.am.service", "mrjam-acme-renew-vise.mrj.am.timer"))
 LEGACY_JOURNALS = ("effacements/demandes.jsonl", "cycle/effacements.jsonl", "fermeture/effacements.jsonl")
 RETAINED_IDENTITIES = {"postgres":(71,71), "forgejo":(982,982), "kanidm":(983,983),
                        "nextcloud":(990,990), "nginx":(60,60), "acme":(996,995), "mrjam-metier":(984,984)}
@@ -75,6 +85,7 @@ REQUIRED_PRIVATE = ("kanidm-admission.token", "kanidm-cycle.token", "kanidm-repl
                     "kanidm-vision.secret", "proton-smtp.json", "cycle.json", "fermeture-hook.secret")
 SOURCE_REPOSITORIES = ("Signature", "apprendre-a-demontrer", "etp-vie-affective", "matheval", "mrjam-plateforme",
                        "mrjam-validation", "style-mrjam", "vision", "vps-infrastructure")
+STAGING_DIRECTORIES = (stage_credentials.OUTPUT,) + tuple(Path("/run")/name for name in sorted(stage_adoption.PROFILES))
 
 
 class Refused(RuntimeError):
@@ -575,9 +586,21 @@ class Backend:
             return True
         return False
 
+    def verify_staging_absent(self):
+        # The staging writers use exclusive mkdir after the paired snapshot.
+        # A previous attempt's material needs separate retention, never cleanup
+        # here or a late failure after otherwise healthy services were frozen.
+        for path in STAGING_DIRECTORIES:
+            try:
+                path.lstat()
+            except FileNotFoundError:
+                continue
+            raise Refused("EXISTING_ADOPTION_STAGING_REFUSED")
+
     def preflight(self):
         require(self.lock is not None and self.checkpoint is not None,"TRANSACTION_CONTEXT_REQUIRED")
         require(os.uname().nodename==HOST,"HOST_TARGET_CHANGED")
+        self.verify_staging_absent()
         replace_initial=self.prepare_preflight_retry()
         self.verify_artifacts()
         self.verify_guard_binding()
@@ -736,7 +759,7 @@ class Backend:
     def verify_previous_private_services(self):
         require(self.checkpoint.read()==Phase.RETURNING,"RETURN_CHECKPOINT_REQUIRED")
         active=self.control.active_before
-        delayed=RETURN_DELAYED
+        delayed=RETURN_DELAYED | RETURN_OPTIONAL
         self.control.release_masks(tuple(unit for unit in sorted(ALLOWED-delayed-set(self.original["foreign_masks"]))))
         # Restore the original service dependency graph while keeping timer
         # and backup writers masked until the durable RETURNED boundary.
@@ -748,8 +771,22 @@ class Backend:
     def reopen_previous_services(self):
         require(self.checkpoint.read()==Phase.RETURNED,"DURABLE_RETURNED_REQUIRED")
         self.generations.select_boot(self.generations.previous)
-        self.control.start(tuple(unit for unit in sorted(self.control.active_before) if unit in RETURN_DELAYED))
+        # Private HTTP and durable RETURNED precede reopening. External jobs
+        # must then have network access, including normal ACME dependencies.
         self.control.open_ingress()
+        active=set(self.control.active_before)-RETURN_OPTIONAL
+        timers=tuple(sorted(active & set(TIMERS)))
+        targets={RETURN_TIMER_SERVICES[timer] for timer in timers}
+        for timer in timers:
+            if timer.startswith("acme-renew-"):
+                domain=timer.removeprefix("acme-renew-").removesuffix(".timer")
+                targets.update(("acme-setup.service","acme-"+domain+".service"))
+        self.control.release_masks(tuple(sorted(targets-set(self.original["foreign_masks"]))))
+        # RemainAfterExit ACME/bootstrap and backup oneshots are not work to
+        # replay. Only their selected timers may trigger them through systemd.
+        workers=active & (RETURN_DELAYED-set(TIMERS)-RETURN_TRIGGERED_ONLY)
+        self.control.start(tuple(sorted(workers)))
+        self.control.start(timers)
 
     def hold_current_state(self):
         self.holding=True

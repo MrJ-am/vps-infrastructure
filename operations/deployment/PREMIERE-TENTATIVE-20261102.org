@@ -1,0 +1,43 @@
+#+title: Première tentative et correction du 2 novembre 2026
+#+language: fr
+
+La première tentative utilise la révision source
+=af8dd5a36f693dfc234312cbebe77321a8fa9d19= et le manifeste
+=e8626d9aca0e6a2760e9900f5b3233395ad310a09ea35b01af4b68b627511028=.
+Elle passe les contrôles préalables, sauvegarde les états arrêtés et atteint
+l'adoption des fichiers. L'adoption du courrier d'archive refuse alors la
+définition de la table historique =fermetures= : seuls les espaces entre
+tokens SQL diffèrent du modèle qualifié. Les colonnes, index et contrôles
+d'intégrité correspondent. Aucune définition SQL ni donnée privée n'a été
+exportée pour ce diagnostic.
+
+Le retour automatique restaure l'ancienne génération et ses données appariées,
+puis vérifie ses réponses HTTPS. L'état terminal de retour est observé avant
+un second refus : la minuterie ACME est redémarrée alors que sa véritable
+cible =acme-order-renew-…service= reste masquée. Le contrôleur contient donc
+de nouveau les services. Le correctif borné de réouverture conserve toutes
+les données courantes, vérifie l'ancienne génération, rouvre le réseau puis
+les minuteries avec leurs dépendances exactes. Il n'effectue aucune nouvelle
+restauration. Les huit sites et les quatorze minuteries sélectionnées sont
+rétablis ; ViSe reste facultatif et arrêté, ses données conservées.
+
+La tentative, son snapshot et la quarantaine de l'état candidat sont déplacés
+intacts dans l'archive privée =attempt-20261102-001=. Les quatre répertoires
+de préparation de =/run= sont également conservés par renommage sur le même
+système de fichiers, sans lecture de leurs contenus. Le verrou transactionnel
+reste le même inode ; le checkpoint est archivé en dernier. Une nouvelle
+tentative exige un nouveau contrôle complet et un nouveau snapshot.
+
+Le paquet d'adoption V3 ignore uniquement les espaces ASCII entre tokens SQL
+complets. Il conserve la casse, les littéraux, commentaires, contraintes,
+opérateurs et ponctuation ; les vérifications des lignes, marqueurs et
+collisions restent inchangées. Sa fusion complète est acceptée sur les images
+retenues du VPS, en mémoire et sans publication de cible. Le retour permanent
+utilise désormais les véritables cibles des minuteries et ne lance pas
+directement les tâches ACME ou de sauvegarde. Le nouveau préflight refuse
+les répertoires de préparation déjà présents avant d'interrompre un service.
+
+Les reçus de ce dossier distinguent la tentative abandonnée, le rétablissement
+effectif de l'ancien service, la qualification des corrections et leur livraison
+inactive. Aucun de ces faits ne constitue à lui seul la réussite du nouveau
+déploiement ou de l'import protégé dans Forgejo.

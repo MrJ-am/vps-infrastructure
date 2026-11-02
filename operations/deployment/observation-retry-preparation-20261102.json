@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-02",
+  "limits": [
+    "Read-only V3 validation uses the retained first-attempt images. A new snapshot and images are required after the next freeze.",
+    "Successful receipt of candidate code is not activation. The running generation remains the restored previous generation."
+  ],
+  "new_deployment_started": false,
+  "observations": {
+    "archive-v3-delivery-result-001.json": {
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      },
+      "sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc"
+    },
+    "candidate-v3-code-delivery-result-001.json": {
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      },
+      "sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc"
+    },
+    "first-release-archive-result-001.json": {
+      "result": {
+        "application_data_modified": false,
+        "code": "FIRST_RELEASE_ATTEMPT_ARCHIVED",
+        "new_deployment_started": false,
+        "runtime_directories_retained": 4,
+        "same_transaction_lock": true,
+        "schema_version": 1,
+        "secret_contents_read": false,
+        "snapshot_restored": false
+      },
+      "sha256": "86e8e8083bf254d0ffeb8baa30b18cf2029014e1cd4dfcbf69c8743fb6aeb721"
+    },
+    "first-release-archive-v3-diagnosis-001.json": {
+      "result": {
+        "classification": {
+          "code": "SOURCE_MERGE_ACCEPTED",
+          "shapes": {
+            "closure": {
+              "exact_schema_accepted": false,
+              "integrity_accepted": true,
+              "mail_column_layout_compatible": true,
+              "object_identities_compatible": true,
+              "sqlite_header_accepted": true
+            },
+            "global": {
+              "exact_schema_accepted": true,
+              "integrity_accepted": true,
+              "mail_column_layout_compatible": true,
+              "object_identities_compatible": true,
+              "sqlite_header_accepted": true
+            }
+          }
+        },
+        "code": "ARCHIVE_DIAGNOSIS_OBSERVED",
+        "journals_read": false,
+        "metadata": {
+          "restored_live_directory": {
+            "expected_metadata": false,
+            "present": false
+          },
+          "retained_target": {
+            "directory": {
+              "expected_metadata": true,
+              "present": true
+            },
+            "installed": {
+              "expected_metadata": false,
+              "present": false
+            },
+            "pending": {
+              "expected_metadata": false,
+              "present": false
+            }
+          },
+          "source_images": {
+            "closure": {
+              "expected_metadata": true,
+              "present": true,
+              "single_link": true,
+              "two_links": false
+            },
+            "global": {
+              "expected_metadata": true,
+              "present": true,
+              "single_link": true,
+              "two_links": false
+            }
+          },
+          "staging_directory": {
+            "expected_metadata": true,
+            "present": true
+          }
+        },
+        "mutation_performed": false,
+        "private_values_exported": false,
+        "schema_version": 1,
+        "secret_content_read": false,
+        "source_content_read_locally": true,
+        "target_classification": {
+          "code": "TARGET_PUBLICATION_PRECONDITIONS_ACCEPTED",
+          "publication_io_success_proved": false,
+          "unit_readonly_mount_reobserved": false
+        }
+      },
+      "sha256": "c8c47f5c47fe3d70028adee0a9a7484002673802a3462bef4de3f30b7d36042a"
+    },
+    "first-release-previous-sso-after-reopen-001.json": {
+      "result": {
+        "checks": {
+          "binding_file_valid": true,
+          "client_id_preserved": true,
+          "discovery_preserved": true,
+          "one_active_native_provider": true,
+          "owner_binding_preserved": true,
+          "owner_local_login_disabled": true,
+          "owner_login_enabled": true,
+          "provider_secret_present": true
+        },
+        "code": "SSO_CHECKED",
+        "mutation_performed": false,
+        "passed": true,
+        "private_values_exported": false,
+        "schema_version": 1
+      },
+      "sha256": "13e167f2ca40a3b7961caeb258a1299e2d0ed1193af63dde447de9d08959cc9a"
+    }
+  },
+  "schema_version": 1
+}

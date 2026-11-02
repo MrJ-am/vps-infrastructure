@@ -1,0 +1,12 @@
+{
+  "archive_module_sha256": "ccbef53836806be24f41e46e27ec46bda46f19a62ae19021f82e5e9564ae456b",
+  "classifier_only_module_and_hash_changed": true,
+  "export_sha256": "64a422d2efcfddb431d8c84586bc8755150382b21948c32553407375d05e5f4e",
+  "narrow_source_delta_reviewed": "DDL tokens preserve word case, literals, comments, constraints and punctuation; only ASCII whitespace between complete tokens ignored",
+  "passed": true,
+  "production_execution_performed": false,
+  "receiver_functions_unchanged": true,
+  "receiver_sha256": "59e6f7941a7d1a33223894bf49a4347dc72993aa5c789fb55b71c892a474d809",
+  "reexport_identical": true,
+  "schema_version": 1
+}

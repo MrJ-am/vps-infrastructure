@@ -164,6 +164,24 @@ ligne ne sont pas le snapshot de retour apparié.
 
 * Preuves et limites
 
+Le reçu 004 remplace le 003 pour la sélection des générations après le premier
+essai réel. Les deux unités d'adoption des courriels lient désormais le paquet
+v3 =8x4pybgy…= : seule la différence d'espaces ASCII entre les tokens du DDL
+est tolérée, sans relâcher les contraintes ou les données. La qualification
+séparée de cet adopteur reproduit le refus v2 puis la publication v3.
+L'évaluation complète comporte maintenant 61 contrôles.
+
+Le retour permanent utilise la cible réelle des anciennes minuteries ACME,
+=acme-order-renew-<domaine>.service=. Après la vérification HTTP privée et le
+checkpoint RETURNED, il sélectionne l'ancien boot, rouvre le réseau, démasque
+les cibles et prérequis des minuteries retenues puis les relance. Les services
+ACME et de sauvegarde ne sont jamais relancés directement pour rejouer leur
+ancien état actif ; ViSe reste en attente. Quatre contrôles VM ciblés couvrent
+les vrais timers systemd, leurs dépendances, les masques et la frontière NFT.
+Les 96 tests combinés couvrent aussi le refus avant gel si l'un des quatre
+répertoires de staging subsiste, y compris sous forme de lien symbolique.
+Ce refus ne nettoie ni ne réécrit les éléments conservés.
+
 Les générations du reçu 002 restent historiques : la VM de retour vers
 une ancienne génération sans garde a montré que les masques runtime sous
 =/run/systemd/system= sont dominés par les unités NixOS sous =/etc/systemd/system=.

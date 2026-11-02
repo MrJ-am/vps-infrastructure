@@ -1,0 +1,49 @@
+{
+  "archive_protocol": [
+    "Create one fixed new sibling archive root0700 on the same filesystem; refuse a foreign destination.",
+    "Keep transaction.lock at its original pathname and inode, holding flock throughout.",
+    "Move initial.json and adoption-started.json without editing their bytes.",
+    "Move the entire snapshot directory by rename, including paired-state.tar, paired-state.json and candidate-state-retained; do not traverse, read, export, extract or modify its contents.",
+    "Move any specifically bound incident/reopening metadata intact; reject unknown entries instead of deleting them.",
+    "Fsync both source and archive directories after every move.",
+    "Move the durable terminal phase.json last: before this commit point a new deploy refuses the old phase.",
+    "After the final fsync, the active directory contains only its original transaction.lock; record closed archive-completion metadata outside it.",
+    "A killed partial archive remains conservatively blocked by the old phase; resume only under the exact fixed archive binding and same lock, never by generic cleanup."
+  ],
+  "data_restored_or_archived_by_this_review": false,
+  "evidence": {
+    "failure_observation_sha256": "ca4ad28cbcd68a853d9941002fb6e3c52ffcf9bc0be4d40cae27103fb73115f3",
+    "returned_observation_epoch": 1793648715.552759,
+    "returned_observation_sha256": "e0e03458df60ba9fe021bbb268cc2179681fd866bd464a267beda66d9e134922"
+  },
+  "next_attempt": [
+    "Use a new sealed controller/release containing the qualified actual-failure correction; no retry of unchanged failing code.",
+    "Use a distinct fixed transient unit and result directory; preserve the failed first service and result.",
+    "Run the full ordinary preflight, including reserved identity checks, current generation, closure, credentials, source bundles and capacity.",
+    "Take a fresh snapshot of the now-current old system; never reuse the historical archived snapshot as a new rollback point."
+  ],
+  "nonnegotiable": [
+    "No snapshot restore, extraction, replayed adoption, SQL operation or application-data rewrite.",
+    "Never coerce HELD to RETURNING or invoke generic recover on a state after durable RETURNED.",
+    "Reopening may publish a separate incident record preserving original HELD then a corrective terminal RETURNED only under the fixed independently reviewed helper and observation binding.",
+    "Preserve the guard and use terminal-state selective masks; prevent direct accidental ACME/backups/bootstrap oneshot execution."
+  ],
+  "old_release_sha256": "e8626d9aca0e6a2760e9900f5b3233395ad310a09ea35b01af4b68b627511028",
+  "production_access": false,
+  "real_state": {
+    "candidate_adoption_entered": true,
+    "guarded_staged_boot_selected": true,
+    "phase_held": true,
+    "previous_generation_running": true,
+    "snapshot_exists_and_has_retained_candidate": true
+  },
+  "retry_archive_preconditions": [
+    "Separately qualified reopening succeeded; actual previous generation and previous boot profile match.",
+    "Application HTTP continuity has been verified and the ingress gate is open.",
+    "No live original deploy/recover/reopen process or foreign live lease; acquire the existing transaction.lock exclusively without replacement.",
+    "Old metadata bindings exactly match the failed release and incident; expected top-level inventory only.",
+    "Owned masks/portable guard must be retired through the reviewed completion path; preserve foreign masks."
+  ],
+  "schema_version": 1,
+  "scope": "Independent retry/archive contract after observed RETURNED followed by HELD; no operational archive or production access."
+}

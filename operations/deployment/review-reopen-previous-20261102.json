@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "Exact target/previous generation and bound initial/adoption records required under the existing Backend flock.",
+    "Closed prior failure result and witnessed previous-generation-restored boundary bind this incident; retention directory is not misrepresented as proof of completed restoration.",
+    "Original HELD checkpoint document is preserved privately before terminal RETURNED is published; a RETURNED retry requires that saved evidence.",
+    "No transition to RETURNING, no snapshot read/extraction/restore, no generation activation, SQL or application adoption.",
+    "NFT and all masks remain closed while terminal checkpoint is published; existing guard then honors selective masks.",
+    "Only fixed previously active core services are started; exact prerequisites may be unmasked without direct bootstrap invocation.",
+    "Eight old HTTP observations must match the original record before previous boot selection and durable opening marker.",
+    "Ingress opens before selected timers; ACME timer/service mapping is explicit and helper starts timers rather than their oneshot services directly.",
+    "Timer-specific SystemControl.Refused failures cannot close the reopened public applications; backend budget and other exceptions are not swallowed by that handler.",
+    "No transaction reset or removal of historical snapshot/quarantine; ViSe stays held."
+  ],
+  "corrections_verified": [
+    "Persist HELD evidence before overwrite.",
+    "Catch only SystemControl.Refused for per-timer failures."
+  ],
+  "helper": "operations/deployment/reopen-previous-20261102.py",
+  "helper_sha256": "96270351d3fd0a4d11d43d36eac8d81fea5652c3f9b420a50b8bc0a9551ce6ab",
+  "immutable_backend": "/nix/store/irb47r5zxmffhlklmf2c613gdm8ydb1z-mrjam-first-release-controller-1",
+  "limits": [
+    "This review does not itself execute the helper or prove live service availability.",
+    "Normal unit dependency activation and timer schedules can execute their declared old services after unmasking; no direct arbitrary command or oneshot action is introduced.",
+    "A future attempt still requires separate evidence-preserving archive under the same lock and a fresh full preflight/snapshot."
+  ],
+  "passed": true,
+  "production_access": false,
+  "release_sha256": "e8626d9aca0e6a2760e9900f5b3233395ad310a09ea35b01af4b68b627511028",
+  "schema_version": 1,
+  "scope": "Independent source and fixed-boundary review; author synthetic sequence tests are recorded separately."
+}

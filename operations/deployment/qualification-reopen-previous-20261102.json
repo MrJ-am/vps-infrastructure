@@ -1,0 +1,21 @@
+{
+  "cases": [
+    "success_order_and_targets",
+    "http_failure_no_open",
+    "timer_system_refusal_keeps_public_open",
+    "backend_deadline_not_absorbed"
+  ],
+  "direct_one_shot_start": false,
+  "held_checkpoint_copy_before_returned": true,
+  "persisted_tests_passed": 4,
+  "schema_version": 1,
+  "source": "operations/deployment/reopen-previous-20261102.py",
+  "source_sha256": "96270351d3fd0a4d11d43d36eac8d81fea5652c3f9b420a50b8bc0a9551ce6ab",
+  "test_source": {
+    "path": "operations/deployment/test_reopen_previous_incident.py",
+    "sha256": "5ee3ad9358df272c0a8d4f7594283a2554c4b944b48477533c305a805c902c25"
+  },
+  "tests_passed": 4,
+  "timer_target_mapping_explicit": true,
+  "validation": "synthetic injected service operations; no VM or production execution"
+}

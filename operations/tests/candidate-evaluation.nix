@@ -94,6 +94,11 @@ let
     archiveMixedRecipientRefused = builtins.elem "Vision archive requires either both private configurations or one public age recipient." (failures mixedArchive);
     legacyArchiveNotPromotable = builtins.elem "mrjamVpsApplications: native identity requires all five adapted worker artifacts, including archival of both historical and native issuers." (failures oldArchive);
     adoptionNeverAutomatic = inactive staged adoptionUnits && inactive promoted adoptionUnits;
+    mailAdoptionDdlWhitespaceV3 = lib.all (config:
+      config.systemd.services.mrjam-cycle-mail-adopt.serviceConfig.ExecStart
+        == "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3/bin/mrjam-cycle-mail-adopt"
+      && config.systemd.services.mrjam-archive-mail-adopt.serviceConfig.ExecStart
+        == "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3/bin/mrjam-archive-mail-adopt") [ staged promoted ];
     databaseAndCredentialAdoptionNeverAutomatic = inactive staged explicitUnits && inactive promoted explicitUnits;
     onlyExplicitDatabaseMigrationUnits = staged.systemd.services.mrjam-adopt-matheval.serviceConfig.User == "postgres"
       && staged.systemd.services.mrjam-bootstrap-journal.serviceConfig.User == "postgres"

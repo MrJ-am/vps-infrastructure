@@ -3,7 +3,7 @@
 { lib, ... }:
 let
   admission = "/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1";
-  mail = "/nix/store/7hmdar637aj6m80vrqma57g82pgqvbc1-mrjam-mail-native-adoption-2";
+  mail = "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3";
   adopt = { user, source, binary, state, conflicts, memory }: {
     description = "Explicit publication of adopted ${state} SQLite state";
     wantedBy = [ ];

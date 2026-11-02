@@ -1,0 +1,56 @@
+#+TITLE: Contrôle borné des barrières après promotion
+
+Ce contrôle complète les observations réellement effectuées par la bascule.
+Il ne relance ni les migrations, ni la gouvernance, ni le préflight.
+
+1. Identités : UID/GID distincts des applications et travailleurs, absence de
+   groupes root/wheel, unités promues sans surcharge, capacités Linux vides et
+   NoNewPrivileges. Quand un processus tourne, vérifier aussi son UID/GID et
+   ses capacités effectives dans /proc. Un travailleur périodique au repos ne
+   fournit pas de preuve de processus courant ; sa déclaration reste vérifiable.
+2. Secrets : métadonnées root:root 0600 des dix références fixes et répertoires
+   0700, sans ouvrir leur contenu. La déclaration effective du rejeu ne reçoit
+   pas le jeton Kanidm large ; celui-ci reste dans l'adaptateur UID 948, dont le
+   contrôle du pair UID 944 possède une preuve indépendante déjà gelée.
+3. Entrées : sockets TCP publics limités à 22/80/443/2222, ports internes en
+   loopback ; chaînes IPv4/IPv6 réellement chargées avec ports exacts et refus
+   terminal. Nginx doit sélectionner la configuration promue et n'avoir aucune
+   surcharge temporaire. sshd -G vérifie la configuration publique calculée :
+   mot de passe et clavier interactif désactivés, root par clé uniquement.
+   Cet accès root reste une administration complète, pas une permission réduite.
+4. Ancien déploiement : quinze services anciens arrêtés et non activés ; les
+   unités d'administration temporaire arrêtées. Le répertoire ViSe conservé
+   doit encore exister. Sa présence seule ne prouve pas l'égalité du contenu.
+5. Sauvegardes : cinq timers actifs, persistants et avec prochaine échéance.
+   Une programmation n'est pas une sauvegarde réussie ni un test de restauration.
+
+Pour le SSO et Forgejo, réutiliser les résultats réels de la phase privée :
+le probe forgejo_sso_probe.py vérifie le fournisseur natif, le propriétaire
+administrateur lié à son sujet SSO et l'absence de connexion locale de ce compte.
+Le helper de gouvernance vérifie les sources/protections déclarées et la révocation
+de son accès temporaire. Ne pas relancer ce helper de mutation pour ce contrôle.
+Le probe Kanidm existant a déjà vérifié les trois identités techniques avant la
+bascule. Le nouveau probe ne relit aucun jeton. Aucune de ces observations ne
+prouve une future CI, une prochaine revue humaine ou une future autorisation.
+
+* Exécution par le parent seulement
+
+=postflight_barriers.py= est autonome, sans argument ni environnement de sélection.
+Il est lié à la génération promue =8b1d53cagzriks09hwxs9yi2swnamfz9= et aux outils
+publics déjà importés avec elle. Le parent peut le transmettre sur l'entrée
+standard du Python immuable déjà livré, via son accès SSH vérifié. Ce document
+n'autorise pas une seconde activation.
+
+La sortie contient uniquement noms de contrôles fixes, booléens et null pour
+un contrôle non applicable. =observed:false= est une indisponibilité de preuve,
+pas une absence de service. Le probe n'émet aucun résultat global « sécurisé ».
+Il est borné à 60 secondes, 5 secondes et 256 Kio par commande. Les seules
+commandes sont systemctl show, iptables/ip6tables -S et sshd -G. Les seuls fichiers
+ouverts sont la configuration publique immuable et les métadonnées noyau /proc.
+Les références de secrets et ViSe sont examinées par stat/lstat uniquement.
+
+La sélection Nginx observée est liée à la configuration promue déjà qualifiée ;
+le probe ne rejoue pas de requête de suppression, d'authentification ou de travail.
+Les en-têtes d'identité et limites d'API sont ceux des octets Nginx sélectionnés,
+pas une nouvelle preuve de tous les chemins applicatifs ni d'un accès Internet
+externe. Aucun journal ou enregistrement métier n'est lu.

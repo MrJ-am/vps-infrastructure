@@ -1,0 +1,98 @@
+{
+  "agent_production_access": false,
+  "ast_delta_check": "check_v2_delta.py passed: removing the DDL token helpers and restoring the two comparison calls produces the exact V2 AST.",
+  "author_tests_passed": 35,
+  "classifier_delta": "Only MODULE and MODULE_HASH assignments differ from preflight_archive_adoption.py; all remaining AST nodes equal.",
+  "classifier_v3_tests_passed": 7,
+  "date": "2026-11-02",
+  "derivation": "/nix/store/i777z7yfg39pjxl87bcya5s9da12a10b-mrjam-mail-native-adoption-3.drv",
+  "files": {
+    "operations/deployment/preflight_archive_adoption.py": "490d120669a92d9c812e3dc15eeb0d768f32f1ec44e6aff9589a927895d82a34",
+    "operations/deployment/preflight_archive_adoption_v3.py": "0904b3315dd8b6b898ea8f0ad2dc4f6ab42ad5b1c39831f013b3bd7f99554735",
+    "operations/deployment/preflight_archive_ddl.py": "d1cba0d6293f138e181ab3eb89a4f03326e2b5ab103bfb4a6337859738cb8b03",
+    "operations/deployment/qualification-archive-diagnosis-20261102.json": "747c3017529abe74b2bbc788c9d20073941e1cb4bbeaa26d51ec1874efa2904d",
+    "operations/deployment/test_preflight_archive_adoption.py": "cff7a9e301d36c17597fd88ff18481695f554ffbea0ef5f54ddd1953fb84a59d",
+    "operations/deployment/test_preflight_archive_adoption_v3.py": "15397ce7eba6a5648c27dd2955db428861589d6cf357e376d090dcd943db2807",
+    "operations/migrations/mail-native-v3/README.org": "3bc3017e1b16aef039b6068ebdb0cafa4c297f6ee00589cd1ff55f8a677a11ef",
+    "operations/migrations/mail-native-v3/adopt.py": "83ea75454c19a3599726da7ed38dad7c8633ecf194c69da727ae0615c950cb05",
+    "operations/migrations/mail-native-v3/check_v2_delta.py": "a11abe96e234d0e9c7befe3f2ecdc37363ad98236053a161dad1f2116187f912",
+    "operations/migrations/mail-native-v3/package.nix": "f8c9b8a430f3c46e797a08db864521f28705218f3914ef7d9634d860575887a5",
+    "operations/migrations/mail-native-v3/result-vm-001.json": "a85314b2857663a6526bab894cc75b16a9e28d7ead43de2c9e16c3af6467cea0",
+    "operations/migrations/mail-native-v3/result-vm-003.json": "4ba098186a6282729a15542da44de94887f878686c32746e41a4a51fd640f50c",
+    "operations/migrations/mail-native-v3/schema-provenance.json": "72fd0b2361103616b25494224d4721ce13a14c9bb590cbaac389685ab20d8844",
+    "operations/migrations/mail-native-v3/schemas/closure-markers.sql": "d8d355a91c9588833b8170bd93723034e8379da36d1bb2fb4140b7e6790a38cd",
+    "operations/migrations/mail-native-v3/schemas/cycle-markers.sql": "556ee5c3f01e66bbc02a20841c2147df34067e729d14f49d4066b2b091eeee67",
+    "operations/migrations/mail-native-v3/schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+    "operations/migrations/mail-native-v3/schemas/native-mail.sql": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd",
+    "operations/migrations/mail-native-v3/schemas/target-mail.sql": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d",
+    "operations/migrations/mail-native-v3/systemd-fixture.py": "202ed175155778bb5ddbba75a30a4c81ae0ff54fb94f05eb0502c4b7683f1fd9",
+    "operations/migrations/mail-native-v3/systemd-test.nix": "fba84cabd70a4717a115ab17ea7da36fb23dfb5d1a4b3d5003c30ab4899bac04",
+    "operations/migrations/mail-native-v3/test_adopt.py": "a446db0f886ddac5233acb03e361efeea16d5d32889b75e1606c1364724c0281",
+    "operations/migrations/mail-native-v3/test_ddl.py": "463f31de860b439f5edfcead052eae531f139a386e1278096d068e93127a6947"
+  },
+  "fixture_002": "Did not pass: host switched module to V3 while the diagnostic V2 package lacked an explicit guest closure dependency. Fixed only test dependencies; expected V2 status1 was never weakened to203.",
+  "historical_vm_001": {
+    "groups_passed": 6,
+    "output": "/nix/store/vaz3b0vz75809k94chxvzdzgk4sajx65-vm-test-run-mrjam-archive-adoption-v3-whitespace-only",
+    "result_sha256": "a85314b2857663a6526bab894cc75b16a9e28d7ead43de2c9e16c3af6467cea0",
+    "seconds": 14.47
+  },
+  "installed_archive_module_sha256": "ccbef53836806be24f41e46e27ec46bda46f19a62ae19021f82e5e9564ae456b",
+  "limits": [
+    "Invented private mail and markers only; no real production content",
+    "Production adoption unit policy reused with only ExecStart bound to new package",
+    "No SMTP, PostgreSQL or application worker semantics requalified here",
+    "The parent ran the closed real-data diagnostics; this agent accessed no VPS. Real private images never leave that host.",
+    "The retained-image read-only result does not publish the target or prove future IO; next attempt must restage the then-current frozen sources."
+  ],
+  "nar_bytes": 37344,
+  "nar_hash": "sha256-u9iI5Iv/rIQru/QYDTA9pDSMykuSahBc47Avk1w0VUA=",
+  "nixpkgs": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+  "package": "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3",
+  "passed": true,
+  "production_delta": "Only ASCII whitespace between complete SQL tokens is ignored. Word case, comments, literals, numeric spelling, constraints, operators and punctuation remain exact.",
+  "root_reported_production_observation": {
+    "closed_report_bindings": {
+      "ddl_diagnosis": {
+        "local_reference": ".local/deployment-20261101/first-release-archive-ddl-001.json",
+        "sha256": "c8a16bde3d5c5a5abe2d9e89e2112c9023376c66d2c7f8c6332f19ad451d7309"
+      },
+      "old_diagnosis": {
+        "local_reference": ".local/deployment-20261101/first-release-archive-diagnosis-001.json",
+        "sha256": "7d3cdf129eef196b3b86506719a5976f8d21d3a0a673f0c69ab2c71725824f02"
+      },
+      "v3_diagnosis": {
+        "local_reference": ".local/deployment-20261101/first-release-archive-v3-diagnosis-001.json",
+        "sha256": "c8c47f5c47fe3d70028adee0a9a7484002673802a3462bef4de3f30b7d36042a"
+      }
+    },
+    "closure_whitespace_tokens_match": true,
+    "mail_and_indexes_exact": true,
+    "mutation_performed": false,
+    "private_values_exported": false,
+    "v3_source_merge_code": "SOURCE_MERGE_ACCEPTED",
+    "v3_target_code": "TARGET_PUBLICATION_PRECONDITIONS_ACCEPTED"
+  },
+  "schema_version": 1,
+  "scope": "Conservative whitespace-only archive adoption compatibility",
+  "unit_module_dependency": {
+    "path": "operations/hosts/mrjam-vps/state-adoption.nix",
+    "sha256": "ea41b339cce6eccd2be68101b3e173a6f3f4aef37414617d11deca118d2e4a65"
+  },
+  "vm": {
+    "checks": [
+      "v2-whitespace-refusal-without-publication",
+      "v3-real-staging-readonly-publication-preservation-idempotence",
+      "exact-and-whitespace-same-target-inode-and-bytes",
+      "constraint-refused-without-target-or-source-change",
+      "default-refused-without-target-or-source-change",
+      "collision-refused-without-target-or-source-change"
+    ],
+    "derivation": "/nix/store/fjjlwvgyclq4dc3appz7fc7f27vbm70z-vm-test-run-mrjam-archive-adoption-v3-whitespace-only.drv",
+    "groups_passed": 6,
+    "output": "/nix/store/p4av712jz2anhnjh1g74naxczn76rsai-vm-test-run-mrjam-archive-adoption-v3-whitespace-only",
+    "result_sha256": "4ba098186a6282729a15542da44de94887f878686c32746e41a4a51fd640f50c",
+    "seconds": 16.19,
+    "stopped": true
+  }
+}
