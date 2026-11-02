@@ -2,36 +2,42 @@
 #+date: 2026-11-02
 #+language: fr
 
-* État courant — corrections avant la troisième tentative
+* État courant — retour de la troisième tentative et correction Forgejo
 
-L'ancienne génération assure les services. La tentative 002 s'est arrêtée au
-contrôle de démarrage du service de fermeture, puis le retour automatique a
-réussi avant toute ouverture publique du candidat. La génération active et
-celle du prochain démarrage sont =jn9rf2fg...=. Les huit domaines HTTPS et les
-huit contrôles de continuité SSO ont été vérifiés après le retour.
+La tentative 003 a franchi la sauvegarde, l'installation privée et les adoptions
+SQL avec les deux corrections de droits. Le helper de gouvernance Forgejo a
+ensuite refusé =DEFAULT_BRANCH_ADOPTION_REQUIRED= avant toute ouverture
+publique. Le retour automatique est terminé : résultat
+=CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED=, contrôleur arrêté, génération
+précédente restaurée. Les huit domaines HTTPS répondent après ce retour.
+Voir [[file:observation-third-cutover-return-20261102.json][le constat de production]].
 
-L'incident est reproduit avec PostgreSQL 17 et les sources exactes : le bootstrap
-du journal n'accordait pas USAGE sur le schéma public aux quatre rôles dont les
-contrôles de catalogue en ont besoin. La correction séparée passe les six
-contrôles de la VM avec l'unité, le binaire et les credentials synthétiques.
-Une observation supplémentaire a constaté le même droit manquant au rôle
-=vision_administration= dans la base =vision=. Sa correction distincte a passé
-la revue indépendante avec connexion réelle du rôle, sans élargir ses droits
-sur les objets, les tables ou les données. Ces corrections seront appliquées
-par l'adoption explicite après la prochaine sauvegarde appariée.
+La cause est identifiée dans Forgejo 17.0.1 : lors du premier import dans un
+dépôt vide, la première branche traitée devient sa branche par défaut. La
+priorité de main ne s'applique qu'à chaque lot de 30 branches du hook.
+Le push atomique des historiques peut présenter une branche d'archive avant
+=main=. Le nouveau helper de [[file:forgejo-governance-v2/core.py][gouvernance v2]] prépare une adoption explicite
+de =main= limitée aux dépôts initialement vides, après vérification du commit
+et des références importées. Le réconciliateur partagé reste strict et les
+branches conservées ne sont pas supprimées. La VM réelle avec 48 branches a reproduit le refus, puis validé l'adoption
+des neuf dépôts, le maintien des protections après drainage des files et la
+nouvelle exécution sans changement. Les sources et reçus exacts doivent encore
+être liés à la nouvelle livraison ; aucune quatrième tentative n'est lancée.
 
-Les générations corrigées sont construites et leurs 61 contrôles déclaratifs
-passent. La répétition intégrée de la bascule et du retour avec diagnostic
-fermé a réussi ses six scénarios (qualification 009). Aucun troisième déploiement n'est encore lancé.
-Les deux tentatives et leurs captures complètes restent archivées séparément ;
-le verrou de transaction a conservé son inode. Aucun nouvel état de données
-n'a été restauré pendant leur archivage.
+Les trois tentatives et leurs captures restent archivées séparément. Le fichier
+fermé =failure.json= de la troisième est conservé. L'archivage n'a restauré
+aucune donnée et le verrou de transaction garde son inode. Le bundle source E
+est retenu sous =previous-12d1beb-20261102=, à côté des bundles A et C ; son
+emplacement canonique attend la prochaine remise. Les huit autres bundles
+sont inchangés. Voir [[file:observation-third-attempt-archived-20261102.json][le résultat d'archivage et de rétention]].
 
-Les neuf bundles Git sont vérifiés et livrés ; ils ne sont pas encore adoptés
-dans Forgejo. La dernière livraison documentaire publiée est
-=756ffdf19dc207a0b749ee9f1048fc48315c095c=, liée à la source C
-=e65a42e303f75467adeb86adca7e2382983d51bd=. La prochaine livraison doit lier
-explicitement les sources finales et conserver les bundles précédents.
+La dernière livraison documentaire publiée est
+=df61adc9b5c759002ba03138fa16e4ff3be37b6f=, liée à la source E
+=12d1bebb2edce1cb46cd8cb10dc8542a809d08bc=. La correction Forgejo aura sa
+propre publication et sa propre liaison ; ces références ne sont pas modifiées
+rétroactivement. Les générations corrigées 006 et le backend qualifié 009
+restent inchangés. Les corrections SQL devront être réappliquées par l'adoption
+après la prochaine sauvegarde, car le retour restaure l'état précédent.
 
 Kanidm et les trois accès techniques sont réparés et vérifiés. Le portail
 administratif temporaire est fermé. ViSe reste exclu avec ses données conservées.

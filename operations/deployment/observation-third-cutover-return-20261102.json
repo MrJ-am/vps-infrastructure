@@ -1,0 +1,37 @@
+{
+  "application_body_read": false,
+  "attempt": 3,
+  "controller_release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "controller_unit": {
+    "ActiveState": "failed",
+    "ExecMainCode": 1,
+    "ExecMainStatus": 1,
+    "LoadState": "loaded",
+    "MainPID": 0,
+    "Result": "exit-code",
+    "SubState": "failed"
+  },
+  "eight_public_https_passed": true,
+  "failure": {
+    "code": "DEFAULT_BRANCH_ADOPTION_REQUIRED",
+    "component": "forgejo_governance",
+    "release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+    "schema_version": 1,
+    "step": "helper"
+  },
+  "local_evidence_sha256": {
+    "first-release-failure-003.json": "85a4b3bc55882c497f031e5d435f2d174382298fa5c9b14780500344981c0faa",
+    "first-release-launch-003.json": "050dbc0b0608c634159f1b5182c9039aa73895fd75b310870a0cb5e50335854d",
+    "first-release-observations-003.jsonl": "232672ca3a511179be138512acedf23118476a8bc09cdaf89ce6e47608747114",
+    "public-https-after-003.json": "16dd13e5e389455bff6ac9f68f923d34dead2a72f7af4fbcd6d48c38a95938cf"
+  },
+  "public_https_observed_at": "2026-11-02T21:33:30.587813+00:00",
+  "schema_version": 1,
+  "snapshot_restoration_requested": false,
+  "terminal_observed_at": "2026-11-02T21:33:15.187689+00:00",
+  "terminal_result": {
+    "code": "CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED",
+    "phase": "previous-generation-restored",
+    "schema_version": 1
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "files": {
+    "cmd/hook.go": {
+      "relevant_line": 28,
+      "sha256": "eed9e7bb26afefb66e7188863234755f52e53f12a7371b588dd82d9fba7e4f6a"
+    },
+    "routers/api/v1/repo/repo.go": {
+      "relevant_line": 818,
+      "sha256": "c15398aad03ad3025999b40c133a413118c9c77bcb990af47be6243801e05799"
+    },
+    "routers/private/hook_post_receive.go": {
+      "relevant_line": 87,
+      "sha256": "c6a26df6a9c17a77d0d8f169b3de7231a977ca63815afad68a5812cab190500b"
+    },
+    "services/repository/push.go": {
+      "relevant_line": 187,
+      "sha256": "eef85e085d6e736271c4c9496bf68cf78ba9ae6331be955c928877723c5405e7"
+    }
+  },
+  "finding": "main prioritization applies within each hook batch; first processed nonempty branch sets default on an initially empty repository",
+  "forgejo_version": "17.0.1",
+  "hook_batch_size": 30,
+  "production_contents_read": false,
+  "schema_version": 1,
+  "scope": "code metadata only; source files already present from the pinned Forgejo build",
+  "source_store": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source"
+}

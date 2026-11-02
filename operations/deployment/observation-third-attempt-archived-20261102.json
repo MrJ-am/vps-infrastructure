@@ -1,0 +1,34 @@
+{
+  "archive_receiver_sha256": "de525119da05425b002ed8ab0254d958de3bcf4149cdf7338edef6ea0658f77c",
+  "archive_result": {
+    "application_data_modified": false,
+    "attempt": 3,
+    "code": "FIRST_RELEASE_ATTEMPT_ARCHIVED",
+    "failure_record_preserved": true,
+    "new_deployment_started": false,
+    "prior_archives_preserved": true,
+    "runtime_directories_retained": 4,
+    "same_transaction_lock": true,
+    "schema_version": 1,
+    "secret_contents_read": false,
+    "snapshot_restored": false
+  },
+  "archive_review_sha256": "6a54790d38d18b7076ff65125b3edcb2c2c62fb51aff7e725a6add036ad6a1ec",
+  "attempt": 3,
+  "canonical_infrastructure_bundle_present": false,
+  "new_deployment_started": false,
+  "retention_receiver_sha256": "27a7cf2f1b94cbce0ff5ea23d1f401b3b7a6ea638010b9bf3250e37e12f34e67",
+  "retention_review_sha256": "e983742398e97a524c508d2475fb12b09e2abe97752175487891312a6c291dfa",
+  "schema_version": 1,
+  "source_e_retention_result": {
+    "application_changes": false,
+    "bytes": 3954624601,
+    "code": "PREVIOUS_INFRASTRUCTURE_BUNDLE_RETAINED",
+    "new_bundle_received": false,
+    "other_bundles_opened": false,
+    "same_inode": true,
+    "same_transaction_lock": true,
+    "schema_version": 1,
+    "sha256": "69e6625c3288972d91fe77175fa021ba3ef229fc035c457cd1fc4619425a2bbc"
+  }
+}

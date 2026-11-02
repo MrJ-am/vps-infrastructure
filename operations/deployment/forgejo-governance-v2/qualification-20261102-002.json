@@ -1,0 +1,46 @@
+{
+  "activation_performed": false,
+  "bootstrap_package": "/nix/store/baqixlinnxw0vqk57grjm7f48bhhp7wg-mrjam-forgejo-technical-bootstrap-1",
+  "date": "2026-11-02",
+  "do_not_deploy_fixture_package": true,
+  "fixture_package": "/nix/store/ir6s4hl1bw8mq710zi7w7z1ah9gz3sqv-mrjam-first-release-governance-2",
+  "limits": [
+    "Invented Git histories only; no production bundle or accepted rules authority inferred.",
+    "The old fixture had fewer than thirty branches; the first v2 diagnostic run retained that small seed and correctly did not reproduce the cross-batch defect. Run002 adds forty-eight invented historical branches.",
+    "Only fixture preparation deletes its disposable reproduction repository; no production runtime delete endpoint or ref deletion was added.",
+    "No runners or human review identities provisioned; existing protection and private target refusals remain strict.",
+    "The production constructor must bind a newly published source revision and its exact nine bundles. This synthetic package must not be deployed."
+  ],
+  "local_tests_passed": 16,
+  "prior_v1_sources_retained": true,
+  "production_access": false,
+  "production_binding_available": false,
+  "reconciler_sha256": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+  "reproduction": {
+    "atomic_git_import_unchanged": true,
+    "corrected_path_starts_from_its_own_new_empty_repositories": true,
+    "existing_nonempty_repository_seeded_to_main_only_by_fixture_before_observation": true,
+    "fixture_branches_exceed_hook_batch_size": true,
+    "post_receive_queues_drained_and_repeated_readbacks_passed": true,
+    "strict_v1_default_branch_refusal_observed": true
+  },
+  "result_sha256": "40ec882e70943071d0aa2e08a7e728a1be070ec667a397940961db17ee47e91c",
+  "schema_version": 1,
+  "scope": "real-isolated-forgejo17-postgresql17-atomic-git-http-import-over-thirty-branches",
+  "source_finding_sha256": "f9bf59a09ddff9afe4370cc8407cc7bb85d8499315836869f1555623c3a90342",
+  "source_sha256": {
+    "README.org": "eb49613899acca43476c1829916ba1da6c69304fe61f9a225d6d1ef783abc995",
+    "core.py": "4cc30e9592e7523a722912ab2416808cc62cf59f53a4343620d8d4067c27af83",
+    "credentials.py": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2",
+    "entry.py": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487",
+    "finding-default-branch-batches-20261102.json": "f9bf59a09ddff9afe4370cc8407cc7bb85d8499315836869f1555623c3a90342",
+    "fixture.py": "ca64ac0cd0b4b9065d08da4d637afd560ebca6772572a3bf2fe6bceb5b0898f8",
+    "package.nix": "c519334b8ec595465db0267a55bda4f45d810761bdfc58d494836cb605b45046",
+    "systemd-test.nix": "a15dbe308509721196816a6f822873cc583790d9587204b2aa92ad55b6937a95",
+    "test_governance.py": "d3157bb8aba0350d5d1968855981f37c9400d7599bca187e9ca20bf864ca2977"
+  },
+  "unchanged_credentials_and_entry": true,
+  "vm_groups_passed": 10,
+  "vm_output": "/nix/store/mjghmws49hm46pgzdcxdfy1475mgk96z-vm-test-run-mrjam-forgejo-initial-default-branch-adoption-v2",
+  "vm_seconds": 138.23
+}

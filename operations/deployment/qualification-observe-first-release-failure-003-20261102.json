@@ -1,0 +1,60 @@
+{
+  "allowlist_counts": {
+    "codes": 258,
+    "components": 183,
+    "steps": 20
+  },
+  "allowlists_loaded_from_exact_immutable_backend": true,
+  "backend_sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+  "checks": [
+    "absence produces no deployment success claim",
+    "valid record and checkpoint preserve bytes/inodes/modes",
+    "foreign release, unknown fields and nonliteral values refused",
+    "null, duplicate keys, malformed, oversized and nonfinite JSON refused",
+    "strict checkpoint schema and phase enumeration",
+    "symlink, hardlink, mode and FIFO refused before content read",
+    "pending failure publication never opened",
+    "directory symlink and permissions refused",
+    "replacement during read refused",
+    "rejection output does not expose private marker",
+    "runtime arguments refused before contract/state reads"
+  ],
+  "controller": "/nix/store/lviggl0pqmarmmhs8brqs4d34fa1cph3-mrjam-first-release-controller-1",
+  "limits": [
+    "Absence of failure.json is not proof of deployment success or absence of an uncompleted failure.json.next publication.",
+    "The two atomic files are read independently while the controller may advance; this is not a locked snapshot of its state.",
+    "An unsafe file or concurrent replacement yields only FIRST_RELEASE_FAILURE_OBSERVATION_REFUSED; no raw diagnostic is exported.",
+    "The immutable controller003 code must have been imported before this probe is usable."
+  ],
+  "maximum_file_bytes": {
+    "failure.json": 1024,
+    "phase.json": 4096
+  },
+  "no_state_write_lock_or_subprocess": true,
+  "passed": true,
+  "process_deadline_seconds": 15,
+  "production_access": false,
+  "release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "schema_fields": [
+    "schema_version",
+    "release_sha256",
+    "step",
+    "component",
+    "code"
+  ],
+  "schema_version": 1,
+  "scope": "Read-only fixed controller003 failure projection; real synthetic filesystem tests, no VPS call",
+  "source": "operations/deployment/observe-first-release-failure-003-20261102.py",
+  "source_sha256": "40c010a2b053376124bd5faad863a8da685e377a0c0b9b1c3f2947fdd38ff3d5",
+  "state_files_read": [
+    "failure.json",
+    "phase.json"
+  ],
+  "tests": {
+    "command": "/nix/store/sgd4bw41gdw6rhla06bw7knzbl9gxzcb-python3-3.14.8/bin/python3 -I operations/deployment/test_observe_first_release_failure_003.py -v",
+    "elapsed_seconds": 0.053,
+    "passed": 11,
+    "path": "operations/deployment/test_observe_first_release_failure_003.py",
+    "sha256": "5460d410b4ea34cc1e76642da2808cfd322169c7c3cdb8e8007c52c70bd4bb22"
+  }
+}
