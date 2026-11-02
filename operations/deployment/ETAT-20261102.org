@@ -5,8 +5,13 @@
 * Production
 
 Spectre porte l'assemblage et le déploiement, conformément au mandat utilisateur
-« Va jusqu'au bout ». Aucune activation, mutation SQL ou modification de service
-n'a encore été effectuée. Le VPS reste sur la génération
+« Va jusqu'au bout ». La nouvelle génération applicative n'est pas activée et
+aucune migration SQL du premier déploiement n'a été effectuée. Les fermetures du
+provisioner et du portail temporaire ont été importées ; leurs unités ont été
+installées dans le runtime systemd. Le portail a été ouvert le 2 novembre à
+17:13:42 UTC avec une route Nginx temporaire et un redémarrage de Nginx. Après
+expiration, le portail est inactif et le probe fermé constate exactement la
+configuration Nginx initiale, sans surcharge runtime. Le VPS reste sur la génération
 =/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80=.
 Le nom observé est =srv1982677=. Le socle conserve le pin
 =c5c4a43b0e8056328ec4529f735cabdb8f1942bb=. ViSe est exclu de la première
@@ -24,14 +29,17 @@ Les 118 tests du workspace, 22 groupes d'acceptation indépendante, huit groupes
 Kanidm réel et neuf groupes systemd passent. Log reçoit uniquement une
 projection subject/mail ; les sessions restent privées. Le socket d'admission
 exige l'UID 947. Source : [[https://github.com/MrJ-am/mrjam-plateforme/pull/1][plateforme PR1]], commit
-=b48f0ab14f37a15ce08c84248b2240e78ae5e4dc=.
+=2a34dac722ff1dab9a63aec56e407dd996de0719=, qui ajoute également l'adaptateur
+de suppression isolé.
 
 Les cinq traitements Vision sont adaptés à Kanidm, avec CA explicite, capacités
 distinctes et conservation des messages/journaux historiques. Le paquet est
 =/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101=.
 Son adopteur de journaux est une sortie séparée, sans argument libre. Source :
-[[https://github.com/MrJ-am/vision/pull/18][Vision PR18]], commit =3c39cf5c776bf8f8b027d79daea69a825a0f337e=,
+[[https://github.com/MrJ-am/vision/pull/18][Vision PR18]], commit =61cf80bddc5e1f6e7b330af319e0c9ecf742dc93=,
 base =workers-operationnels-20261030=.
+Cette tête ajoute le paquet de rejeu par adaptateur DELETE ; les quatre autres
+traitements conservent le paquet cité ci-dessus.
 
 Les 54 tests auteur dont PostgreSQL, 34 tests Nix et neuf groupes systemd
 indépendants passent. =../identity/workers-result-001.json= lie les ELF exacts,
@@ -66,6 +74,64 @@ adresse, date ni contenu privé. Ce contrôle doit être répété après gel de
 écritures avant adoption ; l'observation ne dispense pas de préserver les tables.
 
 * Travail restant
+
+** État courant prioritaire : préparation des accès techniques
+
+L'authentification humaine utilise une passkey dans Proton Pass, sur le navigateur
+de l'utilisateur. La première tentative a échoué. Le contrôle fermé constate
+le démarrage du provisioner v2, un refus en environ 179 ms et aucun signal
+d'échec de révocation de session. Admission reste valide ; les fichiers des
+jetons cycle et rejeu sont toujours absents. Ce constat ne permet pas d'affirmer
+qu'aucun objet Kanidm n'a pu être modifié avant le refus.
+
+La qualification native a reproduit un défaut du contrôle local v2 : une personne
+=idm_admins=, héritant de l'administration des services et groupes, accomplit
+toutes les opérations fixes mais v2 la refuse faute de =idm_access_control_admins=.
+Une personne =idm_group_admins= seule peut réellement ajouter un nouveau membre
+au groupe MAIL, en préservant les autres, mais ne peut pas modifier PEOPLE.
+Ces essais sont synthétiques ; ils ne révèlent pas les groupes du compte humain
+réel. Le reçu =passkey-nginx/qualification-native-capabilities-20261102.json=
+fixe cette preuve et ses limites.
+
+Le provisioner v3 et le portail v2 sont qualifiés dans des dossiers distincts.
+Seul le contrôle d'administration MAIL accepte désormais le rôle d'administration
+des accès ou celui des groupes ; les droits d'identité et toutes les opérations
+natives restent contrôlés. Le portail vérifie les capacités avant d'afficher la
+confirmation et explicite les expirations. Les versions anciennes et leurs
+preuves restent inchangées. Le remplacement des deux unités, uniquement à
+l'arrêt, est préparé par =upgrade_passkey_units.py=. La VM indépendante passe
+24 groupes : remplacement inactif, reprise partielle, refus des unités étrangères,
+parcours HTTP réel, droits insuffisants, rôle administrateur sans ACCESS,
+LoadCredential v3, révocations et restauration Nginx à expiration. Le reçu est
+=passkey-nginx/qualification-integration-v2-20261102.json=. Le transfert correctif
+de 141 536 octets réemploie 179 dépendances de la livraison précédente ; sa revue
+indépendante confirme les octets et l'absence de modification des fonctions du
+receiver. Import, remplacement puis ouverture réels restent à constater dans
+un reçu distinct après publication.
+
+** Composition, retour et forge
+
+Les générations staged et promoted sont construites et passent 60 contrôles
+d'évaluation. La qualification du contrôleur complet et son manifeste final
+restent à terminer ; elles ne sont pas déployables sur la seule foi du build.
+Le générateur de protection portable, le retour entre générations réelles et
+la capture appariée passent respectivement sept, cinq et sept groupes en VM.
+Les reçus courants sont =qualification-system-control-20261102-03.json=,
+=qualification-generation-20261102-02.json= et
+=qualification-snapshot-systemd-20261102-03.json=. Ils remplacent les anciens
+résultats pour la sélection, sans les réécrire.
+
+Les historiques complets de quatre dépôts publics sont disponibles localement.
+Les cinq dépôts privés nécessitent encore un transfert confidentiel de bundles
+complets ; voir =forgejo-governance/BUNDLES-PRIVES.org=. Les emplacements Forgejo
+fixes et les anciens checkouts inspectés ne les contiennent pas. Aucune visibilité
+privée n'est modifiée pour faciliter le transfert. La qualification synthétique
+de l'import Forgejo et des protections ne constitue pas l'adoption en production.
+
+** Notes antérieures conservées
+
+Les paragraphes suivants décrivent des étapes de préparation antérieures ;
+l'état courant ci-dessus prévaut pour les composants désormais qualifiés.
 
 La génération complète, les sauvegardes d'exploitation adaptées, les unités
 d'adoption et le backend borné de bascule sont en cours. =cutover.py= et

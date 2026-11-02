@@ -1,0 +1,17 @@
+{
+  "export_bytes": 141536,
+  "export_sha256": "dab75aba19fa581ff2c1571f329bd07f68a778dd6375e2ee73651b97290dd170",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1074084064,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/an04ifkrx986xh8j2ynlmgbqh10vdibi-mrjam-kanidm-passkey-portal-2",
+    "/nix/store/chvy4yb5hv24av8wvxxqqjz4yhqn62f3-unit-mrjam-kanidm-passkey-portal.service",
+    "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  ],
+  "unit_sha256": "5da6a1e0d958e789aee8bcd19da862c8d7d53641dc35d8c1a7738ad6a5a2cf7d",
+  "unit_store": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service"
+}

@@ -1,0 +1,41 @@
+{
+  "incremental_export": {
+    "all_reused_dependencies_in_previous_delivery": true,
+    "bytes": 141536,
+    "full_closure": 185,
+    "independent_reexport_byte_identical": true,
+    "paths": 6,
+    "reused_dependencies": 179,
+    "sha256": "dab75aba19fa581ff2c1571f329bd07f68a778dd6375e2ee73651b97290dd170"
+  },
+  "limits": [
+    "Code binding and export verification only; no production import or activation performed by this review.",
+    "Use the receiver before the unit upgrader: it deliberately retains the old provisioner unit and refuses a later rerun once that link has changed.",
+    "The VM qualification of corrected portal/provisioner is a separate prerequisite."
+  ],
+  "passed": true,
+  "passkey-correction-delivery-20261102.py": {
+    "only_constants_changed": [
+      "DIRECTORY",
+      "RELEASE"
+    ],
+    "sha256": "d78ab283342009e2a0e18248627fe9d4b592e0dd2dec1358b0111ed21c3fb19b",
+    "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c"
+  },
+  "passkey-correction-open-20261102.py": {
+    "only_constants_changed": [
+      "BINDING"
+    ],
+    "sha256": "247950903ce9619cec7a13dd1fd3c66e2be76fd6002dbd31856ce5cd3be2bbf2",
+    "template_sha256": "bf33aed544fc488d7b48cb8d96c46546ce3de01585b36ee6a2fe01b610ad703a"
+  },
+  "passkey-correction-upgrade-20261102.py": {
+    "only_constants_changed": [
+      "BINDING"
+    ],
+    "sha256": "718c509432881dc9e017dbfc943ce4a1100d8c3c2fa7c20e1cd2525d8bc5ef23",
+    "template_sha256": "f71b58086034513f6d94097d94a8dc987b131c59ea4fcb793f7a92eb1094d73f"
+  },
+  "production_access": false,
+  "schema_version": 1
+}

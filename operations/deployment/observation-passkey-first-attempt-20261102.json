@@ -1,0 +1,131 @@
+{
+  "conclusions": [
+    "The v2 provisioning unit ran and failed before route expiry; cycle and replay credential files remain absent.",
+    "The temporary route expired and the original Nginx binding was observed restored exactly.",
+    "A native synthetic realm proves an unnecessary local v2 access-control-role gate; actual human memberships remain unknown."
+  ],
+  "date": "2026-11-02",
+  "limits": [
+    "No production identity or ACL was inspected. The exact stage of the real v2 refusal was not exported by that version.",
+    "Absence of local token files does not prove that no remote service-account object was changed.",
+    "No global application generation was activated or application SQL migration performed."
+  ],
+  "native_capability_qualification": {
+    "path": "operations/deployment/passkey-nginx/qualification-native-capabilities-20261102.json",
+    "sha256": "78408277737431c9cf912ea151d347d5a24d7d614b718e3955782cad32966593"
+  },
+  "observations": {
+    "passkey-execution-001.json": {
+      "result": {
+        "closed_codes_last_20_minutes": {
+          "KANIDM_WORKER_PROVISION_REFUSED": 1,
+          "KANIDM_WORKER_PROVISION_SESSION_CLEANUP_REQUIRED": 0
+        },
+        "human_cache_read": false,
+        "journal_messages_exported": false,
+        "provision_process_started": true,
+        "provision_started_after_portal": false,
+        "provision_success_observed": false,
+        "read_only": true,
+        "schema_version": 1,
+        "units": {
+          "mrjam-kanidm-passkey-portal.service": {
+            "ActiveState": "inactive",
+            "ExecMainCode": 0,
+            "ExecMainExitTimestampMonotonic": 0,
+            "ExecMainStartTimestampMonotonic": 0,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "success",
+            "SubState": "dead"
+          },
+          "mrjam-kanidm-worker-provision.service": {
+            "ActiveState": "failed",
+            "ExecMainCode": 1,
+            "ExecMainExitTimestampMonotonic": 1361934175613,
+            "ExecMainStartTimestampMonotonic": 1361933996462,
+            "ExecMainStatus": 1,
+            "LoadState": "loaded",
+            "Result": "exit-code",
+            "SubState": "failed"
+          },
+          "mrjam-passkey-nginx-route.service": {
+            "ActiveState": "failed",
+            "ExecMainCode": 1,
+            "ExecMainExitTimestampMonotonic": 1362022385502,
+            "ExecMainStartTimestampMonotonic": 1361121628216,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "timeout",
+            "SubState": "failed"
+          },
+          "nginx.service": {
+            "ActiveState": "active",
+            "ExecMainCode": 0,
+            "ExecMainExitTimestampMonotonic": 0,
+            "ExecMainStartTimestampMonotonic": 1362022311169,
+            "ExecMainStatus": 0,
+            "LoadState": "loaded",
+            "Result": "success",
+            "SubState": "running"
+          }
+        },
+        "worker_lock_contents_read": false,
+        "worker_lock_metadata_valid": true,
+        "worker_lock_present": true
+      },
+      "sha256": "edc94aaf3af18a70608b90d9721d942000951bd6d94ae7921994381299570b53"
+    },
+    "passkey-worker-result-002.json": {
+      "result": {
+        "admission": {
+          "authenticated_service": true,
+          "expected_memberships": true,
+          "present": true
+        },
+        "all_expected_memberships": false,
+        "all_tokens_present": false,
+        "cycle": {
+          "authenticated_service": false,
+          "expected_memberships": false,
+          "present": false
+        },
+        "read_only": true,
+        "replay": {
+          "authenticated_service": false,
+          "expected_memberships": false,
+          "present": false
+        },
+        "schema_version": 1,
+        "tokens_distinct": false,
+        "write_authorization_proved": false
+      },
+      "sha256": "dfef82f56d125822ae4d6e04f0511cecf3807a3fcf090c610e16d23ccb7b402f"
+    },
+    "preflight-passkey-nginx-restored-001.json": {
+      "result": {
+        "code": "PASSKEY_NGINX_CODE_OBSERVED",
+        "configuration": "/nix/store/g0v9ji72630xhgg5q3alz0883m7pjbkb-nginx.conf",
+        "configuration_sha256": "8e540ab2d53da5b03132176e5947eb40cc17866e1dba939725b77901b8155857",
+        "executable": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx",
+        "executable_sha256": "f7c5db5009c76a4dda6ac06312b312eb13586b5aa524a6c7eb1bf9fda19e8a62",
+        "generation": "/nix/store/jn9rf2fgk2y6dbhdnjwkmfww3pchkyb9-nixos-system-nixos-26.05.8639.c5c4a43b0e80",
+        "logs_read": false,
+        "origin": "https://log.mrj.am",
+        "private_configuration_read": false,
+        "production_mutation": false,
+        "rp_id": "log.mrj.am",
+        "runtime_overrides_absent": true,
+        "schema_version": 1,
+        "temporary_prefix": "/_mrjam-worker-provision/",
+        "tls_server_sha256": "3bae594c59fd12f4a31ffabd8842c27f5c7ecc700b27f05a7ffbdfb9160a356c",
+        "unique_tls_server": true,
+        "unit": "/nix/store/l37hs05jhlfwwwyn7iplh2g5061y811b-unit-nginx.service/nginx.service",
+        "unit_sha256": "2b5bba58916fc08413b7ca2c2fdbeffdc03bccac48585e02af579d573ced1263"
+      },
+      "sha256": "9f717f134f3612ddf4d773db87d0bdd0e6e9ac9e2958e1c3f32b7a0480cec828"
+    }
+  },
+  "schema_version": 1,
+  "scope": "Closed observations after first human provisioning attempt; no human cache or application data exported"
+}

@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "mrjam-kanidm-passkey-portal.service": {
+      "next": {
+        "path": "/nix/store/chvy4yb5hv24av8wvxxqqjz4yhqn62f3-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+        "sha256": "f348a04b9e25e691721bc5b14f3b790ba9d48afeae708785afa816eb679448cc"
+      },
+      "previous": {
+        "path": "/nix/store/k7gjq9hsvfayhikb9vmwybznr1rp4d8w-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+        "sha256": "798dabdb31741f1baf7b9869e60ccbf9cec3e05999f3012f185f73991da55c9f"
+      }
+    },
+    "mrjam-kanidm-worker-provision.service": {
+      "next": {
+        "path": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+        "sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc"
+      },
+      "previous": {
+        "path": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+        "sha256": "5da6a1e0d958e789aee8bcd19da862c8d7d53641dc35d8c1a7738ad6a5a2cf7d"
+      }
+    }
+  },
+  "only_binding_assignment_changed": true,
+  "schema_version": 1,
+  "sealed_sha256": "718c509432881dc9e017dbfc943ce4a1100d8c3c2fa7c20e1cd2525d8bc5ef23",
+  "template_sha256": "f71b58086034513f6d94097d94a8dc987b131c59ea4fcb793f7a92eb1094d73f"
+}

@@ -1,0 +1,117 @@
+{
+  "files": [
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/README.org",
+      "sha256": "9bc897c58a5f455dd6aba0af17682662b3a9c1cbfeb82bf0582c0cc50566a0d8"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/index.html",
+      "sha256": "21f092d4c1ac2b80e358a4aae862c5b5c947712d066f1701d81edb1cff98853e"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/package.nix",
+      "sha256": "70b94d98fa8d495d703a157de1998987e5e13a5ef5929b7d75a0eea439f29c79"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/portal.js",
+      "sha256": "397bead1e3f63e36e279db7bc375f9ed31ec14971ef43910cbbe13955b361ef6"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/portal.py",
+      "sha256": "1bb6fd2b84e1b6328c24feb720d4cafb7efe4f3f655cd86dec221f5c18e8fca5"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/qualify.py",
+      "sha256": "136ac2115ff14d636bc78ed83bc86e7c1a570b598fe85e8e6b1d191df8b353b4"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/result-author-001.json",
+      "sha256": "84f95101e1c14c0e181b662a52a1384fb927c908c13c2bf48c60d05e67863a63"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/style.css",
+      "sha256": "0495a8a4db46ef0815cb0764ba4a77f430037cf6e895110c87a4f7ecfa2a6e39"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/test_portal.py",
+      "sha256": "62029d12a04ceff021ab8da12bb14e79baa6deeed567b44b16cda770912c5fc8"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-portal-v2/unit.nix",
+      "sha256": "d8ccfe88e58761f8cbfc958d30cc6e4bf5813f01838cf09b3c8b3a207b5099a3"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/README.org",
+      "sha256": "b39c777e2a06684d296d2e5e26f8f8e9af8ff758c8068dea86d4bc2f2a59ddfe"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/adapt.py",
+      "sha256": "f493733948c004147209d86f6f075a1bbc5d3f68c1a3404a8a2389472b363772"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/check_v2_delta.py",
+      "sha256": "138b594b9d4cd15575ed508c56837b16e69b0e7b9c9a6c436e58dcc7c1e28391"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/human_login.py",
+      "sha256": "0b5f83c2933a528ecd5505741e59575135a3e16e61d2b26668442b892d955253"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/probe.py",
+      "sha256": "3d9aaf7960bac789a8b5e0b195f822a04c91c8a14e0e334375b56dfa159cf6f7"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/provision.nix",
+      "sha256": "fb6ee9f2bb7e223de818ed515a9746985fff74de9db03be452d144570c22fca8"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/provision.py",
+      "sha256": "d9d4aa20549dc7bd8b25db70777c7bf98431aa082d5d8c822176d580f86aaff7"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/provisioning-unit.nix",
+      "sha256": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/credentials-v3/test_provision.py",
+      "sha256": "99021c34d60d8b23d2a861a5dd1308dcaf65b07c4675d2a902030a3cfc121baa"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/passkey-correction-build.nix",
+      "sha256": "c9080c8996a2722e98ea2a273907c5c370be33b3e736b681ebe98f25d83a921e"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/preflight_passkey_execution_v3.py",
+      "sha256": "10b2536edca734c497f96cbe9024df42feff043260003da04431773901e3dd71"
+    },
+    {
+      "mode": "100644",
+      "path": "operations/deployment/qualification-passkey-correction-author-20261102.json",
+      "sha256": "c47995954f5dc8315b7417390b80ef00d99688ef420cdc3fcf6e9d0e8d5d8ac8"
+    }
+  ],
+  "publisher": "root only",
+  "schema_version": 1,
+  "scope": "Versioned portal2/provisioner3 correction, closed probe and author proof; no activation"
+}
