@@ -1,0 +1,36 @@
+{
+  "additional_read_only_check": "Local systemctl --user show of an invented absent unit returns0 and not-found, matching launcher precondition.",
+  "files": {
+    "launch-first-release-20261102.py": "10d8ae21241f1ca25b173955243a403acc0fb00130209cf21782974be488f601",
+    "observe-first-release-20261102.py": "821fdf93e1cfbd4247358c0acda2cf9792104917635abfea4975c51f99115e9f"
+  },
+  "fixed_controller": "/nix/store/irb47r5zxmffhlklmf2c613gdm8ydb1z-mrjam-first-release-controller-1",
+  "fixed_unit": "mrjam-first-release-20261102.service",
+  "launcher_checks": [
+    "No argv, root identity and exact host required.",
+    "Unit must be absent; no stop/reset/restart or automatic recovery branch.",
+    "Fresh private status directory0700 and result file O_EXCL O_NOFOLLOW0600.",
+    "Fixed systemd-run Typeexec RemainAfterExit command and exact reviewed deploy binary; no caller environment or command options accepted.",
+    "No SSH pipe/PTY or wait linkage; stdin/stderrnull; stdout only fixed private result file.",
+    "No runtime stop shortening the engine budgets; KillMode=mixed and no SIGKILL preserve coherent-return handling.",
+    "Uncertain startup returns only LAUNCH_NOT_CONFIRMED and never assumes transaction cancellation."
+  ],
+  "limits": [
+    "This review does not itself prove successful live deployment or execute either helper.",
+    "An SSH disconnect before acknowledgement requires observing the fixed unit, not blindly re-running launch.",
+    "Transient-service detachment protects against client loss; reboot/power loss/SIGKILL remain conservative recovery cases."
+  ],
+  "observer_checks": [
+    "Seven fixed systemd properties, finite textual allowlists and numeric-only values, maximum4096-byte captured response.",
+    "Immutable deploy module imported without executing main; SAFE_FAILURES and Phase taken from sealed source.",
+    "Only root600 nlink1 result file, at most1024bytes; output schema/code/phase validated before projection.",
+    "Checkpoint class validates fixed root-private durable phase; absence reports absent.",
+    "Success requires active/exited, MainPID0, normal exit0, exact CUTOVER_VERIFIED/public-writes-open result and matching durable phase.",
+    "No journal, snapshot, initial-state record, application data or credential read; no mutation command."
+  ],
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "Independent static review and syntax validation of the exact two sealed helpers; no deploy execution.",
+  "sourceA_changed": false
+}
