@@ -1,0 +1,81 @@
+#+title: Coordinateur de collecte et d’attestation de contenu — variante séparée
+#+language: fr
+
+Ce dossier raccorde le lecteur d’=authority-v1= au runner borné. Il n’est pas
+importé par la composition du premier déploiement, ne crée aucune identité
+de production et ne possède aucune activation automatique. Les politiques
+du banc restent synthétiques. Les sources du runner historique et
+d’=authority-v1= ne sont pas modifiées.
+
+* Chemin exécuté
+
+La dérivation reprend les sources, dépendances Go et refus d’admission du
+runner qualifié. Elle change un seul appel dans =mrjamRun= : après
+=mrjamCollect=, =mrjamCollectAndAttest= appelle le lecteur immuable de
+l’autorité. Un échec ou une annulation de collecte empêche cet appel ; un
+refus de signature ou de stockage empêche le succès du job.
+
+Le seul processus ajouté est le chemin de store exact de
+=mrjam-validation-request-attestation=, sans argument ni shell provenant du
+workflow. L’environnement est remplacé par LANG, LC_ALL et le digest déjà
+admis. stdin est fermé, stderr écarté, stdout borné à 128 Kio ; dépassement
+ou délai de 20 secondes annule le processus. Un sous-processus qui garde
+ses pipes ouverts est également borné par WaitDelay. L’admission des
+commandes/actions/checkout du candidat reste impossible dans le runner.
+
+Le lecteur vérifie la signature réelle, le pair, la politique immuable et
+la proposition. Le Go vérifie ensuite seulement le cadrage de cette sortie
+de confiance et la correspondance au job ; son test de stockage ne constitue
+pas une preuve cryptographique supplémentaire. L’enveloppe complète est
+conservée sous le répertoire fixe
+=/var/lib/mrjam-forgejo-runner/attestations/=, avec un nom égal au digest admis
+suivi de =.json=. Le répertoire doit appartenir à l’UID courant en mode 0700 ;
+les fichiers sont créés en 0400 via O_EXCL/O_NOFOLLOW, synchronisés puis
+renommés atomiquement. La sortie précédente reste intacte en cas de refus.
+Un fichier temporaire préexistant provoque un refus et n’est pas supprimé
+arbitrairement. Une répétition réussie remplace l’attestation du même digest.
+
+Le stockage par le coordinateur ne confère aucune confiance à ses fichiers :
+un futur consommateur doit toujours revérifier la signature avec la politique
+adoptée. La notification de succès indique uniquement qu’une attestation de
+contenu a été conservée, sans autorité de déploiement. Aucun champ historique
+=authenticated_validation_authority=false= n’est changé.
+
+* Cache et dates
+
+Le cache v2 lie une collecte au vérificateur, à sa fermeture, aux politiques et
+aux recettes adoptées. Il reste réutilisable pour le même digest et la même
+liaison. =issued_at= date l’émission de la signature, pas la dernière exécution
+du validateur. Cette variante ne prétend donc ni relancer les tests à chaque
+job ni mesurer l’âge réel de leur exécution. Un cache v1 n’est jamais adopté.
+
+* Module séparé
+
+=module.nix= doit recevoir les pkgs verrouillés de la composition CI. Son
+option =services.mrjamValidationCoordinatorAttestation.enable= vaut false par
+défaut ; elle exige le runner et l’autorité configurés séparément. Les sorties
+=package= et =root= sont en lecture seule.
+
+Activé, le module ne change que trois champs de service du coordinateur :
+ExecStart vers le nouveau runner, RootDirectory vers une nouvelle racine
+privée, et l’ajout du seul socket de signature à BindReadOnlyPaths. Il ajoute
+une dépendance sur ce socket, sans WantedBy. La racine contient une copie de
+la racine qualifiée et des seules fermetures publiques du nouveau runner et
+du lecteur. Aucun montage global du store hôte, cache du collecteur, socket
+d’export ou credential de signature n’est ajouté. Les restrictions, identités,
+credentials Forgejo et règles réseau du coordinateur sont conservés.
+
+* Limites de qualification
+
+Les tests Go ajoutés vérifient l’ordre collecte/signature, l’annulation, la
+limite de sortie, le stockage atomique et les refus de lien/fichier temporaire.
+Ils n’utilisent ni clé ni identité de production. La cryptographie et le
+protocole sont qualifiés séparément par les vrais sockets/signatures du banc
+=authority-v1=. L’évaluation Nix compare les champs effectifs et l’absence
+d’activation ; elle n’équivaut pas à une traversée des nouvelles unités.
+
+Avant activation, il reste à qualifier ensemble dans une VM les UID distincts,
+sockets root, LoadCredential, nouveau root du coordinateur, collecte réelle
+via le worker puis signature et conservation. La revue humaine, la fusion,
+la consommation unique d’une autorisation de livraison et le déploiement
+restent hors de ce raccord.

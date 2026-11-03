@@ -1,0 +1,46 @@
+{
+  "all_other_python_modules_byte_identical": true,
+  "application_steps_passed": 75,
+  "application_validation_repeated": false,
+  "cached_contract_code_identical_except_filename_and_timestamp": true,
+  "consumer_targeted_tests": 12,
+  "descriptor_sha256": "09195b07f5a3ab41ad1a4dda969fcd7b813a7c2d14cd7b10689e4b8482efdb76",
+  "frontend_only_metadata_change": "input_manifest_sha256",
+  "frontend_payloads_independently_compared": 7,
+  "limits": [
+    "Original global failure is preserved; the subsequent proof uses the original report plus an invented collector receipt and ephemeral key, not production collection or signing.",
+    "The75steps are one local run under the previously reviewed launcher substitutions, not a Forgejo dispatch or a newly executed worker/collector/systemd chain.",
+    "No new systemd/UID VM is claimed; earlier credentials transport evidence remains separate.",
+    "Rules adoption, human review, complete release-manifest artifact/source linkage and deployment authorization remain unproved here.",
+    "Different server ELF bytes do not establish either semantic equivalence or defect; current sources and completed tests provide separate evidence.",
+    "Cached validation may be reused; issued_at is signature time and does not establish a new execution for every job.",
+    "No private key, production request or private repository was read by this independent review."
+  ],
+  "local_application_observation_sha256": "2c136923099394850fd48e2a0eba9296c577d831bb300101b165d4d7e83b8097",
+  "nix_assertions": 10,
+  "original_global_result": "failed",
+  "original_report_bytes": 6652,
+  "original_report_sha256": "92d4468cbab1dd20f38fee9d16390c7ab0ed4a8c28dbc16aea3e4a8e6fee760d",
+  "original_result_sha256": "8dd98924157d1a42c2b727b97eb0f291131f9a16a1a8b245d0743cad16135585",
+  "package": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3",
+  "package_nar_hash": "sha256-L7nqYGj7HpB0271q5EYVHlz3ndt9mxhXhghCznDkwr0=",
+  "qualification_sha256": "ace4a2845c392f65a395ecb7ba709adced31694618915ed7b4cdda6385b077c6",
+  "reviewed_properties": [
+    "The fixed immutable descriptor binds report policy, exact validator and NAR, runtime, overlay manifest and sole style-logo entry. Build checks the existing selection; runtime policy identity must still match.",
+    "Only the style-logo report entry accepts the exact base/corrected SHA pair. Full ordered75step equality refuses arbitrary extras, missing metadata, reordering or another detailed step.",
+    "Full raw report remains unchanged and its digest stays in the signed artifact list; payload.steps uses the existing simple schema only after the report check succeeds.",
+    "Signer verify/validate_payload, client, peer/credential reader, worker, collector, exporter and producer remain unchanged. The isolated Nix evaluation preserves restrictions and no automatic authority start.",
+    "Independent byte comparisons confirm seven frontend payload sets match the socle baseline; only provenance metadata changes. New server executable bytes differ and are retained as distinct provenance."
+  ],
+  "schema_version": 1,
+  "scope": "independent source/package/input/artifact review of precise report-consumer correction; no application or VM rerun",
+  "server_byte_identical": false,
+  "signer_changes": [
+    "import immutable report_details",
+    "exact detailed report steps comparison",
+    "simple signed steps constructed only after report validation"
+  ],
+  "source_and_descriptor_substitution_exact": true,
+  "status": "PASS_IN_DECLARED_SCOPE",
+  "wrapper_delta_only_self_path": true
+}

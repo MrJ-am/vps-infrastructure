@@ -1,0 +1,112 @@
+{
+  "additional_copy_binding": {
+    "all_bytes_modes_and_symlinks_identical": true,
+    "copy_references": [],
+    "entries_independently_compared": 18,
+    "executed_fixture": "/nix/store/4yqabbrzqi412kgzlf762dsvyb6nf6j1-mrjam-invented-credential-reader-boundaries.py",
+    "executed_fixture_sha256": "d69671c2d9ba7cbca5c5185a504201058faa818f1db7dc23c45af7ef4d67b80d",
+    "imported_package_copy": "/nix/store/2xcmsaj4yns36jvsd47k648gmqwrpkq3-d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+    "original_package": "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+    "same_nar_hash": "sha256-oViFPuQe24bhxEqxC8xvo+zD+hMbE7SEttoZCbFTqWE=",
+    "scope": "Nix literal path copied the package for the negative-case fixture; that fixture imports only the byte-identical contract.py and signing_credential.py. The integrated signing chain uses original d48 directly."
+  },
+  "auxiliary_failed_case_preserved": "credential-reader-boundaries",
+  "credential_v2_qualification_sha256": "3db204ed4cb2e0199a4d21237e3c0fc7566396c8fd6bd65a6cbc3f3c58b9f18f",
+  "frozen_worker_bytes_unchanged": true,
+  "integrated_groups_observed": [
+    "prepare",
+    "inactive-boundaries",
+    "fresh-chain",
+    "cache-reuse",
+    "wrong-peers",
+    "key-separation",
+    "legacy-cache-refused",
+    "tamper-refused",
+    "wrong-key-refused",
+    "expiry-refused"
+  ],
+  "integrated_qualification_sha256": "2a6f8cdbb02e94557586ae2ba52241fe07f4a2646f1323d1365e413ead946317",
+  "kernel_boundary_vm": "/nix/store/jlm6rv2v76qp10422abvn4gybp7n0i21-vm-test-run-mrjam-authority-exact-reader-kernel-boundaries",
+  "kernel_boundary_vm_nar_hash": "sha256-AfMWCxnMNXAmvQ8moQhBjDu0SKE+lu533Yo8jCi95UM=",
+  "kernel_negative_positive_cases": [
+    {
+      "accepted": true,
+      "case": "exact-acl-readonly",
+      "code": "ACCEPTED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "wrong-file-mode",
+      "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "extra-user-acl",
+      "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "wrong-user-acl",
+      "code": "SIGNING_CREDENTIAL_UNAVAILABLE",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "extra-parent-acl",
+      "code": "SIGNING_CREDENTIAL_DIRECTORY_REFUSED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "hardlink",
+      "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "oversize",
+      "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+      "readonly": true
+    },
+    {
+      "accepted": false,
+      "case": "writable-mount",
+      "code": "SIGNING_CREDENTIAL_DIRECTORY_REFUSED",
+      "readonly": false
+    },
+    {
+      "accepted": true,
+      "case": "final-exact-acl-readonly",
+      "code": "ACCEPTED",
+      "readonly": true
+    }
+  ],
+  "limits": [
+    "The original full integrated VM run remains failed at its auxiliary credential-view fixture; this receipt does not relabel it as a whole-run PASS.",
+    "The complement proves the exact reader with real ACL/read-only kernel views under the signer UID, not negative LoadCredential cases through systemd.",
+    "Validator, source, reports, keys, UIDs and admitted Go task are synthetic; no application build or real Forgejo API/job transport is proved.",
+    "No production key/policy, human review, merge, ordinary deployment authority or CI activation is established.",
+    "issued_at remains signing time only; a bound cache may be reused without rerunning the validator."
+  ],
+  "minimal_change_confirmed": "New fixed credential reader plus one signer import and one key-read replacement; other six module transformations are only pre-existing immutable policy/OpenSSL path substitutions.",
+  "original_integrated_build_exit_preserved": 1,
+  "package": "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+  "package_nar_hash": "sha256-oViFPuQe24bhxEqxC8xvo+zD+hMbE7SEttoZCbFTqWE=",
+  "passed": true,
+  "positive_path_uses_real_systemd_loadcredential_and_distinct_uids": true,
+  "private_coordinator_root_existing_entries_independently_compared": 11300,
+  "reviewed_security_properties": [
+    "Fixed credential path only, nonroot signer, root-owned no-symlink ancestors, exact named-user ACLs, root550 parent/root440 regular monolink file, readonly mounts and bounded stable read.",
+    "True Unix peer identities and socket activation; worker/collector/export/authority/coordinator chain with actual memfd/signature flow in private coordinator root.",
+    "Bound cache reuse is explicit; legacy cache, changed artifact, wrong key, expired policy and wrong peers refuse.",
+    "Invented private key unavailable to worker, collector, coordinator and outsider; only signer unit loads the credential.",
+    "Kernel boundary fixture unshares mount propagation, then clears supplementary groups and irreversibly drops UID/GID before running the exact reader."
+  ],
+  "schema_version": 1,
+  "scope": "independent local review of exact packaged source, real integrated groups and separate kernel permission boundary proof; no rerun or production access",
+  "status": "PASS_IN_SEPARATELY_DECLARED_SCOPES",
+  "test_root_additions_only_below_nix_store": 3
+}

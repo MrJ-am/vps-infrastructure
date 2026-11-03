@@ -1,0 +1,61 @@
+{
+  "added_units": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "canonical_context_finding_sha256": "3467091f5d6b12d969ef4efe9ec4755ec7f4f0e72678abc890a3941d1c302958",
+  "changed_existing_units": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "controller_revision_is_placeholder": true,
+  "generated_unit_definitions_compared": 169,
+  "host_checks": 17,
+  "isolated_authority_delta_units": [
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-worker@.service"
+  ],
+  "isolated_delta_checks": 12,
+  "limits": [
+    "Evaluation only: no generation, new coordinator or root output was built by this lot, and no import or activation was performed.",
+    "The host check listing DBus/tmpfiles names is not by itself a new exhaustive proof of trigger content; prior full composition evidence is separately linked, and a built live delta remains required before activation.",
+    "The comparison covers generated NixOS definitions, not every vendor systemd file. nftables.service is one of13 additions, distinct from12 CI units.",
+    "Controller revision O is an evaluation placeholder; the final published CI source revision must replace it and be reevaluated before production construction.",
+    "Real rules approval/adoption, least-privilege credential provisioning, resource/UID preflight, built closure reception and activation remain separate prerequisites.",
+    "No real CI job, collection, signing or release-manifest authorization is demonstrated by these evaluations.",
+    "No Nix evaluation, application validation or VM was repeated by this independent review."
+  ],
+  "new_authority": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3",
+  "new_coordinator_evaluated_only": "/nix/store/xw72xaazwylp50qf06v7pggr37qx7b03-mrjam-forgejo-runner-content-authority-13.2.0",
+  "new_coordinator_root_evaluated_only": "/nix/store/3m3hq3ssisw4ik8hrd719pqwrphvb20s-mrjam-forgejo-coordinator-authority-root-1",
+  "old_evaluation_preserved": true,
+  "private_credential_paths_preserved": true,
+  "proposed_toplevel_evaluated_only": "/nix/store/q2lp89v7m9b6lsl22haspqqjsxnp3wck-nixos-system-srv1982677-26.05pre-git",
+  "qualification_sha256": "123f0010e3d20949c35c9cf3d18f6d08bbcead88b281d7bdd176706badffcb9f",
+  "read_private_credentials": false,
+  "reviewed_properties": [
+    "Three separate copies each change one import only; historical compositions and evaluations are preserved.",
+    "Canonical validator derivation retains the qualified closureInfo context and native producer digest; exact aj0 output, cqz4 authority and native producer are asserted before accepting the proposed toplevel.",
+    "Final host evaluation preserves16 application unit bytes, input firewall, disabled LLMNR and Actions, policy plan mode, and no implicit CI service/socket starts.",
+    "The isolated v2/v3 delta uses the same canonical validator on both sides:169 generated unit definitions compare equal after only authority/coordinator/root package path substitutions; users/groups remain exact and activation script only changes its etc reference.",
+    "Policy and registration credentials retain separate private parent references; the signing key path is only referenced, never read."
+  ],
+  "schema_version": 1,
+  "scope": "independent local source and bound-evaluation review of the inactive authority-v3 host composition",
+  "source_variants_only_one_import_each": true,
+  "status": "PASS_IN_DECLARED_SCOPE"
+}

@@ -1,0 +1,26 @@
+{
+  "all_passed": true,
+  "results": {
+    "actionsRemainDisabled": true,
+    "allApplicationSettingsUnchanged": true,
+    "allApplicationUnitBytesUnchanged": true,
+    "assertionsPass": true,
+    "contentAuthorityRequired": true,
+    "existingFirewallUnitExact": true,
+    "existingUnitsOnlyChangeMaintenanceTriggers": true,
+    "flushAllRulesRefused": true,
+    "historicalOrphanRulesRefused": true,
+    "inputFirewallBackendAndPackagePreserved": true,
+    "llmnrDisabledDnsKept": true,
+    "natMigrationRefused": true,
+    "nftInputMigrationRefused": true,
+    "noCIImplicitStart": true,
+    "observedIdentityNumbersBound": true,
+    "onlyCIOutputTableAdded": true,
+    "policyPlanOnly": true,
+    "resourceLimitsRetained": true,
+    "separateSocketGroupsBound": true,
+    "workerSingleJobBound": true,
+    "wrongAuthorityUidRefused": true
+  }
+}

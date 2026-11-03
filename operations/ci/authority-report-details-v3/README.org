@@ -1,0 +1,54 @@
+#+title: Consommation exacte du rapport réel — version 3
+#+language: fr
+
+Le paquet =cqz4jlh…-mrjam-validation-authority-report-details-3= dérive du
+lecteur de credential v2. Son descripteur immuable lie le validateur
+=aj0m8465…=, son NAR, la politique =e06c75…=, le runtime et le manifeste
+d’overlays existant. Il vérifie la liste entière des 75 étapes ; la seule
+étape détaillée autorisée est =explicit-manifest-overlay-style-logo= avec
+les deux empreintes précises de ce manifeste. Aucun autre champ n’est
+ignoré et le rapport n’est pas réécrit.
+
+Le payload signé garde les étapes simples du protocole v1. Le troisième
+artefact signé conserve le SHA du rapport entier et ses métadonnées.
+Les fonctions =verify= et =validate_payload=, le client, le transport,
+le lecteur de clé, le worker et le collecteur restent identiques à v2.
+Le module conserve les mêmes restrictions systemd, UID, sockets et
+référence de credential. Il ne démarre aucun service automatiquement.
+
+* Preuves et limites
+
+La validation applicative locale unique, sous 2 Gio, 100 % de CPU et 256
+tâches, a duré 839,882 secondes. Son rapport original de 6652 octets
+contient 75 étapes =passed= et ses trois artefacts ont été conservés. Le
+consommateur v2 a ensuite refusé =REQUIRED_STEPS_REFUSED=. Son résultat
+global reste donc =failed= ; aucun reçu historique n’a été transformé en
+réussite.
+
+Les 12 tests de cette variante consomment ces mêmes octets, vérifient les
+refus ciblés et utilisent une clé inventée pour démontrer la compatibilité
+cryptographique avec l’ancien vérificateur et le client Unix inchangé.
+Les 10 assertions Nix comparent les restrictions effectives v2/v3. Ce lot
+n’exécute pas une nouvelle VM ni une nouvelle validation des 75 étapes.
+La précédente preuve systemd/UID distincts demeure une preuve séparée.
+
+La première construction a refusé le contrôle de propriétaire du fichier
+de descripteur à l’intérieur du constructeur Nix. Ce contrôle runtime
+reste strictement root et lecture seule ; son exercice est réalisé hors
+du namespace du constructeur par les tests natifs. Les vérifications de
+contenu immuable restent dans la construction. La première évaluation Nix
+a révélé un mauvais ciblage de =disabledModules= dans le banc ; la seconde
+utilise sa clé explicite et conserve les deux traces.
+
+La comparaison des artefacts publics constate que les sept frontends ont
+les mêmes fichiers utiles que le socle actif ; seul le champ
+=input_manifest_sha256= de leurs manifestes diffère. Le nouvel ELF serveur
+diffère de =wasrcrd9…= ; sa recette et ses résultats locaux sont distincts,
+sans affirmation d’identité binaire.
+
+Les règles =b02bdf1…= restent proposées. Ce lot ne prouve aucun dispatch
+Forgejo, attestation de production, revue humaine, autorisation de
+déploiement ou liaison au manifeste de release. Il ne couvre pas les
+workers et adopteurs du socle. La clé réelle n’a jamais été lue. Les
+caches v2 peuvent être réutilisés : la date d’une signature ne prouve pas
+une nouvelle exécution de validation à chaque job.

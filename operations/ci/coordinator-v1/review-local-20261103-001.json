@@ -1,0 +1,33 @@
+{
+  "all_original_root_entries_bytes_types_modes_and_links_preserved": true,
+  "author_go_test_packages_bound": 21,
+  "author_nix_assertions_bound": 15,
+  "author_qualification_sha256": "5045bfeb06466e3d9215de4412d15c4b82d43fcf32716a2260a34bad0c26c9c0",
+  "checks": [
+    "Single call-site replacement after existing admission/collection; no workflow command or shell becomes executable.",
+    "Fixed immutable client receives only LANG/LC_ALL/admitted digest in replaced environment, closed stdin, discarded stderr and bounded output/context.",
+    "Signature verification remains in qualified client; Go framing binds the trusted-client envelope to the admitted proposal and is not misrepresented as cryptography.",
+    "Private fixed digest-indexed storage uses exclusive nofollow temporary file, file fsync, atomic rename and directory fsync; malformed input or preexisting temporary file preserves prior content.",
+    "Source/module changes are confined to three service fields plus exact authority socket dependencies; historical runner, worker, collector and authority sources remain intact.",
+    "All existing private-root entries match exactly, with only selected public store closures and the authority request socket mountpoint added."
+  ],
+  "evidence_records_verified": 12,
+  "limits": [
+    "Actual systemd/chroot traversal with distinct worker, collector, signer and coordinator UIDs remains unproved until the integrated VM.",
+    "No new full validator execution, live Forgejo success status, review, merge or deployment authority is established.",
+    "v2 cache reuse remains allowed; issued_at dates signature only.",
+    "Stored attestations are controlled by the coordinator and must be cryptographically revalidated by every subsequent consumer.",
+    "Go process bound is statically reviewed; the new Go unit fixtures do not constitute a real systemd process-tree or cryptographic integration test."
+  ],
+  "new_root_entries_only_public_selected_closures_and_exact_socket_mountpoint": true,
+  "new_tests_cryptography_claimed": false,
+  "original_root_entries_compared": 11262,
+  "package_nar_hashes_verified": 2,
+  "production_access": false,
+  "production_activation_authorized": false,
+  "schema_version": 1,
+  "scope": "independent local code/module/build evidence and immutable root comparison",
+  "source_records_verified": 11,
+  "status": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "tests_reexecuted": false
+}

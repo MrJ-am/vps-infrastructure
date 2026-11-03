@@ -35,6 +35,20 @@ Seule sa DER publique a été exportée. Aucune politique n'est adoptée et aucu
 service CI n'est activé par cet amorçage ; les services et la génération phi68
 restent inchangés. Voir [[file:../ci/key-bootstrap-v1/observation-20261103-001.json][le constat d'amorçage]].
 
+Le workflow initial a ensuite été adopté sur =mrjam-validation/main= au commit
+=b02bdf1b5d63dcf0e0610723788a7ca7e384932c=, après dépôt et vérification de la
+revue humaine sur la proposition nº 1. Les protections et les autres références
+sont inchangées ; le jeton temporaire est révoqué. Cet amorçage administratif
+n'émet aucune attestation CI et n'active aucun service.
+Voir [[file:../ci/rules-bootstrap-adoption-v1/observation-20261103-001.json][le constat d'adoption]].
+
+Le validateur courant a exécuté ses 75 étapes locales avec succès. Son résultat
+global initial reste conservé en échec : le consommateur v2 refusait un détail
+du rapport. La variante v3 corrige ce lecteur, avec qualification ciblée et
+revue indépendante, sans modifier les artefacts ou répéter la compilation.
+Le raccord hôte v3 est évalué ; construction, accès techniques et activation
+restent à effectuer. Aucun dispatch de production n'est encore attesté.
+
 ** État conservé avant la cinquième tentative
 
 

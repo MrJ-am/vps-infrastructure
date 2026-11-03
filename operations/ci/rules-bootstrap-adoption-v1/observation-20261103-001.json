@@ -1,0 +1,26 @@
+{
+  "limits": [
+    "CI remains inactive; this adoption does not establish successful CI execution.",
+    "No application or host configuration was changed by this operation."
+  ],
+  "observed_at": "2026-11-03T06:27:37.579177+00:00",
+  "package": "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+  "result": {
+    "activation_performed": false,
+    "ci_attestation_issued": false,
+    "code": "RULES_BOOTSTRAP_MERGED_REVIEW_RECHECKED",
+    "head": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "main_fast_forward_observed": true,
+    "other_heads_tags_unchanged": true,
+    "protection_changed": false,
+    "pull_request": 1,
+    "review_created": false,
+    "schema_version": 1,
+    "status_created": false,
+    "temporary_token_revoked": true,
+    "tree": "f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b"
+  },
+  "result_sha256": "c04e7ea0e481c82db4c80f1fd74270b7f866361ca09a521f2f8edabcf7d9226f",
+  "schema_version": 1,
+  "scope": "actual initial rules adoption after native human review, outside CI authority"
+}

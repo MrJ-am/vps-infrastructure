@@ -1,0 +1,30 @@
+{
+  "activation_performed": false,
+  "checks": {
+    "actual_closure129_diff_exactly_three_declared_roots": true,
+    "all_author_sources_historical_receipts_and_logs_bound": true,
+    "author_eight_targeted_checks_result_bound": true,
+    "compiler_recipe_only_interpreter_patch_and_lock_identical": true,
+    "historical_derivation_and_output_evaluate_exact_but_output_absent": true,
+    "new_validator_registration_matches_distinct_new_provenance": true,
+    "normalized_validator_nar_matches_old_hash_size_after_two_declared_substitutions": true,
+    "runtime_json_only_new_rust_path": true,
+    "three_historical_roots_match_actual_registration_and_old_receipts": true
+  },
+  "full_historical_pipeline_rerun": false,
+  "historical_exact_roots": 3,
+  "limits": [
+    "Historical validator is not available or claimed recovered; normalized temporary NAR was not imported.",
+    "Eight author targeted checks are not a rerun of 74-step application validation or Forgejo/systemd dispatch.",
+    "Historical synthetic rules, policy and source fixture are not a production policy adoption.",
+    "Compiler recipe repair changes derivations; old test receipts must not be silently relabelled to the new root.",
+    "Signing authority, protected status publication, human approval and production delivery remain separate required work."
+  ],
+  "new_validator": "/nix/store/p2494a4mh5nsp77sfzrfd8zhinz34bmp-mrjam-validate",
+  "new_validator_nar_sha256": "sha256-7by4n1iGTm3DG4Pxjavt7yocMc94HiJNYE94ff66/n0=",
+  "production_ready": false,
+  "reviewed_receipt_sha256": "081008ab5c15d26ce4c40eb13a04f5a3e1fc357a5de71f303f1262da2a1e7844",
+  "schema_version": 1,
+  "scope": "independent local source, metadata and normalized-content review; no production or CI activation",
+  "status": "PASS"
+}

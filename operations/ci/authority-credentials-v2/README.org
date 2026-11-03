@@ -1,0 +1,65 @@
+#+title: Lecteur de credential systemd pour l’autorité CI — version séparée
+#+language: fr
+
+La VM a établi un refus concret de l’autorité v1 : après une collecte et un
+export réussis, le signataire refusait la clé avant signature avec
+=FILE_METADATA_REFUSED=. systemd 260 présente ce credential avec propriétaire
+root:root, mode 0440, une ACL donnant lecture au seul UID du signataire, et un
+montage en lecture seule. Son répertoire est root:root en 0550, avec la même
+ACL de lecture/traversée. Le lecteur générique v1 attendait le propriétaire
+du processus et le mode 0400.
+
+Le constat exact, sans valeur de clé, est conservé dans
+[[file:../integration-v1/diagnosis-credential-20261103.json][le diagnostic synthétique]].
+Les sources et reçus v1 restent intacts.
+
+* Correction minimale
+
+=reader.py= accepte exclusivement
+=/run/credentials/mrjam-validation-authority.service/signing-key=. Il reprend
+le modèle déjà qualifié de =reconcile.systemd_credential_permissions= :
+ancêtres root:root 0755 sans symlink, parent root:root 0550 avec ACL nominale
+exacte pour l’UID courant et montage RO, puis fichier régulier monolien
+root:root 0440 avec ACL nominale exacte et montage RO. L’UID root est refusé
+comme lecteur. Les groupes n’ont aucun droit effectif dans cette ACL ; le
+masque ne constitue pas une autorisation supplémentaire.
+
+L’ouverture du fichier se fait relativement au descripteur du parent, avec
+O_NOFOLLOW/O_NONBLOCK. La taille est bornée à 4096 octets et l’identité,
+taille et timestamps doivent rester identiques après lecture. Le contenu
+n’est ni imprimé ni ajouté à une exception. Toute autre ACL, chemin, identité,
+permission ou montage est refusé. Aucun ancien mode ne sert de repli.
+
+=package.nix= réutilise la recette v1 et ajoute seulement ce lecteur ; dans
+le signataire, il ajoute son import et remplace l’appel de lecture de la clé.
+Le lecteur générique, la copie du worker, le producteur, le collecteur,
+l’exporteur, le client et la vérification Ed25519 restent identiques.
+
+=module.nix= réutilise directement l’expression v1, sans imports transitifs.
+Il remplace seulement son appel à la recette exacte du paquet. Les options,
+UID, groupes, protocoles, chemins de sockets, LoadCredential et restrictions
+systemd restent ceux de v1. Le nom de la nouvelle dérivation est
+=mrjam-validation-authority-credentials-2=. Aucun mode ou chemin n’est choisi
+par une requête du candidat.
+
+* Qualification
+
+Les dix groupes intégrés ont réussi avec les UID distincts et les unités
+réelles : chaîne positive, cache lié, refus des mauvais pairs, séparation de
+clé, cache ancien, contenu altéré, mauvaise clé et expiration. L’essai global
+008 reste marqué échoué : son dernier montage auxiliaire simulait le
+credential d’une autre unité, que systemd masque légitimement.
+
+Un petit banc séparé a ensuite franchi les neuf cas du lecteur exact, sous
+UID signataire et montage kernel privé : deux vues exactes acceptées et refus
+des modes/ACL/UID supplémentaires ou différents, liens multiples, taille
+excessive et montage écrivable. Le parcours positif conserve LoadCredential
+réel ; les refus de cette vue ne prétendent pas passer par systemd.
+
+Les deux portées et leurs substitutions sont liées dans
+[[file:qualification-20261103-001.json][le reçu v2]] et
+[[file:../integration-v1/qualification-20261103-001.json][le reçu intégré]].
+Aucune preuve locale v1 ni aucun échec de fixture n’est renommé en succès.
+La date de signature reste distincte de l’âge de l’exécution validée : un
+cache v2 lié peut être réutilisé. Cette correction n’active rien et n’accorde
+aucune autorité de revue humaine, de fusion ou de livraison.

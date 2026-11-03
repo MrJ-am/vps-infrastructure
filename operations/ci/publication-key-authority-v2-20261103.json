@@ -1,0 +1,176 @@
+{
+  "dependencies_not_copied_by_this_manifest": [
+    "operations/ci/authority-v1",
+    "operations/ci/coordinator-v1",
+    "operations/ci/modules.nix",
+    "operations/forgejo/locked-toolchain.nix",
+    "operations/forgejo/worker.py",
+    "operations/nixos/mrjam-validation-worker.nix",
+    "operations/nixos/mrjam-validation-collector.nix",
+    "operations/nixos/mrjam-validation-staging.nix"
+  ],
+  "files": [
+    {
+      "bytes": 2952,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/README.org",
+      "sha256": "7edbb6818e0225992b85ef4e9667fb9aa3e7051cd320e51721da88f2404a16a2"
+    },
+    {
+      "bytes": 5375,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/bootstrap.py",
+      "sha256": "4b6540269dd88599f44615a820c1ff5f83f57fb03d83a24bde3be81a61962a3d"
+    },
+    {
+      "bytes": 4998,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/fixture.py",
+      "sha256": "e9367229c704cf02750a16df094e8afc65074b7b4e6f89458d712533d23e3a4b"
+    },
+    {
+      "bytes": 576,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/package.nix",
+      "sha256": "0b4ecc5e37a959df7f2c02530d5a6e589825e445e7ecbd1fff54134bfae3a0f0"
+    },
+    {
+      "bytes": 4394,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/qualification-20261103-001.json",
+      "sha256": "84dd354c0eba71764cb287c025c41e9d15d1b4cbeb214c9251177e6fed099b1a"
+    },
+    {
+      "bytes": 2492,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/record_qualification.py",
+      "sha256": "a29836b33ace8956c1e05d9d1aca21eafb6473c0273058c6cd69c7735ebf1d05"
+    },
+    {
+      "bytes": 4413,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/review-20261103-001.json",
+      "sha256": "cc15f93b78dc44843e0c78a36cdffc11f4c4c85b0520231e32b7506d1608c6be"
+    },
+    {
+      "bytes": 1573,
+      "mode": "100644",
+      "path": "operations/ci/key-bootstrap-v1/systemd.nix",
+      "sha256": "6ce29c12535ad717ece21c2b78057c2007304eb74e38f4bbd11c19e1aa88b192"
+    },
+    {
+      "bytes": 3756,
+      "mode": "100644",
+      "path": "operations/ci/authority-credentials-v2/README.org",
+      "sha256": "3b8fa713ea1af717eff5505c67161a513d65e78794018295bd1babd0bc19e2d2"
+    },
+    {
+      "bytes": 434,
+      "mode": "100644",
+      "path": "operations/ci/authority-credentials-v2/module.nix",
+      "sha256": "f018ea6abfe5aa30fbbbc7d6d71c8286702d89bd0db499c83662dd87decbbf39"
+    },
+    {
+      "bytes": 962,
+      "mode": "100644",
+      "path": "operations/ci/authority-credentials-v2/package.nix",
+      "sha256": "2bf9aa84b5ad585b5b881561234f04d47e6db3e4d9de98d74f48b816d6d80acf"
+    },
+    {
+      "bytes": 2225,
+      "mode": "100644",
+      "path": "operations/ci/authority-credentials-v2/qualification-20261103-001.json",
+      "sha256": "3db204ed4cb2e0199a4d21237e3c0fc7566396c8fd6bd65a6cbc3f3c58b9f18f"
+    },
+    {
+      "bytes": 2324,
+      "mode": "100644",
+      "path": "operations/ci/authority-credentials-v2/reader.py",
+      "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+    },
+    {
+      "bytes": 1608,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/diagnosis-credential-20261103.json",
+      "sha256": "a148a41c40ea0caa5223f70ad1648502bb41a7f29346040fd864022190e7c90e"
+    },
+    {
+      "bytes": 514,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/diagnostic-signer.py",
+      "sha256": "f4e5778754d66ee1271e84dff4f11566cfdf4195f7cbdf105d82a6035c4a8283"
+    },
+    {
+      "bytes": 17050,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/fixture.py",
+      "sha256": "ddaddabfda54e830a0fdc36defd5b5747f21badc2244c8aacf6356503089e2bb"
+    },
+    {
+      "bytes": 881,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/public-fixture-policy.json",
+      "sha256": "2b2f7c5ed574fc6a009ef06a025d6730aec1211beb0bc377ce7774e00efe7fe2"
+    },
+    {
+      "bytes": 13116,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/qualification-20261103-001.json",
+      "sha256": "2a6f8cdbb02e94557586ae2ba52241fe07f4a2646f1323d1365e413ead946317"
+    },
+    {
+      "bytes": 1627,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/reader-boundaries.nix",
+      "sha256": "5b11ff3a9baca52418084dcdf3de5be23919408e18290f300b4b8b8a16122fe0"
+    },
+    {
+      "bytes": 4061,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/reader-boundaries.py",
+      "sha256": "c01063dcb410ad1d29eb5f57d1546f027294b13a9f0ac8170fb8ee3128810ccd"
+    },
+    {
+      "bytes": 664,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/reader-probe.py",
+      "sha256": "1c7c07baf132f3136f76b5c759b5ed37e746239590c8b5a38f58719f4cb5017c"
+    },
+    {
+      "bytes": 6667,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/record_qualification.py",
+      "sha256": "ba2a0375e29a4b9719b324bbeb13de3b838f1b28635d995d61da8957a05e7bde"
+    },
+    {
+      "bytes": 5426,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/review-20261103-001.json",
+      "sha256": "0815283450024796eac301e082a1e4257f46deb429e234387e20cbdb4589681d"
+    },
+    {
+      "bytes": 699,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/runner-vm_test.go",
+      "sha256": "172e85c6fa5c7ebd2667d5a9f315a3b0f796fb79919ac3f08a858a4f4a02cfc8"
+    },
+    {
+      "bytes": 10667,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/systemd.nix",
+      "sha256": "7a61b37e735c733ae09f4fb6c98d73365125c6ecd5ed1e5e287c7392dff332b1"
+    },
+    {
+      "bytes": 1577,
+      "mode": "100644",
+      "path": "operations/ci/integration-v1/validator.py",
+      "sha256": "7e14207f7dec008447fa2f5e13fe89dc0afa5b2dc8f8bd6a6c6c8f0307beeaa5"
+    }
+  ],
+  "fixture_scope": "All included fixtures use invented public test inputs only; no generated private key, VM disk or local logs are included.",
+  "note": "The bootstrap package itself depends only on its two sources and pinned nixpkgs. v2 and the integrated fixtures additionally require the separate frozen CI module/protocol sources; no implicit publication of private inputs.",
+  "private_data_included": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "frozen-key-bootstrap-authority-credential-reader-and-integration-proof"
+}

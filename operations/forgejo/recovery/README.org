@@ -1,0 +1,60 @@
+#+title: Récupération locale des artefacts CI du 31 octobre
+#+language: fr
+
+Le reçu =../qualification-artifact-recovery-20261102.json= distingue trois
+sorties historiques exactes et un validateur corrigé sous un nouveau chemin.
+Aucune installation, activation ni autorité indépendante n’est établie ici.
+La politique et le paquet de sources restent liés à la fixture synthétique
+=93bd676…=. Le main accepté de validation reste =eb71ffe…=.
+
+Les scripts s’exécutent depuis la racine du dépôt. Leurs destinations sont
+fixes sous =.local/ci-artifact-recovery-20261102= ; une nouvelle récupération
+utilise un répertoire de sortie neuf. Les dépôts Git déjà reçus et vérifiés
+sont les préconditions locales indiquées dans les scripts. Aucun clone complet
+ni checkout de leurs données historiques n’est fait. Seuls les blobs de code
+sélectionnés par la recette qualifiée et les verrous explicites sont lus.
+
+Ordre de reproduction :
+
+1. =inspect-selected-inputs.py=, =recover-proposal.py= puis
+   =recover-synthetic-binding.py= reproduisent les 815 fichiers et leur
+   manifeste. Le commit synthétique est créé à partir des métadonnées d’arbre,
+   sans modifier une référence Git de gouvernance ni lire les blobs non retenus.
+2. =recover-validator-code.py= copie les 35 fichiers de recette/contrôle
+   explicitement nommés depuis le commit accepté.
+3. =recover-validator-inputs.py= vérifie 463 sources, 225 archives Cargo et
+   les fichiers Elm publics. Les archives manquantes peuvent être téléchargées
+   auprès de leurs fournisseurs publics ; chaque contenu est vérifié avant
+   emploi. =recover-validator-resources.py= vérifie les 92 ressources applicatives
+   prévues par le verrou, dont les polices déjà reçues de Signature ; elles
+   restent locales et ne sont pas ajoutées à cette publication.
+4. Construire le compilateur Elm épinglé si nécessaire :
+   =nix build --impure --no-link --max-jobs 1 --cores 2 --expr
+   '(import /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source {}).elmPackages.elm'=.
+   =finish_inputs.py= génère les deux docs.json dont la distribution publique
+   actuelle diffère, puis exige leurs empreintes historiques exactes. Il
+   prépare aussi la recette historique Rust et le fichier policy.json exact.
+5. =packages.nix= expose =runner=, =stager=, =sourceBundle=, =verifier= et
+   =closure=. Construire avec =--impure --max-jobs 1 --cores 2 --builders ''
+   --no-link --json -L=. L’argument =historical=true= reproduit à l’évaluation
+   la dérivation ancienne ; il ne prétend pas que sa sortie a été construite.
+6. =qualify_validator_recovery.py= exécute les huit contrôles ciblés, puis
+   =record_inventory.py= compare les NAR aux reçus et vérifie les fermetures.
+
+Le build historique Rust a réellement échoué : install.sh utilise
+=/usr/bin/env= absent du sandbox. L’ajout ponctuel de ce chemin a été refusé
+par le daemon pour l’utilisateur non trusted ; root a constaté que sudo -n
+requiert un mot de passe. Aucun mot de passe n’a été demandé et aucune
+configuration système n’a été changée. La recette déjà corrigée ajoute
+uniquement =patchShebangs ./install.sh= ; le sandbox reste actif. Elle produit
+un nouveau Rust, un nouveau JSON de runtime et un nouveau validateur. Les
+empreintes différentes et les échecs historiques restent dans le reçu.
+
+La qualification ciblée exécute réellement les versions des six outils,
+formatage/Clippy/test unitaire/doctest/release Rust hors réseau, et un refus du
+validateur empaqueté. Elle vérifie aussi les 449 entrées Elm et le delta exact
+de fermeture. Le NAR du validateur, après substitution explicite de ses deux
+chemins internes, retrouve l’empreinte historique : cela prouve les mêmes
+sources exécutables ; ce NAR normalisé n’est ni importé ni présenté comme un
+artefact historique retrouvé. Aucun nouveau pipeline applicatif complet ni
+passage Forgejo/systemd n’est déclaré.

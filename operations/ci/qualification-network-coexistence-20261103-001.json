@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-03",
+  "groups_passed": 4,
+  "host_nixpkgs": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "limitations": [
+    "The table is read directly from the qualified runner module with invented distinct UIDs 61001 and 61002.",
+    "Invented TCP servers and a kernel network namespace stand in for public and private services. No Forgejo job or credential is used.",
+    "No full host generation activation, reboot, authority signature or production access is asserted."
+  ],
+  "log": {
+    "bytes": 124235,
+    "path": ".local/deployment-20261101/ci-network-coexistence-20261103-001.log",
+    "sha256": "0d89e1effee3c9d8b21d8c4c50f353a2e8948ad48b1b22ca3289ec83baffb944"
+  },
+  "output": {
+    "ca": null,
+    "deriver": "/nix/store/kgazhlq0q69gnxnmm2cxhxx2d3c4r8gv-vm-test-run-mrjam-ci-input-firewall-output-table-coexistence.drv",
+    "narHash": "sha256-EcuFdkPU0N9gnXbXTkN/n1PMA16mD5sX8l2kVBb3Y7c=",
+    "narSize": 760,
+    "path": "/nix/store/iqliwpr12ja4907jnr0kn29m0p35ypqm-vm-test-run-mrjam-ci-input-firewall-output-table-coexistence",
+    "references": [],
+    "registrationTime": 1793664098,
+    "result": {
+      "bytes": 470,
+      "path": "/nix/store/iqliwpr12ja4907jnr0kn29m0p35ypqm-vm-test-run-mrjam-ci-input-firewall-output-table-coexistence/result.json",
+      "sha256": "657c55267e4fe2b98ed273430958e8e2f6953aaffe4f785838c5f9bf2c6f1c7c"
+    },
+    "signatures": [],
+    "storeDir": "/nix/store",
+    "ultimate": true,
+    "version": 1
+  },
+  "production_access": false,
+  "result": {
+    "checks": [
+      "input-and-ci-output-enforced",
+      "nft-reload-preserves-input-and-foreign-table",
+      "input-reload-preserves-ci-output-and-foreign-table",
+      "nft-stop-start-preserves-input-and-foreign-table"
+    ],
+    "limits": [
+      "Invented users and socket servers; no Forgejo or CI job",
+      "No full host generation activation or reboot is asserted"
+    ],
+    "production_access": false,
+    "runner_table_sha256": "e698f9bb94e761d792955f9b8d17ee7c391a491f992e9f70d8a4fa7794da7e18",
+    "schema_version": 1
+  },
+  "schema_version": 1,
+  "scope": "real-kernel-input-iptables-nft-and-ci-output-coexistence",
+  "sources": [
+    {
+      "bytes": 6691,
+      "path": "operations/ci/tests/network-coexistence.nix",
+      "sha256": "55c8d1d258e58d8179eae3e75a56e5f0f8da8fe2a4f3b6269840e0d346329179"
+    },
+    {
+      "bytes": 1179,
+      "path": "operations/ci/preserve-input-firewall.nix",
+      "sha256": "042f0283829bf3da08bd8304e4b097e6fbf79c6c6dce08d1263fb8d18a8f44dc"
+    },
+    {
+      "bytes": 10818,
+      "path": "operations/nixos/mrjam-forgejo-runner.nix",
+      "sha256": "309f5612091d9f86263edd4016ffd95000a53f33ffeb08a7a1a88a668a9c8d1c"
+    },
+    {
+      "bytes": 8972,
+      "path": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source/nixos/modules/services/networking/nat-iptables.nix",
+      "sha256": "546f322c512585e37bde58587d891a7652c219cea24a73d8759ac6aefbf103ac"
+    },
+    {
+      "bytes": 13656,
+      "path": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source/nixos/modules/services/networking/nftables.nix",
+      "sha256": "34b0e90930258914423e7354c4fbd7a6d44e9f3215c40028be538973e1773a84"
+    }
+  ],
+  "status": "PASS",
+  "vm_seconds": 29.64
+}

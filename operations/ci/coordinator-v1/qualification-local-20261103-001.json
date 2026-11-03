@@ -1,0 +1,273 @@
+{
+  "date": "2026-11-03",
+  "dependencies": {
+    "authority_package": "/nix/store/cb555a6c9i2vyvw5gj5qv7g5sy43h29z-mrjam-validation-authority-1",
+    "authority_qualification": {
+      "bytes": 9446,
+      "path": "operations/ci/authority-v1/qualification-local-20261103-001.json",
+      "sha256": "095a6ba17097a80e4924a7b89f5aafc75563ab6423ce5d2e35726ac83ae98be6"
+    },
+    "authority_review": {
+      "bytes": 2563,
+      "path": "operations/ci/authority-v1/review-local-20261103-001.json",
+      "sha256": "6688d135d69fcbc5665557a6fa9ad2d062deea425ff89d7442bcb6b03a7beda6"
+    },
+    "original_root_preserved": "/nix/store/vj2gz23kv6mwkblgmhw6dal5j1icrmhj-mrjam-forgejo-coordinator-root",
+    "original_runner_preserved": "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0"
+  },
+  "evidence": [
+    {
+      "bytes": 90,
+      "path": ".local/ci-coordinator-v1-20261103/runner-build-002.stdout",
+      "sha256": "4329a9f44ded1c212f188ecd1b9eda01ee6e87771e8d055a7c86259ef90ecf3f"
+    },
+    {
+      "bytes": 87,
+      "path": ".local/ci-coordinator-v1-20261103/root-build-001.stdout",
+      "sha256": "cbe5751c8b068c7e153c8f80461f5c0d6fe10b729876b5601e34c4065979fdab"
+    },
+    {
+      "bytes": 1301,
+      "path": ".local/ci-coordinator-v1-20261103/root-build-001.stderr",
+      "sha256": "def4d9a2099f9b656e7f6c08c522c535e15891a9dcd749b3b45fead499aad48d"
+    },
+    {
+      "bytes": 4181,
+      "path": ".local/ci-coordinator-v1-20261103/path-info-001.json",
+      "sha256": "65842a9a05901fe8468cf7f201e9501814a41fb3007f191e5eb26cb6c83e1439"
+    }
+  ],
+  "limits": [
+    "No actual systemd/chroot/UID-separated traversal or production action is proved by this build.",
+    "The v2 collection cache may be reused. issued_at dates only the signature, not execution age or a fresh test run per job.",
+    "The signed envelope is retained by an untrusted coordinator; every subsequent consumer must verify signature, policy and proposal again.",
+    "No human review, merge, Forgejo policy mutation or deployment authority is granted.",
+    "The CLI version retains the upstream bounded-adapter suffix; the new package, derivation, source hashes and NAR identify this distinct build."
+  ],
+  "packages": [
+    {
+      "deriver": "/nix/store/4v7xgwsmqcy4bclpvj7b9fjgnfi40r2r-mrjam-forgejo-runner-content-authority-13.2.0.drv",
+      "kind": "package",
+      "nar_bytes": 33228592,
+      "nar_hash": "sha256-qrYzhOTgJzxpUWzh77b1/16ZRirN5U5WAf639mXTqAo=",
+      "path": "/nix/store/12iyy8y1lzprdhm8vjvmlshcw87vbawa-mrjam-forgejo-runner-content-authority-13.2.0",
+      "references": [
+        "/nix/store/12iyy8y1lzprdhm8vjvmlshcw87vbawa-mrjam-forgejo-runner-content-authority-13.2.0",
+        "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+        "/nix/store/cb555a6c9i2vyvw5gj5qv7g5sy43h29z-mrjam-validation-authority-1",
+        "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/ngx7v0gbiqp14vcbgd5s9218pdyyf1lh-git-minimal-2.54.0",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e"
+      ]
+    },
+    {
+      "deriver": "/nix/store/j6nv8sqsxm8kb4aixgg1w14l1w69vpyg-mrjam-forgejo-coordinator-authority-root-1.drv",
+      "kind": "root",
+      "nar_bytes": 381118992,
+      "nar_hash": "sha256-QX4sS9moRBxND+5SCsxArhBgyIZxj83Y2Ij1wMWUCio=",
+      "path": "/nix/store/gsabvcxsalj82crk99qy9y2h9zdxm7kd-mrjam-forgejo-coordinator-authority-root-1",
+      "references": [
+        "/nix/store/0ba5kj6r0zhfwd84l5vzccqvx7amlq2c-gcc-15.3.0-lib",
+        "/nix/store/0pq2dqyz7pml8iym4ky1q0md3rw8hihm-mrjam-validation-export-policy.json",
+        "/nix/store/10d0lpvg6pxnzlgnrdpm3xjyki00zgah-gdbm-1.26-lib",
+        "/nix/store/12iyy8y1lzprdhm8vjvmlshcw87vbawa-mrjam-forgejo-runner-content-authority-13.2.0",
+        "/nix/store/13czpvp88x852739v5xi04s871pn35b5-bash-interactive-5.3p9",
+        "/nix/store/1d733bdg61s0qwwr04xiyrqz4wydv3ym-xz-5.8.4",
+        "/nix/store/2l6kf3nfwb4k9c5dsdg8k1fs2jr5qikb-brotli-1.2.1-lib",
+        "/nix/store/31f225xam9v06jnm4878id3ch2wjkgkl-keyutils-1.6.3-lib",
+        "/nix/store/3yhivr3h6801yk7sy3skzj4f2j86i68r-readline-8.3p3",
+        "/nix/store/41xwpwwpg8jxqgar1jf9lww0xkfy9mjc-ngtcp2-1.22.1",
+        "/nix/store/45q2jhprzixi3mplz1ca9brcylmid2s4-mrjam-validate",
+        "/nix/store/45xxjbxwx5whlgicf5z4dqm14xnfcs51-mrjam-forgejo-coordinator-runtime",
+        "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+        "/nix/store/4k5a466i6n8nvf3fyjkqj8dj1vizcz2i-gettext-1.0",
+        "/nix/store/4qqwpd1f34k9505ljggkh07p5a9pllsz-sqlite-3.53.3",
+        "/nix/store/4whvlsd07mc0rrkpdinhnhgixrzk7lkv-ncurses-6.6",
+        "/nix/store/7348w7xcmpri6ajymnp136w2hkz1mdwx-zstd-1.5.7",
+        "/nix/store/7b063z98zcilpmzj2sz7sl56gl84zf02-zlib-1.3.2",
+        "/nix/store/87s5annnji32yjl1wz9c7q1r5xxndab1-mrjam-workflow-client",
+        "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+        "/nix/store/9wdq1zinil9w64n9asv6haxyis1php6c-publicsuffix-list-0-unstable-2026-05-13",
+        "/nix/store/akmhgr98bcg2nrnls89gl7xz282h1mzf-mpdecimal-4.0.1",
+        "/nix/store/cb555a6c9i2vyvw5gj5qv7g5sy43h29z-mrjam-validation-authority-1",
+        "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+        "/nix/store/cg5lp7fwxzib30f6b2lm63p5bd791j6h-acl-2.4.0",
+        "/nix/store/d2vjl55mqymp5pqk9nshrdx89965fcxx-nghttp3-1.15.0",
+        "/nix/store/d3f8rpj3iy1wx2p2d8fxqab8kdygyi9f-util-linux-minimal-2.42.4-lib",
+        "/nix/store/dj6hfwqfynzvy7fp6qc9dwhwxvl71ixd-pcre2-10.49",
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+        "/nix/store/hy66nai3pdjgzhv584c0j6di0y087kdb-krb5-1.22.2-lib",
+        "/nix/store/j1axc9lgzg1gx08z3vmjrwkvyib9a0l5-nghttp2-1.69.0-lib",
+        "/nix/store/jlff34v3dkfg860sl56rdzhzdvh9km60-bash-interactive-5.3p9-man",
+        "/nix/store/jq0mamb7v8ly6gxyrq8fnrs7al0l3cdp-libssh2-1.11.1",
+        "/nix/store/k0qnrn1rz01rvc2ys7vcll4wa80qcrdi-expat-2.9.0",
+        "/nix/store/k7q7k6p6dxcc24vll5bmpn9rj1cm0m3b-mrjam-validation-authority-policy.json",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/kvdgx9r3ssdsnyrvg2wfv6il4pgvazi5-curl-8.23.0",
+        "/nix/store/kwc34h21my8mf7xbqm9gxs1xfx07xb4i-coreutils-9.11",
+        "/nix/store/mhdban9k5rif6n21v9wqnxpbh9kbq647-libffi-3.8.0",
+        "/nix/store/na6b3i4azc10wr0mczl3wf11d5w5h8hq-mrjam-submit-validation",
+        "/nix/store/ngx7v0gbiqp14vcbgd5s9218pdyyf1lh-git-minimal-2.54.0",
+        "/nix/store/pbxald1gihb1bl9l30j764q0ibb55421-gnugrep-3.12",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+        "/nix/store/phlf36lhfwaafls84mxvffp8wpz741jn-attr-2.6.0",
+        "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5",
+        "/nix/store/rqpz5lc9g53hda7k5fyzqjvra4cck2fv-gnused-4.10",
+        "/nix/store/s45snyx4414z3q1ycj63qh40hqhhs5yr-gmp-with-cxx-6.3.0",
+        "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+        "/nix/store/vk01x0avwg049mgfwqf5ra31jhycdq8l-zlib-ng-2.3.3",
+        "/nix/store/wkkvmvz3vnbfl3rkf85gp5p5mgp34ak3-gcc-15.3.0-libgcc",
+        "/nix/store/x8ahakmx4pb07rikx4zi25daih9wrsyf-bzip2-1.0.8",
+        "/nix/store/yishn4jrfiyvh63w7cb1wl01mq4wclag-libpsl-0.21.5"
+      ]
+    }
+  ],
+  "preliminary_failures": {
+    "copied_source_readonly_before_chmod": {
+      "bytes": 3990,
+      "path": ".local/ci-coordinator-v1-20261103/runner-build-001.stderr",
+      "sha256": "8aac20b0d17f028ee51bcdde0dad8c60691df0cda1e6cfd7e715ed86d735de74"
+    },
+    "fixture_full_service_equality_accessed_undefined_optional_value": {
+      "bytes": 1612,
+      "path": ".local/ci-coordinator-v1-20261103/evaluation-001.log",
+      "sha256": "e7fe076c362ac93636e9dde145ff4cf0e6676ebe007e2309585b45b933b18efc"
+    },
+    "nonsemantic_mount_list_order_comparison": {
+      "bytes": 621,
+      "path": ".local/ci-coordinator-v1-20261103/evaluation-002.json",
+      "sha256": "18a86aafb10d76352f2610b79cabd394af07ab3587bba59aa44bf14ee88bd2ea"
+    }
+  },
+  "production_activated": false,
+  "production_identity_or_key_created": false,
+  "schema_version": 1,
+  "scope": "local-bounded-coordinator-content-attestation-build",
+  "sources": [
+    {
+      "bytes": 4920,
+      "path": "operations/ci/coordinator-v1/runner-attestation.go",
+      "sha256": "750c1c7d6e8fdab34f73e64005184d59539f7c812ef8fe49c3c3f15495613b30"
+    },
+    {
+      "bytes": 4598,
+      "path": "operations/ci/coordinator-v1/runner-attestation_test.go",
+      "sha256": "bc841725c51ed45011e3271ad2b28812811465ae60426b9dcadd0dc7cc3d9820"
+    },
+    {
+      "bytes": 1823,
+      "path": "operations/ci/coordinator-v1/runner.nix",
+      "sha256": "4a401431a217095176dc32f3baa8d29c5822b71b7c231c109991a8d70e08d6ad"
+    },
+    {
+      "bytes": 2023,
+      "path": "operations/ci/coordinator-v1/module.nix",
+      "sha256": "c616cde2a05855cee08159dd4c452ca061826ae4d9d957d5b909a551f5252a3a"
+    },
+    {
+      "bytes": 5032,
+      "path": "operations/ci/coordinator-v1/evaluation.nix",
+      "sha256": "31ef979382e698b3404a3f16cc51f31aaddae69e7e6b32a5a8dc3175d0da3aad"
+    },
+    {
+      "bytes": 4748,
+      "path": "operations/ci/coordinator-v1/README.org",
+      "sha256": "ba23762a9dbfa52a7c1cc2d6e49a55af5eba2ab726fea32966d11a7fe2b85707"
+    },
+    {
+      "bytes": 11741,
+      "path": "operations/forgejo/runner-admission.go",
+      "sha256": "552e234e6c390298b420a6ad0e5a0844e9e829d96371848c41f167b345842658"
+    },
+    {
+      "bytes": 7283,
+      "path": "operations/forgejo/runner-admission_test.go",
+      "sha256": "04129e8a34826ac1e55e4e87abe4c109f9877b185f27938237a7cb0b1ae45da0"
+    },
+    {
+      "bytes": 1141,
+      "path": "operations/forgejo/runner-admission.nix",
+      "sha256": "d0ce71e1bb7bb23c3b178565403e712c291e1f7162ae58da1b99e3a6f0597fc1"
+    },
+    {
+      "bytes": 10818,
+      "path": "operations/nixos/mrjam-forgejo-runner.nix",
+      "sha256": "309f5612091d9f86263edd4016ffd95000a53f33ffeb08a7a1a88a668a9c8d1c"
+    },
+    {
+      "bytes": 2165,
+      "path": "operations/ci/modules.nix",
+      "sha256": "4a64cad008cdbc5ef703f368062b7eddeebac2a206896b52619c8df57a506d06"
+    }
+  ],
+  "tests": {
+    "build_log": {
+      "bytes": 5361,
+      "path": ".local/ci-coordinator-v1-20261103/runner-build-002.stderr",
+      "sha256": "e3f5487ae03b71842646de8624d1b32f0d6ef7c20e7da781c9c82e6989de524f"
+    },
+    "evaluation_log": {
+      "bytes": 899,
+      "path": ".local/ci-coordinator-v1-20261103/evaluation-004.json",
+      "sha256": "37eb6052233fc56ec225c84fb34ca61e9d1974adb3ed2b3117a40c9910cb3075"
+    },
+    "go_test_packages_passed": 21,
+    "new_test_functions": 5,
+    "new_tests_cryptographic_proof": false,
+    "nix_assertions_passed": 15,
+    "nix_results": {
+      "assertionsPass": true,
+      "collectorUnchanged": true,
+      "disabledUnitExact": true,
+      "entryPointFixed": true,
+      "nftUnchanged": true,
+      "noAutomaticActivation": true,
+      "noHostStoreMount": true,
+      "noNewCredential": true,
+      "onlyAuthoritySocketAdded": true,
+      "onlyThreeServiceConfigFieldsChange": true,
+      "originalRunnerPackagePreserved": true,
+      "rootDistinct": true,
+      "rootIsStore": true,
+      "signerUnchanged": true,
+      "workerUnchanged": true
+    },
+    "packages": [
+      "code.forgejo.org/forgejo/runner/v13/act/artifactcache",
+      "code.forgejo.org/forgejo/runner/v13/act/common",
+      "code.forgejo.org/forgejo/runner/v13/act/common/git",
+      "code.forgejo.org/forgejo/runner/v13/act/common/gitignore",
+      "code.forgejo.org/forgejo/runner/v13/act/container",
+      "code.forgejo.org/forgejo/runner/v13/act/container/docker",
+      "code.forgejo.org/forgejo/runner/v13/act/exprparser",
+      "code.forgejo.org/forgejo/runner/v13/act/filecollector",
+      "code.forgejo.org/forgejo/runner/v13/act/jobparser",
+      "code.forgejo.org/forgejo/runner/v13/act/model",
+      "code.forgejo.org/forgejo/runner/v13/act/plugin",
+      "code.forgejo.org/forgejo/runner/v13/act/plugin/testplugin",
+      "code.forgejo.org/forgejo/runner/v13/act/runner",
+      "code.forgejo.org/forgejo/runner/v13/act/schema",
+      "code.forgejo.org/forgejo/runner/v13/act/workflowpattern",
+      "code.forgejo.org/forgejo/runner/v13/internal/app/cmd",
+      "code.forgejo.org/forgejo/runner/v13/internal/app/poll",
+      "code.forgejo.org/forgejo/runner/v13/internal/app/run",
+      "code.forgejo.org/forgejo/runner/v13/internal/pkg/config",
+      "code.forgejo.org/forgejo/runner/v13/internal/pkg/labels",
+      "code.forgejo.org/forgejo/runner/v13/internal/pkg/report"
+    ],
+    "root_content_check": {
+      "bytes": 784,
+      "path": ".local/ci-coordinator-v1-20261103/root-content-check-002.json",
+      "sha256": "04198fd3e52fc67cb7b608647c3b02fcd2a9a365b4b1ad218dcd010a37a8e1c1"
+    },
+    "upstream_exclusions_preserved": [
+      "network-dependent pinned tests",
+      "Docker and LXC feature tests"
+    ]
+  }
+}

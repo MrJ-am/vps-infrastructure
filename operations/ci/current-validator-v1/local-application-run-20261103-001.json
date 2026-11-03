@@ -1,0 +1,213 @@
+{
+  "application_steps_passed": 75,
+  "application_validation_repeated": false,
+  "artifacts": [
+    {
+      "bytes": 13383152,
+      "name": "server",
+      "sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+    },
+    {
+      "bytes": 23859200,
+      "name": "frontend.tar",
+      "sha256": "663b4d158f33aa9a614960d8c8f67aa3d72fdd583ce0dee3abbcd0f5095d24ba"
+    },
+    {
+      "bytes": 6652,
+      "name": "verification.json",
+      "sha256": "92d4468cbab1dd20f38fee9d16390c7ab0ed4a8c28dbc16aea3e4a8e6fee760d"
+    }
+  ],
+  "comparison": {
+    "application_validation_repeated": false,
+    "deployment_authorized": false,
+    "frontends": {
+      "audition": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "ae8c95a619d900eda9b90f57ef19d6ad8e39d1f513d2ab4d93d600e9187b3d87",
+        "new_files": 96,
+        "old_files": 96,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "log": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "cc38ff1b7c8f29ad0aaa44569d5503a34775821f742c740ade5b8e4551b28898",
+        "new_files": 9,
+        "old_files": 9,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "logique": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "fe041a3e82f90e742536532c76430998fbc841b449c44d71afb05701e5beda7a",
+        "new_files": 125,
+        "old_files": 125,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "mateval": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "031e48e5051ba3908aecd3cf486493d7a3a5e765e36a7524f7a2df5696121161",
+        "new_files": 108,
+        "old_files": 108,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "style": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "8ef0288b27b88bc8aa97630f514fe4576734a9a167ee0f5820aa55cdd457bdb3",
+        "new_files": 49,
+        "old_files": 49,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "style-logo": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "2da78bedbadcbb64d6ead3e39aa64c0d9103b29e41ecb202feb10af672a2436a",
+        "new_files": 38,
+        "old_files": 38,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "vision": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "7f17d92cdf21e95562fce9460076129f28346b7443406ac74b0f52032a04b9c7",
+        "new_files": 24,
+        "old_files": 24,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      }
+    },
+    "limits": [
+      "Unequal executable bytes do not prove semantic equivalence or a defect; provenance and executed tests are reported separately.",
+      "This comparison does not connect the release manifest, reviews or deployment executor to the new artifacts."
+    ],
+    "original_global_result": "failed",
+    "production_access": false,
+    "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+    "schema_version": 1,
+    "scope": "measured-public-artifact-bytes-after-original-consumer-refusal",
+    "server": {
+      "baseline_sha256": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e",
+      "baseline_store_path": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+      "byte_identical": false,
+      "new_sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+    }
+  },
+  "consumer_qualification": {
+    "bytes": 16720,
+    "path": "operations/ci/authority-report-details-v3/qualification-20261103-001.json",
+    "sha256": "ace4a2845c392f65a395ecb7ba709adced31694618915ed7b4cdda6385b077c6"
+  },
+  "launcher": {
+    "bytes": 6793,
+    "path": "operations/ci/current-validator-v1/run_local_validation.py",
+    "sha256": "0344d09f1b3342e3bea6010a66782ea9903af025997b2d42c888baffd640d614"
+  },
+  "launcher_review": {
+    "bytes": 1768,
+    "path": "operations/ci/current-validator-v1/review-local-launch-20261103-001.json",
+    "sha256": "c12c255e505dc320615e611cd931218d47d292783e451bdcf319b97986621da6"
+  },
+  "limits": {
+    "cpu_percent": 100,
+    "memory_bytes": 2147483648,
+    "tasks": 256,
+    "worker_timeout_seconds": 1800
+  },
+  "observation": {
+    "bytes": 2078,
+    "path": ".local/ci-current-validator-v1-20261103/native-validation-001/application-observation-001.json",
+    "sha256": "5839d36565877a81de249174db184abdcb002e716819a87be0db0848db959e09"
+  },
+  "original_global_result": {
+    "code": "Refused",
+    "elapsed_seconds": 839.882,
+    "forgejo_dispatch_performed": false,
+    "private_key_accessed": false,
+    "production_access": false,
+    "production_attestation_emitted": false,
+    "schema_version": 1,
+    "status": "failed"
+  },
+  "original_result_binding": {
+    "bytes": 244,
+    "path": ".local/ci-current-validator-v1-20261103/native-validation-001/result.json",
+    "sha256": "8dd98924157d1a42c2b727b97eb0f291131f9a16a1a8b245d0743cad16135585"
+  },
+  "production_access": false,
+  "production_attestation_emitted": false,
+  "production_key_read": false,
+  "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+  "raw_report": {
+    "bytes": 6652,
+    "path": ".local/ci-current-validator-v1-20261103/native-validation-001/artifacts/verification.json",
+    "sha256": "92d4468cbab1dd20f38fee9d16390c7ab0ed4a8c28dbc16aea3e4a8e6fee760d"
+  },
+  "raw_report_rewritten": false,
+  "release_manifest_binding_established": false,
+  "report_policy_sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001",
+  "rules_adoption_established": false,
+  "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "schema_version": 1,
+  "scope": "one-local-application-run-followed-by-separate-consumer-proof",
+  "substitutions": [
+    "Local UID owns fixed read-only staging copy; worker.verify_input uses this UID and fixed local input root.",
+    "Single-UID user namespace precedes unchanged worker sandbox so process limit is isolated from the desktop.",
+    "Outer subprocess stderr is retained locally; inner application outputs remain silenced.",
+    "No real collector receipt, Forgejo dispatch, signing key or production attestation."
+  ],
+  "validator": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1",
+  "verifier_nar_hash": "sha256-ccWYvZ+frJ3wafs7ZSCJpmHqtjbfqSoRvRx43B5nKes=",
+  "workers_or_adopters_covered": false
+}

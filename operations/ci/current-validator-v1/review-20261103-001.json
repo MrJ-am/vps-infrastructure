@@ -1,0 +1,47 @@
+{
+  "activation_performed": false,
+  "actual_public_key_and_all_proposed_bindings_matched": true,
+  "attestation_emitted": false,
+  "author_nix_assertions_passed": 12,
+  "author_targeted_tests_passed": 12,
+  "authority_package": "/nix/store/19r3a6ylzp32vg3bkfr9wfhd1n8cwm71-mrjam-validation-authority-credentials-2",
+  "authority_pyc_delta_only_self_path_and_timestamp_header": true,
+  "authority_source_unchanged_except_self_and_policy_paths": true,
+  "base_and_compiled_tree_distinguished": true,
+  "closure_paths_independently_checked": 133,
+  "limits": [
+    "Twelve targeted tests and Nix assertions are not the75application checks; the authorized full local validation has not yet run.",
+    "Fresh artifacts need measured hashes; equality with deployed server/frontends is not claimed.",
+    "No actual Forgejo dispatch, production attestation, human approval, adopted rules, merge or deployment authority is established.",
+    "Evaluation uses synthetic controller/token/filesystem references and is not a deployable host configuration.",
+    "Workers/adopters/migrations and Git-SHA1-to-release-manifest mapping remain outside this three-artifact validation proof."
+  ],
+  "manifest_only_rules_revision_changed": true,
+  "old_validator_runtime_synthetic_policy_absent": true,
+  "original_source_bindings": 9,
+  "overlay_patch_sha256": "90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4",
+  "private_history_or_additional_blob_selected": false,
+  "production_access": false,
+  "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+  "public_files_independently_compared": 815,
+  "qualification_sha256": "9ed8276e7ab97b5712b9d86304f7a608513aca1e836f9a6659b8a0ab7f5ab66d",
+  "required_steps": 75,
+  "reviewed_properties": [
+    "Closed schema2 overlay policy fixes base revision, patch publication/hash and both pre/postimage hashes.",
+    "Private copied source inventoried before/after; no symlinks/hardlinks, bounded counts/bytes, exact patch --fuzz=0 before candidate execution and no extra or unrelated file changes.",
+    "All other original validation modules and runtime tools/caches remain byte-identical; public selection alone enters staging.",
+    "Authority policy links validator NAR/closure, report policy, source identities, proposal digest, public key, distinct UIDs and existing producer/export recipes."
+  ],
+  "rules_status": "proposed-not-adopted",
+  "runner_exact_changes": [
+    "Immutable runtime policy path",
+    "Readiness import and fixed overlay step before first Cargo command",
+    "Only eight Elm entrypoint report labels normalized to lowercase; argv/test selection unchanged"
+  ],
+  "schema_version": 1,
+  "scope": "independent source/package/proposed-binding review; no application validation rerun, dispatch, signing or activation",
+  "staged_public_source": "/nix/store/qaf21rxsm38vya6kr6pqr5w02z3dbzbv-mrjam-public-proposed-sources-b02-readiness-v1",
+  "status": "PASS_FOR_ONE_LOCAL_FULL_VALIDATION",
+  "validator": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1",
+  "validator_nar_hash": "sha256-ccWYvZ+frJ3wafs7ZSCJpmHqtjbfqSoRvRx43B5nKes="
+}

@@ -1,0 +1,28 @@
+{
+  "collector_uid": 61001,
+  "expires_at": 1796169600,
+  "key_id": "ce6e2e5cda264d7eed737c0f29aa628afd86f3b165a250589129788ec7c8f536",
+  "not_before": 1793577600,
+  "not_established": [
+    "production activation",
+    "human review"
+  ],
+  "public_key_der": "MCowBQYDK2VwAyEAJzFyzL5iLs3Fw4FMIZb+yHRjUBdDpcd1lN/gKF+GU2o=",
+  "report_policy_sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "requester_uid": 61003,
+  "required_steps": [
+    "synthetic-code-contract"
+  ],
+  "rules_revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "schema_version": 1,
+  "scope": "mrjam-validation-content-authority-v1",
+  "signer_uid": 61002,
+  "sources": [
+    {
+      "id": "synthetic",
+      "repository": "invented/code",
+      "revision": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "tree_sha": "ffffffffffffffffffffffffffffffffffffffff"
+    }
+  ]
+}
