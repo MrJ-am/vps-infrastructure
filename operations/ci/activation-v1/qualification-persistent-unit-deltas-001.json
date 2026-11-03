@@ -1,0 +1,1 @@
+{"application_units_unchanged": true, "boot_links_verified": true, "changed_units": ["mrjam-forgejo-runner.service", "mrjam-validation-authority.socket", "mrjam-validation-collector.socket", "mrjam-validation-export.socket", "mrjam-validation-staging.service", "mrjam-validation-worker.socket"], "code": "CI_BOOT_WIRING_AUDITED", "execution_and_security_directives_unchanged": true}

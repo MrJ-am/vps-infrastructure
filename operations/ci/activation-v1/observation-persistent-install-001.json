@@ -1,0 +1,1 @@
+{"schema_version": 1, "code": "CONFIGURATION_VERIFIED", "events": [{"stage": "preflight", "passed": true}, {"stage": "activate_candidate", "passed": true}, {"stage": "verify_candidate", "passed": true}, {"stage": "select_candidate_boot", "passed": true}, {"stage": "verify_candidate", "passed": true}]}

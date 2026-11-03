@@ -15,6 +15,7 @@ class Transport(R.Transport):
  def endpoint_allowed(self,method,path):
   return super().endpoint_allowed(method,path) or (method=='GET' and path in (WORKFLOW,RUNS)) or (method=='POST' and path==DISPATCH)
 def main():
+ signal.signal(signal.SIGALRM,lambda *_: (_ for _ in ()).throw(TimeoutError('BOOTSTRAP_DEADLINE')))
  signal.alarm(150);os.umask(0o077)
  R.api.require(os.geteuid()==0 and os.uname().nodename=='srv1982677','HOST_REFUSED')
  lock=os.open('/var/lib/mrjam-cutover/first-deployment/transaction.lock',os.O_RDWR|os.O_NOFOLLOW);fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)

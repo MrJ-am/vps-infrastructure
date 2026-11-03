@@ -37,3 +37,16 @@ Cette chaîne valide la proposition explicitement admise ; elle ne constitue
 pas à elle seule un déployeur automatique de toutes les futures révisions.
 Les attestations ne couvrent pas la restauration des sauvegardes, la totalité
 des contrôles SSO ou ViSe. Les données ViSe sont conservées hors de ce périmètre.
+
+* Résultat constaté
+Le run 1 et son job validate ont réussi. Les 75 étapes, les SHA256 des trois
+artefacts et la signature Ed25519 ont été vérifiés sur le VPS. Voir
+observation-attestation-001.json et observation-acceptance-001.json.
+La génération 3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm est active et sélectionnée au boot.
+Le runner s'est reconnecté après son redémarrage ; aucun redémarrage complet
+du VPS n'a été réalisé. Les liens de boot et les dépendances sont vérifiés.
+Le postflight confirme les quatre sockets, onze services actifs, les protections
+des neuf dépôts et HTTPS200 sur Log, Forgejo et Audition.
+L'acquittement d'un ancien échec d'inscription n'est tenté que si l'unité est
+encore failed : après bascule systemd l'avait déjà déchargée. L'échec initial
+reste enregistré, sans réinscription ni élargissement des droits.

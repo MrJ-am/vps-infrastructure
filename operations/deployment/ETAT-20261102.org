@@ -284,3 +284,20 @@ La chaîne Forgejo dispose de qualifications synthétiques séparées. L'adoptio
 protégée des règles et identités, les projets sur la forge et l'autorité réelle
 de livraison restent à établir. Les reçus locaux ne s'y substituent pas. Aucun
 succès global du déploiement, de SSO humain ou d'envoi SMTP réel n'est annoncé.
+
+* 3 novembre — chaîne de validation activée et acceptée
+La revue humaine est adoptée dans mrjam-validation (main b02bdf1...). Actions
+est actif uniquement sur ce dépôt. Le runner 1 a été inscrit avec un bail
+propriétaire temporaire révoqué ; aucun compte technique n'a reçu de rôle
+administrateur global permanent. Le premier run Forgejo 1 a réussi, avec
+75 contrôles passés, trois artefacts conservés et attestation Ed25519 vérifiée.
+La génération active et de boot est désormais
+=/nix/store/3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm-nixos-system-srv1982677-26.05pre-git=.
+Le runner et quatre sockets sont raccordés déclarativement au démarrage.
+Le runner est reconnecté après redémarrage de son unité. Les protections des
+neuf dépôts restent exactes ; Log, Forgejo et Audition répondent HTTPS200.
+Aucune migration SQL ni livraison d'un nouvel artefact applicatif n'a eu lieu
+pendant cette activation CI. Le déployeur ordinaire, l'admission de nouvelles
+propositions et le miroir GitHub restent des travaux distincts ; ViSe demeure
+hors du profil sans suppression de ses données.
+Preuves et commandes : [[file:../ci/activation-v1/README.org][activation-v1]].

@@ -31,7 +31,8 @@ def accepted():
  raw=Path('/var/lib/mrjam-forgejo-runner/attestations/8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb.json').read_bytes()
  C.require(signer.verify(contract.parse(raw),policy),'ATTESTATION_REFUSED')
 def running():
- A.run([A.SYSTEMD+'systemctl','is-active','--quiet','mrjam-forgejo-runner.service','mrjam-validation-worker.socket','mrjam-validation-collector.socket','mrjam-validation-export.socket','mrjam-validation-authority.socket'])
+ for unit in ['mrjam-forgejo-runner.service','mrjam-validation-worker.socket','mrjam-validation-collector.socket','mrjam-validation-export.socket','mrjam-validation-authority.socket']:
+  A.run([A.SYSTEMD+'systemctl','is-active','--quiet',unit])
 def table(required):
  code,raw=output([NFT,'-j','list','table','inet','mrjam-forgejo-coordinator'])
  if not required:C.require(code!=0,'CI_TABLE_RETAINED');return

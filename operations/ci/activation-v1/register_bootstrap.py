@@ -24,6 +24,7 @@ def child(token,pipe):
  except BaseException:
   os.write(pipe,b'{"code":"BOOTSTRAP_REGISTRATION_REFUSED"}');os._exit(1)
 def main():
+ signal.signal(signal.SIGALRM,lambda *_: (_ for _ in ()).throw(TimeoutError('BOOTSTRAP_DEADLINE')))
  signal.alarm(180)
  assert os.geteuid()==0 and os.uname().nodename=='srv1982677' and os.path.realpath('/run/current-system')==CURRENT
  lock=os.open('/var/lib/mrjam-cutover/first-deployment/transaction.lock',os.O_RDWR|os.O_NOFOLLOW);fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
