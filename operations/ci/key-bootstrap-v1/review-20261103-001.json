@@ -1,0 +1,82 @@
+{
+  "ci_activated": false,
+  "entry_python_isolated_no_site": true,
+  "executed_fixture": "/nix/store/r41bd83pk82q9bkg6jp7v30q75bsjcmq-mrjam-key-bootstrap-invented-fixture.py",
+  "executed_fixture_exact_after_four_tool_substitutions": true,
+  "executed_fixture_sha256": "8ea110f63e618fdd386950aea30cf6c5a6905311497549456fc021f0ce90cde6",
+  "limits": [
+    "VM generated invented keys only; no production key was created or read by this review.",
+    "The ten VM groups do not claim an exhaustive ACL/concurrent invocation matrix; ACL refusal and locking are independently reviewed in source.",
+    "No power-loss test or durability guarantee beyond the explicit fsync/atomic rename sequence.",
+    "Key creation alone grants no policy adoption, human review, validation, merge or deployment authority and activates no CI service."
+  ],
+  "observed_groups": [
+    "root-and-no-arguments",
+    "create-private-export-public-only",
+    "repeat-preserves-existing-key",
+    "nonroot-cannot-read-key",
+    "actual-ed25519-signature",
+    "metadata-and-hardlink-refused",
+    "file-and-directory-symlink-refused",
+    "stale-staging-refused-without-deletion",
+    "kernel-no-replacement-publication",
+    "non-ed25519-key-refused"
+  ],
+  "original_fixture_failure_preserved": {
+    "exit": 1,
+    "log": {
+      "bytes": 88733,
+      "path": ".local/ci-key-bootstrap-v1-20261103/build-001.stderr",
+      "sha256": "a70c962ea5863ad9f9093702dcb8484abd9e491b43e77f098ca6f061d9b1a85e"
+    },
+    "reason": "fixture included atime in full stat equality; corrected only fixture to preserve all identity/content metadata checks and public-key equality"
+  },
+  "package": "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+  "package_nar_hash": "sha256-pGx2E15GblvB3xqfrTe5QZvcRJoYxamFT53Hk4Bf8rI=",
+  "packaged_source_only_fixed_openssl_substitution": true,
+  "production_access": false,
+  "qualification_sha256": "84dd354c0eba71764cb287c025c41e9d15d1b4cbeb214c9251177e6fed099b1a",
+  "readme_sha256": "7edbb6818e0225992b85ef4e9667fb9aa3e7051cd320e51721da88f2404a16a2",
+  "reviewed_properties": [
+    "Fixed root/host/noargs context, no network or service API, fixed path under root-owned no-symlink ancestors.",
+    "Exact root700 private directory and root400 monolink regular private key; access/default ACLs refused by source checks.",
+    "Nonblocking directory lock; exclusive staging creation; OpenSSL immutable path with replaced environment, private descriptors only and stdout/stderr null.",
+    "Only exact 44-byte Ed25519 public DER is read by Python and exported; private bytes remain in OpenSSL and private file.",
+    "Before/after identity metadata checks; fsync key then atomic renameat2 NOREPLACE then directory fsync.",
+    "Existing final key is validated and preserved; stale staging refuses without adoption; error cleanup removes only current invocation staging inode.",
+    "Failure output is closed literal codes and cannot contain OpenSSL stderr or exception text."
+  ],
+  "schema_version": 1,
+  "scope": "independent local source/package/fixture and completed invented-VM evidence review; no execution of bootstrap or new test run",
+  "sources": [
+    {
+      "bytes": 5375,
+      "path": "operations/ci/key-bootstrap-v1/bootstrap.py",
+      "sha256": "4b6540269dd88599f44615a820c1ff5f83f57fb03d83a24bde3be81a61962a3d"
+    },
+    {
+      "bytes": 576,
+      "path": "operations/ci/key-bootstrap-v1/package.nix",
+      "sha256": "0b4ecc5e37a959df7f2c02530d5a6e589825e445e7ecbd1fff54134bfae3a0f0"
+    },
+    {
+      "bytes": 4998,
+      "path": "operations/ci/key-bootstrap-v1/fixture.py",
+      "sha256": "e9367229c704cf02750a16df094e8afc65074b7b4e6f89458d712533d23e3a4b"
+    },
+    {
+      "bytes": 1573,
+      "path": "operations/ci/key-bootstrap-v1/systemd.nix",
+      "sha256": "6ce29c12535ad717ece21c2b78057c2007304eb74e38f4bbd11c19e1aa88b192"
+    },
+    {
+      "bytes": 2492,
+      "path": "operations/ci/key-bootstrap-v1/record_qualification.py",
+      "sha256": "a29836b33ace8956c1e05d9d1aca21eafb6473c0273058c6cd69c7735ebf1d05"
+    }
+  ],
+  "status": "PASS_IN_DECLARED_SCOPE",
+  "vm_nar_hash": "sha256-zgiuc6+6b9dAY/Avosj1qKjr/3nnH3wNvha13B2GR5c=",
+  "vm_output": "/nix/store/rcqy7ngq6yr9dkypg6msfhsvabx44cdh-vm-test-run-mrjam-authority-private-key-bootstrap",
+  "vm_result_sha256": "0ee451039a5047d3c496e3264cbc42fd84bd3ea4bbb142787adc5fb09b18a30a"
+}

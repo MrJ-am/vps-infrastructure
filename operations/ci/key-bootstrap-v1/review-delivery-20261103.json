@@ -1,0 +1,40 @@
+{
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "closure_paths": 24,
+  "executor_properties": [
+    "Existing root600 monolink transaction lock held throughout; no caller-selected input or command.",
+    "Exact live and boot phi68 generation required before execution.",
+    "Fixed package verify-path and exact bootstrap source hash before the sole noargs invocation.",
+    "Replaced subprocess environment; stdin null, stderr null; fixed 30/45 second subprocess timeouts.",
+    "Success only exports strict six-field result, exact Ed25519 public DER length/prefix and its matching SHA256; all errors become one closed code."
+  ],
+  "executor_sha256": "914a335e7ba8cc0044767591c9a0367d21fb405ee9bcb1c9432ac99a7a506bcf",
+  "export_reproduced_byte_identical": true,
+  "limits": [
+    "No key or production state read or created by this review.",
+    "Import does not invoke the helper; executor is a separate authorized step.",
+    "No service, profile, policy adoption, signing authority or CI activation is granted."
+  ],
+  "manifest_sha256": "570d093dc43eddf59a0398d0e99061dbd07fc0ec93e7772d51840611cebbd993",
+  "nar": {
+    "bytes": 1331224,
+    "path": ".local/deployment-20261101/ci-key-delivery-20261103.nar",
+    "sha256": "432595565617c33f930c54c127f0a88ac1112af9dd5b4a18b61caae3d9ca67f7"
+  },
+  "new_paths": [
+    "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+    "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin"
+  ],
+  "previous_successful_delivery_receipts_verified": 14,
+  "qualification_sha256": "0cc7b1615362eed9c83a90e858e021ff57f3badff22c875e850530cabe1ee7d0",
+  "receiver_ast_identical_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "receiver_sha256": "452178c84821e6d2b0be53a5ed1e11e7fe94a1ccadb6173bd00b7c287c534fb7",
+  "reused_dependencies": 22,
+  "schema_version": 1,
+  "scope": "independent read-only binding/export and bounded executor review; no bootstrap invocation or SSH",
+  "status": "PASS_IN_DECLARED_SCOPE"
+}

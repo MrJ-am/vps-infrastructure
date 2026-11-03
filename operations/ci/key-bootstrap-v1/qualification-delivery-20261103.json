@@ -1,0 +1,27 @@
+{
+  "application_activation": false,
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "closure_paths": 24,
+  "manifest_sha256": "570d093dc43eddf59a0398d0e99061dbd07fc0ec93e7772d51840611cebbd993",
+  "nar": {
+    "bytes": 1331224,
+    "path": ".local/deployment-20261101/ci-key-delivery-20261103.nar",
+    "sha256": "432595565617c33f930c54c127f0a88ac1112af9dd5b4a18b61caae3d9ca67f7"
+  },
+  "new_store_paths": [
+    "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+    "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin"
+  ],
+  "package": "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+  "production_executed": false,
+  "receiver_sha256": "452178c84821e6d2b0be53a5ed1e11e7fe94a1ccadb6173bd00b7c287c534fb7",
+  "schema_version": 1,
+  "status": "prepared",
+  "systemd_changes": false,
+  "template_sha256": "18a002d46d047e049f661e6c8039cae531e663f5b93d1d2078d996ffabe19e66",
+  "unchanged_ast_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ]
+}
