@@ -22,7 +22,8 @@ let
     baselineExact = toString old.system.build.toplevel == "/nix/store/g1l3zif8rwndmdcyc1vylwasaxds9iia-nixos-system-srv1982677-26.05pre-git";
     assertionsPass = lib.all (a: a.assertion) current.assertions;
     sameUnits = names == builtins.attrNames current.systemd.units;
-    onlyForgejoUnitChanges = changed == [ "forgejo.service" ];
+    onlyForgejoConfigConsumersChange = changed == [ "forgejo.service" "mrjam-upgrade-forgejo-schema.service" ];
+    schemaUpgradeRemainsManual = current.systemd.services.mrjam-upgrade-forgejo-schema.wantedBy == [];
     onlyActionsSettingChanges = (old.services.mrjamForgejoHost.settings // {
       actions = old.services.mrjamForgejoHost.settings.actions // { ENABLED = true; };
     }) == current.services.mrjamForgejoHost.settings;
