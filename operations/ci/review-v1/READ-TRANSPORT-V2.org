@@ -1,0 +1,36 @@
+#+title: Délai effectif du transport de lecture
+#+language: fr
+
+=read_transport_v2.py= conserve les routes GET et les projections du transport
+initial. Il utilise une connexion HTTP directe vers l’origine loopback fixe,
+sans proxy, cookie ou redirection. Aucun token réel n’a été utilisé pour sa
+qualification locale.
+
+Le timeout socket seul ne borne pas une lecture HTTP complète. Un serveur peut
+alimenter lentement une ligne d’en-tête, ou une ligne de taille de bloc, sans
+atteindre ce timeout entre deux octets. Le premier transport a été reproduit
+avec un budget de 0,12 seconde : le refus n’est arrivé qu’après 1,749 seconde.
+Le résultat historique reste conservé ; il n’est pas qualifié pour activation.
+
+La variante attache un watchdog privé à chaque objet socket qu’elle possède.
+À la fin du budget partagé de trente secondes, il appelle shutdown(SHUT_RDWR)
+sur ce socket. Les lectures de lignes internes à http.client sont ainsi
+interrompues aussi. Le watchdog est annulé et la connexion fermée sur toutes
+les sorties. Il ne choisit jamais un descripteur fourni par un appelant et ne
+modifie aucun signal de processus. La connexion initiale conserve un timeout
+socket d’au plus cinq secondes et du budget restant. Comme tout timer Python,
+la réaction dépend de l’ordonnancement ; il ne s’agit pas d’une garantie temps
+réel du noyau.
+
+Onze tests passent : les neuf invariants initiaux, puis deux vrais serveurs
+locaux envoyant lentement soit l’en-tête, soit la ligne de taille chunked. Le
+second annonce Connection: close pour exercer aussi le socket maintenu par le
+flux de réponse. Avec un budget de 150 ms, chaque lecture est refusée en moins
+de 750 ms, le pair observe la fermeture et SIGALRM conserve son gestionnaire.
+Les erreurs restent des codes fermés, sans corps HTTP, token ou texte brut.
+
+Cette qualification ne prouve aucun droit Forgejo réel. Le futur service doit
+encore fournir un token read:user/read:repository adopté, vérifier les
+protections et les acteurs, relire l’approbation sélectionnée et employer une
+identité distincte pour la fusion. Le transport ne crée aucune décision,
+signature, fusion ou activation.

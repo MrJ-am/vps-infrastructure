@@ -1,0 +1,39 @@
+{
+  "author_tests_reviewed_not_rerun": 9,
+  "limits": [
+    "Only invented API responses were exercised; no actual human review or Forgejo API compatibility is established by these nine tests.",
+    "A zero-review PR or incompatible/pending record may refuse projection; no approval or status may be invented to make it pass.",
+    "This receipt adds no authority beyond the previously reviewed unsigned binding."
+  ],
+  "mandatory_next_checks": [
+    "Use only a fixed authenticated origin/transport with total byte, request, time and output budgets; no candidate callback or URL.",
+    "Qualify actual Forgejo17 JSON/headers, pagination and permissions with the distinct read-only observer identity.",
+    "Read and bind branch protections and actor identities through their own fixed contracts.",
+    "Re-read the selected review immediately before merge; stable page counts and unchanged head do not prevent a review edit, dismissal or replacement during pagination.",
+    "Match every consumed manifest artifact/source to the signed attestation, then apply the separately qualified merge/signature/anti-replay authority."
+  ],
+  "passed": true,
+  "primary_api_sources_sha256": {
+    "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/structs/pull.go": "1472f689d9e80da512cc8edafa5d647daafccdf060dfba0d4a74d3be5cfe06e3",
+    "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/structs/pull_review.go": "5745b07705d600454493213f6be1c5715dfa43bb041d9330dfdcb3af1ddb61fb",
+    "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/api/v1/api.go": "889589a7824613c3e55e4878e6002ef8429e69a1be2e2492dc1c97b3aac55e3a",
+    "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/api/v1/repo/pull_review.go": "0ada741ac5530bced27b3764dccec77826a3f9ac2a706dfcc1dc1d824dd23d52"
+  },
+  "qualification_sha256": "3b11dfb8cd0a9ca384e8517b3c083626c49e2426dc6696b444f3a472a834d0c6",
+  "review_contract_sha256": "e86dd5a21f6a9aac5ff0df000dec29b62ad91fbd860c2db7e5462cc331ab5707",
+  "reviewed_properties": [
+    "API routes are constructed only from fixed namespace, adopted repository enum, integer PR number and validated lowercase commit hash; returned URLs never select a request.",
+    "Repository identity/private/default-main, same-repository base/head, fixed Forgejo17 version, main commit, commit/tree and previous generation are checked.",
+    "Every review page has a stable numeric X-Total-Count, bounded page size and count, no duplicate ids and no short incomplete page; missing/changed count refuses.",
+    "Outstanding human or team requests and team review records refuse; projected fields pass the existing closed review contract.",
+    "PR state/head/base/reviewer requests and current main are reread after pagination.",
+    "Review bodies stay in an internal projection; this module has no CLI, export, HTTP transport or mutation."
+  ],
+  "schema_version": 1,
+  "scope": "independent local API projection source review; no HTTP, credentials or production data",
+  "sources_sha256": {
+    "operations/ci/review-v1/API-PROJECTION.org": "04ad807ebc4246a7b34223c432ec1418f40818e84dbf431766f1490feb915de4",
+    "operations/ci/review-v1/api_projection.py": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6",
+    "operations/ci/review-v1/test_api_projection.py": "e945558076f55e9f92a28afc2150e58bd82a5ca2b370f62297eead68abcf170e"
+  }
+}

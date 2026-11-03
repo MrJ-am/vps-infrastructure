@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "local_tests_passed",
+  "tests_passed": 9,
+  "real_loopback_http": true,
+  "invented_credentials_only": true,
+  "production_access": false,
+  "real_forgejo_permissions_proved": false,
+  "sources": {
+    "operations/ci/review-v1/read_transport.py": "1fe4cefd123a7e980ce2303104f7cff913c8c03a2359172633afe707e2fbfe68",
+    "operations/ci/review-v1/test_read_transport.py": "17f7be961b263c43d2cbeea910d48656d609d24e3cc7691dd80039f4f2f682e3",
+    "operations/ci/review-v1/READ-TRANSPORT.org": "f046ae50c7d638545a9bf682775b6e8c1452354f34bb83d4484c73a8e7c30285"
+  },
+  "scope": "GET-only bounded transport, no credential reader or service activation",
+  "limits": [
+    "Token scopes and branch permissions require independent native Forgejo17 qualification.",
+    "Transport is not an API sandbox for arbitrary compromised Python; the native read-only token must enforce write refusal.",
+    "Shared deadline thirty seconds plus at most the in-progress five-second socket timeout."
+  ]
+}

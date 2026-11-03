@@ -1,0 +1,151 @@
+#+title: Autorité de contenu CI — première version séparée
+#+language: fr
+
+Cette version prépare la chaîne future. Elle n’a créé aucune identité, clé de
+production, activation ou signature réelle sur le VPS. Les clés et UID du banc
+sont inventés. Vingt tests locaux et vingt-quatre contrôles d’évaluation Nix sont
+consignés séparément ; la traversée des nouvelles unités avec des UID réellement
+distincts reste à qualifier. Aucun cache historique n’est adopté ni signé.
+
+* Provenance fraîche
+
+=producer.py= utilise les fonctions inchangées de =operations/forgejo/worker.py=
+pour la sélection, les namespaces, le canal, les sceaux et la fin du candidat.
+Le nouveau superviseur compare avant exécution les octets de sa politique et
+sa fermeture aux empreintes d’un fichier root immuable ; il vérifie également
+ses propres sources, le contrat partagé et le cœur du worker. Il produit un
+reçu v2 avec la liaison =producer=. Le candidat n’écrit jamais ce champ.
+
+La liaison contient les règles, verifier et narHash adopté, hash exact des
+=store-paths=, hash de la politique du vérificateur, hash de la politique du
+worker, et hashes des recettes producteur/worker/collecteur/contrat. Le narHash
+est celui adopté lors de la réception indépendante du paquet : le worker ne
+contacte pas le daemon Nix et ne prétend pas recalculer un NAR. Le chemin
+immuable réellement exécuté et la fermeture lue doivent correspondre à cette
+liaison. Le signataire contrôle aussi la politique mentionnée par le vrai
+=verification.json= protégé.
+
+=collector.py= est une version séparée du collecteur : les fonctions de copie,
+limites, hashes, verrou, publication atomique et métadonnées restent identiques.
+Il exige le reçu v2 et la même liaison, vérifie sa recette et utilise seulement
+=/var/lib/mrjam-validation-collector/authority-v1/artifacts=. Un ancien reçu v1,
+y compris copié dans ce nouveau cache, est refusé. La réponse extérieure au
+client runner reste la projection historique non signée et conserve
+=authenticated_validation_authority=false=. Le reçu v2 complet est conservé
+sur disque pour l’export ; aucun booléen historique n’est modifié.
+
+* Export et signature
+
+L’exporteur reçoit exactement un digest hexadécimal de 64 caractères, LF puis
+EOF, sur un socket Unix séquencé. L’UID du demandeur est vérifié avant tout
+accès au cache. Sous verrou partagé non bloquant, il reprend les contrôles de
+cache, relit les trois fichiers réguliers à lien unique, vérifie leur stabilité
+et copie leurs octets dans trois memfd scellés. La réponse est un seul paquet
+contenant le reçu fermé et exactement trois descripteurs, puis EOF. Aucun
+chemin, commande, URL, clé ou politique n’est une entrée du protocole.
+
+Le socket étant créé par systemd root, SO_PEERCRED côté client décrit le
+créateur du listener. Le signataire vérifie donc aussi SCM_CREDENTIALS sur le
+paquet de réponse, fourni par le noyau grâce à SO_PASSCRED, pour prouver l’UID
+réel de l’exporteur. Il refuse troncature, descripteur supplémentaire, alias,
+sceaux manquants, hash ou taille différente et suffixe. Les trois artefacts
+restent =server=, =frontend.tar= et =verification.json=, avec les limites
+historiques de 64 Mio, 64 Mio et 64 Kio.
+
+Le signataire contrôle la liste exacte des étapes attendues, les sources,
+règles, politique et artefacts du rapport ; il conserve les limites et les
+champs historiques faux. Il signe une enveloppe Ed25519 à domaine fixe, liée
+au hash canonique de la politique adoptée, à la recette productrice et à tous
+les contenus. La clé publique doit être celle de cette politique, pas celle
+annoncée librement par un reçu. Les requêtes n’acceptent qu’une proposition
+prévue par le catalogue. Politique expirée, clé étrangère et rapport incomplet
+sont refusés. La clé privée est fournie seulement par LoadCredential à l’unité
+fixe =mrjam-validation-authority.service=, jamais au store, worker, collecteur
+ou runner. Aucun texte d’exception ni contenu privé n’est journalisé.
+
+=client.py= ajoute le lecteur fermé du même protocole. Il accepte seulement
+=MRJAM_PROPOSAL_DIGEST=, sans argument ni adresse configurable dans son entrée
+publique. Après la réponse, il vérifie l’UID réel du signataire, l’enveloppe
+Ed25519 avec la politique immuable empaquetée, son expiration et l’égalité du
+digest signé avec celui demandé. Un autre digest pourtant admis dans la même
+politique reste refusé. Toute l’opération, cryptographie comprise, est bornée à
+20 secondes. Sa sortie réussie est uniquement l’enveloppe publique signée ; un
+échec ne produit que =VALIDATION_ATTESTATION_REFUSED=. Ce lecteur ne stocke
+aucun reçu, n’accorde aucun droit et ne change aucun statut Forgejo.
+
+Le test d’ancillaires mixtes a révélé une fuite de descripteur dans la première
+préparation locale : le noyau avait déjà installé SCM_RIGHTS, mais un
+SCM_CREDENTIALS inattendu placé avant lui déclenchait le refus trop tôt.
+=contract.packet= recueille désormais tous les descripteurs avant de refuser
+les ancillaires inconnus. Le test reproduit l’échec ancien et confirme leur
+fermeture. Aucune version de cette autorité n’était active sur le VPS.
+
+Les signatures établissent la provenance du contenu et des tests dans cette
+base de confiance. Elles ne constituent ni une approbation humaine ni une
+autorisation de livraison. Les deux opérations ne partagent pas ce protocole.
+La répétition d’une attestation de contenu est permise pour le même cache lié ;
+le nonce d’activation et les refus après ouverture appartiennent au futur
+contrôleur de livraison. Cette version ne l’implémente pas.
+
+* Composition Nix
+
+=module.nix= s’ajoute aux modules CI sous le même pkgs verrouillé ; aucun module
+historique n’est édité. L’option =services.mrjamValidationAuthority.enable= vaut
+false par défaut. Activée, elle remplace uniquement ExecStart du worker et du
+collecteur et conserve leurs restrictions qualifiées. Elle ajoute l’exporteur,
+le signataire et deux sockets locaux, sans WantedBy ni activation implicite.
+Les assertions lient les UID déclarés et les mêmes règles/verifier ; elles
+refusent aussi une collision avec l’identité d’enregistrement et une
+proposition absente du staging explicite. La liaison
+des recettes est calculée par le module et ne peut être écrasée par la politique.
+
+Les entrées restantes sont =policy= (objet public fermé contrôlé par
+=contract.policy=) et =signingKeyFile= (référence locale privée sous
+=/var/lib/mrjam-validation-authority/=). Les sorties en lecture seule sont
+=package= et =producerBinding=. La politique exige trois UID distincts,
+une clé publique/id cohérente, une fenêtre de validité au plus de 31 jours,
+les étapes, sources, propositions et limites exactes. Aucun UID de la fixture
+n’est proposé pour le VPS. L’inventaire réel et la marge de coexistence restent
+nécessaires : les plafonds ajoutés sont 192 Mio pour l’exporteur et 256 Mio pour
+le signataire, non une réserve déjà mesurée.
+
+Le package inclut =mrjam-validation-request-attestation=. Le coordinateur
+qualifié reste volontairement inchangé : son adaptateur Go appelle directement
+le collecteur et n’exécute pas la commande shell écrite dans le workflow.
+Monter seulement le socket ou remplacer le client Python historique ne
+raccorderait donc pas la signature. Le raccord précis encore requis est décrit
+dans [[file:RACCORD-COORDINATEUR.org][RACCORD-COORDINATEUR]] ; il ne donne aucun
+accès de fusion, statut Forgejo ou déploiement à la clé de signature.
+
+* Qualification locale et preuve encore nécessaire
+
+=test_authority.py= exerce de vrais sockets Unix, SCM_CREDENTIALS, memfd/sceaux,
+collecte et signatures OpenSSL Ed25519. Les contenus de code sont synthétiques
+et ne sont pas une compilation applicative. Un seul UID local de test exerce
+les fonctions ; la séparation de trois UID par systemd n’est pas déduite de
+cette preuve. Les refus couvrent pair, chemins/suffixes, verrou, cache ancien,
+liens/tamper, descripteurs, sceaux, signatures, étapes, règles, recettes, clé,
+expiration et politique. La projection pour le client historique est testée.
+Le client est exercé avec de vrais paquets Unix et de vraies signatures ; les
+cas négatifs couvrent signature altérée, autre proposition signée, descripteur
+supplémentaire, paquet suffixe et délai global. Aucun résultat ne prétend que
+le runner appelle déjà ce lecteur.
+
+=tests/module-evaluation.nix= vérifie sur les modules NixOS du pin hôte les
+restrictions inchangées, absence d’activation, UID/options, liaison des octets
+et placement exclusif du credential. =tests/fixture_policy.py= génère une
+politique publique reproductible avec une clé de test explicitement publique ;
+elle n’est utilisable dans aucun contexte de production.
+Depuis l’intégration du module par =operations/ci/modules.nix=, le banc importe
+ce module une seule fois. Sa première réexécution a refusé la double
+déclaration d’options ; seule cette composition de fixture a été corrigée.
+Le package construit depuis le module lie ses propres octets de politique
+worker, tandis que le package de protocole utilise des références inventées.
+
+Avant intégration : revue indépendante des nouveaux lecteurs et interfaces,
+puis VM systemd avec trois UID distincts, socket root réel, LoadCredential,
+worker réel sur vérificateur synthétique fermé, collecte fraîche et refus de
+cache ancien. Conserver distinctes la preuve de protocole, celle des unités
+et la qualification applicative du vérificateur choisi. Le raccord à la revue
+et à la livraison demeure décrit dans
+[[file:../../deployment/CHOIX-AUTORITE-CI-20261102.org][CHOIX-AUTORITE-CI]].

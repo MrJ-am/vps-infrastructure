@@ -1,0 +1,221 @@
+{
+  "baseline": {
+    "checkpoint": "public-writes-open",
+    "current_and_boot": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+    "existing_transaction_lock_preserved": true,
+    "result005": "CUTOVER_VERIFIED"
+  },
+  "closed_effects": {
+    "actions_activated": false,
+    "main_changed": false,
+    "merged": false,
+    "protection_changed": false,
+    "review_created": false,
+    "status_created": false
+  },
+  "limits": [
+    "Guest uses invented Git history/accounts/database, not the real private proposal",
+    "VM calls packaged core directly; sealed entry gate has separate local refusal tests and exact source-substitution checks",
+    "No real proposal, human approval, status, merge or activation claimed",
+    "Branch/PR left in place on partial failure; only identical retry permitted",
+    "A hard kill may leave the single private token lease journal; next invocation revokes that exact lease before minting another"
+  ],
+  "local_tests": {
+    "count": 12,
+    "lease_order": "restriction before first API/Git; cleanup on restrict/body failures",
+    "log": {
+      "bytes": 111,
+      "path": ".local/ci-rules-adoption-20261103/proposal-tests-004.log",
+      "sha256": "82fada39a2573ebe31c67e7df7b733bcf844de269a4804e23bf815009cbf8123"
+    },
+    "native_git": [
+      "single-create-server-hook-retained",
+      "identical-retry",
+      "different-existing-branch-refused",
+      "concurrent-fast-forward-refused-by-create-only-prepush",
+      "wrong-workflow-refused-before-push"
+    ],
+    "result": "PASS",
+    "seconds": 0.64
+  },
+  "native_findings": {
+    "bounded_token": "Native resource-specific token disables AllowAdminOverride, so protection GET is403; fixed READ ONLY SQL guard replaces it without broadening scope",
+    "empty_repository": "Fixture initial push post-receive is asynchronous; fixture waits for actual non-empty state; production refuses empty repository",
+    "scope": "exactly read:user and write:repository; SQL resource binding to one repository precedes first network request"
+  },
+  "native_vm": {
+    "additional_protection_refused": true,
+    "captured_synthetic_api": {
+      "bytes": 14541,
+      "path": "/nix/store/kcmbq29shix5srbvp70ihmcgy6wi88b4-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo/api-projection.json",
+      "sha256": "37f91ae672d70054827c95123b7bb769a1f609f9123482238696665bd8c57169"
+    },
+    "checks": [
+      "private-protected-invented-rules-baseline",
+      "single-repository-token-other-repository-and-organization-denied-cleanup-preserves-unrelated",
+      "real-git-http-branch-and-pr-main-protection-unchanged",
+      "24-protection-fields-and-extra-rule-refused-by-native-read-only-guard",
+      "same-branch-and-pr-reused-without-rewrite",
+      "forgejo-protected-main-refuses-admin-push-no-status-or-review",
+      "actual-api-projection-refuses-pr-without-review",
+      "changed-input-and-existing-pr-refused-token-revoked"
+    ],
+    "groups": 8,
+    "human_review_created": false,
+    "output": "/nix/store/kcmbq29shix5srbvp70ihmcgy6wi88b4-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo",
+    "protection_drift_fields_refused": 24,
+    "result": {
+      "bytes": 1502,
+      "path": "/nix/store/kcmbq29shix5srbvp70ihmcgy6wi88b4-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo/result.json",
+      "sha256": "0719a27b4d59c9958209d8f7b9450528544aac92f113b6547c0b341b234efd85"
+    },
+    "seconds": 31.24,
+    "store_metadata": {
+      "ca": null,
+      "deriver": "/nix/store/qm3l6rz8g4bg6gsj3q4fsv8x8raykijb-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo.drv",
+      "narHash": "sha256-1UoJUng9+K4hj3hSP3oKD6UK6zjglNTW7x/y43xw6TE=",
+      "narSize": 16536,
+      "references": [
+        "/nix/store/cl8xy5dab601jzx04cpdmgm7cmllyry4-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1"
+      ],
+      "registrationTime": 1793666124,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "transport": "read_transport_v2.py"
+  },
+  "package": {
+    "exact_checks": {
+      "bytes": 1172,
+      "path": "operations/ci/rules-proposal-v1/package-exact-checks-20261103.json",
+      "sha256": "40bdc09de667ad8b4da27ac1f5d208056af38f44a12198cbd15f2f3e7d8a9900"
+    },
+    "path": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+    "store_metadata": {
+      "ca": null,
+      "deriver": "/nix/store/wh2v2lys9jp2ajssiwvgp6qhccj8lxf4-mrjam-rules-bootstrap-proposal-1.drv",
+      "narHash": "sha256-B6BveEWGIvuy7F+QnG9ZJYWYc0a2AUwke0bm7Vxxznk=",
+      "narSize": 60744,
+      "references": [
+        "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+        "/nix/store/nly4cml071i82515r89rpdw38z55wjqd-git-2.54.0",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15",
+        "/nix/store/y5xil6njhqldrdkgpap95d0dh0ybkafy-mrjam-rules-proposal-binding.json"
+      ],
+      "registrationTime": 1793666148,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "verify_path": "PASS"
+  },
+  "primary_sources": [
+    {
+      "bytes": 2502,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/cmd/admin_user_generate_access_token.go",
+      "sha256": "676d418600e331411a3ede8c302912597ca9f1d98d526d916708ff96f2e52d42"
+    },
+    {
+      "bytes": 13505,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/auth/access_token_scope.go",
+      "sha256": "72dd1f1c24c6fcbecc6120ac03ec24e2a92883cf66a08bbaa1976ce6b3821ecf"
+    },
+    {
+      "bytes": 2242,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/auth/access_token_resource.go",
+      "sha256": "4c693acd9ee11dc43774ca3da9162d78e24f1e956b28cc3bc520c56634e084ee"
+    },
+    {
+      "bytes": 17111,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/git/protected_branch.go",
+      "sha256": "3ff83fa5ec22ac25400574ee6c32843048d6275fc11fefdb5521fbbf4c179ee6"
+    },
+    {
+      "bytes": 2305,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/authz/specific_repos_reducer.go",
+      "sha256": "e5d8d1d9fa58f76dc30e2effa29d6a66143312f52f2f15a3716b7318d1f7dd4c"
+    },
+    {
+      "bytes": 620,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/api/v1/permissions/req_admin.go",
+      "sha256": "a242aaf42191bcbdffd81037c9bf1b02b90de1e36609c2dfad5d2d4fa1744c07"
+    },
+    {
+      "bytes": 598,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/api/v1/permissions/helpers.go",
+      "sha256": "6a857fc3625baf854e6da411a1012031aabd646ae8645ef48f29b7bb4092c5a0"
+    }
+  ],
+  "production_access": false,
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": "bounded-initial-rules-proposal-branch-and-pr-only",
+  "source_files": [
+    {
+      "bytes": 12633,
+      "path": "operations/ci/rules-proposal-v1/core.py",
+      "sha256": "922c8e840225b8b1bca42f4556130a6ce6595424d470b44ca65d2ec11d4f82e3"
+    },
+    {
+      "bytes": 6178,
+      "path": "operations/ci/rules-proposal-v1/lease.py",
+      "sha256": "23c9302dc0314261a30790028fd617ffdbb4cbc9db39c1ef76d380a553b9e795"
+    },
+    {
+      "bytes": 2090,
+      "path": "operations/ci/rules-proposal-v1/protection.py",
+      "sha256": "1162f0c510b01a12f65624c20ab497db79b17d9694ec31e15d185b33b2133735"
+    },
+    {
+      "bytes": 4522,
+      "path": "operations/ci/rules-proposal-v1/entry.py",
+      "sha256": "b6d464861547d76b7fdc7db1049f654af49f3d15e244e4597bd1934838ed3696"
+    },
+    {
+      "bytes": 898,
+      "path": "operations/ci/rules-proposal-v1/pre-push.py",
+      "sha256": "b12fe764b1aa07a96eedb221a4e49c0a1ffd606ada89173e13a963321eca42da"
+    },
+    {
+      "bytes": 2349,
+      "path": "operations/ci/rules-proposal-v1/package.nix",
+      "sha256": "fae7a6a448bde3e80cf5e2f240e57f5047a0b1852ee59fa1d9d79d7eeba340ee"
+    },
+    {
+      "bytes": 12223,
+      "path": "operations/ci/rules-proposal-v1/test_proposal.py",
+      "sha256": "e8d86e96792e775a8fd9ceb786963cfff34038638b7464933b73cd50dd649ac9"
+    },
+    {
+      "bytes": 13951,
+      "path": "operations/ci/rules-proposal-v1/fixture.py",
+      "sha256": "cccd45eebb68900be2f6b9af9a5dd5523ec6da012945441acdbcbd16d969b43a"
+    },
+    {
+      "bytes": 8253,
+      "path": "operations/ci/rules-proposal-v1/systemd.nix",
+      "sha256": "2388cd0a178ce1628bc7603f59eaf63dd1de1fe2a52152fafe12a79634c760fb"
+    },
+    {
+      "bytes": 476,
+      "path": "operations/ci/rules-proposal-v1/binding-20261103.json",
+      "sha256": "5d4bdbbf75aa6bbcbfba08f3bd24fe8412d7548736b30807f57aa0d8cfe9f129"
+    },
+    {
+      "bytes": 1056,
+      "path": "operations/ci/rules-proposal-v1/evidence-20261103.json",
+      "sha256": "4a60df07b0905d17175b744b1dafa378b521232f7cda338e540aa3b4e50de17d"
+    },
+    {
+      "bytes": 5304,
+      "path": "operations/ci/rules-proposal-v1/README.org",
+      "sha256": "65c4d0ad90693a6b1ac79e79d06c3141266cd37c0ccfa1ec915ece0facda26e0"
+    }
+  ]
+}

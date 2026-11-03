@@ -1,0 +1,43 @@
+{
+  "author_reported_tests_reviewed_not_rerun": 11,
+  "limits": [
+    "No real Forgejo review or protection/merge behavior is proved by the eleven synthetic-projection tests.",
+    "The result has no signature and grants no authority to merge or activate.",
+    "issued_at dates validation signature, not a fresh validator execution for this job.",
+    "The human personally submits the exact approval; no agent may synthesize or submit it on their behalf."
+  ],
+  "mandatory_before_operational_authority": [
+    "A fixed trusted Forgejo collector must establish authentic and complete API projections, including any team-review requests and protected-branch policy; a caller-supplied dict is not human evidence.",
+    "The manifest validator must compare every consumed source commit/tree and artifact name/size/hash to the signed attestation as well as validating the complete operational schema. This module intentionally treats manifest bytes as opaque.",
+    "Reobserve exact base/head before bounded fast-forward merge, verify resulting main/tree, retain durable outcome, and refuse races or ambiguous results.",
+    "Only a separate inaccessible signing identity may sign a domain-separated merge/delivery decision; admission must verify that signature and anti-replay state.",
+    "The first-release controller must not be exposed as the ordinary CI deployment backend."
+  ],
+  "passed": true,
+  "primary_forgejo17_api": {
+    "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/structs/pull_review.go",
+    "sha256": "5745b07705d600454493213f6be1c5715dfa43bb041d9330dfdcb3af1ddb61fb"
+  },
+  "qualification_sha256": "75d0fd7ac318fac2da8741a9c31cc401a99d905a70386679296b3f40732031d0",
+  "reviewed_bindings": [
+    "Adopted validation policy hash and actual Ed25519 attestation verification before using signed sources.",
+    "Exact repository/source id/revision/tree against PR head, main base and claimed merge base.",
+    "Closed observation schema, recent observation, complete reviews, no pending requested reviewers, no boolean ids or extra CI status field.",
+    "Adopted human reviewer distinct from PR author and all declared technical actors.",
+    "Latest decisive review per user; later comment does not remove approval, later dismissed approval does not revive an earlier approval.",
+    "Official current-head approval requires exact visible text containing repository, PR number, head and hash of the raw manifest bytes.",
+    "Returned unsigned payload binds selected review id/time, attestation, manifest, base, target, predecessor, merger identity and bounded expiry."
+  ],
+  "schema_version": 1,
+  "scope": "independent source review; no human action, Forgejo API, decision signature, merge or deployment",
+  "source_sha256": {
+    "operations/ci/review-v1/README.org": "0e26de47fd58196ca107ec4e6e25aa8b8032c1956eb31cf0b84bfe29ef584224",
+    "operations/ci/review-v1/review_contract.py": "e86dd5a21f6a9aac5ff0df000dec29b62ad91fbd860c2db7e5462cc331ab5707",
+    "operations/ci/review-v1/test_review_contract.py": "349bfc1e02f5714ee9231fdfbcea7f40fb520adb138e6c98a88cfb8f75c88247"
+  },
+  "status": "LOCAL_UNSIGNED_REVIEW_BINDING_REVIEWED",
+  "validation_dependencies_sha256": {
+    "operations/ci/authority-v1/contract.py": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37",
+    "operations/ci/authority-v1/signer.py": "8a2d545c83638f6414a5fc1685c96bc39907c7a79914528b1504b8a08d141547"
+  }
+}

@@ -29,6 +29,12 @@ pas une preuve de restauration ; SSO humain et envoi SMTP positif ne sont pas
 attestés par ces contrôles. Les propriétés de processus des tâches au repos
 et du slot green masqué restent indisponibles.
 
+Le 3 novembre, la clé Ed25519 de validation a été créée directement sur le VPS
+par le helper qualifié publié dans =6544ad83f8131b7f3d708d177cf022a2f5497adf=.
+Seule sa DER publique a été exportée. Aucune politique n'est adoptée et aucun
+service CI n'est activé par cet amorçage ; les services et la génération phi68
+restent inchangés. Voir [[file:../ci/key-bootstrap-v1/observation-20261103-001.json][le constat d'amorçage]].
+
 ** État conservé avant la cinquième tentative
 
 

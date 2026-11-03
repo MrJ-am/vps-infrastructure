@@ -1,0 +1,32 @@
+{
+  "author_qualification_sha256": "095a6ba17097a80e4924a7b89f5aafc75563ab6423ce5d2e35726ac83ae98be6",
+  "checks": [
+    "Closed proposal digest and exact immutable policy; no caller-selected command, key, URL or path.",
+    "Only the designated requester can reach signing; exporter peer is the signer and per-packet kernel credentials bind the actual sender.",
+    "Three distinct sealed memfds carry exact artifact names/sizes/hashes; aliases, truncation, unsealed data and protocol suffixes are rejected.",
+    "Ancillary parsing collects every received descriptor before refusal and closes descriptors on failed validation.",
+    "Signer validates the passed report, exact steps, sources, producer recipe and artifact correspondence before signing.",
+    "Ed25519 key identity is derived and checked against immutable public policy; domain-separated canonical payload and signature are verified by the client.",
+    "Only signer has LoadCredential; exporter has readonly cache and no credentials, signer cannot access collector cache, candidate worker has no signing credential.",
+    "No unit or socket is automatically activated; module evaluation preserves all service properties except the intentional worker/collector executable bindings.",
+    "Original worker core remains byte-exact and candidate isolation remains its established contract.",
+    "Current coordinator is unchanged; a separate adapter and real systemd/UID traversal are explicitly absent from this proof."
+  ],
+  "declarative_assertions_bound": 24,
+  "evidence_records_verified": 11,
+  "limits": [
+    "A valid v2 cache may be reused. issued_at is the signature time, not evidence of a new validator execution or execution recency for each job.",
+    "Twenty native tests exercise same-user local fixtures with authentic kernel transport and cryptography; distinct production UIDs, systemd sockets and LoadCredential are not established by this review.",
+    "No actual 74-step verifier run, Forgejo status transition, human approval, merge or delivery is claimed.",
+    "No production identity, key, capacity or authority policy has been selected; CI rollout remains separate from release005."
+  ],
+  "native_author_tests_bound": 20,
+  "packaged_source_and_nar_bindings_verified": 2,
+  "production_access": false,
+  "production_activation_authorized": false,
+  "schema_version": 1,
+  "scope": "independent static protocol/module and artifact/evidence binding review only",
+  "source_records_verified": 16,
+  "status": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "tests_reexecuted": false
+}

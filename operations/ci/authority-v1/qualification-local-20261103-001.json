@@ -1,0 +1,248 @@
+{
+  "date": "2026-11-03",
+  "evidence": [
+    {
+      "bytes": 73,
+      "path": ".local/ci-authority-v1-20261102/package-build-003.stdout",
+      "sha256": "8524215ce2c8783f83c062332418e1c3aef35d51963c0c64ccf038a4ad2e8f5f"
+    },
+    {
+      "bytes": 579,
+      "path": ".local/ci-authority-v1-20261102/package-build-003.stderr",
+      "sha256": "f641dc4c5a7b34dea90c3ee87a2511194c6af9965bc5c0a6d42ec2c056f673dd"
+    },
+    {
+      "bytes": 73,
+      "path": ".local/ci-authority-v1-20261102/package-build-module-001.stdout",
+      "sha256": "3574713e15952e6fa7943134310585d2200d3826aa13c4f8ed0ba2140abca4e4"
+    },
+    {
+      "bytes": 721,
+      "path": ".local/ci-authority-v1-20261102/package-build-module-001.stderr",
+      "sha256": "8d3c7dcf21be048e71524c18216389481ba56f89f273778ee5a2b0078b5c102b"
+    },
+    {
+      "bytes": 1590,
+      "path": ".local/ci-authority-v1-20261102/package-path-info-003.json",
+      "sha256": "cc38ebe35162f3421bf3ac1cf09aeabf889e100d7b05cf6dc5ca2a55f6ca402e"
+    },
+    {
+      "bytes": 2166,
+      "path": ".local/ci-authority-v1-20261102/synthetic-policy.json",
+      "sha256": "c2e4bd7c4cfb4344f248a435478af2d904269f13132793661a6b273f5edda971"
+    },
+    {
+      "bytes": 898,
+      "path": ".local/ci-authority-v1-20261102/synthetic-binding.json",
+      "sha256": "177bc6f44ff2e8fbd1466fcb11e9c076a5ebdf84a0a0bca6674bb9f300ffd699"
+    }
+  ],
+  "native_tests": {
+    "failed": 0,
+    "log": {
+      "bytes": 2855,
+      "path": ".local/ci-authority-v1-20261102/native-tests-003.stderr",
+      "sha256": "3676de61a3889bb00097c3516138d7f108b8b4a18c685c532572190a001b631d"
+    },
+    "passed": 20,
+    "real_cryptography": "OpenSSL Ed25519",
+    "real_kernel_features": [
+      "Unix SOCK_SEQPACKET",
+      "SCM_CREDENTIALS",
+      "SCM_RIGHTS",
+      "memfd seals"
+    ]
+  },
+  "nix_evaluation": {
+    "assertions": {
+      "applicationPackagesUnchanged": true,
+      "bindingMatchesWorkerPolicy": true,
+      "collectorHasNoCredential": true,
+      "collectorOnlyEntryChanged": true,
+      "disabledAddsNoServices": true,
+      "disabledLeavesCollectorExact": true,
+      "disabledLeavesWorkerExact": true,
+      "enabledAssertionsPass": true,
+      "exporterCannotReadCredentials": true,
+      "exporterOwnsNoCredential": true,
+      "fixedCredentialUnit": true,
+      "keyOnlyInSigner": true,
+      "newBoundEntries": true,
+      "noAutomaticActivation": true,
+      "originalCoordinatorRemainsUnmodified": true,
+      "producerMetadataReadonly": true,
+      "proposalAbsentFromStagingRefused": true,
+      "signerCannotReadCollectorCache": true,
+      "signerCollectorCollisionRefused": true,
+      "signerRegistrarCollisionRefused": true,
+      "signerUidDistinct": true,
+      "unixSocketsOnly": true,
+      "workerHasNoCredential": true,
+      "workerOnlyEntryChanged": true
+    },
+    "failed": 0,
+    "host_pin": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+    "log": {
+      "bytes": 913,
+      "path": ".local/ci-authority-v1-20261102/module-evaluation-006.json",
+      "sha256": "8620364ceed0ba6eea7411c8c6b14b5e80a3daa2cab1eef69c49ee224ec1e99a"
+    },
+    "passed": 24
+  },
+  "not_established": [
+    "Distinct service UIDs and actual systemd LoadCredential traversal have not been exercised by this local proof.",
+    "No patched coordinator calls the attestation client yet; the exact remaining interface is documented separately.",
+    "No fresh actual verifier execution, Forgejo status transition, human review, merge or deployment is proved here.",
+    "No production UID, key, policy or capacity has been selected."
+  ],
+  "packages": [
+    {
+      "deriver": "/nix/store/yk8ncq24lqb0r49ml62jgla94ykrnnh7-mrjam-validation-authority-1.drv",
+      "narHash": "sha256-5Mk1mt9l+CQdq26s8t/Um2Adn6Lh7GgxDplXb6PYiok=",
+      "narSize": 91712,
+      "package": "/nix/store/cb555a6c9i2vyvw5gj5qv7g5sy43h29z-mrjam-validation-authority-1",
+      "packaged_closed_invocation_refusal": true,
+      "references": [
+        "/nix/store/0pq2dqyz7pml8iym4ky1q0md3rw8hihm-mrjam-validation-export-policy.json",
+        "/nix/store/cb555a6c9i2vyvw5gj5qv7g5sy43h29z-mrjam-validation-authority-1",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/k7q7k6p6dxcc24vll5bmpn9rj1cm0m3b-mrjam-validation-authority-policy.json",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "source_bytes_verified": {
+        "client.py": true,
+        "collector.py": true,
+        "contract.py": true,
+        "exporter.py": true,
+        "frozen_worker.py": true,
+        "producer.py": true,
+        "signer.py": true
+      }
+    },
+    {
+      "deriver": "/nix/store/9dmg2bihnyv0yqa64mh91d8mk6zjs1xi-mrjam-validation-authority-1.drv",
+      "narHash": "sha256-QEV//aa+RSdtuWnqxNmfqhz8O6ew1VCcRASeL7Om3rk=",
+      "narSize": 91712,
+      "package": "/nix/store/klfwdjj6adcs01hlipf4lmvl9r3zvmk3-mrjam-validation-authority-1",
+      "packaged_closed_invocation_refusal": true,
+      "references": [
+        "/nix/store/0dbm1f3g3vhhvffxyx1mhzgbwbf1ycdh-mrjam-validation-export-policy.json",
+        "/nix/store/d7qv5agxq61wvwl79b63cca1bfmq2smi-mrjam-validation-authority-policy.json",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/klfwdjj6adcs01hlipf4lmvl9r3zvmk3-mrjam-validation-authority-1",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "source_bytes_verified": {
+        "client.py": true,
+        "collector.py": true,
+        "contract.py": true,
+        "exporter.py": true,
+        "frozen_worker.py": true,
+        "producer.py": true,
+        "signer.py": true
+      }
+    }
+  ],
+  "production_activated": false,
+  "production_signature_created": false,
+  "regressions": {
+    "descriptor_leak_reproduced_before_fix": {
+      "bytes": 972,
+      "path": ".local/ci-authority-v1-20261102/ancillary-before-fix.stderr",
+      "sha256": "d9d39daa5112b488f54053f513f76d2101214fd981fc8252a4345a0d8d809dd3"
+    },
+    "duplicate_module_in_fixture_refused": {
+      "bytes": 1397,
+      "path": ".local/ci-authority-v1-20261102/module-evaluation-003.log",
+      "sha256": "f7d4c4edded26357159b9aa11fc8c70b3c81bad79029fcab1dfe22d134fc5469"
+    },
+    "scope": "Only authority-v1 sources and fixtures changed; historical worker, collector, runner and deployment sources preserved."
+  },
+  "schema_version": 1,
+  "scope": "local-ci-authority-protocol-and-module-evaluation",
+  "sources": [
+    {
+      "bytes": 10960,
+      "path": "operations/ci/authority-v1/contract.py",
+      "sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37"
+    },
+    {
+      "bytes": 3537,
+      "path": "operations/ci/authority-v1/producer.py",
+      "sha256": "2412163cac2215a232a596197fe0d174c4568b2b7927b4b8dc8808ec335927d1"
+    },
+    {
+      "bytes": 11292,
+      "path": "operations/ci/authority-v1/collector.py",
+      "sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac"
+    },
+    {
+      "bytes": 5455,
+      "path": "operations/ci/authority-v1/exporter.py",
+      "sha256": "49dec6ad066f5a8b9a29f3846e7dd837ee38fbe31c36de8bce2b368d9b141825"
+    },
+    {
+      "bytes": 11730,
+      "path": "operations/ci/authority-v1/signer.py",
+      "sha256": "8a2d545c83638f6414a5fc1685c96bc39907c7a79914528b1504b8a08d141547"
+    },
+    {
+      "bytes": 3002,
+      "path": "operations/ci/authority-v1/client.py",
+      "sha256": "533892253bf42088e6c08ab0ffae6e003b257193688e133d831756a229b20cd5"
+    },
+    {
+      "bytes": 2012,
+      "path": "operations/ci/authority-v1/package.nix",
+      "sha256": "b516aad2878ca8c50638fa4b794adcf4fa6a9b63d222c04a4294102609a780cc"
+    },
+    {
+      "bytes": 7743,
+      "path": "operations/ci/authority-v1/module.nix",
+      "sha256": "17385f852734dbf00f474f94478a52a7461b3657dff9978cf6c11cc7125f4e97"
+    },
+    {
+      "bytes": 16313,
+      "path": "operations/ci/authority-v1/test_authority.py",
+      "sha256": "83783647e6d3b86ae044dee6e714b57e7f3962c922f2f278eadebe06ff9cd2a4"
+    },
+    {
+      "bytes": 9872,
+      "path": "operations/ci/authority-v1/README.org",
+      "sha256": "23be920c4776ee8b9478c71326bc32e7ae723abb47e63ec2dc81b4fbbe69a592"
+    },
+    {
+      "bytes": 3668,
+      "path": "operations/ci/authority-v1/RACCORD-COORDINATEUR.org",
+      "sha256": "a20b1b61645567e90d35780c41d016eae9769c4878a5b80ff3eb21e59616e3e1"
+    },
+    {
+      "bytes": 2392,
+      "path": "operations/ci/authority-v1/tests/fixture_policy.py",
+      "sha256": "c78d23b0fc577402a8ef6c30ca28c1fe072fd20e15a7842493b23e376fe0f98d"
+    },
+    {
+      "bytes": 6464,
+      "path": "operations/ci/authority-v1/tests/module-evaluation.nix",
+      "sha256": "0def415dceeb01e90cd816bb88482fd9a0fa082147455c385b37208efa633166"
+    },
+    {
+      "bytes": 18885,
+      "path": "operations/forgejo/worker.py",
+      "sha256": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5"
+    },
+    {
+      "bytes": 2165,
+      "path": "operations/ci/modules.nix",
+      "sha256": "4a64cad008cdbc5ef703f368062b7eddeebac2a206896b52619c8df57a506d06"
+    },
+    {
+      "bytes": 591,
+      "path": "operations/forgejo/locked-toolchain.nix",
+      "sha256": "a55760ecaa73c388a109b67a4413b83ad8bb25fa0182261e47d9ad4b408ddecc"
+    }
+  ],
+  "synthetic_keys_only": true
+}

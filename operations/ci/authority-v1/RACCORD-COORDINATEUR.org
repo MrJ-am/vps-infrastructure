@@ -1,0 +1,63 @@
+#+title: Raccord minimal restant du coordinateur à l’attestation de contenu
+#+language: fr
+
+Le producteur, le collecteur, l’exporteur, le signataire et le lecteur fermé
+existent sous =authority-v1=. Aucun workflow, runner actif, fusion ou contrôleur
+de livraison n’utilise encore la signature. Les preuves locales ne valent pas
+preuve de ce raccord absent.
+
+* Chemin effectif actuel
+
+=operations/forgejo/runner-admission.go= valide le contexte Forgejo et le
+workflow fermé, puis =mrjamExecute= appelle directement =mrjamCollect=.
+La commande =mrjam-submit-validation= figurant dans le YAML n’est jamais
+interprétée. Le remplacement de ce script seul ne peut donc pas ajouter une
+attestation. La notification finale conserve sa signification de collecte,
+sans autorité de déploiement.
+
+* Variante à construire et qualifier séparément
+
+Conserver l’admission et la collecte inchangées, puis ajouter un appel unique
+du lecteur =mrjam-validation-request-attestation= après le succès de collecte.
+L’exécutable doit être un chemin de store immuable lié à la dérivation du
+runner ; aucun PATH, shell, argument, URL ou commande provenant du workflow.
+Seul le digest déjà admis est transmis dans un environnement remplacé, sans
+hériter de jeton ou configuration Forgejo. Le contexte du job et une borne
+locale de 20 secondes doivent interrompre ce seul enfant. La sortie est
+bornée à 128 Kio et validée comme enveloppe canonique ; le lecteur vérifie
+lui-même politique, signature et digest.
+
+Créer une racine privée distincte du coordinateur, contenant seulement sa
+fermeture publique qualifiée et celle du nouveau lecteur. Ajouter le point
+de montage exact =/run/mrjam-validation-authority/request.sock= ; aucun
+montage global du store hôte ni accès au cache du collecteur, à la clé privée
+ou à l’exporteur. Le runner conserve son UID et son groupe de demandeurs ;
+la vérification du pair par le signataire reste exacte. Ce raccord doit être
+une option séparée, inactive par défaut, sans WantedBy ni enregistrement
+automatique.
+
+Une attestation doit être conservée pour être présentable à la revue. Le
+format à retenir est l’enveloppe signée complète, sous un emplacement fixe
+indexé par le digest admis et avec une écriture atomique bornée. Son stockage
+par le coordinateur ne rend pas ce dernier autorité : toute consommation
+ultérieure revérifie signature, clé, politique et proposition. Aucun reçu
+historique n’est réécrit et aucune ancienne collecte v1 n’est adoptée.
+
+* Preuves nécessaires avant activation
+
+- Cas Go : admission refusée sans collecte ni signature ; collecte échouée
+  sans signature ; succès de collecte suivi d’un refus de signature = job
+  échoué ; succès complet seulement après vérification et conservation.
+- VM réelle : identités worker, collecteur, signataire et coordinateur
+  distinctes, sockets créés par root, LoadCredential du seul signataire,
+  politique hors candidat, collecte fraîche puis signature vérifiée.
+- Refus réels : ancien cache, mauvais pair, clé étrangère, politique expirée,
+  rapport incomplet et absence de socket. Aucun accès de la charge candidate
+  aux sockets, clé privée ou fichiers des autres identités.
+- Vérification du raccord dans la racine privée et des plafonds mémoire sur
+  la composition retenue. Aucun UID, secret ou marge VPS n’est déduit des UID
+  et plafonds synthétiques du banc.
+
+La revue humaine et la livraison demeurent deux opérations distinctes de
+cette attestation de contenu. Elles ne sont ni implémentées ni autorisées par
+un succès du runner ou un champ booléen de reçu.

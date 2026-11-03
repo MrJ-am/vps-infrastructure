@@ -1,0 +1,62 @@
+{
+  "bytes": 874,
+  "directory_traversal": {
+    "ast_except_docstring_identical_to": {
+      "bytes": 10698,
+      "path": "operations/deployment/receive_postrelease_code.py",
+      "sha256": "18a002d46d047e049f661e6c8039cae531e663f5b93d1d2078d996ffabe19e66"
+    }
+  },
+  "effects": {
+    "api_git_request": false,
+    "proposal_opened": false,
+    "service_profile_mutation": false,
+    "store_import": false
+  },
+  "limits": [
+    "No VPS invocation or root-owned filesystem mutation in these local tests",
+    "Baseline gate reuses byte-exact sealed entry qualified by preceding proposal receipt; no additional VM needed",
+    "Input must be the exact private 874-byte bundle; it is never copied to Nix store or public repository"
+  ],
+  "mode": "0600",
+  "owner": "root:root",
+  "package_gate": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+  "parent_mode": "0700",
+  "recovery": [
+    "matching-prefix pending file is completed in same inode",
+    "complete pending publishes exclusively",
+    "interrupted hardlink window recognized only for exact same inode and bytes",
+    "identical final preserves inode,mtime,ctime",
+    "foreign contents, symlink, fifo, links, mode and owner are refused without replacement"
+  ],
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": "receive-only-private-incremental-rules-proposal",
+  "sha256": "9938901b832d40e20992bf2063a79f19fed1fe37b4a6d4eb36bb2842e369c975",
+  "sources": [
+    {
+      "bytes": 5962,
+      "path": "operations/ci/rules-proposal-v1/receive_bundle.py",
+      "sha256": "2937a496c078dc8b5df6b93213dc0b5047971fa8b64e9ecbaab4584a765ea33e"
+    },
+    {
+      "bytes": 4796,
+      "path": "operations/ci/rules-proposal-v1/test_receive_bundle.py",
+      "sha256": "223ae2515836947ff67d06120ba70343984a0fa69619566d63b7ba4f43e6d6ea"
+    }
+  ],
+  "target": "/var/lib/mrjam-ci-rules-proposal/proposal.bundle",
+  "tests": {
+    "actual_local_files": true,
+    "count": 13,
+    "invented_payload_only": true,
+    "log": {
+      "bytes": 112,
+      "path": ".local/ci-rules-adoption-20261103/receive-tests-001.log",
+      "sha256": "70470e06cbcc6e6bd0a68cf09ffea2a61918b758954943bb7af62135d9c7b44f"
+    },
+    "ownership_injected_only_in_tests": true,
+    "result": "PASS",
+    "seconds": 0.064
+  }
+}

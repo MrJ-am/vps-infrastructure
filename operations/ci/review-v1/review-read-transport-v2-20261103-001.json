@@ -1,0 +1,22 @@
+{
+  "limits": [
+    "Only real loopback HTTP with invented credentials; no actual Forgejo permission or production access is proved.",
+    "Watchdog scheduling is subject to the Python runtime and OS scheduler, not a hard real-time kernel deadline.",
+    "Native read-only token scopes and distinct merge actor remain mandatory; a Python GET transport is not a sandbox for compromised code.",
+    "No credential reader, service, policy adoption, decision signature, merge or activation."
+  ],
+  "production_access": false,
+  "qualification_sha256": "343e8c3bf9e78888a78e802229247d42cb219902eba58a70dea7f2751ec94351",
+  "reviewed": [
+    "dedicated direct loopback connection and GET route allowlist",
+    "watchdog shuts down only retained owned socket, including Connection:close body reader",
+    "timers cancelled and response/connection closed on success and exceptions",
+    "no inherited proxy or redirect following or caller signal mutation",
+    "real slow-header and slow-chunk tests, eleven total; source and log digests verified"
+  ],
+  "reviewer": "root independent source/evidence review",
+  "schema_version": 1,
+  "source_sha256": "d4ecc67cb47b92ba783c9af32b9fe5adfc301d06abc9d16ebe09eae3f56342e3",
+  "status": "passed-in-declared-local-scope",
+  "tests_reexecuted": false
+}

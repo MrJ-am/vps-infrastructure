@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "private-protected-invented-rules-baseline",
+    "single-repository-token-other-repository-and-organization-denied-cleanup-preserves-unrelated",
+    "real-git-http-branch-and-pr-main-protection-unchanged",
+    "24-protection-fields-and-extra-rule-refused-by-native-read-only-guard",
+    "same-branch-and-pr-reused-without-rewrite",
+    "forgejo-protected-main-refuses-admin-push-no-status-or-review",
+    "actual-api-projection-refuses-pr-without-review",
+    "changed-input-and-existing-pr-refused-token-revoked"
+  ],
+  "core_sha256": "922c8e840225b8b1bca42f4556130a6ce6595424d470b44ca65d2ec11d4f82e3",
+  "forgejo": "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+  "hook_sha256": "b12fe764b1aa07a96eedb221a4e49c0a1ffd606ada89173e13a963321eca42da",
+  "human_review_created": false,
+  "lease_sha256": "23c9302dc0314261a30790028fd617ffdbb4cbc9db39c1ef76d380a553b9e795",
+  "limits": [
+    "Invented Git base/head and database; no production source bundle used",
+    "Core called directly; production entry gate has separate local refusal tests",
+    "No status, approval, merge, workflow dispatch or CI activation"
+  ],
+  "package": "/nix/store/cl8xy5dab601jzx04cpdmgm7cmllyry4-mrjam-rules-bootstrap-proposal-1",
+  "production_access": false,
+  "projection_sha256": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6",
+  "projection_transport_sha256": "d4ecc67cb47b92ba783c9af32b9fe5adfc301d06abc9d16ebe09eae3f56342e3",
+  "protection_sha256": "1162f0c510b01a12f65624c20ab497db79b17d9694ec31e15d185b33b2133735",
+  "schema_version": 1
+}

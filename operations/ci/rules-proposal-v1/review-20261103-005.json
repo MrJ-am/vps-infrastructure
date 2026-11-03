@@ -1,0 +1,58 @@
+{
+  "binding_sha256": "5d4bdbbf75aa6bbcbfba08f3bd24fe8412d7548736b30807f57aa0d8cfe9f129",
+  "bundle_receiver_qualification_sha256": "09d3109f48859746635b18c0e0631daf2618ae3c4a85447f237e971e6924e522",
+  "code_nar": {
+    "bytes": 62232,
+    "path": ".local/deployment-20261101/rules-proposal-code-delivery-20261103.nar",
+    "sha256": "1e2803b3a1b3a36589ddce25cceb6067d7cb5259f16f1607b7514d1b39f042a2"
+  },
+  "code_receiver_qualification_sha256": "af9297cc1d8afbc305634b510bb01fb0e92beba76a7c4c49922ad56c638dca6f",
+  "code_reexport_byte_identical": true,
+  "credential_helper_only_names_restricted": true,
+  "limits": [
+    "Native VM contains invented histories/accounts/database and invokes packaged core directly; production entry gate has separate local refusal/source checks.",
+    "No actual PR, human approval, CI success status, merge, dispatch, policy adoption or activation is claimed by this review.",
+    "API/SQL observations are sequential and cannot prevent a separately authorized administrator changing protection after the last observation.",
+    "A hard kill may leave the private lease journal; next invocation revokes that exact lease. A partial branch/PR is preserved and only identical retry is permitted.",
+    "The historical workflow evidence is explicitly offline evidence, not a production CI result."
+  ],
+  "local_bundle_receiver_tests": 13,
+  "local_proposal_tests": 12,
+  "native_vm_groups": [
+    "private-protected-invented-rules-baseline",
+    "single-repository-token-other-repository-and-organization-denied-cleanup-preserves-unrelated",
+    "real-git-http-branch-and-pr-main-protection-unchanged",
+    "24-protection-fields-and-extra-rule-refused-by-native-read-only-guard",
+    "same-branch-and-pr-reused-without-rewrite",
+    "forgejo-protected-main-refuses-admin-push-no-status-or-review",
+    "actual-api-projection-refuses-pr-without-review",
+    "changed-input-and-existing-pr-refused-token-revoked"
+  ],
+  "new_code_paths": 2,
+  "package": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+  "package_nar_hash": "sha256-B6BveEWGIvuy7F+QnG9ZJYWYc0a2AUwke0bm7Vxxznk=",
+  "packaged_code_source_exact": true,
+  "packaged_entry_hook_only_declared_substitutions": true,
+  "private_bundle_decoded_or_imported_by_review": false,
+  "private_bundle_size_and_digest_bound": true,
+  "qualification_sha256": "324dba03f7b739384c6fe23097451820d3d63e2f3181a9cbff7026942647b704",
+  "receiver_ast_identical_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "reused_dependencies": 200,
+  "reviewed_properties": [
+    "Token scopes remain read:user,write:repository; the single repository resource is committed and checked before the first API/Git request; finally revokes exact token/resource and checks401.",
+    "Native scoped token protection GET403 is preserved; fixed READ ONLY SQL compares all24 protection columns and requires exactly one repository/rule, exporting only a boolean.",
+    "Immutable hook and server old OID enforce creation of one exact branch only; no force, main push, review, status, merge or protection-write route.",
+    "Base/head/tree/single parent/only regular workflow addition/exact bytes are rechecked; main, private visibility, disabled Actions and protection are reobserved; identical branch/PR can be reused, conflicting state refuses.",
+    "Code import uses the existing transaction lock and phi68+OPEN/result005 gate without units/profile mutation.",
+    "Private bundle receiver accepts only sealed874bytes/hash, checks root700/600 metadata and bounded prefix recovery, exclusively hardlinks final and recognizes only its exact crash window; foreign files remain untouched."
+  ],
+  "schema_version": 1,
+  "scope": "independent local code/binding/native-evidence review of one branch+PR proposal and its two receivers; no test rerun or production action",
+  "status": "PASS_IN_DECLARED_SCOPE",
+  "vm": "/nix/store/kcmbq29shix5srbvp70ihmcgy6wi88b4-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo",
+  "vm_nar_hash": "sha256-1UoJUng9+K4hj3hSP3oKD6UK6zjglNTW7x/y43xw6TE="
+}
