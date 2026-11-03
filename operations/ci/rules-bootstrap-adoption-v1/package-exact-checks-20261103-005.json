@@ -1,0 +1,79 @@
+{
+  "checks": [
+    "immutable-package-root",
+    "ten-modules-byte-exact",
+    "entry-exact-proposal-substitution",
+    "default-preserves-store-context",
+    "isolated-python-wrapper-exact",
+    "arguments-refused-before-effect",
+    "no-private-bundle-in-package",
+    "proposal-direct-store-reference-retained",
+    "all-proposal-transitive-dependencies-retained",
+    "store-path-verified"
+  ],
+  "limits": [
+    "Read-only production packaging checks; no valid entry invocation or production mutation"
+  ],
+  "package": "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+  "result": "PASS",
+  "schema_version": 1,
+  "source_files": [
+    {
+      "path": "operations/ci/rules-bootstrap-adoption-v1/adoption.py",
+      "sha256": "d73de400efa6ad77a7bbb62ca0f6a9b0ddcfe608f73b530a1a15bbec5c651acb"
+    },
+    {
+      "path": "operations/ci/rules-bootstrap-adoption-v1/identity.py",
+      "sha256": "77549cb92edffd93f607218d9db28c746dbb9928be5d6297b02ab7876ddc7cbc"
+    },
+    {
+      "path": "operations/ci/rules-bootstrap-adoption-v1/merge_transport.py",
+      "sha256": "bb1960459ec0239c3b23c43e080247e6c74c0a8dbd52361de832d49bcb840858"
+    },
+    {
+      "path": "operations/deployment/forgejo_sso_probe.py",
+      "sha256": "be06941b14d69b68f1b0fd5ccab28255b5561c836a0650ce186a18cc285ade16"
+    },
+    {
+      "path": "operations/ci/authority-v1/contract.py",
+      "sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37"
+    },
+    {
+      "path": "operations/ci/authority-v1/signer.py",
+      "sha256": "8a2d545c83638f6414a5fc1685c96bc39907c7a79914528b1504b8a08d141547"
+    },
+    {
+      "path": "operations/ci/authority-v1/collector.py",
+      "sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac"
+    },
+    {
+      "path": "operations/ci/review-v1/review_contract.py",
+      "sha256": "e86dd5a21f6a9aac5ff0df000dec29b62ad91fbd860c2db7e5462cc331ab5707"
+    },
+    {
+      "path": "operations/ci/review-v1/api_projection.py",
+      "sha256": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6"
+    },
+    {
+      "path": "operations/ci/review-v1/read_transport_v2.py",
+      "sha256": "d4ecc67cb47b92ba783c9af32b9fe5adfc301d06abc9d16ebe09eae3f56342e3"
+    }
+  ],
+  "store_metadata": {
+    "ca": null,
+    "deriver": "/nix/store/7z3bs7dmsj2sla7njamqqy0ff706m2cx-mrjam-rules-bootstrap-adoption-1.drv",
+    "narHash": "sha256-Yvov8I/XgxTcT2w70lp7GI6HgxZ0Q5FhTzUNWA+luks=",
+    "narSize": 86312,
+    "references": [
+      "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+      "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+      "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+      "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+    ],
+    "registrationTime": 1793668378,
+    "signatures": [],
+    "storeDir": "/nix/store",
+    "ultimate": true,
+    "version": 1
+  }
+}

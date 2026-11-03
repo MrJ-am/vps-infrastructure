@@ -1,0 +1,55 @@
+{
+  "author_local_tests": 16,
+  "author_package_checks": 10,
+  "code_delivery_qualification_sha256": "948cd2a29023924a6867f0d56bea4d81397f46a2d4b1ef31ff7a914502b76d70",
+  "code_export": {
+    "bytes": 86840,
+    "path": ".local/deployment-20261101/rules-adoption-code-delivery-20261103.nar",
+    "sha256": "4b897b199a6af53fe16735f2b50e29a6f600c42189cc2953fcdec384ee984905"
+  },
+  "code_reexport_byte_identical": true,
+  "limits": [
+    "The native VM uses invented identities, repository history and review; it neither creates nor proves the required real human approval.",
+    "The VM invokes the packaged core directly; production entry gates are covered by exact source/substitution and refusal evidence, not production execution in this review.",
+    "No atomicity across separate human actions is promised. A changed review detected after a merge is held without rewriting Git; this administrative bootstrap is outside CI success authority.",
+    "Unknown/team/incomplete review shapes, including absent commit IDs, remain conservatively refused.",
+    "No test suite was rerun, no production request was made, no private bundle was decoded, and no private credential was read by this review.",
+    "The old permanent review projection remains historical; the bootstrap uses its shape parsers only, with the native selection and tree corrections implemented explicitly here."
+  ],
+  "native_groups": [
+    "native-sso-unique-owner-derived-ambiguity-and-invalid-provider-refused",
+    "absent-review-refused-before-native-merge-and-token-revoked",
+    "actual-native-review-shape-official-approval-exact-head-and-text",
+    "native-repo-scoped-force-merge-fast-forward-main-only-no-status-policy-unchanged",
+    "idempotent-postmerge-observation-no-second-merge"
+  ],
+  "native_vm": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward",
+  "native_vm_nar_hash": "sha256-4m8VvAz+bLtBDCu+zqHt7JM8gL9YxnTL1UcD7HR5Mcc=",
+  "new_paths": 1,
+  "package": "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+  "package_nar_hash": "sha256-Yvov8I/XgxTcT2w70lp7GI6HgxZ0Q5FhTzUNWA+luks=",
+  "packaged_entries_only_proposal_substitution": true,
+  "packaged_modules_byte_exact": true,
+  "proposal_store_context_and_transitive_closure_preserved": true,
+  "qualification_sha256": "9b510d824ce637f1b9a89c83141e54654cf1019e5683dcae6d9de79d70ee064c",
+  "receiver_ast_identical_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "reused_dependencies": 202,
+  "reviewed_properties": [
+    "Human identity comes only from the retained SSO subject and eight qualified predicates in the same READ ONLY REPEATABLE READ snapshot as the unique internal owner ID.",
+    "Native max(id) chooses the last non-dismissed decisive review; editing an old approval cannot hide a newer rejection. Complete review pagination is bound to the native requested_reviewers authors; unresolved requests/rejections refuse.",
+    "The owner must be different from the technical author and give an official current APPROVED review at the exact head with the exact bootstrap sentence. No review is created by the helper.",
+    "Native Git binds parent, actual tree, exact single workflow addition and bytes; the Forgejo commit.tree.sha semantic mismatch is not used as an authority.",
+    "The single repository restriction is effective before network access. One native administrative fast-forward-only force_merge request names the sealed head and never deletes the proposal branch or changes protection/status.",
+    "All heads/tags are compared; only main may advance. Pre/post identity/review/policy observations and private durable checkpoints retain ambiguity or later drift without undoing history or issuing CI authority.",
+    "Interrupted merge-requested recovery performs observation only, not another merge. The common transaction lock and live/boot phi68 plus OPEN/result005 gates remain required.",
+    "Receiver imports and verifies one exact Nix path under the existing lock, with no unit, profile or service changes."
+  ],
+  "schema_version": 1,
+  "scope": "independent local review of the fixed initial rules adoption, native synthetic evidence, exact production package and inactive code reception",
+  "source_adoption_sha256": "d73de400efa6ad77a7bbb62ca0f6a9b0ddcfe608f73b530a1a15bbec5c651acb",
+  "status": "PASS_IN_DECLARED_SCOPE"
+}

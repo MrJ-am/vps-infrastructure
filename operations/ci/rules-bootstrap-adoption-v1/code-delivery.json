@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1": {
+      "nar_hash": "sha256-Yvov8I/XgxTcT2w70lp7GI6HgxZ0Q5FhTzUNWA+luks=",
+      "references": [
+        "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+      ]
+    }
+  },
+  "export_bytes": 86840,
+  "export_sha256": "4b897b199a6af53fe16735f2b50e29a6f600c42189cc2953fcdec384ee984905",
+  "required_free_bytes": 1073915504,
+  "schema_version": 1
+}
