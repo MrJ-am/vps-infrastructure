@@ -1,0 +1,426 @@
+{
+  "added": {
+    "mrjam-forgejo": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-forgejo-registration": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-forgejo-registration/policy.json": {
+      "bytes": 61,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "012ede889cd183f6d16be6c969e6186312438af887a30b9ae7425f3e1e6b6889"
+    },
+    "mrjam-forgejo-registration/policy.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-forgejo-registration/policy.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-forgejo-registration/policy.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-forgejo-runner": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-forgejo-runner/admission.json": {
+      "bytes": 80,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "95ffd4aa7c75c8b8bd9c72922616fc97d6c8c1560cfe97859e77dcc7b8e5e978"
+    },
+    "mrjam-forgejo-runner/admission.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-forgejo-runner/admission.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-forgejo-runner/admission.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-forgejo/policy.json": {
+      "bytes": 384,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "af86a69ab66f737c9e7356b0611dfd677ee9aa11aef3daf8a1ef53e037ddc76a"
+    },
+    "mrjam-forgejo/policy.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-forgejo/policy.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-forgejo/policy.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-authority": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-validation-authority/producer.json": {
+      "bytes": 868,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "907a95d746a228d39744922bf859bbe3b74f9b62771b47726db746e06593109f"
+    },
+    "mrjam-validation-authority/producer.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-authority/producer.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-validation-authority/producer.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-staging": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-validation-staging/catalog.json": {
+      "bytes": 280,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "eadb190f8a929284245ca74f9fea250b781dec29f5ea0ef94993541bc5c9c749"
+    },
+    "mrjam-validation-staging/catalog.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-staging/catalog.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-validation-staging/catalog.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-submit": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-validation-submit/policy.json": {
+      "bytes": 61,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "012ede889cd183f6d16be6c969e6186312438af887a30b9ae7425f3e1e6b6889"
+    },
+    "mrjam-validation-submit/policy.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-submit/policy.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-validation-submit/policy.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-worker": {
+      "kind": "directory",
+      "mode": 365
+    },
+    "mrjam-validation-worker/policy.json": {
+      "bytes": 348,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "a779f50c173e8129e594a3f2ec862645a2cf5d3953ff187b66700e34bb6e0780"
+    },
+    "mrjam-validation-worker/policy.json.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-worker/policy.json.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-validation-worker/policy.json.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-worker/store-paths": {
+      "bytes": 8213,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "1a3d5b53de2b8f2d642542842c74befc11a56103539eddbd91412df296613d20"
+    },
+    "mrjam-validation-worker/store-paths.gid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "mrjam-validation-worker/store-paths.mode": {
+      "bytes": 5,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b8efab443febd62844b50b656e9a0d321be20fc1158ec62ad423f9684ee802ef"
+    },
+    "mrjam-validation-worker/store-paths.uid": {
+      "bytes": 3,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "bfccdd6c5c2faa710a992013eb60ebc3159d693e638b8215aaf74602a09fd058"
+    },
+    "systemd/system/mrjam-forgejo-policy.service": {
+      "bytes": 2374,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "61782cd5dbf9d3dfdad7fbd210a37d27904ab5dc72215ace492bc5048ae3a6f5"
+    },
+    "systemd/system/mrjam-forgejo-registration.service": {
+      "bytes": 2384,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "7cd6cae3a978ffd9dec4c5c2771d29c7cb2d78ca54d18f18878608ce7ad3c7be"
+    },
+    "systemd/system/mrjam-forgejo-runner.service": {
+      "bytes": 2362,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "9ba5782fe49e4aa9e019fe53828706947fbcba24219f3ab9237fc5528b6ee8bf"
+    },
+    "systemd/system/mrjam-validation-authority.service": {
+      "bytes": 2230,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "f69b5af73a2892233df25d22a17a63042b2ace788584570b968c326e325b9ed6"
+    },
+    "systemd/system/mrjam-validation-authority.socket": {
+      "bytes": 238,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e9d2ad96109830dd1d1cfa5db7c88103aa47ec904e0ee49f95e10276f0bdd488"
+    },
+    "systemd/system/mrjam-validation-collector.socket": {
+      "bytes": 206,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "d8328e1f3a204b06e73116b50581f38cf673e7c1dd6836f2df8bbb41346c0b85"
+    },
+    "systemd/system/mrjam-validation-collector@.service": {
+      "bytes": 2358,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "477133aee00f0de20d7e9f2c8656e44b3d2ac6c41331fc213bf30041e3406005"
+    },
+    "systemd/system/mrjam-validation-export.socket": {
+      "bytes": 215,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "5acbdbc579dfe3ecffd20066da0346a894c1b2e1ced739ba6f1df39c31927fab"
+    },
+    "systemd/system/mrjam-validation-export@.service": {
+      "bytes": 2143,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "f72effb89ca77544a527b11464eca69f36a61f8ac880cf90b03881a661b16bfd"
+    },
+    "systemd/system/mrjam-validation-staging.service": {
+      "bytes": 2180,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "fe74586bd08591c9c2b79fb80ffb599b2f72de5a6f512a6338076d614a883bad"
+    },
+    "systemd/system/mrjam-validation-worker.socket": {
+      "bytes": 196,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "b7e8ec8ff4cb217ab8a149630b450f2f657941fe044f28c684c68c9d1ab59705"
+    },
+    "systemd/system/mrjam-validation-worker@.service": {
+      "bytes": 2353,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "2b0e659320c69fa91954e8cf0a08c4dc84fab04851f588f1d68fd831e92ba3d8"
+    },
+    "systemd/system/multi-user.target.wants/nftables.service": {
+      "bytes": 1833,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e31b8572de79d79ef48b8e1877fef685358b3053c2635a4f2013a442daf16065"
+    },
+    "systemd/system/nftables.service": {
+      "bytes": 1833,
+      "kind": "file",
+      "mode": 292,
+      "sha256": "e31b8572de79d79ef48b8e1877fef685358b3053c2635a4f2013a442daf16065"
+    }
+  },
+  "candidate": "/nix/store/g1l3zif8rwndmdcyc1vylwasaxds9iia-nixos-system-srv1982677-26.05pre-git",
+  "changed": {
+    "dbus-1/session.conf": {
+      "new": {
+        "bytes": 3655,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "610234672b62ef4a591eaed8c4cd93384b8cef8f7a62d1c3c1fdf2e7293a78df"
+      },
+      "old": {
+        "bytes": 3655,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "b9d0211b60598c4a38c4e28856a1ab187f51c1d11ba23df8b76ed9d142876d42"
+      }
+    },
+    "dbus-1/system.conf": {
+      "new": {
+        "bytes": 5523,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "5cb5fe907de01453a0b690f66b789a1c647c63228abe9e700576d4fd1ba059bb"
+      },
+      "old": {
+        "bytes": 5523,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "941d52c022d2f2b9b22a5b5e386d1025b589969fd810dcf5660445287641f688"
+      }
+    },
+    "modprobe.d/nixos.conf": {
+      "new": {
+        "bytes": 23,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "0931f7c5bd42ff66c783a75515e49752b0a1bfe65db99343e657a0ed6922f852"
+      },
+      "old": {
+        "bytes": 3,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "6a3cf5192354f71615ac51034b3e97c20eda99643fcaf5bbe6d41ad59bd12167"
+      }
+    },
+    "systemd/system/dbus-broker.service.d/overrides.conf": {
+      "new": {
+        "bytes": 1109,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "2ed55cfd01b657b3537e83df21602f55386e56b99c90f86acef4351f2dcd0807"
+      },
+      "old": {
+        "bytes": 1109,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "3e717d4c06f152c8dee1b9c65c265d4e0d5719a5a0107cdcad8a08159fd7ff02"
+      }
+    },
+    "systemd/system/sysinit-reactivation.target.requires/systemd-tmpfiles-resetup.service": {
+      "new": {
+        "bytes": 1545,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "3a417448a04906a102864abe28bf875d8ab75ae8928d296c300e3f08ac0990d2"
+      },
+      "old": {
+        "bytes": 1545,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "4fbaf797d8b456d9afdd89da3fbe132afa7e85fee38e60a761f599aefa0caab9"
+      }
+    },
+    "systemd/system/systemd-tmpfiles-resetup.service": {
+      "new": {
+        "bytes": 1545,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "3a417448a04906a102864abe28bf875d8ab75ae8928d296c300e3f08ac0990d2"
+      },
+      "old": {
+        "bytes": 1545,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "4fbaf797d8b456d9afdd89da3fbe132afa7e85fee38e60a761f599aefa0caab9"
+      }
+    },
+    "systemd/user/dbus-broker.service.d/overrides.conf": {
+      "new": {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "da65cf14b038c97041951d0188abb6427ccfd0891fd7ef722a393aa06d35a930"
+      },
+      "old": {
+        "bytes": 994,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "c49e8c14e32842968ed56fce7552f4f53ca67f6b68fb3b23bade9c159229ec0a"
+      }
+    },
+    "tmpfiles.d/00-nixos.conf": {
+      "new": {
+        "bytes": 2856,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "461b2881262ad4efd6730aac3465aeb6dff36ad2c3e7596b25f155a25b47226e"
+      },
+      "old": {
+        "bytes": 2038,
+        "kind": "file",
+        "mode": 292,
+        "sha256": "808cbdffc9ff3e00ebb271b61fffb1a7ceff4e4bc59cb777197cf9ef1914b184"
+      }
+    }
+  },
+  "controller_revision": "e1dc4a31dc5a8ff37ab0639fb1af131e40263e4e",
+  "previous": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "removed": {}
+}

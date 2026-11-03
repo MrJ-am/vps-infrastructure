@@ -1,0 +1,56 @@
+{
+  "activation_performed": false,
+  "generation": "/nix/store/g1l3zif8rwndmdcyc1vylwasaxds9iia-nixos-system-srv1982677-26.05pre-git",
+  "identical_ast_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "paths": 131,
+  "schema_version": 1,
+  "scope": "import-only exact existing receiver with sealed manifests; no activation",
+  "source_revision": "e1dc4a31dc5a8ff37ab0639fb1af131e40263e4e",
+  "template_sha256": "18a002d46d047e049f661e6c8039cae531e663f5b93d1d2078d996ffabe19e66",
+  "topological_batches": [
+    {
+      "bytes": 339905864,
+      "manifest": "operations/ci/inactive-delivery-v1/delivery-001.json",
+      "manifest_sha256": "3c1330866231278dcd5b694847e1477e1720cb09c40a67cfda82cb289ef2803b",
+      "nar_sha256": "5e68bdb44eab6d854be00b38f9ecec3a6d65b7a00158406b9dc601c1687205fd",
+      "paths": 24,
+      "receiver": "operations/ci/inactive-delivery-v1/receive-001.py",
+      "receiver_sha256": "20b521b77e4c15f2c9cd91daee6cde7c2029435ae393f1a0d0af985ecac4a1b0",
+      "sequence": 1
+    },
+    {
+      "bytes": 838802424,
+      "manifest": "operations/ci/inactive-delivery-v1/delivery-002.json",
+      "manifest_sha256": "3c86d2142e7f9c019428da88098021fc7d3a1290a947f3ae04ee06d2afcf4b5f",
+      "nar_sha256": "5e14647a408a9d18951d394d9af86d9dc1d7512c5c52ffed4b2b0eae5c6f754d",
+      "paths": 36,
+      "receiver": "operations/ci/inactive-delivery-v1/receive-002.py",
+      "receiver_sha256": "1cb848a1a9bebee24574c8f4790a035e074802989f340f5950a9da69e3b365e6",
+      "sequence": 2
+    },
+    {
+      "bytes": 480966336,
+      "manifest": "operations/ci/inactive-delivery-v1/delivery-003.json",
+      "manifest_sha256": "166cd400146093abc61950d1338f7bf7674093d2fe73f00d3699241fa7aeff1b",
+      "nar_sha256": "bb9371878a74a3d0f54e83213f8de0aa9ca98bef8031adec363c57a036e8f0aa",
+      "paths": 35,
+      "receiver": "operations/ci/inactive-delivery-v1/receive-003.py",
+      "receiver_sha256": "5368bdc975bb46b0b9cfc6c295a0db9ea1bbfafc6fc8637f6f236b09a30abd92",
+      "sequence": 3
+    },
+    {
+      "bytes": 416124576,
+      "manifest": "operations/ci/inactive-delivery-v1/delivery-004.json",
+      "manifest_sha256": "ef3c461372f4ce79a528239f4c753a04232f650055d242095d5143fc266c70d0",
+      "nar_sha256": "8fc8c35ee0b9419da5edb18767c020ef5867f42e2d561b75980f962f259352b5",
+      "paths": 36,
+      "receiver": "operations/ci/inactive-delivery-v1/receive-004.py",
+      "receiver_sha256": "25201b58c149108f4a67354fa1e8655566ca87b6b58867fd60cccc976104f001",
+      "sequence": 4
+    }
+  ]
+}
