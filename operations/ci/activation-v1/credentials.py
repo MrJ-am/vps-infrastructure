@@ -41,7 +41,7 @@ def permissions(B,token,role):
  # The account has no organization membership, own repository or site-admin role.
  s=state(B,name);need(s['eligible'] and s['organization_memberships']==0 and s['owned_repositories']==0,'ACCOUNT_BOUNDARY_REFUSED')
  raw=sql(B,f'''SELECT coalesce(json_agg(json_build_object('repo',r.name,'permission',c.mode) ORDER BY r.name),'[]'::json) FROM collaboration c JOIN repository r ON r.id=c.repo_id WHERE c.user_id=(SELECT id FROM public."user" WHERE lower_name='{name}');''')
- need(json.loads(raw)==[{'repo':r,'permission':3} for r in sorted(repos)],'REPOSITORY_ACL_REFUSED')
+ need(sorted(json.loads(raw),key=lambda r:r['repo'])==[{'repo':r,'permission':3} for r in sorted(repos)],'REPOSITORY_ACL_REFUSED')
  if role=='registration':need(request(token,'GET','/api/v1/repos/MrJ-am/mrjam-plateforme')[0] in (403,404),'OTHER_REPOSITORY_NOT_DENIED')
  else:
   code,value=request(token,'GET','/api/v1/repos/MrJ-am/mrjam-validation');need(code==200,'READ_REFUSED')
