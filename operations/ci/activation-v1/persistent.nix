@@ -31,6 +31,7 @@ let
     policyUnchanged = old.services.mrjamForgejoPolicy == current.services.mrjamForgejoPolicy;
   };
 in {
+  modules = [ ../../hosts/mrjam-vps/candidate-unicast.nix (import ../host-profile-authority-report-v3.nix args) wiring ];
   evaluation = { inherit checks changed; candidate = toString current.system.build.toplevel; };
   toplevel = assert lib.all (x: x) (builtins.attrValues checks); current.system.build.toplevel;
 }

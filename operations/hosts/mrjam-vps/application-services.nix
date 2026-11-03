@@ -93,6 +93,8 @@ in {
   ];
   options.mrjamVpsApplications = {
     enable = lib.mkEnableOption "explicit Rust/Elm host composition without ViSe";
+    allowIndependentVise = lib.mkOption { type = lib.types.bool; default = false;
+      description = "Explicit separately qualified ViSe reintegration; never required by the main applications."; };
     activeSlot = lib.mkOption { type = lib.types.enum [ "blue" "green" ]; default = "blue"; };
     slots = lib.mkOption { type = lib.types.attrsOf storePath; default = { };
       description = "Installed blue/green runtime closures, each independently bound to the selected server and seven frontend manifests."; };
@@ -163,8 +165,10 @@ in {
           && builtins.hasAttr cfg.logReadersGroup config.users.groups
           && config.users.groups.${cfg.logReadersGroup}.gid != null;
         message = "mrjamVpsApplications: Log requires the dedicated alias-only projection and explicitly bound reader group, never session-state access."; }
-      { assertion = !(config.systemd.services ? vise) && !(config.services.nginx.virtualHosts ? "vise.mrj.am");
-        message = "mrjamVpsApplications: the first composition deliberately excludes ViSe."; }
+      { assertion = if cfg.allowIndependentVise then
+          (lib.attrByPath [ "services" "mrjamVise" "enable" ] false config) && (config.systemd.services ? vise)
+        else !(config.systemd.services ? vise) && !(config.services.nginx.virtualHosts ? "vise.mrj.am");
+        message = "mrjamVpsApplications: ViSe requires explicit independent reintegration; it remains excluded by default."; }
       # Historical artifacts remain available for reproducing their receipts.
       # Native protocol selection requires all five separately qualified outputs.
       { assertion = !cfg.workers.enable || !nativeWorkers || lib.all

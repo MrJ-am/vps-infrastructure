@@ -63,8 +63,24 @@ reproduit exactement les deux anciens hashes f119... et b0c8..., sans changer
 les verrous. Le premier lot contaminé n'a pas été construit.
 Binaire et site réels construits, TypeScript et15 tests passés ;8 tests de refus
 d'entrées passent. Sorties et preuve dans ../vise/requalification-20261103/.
-VM réelle sur pinNixOS c5 lancée, session outil38418 à suivre sans redémarrer.
+VM réelle sur pinNixOS c5 terminée avec succès, sortie cvhhy14... ; preuve
+qualification-runtime-001.json. Ne pas relancer cette qualification sans changement.
 Preflight VPS lecture seule : compte OS etp_carnet absent ; UID/GID981 disponibles ;
 journal0600 et état0700 conservés sous981 ; unitévise masquée/inactive ; base et
 rôle etp_carnet existants, schéma v1 exact,0 connexions, rôle encore propriétaire
 SQL (pas superuser), rôle mrjam_vise_schema absent. Aucune modification VPS.
+
+* ViSe réintégré — état au 3 novembre après promotion002
+Current ET boot : /nix/store/17lw8y05pgzmcl9q6wvknbf7z1znajl9-nixos-system-srv1982677-26.05pre-git.
+ViSe répond en HTTPS et démarre avec multi-user.target. DroitsSQL adoptés,
+schéma1 exact, rôle applicatif sans DDL. Capture cohérente privée conservée
+uniquement surVPS. Retour de configuration réellement exercé sans restaurationSQL.
+Ne plus utiliser3fylc comme baseline actuelle pour une nouvelle livraison.
+RenouvellementACME : le script réclamait cmp sans diffutils dans PATH. La
+promotion fournit cette dépendance aux neuf unités ; leurs neuf exécutions
+réelles sont réussies. TimerViSe actif, boot vérifié, autres services actifs.
+Pas de rebootVPS effectué. La sauvegarde automatiqueViSe reste à raccorder
+avec cohérence base/journal ; l'ancien script séquentiel n'est pas réactivé.
+Preuves : operations/vise/requalification-20261103/observation-promotion-002.json
+et qualification-runtime-001.json. La livraison Cloud ordinaire reste à achever
+selon les critères1–6, sans considérer l'activationViSe comme leur réalisation.

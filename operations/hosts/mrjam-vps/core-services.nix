@@ -150,7 +150,8 @@ in {
         && config.services.postgresql.ensureUsers == [ ]
         && config.services.postgresql.initialScript == null;
       message = "mrjamCoreServices: SQL bootstrap/migrations must remain explicit operations, not startup actions."; }
-    { assertion = !(config.services.mrjamVise.enable or false);
-      message = "mrjamCoreServices: the first-deployment composition excludes optional ViSe."; }
+    { assertion = !(config.services.mrjamVise.enable or false)
+        || (lib.attrByPath [ "mrjamVpsApplications" "allowIndependentVise" ] false config);
+      message = "mrjamCoreServices: optional ViSe requires explicit independent qualification."; }
   ];
 }

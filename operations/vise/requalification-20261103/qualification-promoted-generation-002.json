@@ -1,0 +1,23 @@
+{
+  "activation_performed": false,
+  "candidate": "/nix/store/17lw8y05pgzmcl9q6wvknbf7z1znajl9-nixos-system-srv1982677-26.05pre-git",
+  "changed_existing_units": [
+    "mrjam-acme-renew-audition.mrj.am.service",
+    "mrjam-acme-renew-cloud.mrj.am.service",
+    "mrjam-acme-renew-forge.mrj.am.service",
+    "mrjam-acme-renew-log.mrj.am.service",
+    "mrjam-acme-renew-logique.echos.systems.service",
+    "mrjam-acme-renew-principiipetit.io.service",
+    "mrjam-acme-renew-vision.mrj.am.service",
+    "mrjam-acme-renew-www.principiipetit.io.service",
+    "nginx.service",
+    "vise.service"
+  ],
+  "existing_renewal_changes_only_diffutils_path": true,
+  "kernel_initrd_modules_firmware_unchanged": true,
+  "nar_bytes": 525968,
+  "nar_sha256": "7d0632cf6423d63b4c2c14a4940ab92f2f85e147dde1603c01ffd9154d767c17",
+  "previous_running": "/nix/store/h7gsm02w34zbacxamwjl98qmbqyb3kci-nixos-system-srv1982677-26.05pre-git",
+  "receiver_sha256": "b5ab4d2f981e6871144b32957c370cfdfab24dc7e7b2d6a1ea1f2b5aa9f244f9",
+  "schema_version": 1
+}
