@@ -1,0 +1,70 @@
+#+title: Objectif courant — du travail Cloud au déploiement vérifié
+#+date: 2026-11-03
+
+Mandat utilisateur : « Ok, c'est donc ton nouvel objectif. Va jusqu'au bout ».
+Objectif actif : achever la livraison des nouvelles propositions Cloud et
+réintégrer ViSe sans bloquer les autres projets. Les autorisations VPS
+antérieures persistent. Ne pas demander une nouvelle autorisation générale.
+
+Base observée : génération 3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm active et boot,
+run Forgejo1 réussi, 75 contrôles et attestation vérifiés. Publication GitHub
+2f80f96dfed8e2faffcfa9ce11f884f8a66c6de7, arbre fc62d413ef8d3142d2baa8b7bee7dbc465464a78,
+branche spectre-reception-identite-20261101, PR103. Aucun ancien backend de
+première bascule ne doit être rejoué comme une livraison ordinaire.
+
+Critères de fin :
+1. Une proposition GitHub Cloud devient une proposition Forgejo identifiable,
+   sans confondre les main ni publier les historiques privés.
+2. Le catalogue admet ses contenus vérifiés, sans autoriser le candidat à
+   choisir règles/outils/clé ou obtenir réseau et secrets de production.
+3. La validation produit les artefacts exacts et une attestation indépendante.
+4. Les revues protégées sont observées réellement ; la fusion et la livraison
+   automatisées consomment leurs preuves, sans approbation humaine fabriquée.
+5. Un backend ordinaire distinct remplace les seuls artefacts admis, vérifie
+   readiness et disponibilité, préserve les écritures et reprend après incident.
+6. Le résultat revient vers la forge et le miroir GitHub ; un essai réel de
+   modification contrôlée prouve toute la traversée, et les refus sont testés.
+7. ViSe possède une construction et des tests réels puis une adoption préservant
+   base et journal ; un obstacle propre ne suspend pas les points1–6.
+
+Travail à reprendre : contrats revue v2/recheck_v2/read_transport_v3 existants ;
+service de décision/fusion non raccordé ; admission signée et backend ordinaire
+manquants ; aucune identité miroir installée. Le serveur CI n'admet actuellement
+qu'un digest fixe, avec une politique expirant le 10 novembre : ce verrou doit
+être remplacé par une admission contrôlée, pas supprimé.
+ViSe : recettes adoption-build.nix et VM vise-application-systemd.nix présentes,
+verrou source8c8ef66f... ; retrouver les entrées matérialisées et preuves avant
+une nouvelle construction. Ne pas réutiliser la fixture à exécutable shell
+comme preuve de l'application réelle.
+
+* Avancée du 3 novembre — objets sources et ViSe
+Le VPS a été relu : génération3fylc... current+boot, runner/Forgejo/Nginx/Rust actifs.
+source_snapshot.py lit les objets Git exacts, sans checkout/remplacement/téléchargement
+implicite. Douze essais avec Git natif passent, dont 137 nouveaux fichiers, ancêtre
+étranger, lien, pointeur LFS, objet altéré et remplacement Git. Les neuf arbres
+réels des sources adoptées (2121 entrées) correspondent aussi exactement.
+Ce composant n'est pas encore un service de réception installé : il reste à
+raccorder transport, catalogue dynamique protégé, validation et livraison.
+
+Les branches main de six dépôts diffèrent entre les forges ; ne pas écraser
+les branches GitHub ni confondre cette différence avec un résultat d'ascendance.
+Observations locales : continuous-github-main-001.json ; Forgejo courant :
+vps22ede223..., plateforme2a34dac..., validationb02bdf..., Signature17194087...,
+matheval91b5b335..., vision61cf80bd... . Les trois autres main concordent.
+Le code compilé du socle utilise encore un overlay de readiness : les deux
+fichiers correspondants de plateforme/main ne sont pas identiques aux octets
+compilés. Raccorder les sources effectivement déployées avant d'ouvrir la
+livraison ordinaire, sans supprimer le contrôle pour faire passer une tête.
+
+ViSe : sources42 fichiers vérifiées, dépendances221 Cargo reconstituées ;
+le cache npm relatif se retrouvait dans source/.local. prepare.py convertit
+maintenant destination/cache en chemins absolus. La seconde préparation
+reproduit exactement les deux anciens hashes f119... et b0c8..., sans changer
+les verrous. Le premier lot contaminé n'a pas été construit.
+Binaire et site réels construits, TypeScript et15 tests passés ;8 tests de refus
+d'entrées passent. Sorties et preuve dans ../vise/requalification-20261103/.
+VM réelle sur pinNixOS c5 lancée, session outil38418 à suivre sans redémarrer.
+Preflight VPS lecture seule : compte OS etp_carnet absent ; UID/GID981 disponibles ;
+journal0600 et état0700 conservés sous981 ; unitévise masquée/inactive ; base et
+rôle etp_carnet existants, schéma v1 exact,0 connexions, rôle encore propriétaire
+SQL (pas superuser), rôle mrjam_vise_schema absent. Aucune modification VPS.

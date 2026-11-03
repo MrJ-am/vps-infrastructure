@@ -1,0 +1,73 @@
+{
+  "code": "NATIVE_SNAPSHOT_REAL_TREES_VERIFIED",
+  "network_or_checkout": false,
+  "production_activation": false,
+  "schema_version": 1,
+  "source_sha256": "05620dcc45331909872b56e2f1d1300e344dc28874b3b4fcfe50f5df0e422c24",
+  "sources": [
+    {
+      "entries": 74,
+      "expected_tree": "2c1f7bf92d01e326eaf4a17fb0d37a98609b548f",
+      "matches_adopted_source_tree": true,
+      "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+      "source_id": "logique"
+    },
+    {
+      "entries": 377,
+      "expected_tree": "c0800e787d855dd4e720506a849711b24e55ed15",
+      "matches_adopted_source_tree": true,
+      "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "source_id": "style"
+    },
+    {
+      "entries": 266,
+      "expected_tree": "a6a2dfc33b3f7717c2f47c6ecea0c4384f6a8e76",
+      "matches_adopted_source_tree": true,
+      "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+      "source_id": "style-log"
+    },
+    {
+      "entries": 266,
+      "expected_tree": "1d7e3d02b207d7ef37fd1b8a1d0935c43766d618",
+      "matches_adopted_source_tree": true,
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+      "source_id": "style-mateval"
+    },
+    {
+      "entries": 242,
+      "expected_tree": "4c7142c0ad646ae01747665a8bfb8eb369e35706",
+      "matches_adopted_source_tree": true,
+      "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
+      "source_id": "style-logique"
+    },
+    {
+      "entries": 129,
+      "expected_tree": "648afcd54cc477f38c399ba64c28ece2b605b0a0",
+      "matches_adopted_source_tree": true,
+      "revision": "99eace9df76777c89bbd992952738b3f57608801",
+      "source_id": "vision"
+    },
+    {
+      "entries": 170,
+      "expected_tree": "7ab94c27479d061a1f29214913fe5e97a59f4b26",
+      "matches_adopted_source_tree": true,
+      "revision": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+      "source_id": "mateval"
+    },
+    {
+      "entries": 441,
+      "expected_tree": "d63baf2c0e2b6921e35f2c0b9e329483a7203d8d",
+      "matches_adopted_source_tree": true,
+      "revision": "3836559dd79c053d2f6a4c7aaa2b4c1add6575b6",
+      "source_id": "infrastructure"
+    },
+    {
+      "entries": 156,
+      "expected_tree": "66bb111ad4af6d7ddf659be0bd8da0cda03cc8f9",
+      "matches_adopted_source_tree": true,
+      "revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+      "source_id": "platform"
+    }
+  ],
+  "synthetic_native_git_tests": 12
+}

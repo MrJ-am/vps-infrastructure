@@ -1,0 +1,1 @@
+{"active_connections": 0, "code": "VISE_DATABASE_METADATA", "database_present": true, "read_only": true, "retained_uid_available": true, "runtime_role_login": true, "runtime_role_owns_database": true, "runtime_role_present": true, "runtime_role_privileged": false, "schema_owner_role_present": false, "schema_version": 1}

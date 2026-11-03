@@ -1,0 +1,1 @@
+{"code": "VISE_SCHEMA_OBSERVED", "context_matches": true, "read_only": true, "retained_gid_available": true, "runtime_ddl_forbidden": false, "schema_checks": {"cascade_accounts": true, "columns": true, "primary_keys": true, "unique_keys": true, "versions": true}, "schema_matches_v1": true, "schema_version": 1}
