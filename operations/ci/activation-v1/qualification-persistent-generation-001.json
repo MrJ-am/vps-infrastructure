@@ -1,0 +1,27 @@
+{
+  "activation_performed": false,
+  "candidate": "/nix/store/3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm-nixos-system-srv1982677-26.05pre-git",
+  "changed_service_units": [
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket"
+  ],
+  "identical_receiver_ast_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "kernel_initrd_modules_firmware_unchanged": true,
+  "nar_bytes": 435112,
+  "nar_sha256": "bcf93c3e5f34faab6224c93e7f3d9f35b3e60f86ca662ecdf9942d53908f2182",
+  "paths": 9,
+  "policy_controller_revision": "95f90ec9d3acdcd260f25b2dca88a8a55574bf11",
+  "previous": "/nix/store/i367qqkm6fzsr9rh8lbs2ymf53166hj9-nixos-system-srv1982677-26.05pre-git",
+  "receiver_sha256": "450b17c9bafd981d6a35df78b17c1bce1b9e441d5d413704d5f88fbd0332f4a5",
+  "schema_upgrade_remains_manual": true,
+  "schema_version": 1,
+  "wiring_sha256": "74af9024f3b08923b3697c09e906c6950fdca78cf8306e1087097852820505fc"
+}

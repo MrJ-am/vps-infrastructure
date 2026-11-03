@@ -1,0 +1,39 @@
+#+title: Activation de la validation indépendante — 3 novembre 2026
+
+La revue humaine a permis l'adoption de la règle b02bdf1b5d63dcf0e0610723788a7ca7e384932c.
+Actions est activé sur le serveur et uniquement sur mrjam-validation. Les
+protections de branche restent intactes. Les quatre sockets isolées sont actives.
+
+* Inscription du runner
+Forgejo 17 utilise reqOwner(TypeActions) pour actions/runners (api.go:795),
+et non reqAdmin. Le compte registrar, collaborateur administrateur du seul
+dépôt de règles, ne satisfait donc pas cette route. Il n'a pas été promu.
+register_bootstrap.py emploie un bail propriétaire temporaire révoqué avant
+son retour. Le contrat immuable d'inscription s'exécute sous UID 949 ; il
+refuse tout état partiel ou runner préexistant. Aucun jeton ne sort du VPS.
+Le runner 1 est rattaché au seul dépôt de règles ; son identité UID 950 est
+distincte du registrar, du worker, du collecteur et du signataire.
+Le service d'inscription reste manuel ; il ne faut pas le relancer avec
+le jeton collaborateur, ni le démarrer au boot.
+
+* Acceptation réelle
+Le déclenchement unique est journalisé avant POST pour éviter un doublon en
+cas de réponse ambiguë. L'API reçoit le digest exact de sources admises ;
+le contrôleur vérifie la règle et n'exécute aucune commande candidate.
+Le premier run est https://forge.mrj.am/MrJ-am/mrjam-validation/actions/runs/1.
+Sa réussite doit être vérifiée avec le statut Forgejo, les trois artefacts
+conservés et la signature Ed25519. Un run en cours ne vaut pas acceptation.
+
+* Démarrage persistant
+persistent.nix conserve la politique et les exécutables déjà qualifiés.
+Il ajoute les quatre sockets à sockets.target et le runner à multi-user.target.
+Le runner dépend du staging, de Forgejo et des sockets ; le staging garde son
+état après succès. Ni inscription ni migration SQL ne démarrent automatiquement.
+install_persistent.py refuse l'activation avant réussite du run 1 et vérification
+de son attestation. Il reprend la machine de retour déjà qualifiée, contrôle
+les unités applicatives inchangées, le filtrage réseau et les liens de boot.
+
+Cette chaîne valide la proposition explicitement admise ; elle ne constitue
+pas à elle seule un déployeur automatique de toutes les futures révisions.
+Les attestations ne couvrent pas la restauration des sauvegardes, la totalité
+des contrôles SSO ou ViSe. Les données ViSe sont conservées hors de ce périmètre.
