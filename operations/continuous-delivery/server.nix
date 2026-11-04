@@ -23,10 +23,10 @@ let
     export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnu
     cargo fmt --all -- --check
     cargo clippy --release --workspace --all-targets --all-features --frozen --offline -- -D warnings
-    export PGDATA="$TMPDIR/postgres"
-    initdb --username=mrjam_synthetic --auth=trust > "$TMPDIR/initdb.log"
-    pg_ctl -l "$TMPDIR/postgres.log" -o "-h 127.0.0.1 -p 55432 -k $TMPDIR" start
-    trap 'pg_ctl -m immediate stop >/dev/null 2>&1 || true' EXIT
+    fixture_database="$TMPDIR/postgres"
+    initdb -D "$fixture_database" --username=mrjam_synthetic --auth=trust > "$TMPDIR/initdb.log"
+    pg_ctl -D "$fixture_database" -l "$TMPDIR/postgres.log" -o "-h 127.0.0.1 -p 55432 -k $TMPDIR" start
+    trap 'pg_ctl -D "$TMPDIR/postgres" -m immediate stop >/dev/null 2>&1 || true' EXIT
     createdb -h 127.0.0.1 -p 55432 -U mrjam_synthetic mrjam_synthetic
     psql -h 127.0.0.1 -p 55432 -U mrjam_synthetic -d mrjam_synthetic -c 'CREATE EXTENSION vector'
     export MRJAM_SYNTHETIC_DATABASE_URL='postgresql://mrjam_synthetic:mrjam_synthetic_only@127.0.0.1:55432/mrjam_synthetic'
@@ -35,7 +35,7 @@ let
     # while avoiding repeated expensive LTO links for the integration harnesses.
     export CARGO_PROFILE_TEST_DEBUG=0
     cargo test --workspace --all-features --frozen --offline -- --test-threads=1
-    pg_ctl -m fast stop
+    pg_ctl -D "$fixture_database" -m fast stop
     trap - EXIT
     runHook postCheck
   '';
