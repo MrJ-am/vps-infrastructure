@@ -48,17 +48,32 @@ la machine sur une branche du dépôt. Plusieurs README de composants décrivent
 encore les lots synthétiques d'octobre : leurs phrases « non déployé » ne
 constituent pas un relevé actuel du VPS.
 
-* Organisation proposée, pas encore configurée
+* Miroirs GitHub et accès Cloud
 
-L'utilisateur propose Forgejo comme source de référence, un miroir sortant
-Forgejo vers GitHub avec écrasement possible, et Codex Cloud travaillant par
-Git/API directement sur Forgejo. Le miroir et l'accès Cloud restent à mettre
-en place et à tester. Aucune livraison automatique n'est annoncée active.
+Forgejo est la source de référence. Les miroirs sortants vers GitHub sont
+configurés le 4 novembre pour les neuf dépôts de l'organisation et pour
+=MrJam/Config= vers =MrJ-am/config=. =org-validation= n'est pas concerné.
+Chaque miroir transmet toutes les branches et tous les tags à chaque push,
+avec un rattrapage toutes les huit heures. GitHub peut être écrasé : effectuer
+les modifications sur Forgejo. Une clé SSH dédiée à chaque dépôt permet
+l'écriture sur sa seule destination GitHub ; aucun jeton personnel GitHub
+n'est installé sur le VPS pour ces miroirs.
+
+Les réglages et la dernière erreur éventuelle sont visibles dans les paramètres
+du dépôt Forgejo, rubrique des miroirs. « Synchroniser maintenant » permet de
+relancer un miroir. Pour l'arrêter, supprimer le miroir et révoquer sa clé de
+déploiement sur GitHub. Le miroir copie Git, pas les tickets, demandes de fusion,
+secrets, bases applicatives ou fichiers joints des releases. Le transport SSH
+choisi ne réplique pas les objets Git LFS.
+
+L'accès de Codex Cloud par Git/API directement à Forgejo reste à mettre en
+place et à tester. Aucune livraison automatique n'est annoncée active.
 
 Le 4 novembre, l'API GitHub des dix dépôts correspondant à la forge ne montrait
 aucune exécution en cours ou en file d'attente, aucun workflow actif et aucun
-webhook de dépôt actif. L'autorisation générale d'utiliser Actions reste
-distincte de ce constat : elle n'est désactivée que sur vps-infrastructure.
+webhook de dépôt actif. Lors de la mise en place des miroirs, GitHub Actions
+a aussi été désactivé au niveau des dix dépôts : les branches répliquées ne
+doivent pas relancer d'anciens workflows. Cela ne réactive aucune chaîne VPS.
 
 * Entretenir cette documentation
 

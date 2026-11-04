@@ -99,9 +99,10 @@ dépôt nettoyé et réappliquer seulement les modifications de sources utiles.
 La purge des objets internes conservés par GitHub n'est pas garantie par
 une réécriture des branches et tags.
 
-Le futur miroir Forgejo vers GitHub pourra écraser les références GitHub.
+Le miroir Forgejo vers GitHub peut écraser les références GitHub.
 Il ne migre pas les bases métier du VPS et ne constitue pas un déploiement.
-Sa mise en place reste distincte de l'accès Git/API de Codex Cloud à Forgejo.
+Il est configuré depuis le 4 novembre ; l'accès Git/API de Codex Cloud à
+Forgejo reste une opération distincte à réaliser.
 
 * Compte rendu minimal à conserver dans Git
 
