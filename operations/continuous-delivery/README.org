@@ -1,0 +1,66 @@
+#+title: Tests Forgejo et livraison depuis main
+#+language: fr
+
+* Circuit courant
+
+Le runner Forgejo standard =mrjam-ci= exécute =.forgejo/workflows/ci.yml=.
+Il récupère le commit exact d'infrastructure et les gitlinks Vision/Mateval,
+puis construit le serveur avec Rust 1.99.1 dans le sandbox Nix. Le build doit
+passer le formatage, Clippy, les tests des crates et les intégrations PostgreSQL
+avec une base synthétique jetable. Aucun accès aux bases applicatives n'est
+utilisé pour ces essais.
+
+Le service =mrjam-delivery= suit =main=. Il exige une exécution réussie du
+workflow =ci.yml= déclenchée par un push sur ce même commit. Il utilise
+l'artefact construit par cette exécution, démarre le slot inactif avec sa
+configuration existante, attend ses sondes privées et vérifie Nginx avant de
+changer son routage. L'ancien processus reste démarré. Les contrôles immédiats
+passent par le vrai Nginx et vérifient TLS et l'en-tête du nouveau serveur.
+Les durées de bascule et de retour sont écrites dans les événements du service.
+
+Après livraison, une surveillance à la seconde déclenche le retour après deux
+échecs de disponibilité. Un commit revenu en arrière n'est pas relivré en boucle.
+Une interruption pendant la bascule provoque aussi le retour via =ExecStopPost= ;
+le routage validé est rétabli avant Nginx au démarrage suivant.
+
+Les scripts SQL ne sont jamais exécutés par le déployeur. Une différence des
+migrations bloque la livraison ordinaire et relève de l'intervention distincte
+prévue pour les schémas. =mrjam-validation= n'est pas modifié. Les anciennes
+chaînes GitHub/admission/attestation/promotion restent arrêtées.
+
+* Installation sur le VPS
+
+Construire =services.nix= avec Nix, transférer sa fermeture et le paquet qu'il
+référence, puis exécuter =install.py PACKAGE SERVICES= comme administrateur.
+L'installateur crée un accès de lecture des sources pour la CI, une inscription
+de runner limitée à l'infrastructure et active Actions sur ce seul dépôt.
+Les valeurs de credentials restent dans =/etc/mrjam-ci/=, hors Git et hors store.
+Le runner utilise son compte systemd dédié et ne reçoit aucun accès administrateur.
+
+Sur ce VPS NixOS, =/etc/systemd/system= pointe vers le store en lecture seule.
+Les unités et leurs dépendances de démarrage sont donc installées sous
+=/etc/systemd/system.control=, présent dans le chemin de chargement de systemd.
+Les paquets installés sont conservés par des racines GC. L'installation seule
+ne remplace aucun binaire applicatif et ne change aucune route.
+
+* Exploitation
+
+=systemctl status mrjam-ci mrjam-delivery= indique l'état de la chaîne.
+Forgejo affiche le résultat des tests sur le commit concerné. Les métadonnées
+de livraison sont dans =/var/lib/mrjam-delivery/current.json= et les résultats
+de construction dans =/var/lib/mrjam-ci/results/=. Ces fichiers ne contiennent
+ni données métier ni credentials.
+
+Pour suspendre les nouvelles livraisons, arrêter =mrjam-delivery=. Cela conserve
+le routage validé ; une transaction inachevée revient automatiquement en arrière.
+Le service de restauration au démarrage conserve la dernière version validée.
+
+* Portée de cette première livraison
+
+Le premier raccord livre le serveur déplacé et son en-tête HTTP, avec les
+frontends, les services d'identité et ViSe déjà installés. Il n'exécute aucune
+migration et ne remplace pas simultanément les autres services. Les évolutions
+des frontends et de ViSe doivent avoir leur recette de construction/livraison
+avant d'être annoncées couvertes par ce premier circuit.
+
+Les sauvegardes restent inchangées et hors priorité de cette intervention.

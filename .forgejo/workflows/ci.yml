@@ -1,0 +1,16 @@
+name: Tests et construction
+on:
+  push:
+    branches: [main, 'spectre/**', 'integration/**']
+  pull_request:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: mrjam-ci
+    timeout-minutes: 90
+    steps:
+      - name: Tests Rust, intégration PostgreSQL et construction Nix
+        env:
+          SOURCE_REPOSITORY: ${{ github.repository }}
+          SOURCE_REVISION: ${{ github.sha }}
+        run: mrjam-ci "$SOURCE_REPOSITORY" "$SOURCE_REVISION"

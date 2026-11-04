@@ -1,5 +1,16 @@
 # Préparer et qualifier l'infrastructure Rust/Elm
 
+- Directive utilisateur du 4 novembre, reprise depuis Spectre : priorité aux outils,
+  à Forgejo et à une livraison automatique simple. Les anciennes chaînes arrêtées
+  ne sont pas un objectif à terminer ou à réactiver. Le circuit courant est préparé
+  dans `operations/continuous-delivery/` : runner Forgejo standard, tests Nix,
+  puis livraison du `main` testé sur le slot inactif et retour rapide.
+- Un seul dépôt modifié par intervention ; `mrjam-validation` reste en lecture
+  seule par défaut. Les sauvegardes sont temporairement hors priorité ; conserver
+  leurs fichiers et services. Les schémas et migrations suivent une intervention
+  distincte. Depuis Spectre, l'administration nécessaire est autorisée, sans
+  lecture des données métier ni affichage de secrets.
+
 - Directive utilisateur du 4 novembre 2026 : toute demande de déploiement autorise
   sa réalisation. Préparer le candidat en amont, conserver l'ancienne version
   disponible, basculer de manière transactionnelle, tester immédiatement et revenir
