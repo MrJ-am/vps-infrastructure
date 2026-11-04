@@ -190,7 +190,7 @@ in {
     # The recipient is read only inside this private unit, from the existing
     # archive configuration, instead of embedding it in a new Nix derivation.
     systemd.services.forgejo-backup = {
-      description = "Retained encrypted Forgejo database and repository backup";
+      description = "Single encrypted Forgejo backup, replaced only when content changes";
       after = [ "postgresql.service" ];
       requires = [ "postgresql.service" ];
       restartIfChanged = false;
@@ -205,6 +205,13 @@ in {
         flock -x 9
         recipient=$(${privateRecipient "forgejo-backup"})
         tmp=$(mktemp -d /var/backup/forgejo/.snapshot-XXXXXX)
+        destination=/var/backup/forgejo
+        # Keep only the directory selected by the atomic latest symlink.
+        retained=$(readlink "$destination/latest" || true)
+        for old in "$destination"/.backup-*; do
+          test -d "$old" || continue
+          if test "$(basename "$old")" != "$retained"; then rm -rf -- "$old"; fi
+        done
         active=0
         pending=""
         if ${pkgs.systemd}/bin/systemctl is-active --quiet forgejo.service; then active=1; fi
@@ -222,6 +229,17 @@ in {
           test ! -L /var/lib/forgejo-identity
           roots+=(forgejo-identity)
         fi
+        absolute_roots=()
+        for root in "''${roots[@]}"; do absolute_roots+=("/var/lib/$root"); done
+        fingerprint=$(${pkgs.python3}/bin/python3 ${../../backups/forgejo_fingerprint.py} \
+          "$tmp/forgejo.dump" ${config.services.postgresql.package}/bin/pg_restore "''${absolute_roots[@]}")
+        if test -s "$destination/latest/forgejo.tar.age" \
+          && test -s "$destination/latest/forgejo.tar.age.key.age" \
+          && test -f "$destination/latest/fingerprint" \
+          && test "$(cat "$destination/latest/fingerprint")" = "$fingerprint" \
+          && (cd "$destination/latest" && sha256sum --status -c SHA256SUMS); then
+          exit 0
+        fi
         tar --acls --xattrs -C /var/lib -cf "$tmp/data.tar" "''${roots[@]}"
         # Capture is complete: encryption and verification use only these fixed
         # snapshots. Resume the writer and its coordinator before expensive I/O.
@@ -229,7 +247,8 @@ in {
           ${pkgs.systemd}/bin/systemctl start forgejo.service
           active=0
         fi
-        dest=/var/backup/forgejo/forgejo-$(date -u +%Y%m%dT%H%M%SZ).tar.age
+        mkdir "$tmp/backup"
+        dest="$tmp/backup/forgejo.tar.age"
         test ! -e "$dest"
         test ! -e "$dest.key.age"
         test ! -e "$dest.tmp"
@@ -245,6 +264,16 @@ in {
         pg_restore --list "$tmp/forgejo.dump" >/dev/null
         mv "$dest.key.age.tmp" "$dest.key.age"
         mv "$dest.tmp" "$dest"
+        printf '%s\n' "$fingerprint" > "$tmp/backup/fingerprint"
+        (cd "$tmp/backup" && sha256sum forgejo.tar.age forgejo.tar.age.key.age > SHA256SUMS)
+        generation=".backup-$(basename "$tmp")"
+        mv "$tmp/backup" "$destination/$generation"
+        ln -s "$generation" "$tmp/latest"
+        mv -Tf "$tmp/latest" "$destination/latest"
+        for old in "$destination"/.backup-*; do
+          test -d "$old" || continue
+          if test "$(basename "$old")" != "$generation"; then rm -rf -- "$old"; fi
+        done
       '';
     };
   };

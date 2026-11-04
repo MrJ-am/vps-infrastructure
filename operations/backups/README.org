@@ -124,3 +124,27 @@ les sauvegardes en cours, puis attendre la fin de leur nettoyage avant l'arrêt
 définitif des écrivains. Le nettoyage Forgejo rétablit son état actif antérieur
 et celui de Nextcloud quitte la maintenance : ils ne doivent pas s'exécuter
 après que le contrôleur a constaté le gel des services.
+
+* Forgejo : une seule sauvegarde, uniquement sur changement
+
+La règle du 4 novembre 2026 remplace l'accumulation quotidienne. Le contrôle
+quotidien compare une empreinte du contenu SQL, des fichiers et de leurs droits
+et attributs. Les dates d'accès/modification des fichiers et le jeton aléatoire
+restrict de pg_restore sont exclus de cette comparaison. Une base ou un fichier
+modifié entraîne une nouvelle sauvegarde ; la simple consultation d'un fichier
+ne suffit pas. Le contrôle exige encore un export temporaire de la base et une
+lecture des fichiers, avec Forgejo brièvement arrêté pour la cohérence.
+
+La seule sauvegarde courante est /var/backup/forgejo/latest, lien vers un
+répertoire contenant forgejo.tar.age, forgejo.tar.age.key.age, fingerprint et
+SHA256SUMS. L'archive et la clé enveloppée gardent le format chiffré précédent.
+La nouvelle archive est déchiffrée et comparée à la capture avant publication.
+Le lien latest est remplacé atomiquement ; l'ancien répertoire est alors retiré.
+En cas d'échec avant publication, la précédente sauvegarde reste accessible.
+Au démarrage suivant, les anciennes générations résiduelles sont retirées.
+
+forgejo-single.nix construit le script du module NixOS sans reconstruire le VPS.
+Un remplacement ciblé d'ExecStart dans /etc/systemd/system.control/forgejo-backup.service.d permet d'appliquer
+la règle immédiatement ; le timer, les credentials et l'isolation restent ceux
+du service existant. Le module backups.nix porte également la nouvelle règle.
+Test synthétique : python3 test_forgejo_single.py CHEMIN_DU_SCRIPT_CONSTRUIT.
