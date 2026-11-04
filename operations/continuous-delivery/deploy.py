@@ -42,7 +42,7 @@ def command(arguments, timeout=30):
 
 
 def probe(slot, route="/readyz"):
-    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=0.4)
+    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=0.8)
     try:
         connection.request("GET", route)
         return connection.getresponse().status == 200
