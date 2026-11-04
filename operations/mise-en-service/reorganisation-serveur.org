@@ -1,6 +1,22 @@
 #+title: Réorganisation du serveur dans vps-infrastructure — 4 novembre 2026
 #+language: fr
 
+* Circuit retenu depuis Spectre
+
+La directive du 4 novembre donne priorité à une forge et une livraison simples,
+avec les applications fonctionnelles. Le circuit courant est décrit dans
+=../continuous-delivery/README.org= : runner Forgejo standard, tests du serveur
+et des composants épinglés dans Nix, puis livraison du =main= réussi sur le slot
+inactif. L'ancienne instance est conservée et les sondes déclenchent le retour
+automatique. Les schémas suivent une intervention distincte ; les sauvegardes
+restent inchangées et temporairement hors priorité.
+
+Les mentions plus bas de validation indépendante, de catalogue scellé et de
+staging décrivent la préparation antérieure. Elles ne constituent pas des
+chantiers à achever pour rétablir l'ancienne chaîne. Le nouveau workflow publie
+directement son résultat natif dans Forgejo et la protection de =main= exige
+ce résultat. =mrjam-validation= reste en lecture seule par défaut.
+
 * Demande et périmètre
 
 Rapatrier le serveur Rust, Log, l'identité, l'effacement et leurs tests dans
