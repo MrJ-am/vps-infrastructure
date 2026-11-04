@@ -4,19 +4,19 @@ let
   unitName = "mrjam-vision-admission";
   storePath = lib.types.strMatching "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
   credentialReference = lib.types.strMatching "/(run/secrets|run/keys|var/lib)/[A-Za-z0-9_./-]+";
-  publicConfig = name: pkgs.writeText "${name}.json" (builtins.toJSON {
+  identity = import ./vision-worker-identity.nix { inherit lib cfg; };
+  publicConfig = name: pkgs.writeText "${name}.json" (builtins.toJSON ({
     schema_version = 1; vision_database = cfg.visionDatabase; admissions_open = cfg.admissionsOpen;
     state_file = "/var/lib/${unitName}/admissions.sqlite";
     smtp_file = "/run/credentials/${name}.service/smtp";
-    keycloak_file = "/run/credentials/${name}.service/keycloak";
     closure_file = "/run/credentials/${name}.service/closure";
     approval_file = "/run/credentials/${name}.service/approval";
-  });
+  } // identity.configuration name));
   mappings = {
     visionAdmission = { database = cfg.visionDatabase; role = "vision_admission"; };
     visionAdmissionAdministration = { database = cfg.visionDatabase; role = "vision_administration"; };
   };
-  references = [ cfg.smtpCredentialFile cfg.keycloakCredentialFile cfg.closureCredentialFile cfg.approvalCredentialFile ];
+  references = [ cfg.smtpCredentialFile identity.credentialFile cfg.closureCredentialFile cfg.approvalCredentialFile ];
   unit = initialize: let name = unitName + lib.optionalString initialize "-initialize";
     command = "${cfg.artifactStorePath}/bin/vision-admission";
     args = "--config ${publicConfig name}";
@@ -30,7 +30,7 @@ let
       User = unitName; Group = unitName;
       StateDirectory = unitName; StateDirectoryMode = "0700";
       LoadCredential = [ "smtp:${cfg.smtpCredentialFile}" ] ++ lib.optionals (!initialize) [
-        "keycloak:${cfg.keycloakCredentialFile}" "closure:${cfg.closureCredentialFile}"
+        identity.credential "closure:${cfg.closureCredentialFile}"
         "approval:${cfg.approvalCredentialFile}" ];
       UMask = "0077"; StandardInput = "null"; StandardOutput = "null"; StandardError = "journal";
       NoNewPrivileges = true; CapabilityBoundingSet = ""; AmbientCapabilities = "";
@@ -57,19 +57,19 @@ in {
     visionDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
     admissionsOpen = lib.mkEnableOption "public admission handlers and periodic processing after explicit adoption";
     smtpCredentialFile = lib.mkOption { type = credentialReference; };
-    keycloakCredentialFile = lib.mkOption { type = credentialReference; };
     closureCredentialFile = lib.mkOption { type = credentialReference; };
     approvalCredentialFile = lib.mkOption { type = credentialReference; };
-  };
+  } // identity.options;
   config = lib.mkIf cfg.enable {
-    assertions = [
+    system.extraDependencies = identity.extraDependencies;
+    assertions = identity.assertions ++ [
       { assertion = !(builtins.hasContext cfg.artifactStorePath);
         message = "Vision admission requires a previously built artifact without construction context."; }
       { assertion = config.services.mrjamPostgresqlAccess.enable && lib.all
           (name: config.services.mrjamPostgresqlAccess.workers.${name} == mappings.${name})
           (builtins.attrNames mappings);
         message = "Vision admission requires its exact dedicated PostgreSQL peer mappings."; }
-      { assertion = lib.all (path: lib.all (part: part != "." && part != "..") (lib.splitString "/" path)
+      { assertion = lib.all (path: path != null && lib.all (part: part != "." && part != "..") (lib.splitString "/" path)
           && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path)) references
           && builtins.length (lib.unique references) == 4;
         message = "Vision admission requires unambiguous, separate credential references."; }

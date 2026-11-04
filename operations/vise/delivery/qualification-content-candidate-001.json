@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "candidate": "/nix/store/51bx822kblj1a93pxnmqqwjiyxnbqf68-mrjam-vise-delivery-candidate-8ea736fc4819",
+  "recipe": "/nix/store/dslpszlj97wb9gylwqyc8ngdg31p1krd-mrjam-protected-delivery-recipe-1",
+  "worktree_and_recipe_same_candidate": true,
+  "constructor_tests_passed": 12,
+  "production_changed": false,
+  "limitations": [
+    "Local synthetic binding uses rules000 and no signature",
+    "Unit tests mock admission and signature observer",
+    "No production staging, activation or rollback"
+  ]
+}

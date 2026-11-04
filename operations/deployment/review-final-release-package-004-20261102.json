@@ -1,0 +1,58 @@
+{
+  "all_candidate_linked_evidence_hashes_valid": true,
+  "artifact_count": 1676,
+  "both_generation_guards_match": true,
+  "both_generations_match_qualified_candidate_006": true,
+  "closure_intersection_count": 811,
+  "controller_package": "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+  "eight_backend_modules_byte_identical_to_source_revision": true,
+  "exact_union_and_all_registered_nar_hashes_match": true,
+  "fixed_wrappers_exec_isolated_python_with_no_extra_operations": true,
+  "forgejo_binding_sha256": "f954125926bf67ffbc38bb5d565a31f62648ecc3c140f419b3cf7fb180f53c9e",
+  "governance_code_and_binding_byte_identical": true,
+  "governance_v2_core_bound_to_independent_review_and_real_vm": true,
+  "instrumented_backend_bound_to_independent_review_and_integrated_vm_009": true,
+  "limits": [
+    "Previous-generation closure is checked against the closed VPS observation, not read on this local host.",
+    "This is a manifest/package binding review; real rollout, private service continuity and rollback remain production outcomes.",
+    "No deploy or recover entrypoint was executed locally or remotely."
+  ],
+  "literal_reversal_restores_entrypoint_bytes": true,
+  "local_closure_count": 1297,
+  "manifest_bytes": 217704,
+  "manifest_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "new_controller_governance_binding_store_bytes_verified": true,
+  "old_observed_artifact_count": 1190,
+  "only_three_entry_constants_changed": true,
+  "passed": true,
+  "production_execution": false,
+  "release_schema_valid": true,
+  "retained_service_unit_hashes_and_v3_adoption_binding_valid": true,
+  "root_count": 14,
+  "schema_version": 1,
+  "source_hashes": {
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release-package.nix": "352c6f4986e6cb76b948d11f23eaa71254034db1db5eb2b36dcf1378026b4be4",
+    "release_backend.py": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+    "release_entrypoint.py": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab",
+    "snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+  },
+  "source_revision": "1c7b4eedf05396900ab05953b09bb98c0dfe522a",
+  "wrappers": {
+    "deploy": {
+      "entry_sha256": "d9db1fdffe8582a9f9bc7c425541d491c5d83900672d913582f3d5868a0e457f",
+      "manifest_path": "/nix/store/xsk4cb9459yncgq2j70cixzbr0y104zg-mrjam-first-release-binding-1/release.json",
+      "wrapper_sha256": "67cf24e1d23d60b206b807c63d260ec913651bf7380c751bbc5f6862e5cd8261"
+    },
+    "recover": {
+      "entry_sha256": "f1d6d79fc899fa8b38314a106fe1b7ef4a2dfbb997fec7f9704407ace97412e1",
+      "manifest_path": "/nix/store/xsk4cb9459yncgq2j70cixzbr0y104zg-mrjam-first-release-binding-1/release.json",
+      "wrapper_sha256": "cd3bb3dde1e46c4ff6cea214bb27c0c0f30d3be2d7517df3966461b8b95d1055"
+    }
+  }
+}

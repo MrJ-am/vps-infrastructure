@@ -1,0 +1,77 @@
+{
+  "all_socket_bindings_exclusive_to_four_public_ports": false,
+  "backup_timers_active_and_future_scheduled": true,
+  "capacity_cgroups_unavailable": [
+    "mrjam-rust-blue.service",
+    "mrjam-rust-green.service",
+    "mrjam-vision-archive.service",
+    "mrjam-vision-cycle.service",
+    "mrjam-vision-replay.service",
+    "phpfpm-nextcloud.service"
+  ],
+  "controller": "/nix/store/aclk4gzc77q0g4mjp6r1i18l06a6ks4w-mrjam-first-release-controller-1",
+  "cutover_verified": true,
+  "evidence_sha256": {
+    ".local/deployment-20261101/capacity-after-release-005.json": "068e92b96e23e95588e068ed2ff110ed0fb2782010357a4d72a39d0c1677f7a3",
+    ".local/deployment-20261101/first-release-observations-005.jsonl": "902ce3ba424ab14e59340754e23f61d030e5a7f82da22d7fb157de82ad7e69c6",
+    ".local/deployment-20261101/postflight-barriers-005.json": "6f33d2eae40fb220ed490524199643dbba211e5977b8c3a5f76b3f737555dddc",
+    ".local/deployment-20261101/postflight-barriers-v5-result-005.json": "bb3094052cc34e21470e4fe2ba3feb96cda5e87c0a5e49096ccef16d343d25cf",
+    ".local/deployment-20261101/public-https-after-005.json": "bb3aab27d853b2726b67f11aa0d4429af0de2497aa3038a0b8217a9b7d983e5c",
+    ".local/deployment-20261101/tcp-listeners-classified-005.json": "e65046ba4d7bd6ae6b409caff286f20ae5761a8815eed20899cf5ebcd50619a3"
+  },
+  "future_ci_proved": false,
+  "green_masked_expected_and_immutable_declaration_verified": true,
+  "legacy_and_temporary_administration_stopped": true,
+  "limits": [
+    "TCP5355 remains a wildcard listener on IPv4/IPv6. The exact observed input firewall does not admit it; no external connection attempt or process attribution is inferred. Its declarative removal belongs to the next generation.",
+    "Masked green and stopped periodic workers have no live process measurements; declaration and loaded-unit checks do not create that absent proof.",
+    "The capacity observation cannot provide counters for every cgroup, including active Rust blue; missing counters remain unavailable, not zero.",
+    "Backup scheduling does not prove a successful backup or restoration. Human SSO, positive SMTP and comprehensive application authorization remain distinct proofs.",
+    "CI execution, human review, merge and protected delivery are not established by this first successful deployment.",
+    "ViSe remains intentionally excluded, with retained-directory metadata only; no content-preservation proof is invented."
+  ],
+  "loaded_workers_with_observed_unit_barriers": [
+    "mrjam-identity",
+    "mrjam-identity-deletion",
+    "mrjam-rust-blue",
+    "mrjam-vision-admission",
+    "mrjam-vision-archive",
+    "mrjam-vision-closure",
+    "mrjam-vision-cycle",
+    "mrjam-vision-replay"
+  ],
+  "postflight_qualification_sha256": "30cc484d5480d7aa689c86558c3cee1df6b0b9cf632136b6ea0e5a0f06bf3852",
+  "postflight_source_sha256": "a319f94479abc13606f745c9e44091b8f4e1d7c62d1decba06d728d4a1228095",
+  "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+  "promoted_live_and_boot": true,
+  "public_https_domains_passed": 8,
+  "public_https_observed_at": "2026-11-02T23:23:29.453295+00:00",
+  "release_sha256": "9fd41d93000fb058397fa49db73d4e0e0c45bb4888fa3ec6a52c148f8ec83341",
+  "replay_declaration_without_provider_token": true,
+  "reviewer_production_access": false,
+  "schema_version": 1,
+  "scope": "review of closed production observations supplied by root, no reviewer VPS access",
+  "source_revision": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd",
+  "ssh_nginx_and_ipv4_ipv6_firewall_checks_passed": true,
+  "status": "SOCLE_DEPLOYED_WITH_EXPLICIT_RESIDUAL_OBSERVATIONS",
+  "technical_secret_metadata_passed_without_content_read": true,
+  "terminal_observed_at": "2026-11-02T23:23:19.085084+00:00",
+  "unexpected_nonloopback_tcp_ports": [
+    5355
+  ],
+  "unexpected_port_has_no_observed_firewall_acceptance": true,
+  "unexpected_port_process_owner_proved": false,
+  "workers_with_observed_process_barriers": [
+    "mrjam-identity",
+    "mrjam-identity-deletion",
+    "mrjam-rust-blue",
+    "mrjam-vision-admission",
+    "mrjam-vision-closure"
+  ],
+  "workers_without_live_process_observation": [
+    "mrjam-rust-green",
+    "mrjam-vision-archive",
+    "mrjam-vision-cycle",
+    "mrjam-vision-replay"
+  ]
+}

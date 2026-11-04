@@ -1,0 +1,55 @@
+#+title: Adoption des admissions natives Kanidm
+
+Ce composant distinct reprend les deux SQLite historiques dans la base privée du
+travailleur Rust. Il conserve les invitations, les décisions, l'URL d'enrôlement
+Kanidm, les messages SMTP et leurs preuves. L'adopteur précédent sous
+=operations/migrations/admission/= et ses reçus restent inchangés.
+
+* Contrat
+
+=mrjam-admission-adopt= ne prend aucun argument et refuse root. Il lit uniquement
+=/run/mrjam-admission-adoption/requests.sqlite= et =mail.sqlite=, puis publie
+=/var/lib/mrjam-vision-admission/admissions.sqlite=. Le répertoire d'entrée est
+privé, mode 0700, appartenant à l'UID cible. Les images sont des fichiers réguliers
+à lien unique, root:GID cible, mode 0440, sur un montage effectivement en lecture
+seule. La destination appartient à l'UID cible, mode 0600, dans son répertoire
+0700. Les images cohérentes doivent être préparées pendant l'arrêt des écrivains ;
+le composant n'ouvre jamais une base vivante ni un fichier du VPS.
+
+Le schéma est reconnu par les objets SQL exacts des sources épinglées, sans vue,
+déclencheur, index supplémentaire ou DDL libre. Les formes Python et Lisp sont
+acceptées, y compris les colonnes ajoutées par le Lisp. La cible comporte
+25 colonnes =demandes= et 11 colonnes =courriels=, conformément aux schémas copiés
+dans =schemas/=.
+
+=enrolement= est conservé octet pour octet lorsqu'il existe ; son absence devient
+NULL. Seule la destination historique =https://log.mrj.am/ui/reset?token=…= est
+acceptée, sans requête réseau. Les clés =enrol:<id>= sont conservées avec les
+autres clés d'admission. =empreinte_metier= reste une colonne distincte : le
+digest Lisp d'un tableau JSON n'est pas le digest Rust d'un objet JSON.
+=contenu_sha256= reste NULL pour les messages historiques. Aucun MIME, jeton ou
+digest absent n'est régénéré.
+
+La publication utilise un verrou exclusif du répertoire, une image temporaire
+privée, fsync et un lien atomique sans remplacement. Une destination identique
+reste intacte ; une destination différente est refusée. Les deux fenêtres de
+reprise prévues sont vérifiées, dont celle du même inode à deux liens après
+publication. Une écriture temporaire partielle exige une récupération distincte.
+Les sorties se limitent à un statut fermé sans donnée d'entrée.
+
+Bornes : 64 Mio par source, 128 Mio de cible, 10000 lignes par table, 131072 octets
+par message, budget SQLite et échéance de 15 secondes par connexion. L'unité
+d'exploitation doit fournir ses limites de mémoire et de temps et interdire le
+réseau. Aucun démarrage implicite du travailleur n'est inclus.
+
+* Validation disponible
+
+=qualification-build-20261102.json= identifie le paquet Nix et ses sources.
+Les 24 tests d'auteur sont passés localement et dans la construction Nix :
+préservation de toutes les preuves, schémas exacts, enrôlement, MIME opaque,
+refus des entrées altérées, bornes, permissions, collisions et reprise après
+interruption. Ils utilisent exclusivement des valeurs inventées.
+
+La qualification indépendante des unités systemd et de la reprise du travailleur
+sur ces images natives reste nécessaire avant activation. Ce reçu de construction
+ne constitue ni une mesure du contenu des bases réelles ni une preuve d'envoi.

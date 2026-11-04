@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "activeSlotIdentical": true,
+    "activeUnitIdentical": true,
+    "assertionsPass": true,
+    "baselineExact": true,
+    "bootPolicyIdentical": true,
+    "buildContextRefused": true,
+    "inactiveUnitChanged": true,
+    "newInactiveExecutable": true,
+    "noImplicitRestart": true,
+    "nonStorePathRefused": true,
+    "retainedUnitsIdentical": true,
+    "routeIdentical": true,
+    "unknownSlotRefused": true
+  },
+  "production_activation": false,
+  "schema_version": 1,
+  "scope": "nixos-evaluation-only-no-runtime-validation-or-activation",
+  "sources": {
+    "slot-artifacts.nix": "bfef93997837842dfba63c43dd3ced8706738168312dc78fa95249112469fa32",
+    "slot-evaluation.nix": "f2c97d00bf09a1102999365e4dddd58aa3aacb72783730cfa0dee06cf396ae2c"
+  }
+}

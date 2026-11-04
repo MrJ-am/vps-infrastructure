@@ -1,0 +1,29 @@
+{
+  "checks": [
+    "HTTP-cookie-and-CSRF-state-required",
+    "wrong-Host-refused",
+    "single-use-callback",
+    "expired-session-refused",
+    "fixed-owner-and-permissions",
+    "unused-secrets-not-retained",
+    "private-file-modes-and-no-overwrite",
+    "RSA-signature-independently-verified",
+    "directory-symlink-refused"
+  ],
+  "checks_passed": 9,
+  "limits": [
+    "GitHub registration and installation pending user authentication",
+    "Live GitHub key authentication and VPS import not yet executed",
+    "Transfer wrapper prepared but no real credential transferred"
+  ],
+  "official_reference": "https://docs.github.com/en/apps/sharing-github-apps/registering-a-github-app-from-a-manifest",
+  "schema_version": 1,
+  "scope": "local-bootstrap-tests-with-synthetic-credentials-no-real-GitHub-registration",
+  "source_sha256": {
+    "github-app-receive.py": "a7cf5861b184e765a456f1cfe479e3c963f41b9921ea383b6fb5d566d60a9367",
+    "github-app-setup.py": "d53330135495e87df96b5b9df362b9eb68e7b1fd4268c10ab9b3cef3c6bb55ed",
+    "github-app-transfer.py": "e1bafcf88928ba0c63ee26ebcd502074c7a9ca8989e2a726f9a0df9e6cd759c3",
+    "test_github_app_receive.py": "1db0bec2ac9de3ff145dbb74b2f42b018f92463d247dead87f246c1b4952013e",
+    "test_github_app_setup.py": "b1cc354011ba10ccfdaed724131f6ec5597f7dc10e5b134a734fcbcbacf3f7fe"
+  }
+}

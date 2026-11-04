@@ -1,0 +1,109 @@
+{
+  "activation_performed": false,
+  "build_exit": 0,
+  "date": "2026-11-03",
+  "duration_seconds": 97.7,
+  "first_attempt": {
+    "exit": 1,
+    "log": {
+      "bytes": 88733,
+      "path": ".local/ci-key-bootstrap-v1-20261103/build-001.stderr",
+      "sha256": "a70c962ea5863ad9f9093702dcb8484abd9e491b43e77f098ca6f061d9b1a85e"
+    },
+    "reason": "fixture included atime in full stat equality; corrected only fixture to preserve all identity/content metadata checks and public-key equality"
+  },
+  "fixed_private_path": "/var/lib/mrjam-validation-authority/signing-key",
+  "limits": [
+    "Only invented keys were generated inside a disposable VM.",
+    "No power-loss durability claim beyond explicit file/directory fsync and atomic no-replace rename.",
+    "The helper creates or observes the key only; it grants no validation, review, merge or deployment authority."
+  ],
+  "log": {
+    "bytes": 76438,
+    "path": ".local/ci-key-bootstrap-v1-20261103/build-002.stderr",
+    "sha256": "c1d61d975564bcb271fd12bfa659d8a4492215de9fe883a03e86a546c072308d"
+  },
+  "package": "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+  "package_info": {
+    "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1": {
+      "ca": null,
+      "deriver": "/nix/store/kzmmbq4a0v5fim3pswxwc6wx1n2syw2d-mrjam-validation-authority-key-bootstrap-1.drv",
+      "narHash": "sha256-pGx2E15GblvB3xqfrTe5QZvcRJoYxamFT53Hk4Bf8rI=",
+      "narSize": 6584,
+      "references": [
+        "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "registrationTime": 1793665261,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "packaged_source": {
+    "bytes": 5439,
+    "path": "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1/lib/bootstrap.py",
+    "sha256": "fadd497d30dc425ca1479cf6e3ab934437bfd8213638189852ca7c917bc95306"
+  },
+  "private_key_exported": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "fixed-root-key-bootstrap-local-invented-VM",
+  "source_byte_identical_after_openssl_substitution": true,
+  "sources": [
+    {
+      "bytes": 5375,
+      "path": "operations/ci/key-bootstrap-v1/bootstrap.py",
+      "sha256": "4b6540269dd88599f44615a820c1ff5f83f57fb03d83a24bde3be81a61962a3d"
+    },
+    {
+      "bytes": 576,
+      "path": "operations/ci/key-bootstrap-v1/package.nix",
+      "sha256": "0b4ecc5e37a959df7f2c02530d5a6e589825e445e7ecbd1fff54134bfae3a0f0"
+    },
+    {
+      "bytes": 4998,
+      "path": "operations/ci/key-bootstrap-v1/fixture.py",
+      "sha256": "e9367229c704cf02750a16df094e8afc65074b7b4e6f89458d712533d23e3a4b"
+    },
+    {
+      "bytes": 1573,
+      "path": "operations/ci/key-bootstrap-v1/systemd.nix",
+      "sha256": "6ce29c12535ad717ece21c2b78057c2007304eb74e38f4bbd11c19e1aa88b192"
+    },
+    {
+      "bytes": 2492,
+      "path": "operations/ci/key-bootstrap-v1/record_qualification.py",
+      "sha256": "a29836b33ace8956c1e05d9d1aca21eafb6473c0273058c6cd69c7735ebf1d05"
+    }
+  ],
+  "status": "passed",
+  "vm_output": "/nix/store/rcqy7ngq6yr9dkypg6msfhsvabx44cdh-vm-test-run-mrjam-authority-private-key-bootstrap",
+  "vm_result": {
+    "checks": [
+      "root-and-no-arguments",
+      "create-private-export-public-only",
+      "repeat-preserves-existing-key",
+      "nonroot-cannot-read-key",
+      "actual-ed25519-signature",
+      "metadata-and-hardlink-refused",
+      "file-and-directory-symlink-refused",
+      "stale-staging-refused-without-deletion",
+      "kernel-no-replacement-publication",
+      "non-ed25519-key-refused"
+    ],
+    "ci_activated": false,
+    "package": "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+    "private_key_exported": false,
+    "production_access": false,
+    "schema_version": 1
+  },
+  "vm_result_file": {
+    "bytes": 544,
+    "path": "/nix/store/rcqy7ngq6yr9dkypg6msfhsvabx44cdh-vm-test-run-mrjam-authority-private-key-bootstrap/result.json",
+    "sha256": "0ee451039a5047d3c496e3264cbc42fd84bd3ea4bbb142787adc5fb09b18a30a"
+  }
+}

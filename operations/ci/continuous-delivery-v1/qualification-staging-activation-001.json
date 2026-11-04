@@ -1,0 +1,16 @@
+{
+  "boot": "/nix/store/9vpbs7mxmz13k7mf4y7m20r6cvmn661y-nixos-system-srv1982677-26.05pre-git",
+  "code": "STAGING_SERVICES_ACTIVE",
+  "current": "/nix/store/9vpbs7mxmz13k7mf4y7m20r6cvmn661y-nixos-system-srv1982677-26.05pre-git",
+  "new_delivery_promoted": false,
+  "real_return_verified": true,
+  "retained_processes_unchanged": true,
+  "services": [
+    "mrjam-acceptance-merge",
+    "mrjam-acceptance-mirror",
+    "mrjam-acceptance-review",
+    "mrjam-acceptance-sync",
+    "mrjam-delivery-preparation",
+    "mrjam-delivery-staging"
+  ]
+}

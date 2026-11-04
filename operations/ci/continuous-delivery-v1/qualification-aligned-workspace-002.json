@@ -1,0 +1,40 @@
+{
+  "binaries": {
+    "mrjam-identity": {
+      "bytes": 7956720,
+      "sha256": "4183f2c5fb880477e1b285aa5d5c2e906ce9b477c108ee2e2a20af0ecbe544a5"
+    },
+    "mrjam-identity-deletion": {
+      "bytes": 2828760,
+      "sha256": "01bfd116c6074ae45b0f61d53cabd8c12bed4f9e773e0ad9daed8b31678d53dc"
+    },
+    "mrjam-server": {
+      "bytes": 16107640,
+      "sha256": "160d2189995961818af19f9ea716b217406c563cf71acb29fc96857c05231105"
+    },
+    "vision-journal-adoption": {
+      "bytes": 4098312,
+      "sha256": "ad7e4de46b0d67febe85f2c04dd61948b3a5edbf43ce353470cb7bd41d98d33f"
+    }
+  },
+  "clippy_all_targets_all_features_deny_warnings_forbid_unsafe": true,
+  "fmt": true,
+  "limits": [
+    "One explicit release memory measurement remains ignored by normal cargo test and requires separate execution",
+    "Not a production CI signature or admission",
+    "No deployment or remote source update performed"
+  ],
+  "materialization_proof_sha256": "57d723e8f719424c1fb2500f253a06705388fae130f0937a50d18c3608780358",
+  "output": "/nix/store/0hms7zwm5an6yrhmmmmbkgj85r49m334-mrjam-aligned-workspace-673d9b6befe2",
+  "platform_revision": "673d9b6befe25b7ee211578e5a941473b37dfe0c",
+  "postgresql": "isolated synthetic PostgreSQL 17 with pgvector",
+  "recipe_sha256": "a5889ed07604a0ec099bcbf73e54915f9cd9e71e1349442e8adf9c6c2ab256d3",
+  "schema_version": 1,
+  "scope": "local-aligned-workspace-qualification-no-production-admission",
+  "tests": {
+    "failed": 0,
+    "ignored": 1,
+    "passed": 143,
+    "result_groups": 35
+  }
+}

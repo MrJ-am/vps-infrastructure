@@ -1,0 +1,19 @@
+{
+  "base_platform_revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+  "files": [
+    {
+      "base_sha256": "da7ba261fdeb982392e89af8ae62764eddde3d4861c10c86f629c2ac12e9f2e3",
+      "compiled_sha256": "10a058655b2ff65acedd457145394b1542cdd432170584ea6e6c80a18e602cf4",
+      "path": "crates/server/src/database.rs"
+    },
+    {
+      "base_sha256": "996a03dca45250b39bd538c9a6ba9b257f700eea3bdc78d1ac16283c7f8b9fd2",
+      "compiled_sha256": "c44a8a1cb562abc873d3761409e6d40c945569bb1973571c09f87d813254b08d",
+      "path": "crates/server/tests/runtime_postgres.rs"
+    }
+  ],
+  "patch_path": "operations/runtime/mateval-readiness-v1/readiness.patch",
+  "patch_sha256": "90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4",
+  "repository": "MrJ-am/vps-infrastructure",
+  "revision": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd"
+}

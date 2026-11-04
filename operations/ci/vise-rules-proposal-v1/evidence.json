@@ -1,0 +1,134 @@
+{
+  "limitations": [
+    "Rules commit is local and not independently adopted",
+    "No signature, private key or registry admission",
+    "Local UID substitutes for root input ownership",
+    "No production database, deployment or backup accessed"
+  ],
+  "repackaged_runtime_paths_admission_compatible": true,
+  "report": {
+    "artifacts": [
+      {
+        "bytes": 6904224,
+        "name": "server",
+        "sha256": "c67326bb587e3b354552ab07355e0bf06392b093d17a9c519b938aa38e517e9e"
+      },
+      {
+        "bytes": 1044480,
+        "name": "frontend.tar",
+        "sha256": "877007256a5fb5cc546f80da33ba1c4a739a2074d87339821a2cb0de14415231"
+      }
+    ],
+    "authority": "local-verifier-content-receipt",
+    "decision": "passed",
+    "independent_adoption_established": false,
+    "not_established": [
+      "Independent release acceptance is not established by this content report.",
+      "Production deployment is not authorized by this content report.",
+      "No production database, erasure ledger or backup was used in validation."
+    ],
+    "policy_sha256": "d7c5b3aa1ed1d83c4cc6ab52389f0ccc1de7cb993494910ce5a99139ea1fc794",
+    "production_authorized": false,
+    "proposal_sha256": "055cf2a44af7d27c2e25306d0806ee64b3ffb9ab512905425a00942203e5ea49",
+    "rules_revision": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+    "schema_version": 1,
+    "sources": [
+      {
+        "id": "vise",
+        "repository": "MrJ-am/etp-vie-affective",
+        "revision": "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c",
+        "tree_sha": "2aa5617e8b54e25b8975baf7805a524033fd7b11"
+      }
+    ],
+    "steps": [
+      {
+        "name": "complete-vise-source-tree",
+        "status": "passed"
+      },
+      {
+        "name": "locked-toolchain-versions",
+        "status": "passed"
+      },
+      {
+        "name": "locked-cargo-npm-elm-dependencies",
+        "status": "passed"
+      },
+      {
+        "name": "rust-offline-release-build",
+        "status": "passed"
+      },
+      {
+        "name": "typescript-no-emit",
+        "status": "passed"
+      },
+      {
+        "name": "vise-frontend-build",
+        "status": "passed"
+      },
+      {
+        "name": "vise-component-tests",
+        "status": "passed"
+      },
+      {
+        "name": "vise-api-tests-synthetic-postgresql",
+        "status": "passed"
+      },
+      {
+        "name": "vise-schema-and-role-refusals",
+        "status": "passed"
+      },
+      {
+        "name": "vise-graceful-stop-and-restart",
+        "status": "passed"
+      },
+      {
+        "name": "vise-restore-current-erasure-ledger",
+        "status": "passed"
+      },
+      {
+        "name": "vise-artifact-content-bound",
+        "status": "passed"
+      }
+    ]
+  },
+  "result": {
+    "artifacts": [
+      {
+        "bytes": 6904224,
+        "name": "server",
+        "sha256": "c67326bb587e3b354552ab07355e0bf06392b093d17a9c519b938aa38e517e9e"
+      },
+      {
+        "bytes": 1044480,
+        "name": "frontend.tar",
+        "sha256": "877007256a5fb5cc546f80da33ba1c4a739a2074d87339821a2cb0de14415231"
+      },
+      {
+        "bytes": 1728,
+        "name": "verification.json",
+        "sha256": "991d053ec9c9900256eefd03ee862249eec8a9c49801729d44b3e45614bc932c"
+      }
+    ],
+    "elapsed_seconds": 174.75,
+    "full_validation": false,
+    "limits": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "pids.max": "256"
+    },
+    "passed": true,
+    "production_access": false,
+    "scope": "local-verifier-and-sealed-content-receipt",
+    "source_owner_substitution": "local UID, not production root staging",
+    "validator": "/nix/store/5i6frxwcryx3li26p06z145ws01b818p-mrjam-vise-canonical-validator-1"
+  },
+  "rules_export": {
+    "repository": "MrJ-am/mrjam-validation",
+    "revision": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+    "schema_version": 1,
+    "tree": "c642b3aa2608d656edb7b7fce684cd9dd16d2354"
+  },
+  "same_all_three_artifacts_as_previous_validation": true,
+  "same_application_artifacts_as_previous_validation": true,
+  "schema_version": 1
+}

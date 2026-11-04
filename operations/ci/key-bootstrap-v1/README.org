@@ -1,0 +1,51 @@
+#+title: Amorçage borné de la clé Ed25519 de validation
+#+language: fr
+
+Le paquet fournit une seule commande sans argument,
+=mrjam-validation-authority-key-bootstrap=. Elle exige root et l’hôte
+=srv1982677=. Elle ne contacte aucun réseau et ne démarre aucune unité.
+Le chemin source attendu par le module est
+=/var/lib/mrjam-validation-authority/signing-key=.
+
+Les ancêtres sont ouverts sans suivre de liens, root:root 0755. Le répertoire
+privé est créé une fois en root:root 0700, ou vérifié s’il existe. Aucune ACL
+d’accès ou par défaut n’est admise. Un verrou non bloquant sur le répertoire
+sérialise les invocations de ce helper.
+
+Une nouvelle clé est générée par l’OpenSSL immuable dans un fichier temporaire
+exclusif, puis passée en root:root 0400, monolien et synchronisée. OpenSSL
+accède à ce fichier via un descripteur local ; Python ne lit pas ses octets
+privés. Les sorties de génération et d’erreur vont à /dev/null. Seule la
+DER publique de 44 octets est récupérée après validation du type Ed25519.
+La publication utilise renameat2(RENAME_NOREPLACE), puis fsync du répertoire.
+
+Une clé finale déjà valide n’est jamais remplacée : le helper dérive et rend
+la même clé publique avec =AUTHORITY_KEY_ALREADY_PRESENT=. Cette répétition
+permet de récupérer la réponse après une interruption suivant la publication.
+Un état =signing-key.next= abandonné est refusé et conservé ; il n’est jamais
+adopté automatiquement. Une erreur avant publication élimine seulement le
+temporaire créé par cette invocation, après comparaison dev/inode.
+
+La réponse réussie contient uniquement le code, =public_key_der=, =key_id=
+(SHA de cette DER) et les constats =private_key_exported=false=,
+=ci_activated=false=. Les refus sont des codes fermés, jamais du texte
+d’exception ou une sortie OpenSSL. Aucun secret n’entre dans le paquet Nix,
+le dépôt ou les journaux de qualification.
+
+* Qualification
+
+Le banc VM emploie exclusivement des clés inventées. Dix groupes passent :
+root et absence d’arguments, création privée/export public, répétition sans
+remplacement, refus de lecture par un autre UID, vraie signature Ed25519,
+modes et liens physiques, liens symboliques, temporaire abandonné, publication
+kernel sans écrasement et refus d’un autre type de clé.
+
+Le premier banc a échoué sur une comparaison trop large de stat, comprenant
+atime. La relecture peut légitimement mettre à jour ce timestamp après le
+rename. Seule la fixture a été corrigée : elle compare toujours inode,
+propriétaire, groupe, mode, liens, taille, mtime, ctime et clé publique.
+Le helper de production n’a pas changé entre ces deux essais.
+
+Cette preuve ne simule pas une coupure électrique. Elle ne crée aucune clé
+de production, n’adopte aucune politique et n’active pas la CI. L’exécution
+réelle appartient au relais root après revue indépendante de ce paquet.

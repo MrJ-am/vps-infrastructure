@@ -1,0 +1,19 @@
+{
+  "after_available_bytes": 15898705920,
+  "available_bytes_gained": 4498067456,
+  "backup_or_application_paths_deleted": false,
+  "before_available_bytes": 11400638464,
+  "code": "UNREFERENCED_STORE_RECLAIMED",
+  "controller": "/nix/store/nxg9yyq1j1vm3mpn2vic2n4djz7fzgzj-reclaim-unreferenced-store.py",
+  "evidence_sha256": {
+    ".local/deployment-20261101/store-reclaim-001.stderr": "14ab396123371531e355f660ada8e5146da94ae2cb1f376f3be2b5d21fbafabd",
+    ".local/deployment-20261101/store-reclaim-001.stdout": "0c2946c07be7bfdfa2d6a98798c1bb51b7028421df95eea3380bad4861112d10",
+    "operations/ci/continuous-delivery-v1/reclaim-unreferenced-store.py": "88d0f162296b349c2d8e97d91d95d19870e9e4281f1e8d61910f3054d5b9634c"
+  },
+  "nix_summary": null,
+  "preserved_services": 7,
+  "profile_generations_deleted": false,
+  "required_roots_verified": 7,
+  "schema_version": 1,
+  "seconds": 40.722
+}

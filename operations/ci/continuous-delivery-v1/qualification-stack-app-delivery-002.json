@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "checks": {
+    "currentExact": true,
+    "assertionsPass": true,
+    "stageChangesOnlyOffTraffic": true,
+    "unitsPreserved": true,
+    "stagedRoutesUnchanged": true,
+    "stagedAdoptionUnchanged": true,
+    "nonAssetConfigurationUnchanged": true,
+    "assetRoutingUnchanged": true,
+    "promotionChangesOnlyRoutesAndBoot": true,
+    "promotionRetainsCommands": true,
+    "noImplicitRestart": true
+  },
+  "current": "/nix/store/31bn5yy3k5y58ryni1wf67zdzyb33jjd-nixos-system-srv1982677-26.05pre-git",
+  "staged": "/nix/store/31bn5yy3k5y58ryni1wf67zdzyb33jjd-nixos-system-srv1982677-26.05pre-git",
+  "promoted": "/nix/store/m5sq6hpy40vhmx39g6w5fip5z6h7qsmq-nixos-system-srv1982677-26.05pre-git",
+  "stagedState": {
+    "active_slot": "blue",
+    "adopted": "/nix/store/2ny4527xzy4d9aljs805j037kydnypbc-mrjam-adopted-source.json",
+    "control_plane": {
+      "acceptance": "/nix/store/448fjd5j0fdm3msq0yx134ym92s0nhsd-mrjam-separated-acceptance-services-1",
+      "preparation": "/nix/store/pgddnwwkaxsi983h14zw3rrs1s4zd6y0-mrjam-delivery-preparation-1",
+      "stack": "/nix/store/skiv0r2zrcqmqgxbcfsrasj1wlyagiir-mrjam-protected-delivery-stack-1",
+      "staging": "/nix/store/z7jj71qnp0pd17mmffj8bfh015ziq0ss-mrjam-protected-staging-service-1"
+    },
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+        "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+      },
+      "green": {
+        "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb",
+        "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/31bn5yy3k5y58ryni1wf67zdzyb33jjd-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  },
+  "promotedState": {
+    "active_slot": "green",
+    "adopted": "/nix/store/v2qj31slhqs948a5ihd7yrva9nhhp7pc-mrjam-adopted-source.json",
+    "control_plane": {
+      "acceptance": "/nix/store/448fjd5j0fdm3msq0yx134ym92s0nhsd-mrjam-separated-acceptance-services-1",
+      "preparation": "/nix/store/pgddnwwkaxsi983h14zw3rrs1s4zd6y0-mrjam-delivery-preparation-1",
+      "stack": "/nix/store/skiv0r2zrcqmqgxbcfsrasj1wlyagiir-mrjam-protected-delivery-stack-1",
+      "staging": "/nix/store/z7jj71qnp0pd17mmffj8bfh015ziq0ss-mrjam-protected-staging-service-1"
+    },
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+        "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+      },
+      "green": {
+        "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb",
+        "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/m5sq6hpy40vhmx39g6w5fip5z6h7qsmq-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  },
+  "deployment_authorized": false,
+  "scope": "Corrected authority closure: packaged ViSe fixture then platform fixture",
+  "recipe": "/nix/store/34w9z6sxrwcqlfmfhrbrn0g1bs7y24qy-mrjam-protected-delivery-recipe-1",
+  "production_changed": false,
+  "fixture_candidates": true,
+  "vise_generation": "/nix/store/31bn5yy3k5y58ryni1wf67zdzyb33jjd-nixos-system-srv1982677-26.05pre-git",
+  "limitations": [
+    "No independent adoption authority for fixture candidates.",
+    "No application activation in this qualification.",
+    "Protected rules review and real signed CI delivery remain required."
+  ],
+  "view_sha256": {
+    "vise-current": "b5eaf972b44b74a155dc6405f7cbc2fd5e9a155c21b6ed72f9acea166093ccdd",
+    "vise-candidate": "a48641a5a2607c548da64b7df4f37dc98e0217e97fc01c8e465ba7807d546925",
+    "platform-current": "dcc0ed8bfec43e16b9d44fbb69cf21b875776acd2e25ec355053c389bb08920e",
+    "platform-stage": "7f751d2ae411f45242eac40cb69f70041c157879b103813b353e1220082b2acc",
+    "platform-promotion": "9607eb887e6053c4681f48ec7152e8c9872fd3243c3d35c5e3b460bbb11b6094"
+  }
+}

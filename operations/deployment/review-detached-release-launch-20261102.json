@@ -1,0 +1,65 @@
+{
+  "controller_package": "/nix/store/irb47r5zxmffhlklmf2c613gdm8ydb1z-mrjam-first-release-controller-1",
+  "deadlines": "Backend preserves its5400s forward and10800s total budgets from freeze. Infinite systemd runtime/stop timeouts do not reset those clocks and do not kill an engaged coherent return or containment.",
+  "fixed_deploy_argv": [
+    "/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2/bin/systemd-run",
+    "--system",
+    "--unit=mrjam-first-release-20261102.service",
+    "--service-type=exec",
+    "--remain-after-exit",
+    "--expand-environment=no",
+    "--property=User=root",
+    "--property=Group=root",
+    "--property=UMask=0077",
+    "--property=WorkingDirectory=/",
+    "--property=StandardInput=null",
+    "--property=StandardError=null",
+    "--property=StandardOutput=append:/run/mrjam-first-release-status/result.json",
+    "--property=Restart=no",
+    "--property=KillMode=mixed",
+    "--property=KillSignal=SIGTERM",
+    "--property=SendSIGHUP=no",
+    "--property=SendSIGKILL=no",
+    "--property=TimeoutStartSec=30s",
+    "--property=TimeoutStopSec=infinity",
+    "--property=RuntimeMaxSec=infinity",
+    "--property=LimitCORE=0",
+    "--",
+    "/nix/store/irb47r5zxmffhlklmf2c613gdm8ydb1z-mrjam-first-release-controller-1/bin/mrjam-first-release-deploy"
+  ],
+  "launch_detached_from_ssh": true,
+  "limits": [
+    "No production launch and no full-generation activation performed for this launch review.",
+    "Power loss, reboot or SIGKILL remain separate conservative recovery cases; a transient unit survives client disconnect, not a reboot.",
+    "Recovery may use the separately sealed recover binary only after the existing transaction is no longer running and its durable phase is eligible."
+  ],
+  "nixos_custom_removal_marker_required": false,
+  "nixos_switch_binary_for_both_generations": "/nix/store/qix9bpv1pprfjz7r5a9cpdkhqk2s03ii-switch-to-configuration-0.1.0/bin/switch-to-configuration",
+  "nixos_switch_deriver": "/nix/store/6mklg926zgyxik0vhsbw5pzcs4b8sin1-switch-to-configuration-0.1.0.drv",
+  "nixos_switch_reason": "collect_unit_changes ignores system units whose FragmentPath does not start with /etc/systemd/system; /run/systemd/transient is excluded before X-StopOnRemoval evaluation.",
+  "nixos_switch_source": "/nix/store/l8nvd2l5ahmc1x2k8af3nqygi0d4fxlz-switch-to-configuration-ng/src/main.rs",
+  "nixos_switch_source_sha256": "54c288f7969e9dfda8e55c2da871105c9166c92a5c2d47de55de77e4b4c6aa10",
+  "no_automatic_restart_or_recovery": true,
+  "no_scope_wait_pipe_pty_collect_or_no_block_options": true,
+  "no_ssh_client_pipe_or_pty_inheritance": true,
+  "observer_contract": [
+    "Fixed unit properties only, each validated against a finite allowlist or bounded numeric shape.",
+    "Only fixed root-private phase.json and result.json, strict schemas, bounded1024-byte reads and enum values; no journals, initial-state records, backups or app data.",
+    "Success requires active/exited, MainPID0, ExecMainCode1, ExecMainStatus0, exact CUTOVER_VERIFIED/public-writes-open result and identical durable phase.",
+    "While active/running, report in-progress even when durable phase already says public-writes-open.",
+    "If launch client disconnects before confirmation, observe the fixed unit first; never blindly re-run, stop, reset or auto-recover."
+  ],
+  "official_sources": [
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.kill.html"
+  ],
+  "passed": true,
+  "preconditions": [
+    "Unit absent, not merely inactive; refuse duplicate or foreign unit without stopping/resetting it.",
+    "Output ancestors root-owned without symlinks or non-root writes; private output directory0700 and new regular root:root output0600 created with O_EXCL and nlink1.",
+    "Operational launch accepts no caller arguments or environment overrides and invokes the reviewed deploy binary only."
+  ],
+  "schema_version": 1,
+  "scope": "Source and official systemd documentation review; no new execution or VM claim."
+}

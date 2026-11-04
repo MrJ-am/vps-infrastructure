@@ -1,0 +1,26 @@
+{
+  "exit_code": 0,
+  "ignored": 0,
+  "messages": [
+    {
+      "code": "PROPOSALS_OBSERVED",
+      "ignored": 0,
+      "proposals": 0
+    }
+  ],
+  "package": "/nix/store/adylyavm0s2y1zjrcpmg0zyklhg3p89d-mrjam-github-proposal-discovery-1",
+  "proposals": 0,
+  "read_token_revoked": true,
+  "schema_version": 1,
+  "scope": "live-read-only-discovery-no-admission",
+  "snapshot_sha256": "19ace916b0fe2aeb28482cc5c64e11cd6c6d932804cf8d176189ace4645df33e",
+  "sources": {
+    "github-discovery-module.nix": "e34877798a16fdaf0b1c06c2362e70d86043b074a6158d12d2ab13faf55b8b74",
+    "github-proposals.nix": "e9e271f2511fbfb2aeaf21b29bc070d13fc36bf7670aea98ffe4e259fd7e3920",
+    "github-proposals.py": "6433a7b0e019a93a5418f6453d85a8acb4a8b4a369928432934f53c1809549b4",
+    "test_github_proposals.py": "a6599b8d1a451351a3fadc8d4b5104bed8ca3fdafa354ebdf03caa2e5e82f281"
+  },
+  "temporary_unit_removed": true,
+  "tests_passed": 6,
+  "timer_installed": false
+}

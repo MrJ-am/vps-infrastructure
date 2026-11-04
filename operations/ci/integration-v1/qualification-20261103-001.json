@@ -1,0 +1,344 @@
+{
+  "credential_boundaries": {
+    "build_exit": 0,
+    "log": {
+      "bytes": 78328,
+      "path": ".local/ci-integration-v1-20261103/reader-boundaries-001.stderr",
+      "sha256": "5ec0c2b91a727f44a76c33e08f455a2a0e1295632b4d6d8951aeb3ba12d2ba79"
+    },
+    "output": "/nix/store/jlm6rv2v76qp10422abvn4gybp7n0i21-vm-test-run-mrjam-authority-exact-reader-kernel-boundaries",
+    "result": {
+      "checks": [
+        {
+          "accepted": true,
+          "case": "exact-acl-readonly",
+          "code": "ACCEPTED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "wrong-file-mode",
+          "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "extra-user-acl",
+          "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "wrong-user-acl",
+          "code": "SIGNING_CREDENTIAL_UNAVAILABLE",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "extra-parent-acl",
+          "code": "SIGNING_CREDENTIAL_DIRECTORY_REFUSED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "hardlink",
+          "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "oversize",
+          "code": "SIGNING_CREDENTIAL_FILE_REFUSED",
+          "readonly": true
+        },
+        {
+          "accepted": false,
+          "case": "writable-mount",
+          "code": "SIGNING_CREDENTIAL_DIRECTORY_REFUSED",
+          "readonly": false
+        },
+        {
+          "accepted": true,
+          "case": "final-exact-acl-readonly",
+          "code": "ACCEPTED",
+          "readonly": true
+        }
+      ],
+      "production_access": false,
+      "schema_version": 1,
+      "scope": "exact-packaged-reader-private-kernel-mount-namespace-dropped-uid"
+    },
+    "result_file": {
+      "bytes": 1078,
+      "path": "/nix/store/jlm6rv2v76qp10422abvn4gybp7n0i21-vm-test-run-mrjam-authority-exact-reader-kernel-boundaries/result.json",
+      "sha256": "25b485ecf68c80b3c70f925d220872c5149bd5977ab993f407496083e4ea7f98"
+    }
+  },
+  "credential_reader_source": {
+    "bytes": 2324,
+    "path": "operations/ci/authority-credentials-v2/reader.py",
+    "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+  },
+  "date": "2026-11-03",
+  "integrated_scope": {
+    "auxiliary_failure": "SYNTHETIC_VIEW_UNAVAILABLE in an invented credential view belonging to another systemd unit; not a signing-chain failure",
+    "bindings": {
+      "bytes": 2306,
+      "path": "/nix/store/id1d8i1appmx3wb6z9sgsj8kjdykhll9-mrjam-ci-synthetic-vm-bindings.json",
+      "sha256": "e0901333c1914fc6bd64213d8f06bccf71ca7eb9a813fec4420f78dd12bc34f0"
+    },
+    "checks_passed": [
+      "prepare",
+      "inactive-boundaries",
+      "fresh-chain",
+      "cache-reuse",
+      "wrong-peers",
+      "key-separation",
+      "legacy-cache-refused",
+      "tamper-refused",
+      "wrong-key-refused",
+      "expiry-refused"
+    ],
+    "count": 10,
+    "derivation": "/nix/store/xlxdx2bjddj9v5qxgg9i82ks9fm8h8y9-vm-test-run-mrjam-ci-distinct-identities-authority-and-coordinator.drv",
+    "failed_build_not_relabelled": true,
+    "fixture": {
+      "bytes": 17113,
+      "path": "/nix/store/ypdb73ispcqgg3jnkrps94g0m0bc3i6j-mrjam-ci-synthetic-unit-fixture/fixture.py",
+      "sha256": "c9f1a3dfc152551e89e7d51ff284de9efc8f3840ff9f8f8e935159273a76b5b6"
+    },
+    "identities": {
+      "collector": 61001,
+      "coordinator": 61003,
+      "outsider": 61006,
+      "registrar": 61004,
+      "signer": 61002,
+      "worker": 61005
+    },
+    "log": {
+      "bytes": 99393,
+      "path": ".local/ci-integration-v1-20261103/build-008.stderr",
+      "sha256": "bc71a379e72a84d34a1d6ea3734553f674e59e129e78ccf4c8218501d95619a8"
+    },
+    "original_full_build_exit": 1,
+    "private_coordinator_root": "/nix/store/jba4s48h4lrs0b8y43bp0hnbnch0mwv3-mrjam-ci-synthetic-coordinator-root",
+    "production_coordinator_root_for_same_policy": "/nix/store/jvkxrswxprgls99c5nfkv5xpcd0s1dgs-mrjam-forgejo-coordinator-authority-root-1"
+  },
+  "not_established": [
+    "Actual Forgejo job transport or production key/policy.",
+    "New validator execution on every job: a bound v2 cache may be reused; issued_at dates signing only.",
+    "Human review, merge or deployment authority."
+  ],
+  "package": "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+  "package_info": {
+    "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2": {
+      "ca": null,
+      "deriver": "/nix/store/hirvlaypcz122dsc5g0zb2kqz3g56kzd-mrjam-validation-authority-credentials-2.drv",
+      "narHash": "sha256-oViFPuQe24bhxEqxC8xvo+zD+hMbE7SEttoZCbFTqWE=",
+      "narSize": 94280,
+      "references": [
+        "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+        "/nix/store/f2xmb4gv2nh14qggn5df25i8vz532vxy-mrjam-validation-export-policy.json",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/mjrp49pbx6ni76zdpjw2jsn1dlfa49rh-mrjam-validation-authority-policy.json"
+      ],
+      "registrationTime": 1793663287,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "packaged_source_checks": {
+    "client": {
+      "packaged_sha256": "80ee5f8f7792528fdb24697dfd607ba9fb5ae847972b73baf87c5f9ec9dc18aa",
+      "source_sha256": "533892253bf42088e6c08ab0ffae6e003b257193688e133d831756a229b20cd5"
+    },
+    "collector": {
+      "packaged_sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac",
+      "source_sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac"
+    },
+    "contract": {
+      "packaged_sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37",
+      "source_sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37"
+    },
+    "exporter": {
+      "packaged_sha256": "12f196b9e33919fbd24625ba07e87672958305a199e39f818c9104f2157611c6",
+      "source_sha256": "49dec6ad066f5a8b9a29f3846e7dd837ee38fbe31c36de8bce2b368d9b141825"
+    },
+    "producer": {
+      "packaged_sha256": "2412163cac2215a232a596197fe0d174c4568b2b7927b4b8dc8808ec335927d1",
+      "source_sha256": "2412163cac2215a232a596197fe0d174c4568b2b7927b4b8dc8808ec335927d1"
+    },
+    "signer": {
+      "packaged_sha256": "f75cb06d5bf45b94d257d50e83852c2a47af8f5f0b300e5c9aa94ccfde89591d",
+      "source_sha256": "8a2d545c83638f6414a5fc1685c96bc39907c7a79914528b1504b8a08d141547"
+    }
+  },
+  "prior_receipts": [
+    {
+      "bytes": 9446,
+      "path": "operations/ci/authority-v1/qualification-local-20261103-001.json",
+      "sha256": "095a6ba17097a80e4924a7b89f5aafc75563ab6423ce5d2e35726ac83ae98be6"
+    },
+    {
+      "bytes": 13268,
+      "path": "operations/ci/coordinator-v1/qualification-local-20261103-001.json",
+      "sha256": "5045bfeb06466e3d9215de4412d15c4b82d43fcf32716a2260a34bad0c26c9c0"
+    },
+    {
+      "bytes": 1608,
+      "path": "operations/ci/integration-v1/diagnosis-credential-20261103.json",
+      "sha256": "a148a41c40ea0caa5223f70ad1648502bb41a7f29346040fd864022190e7c90e"
+    }
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "sources": [
+    {
+      "bytes": 3002,
+      "path": "operations/ci/authority-v1/client.py",
+      "sha256": "533892253bf42088e6c08ab0ffae6e003b257193688e133d831756a229b20cd5"
+    },
+    {
+      "bytes": 11292,
+      "path": "operations/ci/authority-v1/collector.py",
+      "sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac"
+    },
+    {
+      "bytes": 10960,
+      "path": "operations/ci/authority-v1/contract.py",
+      "sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37"
+    },
+    {
+      "bytes": 5455,
+      "path": "operations/ci/authority-v1/exporter.py",
+      "sha256": "49dec6ad066f5a8b9a29f3846e7dd837ee38fbe31c36de8bce2b368d9b141825"
+    },
+    {
+      "bytes": 7743,
+      "path": "operations/ci/authority-v1/module.nix",
+      "sha256": "17385f852734dbf00f474f94478a52a7461b3657dff9978cf6c11cc7125f4e97"
+    },
+    {
+      "bytes": 2012,
+      "path": "operations/ci/authority-v1/package.nix",
+      "sha256": "b516aad2878ca8c50638fa4b794adcf4fa6a9b63d222c04a4294102609a780cc"
+    },
+    {
+      "bytes": 3537,
+      "path": "operations/ci/authority-v1/producer.py",
+      "sha256": "2412163cac2215a232a596197fe0d174c4568b2b7927b4b8dc8808ec335927d1"
+    },
+    {
+      "bytes": 11730,
+      "path": "operations/ci/authority-v1/signer.py",
+      "sha256": "8a2d545c83638f6414a5fc1685c96bc39907c7a79914528b1504b8a08d141547"
+    },
+    {
+      "bytes": 16313,
+      "path": "operations/ci/authority-v1/test_authority.py",
+      "sha256": "83783647e6d3b86ae044dee6e714b57e7f3962c922f2f278eadebe06ff9cd2a4"
+    },
+    {
+      "bytes": 434,
+      "path": "operations/ci/authority-credentials-v2/module.nix",
+      "sha256": "f018ea6abfe5aa30fbbbc7d6d71c8286702d89bd0db499c83662dd87decbbf39"
+    },
+    {
+      "bytes": 962,
+      "path": "operations/ci/authority-credentials-v2/package.nix",
+      "sha256": "2bf9aa84b5ad585b5b881561234f04d47e6db3e4d9de98d74f48b816d6d80acf"
+    },
+    {
+      "bytes": 2324,
+      "path": "operations/ci/authority-credentials-v2/reader.py",
+      "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+    },
+    {
+      "bytes": 5032,
+      "path": "operations/ci/coordinator-v1/evaluation.nix",
+      "sha256": "31ef979382e698b3404a3f16cc51f31aaddae69e7e6b32a5a8dc3175d0da3aad"
+    },
+    {
+      "bytes": 2023,
+      "path": "operations/ci/coordinator-v1/module.nix",
+      "sha256": "c616cde2a05855cee08159dd4c452ca061826ae4d9d957d5b909a551f5252a3a"
+    },
+    {
+      "bytes": 4920,
+      "path": "operations/ci/coordinator-v1/runner-attestation.go",
+      "sha256": "750c1c7d6e8fdab34f73e64005184d59539f7c812ef8fe49c3c3f15495613b30"
+    },
+    {
+      "bytes": 4598,
+      "path": "operations/ci/coordinator-v1/runner-attestation_test.go",
+      "sha256": "bc841725c51ed45011e3271ad2b28812811465ae60426b9dcadd0dc7cc3d9820"
+    },
+    {
+      "bytes": 1823,
+      "path": "operations/ci/coordinator-v1/runner.nix",
+      "sha256": "4a401431a217095176dc32f3baa8d29c5822b71b7c231c109991a8d70e08d6ad"
+    },
+    {
+      "bytes": 514,
+      "path": "operations/ci/integration-v1/diagnostic-signer.py",
+      "sha256": "f4e5778754d66ee1271e84dff4f11566cfdf4195f7cbdf105d82a6035c4a8283"
+    },
+    {
+      "bytes": 17050,
+      "path": "operations/ci/integration-v1/fixture.py",
+      "sha256": "ddaddabfda54e830a0fdc36defd5b5747f21badc2244c8aacf6356503089e2bb"
+    },
+    {
+      "bytes": 1627,
+      "path": "operations/ci/integration-v1/reader-boundaries.nix",
+      "sha256": "5b11ff3a9baca52418084dcdf3de5be23919408e18290f300b4b8b8a16122fe0"
+    },
+    {
+      "bytes": 4061,
+      "path": "operations/ci/integration-v1/reader-boundaries.py",
+      "sha256": "c01063dcb410ad1d29eb5f57d1546f027294b13a9f0ac8170fb8ee3128810ccd"
+    },
+    {
+      "bytes": 664,
+      "path": "operations/ci/integration-v1/reader-probe.py",
+      "sha256": "1c7c07baf132f3136f76b5c759b5ed37e746239590c8b5a38f58719f4cb5017c"
+    },
+    {
+      "bytes": 6667,
+      "path": "operations/ci/integration-v1/record_qualification.py",
+      "sha256": "ba2a0375e29a4b9719b324bbeb13de3b838f1b28635d995d61da8957a05e7bde"
+    },
+    {
+      "bytes": 699,
+      "path": "operations/ci/integration-v1/runner-vm_test.go",
+      "sha256": "172e85c6fa5c7ebd2667d5a9f315a3b0f796fb79919ac3f08a858a4f4a02cfc8"
+    },
+    {
+      "bytes": 10667,
+      "path": "operations/ci/integration-v1/systemd.nix",
+      "sha256": "7a61b37e735c733ae09f4fb6c98d73365125c6ecd5ed1e5e287c7392dff332b1"
+    },
+    {
+      "bytes": 1577,
+      "path": "operations/ci/integration-v1/validator.py",
+      "sha256": "7e14207f7dec008447fa2f5e13fe89dc0afa5b2dc8f8bd6a6c6c8f0307beeaa5"
+    },
+    {
+      "bytes": 881,
+      "path": "operations/ci/integration-v1/public-fixture-policy.json",
+      "sha256": "2b2f7c5ed574fc6a009ef06a025d6730aec1211beb0bc377ce7774e00efe7fe2"
+    }
+  ],
+  "status": "passed-in-declared-scopes",
+  "substitutions": [
+    "Invented immutable validator, sources, report and signing key; no application build.",
+    "An admitted task is supplied through a Go test entrypoint calling the exact bounded coordinator methods, rather than through Forgejo API/daemon.",
+    "The test entrypoint closure is added to the otherwise unchanged private coordinator root; the actual service restrictions and distinct UIDs apply.",
+    "Negative credential cases use private kernel mount namespaces and then drop root to the exact signer UID; the positive signing chain uses real systemd LoadCredential."
+  ],
+  "worker_core_byte_identical": true
+}

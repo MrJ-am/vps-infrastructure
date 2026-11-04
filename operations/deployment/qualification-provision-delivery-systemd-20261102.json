@@ -1,0 +1,103 @@
+{
+  "artifact": {
+    "derivation": "/nix/store/15h639zynkvx6r2rrhy6bs7a0hm93xbq-vm-test-run-mrjam-sealed-provision-delivery-import.drv",
+    "nar_bytes": 1520,
+    "nar_hash": "sha256-W5oHKXUN38nSKa1uCD9kC2QVibN5FO/1jCEwYwuqYVQ=",
+    "path": "/nix/store/zc46civ71s6r3lgma03igvbjbp1cs3pa-vm-test-run-mrjam-sealed-provision-delivery-import",
+    "result_sha256": "942eafdecdefab2200d61d69d3fad9e2f4993b3c88c7f2bbcb3f330bf7b24030"
+  },
+  "date": "2026-11-02",
+  "execution": {
+    "cores": 2,
+    "disk_mib": 3072,
+    "host_store_mounted": false,
+    "max_jobs": 1,
+    "memory_mib": 768,
+    "production_access": false,
+    "publication": false,
+    "scope": "local synthetic VM only",
+    "seconds": 15.9,
+    "ssh": false,
+    "vm_stopped": true,
+    "writable_store": "private disk overlay"
+  },
+  "limits": [
+    "Synthetic archive 1680 bytes and two invented inert paths; this VM does not import the production 718957480-byte export",
+    "No credentials, human authentication, service start, production activation or remote delivery were performed",
+    "Concurrent refusal uses a second real flock open-file description; input read raises if reached"
+  ],
+  "passed": true,
+  "prior_attempts": [
+    {
+      "attempt": 1,
+      "log": ".local/provision-delivery-vm-001.log",
+      "result": "refused before import; private store image was read-only"
+    },
+    {
+      "attempt": 2,
+      "log": ".local/provision-delivery-vm-002.log",
+      "result": "confirmed free-space refusal at receiver line 134; private store image still read-only"
+    },
+    {
+      "attempt": 3,
+      "log": ".local/provision-delivery-vm-003.log",
+      "result": "passed after enabling writable private disk overlay; receiver unchanged"
+    }
+  ],
+  "qualification": "independent-real-nix-import-and-inactive-runtime-unit-delivery",
+  "reproduction": [
+    "Build package and unit attributes from provision-delivery-systemd.nix with artifactsOnly=true and the recorded nixpkgs path",
+    "The embedded synthetic_bundle is the exact bundle JSON; write sorted JSON plus newline and pass its path as --arg bundle",
+    "Build provision-delivery-systemd.nix with --max-jobs 1 --cores 2 --builders empty and nixpkgs /nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source"
+  ],
+  "result": {
+    "bundle_sha256": "9fbc11ea05d10ac82be3c480ea31a1c4dd48d126a243d3032fffa9c55b9fb562",
+    "checks": [
+      "two-invented-roots-absent-from-private-vm-store",
+      "truncation-extra-bytes-corruption-refused-before-real-import",
+      "real-nix-import-verify-path-and-manager-reload-with-inactive-unit",
+      "identical-repeated-import-preserves-unit-and-no-activation",
+      "real-directory-flock-refuses-concurrent-stream-before-read",
+      "foreign-regular-unit-and-link-never-replaced"
+    ],
+    "credentials_created": false,
+    "fixture_sha256": "834fad5e76ac879b15f6d13f868950020ab9060ae9e39c5c88d9eedd76dd8946",
+    "limits": [
+      "Tiny invented inert package and unit only",
+      "Production payload and target remain separately bound by the sealed receiver"
+    ],
+    "passed": true,
+    "production_access": false,
+    "real_store_import": true,
+    "receiver_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+    "schema_version": 1,
+    "source_functions_unmodified": true,
+    "synthetic_package": "/nix/store/8146d2z5889anal4f33k4rbbj5ngk2h6-mrjam-kanidm-worker-provision-2",
+    "synthetic_unit": "/nix/store/dpl855lpniz2krd25wkym0wv354afbgr-mrjam-kanidm-worker-provision.service",
+    "test_sha256": "1d3980fe46b6198280d08d909d2354f2efc724b2dd21d4a7a59c03f9b98c3b7d",
+    "unit_started": false
+  },
+  "schema_version": 1,
+  "sealed_production_copy_review": {
+    "export_bytes": 718957480,
+    "export_sha256": "7d7eb4d466bbb0a691f8bf39d00df4bdf446ee4b96d334c4ad524e1e01e477e9",
+    "local_full_export_size_and_sha256_verified": true,
+    "manifest_sha256": "2b356ae28f56fcaee2ab9fac30d2185eb3de0bed2b9dee6e487a408c341d07a7",
+    "no_execution_of_production_payload": true,
+    "only_release_assignment_differs_byte_for_byte": true,
+    "release_equals_json_manifest": true,
+    "sealed_sha256": "7ce3a2d9d2e280fd577aaf70373be4d6d55d31194234824b06f2f527b38e96d7",
+    "store_path_count": 161,
+    "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+    "unit_bytes_match_manifest": true
+  },
+  "source_substitutions": [
+    "PREVIOUS = real VM /run/current-system target",
+    "DIRECTORY = /var/lib/synthetic-provision-delivery",
+    "Invented frozen manifest supplied explicitly to unmodified deliver function"
+  ],
+  "synthetic_bundle": {
+    "export_gzip_base64": "H4sIAAAAAAAC/81T34vTQBBuUVED/glCROT0IZc2bdr60APh8hCEHl5TEc6jbLLbZJtkkk426Y8/3Ge37dq7WjzLeYrz8vHNbma+zH5Tr23jhULgC4NgEPGKGU3J6yr/VuFjhWKZszU+V5xyZIHIcKn4E4UMxCb3qzpA0k2dR4r7HPbPM7o5/1c6Xiqe4pSkRkyA09SYZxgzNHLMKl7wDO6h76niyMIyIVjTfuhasKAUxE9YbS+eKQwyEFJ74Sn++pUpR2QWkZYjBzHRT9zBZ2fgOedjd+BceuPRwPXGQ+/DpUx9hRP9TDexlB8sQURM8ODmL4xCEBSMarf1v1P4p3zgfnHW+FFxUxrLLOTDMLPXbHeotbJ7vfcESNKetFpxG31/akMYW1HHuHP2hrU3p4vD+sXMx67dtJpB5E+5VZFZ7kM15d24E1QzSH5X/5Ritatf/0/2480xvjwtGFY8YA/gz5/9903xqxFwca2dsyJAngvZtO9CJW8wqnNgKPSdGg6hTlkiJ4VLfcIXokSmXQ23Eq81T3buZ8CKKBOaI9dguLZj/wGNstmUO+9osidQgvSiFHkp+lAmyS7nIGa4Td3f/58O/UnzpGfbSQ58ZcVILXseL9PGvGrZbTLxQzSOfePbff/Wno0O6zaIHbejrhX58aoZ+WFe2WnYw1mDy4ZRGB+nf2/LbuI7vDNtvJAGAAA=",
+    "manifest_base64": "eyJleHBvcnRfYnl0ZXMiOiAxNjgwLCAiZXhwb3J0X3NoYTI1NiI6ICJjNjM3N2M5MGQ0MTRhOGVjMDNmYWVhMjIyNzNjYzUxNWY1MWQ3NThhZDI3ZDFkMjg5MDJlYTkwYzcxZTI4NGVmIiwgInBhY2thZ2UiOiAiL25peC9zdG9yZS84MTQ2ZDJ6NTg4OWFuYWw0ZjMzazRyYmJqNW5nazJoNi1tcmphbS1rYW5pZG0td29ya2VyLXByb3Zpc2lvbi0yIiwgInJlcXVpcmVkX2ZyZWVfYnl0ZXMiOiAxMDczNzQ1MTg0LCAic2NoZW1hX3ZlcnNpb24iOiAxLCAic3RvcmVfcGF0aHMiOiBbIi9uaXgvc3RvcmUvODE0NmQyejU4ODlhbmFsNGYzM2s0cmJiajVuZ2syaDYtbXJqYW0ta2FuaWRtLXdvcmtlci1wcm92aXNpb24tMiIsICIvbml4L3N0b3JlL2RwbDg1NWxwbml6MmtyZDI1d2t5bTB3djM1NGFmYmdyLW1yamFtLWthbmlkbS13b3JrZXItcHJvdmlzaW9uLnNlcnZpY2UiXSwgInVuaXRfc2hhMjU2IjogIjZlMTI5OTE5NTZmZmE5MjM4MTNjNDIzNDI0OTQ3YjI0M2ExZDQ1ZmIxYmQ1Y2FjY2IxNjNiYzgxMjQzZWJhY2UiLCAidW5pdF9zdG9yZSI6ICIvbml4L3N0b3JlL2RwbDg1NWxwbml6MmtyZDI1d2t5bTB3djM1NGFmYmdyLW1yamFtLWthbmlkbS13b3JrZXItcHJvdmlzaW9uLnNlcnZpY2UifQ=="
+  }
+}

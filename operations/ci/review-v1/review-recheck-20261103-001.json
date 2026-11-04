@@ -1,0 +1,29 @@
+{
+  "author_tests_passed": 8,
+  "authorization_produced": false,
+  "limits": [
+    "API reads remain sequential, not atomic with writes or revocation.",
+    "After merge does not recollect other reviews or branch protections and does not reverify artifact/source contents, validation signature or deployed generation; future service must enforce those obligations before authorizing a decision.",
+    "The manifest reader must still compare every consumed artifact and source to the signed attestation; this helper does not supply that missing validator.",
+    "Native Forgejo API shape/scope/permission and atomic merge behavior are not proved by these invented response tests.",
+    "Revocation observed after merge withholds a future delivery decision; no attempt to undo Git history is made."
+  ],
+  "merge_performed": false,
+  "production_access": false,
+  "qualification_sha256": "629439f45c065f342c6b836bc9fccd5baefcb376e0e46ecf4976f09e0da86090",
+  "reused_contract_sha256": "e86dd5a21f6a9aac5ff0df000dec29b62ad91fbd860c2db7e5462cc331ab5707",
+  "reused_projection_sha256": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6",
+  "reviewed_properties": [
+    "Before merge refreshes all review pages through the existing strict collector, revalidates the actual validation envelope signature and exact manifest/review binding, and refuses expired or changed prior binding.",
+    "Final individual selected review reread checks reviewer membership and technical exclusion, official APPROVED state, dismissal/staleness, head, update timestamp and exact approval body.",
+    "After merge requires an already verified binding, same review policy hash and unexpired policy/binding, closed non-draft merged PR, expected head as merge commit, current main equal to that head and unchanged selected approval.",
+    "Returns only an unsigned postmerge observation with head/review ID/time; supplies no write transport, merge request, signature or authority."
+  ],
+  "schema_version": 1,
+  "scope": "independent local code and author-test review, no test rerun, HTTP, merge or deployment",
+  "sources": {
+    "operations/ci/review-v1/recheck.py": "3f4289d3916b92b247e91cb82daa6cc4e452352ec9c287c643b5596783c21d4b",
+    "operations/ci/review-v1/test_recheck.py": "7f3964860cffe2e72526fde3e6766be46ecb57cf6d005bdaa2a390bba5d05fb9"
+  },
+  "status": "PASS_IN_DECLARED_SCOPE"
+}

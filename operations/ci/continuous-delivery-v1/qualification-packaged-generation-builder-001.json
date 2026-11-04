@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "checks": {
+    "currentExact": true,
+    "assertionsPass": true,
+    "stageChangesOnlyOffTraffic": true,
+    "unitsPreserved": true,
+    "stagedRoutesUnchanged": true,
+    "stagedAdoptionUnchanged": true,
+    "nonAssetConfigurationUnchanged": true,
+    "assetRoutingUnchanged": true,
+    "promotionChangesOnlyRoutesAndBoot": true,
+    "promotionRetainsCommands": true,
+    "noImplicitRestart": true
+  },
+  "current": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+  "staged": "/nix/store/27i5lsmml42p1xzc9nm81iakxyafr3b7-nixos-system-srv1982677-26.05pre-git",
+  "promoted": "/nix/store/913dgifa3fn11b6cmdk0jpa4r60y2q6z-nixos-system-srv1982677-26.05pre-git",
+  "stagedState": {
+    "active_slot": "blue",
+    "adopted": "/nix/store/v09b0b3qpi5arjgsr7jqx0nbyyi4mqj7-mrjam-adopted-source.json",
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/j4fh34y2iqfdgw4zvzf57mcj1xis78rx-mrjam-runtime-blue",
+        "server": "/nix/store/c7hgzdnhddl90hdp1a37kwlkj9xrpyyn-mrjam-delivery-server-e06f030310ae"
+      },
+      "green": {
+        "server": "/nix/store/dd69xlsswn5bs01y0n77wpk8rbs7s649-mrjam-delivery-server-e06f030310ae",
+        "runtime": "/nix/store/cryagvlf50dwxhrmyb7vrq5pmrc29lf1-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/27i5lsmml42p1xzc9nm81iakxyafr3b7-nixos-system-srv1982677-26.05pre-git"
+  },
+  "promotedState": {
+    "active_slot": "green",
+    "adopted": "/nix/store/mj7lx76m7b9whznx05608ma8inlw946l-mrjam-adopted-source.json",
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/j4fh34y2iqfdgw4zvzf57mcj1xis78rx-mrjam-runtime-blue",
+        "server": "/nix/store/c7hgzdnhddl90hdp1a37kwlkj9xrpyyn-mrjam-delivery-server-e06f030310ae"
+      },
+      "green": {
+        "server": "/nix/store/dd69xlsswn5bs01y0n77wpk8rbs7s649-mrjam-delivery-server-e06f030310ae",
+        "runtime": "/nix/store/cryagvlf50dwxhrmyb7vrq5pmrc29lf1-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/913dgifa3fn11b6cmdk0jpa4r60y2q6z-nixos-system-srv1982677-26.05pre-git"
+  },
+  "deployment_authorized": false,
+  "candidate": "/nix/store/0l3mivhq0j2sz7jrsbrrw4q30kb8pkww-mrjam-delivery-candidate-e06f030310ae-green",
+  "input_state_sha256": "8b4f494ba23b13e14ef90556bd2e6cc46faed0640e198e6ea4a3033962431582",
+  "view_sha256": {
+    "current": "5065657762528d8f8b9feb607eecb39f8c636b0326b9d757b1b8b0a4e6df9bc9",
+    "stage": "47dcac99b044969e9db291043c944c4db05ab5ff9b844bd86768086061fc559a",
+    "promotion": "3c9c58a05b69c0493836ae124a79931ff76b234086fbe15f8aa0d392d76fb71e"
+  },
+  "built": true,
+  "recipe": "/nix/store/lz5ai0w63h91f4df0yg19gsbzl0zjs7w-mrjam-protected-delivery-recipe-1",
+  "scope": "local-packaged-recipe-with-fixed-current-state-fixture",
+  "activated": false
+}

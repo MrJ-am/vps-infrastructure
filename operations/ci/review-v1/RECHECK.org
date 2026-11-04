@@ -1,0 +1,31 @@
+#+title: Relire la revue au voisinage d'une fusion bornée
+#+language: fr
+
+=recheck.py= fournit deux lectures internes pour un futur service de fusion.
+Il n'émet aucune requête de mutation, signature ou décision de livraison.
+
+Avant la fusion, =before_merge= reprend toutes les pages de revues, vérifie
+l'attestation de validation avec la politique adoptée et reconstruit la liaison
+avec les octets exacts du manifeste. Il refuse un changement de tête, base,
+reviewer, revue, manifeste ou politique, ainsi qu'une liaison expirée. Il relit
+ensuite la revue choisie par son identifiant exact afin de détecter une édition
+ou révocation survenue après sa page de collection.
+
+Après la fusion, =after_merge= exige une PR fermée et fusionnée, une tête et un
+commit de fusion égaux au commit attendu, puis main sur ce même commit. Il
+relit encore l'approbation et son texte lié au manifeste. Une révocation produit
+un refus de constat ; le helper ne défait pas la fusion déjà réalisée.
+
+Les appels API restent non atomiques. Le futur service doit aussi vérifier les
+protections, les identités et les credentials, valider le contenu opérationnel
+du manifeste contre les sources et artefacts signés, utiliser le head_commit_id
+attendu lors de la fusion et vérifier les autres conditions de livraison. Le
+contrôle après fusion ne refait pas toute la collection des autres revues.
+Aucun résultat de ces fonctions ne constitue une autorisation signée.
+
+Huit tests emploient des réponses Forgejo inventées et de vraies signatures de
+validation avec des clés inventées. Ils couvrent notamment la révocation entre
+collection et lecture individuelle, une nouvelle demande de changements, la
+modification du texte sans déplacement de tête, une liaison expirée, un main
+concurrent et la révocation après fusion. Ils n'établissent ni les formes API
+réelles, ni les permissions d'un jeton, ni l'exécution d'une fusion Forgejo.

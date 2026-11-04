@@ -1,0 +1,105 @@
+{
+  "deployment_authorized": false,
+  "evidence_sha256": {
+    "after-vise-state.json": "c37c9e1430d80151eac690a6088cfc7feea515a42629d6c77f2c2edb2c80b9a7",
+    "platform-current.json": "cbd90cab1c4e7b84aca89738c5f5c6d92f8b3c0ad899e147f317d205d70c605e",
+    "platform-promotion.json": "0cd8f16fe19dccb01c8859c7f55418de3f73d784ea9b8786a90bbd301f0042fb",
+    "platform-proof.json": "410b50829f7108fc02a55670ecb674e8a5999bd353869eed6a377c5ec036a8bf",
+    "platform-stage.json": "355cd7d3bd4454e63383114451b0dc0d050d2c234f5dd0ea9a12a5e505721fd7",
+    "vise-candidate.json": "061218306e265be0530bb50ba4831aa2246b47ca7634a8a6c1368ab4bf1d1c3b",
+    "vise-current.json": "6916b65b5b945468e0cebb38be7cfd29075a6fcbb1a74a1fdc0d9a8574f5d247",
+    "vise-proof.json": "112da5f11bbd4f617f97ee762e41dc7f7487915c5ef433b611e08ca4ca783039"
+  },
+  "fixture_candidates": true,
+  "platform": {
+    "checks": {
+      "assertionsPass": true,
+      "assetRoutingUnchanged": true,
+      "currentExact": true,
+      "noImplicitRestart": true,
+      "nonAssetConfigurationUnchanged": true,
+      "promotionChangesOnlyRoutesAndBoot": true,
+      "promotionRetainsCommands": true,
+      "stageChangesOnlyOffTraffic": true,
+      "stagedAdoptionUnchanged": true,
+      "stagedRoutesUnchanged": true,
+      "unitsPreserved": true
+    },
+    "current": "/nix/store/j550awmfnpm2l7r9pv8713pvza4xr71p-nixos-system-srv1982677-26.05pre-git",
+    "deployment_authorized": false,
+    "promoted": "/nix/store/v6waa6dbrw7s5kk1m2drxb34s2w6rqpl-nixos-system-srv1982677-26.05pre-git",
+    "promotedState": {
+      "active_slot": "green",
+      "adopted": "/nix/store/v2qj31slhqs948a5ihd7yrva9nhhp7pc-mrjam-adopted-source.json",
+      "control_plane": {
+        "acceptance": "/nix/store/zkp2pvjhibqr0i68062ngfaskyrbcawx-mrjam-separated-acceptance-services-1",
+        "preparation": "/nix/store/gy2x9i3p3pjkz4wdr47dlybhdaf3azdm-mrjam-delivery-preparation-1",
+        "stack": "/nix/store/cwrqy0vp5q1r7vzpj8p8fa5cd4650c7y-mrjam-protected-delivery-stack-1",
+        "staging": "/nix/store/5zapz1574xm5whrqsw28c0j0mjjc6pzh-mrjam-protected-staging-service-1"
+      },
+      "schema_version": 1,
+      "slots": {
+        "blue": {
+          "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+          "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+        },
+        "green": {
+          "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green",
+          "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb"
+        }
+      },
+      "system": "/nix/store/v6waa6dbrw7s5kk1m2drxb34s2w6rqpl-nixos-system-srv1982677-26.05pre-git",
+      "vise": {
+        "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+        "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+      }
+    },
+    "schema_version": 1,
+    "staged": "/nix/store/j550awmfnpm2l7r9pv8713pvza4xr71p-nixos-system-srv1982677-26.05pre-git",
+    "stagedState": {
+      "active_slot": "blue",
+      "adopted": "/nix/store/2ny4527xzy4d9aljs805j037kydnypbc-mrjam-adopted-source.json",
+      "control_plane": {
+        "acceptance": "/nix/store/zkp2pvjhibqr0i68062ngfaskyrbcawx-mrjam-separated-acceptance-services-1",
+        "preparation": "/nix/store/gy2x9i3p3pjkz4wdr47dlybhdaf3azdm-mrjam-delivery-preparation-1",
+        "stack": "/nix/store/cwrqy0vp5q1r7vzpj8p8fa5cd4650c7y-mrjam-protected-delivery-stack-1",
+        "staging": "/nix/store/5zapz1574xm5whrqsw28c0j0mjjc6pzh-mrjam-protected-staging-service-1"
+      },
+      "schema_version": 1,
+      "slots": {
+        "blue": {
+          "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+          "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+        },
+        "green": {
+          "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green",
+          "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb"
+        }
+      },
+      "system": "/nix/store/j550awmfnpm2l7r9pv8713pvza4xr71p-nixos-system-srv1982677-26.05pre-git",
+      "vise": {
+        "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+        "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+      }
+    }
+  },
+  "production_changed": false,
+  "recipe": "/nix/store/rapjcp0v88hh05y7gy1fgck8p05fj6dn-mrjam-protected-delivery-recipe-1",
+  "schema_version": 1,
+  "stack": "/nix/store/cwrqy0vp5q1r7vzpj8p8fa5cd4650c7y-mrjam-protected-delivery-stack-1",
+  "vise": {
+    "candidate": "/nix/store/51bx822kblj1a93pxnmqqwjiyxnbqf68-mrjam-vise-delivery-candidate-8ea736fc4819",
+    "changed": [
+      "vise.service"
+    ],
+    "deployment_authorized": false,
+    "input_state_sha256": "23abfc4cb46974b6297e72b22a4decda49b09056a60cf6287030a7bb0dd32bb9",
+    "previous": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git",
+    "schema_version": 1,
+    "system": "/nix/store/j550awmfnpm2l7r9pv8713pvza4xr71p-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  }
+}

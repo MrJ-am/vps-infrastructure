@@ -1,0 +1,13 @@
+{
+  "activated": false,
+  "code": "STAGING_RUNTIME_RESTRICTED_PROBE_OK",
+  "environment_unchanged": true,
+  "package": "/nix/store/zf97rkdq655qhfa9zijwyzvjinambdkv-mrjam-separated-acceptance-services-1",
+  "process_identity_verified": true,
+  "ptrace_capability": false,
+  "readiness_verified": true,
+  "schema_version": 1,
+  "slot": "green",
+  "system": "/nix/store/m01vhv8qwbaqs41ns64gkih8zwgvsbvw-nixos-system-srv1982677-26.05pre-git",
+  "systemd_control_socket": false
+}

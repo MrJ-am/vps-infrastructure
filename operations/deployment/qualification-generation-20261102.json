@@ -1,0 +1,19 @@
+{
+  "checks": [
+    "select-staged-boot-with-previous-still-running",
+    "reboot-staged-and-pending-writer-mask",
+    "return-restores-previous-boot-and-live-generation",
+    "promoted-boot-after-durable-opening"
+  ],
+  "fixture_sha256": "b7cdd0e80cdf2df84f9d0b64b77c738922dff3efc19a45349c35537d15d626d1",
+  "generation_sha256": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+  "limits": [
+    "Synthetic NixOS generations and inert application process",
+    "Application adoption is qualified separately"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "output": "/nix/store/qa7fpalnwi8il718zs0wlgk9y8avv4n8-vm-test-run-mrjam-exact-generation-switch-and-boot",
+  "recorded_date": "2026-11-02",
+  "authority": "Spectre-synthetic-systemd-and-real-boot"
+}

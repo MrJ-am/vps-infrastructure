@@ -1,0 +1,29 @@
+{
+  "application_functions_called": false,
+  "author_native_scenarios_reviewed": 6,
+  "author_qualification_sha256": "c663b8e75762446f760499c34017d4bf91aca9097b8766beb54e82d07347c69c",
+  "author_unittest_methods_reviewed": 4,
+  "checks": [
+    "Fixed old-generation gate and seventeen fixed Boolean output predicates.",
+    "Witness literal unchanged from exact migrations; external calculation uses runtime context to avoid catalogue-only type-deparser false negatives.",
+    "All executed function, relation, type and equality/ANY resolutions in runtime-context comparison explicitly use pg_catalog.",
+    "Synthetic public function/view and oid/text/name equality operator homonyms cannot execute through the probe.",
+    "Separate witness shape/proconfig, EXECUTE, public USAGE, version metadata and SELECT predicates.",
+    "Dedicated global deadline escapes per-query handlers and closes output after first interrupted query.",
+    "Read-only SQL transactions and connection defaults; no application function call, body export, private row read or database mutation."
+  ],
+  "function_bodies_exported": false,
+  "limitations": [
+    "Different deparser context can explain old probe false negatives; no migration or witness rewrite is authorized by this diagnostic.",
+    "Catalogue equality to a stored witness is not independent validation of all accepted source function bodies.",
+    "Audition version001 versus002 is classified separately from permissions; actual migration applicability needs separate validation.",
+    "Earlier frozen probe and author receipts remain historical; this final version is separately bound."
+  ],
+  "mutation_performed": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent final source and qualification review; no production access or test rerun",
+  "source": "operations/deployment/preflight_rust_contracts_004_v2.py",
+  "source_sha256": "e6603e8c888fa40f9d2e6952aeb577ee9868350e3a6a7d3e27cab95effaf876c",
+  "status": "PASS"
+}

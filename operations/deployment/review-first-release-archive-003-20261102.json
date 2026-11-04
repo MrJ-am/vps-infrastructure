@@ -1,0 +1,18 @@
+{
+  "actual_execution_receipt": "observation-third-attempt-archived-20261102.json",
+  "algorithm_sha256": "21f8b2092bd35779a5a8e1bac677d27a4ac1ad5222a205f4e401f185782dd09f",
+  "both_prior_archives_preserved_by_identity": true,
+  "failure_bytes_retained_whole": true,
+  "failure_record_required_exact_release_step_component_code": true,
+  "no_data_restore_sql_secret_read_or_activation": true,
+  "only_operation_and_binding_ast_differ": true,
+  "passed": true,
+  "qualification_sha256": "d5cdd8edb1a182e3e4f7c9733439018bd1975832b09f87bdb2b73f93c66b4f82",
+  "reviewer": "root",
+  "same_transaction_lock_and_phase_last": true,
+  "schema_version": 1,
+  "scope": "Independent source/diff review and exact production binding review for attempt003 archival",
+  "sealed_sha256": "de525119da05425b002ed8ab0254d958de3bcf4149cdf7338edef6ea0658f77c",
+  "tests_independently_rerun": false,
+  "tests_reused": 21
+}

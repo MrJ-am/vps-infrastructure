@@ -1,0 +1,31 @@
+{
+  "cause_established": false,
+  "next_step": "Identify the failing test without exporting raw candidate output",
+  "observations": [
+    {
+      "compilation_failure_hint": false,
+      "exit_code": 101,
+      "killed_hint": false,
+      "no_space_hint": false,
+      "scope": "untrusted-output-hints-plus-observed-capacity",
+      "test_failure_hint": true,
+      "work_free_bytes": 361840640,
+      "work_total_bytes": 1073741824
+    },
+    {
+      "code": "CHECK_FAILED_RUST_HTTP_POSTGRES_RLS_TLS_TESTS",
+      "decision": "failed"
+    }
+  ],
+  "result": {
+    "code": "LOCAL_VALIDATION_FAILED",
+    "elapsed_seconds": 508.674,
+    "forgejo_dispatch_performed": false,
+    "private_key_accessed": false,
+    "production_access": false,
+    "production_attestation_emitted": false,
+    "schema_version": 1,
+    "status": "failed"
+  },
+  "schema_version": 1
+}

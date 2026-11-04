@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "local_tests_passed",
+  "tests_passed": 9,
+  "scope": "synthetic API projection only; no HTTP transport, real credentials or mutation",
+  "production_access": false,
+  "sources": {
+    "operations/ci/review-v1/api_projection.py": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6",
+    "operations/ci/review-v1/test_api_projection.py": "e945558076f55e9f92a28afc2150e58bd82a5ca2b370f62297eead68abcf170e",
+    "operations/ci/review-v1/API-PROJECTION.org": "04ad807ebc4246a7b34223c432ec1418f40818e84dbf431766f1490feb915de4"
+  },
+  "limits": [
+    "Pagination and race tests use invented responses.",
+    "Branch protections, actor identities, authenticated transport, selected review rereads and actual merge remain separate prerequisites.",
+    "Projection contains review bodies internally and must not be exported as an observation to agents."
+  ]
+}

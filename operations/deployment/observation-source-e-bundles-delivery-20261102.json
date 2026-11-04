@@ -1,0 +1,23 @@
+{
+  "accepted_source_revision": "12d1bebb2edce1cb46cd8cb10dc8542a809d08bc",
+  "application_activation": false,
+  "code": "SOURCE_E_BUNDLES_RECEIVED_WITHOUT_IMPORT",
+  "forgejo_imported": false,
+  "manifest_sha256": "77c8c1f957dfee67bff74d00680b26cecba04d657b3067bdfe09a92ba76b73bb",
+  "previous_infrastructure_bundle_retained": true,
+  "receiver_sha256": "4b3e36de9707d77ef6fe1c820ac1184d2ecff64a74ac957ad38f6ecd14860caf",
+  "result": {
+    "already_present_count": 8,
+    "application_activation": false,
+    "bundle_count": 9,
+    "code": "SOURCE_BUNDLES_RECEIVED",
+    "created_count": 1,
+    "forgejo_imported": false,
+    "schema_version": 1,
+    "stream_sha256": "91425f0f126232942df66540458eefff6a7cda4b592f8d3b424d6d985d0b1ee0"
+  },
+  "review_sha256": "57546c825f488e407b5f3f9e2ff641a565052f4fb6a60f8a29344bc9c4c081d2",
+  "schema_version": 1,
+  "stream_bytes": 4050855408,
+  "stream_sha256": "91425f0f126232942df66540458eefff6a7cda4b592f8d3b424d6d985d0b1ee0"
+}

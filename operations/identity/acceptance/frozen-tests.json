@@ -1,0 +1,24 @@
+{
+  "author_agent": "identity_acceptance",
+  "candidate_executed": false,
+  "candidate_source_read": false,
+  "fixture_selftest": {
+    "candidate_used": false,
+    "passed": true,
+    "tests_run": 6
+  },
+  "frozen_at_utc": "2026-11-01T21:32:01.652465+00:00",
+  "implementation_agent": "identity_runtime",
+  "reference_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "schema_version": 1,
+  "source_sha256": {
+    "README.md": "706c95fe33f1324aef6897bfc3fb666fbc88ecddeb2a68c07a54748ed653261f",
+    "acceptance.py": "4e8fed43f9c3f7882be059e3b087c9f0d534fe373537d9bbcc225b7a94b98880",
+    "contract.json": "14c8802210c8a79ab996002fe56ca0cd108ed6d21b1c589502b3b986e5093b3a",
+    "fixture.py": "83c66b4ce7a1741e47d15fb896149ce1717cddb903c2d9644b0ab4999c2d2e0a",
+    "legacy-state.sql": "416d77d0e9728728f7fbaa3bc26c4de08b37b1eecc45bbced94ac0e783ec9920",
+    "principals.sql": "d97d3d3b6b0e9f999e438275eff2bb3846a3dbf8b34dabfa5903b1be6ada0aa0",
+    "selftest_fixture.py": "11978ff388b3f3b32bf51f905723d5f80cbfde5503577bd22e9402594de2f6a3"
+  },
+  "test_groups": 22
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "scope": "protected-intake-capture-admission-constructor-and-dispatch-recovery",
+  "tests": {
+    "capture": 14,
+    "dispatch": 10,
+    "passed": true
+  },
+  "constructor": {
+    "bundle": "/nix/store/5rxxkx47dqysx35az86nh1kfzzp7bpsj-mrjam-captured-admission",
+    "descriptor": {
+      "anchor_control": "/nix/store/ixhqrvgq1vixg0g0fc01lwkdprxxkmn7-mrjam-validation-admission-control-1",
+      "capture_sha256": "965e945975a59c4eec172a8b6fa8285e39b84d85aa7aaad61c49393716eefab8",
+      "control": "/nix/store/qvadvvhg2wdfmwdm9ab2xkrzap9kz084-mrjam-validation-admission-control-1",
+      "metadata": "/nix/store/g5hfya1mry27kf097mlxmgv6l8jk3506-mrjam-admission-public-metadata",
+      "proposal_sha256": "5deccc9b3a8a75b9238814974bb19767a26e947f3d4625d8d457c1acb98d4c13",
+      "publisher": "/nix/store/ywglk3by7mzk19wka6lz04hjb57yqz50-mrjam-publish-fixed-admission-1",
+      "record": "/nix/store/jx6r6ghhpkdfxfafr8an7mvcidq3nm9w-mrjam-initial-admission.json",
+      "schema_version": 1,
+      "source": "/nix/store/kgc9ihm7fhackc0f25mllh7f0xanzjvy-mrjam-admitted-source-5deccc9b3a8a",
+      "validator": "/nix/store/6180gd5lppg2fvcis2z2rqk40csxn9dz-mrjam-validate-aligned-workspace-1",
+      "verifierNarHash": "sha256-vICd5pYFMs0GPVy/UCIKAkw3knmM7MUe35sZI/sseLE="
+    },
+    "packaged_recipe_matches_workspace_build": true,
+    "installed_anchor_accepted": true,
+    "registry_published": false
+  },
+  "live_read_only_probe": {
+    "code": "LIVE_VALIDATION_RUN_BINDING_VERIFIED",
+    "run": {
+      "id": 2,
+      "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+      "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+      "status": "success",
+      "terminal": true,
+      "deployment_authorized": false
+    },
+    "read_only": true,
+    "new_dispatch": false
+  },
+  "source_sha256": {
+    "intake_capture.py": "9027ed19be39615509324fcb8473182bf0b0b1125cc6abad4551da2feb808ee2",
+    "test_intake_capture.py": "72cfe8ec89b37af7aa613062984f19ee259342657d9d3a40737c30c4735ef179",
+    "captured-admission.nix": "4ca6db1e6707bba12611d585beac03a727bbf22f9cd227202dc518f374304fb0",
+    "captured-admission-recipe.nix": "58fdf1fbbee5a85f2d0895e9ed905da9f2737cbebebe63f6147ae22d558ff229",
+    "admission-publication.nix": "58da8ac75cc05a6e9c8c73ea6e4b35a90565be2c4061660f8cbb9304b84ea9a2",
+    "validation_dispatch.py": "6e31882b4aaf86d4bba8693ee46e7915c021e27e1a678e68950d01cc4b389432",
+    "test_validation_dispatch.py": "8f7af21c7dbad9782afb16a3bfca2ddca598177b7b9f85115fc7b83abfc52c08",
+    "validation-dispatch-probe.nix": "72564c4149d101872020e1d072ed586ae4d1a021f6843097d28ace0a963f3efd"
+  },
+  "limits": [
+    "Root admission controller and its timer are not installed; no new admission or CI dispatch performed.",
+    "Capture tests use real local Git objects and an independent local commit/tree observation, not a live nonempty GitHub PR.",
+    "Forgejo dispatch POST recovery tested with a simulated transport; live probe only reads already completed run 2.",
+    "Forgejo has no dispatch idempotency key in this protocol; serialize submissions and reconcile before retry. An in-flight uncertain POST can duplicate validation, never granting deployment authority.",
+    "Validity and run lower bound must be journaled before construction/dispatch. Existing immutable admission records do not yet implement renewal after expiry."
+  ]
+}

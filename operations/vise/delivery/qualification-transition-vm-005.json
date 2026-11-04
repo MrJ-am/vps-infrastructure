@@ -1,0 +1,46 @@
+{
+  "completed_receipt_resumed_after_reboot": false,
+  "controller_resumed_after_sigkill": true,
+  "controller_sigkill_point": "checkpoint-recovering",
+  "events": [
+    {
+      "boot": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "current": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "phase": "prepared"
+    },
+    {
+      "boot": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "current": "/nix/store/399g66ilx8b42fvcyrv2h30asx5sv2hc-nixos-system-machine-test",
+      "phase": "recovering"
+    },
+    {
+      "boot": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "current": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "phase": "recovering"
+    },
+    {
+      "boot": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "current": "/nix/store/skqik9h0ij887sp9ga3vmsblg7q3ngdc-nixos-system-machine-test",
+      "phase": "failed"
+    }
+  ],
+  "limitations": [
+    "Synthetic C servers and retained services",
+    "Synthetic authority and acceptance",
+    "No production access",
+    "Interruption at durable recovering checkpoint; not every recovery operation"
+  ],
+  "production_access": false,
+  "real_boot_profile": true,
+  "real_generation_transition": true,
+  "real_reboot": true,
+  "real_return": true,
+  "reboot_before_resume": true,
+  "recovery_case": true,
+  "result": {
+    "code": "VISE_FAILED",
+    "previous_restored": true
+  },
+  "synthetic_authority": true,
+  "vm_result": "/nix/store/mkp4xlk67797666mnvd78jl6c7j6iky9-vm-test-run-mrjam-vise-real-generation-transition"
+}

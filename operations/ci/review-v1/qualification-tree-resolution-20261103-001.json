@@ -1,0 +1,25 @@
+{
+  "limits": [
+    "The first projection assumed commit.tree.sha was a Git tree OID; Forgejo17 uses the commit reference there. Old local tests did not cover this semantic difference.",
+    "Only the fixed encoded tree-peel route is added; no raw tree inventory, response URL or branch name selects a command.",
+    "These local tests use invented API values and one real loopback HTTP exchange; actual Forgejo resolution remains a separate prerequisite."
+  ],
+  "log": {
+    "path": ".local/review-tree-resolution-tests-001.log",
+    "sha256": "3ffc55f6da65f12b319842cb24ef5a1a4c1cfd76ddab07020a41f42ed8aa72f8"
+  },
+  "native_resolution_proof_attached": false,
+  "production_access": false,
+  "recheck_unchanged_except_projection_import": true,
+  "schema_version": 1,
+  "sources": {
+    "operations/ci/review-v1/TREE-RESOLUTION-V2.org": "e7131df3deb9feaaea53c7f5ff16dd758c7f042633c4f55307368ac6e5dfc006",
+    "operations/ci/review-v1/api_projection_v2.py": "bd4803edadb18725ccf0e45539ffc1347b0c4762db96abf931f7908606d9bac2",
+    "operations/ci/review-v1/read_transport_v3.py": "1e327fb6d731d2ac03225d46a553608c61cae02774621203480167075dd370e7",
+    "operations/ci/review-v1/recheck_v2.py": "d5960b6be82d0b8ca28f9cf96f3fa20fdc878a19d560ef85113fdeeb12441729",
+    "operations/ci/review-v1/test_tree_resolution.py": "ce2a9ced6e59c29e8a744dbffedbb8b60c88a53b92487b2da1edce037e90eb7f"
+  },
+  "status": "targeted-local-tests-passed",
+  "tests_passed": 6,
+  "transport_ast_unchanged_except_allowlist": true
+}

@@ -1,0 +1,85 @@
+{
+  "all_opener_function_source_segments_byte_identical": true,
+  "date": "2026-11-02",
+  "derivation": "/nix/store/qf4n25d61037i45yfi40spa5cs3hh7s7-vm-test-run-mrjam-passkey-nginx-real-provider-private-unit.drv",
+  "limits": [
+    "No human Proton Pass browser exercised",
+    "VM helper copies use an invented route binding and public CA; production code source and units remain otherwise identical",
+    "The former real production generation has only been observed, never changed by this agent"
+  ],
+  "nar_hash": "sha256-+2jIHYTK70D/15g30bBR2OHIic2ZlKICT8r/bNImeQI=",
+  "opener_substitutions": [
+    "BINDING = the two exact invented immutable unit paths and SHA256",
+    "PREVIOUS = the actual invented VM generation"
+  ],
+  "output": "/nix/store/halg66rwpr0b3pamrgl8qp0pidg87p79-vm-test-run-mrjam-passkey-nginx-real-provider-private-unit",
+  "passed": true,
+  "previous_integration_receipt": "qualification-integration-20261102-001.json",
+  "previous_integration_receipt_sha256": "d3400cfa356120ce382ac47ddb7e3387fce12763a3dd8d154b9a071ef6627eb6",
+  "production_timeouts_unchanged": true,
+  "result": {
+    "actual_proton_pass_browser": false,
+    "checks": [
+      "opener-wrong-hash-refused-before-start",
+      "opener-foreign-runtime-unit-preserved-before-start",
+      "opener-directory-lock-refuses-concurrent-run",
+      "real-opener-installs-starts-and-active-second-call-never-stops-session",
+      "exact-real-portal-assets-over-tls-with-strict-csp-no-cookie",
+      "cross-origin-and-unknown-csrf-refused-before-private-unit",
+      "real-provider-p256-signatures-for-separate-privileged-accounts",
+      "real-loadcredential-systemd-v2-created-worker-capabilities-and-preserved-admission",
+      "fresh-administrative-sessions-revoked-and-login-cache-removed",
+      "real-closed-result-probe-validates-three-tokens-without-writing",
+      "completed-transaction-replay-refused-with-credentials-unchanged",
+      "single-account-new-session-and-real-v2-idempotence",
+      "browser-and-journal-exclude-private-values-unrelated-sessions-retained",
+      "natural-unit-expiration-restores-route-and-cleans-portal-runtime"
+    ],
+    "fixture_sha256": "9192095d8bbebc4116679979693dbc795e9b82da36e308f91c317bf10ba72fde",
+    "limits": [
+      "Invented accounts and software P-256 credentials only; no real Proton Pass browser",
+      "Production code sources/modules with invented CA and route binding",
+      "Enrollment/signing fixture helpers reused; HTTP and systemd observations independent",
+      "Route and portal RuntimeMaxSec shortened to 45/48; opener only PREVIOUS/BINDING replaced"
+    ],
+    "opener_functions_unchanged": true,
+    "opener_invented_bindings": {
+      "mrjam-kanidm-passkey-portal.service": {
+        "path": "/nix/store/5p7p48zqr008lxhhybrw3ky3w0pyyzpm-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+        "sha256": "541181f3df096df3054a463872b125427bbc3f4ce21b41db8edfca2d86dd6ef1"
+      },
+      "mrjam-passkey-nginx-route.service": {
+        "path": "/nix/store/10v9hlgzcxc0k8icmfniz4qpa55abddg-unit-mrjam-passkey-nginx-route.service/mrjam-passkey-nginx-route.service",
+        "sha256": "8a4d097391b4006408b592a93c63499a574740d736adc28e558e57edda54a084"
+      }
+    },
+    "opener_source_sha256": "bf33aed544fc488d7b48cb8d96c46546ce3de01585b36ee6a2fe01b610ad703a",
+    "passed": true,
+    "portal_module_sha256": "d8ccfe88e58761f8cbfc958d30cc6e4bf5813f01838cf09b3c8b3a207b5099a3",
+    "portal_package": "/nix/store/x2zp3y9h1bsgy84dq8wh26sczp9zmdjp-mrjam-kanidm-passkey-portal-1",
+    "portal_source_sha256": "9667e293165b33b193902e6202a1f8a648fe73bd6f67b720eec4f511b7a24b43",
+    "probe_source_sha256": "14f05d3038e8ba4388843de63380505c5272484daccd1362ad4345cf06e8d00c",
+    "production_access": false,
+    "provision_module_sha256": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a",
+    "provision_package": "/nix/store/nn4j4p44pi56aj3nal62fj94mqvgaapg-mrjam-kanidm-worker-provision-2",
+    "real_https_unix_portal": true,
+    "real_kanidm": true,
+    "real_loadcredential_provisioner": true,
+    "result_probe_package": "/nix/store/af318s286hfy07ppby8zswk766gf8lns-mrjam-kanidm-worker-result-probe-1",
+    "route_module_sha256": "866be2c2c1b92e6b0e1c8090ba7dde105448a18e1e3409a5028c0560be2643df",
+    "route_sha256": "a16bf9bb3c7653feca08e0d638a2894e1120a02e35e9cc9a725438a05e453438",
+    "schema_version": 1,
+    "software_webauthn": true,
+    "test_sha256": "a7f9b2dda939633a5bec8b0323c43c6c5ca905a3ce281fd268f24f94b98a92e3"
+  },
+  "result_sha256": "e50896475d71ca326ee7f436c782de3988c8b6db56eb663121fc692698041116",
+  "schema_version": 1,
+  "scope": "independent local synthetic VM; no SSH, real credentials or remote publication",
+  "seconds": 66.51,
+  "service_timeout_only_test_overrides": {
+    "portal_seconds": 48,
+    "route_seconds": 45
+  },
+  "successful_path": "sealed opener -> TLS Nginx -> Unix portal -> real P-256 Kanidm -> private LoadCredential provisioner v2 -> read-only result probe -> automatic expiration and restoration",
+  "vm_stopped": true
+}

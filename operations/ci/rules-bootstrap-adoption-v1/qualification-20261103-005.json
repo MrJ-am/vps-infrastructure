@@ -1,0 +1,287 @@
+{
+  "authorization_contract": {
+    "git_effect": "native fast-forward main only; all other heads/tags unchanged",
+    "human_identity": "derived only in-process from existing private SSO binding, eight qualified gates and unique eligible account",
+    "real_base": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "real_head": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "real_pr": 1,
+    "real_tree": "f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b",
+    "scope": "explicit initial administrative bootstrap; no CI success claimed",
+    "temporary_token": "one repo before first network access, revoked on exit"
+  },
+  "baseline": {
+    "checkpoint": "public-writes-open",
+    "common_transaction_lock_preserved": true,
+    "current_and_boot": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+    "result005": "CUTOVER_VERIFIED"
+  },
+  "closed_effects": {
+    "activation_performed": false,
+    "branch_deleted": false,
+    "ci_attestation_issued": false,
+    "protection_changed": false,
+    "review_created": false,
+    "status_created": false
+  },
+  "existing_qualified_dependencies": [
+    {
+      "bytes": 7272,
+      "path": "operations/deployment/forgejo_sso_probe.py",
+      "sha256": "be06941b14d69b68f1b0fd5ccab28255b5561c836a0650ce186a18cc285ade16"
+    },
+    {
+      "bytes": 12633,
+      "path": "operations/ci/rules-proposal-v1/core.py",
+      "sha256": "922c8e840225b8b1bca42f4556130a6ce6595424d470b44ca65d2ec11d4f82e3"
+    },
+    {
+      "bytes": 6178,
+      "path": "operations/ci/rules-proposal-v1/lease.py",
+      "sha256": "23c9302dc0314261a30790028fd617ffdbb4cbc9db39c1ef76d380a553b9e795"
+    },
+    {
+      "bytes": 2090,
+      "path": "operations/ci/rules-proposal-v1/protection.py",
+      "sha256": "1162f0c510b01a12f65624c20ab497db79b17d9694ec31e15d185b33b2133735"
+    },
+    {
+      "bytes": 4522,
+      "path": "operations/ci/rules-proposal-v1/entry.py",
+      "sha256": "b6d464861547d76b7fdc7db1049f654af49f3d15e244e4597bd1934838ed3696"
+    },
+    {
+      "bytes": 6362,
+      "path": "operations/ci/review-v1/api_projection.py",
+      "sha256": "60bab686d96a78a33c2020eedee771adcbb14ddc3468bc983608b4e24f4092e6"
+    },
+    {
+      "bytes": 6513,
+      "path": "operations/ci/review-v1/read_transport_v2.py",
+      "sha256": "d4ecc67cb47b92ba783c9af32b9fe5adfc301d06abc9d16ebe09eae3f56342e3"
+    }
+  ],
+  "findings": [
+    {
+      "bytes": 1865,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/finding-forgejo-tree-20261103.json",
+      "sha256": "7bab895c71503f54c2be669ded91332158dc9f8b9def7f4aee16175243174e73"
+    },
+    {
+      "bytes": 1877,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/finding-forgejo-review-participants-20261103.json",
+      "sha256": "17774e9b47560f4b988abc515f2bde75f225df5e455d238f494e9f4e0de91ca5"
+    }
+  ],
+  "limits": [
+    "Guest identities, SSO subject, Git history and review are invented; no production approval created or inferred",
+    "Native VM exercises core directly; packaged entry gate inherits qualified proposal gate and has exact substitution/argument-refusal checks",
+    "No global table lock or atomicity promise across human actions: pre/post observations may detect a revocation only after Git merge; held state issues no authority and performs no undo",
+    "Forgejo17 commit.tree.sha is not trusted as Git tree; bootstrap independently verifies head^{tree}, parent, exact workflow diff and bytes through native Git before mutation",
+    "Unknown/incomplete/team review shapes refuse; no hash is invented for a review lacking commit_id",
+    "Merge transport fixed-route native positive behavior is covered; inherited GET slow-header/slow-body watchdog has separate v2 tests; no new claim of concurrent merge/revocation atomicity"
+  ],
+  "local_tests": {
+    "count": 16,
+    "coverage": [
+      "exact-human-text-and-identity",
+      "native-latest-review-id-not-edited-old-timestamp",
+      "complete-pagination-count-drift-duplicates-and-participant-coherence",
+      "revoke-before-merge-refused",
+      "postmerge-revocation-reference-drift-held-without-undo",
+      "lost-response-only-resolved-by-full-readback",
+      "interrupted-merge-requested-observation-only",
+      "atomic-journal-write-preserves-unrelated-next-files"
+    ],
+    "log": {
+      "bytes": 115,
+      "path": ".local/ci-rules-bootstrap-adoption-20261103/unit-final-005.log",
+      "sha256": "623c246a5bbcad6aec3e5eefb077fe4772a3aaf9152aea3406eb9e8b77e64036"
+    },
+    "result": "PASS",
+    "seconds": 0.178
+  },
+  "native_vm": {
+    "captures": [
+      {
+        "bytes": 252,
+        "path": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward/explicit-tree-resolution.json",
+        "sha256": "5e5408ced9aa21249b24e7e3b581ab08c5201cb11adabed3af5efb3913c83807"
+      },
+      {
+        "bytes": 154,
+        "path": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward/native-review-participants.json",
+        "sha256": "6ba3fee831df150e0a8db798f746742a560c676d5e5192177c160b8882f38888"
+      },
+      {
+        "bytes": 1206,
+        "path": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward/bootstrap-review.json",
+        "sha256": "5192334eb7558507e2d702c51269d8e7fab6d90af177721a5ab95374302f8f33"
+      }
+    ],
+    "checks": [
+      "native-sso-unique-owner-derived-ambiguity-and-invalid-provider-refused",
+      "absent-review-refused-before-native-merge-and-token-revoked",
+      "actual-native-review-shape-official-approval-exact-head-and-text",
+      "native-repo-scoped-force-merge-fast-forward-main-only-no-status-policy-unchanged",
+      "idempotent-postmerge-observation-no-second-merge"
+    ],
+    "exact_native_post": {
+      "Do": "fast-forward-only",
+      "delete_branch_after_merge": false,
+      "force_merge": true,
+      "head_commit_id": "sealed-synthetic-head",
+      "merge_when_checks_succeed": false
+    },
+    "groups": 5,
+    "ordinary_protected_main_push_refusal_proof": {
+      "bytes": 9252,
+      "path": "operations/ci/rules-proposal-v1/qualification-20261103-005.json",
+      "sha256": "324dba03f7b739384c6fe23097451820d3d63e2f3181a9cbff7026942647b704"
+    },
+    "output": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward",
+    "result": "PASS",
+    "result_file": {
+      "bytes": 1314,
+      "path": "/nix/store/zs6w5zvw3i4vam6p10zv12qs67v7kia6-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward/result.json",
+      "sha256": "90fdf91e31eba865cf5a00d10e5d26c316e6940d3d8e0e84ecdb9eaef454a4b4"
+    },
+    "seconds": 31.44,
+    "source_modules_identical_to_production": true,
+    "store_metadata": {
+      "ca": null,
+      "deriver": "/nix/store/nf6qn5s47d6nymr0vn750j5s3p8wqcgd-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward.drv",
+      "narHash": "sha256-4m8VvAz+bLtBDCu+zqHt7JM8gL9YxnTL1UcD7HR5Mcc=",
+      "narSize": 3848,
+      "references": [
+        "/nix/store/cl8xy5dab601jzx04cpdmgm7cmllyry4-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+        "/nix/store/zia5pb4vk05km060s76hmn32dqhybffd-mrjam-rules-bootstrap-adoption-1"
+      ],
+      "registrationTime": 1793668422,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "synthetic_proposal_package": "/nix/store/cl8xy5dab601jzx04cpdmgm7cmllyry4-mrjam-rules-bootstrap-proposal-1"
+  },
+  "package": {
+    "checks": 10,
+    "exact_checks": {
+      "bytes": 2954,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/package-exact-checks-20261103-005.json",
+      "sha256": "603332208e1a5413681bf56ef9a10b900c5ad111771d79434754316731486967"
+    },
+    "metadata": {
+      "ca": null,
+      "deriver": "/nix/store/7z3bs7dmsj2sla7njamqqy0ff706m2cx-mrjam-rules-bootstrap-adoption-1.drv",
+      "narHash": "sha256-Yvov8I/XgxTcT2w70lp7GI6HgxZ0Q5FhTzUNWA+luks=",
+      "narSize": 86312,
+      "references": [
+        "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+      ],
+      "registrationTime": 1793668378,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "path": "/nix/store/1rrdkyzxfq96yn2xf7369h4saqhlr0j3-mrjam-rules-bootstrap-adoption-1"
+  },
+  "primary_sources": [
+    {
+      "bytes": 12324,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/pull/check.go",
+      "sha256": "d51ab2040c82c89609368db0ea3f781dfc047d50fda3d3b785e4d4267b420b88"
+    },
+    {
+      "bytes": 19001,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/pull/merge.go",
+      "sha256": "43d724e4bcdcad0d48ca6b04430b18612c1008af86a374afa932b23d83659ac6"
+    },
+    {
+      "bytes": 52412,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/api/v1/repo/pull.go",
+      "sha256": "10586bae76ce9976cfdd44bec2196bd74216e5555a11eae78ca6d41867023dcb"
+    },
+    {
+      "bytes": 25001,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/routers/private/hook_pre_receive.go",
+      "sha256": "cf9b80c41db0dbe60aa090bdb87f6343a1dbb9624332d10fb53fbfceb161ffcc"
+    },
+    {
+      "bytes": 5898,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/issues/review_list.go",
+      "sha256": "a778a36a939aff68942e11cca94aa8318c157de1d23b7ad34daef511189502cc"
+    },
+    {
+      "bytes": 34608,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/issues/pull.go",
+      "sha256": "d49511635b8a69e54389c83477e282f62445744cabd951adb7698f083831584b"
+    },
+    {
+      "bytes": 22053,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/git/repo_commit.go",
+      "sha256": "39ada37a1279bbe9f25db647c23a2f7e025c4e8585eb390d80dde74cb0bc15b1"
+    }
+  ],
+  "production_access": false,
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": "initial-rules-native-bootstrap-after-real-human-review-outside-ci",
+  "source_files": [
+    {
+      "bytes": 14847,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/adoption.py",
+      "sha256": "d73de400efa6ad77a7bbb62ca0f6a9b0ddcfe608f73b530a1a15bbec5c651acb"
+    },
+    {
+      "bytes": 1223,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/identity.py",
+      "sha256": "77549cb92edffd93f607218d9db28c746dbb9928be5d6297b02ab7876ddc7cbc"
+    },
+    {
+      "bytes": 1663,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/merge_transport.py",
+      "sha256": "bb1960459ec0239c3b23c43e080247e6c74c0a8dbd52361de832d49bcb840858"
+    },
+    {
+      "bytes": 2599,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/entry.py",
+      "sha256": "b08630dafdd061cd641b02f3e2ee67e7471990b5daa7247f228260039dbdec5f"
+    },
+    {
+      "bytes": 1266,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/package.nix",
+      "sha256": "7cd8782c2059c3e87b7caac0a7cb48b50773314cd9064dc966d77766562743f4"
+    },
+    {
+      "bytes": 10331,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/test_adoption.py",
+      "sha256": "4adba7f1c864f2fe8a725cccac96cbed71a5fdafed45ef41ac9958dd2677c721"
+    },
+    {
+      "bytes": 3231,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/test_package.py",
+      "sha256": "92c91d981abbf6e662e111b50502459842f00b8cd398cce9c8e11ec13cbbdc2b"
+    },
+    {
+      "bytes": 6107,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/fixture.py",
+      "sha256": "828c8baaff7bb85fea686999ab4f9dd12cef5a19dbaf136e1fc7645c9d5142a6"
+    },
+    {
+      "bytes": 8298,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/systemd.nix",
+      "sha256": "2dbed58b7dd6f7a180c4f01943c946b3f42cd8ab7fce841503e882dba8e076c8"
+    },
+    {
+      "bytes": 4500,
+      "path": "operations/ci/rules-bootstrap-adoption-v1/CONTRAT.org",
+      "sha256": "2b93d29f04aa2f4ca58ea55d17cce45efb4847b5baf5d7441518ab6d480ef49f"
+    }
+  ]
+}

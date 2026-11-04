@@ -1,0 +1,35 @@
+{
+  "dimensions": 384,
+  "elapsed_seconds": 7.72,
+  "external_network": false,
+  "fixture_sha256": "63b6d2166acdb6b16949bf2b9eae8ffa240917b46cef01939ad0194d4ad4ef33",
+  "groups": 6,
+  "model_id": "contenu-fenetres-1:8e4f52f33f8935f81b1869cc081834734f01f2383e1e1e5813aff156649b42e4",
+  "model_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "model_store_path": "/nix/store/mwwjyy4vlrwp59a7srjy53x24viksa6z-vision-modele-multilingue-e8f8c211226b",
+  "observed_vps_nar_hashes_reproduced": {
+    "model": "sha256-AFWVYilTVXjVV1k+qX4yxMjX2S4w4ryT/wmiHaiNi9Q=",
+    "python": "sha256-eOH9u0UbuvuhX8Jrs1gyeausDxfboWCG4QT+OnjIS/Y="
+  },
+  "passed": true,
+  "production_activation": false,
+  "provider_sha256": "7f4b86c5a71493d4c658d8b34e952c7e5c51818aa7b1dcd72b44a4350ea09997",
+  "python_store_path": "/nix/store/dbnsh65c9fir9psk7waq3swb3mdh18cr-python3-3.13.15-env",
+  "schema_version": 1,
+  "setup_failures_retained": [
+    "001: fixture missing username for torch import",
+    "002: same fixture issue confirmed with synthetic diagnostics"
+  ],
+  "source_hashes": {
+    "embeddings.py": "7f4b86c5a71493d4c658d8b34e952c7e5c51818aa7b1dcd72b44a4350ea09997",
+    "model.lock.json": "2365e107767fb001363ff91ec445e2c19971a1023f2ed8326c7701c3184a84fc",
+    "model.nix": "05edaf73d1fe578c919e127dedc334a51f047077cb65e973e3fab891ec9c8c98",
+    "packages.nix": "6283d51da17cd44f9c8ddebc3c18d333a5206972a8c806e6dffdac4c64476b3c",
+    "qualify.py": "63b6d2166acdb6b16949bf2b9eae8ffa240917b46cef01939ad0194d4ad4ef33"
+  },
+  "source_provenance": {
+    "model_lock": "operations/embeddings/model.lock.json; exact SHA-256 in source_hashes; upstream model revision e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+    "provider": "MrJ-am/vision@c0bfcac66b9ee52e282bb895ec6aed3921a86266:scripts/embeddings.py"
+  },
+  "synthetic_data_only": true
+}

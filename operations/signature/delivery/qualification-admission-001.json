@@ -1,0 +1,42 @@
+{
+  "attestation_emitted": false,
+  "checks": {
+    "authority_identity_roles_and_limits_preserved": true,
+    "baseline_checks_preserved": true,
+    "baseline_steps": 74,
+    "exact_order_matches_independent_expectation": true,
+    "missing_selection_refused": true,
+    "signature_steps": 82,
+    "source_counts": [
+      10,
+      9
+    ],
+    "source_update_tests": 2,
+    "wrong_revision_refused": true
+  },
+  "files": {
+    "operations/ci/continuous-delivery-v1/admission-package.nix": "d8c2b77e8ffcf01d0c6dc877c568f3ab045111cb65926841b1f0ce50efc0b431",
+    "operations/signature/delivery/authority-steps.nix": "535e401df5a9dd440e73e6009168a64385e370b58a31650edada3b6428b58cd8",
+    "operations/signature/delivery/canonical-validator.nix": "d4737ef9247b15282173b4f19e2881adebf2aef68f01bd34b3015f1a8456dfc8",
+    "operations/signature/delivery/expected_steps.py": "71dca1e35fdcac6ff2b5c85087757f08930016b87ba74e47c382317c94ca7afc",
+    "operations/signature/delivery/test_source_updates.py": "6f0b55bd48189bb06c72cf602a52cef6a34f7db04ec7b4c5d40b37a610af738b"
+  },
+  "logs": {
+    "signature-admission-baseline-001.stderr": "f96a09d21da81854866592b7d8cfd33199c1d32a45d1ee04654493c2f02f209e",
+    "signature-admission-build-001.stderr": "d0e56c3600ba6c4b387d80bdd2463f7a17d00ee97beeaa34115627add68cd0c9",
+    "signature-admission-refuse-absent.stderr": "e590ae8b63b0aa43384fc6f5000d222763f8e80616407dbc1735ffef9faff00d",
+    "signature-admission-refuse-revision.stderr": "e590ae8b63b0aa43384fc6f5000d222763f8e80616407dbc1735ffef9faff00d",
+    "signature-source-updates-003.stderr": "b49a0577bca0caa359e994994d23ff143d33c27663c268ae53498d87ec48f697"
+  },
+  "packages": {
+    "baseline": "/nix/store/bnfbmiarw9pgs8446z1dknxp9r8zm495-mrjam-validation-admission-control-1",
+    "signature": "/nix/store/d1lw8qp1d2wchjzp13vfl6xnxk97rw9m-mrjam-validation-admission-control-1"
+  },
+  "production_activated": false,
+  "proposal_sha256": "0cfd8aac6d3267562b90890b79f6a45651b938c11c465acb80cee2647f5b8ed2",
+  "rules_adopted": false,
+  "rules_revision": "ad5481aa7b9809c47f0a55937b9cc99fde7decbb",
+  "schema_version": 1,
+  "scope": "local immutable admission package construction and source-update preparation; no full validator result yet",
+  "status": "passed"
+}

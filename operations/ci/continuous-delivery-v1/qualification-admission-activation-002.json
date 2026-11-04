@@ -1,0 +1,198 @@
+{
+  "activation": {
+    "automatic_deployment_enabled": false,
+    "boot": "/nix/store/xqbbs66wf4q9n7fdrs9p54bf87ak264a-nixos-system-srv1982677-26.05pre-git",
+    "code": "ADMISSION_TEST_ACTIVE",
+    "configuration_return_verified": true,
+    "current": "/nix/store/frha1lc5vwqx4d5bzs6p2hfabk8r6r49-nixos-system-srv1982677-26.05pre-git",
+    "production_validation_job_verified": false,
+    "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+    "retained_processes_unchanged": true
+  },
+  "atomic_publication_tests_passed": 6,
+  "dispatch": {
+    "code": "VALIDATION_DISPATCHED",
+    "id": 2,
+    "jobs": [
+      "validate"
+    ],
+    "run_number": 2,
+    "temporary_owner_token_revoked": true
+  },
+  "first_activation": {
+    "code": "ADMISSION_ACTIVATION_FAILED",
+    "configuration_return_verified": true,
+    "failure": "COMMAND_FAILED",
+    "stage": "stage-and-publish"
+  },
+  "fixed_publisher": "/nix/store/7icx05ykrz7fcqq1qz56zdl6xfmvdgpx-mrjam-publish-fixed-admission-1",
+  "host_evaluation": {
+    "changed": [
+      "mrjam-forgejo-runner.service",
+      "mrjam-validation-authority.service",
+      "mrjam-validation-collector@.service",
+      "mrjam-validation-export@.service",
+      "mrjam-validation-worker@.service",
+      "systemd-tmpfiles-resetup.service"
+    ],
+    "checks": {
+      "assertionsPass": true,
+      "baselineExact": true,
+      "exactProducer": true,
+      "noUnitsAdded": true,
+      "onlyCIUnitsChanged": true,
+      "previousSourceRetained": true,
+      "routesUnchanged": true,
+      "slotUnchanged": true
+    },
+    "system": "/nix/store/frha1lc5vwqx4d5bzs6p2hfabk8r6r49-nixos-system-srv1982677-26.05pre-git"
+  },
+  "initial_admission_gcroot": "/nix/var/nix/gcroots/mrjam-validation-admissions/04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+  "job_last_observation": {
+    "runs": [
+      {
+        "endpoint": "/actions/runs/2",
+        "rows": [
+          {
+            "id": 2,
+            "status": "running"
+          }
+        ]
+      },
+      {
+        "endpoint": "/actions/runs/2/jobs",
+        "rows": [
+          {
+            "id": 2,
+            "status": "running"
+          }
+        ]
+      }
+    ],
+    "rust_release_compilation": false,
+    "schema_version": 1,
+    "services": [
+      {
+        "ActiveState": "inactive",
+        "CPUUsageNSec": "273812000",
+        "ExecMainStatus": "0",
+        "MemoryCurrent": "[not set]",
+        "Result": "success",
+        "unit": "mrjam-validation-authority.service"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "110885000",
+        "ExecMainStatus": "0",
+        "MemoryCurrent": "9216000",
+        "Result": "success",
+        "unit": "mrjam-validation-collector@1-4121-765366_765367-950.service"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "869824000",
+        "ExecMainStatus": "0",
+        "MemoryCurrent": "[not set]",
+        "Result": "success",
+        "unit": "mrjam-validation-staging.service"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "59923974000",
+        "ExecMainStatus": "0",
+        "MemoryCurrent": "274141184",
+        "Result": "success",
+        "unit": "mrjam-validation-worker@1-4122-765475_765476-952.service"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "1364000",
+        "MemoryCurrent": "0",
+        "Result": "success",
+        "unit": "mrjam-validation-authority.socket"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "968000",
+        "MemoryCurrent": "0",
+        "Result": "success",
+        "unit": "mrjam-validation-collector.socket"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "1593000",
+        "MemoryCurrent": "0",
+        "Result": "success",
+        "unit": "mrjam-validation-export.socket"
+      },
+      {
+        "ActiveState": "active",
+        "CPUUsageNSec": "1776000",
+        "MemoryCurrent": "0",
+        "Result": "success",
+        "unit": "mrjam-validation-worker.socket"
+      }
+    ],
+    "worker_process_kinds": {
+      "bwrap": 4,
+      "cargo": 1,
+      "python3": 2,
+      "rustc": 1
+    }
+  },
+  "job_url": "https://forge.mrj.am/MrJ-am/mrjam-validation/actions/runs/2",
+  "limits": [
+    "Real production job running, no successful attestation claimed.",
+    "Boot profile remains the old xqb generation until real acceptance.",
+    "Continuous admission construction, merge and automatic delivery still incomplete."
+  ],
+  "root_publisher_invoked_twice_in_vm": true,
+  "schema_version": 1,
+  "source_sha256": {
+    "activate-admission.py": "45a92f930689beb23ff49a18eae60554cd72c7910c0830738e7a0dae771a7dda",
+    "admission-fixture.py": "a1f20aded4a8bd03a87a186dc482743a5966568e2352de4655b7e202e2523687",
+    "admission-host.nix": "cd32be128917354969979ffade7e40f2a3105b2f7dfb7910510df846e4ece1bd",
+    "admission-integration.nix": "e79c82d3b4627784041c5a29b0d8bd4bd052e7a9f5ab28ecae55460ec73ece01",
+    "admission-module.nix": "9db30f8e57bf1f1dd83e643cdfb1bf2ade0735e8abbb0f189a59c03b4b2b92e9",
+    "admission-publication.nix": "1b49b1dc267af4c4c2a748ec284cb6dc15b48a326dd2b507c5963d91579566b6",
+    "admission_publish.py": "c74183f0166aeb522e647af9f1f3f828770ef3520c63cab519afa301b7d8336a",
+    "dispatch-aligned-validation.py": "7ab1af41e213a452bb507485a8583f7713eb6b3d4f7701983dbba686eee0c871",
+    "initial-admission.nix": "9ed269d9945a7dcbe3783f798ea92791da874a9020b48a3dc3a14f20a1512e49"
+  },
+  "vm_result": {
+    "authority_v1_sources_preserved": true,
+    "authority_v2_fixed_credential_reader": true,
+    "checks": [
+      "prepare",
+      "credential-reader-boundaries",
+      "inactive-boundaries",
+      "fresh-chain",
+      "cache-reuse",
+      "wrong-peers",
+      "key-separation",
+      "legacy-cache-rebuilt",
+      "tamper-refused",
+      "admission-revoked",
+      "wrong-key-refused",
+      "expiry-refused"
+    ],
+    "coordinator_sources_unchanged": true,
+    "dynamic_admission_registry": true,
+    "not_established": [
+      "Actual Forgejo job transport",
+      "Production identities/key/policy/capacity",
+      "New validator execution on every job",
+      "Human review/merge/deployment authority"
+    ],
+    "production_access": false,
+    "schema_version": 1,
+    "scope": "real-systemd-distinct-identities-synthetic-admitted-task",
+    "substitutions": [
+      "Synthetic immutable validator and source/report, no application compilation",
+      "Admitted task delivered by a Go test entrypoint instead of Forgejo API/daemon",
+      "Test entrypoint closure added to the otherwise unchanged private coordinator root",
+      "Invented key/UIDs/credentials only"
+    ]
+  },
+  "vm_store": "/nix/store/c9ih3zcbgsibfj1vv9xar84r3s916p93-vm-test-run-mrjam-ci-admitted-distinct-identities"
+}

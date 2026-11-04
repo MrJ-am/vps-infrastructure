@@ -1,0 +1,17 @@
+{
+  "operations/migrations/admission/README.org": "da06980b91dd057e33b1ad649e6793b0c04929c8a5b7f715f8e2b166aa7e11ef",
+  "operations/migrations/admission/adopt.py": "01e60019d18e349e284aeb6a15a97cd543e9e536d6979816d634bd5677d3cad5",
+  "operations/migrations/admission/package-first-attempt-20261031.nix": "8a0bffcb3fb96d227baf5a2831f870c8d0ead1a40fe38e8b96844f23734aca03",
+  "operations/migrations/admission/package.nix": "657158eae65af58ff1fa54fe7eaff581a32c05aed43e546e5a55bb4907de9289",
+  "operations/migrations/admission/qualification-build-20261031-02.json": "205611b624869ddf240272f44c67c038bdac189a1f8960dafa95d75feb3acdba",
+  "operations/migrations/admission/qualification-build-20261031.json": "70047cae921aca5f33ab3f7c2dd52469bf6ce7ac8cbd2559c53a0ba1046d1683",
+  "operations/migrations/admission/qualification-resume-folded-systemd-20261031.json": "72b603b8b08ec665e1dd7d1c92205cf2c48f8bf2ab616016c802aacf2c9046e1",
+  "operations/migrations/admission/qualification-resume-systemd-20261031.json": "e90274f566887f986f7c7d6293c42155193c641f939377e1a832deb4a2d8cf76",
+  "operations/migrations/admission/qualification-systemd-20261031.json": "f10edc2a685ee03f5a256431df04f3b3314fa8b9c2afe8f89e4a0661bcbd24ee",
+  "operations/migrations/admission/schema-provenance.json": "9df933a89e81c8c56851d04ebd54a13bfcf9673a0139a5f03cbb06a10e3c3386",
+  "operations/migrations/admission/schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+  "operations/migrations/admission/schemas/legacy-requests.sql": "a3b2c4b7bf6ae8f09a9121ed6dde8cbadcb7e7a713407b0df453d42edc1c397d",
+  "operations/migrations/admission/schemas/target-mail.sql": "6874053eff4d72c068a77c79a4051b38b7a5859fe1ad2b02cc702e9600195093",
+  "operations/migrations/admission/schemas/target-requests.sql": "7cc3fcc3c5b4654aa2fd255c9205dd4c5e764f5cb87db8f9ab90cb6836a552fb",
+  "operations/migrations/admission/test_adopt.py": "db9136e4461b2913b80377f621425bf13bff0f4c583a074a0acb5179f67a3a13"
+}

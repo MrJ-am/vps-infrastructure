@@ -1,0 +1,27 @@
+{
+  "checks": {
+    "descriptor_not_authorization": true,
+    "no_previous_admission_in_consumers": true,
+    "package_links_bound": true,
+    "same_admission_every_consumer": true,
+    "same_anchor_everywhere": true,
+    "staging_uses_stack_acceptance": true,
+    "vise_enabled_all_dispatchers": true
+  },
+  "limitations": [
+    "Synthetic anchor, never activate",
+    "No independent real rules adoption",
+    "No host generation activation",
+    "Integrated timer qualification still required"
+  ],
+  "packages": {
+    "acceptance": "/nix/store/hjcnqsa873qr7wfpjj2mlzfjdcl3s8qd-mrjam-separated-acceptance-services-1",
+    "admission": "/nix/store/bswjg8vd42z28w6wcjifxj7bmbzrigd6-mrjam-protected-admission-controller-1",
+    "anchor": "/nix/store/3a99xh93qcx262ab5yr68is4z9baib28-mrjam-validation-admission-control-1",
+    "preparation": "/nix/store/bmh0xllm6py4b500rzq8hnlw9ysl2dcj-mrjam-delivery-preparation-1",
+    "promotion": "/nix/store/p65ij4f4n5p4s0hhwggxfm3i33b02g4j-mrjam-protected-promotion-service-1",
+    "staging": "/nix/store/0q2jjvn7pc64jvlhg80ls8qrq1612r5l-mrjam-protected-staging-service-1"
+  },
+  "schema_version": 1,
+  "stack": "/nix/store/wkhah54rd612nli9zzqfbg6571syss46-mrjam-protected-delivery-stack-1"
+}

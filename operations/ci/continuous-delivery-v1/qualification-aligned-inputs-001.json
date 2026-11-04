@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "nine-complete-Git-source-trees-bound-to-proposal",
+    "old-Rust-graph-refused",
+    "altered-lock-policy-refused",
+    "manifest-rehash-cannot-authorize-Git-blob-change",
+    "active-identity-configuration-omission-refused"
+  ],
+  "checks_passed": 5,
+  "closure": "/nix/store/mbxag55ir7cgv33zv62r6d711zb07k12-closure-info",
+  "limits": [
+    "Input gates and package construction only; full isolated validator run still pending",
+    "Initial 830-file proposal refused because two active Nix identity configurations were missing; replacement has 832 files"
+  ],
+  "production_activation": false,
+  "proposal_sha256": "9a3b1f840c615defe22520ee87a719337c804ae0916475e723b36946ce389cff",
+  "schema_version": 1,
+  "source": "/nix/store/87s4yp1d5xi4snh5n40jasq3d9nsmsa0-mrjam-aligned-public-source-proposal-002",
+  "source_sha256": {
+    "aligned-bindings.nix": "308b9805f4b9234a5124228e96f2cc189478b826ad354638b2e6871a8fa307ef",
+    "aligned-policy.json": "37187fa0030c8f1cc869f8fcf4800528c1e47ea2645f66c5d39f186f712cc77b",
+    "aligned-validator.nix": "3e88b5acb8a1573dde3661aa1a84b7de27775d0f4f74dea747655868d477ed0c",
+    "prepare-aligned-proposal.py": "672db6c491583aa8c33d617c064b9723e02f6a14fa5b2b419021082d60753f86",
+    "run_aligned_validation.py": "7f7132704781b2631969cc009dbed337e156fd35298ac963c448f908617d65c2",
+    "test_aligned_inputs.py": "d2586549c711acdc2ac8e742a18b3116f14ffbe1cfad42f5ea5a85ca0a24d02b"
+  },
+  "validator": "/nix/store/wl22xq0106mfaa8fc7rv6xgwbdk17rir-mrjam-validate-aligned-workspace-1"
+}

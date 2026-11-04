@@ -1,0 +1,35 @@
+{
+  "limits": [
+    "One fixed real PR qualification; not yet a permanent intake service.",
+    "No production admission, signing or deployment performed."
+  ],
+  "live_result": {
+    "candidate_code_executed": false,
+    "code": "EXACT_PRIVATE_GITHUB_SOURCE_RECEIVED",
+    "deployment_authorized": false,
+    "head": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+    "number": 2,
+    "read_token_revoked": true,
+    "repository": "mrjam-plateforme",
+    "selected_blobs_verified": 2,
+    "tree": "898e81ba8da198cbb6512a64fa54e950ecd24d4b",
+    "tree_entries": 184,
+    "uid": 63414
+  },
+  "local_tests_passed": 7,
+  "package": "/nix/store/7633b8ssh98695d8mxjw2gq6apaz4aar-mrjam-source-fetch-live-qualification-1",
+  "schema_version": 1,
+  "source_sha256": {
+    "source-fetch-qualification.nix": "5566568229c3745ec175d0c9df1cb2c91505a71c5c0403bd9c40c661861e9981",
+    "source_fetch.py": "9f55496531424029326bcfb53bfadabb319b8d8c487ef1a48c12f6395d97f9c1",
+    "source_snapshot.py": "05620dcc45331909872b56e2f1d1300e344dc28874b3b4fcfe50f5df0e422c24"
+  },
+  "unit_constraints": {
+    "cpu_quota_percent": 50,
+    "dynamic_user": true,
+    "memory_max_bytes": 268435456,
+    "runtime_max_seconds": 480,
+    "tasks_max": 32,
+    "temporary_filesystem_bytes": 134217728
+  }
+}

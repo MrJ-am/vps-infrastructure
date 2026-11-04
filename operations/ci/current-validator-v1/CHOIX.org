@@ -1,0 +1,87 @@
+#+title: Choix concret du validateur correspondant aux applications déployées
+#+language: fr
+
+Le prochain validateur doit compiler la sélection publique déjà qualifiée,
+avec le correctif Matheval réellement déployé. Il aura un nouveau chemin Nix,
+une nouvelle politique et un nouveau reçu. Le paquet =p249…= et la révision
+synthétique =93bd…= restent des preuves historiques.
+
+* Sources retenues et confidentialité
+
+=source-choice-20261103.json= est produit par =inspect.py=. Il vérifie les
+octets des 815 fichiers de la proposition =8bf05f…= contre ceux du paquet
+historique de code public =zjw…=, manifeste =5857e7…=. Noms, tailles et SHA
+sont identiques ; seul =rules_revision= du manifeste change. Les neuf liens
+source/révision/arbre sont conservés dans ce constat. Aucun fichier
+supplémentaire des historiques privés n’est nécessaire pour cette base.
+
+Cette preuve ne déclare pas publics les dépôts complets. Aucun bundle Git,
+historique, export de données, codebook privé ou source non sélectionnée ne
+doit rejoindre le store ou le staging public. Toute future extension privée
+nécessitera un raccord distinct ; aucun booléen ne la rend publique.
+
+Le patch retenu est =operations/runtime/mateval-readiness-v1/readiness.patch=,
+SHA =90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4=,
+publié dans la source I =22ede22314b9dda89f11383a5d4cd9ac3c01cdcd=.
+Le constat lie les SHA des deux fichiers avant et après application exacte.
+L’arbre Git de plateforme =4e654…= reste l’origine ; l’arbre compilé est un
+dérivé explicite de cet arbre et du patch. Aucun fichier corrigé n’est décrit
+comme un blob inchangé du commit d’origine.
+
+* Modification minimale à réaliser
+
+Une recette séparée du validateur réutilisera les outils, verrous, caches et
+contrôles existants. La politique du rapport aura une version distincte avec
+un champ fermé pour ce seul overlay : dépôt/commit/path/SHA du patch, révision
+de base, deux chemins exacts et SHA avant/après. Le parseur refusera un autre
+overlay, une base différente ou un champ inconnu.
+
+Après copie privée de plateforme/Vision/Matheval et avant Cargo, une étape
+fixe vérifiera les deux contenus d’origine, appliquera ce patch immuable sans
+fuzz ni shell candidat, puis vérifiera les deux contenus résultants et
+l’absence de fichier supplémentaire. Elle ajoutera une étape nommée fixe au
+rapport. Les validations métier et la comparaison typée restent celles du
+patch déjà qualifié ; aucune base de production ne participe à ce build.
+
+Le rapport conserve les liens Git d’origine. Son =policy_sha256= lie aussi
+l’overlay, tandis que l’attestation lie ce SHA, le NAR du nouveau validateur,
+sa fermeture, les recettes producteur/collecteur et les trois artefacts.
+Le protocole d’autorité n’a pas besoin d’un nouveau champ candidat libre.
+
+La révision proposée des règles est
+=b02bdf1b5d63dcf0e0610723788a7ca7e384932c=, enfant de =eb71ffe…= ajoutant
+seulement le workflow qualifié. Elle peut servir de référence proposée de
+construction ; elle n’est pas encore le main protégé adopté. Ce même SHA
+devra être lié par la politique, le manifeste du staging, le worker, le
+runner et l’autorité après adoption effective. La recette d’overlay sera
+elle-même publiée et examinée avant ce raccord.
+
+* Constructions et preuves utiles
+
+1. Construire seulement la nouvelle recette de validateur et sa fermeture,
+   en réutilisant Rust 1.99.1 corrigé, les dépendances et caches déjà vérifiés.
+   Vérifier le refus d’un ancien contenu brut, d’un patch altéré et d’un
+   résultat différent ; aucune suite applicative générale à répéter pour
+   cette préparation de recette.
+2. Préparer le manifeste des mêmes 815 fichiers publics sous la révision
+   proposée. Le patch est une entrée immuable de la recette, pas une source
+   choisie par le candidat. Construire le paquet public et la politique
+   proposés ; ne rien activer avant adoption/revue.
+3. Exécuter ensuite une seule validation réelle de cette proposition pour
+   obtenir =server=, =frontend.tar= et =verification.json= nouveaux. Cette
+   exécution sera nécessaire à leur propre attestation ; les anciens tests
+   ne lui donnent pas un succès par avance. Comparer réellement ses octets
+   aux références actuelles si l’on veut en revendiquer l’égalité.
+4. Construire les bindings définitifs de l’autorité et du coordonnateur
+   avec la clé publique produite par l’amorçage, les UID observés, les hashes
+   de ce nouveau validateur, la politique et la proposition. La création de
+   clé seule ne permet ni démarrage de CI ni livraison.
+
+La référence actuelle du serveur est =wasr…=, ELF
+=a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e= ;
+ses sept frontends et leurs manifestes réels figurent dans le constat.
+Une reconstruction CI n’est pas déclarée byte-identique à ces sorties avant
+mesure. Le protocole à trois artefacts couvre le serveur et les frontends ;
+les workers, adopteurs et migrations séparés de la génération conservent
+leurs preuves et leur circuit de livraison distincts. ViSe reste hors de ce
+lot et ne bloque aucune étape.

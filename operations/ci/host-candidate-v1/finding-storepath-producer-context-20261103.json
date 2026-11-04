@@ -1,0 +1,37 @@
+{
+  "application_validation_repeated": false,
+  "cached_receipts_rewritten": false,
+  "canonical_derivation_input": {
+    "authority_v3": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3",
+    "worker_policy_sha256": "a779f50c173e8129e594a3f2ec862645a2cf5d3953ff187b66700e34bb6e0780"
+  },
+  "code": "VALIDATOR_STORE_CONTEXT_CHANGES_PRODUCER_BINDING",
+  "correction": "new evaluation-v3 imports the canonical validator derivation from current-validator-v1/bindings.nix and asserts its exact aj0 output plus the qualified native producer",
+  "explanation": "closureInfo depends on the derivation input context; worker_policy includes the resulting closure_file path, so storePath and derivation inputs with the same output path bind different producers",
+  "intermediate_results_retained": [
+    {
+      "bytes": 6646,
+      "path": ".local/ci-rules-bootstrap-adoption-20261103/host-evaluation-v3.json",
+      "sha256": "e4f1d7102d983b8e897b694cbdb9bfc13bea7b8aa39d1900f2f7cd0036cf5f64"
+    },
+    {
+      "bytes": 2284,
+      "path": ".local/ci-rules-bootstrap-adoption-20261103/host-delta-v3.json",
+      "sha256": "7bdf7e28b7f6be9fc21bd7400c9aee1d54f3986c5e40693f209f31237eb4ade5"
+    }
+  ],
+  "old_expression_preserved": {
+    "bytes": 4674,
+    "path": "operations/ci/host-candidate-v1/evaluation.nix",
+    "sha256": "dbeaee2da39950af1ed5628b9e1434102697062794a43e9c3b27e23b01aa6f50"
+  },
+  "production_mutation": false,
+  "same_validator_store_path": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1",
+  "same_verifier_nar": "sha256-ccWYvZ+frJ3wafs7ZSCJpmHqtjbfqSoRvRx43B5nKes=",
+  "schema_version": 1,
+  "scope": "evaluation-only-before-activation",
+  "store_path_input": {
+    "authority_v3": "/nix/store/h2294pqxjfvqqx1k9kfwcbs20rca0fw6-mrjam-validation-authority-report-details-3",
+    "worker_policy_sha256": "582196e7047613ebd5e684f02117d953b046ead8c219ad774c2d6a43ec97fa5e"
+  }
+}

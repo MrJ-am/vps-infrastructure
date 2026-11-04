@@ -1,0 +1,29 @@
+{
+  "author_qualification": {
+    "path": "operations/ci/qualification-capacity-probe-after-release-004-20261102.json",
+    "sha256": "ac417c62433827668cfbd89b7001394092f409098464b05995e46ffa865cc109",
+    "tests_repeated_by_reviewer": false,
+    "tests_reported": 12
+  },
+  "checks": [
+    "exact release004 successful terminal result, OPEN phase and current/boot fi48 required before resource observations",
+    "fixed systemctl executable, unit names, properties, bounded output and timeout",
+    "no passwords, homes, arbitrary users, application files, logs or secrets exported",
+    "UID/GID metadata restricted to949..959 and exact CI technical names including authority",
+    "cgroup reads use fixed qualified paths; unknown PID1 path never followed",
+    "kernel numeric fields and closed enum projections only",
+    "no production mutation, activation or identity assignment"
+  ],
+  "limitations": [
+    "A point-in-time observation is not a load test or proof of future memory margin.",
+    "No new production observation or command executed by this reviewer.",
+    "Terminal unit rows are one bounded systemctl snapshot; filesystem terminal bindings are checked again after the readings."
+  ],
+  "passed": true,
+  "schema_version": 1,
+  "scope": "independent local read-only source review of fixed capacity probe",
+  "source": {
+    "path": "operations/ci/preflight-capacity-after-release-004-20261102.py",
+    "sha256": "74c34d386924d2c69b37afc4363ce457110e3a3bc15d564d42f8965fcdb7446c"
+  }
+}

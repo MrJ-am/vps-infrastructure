@@ -1,0 +1,249 @@
+"""Sealed code import after release005; no unit, profile or service mutation."""
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import resource
+import selectors
+import signal
+import stat
+import subprocess
+import sys
+import time
+
+RELEASE = {'schema_version': 1, 'export_sha256': 'ccb0f76d8f5e44db032789bb5a025afbf58b6e9af061e862830695fdafdded98', 'export_bytes': 427800, 'required_free_bytes': 1076877080, 'artifacts': {'/nix/store/2b7vq4rshbsyjjcbyz0h6bx32gcn2vp4-unit-systemd-resolved.service': {'nar_hash': 'sha256-G4tVenUschc9XpB7w8YboddiqtUmagXZi2QgLZylRhc=', 'references': ['/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2', '/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67', '/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11', '/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0', '/nix/store/m2sv1rizzbnsb35hv3ii0dnf3rvfy3n3-tzdata-2026c', '/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12', '/nix/store/svl89366pvzz5s3myh1fjniz9l0x17fh-gnused-4.10', '/nix/store/xm9dk145k6xsfkz5wjwmqg545i652vy6-X-Reload-Triggers-systemd-resolved']}, '/nix/store/8flknkv1hwsarmra0lm4h4i74cksmm6n-etc-systemd-resolved.conf': {'nar_hash': 'sha256-awtRZKwHA/zqg8OuTK+bc7jhUZb5wCzZh5oYwEfFsac=', 'references': []}, '/nix/store/b2fd0wc1s9kn58xzjif2ywkdkr8w50g2-system-units': {'nar_hash': 'sha256-5NV8X1mtnK3auwX8AW7vXQp1In4Io8aCf91nZ3A8jcQ=', 'references': ['/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2', '/nix/store/1bxki24fm5y15ihbw2vg322ljk83hf6a-unit-mrjam-vision-replay.service', '/nix/store/1rasq4fzclg4ckd9zb45wlmm31smcwjy-unit-network-local-commands.service-disabled', '/nix/store/2b7vq4rshbsyjjcbyz0h6bx32gcn2vp4-unit-systemd-resolved.service', '/nix/store/2m33ymd9q9jbhkcpshzci7x6kh0abkfq-unit-systemd-remount-fs.service', '/nix/store/2ryykipbqxaz4iam4bmy4r1jw2sb5agk-unit-mrjam-acme-renew-logique.echos.systems.service', '/nix/store/2v02k9wzbd0nshz5ln0qr6l8bbpa5cv5-unit-linger-users.service', '/nix/store/2yfzrda4jq8qrgpi04k4ly9wqblk6p23-unit-suid-sgid-wrappers.service', '/nix/store/335bgljhwfcc2yz9l5nkrmkch8qcpgk8-unit-mrjam-rust.slice', '/nix/store/37wz5qg1vhz3w8n8kwpsw17bbsizmxhf-unit-system.slice', '/nix/store/3aijia22mlcrb3g4crhp8xg2w512n5ry-unit-fstrim.timer', '/nix/store/3r7q36cibjf3mjbw09rshgi4fflciz01-unit-mrjam-forgejo-bootstrap.service', '/nix/store/3xpjjmxgxby0vs0dnnyrf7vwqpcp18sr-unit-mrjam-rust-blue.service', '/nix/store/3yg7dkp8k75c5xh9ivi7fns2j7d2y42b-unit-remote-fs.target', '/nix/store/3ypfwb7qbgn989b344hahqhkpzmz5cnk-unit-mrjam-sauvegarde.timer', '/nix/store/41lwx3hjsbgffaa5gi7id99by2rxq4q7-unit-mrjam-acme-runtime.service', '/nix/store/462hi453bvp26rkiasa1jn2c30fygfiz-unit-post-boot.service', '/nix/store/490gj5jmk5zbjm75f4nl05pb4gbf6drq-unit-nix-daemon.socket', '/nix/store/4fzvnrid2anm20sxa478yks02w113b7r-unit-modprobe-.service', '/nix/store/4g8kh7qd5dy6xs8sx4dlp32k4bignliz-unit-mrjam-adopt-forgejo-role.service', '/nix/store/4lqrn26wayh2dr4qm25574b1r5hcqmcy-unit-sshd-.service', '/nix/store/4n075ll5jdwbjv142yg8ymz5f3yf4pam-util-linux-2.42.2-bin', '/nix/store/4pkqy20caycm48kamda3ycnd2k8l603i-unit-systemd-random-seed.service', '/nix/store/4qvlwbcnkfwl0wwygcn2d1kynyj1hkn8-unit-nextcloud-cron.service', '/nix/store/4qxbj7z53rxbaf20m9d9p49vwfnn4m1p-unit-postgresql.target', '/nix/store/501gfkjnc29n3wd33d7d72krk9g6np6h-unit-sshd-vsock-.service', '/nix/store/52k47shyn682b1blwrryiha1inib69gq-dbus-broker-37', '/nix/store/5agrp3dwy4fqg0fz80qd2k2zjs3256ad-unit-nextcloud-setup.service', '/nix/store/5d5xnixjs2liicghhc3w4cckg77fy9am-unit-reload-systemd-vconsole-setup.service', '/nix/store/5iphbmlxmlbn08pdw1540p97flxipz5y-unit-systemd-journald-audit.socket', '/nix/store/60gj494fjqarv1drgbrnnzy7ai2lb135-unit-local-fs.target', '/nix/store/63xrng4rpakryf47yhbrnyif1ljjji90-unit-mrjam-acme-renew-log.mrj.am.service', '/nix/store/67iqk2nmcrcqy41ll8052bg34524cffs-unit-systemd-user-sessions.service', '/nix/store/6ddcx00s76ll51nkd6rinryssfl5akaz-unit-systemd-modules-load.service', '/nix/store/6mjbjklnk9issmzyla0zpr8ys6dqjbsw-unit-systemd-networkd-varlink-metrics.socket', '/nix/store/6ngm1nh47xcazbdd2cxmc63b9bvd2prb-unit-systemd-networkd-wait-online-.service', '/nix/store/6y71hmq8clx8j11vphndx2hrvvb0llq2-unit-nix-daemon.service', '/nix/store/70d7hms3p769jz5icli9l6g37i7z8mbq-unit-sshd-keygen.service', '/nix/store/75fnk0nwchn9zsa91618lk7bhnlqxija-unit-systemd-oomd.service', '/nix/store/77nlsswldjv7bbyl39mlykh2ly7pybh7-unit-mrjam-identity-deletion.service', '/nix/store/7c7vsk4lbwgxlq2w74bh0v38h8g0g616-unit-mrjam-vision-cycle.timer', '/nix/store/7q10agyjip4f107z1vmpy2kr7fn9444b-unit-qemu-guest-agent.service', '/nix/store/7q5s1d5xrdb69v2hlbl9iiyfc4vmm4c2-unit-system-phpfpm.slice', '/nix/store/86i1c3wsq6bzn6k6dyasg0j65akcxi8g-unit-dbus-broker.service', '/nix/store/8ca9yd2kv8c5yndfbqmrrrk8jlckz49j-unit-redis-nextcloud.service', '/nix/store/8cipz0s3sp0bicmqki640rx6y0dv2yns-unit-mrjam-acme-renew-logique.echos.systems.timer', '/nix/store/8cmc8y4b9yz6v6mzll5gng8llbi2n1a9-unit-mrjam-acme-renew-cloud.mrj.am.timer', '/nix/store/8fprjvyl5f3x32rvllp3mmqhgmfhhkjy-unit-mrjam-acme-renew-audition.mrj.am.timer', '/nix/store/8hs6wvrwxwwngwa3y2lxj9zl77yy4byj-unit-postgresql-setup.service', '/nix/store/8sxb4zn4zr788wca86mjcz9qfyr7r6gi-unit-container-getty-.service', '/nix/store/8v7nxzcd6gq4m7qmldjlwjmx0nz4a494-unit-postgresqlBackup-matheval.service', '/nix/store/8x0gxzq0svffdcjgrnzwqvxldxgxp59r-unit-mrjam-acme-renew-www.principiipetit.io.timer', '/nix/store/8x0msnc5db0i4gsrmbilv1idgkyzz834-unit--.slice', '/nix/store/8yadwwbvv2ab0ddkisp53lc3j8pmzd31-unit-nextcloud-backup.service', '/nix/store/9bls42pnwrggsa8qjaqndnm3j9bxg6lw-util-linux-2.42.2-lastlog', '/nix/store/9jw4rc0745hrwcb12jph7j525kfbf92j-unit-logrotate.timer', '/nix/store/a5qip1xrrbap00pn80mxb037dbycad65-unit-postgresqlBackup-nextcloud.timer', '/nix/store/ab4r33zpxaavc3abzdg8xidp1ylqr7id-unit-cloud-init-local.service', '/nix/store/aig4vpcwzk30zdc5632n2cz9hzpc29n1-unit-systemd-networkd.service', '/nix/store/akqfivcibd3xxbm4r67nw366b1dl3vw8-unit-firewall.service', '/nix/store/akr4k62444nn6z3gl9rw77dqb6i85wrv-unit-postgresqlBackup-nextcloud.service', '/nix/store/apwqz1fv2w7080c5bbb37s0qcbw0i8df-unit-kmod-static-nodes.service', '/nix/store/asl1zrmynbw16n9bcn1sp7q4m841s1j8-unit-mrjam-rust-green.service', '/nix/store/b0ndyz4xnzl596h2gxv5yfrm5fgi22h3-unit-systemd-journald.service', '/nix/store/b25k4204rvw7lli9khnzda2bvrhhjn6c-unit-systemd-makefs-.service', '/nix/store/bbi39z6w1j6h39wgxsbxhs036iyn9njs-unit-nextcloud-update-db.service-disabled', '/nix/store/bwlhn98cjznc69z3z12dlzp12zamqpds-unit-mrjam-worker-credentials-adapt.service', '/nix/store/by151pa6c2kk472mnsjpxdvvndwpvmw1-unit-mrjam-archive-mail-adopt.service', '/nix/store/c4r6jn5hn6siv9383762ys3l508s4f4b-unit-getty-.service', '/nix/store/ckmqmpwp39nmmkh5jsil1y73p661g1d7-unit-systemd-networkd-wait-online.service', '/nix/store/cr8aqrp2xgi7mp5gmb17scrb1lnlf9a0-unit-mrjam-acme-renew-log.mrj.am.timer', '/nix/store/d5zqkhrkjxh7dvbdy1hpm2mwpf4x9q71-unit-systemd-timedated.service', '/nix/store/dhr93r6hn987wkk0nr01h4hbn55b0i3m-unit-mrjam-adopt-matheval.service', '/nix/store/dr683b8a5rgcw5mv09sra2pnad0k87qj-unit-growpart.service', '/nix/store/f5q0xmgn4swgfs48l71gr50xpcfzxw5r-unit-mrjam-acme-renew-vision.mrj.am.service', '/nix/store/fbh5q0g4s7pllrbvkpli0zlfb2mbhchi-unit-cloud-config.service', '/nix/store/g3r9ngl032y2fpq8rhlkmp946lkknj1y-unit-mrjam-identity.service', '/nix/store/gb7mprj2qngw0r8c2ldfp79ff0k372xg-unit-dbus.service', '/nix/store/gdm3v5420c0a0kaw5ndbzrdaf19mc3bz-unit-mrjam-acme-renew-www.principiipetit.io.service', '/nix/store/gi57kdqg1blqhkxj4ymk6s8i1ly7915q-unit-systemd-pstore.service', '/nix/store/glwgdgp9ar6ms7jr7y9dqzd5dniwbp01-unit-systemd-nspawn-.service', '/nix/store/gnx0alh2mrc2ndjs7ik6jm3w7avld56w-lvm2-2.03.39', '/nix/store/h28y1vslcrqr68hqm9c3790xv1ah8c47-unit-mrjam-vision-closure.service', '/nix/store/h5qbaa9v30mlrrm9ghsnjhzdmm221cz3-unit-logrotate-checkconf.service', '/nix/store/h7prw0yjh0sshl10zgrqdljv5mappnij-unit-systemd-networkd.socket', '/nix/store/hb2bjx944k6x3nml6vap7vydzqiic4n0-unit-vision-embeddings.service', '/nix/store/hcf3bz18pvdsbg8kvkqqy2gcdjx52fcv-unit-nginx.service', '/nix/store/hl47j83mr5sarggr500s0ydkwkl79sw1-unit-postgresqlBackup-matheval.timer', '/nix/store/hmm8xxwkmlnmamzvhxrgknc2fjdx8l2c-unit-mrjam-forgejo-probe.service', '/nix/store/hq9kw949rhq0a56ynqk4zaq2dmf3z5vx-unit-mrjam-vision-replay.timer', '/nix/store/i4bv0lvk0gfzllcy2kqgz3iam0aw4c4i-nix-2.34.8', '/nix/store/i816mq4zlqvc32w6js8nxbvsaiji6mdw-unit-sshd-vsock.socket', '/nix/store/ijjiz5sgd1bzh5kv53x6pin5wif0j58h-unit-nscd.service', '/nix/store/isbkxmncf09y0mhpf3k10pd7pjz907i0-unit-systemd-update-utmp.service', '/nix/store/j7q0v0b4mzcnsh00s9zs2h8mbccnimq9-unit-systemd-sysctl.service', '/nix/store/ja0k8q0zvvil54046n0xra55zng0vsq0-unit-systemd-localed.service', '/nix/store/k92wbnr70lij1qnl4wcgyvcis100v0f8-unit-lastlog2-import.service', '/nix/store/kg4agmg4a7z4djvr9l2c22lz7mca3wyw-unit-prepare-kexec.service', '/nix/store/khknbkyfmm4bxx514lmas9kwaq85y67w-unit-multi-user.target', '/nix/store/ks1kdi8ynsw13gxnbl83hcknhi7jjk5n-unit-cloud-final.service', '/nix/store/ks2x2nhfnwyxdjaq5zr0v2rs424g24p9-unit-phpfpm-nextcloud.service', '/nix/store/l3pccjr6sh1zj3iqaalxbad0d7x5d83x-unit-mrjam-admission-native-adopt.service', '/nix/store/lg8cfqq5yp5fcaq619y6nsmg8binsf05-unit-logrotate.service', '/nix/store/lhy8b96185g6kiwsqnijs40mh95h6q3j-unit-mrjam-acme-renew-principiipetit.io.service', '/nix/store/lkqh0jxxlfjldna53hwys5m9ki5n2v52-unit-user-.service', '/nix/store/lwb6jqck7yskn4jsvd958p8ic850vhql-unit-systemd-mkswap-.service', '/nix/store/m02lw56vmpx2rszxhd4mq15q9792nxfb-unit-getty.target', '/nix/store/m9kk3qibaqqv0k03l83z2ywiawwkz3pl-unit-mrjam-kanidm-backup.service', '/nix/store/mlmwvr6ia2734bxzgxjzbry8ra5a4j9w-unit-mrjam-vision-cycle-initialize.service', '/nix/store/mlwzk57985iiic0hawa7bbycly7923kc-unit-systemd-logind.service', '/nix/store/mvklkmjz08d3rnggcd9pi85mjskrfn3y-unit-user.slice', '/nix/store/myvppcsaqlp6iiikg9qwr384xc4hdvim-unit-serial-getty-.service', '/nix/store/n41xknlq9gia42f8fkmr55g0q2sjz8j5-unit-mrjam-acme-renew-principiipetit.io.timer', '/nix/store/n9jnd19dxyi8nap86pxysm6ikf2izqgx-unit-systemd-tmpfiles-resetup.service', '/nix/store/ncp5rqv42wjdpcwcw0kfvfnbljhrz5ic-unit-forgejo-backup.timer', '/nix/store/nh4pcdcrr8nwng4746vb28az6n9jm75n-unit-mrjam-vision-archive.service', '/nix/store/nkcb5x9iwb7nnjj0ar1w91w3irm51pzl-unit-sshd.service', '/nix/store/ns79nvx2hsxlrrdk2bdb5ni8yda8axsl-unit-generate-shutdown-ramfs.service', '/nix/store/nv23xbp695g5pzfwv71dsmfrgaj6893h-unit-mrjam-identity-aliases.service', '/nix/store/nxxl46sm8pb4rzhf5s8vay47nf10kwx8-unit-keys.target', '/nix/store/nz8hh56vjjj96qda6cc9srd775jvyicg-unit-mrjam-vision-admission-initialize.service', '/nix/store/p3hlcbmxlwfhmi5wfc9cbh72i2vl3jkz-unit-systemd-fsck-.service', '/nix/store/ph06qf893mn2g608mnsgzpvc19cdxdn4-unit-mrjam-bootstrap-journal.service', '/nix/store/psg7b6zvg7540k1bj67fnlkfwxx9b2gg-unit-systemd-journal-flush.service', '/nix/store/pxvkqr4cjy1gcmx9k015f9qgnlpa45z4-unit-phpfpm.target', '/nix/store/q0m19s73s1n9p7jlra7vw571c72j8is5-unit-fs.target', '/nix/store/q936bhybcljxl30jbqsf7sg7cwbbc6z0-unit-mrjam-vision-archive-initialize.service', '/nix/store/qccnwcpmgx5icj1szwih5wffd28qvpqq-unit-run-initramfs.mount', '/nix/store/qmyr4vk6cz1gjj8v2mafcp18q8b3xdr2-unit-mrjam-identity-aliases.timer', '/nix/store/qmzz5hnaang3dgknfn4ihj70i11kydw4-unit-mrjam-acme-renew-audition.mrj.am.service', '/nix/store/qz8f3sfyvlvsxvfyhqrkw6jd1a14549v-unit-mrjam-vision-archive.timer', '/nix/store/r29y0igx6angdzqvp70fgj40j7sp8pjs-unit-mrjam-cycle-mail-adopt.service', '/nix/store/rn3vmm9fmgyzr5in73w7xar27frsgwsv-unit-mrjam-acme-renew-forge.mrj.am.timer', '/nix/store/s4bhdx48vaxw00s40q6qz2frd5la6hyy-unit-systemd-journald-.service', '/nix/store/sbj2jkmr4h75hcp35gwiy81f8ciqb41k-unit-systemd-hostnamed.service', '/nix/store/sv8j8vgwiabxavw03vdrchjidmq0b5af-unit-mrjam-vision-cycle.service', '/nix/store/v29lmqnbaw2md9pbs233gajn257rigw8-unit-sysinit-reactivation.target', '/nix/store/v5w5clg8a8p1m63qrj87g5dycv2k0hg1-unit-systemd-timesyncd.service', '/nix/store/v902wgjq9s6g5nn7h2rg3pdqjphq383a-unit-user-runtime-dir-.service', '/nix/store/vds2cgdbvx8p54bkhqcv77i36smq07n9-unit-nix-gc.service', '/nix/store/vg62wld25p7z7wpkqr4zcc620wxyxlhj-unit-forgejo.service', '/nix/store/vh0z1b9hnr6ahl1pwfxyhcp677nvpg0x-unit-mrjam-acme-renew-cloud.mrj.am.service', '/nix/store/vm7dyx4k3yyyfv85mw4vbgk0bb3gr5kc-unit-postgresql.service', '/nix/store/vqh4kwgxbr3pkc0iza5w2jb8z9mbdhpi-unit-mrjam-acme-renew-forge.mrj.am.service', '/nix/store/vss4kj23s6r8hc9w2amf8h7r4ak4s1gd-unit-systemd-backlight-.service', '/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service', '/nix/store/w6pphaj46n96kl5p37g4dpakaf49ss05-unit-nextcloud-backup.timer', '/nix/store/wa07nishvqly9gs1l9h148z1d9k83xbx-unit-forgejo-backup.service', '/nix/store/wwgspas5a3rk24bqvfmbx0s1gn7iq57h-unit-cloud-init.service', '/nix/store/x1q6xzb8j8ks7pmqvldqczxm1d594kvv-unit-nextcloud-cron.timer', '/nix/store/x4wbfm3ymlwlkz1gp5wskig5b1prp0dp-unit-mrjam-upgrade-forgejo-schema.service', '/nix/store/xlg711cypryp08zgswq0xc2h9q3nf324-unit-nix-optimise.service', '/nix/store/xm41z186g4bfsh0syh8fl6pg06vrzxb9-unit-mrjam-vision-admission.service', '/nix/store/xr9mx11i6gary2gbxnkfbxrdd0nfi4bx-dbus-1.16.2', '/nix/store/xshswrrzr9lfzc13wczcl50w23n6786f-unit-cloud-config.target', '/nix/store/yavsyfzv895akbwgnmwllh85bhl1wf02-unit-systemd-udevd.service', '/nix/store/ycqpbg2nbfbkmwxsy8ahqza4wl10zq2p-unit-sleep-actions.service', '/nix/store/yqmnkrw1kn1v0v69113b41smmax2jzwg-unit-run-wrappers.mount', '/nix/store/z3x7xjilr69qj16ql7axr7hs0bnyikj6-unit-systemd-importd.service', '/nix/store/z93gaqgqfndkpi415pscc35b7mcjr3sz-unit-kanidm.service', '/nix/store/znh6d71099pwlib3kc91yrhfahpgjh87-unit-mrjam-acme-renew-vision.mrj.am.timer', '/nix/store/zsjl15s74114v8phvvp32ilxr68q65yi-unit-mrjam-sauvegarde.service']}, '/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001': {'nar_hash': 'sha256-vEjC0G9hFgxSXCaiNDlrabJG/T7dz7tj0IILEVNiH4k=', 'references': ['/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001', '/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9', '/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17']}, '/nix/store/j14aa3q3vf9xlysb37f5jilwvdhqi1z2-etc': {'nar_hash': 'sha256-HquB0Rv5tLwWVUTscR2uVzWRyQixQ1kgSXNcJVU27WM=', 'references': ['/nix/store/096kns5zkm9yszg3mqhxwnifgf3safj3-su.pam', '/nix/store/0cvxl0pg9kj6va8a2xi857iqql4ar6ni-etc-systemd-logind.conf', '/nix/store/0l732dy7d4w9xrg71dbb6pdyiz72rgb7-useradd.pam', '/nix/store/0sg8ybrlj2xw933w2b533qhnq1hafpr8-nss-cacert-3.126-p11kit', '/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2', '/nix/store/1m9xxhln778wv1yj43rqj9n7k338s30n-vconsole.conf', '/nix/store/1nr7pxng68cwp5jcmfz5v11217pbib1h-sshd.pam', '/nix/store/206m56yfhycp91zp3y6ry3ddirqflnxs-nss-cacert-3.126', '/nix/store/265hgk53hl438z1hgb37i0nbwg4fwqv5-etc-os-release', '/nix/store/28hprrw9sdi4iarzyxa3r1a22b3dq5pn-openssh-10.5p1', '/nix/store/2hvfn54g2zadj629z0ckbhv44cxwby5c-userdel.pam', '/nix/store/2m7z7l26nxvglzb6k5ii7k2kp25hqi37-vlock.pam', '/nix/store/2vi2c72661y594h29w9rd1kfl4xri70q-groupadd.pam', '/nix/store/4249kimmkik9wvc0zbp63fdxrv59137l-etc-nscd.conf', '/nix/store/42vhlpr631pqaqry617k85q2pczb2c2i-root-authorized_keys', '/nix/store/4hp15l5bbymr14mm2a7xh6053sapyfpd-groupmod.pam', '/nix/store/4k49yqvvb6ak3d0c0akkkxhff8mn9y8x-etc-systemd-sleep.conf', '/nix/store/4kj6hixhrxmj7qn1yhcr1ia6z01b4vwz-system-shutdown', '/nix/store/4v11srfzsbx7z3mikyd1jh9s7kh86cgi-etc-bash_logout', '/nix/store/585fqy23lixxn1gfjv0b2vv0n0vq4kpw-etc-fuse.conf', '/nix/store/5k0zskn6gg5z1nmj427aidfravjgxna0-etc-systemd-user-preset-00-nixos.preset', '/nix/store/5y6hcl4hii8jxiy2w6c0iq50rqh0bkwr-tmpfiles.d', '/nix/store/612ghk5z4jw3qpy9pv1zmdrw9fxq6kw9-nixos-init-0.1.0', '/nix/store/69vlfb2y3gwxx37v8clzr01a5ycznr6m-etc-fstab', '/nix/store/6bjwv9h256vi48lsmjqxhdl6fcc3v003-systemd-user.pam', '/nix/store/6vqgwdpjr87569kzsvgnh0divdrqfkh8-etc-host.conf', '/nix/store/72wq0k50j4lii6d9260wdbmas2m69qxa-etc-systemd-timesyncd.conf', '/nix/store/79l39qw5lvkhdfkf21y7a43wswngp086-50-coredump.conf', '/nix/store/7a1r405zhi5jdxhn5xfw3s6hpmgqiakb-runuser.pam', '/nix/store/7gbc5rdjsy21kam9hkdfsb2fj2lyh4ax-console-env', '/nix/store/8flknkv1hwsarmra0lm4h4i74cksmm6n-etc-systemd-resolved.conf', '/nix/store/8km986k3inmpxvci3jzmcj0gjbq1bkzi-etc-hostname', '/nix/store/94a4z5z2m7k16wcmlg2gq0ryj0929pzy-etc-nix-registry.json', '/nix/store/9fyg8jiy6kr48cir2rsp3v78xfvqdval-hosts', '/nix/store/9h7bn5cfd9s7g2i581ar48n2gqxbxhvl-etc-modprobe.d-firmware.conf', '/nix/store/9xfqyl52drhqhfn03xaf65g3brrycfbm-system-path', '/nix/store/a1xvy1l31g38cg972cg4610k4dbmvwyw-sshd.conf-final', '/nix/store/acivpf9ijpvj066v0mqrrshb4xlfnfkn-etc-modprobe.d-nixos.conf', '/nix/store/apxnvg52chi7dhg91ildc93g0c3zia72-kmod-blacklist-31+20240202-2ubuntu8', '/nix/store/awsddlghdh8zs66krz4scac7rhqys3b1-etc-nsswitch.conf', '/nix/store/ax1xvjm9sxwms8abch380hy2fn1z9fd6-usermod.pam', '/nix/store/b2fd0wc1s9kn58xzjif2ywkdkr8w50g2-system-units', '/nix/store/b2fiwn43pdiqdsxnva4d652044x2fn1k-login.defs', '/nix/store/b4y1mxklnd7g100xqwsyp2hmq0i7wfhi-sudoers', '/nix/store/b7ac2cyknvlx6ibn3dhjvffj33r969f6-user-units', '/nix/store/c2hscq192vyay8xc0bm1j68swlvcqggq-user-generators', '/nix/store/cd5znwd77xzjdjxsivkq5sn52z4ff0p6-groupdel.pam', '/nix/store/cnyknz9na9k2kd3rllp73dk61w6zq0y5-dbus-1', '/nix/store/d5jj34synqyn1bc5n362pric9a695a0h-iana-etc-20251215', '/nix/store/d8asimr90i6vhvnn72i2q4cl2xwdb3vh-etc-shells', '/nix/store/dwv0wf3szv3ipgyyyrf1zxh4iqlckiip-inputrc', '/nix/store/f031r5ids0d01r59pi2ii3kxy3ym2wwc-etc-resolvconf.conf', '/nix/store/f9gjjif2rb9sfp3hffs6bzy528f9j9m2-chpasswd.pam', '/nix/store/ff5nbmdmrzw81ss7yb3arnsl8888asg0-etc-pam-environment', '/nix/store/fnc481kikfnllvngajp7ynhm9n4440id-etc-ssh-ssh_config', '/nix/store/g0mazy60g93pcbjz3rg69lrx50x2vdbz-mrjam-kanidm-server.toml', '/nix/store/g28l15mbdbig59n102zd0ardsfisiw32-binfmt_nixos.conf', '/nix/store/gvrl5qp3f7s6yyb7d8l6ij30zcir22ad-other.pam', '/nix/store/h2jsqa65cnf0lpw8vnx5pc9lpajfc2hp-kmod-debian-aliases.conf-30+20230601-2', '/nix/store/hd8c4msd106ck6pyy4rg1anzmddnx94r-issue', '/nix/store/i1q3sqmybd62sr9nlmm0zj75hrzrcxr8-etc-systemd-coredump.conf', '/nix/store/ivcx4j75ah96h85kimqpwla0pwb14dvp-sudo.pam', '/nix/store/jb48qfav9qzw08q7mv0w6ig09mfrciya-etc-profile', '/nix/store/jf7rf141yrwpsmvf53444xx6rpibv74g-55-nixos-aslr-entropy.conf', '/nix/store/jjxrksd3c2axchfv10sp60gfwrmdji50-fontconfig-etc', '/nix/store/kvyf5b56cdya4bcryxc772yhvlnvgn5y-etc-systemd-journald.conf', '/nix/store/kwgjd5w39vr9mk5gcrhbfalaljv4739m-etc-nanorc', '/nix/store/l16ajkg3dn8wrd3s8h4371g614bd8j5v-cloud.cfg', '/nix/store/lnw7wa2inzkl92dk3s1c03hcgf00c0ni-chfn.pam', '/nix/store/lqh0j3z7lx0g2xzaz3gvk06lfyqfv7hw-etc-environment.d-50-systemd-path.conf', '/nix/store/m07h00fl6538s4gavrp66a20ka4hg7fy-glibc-2.42-67', '/nix/store/m2sv1rizzbnsb35hv3ii0dnf3rvfy3n3-tzdata-2026c', '/nix/store/m9gppxq063nvbhg5ff322b9lf9m0n8cg-set-environment', '/nix/store/mbvsmzl2isg7wrizcg3rppvwxnajax24-etc-man_db.conf', '/nix/store/ndyp9kdjckca922rykzi8dw4fsfhhkbw-etc-ssh-ssh_known_hosts', '/nix/store/nkkmcq3al5hbi7sm5dmkd2pprb163rs8-etc-systemd-system.conf', '/nix/store/p02wh3g19hlxsj0mifjws5sdk3cvvc31-passwd.pam', '/nix/store/pbcdjzn9dr8fmsa3knhw1vii5d5hzb5j-systemd-generator-environment.json', '/nix/store/ps5pxv7bvmqwa33mqmczx0w4i7rz7i12-hwdb.bin', '/nix/store/pvrzwyzkhmlb4rzdjp6fz1pkavymfi31-etc-systemd-system-preset-00-nixos.preset', '/nix/store/q00fph3q43rqcghdzjjkakwarr48i82p-unit-05-matheval-eth0.network', '/nix/store/qbkv6sw84n5yqxf5ybqfk207acl70zd6-udev-rules', '/nix/store/qh0i8ixraj4k3vksa8bf2cnx9cm17n22-etc-netgroup', '/nix/store/qp62d4g2d6mk5l9dmc802g5dk5qljazx-useradd', '/nix/store/rfyn08h7j62p1lrwv8xg45xhyjag7s7j-etc-sysctl.d-60-nixos.conf', '/nix/store/rlby3yy573nwfmi15ywfg6vfw08a3ji8-etc-bashrc', '/nix/store/rm69vk40w5513vca12xfih8vv8m9gbix-nixos.conf', '/nix/store/ryldkvml1043yxhnr6ijn241svzcjr7h-etc-lsb-release', '/nix/store/s0imhmki9hbr07ia4a7mfj40k45c5ji7-etc-systemd-networkd.conf', '/nix/store/sn0qwydl9x5d3j58njcvlkas7ng378yf-chsh.pam', '/nix/store/wgm17vn9yg2ahjlhwlj8xirhimkxnwh3-groupmems.pam', '/nix/store/ww3i605ck3ngmzn5njya9mq1hkx343c2-runuser-l.pam', '/nix/store/xasbpd4bdfapfxsglr651asi9pmkakpg-etc-lvm-lvm.conf', '/nix/store/xbsxq28k0h84bpawiyajmc2cnba6dhbi-nix.conf', '/nix/store/ygxgdzyw7i4z4k4z17v7jcysfffkh9vw-system-generators', '/nix/store/yhrx58p4kmmjsn4cbs6sq1fi3b5pk16q-locale.conf', '/nix/store/yivfmh61nmnr06bi45dcxbbcpacjfa0m-login.pam', '/nix/store/ylj023mv7fj5cv7pn9s1gzazcf8d4gih-etc-systemd-user.conf', '/nix/store/ylmpy7xriyp9lhav85g9k46npqbr307y-etc-gai.conf', '/nix/store/zfcqvlp2024w6n5zdxscpw6sjjmq7pv4-etc-systemd-oomd.conf']}, '/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git': {'nar_hash': 'sha256-T4CliMwfCpluhlkWr8BFNHbVDkv2dixVoLov9Q7l5Ps=', 'references': ['/nix/store/0sfj9b6sxa9f7g412lsgv3a1ic03zbbn-users-groups.json', '/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2', '/nix/store/1n0p3fn7nfdbwvpkbqlnk7y13057mivk-mrjam-identity-0.1.0', '/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67', '/nix/store/4d4gjjj8vahg1ss4y0cdfarr0m7k52l7-perl-5.42.0-env', '/nix/store/4n075ll5jdwbjv142yg8ymz5f3yf4pam-util-linux-2.42.2-bin', '/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2', '/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision', '/nix/store/71yzkzzgsm4v8ngpwya1cm00y6mhi4r6-switch-inhibitors', '/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique', '/nix/store/81220alzad19dzxxpx3w8wb8ica0cmm1-getent-glibc-2.42-67', '/nix/store/87r6h72hqnhb2cv54zr1jrih8g2wxr8c-firmware', '/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3', '/nix/store/9dn05bap085d5c7bjzilqs4bwd4ql4gg-mrjam-admission-native-adoption-1', '/nix/store/9xfqyl52drhqhfn03xaf65g3brrycfbm-system-path', '/nix/store/ahni4ky7vcyga5rkfk6yil6g0293qyvk-kmod-31', '/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0', '/nix/store/dbnsh65c9fir9psk7waq3swb3mdh18cr-python3-3.13.15-env', '/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo', '/nix/store/dyx8qsmgnsz2csfzwn723gbd2jvp0j7g-update-users-groups.pl', '/nix/store/f0sk5zsngp4q7wrz72m7yh5snrw3if8j-pre-switch-checks', '/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style', '/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log', '/nix/store/gdalsnb0bbj02c9vbskyzg4qisdlcf3p-shadow-4.19.4', '/nix/store/gf10wjnkw745qf9kz3agfximnk74v683-mrjam-worker-credential-adaptation-1', '/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11', '/nix/store/h80nb302p7ngby23ia4k8r0dmk1di5p7-perl-5.42.0-env', '/nix/store/j14aa3q3vf9xlysb37f5jilwvdhqi1z2-etc', '/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0', '/nix/store/kbqmlal53czby17lpdycp8x2bhfiw7an-mrjam-vision-kanidm-workers-0.1.0-native-20261101', '/nix/store/l0avd78x86jr5swpayvz8a6z9y5g15z3-ca.pem', '/nix/store/lhp8crggngs6v3qhv89rhgkmp5pz0qjp-mounts.sh', '/nix/store/lwdsw9cvlpbf4vgim65p4rvh7basblpn-install-grub.sh', '/nix/store/lzi4zg1ngjwqfjs0wyjf6bwrcl814mxb-glibc-2.42-67-bin', '/nix/store/m07h00fl6538s4gavrp66a20ka4hg7fy-glibc-2.42-67', '/nix/store/m345il89k5ssycdljf2isq6rx057bjds-initrd-linux-6.18.48', '/nix/store/mhxn5kwnri3z9hdzi3x0980id65p0icn-lib.sh', '/nix/store/mwwjyy4vlrwp59a7srjy53x24viksa6z-vision-modele-multilingue-e8f8c211226b', '/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval', '/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git', '/nix/store/pkf547jp8a92k4wmxikkyby58w10pysr-bash-interactive-5.3p9', '/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1', '/nix/store/qix9bpv1pprfjz7r5a9cpdkhqk2s03ii-switch-to-configuration-0.1.0', '/nix/store/rg5rf512szdxmnj9qal3wfdnpfsx38qi-setup-etc.pl', '/nix/store/rwshpggwxjiyf4kxxpcaxklf3v6q19n3-local-cmds', '/nix/store/ryhz70asgrjn7dvw5l1qvghpjgrwm2nr-linux-6.18.48', '/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9', '/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12', '/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition', '/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2', '/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1', '/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue', '/nix/store/zklx555ig7d2gsvlfdmraz6m7kl4n4rn-linux-6.18.48-modules', '/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green']}, '/nix/store/xm9dk145k6xsfkz5wjwmqg545i652vy6-X-Reload-Triggers-systemd-resolved': {'nar_hash': 'sha256-GwTC3psXWT2A6TtdkF9r2bRnEQPhFhU4yejDiOojISs=', 'references': ['/nix/store/8flknkv1hwsarmra0lm4h4i74cksmm6n-etc-systemd-resolved.conf']}}}
+CURRENT = '/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git'
+DIRECTORY = Path('/var/lib/mrjam-deployment-delivery/postrelease-resolver-update-20261103')
+STATE = Path('/var/lib/mrjam-cutover/first-deployment')
+RESULT_DIRECTORY = Path('/run/mrjam-first-release-status-05')
+STORE = re.compile(r'/nix/store/[0-9abcdfghijklmnpqrsvwxyz]{32}-[A-Za-z0-9+._?=-]{1,200}\Z')
+NAR = re.compile(r'sha256-[A-Za-z0-9+/]{43}=\Z')
+
+
+class Refused(RuntimeError):
+    pass
+
+
+def require(value):
+    if not value:
+        raise Refused('POSTRELEASE_CODE_IMPORT_REFUSED')
+
+
+def parse(raw):
+    def unique(items):
+        value = {}
+        for key, item in items:
+            require(key not in value)
+            value[key] = item
+        return value
+    return json.loads(raw, object_pairs_hook=unique)
+
+
+def validate_release(value):
+    require(type(value) is dict and set(value) == {
+        'schema_version', 'export_sha256', 'export_bytes', 'required_free_bytes', 'artifacts'})
+    require(type(value['schema_version']) is int and value['schema_version'] == 1)
+    require(type(value['export_sha256']) is str and re.fullmatch('[0-9a-f]{64}', value['export_sha256']))
+    require(type(value['export_bytes']) is int and 0 < value['export_bytes'] <= 1024**3)
+    require(type(value['required_free_bytes']) is int
+            and 2 * value['export_bytes'] + 1024**3 <= value['required_free_bytes'] <= 8 * 1024**3)
+    artifacts = value['artifacts']
+    require(type(artifacts) is dict and 0 < len(artifacts) <= 10000)
+    for path, info in artifacts.items():
+        require(type(path) is str and STORE.fullmatch(path))
+        require(type(info) is dict and set(info) == {'nar_hash', 'references'})
+        require(type(info['nar_hash']) is str and NAR.fullmatch(info['nar_hash']))
+        refs = info['references']
+        require(type(refs) is list and len(refs) <= 4096 and refs == sorted(set(refs)))
+        require(all(type(item) is str and STORE.fullmatch(item) for item in refs))
+    return value
+
+
+def protected_directory(path, create=False):
+    """No symlink traversal and no writable ancestor outside root."""
+    descriptor=os.open("/",os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC)
+    try:
+        for part in Path(path).parts[1:]:
+            if create:
+                try:
+                    os.mkdir(part,0o700,dir_fd=descriptor)
+                    os.fsync(descriptor)
+                except FileExistsError:
+                    pass
+            child=os.open(part,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW|os.O_CLOEXEC,dir_fd=descriptor)
+            os.close(descriptor);descriptor=child
+            item=os.fstat(descriptor)
+            require(item.st_uid==0 and not stat.S_IMODE(item.st_mode)&0o022)
+        return descriptor
+    except Exception:
+        os.close(descriptor)
+        raise
+
+
+def receive(stream, directory, release):
+    # Only this fixed, bound public code archive can be replaced on retry.
+    fd=os.open("export.partial",os.O_WRONLY|os.O_CREAT|os.O_NOFOLLOW|os.O_CLOEXEC,0o600,dir_fd=directory)
+    try:
+        item=os.fstat(fd)
+        require(stat.S_ISREG(item.st_mode) and item.st_uid==os.geteuid() and item.st_nlink==1
+                and stat.S_IMODE(item.st_mode)==0o600)
+        os.ftruncate(fd,0)
+        digest=hashlib.sha256();total=0
+        with os.fdopen(fd,"wb",closefd=False) as output:
+            while total<=release["export_bytes"]:
+                block=stream.read(min(1024*1024,release["export_bytes"]-total+1))
+                if not block:
+                    break
+                total+=len(block)
+                require(total<=release["export_bytes"])
+                digest.update(block);output.write(block)
+            require(total==release["export_bytes"] and digest.hexdigest()==release["export_sha256"])
+            output.flush();os.fsync(fd)
+        os.rename("export.partial","export.nar",src_dir_fd=directory,dst_dir_fd=directory)
+        os.fsync(directory)
+    finally:
+        os.close(fd)
+
+
+def private_json(directory, name, maximum):
+    fd = os.open(name, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC | os.O_NONBLOCK, dir_fd=directory)
+    with os.fdopen(fd, 'rb') as stream:
+        item = os.fstat(stream.fileno())
+        require(stat.S_ISREG(item.st_mode) and item.st_uid == item.st_gid == 0
+                and item.st_nlink == 1 and stat.S_IMODE(item.st_mode) == 0o600)
+        raw = stream.read(maximum + 1)
+    require(len(raw) <= maximum)
+    return parse(raw)
+
+
+def gate(state):
+    require(all(os.path.realpath(path) == CURRENT for path in ('/run/current-system', '/nix/var/nix/profiles/system')))
+    phase = private_json(state, 'phase.json', 1024)
+    require(type(phase) is dict and set(phase) == {'schema_version', 'phase', 'elapsed_seconds'}
+            and type(phase['schema_version']) is int and phase['schema_version'] == 1
+            and phase['phase'] == 'public-writes-open' and type(phase['elapsed_seconds']) is int
+            and phase['elapsed_seconds'] >= 0)
+    result_directory = protected_directory(RESULT_DIRECTORY)
+    try:
+        result = private_json(result_directory, 'result.json', 1024)
+        require(type(result) is dict and type(result.get('schema_version')) is int
+                and result == {'schema_version': 1, 'code': 'CUTOVER_VERIFIED', 'phase': 'public-writes-open'})
+    finally:
+        os.close(result_directory)
+
+
+def command(args, source=None):
+    process = None
+    try:
+        process = subprocess.Popen(args, stdin=source if source is not None else subprocess.DEVNULL,
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, start_new_session=True,
+            env={'LANG': 'C', 'LC_ALL': 'C', 'NIX_PATH': ''})
+        data = bytearray()
+        end = time.monotonic() + 240
+        with selectors.DefaultSelector() as selector:
+            selector.register(process.stdout, selectors.EVENT_READ)
+            while True:
+                remaining = end - time.monotonic()
+                require(remaining > 0 and selector.select(remaining))
+                chunk = os.read(process.stdout.fileno(), 16384)
+                if not chunk:
+                    break
+                data.extend(chunk)
+                require(len(data) <= 2 * 1024**2)
+        require(process.wait(timeout=max(.01, end - time.monotonic())) == 0)
+        return bytes(data)
+    finally:
+        if process is not None:
+            if process.poll() is None:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                process.wait(timeout=1)
+            process.stdout.close()
+
+
+def verify_import(release, imported):
+    observed = imported.decode('ascii').splitlines()
+    paths = sorted(release['artifacts'])
+    require(len(observed) == len(set(observed)) and set(observed) == set(paths))
+    command([CURRENT + '/sw/bin/nix-store', '--verify-path', *paths])
+    info = parse(command([CURRENT + '/sw/bin/nix', '--extra-experimental-features', 'nix-command',
+                          'path-info', '--json', *paths]))
+    if type(info) is list:
+        require(all(type(item) is dict and type(item.get('path')) is str for item in info))
+        require(len({item['path'] for item in info}) == len(info))
+        info = {item['path']: item for item in info}
+    require(type(info) is dict and set(info) == set(paths))
+    for path in paths:
+        require(type(info[path]) is dict and info[path].get('narHash') == release['artifacts'][path]['nar_hash']
+                and sorted(info[path].get('references', [])) == release['artifacts'][path]['references'])
+
+
+def deliver(release, stream):
+    release = validate_release(release)
+    require(os.geteuid() == os.getegid() == 0 and os.uname().nodename == 'srv1982677')
+    state = protected_directory(STATE)
+    lock = work = None
+    try:
+        lock = os.open('transaction.lock', os.O_RDWR | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=state)
+        item = os.fstat(lock)
+        require(stat.S_ISREG(item.st_mode) and item.st_uid == item.st_gid == 0
+                and item.st_nlink == 1 and stat.S_IMODE(item.st_mode) == 0o600)
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        gate(state)
+        work = protected_directory(DIRECTORY, create=True)
+        require(stat.S_IMODE(os.fstat(work).st_mode) == 0o700)
+        fcntl.flock(work, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        for filesystem in (os.fstatvfs(work), os.statvfs('/nix/store')):
+            require(filesystem.f_bavail * filesystem.f_frsize >= release['required_free_bytes'])
+        binding = (json.dumps(release, sort_keys=True, separators=(',', ':')) + '\n').encode()
+        try:
+            fd = os.open('release.json', os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW | os.O_CLOEXEC,
+                         0o600, dir_fd=work)
+        except FileExistsError:
+            require(private_json(work, 'release.json', 2 * 1024**2) == release)
+        else:
+            with os.fdopen(fd, 'wb') as output:
+                output.write(binding)
+                output.flush()
+                os.fsync(output.fileno())
+            os.fsync(work)
+        receive(stream, work, release)
+        gate(state)
+        fd = os.open('export.nar', os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=work)
+        with os.fdopen(fd, 'rb') as archive:
+            imported = command([CURRENT + '/sw/bin/nix-store', '--import'], source=archive)
+        verify_import(release, imported)
+        gate(state)
+    finally:
+        if work is not None:
+            os.close(work)
+        if lock is not None:
+            os.close(lock)
+        os.close(state)
+    return {'schema_version': 1, 'code': 'POSTRELEASE_CODE_IMPORTED', 'store_paths': len(release['artifacts']),
+            'application_activation': False, 'systemd_changes': False}
+
+
+def main():
+    try:
+        require(len(sys.argv) == 1)
+        resource.setrlimit(resource.RLIMIT_CORE, (0, 0))
+        os.umask(0o077)
+        signal.signal(signal.SIGALRM, lambda *_: (_ for _ in ()).throw(Refused()))
+        signal.alarm(600)
+        value = deliver(RELEASE, sys.stdin.buffer)
+    except Exception:
+        print('{"schema_version":1,"code":"POSTRELEASE_CODE_IMPORT_REFUSED"}')
+        return 1
+    finally:
+        signal.alarm(0)
+    print(json.dumps(value, sort_keys=True, separators=(',', ':')))
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

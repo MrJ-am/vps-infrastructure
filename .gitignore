@@ -1,4 +1,5 @@
 target/
+.local/
 node_modules/
 elm-stuff/
 .syntax-tools/

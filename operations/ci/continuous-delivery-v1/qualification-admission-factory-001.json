@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "scope": "generic-trusted-recipe-preparation-only",
+  "source": "/nix/store/454bhd3gw2xjswd21nhxcv1y5zxza07h-mrjam-admitted-source-04754e2c5e53",
+  "source_files": 833,
+  "all_bytes_identical_to_accepted_source": true,
+  "checks": {
+    "boundedWindowAccepted": true,
+    "defaultControlUnchanged": true,
+    "missingExpiryRefused": true,
+    "nonIntegerRefused": true,
+    "reversedRefused": true,
+    "sameControl": true,
+    "sameProposal": true,
+    "sameValidator": true,
+    "unboundedRefused": true,
+    "unknownFieldRefused": true,
+    "zeroStartRefused": true
+  },
+  "sources": {
+    "aligned-validator.nix": "6ab5b2e6ee446ae080785092fa4eb1213f74f36dea203073e0db079de56dbe2a",
+    "admission-package.nix": "685f1ca3cf66541f55f0f61390c36d8192411eca7886c755d8f7d2b5916236ae",
+    "proposal-bindings.nix": "4e7ce9278fcb75b3b5c872cb0137598124fb4b758efc126eb234082ee38b2c99",
+    "proposal-bindings-qualification.nix": "f9cfe29c137a375458eb474c9d1145bc672cd985f7dbb57cb9cde95d127549b5",
+    "admission-factory-evaluation.nix": "75738af227601134d612e1aea2153379105a2d177d010cc91783519bdcbd26e3"
+  },
+  "live_control_unchanged": true,
+  "new_admission_published": false,
+  "future_deployment_automatic": false
+}

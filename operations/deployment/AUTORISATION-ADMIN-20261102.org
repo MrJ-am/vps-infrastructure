@@ -1,0 +1,30 @@
+#+title: Autorisation administrative pour terminer le déploiement
+#+date: 2026-11-02
+#+language: fr
+
+L'utilisateur signale que le portail corrigé refuse les deux capacités
+d'administration des identités et des comptes techniques de son compte.
+Il demande de corriger ce défaut et autorise explicitement :
+
+#+begin_quote
+je t'autorise à utiliser le compte admin du VPS jusqu'à déploiement total et
+on fera après une vérification du fait que toutes les barrières techniques
+sont effectivement en place.
+#+end_quote
+
+Cette autorisation remplace les restrictions antérieures limitant l'accès
+administratif Spectre à une seule commande ou à la seule vérification humaine.
+Elle couvre le déblocage Kanidm et la poursuite jusqu'au déploiement complet ;
+ne pas redemander l'autorisation administrative à chaque étape.
+
+Le compte propriétaire attendu doit recevoir les droits d'administration
+nécessaires. Le script d'amorçage reçu créait son groupe de politique et sa
+protection de compte privilégié, mais explicitement sans administration IdP.
+La sélection de ce compte doit rester non ambiguë et préserver sa passkey.
+
+La confidentialité des données et secrets, la conservation des données et
+historiques, le budget supplémentaire nul et l'absence de ViSe comme prérequis
+restent applicables. Les secrets techniques sont traités dans les processus
+locaux du VPS ; les retours destinés aux agents restent des états fermés.
+La vérification finale des barrières est à réaliser effectivement, et ne doit
+pas être déclarée acquise sur la seule foi de leur configuration.

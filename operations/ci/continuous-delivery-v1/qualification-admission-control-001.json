@@ -1,0 +1,27 @@
+{
+  "limits": [
+    "Full multi-identity worker/collector/signer traversal still required.",
+    "Admission insertion controller and permanent intake not yet installed.",
+    "Artifact cache retention and crash recovery must be completed for continuous use."
+  ],
+  "package": "/nix/store/7hpx8az4rb1cvilj2nvvflsh1gbr1nf1-mrjam-validation-admission-control-1",
+  "production_activation": false,
+  "production_signing_performed": false,
+  "registry_lookup_substituted_for_local_report_check": true,
+  "registry_tests_passed": 8,
+  "retained_real_report_content_matches": true,
+  "retained_report_sha256": "4655be0da7f48dfa9ccacfc1297482c96894d8927ca108dee2e3be38100fac36",
+  "schema_version": 1,
+  "synthetic_ed25519_tests_passed": 6,
+  "vm_result": {
+    "limits": [
+      "Registry and configuration selection only; no signing key or compiler invocation in this VM."
+    ],
+    "missing_writable_symlink_revoked_entries_refused": true,
+    "production_activation": false,
+    "root_admission_read_by_uid": 1101,
+    "schema_version": 1,
+    "unprivileged_create_chmod_delete_refused": true
+  },
+  "vm_store": "/nix/store/cc9cm6v1mvsfwk27ry3qbwjka51vx7yq-vm-test-run-mrjam-admission-registry-real-permissions"
+}

@@ -1,0 +1,66 @@
+{
+  "batches": [
+    {
+      "batch": 1,
+      "receipt_sha256": "1b59f3fb65f546a2b64792484732b230d484d4ee0e902e24926c9d53355a8c5d",
+      "result": {
+        "application_activation": false,
+        "code": "POSTRELEASE_CODE_IMPORTED",
+        "schema_version": 1,
+        "store_paths": 24,
+        "systemd_changes": false
+      }
+    },
+    {
+      "batch": 2,
+      "receipt_sha256": "b40583d1cb6799b56343ef4be869bf1e608bce49f31f497fcb7e83dd3165a123",
+      "result": {
+        "application_activation": false,
+        "code": "POSTRELEASE_CODE_IMPORTED",
+        "schema_version": 1,
+        "store_paths": 36,
+        "systemd_changes": false
+      }
+    },
+    {
+      "batch": 3,
+      "receipt_sha256": "31d496857fbbb6877d24d76ccdd345c3a24ff05ec5c12dca080e51c58e82e369",
+      "result": {
+        "application_activation": false,
+        "code": "POSTRELEASE_CODE_IMPORTED",
+        "schema_version": 1,
+        "store_paths": 35,
+        "systemd_changes": false
+      }
+    },
+    {
+      "batch": 4,
+      "receipt_sha256": "b40583d1cb6799b56343ef4be869bf1e608bce49f31f497fcb7e83dd3165a123",
+      "result": {
+        "application_activation": false,
+        "code": "POSTRELEASE_CODE_IMPORTED",
+        "schema_version": 1,
+        "store_paths": 36,
+        "systemd_changes": false
+      }
+    }
+  ],
+  "candidate": "/nix/store/g1l3zif8rwndmdcyc1vylwasaxds9iia-nixos-system-srv1982677-26.05pre-git",
+  "delivery_revision": "95b5fdc5b2c0740af165789bd52ad843ab9c0625",
+  "new_paths": 131,
+  "observed_at": "2026-11-03T06:43:09.405384+00:00",
+  "post_import_readonly": {
+    "candidate_present": true,
+    "forgejo_kanidm_nginx_postgresql_rust_blue_active": true,
+    "live_and_boot_still_phi68": true
+  },
+  "remaining": [
+    "Private policy and registrar credentials",
+    "Qualified configuration activation and return",
+    "Bounded Actions activation and real dispatch",
+    "Protected ordinary release authority and GitHub mirror"
+  ],
+  "schema_version": 1,
+  "scope": "actual import of inactive CI generation; no system switch or CI start",
+  "source_revision": "e1dc4a31dc5a8ff37ab0639fb1af131e40263e4e"
+}

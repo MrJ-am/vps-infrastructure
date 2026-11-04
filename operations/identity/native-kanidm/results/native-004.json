@@ -1,0 +1,25 @@
+{
+  "actual_production_sso_qualified": false,
+  "candidate_sha256": "ac3d6330f3929bfd43e373d7e9eb65d8724b9ab7310cbe8613552cb02c7b7068",
+  "checks": [
+    "real-kanidm-bootstrap-tls",
+    "invented-oauth-client-and-person",
+    "native-discovery-and-jwks",
+    "native-authorization-token-signature-introspection",
+    "native-refresh-signature-and-revocation",
+    "broker-real-native-callback-and-host-audiences",
+    "native-outage-and-restart-preserve-broker-session",
+    "broker-local-and-real-native-logout"
+  ],
+  "human_mfa_qualified": false,
+  "kanidm": "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "isolated-real-kanidm-invented-identity-wire-qualification",
+  "test_sha256": "45225e5b5ad67adee6f5f018c1f8591f0bacf73ef015de1a44bdd10dd8a72864",
+  "upstream_observations": {
+    "native_code_replay_http_status": 200,
+    "native_code_replay_refused": false
+  }
+}

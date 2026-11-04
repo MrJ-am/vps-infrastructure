@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "real-reload-new-route-preserves-in-flight-old-response-and-master",
+    "graceful-return-to-previous-route",
+    "failed-post-switch-readiness-returns-without-stopping-backends",
+    "interrupted-selection-recovers-from-durable-record",
+    "tampered-installed-configuration-refused",
+    "continuous-writes-no-errors-loss-or-duplicate-effects"
+  ],
+  "limitations": [
+    "synthetic HTTP backends only",
+    "no production activation",
+    "not a full artifact admission, Rust session or deployment qualification"
+  ],
+  "qualification_output": "/nix/store/8s8j0gwyds8ipcxnkyciw6liapynwpjl-mrjam-graceful-gateway-native-001",
+  "schema_version": 1,
+  "source_sha256": "87bc883721b7f310eee05aa6b944cfb004adaaf08e714ed23c3017b4d8f5e300",
+  "synthetic_writes": 112,
+  "write_errors": 0
+}

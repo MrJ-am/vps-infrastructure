@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "bytes": 4591,
+      "path": "operations/runtime/mateval-readiness-v1/README.org",
+      "sha256": "efc9abd8f5b343e35d6c4981a6da7cb4ff91e251ba7e4d7530b41f61226f5173"
+    },
+    {
+      "bytes": 1466,
+      "path": "operations/runtime/mateval-readiness-v1/artifact_manifest.py",
+      "sha256": "d49372619a3337f941f0a97a308e4a55e77dee730885a76495e5fcbfa170acb2"
+    },
+    {
+      "bytes": 2941,
+      "path": "operations/runtime/mateval-readiness-v1/package.nix",
+      "sha256": "408868fa6e88ced091fda0e4bba62ae98c2662b0132ad2bccefddb39b993ba14"
+    },
+    {
+      "bytes": 1343,
+      "path": "operations/runtime/mateval-readiness-v1/prepare.py",
+      "sha256": "35719ee38601c081b1ffef9750d3590749ba0db27ea7196e13b7043ba99ca6ea"
+    },
+    {
+      "bytes": 11406,
+      "path": "operations/runtime/mateval-readiness-v1/readiness.patch",
+      "sha256": "90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4"
+    },
+    {
+      "bytes": 2058,
+      "path": "operations/runtime/mateval-readiness-v1/toolchain-provenance.json",
+      "sha256": "80f5bb8db2443515ae356c692f6d63f4f34547caa96f6c0c23a5979d4dc069a9"
+    },
+    {
+      "bytes": 4840,
+      "path": "operations/runtime/mateval-readiness-v1/qualification-20261102.json",
+      "sha256": "ac93a8df9a6b45d77eea97ffd0884c43e2ae59f81fb3eb7ff81ff66998873d5f"
+    },
+    {
+      "bytes": 2029,
+      "path": "operations/builds/toolchains.nix",
+      "sha256": "db61fe0a3290316212580ceaa2f73144121f9f5d398b32249e1fff265fbf1fdf"
+    },
+    {
+      "bytes": 1408,
+      "path": "operations/builds/toolchains.lock.json",
+      "sha256": "27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "qualified Rust readiness correction and minimal toolchain reconstruction; no CI activation"
+}

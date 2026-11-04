@@ -1,0 +1,21 @@
+{
+  "activation_performed": false,
+  "candidate": "/nix/store/3a6gyg9bvy1g2gp5rr1qsjcw1h00lznm-nixos-system-srv1982677-26.05pre-git",
+  "changed_existing_units": [
+    "nginx.service",
+    "vise.service"
+  ],
+  "kernel_initrd_modules_firmware_unchanged": true,
+  "nar_bytes": 484272,
+  "nar_sha256": "556f7373f5a4e652c347d432d687273d581bc4e19e38e35725264b19fa9e2dcc",
+  "previous_boot": "/nix/store/3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm-nixos-system-srv1982677-26.05pre-git",
+  "previous_running": "/nix/store/h7gsm02w34zbacxamwjl98qmbqyb3kci-nixos-system-srv1982677-26.05pre-git",
+  "receiver_changes": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY",
+    "gate binds separately exact staged current and retained boot"
+  ],
+  "receiver_sha256": "21ce83a5070c62efc4bc685b71b55b8cbb4577bde20c6fcbb6969194469f4bd8",
+  "schema_version": 1
+}

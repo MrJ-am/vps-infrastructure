@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-03",
+  "unit_tests_passed": {"feedback": 8, "orchestrator": 13, "adapter": 8},
+  "host_assertions_passed": 7,
+  "current_and_boot": "/nix/store/rks6y23zykcka5ifmilxj0p8r6nvrd57-nixos-system-srv1982677-26.05pre-git",
+  "previous": "/nix/store/zsfxxknh53v8s20v98m2b6ra9inl6471-nixos-system-srv1982677-26.05pre-git",
+  "controller": "/nix/store/dlphwj3kmxmljjg4dj6flihqah9jghgy-mrjam-protected-admission-controller-1",
+  "changed_units": ["mrjam-admission-controller.service"],
+  "real_return_verified": true,
+  "retained_processes_unchanged": true,
+  "runner_policy_current_after_boot": true,
+  "live_validation_run": 4,
+  "live_validation_observed_status": "running",
+  "live_feedback_verified": false,
+  "automatic_deployment_enabled": false
+}

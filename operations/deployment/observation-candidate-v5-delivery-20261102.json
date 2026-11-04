@@ -1,0 +1,15 @@
+{
+  "candidate": "007",
+  "deployment_started": false,
+  "export_bytes": 14376800,
+  "export_sha256": "f2171435d0a2bb84d5c18c15c89cbe8c7e0ce5e87071726559ca48cca2eba1cb",
+  "receiver_sha256": "c8264c453100c9165063ed32adc1d2597066ea42f13c69e0a05838b20df37f62",
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "review_sha256": "0e05e952753cf7e18d105194160e1411b79b77c8b5d3bb80cf3fc69c5f61f994",
+  "schema_version": 1
+}

@@ -1,0 +1,26 @@
+{
+  "findings": {
+    "operations/ci/rules-bootstrap-adoption-v1/finding-forgejo-review-participants-20261103.json": "17774e9b47560f4b988abc515f2bde75f225df5e455d238f494e9f4e0de91ca5",
+    "operations/ci/rules-bootstrap-adoption-v1/finding-forgejo-tree-20261103.json": "7bab895c71503f54c2be669ded91332158dc9f8b9def7f4aee16175243174e73"
+  },
+  "limits": [
+    "Native endpoint and review semantics are proved on an invented Forgejo fixture; no production reviewer or token is observed here.",
+    "The permanent projection/service as a whole was not run by that fixture; its targeted local tests are linked separately.",
+    "No merge, credential or deployment authority is supplied by these projection components."
+  ],
+  "local_projection_qualification_sha256": "bd71732f6776442cd20766c5bdf224f199ad589cbc0c7a5c804effb785705816",
+  "native_fixture_qualification_sha256": "9b510d824ce637f1b9a89c83141e54654cf1019e5683dcae6d9de79d70ee064c",
+  "native_fixture_review_sha256": "8fc64bbf7f653f4257a8ff046d708ed07f83b0d709889152bfde5d69c903e1ba",
+  "native_tree_resolution": {
+    "api_resolved_tree": "62fc2bb3fd0e888d75ae7798360747fb0c8589fb",
+    "expected_git_tree": "62fc2bb3fd0e888d75ae7798360747fb0c8589fb",
+    "head": "e2fbc8f95961262dd18d525b830ec4aacdc28771",
+    "matched": true,
+    "schema_version": 1,
+    "synthetic_fixture_only": true
+  },
+  "native_tree_result_sha256": "5e5408ced9aa21249b24e7e3b581ab08c5201cb11adabed3af5efb3913c83807",
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "native Forgejo17 semantic evidence for the permanent read-only projection correction"
+}

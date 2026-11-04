@@ -1,0 +1,18 @@
+{
+  "capture_package": "/nix/store/wpqd4c05ybyqp35cp6qd4h1migba8v2s-mrjam-captured-vise-admission",
+  "final_packaging_validation": "qualification-validation-003.json",
+  "limits": [
+    "Synthetic capture receipt, no remote observation",
+    "No registry publication, signature or deployment"
+  ],
+  "nonzero_rules_without_installed_binding_refused": true,
+  "reconstructed_validator_identical": true,
+  "rules_binding": {
+    "profile": "vise-v1",
+    "rules_revision": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+    "schema_version": 1,
+    "source": "/nix/store/h7wi712f2kskff6h30kixa7rnhigj3kv-mrjam-installed-vise-rules"
+  },
+  "schema_version": 1,
+  "validator": "/nix/store/5i6frxwcryx3li26p06z145ws01b818p-mrjam-vise-canonical-validator-1"
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "scope": "local immutable controller packaging and unit tests only",
+  "production_changed": false,
+  "deployment_qualified": false,
+  "platform_package": "/nix/store/nff7xcjww9vjb33113syd0gcx11awywi-mrjam-protected-admission-controller-1",
+  "two_profiles_package": "/nix/store/wab8nfcl6v66m5x22zcvph3a41whz09w-mrjam-protected-admission-controller-1",
+  "two_profiles_anchor": "/nix/store/3a99xh93qcx262ab5yr68is4z9baib28-mrjam-validation-admission-control-1",
+  "two_profiles_anchor_is_synthetic_not_for_installation": true,
+  "unit_tests": {
+    "modules": ["test_admission_adapter", "test_admission_orchestrator", "test_admission_job_profiles", "test_delivery_profiles"],
+    "passed": 34
+  },
+  "missing_vise_anchor_build_refused": true,
+  "system_two_profiles_test": "pending session 23096; prior run failed publication",
+  "remaining": ["adopt real ViSe authority", "qualify system IPC", "wire acceptance and promotion", "verify actual automatic delivery and rollback"]
+}

@@ -1,0 +1,27 @@
+{
+  "deployment_started": false,
+  "receipt": {
+    "already_present_count": 8,
+    "application_activation": false,
+    "bundle_count": 9,
+    "code": "SOURCE_BUNDLES_RECEIVED",
+    "created_count": 1,
+    "forgejo_imported": false,
+    "schema_version": 1,
+    "stream_sha256": "26c4ddc513abc33a68642f0d6aae86bbd5a56b3b00e6ab3b8b3da64b2c57a771"
+  },
+  "retention_g": {
+    "application_changes": false,
+    "bytes": 3954678447,
+    "code": "PREVIOUS_INFRASTRUCTURE_BUNDLE_RETAINED",
+    "new_bundle_received": false,
+    "other_bundles_opened": false,
+    "same_inode": true,
+    "same_transaction_lock": true,
+    "schema_version": 1,
+    "sha256": "f4dfc2589083a8a60516fe03b81d2ef619066e983cf9a3e338af26e295c19c87"
+  },
+  "review_sha256": "c38d64c02747d46098cf7e6ed6e02b4fd71d0305270cdb88d9f0219a90d532fc",
+  "schema_version": 1,
+  "source_commit": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd"
+}

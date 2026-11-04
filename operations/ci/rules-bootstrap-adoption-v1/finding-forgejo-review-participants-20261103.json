@@ -1,0 +1,45 @@
+{
+  "code": "FORGEJO17_REQUESTED_REVIEWERS_INCLUDES_APPROVALS",
+  "consequences": [
+    "requested_reviewers is not the list of unresolved requests: a native approval remains present",
+    "All pages are still required; helper compares this list exactly with authors of non-dismissed decisive reviews",
+    "The latest non-dismissed decision is selected by ID, not modification timestamp, so editing an old approval cannot hide a newer rejection",
+    "Unresolved REQUEST_REVIEW or REQUEST_CHANGES still refuse adoption; unknown, missing or unprojectable review fields refuse safely"
+  ],
+  "forgejo_version": "17.0.1",
+  "historical_receipts_rewritten": false,
+  "native_capture": {
+    "bytes": 154,
+    "path": "/nix/store/4fgjdlkni5l5d44m3jx08jqsw6ipimmq-vm-test-run-mrjam-rules-bootstrap-adoption-native-review-fast-forward/native-review-participants.json",
+    "sha256": "6ba3fee831df150e0a8db798f746742a560c676d5e5192177c160b8882f38888"
+  },
+  "primary_sources": [
+    {
+      "bytes": 34608,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/issues/pull.go",
+      "sha256": "d49511635b8a69e54389c83477e282f62445744cabd951adb7698f083831584b"
+    },
+    {
+      "bytes": 5898,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/issues/review_list.go",
+      "sha256": "a778a36a939aff68942e11cca94aa8318c157de1d23b7ad34daef511189502cc"
+    },
+    {
+      "bytes": 8099,
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/convert/pull.go",
+      "sha256": "7e3e4ef86c1854943eb36530797a878dc10a66845d3e34e845dc3c69c80930b5"
+    }
+  ],
+  "production_access": false,
+  "query_semantics": {
+    "dismissed": false,
+    "original_author_id": 0,
+    "selection": "max(id) for each reviewer",
+    "states": [
+      "APPROVED",
+      "REQUEST_CHANGES",
+      "REQUEST_REVIEW"
+    ]
+  },
+  "schema_version": 1
+}

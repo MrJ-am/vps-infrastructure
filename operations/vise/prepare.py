@@ -21,6 +21,8 @@ import prepare as cargo_inputs  # noqa: E402
 
 
 def prepare(source, cargo_cache, elm_home, destination, npm_cache, download):
+    # npm runs inside destination/source; its cache must not become source input.
+    destination, npm_cache = destination.absolute(), npm_cache.absolute()
     lock_bytes = (HERE / "sources.lock.json").read_bytes()
     lock = json.loads(lock_bytes)
     if cargo_inputs.git(source, "rev-parse", "HEAD") != lock["revision"]:

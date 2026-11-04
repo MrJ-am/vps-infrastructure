@@ -28,20 +28,26 @@ STORE = Path("/nix/store")
 MAX_FILES = 4096
 MAX_BYTES = 32 * 1024 * 1024
 MAX_MANIFEST = 4 * 1024 * 1024
-MAX_RETAINED = 2
+MAX_RETAINED = 4  # Two adopted profiles and at most one pending source per profile.
 MAX_NODES = 16384
 
 
 def catalog(value):
-    worker.exact(value, ("schema_version", "rules_revision", "proposals"))
-    require(type(value["schema_version"]) is int and value["schema_version"] == 1, "INVALID_VERSION")
-    rules = value["rules_revision"]
-    require(type(rules) is str and re.fullmatch("[0-9a-f]{40}", rules), "INVALID_RULES")
+    require(type(value) is dict and type(value.get('schema_version')) is int
+            and value['schema_version'] in (1,2), "INVALID_VERSION")
+    version=value['schema_version']
+    worker.exact(value, ("schema_version", "rules_revision", "proposals") if version==1
+                 else ("schema_version", "proposals"))
+    if version==1:
+        rules = value["rules_revision"]
+        require(type(rules) is str and re.fullmatch("[0-9a-f]{40}", rules), "INVALID_RULES")
     entries = value["proposals"]
-    require(type(entries) is list and 1 <= len(entries) <= MAX_RETAINED, "RETENTION_LIMIT")
+    require(type(entries) is list and 1 <= len(entries) <= (2 if version==1 else MAX_RETAINED), "RETENTION_LIMIT")
     seen = set()
     for entry in entries:
-        worker.exact(entry, ("sha256", "source_store"))
+        worker.exact(entry, ("sha256", "source_store") if version==1 else ("sha256", "source_store", "rules_revision"))
+        if version==2:
+            require(type(entry['rules_revision']) is str and re.fullmatch('[0-9a-f]{40}',entry['rules_revision']), 'INVALID_RULES')
         proposal, source = entry["sha256"], entry["source_store"]
         require(type(proposal) is str and worker.HEX.fullmatch(proposal), "INVALID_PROPOSAL")
         require(proposal not in seen, "DUPLICATE_PROPOSAL")
@@ -218,7 +224,8 @@ def publish_locked(configuration, root, owner, store):
         source = store/Path(entry["source_store"]).name
         worker.root_readonly(source, directory=True, owner=owner)
         raw = source_bytes(source/"manifest.json", MAX_MANIFEST, owner)
-        value, names, directories = manifest(raw, entry["sha256"], configuration["rules_revision"])
+        rules=configuration['rules_revision'] if configuration['schema_version']==1 else entry['rules_revision']
+        value, names, directories = manifest(raw, entry["sha256"], rules)
         source_tree(source, names, directories, owner)
         prepared.append((entry["sha256"], source, raw, value))
     published = []
@@ -247,7 +254,7 @@ def publish_locked(configuration, root, owner, store):
                 Path(base).chmod(0o555)
                 fsync_dir(base)
             view.chmod(0o500)
-            worker.verify_input(view, proposal, configuration["rules_revision"], owner=owner)
+            worker.verify_input(view, proposal, value["rules_revision"], owner=owner)
             fsync_dir(view)
         fsync_dir(stage)
         # No publication or retirement happens until ALL copies are valid.

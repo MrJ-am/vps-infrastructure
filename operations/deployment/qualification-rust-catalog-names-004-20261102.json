@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "Engine AST unchanged from reviewed e6603e8c except fixed output schema/labels/metadata flag",
+    "Eight fixed boolean predicates, pg_catalog-only context",
+    "Actual CREATE EXTENSION vector has public equality operators but no runtime oid/name/text homonym; every operator is a vector extension member with expected operand type",
+    "Synthetic text equality operator raising exception is not invoked and is classified as relevant unowned unexpected operator",
+    "Synthetic pg_get_functiondef function and pg_proc view are not invoked/read and are classified separately"
+  ],
+  "decision": "PASSED",
+  "limits": [
+    "No production result claimed",
+    "No application function executed or body exported by probe",
+    "The extension membership/type classification is descriptive, not a blanket approval of other extension behaviours",
+    "No witness regeneration or migration performed"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/deployment/preflight_rust_catalog_names_004.py": "641e14aeb43d8a490595bab6324c39958cb8ffe797d9d1702b778c0d4c12fa9d",
+    "operations/deployment/preflight_rust_contracts_004_v2.py": "e6603e8c888fa40f9d2e6952aeb577ee9868350e3a6a7d3e27cab95effaf876c",
+    "operations/deployment/test_rust_catalog_names_004.py": "668efa5851f14b297046da4e03ed3130419d4f15f67ec4b235b5b47f36e55610"
+  },
+  "tests": {
+    "elapsed_seconds": 4.019,
+    "log_sha256": "06f800e1599fe78a80e84b1e9763b009f9a388fc1669dcb1720588de99e0c513",
+    "native_package": "/nix/store/0xml3ipsrjdp9sms6igsw46bzwaqwbr8-postgresql-and-plugins-17.11",
+    "pgvector": "0.8.2",
+    "postgresql": "17.11",
+    "unittest_methods": 3
+  }
+}

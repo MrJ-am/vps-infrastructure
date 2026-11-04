@@ -1,0 +1,37 @@
+{
+  "audit": "/nix/store/74329d2w5p244s4rvpfip1c70cvb4qid-mrjam-vise-rules-independent-audit-1",
+  "evidence_sha256": {
+    "publish-entry.py": "1cfe8b351a5d68481b5953ff6ddddb7217f4bded042bbe7b7073388b28e81ba1",
+    "publish.py": "4e1b120a1570d3d092302bcb071e8bd092425ca076a4e14aae2862b80e251500",
+    "publisher.nix": "1d8aadd8f5da267d807930df30289f2c8a00f5edc2cf469f82ce4c4edeb59f6d",
+    "qualification-native-git-001.json": "3ce7f639125472bd0d7c8d24f9a8fa9b6c6635037f8d0f472eda825ab35cd8b4",
+    "rules-audit-publish-002.stderr": "4abf1d22101dc50733fabd23ab6a1c7e4a2294d5e29c51d356325d161c643d6c",
+    "rules-audit-publish-002.stdout": "85cc59fb4e2c0f9390da257bae3b0cf7ddadb9a9a297eea21e038b6a959d5d3d",
+    "test_publish.py": "79803263554bc2f92e638a128324391d256e5e009b176b890908eb08e5e03960"
+  },
+  "limitations": [
+    "No human review created",
+    "No rule adoption or merge",
+    "No application signature or deployment",
+    "Not a Forgejo Actions run"
+  ],
+  "native_git_checks_passed": 4,
+  "protection_verified_before_and_after": true,
+  "publisher": "/nix/store/ifj6nyig0yvxsp024cgd8yylhxd4ql66-mrjam-vise-rules-audit-publisher-1",
+  "publisher_tests_passed": 9,
+  "result": {
+    "code": "RULES_AUDIT_PUBLISHED",
+    "created": true,
+    "deployed": false,
+    "forgejo_actions_run_id": null,
+    "head": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+    "merged": false,
+    "report_sha256": "01c207fc0880e270a597c0d3a4657bd1b3e95df3355aab267d96b3d4f484bdba",
+    "review_created": false,
+    "schema_version": 1,
+    "status_id": 1,
+    "temporary_token_revoked": true
+  },
+  "schema_version": 1,
+  "scope": "external independent rules audit publication only"
+}

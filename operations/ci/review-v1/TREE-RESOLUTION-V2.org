@@ -1,0 +1,54 @@
+#+title: Résoudre explicitement l'objet arbre dans Forgejo 17
+#+language: fr
+
+L'essai natif du bootstrap a invalidé une hypothèse de notre première projection :
+=GET /git/commits/<head>= expose =commit.tree.sha= comme identifiant du commit,
+utilisable dans l'URL d'arbre, et non comme OID Git de cet arbre. Un
+=GET /git/trees/<head>= ordinaire conserve également cet identifiant résolu.
+Les premiers tests synthétiques utilisaient à tort le véritable OID d'arbre
+dans ce champ. Le premier banc natif sans revue ne vérifiait pas cette égalité.
+Les sources figées et leurs reçus restent des preuves de ces périmètres limités.
+
+=api_projection_v2.py= conserve la vérification du commit et demande désormais
+la résolution explicite et fixe =<head>^{tree}=, encodée
+=<head>%5E%7Btree%7D?page=1&per_page=1=. Le SHA retourné doit être un OID valide
+et différent du commit. Aucune URL de réponse n'est suivie. Le contenu paginé
+n'est pas utilisé comme inventaire complet : seul l'identifiant résolu compte.
+
+=read_transport_v3.py= ajoute uniquement cette route GET pour le dépôt attendu
+et un commit de 40 caractères hexadécimaux. Les autres suffixes de révision,
+branches, paramètres et dépôts sont refusés. Les gardes réseau et le watchdog
+qualifiés du transport v2 restent inchangés. =recheck_v2.py= utilise les modules
+corrigés et adapte aussi le contrôle des participants après fusion, décrit plus bas.
+
+Neuf tests ciblés avec données inventées vérifient cette sémantique, le refus
+d'un commit présenté comme arbre, les routes fermées, le déplacement concurrent
+de tête et l'envoi HTTP réellement encodé. La preuve native de cette résolution
+est jointe dans =qualification-native-semantics-20261103-001.json= ; ces tests
+ne la remplacent pas. Le bootstrap des
+règles conserve sa propre vérification Git native et ne dépend pas de ce chemin.
+
+* Participants et ordre des décisions
+
+Le même banc a révélé une seconde hypothèse incorrecte de la projection v1 :
+=requested_reviewers= contient les auteurs des dernières décisions actives,
+y compris les approbations. La projection v2 rapproche exhaustivement cette
+liste des revues collectées ; seules les véritables entrées =REQUEST_REVIEW=
+restantes deviennent des demandes en attente dans l'observation interne.
+Une liste d'identités incohérente reste refusée. Les équipes restent hors périmètre.
+
+=review_contract_v2.py= ordonne les décisions par ID croissant, comme la
+sélection native =max(id)=, et non par date de dernière édition. Modifier une
+ancienne approbation ne peut donc pas lui donner priorité sur un rejet plus
+récent. Six tests avec signatures réelles inventées couvrent ces réordonnancements
+et les décisions écartées : la dernière décision non écartée continue de bloquer
+un rejet ou une demande active, tandis que la dernière décision globale sert
+à choisir une approbation sans ressusciter une approbation écartée.
+Les dates d'édition restent contrôlées et liées à la relecture de la revue choisie.
+
+Le contrôle après fusion du =recheck_v2= exige la présence du reviewer choisi
+parmi les participants, puis sa revue exacte. Il ne prétend toujours pas
+refaire toutes les autres revues après fusion. Les demandes ayant un commit_id
+vide restent refusées par le contrat strict actuel, même dans l'historique :
+leur prise en charge éventuelle devra conserver l'absence de liaison au commit,
+sans inventer un OID. Aucun de ces composants n'est encore activé en production.

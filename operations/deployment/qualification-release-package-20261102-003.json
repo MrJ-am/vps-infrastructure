@@ -1,0 +1,35 @@
+{
+  "backend_modules_byte_identical": true,
+  "checks": [
+    "deploy:no-args-inert-fixture",
+    "deploy:extra-argument-refused",
+    "deploy:extra-argument-refused",
+    "recover:no-args-inert-fixture",
+    "recover:extra-argument-refused",
+    "recover:extra-argument-refused"
+  ],
+  "entrypoint_build_tests_passed": 13,
+  "limits": [
+    "The invalid manifest refuses before Backend is instantiated. Actual deployment uses a separately bound manifest and requires the integrated backend qualification."
+  ],
+  "only_three_entry_constants_changed": true,
+  "package": "/nix/store/s9qp09g14bkq401qgzs0pxis6k1b5xfy-mrjam-first-release-controller-1",
+  "passed": true,
+  "production_package": false,
+  "schema_version": 1,
+  "scope": "Built wrappers with deliberately invalid synthetic manifest; no production operation",
+  "source_sha256": {
+    "operations/deployment/cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "operations/deployment/generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "operations/deployment/recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "operations/deployment/release-package.nix": "352c6f4986e6cb76b948d11f23eaa71254034db1db5eb2b36dcf1378026b4be4",
+    "operations/deployment/release_backend.py": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "operations/deployment/release_entrypoint.py": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab",
+    "operations/deployment/snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "operations/deployment/stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "operations/deployment/stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "operations/deployment/system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "operations/deployment/test_release_entrypoint.py": "0777db2d33930544bcc7596168a0a9e7b3cffdbc27dd5b9f82536f17df56004c"
+  },
+  "supersedes": "qualification-release-package-20261102-002.json"
+}

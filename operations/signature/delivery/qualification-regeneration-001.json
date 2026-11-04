@@ -1,0 +1,105 @@
+{
+  "adversarial_tests_passed": 9,
+  "build": {
+    "exit_code": 0,
+    "output": "/nix/store/fgw9wgm6kmibp0n6p6jxm7v4m7f9q8k6-mrjam-signature-regeneration-qualified-1",
+    "sandbox_observed": true
+  },
+  "canonical_rules_adopted": false,
+  "changed_tex_failure": "SIGNATURE_REGENERATION_MISMATCH: web/MrJamSignature.woff2",
+  "changed_tex_stale_fonts_refused": true,
+  "dependency_tests": {
+    "fonttools": {
+      "deselected": 4,
+      "passed": 4555,
+      "skipped": 48,
+      "xfailed": 2
+    },
+    "skia_pathops": {
+      "passed": 48
+    },
+    "uharfbuzz": {
+      "passed": 226,
+      "skipped": 4
+    }
+  },
+  "deployment_authorized": false,
+  "evidence_sha256": {
+    ".local/deployment-20261101/signature-dependencies-001.json": "b6b39c7f11e8d49cf58058b7657b0545be2167e81117f30bb2849e95dad7acb1",
+    ".local/deployment-20261101/signature-regeneration-003.stderr": "73ae88f049ce3fd46e57b0cf0bb314f5f2cf79df7115f9d58f3a7dae9dc3f86b",
+    ".local/deployment-20261101/signature-regeneration-003.stdout": "164ada85cf89d52843c948b770ba0f696e2235d76ab873e41e2c4fbd356526e8",
+    ".local/deployment-20261101/signature-regeneration-stale-001.stderr": "aa4471eb58ede16d8e7b2ea38a55da96d9a4bb86efc4c6fd3fa5ab38e0025d4c",
+    ".local/deployment-20261101/signature-regeneration-tests-002.stderr": "e09602f41bae662f0e3525a5ca6a07413dfe382970b81594d08d02d25b3db3b4",
+    ".local/deployment-20261101/signature-toolchain-001.stderr": "7aa6ecaa95721e6d31363d9a1686157078145cd88a51a1988f69dd5a45dd1e81",
+    ".local/deployment-20261101/signature-toolchain-001.stdout": "958b2a8309bf22f0d52e693f1064161833b49dd16f795ce146cae923c3cec05c",
+    "operations/signature/delivery/consumer-fixture-inventory-001.json": "fe9925096c8100adaf9896e217ba85b48c039afebeacf22ead520a49e9bcdadf",
+    "operations/signature/delivery/generator-provenance.json": "e69dde9d45f5eb39d6308b559665d7fcf58fb6835599cc54462b8d337bada112",
+    "operations/signature/delivery/reference-generator.py": "9f5fe9121b14592d3c4b6205702651a7b875916a99cc3dc678aaac48cde7a973",
+    "operations/signature/delivery/regeneration.nix": "553769cb68c696c96ecfc3a50628b49d8a06578ec6b61fca74fa175d33f1ee9c",
+    "operations/signature/delivery/resources.py": "1c57560346df963b76369406e6bbd2d3f0ab2440fe8285e08689a069e9ec2d39",
+    "operations/signature/delivery/test_regeneration.py": "8a91f1afbd075dc329caa133c6027a53cf7a82d7a7355b697fd54bd86828cdb7",
+    "operations/signature/delivery/toolchain.nix": "f7bc971075d9aa83ba1c32372775efba576c9267dfd62698df65af986f654373",
+    "operations/signature/delivery/verify_generated.py": "e262ec35611ee464695ef335898af97e69a8dde3c66327c6d44408c47f7847cf"
+  },
+  "input_sha256": {
+    "artwork/Echologo.svg": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3",
+    "fonts/Parisienne-OFL.txt": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db",
+    "fonts/Parisienne-Regular.ttf": "bc9ee17f022e20bc700797e5f557d14bfa43af0c98d9e6c9c5c1ca4ec7aacd57",
+    "mrjam.sty": "f48aebcc96d1e199ed19df2873cc5eb63bace9b2baefa98f50f17cef2044e696",
+    "web/EchoPoint.woff2": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
+    "web/MrJamSignature.woff2": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
+    "web/geometry.json": "2b1f5c0aa9f7c0402ede4b4f2fd570646276efd467d610209fba0eb9da72b7d6",
+    "web/signature.css": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+  },
+  "limitations": [
+    "No browser selection/rendering scenario qualified in this step",
+    "No consumer assembly integration or new canonical rule adoption",
+    "Vision Parisienne WOFF2 conversion still requires integration",
+    "No new Signature proposal automatically delivered"
+  ],
+  "production_activated": false,
+  "python": "/nix/store/4qdwdg7m15bycc8gmr0ar5i1zi1nmkr2-python3-3.13.15-env",
+  "schema_version": 1,
+  "scope": "Independent Signature reference font/CSS regeneration from captured source inputs",
+  "verification": {
+    "deployment_authorized": false,
+    "font_and_css_bytes_exact": true,
+    "geometry_values_equal": true,
+    "outputs": {
+      "web/EchoPoint.woff2": {
+        "byte_identical": true,
+        "bytes": 1332,
+        "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda",
+        "source_sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+      },
+      "web/MrJamSignature.woff2": {
+        "byte_identical": true,
+        "bytes": 7396,
+        "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604",
+        "source_sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+      },
+      "web/geometry.json": {
+        "byte_identical": false,
+        "bytes": 920,
+        "sha256": "8bc7990fb02a46334ea79254849fa93f332a5d014db390e4a97e1191a380111b",
+        "source_sha256": "2b1f5c0aa9f7c0402ede4b4f2fd570646276efd467d610209fba0eb9da72b7d6"
+      },
+      "web/signature.css": {
+        "byte_identical": true,
+        "bytes": 996,
+        "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830",
+        "source_sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+      }
+    },
+    "regeneration_verified": true,
+    "schema_version": 1,
+    "tool_versions": {
+      "brotli": "1.2.0",
+      "fonttools": "4.61.1",
+      "skia-pathops": "0.9.2",
+      "uharfbuzz": "0.56.1"
+    },
+    "unicode_mapping_verified": true
+  },
+  "verification_sha256": "a3a2f7e4b872571e378ea6cd633c14bba6d06aa9ec513c7c7dc1eca8c718e3d1"
+}

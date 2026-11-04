@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "scope": "protected-source-merge-and-inactive-production-slot",
+  "forge_merge": {
+    "code": "REVIEWED_SOURCE_FAST_FORWARDED",
+    "head": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+    "reviewer": "MrJam",
+    "review_id": 3,
+    "protected_merge": true,
+    "protection_unchanged": true,
+    "temporary_token_revoked": true,
+    "application_deployed": false
+  },
+  "github_main": {
+    "previous": "6009020151cdd6e069aed67b4970b3b6de1b5151",
+    "head": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+    "force": false,
+    "connector_update_succeeded": true
+  },
+  "stage": {
+    "code": "INACTIVE_REVIEWED_DELIVERY_READY",
+    "current": "/nix/store/z3rr0v83aar7xnghm96840cwfr1hjdiv-nixos-system-srv1982677-26.05pre-git",
+    "boot": "/nix/store/frha1lc5vwqx4d5bzs6p2hfabk8r6r49-nixos-system-srv1982677-26.05pre-git",
+    "green_ready": true,
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "routes_changed": false,
+    "automatic_deployment_enabled": false
+  },
+  "vm": {
+    "checks": [
+      "no-implicit-slot-start",
+      "both-real-executables-ready-static-only",
+      "wrapped-elf-identity",
+      "five-interfaces-identical",
+      "graceful-route-change-and-return-same-pids",
+      "inactive-sigterm-stop"
+    ],
+    "limitations": [
+      "static-only runtime",
+      "SQL and authenticated sessions not tested here",
+      "no long request in this case"
+    ],
+    "new_server": "/nix/store/jszbmj1s6h4xnzg5qgga99bzcy6i84hq-mrjam-delivery-server-04754e2c5e53",
+    "old_server": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+    "passed": true,
+    "production_access": false
+  },
+  "sources": {
+    "stage-aligned-delivery.py": "7abc8df128da83261c3a0bebc5e8c62daa628d1a78f36e59d06a09d5927acda7",
+    "delivery-staged-host.nix": "f7d17c846037714ac7110c6e53a436784c8752acb5bdfb5d50473a4485eb85d5",
+    "delivery-rust-routing.nix": "d5969d186ba6591eac29736bd518e36b3de3472affbc12b82e945fdcceb21ad2",
+    "publish-forge-alignment.py": "9052ae4b546848ce9e3abaa11279cfdcd6ac8ef2f267d2f903bda9abd3e9000a",
+    "merge-forge-alignment.py": "54b0928e18d115f33e737cc29720049fed07789b397f10b98ff667e2d5c36ff3",
+    "feedback-aligned-validation.py": "fcded40e80db8d963f8773b6678a6bbeb2e2e8f023fbccd3ca29a974d9a64cc2"
+  },
+  "limits": [
+    "Blue still receives traffic; green production readiness verified without business writes.",
+    "Automatic future-proposal deployment remains incomplete.",
+    "Initial two attempts refused the retained green migration mask and returned successfully. Only this mask was removed in attempt3."
+  ]
+}

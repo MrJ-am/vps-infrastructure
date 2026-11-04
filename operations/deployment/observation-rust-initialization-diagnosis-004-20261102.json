@@ -1,0 +1,211 @@
+{
+  "application_mutation_performed": false,
+  "limits": [
+    "Post-return observations do not describe candidate-only accounts or credentials.",
+    "Bank comparison includes every typed question/production field and array order; unknown historical fields stay unchanged.",
+    "No codebook content or equality was inspected; no application rows exported.",
+    "Audition migration2 is absent; Vision witnesses match runtime context and name classification confirms only the expected pgvector equality operators."
+  ],
+  "observations": {
+    "audition_adoption_applicability": {
+      "result": {
+        "already_exact_002": false,
+        "applicable_001": true,
+        "application_functions_called": false,
+        "application_rows_read": false,
+        "checks": {
+          "database_is_vision": true,
+          "known_schema_001": true,
+          "known_schema_002": false,
+          "owners_separate_and_consistent": true,
+          "postgresql_is_17": true,
+          "runtime_metadata_access": true,
+          "runtime_role_unprivileged": true,
+          "versions_exactly_1": true,
+          "versions_exactly_1_and_2": false
+        },
+        "code": "AUDITION_SCHEMA_ADOPTION_APPLICABILITY_OBSERVED",
+        "function_bodies_exported": false,
+        "mutation_performed": false,
+        "schema_version": 1
+      },
+      "source": "operations/deployment/preflight_audition_schema_004.py",
+      "source_sha256": "c3997ec851d51d3e16ec0bbf37970fe1aa258900170906000847594ebf9c2a91"
+    },
+    "classifier_import": {
+      "result": {
+        "application_activation": false,
+        "code": "CORPUS_CLASSIFIER_IMPORTED",
+        "database_access": false,
+        "schema_version": 1,
+        "secret_content_read": false,
+        "store_paths_verified": 5
+      },
+      "source": "operations/deployment/corpus-diagnostic/deliver.py",
+      "source_sha256": "c591d7b5daf16a1fe81cfc84d9fc64e985ce73f62fd3a6803fd45a7125502eac"
+    },
+    "mateval_typed_bank": {
+      "result": {
+        "checks": {
+          "extra_production_fields_present": true,
+          "extra_question_fields_present": true,
+          "extra_root_fields_present": true,
+          "production_contents_equal": true,
+          "production_ids_and_order_equal": true,
+          "question_count_equal": true,
+          "question_domains_equal": true,
+          "question_families_equal": true,
+          "question_ids_and_order_equal": true,
+          "question_levels_equal": true,
+          "question_statements_equal": true,
+          "raw_json_equal": false,
+          "typed_deserialization_accepted": true,
+          "typed_json_equal": true,
+          "typed_validation_accepted": true,
+          "version_equal": true
+        },
+        "code": "MATHEVAL_TYPED_CORPUS_CLASSIFIED",
+        "codebook_read": false,
+        "corpus_values_exported": false,
+        "mutation_performed": false,
+        "schema_version": 1
+      },
+      "source": "operations/deployment/corpus-diagnostic/probe.py",
+      "source_sha256": "f5cd5374193fd9facf01d8e9b1a47a2037065b26ad87664b5960c6888d189889"
+    },
+    "vision_audition_guards": {
+      "result": {
+        "application_functions_called": false,
+        "checks": {
+          "audition_maximum_version_is_2": {
+            "accepted": false,
+            "observed": true
+          },
+          "audition_schema_usage_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "audition_version_select_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "audition_versions_exactly_1": {
+            "accepted": true,
+            "observed": true
+          },
+          "audition_versions_exactly_1_and_2": {
+            "accepted": false,
+            "observed": true
+          },
+          "vision_creation_witness_execute_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_creation_witness_expected_shape": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_creation_witness_matches_catalog_context": {
+            "accepted": false,
+            "observed": true
+          },
+          "vision_creation_witness_matches_runtime_context": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_public_usage_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_revision_witness_execute_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_revision_witness_expected_shape": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_revision_witness_matches_catalog_context": {
+            "accepted": false,
+            "observed": true
+          },
+          "vision_revision_witness_matches_runtime_context": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_schema_versions_1_through_27": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_version_select_granted": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_witness_runtime_names_unshadowed": {
+            "accepted": false,
+            "observed": true
+          }
+        },
+        "code": "RUST_CODE_VERSION_GUARDS_CLASSIFIED",
+        "function_bodies_exported": false,
+        "migration_version_metadata_read": true,
+        "mutation_performed": false,
+        "private_application_rows_read": false,
+        "schema_version": 2,
+        "secret_content_read": false
+      },
+      "source": "operations/deployment/preflight_rust_contracts_004_v2.py",
+      "source_sha256": "e6603e8c888fa40f9d2e6952aeb577ee9868350e3a6a7d3e27cab95effaf876c"
+    },
+    "vision_catalog_names": {
+      "result": {
+        "application_functions_called": false,
+        "checks": {
+          "public_equality_operands_all_expected_vector_types": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_equality_operators_all_pgvector_members": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_equality_operators_present": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_md5_homonym_absent": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_pg_get_functiondef_homonym_absent": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_pg_proc_relation_absent": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_runtime_type_equality_homonyms_absent": {
+            "accepted": true,
+            "observed": true
+          },
+          "public_string_agg_homonym_absent": {
+            "accepted": true,
+            "observed": true
+          }
+        },
+        "code": "RUST_CATALOG_NAMES_CLASSIFIED",
+        "function_bodies_exported": false,
+        "migration_version_metadata_read": false,
+        "mutation_performed": false,
+        "private_application_rows_read": false,
+        "schema_version": 3,
+        "secret_content_read": false
+      },
+      "source": "operations/deployment/preflight_rust_catalog_names_004.py",
+      "source_sha256": "641e14aeb43d8a490595bab6324c39958cb8ffe797d9d1702b778c0d4c12fa9d"
+    }
+  },
+  "schema_version": 1,
+  "scope": "incident-004-read-only-classification-after-return"
+}

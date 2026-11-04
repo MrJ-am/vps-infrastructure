@@ -1,0 +1,42 @@
+{
+  "limitation": "Single platform profile only; separate two-profile VM is still running.",
+  "output": "/nix/store/sxh5iwmjbydns0pr7pvlj47nxzg4l8rh-vm-test-run-mrjam-ci-admitted-distinct-identities",
+  "result": {
+    "authority_v1_sources_preserved": true,
+    "authority_v2_fixed_credential_reader": true,
+    "checks": [
+      "prepare",
+      "credential-reader-boundaries",
+      "inactive-boundaries",
+      "fresh-chain",
+      "delivery-capture",
+      "cache-reuse",
+      "wrong-peers",
+      "key-separation",
+      "legacy-cache-rebuilt",
+      "tamper-refused",
+      "admission-revoked",
+      "wrong-key-refused",
+      "expiry-refused"
+    ],
+    "coordinator_sources_unchanged": true,
+    "dynamic_admission_registry": true,
+    "not_established": [
+      "Actual Forgejo job transport",
+      "Production identities/key/policy/capacity",
+      "New validator execution on every job",
+      "Human review/merge/deployment authority"
+    ],
+    "production_access": false,
+    "schema_version": 1,
+    "scope": "real-systemd-distinct-identities-synthetic-admitted-task",
+    "substitutions": [
+      "Synthetic immutable validator and source/report, no application compilation",
+      "Admitted task delivered by a Go test entrypoint instead of Forgejo API/daemon",
+      "Test entrypoint closure added to the otherwise unchanged private coordinator root",
+      "Invented key/UIDs/credentials only"
+    ]
+  },
+  "result_sha256": "c34e2b8b09ce94a4aedd27462e83d3dceaafcb3f9d7fd783031dc260d297bb98",
+  "schema_version": 1
+}

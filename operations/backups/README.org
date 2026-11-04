@@ -1,0 +1,126 @@
+#+title: Sauvegardes après adoption des services natifs
+#+date: 2026-11-02
+#+language: fr
+
+Le module =../hosts/mrjam-vps/backups.nix= conserve les destinations et
+minuteries déclarées par les sources historiques. Il reste sans minuteries
+actives dans le candidat staged ; =candidate-promoted.nix= les sélectionne
+explicitement. Aucune restauration, émission réseau, lecture depuis le VPS
+ou consultation de sauvegarde réelle n'a été exécutée pour ce travail.
+
+| Unité | Capture | Destination | Horaire déclaré |
+|-------+---------+-------------+-----------------|
+| postgresqlBackup-matheval | dump PostgreSQL | /var/backup/postgresql | daily |
+| postgresqlBackup-nextcloud | dump PostgreSQL | /var/backup/postgresql | daily |
+| nextcloud-backup | maintenance, dump et config/data | /var/backup/nextcloud | 03:30 UTC |
+| forgejo-backup | arrêt Forgejo, dump et dépôts, enveloppe age vérifiée | /var/backup/forgejo | 04:45, jitter 10 min |
+| mrjam-sauvegarde | composants natifs SQL/SQLite/Kanidm, enveloppe age vérifiée | /var/backup/mrjam/native-v1 | daily, jitter 30 min |
+| mrjam-kanidm-backup | export natif privé demandé par mrjam-sauvegarde | /run/mrjam-kanidm-backup | aucune minuterie |
+
+Les fichiers et archives historiques restent en place. Nextcloud conserve son
+format =base.dump/fichiers.tar/SHA256SUMS= et la rétention de sept jours de
+sa source. Forgejo conserve le couple =.tar.age/.tar.age.key.age= et sa
+vérification par clé jetable. Le destinataire age est lu exclusivement dans
+la configuration privée de l'archiveur ; aucune valeur n'est placée dans Nix.
+
+* Révision Forgejo du 4 novembre : qualifiée et installée
+
+La capture du dump et des dépôts reste effectuée pendant l'arrêt du writer.
+La révision remet Forgejo en service dès que ces captures sont terminées.
+Le chiffrement et la vérification utilisent ensuite uniquement les captures.
+Le flux déchiffré passe par =tar --compare= : il est comparé aux octets capturés
+sans extraire une seconde copie complète. Le format et les deux membres
+=forgejo.dump/data.tar= restent identiques. Les fichiers chiffrés temporaires
+créés par cette exécution sont supprimés sur échec ; les sauvegardes précédentes
+ne sont pas supprimées.
+
+=qualification-forgejo-stream-001.json= consigne huit contrôles réussis en VM,
+dont restauration synthétique, retour du coordinateur, reprise avant chiffrement,
+refus d'une capture altérée et refus d'un flux chiffré corrompu. PostgreSQL,
+systemd, tar et age sont réels ; le writer Forgejo est simulé. Cette qualification
+ne prouve ni installation sur le VPS, ni réserve disque, ni rétention Forgejo.
+
+L'installation est vérifiée séparément dans
+=qualification-forgejo-stream-installed-001.json= : génération =f3kci24k…=
+courante et sélectionnée au démarrage, retour réel vers =9ng98pjn…= puis
+réinstallation, dix processus applicatifs conservés et contrôles HTTPS réussis.
+Les constructeurs ViSe et plateforme conservent exactement la nouvelle unité
+de sauvegarde. Aucun déclenchement manuel d'une sauvegarde de production :
+la prochaine exécution planifiée reste à observer. La rétention durable et
+la sauvegarde hors site restent à établir.
+
+* Remplacement de la sauvegarde globale obsolète
+
+L'ancienne commande exigeait =mrjam_identite= et
+=/var/lib/mrj-auth/sessions.sqlite=. Ces références ne correspondent pas à
+l'identité native adoptée. Le nouveau helper fermé, sans argument, capture :
+
+- =vision=, avec le schéma Audition présent dans cette base ;
+- =vision_journal=, séparé de Vision, et =matheval= ;
+- =mrjam-metier/log/sessions.sqlite= ;
+- les SQLite admission, cycle et archive des nouveaux travailleurs ;
+- l'export natif Kanidm 1.11.2, au format gzip réellement vérifié.
+
+Chaque dump SQL utilise son snapshot PostgreSQL ; chaque SQLite passe par
+l'API backup et inclut le WAL validé. Ces captures en ligne sont distinctes.
+Le manifeste indique =cross_component_atomic=false= : elles ne constituent
+pas le retour apparié de la première bascule. Ce dernier reste le snapshot
+offline de =../deployment/snapshot.py=, réalisé après arrêt des écrivains.
+Toute restauration applicative ultérieure requiert également le registre
+d'effacement courant et sa procédure de rapprochement ; le helper n'expose
+aucune commande de restauration ni de rejeu de données anciennes.
+
+Le helper exige toutes ses sources ; il ne remplace jamais une absence par
+une base vide. Les chemins, bases et commandes sont fixés lors du packaging.
+Sources SQLite : fichiers 0600, UID/GID dédiés, un seul lien et aucun chemin
+symbolique. Les fichiers privés restent dans un répertoire root 0700 ; les
+images SQLite sont bornées à 1 Gio et les opérations ont une échéance.
+
+Le paquet publié contient seulement =components.tar.age=, =key.age= et son
+manifeste, modes 0600, dans un répertoire 0700. Une clé jetable chiffre le
+contenu et est elle-même chiffrée pour le destinataire conservé. Le vrai flux
+chiffré est déchiffré et comparé avant publication atomique du répertoire.
+Une capture ou vérification ratée ne publie rien ; ses fichiers incomplets
+restent privés pour récupération explicite. Aucun diagnostic libre, contenu,
+identifiant de personne ou valeur de credential ne sort de l'unité.
+
+La rétention de trente jours ne s'applique qu'aux répertoires du nouveau format
+reconnus et vérifiés, après une nouvelle sauvegarde réussie. Les archives
+historiques, fichiers inconnus et préparations incomplètes ne sont pas supprimés.
+Le copieur mensuel historique ne reconnaît pas ce manifeste natif : sa
+compatibilité ne doit pas être annoncée. Aucun transfert hors VPS n'est ajouté.
+
+* Provenance et limites de qualification
+
+Les horaires et formats conservés proviennent de
+=reference-nixos/apps/nextcloud.nix=, =scripts/nextcloud-backup.sh=,
+=assemblage/forgejo/module.nix=, =modules/postgresql.nix= et
+=modules/identite.nix=. Ces fichiers ont été lus comme références et ne sont
+pas importés ni exécutés par le nouveau candidat. Le helper natif est nouveau.
+
+Le contrat Kanidm a aussi été vérifié dans sa source exacte
+=/nix/store/07a0mn5dkz2fx7wd4dh6jj7qnrz7a4ds-source= :
+=server/daemon/src/main.rs= distingue =scripting= du démarrage du daemon,
+et =server/core/src/lib.rs:backup_server_core= capture une transaction de
+lecture, avec la compression configurée. Certaines erreurs renvoient zéro
+sans contenu : l'unité exige un fichier non vide et une vérification gzip.
+
+=qualification.nix= exerce des vrais =pg_dump/pg_restore=, SQLite WAL et age
+sur des données inventées ; =kanidm-qualification.nix= crée un fournisseur
+local avec TLS, une personne fictive, exporte pendant son fonctionnement,
+restaure dans une autre base puis vérifie l'identité et le credential inventé.
+Les reçus identifient les sorties et les limites : les tests locaux ne prouvent
+ni la capacité disque du VPS, ni la possession de la clé privée du destinataire,
+ni une sauvegarde hors site, ni la restauration cohérente de tous les services.
+
+Le reçu =qualification-20261102.json= lie les sources finales aux 14 tests du
+helper, aux quatre groupes d'export/restauration Kanidm réel et aux six groupes
+de la VM =systemd.nix=. Cette dernière exécute les unités exactes avec les
+credentials systemd réels, PostgreSQL et Kanidm ; le processus écrivain Forgejo
+et la commande de maintenance Nextcloud y sont des fixtures explicites.
+
+Avant le gel de première bascule, le contrôleur doit arrêter les minuteries et
+les sauvegardes en cours, puis attendre la fin de leur nettoyage avant l'arrêt
+définitif des écrivains. Le nettoyage Forgejo rétablit son état actif antérieur
+et celui de Nextcloud quitte la maintenance : ils ne doivent pas s'exécuter
+après que le contrôleur a constaté le gel des services.

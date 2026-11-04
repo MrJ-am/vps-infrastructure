@@ -1,0 +1,51 @@
+{
+  "algorithm_origin": {
+    "path": "operations/deployment/first_release_archive.py",
+    "sha256": "4b632801419ed7e0a4277d6288ec633989782a17c16283a61b270473b9d4ef0f",
+    "unchanged": true
+  },
+  "changes": [
+    "Fixed release/controller/result/unit and new archive destinations 002.",
+    "Requires exactly initial/adoption/RETURNED metadata and successful automatic return result; HELD and corrective reopening records refused.",
+    "Requires controller failed, exit1, PID0; checks exact closed systemd properties.",
+    "Binds and preserves prior persistent/runtime archive identities and completed archive001 metadata; prior data never opened."
+  ],
+  "checks": [
+    "Same existing transaction.lock inode held by nonblocking exclusive flock; concurrent lock refusal.",
+    "Snapshot and retained candidate tree renamed whole, never opened; four runtime staging directories renamed on their own filesystem without opening credential or SQLite files.",
+    "Exact metadata hashes and directory identities bind archive; only owned mask record and exact guard removed, foreign masks retained.",
+    "HTTP baseline, current/boot previous, gate absent, reserved UID/GID940..948 absent required; injected closed observations exercise refusal branches.",
+    "Phase moved last after durable metadata/snapshot/runtime moves; failure midmove retains phase and every object in exactly one location.",
+    "Prior archive fixture content and inodes unchanged; symlinks/hardlinks/unknown entries/foreign archive/invalid result or controller state refused."
+  ],
+  "command": "python3 -I -m unittest discover -s operations/deployment -p test_first_release_archive_002.py -v",
+  "controller": "/nix/store/0799clfzrb1y8b17z5g5z12w3vm6fcaw-mrjam-first-release-controller-1",
+  "limits": [
+    "No service or production invocation; local fixture ownership substitutes root and fixed staged UID/GID.",
+    "Actual live conditions require parent execution of the sealed read-only probe before binding the archive.",
+    "Interrupted archive remains preserved and refuses automatic retry; no automatic cleanup or data restoration.",
+    "Only attempt002 metadata is accepted; future failure.json/failure.json.next are intentionally unknown and refused."
+  ],
+  "passed": true,
+  "probe": "operations/deployment/preflight-first-release-archive-attempt-002-20261102.py",
+  "probe_only_operation_constant_changed": true,
+  "probe_sha256": "c572f8106e8e1655d2d8e9063a2b3cd1960e5bc6bf4b66a3229e4185681387c7",
+  "production_access": false,
+  "production_binding_available": false,
+  "release_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+  "remaining_obligations": {
+    "path": "operations/deployment/OBLIGATIONS-APRES-BASCULE-20261102.org",
+    "sha256": "7a45426a595ee681bd98381b1d412d8e30e2e9e33fa5d53dcd1cf6f6afbe3d69"
+  },
+  "return_observation": {
+    "path": "operations/deployment/observation-second-cutover-return-20261102.json",
+    "sha256": "bea58bd7683c4dba2b8ae7a0c42beb18b2a366815367274509a4656846b1de28"
+  },
+  "schema_version": 1,
+  "scope": "Fixed second attempt after successful automatic RETURNED; real synthetic file moves and locks, substituted local identities and service observations.",
+  "source": "operations/deployment/first_release_archive_002.py",
+  "source_sha256": "632ece3fce33775223602bb71627da67d1e0a89b94f0aca865ceccbb9ea82d58",
+  "tests": "operations/deployment/test_first_release_archive_002.py",
+  "tests_passed": 16,
+  "tests_sha256": "1cfa25e0e0fa8474f3a3fc900e529ad661fc76473602da686c9cebbddb6e9cf7"
+}

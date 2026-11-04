@@ -1,0 +1,71 @@
+#+title: Accès humain et adoption explicite des rôles Forgejo
+#+date: 2026-11-02
+#+language: fr
+
+* Accès existant, sans ajout de membre
+
+Le bootstrap crée uniquement le compte technique de gouvernance et, si absent,
+l’organisation privée MrJ-am. Il ne choisit aucun propriétaire ou reviewer
+humain et ne modifie aucun membre existant.
+
+Le [[file:../deployment/forgejo_sso_probe.py][probe SSO déjà qualifié]] exige un seul compte humain parmi les deux noms
+historiques autorisés, lié au =ownerSubject= du binding privé existant. Il
+vérifie le fournisseur Kanidm natif, =is_admin=true=, l’état actif, l’absence de
+blocage du login et le rattachement au login natif. Le sujet,
+l’identifiant, le nom et les secrets ne sortent pas du VPS.
+
+Dans le code exact Forgejo 17.0.1, l’administrateur de site voit une
+organisation privée même sans appartenance explicite :
+=models/organization/org.go:479=. Il reçoit l’accès propriétaire aux dépôts
+à =models/perm/access/repo_permission.go:249= et les droits de gestion de
+l’organisation à =services/context/org.go:138=.
+
+Ainsi, un résultat SSO fraîchement passé et la présence des neuf dépôts privés
+établissent cet accès selon le code. Il n’est pas nécessaire d’inventer une
+identité ou d’ajouter un membre pour rendre ces dépôts accessibles à cet
+administrateur. Ce constat ne remplace pas un essai de connexion humaine.
+Les protections de main restent applicables aux administrateurs et aucun
+push direct n’est débloqué.
+
+* Observations fermées avant une adoption de rôles
+
+Après réussite de la bascule, le relevé peut s’appuyer sur le même binding
+privé existant, sans recueillir un nouveau nom, mot de passe ou token humain.
+Il doit refuser toute ambiguïté et ne retourner que les booléens suivants :
+
+- Le compte unique lié au sujet du binding est natif, actif et administrateur ;
+  il est distinct du compte de bootstrap et de chaque identité technique CI.
+- L’organisation existe comme organisation privée ; chacun des neuf dépôts
+  lui appartient, reste privé, conserve main et sa protection exacte.
+- Ce même compte appartient déjà, ou non, à l’organisation et à son équipe
+  propriétaire. Les membres existants ne sont ni énumérés ni remplacés.
+- Le fournisseur configure, ou non, une synchronisation du statut
+  administrateur à partir d’un groupe. Ne pas exporter le nom de ce groupe.
+- Les protections imposent toujours l’approbation et le statut de validation,
+  sans bypass administrateur ni whitelist de push.
+
+Le point sur le groupe est distinct du statut courant :
+=routers/web/auth/oauth.go:1268= produit une mise à jour de =is_admin= quand
+=AdminGroup= est configuré. Sans nouvelle connexion, un simple relevé SQL ne
+prouve pas l’effet d’une future assertion d’identité. Un groupe non configuré
+laisse cette mise à jour facultative absente. Conserver cette distinction dans
+le reçu plutôt que déduire une appartenance à partir d’un nom de compte.
+
+* Propriétaire explicite et reviewer
+
+L’ajout éventuel de l’humain déjà lié au binding à l’équipe propriétaire doit
+être une opération distincte, liée à une observation récente. Elle ajoute
+uniquement l’appartenance manquante et préserve tous les membres, rôles,
+protections et identités présents. Aucun nouveau compte ou rôle administrateur
+n’est nécessaire pour rendre l’accès actuel possible.
+
+Le rôle de reviewer ne se déduit pas du créateur technique de l’organisation
+ni du seul fait d’être administrateur. La politique de revue doit distinguer
+l’humain du producteur de proposition, du runner, du validateur, du signataire
+et du déployeur ; ne pas accepter une auto-approbation comme revue indépendante.
+L’autorité de validation et la preuve authentifiée de revue restent liées aux
+révisions et artefacts exacts, comme décrit dans le plan de chaîne CI.
+
+Ce document est une analyse de code et un contrat d’observation. Il n’affirme
+aucune appartenance humaine de production non observée et n’effectue aucune
+mutation, connexion, lecture de secret ou requête sur le VPS.

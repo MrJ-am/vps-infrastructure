@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "scope": "source-preparation-independent-policy-check-and-generic-admission-constructor",
+  "tests": {
+    "source_preparation_and_policy": 10,
+    "fresh_observation": 5,
+    "passed": true
+  },
+  "integration": {
+    "candidate_code_executed": false,
+    "control": "/nix/store/3b0sn0acjr9w8qhm35jdgr1ra9raiia3-mrjam-validation-admission-control-1",
+    "deployment_authorized": false,
+    "different_source_and_validator_bound": true,
+    "fixed_identity_rules_and_recipes_preserved": true,
+    "passed": true,
+    "production_anchor_accepted": true,
+    "proposal": "952f4611369b7a4faaa4566e81d96af60e78cfe6fac3a0f8cf03c5eaba221ae6",
+    "public_metadata_documents": 8,
+    "registry_published": false,
+    "schema_version": 1,
+    "scope": "synthetic-candidate-real-admission-constructor",
+    "source": "/nix/store/rdg2rkq1m7xagwsrqcv075gm5kfkrkm4-mrjam-admitted-source-952f4611369b",
+    "validator": "/nix/store/6927bwbppmbmrplf3ah6mm36yaxq20hh-mrjam-validate-aligned-workspace-1"
+  },
+  "source_sha256": {
+    "proposal_prepare.py": "aedbec0cb1135ff22bd9706972a41c59b79c1d0922d7868116ed4062a9796f1e",
+    "proposal_policy.py": "8949bd653849aeb9dac854979ca831c553a23d9e9f3c9b7fbb1b99ea788caa26",
+    "source_observation.py": "d25ebfffa69e342bc7bdf5855d1d9a723246702a9753d05122e46adb8b2af7d5",
+    "test_proposal_prepare.py": "15c2ef003670220a6f118f7f68be0c06d27fb1e15201853b30d6f678150f2a39",
+    "test_source_observation.py": "1fff0aba655935783b7200a08a1df906bd8a17b5c7fe28c644e4d33b574706fc",
+    "proposal-factory-integration.nix": "d969e44d1417340b0c27e8dd33bbd058c6c5380fb951809a287f83bfdb1c0d7f"
+  },
+  "limits": [
+    "Synthetic local commits; no remote repository mutation.",
+    "GitHub API observation transport mocked in these tests; no new live API probe.",
+    "No root registry publication, validation dispatch or new application deployment.",
+    "Persistent proposal queue and its consumer remain to be connected."
+  ]
+}

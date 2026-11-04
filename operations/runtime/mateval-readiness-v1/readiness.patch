@@ -1,0 +1,257 @@
+--- a/crates/server/src/database.rs
++++ b/crates/server/src/database.rs
+@@ -110,16 +110,119 @@
+             .get("version")
+             .and_then(serde_json::Value::as_str)
+             .ok_or("INVALID_PUBLIC_CORPUS")?;
+-        let aligned: bool =
+-            sqlx::query_scalar("SELECT EXISTS (SELECT 1 FROM corpus WHERE version=$1 AND bank=$2)")
+-                .bind(version)
+-                .bind(sqlx::types::Json(bank))
+-                .fetch_one(pool)
+-                .await
+-                .map_err(|_| "MATEVAL_CORPUS_UNAVAILABLE")?;
+-        if !aligned {
++        // Collection and resumed sessions consume Bank, retaining every known
++        // field and array order while ignoring historical private metadata.
++        // Compare that exact contract without rewriting the stored JSON,
++        // digest, codebook, version or existing participation references.
++        let stored = sqlx::query_scalar::<_, Option<sqlx::types::Json<serde_json::Value>>>(
++            "SELECT CASE WHEN octet_length(bank::text)<=5242880 THEN bank ELSE NULL END FROM corpus WHERE version=$1",
++        )
++        .bind(version)
++        .fetch_optional(pool)
++        .await
++        .map_err(|_| "MATEVAL_CORPUS_UNAVAILABLE")?
++        .flatten()
++        .ok_or("MATEVAL_CORPUS_MISMATCH")?
++        .0;
++        if !same_mateval_bank(bank, &stored) {
+             return Err("MATEVAL_CORPUS_MISMATCH");
+         }
+     }
+     Ok(())
+ }
++
++fn same_mateval_bank(public: &serde_json::Value, stored: &serde_json::Value) -> bool {
++    let typed = |value: &serde_json::Value| -> Option<serde_json::Value> {
++        let bank: mrjam_mateval::Bank = serde_json::from_value(value.clone()).ok()?;
++        bank.validate().ok()?;
++        serde_json::to_value(bank).ok()
++    };
++    let Some(expected) = typed(public) else {
++        return false;
++    };
++    // A future public field cannot be silently ignored by this runtime.
++    expected == *public && typed(stored).as_ref() == Some(&expected)
++}
++
++#[cfg(test)]
++mod bank_tests {
++    use super::same_mateval_bank;
++    use serde_json::{Value, json};
++
++    fn bank() -> Value {
++        json!({"version":"0.3.0","questions":[{"id":"R01","family":"f1","level":"level","domain":"domain","statement":"invented question","productions":[{"id":"R01-1","content":"invented one"},{"id":"R01-2","content":"invented two"}]}]})
++    }
++
++    #[test]
++    fn historical_metadata_is_retained_but_not_a_collection_field() {
++        let expected = bank();
++        let mut stored = expected.clone();
++        stored["historical"] = json!({"invented":"root"});
++        stored["questions"][0]["historical"] = json!({"invented":"question"});
++        stored["questions"][0]["productions"][0]["historical"] = json!({"invented":"production"});
++        let before = stored.clone();
++        assert_ne!(expected, stored);
++        assert!(same_mateval_bank(&expected, &stored));
++        assert_eq!(stored, before);
++        assert!(!same_mateval_bank(&stored, &expected));
++    }
++
++    #[test]
++    fn every_known_field_and_order_remains_exact() {
++        let expected = bank();
++        for path in [
++            "/version",
++            "/questions/0/id",
++            "/questions/0/family",
++            "/questions/0/level",
++            "/questions/0/domain",
++            "/questions/0/statement",
++            "/questions/0/productions/0/id",
++            "/questions/0/productions/0/content",
++        ] {
++            let mut stored = expected.clone();
++            if let Some(value) = stored.pointer_mut(path) {
++                *value = json!("invented difference");
++            }
++            assert!(!same_mateval_bank(&expected, &stored));
++        }
++        let mut stored = expected.clone();
++        if let Some(productions) = stored["questions"][0]["productions"].as_array_mut() {
++            productions.reverse();
++        }
++        assert!(!same_mateval_bank(&expected, &stored));
++    }
++
++    #[test]
++    fn missing_fields_invalid_types_and_invalid_identifiers_are_refused() {
++        let expected = bank();
++        for stored in [
++            Value::Null,
++            json!({"version":"0.3.0"}),
++            json!({"version":3,"questions":[]}),
++        ] {
++            assert!(!same_mateval_bank(&expected, &stored));
++        }
++        let mut invalid = expected.clone();
++        invalid["questions"][0]["id"] = json!("invalid");
++        assert!(!same_mateval_bank(&invalid, &invalid));
++        let mut duplicate = expected.clone();
++        duplicate["questions"][0]["productions"][1]["id"] = json!("R01-1");
++        assert!(!same_mateval_bank(&duplicate, &duplicate));
++    }
++
++    #[test]
++    fn two_question_order_is_not_canonicalized() {
++        let mut expected = bank();
++        let second = json!({"id":"R02","family":"f2","level":"level","domain":"domain","statement":"invented second question","productions":[{"id":"R02-1","content":"invented second production"}]});
++        if let Some(questions) = expected["questions"].as_array_mut() {
++            questions.push(second);
++        }
++        assert_eq!(expected["questions"].as_array().map(Vec::len), Some(2));
++        let mut stored = expected.clone();
++        if let Some(questions) = stored["questions"].as_array_mut() {
++            questions.reverse();
++        }
++        assert!(!same_mateval_bank(&expected, &stored));
++    }
++}
+--- a/crates/server/tests/runtime_postgres.rs
++++ b/crates/server/tests/runtime_postgres.rs
+@@ -102,12 +102,61 @@
+     std::fs::write(root.join("artifact.json"), &bytes)?;
+     let database = |username: &str| json!({"transport":{"kind":"tcp","port":55432},"database":"mrjam_synthetic","username":username,"password_file":pass,"schema":schema,"maximum_connections":2});
+     let configuration = json!({"schema_version":1,"public_hosts":["principiipetit.io"],"required_capabilities":["static-assets","mateval-collection","mateval-administration"],"assets":[{"host":"principiipetit.io","directory":root,"manifest_sha256":digest(&bytes),"payload_prefix":"","mount":"/matheval/"}],"mateval":{"database":database(role),"administration_database":database(admin_role),"activation_sha256_file":activation},"identity":null,"vision":null,"audition":null});
++    let mut historical = public_bank();
++    historical["private_fixture_metadata"] = json!({"origin":"invented"});
++    historical["questions"][0]["private_fixture_metadata"] = json!("invented question metadata");
++    historical["questions"][0]["productions"][0]["private_fixture_metadata"] =
++        json!("invented production metadata");
++    sqlx::query(sqlx::AssertSqlSafe(format!(
++        "UPDATE {schema}.corpus SET bank=$1"
++    )))
++    .bind(Json(&historical))
++    .execute(admin)
++    .await?;
++    let formerly_aligned: bool = sqlx::query_scalar(sqlx::AssertSqlSafe(format!(
++        "SELECT EXISTS(SELECT 1 FROM {schema}.corpus WHERE version='1.0.0' AND bank=$1)"
++    )))
++    .bind(Json(public_bank()))
++    .fetch_one(admin)
++    .await?;
++    assert!(!formerly_aligned);
++    let corpus_before: Json<Value> = sqlx::query_scalar(sqlx::AssertSqlSafe(format!(
++        "SELECT to_jsonb(c) FROM {schema}.corpus c WHERE version='1.0.0'"
++    )))
++    .fetch_one(admin)
++    .await?;
+     let router = mrjam_server::runtime::assemble(RuntimeConfiguration::from_bytes(
+         &serde_json::to_vec(&configuration)?,
+     )?)
+     .await?;
+     let (status, _, ready) = request(&router, "GET", "/readyz", None, None).await?;
+     assert_eq!(status, StatusCode::OK);
++    let corpus_after: Json<Value> = sqlx::query_scalar(sqlx::AssertSqlSafe(format!(
++        "SELECT to_jsonb(c) FROM {schema}.corpus c WHERE version='1.0.0'"
++    )))
++    .fetch_one(admin)
++    .await?;
++    assert_eq!(corpus_after.0, corpus_before.0);
++    // No participation exists yet: exercise a missing version without deleting
++    // the historical row or weakening its later foreign-key references.
++    sqlx::query(sqlx::AssertSqlSafe(format!(
++        "UPDATE {schema}.corpus SET version='1.0.1' WHERE version='1.0.0'"
++    )))
++    .execute(admin)
++    .await?;
++    assert_eq!(
++        request(&router, "GET", "/readyz", None, None).await?.0,
++        StatusCode::SERVICE_UNAVAILABLE
++    );
++    sqlx::query(sqlx::AssertSqlSafe(format!(
++        "UPDATE {schema}.corpus SET version='1.0.0' WHERE version='1.0.1'"
++    )))
++    .execute(admin)
++    .await?;
++    assert_eq!(
++        request(&router, "GET", "/readyz", None, None).await?.0,
++        StatusCode::OK
++    );
+     assert_eq!(
+         ready["capabilities"],
+         configuration["required_capabilities"]
+@@ -115,6 +164,62 @@
+     let (status,_,session)=request(&router,"POST","/matheval/api/sessions",None,Some(json!({"id":"00000000-0000-4000-8000-000000000034","secret":"a".repeat(64),"bankVersion":"1.0.0","levels":["synthetic"],"seed":1}))).await?;
+     assert_eq!(status, StatusCode::CREATED);
+     assert!(session.get("token_hash").is_none());
++    let participation_before: Json<Value> = sqlx::query_scalar(sqlx::AssertSqlSafe(format!("SELECT to_jsonb(p) FROM {schema}.participations p WHERE id='00000000-0000-4000-8000-000000000034'"))).fetch_one(admin).await?;
++    for path in [
++        "/version",
++        "/questions/0/id",
++        "/questions/0/family",
++        "/questions/0/level",
++        "/questions/0/domain",
++        "/questions/0/statement",
++        "/questions/0/productions/0/id",
++        "/questions/0/productions/0/content",
++    ] {
++        let mut changed = historical.clone();
++        if let Some(value) = changed.pointer_mut(path) {
++            *value = json!("invented mismatch");
++        }
++        sqlx::query(sqlx::AssertSqlSafe(format!(
++            "UPDATE {schema}.corpus SET bank=$1"
++        )))
++        .bind(Json(changed))
++        .execute(admin)
++        .await?;
++        assert_eq!(
++            request(&router, "GET", "/readyz", None, None).await?.0,
++            StatusCode::SERVICE_UNAVAILABLE
++        );
++    }
++    let mut oversized = historical.clone();
++    oversized["private_fixture_metadata"] = json!("x".repeat(5 * 1024 * 1024));
++    sqlx::query(sqlx::AssertSqlSafe(format!(
++        "UPDATE {schema}.corpus SET bank=$1"
++    )))
++    .bind(Json(oversized))
++    .execute(admin)
++    .await?;
++    assert_eq!(
++        request(&router, "GET", "/readyz", None, None).await?.0,
++        StatusCode::SERVICE_UNAVAILABLE
++    );
++    sqlx::query(sqlx::AssertSqlSafe(format!(
++        "UPDATE {schema}.corpus SET bank=$1"
++    )))
++    .bind(Json(&historical))
++    .execute(admin)
++    .await?;
++    assert_eq!(
++        request(&router, "GET", "/readyz", None, None).await?.0,
++        StatusCode::OK
++    );
++    let participation_after: Json<Value> = sqlx::query_scalar(sqlx::AssertSqlSafe(format!("SELECT to_jsonb(p) FROM {schema}.participations p WHERE id='00000000-0000-4000-8000-000000000034'"))).fetch_one(admin).await?;
++    assert_eq!(participation_after.0, participation_before.0);
++    let corpus_after: Json<Value> = sqlx::query_scalar(sqlx::AssertSqlSafe(format!(
++        "SELECT to_jsonb(c) FROM {schema}.corpus c WHERE version='1.0.0'"
++    )))
++    .fetch_one(admin)
++    .await?;
++    assert_eq!(corpus_after.0, corpus_before.0);
+     let (status, _, _) = request(&router, "GET", "/matheval/api/admin/me", None, None).await?;
+     assert_eq!(status, StatusCode::UNAUTHORIZED);
+     sqlx::query(sqlx::AssertSqlSafe(format!(

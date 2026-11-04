@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "deployment_authorized": false,
+  "previous_anchor": "/nix/store/mzsa422k82yskpz593cxhzswrah74gr1-mrjam-validation-admission-control-1",
+  "discarded_anchor": "/nix/store/nr7g7rk659djqnb7dxzspwp835qcgk77-mrjam-validation-admission-control-1",
+  "corrected_anchor": "/nix/store/cn315ryfbdp3swn5dm7npk35yvmfsx65-mrjam-validation-admission-control-1",
+  "metadata_sha256": "f9c6e40ba221139a3701b25b0409c0d9e205bbbb92c4683a7a0536ea9de700fe",
+  "metadata_bytes_unchanged": true,
+  "original_closure_bytes": 215171776,
+  "discarded_closure_bytes": 1847013048,
+  "corrected_closure_bytes": 215178592,
+  "direct_references": [
+    "/nix/store/f2bsh1n6snqdldnjdshdy1lw3hnlfxwi-bubblewrap-0.12.0",
+    "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+    "/nix/store/gm3al9igqfgx4q1ka3hkpnx1qq8gkkwb-mrjam-admitted-authority.json",
+    "/nix/store/h7wi712f2kskff6h30kixa7rnhigj3kv-mrjam-installed-vise-rules",
+    "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+    "/nix/store/icqhi3dmkks1km05qfyyxap58fb96pgc-mrjam-admission-export-anchor.json",
+    "/nix/store/k825ix5cd4hnq61ns26j2qx7lqna69fq-3w25yk1sl0zdybdhi56x1gln84jabr27-mrjam-admitted-authority.json",
+    "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+    "/nix/store/pqbh1y7rwvqarpd0cqn8fh2jq7685jwm-mrjam-authority-host-binding.json",
+    "/nix/store/cn315ryfbdp3swn5dm7npk35yvmfsx65-mrjam-validation-admission-control-1"
+  ],
+  "build_guard": "disallowedRequisites=[bindings.validator]",
+  "stopped_build_unit": "mrjam-stack-host-build-001.service",
+  "production_activated": false
+}

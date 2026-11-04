@@ -1,0 +1,38 @@
+#+TITLE: Adoption du courrier, version 3 : espaces du DDL historique
+
+Le premier essai réel a refusé la base de fermeture avant publication : son
+DDL ne comportait pas les mêmes espaces que le modèle source épinglé. Les deux
+observations fermées ont confirmé les mêmes objets, colonnes et index, ainsi
+que l'intégrité SQLite ; la comparaison de tous les tokens hors espaces passe.
+Aucun SQL ou contenu de message réel n'a été exporté.
+
+La version 3 ignore uniquement les espaces ASCII entre tokens SQL complets.
+Elle conserve leur ordre, la casse des mots, les commentaires, les littéraux
+et identifiants cités, les nombres, opérateurs et ponctuation. Les modèles
+autorisés restent exactement les schémas source épinglés. CHECK, DEFAULT,
+COLLATE, contraintes et objets additionnels ne peuvent pas disparaître par cette
+normalisation. Une syntaxe inconnue est refusée. Aucun DDL reçu n'est exécuté
+pour construire un modèle de référence.
+
+Les validations de lignes, marqueurs, clés, collisions, preuves, tailles et
+droits restent inchangées, ainsi que la publication atomique sans remplacement.
+=check_v2_delta.py= vérifie cette limitation par comparaison AST après retrait
+des deux fonctions de comparaison et restauration des deux appels modifiés.
+Le paquet version 2 et ses preuves restent historiques et intacts.
+
+Les 29 tests précédents et six tests spécifiques passent. Le banc NixOS réutilise
+la politique réelle des unités et le vrai staging, en remplaçant seulement
+l'exécutable par le paquet testé. Il reproduit d'abord le refus version 2 avec
+une fermeture inventée dont seuls les espaces diffèrent, puis valide la version
+3, les octets opaques, marqueurs et répétitions sans changement d'inode. Les
+variantes CHECK, DEFAULT et collision restent refusées sans changer la cible.
+Six groupes passent dans cette VM ; aucun VPS, secret humain ou contenu réel
+n'y intervient. Aucun traitement SMTP/PostgreSQL applicatif n'est requalifié ici.
+
+Le classifier =operations/deployment/preflight_archive_adoption_v3.py= ne change
+que les constantes MODULE/HASH de la première version déjà vérifiée. Il lit
+localement les deux images retenues et, si nécessaire, la cible candidate
+retenue, avec les fonctions de lecture et fusion du paquet immuable. Il n'appelle
+jamais publish/main ; les sorties sont des codes fermés et booléens. Ce contrôle
+doit vérifier la fusion complète avant une nouvelle tentative. Le prochain gel
+doit préparer de nouvelles images cohérentes de l'état alors courant.

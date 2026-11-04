@@ -1,0 +1,32 @@
+{
+  "activation_performed": false,
+  "backend_tests_passed": 30,
+  "combined_deployment_tests_passed": 77,
+  "control_tests_passed": 12,
+  "independent_boundary_tests_passed": 5,
+  "limits": [
+    "Service/generation operations injected in backend unit tests; complete backend VM remains separate",
+    "No immutable production release manifest or release entry exists yet",
+    "Governance constructor passed a separate real Forgejo VM with invented histories; production bundles and binding remain unavailable"
+  ],
+  "log_sha256": "4460afd25ef678d30d97f71e1fe003f0d174b402f4102be7b05e7d4990d9ce74",
+  "production_access": false,
+  "recorded_on": "2026-11-02",
+  "schema_version": 1,
+  "scope": "local-unit-sequence-and-refusal-checks-only",
+  "source_sha256": {
+    "boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release_backend.py": "212bfb54e9020d1e334e61a1443f9fad09cc9ad7ea7cedb0abf102dba4861114",
+    "snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "test_independent_cutover_boundaries.py": "c525cfc171f4f662bb14b9d47da66acb340a93576096b0652bdf7faf3970d7aa",
+    "test_release_backend.py": "c4c5cd12ade65cfc01ddd0cfc525a9a3b1028f9058baa4fa319159aae86604f1",
+    "test_system_control.py": "c5f896f97444627815228156b2db9e36acbd227acfe7500c487c60e842a26bb1"
+  }
+}

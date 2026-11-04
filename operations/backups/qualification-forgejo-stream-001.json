@@ -1,0 +1,47 @@
+{
+  "backup_format_changed": false,
+  "changes": [
+    "Writer resumed after immutable snapshot capture",
+    "Decrypted tar compared in stream; no second full extraction",
+    "Own incomplete ciphertext files cleaned on failure"
+  ],
+  "evidence_sha256": {
+    ".local/deployment-20261101/backup-stream-vm-001.stderr": "43eb9c41ef6f43a6cd2acc6317e5bab2db9c908992592a2022562bd40807cc55",
+    ".local/deployment-20261101/backup-stream-vm-001.stdout": "4dafb5b25318067d7f15a43822e6f59559c1eaafec5af1ecba7ca89188b09a0e",
+    "/nix/store/83ycbj4nw1nkzkgi2yfxv5hsmhrq8z0g-vm-test-run-mrjam-native-backups-systemd-synthetic/result.json": "8b535ed9d92630f0286b2145cc0c8d2636a1b30bde1bc693e12b0de7b6f31ff3",
+    "operations/backups/systemd.nix": "15b0c355c6acbb55dd1d8b9a2e4ebdec7818f8aadd1a70008f96ae638dab10c5",
+    "operations/hosts/mrjam-vps/backups.nix": "dede45217064b34c4ef57735b87145a4fc538a00055aa33691e264eb804555ee"
+  },
+  "historical_backups_deleted": false,
+  "limitations": [
+    "Not installed on VPS yet",
+    "No Forgejo retention policy established",
+    "No full disk or hard-kill recovery qualification in this change"
+  ],
+  "production_activated": false,
+  "schema_version": 1,
+  "vm_result": {
+    "checks": [
+      "staged-timers-inactive-with-real-native-provider",
+      "real-unit-private-credentials-sql-sqlite-and-native-export",
+      "forgejo-stop-copy-verified-envelope-and-restart",
+      "forgejo-and-coordinator-resume-before-encryption-finishes",
+      "forgejo-stream-compare-and-age-authentication-failures-preserve-backup-and-availability",
+      "nextcloud-maintenance-contract-and-real-sql-files",
+      "retained-postgresql-dump-units",
+      "symlink-source-refused-without-partial-publication"
+    ],
+    "limitations": [
+      "Forgejo writer process and Nextcloud maintenance CLI are fixtures",
+      "PostgreSQL, native Kanidm, systemd credentials, tar and age are real",
+      "No production recipient, disk reserve, external backup or whole-platform restore tested"
+    ],
+    "module_sha256": "dede45217064b34c4ef57735b87145a4fc538a00055aa33691e264eb804555ee",
+    "native_source_sha256": "46d85fbf68f47c99673403998937da5bb7ec04820642607d828db86b11fe1907",
+    "passed": true,
+    "production_access": false,
+    "schema_version": 1,
+    "synthetic_only": true
+  },
+  "vm_store": "/nix/store/83ycbj4nw1nkzkgi2yfxv5hsmhrq8z0g-vm-test-run-mrjam-native-backups-systemd-synthetic"
+}

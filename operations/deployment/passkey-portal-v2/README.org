@@ -1,0 +1,32 @@
+#+TITLE: Portail passkey 2 — droits vérifiés avant READY
+
+La version 1 et ses preuves restent immuables dans passkey-portal/. Le portail
+conserve la même origine exacte, les API fermées, la CSP, les contrôles Origin,
+les limites de requêtes, l'absence de cookies et la conservation des jetons
+administratifs uniquement côté serveur.
+
+Après chaque passkey validée, le portail vérifie /v1/self et ne renvoie que trois
+booléens : identity_services, identity_admins et mail_group_management. Les deux
+premiers imposent les mêmes groupes que le provisioner. Le troisième reconnaît
+idm_access_control_admins ou idm_group_admins, conformément à l'API native.
+Un compte idm_admins standard peut donc suffire grâce à l'héritage natif.
+
+Une identité insuffisante est révoquée avec un message explicite. Si les droits
+MAIL manquent, ACCESS_REQUIRED conserve la première session pendant sa fenêtre
+bornée et permet une seconde passkey avec POST api/access. Les droits sont relus
+juste avant commit ; aucun élargissement de rôle ou d'API n'est effectué.
+
+La fenêtre de transaction de 300 secondes est renouvelée uniquement après une
+authentification réussie. Elle est bornée par la première expiration de session
+et la fermeture globale après 900 secondes, avec une marge de 150 secondes pour
+le provisioner. Le navigateur affiche le temps restant et retire le bouton à
+échéance. Le serveur renvoie EXPIRED, y compris pour une transaction READY
+expirée. Les tombstones restent opaques et bornés à quatre transactions.
+
+Les tests de machine d'état sont explicitement synthétiques. La branche
+ACCESS_REQUIRED peut nécessiter une politique de groupes différente des groupes
+intégrés natifs, car idm_admins hérite déjà de idm_group_admins ; elle ne doit pas
+être présentée comme une preuve de cette politique sur une instance native.
+Les signatures P-256 et la séquence complète sur Kanidm réel sont qualifiées
+séparément avec des personnes et passkeys inventées. Proton Pass réel reste une
+action humaine, sans lecture ni transfert de profil personnel.

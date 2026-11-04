@@ -1,0 +1,76 @@
+#+title: Sauvegarde cohérente ViSe — qualifiée et installée sur le VPS
+
+Le paquet assemble une capture hors écriture de PostgreSQL et du registre
+d’effacement, une enveloppe age vérifiée et une rétention locale. Les chemins,
+la base et les commandes sont fixes. Les deux points d’entrée capture/recover
+refusent les arguments supplémentaires ; aucune restauration n’est exposée.
+Le destinataire est consommé dans le processus protégé, jamais dans Nix.
+
+L’intention de redémarrage est journalisée avant l’arrêt de ViSe. Toute reprise
+interrompue rétablit la disponibilité antérieure sans continuer une capture
+partielle. Une publication est exclusive, atomique et synchronisée avant le
+redémarrage. Une publication dont l’accusé est perdu n’est jamais écrasée.
+
+Le module optionnel utilise le verrou partagé des déploiements, ExecStopPost,
+une unité de reprise séparée appelée par OnFailure, et une reprise au boot et
+périodique. La séparation est nécessaire : un SIGKILL de tout le cgroup peut
+également tuer ExecStopPost, ce que la VM009 a effectivement révélé. La VM010
+vérifie la reprise indépendante après ce même arrêt forcé.
+
+Lorsqu'un déploiement détient le verrou, la reprise retourne le code
+=VISE_BACKUP_RECOVERY_DEFERRED= sans lire le journal applicatif ni agir sur
+ViSe. La minuterie de reprise réessaie ensuite. Attendre ce verrou depuis une
+unité démarrée par le changement de génération créerait une attente circulaire.
+VM015 vérifie le report sans changement du journal ni du processus ViSe, puis
+le réessai effectif par la minuterie après libération du verrou.
+
+* Qualification observée
+Les 26 tests de composants passent, dont douze points d’interruption simulée,
+les refus de fichiers non sûrs, le chiffrement/déchiffrement réel, la rétention
+et les refus de changement d’identité enfant. Sortie :
+/nix/store/2bfgyaig7rjaic9xkspiqc5vyf925apj-mrjam-vise-backup-components-tests
+
+La VM015 utilise le vrai binaire ViSe qualifié et PostgreSQL17 avec uniquement
+une base, un registre et un destinataire inventés. Six scénarios passent :
+- Capture hors écriture, chiffrement, déchiffrement par le destinataire et reprise.
+- Restauration SQL avec registre d’effacement courant : le compte supprimé
+  ne réapparaît pas après le redémarrage de ViSe.
+- SIGKILL de tout le cgroup de sauvegarde pendant l’arrêt gracieux de ViSe :
+  OnFailure déclenche la reprise séparée, le journal devient aborted et
+  l’application répond de nouveau au contrôle de disponibilité.
+- Rétention par le service réel après une seconde capture réussie : les deux
+  copies vérifiées de 90 jours sont supprimées, les deux copies récentes restent.
+- Verrou de déploiement détenu : report sans effet et réessai par la minuterie.
+- Panne complète de la VM pendant l’arrêt gracieux : après démarrage, le même
+  journal est repris, ViSe répond, le compte supprimé reste absent et le compte
+  applicatif ne récupère pas de droit CREATE sur la base.
+
+Preuve :
+/nix/store/kvmrm7c01n4gkx3dvpvyjfslvjrs7asp-vm-test-run-mrjam-vise-coherent-backup-synthetic/vise-backup-result.json
+
+L’artefact ViSe, installé sous /server, est retenu par system.extraDependencies.
+Les trois capacités déclarées sont conservées à travers les exec par
+AmbientCapabilities, sous NoNewPrivileges, sans ajouter de capacité au bounding set.
+
+* Installation réelle vérifiée
+La génération 04j3v1y76rx8l762zp5dc4059wfcnhhw est active et enregistrée
+pour le prochain démarrage. Un retour réel à la génération précédente a été
+exécuté ; les sept processus surveillés ont été conservés pendant les bascules.
+La première capture réelle est complète, ses fichiers chiffrés et permissions
+sont vérifiés, ViSe répond de nouveau en HTTPS. Seuls des résultats de contrôle
+ont été exportés, aucune donnée, clé, base ou registre.
+
+Preuve : =qualification-production-001.json=. Les trois vues de livraison
+conservent les quatre unités : =qualification-future-delivery-006.json=.
+La capture quotidienne et la reprise périodique sont activées.
+
+* Limites restantes
+Le transfert et la restauration hors VPS restent à qualifier. Aucun
+redémarrage du VPS ni restauration de données réelles n’a été effectué.
+Les tests de restauration et de panne utilisent exclusivement la VM synthétique.
+
+Les captures privées existantes restent intactes. Ce chantier ne bloque pas
+les livraisons du socle.
+
+La preuve détaillée et les empreintes exactes des sources de production et du
+banc d’essai sont dans =qualification-systemd-015.json=.

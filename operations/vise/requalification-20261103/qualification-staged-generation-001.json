@@ -1,0 +1,23 @@
+{
+  "activation_performed": false,
+  "candidate": "/nix/store/h7gsm02w34zbacxamwjl98qmbqyb3kci-nixos-system-srv1982677-26.05pre-git",
+  "changed_service_units": [
+    "nginx.service",
+    "postgresql.service"
+  ],
+  "identical_receiver_ast_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "kernel_initrd_modules_firmware_unchanged": true,
+  "nar_bytes": 13744944,
+  "nar_sha256": "71ea836870169d3a97dae7b98e53fe1badf2fe6052a66a787ac8c54b4b68b66b",
+  "paths": 23,
+  "policy_controller_revision": "95f90ec9d3acdcd260f25b2dca88a8a55574bf11",
+  "previous": "/nix/store/3fylc2yfjvzzibpi0pf0nzqj0f5lh1hm-nixos-system-srv1982677-26.05pre-git",
+  "receiver_sha256": "8b8284bf05a5a6d3c41ab99116aa8eb5b2e26d11104c78d520a401685bdb102a",
+  "schema_upgrade_remains_manual": true,
+  "schema_version": 1,
+  "wiring_sha256": "6311c525adda56ac3a4aef847e85f49a6e9b6d823cac684e6b6d5e45e69b879e"
+}

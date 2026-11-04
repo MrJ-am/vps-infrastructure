@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "scope": "Source and synthetic local tests only; no VPS access or real data",
+  "host_nixpkgs": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "sources": {
+    "native.py": "46d85fbf68f47c99673403998937da5bb7ec04820642607d828db86b11fe1907",
+    "package.nix": "4cbcee90410817b94fd0498b6e37579d832575b6d08b5dd0d441745cff3c148a",
+    "test_native.py": "b97eb8889d0d5ee702819f8aa36c68fcd357d59be61f7899d06be6f2259b513e",
+    "qualification.nix": "6d0858c6a1fe796d228baccebc0cce4e89eb01efa2029718ea77b9bb3d8ea53e",
+    "kanidm_qualification.py": "e13e34c92328a1e7de64a4ba7cc0dbfbcb070fa562b2a8e7b2c2b4d1568f6446",
+    "kanidm-qualification.nix": "6190f2146edade33b9e0755116714fd9c6f0419321662321f02f7a6c386803a7",
+    "systemd.nix": "b509a81a6213f78bb710aed1f047fdc649902b18d0b7a4d448de467831c62b55"
+  },
+  "host_module": {
+    "path": "operations/hosts/mrjam-vps/backups.nix",
+    "sha256": "5805d80444217e62d57d771477f77bc39df1021e0c183d1b45cfc08620dfcc05"
+  },
+  "package": {
+    "path": "/nix/store/hvbfafgxkwy54lfyqp72rhm26kcz745w-mrjam-native-component-backup-1",
+    "nar_hash": "sha256-v9/8o2fxZOAy9qD3Vr8+w7bw1v8ySYZnznELNqbt9bg=",
+    "nar_size": 15640
+  },
+  "qualifications": [
+    {
+      "name": "author-contracts",
+      "path": "/nix/store/fhkymd35af68xz8gyv6is24j839s3049-mrjam-native-backup-synthetic-qualification",
+      "nar_hash": "sha256-i10rDYeEyl2MJIJQibbiK70tAlKgthXeGMB5Hz/RB6Q=",
+      "groups": 14,
+      "result": {
+        "schema_version": 1,
+        "groups": 14,
+        "passed": true,
+        "synthetic_only": true,
+        "postgresql_restore": true,
+        "sqlite_wal": true,
+        "actual_age_envelope": true,
+        "production_access": false,
+        "kanidm_export_fixture": "invented gzip; real provider export qualified separately",
+        "cross_component_atomic": false
+      }
+    },
+    {
+      "name": "native-provider-export-restore",
+      "path": "/nix/store/b1ixlblzvri4jcbpcwaa0fgg717764np-mrjam-native-kanidm-backup-restore-synthetic",
+      "nar_hash": "sha256-fIXQwKmXiwnRdUU2smSJw6bMAEu3g9WxhleLSYDgNWE=",
+      "groups": 4,
+      "result": {
+        "checks": [
+          "real-native-tls-and-invented-person",
+          "online-scripting-export-valid-gzip",
+          "offline-native-restoration",
+          "retained-principal-uuid-and-admin-credential"
+        ],
+        "groups": 4,
+        "limitations": [
+          "Local processes, not the production systemd sandbox or recipient key"
+        ],
+        "native_version": "1.11.2",
+        "passed": true,
+        "production_access": false,
+        "schema_version": 1,
+        "synthetic_only": true
+      }
+    },
+    {
+      "name": "real-systemd-units",
+      "path": "/nix/store/gmcv2qyq6kwhzy0xdjjsxrjl6lgiccha-vm-test-run-mrjam-native-backups-systemd-synthetic",
+      "nar_hash": "sha256-tgML6zz/XJ3rhJSVkhbgYVcdgAQmqdoQkjNaDjRZ98k=",
+      "groups": 6,
+      "result": {
+        "checks": [
+          "staged-timers-inactive-with-real-native-provider",
+          "real-unit-private-credentials-sql-sqlite-and-native-export",
+          "forgejo-stop-copy-verified-envelope-and-restart",
+          "nextcloud-maintenance-contract-and-real-sql-files",
+          "retained-postgresql-dump-units",
+          "symlink-source-refused-without-partial-publication"
+        ],
+        "limitations": [
+          "Forgejo writer process and Nextcloud maintenance CLI are fixtures",
+          "PostgreSQL, native Kanidm, systemd credentials, tar and age are real",
+          "No production recipient, disk reserve, external backup or whole-platform restore tested"
+        ],
+        "module_sha256": "5805d80444217e62d57d771477f77bc39df1021e0c183d1b45cfc08620dfcc05",
+        "native_source_sha256": "46d85fbf68f47c99673403998937da5bb7ec04820642607d828db86b11fe1907",
+        "passed": true,
+        "production_access": false,
+        "schema_version": 1,
+        "synthetic_only": true
+      }
+    }
+  ],
+  "passed": true,
+  "production_access": false,
+  "activation_performed": false,
+  "limits": [
+    "Online component snapshots are individually consistent, not a cross-component rollback point.",
+    "Whole-platform offline rollback has a separate paired-snapshot qualification.",
+    "Forgejo service and Nextcloud maintenance CLI in the systemd VM are synthetic fixtures; PostgreSQL, Kanidm, systemd credentials, SQLite, tar and age are real.",
+    "No production recipient, disk reserve, off-site transfer or external restore was accessed or qualified.",
+    "Existing archive formats and private partial files are retained; the historical off-site copier does not understand the new native manifest."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "activation_performed": false,
+  "candidate": "/nix/store/i367qqkm6fzsr9rh8lbs2ymf53166hj9-nixos-system-srv1982677-26.05pre-git",
+  "changed_service_units": [
+    "forgejo.service",
+    "mrjam-upgrade-forgejo-schema.service"
+  ],
+  "identical_receiver_ast_except": [
+    "RELEASE",
+    "CURRENT",
+    "DIRECTORY"
+  ],
+  "kernel_initrd_modules_firmware_unchanged": true,
+  "nar_bytes": 440928,
+  "nar_sha256": "703325c19851319ca1d1438d31a0048a8e18766603b47f7e7b936f6627df0ca2",
+  "paths": 10,
+  "previous": "/nix/store/g1l3zif8rwndmdcyc1vylwasaxds9iia-nixos-system-srv1982677-26.05pre-git",
+  "receiver_sha256": "2bc8c59907b50bb951fc9376f5cf0674c7c52072d821ff4044c111467aa3a3b6",
+  "schema_upgrade_remains_manual": true,
+  "schema_version": 1,
+  "source_revision": "95f90ec9d3acdcd260f25b2dca88a8a55574bf11"
+}

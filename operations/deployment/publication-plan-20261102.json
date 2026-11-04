@@ -1,0 +1,997 @@
+{
+  "already_published_portal_commits": [
+    "534f4d52879dfdf1b374845a7377793c27992449",
+    "154bb396bfeae4fe0e89f361fe6920bed0d78b31"
+  ],
+  "branch": "spectre-reception-identite-20261101",
+  "comparison_method": "Read-only anonymous fetch of the fixed public branch; full Git tree and local blob-byte comparison. No force, prune, remote write or credential used.",
+  "comparison_parent": "97c75c76ea10ae6bad0fbef9ccf6f086027ed2f4",
+  "date": "2026-11-02",
+  "duplicate_path_with_runtime_manifest": "operations/deployment/backend-integration/finding-http-readiness-20261102.json; deduplicate identical path/hash when composing.",
+  "excluded_unpublished_files": [
+    {
+      "path": "operations/deployment/forgejo-bootstrap/result-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/forgejo-bootstrap/result-002.json"
+    },
+    {
+      "path": "operations/deployment/forgejo-governance/qualification-20261102-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/forgejo-governance/qualification-20261102-002.json"
+    },
+    {
+      "path": "operations/deployment/forgejo-governance/result-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/forgejo-governance/result-002.json"
+    },
+    {
+      "path": "operations/deployment/qualification-generation-20261102.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-generation-20261102-02.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-backend-unit-20261102-004.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-002.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-backend-unit-20261102-004.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-003.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-backend-unit-20261102-004.json"
+    },
+    {
+      "path": "operations/deployment/qualification-snapshot-systemd-20261102-02.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-snapshot-systemd-20261102-03.json"
+    },
+    {
+      "path": "operations/deployment/qualification-system-control-20261102-02.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-system-control-20261102-03.json"
+    },
+    {
+      "path": "operations/deployment/qualification-system-control-20261102.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-system-control-20261102-03.json"
+    },
+    {
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-003.json"
+    },
+    {
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-002.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-003.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-004.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-backend-unit-20261102-005.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-entrypoint-20261102-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-entrypoint-20261102-002.json"
+    },
+    {
+      "path": "operations/deployment/qualification-release-package-20261102-001.json",
+      "reason": "superseded-receipt",
+      "replacement": "operations/deployment/qualification-release-package-20261102-002.json"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 6237,
+      "git_blob_sha1": "8731706bc0e9f95ce133168229e50f7bdfa23a4a",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/README.org",
+      "previous_blob_sha1": null,
+      "sha256": "421031c946f0635d298598cba568ac9b22526af4d5ca5e9d3abcad57fc84ab5b"
+    },
+    {
+      "bytes": 355,
+      "git_blob_sha1": "bfddf03659d5f3d32d07d431b1af073f3da9585d",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/kanidm-qualification.nix",
+      "previous_blob_sha1": null,
+      "sha256": "6190f2146edade33b9e0755116714fd9c6f0419321662321f02f7a6c386803a7"
+    },
+    {
+      "bytes": 8553,
+      "git_blob_sha1": "e3de85554a7f646400d81b59f6175b7543b4bb87",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/kanidm_qualification.py",
+      "previous_blob_sha1": null,
+      "sha256": "e13e34c92328a1e7de64a4ba7cc0dbfbcb070fa562b2a8e7b2c2b4d1568f6446"
+    },
+    {
+      "bytes": 13968,
+      "git_blob_sha1": "0fb628bea5802f9ce4b5a6a86d399d988f8856e2",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/native.py",
+      "previous_blob_sha1": null,
+      "sha256": "46d85fbf68f47c99673403998937da5bb7ec04820642607d828db86b11fe1907"
+    },
+    {
+      "bytes": 781,
+      "git_blob_sha1": "9cedecef1843020d8a27f62d21e244dbcb8e52f9",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/package.nix",
+      "previous_blob_sha1": null,
+      "sha256": "4cbcee90410817b94fd0498b6e37579d832575b6d08b5dd0d441745cff3c148a"
+    },
+    {
+      "bytes": 4698,
+      "git_blob_sha1": "de927678515d89be3a9f92982c13ea115fed1d98",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/qualification-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "e0a0e3472a284ce0dc7646df7253e7e85a9c3510d0ab78297cf33eb1134b604e"
+    },
+    {
+      "bytes": 647,
+      "git_blob_sha1": "4bfeaff011842f9b2d46efde8fcf66e1426744f7",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/qualification.nix",
+      "previous_blob_sha1": null,
+      "sha256": "6d0858c6a1fe796d228baccebc0cce4e89eb01efa2029718ea77b9bb3d8ea53e"
+    },
+    {
+      "bytes": 17032,
+      "git_blob_sha1": "43605135a4c66734c0c214c24e659eb584e03960",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/systemd.nix",
+      "previous_blob_sha1": null,
+      "sha256": "b509a81a6213f78bb710aed1f047fdc649902b18d0b7a4d448de467831c62b55"
+    },
+    {
+      "bytes": 12794,
+      "git_blob_sha1": "6e6600ead13cab8ecb3b87c3cedb56717f2e63aa",
+      "group": "backups",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/backups/test_native.py",
+      "previous_blob_sha1": null,
+      "sha256": "b97eb8889d0d5ee702819f8aa36c68fcd357d59be61f7899d06be6f2259b513e"
+    },
+    {
+      "bytes": 9924,
+      "git_blob_sha1": "fa6caf06119ef92c90bc99cb9d0179facd8c25a1",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/RELEASE-BACKEND.org",
+      "previous_blob_sha1": null,
+      "sha256": "c383dbd5f0aeb2f7fa879eab090385521a0a1083df4b0b260e771de0f1edf2f0"
+    },
+    {
+      "bytes": 1799,
+      "git_blob_sha1": "3a23ee3b3f01becf61bc93ddc7264b42f123715d",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/backend-integration/finding-http-readiness-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "32e4f42e936fd8c587c7eb03eae69bcbe934e94bcdeacfddf6498f758dba761e"
+    },
+    {
+      "bytes": 8236,
+      "git_blob_sha1": "bccbd6fab272a9fe6514813e4cf1c104cb02542f",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/credential-adoption-systemd.nix",
+      "previous_blob_sha1": null,
+      "sha256": "af3a1c28665dde30a66b02a7b03916fdac702293f0dbcc81c9fe467c71f504d6"
+    },
+    {
+      "bytes": 1940,
+      "git_blob_sha1": "a09eaccb589fac11ff4bdb2639dac104837c0551",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/credential-adoption.nix",
+      "previous_blob_sha1": null,
+      "sha256": "c6f9ff339e7c115cb69fbc2965367e635ac1b212409b97933ab57ac6df1be2ee"
+    },
+    {
+      "bytes": 5494,
+      "git_blob_sha1": "ef2a15ba794d1b4c04c1992891f079ecb2844da7",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/README.md",
+      "previous_blob_sha1": null,
+      "sha256": "d413a9344cfe09034926ab2ecd3f5d653242b854d34f60491591ad3e3123aa9a"
+    },
+    {
+      "bytes": 19883,
+      "git_blob_sha1": "01577951e0a6995d3ac64df231866ca850a92900",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/core.py",
+      "previous_blob_sha1": null,
+      "sha256": "8d9a821eb500e46c1e0117ffb7a4cca0df6e238694a7aff40528731369a6aa61"
+    },
+    {
+      "bytes": 302,
+      "git_blob_sha1": "99961ca0bf46a759ecff1f6296d23612677ec4a3",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/entry.py",
+      "previous_blob_sha1": null,
+      "sha256": "19fe9d559278fc3414ad3ba8972a9db20fee20e0bc213ed6775e1d53726a19c2"
+    },
+    {
+      "bytes": 13065,
+      "git_blob_sha1": "3a899b2eb310a5ab270b3abea1b925b02dd58767",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/fixture.py",
+      "previous_blob_sha1": null,
+      "sha256": "03a3a15c8e0758401e679d9c5bfd4116e0a7cec8df92020042e47c8a474b2ee2"
+    },
+    {
+      "bytes": 3480,
+      "git_blob_sha1": "479ff4fc8a4698320e4cb8a862811398027006f7",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/initial-findings.json",
+      "previous_blob_sha1": null,
+      "sha256": "4f54df1a4aff0253dc7e1161dabfcf817000123156bb8b14896cf869330735c6"
+    },
+    {
+      "bytes": 2473,
+      "git_blob_sha1": "c757c02e91392975f2d8620c8f5301869acc267e",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/module.nix",
+      "previous_blob_sha1": null,
+      "sha256": "882799a2fc053b0ec506d727cbeef9e6d07b981ff49043d5a4f957128f8fb502"
+    },
+    {
+      "bytes": 1116,
+      "git_blob_sha1": "b9bb23b22ad225ea12dbb64d048b391efdca7b5a",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/package.nix",
+      "previous_blob_sha1": null,
+      "sha256": "bca91d3788fa40b22c860f42c2a0a8405786fe057e0fdbfdea4327d2e8a5918c"
+    },
+    {
+      "bytes": 2612,
+      "git_blob_sha1": "7bf550f742340489ae2e77e6bf95142cf34f43fb",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/result-002.json",
+      "previous_blob_sha1": null,
+      "sha256": "92b8e3cbd1a08da3588e9d8b435e4dd26276d3a19cfed1dd50abbf75020f88a6"
+    },
+    {
+      "bytes": 6545,
+      "git_blob_sha1": "d50d99756295b3ca04e069c7f573021a32517fa6",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/systemd-test.nix",
+      "previous_blob_sha1": null,
+      "sha256": "15e3932e25e27a9982fc987f27d12e955ca92fd9d4ef6593aae25807bc3e99fb"
+    },
+    {
+      "bytes": 11596,
+      "git_blob_sha1": "9bdbe78cc18b4e52a6108953db26621aa453b8cb",
+      "group": "forgejo-bootstrap",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-bootstrap/test_core.py",
+      "previous_blob_sha1": null,
+      "sha256": "2e856d332a0e99961832358a61d0f1067889c8642e432bbf6d282303f179e288"
+    },
+    {
+      "bytes": 9102,
+      "git_blob_sha1": "59a0c82f58e9305edad35aaf8fb708fed4440161",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/README.org",
+      "previous_blob_sha1": null,
+      "sha256": "8c83e45e063350b357a6a733130ddecfdd91f26636cc4bbb4979c41d97d60e6b"
+    },
+    {
+      "bytes": 17694,
+      "git_blob_sha1": "b11ce50bcdcbbaa0507e425db99b65f2021373b6",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/core.py",
+      "previous_blob_sha1": null,
+      "sha256": "72fd3677544b4e7e34b2149092cb5cbc4e0edf1725aa2ee9f82f041575be53ac"
+    },
+    {
+      "bytes": 4847,
+      "git_blob_sha1": "a3c73ade0c6e2c01f5d887f5075ac2e1f42969f8",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/credentials.py",
+      "previous_blob_sha1": null,
+      "sha256": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2"
+    },
+    {
+      "bytes": 2588,
+      "git_blob_sha1": "2be72989a0aa85370290fd80b116070288f46e06",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/entry.py",
+      "previous_blob_sha1": null,
+      "sha256": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487"
+    },
+    {
+      "bytes": 8212,
+      "git_blob_sha1": "c4bb41ad9cdfec1eaebcca7ddd2877518bf5b81d",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/fixture.py",
+      "previous_blob_sha1": null,
+      "sha256": "63edcee07455286d16a2d9363d210b1deb264ae4523e31559b0547fa08bf5229"
+    },
+    {
+      "bytes": 1655,
+      "git_blob_sha1": "aa15dfa8304b2373097e52baa6d113609c3fea50",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/package.nix",
+      "previous_blob_sha1": null,
+      "sha256": "a61d4b70e3e8c4ca0f00d84b8a7fc7dd05c4bbb8f8d50325e1aaa75877f6a8c0"
+    },
+    {
+      "bytes": 1730,
+      "git_blob_sha1": "b5c2bff508215f8a0f09dddee11815f098651397",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/qualification-20261102-002.json",
+      "previous_blob_sha1": null,
+      "sha256": "82ccdb636e113c03fa6d23c6f15eb6733a920381b53e15e9b9245ae8e1122d74"
+    },
+    {
+      "bytes": 2376,
+      "git_blob_sha1": "153df33a0acfcab3bec4605f814617e25de7f60c",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/received-public-bundles-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "d55c02549c50bf554a4e39e5dc89281faeb87380f3ea400c6cae5c1ca50d1737"
+    },
+    {
+      "bytes": 1689,
+      "git_blob_sha1": "955bee2e72cb572e6b3ef8d1dd9b0b802c22d623",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/result-002.json",
+      "previous_blob_sha1": null,
+      "sha256": "ffd06e009894374589ca7a7a4bfc3ed175d3ad1834e63aa3009c7f568d116ae1"
+    },
+    {
+      "bytes": 8412,
+      "git_blob_sha1": "bb999b98bf90e5b667beeddc8ffffac824bc3c68",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/systemd-test.nix",
+      "previous_blob_sha1": null,
+      "sha256": "6c675b489ef6f526faee77619b2c9b4acffdc0aa34623dc29d239b5ff8415c67"
+    },
+    {
+      "bytes": 13627,
+      "git_blob_sha1": "f2ce4258b9768d1523225a1f0dd79ad3a522ba49",
+      "group": "forgejo-governance",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-governance/test_governance.py",
+      "previous_blob_sha1": null,
+      "sha256": "d17f71358c02b8f3f18e248d9d5fc6c49dfb1c3749fdf69f8d517ad8bcbf6d69"
+    },
+    {
+      "bytes": 620,
+      "git_blob_sha1": "e105b8c1efbea7033ab4b1b1951508bc73f2429d",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo-sso-qualification.nix",
+      "previous_blob_sha1": null,
+      "sha256": "2c9bb313d417545ec807ecc0a7f6b818c202b8759e79465999c9d4b136fa11d2"
+    },
+    {
+      "bytes": 7272,
+      "git_blob_sha1": "d735aa3f6052e4d12a4c1890b4993577d04021db",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/forgejo_sso_probe.py",
+      "previous_blob_sha1": null,
+      "sha256": "be06941b14d69b68f1b0fd5ccab28255b5561c836a0650ce186a18cc285ade16"
+    },
+    {
+      "bytes": 597,
+      "git_blob_sha1": "3dc599b55837773567b81a998c349ab30e1095ce",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/observation-generation-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "2b7144f0b21d85035609076f05d2f567ca2da3a18a2aba54fd379102dd8250dd"
+    },
+    {
+      "bytes": 5326,
+      "git_blob_sha1": "f9a56070c567b5f401ea1a754f4fa143abcc4d37",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/observation-paths-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "190a8fc16d03abd67b8f059acdc790bfa959be4c8a1b719ca8fa9d2cb4d84c15"
+    },
+    {
+      "bytes": 154802,
+      "git_blob_sha1": "3548d88725c76af117fc75e5e1d4893173c64efe",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/observation-previous-closure-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "e399d64d097d60993ca552d9aabe30b279a3f6a08ae1918dae2d734e4909f15d"
+    },
+    {
+      "bytes": 1142,
+      "git_blob_sha1": "1bf99cfccda6eb3c0f23b22e1cfc0294b4152acc",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-credential-adoption-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "3198b4f37c7eff42cb6d85e214e62a91ead4073df37a2dec776cd79a06c47624"
+    },
+    {
+      "bytes": 1112,
+      "git_blob_sha1": "839a567e92db428227ef11ff14e828316c4f61ff",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-forgejo-sso-probe-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "96ddf210214c62139bf50afa87de0f4749be327d12e45dded821417c1cbb880f"
+    },
+    {
+      "bytes": 2178,
+      "git_blob_sha1": "29e814d433e20904ecd62b7e52923c09a2e81851",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-independent-cutover-boundaries-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "6ba86c78bea2da17fd5d235ca778372002b125f891e7460be225a7f40586ae01"
+    },
+    {
+      "bytes": 3037,
+      "git_blob_sha1": "a0a3b00c9aacf2a5c882287be2a9469ac0494754",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-005.json",
+      "previous_blob_sha1": null,
+      "sha256": "5fb1b76328e6e990bc46e540577660ed517a22fcff6d76616e4c2206af318225"
+    },
+    {
+      "bytes": 1653,
+      "git_blob_sha1": "3631235fc6767c6efdfdd07592bc934e2ede2ecd",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-release-entrypoint-20261102-002.json",
+      "previous_blob_sha1": null,
+      "sha256": "956ecb4e4ee1a7cf3210987ec578012559069d086a9aa0d35e19bfc381910b20"
+    },
+    {
+      "bytes": 2176,
+      "git_blob_sha1": "b259f3c698bade57769913d194b2c99480b0ccfb",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/qualification-release-package-20261102-002.json",
+      "previous_blob_sha1": null,
+      "sha256": "6a9cb3b0e06e83b75e2fd48c11cdfa42df78526eb49034525959ce0db301f34a"
+    },
+    {
+      "bytes": 2745,
+      "git_blob_sha1": "f3e7836480403ade8ec5360881f69ce7287b2631",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/deployment/recovery.py",
+      "previous_blob_sha1": "548bbe927ed1d3f3b7f5680ef5f068aa92cef5e9",
+      "sha256": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1"
+    },
+    {
+      "bytes": 2296,
+      "git_blob_sha1": "0d6a75344f54282d287a4a53a08d2a829f6720ed",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/release-package.nix",
+      "previous_blob_sha1": null,
+      "sha256": "352c6f4986e6cb76b948d11f23eaa71254034db1db5eb2b36dcf1378026b4be4"
+    },
+    {
+      "bytes": 521,
+      "git_blob_sha1": "2956240ed036c31538d60fc50cfaf594a7250c8e",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/release-probes.nix",
+      "previous_blob_sha1": null,
+      "sha256": "62d7870279c7c8bdb04c87132c29ea2102a84e0696e9db1f915d12aba4b950bb"
+    },
+    {
+      "bytes": 43162,
+      "git_blob_sha1": "519b0849f481198c1a25c9545caad83b1db29e1d",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/release_backend.py",
+      "previous_blob_sha1": null,
+      "sha256": "0c6fec7976b74abcd6eb3715e614fb4dda160ce96b95800b8f24a2631e59a4d1"
+    },
+    {
+      "bytes": 4832,
+      "git_blob_sha1": "704ddb8daf5519c1468c120347c89a2a864baf38",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/release_entrypoint.py",
+      "previous_blob_sha1": null,
+      "sha256": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab"
+    },
+    {
+      "bytes": 2717,
+      "git_blob_sha1": "14c6a371a8d334ce42a54733bfb7342dab21eb52",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/stage_credentials.py",
+      "previous_blob_sha1": null,
+      "sha256": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8"
+    },
+    {
+      "bytes": 9753,
+      "git_blob_sha1": "c0368234955938a815537efdc6a0e3107f0f178a",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/test_forgejo_sso_probe.py",
+      "previous_blob_sha1": null,
+      "sha256": "335940bfba34ddeafcfd53215d4f4d3c6d98f1a56c13f2907b3379578ef0e21c"
+    },
+    {
+      "bytes": 8417,
+      "git_blob_sha1": "5423ecf37d76de821aef0e197aa601ea1cc18e9d",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/test_independent_cutover_boundaries.py",
+      "previous_blob_sha1": null,
+      "sha256": "1b9d097b30748e2d0ed4658a46502b13d1b902ddacfbf82fd1228016018fbbe2"
+    },
+    {
+      "bytes": 5820,
+      "git_blob_sha1": "ad95f841632b05b361a23ab8f161cf459d51da1e",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/deployment/test_recovery.py",
+      "previous_blob_sha1": "572cb722ff51f91b03bb04007b28ce86f0fd2515",
+      "sha256": "af6ff93593d308e5f29f93ab8e174774ab7211ada77b15280ff7b4128292a36e"
+    },
+    {
+      "bytes": 26199,
+      "git_blob_sha1": "08187b4de68683b64c81513f4eabd7d30ced0ea6",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/test_release_backend.py",
+      "previous_blob_sha1": null,
+      "sha256": "590a4b9b7b2fb6cf05de0c548f4956b8c0f7a14ec5c00c9b977c1076106e48de"
+    },
+    {
+      "bytes": 11052,
+      "git_blob_sha1": "37ced725e042145170f8b57c6cd983731283df16",
+      "group": "release-backend",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/deployment/test_release_entrypoint.py",
+      "previous_blob_sha1": null,
+      "sha256": "0777db2d33930544bcc7596168a0a9e7b3cffdbc27dd5b9f82536f17df56004c"
+    },
+    {
+      "bytes": 14175,
+      "git_blob_sha1": "041ae4073fbc361bf3d29ca4d385fa68e1ea9020",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/CANDIDATE-ASSEMBLY.org",
+      "previous_blob_sha1": null,
+      "sha256": "6f6ffabfecb4a3111497aeb99554a06bd163b78b67903655b4b31f7c4e82ae64"
+    },
+    {
+      "bytes": 17651,
+      "git_blob_sha1": "6fe4d00eef21caed831cd6f7df33cee96a184cbf",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/hosts/mrjam-vps/application-services.nix",
+      "previous_blob_sha1": "971dc956a704e1ecf034fc5820f2526ac3a36f36",
+      "sha256": "20597f905fdb935f8315b14719052b51c9c2476a8fb4be29694685758468e1a6"
+    },
+    {
+      "bytes": 10347,
+      "git_blob_sha1": "d92e679ad8e0df792a58dbb421b95b9c58898814",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/backups.nix",
+      "previous_blob_sha1": null,
+      "sha256": "5805d80444217e62d57d771477f77bc39df1021e0c183d1b45cfc08620dfcc05"
+    },
+    {
+      "bytes": 5961,
+      "git_blob_sha1": "ba6af943a2c03b7e3234bcdfaf700f7a90d75b44",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/candidate-nginx-systemd.nix",
+      "previous_blob_sha1": null,
+      "sha256": "ad5967f55b991d860f401dca785da6b60d207946b661d295195ef720449136b7"
+    },
+    {
+      "bytes": 1167,
+      "git_blob_sha1": "fb833a0567a779790d88805cfec35c09dccfae2f",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/candidate-promoted.nix",
+      "previous_blob_sha1": null,
+      "sha256": "1b7da33f6a64e6364910ef179b413e0ffe1eeb59b9771565b2be14e8854a74db"
+    },
+    {
+      "bytes": 6360,
+      "git_blob_sha1": "1c792f88729f26ed89ea0fa8d70cdccd936f11d6",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/candidate.nix",
+      "previous_blob_sha1": null,
+      "sha256": "27dce4587c88f8686ad67284fff872a24caf8cd14e7d05d0ec8694702bc76778"
+    },
+    {
+      "bytes": 3146,
+      "git_blob_sha1": "fb3fcaf069e08c711c7bbb128ad2f5cd697657b4",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/machine-profile.nix",
+      "previous_blob_sha1": null,
+      "sha256": "fbf00f379889ea5134e8457d701463dea0f371ede8766caf2c04bfb19816c73d"
+    },
+    {
+      "bytes": 488,
+      "git_blob_sha1": "1f529d59fc8db4b6ecbf7ce8a33d2aaf06d91718",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/hosts/mrjam-vps/machine.nix",
+      "previous_blob_sha1": "d283ca437c34404e3ee4dc40e0cdc10f9ee6e0f5",
+      "sha256": "48305adb5c454a0575cbc1a01f94e213ea5df69f2e4e7829a4a9516373cfa0bd"
+    },
+    {
+      "bytes": 3928,
+      "git_blob_sha1": "48bf8ea6f819aa95cd03ae9296ca2da6e7c844a7",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/observed-public-services.json",
+      "previous_blob_sha1": null,
+      "sha256": "5c261d137fe9af1b330341b9544a7ca001fae46910f3687de9a102b8b178f8af"
+    },
+    {
+      "bytes": 9220,
+      "git_blob_sha1": "1ad66a2231daf422f5ed881f9015413d4b39316e",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-003.json",
+      "previous_blob_sha1": null,
+      "sha256": "dd830603d6a6eee7682fde226a5a7378c5daf06abf7690a1c53a1c1cbe9bb2ac"
+    },
+    {
+      "bytes": 761,
+      "git_blob_sha1": "ea5ca0280165a7f6641a2894dd4b0bf6e21df760",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-nginx-20261102-001.json",
+      "previous_blob_sha1": null,
+      "sha256": "0319f9edca0fdecce7c950d95774f2a67899f88cf750aec59e5d60cfd5402783"
+    },
+    {
+      "bytes": 701,
+      "git_blob_sha1": "72c0370efe95eb45e989c128fa5c4ee800ea17e8",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/retained-forgejo-quotas.json",
+      "previous_blob_sha1": null,
+      "sha256": "8cb9cf17f1a89d2da6192afd000c41ade7649e338174c755ea5579feb92f8860"
+    },
+    {
+      "bytes": 725,
+      "git_blob_sha1": "280943a4645b4028aabd424699e735f0965531ff",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/hosts/mrjam-vps/systems.nix",
+      "previous_blob_sha1": null,
+      "sha256": "54c6a0185389d7df4cb1cec905f1d79c33c133816ac41a5acbc4976919174353"
+    },
+    {
+      "bytes": 8159,
+      "git_blob_sha1": "1908c7a60209e274a05dbe0a69899596e130b864",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/build-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "da305738770e5e9285b611c01bbe49ae7204e0a0be4c6ceee9d88c5447eed32a"
+    },
+    {
+      "bytes": 2601,
+      "git_blob_sha1": "8fc0967420ae46b158ba716d97d819034f9cc9b0",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/contract.json",
+      "previous_blob_sha1": null,
+      "sha256": "a008fedd04cd6ac336f0a09b770863322d6eedab2ceea800330beda3b87df1a6"
+    },
+    {
+      "bytes": 11778,
+      "git_blob_sha1": "6137fa4f450b3f58c8778065ea12de68bdb621e5",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/fixture.py",
+      "previous_blob_sha1": null,
+      "sha256": "8385e98a524b85360a696ccd4cf21d5d973e997a1473354dd39698b0edc2651b"
+    },
+    {
+      "bytes": 2374,
+      "git_blob_sha1": "1e57cc2dd684d2b64615b729df7d854125a550ad",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/initial-findings.json",
+      "previous_blob_sha1": null,
+      "sha256": "619e27ecd3859f40cce54bca14c7b627d8eb36523419625cff5ab28d3eea280d"
+    },
+    {
+      "bytes": 3595,
+      "git_blob_sha1": "fabe6c857d16ff5f0011bd542805836e89f16156",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/qualification-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "45dbfee9144761b41460f3e13b22ab1cd756ef5b236a8c9ce066b10414f3b63e"
+    },
+    {
+      "bytes": 1637,
+      "git_blob_sha1": "5b45f22339f43958765bdc987e907c2d7245c268",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/result-001.json",
+      "previous_blob_sha1": null,
+      "sha256": "c5a003e90b622c38cb719152ecab19bbd222d38f67ab22a2a8159ad5a071fd11"
+    },
+    {
+      "bytes": 15525,
+      "git_blob_sha1": "a09491a58e02112737d28630ed9f8bfab50a9edd",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/deletion-adapter/systemd-test.nix",
+      "previous_blob_sha1": null,
+      "sha256": "ffdd8b69500ca0d0928081bb1d470dfe61359c04df9c9227304693b6cfaf7164"
+    },
+    {
+      "bytes": 801,
+      "git_blob_sha1": "26bb20ee2e7c8307a2175359591d4acf3be1d3b0",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/identity/publication-deletion-20261102.json",
+      "previous_blob_sha1": null,
+      "sha256": "2979e65aa9ee8d04414132cf83b76c2faaa0a65f6586a245a1c8f7944514d7af"
+    },
+    {
+      "bytes": 7304,
+      "git_blob_sha1": "5681afe7a0956bbff0eab4879ebc3e26352a24dc",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/nixos/mrjam-forgejo-host.nix",
+      "previous_blob_sha1": "21b4bcf6f26747571e96090bc15c25b51918dea2",
+      "sha256": "54b163c66ecb45fcea9a1040472ef4565ccf063925dd14f61a8f40e61f364552"
+    },
+    {
+      "bytes": 5074,
+      "git_blob_sha1": "f2530fd81a8e6cb91cfc0c7d97acb562bc3a2ad1",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/nixos/mrjam-identity-deletion.nix",
+      "previous_blob_sha1": null,
+      "sha256": "e400ede790befe99f7eab2a22bf4b1eb286e6479a2e8df29bd977eb27e27e58b"
+    },
+    {
+      "bytes": 6541,
+      "git_blob_sha1": "6ac59975161ac2c81c04126d74731464b2ad5320",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "update",
+      "path": "operations/nixos/mrjam-vision-replay.nix",
+      "previous_blob_sha1": "30f8a6cb8d5b9cc8bd2a32916b8285c157255680",
+      "sha256": "3aca1ae89a4b05d46f7bf24c681eb7e4a658d80fc4a197e65f3cc7512c423d5b"
+    },
+    {
+      "bytes": 16333,
+      "git_blob_sha1": "b7476e4cf62dd108f626cac036dd0fc263ea5550",
+      "group": "candidate",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/tests/candidate-evaluation.nix",
+      "previous_blob_sha1": null,
+      "sha256": "71c465479cf93e30cf07796740ff715d22b3d2bedd560fc3005fb2eee46c614a"
+    },
+    {
+      "bytes": 4117,
+      "git_blob_sha1": "74f6b72cd0d4fbc4768a9dbeabcd5b225813579b",
+      "group": "identity-delete",
+      "mode": "100644",
+      "operation": "add",
+      "path": "operations/tests/identity-deletion-evaluation.nix",
+      "previous_blob_sha1": null,
+      "sha256": "8caafacf6ee29b2611a56dca05afc54a91d77edd2925acc3cf4fdad053ea051c"
+    }
+  ],
+  "files_sha256": "9a8bef8fb343fa0c6dc6a5174fe4d77163e7457c8721e16343f45ee7bbe3a93c",
+  "integrated_backend_receipt": {
+    "path": "operations/deployment/backend-integration/qualification-20261102-007.json",
+    "publication_supplied_separately_by_owner": true,
+    "sha256": "3a2038155833b051abe3b9f08e6cb727d0a2631305bd10aaf4ac17a3cd0fc4e7"
+  },
+  "limits": [
+    "This is a source publication plan, not a production release manifest or an authorization receipt.",
+    "No .local file, Git bundle, private reference map, application data, credentials, binary or build log is included.",
+    "The integrated backend receipt and native local Kanidm bootstrap are supplied separately by their owners.",
+    "Production release still requires reviewed source/policy binding, final infrastructure bundle, final immutable manifest and separately reviewed delivery artifacts.",
+    "The independent boundary-review receipt binds an earlier backend and test-fixture revision; the latest combined unit receipt 005 reruns those tests against the current backend.",
+    "Recheck file hashes and current remote parent immediately before publishing; preserve newer remote changes.",
+    "No new potentially billable workflow is authorized by this plan."
+  ],
+  "manifest_self_excluded": true,
+  "private_histories_received_independently": true,
+  "production_activation_performed": false,
+  "publication_performed": false,
+  "publisher": "root only",
+  "repository": "MrJ-am/vps-infrastructure",
+  "requested_baseline": "63af6aaba4f819e4fa59963a823f6132d121ef66",
+  "schema_version": 1,
+  "separate_publication_roots": [
+    "operations/deployment/backend-integration/",
+    "operations/deployment/kanidm-local-bootstrap/"
+  ],
+  "total_bytes": 683360,
+  "verification": {
+    "already_published_nix_dependencies": [
+      "operations/compatibility/nixpkgs-vps-observed.lock.json",
+      "operations/deployment/boot-guard.nix",
+      "operations/deployment/credentials/probe-standalone.py",
+      "operations/deployment/credentials/provisioning-unit.nix",
+      "operations/deployment/cutover.py",
+      "operations/deployment/database-adoption.nix",
+      "operations/deployment/generation.py",
+      "operations/deployment/preflight_obligations.py",
+      "operations/deployment/snapshot.py",
+      "operations/deployment/stage_adoption.py",
+      "operations/deployment/system_control.py",
+      "operations/forgejo/adopt-runtime-role.sql",
+      "operations/forgejo/locked-toolchain.nix",
+      "operations/forgejo/reconcile.py",
+      "operations/forgejo/schema-check.nix",
+      "operations/hosts/mrjam-vps/application-artifacts.json",
+      "operations/hosts/mrjam-vps/core-services.nix",
+      "operations/hosts/mrjam-vps/preserved-packages.nix",
+      "operations/hosts/mrjam-vps/received-profile.json",
+      "operations/hosts/mrjam-vps/renewal.nix",
+      "operations/hosts/mrjam-vps/runtimes.nix",
+      "operations/hosts/mrjam-vps/state-adoption.nix",
+      "operations/identity/acceptance/fixture.py",
+      "operations/identity/acceptance/legacy-state.sql",
+      "operations/identity/native-kanidm/qualify.py",
+      "operations/identity/workers_fixture.py",
+      "operations/nixos/mrjam-embeddings.nix",
+      "operations/nixos/mrjam-forgejo.nix",
+      "operations/nixos/mrjam-gateway.nix",
+      "operations/nixos/mrjam-identity.nix",
+      "operations/nixos/mrjam-kanidm-host.nix",
+      "operations/nixos/mrjam-postgresql-access.nix",
+      "operations/nixos/mrjam-postgresql-policy.nix",
+      "operations/nixos/mrjam-vision-admission.nix",
+      "operations/nixos/mrjam-vision-archive.nix",
+      "operations/nixos/mrjam-vision-closure.nix",
+      "operations/nixos/mrjam-vision-cycle.nix",
+      "operations/nixos/vision-worker-identity.nix"
+    ],
+    "existing_literal_nix_source_references_missing": [],
+    "files_verified": 82,
+    "historical_receipt_source_mismatches": [
+      {
+        "current": "0c6fec7976b74abcd6eb3715e614fb4dda160ce96b95800b8f24a2631e59a4d1",
+        "receipt": "operations/deployment/qualification-independent-cutover-boundaries-20261102.json",
+        "recorded": "3d556d0b6eb51b75e7bd03d065c33a51283497ca7a4e11099a3f6aaaf6c547fb",
+        "source": "release_backend.py"
+      },
+      {
+        "current": "1b9d097b30748e2d0ed4658a46502b13d1b902ddacfbf82fd1228016018fbbe2",
+        "receipt": "operations/deployment/qualification-independent-cutover-boundaries-20261102.json",
+        "recorded": "c525cfc171f4f662bb14b9d47da66acb340a93576096b0652bdf7faf3970d7aa",
+        "source": "test_independent_cutover_boundaries.py"
+      }
+    ],
+    "receipt_source_pairs_checked": 86
+  }
+}

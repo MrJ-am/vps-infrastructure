@@ -1,0 +1,34 @@
+{
+  "date": "2026-11-02",
+  "dependency_unit": {
+    "path": "operations/hosts/mrjam-vps/state-adoption.nix",
+    "sha256": "ea41b339cce6eccd2be68101b3e173a6f3f4aef37414617d11deca118d2e4a65"
+  },
+  "files": {
+    "operations/deployment/preflight_archive_adoption.py": "490d120669a92d9c812e3dc15eeb0d768f32f1ec44e6aff9589a927895d82a34",
+    "operations/deployment/preflight_archive_adoption_v3.py": "0904b3315dd8b6b898ea8f0ad2dc4f6ab42ad5b1c39831f013b3bd7f99554735",
+    "operations/deployment/preflight_archive_ddl.py": "d1cba0d6293f138e181ab3eb89a4f03326e2b5ab103bfb4a6337859738cb8b03",
+    "operations/deployment/qualification-archive-diagnosis-20261102.json": "747c3017529abe74b2bbc788c9d20073941e1cb4bbeaa26d51ec1874efa2904d",
+    "operations/deployment/test_preflight_archive_adoption.py": "cff7a9e301d36c17597fd88ff18481695f554ffbea0ef5f54ddd1953fb84a59d",
+    "operations/deployment/test_preflight_archive_adoption_v3.py": "15397ce7eba6a5648c27dd2955db428861589d6cf357e376d090dcd943db2807",
+    "operations/migrations/mail-native-v3/README.org": "3bc3017e1b16aef039b6068ebdb0cafa4c297f6ee00589cd1ff55f8a677a11ef",
+    "operations/migrations/mail-native-v3/adopt.py": "83ea75454c19a3599726da7ed38dad7c8633ecf194c69da727ae0615c950cb05",
+    "operations/migrations/mail-native-v3/check_v2_delta.py": "a11abe96e234d0e9c7befe3f2ecdc37363ad98236053a161dad1f2116187f912",
+    "operations/migrations/mail-native-v3/package.nix": "f8c9b8a430f3c46e797a08db864521f28705218f3914ef7d9634d860575887a5",
+    "operations/migrations/mail-native-v3/qualification-20261102.json": "57bb7744c128c625e1ef8353dec8df462a18357af25abaa6f08d497a34105fe3",
+    "operations/migrations/mail-native-v3/result-vm-001.json": "a85314b2857663a6526bab894cc75b16a9e28d7ead43de2c9e16c3af6467cea0",
+    "operations/migrations/mail-native-v3/result-vm-003.json": "4ba098186a6282729a15542da44de94887f878686c32746e41a4a51fd640f50c",
+    "operations/migrations/mail-native-v3/schema-provenance.json": "72fd0b2361103616b25494224d4721ce13a14c9bb590cbaac389685ab20d8844",
+    "operations/migrations/mail-native-v3/schemas/closure-markers.sql": "d8d355a91c9588833b8170bd93723034e8379da36d1bb2fb4140b7e6790a38cd",
+    "operations/migrations/mail-native-v3/schemas/cycle-markers.sql": "556ee5c3f01e66bbc02a20841c2147df34067e729d14f49d4066b2b091eeee67",
+    "operations/migrations/mail-native-v3/schemas/legacy-mail.sql": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561",
+    "operations/migrations/mail-native-v3/schemas/native-mail.sql": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd",
+    "operations/migrations/mail-native-v3/schemas/target-mail.sql": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d",
+    "operations/migrations/mail-native-v3/systemd-fixture.py": "202ed175155778bb5ddbba75a30a4c81ae0ff54fb94f05eb0502c4b7683f1fd9",
+    "operations/migrations/mail-native-v3/systemd-test.nix": "fba84cabd70a4717a115ab17ea7da36fb23dfb5d1a4b3d5003c30ab4899bac04",
+    "operations/migrations/mail-native-v3/test_adopt.py": "a446db0f886ddac5233acb03e361efeea16d5d32889b75e1606c1364724c0281",
+    "operations/migrations/mail-native-v3/test_ddl.py": "463f31de860b439f5edfcead052eae531f139a386e1278096d068e93127a6947"
+  },
+  "production_package": "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3",
+  "schema_version": 1
+}

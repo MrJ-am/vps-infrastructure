@@ -1,0 +1,21 @@
+{
+  "adoption_materialization_sha256": "b0c8a52571c4e1c3b89b5c72b82f15a55bb968d4d1a1a95ca3c433c9ef2b651f",
+  "api_tests": "/nix/store/a46dz5ayfq3h5rksc6h6bsa5blzdnj40-mrjam-vise-0.2.0-8c8ef66f943c-tests",
+  "artifact": "/nix/store/zmb0mvkn59zxpxnc9ny02q4rkaffc5bw-mrjam-vise-0.2.0-8c8ef66f943c",
+  "artifact_manifest_sha256": "888db2606d1de65e149da2ebec6cc47a36fada23a2fdf219a672a0458ad6fabb",
+  "baseline_materialization_sha256": "f119430d6c3163faece432c1c4cc84449f3e9cd0ffc9866b2136f9b4dcccdfc6",
+  "build_checks": {
+    "input_refusal_tests_passed": 8,
+    "typescript": true,
+    "unit_tests_passed": 15
+  },
+  "bundled_npm_version": "11.17.0",
+  "first_materialization_used_for_build": false,
+  "pinned_cargo_packages": 221,
+  "pinned_node_version": "24.19.0",
+  "production_activation": false,
+  "relative_cache_bug_corrected": true,
+  "runtime_test": "running",
+  "schema_version": 1,
+  "source_revision": "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c"
+}

@@ -1,0 +1,88 @@
+#+title: Adoption des files de courriels cycle, fermeture et globale
+
+Le Lisp installé traitait également la file globale via =tache-courriel= dans
+=lisp/serveur/main.lisp@c6459ae=. La présence de messages en attente ne peut pas
+être déduite du code. Les trois files sont donc conservées, et leur traitement
+doit continuer après adoption. Aucun contenu réel n'a été consulté.
+
+* Deux opérations fermées
+
+| Exécutable sans argument | Images sous /run | Destination sous /var/lib |
+|-------------------------+------------------+--------------------------|
+| mrjam-cycle-mail-adopt | mrjam-cycle-mail-adoption/mail.sqlite | mrjam-vision-cycle/courriels.sqlite |
+| mrjam-archive-mail-adopt | mrjam-archive-mail-adoption/closure.sqlite et global.sqlite | mrjam-vision-archive/courriels.sqlite |
+
+Les profils sont fixés lors de la construction du paquet ; aucun argument,
+chemin, SQL ou sélecteur d'environnement n'est accepté. Le premier profil reprend
+=cycle/courriels.sqlite=. Le second fusionne =fermeture/courriels.sqlite= et
+=courriel/file.sqlite=. Les deux images de fusion sont obligatoires. Une file
+effectivement vide est représentée par une vraie image SQLite au schéma exact.
+
+Les écrivains doivent être arrêtés et les images cohérentes préparées avant
+l'opération. Le répertoire d'entrée est mode 0700, UID cible ; chaque image est
+root:GID cible, mode 0440, régulière, à lien unique, sur un montage en lecture
+seule. Le composant refuse root. La destination appartient à l'UID cible, mode
+0600, dans un répertoire 0700. Il n'accède ni à SMTP ni à PostgreSQL ni au VPS.
+
+* Conservation et conflits
+
+Le schéma exact Python ou Lisp épinglé est reconnu avec zéro, une ou deux
+colonnes historiques de preuve. Les objets SQL supplémentaires sont refusés.
+La table =courriels= comporte exactement les 11 colonnes du schéma Rust gelé.
+Le profil cycle conserve également la table exacte =effacements_termines= si elle
+existe ; l'entrée fermeture du profil archive conserve =fermetures=, avec ses
+colonnes =sujet=, =outils_effaces= et =terminee=. Ces tables sont refusées dans
+les autres entrées. L'absence et la présence vide d'une table restent distinctes.
+
+Les octets de =message=, =cle=, =cree=, =etat=, =essais=, =prochain=, =accepte=,
+=erreur=, =empreinte= et =empreinte_metier= restent identiques. Une preuve absente
+reste NULL ; =contenu_sha256= reste NULL pour l'historique, car les empreintes
+métier Lisp et Rust sont différentes. Les messages vidés par la rétention
+conservent leurs preuves et métadonnées. Aucun message n'est décodé, réécrit,
+réadressé ou rechiffré.
+
+Les clés acceptées sont celles de la file historique : ASCII alphanumérique et
+=_.:-=, de 1 à 160 caractères. Aucune restriction de préfixe n'est inventée pour
+la file globale. Une clé présente dans les deux sources est dédoublonnée seulement
+si toutes les valeurs canoniques sont identiques. Une différence, même de date,
+tentative ou absence de preuve, refuse toute la fusion avant publication.
+
+La publication verrouille exclusivement le répertoire, synchronise l'image
+privée puis crée le lien de destination sans remplacement. Une destination
+identique garde son inode ; une destination différente ou partielle est refusée.
+Les fenêtres de reprise avant/après publication sont vérifiées. Le résultat
+standard ne révèle qu'un statut fermé.
+
+Bornes : 64 Mio par image source, 128 Mio de cible, 10000 clés distinctes au total,
+131072 octets par message, budget d'instructions SQLite et échéance de 15 secondes
+par connexion. Pour l'unité de fusion, prévoir 768 Mio de mémoire et une limite
+de 90 secondes, sans réseau. Les fichiers source ne sont jamais modifiés.
+
+* Raccord au traitement
+
+Le travailleur cycle sait traiter sa file entière. L'archiveur doit traiter au
+plus cinq messages déjà présents par passe, indépendamment des nouvelles tâches
+PostgreSQL, avant sa passe habituelle. Les seules anciennes clés ne doivent
+produire aucun acquittement SQL inventé. Ce raccord est préparé séparément dans
+le candidat Rust ; l'adopteur n'enclenche aucun service.
+
+Les 29 tests d'auteur passent localement et dans Nix ; ils couvrent les six formes
+de schéma, la fusion, les collisions, les preuves distinctes, les refus de schéma
+ou de contenu, les bornes et la publication après interruption. Toutes les bases
+et tous les messages sont inventés. =qualification-build-20261102-02.json= identifie
+les artefacts. La qualification indépendante est conservée dans
+=operations/identity/mail-result-001.json= : huit groupes passent dans la VM,
+avec les 29 tests de l'adopteur, le staging, la reprise des workers et la
+configuration archive privée. Aucun acquittement SQL n'est produit à partir
+d'une seule ancienne clé.
+
+La version 2 conserve les marqueurs métier sans les traduire en intentions :
+ils ne contiennent ni la date d'intention originale ni l'émetteur. Leur copie
+ne constitue pas une reprise d'effacement. Le précontrôle fermé doit déterminer
+si ces tables contiennent des marqueurs et si une fermeture reste incomplète,
+puis le raccord au journal doit traiter les situations effectivement présentes.
+Aucune date, identité ou confirmation SQL ne peut être inventée.
+
+Le premier reçu =qualification-build-20261102.json= est conservé avec son paquet
+version 1. Celui-ci ne reconnaît pas ces deux tables natives et ne doit pas être
+promu pour leur adoption.

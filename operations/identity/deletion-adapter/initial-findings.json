@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "production_access": false,
+  "original_adapter": "/nix/store/79ls7yx6mxh4sryiipdn7k75ls1rbii8-mrjam-identity-deletion-0.1.0",
+  "replay": "/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0",
+  "attempts": [
+    {
+      "id": "001",
+      "derivation": "/nix/store/rx329fgqc56yjd33pzzcq0sdpvf16ha8-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "result": "VM boot D-Bus property request timed out before application testing; no component acceptance result"
+    },
+    {
+      "id": "002",
+      "derivation": "/nix/store/b2d9vxlimvvymfnvbvqmrg2kg0kw8b8l-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "result": "Fixture required reset-failed success for a never-loaded explicit unit; fixture now permits the documented unloaded result before mandatory actual start"
+    },
+    {
+      "id": "003",
+      "derivation": "/nix/store/cc5ngidxla6mf95h22dvlxrkg5f052gn-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "result": "Actual unit starts and creates socket; strict client rejects transport failure after wrong-UID request"
+    },
+    {
+      "id": "004",
+      "derivation": "/nix/store/vgnsxs6x461dmh7ljaj8iiw0ak2rab5h-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "result": "Closed diagnostic confirms ConnectionResetError after response bytes for UID0; graceful EOF contract is not satisfied"
+    },
+    {
+      "id": "005",
+      "derivation": "/nix/store/4h2ykh4xmz19f6rd4s0zpnna6q4q5dzk-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "result": "Corrected adapter passes UID0 graceful refusal; fixture misread systemctl LoadCredential tuple rendering. It now checks the exact selected unit and all drop-in declarations."
+    }
+  ],
+  "qualification_complete": false,
+  "original_adapter_qualified": false,
+  "notes": [
+    "All provider accounts, credentials, files and SQL rows are invented inside isolated VMs",
+    "The UID0 request is refused without an upstream delete; the observed defect concerns the promised Unix response termination",
+    "The minimal upstream people_admins membership is used independently of the old worker fixture's extra mail-read membership",
+    "All failed VM processes were terminated by the test harness; no production activation occurred"
+  ],
+  "follow_up_qualification": "qualification-20261102.json"
+}

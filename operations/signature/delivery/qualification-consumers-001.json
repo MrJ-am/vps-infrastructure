@@ -1,0 +1,93 @@
+{
+  "canonical_rules_adopted": false,
+  "deployment_authorized": false,
+  "evidence_sha256": {
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/consumer_identity.py": "555cd8f3c4654836a5f026a9c24a4ce5a7eb66f61cb178130474902d361e248c",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/generator-provenance.json": "e69dde9d45f5eb39d6308b559665d7fcf58fb6835599cc54462b8d337bada112",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/parisienne.py": "1301f9aa07ec17b4c788edbf7123ed0fe814fbbb5cf2194ed8e06ff2f5456514",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/policy.py": "6e3637f1536363c2c17b737a75840296098113d5cb0ea73d1c1532ce2440764d",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/prepare_identity.py": "d1e92da00c8a69ad36d4034e1380fabd2156be5eba9ea1ee712c396b810e7c9b",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/reference-generator.py": "9f5fe9121b14592d3c4b6205702651a7b875916a99cc3dc678aaac48cde7a973",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/runner.py": "a3cd95cf87d5ba536fc247c5d52b206003ff65d133e70a1610928208f4068eed",
+    ".local/ci-signature-rules-proposal-20261104/workflow-runner/verify_generated.py": "e262ec35611ee464695ef335898af97e69a8dde3c66327c6d44408c47f7847cf",
+    ".local/deployment-20261101/signature-consumers-tests-004.stderr": "f3691d8862269d775a8b514f4b541a86c94a76c88834838d23985e1145484678",
+    ".local/deployment-20261101/signature-identity-job-001/identity/manifest.json": "670c73eb121fc15a493651d3e00fbda34faec0aafbf9c6cbaa15890a050f5ef7",
+    ".local/deployment-20261101/signature-identity-tests-001.stderr": "389e01ee0077dce7ff8ae1df1438b65e14d6292ee9b9d485b644cb488f507f64",
+    ".local/deployment-20261101/signature-rules-hook-tests-003.stderr": "209637c5270ea62667d3505f25f6e8e713fd220b3020983b799e40ff6ae4138a",
+    ".local/deployment-20261101/signature-runner-hook-002.json": "6210230e369a2cd95821dae00cd0143a5ed6d95005c5c569e1918e0485cb4720",
+    ".local/deployment-20261101/signature-runner-hook-002.py": "b9df5b26d6758b357e4e35e89a86db064732a965884a6fedd797c82e454cb6ae",
+    ".local/deployment-20261101/signature-support-001.stdout": "78a60d1e1f47c8c0111c0ee64af6f0c8ff6fe00a5185e52935cfd8258a2629ef",
+    "operations/signature/delivery/consumer_identity.py": "555cd8f3c4654836a5f026a9c24a4ce5a7eb66f61cb178130474902d361e248c",
+    "operations/signature/delivery/generator-provenance.json": "e69dde9d45f5eb39d6308b559665d7fcf58fb6835599cc54462b8d337bada112",
+    "operations/signature/delivery/parisienne.py": "1301f9aa07ec17b4c788edbf7123ed0fe814fbbb5cf2194ed8e06ff2f5456514",
+    "operations/signature/delivery/prepare_identity.py": "d1e92da00c8a69ad36d4034e1380fabd2156be5eba9ea1ee712c396b810e7c9b",
+    "operations/signature/delivery/reference-generator.py": "9f5fe9121b14592d3c4b6205702651a7b875916a99cc3dc678aaac48cde7a973",
+    "operations/signature/delivery/support.nix": "c251f14ae6e7afa36b0d87ff266ce7f92a0d2dc9dc10fe29d5a7339e7360c636",
+    "operations/signature/delivery/test_consumers.py": "acbb5a40de3de30b0cb8dfafd895c832c995be4d23ccf6a5673d46df69372ec6",
+    "operations/signature/delivery/test_identity_job.py": "b3406c639021248729be5d4b2b961aa2f212b8552173b79a7a93eb5abdee2d36",
+    "operations/signature/delivery/test_rules_hook.py": "a8847f8f2fd1c70361df6a5e2371b85f26f9045e8436346017640eeb98688d6c",
+    "operations/signature/delivery/verify_generated.py": "e262ec35611ee464695ef335898af97e69a8dde3c66327c6d44408c47f7847cf"
+  },
+  "full_validator_run_completed": false,
+  "isolated_hook": {
+    "deployment_authorized": false,
+    "isolated_command_completed": true,
+    "job_removed": true,
+    "resources": [
+      "EchoPoint.woff2",
+      "Echologo.svg",
+      "MrJamSignature.woff2",
+      "Parisienne-OFL.txt",
+      "Parisienne-Regular.ttf",
+      "Parisienne-Regular.woff2",
+      "signature.css"
+    ],
+    "revision": "17194087eec9162bb5372221c43e1de0501dfe6a",
+    "steps": [
+      {
+        "name": "signature-resource-regeneration",
+        "status": "passed"
+      }
+    ]
+  },
+  "limitations": [
+    "No full Rust/Elm validation with the new ten-source policy yet",
+    "No new rules publication or protected adoption",
+    "No source bootstrap, admission, constructor or permanent VPS runtime changed",
+    "No fresh browser rendering or selection qualification"
+  ],
+  "mateval_admin_included": true,
+  "parisienne_legacy_comparison": {
+    "changed_tables": [
+      "head"
+    ],
+    "cmap_and_metrics_equal": true,
+    "modified_times": [
+      3874127530,
+      3409935518
+    ],
+    "new_sha256": "5d11ee7370a1804e3540182f3804b8bd765baeaf6c3fe42701d07f270b30bb49",
+    "old_sha256": "12dfc24634d76dc70010417a20599eddcbb8b14c68500c3b77ee6ef01d553eea"
+  },
+  "production_activated": false,
+  "rules_base": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "rules_worktree": ".local/ci-signature-rules-proposal-20261104",
+  "schema_version": 1,
+  "scope": "Signature isolated preparation and existing frontend assembly fixtures",
+  "scope_frontends": [
+    "audition",
+    "log",
+    "logique",
+    "mateval",
+    "style",
+    "vision",
+    "style-logo"
+  ],
+  "style_logo_resources_unchanged": true,
+  "support": "/nix/store/zalld09vdpn9sb4jva5840mhx17mifjw-mrjam-signature-verifier-support-1",
+  "tests": {
+    "consumer_and_conversion": 9,
+    "result_rebinding": 8,
+    "rule_hook": 7
+  }
+}

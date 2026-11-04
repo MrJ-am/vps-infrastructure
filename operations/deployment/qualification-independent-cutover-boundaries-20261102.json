@@ -1,0 +1,35 @@
+{
+  "checks": {
+    "explicit_nix_command_with_globally_disabled_feature": true,
+    "initial_metadata_retry_same_release_and_no_effects": true,
+    "interrupted_presnapshot_return_without_extraction": true,
+    "periodic_previous_services_delayed_until_returned": true,
+    "restore_refused_after_opening_open_returned_held": true
+  },
+  "corrected_findings": [
+    "Explicit nix-command required by path-info on the previous host configuration",
+    "Initial metadata without PREPARED can restart only a complete preflight after same-release/no-effects validation",
+    "RETURNING without an adoption marker does not require or extract a nonexistent snapshot",
+    "Old periodic worker services, not only their timers, remain masked until the durable RETURNED boundary"
+  ],
+  "limits": [
+    "The Nix feature check invokes the real local nix tool; service, network-gate and generation operations are injected.",
+    "The preflight metadata decision uses disposable local files and substitutes ownership validation; root ownership is not qualified by this test.",
+    "Full production generation, systemd, nftables and reboot qualification remain separate receipts."
+  ],
+  "production_access": false,
+  "reviewed_source_sha256": {
+    "boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release_backend.py": "3d556d0b6eb51b75e7bd03d065c33a51283497ca7a4e11099a3f6aaaf6c547fb",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "test_independent_cutover_boundaries.py": "c525cfc171f4f662bb14b9d47da66acb340a93576096b0652bdf7faf3970d7aa"
+  },
+  "schema_version": 1,
+  "scope": "Independent local review of first-cutover and interrupted recovery boundaries; no production or service operation",
+  "sources_modified_by_reviewer": false,
+  "test": "operations/deployment/test_independent_cutover_boundaries.py",
+  "test_log_sha256": "7da86b0602f59f516588394ef90fcfb01f82a010aaf0497fa063b4ef8023f7df",
+  "tests_passed": 5
+}

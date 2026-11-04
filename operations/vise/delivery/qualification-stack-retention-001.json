@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "previous": "/nix/store/z13m4k64jpgf70mw2xpyqq6dsngqyiq1-nixos-system-srv1982677-26.05pre-git",
+  "system": "/nix/store/w6q99hw5p1drdfj1fakx3173d583jriy-nixos-system-srv1982677-26.05pre-git",
+  "candidate": "/nix/store/51bx822kblj1a93pxnmqqwjiyxnbqf68-mrjam-vise-delivery-candidate-8ea736fc4819",
+  "input_state_sha256": "b1c5b48cb0a126c9706fd4511d8211b07f497000cb6c5a6b83c7cda9af2dadd3",
+  "changed": [
+    "vise.service"
+  ],
+  "vise": {
+    "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819",
+    "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json"
+  },
+  "deployment_authorized": false,
+  "scope": "NixOS views from the packaged recipe; fixture candidate, no activation",
+  "recipe": "/nix/store/zhkv6c4a76c6i3icrq15hr06d7p1yx0g-mrjam-protected-delivery-recipe-1",
+  "stack": "/nix/store/yx8987hffj0kssmm6mg03ix1yzbcyyf9-mrjam-protected-delivery-stack-1",
+  "production_changed": false,
+  "limitations": [
+    "Fixture candidate has no production adoption authority.",
+    "No complete system build or activation in this qualification."
+  ],
+  "view_sha256": {
+    "current": "a4d4c2b559f2e238a4e67e05abd41dc8f4bbac152986fc5b8d30460a7f56bcfd",
+    "candidate": "6dcbd45d8c231792d7d825c0042ee810a692974333ff5ff2a2029f04b1eb033e"
+  },
+  "platform_retention_proof": "operations/ci/continuous-delivery-v1/qualification-stack-app-delivery-001.json"
+}

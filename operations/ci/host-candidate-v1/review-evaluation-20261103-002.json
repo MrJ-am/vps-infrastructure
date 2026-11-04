@@ -1,0 +1,32 @@
+{
+  "actual_public_policy_and_artifact_bindings_unchanged": true,
+  "checks_unchanged": 14,
+  "ci_activated": false,
+  "credential_created": false,
+  "credential_references": {
+    "policy": "/var/lib/mrjam-ci-credentials/forgejo-policy-token",
+    "registration": "/var/lib/mrjam-ci-credentials/forgejo-registration-token",
+    "signing": "/var/lib/mrjam-validation-authority/signing-key"
+  },
+  "evaluation_result_sha256": "64fb68c4cfa92f53857ddf903079998aec73fdd36ead34e1671a7ff760dad021",
+  "exact_delta": "Only policy/registration credential source path literals moved out of the service-owned StateDirectory into one future root-owned credential directory.",
+  "existing_unit_name_delta_unchanged": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "expression_sha256": "dbeaee2da39950af1ed5628b9e1434102697062794a43e9c3b27e23b01aa6f50",
+  "future_source_parent": "/var/lib/mrjam-ci-credentials root:root0700; files root:root0400; not yet created or observed",
+  "generation_built": false,
+  "limits": [
+    "Previous evaluation is historical only; future construction must use the corrected references.",
+    "No credential creation/existence/permissions, generation build, service start or activation established.",
+    "All limitations of the previous evaluation review remain, including controller publication placeholder and absent native runtime/coexistence proof for this candidate."
+  ],
+  "new_units_unchanged": 13,
+  "previous_expression_preserved_sha256": "562a32ae69034debe8ad4f2bbb678d6eafb408007d601d89899a3e7ec9776ef1",
+  "previous_review_sha256": "199d63388d069586dc3ac838e69e9a5f91905c3be4dadca36fb21fc169ff50b7",
+  "production_access": false,
+  "qualification_sha256": "70daa1ae4d06d5fb4ef61ae1f69dae8e5800e42d800cd52091fd2be851be4043",
+  "schema_version": 1,
+  "status": "PASS_FOR_PROPOSED_EVALUATION_ONLY"
+}

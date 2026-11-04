@@ -1,0 +1,37 @@
+{
+  "cache_and_registry_interpreter": "Python 3.13.17 (production interpreter)",
+  "cache_completed_results_retained": 16,
+  "cache_successive_results_tested": 64,
+  "cache_tests_passed": 6,
+  "compiler_and_validator_absent_from_control_closure": true,
+  "limits": [
+    "Common worker/collector/exporter/signer/client traversal still required.",
+    "Permanent intake and protected insertion controller not installed.",
+    "No automatic merge or delivery enabled by these tests."
+  ],
+  "package": "/nix/store/gy289sa7rgswr2cql3kmc1vn1gvmhlvj-mrjam-validation-admission-control-1",
+  "package_closure_paths": 30,
+  "production_activation": false,
+  "registry_tests_passed": 8,
+  "schema_version": 1,
+  "source_sha256": {
+    "admission-package.nix": "54904a1c888a2e59e542be75f6857c1f3d088b6950d0651c7cfc0fe61a7b2e8c",
+    "admission-registry-vm.nix": "b91fbb653ff15752b1e0782cb3ba1d0dfd9bebceac306930865e08e1f43d639a",
+    "admission_collector.py": "89b7d6cb08f5f45cb35ce3114cf01d4a188237cb3f1eda2bf739da28b6bb3005",
+    "admission_control.py": "181ff761816810d227102c8f08833786febd692e871885ef13e19477731d40a6",
+    "admission_registry.py": "dd873ac0adb711807bbae7c6fa301169d0cd1948277e3d903572ebdea8a3f4c4"
+  },
+  "synthetic_signing_tests_passed": 6,
+  "vm_result": {
+    "limits": [
+      "Registry and configuration selection only; no signing key or compiler invocation in this VM."
+    ],
+    "missing_writable_symlink_revoked_entries_refused": true,
+    "private_client_root_excludes_compiler_and_reads_metadata_only": true,
+    "production_activation": false,
+    "root_admission_read_by_uid": 1101,
+    "schema_version": 1,
+    "unprivileged_create_chmod_delete_refused": true
+  },
+  "vm_store": "/nix/store/mzamblnmnhddkzaih7h63qdhm6a32ncd-vm-test-run-mrjam-admission-registry-real-permissions"
+}

@@ -85,6 +85,30 @@ class Publication(unittest.TestCase):
         self.assertEqual((final/"src/main.txt").stat().st_nlink,1)
         self.assertEqual(stat.S_IMODE((final/"src/main.txt").stat().st_mode),0o444)
 
+    def test_distinct_rules_coexist_and_wrong_binding_does_not_replace_sources(self):
+        first,_=self.bundle();second,_=self.bundle(rules='2'*40)
+        entries=[first|{'rules_revision':RULES},second|{'rules_revision':'2'*40}]
+        config={'schema_version':2,'proposals':entries}
+        result=s.reconcile(config,self.root,self.lock,owner=self.owner,store=self.store)
+        self.assertEqual(result['created'],2)
+        for entry in entries:s.worker.verify_input(self.root,entry['sha256'],entry['rules_revision'],owner=self.owner)
+        config['proposals'][1]['rules_revision']=RULES
+        with self.assertRaisesRegex(s.Refused,'RULES_MISMATCH'):
+            s.reconcile(config,self.root,self.lock,owner=self.owner,store=self.store)
+        self.assertTrue((self.root/first['sha256']).is_dir())
+        s.worker.verify_input(self.root,second['sha256'],'2'*40,owner=self.owner)
+
+    def test_four_sources_bounded_and_legacy_limit_unchanged(self):
+        entries=[self.bundle({'code':str(i).encode()},rules=str(i+1)*40)[0]
+                 |{'rules_revision':str(i+1)*40} for i in range(4)]
+        s.reconcile({'schema_version':2,'proposals':entries},self.root,self.lock,owner=self.owner,store=self.store)
+        self.assertEqual(len(list(self.root.iterdir())),4)
+        extra,_=self.bundle(rules='5'*40)
+        with self.assertRaisesRegex(s.Refused,'RETENTION_LIMIT'):
+            s.catalog({'schema_version':2,'proposals':entries+[extra|{'rules_revision':'5'*40}]})
+        with self.assertRaisesRegex(s.Refused,'RETENTION_LIMIT'):
+            s.catalog(self.config(*[{k:v for k,v in e.items() if k!='rules_revision'} for e in entries[:3]]))
+
     def test_repeat_preserves_published_inodes_times_and_bytes(self):
         e, _ = self.bundle()
         self.run_config(e)

@@ -1,0 +1,28 @@
+{
+  "launcher_sha256": "0344d09f1b3342e3bea6010a66782ea9903af025997b2d42c888baffd640d614",
+  "limits": [
+    "Local source owner/path substitute for root-owned systemd staging; not a new proof of the systemd UID boundary.",
+    "One actual application validation still has to finish; no success or byte identity of outputs claimed.",
+    "No Forgejo dispatch, production key access, attestation, policy adoption or deployment."
+  ],
+  "limits_preserved": {
+    "cpu_quota_percent": 100,
+    "memory_max_bytes": 2147483648,
+    "tasks_max": 256,
+    "wall_timeout_seconds": 1800
+  },
+  "namespace_prerequisite_failed_first_sha256": "69e9183c2fbece85ee5e57d08d3fcabdb55b9779520eb8ffbb151902cc857a86",
+  "namespace_prerequisite_passed_sha256": "2da60b3ea71e2b4abd8c0eaf8ffcb73b26adcbd6c24dfda83aac0a8137ce555e",
+  "preparation_sha256": "66d0ac606094545e54b216be9c1c474a9aed534a9b2b68f74ac8b9febab5efd9",
+  "qualified_worker_sha256": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5",
+  "reviewed_properties": [
+    "Fixed reviewed validator/source/closure/proposal/rules paths and digests; exclusive first run directory.",
+    "Preceding one-UID user namespace isolates process-count accounting, does not reduce any worker RLIMIT or seccomp boundary.",
+    "Unchanged worker command/execution/FIFO receiver/memfd sealing; captures only outer stderr for local closed diagnostics.",
+    "Report is checked against the proposed public authority policy; signer main/read_key/signature functions are not invoked."
+  ],
+  "schema_version": 1,
+  "scope": "independent launcher read-through; no execution by reviewer",
+  "status": "PASS_FOR_ONE_LOCAL_VALIDATION",
+  "validator_review_sha256": "13ffed766f5afc981fab9d3ddcd0dcb276e14afe734073d607238cdc13a32fb8"
+}

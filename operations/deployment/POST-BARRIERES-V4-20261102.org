@@ -1,0 +1,18 @@
+#+TITLE: Barrières après la promotion corrigée 007
+
+Utiliser =postflight_barriers_v4.py= seulement après le succès de la bascule vers
+=dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git=.
+Cette version remplace uniquement la constante de génération de v3 ; les
+observations et les limites de =POST-BARRIERES-20261102.org= restent applicables.
+
+Les unités des deux slots Rust changent seulement les chemins du serveur et
+de leur configuration publique, dont les octets restent identiques. Leurs
+identités, capacités, credentials, cgroups et confinement sont conservés.
+Le script explicite d'adoption ajoute la migration Audition 002 déjà qualifiée.
+Les 211 autres unités service/timer/socket, SSH et Nginx conservent leurs octets.
+
+Les neuf tests de v3 restent liés par l'identité exacte des fonctions. Aucune
+nouvelle exécution de ces tests inchangés n'est revendiquée. Ce programme ne lit
+ni contenu secret, ni ligne applicative, ni journal ; il ne démarre aucun service.
+Il ne prouve pas la chaîne CI, les autorisations applicatives complètes, une
+restauration de sauvegarde ou la disponibilité publique externe.

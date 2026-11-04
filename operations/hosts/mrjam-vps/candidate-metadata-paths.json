@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "scope": "Closed preflight references only; no contents, size, timestamp or directory listing",
+  "existing_backup_parents": [
+    "/var/backup",
+    "/var/backup/forgejo",
+    "/var/backup/nextcloud",
+    "/var/backup/postgresql",
+    "/var/backup/mrjam"
+  ],
+  "new_backup_namespace": [
+    "/var/backup/mrjam/native-v1"
+  ],
+  "retained_sso_and_configuration_references": [
+    "/var/lib/forgejo",
+    "/var/lib/forgejo/repositories",
+    "/var/lib/forgejo/custom/conf",
+    "/var/lib/forgejo/custom/conf/secret_key",
+    "/var/lib/forgejo/custom/conf/internal_token",
+    "/var/lib/forgejo/custom/conf/oauth2_jwt_secret",
+    "/var/lib/forgejo/.identity-config",
+    "/var/lib/forgejo/.identity-config/app.ini",
+    "/var/lib/forgejo-identity",
+    "/var/lib/forgejo-identity/client.json",
+    "/var/lib/nextcloud/config",
+    "/var/lib/nextcloud/config/config.php",
+    "/var/lib/nextcloud/data",
+    "/var/lib/nextcloud-php-security",
+    "/var/lib/nextcloud-php-security/blocked"
+  ],
+  "retained_native_credential_sources": [
+    "/var/lib/mrjam-identite",
+    "/var/lib/mrjam-identite/cycle.json",
+    "/var/lib/mrjam-identite/proton-smtp.json",
+    "/var/lib/mrjam-identite/fermeture-hook.secret",
+    "/var/lib/mrjam-identite/kanidm-vision.secret",
+    "/var/lib/mrjam-identite/kanidm-admission.token"
+  ],
+  "explicitly_new_private_references": [
+    "/var/lib/mrjam-worker-credentials",
+    "/var/lib/mrjam-worker-credentials/v1",
+    "/var/lib/mrjam-worker-credentials/v1/archive.json",
+    "/var/lib/mrjam-worker-credentials/v1/archive-initialize.json",
+    "/var/lib/mrjam-worker-credentials/v1/smtp.json",
+    "/var/lib/mrjam-worker-credentials/v1/recipient",
+    "/var/lib/mrjam-worker-credentials/v1/closure",
+    "/var/lib/mrjam-worker-credentials/v1/approval",
+    "/var/lib/mrjam-identite/kanidm-cycle.token",
+    "/var/lib/mrjam-identite/kanidm-replay.token"
+  ],
+  "runtime_only_new_references": [
+    "/run/mrjam-kanidm-backup",
+    "/run/mrjam-kanidm-backup/kanidm.json.gz"
+  ],
+  "observations_are_not_bootstrap_authority": true,
+  "optional_legacy_sso_directory_must_not_be_fabricated": true
+}

@@ -1,0 +1,182 @@
+#+title: Livraison automatique ViSe — raccord en préparation, non activé
+
+* Point de reprise du 4 novembre : préparation qualifiée, activation restante
+Les sections suivantes conservent l'historique des étapes ; pour les résultats
+les plus récents, consulter aussi continuous-delivery-v1/ETAT.org.
+Le validateur isolé complet, le paquet final et la génération sont maintenant
+qualifiés sur des fixtures synthétiques (qualification-validation-001.json,
+qualification-packaged-runtime-001.json, qualification-host-builder-001.json).
+Le constructeur intégré a terminé sur le VPS en 229 secondes, sans activation ;
+les 586 entrées d'unités ont été comparées, avec changement limité à ViSe et son
+lien wantedBy. Le profil plateforme conserve ViSe dans les vues qualifiées.
+
+Le préparateur distingue les profils par identité de dépôt et dispose d'un
+commutateur compilé désactivé par défaut. Dix tests de dispatch passent ; les
+deux paquets se construisent mais ne sont pas installés. preparation_plan.py
+revérifie l'autorité, les octets de liaison, la recette installée, les vues, le
+contenu des générations construites et les reçus avant de produire un plan de
+données sans autorisation de déploiement. Ses dix tests couvrent notamment la
+substitution de recette, de base, de job et d'artefact de vérification.
+
+Ce plan est maintenant branché au contrôle d'acceptation dans le code local :
+acceptance_gate.py refuse un staging ou une acceptation concurrents, revérifie
+le plan et le persiste avant la réservation commune et la demande de fusion.
+Une fois réservé, le plan ne peut plus changer ; un échec avant réservation ne
+bloque pas un autre projet. Les paquets avec et sans ViSe se construisent, mais
+ne sont pas installés. Restent le consommateur du plan après fusion/synchronisation,
+l'adaptateur réel de transition et ses tests d'interruption/retour, l'adoption
+des règles réelles et l'installation cohérente des contrôleurs. La preuve finale
+reste une proposition nouvelle traversant toute la chaîne jusqu'au déploiement.
+Les fixtures avec règles synthétiques ne doivent jamais être activées.
+
+* État observé
+ViSe et sa sauvegarde cohérente sont actifs dans la génération04j3v1y76rx8l762zp5dc4059wfcnhhw.
+Cela ne prouve pas sa livraison automatique. Les observations et preuves de
+sauvegarde sont dans ../backup ; aucun changement de production dans ce lot.
+
+Le parcours actuel refuse ViSe à plusieurs niveaux :
+- intake_prepare.once exige que le dépôt figure dans les sources de la politique
+  adoptée ; ViSe et Signature n'y figurent pas.
+- La politique canonique exige sept frontends précis et déclare etp-vise hors
+  périmètre ; verify_sources ne sélectionne pas ses sources Rust/Elm/TypeScript.
+- delivery_constructor.SUPPORTED comprend cinq projets et son binding exige
+  server, frontend.tar et verification.json pour le monolithe Rust.
+- Les générations, le staging et la promotion existants décrivent les deux
+  instances du monolithe, pas le service autonome ViSe ni sa transition d'écriture.
+
+Il ne faut donc pas supprimer uniquement PROJECT_RECIPE_UNAVAILABLE ou ajouter
+le dépôt à SUPPORTED : cela contournerait une absence de recette et de preuve.
+
+* Composant réalisé
+source_scope.py sélectionne le code ViSe et ses manifestes de dépendances. Les
+quatre tests passent : couverture des42 fichiers du lot de référence, sélection
+de nouveaux modules et ressources, exclusion des emplacements de données et
+sorties connus, refus de chemins ambigus. Le nombre42 décrit la fixture ; ce
+n'est pas une limite de réception.
+
+Ce sélecteur ne lit aucun objet Git, ne vérifie aucun secret par son contenu,
+ne remplace pas le contrôle de l'arbre complet, et ne constitue ni une admission
+ni une autorisation de compilation ou de déploiement. Il n'est pas installé.
+Le contrôle partagé de l'arbre Git, les identités d'objets, les configurations
+actives, les gitlinks, les bornes et les empreintes restent obligatoires.
+
+* Intégration à achever
+La validation ViSe doit être distinguée de celle du monolithe par une politique
+protégée et liée à l'attestation. Un code candidat ne doit pas choisir la recette.
+Une modification ViSe doit construire et tester son binaire et son site, avec
+les dépendances verrouillées, TypeScript, tests de composants et tests API sur
+une base fictive. Un échec ViSe ne doit pas invalider une proposition indépendante
+d'un des cinq projets déjà pris en charge.
+
+Établir le contrat de sélection de cible avant d'adapter le schéma canonique,
+l'adoption et les consommateurs d'artefacts. L'architecture de l'adoption actuelle
+est globale : source et politique uniques. Il faut préserver les révisions des
+sources non modifiées et éviter qu'une politique ViSe adoptée devienne ensuite
+le mauvais validateur d'une proposition du monolithe.
+
+Puis raccorder la réception, la qualification signée, la préparation de génération,
+la revue/fusion et la publication. La livraison réelle doit conserver l'identité
+SQL sans DDL, le registre d'effacement courant et les sauvegardes, journaliser
+l'intention de retour, puis vérifier le binaire exact et la disponibilité.
+Aucune restauration de base ne doit accompagner un simple retour de binaire.
+
+La preuve finale demandera une proposition GitHub nouvelle traversant tous ces
+contrôleurs jusqu'au VPS, avec artefact lié à la révision acceptée et retour vérifié.
+
+* Routage préparé
+Dans continuous-delivery-v1, delivery_profiles.py associe les sept identités
+GitHub applicatives à platform ou vise. Les champs proposés target/branch ne
+changent jamais ce choix. Les dépôts de règles et d'infrastructure ne reçoivent
+pas une recette applicative par défaut.
+
+intake_prepare.once accepte un fournisseur de base installé, appelé après la
+prise en charge d'une proposition. Le reçu reste lié à la base/politique choisie.
+L'entrée du service utilise ce point de raccord pour platform ; vise reste
+explicitement refusé jusqu'au raccord de son validateur qualifié. Ces changements
+ne sont pas installés. Quatre tests de routage et douze tests de réception avec
+objets Git réels passent ; le paquet construit est
+/nix/store/kb16mlx50839as2agkcrj23zp0jzvr6n-mrjam-exact-intake-preparation-1.
+
+* Contrat d'autorité à étendre explicitement
+admission_registry.py ancre rules_revision, required_steps et not_established.
+Le descripteur de détails exige aussi l'overlay style-logo et son étape détaillée.
+La recette admission-package.nix fixe actuellement expectedSteps=74. Le chemin
+proposal-bindings.nix construit toujours aligned-validator.nix.
+
+Un validateur ViSe ne doit donc pas fabriquer des étapes monolithe ou un faux
+overlay pour satisfaire ce contrat. Il lui faut un profil d'autorité distinct,
+avec ses propres étapes exactes, relié au dépôt et au validateur figé ; la clé
+et les identités techniques peuvent être conservées. Les trois noms d'artefacts
+server/frontend.tar/verification.json sont compatibles avec un binaire et un site
+ViSe, mais leur consommation doit rester liée au profil signé, jamais au nom seul.
+
+Le prochain paquet de recette doit inclure delivery_profiles.py (inventaire
+mis à jour). Avant de le déployer, préserver les paquets historiques du baseline
+ou étendre explicitement l'état du contrôle de réception : admission-controller-host.nix
+réévalue intake-prepare.nix. Une nouvelle recette basée sur ces sources locales
+changerait donc aussi cette unité ; ne pas installer un nouveau préparateur seul.
+
+* Politique de sources et profil d'autorité réalisés localement
+source_policy.py vérifie le profil vise-v1 (schéma2), un unique dépôt ViSe,
+les manifestes Rust, l'arbre Git complet, tous les blobs sélectionnés, les
+configurations actives et les identités de sources. Il borne les fichiers,
+octets et répertoires et refuse les liens et contenus non déclarés. Les scripts
+Rust implicites build.rs et tests d'intégration sont sélectionnés ; un nouveau
+workspace Cargo non prévu est refusé explicitement, jamais omis silencieusement.
+
+proposal_prepare.py choisit le sélecteur fourni par le module de politique
+installé ; une donnée de proposition ne peut pas fournir cette fonction. Les
+12 tests du préparateur monolithe restent verts. Les18 tests ViSe passent,
+dont un vrai arbre Git synthétique traversant préparation et contrôle indépendant.
+
+Le contrôle de la vraie révision8c8ef66f943c10cb1397868bd1c5ed1962a97b5c passe
+avec49 fichiers sélectionnés. qualification-source-selection-001.json décrit
+strictement ce contrôle de sources ; son identifiant de règles est synthétique.
+Il ne qualifie aucune compilation, admission ou livraison.
+
+authority_profile.py définit12 étapes ViSe précises (sources, outils et dépendances,
+construction, TypeScript, tests de composants/API, refus SQL, arrêt/reprise,
+restauration avec registre courant et artefacts). Il vérifie leurs liens aux
+sources, règles et octets de politique avec le contrat d'autorité existant.
+Ces tests de contrat ne constituent pas l'exécution de ces12 étapes. Le module
+n'est encore ni raccordé au registre d'autorité ni au signataire.
+
+Le paquet de réception rab03yy253cmg6iarjfqxi2qqbpj15q1 se construit et importe
+les deux politiques. Son entrée utilise MRJAM_VISE_ADOPTED_BASE pour ViSe, avec
+refus explicite si absent et sans repli sur la politique platform. Trois essais
+sur le paquet construit passent (absence, bon profil, profil mélangé), en isolant
+le routage de la vérification des métadonnées Nix via une fixture temporaire.
+Ce paquet n'est pas installé. Aucune variable ViSe n'est activée sur le VPS.
+
+Prochain raccord : vérificateur exécutable isolé ViSe et dépendances matérialisées,
+puis profil de registre/admission signé, adoption ViSe distincte, recette de
+génération et transition préservant la base. Ne pas confondre le contrat vérifié
+localement avec une validation indépendante déjà effectuée sur une proposition.
+
+* Vérificateur isolé en qualification
+=build-probe.nix= construit un superviseur local (=probe="build"= par défaut)
+qui emploie le worker et son lanceur de sous-processus inchangés. Les commandes
+candidates s'exécutent dans leurs namespaces sans réseau externe, avec sources
+et outils en lecture seule. Le paquet de dépendances provient de la remise
+matérialisée vérifiée ; un changement de verrou nécessite une nouvelle remise.
+Ce probe ne publie aucun artefact collector et n'émet aucune attestation.
+
+La récupération du serveur copie les octets ELF bornés dans le répertoire privé
+du superviseur après terminaison de la commande. Les hardlinks produits par
+Cargo sont acceptés pour cette copie ; les liens symboliques et parents liés
+sont refusés. Quatre tests couvrent ces propriétés. Le lecteur des sources reste
+strict et conserve son exigence de lien unique.
+
+=probe="database"= qualifie séparément une base jetable dans un namespace dédié.
+Les chemins de schéma, contrat et adoption viennent du paquet protégé, jamais du
+candidat. Le superviseur conserve un mot de passe administrateur aléatoire hors
+du namespace candidat. Seule l'identité SQL applicative restreinte pourra être
+transmise au serveur candidat. L'authentification TCP utilise SCRAM ; aucune
+connexion trust n'est ouverte sur le loopback partagé des essais.
+
+=qualification-database-001.json= prouve les quatre groupes de contrôles réellement
+exécutés dans le worker : schéma/adoption idempotente, refus DDL et gestion des
+rôles, impossibilité d'authentification administrateur avec le mot de passe
+applicatif, détection des dérives de version/droits. Ce résultat n'est pas une
+qualification du serveur : les API, l'arrêt gracieux et la restauration avec
+registre d'effacement courant doivent encore être intégrés et exécutés.

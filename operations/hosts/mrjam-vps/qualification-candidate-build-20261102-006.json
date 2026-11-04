@@ -1,0 +1,212 @@
+{
+  "activation_performed": false,
+  "authority": "Spectre-local-build",
+  "boot_guard_bound_to_current_sources": "/nix/store/11gb9i2v7b3980zylx4pnr3wh7hd8djf-mrjam-first-cutover-boot-guard",
+  "checks": {
+    "admissionPeerExact": true,
+    "adoptionImagesReadOnly": true,
+    "adoptionNeverAutomatic": true,
+    "adoptionNoNetwork": true,
+    "aliasReadersSeparate": true,
+    "archiveInitializePrivateConfig": true,
+    "archiveMissingCompanionRefused": true,
+    "archiveMixedRecipientRefused": true,
+    "archivePrivateConfigOnly": true,
+    "auditionKeepsExistingDatabase": true,
+    "backupDiagnosticsPrivate": true,
+    "backupTimersRequirePromotion": true,
+    "bootRecoveryGuardPresent": true,
+    "bothQualifiedRuntimes": true,
+    "caExact": true,
+    "databaseAndCredentialAdoptionNeverAutomatic": true,
+    "deletionAdapterExact": true,
+    "distinctNativeTokenReferences": true,
+    "eightObservedHostsOnly": true,
+    "embeddingsExact": true,
+    "existingPostgresqlBackupSelection": true,
+    "fixedApplicationIdentities": true,
+    "forgejoQuotaDefaultsPreserved": true,
+    "forgejoRetainedSecretsOnly": true,
+    "forgejoSsoConfigurationPreserved": true,
+    "forgejoTechnicalBootstrapBindsRetainedIdentity": true,
+    "fourNativeWorkersUnchanged": true,
+    "humanCredentialProvisioningExactAndLoopbackOnly": true,
+    "incompletePreparationStillBlocked": true,
+    "kanidmCertificateReloadRetained": true,
+    "legacyArchiveNotPromotable": true,
+    "machineStateVersionRetained": true,
+    "mailAdoptionDdlWhitespaceV3": true,
+    "mathevalPrefixAndRootRedirect": true,
+    "nativeAdminEndpointsPrivate": true,
+    "nativeBackupCredentialSeparate": true,
+    "nativeExportNeverAutostarts": true,
+    "nativeProtocolsSelected": true,
+    "noAcmeBootstrap": true,
+    "noInventedStyleOrLogoDomain": true,
+    "noReplayedBusinessMigration": true,
+    "noViseUnit": true,
+    "observedHostname": true,
+    "onlyExplicitDatabaseMigrationUnits": true,
+    "phpContainmentPreserved": true,
+    "portableRuntimeGuardExact": true,
+    "postgresPeerAndNoBootstrap": true,
+    "privateCredentialAdaptationIsolated": true,
+    "promotedCompositionAssertions": true,
+    "promotedOnlyActiveSlot": true,
+    "promotedWritersExplicit": true,
+    "renewalPromotionExplicit": true,
+    "renewalsKeepEightAccounts": true,
+    "replaySeparatelyBuilt": true,
+    "replayWithoutProviderCredential": true,
+    "sevenFrontendClosuresRetained": true,
+    "stagedApplicationsNotStarted": true,
+    "stagedCompositionAssertions": true,
+    "stagedTimersNotPromoted": true,
+    "unchangedServerRetained": true,
+    "wwwRedirect": true
+  },
+  "checks_passed": 61,
+  "composition_qualified": true,
+  "generation_switch_and_return_qualified": true,
+  "historical_bootstrap_source_manifest_sha256": "1777b5ab2f79751f5ddc9564c09bbd7372b0719fd8df2620433c76267ab0b597",
+  "human_provisioner_exact_unit": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+  "independent_component_evidence": {
+    "exact_nginx_routes": {
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-nginx-20261102-001.json",
+      "sha256": "0319f9edca0fdecce7c950d95774f2a67899f88cf750aec59e5d60cfd5402783"
+    },
+    "human_provisioning": {
+      "path": "operations/deployment/credentials/qualification-provision-systemd-20261102.json",
+      "sha256": "29e952a10e56d811f1f914b13d8f4971e4114e4e23c0806d9461426576ed4410"
+    },
+    "journal_namespace_and_closure": {
+      "path": "operations/deployment/qualification-journal-closure-systemd-20261102-003.json",
+      "sha256": "a10962d0d193f4d1fad818dcd0664d3b91c447d1686ef45fef3e9c49c0513c29"
+    },
+    "mail_adoption_v3": {
+      "path": "operations/migrations/mail-native-v3/qualification-20261102.json",
+      "sha256": "57bb7744c128c625e1ef8353dec8df462a18357af25abaa6f08d497a34105fe3"
+    },
+    "namespace_author": {
+      "path": "operations/deployment/qualification-sql-namespace-20261102.json",
+      "sha256": "2bd986c01f1cbb3cabdca752322e5bcf4ff9fc6f5d5261d8c477a8e1f6ba215d"
+    },
+    "native_deletion": {
+      "path": "operations/identity/deletion-adapter/qualification-20261102.json",
+      "sha256": "45dbfee9144761b41460f3e13b22ab1cd756ef5b236a8c9ce066b10414f3b63e"
+    },
+    "old_generation_without_guard_return": {
+      "path": "operations/deployment/qualification-generation-20261102-02.json",
+      "sha256": "e62631fd9cb1ab0b19d29f79827cfdcf4a5d66ce2dd9588881bedcf3b45591c6"
+    },
+    "portable_guard": {
+      "path": "operations/deployment/qualification-system-control-20261102-03.json",
+      "sha256": "7ee0be80878cc3f3a08914d780e1859878e664bc6a482200787938ea54746c82"
+    },
+    "previous_timer_return": {
+      "path": "operations/deployment/qualification-previous-return-systemd-20261102-002.json",
+      "sha256": "ba608f90ff27c936cd89f4559f8441883d4109d94dd27de5447a110a217c058f"
+    },
+    "vision_administration_namespace": {
+      "path": "operations/deployment/review-vision-admin-public-schema-usage-20261102.json",
+      "sha256": "824c184f2183314eabdfb8aaf131ee40f1270d069c1073379a411cd67d440d51"
+    }
+  },
+  "joint_closure_list_sha256": "275f360b27b052407c6e9119330886db2049e8e5de6c40c2d0a68fcb16f04211",
+  "joint_closure_paths": 1292,
+  "legacy_lisp_runtime_found": false,
+  "limits": [
+    "Build and evaluation performed locally without activation. Final release manifest and source binding remain separate.",
+    "Relative to candidate build004, only the explicit journal bootstrap unit/script changes: two separate namespace USAGE corrections. Existing worker/application/SSO/ingress units remain byte-identical.",
+    "This receipt is a construction and composition proof, not successful production activation or complete application readiness. Journal closure systemd and role predicates have separate real PostgreSQL/VM evidence."
+  ],
+  "mail_adoption_package": "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3",
+  "nixpkgs_nar_hash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+  "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "production_access": false,
+  "promotable": false,
+  "recorded_on": "2026-11-02",
+  "schema_version": 1,
+  "scope": "complete-generations-built-and-declarative-composition-evaluated",
+  "source_sha256": {
+    "operations/deployment/boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "operations/deployment/boot-guard.nix": "f1b0198336de79af9e632045aa596cfd1f8f0ef0f85e374ac7b09a2b310c5f09",
+    "operations/deployment/boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "operations/deployment/credential-adoption.nix": "c6f9ff339e7c115cb69fbc2965367e635ac1b212409b97933ab57ac6df1be2ee",
+    "operations/deployment/credentials/provisioning-unit.nix": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a",
+    "operations/deployment/cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "operations/deployment/database-adoption.nix": "3150ea7b0cd490c3c4cdc391635be7c177d0437797798b703f12274f45fe7880",
+    "operations/deployment/forgejo-bootstrap/core.py": "8d9a821eb500e46c1e0117ffb7a4cca0df6e238694a7aff40528731369a6aa61",
+    "operations/deployment/forgejo-bootstrap/module.nix": "882799a2fc053b0ec506d727cbeef9e6d07b981ff49043d5a4f957128f8fb502",
+    "operations/deployment/forgejo-bootstrap/package.nix": "bca91d3788fa40b22c860f42c2a0a8405786fe057e0fdbfdea4327d2e8a5918c",
+    "operations/deployment/journal-public-schema-usage.sql": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "operations/deployment/system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "operations/deployment/vision-admin-public-schema-usage.sql": "c355bf1d930042cc99e59ee4235597298fa51ff7426625f5ed6da68d94cdbf9e",
+    "operations/hosts/mrjam-vps/CANDIDATE-ASSEMBLY.org": "26b978ef21bd1e33374e32b0be680d510a82071f87b0fc001819bcd3bacafe13",
+    "operations/hosts/mrjam-vps/application-services.nix": "20597f905fdb935f8315b14719052b51c9c2476a8fb4be29694685758468e1a6",
+    "operations/hosts/mrjam-vps/backups.nix": "5805d80444217e62d57d771477f77bc39df1021e0c183d1b45cfc08620dfcc05",
+    "operations/hosts/mrjam-vps/candidate-promoted.nix": "1b7da33f6a64e6364910ef179b413e0ffe1eeb59b9771565b2be14e8854a74db",
+    "operations/hosts/mrjam-vps/candidate.nix": "27dce4587c88f8686ad67284fff872a24caf8cd14e7d05d0ec8694702bc76778",
+    "operations/hosts/mrjam-vps/core-services.nix": "930c6f2ca2c80371591208efe5df583acbcabe876c14d66118ff1f99a1ebc2d9",
+    "operations/hosts/mrjam-vps/machine-profile.nix": "fbf00f379889ea5134e8457d701463dea0f371ede8766caf2c04bfb19816c73d",
+    "operations/hosts/mrjam-vps/machine.nix": "48305adb5c454a0575cbc1a01f94e213ea5df69f2e4e7829a4a9516373cfa0bd",
+    "operations/hosts/mrjam-vps/observed-service-identities.nix": "a7f758a5a09918c5eca8dbd256be2b3504f7fe7564c6b0ad16ebd85e7bff2cac",
+    "operations/hosts/mrjam-vps/renewal.nix": "9fc6950050b9d947decae8d0afe3eea137de42564e192e4f565986ebdbfb31bd",
+    "operations/hosts/mrjam-vps/retained-forgejo-quotas.json": "8cb9cf17f1a89d2da6192afd000c41ade7649e338174c755ea5579feb92f8860",
+    "operations/hosts/mrjam-vps/runtime-blue.json": "96813c225a279cb96be091ed055871f92af61c9a8928238c9c9e604fcc424ca1",
+    "operations/hosts/mrjam-vps/runtime-green.json": "0ab1edeb133feff676121699344814ea468857a7cd8a9e52f3a4dee5d910e9f1",
+    "operations/hosts/mrjam-vps/runtimes.nix": "f4de528e9e6d5d0b2687938b7c13f4de74e8ea8842893b7ec9754fbf9e732a9c",
+    "operations/hosts/mrjam-vps/state-adoption.nix": "ea41b339cce6eccd2be68101b3e173a6f3f4aef37414617d11deca118d2e4a65",
+    "operations/hosts/mrjam-vps/systems.nix": "54c6a0185389d7df4cb1cec905f1d79c33c133816ac41a5acbc4976919174353",
+    "operations/nixos/mrjam-identity-deletion.nix": "e400ede790befe99f7eab2a22bf4b1eb286e6479a2e8df29bd977eb27e27e58b",
+    "operations/nixos/mrjam-vision-replay.nix": "3aca1ae89a4b05d46f7bf24c681eb7e4a658d80fc4a197e65f3cc7512c423d5b",
+    "operations/tests/candidate-evaluation.nix": "fb45ae49ce3ffa51a2262a85bf317d2a168bbdf1f421ee6b150a7ddad66823ef"
+  },
+  "supersedes": "qualification-candidate-build-20261102-004.json",
+  "systems": {
+    "promoted": {
+      "bootstrap_script": "/nix/store/8mllic0z8iwrhnv0khqbja7kwwmbbl1d-unit-script-mrjam-bootstrap-journal-start/bin/mrjam-bootstrap-journal-start",
+      "bootstrap_script_sha256": "3a9abfcb7ddf248f2a6cf2ed3f86b7ab80469938d26d2c6b3cf085e3749fe752",
+      "bootstrap_unit_sha256": "7cab3d4c77b3dec89300b745dc0f11298d140a12a35ce5dee6ab3dc5261e4e6d",
+      "changed_unit_names": [
+        "mrjam-bootstrap-journal.service"
+      ],
+      "closure_size_bytes": 6647087672,
+      "compared_service_timer_socket_units": 214,
+      "derivation": "/nix/store/rgajh6bnbh2z5zsfhi0gg2d4m6jrfnhd-nixos-system-srv1982677-26.05pre-git.drv",
+      "nar_hash": "sha256-o6FqYplIyuaeLiG1IJ+rww+vU0nUtc2Dpmk9QgojjDo=",
+      "store_path": "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+      "unchanged_service_unit_sha256": {
+        "forgejo": "96d890e2f3dbf3d1d3e0dfed50849dfaeb2a3f2f561027d6b5efa4dbd543ee8b",
+        "kanidm": "6d303b2f4dd440b3687e63107551991dfe96bbd492f4eba45e49fda5b45048fd",
+        "mrjam-rust-blue": "167ba31e0aa7a56bd771787a963e6dad13baefecbcedcfaeb87368fac8855543",
+        "nginx": "9d4cb9a03dd7211931b03b808114cee2bc973b87a0d1f319d069355862141659",
+        "phpfpm-nextcloud": "f2387db19fef54ad38782b781a229a0f5096e6e6b7a67057aa01099e81cd6613",
+        "postgresql": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c",
+        "sshd": "8e6e0e5e264ae5349b64f4086df61768e091990ef5fe9845090758fadbb0d709"
+      }
+    },
+    "staged": {
+      "bootstrap_script": "/nix/store/8mllic0z8iwrhnv0khqbja7kwwmbbl1d-unit-script-mrjam-bootstrap-journal-start/bin/mrjam-bootstrap-journal-start",
+      "bootstrap_script_sha256": "3a9abfcb7ddf248f2a6cf2ed3f86b7ab80469938d26d2c6b3cf085e3749fe752",
+      "bootstrap_unit_sha256": "7cab3d4c77b3dec89300b745dc0f11298d140a12a35ce5dee6ab3dc5261e4e6d",
+      "changed_unit_names": [
+        "mrjam-bootstrap-journal.service"
+      ],
+      "closure_size_bytes": 6647076848,
+      "compared_service_timer_socket_units": 211,
+      "derivation": "/nix/store/rvqvlr9wvkd1zsiiiydbix2ghjpy4fwx-nixos-system-srv1982677-26.05pre-git.drv",
+      "nar_hash": "sha256-ICnSYbMVF02n1iJmqjogUmevXR3g1SJWVhkdBMdXFKA=",
+      "store_path": "/nix/store/cxqicl1y5i8fcbclbvyrx0mdhkf2z215-nixos-system-srv1982677-26.05pre-git",
+      "unchanged_service_unit_sha256": {
+        "forgejo": "6ef12b8b7a9566ef8130415d4cbf9717e4efce6d7492ca4ee0e97fd50d5e6c34",
+        "kanidm": "76aaa520791d2501669733ffffb8371a032da9d9d988c87c8f400b541f67491d",
+        "mrjam-rust-blue": "7d78efbcc21b50e77168f97f3941e8a5e71005efefbbbf20a5a7296c81ac60da",
+        "nginx": "b11f01cc9a1984ae6bb1298c28745dc4c5f91a1f9b7ba102d1949061ab068847",
+        "phpfpm-nextcloud": "842ed5dd3f8889f7ce9ebbdd5c8ba8d3a16098cfcee7a75dfd3246a2b3f167c5",
+        "postgresql": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c",
+        "sshd": "8e6e0e5e264ae5349b64f4086df61768e091990ef5fe9845090758fadbb0d709"
+      }
+    }
+  }
+}

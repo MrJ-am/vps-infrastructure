@@ -1,0 +1,53 @@
+{
+  "evaluation": {
+    "added": [
+      "mrjam-vise-backup-recovery.service",
+      "mrjam-vise-backup-recovery.timer",
+      "mrjam-vise-backup.service",
+      "mrjam-vise-backup.timer"
+    ],
+    "changed": [
+      "mrjam-delivery-preparation.service",
+      "systemd-tmpfiles-resetup.service"
+    ],
+    "checks": {
+      "adoptedUnchanged": true,
+      "assertionsPass": true,
+      "baselineExact": true,
+      "credentialsUnchanged": true,
+      "databasesUnchanged": true,
+      "onlyBackupAdded": true,
+      "onlyBackupDirectoryAdded": true,
+      "onlyPreparationAndDirectorySetupChanged": true,
+      "routesUnchanged": true,
+      "unitsPreserved": true,
+      "viseUnchanged": true
+    },
+    "previous": "/nix/store/2kxbyhis07lvizp5myaccx3zpn47fxg7-nixos-system-srv1982677-26.05pre-git",
+    "state": {
+      "active_slot": "blue",
+      "adopted": "/nix/store/2ny4527xzy4d9aljs805j037kydnypbc-mrjam-adopted-source.json",
+      "control_plane": {
+        "acceptance": "/nix/store/vkvzk7vd6w5jawhda3vz7p88d5wpdqm0-mrjam-separated-acceptance-services-1",
+        "preparation": "/nix/store/p0rsqcgy8jyvpbapjhci8dbwmlyryk1s-mrjam-delivery-preparation-1",
+        "staging": "/nix/store/zk671bry18xn1ahfhjy8y2yg31mpli23-mrjam-protected-staging-service-1"
+      },
+      "schema_version": 1,
+      "slots": {
+        "blue": {
+          "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+          "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+        },
+        "green": {
+          "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green",
+          "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb"
+        }
+      },
+      "system": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git"
+    },
+    "system": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git"
+  },
+  "input_state": "/nix/store/71xz752m19lbycn75fgrnqi2376lnl99-vise-backup-state-final-pr5-001.json",
+  "recipe": "/nix/store/nx2hr5iivs9l9ywxrigx2x1adpzqvq48-mrjam-vise-backup-host-recipe-1",
+  "scope": "evaluation-only-no-activation"
+}

@@ -1,0 +1,10 @@
+{
+  "actual_production_preflight_passed": true,
+  "archive_not_yet_executed": true,
+  "attempt": 2,
+  "only_operation_and_binding_constants_changed": true,
+  "production_preflight_sha256": "cafa3b79d84e02df7b197815f313b229607cb0f6609bffef35db3aaef3f2ebe2",
+  "schema_version": 1,
+  "sealed_sha256": "bee603443647f5007cc620b647e74279122ff6b520a7337f3b2d1f363884b653",
+  "source_sha256": "632ece3fce33775223602bb71627da67d1e0a89b94f0aca865ceccbb9ea82d58"
+}

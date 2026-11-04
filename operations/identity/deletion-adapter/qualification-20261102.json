@@ -1,0 +1,67 @@
+{
+  "activation_performed": false,
+  "artifacts": {
+    "/nix/store/2brahvjj3s8b0grx3hp6kdx356svm0as-vm-test-run-mrjam-native-delete-unix-independent": {
+      "deriver": "/nix/store/nqdl0vsq3j933bpqmkp07mg5v989ybmd-vm-test-run-mrjam-native-delete-unix-independent.drv",
+      "narHash": "sha256-yTi1E1Id4BqHQwinNSWvHfRRDt7McPXYZjUx1429y5I=",
+      "narSize": 1944
+    },
+    "/nix/store/cp5rsnp0iqyd4j1k815b40avhz5jgp6h-mrjam-vision-delete-replay-0.1.0": {
+      "deriver": "/nix/store/rqfvk45w250b5hsb4cwf3scgvf19yryz-mrjam-vision-delete-replay-0.1.0.drv",
+      "narHash": "sha256-747D1x24u5ljv++iR4roEmc1NGilYuYZk/9nW/V2PSI=",
+      "narSize": 6134800
+    },
+    "/nix/store/vxq44jamqwldh4q9j3xv50znz42lqg27-mrjam-identity-deletion-0.1.0-transport2": {
+      "deriver": "/nix/store/vigrs9pr3cxvd49xzy5hs15dyxaqnc9h-mrjam-identity-deletion-0.1.0-transport2.drv",
+      "narHash": "sha256-2rhGHLcq4xrlThvFz9X/v9AYfsG5K1TJZzcJ8CW6a2g=",
+      "narSize": 2826424
+    }
+  },
+  "checks_passed": 7,
+  "derivation": "/nix/store/nqdl0vsq3j933bpqmkp07mg5v989ybmd-vm-test-run-mrjam-native-delete-unix-independent.drv",
+  "duration_seconds": 77.59,
+  "identities": {
+    "adapter": 948,
+    "adapter_gid": 944,
+    "admission": 947,
+    "archive": 943,
+    "broker": 984,
+    "closure": 946,
+    "kanidm": 983,
+    "postgresql": 71,
+    "replay": 944
+  },
+  "limits": [
+    "Upstream people_admins credential broader than Unix capability",
+    "SMTP archive receipt explicitly simulated",
+    "No production or protected-governance authority",
+    "The adapter drains refused input at most64KiB for at most2s; larger floods are transport-aborted without a document or upstream call",
+    "Only synthetic accounts and public test CA are used; production CA remains a separately pinned public input"
+  ],
+  "negative_requests": {
+    "malformed_or_extra_field_payloads": 18,
+    "stalled_payloads": 1,
+    "wrong_peer_uids": 2
+  },
+  "output": "/nix/store/2brahvjj3s8b0grx3hp6kdx356svm0as-vm-test-run-mrjam-native-delete-unix-independent",
+  "previous_adapter": "/nix/store/79ls7yx6mxh4sryiipdn7k75ls1rbii8-mrjam-identity-deletion-0.1.0",
+  "previous_adapter_qualified": false,
+  "production_access": false,
+  "qualification_date": "2026-11-02",
+  "result_sha256": "c5a003e90b622c38cb719152ecab19bbd222d38f67ab22a2a8159ad5a071fd11",
+  "schema_version": 1,
+  "scope": "independent-native-delete-unix-adapter-and-replay",
+  "services_and_vm_stopped": true,
+  "smtp_delivery_qualified": false,
+  "source_sha256": {
+    "operations/identity/acceptance/fixture.py": "83c66b4ce7a1741e47d15fb896149ce1717cddb903c2d9644b0ab4999c2d2e0a",
+    "operations/identity/acceptance/legacy-state.sql": "416d77d0e9728728f7fbaa3bc26c4de08b37b1eecc45bbced94ac0e783ec9920",
+    "operations/identity/deletion-adapter/contract.json": "a008fedd04cd6ac336f0a09b770863322d6eedab2ceea800330beda3b87df1a6",
+    "operations/identity/deletion-adapter/fixture.py": "8385e98a524b85360a696ccd4cf21d5d973e997a1473354dd39698b0edc2651b",
+    "operations/identity/deletion-adapter/systemd-test.nix": "ffdd8b69500ca0d0928081bb1d470dfe61359c04df9c9227304693b6cfaf7164",
+    "operations/identity/native-kanidm/qualify.py": "45225e5b5ad67adee6f5f018c1f8591f0bacf73ef015de1a44bdd10dd8a72864",
+    "operations/identity/workers_fixture.py": "8b8b0c61f184908d8ed18b17b73459b55687f23cc17e43f0bf15c69708746c5c",
+    "operations/nixos/mrjam-identity-deletion.nix": "e400ede790befe99f7eab2a22bf4b1eb286e6479a2e8df29bd977eb27e27e58b",
+    "operations/nixos/mrjam-vision-replay.nix": "3aca1ae89a4b05d46f7bf24c681eb7e4a658d80fc4a197e65f3cc7512c423d5b"
+  }
+}

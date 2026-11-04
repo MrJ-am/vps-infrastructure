@@ -1,0 +1,64 @@
+{
+  "backend_sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+  "changes": [
+    "Fixed attempt004/controller004/manifest004/result04/archive04 bindings.",
+    "Persistent and runtime archives001,002,003 stay in place; each directory inode and completion witness is bound without opening snapshot or staged contents.",
+    "Exact observed failure.json must match release004 and immutable backend schema/allowlists: readiness/vision-frontend/SEALED_OPERATION_REFUSED.",
+    "Only prior-archive enumeration and fixed observation labels differ from the qualified003 algorithm; no new mutation path."
+  ],
+  "controller_package": "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+  "exact_unchanged_function_bodies": [
+    "Refused",
+    "require",
+    "absent",
+    "directory",
+    "identity",
+    "read_metadata",
+    "new_metadata",
+    "sync",
+    "lock_state",
+    "runtime_inventory",
+    "controller_finished",
+    "verify_live",
+    "main"
+  ],
+  "limits": [
+    "This qualifies the local filesystem algorithm with synthetic files and mocked service observations. Root must first execute the closed production probe and seal its exact binding.",
+    "Pending or unfamiliar state files are deliberately refused, never erased or normalized.",
+    "No production operation or SSH was performed by this reviewer."
+  ],
+  "passed": true,
+  "preserved_invariants": [
+    "Same existing transaction.lock descriptor/inode with flock throughout.",
+    "Previous current/boot profiles, no ingress gate, old HTTP baseline and free940..948 required.",
+    "Controller04 must be finished failed/PID0/exit1; terminal RETURNED result exact.",
+    "No snapshot restoration, application write, SQL, credential read or new deployment.",
+    "Snapshot/quarantine and four runtime directories renamed whole without reading contents.",
+    "Only exact owned mask record and guard removed; foreign masks retained.",
+    "phase.json moved last after fsync; interrupted archive refuses automatic retry."
+  ],
+  "previous_qualified_algorithm": {
+    "path": "operations/deployment/first_release_archive_003.py",
+    "sha256": "21f8b2092bd35779a5a8e1bac677d27a4ac1ad5222a205f4e401f185782dd09f"
+  },
+  "probe": "operations/deployment/preflight-first-release-archive-attempt-004-20261102.py",
+  "probe_only_operation_constant_changed_byte_for_byte": true,
+  "probe_sha256": "2bb051636295cd20939ff83adb7f2d7a97aed25bb8bba64ea1e9e908faab4e92",
+  "production_access": false,
+  "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "return_witness": {
+    "path": "operations/deployment/observation-fourth-cutover-return-20261102.json",
+    "sha256": "2993d2b1bdac2810331cf4eb8f19f509428bb004d672356c484639b79dfcab53"
+  },
+  "schema_version": 1,
+  "source": "operations/deployment/first_release_archive_004.py",
+  "source_sha256": "f9c47d44a19b9f0e227d833dda7f0bab2f2f6ce095cb01049f9d55f92ae38c5c",
+  "tests": {
+    "elapsed_seconds": 0.715,
+    "groups_passed": 22,
+    "log": ".local/deployment-20261101/archive004-tests.log",
+    "log_sha256": "0e5aa0b67d80bc5f3608a642685167aec8eab660784c92aac68d0d8a75588b27",
+    "path": "operations/deployment/test_first_release_archive_004.py",
+    "sha256": "4eff9819b5c48463e5ef6417e0433805eb68fb68978499c503b51bb8b59cf836"
+  }
+}

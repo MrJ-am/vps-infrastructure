@@ -1,0 +1,21 @@
+{
+  "both_histories_preserved": true,
+  "candidate_commit": "673d9b6befe25b7ee211578e5a941473b37dfe0c",
+  "candidate_tree": "4e2a1e4597fde68d616880ebe6fa53d81151ec45",
+  "changed_paths": [
+    "crates/server/src/database.rs",
+    "crates/server/tests/runtime_postgres.rs",
+    "docs/etat.json",
+    "docs/reprise.org",
+    "docs/source-reconciliation-20261103.json"
+  ],
+  "full_workspace_revalidated": false,
+  "gitlinks_unchanged": true,
+  "local_ref": "refs/heads/spectre/source-alignment-20261103",
+  "parents": [
+    "2a34dac722ff1dab9a63aec56e407dd996de0719",
+    "6009020151cdd6e069aed67b4970b3b6de1b5151"
+  ],
+  "remote_mutation": false,
+  "schema_version": 1
+}

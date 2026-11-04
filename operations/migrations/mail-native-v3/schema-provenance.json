@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "services/mrjam-courriel/courriel.py",
+      "blob": "6e9a1cb8fb7596e51766c60b376299a495dfa2a7",
+      "source_sha256": "bf3576f61472de88ec4c9db022f4cb57bfe97769330b07a39b8b6890dc03fdde",
+      "extraction": "AST string literal only; legacy code never imported or executed",
+      "schema": "legacy-mail.sql",
+      "schema_sha256": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561"
+    },
+    {
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+      "path": "lisp/courriel/file.lisp",
+      "blob": "b1f470a52e371ca55fda9d2b8e231bda16b040c8",
+      "source_sha256": "3f6158528f6d6af7acf1facbe3cefd5195327fe5abb9c24cba0e9832fa9a42da",
+      "legacy_code_executed": false,
+      "schema": "native-mail.sql",
+      "schema_sha256": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd",
+      "extraction": "Pinned literal CREATE SQL only, plus exact reviewed ALTER columns in model; never load legacy runtime"
+    },
+    {
+      "schema": "target-mail.sql",
+      "schema_sha256": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d",
+      "target_candidate": ".local/vision-kanidm-workers/workers/001_courriels.sql",
+      "qualification": "Shared canonical contract frozen by host_composition; publication revision not yet assigned"
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "a3cb6be33652c7f2b824af0213bd1604eb9d6d5f",
+      "path": "src/cycle.lisp",
+      "source_sha256": "6f6c08468ef86ca495adef994d62424f8a9d1e8eaf2d74e2e295a0041f74dddb",
+      "blob": "0e021661d63f0ae8c07b29dfbff5348e4224ffa3",
+      "schema": "cycle-markers.sql",
+      "schema_sha256": "556ee5c3f01e66bbc02a20841c2147df34067e729d14f49d4066b2b091eeee67",
+      "extraction": "Exact CREATE SQL literal only; no legacy code execution",
+      "profile": "cycle"
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "revision": "a3cb6be33652c7f2b824af0213bd1604eb9d6d5f",
+      "path": "src/fermeture.lisp",
+      "source_sha256": "2c1b890f8c5abe59cf83dd34e995799680f2e4d027a6f532b4d789f6ad9d8642",
+      "blob": "97bf9a121a79012c02e79351b25c5485c6ffa0d8",
+      "schema": "closure-markers.sql",
+      "schema_sha256": "d8d355a91c9588833b8170bd93723034e8379da36d1bb2fb4140b7e6790a38cd",
+      "extraction": "Exact CREATE SQL literal only; no legacy code execution",
+      "profile": "closure input of archive"
+    }
+  ],
+  "publisher_origin": {
+    "path": "operations/migrations/admission-native/adopt.py",
+    "sha256": "dbdd4192473a5594eb1c8fbca625618988e3164db62b5d83d11bc4cd012fb261",
+    "modified_in_place": false
+  },
+  "source_scopes": {
+    "cycle": [
+      "cycle/courriels.sqlite"
+    ],
+    "archive": [
+      "fermeture/courriels.sqlite",
+      "courriel/file.sqlite"
+    ]
+  },
+  "target_columns": 11,
+  "collision_policy": "Identical canonical rows only; any differing byte, state, date, count or proof refuses the entire merge",
+  "source_keys": "Historical ASCII [A-Za-z0-9_.:-]{1,160}; no speculative prefix restriction",
+  "business_hashes": "empreinte_metier preserved separately; contenu_sha256 remains NULL for all historical rows",
+  "production_data_access": false,
+  "legacy_code_executed": false,
+  "preserved_markers": {
+    "cycle": "effacements_termines(utilisateur)",
+    "archive": "fermetures(sujet,outils_effaces,terminee)",
+    "semantics": "Preservation only; no inferred intention date, issuer, journal acknowledgment or deletion replay"
+  }
+}

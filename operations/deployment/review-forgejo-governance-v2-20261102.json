@@ -1,0 +1,64 @@
+{
+  "all_closed_codes_supported_by_current_backend": true,
+  "author_native_tests_passed": 16,
+  "changed_existing_definitions": [
+    "Git",
+    "wait_repository_metadata",
+    "adopt"
+  ],
+  "changed_sources": {
+    "README.org": "eb49613899acca43476c1829916ba1da6c69304fe61f9a225d6d1ef783abc995",
+    "core.py": "4cc30e9592e7523a722912ab2416808cc62cf59f53a4343620d8d4067c27af83",
+    "credentials.py": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2",
+    "entry.py": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487",
+    "finding-default-branch-batches-20261102.json": "f9bf59a09ddff9afe4370cc8407cc7bb85d8499315836869f1555623c3a90342",
+    "fixture.py": "ca64ac0cd0b4b9065d08da4d637afd560ebca6772572a3bf2fe6bceb5b0898f8",
+    "package.nix": "c519334b8ec595465db0267a55bda4f45d810761bdfc58d494836cb605b45046",
+    "systemd-test.nix": "a15dbe308509721196816a6f822873cc583790d9587204b2aa92ad55b6937a95",
+    "test_governance.py": "d3157bb8aba0350d5d1968855981f37c9400d7599bca187e9ca20bf864ca2977"
+  },
+  "checks": [
+    "Only repositories observed empty/main without protection or Actions and with no Git refs before this import can receive the fixed default-branch PATCH.",
+    "Chosen archive branch must belong to the exact imported bundle namespace and readback refs; target main must equal the sealed source commit.",
+    "ID, visibility, Actions and protection are unchanged, with fresh metadata and exact Git ref checks before PATCH and strict metadata readback afterwards.",
+    "Existing nonempty defaults and shared reconciler remain strict; no force, ref deletion, arbitrary endpoint or credential change.",
+    "Real Forgejo17 atomic import exceeding thirty branches reproduces the old refusal; disposable fixture resets that repository before the corrected path observes a fresh empty state.",
+    "Corrected real nine-repository import, queue drain, repeated main/protection checks, idempotence, admin protected-push refusal and private/tampered-source refusals pass."
+  ],
+  "core_sha256": "4cc30e9592e7523a722912ab2416808cc62cf59f53a4343620d8d4067c27af83",
+  "credential_and_entry_bytes_unchanged": true,
+  "fixture_runtime_code_byte_identical": true,
+  "git_command_and_ref_safety_unchanged": true,
+  "limits": [
+    "Qualification uses invented histories and credentials; it is not a production import or proof of CI/review authority.",
+    "The fixture alone deletes its disposable reproduction repository and prepares an existing main; neither operation was added to production runtime.",
+    "The new production package must bind the published accepted revision and exact nine bundles; do not deploy the synthetic fixture package.",
+    "No repeated unchanged test suite, SSH, store import or service activation was performed by this reviewer."
+  ],
+  "new_definitions": [
+    "adopt_empty_default_branches",
+    "observe_import_metadata"
+  ],
+  "only_new_patch_payload_literal_main": true,
+  "package_only_version_name_changed": true,
+  "passed": true,
+  "primary_finding_sha256": "f9bf59a09ddff9afe4370cc8407cc7bb85d8499315836869f1555623c3a90342",
+  "primary_forgejo_source_hashes_verified": true,
+  "production_access": false,
+  "qualification": {
+    "path": "operations/deployment/forgejo-governance-v2/qualification-20261102-002.json",
+    "sha256": "ed22ba06329eca870dc8a6c57846724deb9876b9897946fa4350495268a6e79e"
+  },
+  "runtime_code_review_passed": true,
+  "schema_version": 1,
+  "scope": "Independent source/AST, primary-source and actual VM artifact review of bounded initial default-branch adoption",
+  "shared_reconciler_sha256": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+  "source": "operations/deployment/forgejo-governance-v2/core.py",
+  "vm_result": {
+    "byte_identical_to_store_result": true,
+    "groups_passed": 10,
+    "output": "/nix/store/mjghmws49hm46pgzdcxdfy1475mgk96z-vm-test-run-mrjam-forgejo-initial-default-branch-adoption-v2",
+    "path": "operations/deployment/forgejo-governance-v2/result-002.json",
+    "sha256": "40ec882e70943071d0aa2e08a7e728a1be070ec667a397940961db17ee47e91c"
+  }
+}

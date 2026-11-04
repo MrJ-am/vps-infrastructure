@@ -1,0 +1,28 @@
+{
+  "export_bytes": 14376800,
+  "export_sha256": "f2171435d0a2bb84d5c18c15c89cbe8c7e0ce5e87071726559ca48cca2eba1cb",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1106923360,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/124ll4pddj14whprlwn21ihkm9q8vq82-unit-script-mrjam-bootstrap-journal-start",
+    "/nix/store/1i46491bsxkwy84sk8ycmvpphchr9ajg-system-units",
+    "/nix/store/3xpjjmxgxby0vs0dnnyrf7vwqpcp18sr-unit-mrjam-rust-blue.service",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/9hi42i79xwv298xh21ih1azz5xbb8hmm-unit-mrjam-rust-blue.service",
+    "/nix/store/9izcvd8wawanhpxhih1cvmqgg5bdsl9z-etc",
+    "/nix/store/asl1zrmynbw16n9bcn1sp7q4m841s1j8-unit-mrjam-rust-green.service",
+    "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/dcnw9gr779pn7jhsyf7wqriz97g45x9w-system-units",
+    "/nix/store/hbfh9zzrv35kxck3p56yv7pxxw22fb3y-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/j7hxh8lciy43px1zapj6sbq6fw2lzxb5-etc",
+    "/nix/store/nn4sx38x6snsq4jm4hv13j2w8nrki5jk-mrjam-audition-schema-adoption-2",
+    "/nix/store/ph06qf893mn2g608mnsgzpvc19cdxdn4-unit-mrjam-bootstrap-journal.service",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+    "/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue",
+    "/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

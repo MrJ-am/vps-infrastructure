@@ -1,0 +1,15 @@
+{
+  "all_functions_ast_identical_to_qualified_template": true,
+  "binding_exactly_matches_successful_closed_live_probe": true,
+  "closed_probe_sha256": "e55460eb779d27a3df1422f92be83f608977e8dcffa8f67726fe5bd8865ea1a0",
+  "no_restore_or_activation_added": true,
+  "only_operation_and_binding_changed": true,
+  "passed": true,
+  "prior_release_and_reopening_witness_exact": true,
+  "production_execution_by_reviewer": false,
+  "same_transaction_lock_and_phase_last_unchanged": true,
+  "schema_version": 1,
+  "sealed_helper_sha256": "735280d0a976220c6b7fca36d0b81fd72f02c2d403d6ad02e4366ec3ef985416",
+  "six_metadata_records_and_four_runtime_directories_bound": true,
+  "template_sha256": "4b632801419ed7e0a4277d6288ec633989782a17c16283a61b270473b9d4ef0f"
+}

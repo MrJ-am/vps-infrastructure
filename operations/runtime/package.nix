@@ -9,7 +9,7 @@ let
   storePattern = "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
   validStore = value: builtins.isString value && !(builtins.hasContext value)
     && builtins.match storePattern value != null;
-  configuration = builtins.fromJSON (builtins.readFile configFile);
+  configuration = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile configFile));
   assetPaths = map (asset: asset.directory) configuration.assets;
   caRoot = if (configuration.log or null) == null then [ ] else
     [ (lib.concatStringsSep "/" (lib.take 4 (lib.splitString "/" configuration.log.ca_file))) ];

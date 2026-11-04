@@ -1,0 +1,311 @@
+{
+  "activation_performed": false,
+  "authority": "Spectre-local-build",
+  "boot_guard_bound_to_current_sources": "/nix/store/11gb9i2v7b3980zylx4pnr3wh7hd8djf-mrjam-first-cutover-boot-guard",
+  "checks": {
+    "admissionPeerExact": true,
+    "adoptionImagesReadOnly": true,
+    "adoptionNeverAutomatic": true,
+    "adoptionNoNetwork": true,
+    "aliasReadersSeparate": true,
+    "archiveInitializePrivateConfig": true,
+    "archiveMissingCompanionRefused": true,
+    "archiveMixedRecipientRefused": true,
+    "archivePrivateConfigOnly": true,
+    "auditionKeepsExistingDatabase": true,
+    "backupDiagnosticsPrivate": true,
+    "backupTimersRequirePromotion": true,
+    "bootRecoveryGuardPresent": true,
+    "bothQualifiedRuntimes": true,
+    "caExact": true,
+    "databaseAndCredentialAdoptionNeverAutomatic": true,
+    "deletionAdapterExact": true,
+    "distinctNativeTokenReferences": true,
+    "eightObservedHostsOnly": true,
+    "embeddingsExact": true,
+    "existingPostgresqlBackupSelection": true,
+    "fixedApplicationIdentities": true,
+    "forgejoQuotaDefaultsPreserved": true,
+    "forgejoRetainedSecretsOnly": true,
+    "forgejoSsoConfigurationPreserved": true,
+    "forgejoTechnicalBootstrapBindsRetainedIdentity": true,
+    "fourNativeWorkersUnchanged": true,
+    "humanCredentialProvisioningExactAndLoopbackOnly": true,
+    "incompletePreparationStillBlocked": true,
+    "kanidmCertificateReloadRetained": true,
+    "legacyArchiveNotPromotable": true,
+    "machineStateVersionRetained": true,
+    "mailAdoptionDdlWhitespaceV3": true,
+    "mathevalPrefixAndRootRedirect": true,
+    "nativeAdminEndpointsPrivate": true,
+    "nativeBackupCredentialSeparate": true,
+    "nativeExportNeverAutostarts": true,
+    "nativeProtocolsSelected": true,
+    "noAcmeBootstrap": true,
+    "noInventedStyleOrLogoDomain": true,
+    "noReplayedBusinessMigration": true,
+    "noViseUnit": true,
+    "observedHostname": true,
+    "onlyExplicitDatabaseMigrationUnits": true,
+    "phpContainmentPreserved": true,
+    "portableRuntimeGuardExact": true,
+    "postgresPeerAndNoBootstrap": true,
+    "privateCredentialAdaptationIsolated": true,
+    "promotedCompositionAssertions": true,
+    "promotedOnlyActiveSlot": true,
+    "promotedWritersExplicit": true,
+    "qualifiedServerBound": true,
+    "renewalPromotionExplicit": true,
+    "renewalsKeepEightAccounts": true,
+    "replaySeparatelyBuilt": true,
+    "replayWithoutProviderCredential": true,
+    "sevenFrontendClosuresRetained": true,
+    "stagedApplicationsNotStarted": true,
+    "stagedCompositionAssertions": true,
+    "stagedTimersNotPromoted": true,
+    "wwwRedirect": true
+  },
+  "checks_passed": 61,
+  "closure_delta": {
+    "added": [
+      "/nix/store/124ll4pddj14whprlwn21ihkm9q8vq82-unit-script-mrjam-bootstrap-journal-start",
+      "/nix/store/1i46491bsxkwy84sk8ycmvpphchr9ajg-system-units",
+      "/nix/store/3xpjjmxgxby0vs0dnnyrf7vwqpcp18sr-unit-mrjam-rust-blue.service",
+      "/nix/store/9hi42i79xwv298xh21ih1azz5xbb8hmm-unit-mrjam-rust-blue.service",
+      "/nix/store/9izcvd8wawanhpxhih1cvmqgg5bdsl9z-etc",
+      "/nix/store/asl1zrmynbw16n9bcn1sp7q4m841s1j8-unit-mrjam-rust-green.service",
+      "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+      "/nix/store/dcnw9gr779pn7jhsyf7wqriz97g45x9w-system-units",
+      "/nix/store/hbfh9zzrv35kxck3p56yv7pxxw22fb3y-nixos-system-srv1982677-26.05pre-git",
+      "/nix/store/j7hxh8lciy43px1zapj6sbq6fw2lzxb5-etc",
+      "/nix/store/nn4sx38x6snsq4jm4hv13j2w8nrki5jk-mrjam-audition-schema-adoption-2",
+      "/nix/store/ph06qf893mn2g608mnsgzpvc19cdxdn4-unit-mrjam-bootstrap-journal.service",
+      "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+      "/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue",
+      "/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green"
+    ],
+    "removed": [
+      "/nix/store/3ygj2w5qqbzn5mj9f6b96k7a9rczk1k5-unit-mrjam-bootstrap-journal.service",
+      "/nix/store/678k8rj14zijh8g4ipdxq23651cfl64a-etc",
+      "/nix/store/6jmag1wwiam0lj0gnfcq3r3y3w2kjysw-etc",
+      "/nix/store/8mllic0z8iwrhnv0khqbja7kwwmbbl1d-unit-script-mrjam-bootstrap-journal-start",
+      "/nix/store/a6piibaxg2f145yc08rn6m8jf2ag90cl-system-units",
+      "/nix/store/cxqicl1y5i8fcbclbvyrx0mdhkf2z215-nixos-system-srv1982677-26.05pre-git",
+      "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+      "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a",
+      "/nix/store/i6sihwyslybsjf3qxx8k6pqb18n0wcak-mrjam-runtime-blue",
+      "/nix/store/nwyfhqa42f1c4igk6cv3pfxzkpixqsbn-system-units",
+      "/nix/store/p6fzklfcay69gl3b69n5zb5l79wx73cr-unit-mrjam-rust-blue.service",
+      "/nix/store/qp7jys8wcvyc2w611y6acl206n5yq2vg-mrjam-runtime-green",
+      "/nix/store/s5jn3yzw2a6gfiw780qwx2qhz9d5nb2i-unit-mrjam-rust-green.service",
+      "/nix/store/yggg90qinfw851c5b1x6vavalf0zzdyy-unit-mrjam-rust-blue.service"
+    ]
+  },
+  "composition_qualified": true,
+  "generation_switch_and_return_qualified": true,
+  "historical_bootstrap_source_manifest_sha256": "1777b5ab2f79751f5ddc9564c09bbd7372b0719fd8df2620433c76267ab0b597",
+  "human_provisioner_exact_unit": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+  "independent_component_evidence": {
+    "audition_qualification-20261102.json": {
+      "path": "operations/deployment/audition-schema-v2/qualification-20261102.json",
+      "sha256": "7fe065e2234df4925a21c0f141973554a351765bb59514687afbd9cde5aeff5c"
+    },
+    "audition_review-20261102.json": {
+      "path": "operations/deployment/audition-schema-v2/review-20261102.json",
+      "sha256": "ea65169b660b61da1c699c0c64c7c0dcd5c1a73a74ee13b29a8f5b1e3b7c4510"
+    },
+    "exact_nginx_routes": {
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-nginx-20261102-001.json",
+      "sha256": "0319f9edca0fdecce7c950d95774f2a67899f88cf750aec59e5d60cfd5402783"
+    },
+    "human_provisioning": {
+      "path": "operations/deployment/credentials/qualification-provision-systemd-20261102.json",
+      "sha256": "29e952a10e56d811f1f914b13d8f4971e4114e4e23c0806d9461426576ed4410"
+    },
+    "journal_namespace_and_closure": {
+      "path": "operations/deployment/qualification-journal-closure-systemd-20261102-003.json",
+      "sha256": "a10962d0d193f4d1fad818dcd0664d3b91c447d1686ef45fef3e9c49c0513c29"
+    },
+    "mail_adoption_v3": {
+      "path": "operations/migrations/mail-native-v3/qualification-20261102.json",
+      "sha256": "57bb7744c128c625e1ef8353dec8df462a18357af25abaa6f08d497a34105fe3"
+    },
+    "mateval_typed_readiness_0": {
+      "path": "operations/runtime/mateval-readiness-v1/qualification-20261102.json",
+      "sha256": "ac93a8df9a6b45d77eea97ffd0884c43e2ae59f81fb3eb7ff81ff66998873d5f"
+    },
+    "mateval_typed_readiness_1": {
+      "path": "operations/runtime/mateval-readiness-v1/review-20261102.json",
+      "sha256": "cf48c222bbfb5a2f1ce44da119354a97faf900c5a9ca56f5ab001dc3d5f50d22"
+    },
+    "namespace_author": {
+      "path": "operations/deployment/qualification-sql-namespace-20261102.json",
+      "sha256": "2bd986c01f1cbb3cabdca752322e5bcf4ff9fc6f5d5261d8c477a8e1f6ba215d"
+    },
+    "native_deletion": {
+      "path": "operations/identity/deletion-adapter/qualification-20261102.json",
+      "sha256": "45dbfee9144761b41460f3e13b22ab1cd756ef5b236a8c9ce066b10414f3b63e"
+    },
+    "old_generation_without_guard_return": {
+      "path": "operations/deployment/qualification-generation-20261102-02.json",
+      "sha256": "e62631fd9cb1ab0b19d29f79827cfdcf4a5d66ce2dd9588881bedcf3b45591c6"
+    },
+    "portable_guard": {
+      "path": "operations/deployment/qualification-system-control-20261102-03.json",
+      "sha256": "7ee0be80878cc3f3a08914d780e1859878e664bc6a482200787938ea54746c82"
+    },
+    "previous_timer_return": {
+      "path": "operations/deployment/qualification-previous-return-systemd-20261102-002.json",
+      "sha256": "ba608f90ff27c936cd89f4559f8441883d4109d94dd27de5447a110a217c058f"
+    },
+    "vision_administration_namespace": {
+      "path": "operations/deployment/review-vision-admin-public-schema-usage-20261102.json",
+      "sha256": "824c184f2183314eabdfb8aaf131ee40f1270d069c1073379a411cd67d440d51"
+    }
+  },
+  "joint_closure_list_sha256": "e94163ed2eb987d8f474ff2ce40d2fbdc53a34a24c8848a4f28a11da8cc0cad4",
+  "joint_closure_paths": 1293,
+  "legacy_lisp_runtime_found": false,
+  "limits": [
+    "Local construction/evaluation only; no activation or production application readiness claimed.",
+    "Compared with candidate006, only two Rust slot units and the explicit journal/adoption script change. All other service/timer/socket unit bytes remain identical.",
+    "Rust slot sandbox/credentials/ordering are unchanged after exact server/runtime prefix substitution. Frontend assets remain the seven approved immutable outputs.",
+    "Audition002 changes only two policies and its schema marker under exact catalogue guards; native PostgreSQL proof and independently reviewed live readonly applicability are separate.",
+    "The Matheval change validates the existing typed corpus without modifying scientific data or versions; its independent server qualification is bound separately."
+  ],
+  "mail_adoption_package": "/nix/store/8x4pybgyhkz01jqd41363wfs5rz0fm8i-mrjam-mail-native-adoption-3",
+  "nixpkgs_nar_hash": "sha256-u6z9VTZA4Kf3RkHQo9sQI7NI4Ei/uiU9vrMqOiwWP1Y=",
+  "nixpkgs_revision": "c5c4a43b0e8056328ec4529f735cabdb8f1942bb",
+  "production_access": false,
+  "promotable": false,
+  "recorded_on": "2026-11-02",
+  "schema_version": 1,
+  "scope": "complete-generations-built-and-declarative-composition-evaluated",
+  "source_sha256": {
+    "operations/deployment/audition-schema-v2/001-reference.sql": "f834e41dc2de49a7063318e6be466a5a28d0698a340527068e4c914211dfe937",
+    "operations/deployment/audition-schema-v2/002-additive.sql": "183a44c605ee3e6ddcc4ee7737f042b65c17262ed4cd89d8c674acd98e761ab9",
+    "operations/deployment/audition-schema-v2/build_sql.py": "6e44492cf51c7d7daf511758a33a355f0780c0d4b89a125f45df23de3bb743ae",
+    "operations/deployment/audition-schema-v2/catalogue.sql": "d48bb48b4b8165f6da89a8989dea91dce93b4fc1c3dad6224c01caf64243bfcc",
+    "operations/deployment/audition-schema-v2/package.nix": "7f4d0ba6f59340f8037ee33ba0096481f5b4c21285c1d6c7d0587e982a217fe1",
+    "operations/deployment/audition-schema-v2/source.json": "fbbbbe9ef70b3a5169f74ffc1ab6c444ee40a1719abad48ceaad1b046785da96",
+    "operations/deployment/boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "operations/deployment/boot-guard.nix": "f1b0198336de79af9e632045aa596cfd1f8f0ef0f85e374ac7b09a2b310c5f09",
+    "operations/deployment/boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "operations/deployment/credential-adoption.nix": "c6f9ff339e7c115cb69fbc2965367e635ac1b212409b97933ab57ac6df1be2ee",
+    "operations/deployment/credentials/provisioning-unit.nix": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a",
+    "operations/deployment/cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "operations/deployment/database-adoption.nix": "676d4bb1f95968676a877d1fdf385f70976f038d1c346f76d2f7cdce9b77eb0f",
+    "operations/deployment/forgejo-bootstrap/core.py": "8d9a821eb500e46c1e0117ffb7a4cca0df6e238694a7aff40528731369a6aa61",
+    "operations/deployment/forgejo-bootstrap/module.nix": "882799a2fc053b0ec506d727cbeef9e6d07b981ff49043d5a4f957128f8fb502",
+    "operations/deployment/forgejo-bootstrap/package.nix": "bca91d3788fa40b22c860f42c2a0a8405786fe057e0fdbfdea4327d2e8a5918c",
+    "operations/deployment/journal-public-schema-usage.sql": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "operations/deployment/system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "operations/deployment/vision-admin-public-schema-usage.sql": "c355bf1d930042cc99e59ee4235597298fa51ff7426625f5ed6da68d94cdbf9e",
+    "operations/hosts/mrjam-vps/CANDIDATE-ASSEMBLY.org": "26b978ef21bd1e33374e32b0be680d510a82071f87b0fc001819bcd3bacafe13",
+    "operations/hosts/mrjam-vps/application-services.nix": "20597f905fdb935f8315b14719052b51c9c2476a8fb4be29694685758468e1a6",
+    "operations/hosts/mrjam-vps/backups.nix": "5805d80444217e62d57d771477f77bc39df1021e0c183d1b45cfc08620dfcc05",
+    "operations/hosts/mrjam-vps/candidate-promoted.nix": "1b7da33f6a64e6364910ef179b413e0ffe1eeb59b9771565b2be14e8854a74db",
+    "operations/hosts/mrjam-vps/candidate.nix": "27dce4587c88f8686ad67284fff872a24caf8cd14e7d05d0ec8694702bc76778",
+    "operations/hosts/mrjam-vps/core-services.nix": "930c6f2ca2c80371591208efe5df583acbcabe876c14d66118ff1f99a1ebc2d9",
+    "operations/hosts/mrjam-vps/machine-profile.nix": "fbf00f379889ea5134e8457d701463dea0f371ede8766caf2c04bfb19816c73d",
+    "operations/hosts/mrjam-vps/machine.nix": "48305adb5c454a0575cbc1a01f94e213ea5df69f2e4e7829a4a9516373cfa0bd",
+    "operations/hosts/mrjam-vps/observed-service-identities.nix": "a7f758a5a09918c5eca8dbd256be2b3504f7fe7564c6b0ad16ebd85e7bff2cac",
+    "operations/hosts/mrjam-vps/renewal.nix": "9fc6950050b9d947decae8d0afe3eea137de42564e192e4f565986ebdbfb31bd",
+    "operations/hosts/mrjam-vps/retained-forgejo-quotas.json": "8cb9cf17f1a89d2da6192afd000c41ade7649e338174c755ea5579feb92f8860",
+    "operations/hosts/mrjam-vps/runtime-blue.json": "96813c225a279cb96be091ed055871f92af61c9a8928238c9c9e604fcc424ca1",
+    "operations/hosts/mrjam-vps/runtime-green.json": "0ab1edeb133feff676121699344814ea468857a7cd8a9e52f3a4dee5d910e9f1",
+    "operations/hosts/mrjam-vps/runtimes.nix": "7b22d7efd2d8ba8117d61cd3e4f5de477c03f6dfa8550236494fe836950db415",
+    "operations/hosts/mrjam-vps/state-adoption.nix": "ea41b339cce6eccd2be68101b3e173a6f3f4aef37414617d11deca118d2e4a65",
+    "operations/hosts/mrjam-vps/systems.nix": "54c6a0185389d7df4cb1cec905f1d79c33c133816ac41a5acbc4976919174353",
+    "operations/nixos/mrjam-identity-deletion.nix": "e400ede790befe99f7eab2a22bf4b1eb286e6479a2e8df29bd977eb27e27e58b",
+    "operations/nixos/mrjam-vision-replay.nix": "3aca1ae89a4b05d46f7bf24c681eb7e4a658d80fc4a197e65f3cc7512c423d5b",
+    "operations/tests/candidate-evaluation.nix": "4703ea834788b60ce59d30c42c50858e910a0ff572d91acc5f215902d2cb4afa"
+  },
+  "supersedes": "qualification-candidate-build-20261102-006.json",
+  "systems": {
+    "promoted": {
+      "bootstrap_only_added_guarded_audition_call": true,
+      "bootstrap_script": "/nix/store/124ll4pddj14whprlwn21ihkm9q8vq82-unit-script-mrjam-bootstrap-journal-start/bin/mrjam-bootstrap-journal-start",
+      "bootstrap_script_sha256": "396473a55160048a29a372955bfe24400688a30a3178f320924d8c94472b9bf8",
+      "bootstrap_unit_sha256": "e2e6cfe3a32faf94e2c636ca4916d81d154f904b556cf32fb3c7923f50d8fbc3",
+      "changed_rust_units": {
+        "mrjam-rust-blue.service": {
+          "current_sha256": "52b16f3a45bead0db4d1ebb162429dc89ec4eae3a2fbb23c784e0c2985601f55",
+          "only_server_and_runtime_store_prefixes_changed": true,
+          "previous_sha256": "167ba31e0aa7a56bd771787a963e6dad13baefecbcedcfaeb87368fac8855543",
+          "public_runtime_json_unchanged": true,
+          "runtime": "/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue",
+          "server": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+        },
+        "mrjam-rust-green.service": {
+          "current_sha256": "4840fb095f8e3f11954da8b1ea8435dce99125d0b92e0b0dbade6c4cef10ac66",
+          "only_server_and_runtime_store_prefixes_changed": true,
+          "previous_sha256": "0c690be62c6839ae4dc1bf7eee05be194399d3473ea766def8bce94c69426af9",
+          "public_runtime_json_unchanged": true,
+          "runtime": "/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green",
+          "server": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+        }
+      },
+      "changed_unit_names": [
+        "mrjam-bootstrap-journal.service",
+        "mrjam-rust-blue.service",
+        "mrjam-rust-green.service"
+      ],
+      "closure_size_bytes": 6599713592,
+      "compared_service_timer_socket_units": 214,
+      "derivation": "/nix/store/fwkhks84hpl6s32wbg39lpppvk6pn9ra-nixos-system-srv1982677-26.05pre-git.drv",
+      "nar_hash": "sha256-XZpaPwGMXXqnIO0pac+Kc/EiXVOTkm5ZwaYH4Q6wT6c=",
+      "store_path": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+      "unchanged_service_unit_sha256": {
+        "forgejo": "96d890e2f3dbf3d1d3e0dfed50849dfaeb2a3f2f561027d6b5efa4dbd543ee8b",
+        "kanidm": "6d303b2f4dd440b3687e63107551991dfe96bbd492f4eba45e49fda5b45048fd",
+        "nginx": "9d4cb9a03dd7211931b03b808114cee2bc973b87a0d1f319d069355862141659",
+        "phpfpm-nextcloud": "f2387db19fef54ad38782b781a229a0f5096e6e6b7a67057aa01099e81cd6613",
+        "postgresql": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c",
+        "sshd": "8e6e0e5e264ae5349b64f4086df61768e091990ef5fe9845090758fadbb0d709"
+      }
+    },
+    "staged": {
+      "bootstrap_only_added_guarded_audition_call": true,
+      "bootstrap_script": "/nix/store/124ll4pddj14whprlwn21ihkm9q8vq82-unit-script-mrjam-bootstrap-journal-start/bin/mrjam-bootstrap-journal-start",
+      "bootstrap_script_sha256": "396473a55160048a29a372955bfe24400688a30a3178f320924d8c94472b9bf8",
+      "bootstrap_unit_sha256": "e2e6cfe3a32faf94e2c636ca4916d81d154f904b556cf32fb3c7923f50d8fbc3",
+      "changed_rust_units": {
+        "mrjam-rust-blue.service": {
+          "current_sha256": "fa97ec326c2ff4576eb43764440f2bd2797d78b587a686150fed33e745da1252",
+          "only_server_and_runtime_store_prefixes_changed": true,
+          "previous_sha256": "7d78efbcc21b50e77168f97f3941e8a5e71005efefbbbf20a5a7296c81ac60da",
+          "public_runtime_json_unchanged": true,
+          "runtime": "/nix/store/y3vx7wl0419wqzkfdwckf2kdmk6sdfv5-mrjam-runtime-blue",
+          "server": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+        },
+        "mrjam-rust-green.service": {
+          "current_sha256": "4840fb095f8e3f11954da8b1ea8435dce99125d0b92e0b0dbade6c4cef10ac66",
+          "only_server_and_runtime_store_prefixes_changed": true,
+          "previous_sha256": "0c690be62c6839ae4dc1bf7eee05be194399d3473ea766def8bce94c69426af9",
+          "public_runtime_json_unchanged": true,
+          "runtime": "/nix/store/zzfz80j1qwxwsv358lf57pppagglhmkk-mrjam-runtime-green",
+          "server": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+        }
+      },
+      "changed_unit_names": [
+        "mrjam-bootstrap-journal.service",
+        "mrjam-rust-blue.service",
+        "mrjam-rust-green.service"
+      ],
+      "closure_size_bytes": 6599702768,
+      "compared_service_timer_socket_units": 211,
+      "derivation": "/nix/store/32z3xk1jfimyi428mpi1c9qi9wgn53x3-nixos-system-srv1982677-26.05pre-git.drv",
+      "nar_hash": "sha256-cIE1Wvsj8Kc7WzJoe3S9PzKQspJ+7OjumAgjFT6+PMs=",
+      "store_path": "/nix/store/hbfh9zzrv35kxck3p56yv7pxxw22fb3y-nixos-system-srv1982677-26.05pre-git",
+      "unchanged_service_unit_sha256": {
+        "forgejo": "6ef12b8b7a9566ef8130415d4cbf9717e4efce6d7492ca4ee0e97fd50d5e6c34",
+        "kanidm": "76aaa520791d2501669733ffffb8371a032da9d9d988c87c8f400b541f67491d",
+        "nginx": "b11f01cc9a1984ae6bb1298c28745dc4c5f91a1f9b7ba102d1949061ab068847",
+        "phpfpm-nextcloud": "842ed5dd3f8889f7ce9ebbdd5c8ba8d3a16098cfcee7a75dfd3246a2b3f167c5",
+        "postgresql": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c",
+        "sshd": "8e6e0e5e264ae5349b64f4086df61768e091990ef5fe9845090758fadbb0d709"
+      }
+    }
+  }
+}

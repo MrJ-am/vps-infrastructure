@@ -1,0 +1,63 @@
+#+title: Adoption initiale de main après l’import multi-branches
+#+date: 2026-11-02
+#+language: fr
+
+Cette version conserve les fichiers et paquets de gouvernance v1. Le
+réconciliateur partagé, les credentials, les points d’entrée, les neuf noms de
+dépôts et la politique de protection restent inchangés. Le contrôleur de
+bascule et les générations NixOS ne sont pas modifiés.
+
+* Défaut observé et cause
+
+La troisième tentative a refusé =DEFAULT_BRANCH_ADOPTION_REQUIRED= puis a
+rétabli l’ancienne génération et sa sauvegarde cohérente. Le contrôle après
+retour confirme que le namespace de destination était initialement absent.
+
+Le source exact Forgejo 17.0.1 fixe =hookBatchSize= à 30 dans =cmd/hook.go=.
+=routers/private/hook_post_receive.go= place main en tête du lot qui le
+contient, mais ne le déplace pas dans un lot précédent. Le premier événement
+de branche d’un dépôt encore vide fixe sa branche par défaut dans
+=services/repository/push.go=. Un import atomique contenant de nombreuses
+branches archivées avant main peut donc sélectionner une de ces archives.
+L’ancienne fixture ne franchissait pas cette limite et ne révélait pas ce cas.
+
+* Correction bornée
+
+L’import Git conserve exactement ses commandes sans force, suppression, prune,
+contournement de hook ou changement de protection. Il retourne à l’appelant ses
+références avant/après en mémoire uniquement. Le programme attend ensuite la
+fin du passage des neuf dépôts de vides à non vides.
+
+Une seule métadonnée peut être adaptée par cette nouvelle étape :
+=PATCH {"default_branch":"main"}=. Les conditions cumulatives sont :
+
+- Le dépôt était observé vide, sur main, sans protection et sans Actions, avec
+  aucune référence Git avant l’import de cette invocation.
+- Son identifiant, sa visibilité, sa protection et son état Actions sont
+  conservés. Sa branche courante appartient à l’espace d’archive du bundle
+  exact et figure parmi les références réellement importées.
+- La référence main importée correspond au commit scellé. Une lecture fraîche
+  vérifie toutes les références et les métadonnées avant cette écriture.
+- La relecture après PATCH conserve tous les autres champs observés.
+
+Un dépôt initialement non vide dont la branche par défaut diffère de main reste
+refusé. Le réconciliateur partagé exige toujours main ; ses observations,
+protections, préconditions et limites ne sont pas assouplies. Les protections
+ne sont appliquées qu’après cette adoption et leur relecture complète.
+
+* Qualification et limites
+
+Les tests locaux couvrent les conditions précédentes, les dérives, l’absence
+d’écriture sur refus, les credentials et le transport Git HTTP réel. Le banc
+VM comporte un historique inventé dépassant trente branches : il démontre le
+refus du contrat v1, puis l’adoption v2 sur neuf dépôts, le drainage des files
+post-receive, des relectures répétées, le replay idempotent et le refus d’un
+push administrateur sur main protégé. La préparation du dépôt existant dans
+la fixture choisit explicitement main avant toute observation du runtime ;
+ceci n’ajoute aucune normalisation des dépôts existants au programme livré.
+
+Les résultats et empreintes exacts sont consignés dans le reçu de
+qualification voisin. Aucun dépôt privé réel, compte réel ou accès VPS n’est
+utilisé par cette qualification. Le paquet de fixture ne doit pas être livré.
+La livraison utilise un binding neuf lié au commit de source publié ; aucune
+ancienne archive de tentative n’est rejouée.

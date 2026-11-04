@@ -1,0 +1,15 @@
+{
+  "limits": [
+    "Caller must supply a private size-limited temporary filesystem.",
+    "Live GitHub source transfer not yet exercised.",
+    "No validation or deployment authority."
+  ],
+  "production_installed": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "source_fetch.py": "9f55496531424029326bcfb53bfadabb319b8d8c487ef1a48c12f6395d97f9c1",
+    "test_source_fetch.py": "7d2977dc7d9ba9d928a9cf11e61bfdb8e51e61e07dc5db65af9a078fdf14acc5"
+  },
+  "tests_passed": 7,
+  "transport": "real local Git objects; simulated GitHub API and local replacement for HTTPS transport"
+}

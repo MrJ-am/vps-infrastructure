@@ -1,0 +1,23 @@
+{
+  "artifacts": {
+    "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1": {
+      "nar_hash": "sha256-B6BveEWGIvuy7F+QnG9ZJYWYc0a2AUwke0bm7Vxxznk=",
+      "references": [
+        "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+        "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+        "/nix/store/nly4cml071i82515r89rpdw38z55wjqd-git-2.54.0",
+        "/nix/store/rzl7zd3zx56vl7m55x1l49sr4xx2bb7y-bash-5.3p9",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15",
+        "/nix/store/y5xil6njhqldrdkgpap95d0dh0ybkafy-mrjam-rules-proposal-binding.json"
+      ]
+    },
+    "/nix/store/y5xil6njhqldrdkgpap95d0dh0ybkafy-mrjam-rules-proposal-binding.json": {
+      "nar_hash": "sha256-1IP8lvcxt8gt/TECQzSr+r9XQs/2cpuqKvd2gxIbRHo=",
+      "references": []
+    }
+  },
+  "export_bytes": 62232,
+  "export_sha256": "1e2803b3a1b3a36589ddce25cceb6067d7cb5259f16f1607b7514d1b39f042a2",
+  "required_free_bytes": 1073866288,
+  "schema_version": 1
+}

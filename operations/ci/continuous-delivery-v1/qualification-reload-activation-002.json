@@ -1,0 +1,71 @@
+{
+  "activation": {
+    "automatic_deployment_enabled": false,
+    "boot": "/nix/store/xqbbs66wf4q9n7fdrs9p54bf87ak264a-nixos-system-srv1982677-26.05pre-git",
+    "code": "NATIVE_RELOAD_ACTIVE_AND_BOOT",
+    "current": "/nix/store/xqbbs66wf4q9n7fdrs9p54bf87ak264a-nixos-system-srv1982677-26.05pre-git",
+    "https_statuses": {
+      "audition.mrj.am": 200,
+      "forge.mrj.am": 303,
+      "log.mrj.am": 200,
+      "vise.mrj.am": 200,
+      "vision.mrj.am": 200
+    },
+    "initial_nginx_restart": true,
+    "retained_processes_unchanged": true,
+    "subsequent_reload_preserved_master": true
+  },
+  "evaluation": {
+    "added": [
+      "nginx-config-reload.service"
+    ],
+    "changed": [
+      "nginx.service"
+    ],
+    "checks": {
+      "allOtherEtcIdentical": true,
+      "assertionsPass": true,
+      "baselineExact": true,
+      "onlyNginxConfigurationAdded": true,
+      "onlyNginxUnitChanged": true,
+      "onlyReloadUnitAdded": true,
+      "reloadEnabled": true,
+      "routesIdentical": true,
+      "selectedSlotUnchanged": true
+    },
+    "etcAdded": [
+      "nginx/nginx.conf"
+    ],
+    "etcChanged": [
+      "systemd/system"
+    ],
+    "system": "/nix/store/xqbbs66wf4q9n7fdrs9p54bf87ak264a-nixos-system-srv1982677-26.05pre-git"
+  },
+  "first_attempt": {
+    "activation_passed": false,
+    "immediate_return_probe_passed": false,
+    "subsequent_https_probe_passed": true,
+    "subsequent_read_only_check_current_and_boot_previous": true
+  },
+  "limits": [
+    "Initial transition restarts Nginx; uninterrupted service during this restart is not claimed.",
+    "No candidate deployment admission or automatic merge enabled.",
+    "No VPS reboot performed."
+  ],
+  "schema_version": 1,
+  "scope": "native-nginx-reload-transition",
+  "source_sha256": {
+    "activate-reload.py": "889bc142fa8620427740df7611a9f387facc0df72d7bb48207fd3f31f793a79d",
+    "reload-host.nix": "f3ff193ee68195fbf04a7d34ad6f67583ccd710fab007c0cdb402cb64237083a",
+    "reload-transition.nix": "49c9cd182ca3079df8c6742dd7c36925ea0ba61a8bd015b248e5babf996f34c7"
+  },
+  "vm_result": {
+    "continuous_service_during_initial_restart_claimed": false,
+    "initial_restart_required": true,
+    "production_activation": false,
+    "schema_version": 1,
+    "subsequent_reload_preserves_master": true,
+    "transition_and_return_passed": true
+  },
+  "vm_store": "/nix/store/x8l1h7ywgfqs0jb8gb6vbnjnxylzxsx7-vm-test-run-mrjam-nginx-reload-initial-transition"
+}

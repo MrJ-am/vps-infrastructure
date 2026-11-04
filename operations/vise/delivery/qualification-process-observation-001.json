@@ -1,0 +1,17 @@
+{
+  "active_service_not_reported_stopped": true,
+  "running_identity": {
+    "boot_id": "245f2363-1aba-4484-80d1-610f34087a32",
+    "executable": "/nix/store/zmb0mvkn59zxpxnc9ny02q4rkaffc5bw-mrjam-vise-0.2.0-8c8ef66f943c/server",
+    "pid": 920931,
+    "starttime": 147429235
+  },
+  "schema_version": 1,
+  "service_control_performed": false,
+  "scope": "read-only active production process identity and negative stop gate",
+  "limitations": [
+    "No service stopped",
+    "Positive stopped-state proof still requires system test",
+    "No activation or deployment"
+  ]
+}

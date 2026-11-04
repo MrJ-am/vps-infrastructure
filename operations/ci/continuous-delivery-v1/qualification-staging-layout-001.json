@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "units": {
+    "old": 573,
+    "staged": 573,
+    "promoted": 573
+  },
+  "built_layout_verified": true,
+  "scope": "real-built-generations-read-only",
+  "activated": false,
+  "systems": {
+    "current": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+    "stage": "/nix/store/27i5lsmml42p1xzc9nm81iakxyafr3b7-nixos-system-srv1982677-26.05pre-git",
+    "promotion": "/nix/store/913dgifa3fn11b6cmdk0jpa4r60y2q6z-nixos-system-srv1982677-26.05pre-git"
+  }
+}

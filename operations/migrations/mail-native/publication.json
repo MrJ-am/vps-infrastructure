@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "action": "add only; parent agent publishes",
+  "package": "/nix/store/7hmdar637aj6m80vrqma57g82pgqvbc1-mrjam-mail-native-adoption-2",
+  "files": [
+    {
+      "path": "operations/migrations/mail-native/README.org",
+      "sha256": "31de911ffba19edd73bb574aabd71f40a97b06e57e4404789febbbca36447235"
+    },
+    {
+      "path": "operations/migrations/mail-native/adopt.py",
+      "sha256": "db697ba4464e52b04b7697ff68aba471eb089278e0db36736056d6e69451d46f"
+    },
+    {
+      "path": "operations/migrations/mail-native/package.nix",
+      "sha256": "d79999a92ac462104b9cc611d43d44c1ce903175d411b317954ed509ceb9ee43"
+    },
+    {
+      "path": "operations/migrations/mail-native/qualification-build-20261102-02.json",
+      "sha256": "a6e6e0357c44bc2fdd968e2f47b4a57ddf98b7db335a8f828c5307e81b0f2ac8"
+    },
+    {
+      "path": "operations/migrations/mail-native/qualification-build-20261102.json",
+      "sha256": "c787fb0c3dce452821def1ed9032d4a3364d2d2dffe2d4f52036a3f75c74a226"
+    },
+    {
+      "path": "operations/migrations/mail-native/schema-provenance.json",
+      "sha256": "72fd0b2361103616b25494224d4721ce13a14c9bb590cbaac389685ab20d8844"
+    },
+    {
+      "path": "operations/migrations/mail-native/schemas/closure-markers.sql",
+      "sha256": "d8d355a91c9588833b8170bd93723034e8379da36d1bb2fb4140b7e6790a38cd"
+    },
+    {
+      "path": "operations/migrations/mail-native/schemas/cycle-markers.sql",
+      "sha256": "556ee5c3f01e66bbc02a20841c2147df34067e729d14f49d4066b2b091eeee67"
+    },
+    {
+      "path": "operations/migrations/mail-native/schemas/legacy-mail.sql",
+      "sha256": "e8c87623f56ffca2792bd43bc51cde46c052c2e19d081c2e02495a86a0b7d561"
+    },
+    {
+      "path": "operations/migrations/mail-native/schemas/native-mail.sql",
+      "sha256": "5bb1284d8797440fb2d2c5d993d94d88f5889f08896ea693621d721bb93ba0fd"
+    },
+    {
+      "path": "operations/migrations/mail-native/schemas/target-mail.sql",
+      "sha256": "478c5dfc5e4830326903241be73559b5c1285b669cb39ebac4a5e85a2a46ab9d"
+    },
+    {
+      "path": "operations/migrations/mail-native/test_adopt.py",
+      "sha256": "a446db0f886ddac5233acb03e361efeea16d5d32889b75e1606c1364724c0281"
+    }
+  ],
+  "excluded": [
+    "__pycache__",
+    "local logs"
+  ]
+}

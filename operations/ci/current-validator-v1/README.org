@@ -1,0 +1,59 @@
+#+title: Validateur proposé des applications actuelles — état qualifié localement
+#+language: fr
+
+Le paquet =mrjam-validate-current-readiness-1= est une nouvelle sortie. Sa
+base de contrôle est explicitement le validateur récupéré =p249…= ; sa
+politique synthétique et son ancien runtime ne sont plus sélectionnés et
+ne figurent pas dans la nouvelle fermeture. Les compilateurs, verrous,
+dépendances, contrôles Git et frontends sont conservés.
+
+Le staging contient les mêmes 815 fichiers publics vérifiés octet par octet
+par =inspect.py=. Son nouveau manifeste lie uniquement la révision proposée
+=b02bdf1b5d63dcf0e0610723788a7ca7e384932c=. Aucun historique privé ni nouveau
+blob non sélectionné n’a été copié. Cette proposition n’est pas une adoption
+du main protégé.
+
+* Deux changements de contrôle distincts
+
+Le parseur =policy_v2.py= exige le schéma 2 et l’objet fermé =overlay.json=,
+puis applique tous les contrôles de la politique d’origine. =readiness.py=
+applique le patch public I =90d22…= avant le premier appel Cargo, après
+vérification des deux SHA d’origine. Il borne l’inventaire, refuse les liens,
+exige l’UID du superviseur, vérifie le patch et les deux SHA résultants, et
+refuse toute différence supplémentaire de fichier ou de contenu. Les sources
+Git d’origine restent identifiées par leur véritable arbre ; le contenu
+compilé corrigé est un dérivé explicitement lié.
+
+Le premier raccord de l’autorité a révélé séparément huit noms d’étape Elm
+contenant des majuscules, dont =elm-entrypoint-style-Bibliotheque=. Ils étaient
+refusés par le protocole qualifié des noms, qui exige minuscules/chiffres/
+tirets. Le nouveau runner utilise seulement =Path(target).stem.lower()= dans
+ce libellé. Les commandes, chemins des fichiers compilés et tests ne changent
+pas. La comparaison textuelle exacte du runner lie cette substitution avec
+l’import et l’appel d’overlay. Le paquet de l’autorité reste inchangé ; sa
+construction valide maintenant les 75 noms attendus, uniques.
+
+* Preuves et portée
+
+Douze tests ciblés passent : contenu public complet et arbres Git, overlay
+réel, appel depuis la méthode Rust avant Cargo, refus de base/patch/résultat
+altérés, de liens et changements annexes, refus de politique ancienne ou
+inconnue, delta exact du contrôle et erreur d’invocation fermée. Douze
+assertions Nix lient la proposition, le validateur, les règles, les UID et le
+credential, sans démarrage automatique. Les références factices de contrôleur,
+filesystem et tokens de ce seul banc d’évaluation ne sont pas une génération
+de production.
+
+=authority-policy.proposed.json= lie la clé publique réellement créée, les
+UID 950/952/953, le NAR et la fermeture du nouveau validateur, la politique de
+rapport et le SHA256 exact de la proposition. Sa fenêtre proposée va du
+3 novembre 2026 à 00:31 UTC au 10 novembre à 00:31 UTC. La clé privée n’est
+jamais lue. Les 75 étapes sont des exigences, pas des résultats présumés.
+
+La validation applicative complète locale reste distincte et doit produire
+trois nouveaux fichiers avant toute attestation : =server=, =frontend.tar= et
+=verification.json=. Elle ne vaut ni dispatch Forgejo, ni attestation signée
+en production, ni revue humaine, ni autorisation de livraison. Les workers,
+adopteurs et migrations séparés restent hors de ce protocole. Les Git SHA1
+des arbres, SHA256 des sélections/propositions et SHA256/NAR des artefacts
+ne sont jamais assimilés ; le raccord au manifeste de livraison reste à faire.

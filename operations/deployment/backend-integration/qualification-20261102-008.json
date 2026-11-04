@@ -1,0 +1,81 @@
+{
+  "checks": [
+    "initial-before-prepared-full-preflight-retry-without-effects",
+    "private-failure-real-paired-return-and-periodic-writer-after-returned",
+    "interrupt-return-before-snapshot-real-recovery",
+    "interrupt-after-adoption-real-recovery",
+    "real-public-write-then-held-without-snapshot-or-generation-restore",
+    "real-promoted-live-boot-timers-and-ingress-after-opening"
+  ],
+  "command": "nix build --impure --max-jobs 1 --cores 2 --builders '' --no-link --json --file operations/deployment/backend-integration/systemd-test.nix --arg nixpkgs /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+  "date": "2026-11-02",
+  "derivation": "/nix/store/n9lpd1g9hcdr4lnvgv2zkfzk21i13j61-vm-test-run-mrjam-integrated-cutover-recovery-control.drv",
+  "elapsed_seconds": 394.85,
+  "fixture_unchanged": true,
+  "groups_passed": 6,
+  "limits": [
+    "Only HOST and PREVIOUS backend constants are bound to the invented VM; no backend function is rewritten.",
+    "Seven application/identity/SSO/Forgejo helper responses are explicit synthetic contracts. Nine source bundle files are invented; this receipt does not qualify Git import, governance or application behavior.",
+    "Application service processes and HTTPS responses are fixtures. The accepted write is an invented paired SQL/file operation triggered by the private controller health request after durable OPEN.",
+    "The copied production entrypoint is not executed here. Its package and signal handling have separate receipts.",
+    "This integrated test activates generations without rebooting. Separate generation/boot-guard tests cover boot behavior.",
+    "nft egress rules are executed but only ingress is exercised with traffic.",
+    "Snapshot methods run with their real ACL/xattr flags; this fixture asserts SQL and paired file content, not additional custom ACL/xattr preservation.",
+    "Interruptions use os._exit at selected durable boundaries; this is not arbitrary power-loss coverage.",
+    "All identities, state and credentials are invented. No actual user session, VPS state, SSH or production activation is involved.",
+    "The specific legacy ACME Unit= target case is covered by the separate host-owned real-systemd return test; this fixture uses synthetic application services.",
+    "Mail adoption V3 is separately qualified with real staging and systemd. This integrated fixture retains its explicit synthetic adoption contracts."
+  ],
+  "nixpkgs": "/nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source",
+  "output": "/nix/store/6bvivly267kbd1974khl67b3mp0yf8f0-vm-test-run-mrjam-integrated-cutover-recovery-control",
+  "passed": true,
+  "previous_receipt": {
+    "path": "operations/deployment/backend-integration/qualification-20261102-007.json",
+    "sha256": "3a2038155833b051abe3b9f08e6cb727d0a2631305bd10aaf4ac17a3cd0fc4e7",
+    "unchanged": true
+  },
+  "production_access": false,
+  "readiness_regression": {
+    "diagnostic_replay_removed": true,
+    "finding": "operations/deployment/backend-integration/finding-http-readiness-20261102.json",
+    "finding_sha256": "32e4f42e936fd8c587c7eb03eae69bcbe934e94bcdeacfddf6498f758dba761e",
+    "fixed_backend_sha256": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "private_return_with_original_http_status_map_passed": true,
+    "strict_expected_private_failure_after_adoption": true
+  },
+  "real_components": [
+    "Unmodified Backend/Cutover/Recovery and real SystemControl methods",
+    "Old, staged and promoted NixOS profiles and real switch-to-configuration activations",
+    "systemd masks, generators, service state, legacy periodic writer and eighteen public timers",
+    "nft ingress boundary tested by a separate network namespace with HTTPS requests",
+    "PostgreSQL 17 offline physical snapshot/restoration and paired application-file markers",
+    "Actual credential/adoption staging readers with invented root-only files and SQLite images",
+    "Recovery before any snapshot and recovery after durable adoption",
+    "Retained logical PostgreSQL row and file markers after accepted public-write fixture and HELD"
+  ],
+  "rerun_reason": "Repeat unchanged six-scenario integration on the corrected backend after real archive-DDL and old-ACME-target failures; stale-staging preflight also included.",
+  "result": {
+    "path": "operations/deployment/backend-integration/result-008.json",
+    "sha256": "ed949be870e1b6b3782c6cb6483c46bd755d12fae523ef72297b5ab9b2cf9f09"
+  },
+  "schema_version": 1,
+  "scope": "Integrated control-plane qualification with explicit invented application contracts",
+  "sources": {
+    "operations/deployment/backend-integration/contract.org": "d3a2fe4b368e08668e17ecba95c607ef4fe49abfe33fbeb59397f16ea7a3c9a0",
+    "operations/deployment/backend-integration/fixture.py": "e0a9bacd3b02f3d2541180355de86c3dc1a01da71115d515746b003e8b03a090",
+    "operations/deployment/backend-integration/helpers.py": "dcc7a9a4b369fc5f39bf87af3ba3a5acd7d2d115d618155524ef53337b410b66",
+    "operations/deployment/backend-integration/systemd-test.nix": "08912c7554f85ca63665419da2bf0abdc6d38f7048e94328cc55815c1d139802",
+    "operations/deployment/boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "operations/deployment/boot-guard.nix": "f1b0198336de79af9e632045aa596cfd1f8f0ef0f85e374ac7b09a2b310c5f09",
+    "operations/deployment/boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "operations/deployment/cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "operations/deployment/generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "operations/deployment/recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "operations/deployment/release_backend.py": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "operations/deployment/snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "operations/deployment/stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "operations/deployment/stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "operations/deployment/system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+  },
+  "vm_stopped": true
+}

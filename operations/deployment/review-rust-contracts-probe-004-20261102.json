@@ -1,0 +1,30 @@
+{
+  "application_functions_called_by_probe": false,
+  "author_test_source_sha256": "a2e5266133064bc1f72cbbe1eaba624671f100eae2323c93ca00641d9da11264",
+  "checks": [
+    "Current-generation/noargs/root/hostname gate fixed to returned previous generation.",
+    "Four fixed queries only; migration version numbers and named PostgreSQL function metadata.",
+    "Creation and revision construction text matches the selected public migration016/017 source exactly.",
+    "Witness definitions compared in the database to the same digest construction; no witness or other application function invoked.",
+    "Function bodies and digests never exported: output accepts only exact t or f bytes.",
+    "Each query is a separate bounded READ ONLY transaction with read-only connection defaults, fixed pg_catalog search path and fixed psql/runuser command.",
+    "No selected private application rows, credentials or logs."
+  ],
+  "function_bodies_exported": false,
+  "limits": [
+    "Current catalogue equality is not an independent proof that every function still matches the accepted application source.",
+    "Restored-system observations do not test new candidate HBA, UID namespaces or post-adoption role ACLs.",
+    "Author native tests are separate; reviewer ran no PostgreSQL instance or production probe."
+  ],
+  "migration_code_evidence_sha256": {
+    "016_creation_semantique.sql": "3b0130d6173c9275c04e5825a3eef049334827a54afc28aa8fc427eb354e1abd",
+    "017_tutorat_temps.sql": "aa74a7c5c42a39e1613526a5b5c3ccd88c630f15c11b7e1f6ce6a8f7d82fee6a"
+  },
+  "mutation_performed": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent source review of fixed metadata-only restored-generation code guards",
+  "source": "operations/deployment/preflight_rust_contracts_004.py",
+  "source_sha256": "be25c90154e6f7ddad856f3be801abbfa389d07d6c33f34126fd23e4c2e7390d",
+  "status": "PASS"
+}

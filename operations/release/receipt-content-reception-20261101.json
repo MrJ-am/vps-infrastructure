@@ -1,0 +1,216 @@
+{
+  "adopter_reproduced_original_store_identity": true,
+  "limits": [
+    "Original unsigned export paths were not imported into the daemon",
+    "New store paths remain distinct from original export identities",
+    "Content equality is not protected approval or production qualification",
+    "Admission/cycle/replay still require native Kanidm compatibility"
+  ],
+  "new_output_nars_equal_original_nars": true,
+  "original_archives": [
+    {
+      "all_members_verified": true,
+      "archive": "mrjam-artefacts-revue-20261031.tar",
+      "bytes": 48640000,
+      "closure_paths": 15,
+      "export_bytes": 149057376,
+      "imported_program_executed": false,
+      "manifest_sha256": "cbc2c154310f8d3764158272c95a593dc3ea85328675903c8d11bb6f02c15da4",
+      "members": 14,
+      "production_access": false,
+      "selection": "platform-20261031",
+      "selection_sha256": "17944c0c802082f9650493c1da8122357a15fc676d2e7fe68ebe17d5fd20f580",
+      "sha256": "5f5bfab9874591baabc05bfb7ac72c0176101c1fa0ea10d422ab50e03b9a5cff",
+      "uncompressed_export_verified": true
+    },
+    {
+      "all_members_verified": true,
+      "archive": "mrjam-travailleurs-revue-20261031-03.tar",
+      "bytes": 107653120,
+      "closure_paths": 27,
+      "export_bytes": 256384928,
+      "imported_program_executed": false,
+      "manifest_sha256": "a164c1189176f9b5cff87e751cbb65ba37ccd128d1860550fbbef31f65089643",
+      "members": 17,
+      "production_access": false,
+      "selection": "workers-20261031-03",
+      "selection_sha256": "d915853fed6dca08f8d1b5c6b47902e52e8c39ca20e8d863af16a3ab69c82f8d",
+      "sha256": "08fb566aa27e6eca2c857cd1c895cfbb4313862e443d86a3030c2b7d702dcd3c",
+      "uncompressed_export_verified": true
+    }
+  ],
+  "original_server_bytes_unchanged": true,
+  "outputs": {
+    "/nix/store/0qwbdzhp9bn81yzq0xmnsqmvc4w5z4jb-mrjam-qualified-artifacts-8bf05fb9065a-log": {
+      "derivation": "/nix/store/081kshm0w143mg2ih0gn76dflcvbn7pp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-zB2YJlh1RPG0zLRAqdBk8hKVtUAJt3ZuAQGoIUNo1Mw=",
+      "nar_size": 552760,
+      "path": "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/2rpf7p0sda81m7kqm8c6yjfshid4nvps-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive": {
+      "derivation": "/nix/store/crvz2bilsbccjq1la61vacxx6hkzyf2v-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive.drv",
+      "executable_sha256": {
+        "bin/vision-archive": "45751f900b70f2231856ff83f339e69595d7cc620f150d004f2d882d68a04a1c"
+      },
+      "nar_hash": "sha256-5U+xUqIRsUePuMEegBvgSodJkWK3OUC86LAxUmI31Zw=",
+      "nar_size": 10347600,
+      "path": "/nix/store/4b6nhz4zf41qndgys9wk8k1fpbxy62g7-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-archive",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/4q27zxfwwb8mwycxglmnwiqy8203wib6-mrjam-qualified-artifacts-8bf05fb9065a-audition": {
+      "derivation": "/nix/store/yfkg5mw0aj1bpqyx8wv8m16sbzz6pdl2-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-nqYQI5NsuDBXOEON7T3NP7g7qDmfDkf89nASBoCWiOo=",
+      "nar_size": 3727672,
+      "path": "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/6zrdrs6gpzng37iy858kk6j8kl603l09-mrjam-qualified-artifacts-8bf05fb9065a-logique": {
+      "derivation": "/nix/store/mm2a3ninjrgd1r59idfi5rhmzz66x2mh-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-ygIDE18yv298o3P8JdInG8yGq4d6V34JjXwqMFEMvxQ=",
+      "nar_size": 4053448,
+      "path": "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/8z00mbsyk2mhzcisw5fnr32lphr8nfih-mrjam-vision-workers-0.1.0-51e7bcd63f4a": {
+      "derivation": "/nix/store/lvq6lwiai58jvk4085ykxqd3fqgbqw1w-mrjam-reviewed-mrjam-vision-workers-0.1.0-51e7bcd63f4a.drv",
+      "executable_sha256": {
+        "bin/vision-archive": "7b3329b06da07658b036c18d7499841759b2d3bc6fd53c4a0d36ba674d98e092",
+        "bin/vision-replay": "5afcb57458af7c627012677e38961adc532ad62fa99048bdb746c8d069f4caae"
+      },
+      "nar_hash": "sha256-eS3zVoScOd+TLSkO09IVF/g9bVGW0HShCk1MC59kkoc=",
+      "nar_size": 16525336,
+      "path": "/nix/store/zisdjas4fb6m0jbhs23w31c5jgn20sva-mrjam-reviewed-mrjam-vision-workers-0.1.0-51e7bcd63f4a",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/9y499yg6jwbn3l93nkqhgv99z481bbj3-mrjam-qualified-artifacts-8bf05fb9065a-vision": {
+      "derivation": "/nix/store/z6dww7636f1xlmnp81wkd00idwx19kxz-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-BE2eR2JQdrIC5uTSep4jmDwiaVybTgL7iNm05u0mwy4=",
+      "nar_size": 1122464,
+      "path": "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/bn726cd5h0nmnpmwcis3k2qxg7rfr47b-mrjam-qualified-artifacts-8bf05fb9065a": {
+      "derivation": "/nix/store/1kz13sab6snis6pfj1wgrrabwjqmmhhf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a.drv",
+      "executable_sha256": {
+        "bin/mrjam-server": "f896cd1c17cc85d331474622747f4c019258a1023dfb5963125b235f4a6236cd"
+      },
+      "nar_hash": "sha256-J7sqTQ7DQ7qkYfATGhQ4yO13YFcraLhoRJhsCA369II=",
+      "nar_size": 60858624,
+      "path": "/nix/store/hf08v9mbbr9hrjzp5j53691zv0b5dvq5-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/mbfhdq690mris1dbfbw36j0czaiqf0wq-mrjam-qualified-artifacts-8bf05fb9065a-style": {
+      "derivation": "/nix/store/mfik9ii2hangqkdwnm90rbjxdq5b0b8k-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-5VTNi5DrvbDf+hEA9T67O1tJV5HswJXzJUrHCQVnO9A=",
+      "nar_size": 4257992,
+      "path": "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/n8y0whg3w2kfv8lhly654rmdxkjwmyh0-mrjam-qualified-artifacts-8bf05fb9065a-logo": {
+      "derivation": "/nix/store/ff0mqnpvbd5xc3320cr3fr082mbip4mg-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-wa+4R3BXS6BLp8d+h9Sw/8yZiHdz6vmesDPNfK1CLfE=",
+      "nar_size": 6060888,
+      "path": "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1": {
+      "derivation": "/nix/store/30h7xz1d5q08m52fb4jpj4sfixsl3w58-mrjam-admission-adoption-1.drv",
+      "executable_sha256": {
+        "bin/mrjam-admission-adopt": "a718997189ee655a208d75fb31e382336a6190a5122c33bce1eb84ada38fe55f"
+      },
+      "nar_hash": "sha256-RKs7HMojEtUAma/Fsex2uZICnRlfGKEyIx223xhr7gI=",
+      "nar_size": 18096,
+      "path": "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1",
+      "references": [
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/sc6zj2w7gpkqr08yhdyfdisyqlg64ax1-mrjam-admission-adoption-1"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/sfyi4ipb53c81kwzizd6jwpvfnms0mir-mrjam-vision-closure-0.1.0-e067f8c74195": {
+      "derivation": "/nix/store/vxapqd1glhnkqfvkk9l1p6vjz8zc3vq8-mrjam-reviewed-mrjam-vision-closure-0.1.0-e067f8c74195.drv",
+      "executable_sha256": {
+        "bin/vision-closure": "a38d798172ca3291e4b4c01e4f5fa94dad259eadedbdb561495f12a83b600bfe"
+      },
+      "nar_hash": "sha256-qDgmawvvlK8ASuTv8KWh9AU/C8+RpyTodtQ9M/8K/Fk=",
+      "nar_size": 11977128,
+      "path": "/nix/store/js3s25fyr6vkqynin3l3cw5mfrj7607i-mrjam-reviewed-mrjam-vision-closure-0.1.0-e067f8c74195",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/ssw764qad599i6v2kw8p0v0lgqszaj6q-mrjam-vision-journal-ordering-004-c7056949832a": {
+      "derivation": "/nix/store/avlykv89xhsihgqva1hfivpxs8f7x8jl-mrjam-reviewed-mrjam-vision-journal-ordering-004-c7056949832a.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-GmDK6bVkDMNq8UPRAIv4GIDSHLqX7apUNpCuvmQFjCI=",
+      "nar_size": 3704,
+      "path": "/nix/store/yv57xsrdcs8fn06jcl2c75i115rwd0w3-mrjam-reviewed-mrjam-vision-journal-ordering-004-c7056949832a",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/y27jphzcpws44zr75ynm7d87aizk8znq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle": {
+      "derivation": "/nix/store/lj9qa1dxgwc6m6j21y5082617qa4z0ym-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle.drv",
+      "executable_sha256": {
+        "bin/vision-cycle": "61b94d0f0fabf7e5854cb38d25f176b053f41bb96ecff343c48d15d743f7be41"
+      },
+      "nar_hash": "sha256-sVPudG8E/1k0HNOF5ZGmBKczUH/v7zS0g1R2CGrhsC8=",
+      "nar_size": 11474768,
+      "path": "/nix/store/fvq4avj7xqynivd5q63c1jflydkfsxyp-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-cycle",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    },
+    "/nix/store/yi2jsgkbp302l6hqp7cxpq0lnv05k7pd-mrjam-qualified-artifacts-8bf05fb9065a-mateval": {
+      "derivation": "/nix/store/4k30lpyxgyc71y1k6sg1rhi6xcblkhqc-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval.drv",
+      "executable_sha256": {},
+      "nar_hash": "sha256-FNRjIXqN3bltfjGxuGa2Bq2T7RbNAS3CNzReE866vH8=",
+      "nar_size": 3831400,
+      "path": "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+      "references": [],
+      "same_nar_as_original": true
+    },
+    "/nix/store/zy56rr1vbdhhnb3wga3lq4qlq8z415dq-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission": {
+      "derivation": "/nix/store/f28722k5m2ix8pfdkbh2nl40wxyk5xki-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission.drv",
+      "executable_sha256": {
+        "bin/vision-admission": "78812f981f0698674217c3677622d671b594c4677f2905ecaa28598c146a6112"
+      },
+      "nar_hash": "sha256-+tmjtOs7Nq5/9ldSHapUilatZ7zBb31fges7OYk3Xd4=",
+      "nar_size": 11946968,
+      "path": "/nix/store/aizaxh7g2ns41w46lm04ilv6bvpjf560-mrjam-reviewed-mrjam-vision-mail-workers-0.1.0-7d87768bd141-admission",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103"
+      ],
+      "same_nar_as_original": true
+    }
+  },
+  "production_access": false,
+  "production_ready": false,
+  "schema_version": 1,
+  "scope": "same-public-payloads-at-separately-derived-local-paths",
+  "trust_settings_modified": false
+}

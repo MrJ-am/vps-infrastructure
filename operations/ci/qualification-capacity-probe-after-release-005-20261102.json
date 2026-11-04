@@ -1,0 +1,26 @@
+{
+  "all_executable_functions_byte_identical": true,
+  "controller": "/nix/store/aclk4gzc77q0g4mjp6r1i18l06a6ks4w-mrjam-first-release-controller-1",
+  "generation_unit_and_cgroup_review_sha256": "8f79bc2d62482396e1825db316bc1917462523afaf45e2ddd797c3502ebea7c9",
+  "limits": [
+    "Must refuse until controller005 has succeeded with exact generation007/current/boot and durable OPEN.",
+    "Fixed technical NSS names/UID949-959 and fixed resource/cgroup metadata only; no application data, logs, arbitrary commands or identities.",
+    "Capacity measurements are observational and do not authorize CI activation; CI authority remains separate."
+  ],
+  "literal_reversal_restores_prior_source": true,
+  "only_five_binding_constants_and_two_descriptive_labels_changed": true,
+  "prior_probe": "operations/ci/preflight-capacity-after-release-004-20261102.py",
+  "prior_probe_sha256": "74c34d386924d2c69b37afc4363ce457110e3a3bc15d564d42f8965fcdb7446c",
+  "prior_qualification_sha256": "ac417c62433827668cfbd89b7001394092f409098464b05995e46ffa865cc109",
+  "prior_tests_reused": 12,
+  "probe": "operations/ci/preflight-capacity-after-release-005-20261102.py",
+  "probe_sha256": "ebbcadccbeb844f46fe7b4eb0018fa168b02a3c3b96df8bdbbeb785b8909ce60",
+  "production_access": false,
+  "production_probe_executed": false,
+  "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+  "release_binding_review_sha256": "ffab903e71cf7a70217c39c1016b9bb08db7d2ea9bc7f745fea94489f9db2b94",
+  "release_sha256": "9fd41d93000fb058397fa49db73d4e0e0c45bb4888fa3ec6a52c148f8ec83341",
+  "schema_version": 1,
+  "status": "PASS",
+  "tests_reexecuted": false
+}

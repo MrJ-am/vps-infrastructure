@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "scope": "persistent-queue-to-exact-source-preparation",
+  "local_integration_tests": 10,
+  "queue_tests": 9,
+  "tests_passed": true,
+  "live_isolated": {
+    "code": "LIVE_PREPARATION_QUALIFIED",
+    "observations": [
+      {
+        "phase": "discovery",
+        "codes": [
+          "PROPOSALS_OBSERVED",
+          "PROPOSALS_QUEUED"
+        ]
+      },
+      {
+        "phase": "prepare",
+        "codes": [
+          "PREPARATION_IDLE"
+        ]
+      },
+      {
+        "phase": "resume",
+        "codes": [
+          "PREPARATION_IDLE"
+        ]
+      }
+    ],
+    "proposals": 0,
+    "queue_states": {},
+    "discovery_token_revoked": true,
+    "admission_or_deployment_performed": false
+  },
+  "activation": {
+    "code": "SOURCE_PREPARATION_ACTIVE",
+    "current": "/nix/store/qjkig4qypn3640v2i9gb1qi4w0r48hj6-nixos-system-srv1982677-26.05pre-git",
+    "boot": "/nix/store/qjkig4qypn3640v2i9gb1qi4w0r48hj6-nixos-system-srv1982677-26.05pre-git",
+    "queue_states": [
+      {},
+      {}
+    ],
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "new_admission_performed": false,
+    "automatic_deployment_enabled": false
+  },
+  "evaluation": {
+    "added": [
+      "mrjam-intake-prepare.service",
+      "mrjam-intake-prepare.timer"
+    ],
+    "changed": [],
+    "checks": {
+      "assertionsPass": true,
+      "authorityUnchanged": true,
+      "baselineExact": true,
+      "discoveryUnchanged": true,
+      "existingUnitsUnchanged": true,
+      "greenRemainsActive": true,
+      "onlyPreparationAdded": true,
+      "routesUnchanged": true,
+      "temporaryTransportBounded": true
+    },
+    "system": "/nix/store/qjkig4qypn3640v2i9gb1qi4w0r48hj6-nixos-system-srv1982677-26.05pre-git"
+  },
+  "source_sha256": {
+    "intake_queue.py": "571a7ecd01a7c91d7550a97aac7fe549a021dfcc3c0e11b86ef8b2909267e70c",
+    "intake_prepare.py": "d79fad922388ce4cbf97b9a2d150693527172981183faed66938a1181013c23c",
+    "test_intake_prepare.py": "b805a84d0bb5489daacc8f2996c733d7203d661fdfe017cafe094d25a1af527b",
+    "intake-prepare-entry.py": "df4230db10f4c395c512443cce3bce05dbd4b3a3122760e51faeb999f7a0aac3",
+    "intake-prepare.nix": "a0a0a9ace1ab1e32ecabbc2be03b31b25bab488912e67b451f1a08b429704411",
+    "adopted-source-bootstrap.nix": "af2609e4ac2a35901ed55e304aaaf7f531486b2092a578d11d9c1072add28feb",
+    "intake-prepare-module.nix": "b7a957e0ac3aaa13cf0402fa870d9bd2be14b39977494109738e11ef6e92bcd4",
+    "intake-prepare-host.nix": "367c43b44a12d3cadfe6cfa4a12d4c8200bc12266c89b8a1cf7888fb96156e38",
+    "qualify-intake-prepare.py": "eda4625fbf3ae6b7cf14ff4e3be2768a488f389bf0cd2a963595ed0c66ef2a05",
+    "activate-intake-prepare.py": "5dc90642edcfc780e7179ce2530da0a292006fbc87000ba24ed1efd5954a4556"
+  },
+  "limits": [
+    "No open PR observed live; nonempty cases use real local Git objects with replaced network transport.",
+    "Preparation receipt is untrusted metadata, not admission or deployment authority.",
+    "Protected admission consumer, receipt retirement, current-base invalidation and generic deployment remain to be connected.",
+    "Bootstrap adopted-source descriptor must advance atomically with future promotions.",
+    "ViSe and Signature require their own recipes; failures are delayed independently and do not block other queued projects."
+  ]
+}

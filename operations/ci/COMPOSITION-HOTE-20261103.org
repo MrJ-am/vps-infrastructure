@@ -1,0 +1,80 @@
+#+title: Composition CI après le déploiement du socle
+#+date: 2026-11-03
+#+language: fr
+
+La composition part de la génération déployée =phi68cwg38madbq8p805yvrsyry8g8wr=,
+qui conserve le socle 007 et désactive LLMNR. Ces fichiers préparent les unités
+CI ; aucune génération CI réelle, activation, inscription ou clé de production
+n'est créée par cette qualification.
+
+* Raccord et identités
+
+[[file:modules.nix][modules.nix]] applique le seul paquetage CI verrouillé
+=6f06d204d8f2d8761d9da78778745974a3216381= aux cinq modules historiques,
+au lecteur de credentials de l'autorité v2 et au coordinateur attesté v1.
+Le paquetage hôte reste inchangé. Les imports du staging et du worker convergent
+sur une déclaration unique ; les imports historiques non spécialisés sont
+désactivés pour ces seuls chemins.
+
+[[file:host-profile.nix][host-profile.nix]] exige des paramètres explicites :
+révisions des règles et du contrôleur, vérificateur, propositions scellées,
+politique publique d'autorité et chemins des trois credentials privés.
+Aucune politique ou clé de fixture ne constitue une valeur par défaut.
+
+| Usage | UID/GID |
+|-------+---------|
+| Inscription du runner | 949 |
+| Coordinateur | 950 |
+| Worker | 951 |
+| Collecteur | 952 |
+| Autorité de contenu | 953 |
+| Groupe de soumission | GID 954 |
+| Groupe de requêtes | GID 955 |
+
+Ces numéros étaient libres dans l'observation réelle après la bascule 005.
+Le compte de réconciliation reste DynamicUser. Les services et sockets CI
+n'ont pas de WantedBy ; Actions reste désactivé par défaut. La réconciliation
+est préparée en mode plan, sans plan approuvé fourni implicitement.
+
+* Pare-feu et écarts attendus
+
+Le pare-feu INPUT conserve le backend iptables utilisant nf_tables et son
+unité exacte. Le module NixOS NAT supprime normalement son nettoyage historique
+lorsqu'on active nftables, même si NAT est désactivé. Le raccord
+[[file:preserve-input-firewall.nix][preserve-input-firewall.nix]] réutilise cette
+configuration du module hôte, sans redéclarer ses options ni recopier son shell.
+Il refuse un hôte avec NAT activé.
+
+Seule une table inet OUTPUT, tirée du module runner qualifié, limite les UID
+949 et 950 à =127.0.0.1:3004=. Aucun flush global du ruleset n'est autorisé.
+Le test [[file:tests/network-coexistence.nix][network-coexistence.nix]] exerce
+réellement IPv4, IPv6, un autre port et une destination non loopback avec des
+serveurs témoins. Il conserve INPUT et une table étrangère pendant les reloads
+iptables/nftables et pendant le stop/start de nftables. Les identités et
+serveurs de cette VM sont inventés ; aucun accès au VPS n'est effectué.
+
+La composition d'évaluation ajoute douze unités CI et nftables.service.
+Les seize unités applicatives observées restent identiques. Les seules unités
+préexistantes dont le texte change sont D-Bus et systemd-tmpfiles-resetup :
+leurs seuls triggers changent. D-Bus conserve reloadIfChanged=true ; ses
+commandes ne changent pas. Les nouveaux fichiers de politiques, sockets,
+tmpfiles et le blacklistage du module legacy ip_tables sont déclaratifs.
+Le binaire iptables conservé utilise nf_tables. Le delta complet figure dans
+[[file:host-profile-delta-20261103-001.json][le relevé de composition]].
+
+* Conditions encore nécessaires à une génération de production
+
+Le main réel des règles =eb71ffe5944943474c5ee483e66c270b5976ab90= ne contient
+pas encore le workflow. La proposition locale privée =b02bdf1b5d63dcf0e0610723788a7ca7e384932c=
+ajoute uniquement le workflow déjà qualifié ; elle n'est pas adoptée.
+La révision synthétique historique =93bd67666a3b4be9657c333931fa25b2359e165b=
+est explicitement refusée par le profil hôte.
+
+Avant construction de la génération réelle, lier la révision adoptée, le vrai
+vérificateur et sa fermeture, les sources sélectionnées, les propositions et
+la politique d'autorité à leurs preuves. Conserver la confidentialité des
+sources privées ; les bundles historiques ne deviennent pas du staging public.
+Installer la clé et les credentials privés par le parcours séparé, puis revoir
+le delta de génération et le retour de configuration. La qualification
+intégrée de l'autorité v2 reste une preuve distincte. Aucun de ces prérequis
+ne peut être remplacé par les champs synthétiques du banc d'évaluation.

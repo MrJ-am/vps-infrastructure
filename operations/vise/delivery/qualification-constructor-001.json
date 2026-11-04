@@ -1,0 +1,27 @@
+{
+  "descriptor": {
+    "anchor_control": "/nix/store/3a99xh93qcx262ab5yr68is4z9baib28-mrjam-validation-admission-control-1",
+    "capture_sha256": "a7cd901a9a8b3662a1145e89396ae53fd2313ba85e28acf0b71a5533f786945a",
+    "control": "/nix/store/0jzyyasy7y50zad3fccj0jnhh218bca1-mrjam-validation-admission-control-1",
+    "metadata": "/nix/store/dndyr27g2hkb73d9jd9gzwzxfp6lz9wb-mrjam-admission-public-metadata",
+    "proposal_sha256": "8ea736fc4819b4c795f340d26638c2223c06d1a3ae612fbbec980d2b25a4ab5d",
+    "publisher": "/nix/store/q2y5ipi8frf49cqm7rfdi90gyn0azjnc-mrjam-publish-fixed-admission-1",
+    "record": "/nix/store/d2cf22zyfn6nw6nw9l4rqjjxch7qaqba-mrjam-initial-admission.json",
+    "schema_version": 1,
+    "source": "/nix/store/9kj6b8k1k3pld1s427z12lg0099isc0l-mrjam-admitted-source-8ea736fc4819",
+    "validator": "/nix/store/36g4l9pmx6nh73v8pivzh3x9k0rsspix-mrjam-vise-isolated-validation-probe-1",
+    "verifierNarHash": "sha256-q9kDWrwgI+3rrEuN/R04k3Cq1xt8Ui8/D7RVH0Rkpvk="
+  },
+  "limitations": [
+    "Rules revision 000 and deliberately expired 100..200 authority fixture",
+    "Synthetic capture has no remote GitHub observation",
+    "Publisher built but never executed; no registry admission or signature"
+  ],
+  "output": "/nix/store/g8mmpyj5xk8nyd0d1a080k30ikrscm24-mrjam-captured-vise-admission",
+  "production_access": false,
+  "publication_executed": false,
+  "recipe": "/nix/store/dpvajb2sa2wak24a4vlhxcz3dqchn3gm-mrjam-protected-admission-recipe",
+  "schema_version": 1,
+  "scope": "synthetic-capture-constructor-only",
+  "workspace_and_packaged_recipe_identical": true
+}

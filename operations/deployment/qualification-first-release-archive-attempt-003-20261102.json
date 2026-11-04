@@ -1,0 +1,50 @@
+{
+  "backend_sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+  "changes": [
+    "Fixed attempt003/controller003/manifest003/result03/archive03 bindings.",
+    "Both persistent and runtime archives001 and002 remain in place with inode and completion witness binding.",
+    "Exact observed failure.json is mandatory and must match release003, immutable backend schema/allowlists, helper/forgejo_governance/DEFAULT_BRANCH_ADOPTION_REQUIRED.",
+    "failure.json bytes, inode, metadata and digest are retained through same-filesystem rename before phase commit.",
+    "An unexpected failure.json.next, including hardlinked publication interruption, is refused and retained without cleanup."
+  ],
+  "controller_package": "/nix/store/lviggl0pqmarmmhs8brqs4d34fa1cph3-mrjam-first-release-controller-1",
+  "limits": [
+    "This qualifies the local filesystem algorithm with synthetic files and mocked service observations. Root must first execute the closed production probe and seal its exact binding.",
+    "Pending or unfamiliar state files are deliberately refused, never erased or normalized.",
+    "No production operation or SSH was performed by this reviewer."
+  ],
+  "passed": true,
+  "preserved_invariants": [
+    "Same existing transaction.lock descriptor/inode with flock throughout.",
+    "Previous current/boot profiles, no ingress gate, old HTTP baseline and free940..948 required.",
+    "Controller03 must be finished failed/PID0/exit1; terminal RETURNED result exact.",
+    "No snapshot restoration, application write, SQL, credential read or new deployment.",
+    "Snapshot/quarantine and four runtime directories renamed whole without reading contents.",
+    "Only exact owned mask record and guard removed; foreign masks retained.",
+    "phase.json moved last after fsync; interrupted archive refuses automatic retry."
+  ],
+  "previous_qualified_algorithm": {
+    "path": "operations/deployment/first_release_archive_002.py",
+    "sha256": "632ece3fce33775223602bb71627da67d1e0a89b94f0aca865ceccbb9ea82d58"
+  },
+  "probe": "operations/deployment/preflight-first-release-archive-attempt-003-20261102.py",
+  "probe_only_operation_constant_changed_byte_for_byte": true,
+  "probe_sha256": "dfd59c940966e21d02f7edca8dd965a1429c9a702a0254ccd193c1b2ce12e5d9",
+  "production_access": false,
+  "release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "return_witness": {
+    "path": "operations/deployment/observation-third-cutover-return-20261102.json",
+    "sha256": "b8d7430efd24d73cabfc8f89e4232aaa6a9cc31354e53e01786dba13024b1b85"
+  },
+  "schema_version": 1,
+  "source": "operations/deployment/first_release_archive_003.py",
+  "source_sha256": "21f8b2092bd35779a5a8e1bac677d27a4ac1ad5222a205f4e401f185782dd09f",
+  "tests": {
+    "elapsed_seconds": 0.857,
+    "groups_passed": 21,
+    "log": ".local/deployment-20261101/archive003-tests.log",
+    "log_sha256": "b80506de6525bd94cafe567102df63feec28d4239a51b0829c8d1ff727553f0d",
+    "path": "operations/deployment/test_first_release_archive_003.py",
+    "sha256": "de715481f3e34eb793e3286d811ea956883c53d89925108eccd78cb67e09c5c8"
+  }
+}

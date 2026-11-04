@@ -1,0 +1,22 @@
+#+TITLE: Provisioner 3 — contrôle MAIL corrigé et diagnostics fermés
+
+La version 2 reste immuable dans credentials/. La seule différence fonctionnelle
+est l'acceptation de idm_access_control_admins OU idm_group_admins pour l'opération
+fixe d'ajout du compte cycle au groupe de lecture MAIL. La preuve native séparée
+montre une véritable addition par idm_group_admins, avec préservation des autres
+membres, et le refus du même compte sur PEOPLE. idm_admins hérite de ce pouvoir.
+L'identité administrative reste tenue de posséder idm_admins et
+idm_service_account_admins. Aucun compte, rôle humain ni ACL Kanidm n'est modifié
+par cette correction.
+
+Les créations de comptes, destinations, groupes, jetons, durées, scopes,
+contrôles d'admission, protections de fichiers et révocations sont inchangés.
+check_v2_delta.py reconstitue exactement le fichier v2 après retrait du seul
+gate MAIL corrigé et des annotations de diagnostic.
+
+Le journal ne reçoit qu'un stade fixe supplémentaire lorsqu'une opération
+échoue : INITIALIZE, ADMIN_CACHE, CREDENTIAL_STATE, IDENTITY_RIGHTS, ACCESS_RIGHTS,
+ADMISSION, EXISTING_STATE, SERVICE_CREATE, GROUP_CHANGE, TOKEN_CREATE,
+TOKEN_WRITE, TOKEN_VERIFY, FINAL_CONSISTENCY ou CLEANUP. Aucune identité, valeur
+privée, réponse fournisseur ou diagnostic de sous-processus n'est journalisé.
+Le JSON de succès est inchangé. Le portail n'a pas accès à ces journaux.

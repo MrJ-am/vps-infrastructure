@@ -1,0 +1,14 @@
+{
+  "export_bytes": 66640,
+  "export_sha256": "3a7bfcaf024c3b4654e7419e06f7340dcb471c3757a9032a87847c6df31db9ab",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1073906768,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/y7viyzl5v93ac9jr1pzavjqx0n3knlnw-mrjam-kanidm-local-bootstrap-1"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

@@ -1,0 +1,19 @@
+{
+  "export_bytes": 460040,
+  "export_sha256": "8c6b4ede13a501e2dbd421b0f4f4f2e8741fb2ae8b520c495a55e096900d8af6",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1076954376,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/2b7vq4rshbsyjjcbyz0h6bx32gcn2vp4-unit-systemd-resolved.service",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/8flknkv1hwsarmra0lm4h4i74cksmm6n-etc-systemd-resolved.conf",
+    "/nix/store/b2fd0wc1s9kn58xzjif2ywkdkr8w50g2-system-units",
+    "/nix/store/j14aa3q3vf9xlysb37f5jilwvdhqi1z2-etc",
+    "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/xm9dk145k6xsfkz5wjwmqg545i652vy6-X-Reload-Triggers-systemd-resolved"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

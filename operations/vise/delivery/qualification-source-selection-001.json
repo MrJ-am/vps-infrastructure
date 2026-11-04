@@ -1,0 +1,12 @@
+{
+  "admission_performed": false,
+  "compilation_performed": false,
+  "deployment_authorized": false,
+  "passed": true,
+  "proposal_sha256": "8ea736fc4819b4c795f340d26638c2223c06d1a3ae612fbbec980d2b25a4ab5d",
+  "rules_identifier_is_synthetic": true,
+  "scope": "actual-installed-revision-source-selection-only",
+  "selected_files": 49,
+  "source_revision": "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c",
+  "source_tree": "2aa5617e8b54e25b8975baf7805a524033fd7b11"
+}

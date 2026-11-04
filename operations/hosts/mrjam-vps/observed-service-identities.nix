@@ -3,9 +3,9 @@
 # created by this module; the adoption services remain disabled by default.
 # ViSe identity belongs to the separately selected optional profile.
 let
-  target = builtins.fromJSON (builtins.readFile ../../targets/mrjam-vps.json);
+  target = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../../targets/mrjam-vps.json));
   reportFile = ../../received/20261101/services-v1.json;
-  report = builtins.fromJSON (builtins.readFile reportFile);
+  report = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile reportFile));
   identity = name:
     let account = report.accounts.${name};
     in assert account.state == "observed";

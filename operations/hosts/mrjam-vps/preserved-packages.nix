@@ -1,7 +1,7 @@
 # Preserve the reviewed application versions independently of the host pin.
 { system ? "x86_64-linux" }:
 let
-  input = (builtins.fromJSON (builtins.readFile ../../compatibility/nixpkgs-vps-observed.lock.json)).input;
+  input = (builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../../compatibility/nixpkgs-vps-observed.lock.json))).input;
   baseline = builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/${input.rev}.tar.gz";
     sha256 = input.narHash;

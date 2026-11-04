@@ -1,0 +1,79 @@
+#+title: Amorçage explicite des règles, hors autorité CI
+#+date: 2026-11-03
+#+language: fr
+
+Ce mécanisme distinct prépare l'adoption initiale du seul workflow déjà proposé
+dans =MrJ-am/mrjam-validation/pulls/1=. Il ne fabrique ni exécution CI, ni statut,
+ni revue humaine, ni attestation de validation. La CI et les applications ne
+sont pas activées par ce mécanisme.
+
+* Entrées et preuve humaine
+
+Les révisions et le workflow restent ceux du binding qualifié de
+=rules-proposal-v1= : base =eb71ffe5944943474c5ee483e66c270b5976ab90=,
+head =b02bdf1b5d63dcf0e0610723788a7ca7e384932c= et arbre
+=f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b=. Le corps de la PR reste exactement
+celui créé par =Binding.body=. Le commit proposé reste l'enfant unique de la
+base et n'ajoute que le workflow public scellé.
+
+L'identité humaine est dérivée uniquement du binding SSO privé existant
+=/var/lib/forgejo-identity/client.json=, via le lecteur qualifié
+=forgejo_sso_probe.subject_from_binding=. Les huit prédicats existants doivent
+être vrais : fournisseur natif unique actif, paramètres Kanidm exacts et compte
+humain unique éligible lié au sujet conservé. L'ID n'est jamais choisi par le
+candidat, deviné ni exporté. Le compte technique auteur ne peut pas approuver.
+
+La revue réelle doit être APPROVED, officielle, non obsolète, non rejetée,
+liée exactement au head proposé et émise par ce compte humain. Le texte demandé
+par le relais est exactement :
+
+#+begin_quote
+J’approuve l’amorçage initial du workflow, sur la base des vérifications hors CI décrites dans cette proposition.
+#+end_quote
+
+Seuls CRLF vers LF et les blancs externes sont normalisés. Aucune sous-chaîne
+ni phrase alternative n'est acceptée. Toutes les pages de revues sont lues ;
+les demandes de modifications ou de revue encore ouvertes sont refusées.
+La liste Forgejo =requested_reviewers= contient aussi les approbateurs : elle
+est liée exactement aux auteurs des revues décisives non écartées. La dernière
+décision est choisie par ID, comme le moteur natif, sans laisser une édition
+d'une ancienne approbation masquer un rejet plus récent. Les équipes ou formes
+non projetables sont refusées, sans inventer un commit pour une revue incomplète.
+
+* Opération native bornée
+
+Le bail technique déjà qualifié reste limité au seul dépôt, avant tout accès
+réseau, puis révoqué en sortie. L'unique nouvelle route mutante est la fusion
+de cette PR avec le champ natif =Do= valant =fast-forward-only=, =head_commit_id= exact,
+=force_merge=true=, =merge_when_checks_succeed=false= et
+=delete_branch_after_merge=false=. Aucun push forcé, statut, changement de
+protection ou suppression de branche n'est disponible.
+
+L'exception native de fusion constitue l'amorçage administratif explicite hors
+CI : elle ne signifie pas que le contrôle CI absent aurait réussi. Les sources
+Forgejo17 vérifiées sont =services/pull/check.go=, =services/pull/merge.go= et
+=routers/api/v1/repo/pull.go=. Le chemin natif doit être qualifié avec un jeton
+effectivement limité au dépôt avant toute livraison de ce nouvel outil.
+
+La protection main est relue avec le garde SQL READ ONLY qualifié. Tous les
+heads et tags sont comparés avant/après ; seul main peut avancer au head exact.
+Le commit, l'arbre, le parent et le seul ajout du workflow sont vérifiés avant
+fusion. La branche de proposition est conservée.
+
+* Frontière de décision
+
+Le même verrou transactionnel de déploiement et la baseline phi68 sont requis.
+Aucun verrou global de table Forgejo n'est pris. La revue, son identité, le
+corps de PR, les références et la protection sont relus immédiatement avant
+l'appel natif, puis après sa réponse. L'observation finale doit encore retrouver
+la même revue valide, le main attendu et la PR fusionnée par l'identité technique.
+
+Ces observations ne sont pas atomiques avec les actions humaines dans Forgejo.
+Une révocation ou dérive constatée après la fusion produit un état retenu :
+Git reste tel qu'il est, aucune autorité CI ni activation n'est émise. Aucun
+retour arrière de l'historique ni faux succès ne masque cette situation.
+Une réponse HTTP ambiguë est également conservée pour une reprise par
+observation du même objet, jamais résolue par une autre révision ou une autre PR.
+
+La qualification locale utilise exclusivement une forge et des revues inventées.
+Elle ne constitue jamais la revue humaine réelle attendue sur la PR de production.

@@ -1,0 +1,64 @@
+{
+  "added_units": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "authority_policy_file_sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66",
+  "changed_existing_units": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "checks": {
+    "actionsRemainDisabled": true,
+    "actualPublicKeyBound": true,
+    "applicationUnitBytesPreserved": true,
+    "assertionsPass": true,
+    "baselineMatchesDeployed": true,
+    "existingUnitDeltaOnlyMaintenanceTriggers": true,
+    "firewallUnitBytesPreserved": true,
+    "keyReferenceExact": true,
+    "llmnrRemainsDisabled": true,
+    "noCIServiceImplicitStart": true,
+    "noCISocketImplicitStart": true,
+    "policyRemainsPlanOnly": true,
+    "policySourceUnchanged": true,
+    "separateFutureCredentialReferences": true
+  },
+  "ci_activated": false,
+  "controller_revision_for_evaluation_only": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+  "credential_references": {
+    "policy": "/var/lib/mrjam-forgejo-policy/token",
+    "registration": "/var/lib/mrjam-forgejo-registration/token",
+    "signing": "/var/lib/mrjam-validation-authority/signing-key"
+  },
+  "expression_sha256": "562a32ae69034debe8ad4f2bbb678d6eafb408007d601d89899a3e7ec9776ef1",
+  "generation_built": false,
+  "limits": [
+    "Controller revision O is only an evaluation placeholder; the final code publication must be bound and evaluated again before delivery.",
+    "Actual rules adoption, separate credentials and completed application validation remain prerequisites.",
+    "No namespace, resource coexistence or rollback execution is proved by this evaluation; corresponding existing scoped qualifications remain separate.",
+    "Only existing unit names of D-Bus/tmpfiles differ here; their prior trigger-only proof is not a new runtime result."
+  ],
+  "missing_production_credentials": [
+    "policy",
+    "registration"
+  ],
+  "proposed_toplevel_not_built": "/nix/store/klznw05kwga2wlinrm8yc0l3drvq87ai-nixos-system-srv1982677-26.05pre-git",
+  "removed_units": [],
+  "result_sha256": "23118c6b13df8af79fac3482a07329c3c7c10079b7b14b67a8aae03bdf654aa7",
+  "rules_adopted": false,
+  "schema_version": 1,
+  "scope": "proposed real CI bindings, Actions disabled; no build or activation",
+  "status": "evaluation-passed"
+}

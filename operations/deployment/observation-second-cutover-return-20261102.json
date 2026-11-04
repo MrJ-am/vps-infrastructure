@@ -1,0 +1,245 @@
+{
+  "accepted_source_revision": "e65a42e303f75467adeb86adca7e2382983d51bd",
+  "application_diagnostic_text_read": false,
+  "candidate_deployed": false,
+  "closed_unit_observation": {
+    "boot_is_previous": true,
+    "code": "ATTEMPT_002_UNIT_JOBS_OBSERVED",
+    "current_is_previous": true,
+    "jobs": [
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-first-release-20261102-02.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 2,
+        "unit": "nginx.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "kanidm.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "phpfpm-nextcloud.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "redis-nextcloud.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "vision-embeddings.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "forgejo.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 4,
+        "unit": "postgresql.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-worker-credentials-adapt.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-admission-native-adopt.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-cycle-mail-adopt.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-archive-mail-adopt.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-adopt-matheval.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-bootstrap-journal.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-upgrade-forgejo-schema.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-adopt-forgejo-role.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 2,
+        "unit": "mrjam-identity.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-identity-aliases.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 2,
+        "unit": "mrjam-identity-deletion.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 2,
+        "unit": "nextcloud-setup.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 2,
+        "unit": "mrjam-vision-admission.service"
+      },
+      {
+        "EXIT_CODE": "exited",
+        "EXIT_STATUS": "1",
+        "count": 1,
+        "unit": "mrjam-vision-closure.service"
+      },
+      {
+        "JOB_RESULT": "failed",
+        "count": 1,
+        "unit": "mrjam-vision-closure.service"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "forgejo-backup.timer"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "mrjam-sauvegarde.timer"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "nextcloud-backup.timer"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "nextcloud-cron.timer"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "postgresqlBackup-matheval.timer"
+      },
+      {
+        "JOB_RESULT": "done",
+        "count": 1,
+        "unit": "postgresqlBackup-nextcloud.timer"
+      },
+      {
+        "EXIT_CODE": "exited",
+        "EXIT_STATUS": "1",
+        "count": 1,
+        "unit": "mrjam-first-release-20261102-02.service"
+      }
+    ],
+    "phase": "previous-generation-restored"
+  },
+  "code": "SECOND_CUTOVER_RETURN_CONFIRMED",
+  "controller": "/nix/store/0799clfzrb1y8b17z5g5z12w3vm6fcaw-mrjam-first-release-controller-1",
+  "delivery_revision": "756ffdf19dc207a0b749ee9f1048fc48315c095c",
+  "failed_service": "mrjam-vision-closure.service",
+  "failure_cause_not_yet_identified": true,
+  "last_observation": {
+    "observed_utc_epoch": 1793651626.4750528,
+    "result": {
+      "code": "FIRST_RELEASE_OBSERVED",
+      "deployment_verified": false,
+      "phase": "previous-generation-restored",
+      "result": {
+        "code": "CUTOVER_REFUSED_PREVIOUS_GENERATION_RESTORED",
+        "phase": "previous-generation-restored",
+        "schema_version": 1
+      },
+      "schema_version": 1,
+      "unit": {
+        "ActiveState": "failed",
+        "ExecMainCode": 1,
+        "ExecMainStatus": 1,
+        "LoadState": "loaded",
+        "MainPID": 0,
+        "Result": "exit-code",
+        "SubState": "failed"
+      }
+    },
+    "ssh_exit": 0
+  },
+  "public_candidate_opened": false,
+  "public_https_after_return": {
+    "code": "PREVIOUS_PUBLIC_AFTER_ATTEMPT_002",
+    "observed_utc_epoch": 1793651689.5807512,
+    "results": [
+      {
+        "domain": "audition.mrj.am",
+        "http_status": 200,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "cloud.mrj.am",
+        "http_status": 302,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "forge.mrj.am",
+        "http_status": 200,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "log.mrj.am",
+        "http_status": 200,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "logique.echos.systems",
+        "http_status": 200,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "principiipetit.io",
+        "http_status": 308,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "vision.mrj.am",
+        "http_status": 200,
+        "tls_transport_ok": true
+      },
+      {
+        "domain": "www.principiipetit.io",
+        "http_status": 301,
+        "tls_transport_ok": true
+      }
+    ],
+    "schema_version": 1
+  },
+  "release_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+  "schema_version": 1,
+  "scope": "Production observation, not a qualification of future releases. Snapshot and candidate data retained on VPS."
+}

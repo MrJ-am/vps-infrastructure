@@ -1,0 +1,23 @@
+{
+  "binding_exactly_matches_closed_vps_probe": true,
+  "both_prior_archives_bound": true,
+  "failure_record_sha256": "ddb40e1e2b3dcf7ed6deb4eb88c01fa6510755e1ceec5cd9e0ed5cabc55323ad",
+  "limits": [
+    "Sealing only; this reviewer has not executed the archive or accessed the VPS.",
+    "Runtime preconditions and transaction lock are rechecked by unchanged qualified algorithm before mutation."
+  ],
+  "only_operation_and_binding_constants_changed_byte_for_byte": true,
+  "operation": "archive",
+  "passed": true,
+  "probe_result": ".local/deployment-20261101/third-release-archive-preflight-001.json",
+  "probe_result_sha256": "0f4264e712f893feb29b97d8a94ef5509911e647c23a8d84d72f17bfc9021ac3",
+  "production_execution": false,
+  "release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "return_observation_sha256": "b8d7430efd24d73cabfc8f89e4232aaa6a9cc31354e53e01786dba13024b1b85",
+  "runtime_directories_bound": 4,
+  "schema_version": 1,
+  "sealed": "operations/deployment/archive-first-release-attempt-003-20261102.py",
+  "sealed_sha256": "de525119da05425b002ed8ab0254d958de3bcf4149cdf7338edef6ea0658f77c",
+  "template": "operations/deployment/first_release_archive_003.py",
+  "template_sha256": "21f8b2092bd35779a5a8e1bac677d27a4ac1ad5222a205f4e401f185782dd09f"
+}

@@ -1,0 +1,91 @@
+{
+  "entries": [
+    {
+      "bytes": 45570,
+      "path": "operations/deployment/release_backend.py",
+      "sha256": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90"
+    },
+    {
+      "bytes": 30431,
+      "path": "operations/deployment/test_release_backend.py",
+      "sha256": "eb11465ea2fa12b70729460009af01999d052c9632acb07260ae4aef411dbae7"
+    },
+    {
+      "bytes": 6992,
+      "path": "operations/deployment/previous-return-systemd.nix",
+      "sha256": "59c773daae328c0bad32ca9aa6f056c5d49d0a31d5f1b09d737c2e45f76545bc"
+    },
+    {
+      "bytes": 987,
+      "path": "operations/deployment/result-previous-return-systemd-002.json",
+      "sha256": "37334ae5cad8015ee3c927a387bc536681575739f8a16a376f994f5c74a8487d"
+    },
+    {
+      "bytes": 1697,
+      "path": "operations/deployment/qualification-previous-return-systemd-20261102-002.json",
+      "sha256": "ba608f90ff27c936cd89f4559f8441883d4109d94dd27de5447a110a217c058f"
+    },
+    {
+      "bytes": 3070,
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-006.json",
+      "sha256": "9847b664ae6e039a84985f03db10fb589d63a870d38f08da50d388d29b7cb313"
+    },
+    {
+      "bytes": 2176,
+      "path": "operations/deployment/qualification-release-package-20261102-003.json",
+      "sha256": "5da086f630d93176cf9d020fa50c9df475a795bc63af5fe630ab960902917977"
+    },
+    {
+      "bytes": 3298,
+      "path": "operations/hosts/mrjam-vps/state-adoption.nix",
+      "sha256": "ea41b339cce6eccd2be68101b3e173a6f3f4aef37414617d11deca118d2e4a65"
+    },
+    {
+      "bytes": 16793,
+      "path": "operations/tests/candidate-evaluation.nix",
+      "sha256": "fb45ae49ce3ffa51a2262a85bf317d2a168bbdf1f421ee6b150a7ddad66823ef"
+    },
+    {
+      "bytes": 15405,
+      "path": "operations/hosts/mrjam-vps/CANDIDATE-ASSEMBLY.org",
+      "sha256": "26b978ef21bd1e33374e32b0be680d510a82071f87b0fc001819bcd3bacafe13"
+    },
+    {
+      "bytes": 11168,
+      "path": "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-004.json",
+      "sha256": "2d175ee67da7a7ec7aaf961e0761cf30f3f9f0a6cfd8f7ce4e78743fb4e423ed"
+    },
+    {
+      "bytes": 8272,
+      "path": "operations/deployment/reopen-previous-20261102.py",
+      "sha256": "96270351d3fd0a4d11d43d36eac8d81fea5652c3f9b420a50b8bc0a9551ce6ab"
+    },
+    {
+      "bytes": 777,
+      "path": "operations/deployment/qualification-reopen-previous-20261102.json",
+      "sha256": "f2873c995e93eea4a2b4d90087a285c0a739f7034d46f81c127925e46c14ed7e"
+    },
+    {
+      "bytes": 4437,
+      "path": "operations/deployment/test_reopen_previous_incident.py",
+      "sha256": "5ee3ad9358df272c0a8d4f7594283a2554c4b944b48477533c305a805c902c25"
+    }
+  ],
+  "exclusions": [
+    "All private directories and artifacts under .local",
+    "Archive V3 and full integrated VM publication owned by separate agent",
+    "Final release manifest/governance binding await publication pin"
+  ],
+  "independent_review": {
+    "agent": "/root/identity_acceptance_resume",
+    "backend_sha256": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "limitation": "Another unexpected reopen failure can still lead to HELD; no second restore is authorized after RETURNED.",
+    "result": "PASS",
+    "scope": "read-only review of staging absence, exact timer targets, no direct ACME/backup restart, ViSe exclusion and immutable RETURNED boundary"
+  },
+  "independent_review_pending": false,
+  "remote_mutations": false,
+  "schema_version": 1,
+  "scope": "source-C-local-host-and-backend-corrections",
+  "source_base": "af8dd5a36f693dfc234312cbebe77321a8fa9d19"
+}

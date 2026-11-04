@@ -1,0 +1,166 @@
+{
+  "capacity": {
+    "allocated_new_paths_bytes": 2707456,
+    "required_free_bytes": 1076877080
+  },
+  "export": {
+    "all_references_covered_by_new_or_prior_received_paths": true,
+    "bytes": 427800,
+    "closure_paths": 1260,
+    "new_store_paths": 7,
+    "path": ".local/deployment-20261101/postrelease-resolver-update-delivery-20261103.nar",
+    "sha256": "ccb0f76d8f5e44db032789bb5a025afbf58b6e9af061e862830695fdafdded98"
+  },
+  "generation_delta_review": {
+    "path": "operations/hosts/mrjam-vps/review-resolver-unicast-generation-20261103-001.json",
+    "sha256": "ed4039f91c4ea027625c9e736bb2495d6a344d902c4baab07f9eff241d5b5d04"
+  },
+  "limits": [
+    "The older provision receiver is explicitly unsuitable after005 because it reinstalls a temporary administration unit and targets the old generation; neither rejected preparation is authorized for execution.",
+    "The native test uses a fresh isolated local Nix store, with root metadata/profile gates supplied synthetically; it does not claim a new root VM or VPS execution.",
+    "Only import and immutable-code verification are performed. The separately reviewed resolver controller remains inactive until root launches it."
+  ],
+  "manifest": {
+    "path": "operations/deployment/postrelease-resolver-update-delivery-20261103.json",
+    "sha256": "a34a6e02fc4dca8012985210755bf4e1cc5c6e473b608d2b4520dd88314d6fef"
+  },
+  "previous_successful_deliveries": [
+    {
+      "manifest": "operations/deployment/passkey-delivery-20261102.json",
+      "manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+      "result": ".local/deployment-20261101/passkey-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/passkey-correction-delivery-20261102.json",
+      "manifest_sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724",
+      "result": ".local/deployment-20261101/passkey-correction-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-code-delivery-20261102.json",
+      "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+      "result": ".local/deployment-20261101/candidate-code-delivery-result-001.json",
+      "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-20261102.json",
+      "manifest_sha256": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+      "result": ".local/deployment-20261101/final-code-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/archive-v3-delivery-20261102.json",
+      "manifest_sha256": "dda4f1a0e101fd53fb2a74721b21942cbfdd1ead81c03ece3389aa5ae679a513",
+      "result": ".local/deployment-20261101/archive-v3-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v3-code-delivery-20261102.json",
+      "manifest_sha256": "67228e849196c2ca8398a338d828e18e935554807ac28e2f46c591d2252b3643",
+      "result": ".local/deployment-20261101/candidate-v3-code-delivery-result-001.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json",
+      "manifest_sha256": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec",
+      "result": ".local/deployment-20261101/kanidm-local-bootstrap-delivery-result-001.json",
+      "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-002-20261102.json",
+      "manifest_sha256": "239c65435e78b2d0a90d721473b75bd5e50e5f113dafad6eb0f296d46971269e",
+      "result": ".local/deployment-20261101/final-code-delivery-result-002.json",
+      "result_sha256": "22c2649266ef3b282b68f7db228b14b76b53ac4c7ed7916c7e777dd03e9180cc",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v4-code-delivery-20261102.json",
+      "manifest_sha256": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005",
+      "result": ".local/deployment-20261101/candidate-v4-code-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-003-20261102.json",
+      "manifest_sha256": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4",
+      "result": ".local/deployment-20261101/final-code-delivery-result-003.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-004-20261102.json",
+      "manifest_sha256": "39a038ccc1520cb98e8af5d828608789c5c1392d8e159906ed43c5bbb08ddb75",
+      "result": ".local/deployment-20261101/final-code-delivery-result-004.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/candidate-v5-code-delivery-20261102.json",
+      "manifest_sha256": "19940cdcdb566afcba44545da0910a6d79d0f2169558dc5313103d515a2ac7ad",
+      "result": ".local/deployment-20261101/candidate-v5-code-delivery-result-001.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    },
+    {
+      "manifest": "operations/deployment/final-code-delivery-005-20261102.json",
+      "manifest_sha256": "b27b3744f9b500b35758637b4decee72db4fb24c435a6866bee8b4732f8e99a0",
+      "result": ".local/deployment-20261101/final-code-delivery-result-005.json",
+      "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+      "success": true
+    }
+  ],
+  "receiver": {
+    "exact_generation007_and_boot007_required": true,
+    "historical_transaction_lock_held": true,
+    "nar_hashes_and_references_verified_after_import": true,
+    "no_temporary_unit_or_profile_or_symlink_or_systemctl_operation": true,
+    "only_RELEASE_assignment_changes": true,
+    "path": "operations/deployment/postrelease-resolver-update-delivery-20261103.py",
+    "sha256": "03001828c05a80164020789677b410abf7f7eac400d1748d3034e90683467de8",
+    "template": "operations/deployment/receive_postrelease_code.py",
+    "template_sha256": "18a002d46d047e049f661e6c8039cae531e663f5b93d1d2078d996ffabe19e66",
+    "terminal_release005_and_OPEN_required": true
+  },
+  "rejected_preparations": [
+    "resolver-unicast-code-delivery-20261103.py",
+    "resolver-update-code-delivery-20261103.py"
+  ],
+  "roots": {
+    "controller": "/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001",
+    "generation": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git"
+  },
+  "schema_version": 1,
+  "scope": "local sealed postrelease import-only delivery; no SSH or activation",
+  "status": "passed",
+  "tests": {
+    "failed": 0,
+    "fresh_isolated_local_store_import_and_repeat": true,
+    "log": ".local/deployment-20261101/postrelease-code-receiver-tests-003.log",
+    "log_sha256": "9d2d6a585015ef5074b2d306dc156b21c13b8b5a410b797f81df5cadc85c918a",
+    "passed": 13,
+    "path": "operations/deployment/test_receive_postrelease_code.py",
+    "production_has_no_store_override_or_signature_bypass": true,
+    "real_pinned_nix_tools_used": true,
+    "root_metadata_and_gate_injected_only_in_fixture": true,
+    "sealed_manifest_137_paths_accepted": true,
+    "sha256": "33549f5d41193fef20f22b87b28957649219887bd5ede1e22d1db0d7b137b37c"
+  },
+  "transport_reuse": {
+    "functions_ast_identical": [
+      "protected_directory",
+      "receive"
+    ],
+    "historical_vm": "operations/deployment/qualification-provision-delivery-systemd-20261102.json",
+    "historical_vm_sha256": "dbec4274b50b3582795675937fa0bd1ee701a802d3db6ac5d87bb907b2077e16",
+    "sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+    "source": "operations/deployment/deliver_provision.py"
+  }
+}

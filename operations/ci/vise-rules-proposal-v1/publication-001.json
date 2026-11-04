@@ -1,0 +1,21 @@
+{
+  "actions_activated": false,
+  "base": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "binding_sha256": "f1be13306d02a8e598efdd5c127910c6464392d7f234441bd07d9b441f05ecdc",
+  "branch_created": true,
+  "code": "RULES_PROPOSAL_OPENED",
+  "head": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+  "local_tests_passed": 13,
+  "main_changed": false,
+  "merged": false,
+  "package": "/nix/store/pdzjsgkvdf0jm2pjkchqbb6sy15wpps4-mrjam-vise-rules-proposal-1",
+  "protection_changed": false,
+  "pull_request": 2,
+  "pull_request_created": true,
+  "review_created": false,
+  "schema_version": 1,
+  "status_created": false,
+  "temporary_token_revoked": true,
+  "tree": "5d2754e2fa062f4476d36eecc4cd3a2c359a48b1",
+  "url": "https://forge.mrj.am/MrJ-am/mrjam-validation/pulls/2"
+}

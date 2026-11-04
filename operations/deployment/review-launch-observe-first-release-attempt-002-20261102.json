@@ -1,0 +1,28 @@
+{
+  "all_functions_byte_identical": true,
+  "base_launch_sha256": "10d8ae21241f1ca25b173955243a403acc0fb00130209cf21782974be488f601",
+  "base_observer_sha256": "821fdf93e1cfbd4247358c0acda2cf9792104917635abfea4975c51f99115e9f",
+  "detached_lifecycle_and_closed_observation_unchanged": true,
+  "exclusive_new_unit_and_directory_guards_preserved": true,
+  "files": {
+    "launch-first-release-attempt-002-20261102.py": "2f5fd24cda956ee674c4d6f50d49abfe3764249916348d458da03f2af1bb72eb",
+    "observe-first-release-attempt-002-20261102.py": "b66a7c81963f338aacd511229a9d732f705b27bdb91598c27910dfe2414124ab"
+  },
+  "limits": [
+    "Actual absence of the new unit and status directory is verified on the VPS by the launcher before any start.",
+    "This review does not execute deploy or claim rollout success."
+  ],
+  "new_controller": "/nix/store/0799clfzrb1y8b17z5g5z12w3vm6fcaw-mrjam-first-release-controller-1",
+  "new_status_directory": "/run/mrjam-first-release-status-02",
+  "new_unit": "mrjam-first-release-20261102-02.service",
+  "old_unit_and_result_preserved": true,
+  "only_controller_unit_and_status_directory_changed": true,
+  "passed": true,
+  "production_access": false,
+  "public_manifest_byte_identical_to_reviewed_local_release": true,
+  "public_manifest_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+  "public_nix_expression_evaluates_to_reviewed_controller": true,
+  "public_nix_expression_sha256": "856237b18a852695749eb7f5a320935b7c909ef911dd3da6db045f22aa2e1664",
+  "schema_version": 1,
+  "scope": "Exact byte comparison after reversing three fixed bindings; no new VM or production execution."
+}

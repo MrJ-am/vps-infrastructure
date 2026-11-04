@@ -1,0 +1,124 @@
+{
+  "authority": "filtered-read-only-metadata-not-activation",
+  "certificates": {
+    "audition.mrj.am": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "audition.mrj.am",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "cloud.mrj.am": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "cloud.mrj.am",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "forge.mrj.am": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "forge.mrj.am",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "log.mrj.am": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "log.mrj.am",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service",
+        "kanidm.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "logique.echos.systems": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "logique.echos.systems",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "principiipetit.io": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "principiipetit.io",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "vision.mrj.am": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "vision.mrj.am",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    },
+    "www.principiipetit.io": {
+      "accountHash": "a96772ab152e39f749f9",
+      "certificateHash": "748661661a99cbbf91d5",
+      "domain": "www.principiipetit.io",
+      "extraDomains": [],
+      "interval": "*-*-* 00:00:00",
+      "jitter": "1d",
+      "keyType": "ec256",
+      "reloadServices": [
+        "nginx.service"
+      ],
+      "server": "https://acme-v02.api.letsencrypt.org/directory",
+      "webroot": "/var/lib/acme/acme-challenge"
+    }
+  },
+  "credentials_exported": false,
+  "hostname": "srv1982677",
+  "production_mutation": false,
+  "recorded_at_utc": "2026-11-02T09:11:38.714471+00:00",
+  "schema_version": 1,
+  "source_sha256": "de1bc360ba4f525d8c343632f071e1b8b83639a309739d7fcb6e04a8a588fcce"
+}

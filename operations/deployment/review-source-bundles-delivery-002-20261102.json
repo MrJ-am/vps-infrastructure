@@ -1,0 +1,27 @@
+{
+  "all_nine_names_sizes_digests_match_private_transfer_plan": true,
+  "binding_matches_all_bundle_destinations_and_digests": true,
+  "binding_sha256": "cbc7600470eb44d5dec75090366b0c82d0129fc5c7cb6fa0cf96ce7cc41a5ae7",
+  "bundle_count": 9,
+  "eight_original_bundles_unchanged": true,
+  "infrastructure_pin": "e65a42e303f75467adeb86adca7e2382983d51bd",
+  "input_stream_independently_verified_segment_by_segment": true,
+  "limits": [
+    "Local byte verification only; no VPS access or reception performed by this reviewer.",
+    "Receiver is unchanged apart from RELEASE; previous strict symlink/existing-file and bounded stream semantics apply."
+  ],
+  "manifest_sha256": "982c213323b33eecbac1c0d1251bd542f97ae11053fa364f98a7f654c7713ead",
+  "no_git_import_or_activation": true,
+  "only_release_constant_changed": true,
+  "original_validator_passed": true,
+  "passed": true,
+  "private_contents_or_references_output": false,
+  "production_access": false,
+  "qualified_template_ast_identical": true,
+  "receiver_sha256": "a4b248ad34dead1d65dd62f6bb82df80f1e3b503e6940de2eecbd6f7b15b57e8",
+  "root_private_modes_bound": true,
+  "schema_version": 1,
+  "stream_bytes": 4050642782,
+  "stream_sha256": "6b48b4af02ddf7510723cefddcb082fdde1ec4a45932eae6ee5a4b069b763865",
+  "template_sha256": "11d0b4a0451cee79c48b6dbf710a246bf412d6808c199697113b1f821c75be37"
+}

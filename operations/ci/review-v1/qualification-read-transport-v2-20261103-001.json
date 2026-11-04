@@ -1,0 +1,46 @@
+{
+  "allowed_routes_ast_unchanged": true,
+  "caller_signals_untouched": true,
+  "invented_credentials_only": true,
+  "limits": [
+    "Only real loopback HTTP with invented credentials; no actual Forgejo permission or production access is proved.",
+    "Watchdog scheduling is subject to the Python runtime and OS scheduler, not a hard real-time kernel deadline.",
+    "Native read-only token scopes and distinct merge actor remain mandatory; a Python GET transport is not a sandbox for compromised code.",
+    "No credential reader, service, policy adoption, decision signature, merge or activation."
+  ],
+  "log": {
+    "bytes": 1545,
+    "path": ".local/read-transport-v2-tests-002.log",
+    "sha256": "9afb954d157844f817a7d8878b0ffba330855cbddad2754ecc63c5fb7c2049b3"
+  },
+  "new_cases": [
+    "real slow status/header bytes are interrupted at the shared deadline",
+    "real slow chunk-size line with Connection: close is interrupted at the shared deadline"
+  ],
+  "original_slow_header_reproduction": {
+    "path": ".local/read-transport-slow-header-result.json",
+    "result": {
+      "closed_failure_code": "API_DEADLINE",
+      "configured_shared_deadline_seconds": 0.12,
+      "deadline_plus_one_socket_timeout_exceeded": true,
+      "maximum_socket_timeout_seconds": 0.12,
+      "observed_elapsed_seconds": 1.749,
+      "production_access": false,
+      "schema_version": 1,
+      "scope": "invented-loopback-slow-header-only"
+    },
+    "sha256": "c2c353ff23d6642b66e27a4282185a3a7da8e9b7bafa32b741a53b211d590f96"
+  },
+  "original_source_sha256": "1fe4cefd123a7e980ce2303104f7cff913c8c03a2359172633afe707e2fbfe68",
+  "private_watchdog_socket_shutdown": true,
+  "production_access": false,
+  "real_loopback_http": true,
+  "schema_version": 1,
+  "sources": {
+    "operations/ci/review-v1/READ-TRANSPORT-V2.org": "8623bde887c152c6479a240bb6f68a751bf1d27e6663a4facd90a41e57bbefa6",
+    "operations/ci/review-v1/read_transport_v2.py": "d4ecc67cb47b92ba783c9af32b9fe5adfc301d06abc9d16ebe09eae3f56342e3",
+    "operations/ci/review-v1/test_read_transport_v2.py": "5a532a8281d16638ac0f0a9ff4cc5f1510aafa1d1e1b4e06c527d249855707ae"
+  },
+  "status": "local_tests_passed",
+  "tests_passed": 11
+}

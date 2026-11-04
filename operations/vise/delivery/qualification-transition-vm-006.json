@@ -1,0 +1,48 @@
+{
+  "acceptance_return_recognized": true,
+  "completed_receipt_resumed_after_reboot": false,
+  "controller_resumed_after_sigkill": true,
+  "controller_sigkill_point": "checkpoint-recovering",
+  "events": [
+    {
+      "boot": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "current": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "phase": "prepared"
+    },
+    {
+      "boot": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "current": "/nix/store/mljv4c30ir37mcixzy34307ds15j4zf5-nixos-system-machine-test",
+      "phase": "recovering"
+    },
+    {
+      "boot": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "current": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "phase": "recovering"
+    },
+    {
+      "boot": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "current": "/nix/store/r9p4q6xki9f9jdzvx25hipfsf96rh77d-nixos-system-machine-test",
+      "phase": "failed"
+    }
+  ],
+  "limitations": [
+    "Synthetic C servers and retained services",
+    "Synthetic authority and acceptance",
+    "No production access",
+    "No subsequent real project deployment in this VM"
+  ],
+  "production_access": false,
+  "real_boot_profile": true,
+  "real_generation_transition": true,
+  "real_reboot": true,
+  "real_return": true,
+  "reboot_before_resume": true,
+  "recovery_case": true,
+  "result": {
+    "code": "VISE_FAILED",
+    "previous_restored": true
+  },
+  "staging_pending_commit_cleared": true,
+  "synthetic_authority": true,
+  "vm_result": "/nix/store/yv520jbfv7n2dh216jn7bswwc4zm9iix-vm-test-run-mrjam-vise-real-generation-transition"
+}

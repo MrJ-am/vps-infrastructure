@@ -1,0 +1,31 @@
+{
+  "checks": [
+    "Fixed hostname/root/noargs/previous-generation gate and1GiB store reserve.",
+    "Exact byte count/SHA256 checked before any import; oversize or short stream refused.",
+    "TemporaryFile under/run is anonymous/private0600 with root umask077 and always closed.",
+    "Only fixed nix-store import followed by exact duplicate-free5path set and verify-path; no service, daemon reload, profile or database action.",
+    "Global180s and import90s/verification45s deadlines; closed refusal without tool stderr."
+  ],
+  "classifier_review_sha256": "bc49da24761dab4e2c95849d8c7e4f3cffb3cd78be086ce00bd119417cc4ff10",
+  "delivery_executed_by_reviewer": false,
+  "export": {
+    "sha256": "f268a266ab6412adbaaef1c781e756c4d8144974616079a16dad0dfe31746fdd",
+    "size": 38429920,
+    "store_paths": [
+      "/nix/store/4fhm41clh7s82xgb3jdnpll1axi9zqgq-xgcc-15.3.0-libgcc",
+      "/nix/store/hl2q8nksy0m8qgh3hzvd24rhill1rpix-libunistring-1.4.2",
+      "/nix/store/scgsymw7hbvk6hh2cgbdz906iv4v5y9z-libidn2-2.3.8",
+      "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+      "/nix/store/anvdal9pag7qh6w13cn88mw1pdlyiky2-mrjam-mateval-corpus-classifier-1"
+    ]
+  },
+  "limitations": [
+    "Import may retain valid immutable Nix store paths if later verification fails; no application state is changed.",
+    "The review validates the exact frozen stream and code; production execution belongs to root."
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "service_activation": false,
+  "source_sha256": "c591d7b5daf16a1fe81cfc84d9fc64e985ce73f62fd3a6803fd45a7125502eac",
+  "status": "PASS"
+}

@@ -1,0 +1,21 @@
+{
+  "accepted_source_revision": "12d1bebb2edce1cb46cd8cb10dc8542a809d08bc",
+  "application_activation": false,
+  "code": "CONTROLLER_003_RECEIVED_WITHOUT_ACTIVATION",
+  "controller": "/nix/store/lviggl0pqmarmmhs8brqs4d34fa1cph3-mrjam-first-release-controller-1",
+  "credential_creation": false,
+  "export_bytes": 452080,
+  "export_sha256": "f731de0f84a8e15130315eff15b4e6d37ee3fcb04bd662314e96588b736a8734",
+  "manifest_sha256": "366bbf84f132bcd75b30ebfb9fc7bf9ddd97dc4a95fede7dbee09e6b209ad7f4",
+  "receiver_sha256": "8340955c5da8d864a4df3cea6e3cc6c41a327372e9935cdb432f1d313191b25c",
+  "release_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "review_sha256": "5ca567c1dd823260f4d0b8d919d7d2a2980f7958d78d056bd4459c1529dd42a5",
+  "schema_version": 1,
+  "store_paths": 6
+}

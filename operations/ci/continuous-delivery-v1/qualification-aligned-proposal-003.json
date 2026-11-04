@@ -1,0 +1,19 @@
+{
+  "files": 832,
+  "platform_revision": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+  "platform_tree": "898e81ba8da198cbb6512a64fa54e950ecd24d4b",
+  "policy_sha256": "be4a54ba570c87dcc53f4522e77c748e14b9fe1aa5fb9995a7600a949510a8e9",
+  "production_activation": false,
+  "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+  "rust_members": [
+    "crates/server",
+    "crates/audition",
+    "crates/log",
+    "crates/identity",
+    "crates/identity-deletion",
+    "components/vision",
+    "components/mateval"
+  ],
+  "schema_version": 1,
+  "scope": "prepared-not-admitted"
+}

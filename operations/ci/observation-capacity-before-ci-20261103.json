@@ -1,0 +1,125 @@
+{
+  "baseline_matches": true,
+  "code": "CI_CAPACITY_METADATA_OBSERVED",
+  "disk": {
+    "/nix/store": {
+      "available_bytes": 26668584960,
+      "available_inodes": 5771143,
+      "total_bytes": 105590210560
+    },
+    "/var/lib": {
+      "available_bytes": 26668584960,
+      "available_inodes": 5771143,
+      "total_bytes": 105590210560
+    },
+    "same_filesystem": true
+  },
+  "identity_metadata": {
+    "reserved_ids": {
+      "949": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "950": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "951": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "952": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "953": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "954": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "955": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "956": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "957": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "958": {
+        "gid_free": true,
+        "uid_free": true
+      },
+      "959": {
+        "gid_free": true,
+        "uid_free": true
+      }
+    },
+    "technical_accounts": {
+      "mrjam-forgejo-policy": {
+        "present": false
+      },
+      "mrjam-forgejo-registration": {
+        "present": false
+      },
+      "mrjam-forgejo-runner": {
+        "present": false
+      },
+      "mrjam-validation-authority": {
+        "present": false
+      },
+      "mrjam-validation-collector": {
+        "present": false
+      },
+      "mrjam-validation-worker": {
+        "present": false
+      }
+    },
+    "technical_groups": {
+      "mrjam-forgejo-policy": {
+        "present": false
+      },
+      "mrjam-forgejo-registration": {
+        "present": false
+      },
+      "mrjam-forgejo-runner": {
+        "present": false
+      },
+      "mrjam-validation-authority": {
+        "present": false
+      },
+      "mrjam-validation-collector": {
+        "present": false
+      },
+      "mrjam-validation-requesters": {
+        "present": false
+      },
+      "mrjam-validation-submitters": {
+        "present": false
+      },
+      "mrjam-validation-worker": {
+        "present": false
+      }
+    }
+  },
+  "limits": [
+    "Instantaneous free memory and disk are not a production CI coexistence proof.",
+    "No CI account, service or credential was created by this read-only probe."
+  ],
+  "memory": {
+    "MemAvailable_bytes": 6282399744,
+    "MemTotal_bytes": 8328343552,
+    "SwapFree_bytes": 0,
+    "SwapTotal_bytes": 0
+  },
+  "probe_sha256": "bc63f4a630a66bbaad31c4238e3fb8b8480cb577a0dc7997958e7b3459fefa78",
+  "raw_receipt_sha256": "bb23770d0121c9decd649371b1c7a287f6ee2e4ed68e7c6fcd43b63cf3edddfe",
+  "schema_version": 1,
+  "scope": "read-only VPS capacity before inactive CI installation"
+}

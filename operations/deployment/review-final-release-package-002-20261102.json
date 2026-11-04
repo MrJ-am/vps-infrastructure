@@ -1,0 +1,62 @@
+{
+  "all_candidate_linked_evidence_hashes_valid": true,
+  "artifact_count": 1674,
+  "both_generation_guards_match": true,
+  "both_generations_match_qualified_candidate_004": true,
+  "closure_intersection_count": 811,
+  "controller_package": "/nix/store/0799clfzrb1y8b17z5g5z12w3vm6fcaw-mrjam-first-release-controller-1",
+  "eight_backend_modules_byte_identical_to_source_revision": true,
+  "exact_union_and_all_registered_nar_hashes_match": true,
+  "fixed_wrappers_exec_isolated_python_with_no_extra_operations": true,
+  "forgejo_binding_sha256": "cbc7600470eb44d5dec75090366b0c82d0129fc5c7cb6fa0cf96ce7cc41a5ae7",
+  "governance_code_and_binding_byte_identical": true,
+  "integrated_backend_evidence": {
+    "all_source_hashes_and_result_store_bytes_match": true,
+    "groups_passed": 6,
+    "limits": "The integrated VM has synthetic application contracts; mail adoption V3 and native ACME timer behavior are separately qualified.",
+    "receipt": "operations/deployment/backend-integration/qualification-20261102-008.json",
+    "sha256": "62655a5ac751233990f87b37a2e12a1f1cfd05a48c2cf454a186a62852b37d69"
+  },
+  "limits": [
+    "Previous-generation closure is checked against the closed VPS observation, not read on this local host.",
+    "This is a manifest/package binding review; real rollout, private service continuity and rollback remain production outcomes.",
+    "No deploy or recover entrypoint was executed locally or remotely."
+  ],
+  "local_closure_count": 1295,
+  "manifest_bytes": 207222,
+  "manifest_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+  "new_controller_governance_binding_store_bytes_verified": true,
+  "old_observed_artifact_count": 1190,
+  "only_three_entry_constants_changed": true,
+  "passed": true,
+  "production_execution": false,
+  "release_schema_valid": true,
+  "retained_service_unit_hashes_and_v3_adoption_binding_valid": true,
+  "root_count": 14,
+  "schema_version": 1,
+  "source_hashes": {
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release-package.nix": "352c6f4986e6cb76b948d11f23eaa71254034db1db5eb2b36dcf1378026b4be4",
+    "release_backend.py": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "release_entrypoint.py": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab",
+    "snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+  },
+  "source_revision": "e65a42e303f75467adeb86adca7e2382983d51bd",
+  "wrappers": {
+    "deploy": {
+      "entry_sha256": "dadfa45153a29b7568a05593eb5806a69282f526b9e36c6401990d72069a2f9d",
+      "manifest_path": "/nix/store/jlgchk6dlqvyf5syiws9rzksmn0nlvgn-mrjam-first-release-binding-1/release.json",
+      "wrapper_sha256": "ffbfa04615f5d5de84dafd7ec028333a624df7d62d40b19bb5d52fbc0fe25f66"
+    },
+    "recover": {
+      "entry_sha256": "09a18d70e06b51ae0d0e609068da456bdca140f3a475bd5dd8420d3c919bd2b6",
+      "manifest_path": "/nix/store/jlgchk6dlqvyf5syiws9rzksmn0nlvgn-mrjam-first-release-binding-1/release.json",
+      "wrapper_sha256": "37c2df30d6b4365de3130f77faa5e974ede011aed52c300f8a7dd05164393f59"
+    }
+  }
+}

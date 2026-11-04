@@ -1,0 +1,26 @@
+{
+  "attempt": 4,
+  "authority": "Spectre-synthetic-systemd",
+  "checks": [
+    "select-staged-boot-with-previous-still-running",
+    "reboot-staged-and-pending-writer-mask",
+    "interrupted-private-return-reboots-guarded-staged",
+    "return-restores-previous-boot-and-live-generation",
+    "promoted-boot-after-durable-opening"
+  ],
+  "fixture_sha256": "fa3cf3cc01a88f90ab5aa0f4fd68bf27aecde779a593111e4525c2f65eced2fb",
+  "generation_sha256": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+  "guard": "/nix/store/11gb9i2v7b3980zylx4pnr3wh7hd8djf-mrjam-first-cutover-boot-guard",
+  "limits": [
+    "Synthetic NixOS generations and inert application process",
+    "Application adoption is qualified separately"
+  ],
+  "output": "/nix/store/ik8rzwaf4lk339gx2wwrb6d22h3lwfjq-vm-test-run-mrjam-exact-generation-switch-and-boot",
+  "passed": true,
+  "previous_generation_contains_guard": false,
+  "production_access": false,
+  "recorded_date": "2026-11-02",
+  "schema_version": 1,
+  "supersedes": "qualification-generation-20261102.json",
+  "system_control_sha256": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+}

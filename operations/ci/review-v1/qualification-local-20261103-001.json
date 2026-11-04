@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "scope": "local review binding only; no API, signing identity, merge or deployment",
+  "status": "local_tests_passed",
+  "tests_passed": 11,
+  "real_validation_signatures_with_invented_keys": true,
+  "human_review_proved": false,
+  "forgejo_permissions_proved": false,
+  "production_activation": false,
+  "sources": {
+    "operations/ci/review-v1/review_contract.py": "e86dd5a21f6a9aac5ff0df000dec29b62ad91fbd860c2db7e5462cc331ab5707",
+    "operations/ci/review-v1/test_review_contract.py": "349bfc1e02f5714ee9231fdfbcea7f40fb520adb138e6c98a88cfb8f75c88247",
+    "operations/ci/review-v1/README.org": "0e26de47fd58196ca107ec4e6e25aa8b8032c1956eb31cf0b84bfe29ef584224"
+  },
+  "primary_api_source": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/structs/pull_review.go",
+  "limits": [
+    "Observations are synthetic; the future fixed API collector must establish their completeness and authenticity.",
+    "Output is unsigned and cannot authorize a merge or activation.",
+    "Manifest bytes are bound, but their operational schema is the separate release validator responsibility.",
+    "Before any authority consumes this binding, the manifest validator must match consumed sources and artifacts to the signed attestation, not merely validate its schema."
+  ]
+}

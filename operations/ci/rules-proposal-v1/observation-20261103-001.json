@@ -1,0 +1,49 @@
+{
+  "delivery": {
+    "code": {
+      "application_activation": false,
+      "code": "POSTRELEASE_CODE_IMPORTED",
+      "schema_version": 1,
+      "store_paths": 2,
+      "systemd_changes": false
+    },
+    "private_bundle": {
+      "bytes": 874,
+      "code": "RULES_PROPOSAL_BUNDLE_RECEIVED",
+      "created": true,
+      "proposal_opened": false,
+      "schema_version": 1,
+      "sha256": "9938901b832d40e20992bf2063a79f19fed1fe37b4a6d4eb36bb2842e369c975"
+    }
+  },
+  "human_review_observed": false,
+  "limits": [
+    "This creates only the exact branch and pull request; no human review, CI status, merge or activation was produced.",
+    "Human approval has been requested separately and is not yet observed."
+  ],
+  "observed_at": "2026-11-03T00:44:12.904128+00:00",
+  "package": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+  "result": {
+    "actions_activated": false,
+    "base": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "branch_created": true,
+    "code": "RULES_PROPOSAL_OPENED",
+    "head": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "main_changed": false,
+    "merged": false,
+    "protection_changed": false,
+    "pull_request": 1,
+    "pull_request_created": true,
+    "review_created": false,
+    "schema_version": 1,
+    "status_created": false,
+    "temporary_token_revoked": true,
+    "tree": "f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b",
+    "url": "https://forge.mrj.am/MrJ-am/mrjam-validation/pulls/1"
+  },
+  "review_sha256": "62ea711d6adfa119fa3fa778be7c5dc2af005e88d8b1f2e025a19b2ed5856b40",
+  "rules_adopted": false,
+  "schema_version": 1,
+  "scope": "actual-rules-branch-and-pull-request-only",
+  "source_commit": "a69e94ac1cd143f0697fd45e7b864347e487c3ab"
+}

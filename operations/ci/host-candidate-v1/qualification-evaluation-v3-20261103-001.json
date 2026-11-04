@@ -1,0 +1,411 @@
+{
+  "activation_performed": false,
+  "application_validation_repeated": false,
+  "canonical_context_correction": {
+    "bytes": 1962,
+    "path": "operations/ci/host-candidate-v1/finding-storepath-producer-context-20261103.json",
+    "sha256": "3467091f5d6b12d969ef4efe9ec4755ec7f4f0e72678abc890a3941d1c302958"
+  },
+  "checks_total": 29,
+  "evaluation": {
+    "added_units": [
+      "mrjam-forgejo-policy.service",
+      "mrjam-forgejo-registration.service",
+      "mrjam-forgejo-runner.service",
+      "mrjam-validation-authority.service",
+      "mrjam-validation-authority.socket",
+      "mrjam-validation-collector.socket",
+      "mrjam-validation-collector@.service",
+      "mrjam-validation-export.socket",
+      "mrjam-validation-export@.service",
+      "mrjam-validation-staging.service",
+      "mrjam-validation-worker.socket",
+      "mrjam-validation-worker@.service",
+      "nftables.service"
+    ],
+    "arguments": {
+      "authorityPolicy": {
+        "accepted_proposals": [
+          "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb"
+        ],
+        "closure_sha256": "1a3d5b53de2b8f2d642542842c74befc11a56103539eddbd91412df296613d20",
+        "collector_uid": 952,
+        "expires_at": 1794270660,
+        "key_id": "f0e41983bbc2c2ff0bc1ccda81156d2e0b26f146d7dd0ec7497d03e2810fb758",
+        "not_before": 1793665860,
+        "not_established": [
+          "production ACL and signing identity",
+          "real SSO and production database state",
+          "backup restoration",
+          "etp-vise: source inventory and qualification remain outside the migrated VPS scope"
+        ],
+        "public_key_der": "MCowBQYDK2VwAyEAPZSm2lvwlpEiLRu0n++heq4eEpXmy75gPjnfxcmHUiU=",
+        "report_policy_sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001",
+        "requester_uid": 950,
+        "required_steps": [
+          "complete-trees-submodules-and-locked-tools",
+          "rust-reviewed-readiness-overlay",
+          "rust-format",
+          "rust-clippy-all-features",
+          "rust-http-postgres-rls-tls-tests",
+          "rust-release",
+          "independent-http-release-bytes",
+          "elm-rules-208",
+          "elm-compile-audition",
+          "elm-review-prepare-audition",
+          "elm-review-audition",
+          "elm-tests-audition",
+          "elm-entrypoint-audition-elm",
+          "frontend-resource-closure-audition",
+          "frontend-runtime-manifest-audition",
+          "elm-compile-log",
+          "elm-review-prepare-log",
+          "elm-review-log",
+          "elm-tests-log",
+          "elm-entrypoint-log-elm",
+          "frontend-resource-closure-log",
+          "frontend-runtime-manifest-log",
+          "elm-compile-logique",
+          "elm-review-prepare-logique",
+          "elm-review-logique",
+          "logique-curriculum",
+          "logique-corrector",
+          "logique-proof-workshop",
+          "elm-entrypoint-logique-app",
+          "frontend-resource-closure-logique",
+          "frontend-runtime-manifest-logique",
+          "elm-compile-mateval",
+          "elm-review-prepare-mateval",
+          "elm-review-mateval",
+          "elm-tests-mateval",
+          "elm-entrypoint-mateval-administration",
+          "elm-entrypoint-mateval-demo-card",
+          "elm-entrypoint-mateval-main",
+          "elm-entrypoint-mateval-survey",
+          "frontend-resource-closure-mateval",
+          "frontend-runtime-manifest-mateval",
+          "elm-compile-style",
+          "elm-review-prepare-style",
+          "elm-review-style",
+          "elm-entrypoint-style-bibliotheque",
+          "elm-entrypoint-style-blocs",
+          "elm-entrypoint-style-contextes",
+          "elm-entrypoint-style-galerie",
+          "elm-entrypoint-style-geometrie",
+          "elm-entrypoint-style-lecture",
+          "elm-entrypoint-style-medias",
+          "elm-entrypoint-style-scientifique",
+          "elm-bundle-style",
+          "frontend-resource-closure-style",
+          "frontend-runtime-manifest-style",
+          "explicit-manifest-overlay-style-logo",
+          "elm-compile-style-logo",
+          "elm-review-prepare-style-logo",
+          "elm-review-style-logo",
+          "elm-tests-style-logo",
+          "elm-entrypoint-style-logo-exporter",
+          "elm-entrypoint-style-logo-main",
+          "elm-entrypoint-style-logo-palette",
+          "elm-entrypoint-style-logo-philosophie",
+          "elm-bundle-style-logo",
+          "logo-public-vector-exports",
+          "frontend-resource-closure-style-logo",
+          "frontend-runtime-manifest-style-logo",
+          "elm-compile-vision",
+          "elm-review-prepare-vision",
+          "elm-review-vision",
+          "elm-tests-vision",
+          "elm-entrypoint-vision-app",
+          "frontend-resource-closure-vision",
+          "frontend-runtime-manifest-vision"
+        ],
+        "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+        "schema_version": 1,
+        "scope": "mrjam-validation-content-authority-v1",
+        "signer_uid": 953,
+        "sources": [
+          {
+            "id": "logique",
+            "repository": "MrJ-am/apprendre-a-demontrer",
+            "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+            "tree_sha": "2c1f7bf92d01e326eaf4a17fb0d37a98609b548f"
+          },
+          {
+            "id": "style",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+            "tree_sha": "c0800e787d855dd4e720506a849711b24e55ed15"
+          },
+          {
+            "id": "style-log",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+            "tree_sha": "a6a2dfc33b3f7717c2f47c6ecea0c4384f6a8e76"
+          },
+          {
+            "id": "style-mateval",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+            "tree_sha": "1d7e3d02b207d7ef37fd1b8a1d0935c43766d618"
+          },
+          {
+            "id": "style-logique",
+            "repository": "MrJ-am/style-mrjam",
+            "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
+            "tree_sha": "4c7142c0ad646ae01747665a8bfb8eb369e35706"
+          },
+          {
+            "id": "vision",
+            "repository": "MrJ-am/vision",
+            "revision": "99eace9df76777c89bbd992952738b3f57608801",
+            "tree_sha": "648afcd54cc477f38c399ba64c28ece2b605b0a0"
+          },
+          {
+            "id": "mateval",
+            "repository": "MrJ-am/matheval",
+            "revision": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+            "tree_sha": "7ab94c27479d061a1f29214913fe5e97a59f4b26"
+          },
+          {
+            "id": "infrastructure",
+            "repository": "MrJ-am/vps-infrastructure",
+            "revision": "3836559dd79c053d2f6a4c7aaa2b4c1add6575b6",
+            "tree_sha": "d63baf2c0e2b6921e35f2c0b9e329483a7203d8d"
+          },
+          {
+            "id": "platform",
+            "repository": "MrJ-am/mrjam-plateforme",
+            "revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+            "tree_sha": "66bb111ad4af6d7ddf659be0bd8da0cda03cc8f9"
+          }
+        ],
+        "verifier": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1",
+        "verifier_nar_hash": "sha256-ccWYvZ+frJ3wafs7ZSCJpmHqtjbfqSoRvRx43B5nKes="
+      },
+      "controllerRevision": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+      "enableBoundedActions": false,
+      "policyTokenFile": "/var/lib/mrjam-ci-credentials/forgejo-policy-token",
+      "proposals": [
+        {
+          "sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+          "source": "/nix/store/qaf21rxsm38vya6kr6pqr5w02z3dbzbv-mrjam-public-proposed-sources-b02-readiness-v1"
+        }
+      ],
+      "registrationTokenFile": "/var/lib/mrjam-ci-credentials/forgejo-registration-token",
+      "rulesRevision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+      "signingKeyFile": "/var/lib/mrjam-validation-authority/signing-key",
+      "validator": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1"
+    },
+    "changed_existing_units": [
+      "dbus-broker.service",
+      "systemd-tmpfiles-resetup.service"
+    ],
+    "checks": {
+      "actionsRemainDisabled": true,
+      "actualPublicKeyBound": true,
+      "applicationUnitBytesPreserved": true,
+      "assertionsPass": true,
+      "baselineMatchesDeployed": true,
+      "canonicalValidatorExact": true,
+      "existingUnitDeltaOnlyMaintenanceTriggers": true,
+      "firewallUnitBytesPreserved": true,
+      "keyReferenceExact": true,
+      "llmnrRemainsDisabled": true,
+      "noCIServiceImplicitStart": true,
+      "noCISocketImplicitStart": true,
+      "policyRemainsPlanOnly": true,
+      "policySourceUnchanged": true,
+      "qualifiedAuthorityExact": true,
+      "qualifiedNativeProducerExact": true,
+      "separateFutureCredentialReferences": true
+    },
+    "controllerRevision": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+    "proposed_toplevel": "/nix/store/q2lp89v7m9b6lsl22haspqqjsxnp3wck-nixos-system-srv1982677-26.05pre-git",
+    "removed_units": [],
+    "schema_version": 1,
+    "scope": "proposed actual bindings; rules not yet adopted; credentials absent; no activation"
+  },
+  "evaluation_logs": [
+    {
+      "bytes": 6744,
+      "path": ".local/ci-rules-bootstrap-adoption-20261103/host-evaluation-v3-canonical.json",
+      "sha256": "9d59329e661cd7e2a5c75c5281f34390395776256fea91c89728aa50e7fbaafd"
+    },
+    {
+      "bytes": 2840,
+      "path": ".local/ci-rules-bootstrap-adoption-20261103/host-delta-v3-canonical.json",
+      "sha256": "bce5e04f42bad135de1fa783913e1bad89c55731a853186aae6fea6ec3cef74d"
+    }
+  ],
+  "generation_built": false,
+  "import_variants": [
+    {
+      "after": {
+        "bytes": 2208,
+        "path": "operations/ci/modules-authority-report-v3.nix",
+        "sha256": "615810d8bd7f5d31bb037bd130527e3ad3ae1aba0ecc2c02effab8a318fb4bf6"
+      },
+      "before": {
+        "bytes": 2205,
+        "path": "operations/ci/modules.nix",
+        "sha256": "1d82d8e5d4a3c752f473af76e067a41df2f914fa6941af5559a8f2e26603741c"
+      },
+      "only_change": {
+        "from": "./authority-credentials-v2/module.nix",
+        "to": "./authority-report-details-v3/module.nix"
+      }
+    },
+    {
+      "after": {
+        "bytes": 8248,
+        "path": "operations/ci/forgejo-host-actions-authority-report-v3.nix",
+        "sha256": "2bbf5ea444c5862d60ac16bd6a89b30a8bdff6e1c4d98b8c9bc04ffa5161d01e"
+      },
+      "before": {
+        "bytes": 8228,
+        "path": "operations/ci/forgejo-host-actions.nix",
+        "sha256": "884eca76f21cb8838926ba294074600b90f3d69f07a0401a080c28f18ccf7b12"
+      },
+      "only_change": {
+        "from": "./modules.nix",
+        "to": "./modules-authority-report-v3.nix"
+      }
+    },
+    {
+      "after": {
+        "bytes": 2894,
+        "path": "operations/ci/host-profile-authority-report-v3.nix",
+        "sha256": "7c7ce363722c7b01238d912e2a6681638618c97f3cb3c7aa3533e62a60c2a55b"
+      },
+      "before": {
+        "bytes": 2874,
+        "path": "operations/ci/host-profile.nix",
+        "sha256": "d2f389a8ff2bbab9c4f12369470a255c9239e26994aa0ed53a6eb2511cf671a0"
+      },
+      "only_change": {
+        "from": "./forgejo-host-actions.nix",
+        "to": "./forgejo-host-actions-authority-report-v3.nix"
+      }
+    }
+  ],
+  "isolated_authority_version_delta": {
+    "after_toplevel": "/nix/store/q2lp89v7m9b6lsl22haspqqjsxnp3wck-nixos-system-srv1982677-26.05pre-git",
+    "all_passed": true,
+    "before_toplevel": "/nix/store/89hpb0kmy3279lan1qjh1rhdm9yc13pf-nixos-system-srv1982677-26.05pre-git",
+    "changed": [
+      "mrjam-forgejo-runner.service",
+      "mrjam-validation-authority.service",
+      "mrjam-validation-collector@.service",
+      "mrjam-validation-export@.service",
+      "mrjam-validation-worker@.service"
+    ],
+    "changed_unit_hashes": [
+      {
+        "after_sha256": "9ba5782fe49e4aa9e019fe53828706947fbcba24219f3ab9237fc5528b6ee8bf",
+        "before_sha256": "de5c5abd0de3d3cd2eafe7f04ca35a1f61ed65079853dc75d02c6d980fcf0dac",
+        "name": "mrjam-forgejo-runner.service"
+      },
+      {
+        "after_sha256": "f69b5af73a2892233df25d22a17a63042b2ace788584570b968c326e325b9ed6",
+        "before_sha256": "2c2eeb7aa40ea9e1bf30a473ae6562c8e4bf787d18bf5801cab3428adfd3c010",
+        "name": "mrjam-validation-authority.service"
+      },
+      {
+        "after_sha256": "477133aee00f0de20d7e9f2c8656e44b3d2ac6c41331fc213bf30041e3406005",
+        "before_sha256": "c00a669ab284c910ae7d192f82aad35f2a0798789e892c27c95167defefd8c95",
+        "name": "mrjam-validation-collector@.service"
+      },
+      {
+        "after_sha256": "f72effb89ca77544a527b11464eca69f36a61f8ac880cf90b03881a661b16bfd",
+        "before_sha256": "ef492891c091343d37b701b76d8677bea15d57bec88b265389c0bc9a910083d5",
+        "name": "mrjam-validation-export@.service"
+      },
+      {
+        "after_sha256": "2b0e659320c69fa91954e8cf0a08c4dc84fab04851f588f1d68fd831e92ba3d8",
+        "before_sha256": "6eb192f0c3848e4a10699f844858f3793e483cc86626ae796541f6b3d4525333",
+        "name": "mrjam-validation-worker@.service"
+      }
+    ],
+    "checks": {
+      "actionsRemainDisabled": true,
+      "activationScriptOnlyEtcReferenceChanges": true,
+      "allUnitTextIdenticalAfterPackageSubstitution": true,
+      "assertionsPass": true,
+      "credentialsRemainPrivateReferences": true,
+      "newAuthorityExact": true,
+      "oldAuthorityExact": true,
+      "onlyFourAuthorityConsumersAndCoordinatorChange": true,
+      "producerUnchanged": true,
+      "publicPolicyUnchanged": true,
+      "unitNamesIdentical": true,
+      "usersAndGroupsUnchanged": true
+    },
+    "controllerRevision": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+    "newCoordinator": "/nix/store/xw72xaazwylp50qf06v7pggr37qx7b03-mrjam-forgejo-runner-content-authority-13.2.0",
+    "newEtc": "/nix/store/y0afvi50fzrcw80icmwa8c78231r9k4d-etc",
+    "newPackage": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3",
+    "newRoot": "/nix/store/3m3hq3ssisw4ik8hrd719pqwrphvb20s-mrjam-forgejo-coordinator-authority-root-1",
+    "oldCoordinator": "/nix/store/jqmj7hpmp152j3lyy6fk5vngi5dfvl8a-mrjam-forgejo-runner-content-authority-13.2.0",
+    "oldEtc": "/nix/store/b1ndxcf668pshsiaacmxbzphnw30kh26-etc",
+    "oldPackage": "/nix/store/19r3a6ylzp32vg3bkfr9wfhd1n8cwm71-mrjam-validation-authority-credentials-2",
+    "oldRoot": "/nix/store/qpcqj9c4xmbdmnvzi950169s5sw0n2k2-mrjam-forgejo-coordinator-authority-root-1",
+    "schema_version": 1,
+    "scope": "authority package substitution in two inactive proposed CI compositions; no build or activation",
+    "unit_count": 169
+  },
+  "limits": [
+    "Comparison covers 169 generated NixOS unit definitions, not every vendor systemd unit file",
+    "The 12-check package delta uses the canonical validator on both sides to isolate authority v2 to v3; the 17-check host evaluation separately compares the final proposal against the deployed phi68 baseline",
+    "Actions disabled, policy plan only, no wantedBy service/socket starts; no proof of actual production CI execution is claimed",
+    "The private signing key is referenced by its fixed path only, never read or copied"
+  ],
+  "production_operations": false,
+  "qualified_component_receipts": [
+    {
+      "bytes": 16720,
+      "path": "operations/ci/authority-report-details-v3/qualification-20261103-001.json",
+      "sha256": "ace4a2845c392f65a395ecb7ba709adced31694618915ed7b4cdda6385b077c6"
+    },
+    {
+      "bytes": 3619,
+      "path": "operations/ci/authority-report-details-v3/review-20261103-001.json",
+      "sha256": "b4e1dbf5980c83d36fc1947fa5220fb0726fc2a38c2fd3f69a0c7cd2a0ab3c78"
+    },
+    {
+      "bytes": 3658,
+      "path": "operations/ci/review-host-composition-20261103-001.json",
+      "sha256": "bcf9b4539408e10aa3a16b879304bc639b91c2da4b7a82349ef6643326efc162"
+    },
+    {
+      "bytes": 1178,
+      "path": "operations/ci/current-validator-v1/proposed-bindings-20261103.json",
+      "sha256": "fb546db394a5bae9d7f45a48e2d614021dae8a52a2f04182149bb47c4f137bbd"
+    }
+  ],
+  "qualified_public_authority_policy": {
+    "bytes": 5541,
+    "path": "/nix/store/d8bhnl18vsch1zbrvm28w6dvn6acz1k6-mrjam-validation-authority-policy.json",
+    "sha256": "ae8da497327c987e54adef0fe445e946a105114b6ea76253c359ec0a13a77972"
+  },
+  "remaining_dependencies": [
+    "Real native human approval and initial rules adoption are separate and are not inferred here",
+    "controllerRevision O is an evaluation placeholder only and must be replaced by the final published CI source revision",
+    "Policy and registration credentials remain absent; distinct least-privilege accounts and private token provisioning are required",
+    "New coordinator and root outputs are evaluated only; full proposed generation build, incremental reception, strict live delta and activation review remain required"
+  ],
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": "separate inactive host CI authority-v3 composition with canonical native producer",
+  "sources": [
+    {
+      "bytes": 5432,
+      "path": "operations/ci/host-candidate-v1/evaluation-v3.nix",
+      "sha256": "147ea1e2e743bad1412044b5796586d8fb6600b83c11ce07b2da1910b4d9a9f3"
+    },
+    {
+      "bytes": 3994,
+      "path": "operations/ci/host-candidate-v1/delta-authority-v3.nix",
+      "sha256": "7ee16295f0d4f3fb52fb4c42a4cad2a36d2817cb8d518a7e9b64739e8a410b9a"
+    }
+  ]
+}

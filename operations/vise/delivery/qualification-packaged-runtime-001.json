@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "result": {
+    "elapsed_seconds": 12.88,
+    "full_validation": false,
+    "limits": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "pids.max": "256"
+    },
+    "passed": true,
+    "production_access": false,
+    "scope": "local-packaged-synthetic-runtime-only",
+    "source_owner_substitution": "local UID, not production root staging",
+    "validator": "/nix/store/kyrb4wnd7p2gvd7sb7dr68y01bhw1jwa-mrjam-vise-packaged-runtime-probe-1"
+  },
+  "runtime": {
+    "deployment_authorized": false,
+    "package": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819",
+    "production_access": false,
+    "proposal_sha256": "8ea736fc4819b4c795f340d26638c2223c06d1a3ae612fbbec980d2b25a4ab5d",
+    "scope": "isolated-packaged-runtime-only",
+    "steps": [
+      {
+        "name": "vise-api-tests-synthetic-postgresql",
+        "status": "passed"
+      },
+      {
+        "name": "vise-schema-and-role-refusals",
+        "status": "passed"
+      },
+      {
+        "name": "vise-graceful-stop-and-restart",
+        "status": "passed"
+      },
+      {
+        "name": "vise-restore-current-erasure-ledger",
+        "status": "passed"
+      }
+    ]
+  },
+  "limitations": [
+    "Local user namespace substitutes for root-owned production staging",
+    "Synthetic source rules; no production admission or signature",
+    "No production activation, database access or rollback"
+  ]
+}

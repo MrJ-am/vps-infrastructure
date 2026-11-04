@@ -1,0 +1,170 @@
+{
+  "acceptance": {
+    "merge": {
+      "deployed": false,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "merger": "mrjam-release-merge",
+      "number": 3,
+      "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+      "protected_fast_forward": true,
+      "recovered_existing": false,
+      "repository": "mrjam-plateforme",
+      "review_id": 5
+    },
+    "mirror": {
+      "author": "mrjam-proposal-mirror",
+      "base": "e4cc836d76c4104b4d356e583a2e5f34a827f90b",
+      "branch": "cloud/pr-4-bf4d301b837c350ec61f806d06571165c16a8df5",
+      "deployed": false,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "merged": false,
+      "number": 3,
+      "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+      "repository": "mrjam-plateforme",
+      "repository_id": 8,
+      "reviewed": false
+    },
+    "review": {
+      "deployed": false,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "human_review": false,
+      "merged": false,
+      "number": 3,
+      "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+      "repository": "mrjam-plateforme",
+      "review_id": 5,
+      "reviewer": "mrjam-validation-review"
+    },
+    "sync": {
+      "canonical_forgejo_main": true,
+      "deployed": false,
+      "github_main_synchronized": true,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "recovered_existing": false,
+      "repository": "mrjam-plateforme",
+      "token_revoked": true
+    }
+  },
+  "adopted": {
+    "policy": "/nix/store/v46sr8xmd7w4fj9na61c5slddajk1rqj-mrjam-aligned-validator-policy.json",
+    "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+    "schema_version": 1,
+    "source": "/nix/store/4q2c0mv7vv9991n47b2w8lbs342kav4b-mrjam-admitted-source-6135a1bda1eb"
+  },
+  "boot": "/nix/store/cx70ninizmzz3lmx00p6rgr17g6wna97-nixos-system-srv1982677-26.05pre-git",
+  "current": "/nix/store/cx70ninizmzz3lmx00p6rgr17g6wna97-nixos-system-srv1982677-26.05pre-git",
+  "delivery": {
+    "generation": "/nix/store/cx70ninizmzz3lmx00p6rgr17g6wna97-nixos-system-srv1982677-26.05pre-git",
+    "plan_sha256": "ded96f549fea02a6201fb0aaf6f98b13a2e18f32c03dad667545f3d8d5e53837",
+    "previous_generation": "/nix/store/pbk109l2hbvnvpiw9dnymnnnm3czl5ap-nixos-system-srv1982677-26.05pre-git",
+    "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f"
+  },
+  "forgejo": {
+    "branches/main": {
+      "commit": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "head": null,
+      "merged": null
+    },
+    "pulls/3": {
+      "commit": null,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "merged": true
+    }
+  },
+  "green_executable": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb/libexec/mrjam-server",
+  "job": "68f75aceaf25b4dc11bd8ab10fe06ce01fb23f6c93cc988b6b1d316ab25f9b75",
+  "job_phase": "deployed",
+  "observed_utc": "2026-11-03T23:26:51.805337+00:00",
+  "plan": {
+    "bundle": "/nix/store/mabrj6nz3c7g452xxv4sh7xrr78gc8ka-mrjam-delivery-bundle-6135a1bda1eb-green",
+    "forge_pull": 3,
+    "job": "68f75aceaf25b4dc11bd8ab10fe06ce01fb23f6c93cc988b6b1d316ab25f9b75",
+    "new": "/nix/store/cx70ninizmzz3lmx00p6rgr17g6wna97-nixos-system-srv1982677-26.05pre-git",
+    "old": "/nix/store/pbk109l2hbvnvpiw9dnymnnnm3czl5ap-nixos-system-srv1982677-26.05pre-git",
+    "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+    "review": {
+      "deployed": false,
+      "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+      "human_review": false,
+      "merged": false,
+      "number": 3,
+      "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+      "repository": "mrjam-plateforme",
+      "review_id": 5,
+      "reviewer": "mrjam-validation-review"
+    },
+    "schema_version": 1,
+    "slot": "green"
+  },
+  "promotion_journal": {
+    "phase": "complete",
+    "plan_sha256": "ded96f549fea02a6201fb0aaf6f98b13a2e18f32c03dad667545f3d8d5e53837",
+    "schema_version": 1
+  },
+  "public_https_status": {
+    "audition.mrj.am": 200,
+    "forge.mrj.am": 303,
+    "log.mrj.am": 200,
+    "vise.mrj.am/api/health": 200,
+    "vision.mrj.am": 200
+  },
+  "ready": {
+    "blue": {
+      "body_sha256": "1cc411ecfb672c400b2485339abc2f709a6cb2e9ee3b2a157e91f93638642ed0",
+      "status": 200
+    },
+    "green": {
+      "body_sha256": "1cc411ecfb672c400b2485339abc2f709a6cb2e9ee3b2a157e91f93638642ed0",
+      "status": 200
+    }
+  },
+  "routes": {
+    "blue": 0,
+    "green": 11
+  },
+  "schema_version": 1,
+  "scope": "one real platform pull request, with preparation trust-import correction during qualification",
+  "stage_lease_present": false,
+  "stage_records": [
+    {
+      "base_sha256": "e06f030310aed4f8ff1cb0c5b836848dfcd9d4e99b926c841f7619b477fdd7e7",
+      "job": "68f75aceaf25b4dc11bd8ab10fe06ce01fb23f6c93cc988b6b1d316ab25f9b75",
+      "phase": "complete",
+      "plan_sha256": "1a57acfb6d15259e80bd5a02a84578237dbfe4c8a5e60f0b1539e79e4686d9e0",
+      "proposal_sha256": "6135a1bda1eb637fb17c445c28b686f8d97f1acca5151f28ea73bc073d78657f",
+      "runtime": null,
+      "schema_version": 1,
+      "system": "/nix/store/pbk109l2hbvnvpiw9dnymnnnm3czl5ap-nixos-system-srv1982677-26.05pre-git"
+    }
+  ],
+  "units": {
+    "forgejo": [
+      "ActiveState=active",
+      "MainPID=750937"
+    ],
+    "mrjam-forgejo-runner": [
+      "ActiveState=active",
+      "MainPID=806854"
+    ],
+    "mrjam-rust-blue": [
+      "ActiveState=active",
+      "MainPID=809976"
+    ],
+    "mrjam-rust-green": [
+      "ActiveState=active",
+      "MainPID=888096"
+    ],
+    "nginx": [
+      "ActiveState=active",
+      "MainPID=759749"
+    ],
+    "postgresql": [
+      "ActiveState=active",
+      "MainPID=750850"
+    ],
+    "vise": [
+      "ActiveState=active",
+      "MainPID=751069"
+    ]
+  }
+}

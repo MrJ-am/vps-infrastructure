@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "source_commit": "2c32b6eca6358387b26970672deb6f218e0bbb27",
+  "sealed_script_sha256": "aee93cb27ec4709a930f4c1a88748145145b5b398ff42bd3b894245d70860b94",
+  "export_sha256": "324979d7a2c8d7eb7c01b9cf79ca106d6914d6ca804b6604b1fdb825fdf44c05",
+  "export_bytes": 881553416,
+  "result": {
+    "application_activation": false,
+    "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+    "credential_creation": false,
+    "schema_version": 1
+  },
+  "ssh_exit_code": 0,
+  "portal_opened": false
+}

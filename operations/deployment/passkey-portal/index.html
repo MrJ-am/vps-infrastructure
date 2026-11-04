@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="fr"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Préparer les accès techniques — MRJ.am</title><link rel="stylesheet" href="style.css"><script src="portal.js" defer></script>
+<main><p class="eyebrow">MRJ.am · Administration</p><h1>Préparer les accès techniques</h1><p>Connectez-vous avec la passkey de votre compte administrateur dans Proton Pass. Cette autorisation sert à préparer les accès du cycle et de la suppression des comptes.</p>
+<form id="login"><label>Compte administrateur<input id="identity" name="identity" required maxlength="64" pattern="[A-Za-z0-9_.-]{1,64}" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+<label class="choice"><input id="separate" type="checkbox">Un autre compte gère les droits d’accès</label>
+<label id="access-label" hidden>Compte chargé des droits d’accès<input id="access" name="access" maxlength="64" pattern="[A-Za-z0-9_.-]{1,64}" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+<button id="login-button" type="submit">S’authentifier avec Proton Pass</button></form>
+<p id="status" role="status" aria-live="polite"></p><button id="commit" hidden>Créer les accès techniques</button><button id="cancel" class="secondary" hidden>Annuler</button>
+<p class="note">L’autorisation temporaire est révoquée à la fin de l’opération. Aucun mot de passe ni changement de passkey n’est demandé.</p></main></html>

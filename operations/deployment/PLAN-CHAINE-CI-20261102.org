@@ -1,0 +1,192 @@
+#+title: Raccord de la chaîne CI et de la livraison protégée
+#+date: 2026-11-02
+#+language: fr
+
+Ce plan complète [[file:OBLIGATIONS-APRES-BASCULE-20261102.org][les obligations après bascule]]. Il décrit le travail
+après réussite du socle et contrôle de ses barrières. Il n'active aucun service,
+ne change aucun module qualifié et ne mêle pas la CI à la prochaine bascule.
+ViSe reste hors du chemin critique. L'autorisation de poursuivre existe déjà ;
+les constats techniques manquants doivent être obtenus sans redemander une
+autorisation générale.
+
+* État concret des composants
+
+Les [[file:../forgejo/INTEGRATION-COMPLETE.org][17 contrôles d'intégration et 74 étapes Rust/Elm]] ont réussi sur les vrais
+programmes. Les modules systemd et le staging disposent de preuves distinctes.
+Ces résultats restent valables pour leurs octets et leur périmètre. Ils ne
+prouvent pas l'installation sur le VPS ni l'autorité de livraison.
+
+| Composant existant | Raccord restant |
+|--------------------+-----------------|
+| [[file:../nixos/mrjam-forgejo-policy.nix][Politique Forgejo]] | Phase operate-validation, révisions exactes, observation fraîche, plan relu et credential privé |
+| [[file:../nixos/mrjam-forgejo-runner.nix][Runner spécialisé]] | Deux UID explicites, inscription limitée au dépôt de règles, identité du daemon séparée, règles réseau |
+| [[file:../nixos/mrjam-validation-worker.nix][Worker]] | Vérificateur et règles épinglés, fermeture publique copiée, socket et isolation effective |
+| [[file:../nixos/mrjam-validation-collector.nix][Collecteur]] | Identité distincte, socket fixe, stockage privé des trois artefacts |
+| [[file:../nixos/mrjam-validation-staging.nix][Staging]] | Un ou deux paquets de sources sélectionnés hors du candidat, catalogue exact |
+| [[file:../forgejo/independent-validation.yml][Workflow existant]] | Adoption protégée de ses octets dans la révision de règles réelle |
+| [[file:../release/README.org][Livraison suivante]] | Identités et preuve authentifiée de validation/revue, puis exécuteur borné du manifeste accepté |
+
+Le candidat fi48 conserve =actions.ENABLED=false=. L'adoption Git des neuf
+dépôts et leur protection ne mettent pas en route ces cinq modules.
+
+* 1. Récupérer les artefacts et choisir leur injection limitée
+
+Les reçus identifient les quatre sorties suivantes, absentes du store local au
+contrôle initial. L'agent runtime recherche d'abord les exports et le store
+isolé, puis reconstruira sous les mêmes pins si nécessaire. Un chemin cité
+dans un reçu ne suffit pas à démontrer que son contenu est disponible.
+
+- =/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate=
+- =/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0=
+- =/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1=
+- =/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging=
+
+Comparer les NAR, sources et fermetures aux reçus
+[[file:../forgejo/qualification-complete-chain-20261031.json][qualification-complete-chain]],
+[[file:../forgejo/qualification-staging-20261031.json][qualification-staging]],
+[[file:../forgejo/forgejo-runner-systemd-pass-20261031.json][runner-systemd]] et
+[[file:../forgejo/worker-systemd-closure-copy-pass-20261031.json][worker-systemd]]. Les recettes sont notamment
+=runner-admission.nix=, =staging-package.nix= et
+=tests/prepare_complete_chain.py=. Ce dernier produit une expression de
+qualification liée à sa politique ; ce n'est pas encore la politique de production.
+
+L'évaluation locale du pin hôte
+=/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source= donne Forgejo 16.0.3,
+runner 12.13.2 et Bubblewrap 0.11.2. Les modules CI exigent respectivement
+17.0.1, 13.2.0 et 0.12.0. Le binaire Forgejo 17.0.1 déjà sélectionné par le
+socle ne modifie pas les attributs du paquetage hôte.
+
+Réutiliser [[file:../forgejo/locked-toolchain.nix][locked-toolchain.nix]] : nixpkgs
+=6f06d204d8f2d8761d9da78778745974a3216381=,
+=sha256-loLMnbbS4KhmG2ln9EY6f0YMNCA273Yx02oWYQ9IMeE==.
+Conserver le pin hôte, ses modules NixOS et les applications déployées.
+Deux options d'intégration sont à départager avant modification fonctionnelle :
+
+- Composition locale des cinq modules avec leurs seuls paquets verrouillés.
+  Elle conserve les recettes existantes. Traiter aussi l'import du worker par
+  le module staging : un simple remplacement de =pkgs= sur le module parent
+  ne s'applique pas automatiquement à ses imports et peut créer un doublon.
+- Options de dépendances explicites dans les modules CI. Elles rendent les
+  choix visibles mais modifient davantage les sources et assertions qualifiées.
+
+La première option est préférée si l'évaluation prouve l'absence de doublons
+et d'effet sur les autres paquets. Ne pas remplacer globalement =pkgs=,
+introduire un overlay hôte ou retirer les assertions de version.
+
+* 2. Fixer les règles, identités, sources et ressources réelles
+
+Observer le main protégé de =mrjam-validation= et les comptes/permissions
+Forgejo effectivement présents. Le commit
+=93bd67666a3b4be9657c333931fa25b2359e165b= de la qualification est orphelin et
+synthétique. Il ne doit pas devenir la révision de règles de production par
+simple copie de la fixture. Adopter le workflow fixe et la politique par le
+parcours protégé, puis épingler la même révision dans le vérificateur,
+coordinateur, collecteur, worker et catalogue.
+
+Réserver ou rapprocher les UID/GID après inventaire réel. Les UID explicites
+du coordinateur et du registrar doivent être distincts ; ne pas reprendre
+ceux d'une VM. Séparer le compte de réconciliation, l'inscription API, le
+daemon runner, le collecteur, le worker, la future autorité de validation,
+la revue et le miroir. Fournir les credentials nécessaires par références
+locales privées et =LoadCredential=, jamais par le store ou le workflow.
+Le daemon ne reçoit que son identité de runner, pas le credential API
+d'inscription ; le worker et le collecteur n'en reçoivent aucun.
+
+Le staging accepte des paquets de code public sélectionnés et scellés hors du
+candidat. Il ne fait aucun fetch Git. Raccorder le fetch de confiance et
+l'adoption du manifeste/catalogue ; ne pas rendre les bundles privés ou leurs
+historiques lisibles dans le store pour satisfaire ce contrat. Si de nouvelles
+sources confidentielles doivent être compilées, leur parcours doit conserver
+cette confidentialité et être examiné séparément du paquet public de fixture.
+
+Mesurer la marge sur le VPS après démarrage des applications. Les plafonds
+déclarés sont 2 Gio pour le worker, 512 Mio pour le coordinateur, 128 Mio pour
+le collecteur, plus 192 Mio pour le staging quand il s'exécute. La taille RAM
+historique du VPS ne prouve pas cette marge. Observer cgroups, namespaces,
+place du store, copie de fermeture et cache. Garder un seul travailleur actif
+et les bornes de temps existantes ; ne pas augmenter les quotas pour masquer
+une coexistence non démontrée.
+
+* 3. Installer et activer les éléments déjà qualifiés
+
+Le module hôte [[file:../nixos/mrjam-forgejo-host.nix][mrjam-forgejo-host.nix]] impose actuellement Actions désactivé et
+expose ses settings en lecture seule. Préparer un choix déclaratif limité,
+désactivé par défaut et lié à la présence du runner borné. Cette modification
+est distincte de la première bascule. Ne pas éditer l'INI à la main ni activer
+le runner amont générique.
+
+Installer d'abord les unités, credentials, copies de politique, fermeture et
+catalogue sans démarrage implicite. Les modules actuels n'ajoutent pas de
+=WantedBy=. Vérifier les unités produites sur le NixOS du VPS et leur delta
+par rapport aux unités qualifiées, puis suivre cet ordre :
+
+1. Mettre en place les identités et les règles nftables du coordinateur et
+   du registrar : seule destination réseau =127.0.0.1:3004=, refus du reste.
+2. Publier les sources exactes par =mrjam-validation-staging.service= avec
+   le verrou commun au worker ; ouvrir les sockets worker puis collecteur.
+3. Activer Actions globalement avec le runner spécialisé prêt. Appliquer le
+   plan frais =operate-validation= : Actions sur =mrjam-validation= seulement,
+   désactivé dans les dépôts candidats ; conserver les protections de main.
+4. Exécuter =mrjam-forgejo-registration.service= pour le seul dépôt de règles,
+   puis démarrer =mrjam-forgejo-runner.service= avec son identité séparée.
+5. Déclencher le workflow existant avec le seul digest du manifeste sélectionné.
+   Vérifier la traversée réelle et les trois artefacts identifiés ; vérifier
+   le cache sans recompilation supplémentaire si cet essai est nécessaire.
+
+Le plan de réconciliation doit être lié à l'observation courante et à la
+politique exacte ; sa durée de validité est 3600 secondes. Une application
+partielle appelle une nouvelle observation, pas une réutilisation forcée.
+L'import historique et le bootstrap de la première bascule ne sont pas rejoués.
+
+Qualifier seulement les nouveaux raccords et leurs refus effectifs : isolement
+sur le noyau/systemd du VPS, version/outils corrects, révision/politique commune,
+droits des sockets et credentials, refus du réseau et d'un job non admis. Les
+suites compiler/runner déjà valides ne nécessitent pas une répétition générale.
+Ne pas ajouter un nouveau workflow de test lorsqu'un dispatch borné du workflow
+existant démontre le raccord demandé.
+
+* 4. Établir l'autorité de revue et de livraison
+
+Ce point n'est pas un réglage manquant du runner. =submit.py= émet explicitement
+=authenticated_validation_authority:false= et le client exige cette valeur.
+Le reçu est =local-controller-receipt=. =release_plan.py= conserve
+=production_authorized:false= et =execution_supported:false= même en réussite.
+Ne pas changer ces booléens pour transformer une preuve locale en autorisation.
+
+La protection actuelle exige le contexte =mrjam/independent-validation= et une
+approbation, s'applique aux administrateurs et interdit le push direct. Elle
+n'impose pas une signature des commits et n'identifie pas à elle seule l'acteur
+autorisé à produire le contexte. Avant d'annoncer une livraison protégée :
+
+- Définir et installer une autorité indépendante qui lie identité, révision
+  des règles, digest de proposition, résultats et artefacts exacts. Aucun
+  candidat/runner/worker ne doit disposer de son secret ou choisir sa politique.
+- Raccorder le statut et la revue à cette autorité ; démontrer que le candidat
+  ne peut pas fabriquer un statut acceptable, s'auto-approuver ou modifier les
+  règles qui l'évaluent. Une chaîne de caractères de contexte ne suffit pas.
+- Construire le manifeste de livraison à partir de ces preuves et d'une
+  observation réelle, puis le faire consommer par un exécuteur fermé distinct.
+  Réutiliser les contrats de réception, génération, sauvegarde, retour et
+  readiness déjà revus, avec le manifeste exact de la nouvelle livraison.
+- Démontrer les refus d'autorité/révision/artefact et la reprise nécessaires
+  au nouveau raccord. Ne donner au runner ni root SSH, ni shell de déploiement,
+  ni daemon Nix, ni accès SQL/données/secrets applicatifs.
+
+Le contrôleur scellé de première bascule est lié à sa livraison et à son état
+initial. Il ne constitue pas une commande générale à exposer à la CI. Le choix
+du mécanisme d'authentification et du raccord d'activation doit être revu avant
+implémentation ; les primitives actuelles de reçu non signé ne l'implémentent pas.
+
+* 5. Achever le flux de travail sans créer deux autorités
+
+Le contrat de [[file:../release/README.org][livraison]] prévoit =Forgejo main → miroir GitHub=. Les changements
+Cloud reviennent comme propositions à examiner sur Forgejo. Le miroir utilise
+une identité distincte de validation, revue et administration ; il ne choisit
+pas les règles, ne signe pas la validation et n'active rien. Aucun automate de
+miroir n'a été identifié parmi les outils examinés : raccorder ce flux et
+vérifier ses permissions demeure un travail séparé, pas une preuve acquise.
+
+Le socle peut être annoncé déployé après sa bascule et son postflight. La chaîne
+complète nécessite en plus un dispatch réel borné, des artefacts conservés et
+une revue/livraison dont l'autorité indépendante est démontrée. Conserver les
+résultats et limites dans des reçus neufs ; ne pas réécrire les preuves anciennes.

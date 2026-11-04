@@ -1,0 +1,50 @@
+{
+  "built_layout_verified": true,
+  "changed": [
+    "mrjam-acceptance-merge.service",
+    "mrjam-acceptance-mirror.service",
+    "mrjam-acceptance-review.service",
+    "mrjam-acceptance-sync.service",
+    "mrjam-admission-controller.service",
+    "mrjam-delivery-preparation.service",
+    "mrjam-delivery-staging.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-promotion.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-worker@.service",
+    "multi-user.target.wants/mrjam-forgejo-runner.service",
+    "sysinit-reactivation.target.requires/systemd-tmpfiles-resetup.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "coordinator_client_verified": true,
+  "deployment_authorized": false,
+  "new": "/nix/store/xqqy4b88xrifai5nmrqfjx3ahcj4mslv-nixos-system-srv1982677-26.05pre-git",
+  "old": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git",
+  "schema_version": 1,
+  "stack": "/nix/store/skiv0r2zrcqmqgxbcfsrasj1wlyagiir-mrjam-protected-delivery-stack-1",
+  "unit_entries": 586,
+  "build": {
+    "unit": "mrjam-stack-host-build-002.service",
+    "exit_code": 0,
+    "seconds": 673.125,
+    "cpu_seconds": 323.754,
+    "peak_memory": "3.3G",
+    "evaluation_and_compilation_separate": true,
+    "package": "/nix/store/zxwjzsawgm8k7vkaqmr8p22s3n2qbqv8-mrjam-protected-stack-host-build-1"
+  },
+  "gc_root": "/var/lib/mrjam-stack-host-build-002/generation",
+  "production_activated": false,
+  "limits": [
+    "Protected rules PR2 adoption is still pending.",
+    "No runtime activation or end-to-end signed CI delivery claimed."
+  ],
+  "evidence_sha256": {
+    "delivery-stack-export-evaluation-002.json": "215c1ab169b719406e9823cf4f086feb91f04f410ec0edad18060dc8d0cb0167",
+    "delivery-stack-layout-003.json": "255a35ed54fea808f15958ee6b189f359df142f6d9d4d2a228becf7615f37cc5",
+    "delivery-stack-host-build-002.stdout": "92bb95cf4806821776ac989757eacba992940a557a400306f0c27528a6f6aac7",
+    "delivery-stack-host-build-002.stderr": "cdaaa889fcbcafbf78d9d27ad597592bf027c6ba68535813220f8f4b317c8bb8"
+  },
+  "app_constructor_proof": "operations/ci/continuous-delivery-v1/qualification-stack-app-delivery-002.json"
+}

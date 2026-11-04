@@ -1,0 +1,24 @@
+{
+  "activated": false,
+  "built": true,
+  "checks": {
+    "activationAndSignerMasked": true,
+    "adoptionUnchanged": true,
+    "assertionsPass": true,
+    "baselineExact": true,
+    "boundedResources": true,
+    "existingUnitsUnchanged": true,
+    "observerOnly": true,
+    "onlyPreparationAdded": true,
+    "routesUnchanged": true,
+    "stateOnlyWritable": true
+  },
+  "installation_pending": "VPS SSH connection timeout; no activation attempted",
+  "package": "/nix/store/rrwc9pz5pcs3j22qzjsn4rvb6r28ggr4-mrjam-delivery-preparation-1",
+  "recipe": "/nix/store/c8l0z4ijaw1k0wh2v1ra27llnvi8lmak-mrjam-protected-delivery-recipe-1",
+  "reproduction_exact": true,
+  "schema_version": 1,
+  "scope": "local-preparation-service",
+  "system": "/nix/store/m01vhv8qwbaqs41ns64gkih8zwgvsbvw-nixos-system-srv1982677-26.05pre-git",
+  "tests_passed": 38
+}

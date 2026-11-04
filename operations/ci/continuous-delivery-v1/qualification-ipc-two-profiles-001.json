@@ -1,0 +1,44 @@
+{
+  "authority_v1_sources_preserved": true,
+  "authority_v2_fixed_credential_reader": true,
+  "checks": [
+    "prepare",
+    "credential-reader-boundaries",
+    "inactive-boundaries",
+    "fresh-chain",
+    "delivery-capture",
+    "cache-reuse",
+    "wrong-peers",
+    "key-separation",
+    "legacy-cache-rebuilt",
+    "tamper-refused",
+    "admission-revoked",
+    "wrong-key-refused",
+    "expiry-refused",
+    "multi-profile"
+  ],
+  "coordinator_sources_unchanged": true,
+  "dynamic_admission_registry": true,
+  "not_established": [
+    "Actual Forgejo job transport",
+    "Production identities/key/policy/capacity",
+    "New validator execution on every job",
+    "Human review/merge/deployment authority"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "real-systemd-distinct-identities-synthetic-admitted-task",
+  "substitutions": [
+    "Synthetic immutable validator and source/report, no application compilation",
+    "Admitted task delivered by a Go test entrypoint instead of Forgejo API/daemon",
+    "Test entrypoint closure added to the otherwise unchanged private coordinator root",
+    "Invented key/UIDs/credentials only"
+  ],
+  "two_distinct_rules_profiles": true,
+  "result_store": "/nix/store/bhhz465xgjwjrpnv01izyhy71s4j88bh-vm-test-run-mrjam-ci-admitted-distinct-identities-two-profiles",
+  "limitations_additional": [
+    "Second source manually staged in synthetic VM; staging catalog schema2 not exercised",
+    "ViSe fixed publisher main called through synthetic diagnostic runner",
+    "No actual ViSe application compilation by this IPC fixture"
+  ]
+}

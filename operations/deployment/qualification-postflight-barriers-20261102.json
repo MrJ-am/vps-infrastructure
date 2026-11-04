@@ -1,0 +1,31 @@
+{
+  "additional_check": "Real systemctl show of one invented nonexistent unit on the local workstation: closed selected properties, no service action",
+  "date": "2026-11-02",
+  "files": {
+    "operations/deployment/POST-BARRIERES-20261102.org": "44246a0a397976b27334b0b65901013363a2ed49de79a31e57d40462f3ec6fdf",
+    "operations/deployment/postflight_barriers.py": "d1f6f00353a83f1fa420dda88aaf817419317ad01a1ee302de416d2e5b78b325",
+    "operations/deployment/test_postflight_barriers.py": "b4c305058e74a88cb2fc6cc8baa65bfc7658dc8fd41ca2e7d6d3fc86af64dd83"
+  },
+  "limits": [
+    "No production observation has been performed by this agent",
+    "Kernel firewall parser tested with invented rule output; actual loaded rule observations remain for the parent",
+    "No application records, secrets, journals or authenticated request are used",
+    "No new VM, arbitrary power-loss coverage, application authorization or future CI claim"
+  ],
+  "native_read_only_check": "OpenSSH 10.5p1 -G on the immutable promoted public sshd configuration; no daemon started",
+  "production_access": false,
+  "production_probe_executed": false,
+  "schema_version": 1,
+  "scope": "Local preparation of closed post-promotion metadata checks",
+  "tests": [
+    "Closed unit parser rejects extra fields and ambiguous identities",
+    "IPv4 and IPv6 including mapped loopback listeners classified",
+    "Effective process capabilities and UID mismatch detected",
+    "Account group differs intentionally from identity broker service group",
+    "Extra firewall accept rule and missing terminal drop refused",
+    "Real pinned OpenSSH -G parses promoted public configuration with key-only root",
+    "Command stdout bounded and child reaped",
+    "Exception never leaks private text or partial results"
+  ],
+  "tests_passed": 8
+}

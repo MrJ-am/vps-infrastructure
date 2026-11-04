@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "production_activation": false,
+  "publications": [
+    {
+      "repository": "MrJ-am/mrjam-plateforme",
+      "branch": "spectre-identite-native-20261101",
+      "commit": "2a34dac722ff1dab9a63aec56e407dd996de0719",
+      "tree": "211218b14b681dcf7cafcb18f728539463d53ae1",
+      "files": 6
+    },
+    {
+      "repository": "MrJ-am/vision",
+      "branch": "spectre-kanidm-native-20261102",
+      "commit": "61cf80bddc5e1f6e7b330af319e0c9ecf742dc93",
+      "tree": "be236eb18a153931eed59b2e78b77457254aaf80",
+      "files": 5
+    }
+  ],
+  "scope": "Qualified adapter transport2 and separate replay build; original broker/server/four other workers unchanged",
+  "manifest_sha256": "5632ea0dde08387179d86553f66c27cebc63d52ff92368b4f4cfecbf7544565f"
+}

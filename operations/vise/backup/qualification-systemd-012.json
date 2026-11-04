@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "real-offline-pair-encryption-recipient-decryption-and-service-restart",
+    "real-restore-with-current-ledger-no-resurrection",
+    "real-systemd-cgroup-kill-during-graceful-stop-independent-recovery-restarts-vise",
+    "vm-power-failure-durable-intent-boot-recovery-and-no-resurrection"
+  ],
+  "current_test_fixture_has_additional_unqualified_retention_scenario": true,
+  "derivation": "/nix/store/cbkgbxjf0n711lz587kmr8m18xl2j2ir-vm-test-run-mrjam-vise-coherent-backup-synthetic.drv",
+  "limitations": [
+    "Retention in operation and offsite transfer remain unqualified",
+    "No production activation or production reboot"
+  ],
+  "output": "/nix/store/j8yfv6pnk21jf34z7z9afml0sb4rl8ri-vm-test-run-mrjam-vise-coherent-backup-synthetic",
+  "production_activated": false,
+  "production_data_accessed": false,
+  "production_source_sha256": {
+    "capture.py": "24ec6fb9f9221526babec73c55e205578f5f63f82b22de961eb9c1d5a2836958",
+    "envelope.py": "e98d0dacd265f0727dbe79e0895f19dfd047d8b0266e17c022be6edddd43ca44",
+    "module.nix": "065f695cb316c3df231666e917e91de43e39c4efc910d163672a38ff3923b8f3",
+    "package.nix": "a355515d8173d88850cc21377e0ea5e79fdb02aa457c20a4652824c1047c286d",
+    "retention.py": "3a7d7fdb03b4222d6ba3f9264b0b0d7db2d747fc9afea092a0e9d2955d85c2dc",
+    "service.py": "658e7ecd8822ff4ebb9c83b059bb34b85597aea97b62feaa330d992e856374c2",
+    "transaction.py": "546b63363d982bc7b8f4752ff14e46a0db087fc9d63e778ef576ed99716c6da4"
+  },
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg"
+}

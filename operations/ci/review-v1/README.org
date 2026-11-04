@@ -1,0 +1,55 @@
+#+title: Liaison explicite entre validation, revue humaine et dossier de livraison
+#+language: fr
+
+Ce module local prépare le service de revue prévu par
+=operations/deployment/CHOIX-AUTORITE-CI-20261102.org=. Il ne contacte pas Forgejo,
+ne crée pas de clé, ne signe pas de décision, ne fusionne pas de PR et n’active
+rien. Sa sortie n’est pas une autorisation de déploiement. Une projection
+fournie à une fonction Python ne prouve pas qu’une personne a effectué une revue.
+
+=review_contract.py= vérifie la signature Ed25519 de validation avec la politique
+adoptée, puis lie la source signée au commit et à l’arbre de la PR. La base doit
+être main, ancêtre exact de la tête pour une fusion fast-forward. Les règles
+refusent dépôt/cible/génération différents, politique expirée, observation de
+plus de 60 secondes, PR fermée/draft/fusionnée, revues incomplètes et demandes
+de revue non résolues. Aucun contexte de statut CI n’est lu comme preuve.
+
+Le réviseur doit être dans la liste humaine adoptée, distinct de l’auteur et
+des comptes techniques. Une approbation doit être officielle, non révoquée,
+non périmée, liée à la tête exacte. Son texte contient le dépôt, la PR, le SHA
+de tête et le SHA-256 exact du manifeste détaché. Un simple Approve sur le code
+ne lie pas à lui seul ce manifeste. Ce texte pourra être prérempli pour la
+revue personnelle de l’utilisateur ; il ne doit jamais être envoyé par l’agent
+au nom d’une personne ou présenté comme déjà approuvé.
+
+Pour chaque personne, la dernière décision est retenue selon sa date et son
+identifiant. Un commentaire seul ne retire pas une approbation ; une nouvelle
+approbation révoquée ne réactive pas une ancienne. Une demande de changements
+non résolue bloque. Le résultat lie l’approbation sélectionnée, la validation,
+le manifeste, la cible, la génération précédente et la base attendue. Son
+échéance ne dépasse ni une heure, ni celle des politiques. La date de signature
+de validation n’est toujours pas une preuve de réexécution du compilateur.
+
+Onze tests utilisent de vraies signatures de validation avec clés inventées et
+des projections Forgejo synthétiques. Ils ne constituent pas une preuve de
+revue humaine, de permissions Forgejo ou d’intégration du futur service.
+
+Avant emploi opérationnel, le service séparé doit :
+
+- récupérer lui-même les projections complètes dans les API fixes de Forgejo17,
+  vérifier pagination, identité du dépôt, protections, acteur et main courant ;
+- vérifier le manifeste complet avec son lecteur qualifié ; ce module lie son
+  empreinte brute sans prétendre valider toutes ses opérations. Ce lecteur doit
+  aussi comparer chaque source et artefact consommé aux commits, arbres, tailles
+  et hashes de l’attestation signée ; valider le seul schéma serait insuffisant ;
+- relire tête/base avant la fusion fast-forward-only avec HeadCommitID attendu,
+  puis relire main et son arbre et refuser toute issue ambiguë ;
+- signer la décision dans un domaine distinct avec une clé inaccessible au
+  candidat, au runner et au validateur ; conserver l’état durable de la fusion ;
+- faire vérifier cette décision et un nonce frais par l’admission de livraison,
+  sans réexposer le contrôleur de première bascule à la CI.
+
+La politique de whitelist et ces interactions doivent encore être éprouvées
+contre Forgejo17 réel : faux contexte, auto-revue, révocation, ancienne tête,
+course sur la base et fusion directe par un autre compte. Aucune observation
+de production et aucune autorité humaine ne sont déduites des tests locaux.

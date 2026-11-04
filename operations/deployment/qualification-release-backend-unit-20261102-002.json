@@ -1,0 +1,30 @@
+{
+  "activation_performed": false,
+  "backend_tests_passed": 23,
+  "combined_deployment_tests_passed": 69,
+  "control_tests_passed": 12,
+  "limits": [
+    "Backend external operations injected in unit tests; not a complete VM cutover proof",
+    "Old-generation return with portable guard qualification remains separate",
+    "No executable entrypoint or immutable production release manifest exists",
+    "Real Forgejo governance/source binding helper remains required"
+  ],
+  "production_access": false,
+  "recorded_on": "2026-11-02",
+  "schema_version": 1,
+  "scope": "local-unit-sequence-and-refusal-checks-only",
+  "source_sha256": {
+    "boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "recovery.py": "aeb21a04a5d15b211db665cec0bae25232efdfc1173f22dd150275c2fc4a14da",
+    "release_backend.py": "b40b068960af59d0315666e5b52d72cdca00ad2752a6be8a37eba164b05c2871",
+    "snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "test_release_backend.py": "5bf343a00eb26c919d5f2e87ebc562728af27cf28a1b6866244706c4f801c525",
+    "test_system_control.py": "c5f896f97444627815228156b2db9e36acbd227acfe7500c487c60e842a26bb1"
+  }
+}

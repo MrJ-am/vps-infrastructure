@@ -1,0 +1,35 @@
+{
+  "limits": [
+    "Native tree peel passed in the independent bootstrap VM; its final pinned receipt is still to be attached here.",
+    "requested_reviewers is an active decision participant list; it is checked against the complete review collection before projecting unresolved requests.",
+    "Empty commit_id on historical review requests is currently refused, never replaced with a fabricated commit.",
+    "After-merge observation remains limited to main, expected merge and the chosen approval; it is not an atomic view of all other reviewers.",
+    "No credential reader, service, merge permission or activation is established by these local components."
+  ],
+  "logs": [
+    {
+      "path": ".local/review-tree-resolution-tests-003.log",
+      "sha256": "990c433af91e0d7bc9478aff4ece0985275375e3c0b69c498c3802374abb422b"
+    },
+    {
+      "path": ".local/review-order-v2-tests-001.log",
+      "sha256": "407b8ad439dba844b1acd632cc4f3e3cb514114a104057ac464223e8bc461e3b"
+    }
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "sources": {
+    "operations/ci/review-v1/TREE-RESOLUTION-V2.org": "78a60aa81a3634f5872dd16c32358a834bd239ce7c45428cb677aade573f3c0c",
+    "operations/ci/review-v1/api_projection_v2.py": "c37e18471dff8d5ba10e42f747fd549b0b128da9e9fc397137b1c35175cc3558",
+    "operations/ci/review-v1/read_transport_v3.py": "f4c2123cab6e7e3fee1d3d913e503b63117e4e69d7a7f1a5680a6b98e7b2b657",
+    "operations/ci/review-v1/recheck_v2.py": "98ef011d0d81ae7f87b894ebc81c3d04c3ae684d2c8147f87cda70fa4c8168ac",
+    "operations/ci/review-v1/review_contract_v2.py": "2a5e849c13d08b1ff023f9a47daacf72d6fcfca5bfc5a7b78f6bdea749050469",
+    "operations/ci/review-v1/test_review_order_v2.py": "b37122ff10c6b618718cbe1d165dbcda3f644848ac63f26d7548577533505cab",
+    "operations/ci/review-v1/test_tree_resolution.py": "17fdab390a756297049acc21d39553861a76552b9f706258c8772902a34ef78b"
+  },
+  "status": "targeted-local-tests-passed-native-binding-pending",
+  "tests": {
+    "decision_order": 3,
+    "tree_and_participants": 9
+  }
+}

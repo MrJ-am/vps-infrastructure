@@ -1,0 +1,36 @@
+{
+  "accepted_source_revision": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd",
+  "barriers_complete": false,
+  "ci_chain_complete": false,
+  "delivery_revision": "e93fea11099c1ee45c2c3f8fb9325b693682b1a8",
+  "limits": [
+    "Postflight unit-path comparisons require symlink-aware measurement; extra non-loopback TCP port classification pending.",
+    "CI authority/coordinator remains locally prepared, not deployed.",
+    "Root SSH remains full administration under the user authorization."
+  ],
+  "promoted_generation": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+  "schema_version": 1,
+  "terminal_observation": {
+    "observation": {
+      "code": "FIRST_RELEASE_OBSERVED",
+      "deployment_verified": true,
+      "phase": "public-writes-open",
+      "result": {
+        "code": "CUTOVER_VERIFIED",
+        "phase": "public-writes-open",
+        "schema_version": 1
+      },
+      "schema_version": 1,
+      "unit": {
+        "ActiveState": "active",
+        "ExecMainCode": 1,
+        "ExecMainStatus": 0,
+        "LoadState": "loaded",
+        "MainPID": 0,
+        "Result": "success",
+        "SubState": "exited"
+      }
+    },
+    "time": "2026-11-02T23:23:19.085084+00:00"
+  }
+}

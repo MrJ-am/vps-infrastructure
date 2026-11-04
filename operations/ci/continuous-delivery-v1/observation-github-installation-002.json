@@ -1,0 +1,74 @@
+{
+  "app_id": 5592797,
+  "complete_installation_repository_scope_verified": true,
+  "installation_id": 178130872,
+  "local_bootstrap_private_key_removed": true,
+  "local_setup_server_stopped": true,
+  "permissions": {
+    "contents": "write",
+    "metadata": "read",
+    "pull_requests": "write",
+    "statuses": "write",
+    "workflows": "write"
+  },
+  "pipeline_activated": false,
+  "read_token_revoked": true,
+  "repositories": [
+    {
+      "full_name": "MrJ-am/Signature",
+      "id": 1374156543,
+      "main": "912470795d0bd078cdd6a1e1fdb0e76c8beefdce",
+      "private": true
+    },
+    {
+      "full_name": "MrJ-am/apprendre-a-demontrer",
+      "id": 1371197112,
+      "main": "a2690c7cd6a706cada866e4aa576819c4ed20092",
+      "private": false
+    },
+    {
+      "full_name": "MrJ-am/etp-vie-affective",
+      "id": 1433178398,
+      "main": "65bbd8c53a1f6d2efda453a5c82d66c49df26699",
+      "private": false
+    },
+    {
+      "full_name": "MrJ-am/matheval",
+      "id": 1437121919,
+      "main": "ccde49f2a9b16927e977ba5f75a0f62635d1ac2b",
+      "private": true
+    },
+    {
+      "full_name": "MrJ-am/mrjam-plateforme",
+      "id": 1437120781,
+      "main": "6009020151cdd6e069aed67b4970b3b6de1b5151",
+      "private": true
+    },
+    {
+      "full_name": "MrJ-am/mrjam-validation",
+      "id": 1437121466,
+      "main": "3ac42ab9b55cb44535c0a397b2ade5809cbd54fa",
+      "private": true
+    },
+    {
+      "full_name": "MrJ-am/style-mrjam",
+      "id": 1379878757,
+      "main": "2c145fb82a141d0a9a8b552577998852f574b788",
+      "private": false
+    },
+    {
+      "full_name": "MrJ-am/vision",
+      "id": 1354721741,
+      "main": "44ecabd871bb3b5005bbd551205ca15bd644bd5c",
+      "private": true
+    },
+    {
+      "full_name": "MrJ-am/vps-infrastructure",
+      "id": 1375074191,
+      "main": "b9621e4e9b1c42648f822962622bdc64d297f38a",
+      "private": false
+    }
+  ],
+  "repository_selection": "selected",
+  "schema_version": 1
+}

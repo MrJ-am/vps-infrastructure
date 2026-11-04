@@ -1,0 +1,16 @@
+{
+  "binding": {
+    "mrjam-kanidm-passkey-portal.service": {
+      "path": "/nix/store/k7gjq9hsvfayhikb9vmwybznr1rp4d8w-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+      "sha256": "798dabdb31741f1baf7b9869e60ccbf9cec3e05999f3012f185f73991da55c9f"
+    },
+    "mrjam-passkey-nginx-route.service": {
+      "path": "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service/mrjam-passkey-nginx-route.service",
+      "sha256": "034249d696a7eef43a834b95a678ac0275326f9a05523d70a8b67ad15eb32b7b"
+    }
+  },
+  "only_binding_assignment_changed": true,
+  "schema_version": 1,
+  "sealed_sha256": "02574565000b60ebf0231ffe21802678c6dfff38e2dfcf91a189de798edb560a",
+  "template_sha256": "bf33aed544fc488d7b48cb8d96c46546ce3de01585b36ee6a2fe01b610ad703a"
+}

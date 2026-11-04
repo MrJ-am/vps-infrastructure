@@ -1,0 +1,61 @@
+{
+  "controller": "/nix/store/xd5429bch5sikwkhbhkykyr261a3szjj-activate-delivery-stack.py",
+  "evidence_sha256": {
+    ".local/deployment-20261101/delivery-stack-activation-003.stderr": "2216f5c70c094a4dcdb9d61595213bcc4bfd40267e2dcb8e687e64ad75caabd8",
+    ".local/deployment-20261101/delivery-stack-activation-003.stdout": "413cec3b741c96174e9e9c5926fa9763ce0cf37eebbc9a81cd3560023c384876",
+    ".local/deployment-20261101/delivery-stack-installed-001.json": "cd959379a1c9d471c1098bb988b44e7b67cc7cd87a83d7efcb75913772ad7369",
+    "operations/ci/continuous-delivery-v1/activate-delivery-stack.py": "cc5c4b162d5d47d743e5d7e0659ef4bcd641f7eb46ab73b0c98cd8c72291fbdb",
+    "operations/ci/continuous-delivery-v1/qualification-stack-app-delivery-003.json": "f37db767c00435c2138aea66061565e70eabcfbcf6dc61447c36e3ecb575daff",
+    "operations/ci/continuous-delivery-v1/qualification-stack-host-build-003.json": "6a24afe3b5f69f255f6ebf0a0152a880e8cf7a975b943210f4c1c424698da854",
+    "operations/ci/continuous-delivery-v1/test_stack_activation.py": "43df584eafb26fe0921cb243154a3fd2d359cab3d99eab034d2e9ba8a4dc8c78"
+  },
+  "exit_code": 0,
+  "independent_readback": {
+    "boot": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git",
+    "current": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git",
+    "declarative_recovery_verified": true,
+    "installed_state_exact": true,
+    "phase": "complete",
+    "runner_pids": [
+      980987,
+      981383,
+      981725
+    ],
+    "runtime_repair_removed": true,
+    "schema_version": 1,
+    "stack": "/nix/store/cwrqy0vp5q1r7vzpj8p8fa5cd4650c7y-mrjam-protected-delivery-stack-1"
+  },
+  "journal": "/var/lib/mrjam-stack-upgrade-001/state.json",
+  "limitations": [
+    "No actual VPS reboot performed",
+    "No protected ViSe rule adoption or new application deployment in this operation",
+    "Scheduled-backup recovery still needs observation of a real subsequent backup"
+  ],
+  "peak_memory": "56.9M",
+  "preserved_application_services": 10,
+  "result": {
+    "application_deployment": false,
+    "code": "DELIVERY_STACK_ACTIVE_AND_BOOT",
+    "https": {
+      "audition.mrj.am": 200,
+      "forge.mrj.am": 303,
+      "log.mrj.am": 200,
+      "vise.mrj.am": 200,
+      "vision.mrj.am": 200
+    },
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "runner_pids": [
+      980987,
+      981383,
+      981725
+    ],
+    "runtime_repair_removed": true,
+    "system": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git"
+  },
+  "schema_version": 1,
+  "scope": "protected control-stack activation and real configuration return",
+  "seconds": 23.425,
+  "transaction_tests_passed": 6,
+  "unit": "mrjam-stack-activate-003.service"
+}

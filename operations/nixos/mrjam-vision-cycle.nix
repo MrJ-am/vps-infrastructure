@@ -4,14 +4,14 @@ let
   unitName = "mrjam-vision-cycle";
   storePath = lib.types.strMatching "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
   credentialReference = lib.types.strMatching "/(run/secrets|run/keys|var/lib)/[A-Za-z0-9_./-]+";
-  publicConfig = name: pkgs.writeText "${name}.json" (builtins.toJSON {
+  identity = import ./vision-worker-identity.nix { inherit lib cfg; };
+  publicConfig = name: pkgs.writeText "${name}.json" (builtins.toJSON ({
     schema_version = 1;
     vision_database = cfg.visionDatabase;
     journal_database = cfg.journalDatabase;
     state_file = "/var/lib/${unitName}/courriels.sqlite";
     smtp_file = "/run/credentials/${name}.service/smtp";
-    keycloak_file = "/run/credentials/${name}.service/keycloak";
-  });
+  } // identity.configuration name));
   mappings = {
     visionCycle = { database = cfg.visionDatabase; role = "vision_cycle"; };
     visionCycleJournal = { database = cfg.journalDatabase; role = "vision_journal_writer"; };
@@ -25,7 +25,7 @@ let
       User = unitName; Group = unitName;
       StateDirectory = unitName; StateDirectoryMode = "0700";
       LoadCredential = [ "smtp:${cfg.smtpCredentialFile}" ]
-        ++ lib.optional (!initialize) "keycloak:${cfg.keycloakCredentialFile}";
+        ++ lib.optional (!initialize) identity.credential;
       UMask = "0077"; StandardInput = "null"; StandardOutput = "null";
       StandardError = "journal"; # Only a fixed closed CLI error code.
       NoNewPrivileges = true; CapabilityBoundingSet = ""; AmbientCapabilities = "";
@@ -49,11 +49,11 @@ in {
     visionDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
     journalDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
     smtpCredentialFile = lib.mkOption { type = credentialReference; };
-    keycloakCredentialFile = lib.mkOption { type = credentialReference; };
     timer.enable = lib.mkEnableOption "periodic notice cycle after explicit adoption";
-  };
+  } // identity.options;
   config = lib.mkIf cfg.enable {
-    assertions = [
+    system.extraDependencies = identity.extraDependencies;
+    assertions = identity.assertions ++ [
       { assertion = !(builtins.hasContext cfg.artifactStorePath);
         message = "Vision cycle requires a previously built artifact, without a Nix construction context."; }
       { assertion = cfg.visionDatabase != cfg.journalDatabase;
@@ -62,9 +62,9 @@ in {
           (name: config.services.mrjamPostgresqlAccess.workers.${name} == mappings.${name})
           (builtins.attrNames mappings);
         message = "Vision cycle requires its exact dedicated PostgreSQL peer capabilities."; }
-      { assertion = lib.all (path: lib.all (part: part != "." && part != "..") (lib.splitString "/" path)
+      { assertion = lib.all (path: path != null && lib.all (part: part != "." && part != "..") (lib.splitString "/" path)
           && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path))
-          [ cfg.smtpCredentialFile cfg.keycloakCredentialFile ];
+          [ cfg.smtpCredentialFile identity.credentialFile ];
         message = "Vision cycle refuses ambiguous credential references."; }
     ];
     users.groups.${unitName} = { };

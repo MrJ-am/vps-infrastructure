@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "explicit-only-existing-schema-refused",
+    "journal-explicit-and-repeat-refused",
+    "matheval-preserved-and-repeat-refused",
+    "forgejo16-to17-explicit-unit-restricted-role",
+    "clean-shutdown"
+  ],
+  "derivation": "/nix/store/41ar61z2cgg7yg2j2zxkkvz7arh730db-vm-test-run-mrjam-explicit-database-adoption-units.drv",
+  "earlier_failures": [
+    "001: fixture omitted retained Forgejo17 closure",
+    "002: same issue diagnosed only inside invented VM"
+  ],
+  "limits": [
+    "Synthetic database state only",
+    "No generation switch or external SMTP"
+  ],
+  "module_sha256": "a51efd0a9ac598b6676dacad4057021173c682c754ef4583b30ddb83694a21e6",
+  "output": "/nix/store/jh9crj9w83rmrlksdk4bpfqqwr7fa3xg-vm-test-run-mrjam-explicit-database-adoption-units",
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "source_mateval": "MrJ-am/matheval@91b5b33541a39faade0c40792bfed5ad35ae80a1",
+  "test_sha256": "e75b853dbc071f0ea5059e74045d9327621ad119294da22c55e53c2eef192d80"
+}

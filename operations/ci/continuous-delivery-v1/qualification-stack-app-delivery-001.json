@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "checks": {
+    "currentExact": true,
+    "assertionsPass": true,
+    "stageChangesOnlyOffTraffic": true,
+    "unitsPreserved": true,
+    "stagedRoutesUnchanged": true,
+    "stagedAdoptionUnchanged": true,
+    "nonAssetConfigurationUnchanged": true,
+    "assetRoutingUnchanged": true,
+    "promotionChangesOnlyRoutesAndBoot": true,
+    "promotionRetainsCommands": true,
+    "noImplicitRestart": true
+  },
+  "current": "/nix/store/w6q99hw5p1drdfj1fakx3173d583jriy-nixos-system-srv1982677-26.05pre-git",
+  "staged": "/nix/store/w6q99hw5p1drdfj1fakx3173d583jriy-nixos-system-srv1982677-26.05pre-git",
+  "promoted": "/nix/store/gkzhhysk0f9xidy5fzvb9vz5mj6clhxj-nixos-system-srv1982677-26.05pre-git",
+  "stagedState": {
+    "active_slot": "blue",
+    "adopted": "/nix/store/2ny4527xzy4d9aljs805j037kydnypbc-mrjam-adopted-source.json",
+    "control_plane": {
+      "acceptance": "/nix/store/sdmzjaqbnpf2dzklcw66b0cgshrnhq0x-mrjam-separated-acceptance-services-1",
+      "preparation": "/nix/store/wck2izf165b9nv1g6bhh1d1wqyrph7lm-mrjam-delivery-preparation-1",
+      "stack": "/nix/store/yx8987hffj0kssmm6mg03ix1yzbcyyf9-mrjam-protected-delivery-stack-1",
+      "staging": "/nix/store/imm38zpvw0lmfqiqadvap27pnpx39zr1-mrjam-protected-staging-service-1"
+    },
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+        "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+      },
+      "green": {
+        "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb",
+        "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/w6q99hw5p1drdfj1fakx3173d583jriy-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  },
+  "promotedState": {
+    "active_slot": "green",
+    "adopted": "/nix/store/v2qj31slhqs948a5ihd7yrva9nhhp7pc-mrjam-adopted-source.json",
+    "control_plane": {
+      "acceptance": "/nix/store/sdmzjaqbnpf2dzklcw66b0cgshrnhq0x-mrjam-separated-acceptance-services-1",
+      "preparation": "/nix/store/wck2izf165b9nv1g6bhh1d1wqyrph7lm-mrjam-delivery-preparation-1",
+      "stack": "/nix/store/yx8987hffj0kssmm6mg03ix1yzbcyyf9-mrjam-protected-delivery-stack-1",
+      "staging": "/nix/store/imm38zpvw0lmfqiqadvap27pnpx39zr1-mrjam-protected-staging-service-1"
+    },
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/hlzia0qhs00xqhdwqh2z0j41ywmd5dv0-mrjam-runtime-blue",
+        "server": "/nix/store/s7jifv4bgzbgjddfsfq20x2vkjmvjc6x-mrjam-delivery-server-76cfaec0736c"
+      },
+      "green": {
+        "server": "/nix/store/qscwq2h3brh011sc22x0530ibkh3invs-mrjam-delivery-server-6135a1bda1eb",
+        "runtime": "/nix/store/d9p7cw8icyviyilbfiapc0mj1ks9qmvi-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/gkzhhysk0f9xidy5fzvb9vz5mj6clhxj-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  },
+  "deployment_authorized": false,
+  "scope": "Packaged NixOS constructors: ViSe fixture followed by platform fixture, retaining complete protected stack",
+  "recipe": "/nix/store/zhkv6c4a76c6i3icrq15hr06d7p1yx0g-mrjam-protected-delivery-recipe-1",
+  "production_changed": false,
+  "fixture_candidates": true,
+  "vise_generation": "/nix/store/w6q99hw5p1drdfj1fakx3173d583jriy-nixos-system-srv1982677-26.05pre-git",
+  "limitations": [
+    "No complete system build or activation in this qualification.",
+    "No independent adoption authority for fixture candidates.",
+    "Real signed CI and automatic delivery remain to be demonstrated."
+  ],
+  "view_sha256": {
+    "vise-current": "a4d4c2b559f2e238a4e67e05abd41dc8f4bbac152986fc5b8d30460a7f56bcfd",
+    "vise-candidate": "6dcbd45d8c231792d7d825c0042ee810a692974333ff5ff2a2029f04b1eb033e",
+    "platform-current": "c8522332932e7770e7d78577a3d42a6efdc36858eb5223efa5d2269f46c0a93d",
+    "platform-stage": "dd69c46ce6229918a0d5848ce61a29cbae858565c1c998233ea079fefc173aa5",
+    "platform-promotion": "567cfed3a1ad02d378b166d753b2dcfa52906dac9112c5657b9e058ebcab8643"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "added": [
+    "forgejo.service.wants",
+    "forgejo.service.wants/mrjam-forgejo-runner.service"
+  ],
+  "app_constructor_proof": "operations/ci/continuous-delivery-v1/qualification-stack-app-delivery-003.json",
+  "build": {
+    "cpu_seconds": 55.668,
+    "exit_code": 0,
+    "package": "/nix/store/ph8sbgfgpgjvkv7ps4mpfiiff4a0dhhq-mrjam-protected-stack-host-build-1",
+    "peak_memory": "3.1G",
+    "seconds": 112.039,
+    "unit": "mrjam-stack-host-build-003.service"
+  },
+  "built_layout_verified": true,
+  "changed": [
+    "mrjam-acceptance-merge.service",
+    "mrjam-acceptance-mirror.service",
+    "mrjam-acceptance-review.service",
+    "mrjam-acceptance-sync.service",
+    "mrjam-admission-controller.service",
+    "mrjam-delivery-preparation.service",
+    "mrjam-delivery-staging.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-promotion.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-worker@.service",
+    "multi-user.target.wants/mrjam-forgejo-runner.service",
+    "sysinit-reactivation.target.requires/systemd-tmpfiles-resetup.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "coordinator_client_verified": true,
+  "coordinator_recovery_verified": true,
+  "deployment_authorized": false,
+  "evidence_sha256": {
+    "delivery-stack-export-evaluation-003.json": "37969d339c225586f162c9b5f325f9e18fe7fcc7083c7615cfbcce219f6d59f3",
+    "delivery-stack-host-build-003.stderr": "8af2f94efb04dc4b1ddddbec5e16ad727512190c31ade23a345fcbf317aca005",
+    "delivery-stack-host-build-003.stdout": "447b5a7c001ce236f3f329e26c36bd94eab924200e5b66041554aab89a4e433a",
+    "delivery-stack-layout-004.json": "002b8115fc56132b0ba52d9842ec50315f5be5a6bb2d7728959f15cf688e874a",
+    "delivery-stack-preflight-002.json": "fb5aa672c56c4aa4d00817e76f3d6090a0687babaca81aadc96cad226c069962"
+  },
+  "gc_root": "/var/lib/mrjam-stack-host-build-003/generation",
+  "limitations": [
+    "No control upgrade activation yet",
+    "Preflight is a point-in-time observation; repeat under transaction lock",
+    "Protected rules PR2 review still pending"
+  ],
+  "new": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git",
+  "old": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git",
+  "preflight": {
+    "active_validation_units": 0,
+    "baseline_exact": true,
+    "code": "STACK_UPGRADE_PREFLIGHT",
+    "eligible_at_observation": true,
+    "job_phases": {
+      "deployed": 3
+    },
+    "pending_acceptance": false,
+    "production_mutation": false,
+    "promotion_markers": 0,
+    "schema_version": 1,
+    "staging_lease_present": false,
+    "system": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git"
+  },
+  "production_activated": false,
+  "schema_version": 1,
+  "stack": "/nix/store/cwrqy0vp5q1r7vzpj8p8fa5cd4650c7y-mrjam-protected-delivery-stack-1",
+  "unit_entries": 586
+}

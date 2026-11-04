@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "candidate": "/nix/store/0l3mivhq0j2sz7jrsbrrw4q30kb8pkww-mrjam-delivery-candidate-e06f030310ae-green",
+  "bundle": "/nix/store/79ia22l2yp92zfmrbzrz521qgmrw2xmr-mrjam-delivery-bundle-e06f030310ae-green",
+  "slot": "green",
+  "server_byte_identical": true,
+  "frontend_files_byte_identical": 449,
+  "source_manifest_and_files_verified": true,
+  "non_asset_configuration_identical": true,
+  "constructor_unit_tests": 8,
+  "activated": false,
+  "qualification_scope": "local-content-packaging-from-previously-captured-e06-artifacts-not-new-delivery-authority",
+  "nix_binding_cases": {
+    "valid": "accepted-for-packaging-only",
+    "server_hash": "refused",
+    "policy_hash": "refused",
+    "source_digest": "refused",
+    "extra_field": "refused",
+    "invalid_slot": "refused",
+    "source_outside_store": "refused"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "conclusions": {
+    "future_login_admin_group_synchronization_requires_distinct_observation": true,
+    "human_membership_or_review_authority_not_inferred": true,
+    "site_admin_can_manage_organization_without_explicit_membership": true,
+    "site_admin_has_private_organization_visibility": true,
+    "site_admin_has_repository_owner_permission": true
+  },
+  "existing_sso_probe": {
+    "path": "operations/deployment/forgejo_sso_probe.py",
+    "sha256": "be06941b14d69b68f1b0fd5ccab28255b5561c836a0650ce186a18cc285ade16"
+  },
+  "forgejo_version": "17.0.1",
+  "mutation_performed": false,
+  "production_access": false,
+  "production_identity_or_membership_observed": false,
+  "schema_version": 1,
+  "scope": "read-only local code review; no production observation or mutation",
+  "source_files": {
+    "models/organization/org.go": {
+      "relevant_line": 479,
+      "sha256": "249a599466d3aba5490da4683e32ac06616dad6255aafda2d1841443c8d8144d"
+    },
+    "models/perm/access/repo_permission.go": {
+      "relevant_line": 249,
+      "sha256": "5407355ae11220ed2ac0514ee79776aa4f0ea23d5fe8ec852814b5936868c9f1"
+    },
+    "routers/web/auth/oauth.go": {
+      "relevant_line": 1268,
+      "sha256": "7bfa2464d4d3a1fbe3ecac41be3a7732bb471435f269418ff87d992f9a072e65"
+    },
+    "services/context/org.go": {
+      "relevant_line": 138,
+      "sha256": "27964818f13a0cf2d12e2496507e95fa66dab5f743bc5a2fa6d46f7e5b656cd6"
+    }
+  },
+  "source_store": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source"
+}

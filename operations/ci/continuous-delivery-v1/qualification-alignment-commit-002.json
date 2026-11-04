@@ -1,0 +1,15 @@
+{
+  "candidate_commit": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+  "candidate_tree": "898e81ba8da198cbb6512a64fa54e950ecd24d4b",
+  "changed_paths": [
+    "crates/identity/src/tests.rs",
+    "docs/etat.json",
+    "docs/reprise.org"
+  ],
+  "parent": "673d9b6befe25b7ee211578e5a941473b37dfe0c",
+  "remote_mutation": false,
+  "schema_version": 1,
+  "source_mount_remains_readonly": true,
+  "test_assertions_unchanged": true,
+  "test_source_sha256": "d7ae48faac469b25f7c7309a1e0ed1ce210d03e7bf900a8d2a4c93804493dff4"
+}

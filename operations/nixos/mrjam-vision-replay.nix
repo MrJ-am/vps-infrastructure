@@ -4,13 +4,14 @@ let
   unit = "mrjam-vision-replay";
   storePath = lib.types.strMatching "/nix/store/[0-9a-df-np-sv-z]{32}-[A-Za-z0-9+._?=-]+";
   credentialReference = lib.types.strMatching "/(run/secrets|run/keys|var/lib)/[A-Za-z0-9_./-]+";
-  publicConfig = pkgs.writeText "mrjam-vision-replay.json" (builtins.toJSON {
+  identity = import ./vision-worker-identity.nix { inherit lib cfg; };
+  socketProtocol = cfg.identityProtocol == "kanidm-delete-socket";
+  publicConfig = pkgs.writeText "mrjam-vision-replay.json" (builtins.toJSON ({
     schema_version = 1;
     vision_database = cfg.visionDatabase;
     journal_database = cfg.journalDatabase;
-    keycloak_file = "/run/credentials/${unit}.service/keycloak";
     admissions_file = "/run/credentials/${unit}.service/admissions";
-  });
+  } // lib.optionalAttrs (!socketProtocol) (identity.configuration unit)));
   mappings = {
     visionReplayJournal = { database = cfg.journalDatabase; role = "vision_journal_rejeu"; };
     visionReplayCycle = { database = cfg.visionDatabase; role = "vision_cycle"; };
@@ -18,17 +19,27 @@ let
   };
 in {
   imports = [ ./mrjam-postgresql-access.nix ];
-  options.services.mrjamVisionReplay = {
+  options.services.mrjamVisionReplay = identity.options // {
+    identityProtocol = lib.mkOption {
+      type = lib.types.enum [ "keycloak-legacy" "kanidm-native" "kanidm-delete-socket" ];
+      default = "keycloak-legacy";
+      description = "Exact protocol of this separately qualified replay ELF; socket mode has no provider credential.";
+    };
     enable = lib.mkEnableOption "bounded prebuilt Vision normal replay worker";
     artifactStorePath = lib.mkOption { type = storePath; description = "Exact independently qualified closure containing bin/vision-replay; no build dependency."; };
     visionDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
     journalDatabase = lib.mkOption { type = lib.types.strMatching "[a-z][a-z0-9_]{0,62}"; };
-    keycloakCredentialFile = lib.mkOption { type = credentialReference; description = "Existing private credential for the fixed historical closure client; IdP compatibility must be established before adoption."; };
     admissionsCredentialFile = lib.mkOption { type = credentialReference; };
     timer.enable = lib.mkEnableOption "periodic normal replay after prerequisite adoption";
   };
   config = lib.mkIf cfg.enable {
-    assertions = [
+    system.extraDependencies = lib.optionals (!socketProtocol) identity.extraDependencies;
+    assertions = lib.optionals (!socketProtocol) identity.assertions ++ [
+      { assertion = !socketProtocol || (cfg.keycloakCredentialFile == null && cfg.kanidmCredentialFile == null
+          && cfg.kanidmCaFile == null && cfg.kanidmCaSha256 == null);
+        message = "Vision replay socket mode must never receive a provider credential or CA configuration."; }
+      { assertion = !socketProtocol || (config.services.mrjamIdentityDeletion.enable or false);
+        message = "Vision replay socket mode requires the separately declared bounded deletion adapter."; }
       { assertion = !(builtins.hasContext cfg.artifactStorePath);
         message = "Vision replay requires a previously built artifact, without a Nix construction context."; }
       { assertion = cfg.visionDatabase != cfg.journalDatabase;
@@ -37,9 +48,9 @@ in {
           (name: config.services.mrjamPostgresqlAccess.workers.${name} == mappings.${name})
           (builtins.attrNames mappings);
         message = "Vision replay requires its three exact dedicated PostgreSQL peer capabilities."; }
-      { assertion = lib.all (path: !(lib.hasInfix "/../" path) && !(lib.hasInfix "/./" path)
+      { assertion = lib.all (path: path != null && !(lib.hasInfix "/../" path) && !(lib.hasInfix "/./" path)
           && !(lib.hasInfix "//" path) && !(lib.hasSuffix "/" path))
-          [ cfg.keycloakCredentialFile cfg.admissionsCredentialFile ];
+          ([ cfg.admissionsCredentialFile ] ++ lib.optional (!socketProtocol) identity.credentialFile);
         message = "Vision replay refuses ambiguous credential references."; }
     ];
     users.groups.${unit} = { };
@@ -50,15 +61,17 @@ in {
     services.mrjamPostgresqlAccess = { enable = lib.mkDefault true; workers = mappings; };
     systemd.services.${unit} = {
       description = "MRJ.am Vision normal replay of acknowledged erasure intentions";
-      after = [ "postgresql.service" ];
-      requires = [ "postgresql.service" ];
+      after = [ "postgresql.service" ] ++ lib.optional socketProtocol "mrjam-identity-deletion.service";
+      requires = [ "postgresql.service" ] ++ lib.optional socketProtocol "mrjam-identity-deletion.service";
       restartIfChanged = false;
       # No restoration verb, schema creation, initialisation or implicit startup.
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${cfg.artifactStorePath}/bin/vision-replay run-once --config ${publicConfig}";
         User = unit; Group = unit;
-        LoadCredential = [ "keycloak:${cfg.keycloakCredentialFile}" "admissions:${cfg.admissionsCredentialFile}" ];
+        LoadCredential = lib.optional (!socketProtocol) identity.credential
+          ++ [ "admissions:${cfg.admissionsCredentialFile}" ];
+        BindReadOnlyPaths = lib.optional socketProtocol "/run/mrjam-identity-deletion";
         UMask = "0077"; StandardInput = "null"; StandardOutput = "null";
         StandardError = "journal"; # CLI emits a fixed closed code only.
         NoNewPrivileges = true; CapabilityBoundingSet = ""; AmbientCapabilities = "";
@@ -67,10 +80,13 @@ in {
         ProtectKernelLogs = true; ProtectControlGroups = true; ProtectProc = "invisible";
         ProcSubset = "pid"; RestrictSUIDSGID = true; RestrictRealtime = true;
         RestrictNamespaces = true; LockPersonality = true; MemoryDenyWriteExecute = true;
+        # The admission-purge contract still uses fixed loopback HTTP :3027.
         RestrictAddressFamilies = [ "AF_UNIX" "AF_INET" ];
         IPAddressDeny = "any"; IPAddressAllow = "localhost";
         InaccessiblePaths = [ "-/var/lib/forgejo" "-/var/lib/postgresql" "-/var/lib/kanidm"
-          "-/var/lib/nextcloud" "-/var/backup" "-/var/backups" "-/var/run/docker.sock" ];
+          "-/var/lib/nextcloud" "-/var/backup" "-/var/backups" "-/var/run/docker.sock" ]
+          ++ lib.optionals socketProtocol [ "-/var/lib/mrjam-identite" "-/var/lib/mrjam-worker-credentials"
+            "-/run/credentials/mrjam-identity-deletion.service" ];
         MemoryAccounting = true; MemoryMax = "256M"; CPUQuota = "20%"; TasksMax = 32;
         TimeoutStartSec = 900; TimeoutStopSec = 30; KillMode = "control-group"; LimitCORE = 0;
       };

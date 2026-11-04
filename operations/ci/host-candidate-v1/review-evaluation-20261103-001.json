@@ -1,0 +1,50 @@
+{
+  "added_units": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "arguments_match_reviewed_public_policy_and_proposal": true,
+  "changed_existing_units": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "ci_activated": false,
+  "controller_revision_only_evaluation_placeholder": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+  "controller_revision_required_argument": true,
+  "current_validator_review_sha256": "13ffed766f5afc981fab9d3ddcd0dcb276e14afe734073d607238cdc13a32fb8",
+  "evaluation_checks": 14,
+  "evaluation_result_sha256": "23118c6b13df8af79fac3482a07329c3c7c10079b7b14b67a8aae03bdf654aa7",
+  "expression_sha256": "562a32ae69034debe8ad4f2bbb678d6eafb408007d601d89899a3e7ec9776ef1",
+  "generation_built": false,
+  "limits": [
+    "Controller revision O is only a placeholder; final immutable publication must be substituted and evaluated before building/delivery.",
+    "The check of existing changed unit names alone does not prove trigger-only content anew; prior full delta/network proof remains separately scoped.",
+    "Policy and registration credentials are still absent; a path string is not proof of a credential or permission.",
+    "Rules adoption and the75application-check result are not established by evaluation.",
+    "No full generation build, switch, resource coexistence runtime or new rollback test was performed here."
+  ],
+  "prior_composition_qualification_sha256": "555847f137fc58e34a0282a2f51f1250fe1822be232d1b0030743ad259a6a156",
+  "prior_source_files_still_exact": 14,
+  "qualification_sha256": "7880269c42c4c14dc53031569b6950a7a00fd3b53ba69cf0528e92a0ef339522",
+  "removed_units": [],
+  "reviewed_properties": [
+    "Actual proposed validator/source/public-key policy match the independently reviewed pins; source expression has no default controller revision.",
+    "Evaluation retains sixteen application units and input-firewall unit, LLMNR=false, Actions=false, policy plan-only and no WantedBy for CI services/sockets.",
+    "Twelve CI units are added together with nftables.service; its declarative output filtering is a separate control addition, not a launched CI job.",
+    "Original composition modules and external credential/coordinator variants remain exact; no production credential content is supplied by these paths."
+  ],
+  "schema_version": 1,
+  "scope": "independent local read-through and binding of existing Nix evaluation; no reevaluation/build/activation",
+  "status": "PASS_FOR_PROPOSED_EVALUATION_ONLY"
+}

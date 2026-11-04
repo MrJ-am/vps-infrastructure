@@ -1,0 +1,31 @@
+{
+  "activation_performed": false,
+  "bootstrap_package": "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+  "date": "2026-11-02",
+  "do_not_deploy_fixture_package": true,
+  "fixture_package": "/nix/store/d6zcrq8iwslnxpp7xzdzc8n374m13sy4-mrjam-first-release-governance-1",
+  "limits": [
+    "Invented Git histories only",
+    "No production bundle or accepted rules authority inferred",
+    "No runners or human review identities provisioned"
+  ],
+  "local_tests_passed": 10,
+  "production_access": false,
+  "production_binding_available": false,
+  "reconciler_sha256": "8b50d48a04d0c33b2808fc338bc6a3a5a2a0bdea4345cae798cceb00e649bd78",
+  "result_sha256": "96956c0c0cadc3990b5dfbb00b5f378f7c3d02c4474589992e4188003558f15f",
+  "schema_version": 1,
+  "scope": "real-isolated-forgejo17-postgresql17-git-http-with-invented-full-histories",
+  "source_sha256": {
+    "core.py": "bb0ba70d9a31de5ef3f8c02f9382e7f268a3cd009b8c2035d1342957b90f6409",
+    "credentials.py": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2",
+    "entry.py": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487",
+    "fixture.py": "d1e40b24bb2a38ab67e5786bae0a8e479ac312e608772968b744a8a974a90490",
+    "package.nix": "a61d4b70e3e8c4ca0f00d84b8a7fc7dd05c4bbb8f8d50325e1aaa75877f6a8c0",
+    "systemd-test.nix": "c4694597852330909f6cd87ee451939c1737eb94759d204f77a260bcfee156aa",
+    "test_governance.py": "a59edee93e56cfcb142ee2e4a985065d6f638e1933fdf837b1e12f0fb53b0ca9"
+  },
+  "vm_groups_passed": 7,
+  "vm_output": "/nix/store/1xsx5i241fpk0bnkcvy71jdjfdil5gh6-vm-test-run-mrjam-forgejo-source-history-and-protection",
+  "vm_seconds": 74.58
+}

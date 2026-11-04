@@ -1,0 +1,35 @@
+{
+  "application_validation_repeated": false,
+  "artifacts": [
+    {
+      "bytes": 13383152,
+      "name": "server",
+      "sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+    },
+    {
+      "bytes": 23859200,
+      "name": "frontend.tar",
+      "sha256": "f3db1448bf4dfb9e88dace2d3e5b6932f19bde9033947f8e31a85d0e132ae8f6"
+    },
+    {
+      "bytes": 6591,
+      "name": "verification.json",
+      "sha256": "4655be0da7f48dfa9ccacfc1297482c96894d8927ca108dee2e3be38100fac36"
+    }
+  ],
+  "limits": [
+    "Normal cargo test retains its explicitly ignored memory measurement.",
+    "No production policy adopted and no deployment authorized by this check."
+  ],
+  "original_harness_final_check": "old-reader-refused-detailed-style-overlay-entry",
+  "original_run_elapsed_seconds": 1086.095,
+  "policy_sha256": "be4a54ba570c87dcc53f4522e77c748e14b9fe1aa5fb9995a7600a949510a8e9",
+  "private_key_accessed": false,
+  "production_access": false,
+  "production_attestation_emitted": false,
+  "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+  "report_matches_local_expected_content_only": true,
+  "required_steps_passed": 74,
+  "schema_version": 1,
+  "status": "passed"
+}

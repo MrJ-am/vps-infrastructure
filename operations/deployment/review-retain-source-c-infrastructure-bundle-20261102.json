@@ -1,0 +1,38 @@
+{
+  "bundle_bytes": 3954411975,
+  "bundle_sha256": "a1696d45de918ad637d1dd792bb700f0fb7af3f0567ed39904bdd9b0251efd4f",
+  "checks": [
+    "Constants match sourceC governance receipt, independent bundle verification digest and nine-bundle delivery manifest.",
+    "Identical code preserves transaction.lock inode and archive001/A directories; only fixed infrastructure bundle is opened for exact byte count/hash.",
+    "Same-filesystem rename into new exclusive root0700 folder preserves bundle inode/bytes, root0600 and nlink1; no overwrite or deletion.",
+    "Old current/boot and state-only-existing-lock preconditions preserved; no application/git/SQL/service operation."
+  ],
+  "destination": "/var/lib/mrjam-source-import/previous-e65a42e-20261102/vps-infrastructure.bundle",
+  "exact_reverse_text_replacement_equals_qualified_template": true,
+  "limits": [
+    "No local production bundle reread and no repeated invariant tests; qualified nine-case template tests reused through exact reverse-byte equivalence.",
+    "Parent executes only after replacement source bundle is ready; this helper does not receive or publish the replacement."
+  ],
+  "linked_receipts": {
+    ".local/deployment-20261101/forgejo-binding-source-c-20261102/governance-final-receipt.json": "f5cb919de0994b203b802d6dc514e9701d38d5d523a0892c40fb38f510aa6360",
+    "/home/jam/Documents/Codex/2026-11-01-lis-ce-prompt-et-pr-pare/vps-qualification-20261101/.local/deployment-20261101/forgejo-binding-source-c-20261102/infrastructure-bundle-verification.json": "fd3c69e9ccf14437fbeadbdf6e39d774b90304ebcc9aa75226864209f0b4ce47",
+    "operations/deployment/qualification-retain-previous-infrastructure-bundle-20261102.json": "37c45cbe943eb544e526f60863b997d4b62674763b83391cbba90b2404a5d1c7",
+    "operations/deployment/source-bundles-delivery-002-20261102.json": "982c213323b33eecbac1c0d1251bd542f97ae11053fa364f98a7f654c7713ead",
+    "operations/deployment/source-c-retention-binding-20261102.json": "79de1f25284136a5af868e8dba99ac8707bb641f2e714b9b9a0d716eafeb7558"
+  },
+  "only_bindings_changed": [
+    "ARCHIVE",
+    "BYTES",
+    "SHA256"
+  ],
+  "passed": true,
+  "previous_a_destination_distinct": "/var/lib/mrjam-source-import/previous-af8dd5a-20261102/vps-infrastructure.bundle",
+  "production_access": false,
+  "production_executed": false,
+  "schema_version": 1,
+  "sealed": "operations/deployment/retain-source-c-infrastructure-bundle-20261102.py",
+  "sealed_sha256": "0f8352ac2a90a7dbb3cc14f843ea6ae58254c9ecf1900d9686001c3242f1f151",
+  "source_revision": "e65a42e303f75467adeb86adca7e2382983d51bd",
+  "template": "operations/deployment/retain_previous_infrastructure_bundle.py",
+  "template_sha256": "4fffe6524503a505b1ea76cd633b15cfd6a49f965a80e38453cb1210591b1e5b"
+}

@@ -1,0 +1,31 @@
+{
+  "backend_sha256": "212bfb54e9020d1e334e61a1443f9fad09cc9ad7ea7cedb0abf102dba4861114",
+  "completed_before_failure": [
+    "Real full preflight retry after initial.json before PREPARED",
+    "Real NixOS staged activation with generator masks and nft gate",
+    "Real offline PostgreSQL and application-file snapshot and candidate adoption",
+    "Real paired snapshot restore and previous live generation activation"
+  ],
+  "date": "2026-11-02",
+  "derivation": "/nix/store/r1x2592v5b9cp1778lwi36ihynsq7qdm-vm-test-run-mrjam-integrated-cutover-recovery-control.drv",
+  "finding": "An immediately restored Type=simple HTTP service can still have an unbound socket when the old-generation private HTTP verification runs.",
+  "limits": [
+    "Synthetic HTTPS application contract and invented state; not a production application readiness observation.",
+    "The diagnostic replays only the failed fixed curl read after250ms, records a boolean, and still returns its original failing result.",
+    "The integration test did not pass; this is an initial finding, not a qualification receipt."
+  ],
+  "observation": {
+    "final_phase": "held-for-recovery",
+    "initial_curl_exit": 7,
+    "initial_failure_propagated": true,
+    "initial_private_failure": "PRIVATE_READINESS_REFUSED",
+    "restored_phase": "returning-before-public-writes",
+    "result": "COHERENT_RETURN_REQUIRES_RECOVERY",
+    "same_request_after_250ms_http200": true
+  },
+  "production_access": false,
+  "recommended_change": "Bounded polling of the exact original HTTP status map during private return verification; keep nft and periodic writers closed until RETURNED.",
+  "schema_version": 1,
+  "source_note": "The core nginx module also uses daemon off without a Type=notify/forking readiness contract.",
+  "vm_stopped": true
+}

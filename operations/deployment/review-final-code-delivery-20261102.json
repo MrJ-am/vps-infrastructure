@@ -1,0 +1,79 @@
+{
+  "ast_identical_except_exact_release_and_directory": true,
+  "coverage": {
+    "artifacts_covered_before_this_stream": 1669,
+    "delivery_roots_closure_paths": 259,
+    "delivery_roots_uncovered_dependencies": 0,
+    "final_artifacts_added_by_this_stream": 5,
+    "final_release_artifacts": 1674,
+    "final_release_sha256": "e8626d9aca0e6a2760e9900f5b3233395ad310a09ea35b01af4b68b627511028",
+    "missing_final_artifacts": 0,
+    "observed_old_paths": 1190,
+    "observed_old_receipt_sha256": "e399d64d097d60993ca552d9aabe30b279a3f6a08ae1918dae2d734e4909f15d",
+    "old_artifact_nar_conflicts": 0,
+    "previous_deliveries": [
+      {
+        "manifest": "operations/deployment/passkey-delivery-20261102.json",
+        "manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+        "paths": 183,
+        "result": ".local/deployment-20261101/passkey-delivery-result-001.json",
+        "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+        "stderr_empty": true
+      },
+      {
+        "manifest": "operations/deployment/passkey-correction-delivery-20261102.json",
+        "manifest_sha256": "bcb60d775dbc6ed13c47bccf79f455f4acd60f3ce8e9cdd9d1632c257f021724",
+        "paths": 6,
+        "result": ".local/deployment-20261101/passkey-correction-delivery-result-001.json",
+        "result_sha256": "327a1b1a14070d62819ff4bcef7089806be3c81756aabd553ed1dc2cd6deb5ce",
+        "stderr_empty": true
+      },
+      {
+        "manifest": "operations/deployment/candidate-code-delivery-20261102.json",
+        "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+        "paths": 394,
+        "result": ".local/deployment-20261101/candidate-code-delivery-result-001.json",
+        "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+        "stderr_empty": true
+      },
+      {
+        "manifest": "operations/deployment/kanidm-local-bootstrap-delivery-20261102.json",
+        "manifest_sha256": "e7ad781f6ebb40c476f8dfa71b25d6396c2c0fb20d2f00f6d6b56bd26fb540ec",
+        "paths": 3,
+        "result": ".local/deployment-20261101/kanidm-local-bootstrap-delivery-result-001.json",
+        "result_sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79",
+        "stderr_empty": true
+      }
+    ]
+  },
+  "date": "2026-11-02",
+  "export": {
+    "bytes": 1874392,
+    "local_nix_store_verify_path_passed": true,
+    "reexport_byte_identical": true,
+    "sha256": "a3d6d6169c6525e2282b92fdbc3c3c1403e4e28a972c0c5827c84e79ab037e4e",
+    "store_paths": 9
+  },
+  "inactive_unit": {
+    "matches_previously_upgraded_v3_unit": true,
+    "path": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+    "sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+    "v2_package_only_validator_anchor": true
+  },
+  "limits": [
+    "Local bytes and recorded successful deliveries are checked; no fresh VPS observation was performed by this reviewer.",
+    "The receiver imports code and preserves the already-upgraded inactive V3 unit with daemon-reload; it never invokes the controller, selects a generation or starts an application.",
+    "The final manifest and controller have a separate independent review. Delivery success is not deployment success."
+  ],
+  "original_validator_passed": true,
+  "passed": true,
+  "release_literal_equals_json": true,
+  "schema_version": 1,
+  "scope": "Independent local review of exact inactive final-code delivery; no SSH, import or service operation",
+  "source_sha256": {
+    "operations/deployment/deliver_provision.py": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c",
+    "operations/deployment/final-code-delivery-20261102.json": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+    "operations/deployment/final-code-delivery-20261102.py": "882bd97fcfb09fa193990955401f622d2f8ed4234e9a37f829d9facc103f9aa1"
+  },
+  "template_matches_prior_independent_import_vm": true
+}

@@ -1,0 +1,65 @@
+{
+  "base_commit": "756ffdf19dc207a0b749ee9f1048fc48315c095c",
+  "entries": [
+    {
+      "bytes": 61366,
+      "path": "operations/deployment/release_backend.py",
+      "sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c"
+    },
+    {
+      "bytes": 11885,
+      "path": "operations/deployment/test_release_failure_observation.py",
+      "sha256": "f953c654cabe06a1b75eeef6410ef89644bbeb1f3365bdf61f1b864e7be8ee34"
+    },
+    {
+      "bytes": 2527,
+      "path": "operations/deployment/FAILURE-OBSERVATION.org",
+      "sha256": "cfc9d1dfb92a431fba2399ad9ce8581e9cb1934235b9e788d6bc7ff25e712143"
+    },
+    {
+      "bytes": 3742,
+      "path": "operations/deployment/qualification-release-backend-unit-20261102-007.json",
+      "sha256": "aa7447e373127a9104cbd329f146bcb659944d44730da506bd59a82b449a12d3"
+    },
+    {
+      "bytes": 2176,
+      "path": "operations/deployment/qualification-release-package-20261102-004.json",
+      "sha256": "82c07f887d321651bf34e76efbb290fc962248edf95b4fdb03d25d3ffa03644a"
+    },
+    {
+      "bytes": 4034,
+      "path": "operations/deployment/review-release-failure-observation-20261102.json",
+      "sha256": "23ea188bc92124f90990d613419218d6742c7d638d04709f861f33b863e5ca4f"
+    },
+    {
+      "bytes": 19565,
+      "path": "operations/deployment/backend-integration/fixture.py",
+      "sha256": "8d9ac86f02868261bf932f83a52dfd7587361a1e8aa743bca20cbf262010072d"
+    },
+    {
+      "bytes": 7484,
+      "path": "operations/deployment/backend-integration/qualification-20261102-009.json",
+      "sha256": "b43f32ff0b9bc38e084d000656dcfbc11c32199eabb5fd76ea1f65bde02e6ccc"
+    },
+    {
+      "bytes": 2887,
+      "path": "operations/deployment/backend-integration/publication-20261102-009.json",
+      "sha256": "014568eaa6aec1b9a4d2e223cb2ba70356d30c287436cf90d2b48766e350f422"
+    },
+    {
+      "bytes": 1744,
+      "path": "operations/deployment/backend-integration/result-009.json",
+      "sha256": "95aa0d47e0d638d848ff5af449f1892b9ce5a850ee9ec2a46a04a68e87320d21"
+    }
+  ],
+  "exclusions": [
+    "Private .local content, streams, bundles and credentials",
+    "Unchanged historical qualifications intentionally absent from earlier publications",
+    "SQL changes and host generations owned by parent/runtime"
+  ],
+  "integrated_vm_groups_passed": 6,
+  "pending": [],
+  "ready_for_publication": true,
+  "schema_version": 1,
+  "scope": "closed failure observation source and final qualification; local only"
+}

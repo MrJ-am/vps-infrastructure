@@ -1,0 +1,56 @@
+{
+  "controller_kill_cases": 0,
+  "events": [
+    {
+      "boot": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "current": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "phase": "prepared"
+    },
+    {
+      "boot": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "current": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "phase": "new-tested"
+    },
+    {
+      "boot": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "current": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "phase": "returned"
+    },
+    {
+      "boot": "/nix/store/cr1y45i55av5aan0nr0jbpsm9mzrwxy4-nixos-system-machine-test",
+      "current": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "phase": "active"
+    },
+    {
+      "boot": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "current": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "phase": "boot"
+    },
+    {
+      "boot": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "current": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "phase": "commit-ready"
+    },
+    {
+      "boot": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "current": "/nix/store/51hgavx3i7j8vkrb5kb975pczdsk5rgv-nixos-system-machine-test",
+      "phase": "complete"
+    }
+  ],
+  "limitations": [
+    "Synthetic C servers and retained services",
+    "Synthetic signature and acceptance authority",
+    "No production access"
+  ],
+  "production_access": false,
+  "real_boot_profile": true,
+  "real_generation_transition": true,
+  "real_reboot": false,
+  "real_return": true,
+  "result": {
+    "code": "VISE_COMPLETE",
+    "recovered": false
+  },
+  "synthetic_authority": true,
+  "vm_result": "/nix/store/lrfqa22hm9r7kikjmd197qay99s671zy-vm-test-run-mrjam-vise-real-generation-transition"
+}

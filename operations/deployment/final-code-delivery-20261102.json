@@ -1,0 +1,20 @@
+{
+  "export_bytes": 1874392,
+  "export_sha256": "a3d6d6169c6525e2282b92fdbc3c3c1403e4e28a972c0c5827c84e79ab037e4e",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1077668312,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/15pixql04a3wxipk57mcvinjc0xlqzas-mrjam-first-release-governance-1",
+    "/nix/store/2kwxjwafmnvw5z94m27hn7qynwdrsyrp-jansson-2.15.0",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/9hs01b84c30hq4lkn7db99dvyjq43sm8-mrjam-first-source-binding.json",
+    "/nix/store/gripy5dbgwaa7g173vxdm6vr1vwhmk72-nftables-1.1.6",
+    "/nix/store/irb47r5zxmffhlklmf2c613gdm8ydb1z-mrjam-first-release-controller-1",
+    "/nix/store/nz0f6kmcf3wz0q6k4iwyhmk3q703ixf1-mrjam-first-release-read-only-probes-1",
+    "/nix/store/rqfxds31bkc0wq2g69pp0nyhk2xgqfzp-mrjam-first-release-binding-1",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

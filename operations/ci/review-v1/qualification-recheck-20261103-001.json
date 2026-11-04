@@ -1,0 +1,17 @@
+{
+  "limits": [
+    "No atomic snapshot across API calls and no native Forgejo shape or permission proof.",
+    "Before merge refreshes full review set and verifies signature; after merge checks expected FF and selected approval only.",
+    "Caller must hold a previously verified binding; no authorization, signature, protection proof or deployment is produced.",
+    "A revoked approval after merge blocks a future decision, without undoing the merge."
+  ],
+  "merge_performed": false,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "read-only before/after merge rechecks, invented Forgejo responses and real invented validation signatures",
+  "sources": {
+    "operations/ci/review-v1/recheck.py": "3f4289d3916b92b247e91cb82daa6cc4e452352ec9c287c643b5596783c21d4b",
+    "operations/ci/review-v1/test_recheck.py": "7f3964860cffe2e72526fde3e6766be46ecb57cf6d005bdaa2a390bba5d05fb9"
+  },
+  "tests_passed": 8
+}

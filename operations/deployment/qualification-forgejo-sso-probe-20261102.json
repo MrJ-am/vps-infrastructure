@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-02",
+  "source_sha256": {
+    "forgejo_sso_probe.py": "be06941b14d69b68f1b0fd5ccab28255b5561c836a0650ce186a18cc285ade16",
+    "test_forgejo_sso_probe.py": "335940bfba34ddeafcfd53215d4f4d3c6d98f1a56c13f2907b3379578ef0e21c",
+    "forgejo-sso-qualification.nix": "2c9bb313d417545ec807ecc0a7f6b818c202b8759e79465999c9d4b136fa11d2"
+  },
+  "output": "/nix/store/qfzvcab556vvlgpmbqgrbwrfgdm9iswm-mrjam-forgejo-sso-closed-probe-qualification",
+  "nar_hash": "sha256-APxzwc7f1fj12BlRKNZsAmhe+c1nA7k9IpvPZrwCG0g=",
+  "groups": 13,
+  "passed": true,
+  "actual_postgresql": true,
+  "production_access": false,
+  "mutation_performed": false,
+  "limits": [
+    "The synthetic PostgreSQL tables implement the exact Forgejo17 model fields used by the fixed query.",
+    "The probe verifies retained local SSO configuration and immutable subject binding; it does not perform a human OIDC login or remote provider request."
+  ],
+  "primary_sources": [
+    "reference-nixos/assemblage/forgejo/sso.py",
+    "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/models/auth/source.go"
+  ]
+}

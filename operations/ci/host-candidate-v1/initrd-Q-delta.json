@@ -1,0 +1,32 @@
+{
+  "added": [
+    "nix/store/mwdd9bmwd56flmg956dgk4vfjmxj9w40-etc-modprobe.d-nixos.conf"
+  ],
+  "changed": {
+    "etc/modprobe.d/nixos.conf": {
+      "new": {
+        "bytes": 69,
+        "gid": 0,
+        "mode": 41471,
+        "nlink": 1,
+        "sha256": "dac3f539e2c9a885b09edce7b397a5ea0ad20c72dcbb4926f2e0e1c333d2a654",
+        "target": "/nix/store/mwdd9bmwd56flmg956dgk4vfjmxj9w40-etc-modprobe.d-nixos.conf",
+        "uid": 0
+      },
+      "old": {
+        "bytes": 69,
+        "gid": 0,
+        "mode": 41471,
+        "nlink": 1,
+        "sha256": "2a989a3152c845beff32c02e81f366e5679b12d3cfaef8a8c53f807726bf1949",
+        "target": "/nix/store/acivpf9ijpvj066v0mqrrshb4xlfnfkn-etc-modprobe.d-nixos.conf",
+        "uid": 0
+      }
+    }
+  },
+  "new_entries": 2068,
+  "old_entries": 2068,
+  "removed": [
+    "nix/store/acivpf9ijpvj066v0mqrrshb4xlfnfkn-etc-modprobe.d-nixos.conf"
+  ]
+}

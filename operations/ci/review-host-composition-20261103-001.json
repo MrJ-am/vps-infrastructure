@@ -1,0 +1,56 @@
+{
+  "added_units": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "author_evaluations_reviewed_not_rerun": {
+    "host_profile": 21,
+    "inactive_import": 33,
+    "scoped_modules": 33
+  },
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "existing_application_units_independently_bound_to_baseline": 16,
+  "existing_input_firewall_unit_bound_to_baseline": true,
+  "existing_unit_changes": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "limits": [
+    "This is evaluation of invented rules, inert validator, invalid synthetic proposal and public test key; it is not a production generation or authority policy.",
+    "Inactive imports alone reposition two identical Forgejo tmpfiles rules and alter their trigger; complete generation byte identity is not claimed.",
+    "The integrated credentials-v2/coordinator VM remains a separate pending qualification.",
+    "Network VM does not prove an external IPv6 ingress path, full host activation/reboot, actual Forgejo job or signing workflow.",
+    "The ip_tables legacy module blacklist is an explicit additional declarative change; the retained iptables implementation uses nf_tables.",
+    "A real candidate needs adopted workflow/policy/proposals, private credential installation, fresh identity/resource checks, exact full closure/delta and reviewed return path. No CI capacity approval or real human review is inferred."
+  ],
+  "network_qualification_sha256": "6ea4483cb3957c60ea3257629855b8dfa92b7a3d365a28f70970147d233b3481",
+  "network_vm_nar_hash": "sha256-EcuFdkPU0N9gnXbXTkN/n1PMA16mD5sX8l2kVBb3Y7c=",
+  "network_vm_output": "/nix/store/iqliwpr12ja4907jnr0kn29m0p35ypqm-vm-test-run-mrjam-ci-input-firewall-output-table-coexistence",
+  "passed": true,
+  "qualification_sha256": "555847f137fc58e34a0282a2f51f1250fe1822be232d1b0030743ad259a6a156",
+  "real_network_groups_reviewed_not_rerun": 4,
+  "removed_units": [],
+  "reviewed_invariants": [
+    "Seven CI imports use the separate locked CI toolchain without replacing host pkgs; old staging/worker imports converge.",
+    "No fixture policy default; host UIDs949-953 and socket GIDs954-955 are fixed and tied to the prior free-range observation.",
+    "Actions remains disabled and CI services/sockets have no WantedBy; policy defaults to plan. nftables is the separate explicit system configuration addition.",
+    "Input firewall remains byte-identical; NAT-disabled original cleanup is reused from the primary host module, global ruleset flush and NAT enable refused.",
+    "Actual runner OUTPUT table restricts only coordinator/registrar UIDs to127.0.0.1:3004, with separate service/chroot/Unix restrictions retained.",
+    "Kernel namespace tests exercise IPv4 ingress and IPv4/IPv6 egress, preserve both iptables/ip6tables declarations and an unrelated nft table through reload/stop/start.",
+    "LLMNR=false preserved; thirteen new units, only D-Bus/tmpfiles trigger changes among existing units, no removed application units."
+  ],
+  "schema_version": 1,
+  "scope": "independent source, binding and immutable VM-output review; local synthetic composition only",
+  "source_hashes_verified": true
+}

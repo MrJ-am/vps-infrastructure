@@ -1,0 +1,36 @@
+{
+  "correction": "Latest non-dismissed decisions block unresolved rejection/requests; latest overall decisions select approval without resurrecting dismissed approvals.",
+  "limits": [
+    "Native endpoint semantics are bound separately in qualification-native-semantics-20261103-001.json; the complete permanent service is not implemented.",
+    "requested_reviewers is an active decision participant list; it is checked against the complete review collection before projecting unresolved requests.",
+    "Empty commit_id on historical review requests is currently refused, never replaced with a fabricated commit.",
+    "After-merge observation remains limited to main, expected merge and the chosen approval; it is not an atomic view of all other reviewers.",
+    "No credential reader, service, merge permission or activation is established by these local components."
+  ],
+  "logs": [
+    {
+      "path": ".local/review-tree-resolution-tests-003.log",
+      "sha256": "990c433af91e0d7bc9478aff4ece0985275375e3c0b69c498c3802374abb422b"
+    },
+    {
+      "path": ".local/review-order-v2-tests-002.log",
+      "sha256": "4c3262c4ece33de04113549078e304f2ff2d679a3288431f46777325fe16a0e1"
+    }
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "sources": {
+    "operations/ci/review-v1/TREE-RESOLUTION-V2.org": "b8c95ade82b9e12c68636ef46e502d1647c378fd504b4b54e728dd9827e79285",
+    "operations/ci/review-v1/api_projection_v2.py": "c37e18471dff8d5ba10e42f747fd549b0b128da9e9fc397137b1c35175cc3558",
+    "operations/ci/review-v1/read_transport_v3.py": "f4c2123cab6e7e3fee1d3d913e503b63117e4e69d7a7f1a5680a6b98e7b2b657",
+    "operations/ci/review-v1/recheck_v2.py": "98ef011d0d81ae7f87b894ebc81c3d04c3ae684d2c8147f87cda70fa4c8168ac",
+    "operations/ci/review-v1/review_contract_v2.py": "4253087029847ceef168642965140e6f6e5ace616f903a67aa2b9d18f531d7ec",
+    "operations/ci/review-v1/test_review_order_v2.py": "5c9d23a70352ffd17f1d2f40f516cda74fb90e27617ddb43f2307e2c2809458f",
+    "operations/ci/review-v1/test_tree_resolution.py": "17fdab390a756297049acc21d39553861a76552b9f706258c8772902a34ef78b"
+  },
+  "status": "targeted-local-tests-passed-independent-review-pending",
+  "tests": {
+    "decision_order": 6,
+    "tree_and_participants": 9
+  }
+}

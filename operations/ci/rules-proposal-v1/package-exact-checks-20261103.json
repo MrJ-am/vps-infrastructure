@@ -1,0 +1,26 @@
+{
+  "binding_sha256": "5d4bdbbf75aa6bbcbfba08f3bd24fe8412d7548736b30807f57aa0d8cfe9f129",
+  "binding_store_path": "/nix/store/y5xil6njhqldrdkgpap95d0dh0ybkafy-mrjam-rules-proposal-binding.json",
+  "checks": {
+    "binding_bytes_exact": true,
+    "credentials_only_names_changed": true,
+    "credentials_only_one_repository": true,
+    "entry_argument_refused": true,
+    "exact_core.py": true,
+    "exact_lease.py": true,
+    "exact_protection.py": true,
+    "exact_reconcile": true,
+    "no_bundle_in_package": true,
+    "sealed_entry.py": true,
+    "sealed_pre-push.py": true
+  },
+  "package": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1",
+  "schema_version": 1,
+  "substitutions": {
+    "BINDING": "/nix/store/y5xil6njhqldrdkgpap95d0dh0ybkafy-mrjam-rules-proposal-binding.json",
+    "BINDING_SHA256": "5d4bdbbf75aa6bbcbfba08f3bd24fe8412d7548736b30807f57aa0d8cfe9f129",
+    "BOOTSTRAP": "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+    "GIT": "/nix/store/nly4cml071i82515r89rpdw38z55wjqd-git-2.54.0",
+    "SELF": "/nix/store/1j61zvqin8df0vdazsdxlfssf5rdc54z-mrjam-rules-bootstrap-proposal-1"
+  }
+}

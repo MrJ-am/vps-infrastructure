@@ -1,0 +1,141 @@
+#+title: Raccord borné Forgejo main vers GitHub
+#+date: 2026-11-03
+#+language: fr
+
+Ce plan est inerte. Il ne crée ni clé, compte, token, unité, règle distante ou
+workflow et ne contacte aucun service. Il applique le flux de
+[[file:../release/README.org][livraison accepté]] et le point 5 du [[file:../deployment/PLAN-CHAINE-CI-20261102.org][plan CI]] : Forgejo reste
+l’autorité de main ; Cloud produit des propositions qui reviennent en revue
+sur Forgejo. Le miroir ne signe, n’approuve, ne fusionne et ne déploie rien.
+
+* Périmètre et état réellement connu
+
+Root rapporte une observation GitHub API du 3 novembre : neuf dépôts existants,
+non archivés, branche principale main. Cette revue locale ne répète pas cet
+appel et n’invente pas leurs IDs numériques ou OID courants.
+
+| Dépôt sous MrJ-am | Visibilité GitHub à conserver |
+|------------------+-------------------------------|
+| mrjam-plateforme | privée |
+| mrjam-validation | privée |
+| Signature | privée |
+| matheval | privée |
+| vision | privée |
+| vps-infrastructure | publique |
+| apprendre-a-demontrer | publique |
+| style-mrjam | publique |
+| etp-vie-affective | publique |
+
+Les dépôts Forgejo adoptés sont privés. Leur copie intégrale vers les quatre
+destinations publiques n’est donc pas autorisée par la seule correspondance
+de nom. Les archives privées, refs historiques d’import et tags restent sur
+Forgejo. Aucun =push --mirror=, =--all=, =--tags=, suppression, force push ou
+export de bundle privé vers un emplacement public n’appartient au raccord.
+La portée initiale comprend uniquement =refs/heads/main= dans chaque dépôt.
+
+* Préparation indépendante de l’accès GitHub
+
+1. Écrire une politique fermée avec IDs source/destination attendus, noms et
+   origines exacts, visibilité, unique ref main, identité du miroir et règles
+   d’éligibilité des publications. Les IDs/têtes/protections sont encore à
+   observer ; aucun nom seul ne permet une mutation.
+2. Préparer un helper à arguments fermés et un compte Unix distinct
+   =mrjam-forgejo-mirror=, sans privilège root, clé de signature, credential
+   applicatif, accès SQL ou socket CI. L’UID/GID sera choisi après observation
+   des identités libres, sans réutiliser les valeurs synthétiques des tests.
+   La lecture Forgejo et l’écriture GitHub utilisent deux credentials dédiés.
+   Le miroir est exclu des réviseurs, mergeurs et émetteurs de statuts CI.
+3. Réutiliser le motif qualifié du helper Git et de son pre-push immuable :
+   environnement remplacé, configuration utilisateur ignorée, pas de hooks
+   candidat, sous-modules non exécutés, limites de ressources et de temps,
+   répertoire privé. Adapter le garde à une seule ref existante et un ancien
+   OID exact ; ne pas importer le bail administrateur de rules-proposal.
+4. Qualifier sur dépôts inventés : avance normale, égalité, divergence,
+   destination en avance, changement de tête entre observation et push,
+   mauvaise ref/URL/visibilité, interruption après push et reprise sans
+   écriture supplémentaire. Ces tests ne nécessitent pas de clé GitHub ni
+   de VM complète. Aucun test nouveau n’est lancé par ce document.
+
+* Transaction d’un dépôt
+
+- Sous verrou dédié, lire les deux identités de dépôt, visibilités, protections
+  utiles et têtes S=Forgejo/main, D=GitHub/main. Vérifier l’identité technique,
+  les permissions natives réellement accordées et les effets éventuels de
+  hooks/workflows GitHub. Ne pas activer de workflow ou provoquer un nouveau
+  coût ; les capacités de lecture d’un connecteur ne prouvent pas un droit
+  de push automatisé.
+- Copier seulement la fermeture Git nécessaire dans un espace privé isolé,
+  sans références d’archives, refs de PR ou checkout récursif de sous-modules.
+  Conserver les octets/commits/arbres existants, sans commit orphelin, squash,
+  rebase ou réécriture d’URL de gitlink pour contourner un écart.
+- S=D donne un reçu sans écriture. Sinon exiger D ancêtre de S. Si GitHub est
+  en avance ou diverge, laisser les deux histoires intactes et préparer le
+  retour des changements GitHub comme proposition Forgejo ; aucune remise à
+  zéro ni avance inverse automatique de Forgejo.
+- Pour une destination publique, vérifier que tout objet nouvellement
+  atteignable est couvert par une publication publique déjà attestée ou par
+  une sélection publique explicitement revue. Un arbre nettoyé au tip ne
+  rend pas publics ses ancêtres. Une preuve de publication d’un commit sur
+  une branche GitHub publique peut être réutilisée ; les seuls 815 fichiers
+  de staging CI ne prouvent pas la publicité d’une histoire Git complète.
+  En l’absence de preuve, ce dépôt reste en attente sans affecter les autres.
+- Inventorier explicitement les pointeurs LFS et gitlinks nécessaires. Le push
+  Git seul ne prouve pas la présence des objets LFS. Si nécessaire, prévoir un
+  transfert LFS distinct limité aux OID/tailles autorisés et à la même
+  visibilité ; ne jamais reprendre un hook libre ou télécharger toutes les
+  archives. Les dépendances de sous-modules restent des commits distincts.
+- Relire S et D, puis pousser le SHA S figé vers la seule ref main. Le hook
+  exige exactement S et l’ancien OID D observé. Le protocole receive-pack
+  vérifie cet ancien OID à l’écriture : cette comparaison fournit le lease.
+  Avec D ancêtre de S et un push normal sans option force, l’opération reste
+  une avance seule. Un changement concurrent fait refuser le push.
+- Relire GitHub/main=S et la visibilité attendue. Publier un reçu durable
+  fermé : ID logique, anciens/nouveaux OID, politique, résultat et nombre
+  d’objets/LFS concernés, sans contenu, auteur, message, URL authentifiée ou
+  credential. Un résultat réseau ambigu impose une relecture : S déjà en
+  place est idempotent, tout autre état exige une nouvelle observation.
+
+Les protections GitHub devront autoriser ce seul acteur à réaliser le flux
+prévu sans ouvrir de force push ni de suppression. Leur adaptation est une
+opération distincte à revoir après observation des règles effectives ; elle
+ne doit ni affaiblir Forgejo ni donner aux changements Cloud une autorité sur
+sa branche principale. Les branches GitHub de proposition restent intactes.
+
+* Accès déjà documentés et choix restant à faire
+
+| Accès | Ce qu’il permet de réutiliser | Ce qu’il ne prouve pas |
+|-------+-------------------------------+-------------------------|
+| HTTPS public des relais ACCES-GITHUB | Lire du code/publications exacts sans secret | Push ni accès aux cinq dépôts privés |
+| Connecteur GitHub déjà authentifié | Observations de permissions/installations ; téléchargement authentifié d’un artefact privé existant selon BUNDLES-PRIVES.org | Credential présent/exportable sur VPS ; création de deploy key ou droit Git sur neuf dépôts |
+| Session de publication Spectre déjà employée par root | Un éventuel premier transfert borné depuis le poste, après contrôle de ses droits exacts | Droit réutilisable par un service VPS sans supervision |
+| Ancienne identité SSH mentionnée dans BUNDLES-PRIVES.org | Constat historique à conserver | Elle avait échoué à lire les privés ; aucune clé à recopier ou présumer utilisable |
+
+Les capacités de création de clé de déploiement n’ont pas été trouvées dans
+les outils connectés observés par root. Rien ici ne déclare donc un accès
+GitHub d’écriture disponible sur le VPS.
+
+Le choix d’accès futur peut être une identité GitHub App propre au miroir,
+limitée aux dépôts requis avec jetons d’installation courts, ou des clés de
+déploiement d’écriture distinctes par dépôt. Un token finement limité d’un
+compte technique distinct constitue une autre option si les deux premières
+ne sont pas disponibles. Les permissions et contraintes exactes de l’option
+retenue devront être vérifiées dans l’interface/API native avant adoption,
+y compris les fichiers de workflow et l’application des protections.
+Aucun token humain, cookie/profil de navigateur, identité Cloud, clé de
+validation ou accès administrateur SSH ne doit être copié pour cela.
+
+La création/adoption de cette identité et de ses droits doit être un geste
+concret distinct. Après ce raccord seulement : remettre le secret dans un
+fichier privé via un canal protégé, fournir LoadCredential au seul service,
+qualifier son refus d’autres dépôts et de toute fusion/statut/signature,
+puis installer une unité inactive. L’ouverture bornée et le premier reçu
+réel précèdent toute décision de planification périodique. Ce plan n’active
+rien et ne conditionne pas le socle déjà déployé au retour de ViSe.
+
+Sources locales : [[file:../release/README.org][contrat de livraison]],
+[[file:../release/forgejo_plan.py][planificateur historique inerte à trois dépôts]],
+[[file:../deployment/CHOIX-AUTORITE-CI-20261102.org][séparation des autorités]],
+[[file:../deployment/forgejo-governance/BUNDLES-PRIVES.org][canaux privés et limites historiques]],
+[[file:../bootstrap-provenance/ACCES-GITHUB.txt][lecture publique GitHub]],
+[[file:../../environment/README.org][limites des accès Cloud]]. Le planificateur à trois dépôts ne constitue
+pas un automate de miroir et ne couvre pas implicitement les neuf dépôts.

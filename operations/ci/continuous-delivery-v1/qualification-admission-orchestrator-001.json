@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "scope": "installed-intake-admission-ci-orchestrator",
+  "tests": {
+    "bridge": 9,
+    "orchestrator": 11,
+    "concrete_adapter": 8,
+    "passed": true
+  },
+  "concrete_constructor": {
+    "code": "CONCRETE_CONSTRUCTOR_EXECUTION_PASSED",
+    "bundle": "/nix/store/5rxxkx47dqysx35az86nh1kfzzp7bpsj-mrjam-captured-admission",
+    "installed_nix_executable": true,
+    "restricted_environment": true,
+    "candidate_executed": false,
+    "registry_published": false
+  },
+  "live_isolated": {
+    "code": "LIVE_CONTROLLER_BRIDGE_QUALIFIED",
+    "root_observations": [
+      [
+        "ORCHESTRATOR_IDLE"
+      ],
+      [
+        "ORCHESTRATOR_IDLE"
+      ]
+    ],
+    "ready": 0,
+    "isolated_state": true,
+    "new_admission": false,
+    "new_dispatch": false,
+    "deployment_performed": false
+  },
+  "evaluation": {
+    "added": [
+      "mrjam-admission-controller.service",
+      "mrjam-admission-controller.timer"
+    ],
+    "changed": [
+      "mrjam-intake-prepare.service",
+      "systemd-tmpfiles-resetup.service"
+    ],
+    "checks": {
+      "assertionsPass": true,
+      "authorityUnchanged": true,
+      "baselineExact": true,
+      "boundedPreparation": true,
+      "discoveryUnchanged": true,
+      "greenRemainsActive": true,
+      "onlyControllerAdded": true,
+      "onlyDecisionDirectoryAdded": true,
+      "onlyPreparationAndTmpfilesChanged": true,
+      "routesUnchanged": true,
+      "signingKeyInaccessible": true,
+      "tmpfilesCommandUnchanged": true
+    },
+    "system": "/nix/store/a4hd5y55m2z7xh5na712bp4v22lyr1qr-nixos-system-srv1982677-26.05pre-git"
+  },
+  "activation": {
+    "code": "ADMISSION_CONTROLLER_ACTIVE",
+    "current": "/nix/store/a4hd5y55m2z7xh5na712bp4v22lyr1qr-nixos-system-srv1982677-26.05pre-git",
+    "boot": "/nix/store/a4hd5y55m2z7xh5na712bp4v22lyr1qr-nixos-system-srv1982677-26.05pre-git",
+    "queue_states": [
+      {},
+      {}
+    ],
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "new_admission_performed": false,
+    "automatic_deployment_enabled": false,
+    "controller_codes": [
+      "ORCHESTRATOR_IDLE"
+    ],
+    "automatic_ci_configured": true
+  },
+  "source_sha256": {
+    "intake_bridge.py": "481f46e472a22e567f53e7ad6ee324b670e9564f0163dbd02da16e82cd5f1e8b",
+    "test_intake_bridge.py": "2d7b08eb74b1ed09bd482e29a11fc61eb2cb426778a3236941a9dddc6af79ab9",
+    "admission_orchestrator.py": "ac5827807eedbc57fd5a2d01d8d84ae03dd7a570668015db636431af59c4350a",
+    "test_admission_orchestrator.py": "9eaab8e977eb5ce52bba79344cd30511ace9c72a992f8f56b3e849e67785d6b5",
+    "admission_adapter.py": "6f48a3a9df23331939c4727287c690f0d67b00512f1542fa2460f57061edc578",
+    "test_admission_adapter.py": "b5cdb2eb254a727fb6d7f8cb17942ef1f1c49f20b4a16bb9b9dda039148e80d3",
+    "intake-prepare-entry.py": "c03b76298f9c83957a7cd505055e6b51af0205cb655612fbdcb87610aeee78af",
+    "intake-prepare.nix": "d9049c1acf9b25555d81c717f0b51a6396cbaf7c2895d1f4d79f0702844302ec",
+    "admission-controller-entry.py": "f034db1f1f95872bc387b8035b0805a61fb48ea393998787b1c004de4bfb7685",
+    "admission-controller.nix": "ead1f367efa53518150f37d997eb7f18db1b6b84d0ef8deeb4dc37264dcd5d52",
+    "admission-controller-module.nix": "2a91c58f80be09997e458857d5936350a01d21b385e26b4f020e955c46a521ed",
+    "admission-controller-host.nix": "a521bb305b68ef8ca263fb241a007eebd45c8b9396450e636004137b293cc394",
+    "qualify-admission-controller.py": "a68e0c26c948577c14e1fb4ed4af96786af8dd9d9d92f8196eda6bee83afce8b",
+    "activate-admission-controller.py": "b583f32cd9448c8abee55801657182c5d563fe12ccd2df5f8db25cef19b8147d",
+    "activate-admission-controller.nix": "528c4f3af9ca44eea4219aa5aeae95c7c23dee3a6c60fb9554687ad0465ecd41"
+  },
+  "limits": [
+    "Live bridge/controller observations contained no ready proposal; no new real CI run was submitted during activation.",
+    "CI orchestration reaches captured signed artifacts; protected review/merge feedback and application promotion are not yet connected.",
+    "Validated jobs retain their intake receipt so an adopted-base change can invalidate and reprepare them.",
+    "Expired immutable admissions, transient failed-CI retry, boot-time staging reconciliation and retention of old root jobs still need full qualification.",
+    "ViSe/Signature require separate recipes; ViSe service itself remains active, but periodic coherent/offsite backup remains incomplete."
+  ]
+}

@@ -1,0 +1,91 @@
+#+title: Proposition initiale du workflow de règles
+#+date: 2026-11-03
+#+language: fr
+
+Ce paquet prépare une branche et une PR dans le seul dépôt privé
+=MrJ-am/mrjam-validation=. Il ne modifie ni main, ni ses protections, ni les
+droits humains. Il n'offre aucune opération de statut, de revue, de fusion,
+de dispatch ou d'activation. Le résultat est une proposition à examiner.
+
+* Objet exact
+
+La base réelle est =eb71ffe5944943474c5ee483e66c270b5976ab90=. Le commit proposé
+=b02bdf1b5d63dcf0e0610723788a7ca7e384932c= est son enfant unique et porte l'arbre
+=f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b=. Seul le fichier régulier 100644
+=.forgejo/workflows/independent-validation.yml= est ajouté. Ses octets sont
+ceux du workflow déjà qualifié, SHA-256
+=cd01f21d4df118d1c52d9e76ab600e6bebbd746415c4f57cc744c8d5f6f2b5de=.
+
+[[file:binding-20261103.json][Le binding]] et [[file:evidence-20261103.json][les preuves hors CI]] lient ces identifiants.
+Le bundle incrémental privé fait 874 octets, avec la base exacte comme unique
+prérequis. Il reste hors store et hors publication. Le paquet ne contient
+que le code, le binding public et les références aux outils qualifiés.
+Le dépôt de destination fournit localement les objets de la base.
+
+* Droits et secret technique
+
+L'identité technique déjà attestée reste l'auteur de la proposition ; aucune
+identité humaine n'est imitée. Le bail reprend le verrou, les contrôles de
+configuration, le binaire Forgejo17 et les commandes bornées du bootstrap
+qualifié, dans une variante distincte. Aucun compte ni mot de passe n'est créé.
+
+La CLI native Forgejo17 crée encore des jetons avec =ResourceAllRepos=true=,
+y compris lorsqu'on limite leurs scopes. Avant le premier appel API ou Git,
+une transaction fixe limite le jeton fraîchement créé au seul dépôt des règles :
+ressource unique dans =access_token_resource_repo=, puis =resource_all_repos=false=.
+Les scopes sont uniquement =read:user,write:repository=. L'identité, le nom
+aléatoire du bail, les scopes et le dépôt privé unique sont vérifiés dans la
+transaction. Aucun corps de dépôt, secret ou autre compte n'est lu par ce SQL.
+
+La révocation retire les ressources du seul jeton de ce bail puis le jeton,
+dans une transaction, et vérifie ensuite le refus HTTP401. Un journal privé
+permet la révocation au prochain essai après interruption. Les autres jetons
+et leurs ressources restent intacts. Le jeton n'entre jamais dans argv,
+l'environnement, un fichier, un journal public ou la sortie de l'agent.
+
+Ces choix correspondent aux modèles natifs Forgejo17
+=models/auth/access_token.go= et =access_token_resource.go= du pin
+=/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source=. La route de création
+de PR appartient au scope repository ; aucun scope organization ou issue
+supplémentaire n'est nécessaire.
+
+Forgejo17 retire aussi =AllowAdminOverride= aux jetons limités à un dépôt.
+La lecture API des protections exige ce privilège et refuse donc ce jeton.
+Le helper conserve cette restriction : une requête fixe =READ ONLY= compare
+les 24 colonnes de la protection native à la règle qualifiée, exige l'unique
+dépôt et l'unique règle =main=, et ne retourne qu'un booléen. Les listes vides
+et nulles sont normalisées comme dans la projection API qualifiée. Toute
+règle supplémentaire ou dérive est refusée. Aucun jeton plus large n'est créé
+pour lire ces métadonnées ; aucune protection n'est modifiée.
+
+* Concurrence et reprise
+
+L'entrée n'accepte aucun argument. Elle exige la génération active et le boot
+=phi68cwg38madbq8p805yvrsyry8g8wr=, le checkpoint OPEN et le résultat terminal
+réussi de la bascule005, sous le verrou transactionnel existant. Elle conserve
+ce verrou pendant le bail de proposition.
+
+Les protections de main, sa révision, la visibilité privée et Actions désactivé
+sont relus avant et après chaque étape utile. Le Git client reçoit uniquement
+un bundle scellé et l'URL loopback fixe. Le hook pre-push immuable exige l'unique
+ref et commit attendus, avec ancien OID distant nul ; le receive-pack vérifie
+ce même ancien OID. Aucun force push, suppression ou bypass de hook serveur
+n'est utilisé. La maintenance automatique du dépôt temporaire est désactivée.
+
+Une branche déjà identique et la même PR ouverte sont réutilisées. Une branche
+différente, une PR modifiée, fermée, fusionnée, d'un autre auteur ou liée à
+d'autres révisions sont refusées. Un échec après création de branche ou PR
+les laisse en place ; aucune suppression corrective n'est implicite.
+
+* Revue et adoption ultérieures
+
+La PR annonce explicitement que la CI de cette forge n'est pas encore active.
+Le hash d'une preuve hors CI ne devient ni un statut CI ni une approbation.
+L'examen humain réel et l'adoption initiale des règles relèvent du circuit
+distinct prévu par le mandat. Ce paquet ne fournit pas l'opération de fusion
+et ne change pas la politique pour faire accepter sa propre proposition.
+
+Le banc Forgejo/PostgreSQL utilise uniquement des comptes, historiques et
+objets inventés. Les tests Git de concurrence utilisent aussi des dépôts
+inventés. Ces preuves qualifient les nouveaux raccords ; elles n'affirment
+aucune PR, revue ou mutation déjà effectuée sur la forge réelle.

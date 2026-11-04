@@ -1,0 +1,87 @@
+{
+  "addedUnits": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "changedEtcEntries": [
+    "dbus-1",
+    "modprobe.d/nixos.conf",
+    "mrjam-forgejo-registration/policy.json",
+    "mrjam-forgejo-runner/admission.json",
+    "mrjam-forgejo/policy.json",
+    "mrjam-validation-authority/producer.json",
+    "mrjam-validation-staging/catalog.json",
+    "mrjam-validation-submit/policy.json",
+    "mrjam-validation-worker/policy.json",
+    "mrjam-validation-worker/store-paths",
+    "systemd/system",
+    "systemd/user",
+    "terminfo",
+    "tmpfiles.d"
+  ],
+  "changedExistingUnits": {
+    "dbus-broker.service": {
+      "after_sha256": "2ed55cfd01b657b3537e83df21602f55386e56b99c90f86acef4351f2dcd0807",
+      "before_sha256": "3e717d4c06f152c8dee1b9c65c265d4e0d5719a5a0107cdcad8a08159fd7ff02"
+    },
+    "systemd-tmpfiles-resetup.service": {
+      "after_sha256": "3a417448a04906a102864abe28bf875d8ab75ae8928d296c300e3f08ac0990d2",
+      "before_sha256": "4fbaf797d8b456d9afdd89da3fbe132afa7e85fee38e60a761f599aefa0caab9"
+    }
+  },
+  "firewallUnitSha256": "3407315ab2688e320dfd79e791269ee3fd0a9415bc02828b77edb491e1bc6dbb",
+  "newKernelModuleBlacklist": [
+    "ip_tables"
+  ],
+  "nftablesTable": {
+    "content": "chain bounded_output {\n  type filter hook output priority 10; policy accept;\n  meta skuid 950 ip daddr 127.0.0.1 tcp dport 3004 accept\n  meta skuid 950 reject\n  meta skuid 949 ip daddr 127.0.0.1 tcp dport 3004 accept\n  meta skuid 949 reject\n}\n",
+    "enable": true,
+    "family": "inet",
+    "name": "mrjam-forgejo-coordinator"
+  },
+  "preservedApplicationUnits": {
+    "forgejo.service": "96d890e2f3dbf3d1d3e0dfed50849dfaeb2a3f2f561027d6b5efa4dbd543ee8b",
+    "kanidm.service": "6d303b2f4dd440b3687e63107551991dfe96bbd492f4eba45e49fda5b45048fd",
+    "mrjam-identity-deletion.service": "57e9768c72268b149b18af2dec4ed2c6266e1e3dcb75b06044778f6bf9093c5d",
+    "mrjam-identity.service": "3a7c4df3c55b533371333fdd6a2d7f54024658c46a6ca6cbab078296b829f6a0",
+    "mrjam-rust-blue.service": "52b16f3a45bead0db4d1ebb162429dc89ec4eae3a2fbb23c784e0c2985601f55",
+    "mrjam-rust-green.service": "4840fb095f8e3f11954da8b1ea8435dce99125d0b92e0b0dbade6c4cef10ac66",
+    "mrjam-vision-admission.service": "0b1801682213548e3c5153a42f3b93e99af2deeae9166af0503add6e12c700fb",
+    "mrjam-vision-archive.service": "00225c1a32aa3daac84324f0e8fb757cd5137eccbec00a654ae31c694890b746",
+    "mrjam-vision-closure.service": "32a550f8727efc9e1b90f2a171c6afea7838705cb4bb7f3126b7380094520d46",
+    "mrjam-vision-cycle.service": "7b386821ba62eb77e29454e09e9b9a05ec60d51e1344cfbe593a1388295dba93",
+    "mrjam-vision-replay.service": "4278c5cfb8e368e347345ff44f12787272bc33d7245884775501615ca6b95277",
+    "nginx.service": "9d4cb9a03dd7211931b03b808114cee2bc973b87a0d1f319d069355862141659",
+    "phpfpm-nextcloud.service": "f2387db19fef54ad38782b781a229a0f5096e6e6b7a67057aa01099e81cd6613",
+    "postgresql.service": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c",
+    "redis-nextcloud.service": "5edccc536abe91f1de013bcd09bdabb6f2a113a5aad107d5271a0e65083e5f97",
+    "vision-embeddings.service": "a213b1134fd2be028c96067931eacd3b45e168e145d5787fffdfe2ec86aff586"
+  },
+  "removedUnits": [],
+  "scope": "Evaluation-only fixture on phi68; no production candidate or policy",
+  "tmpfilesAdded": [
+    "d /run/mrjam-validation-authority 0755 root root -",
+    "d /var/lib/mrjam-validation-collector/authority-v1 0700 mrjam-validation-collector mrjam-validation-collector -",
+    "d /var/lib/mrjam-validation-collector/authority-v1/artifacts 0700 mrjam-validation-collector mrjam-validation-collector -",
+    "d /run/mrjam-validation-collector 0750 root mrjam-validation-requesters -",
+    "d /var/lib/mrjam-validation-collector/artifacts 0700 mrjam-validation-collector mrjam-validation-collector -",
+    "d /var/lib/mrjam-validation-input 0555 root root -",
+    "d /run/mrjam-validation-worker 0750 root mrjam-validation-worker -",
+    "f /run/mrjam-validation-worker/operation.lock 0440 root mrjam-validation-worker -",
+    "d /run/mrjam-validation 0750 root mrjam-validation-submitters -",
+    "d /var/lib/mrjam-forgejo-runner/work 0700 mrjam-forgejo-runner mrjam-forgejo-runner -"
+  ],
+  "tmpfilesRemoved": []
+}

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "added": [
+    "mrjam-acceptance-merge.service",
+    "mrjam-acceptance-merge.timer",
+    "mrjam-acceptance-mirror.service",
+    "mrjam-acceptance-mirror.timer",
+    "mrjam-acceptance-review.service",
+    "mrjam-acceptance-review.timer",
+    "mrjam-acceptance-sync.service",
+    "mrjam-acceptance-sync.timer"
+  ],
+  "changed": [],
+  "checks": {
+    "adoptedUnchanged": true,
+    "assertionsPass": true,
+    "baselineExact": true,
+    "captureReadOnly": true,
+    "existingUnitsUnchanged": true,
+    "isolatedCredentials": true,
+    "onlyAcceptanceUnitsAdded": true,
+    "privilegedSocketsMasked": true,
+    "routesUnchanged": true
+  },
+  "system": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+  "current": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+  "boot": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+  "real_return_verified": true,
+  "retained_processes_unchanged": true,
+  "four_services_success": true,
+  "four_timers_active": true,
+  "new_proposal_exercised": false,
+  "generic_delivery_constructor_installed": false,
+  "unit_tests": 14
+}

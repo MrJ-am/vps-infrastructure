@@ -1,0 +1,262 @@
+{
+  "application_rerun": false,
+  "existing_dependencies": [
+    "operations/builds/toolchains.nix",
+    "operations/forgejo/locked-toolchain.nix",
+    "operations/runtime/mateval-readiness-v1/readiness.patch",
+    "operations/ci/authority-v1",
+    "operations/ci/authority-credentials-v2",
+    "operations/ci/integration-v1",
+    "operations/ci/modules.nix"
+  ],
+  "explicitly_excluded": [
+    "All private Git histories and nonselected data",
+    "All private keys, credentials and profiles",
+    "Local runtime outputs and VM disks",
+    "Historical unused compare_local_result.py requiring global passed result",
+    "Future independent review file not yet written"
+  ],
+  "files": [
+    {
+      "bytes": 5264,
+      "path": "operations/ci/current-validator-v1/CHOIX.org",
+      "sha256": "3ca421617b74e5be3de42666dccdd5d559f3faecfd9dc5e1fa3206a23b3dad0c"
+    },
+    {
+      "bytes": 3601,
+      "path": "operations/ci/current-validator-v1/README.org",
+      "sha256": "9d6b2892edfc47b937ce7e83bab193bb5733ebfb40be9518707e9f91df07c95f"
+    },
+    {
+      "bytes": 5525,
+      "path": "operations/ci/current-validator-v1/authority-policy.proposed.json",
+      "sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66"
+    },
+    {
+      "bytes": 270,
+      "path": "operations/ci/current-validator-v1/bindings.nix",
+      "sha256": "8720d23f6540daff77d7708f1567a022148c313cf65696b81bac7266af485ba7"
+    },
+    {
+      "bytes": 4292,
+      "path": "operations/ci/current-validator-v1/evaluation.nix",
+      "sha256": "213889f93fc3f84aaa565e5f8220d3473cc9f08f48d71b945edb1bb3fabca906"
+    },
+    {
+      "bytes": 6106,
+      "path": "operations/ci/current-validator-v1/inspect.py",
+      "sha256": "e9790e161ab11cb6dcd72cbe7aa25278bf7c5f9f348e883501bf241723c31c10"
+    },
+    {
+      "bytes": 8776,
+      "path": "operations/ci/current-validator-v1/local-application-run-20261103-001.json",
+      "sha256": "2c136923099394850fd48e2a0eba9296c577d831bb300101b165d4d7e83b8097"
+    },
+    {
+      "bytes": 848,
+      "path": "operations/ci/current-validator-v1/overlay.json",
+      "sha256": "07e4da437d1d94432812f5d8e49ad011e64dc04816e51f9c2711f79052317755"
+    },
+    {
+      "bytes": 2822,
+      "path": "operations/ci/current-validator-v1/package.nix",
+      "sha256": "f78621cdcddd3c2760572f6f5211600c0acec9e5dad34de42870b424b4254b4f"
+    },
+    {
+      "bytes": 32619,
+      "path": "operations/ci/current-validator-v1/policy.json",
+      "sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001"
+    },
+    {
+      "bytes": 838,
+      "path": "operations/ci/current-validator-v1/policy_v2.py",
+      "sha256": "6c666de2dc62e25b5c5defa733ed66c235466fec764541bec121365844381162"
+    },
+    {
+      "bytes": 4082,
+      "path": "operations/ci/current-validator-v1/prepare_authority_policy.py",
+      "sha256": "86b5cdaf29f87f61c53ac4d8290a33b316e7e0ce41b3b244fa05176a1f3ad6e6"
+    },
+    {
+      "bytes": 1178,
+      "path": "operations/ci/current-validator-v1/proposed-bindings-20261103.json",
+      "sha256": "fb546db394a5bae9d7f45a48e2d614021dae8a52a2f04182149bb47c4f137bbd"
+    },
+    {
+      "bytes": 11423,
+      "path": "operations/ci/current-validator-v1/qualification-20261103-001.json",
+      "sha256": "9ed8276e7ab97b5712b9d86304f7a608513aca1e836f9a6659b8a0ab7f5ab66d"
+    },
+    {
+      "bytes": 2876,
+      "path": "operations/ci/current-validator-v1/readiness.py",
+      "sha256": "06203a9ee788d79e2bfe854a5415a9a70821ae64714482d82a45636e920573f5"
+    },
+    {
+      "bytes": 4442,
+      "path": "operations/ci/current-validator-v1/record_qualification.py",
+      "sha256": "36b86fad26fb2aa14184f0dd80abb20615b11c3742d66b8a53a73b0efd2674af"
+    },
+    {
+      "bytes": 3170,
+      "path": "operations/ci/current-validator-v1/review-20261103-001.json",
+      "sha256": "13ffed766f5afc981fab9d3ddcd0dcb276e14afe734073d607238cdc13a32fb8"
+    },
+    {
+      "bytes": 1768,
+      "path": "operations/ci/current-validator-v1/review-local-launch-20261103-001.json",
+      "sha256": "c12c255e505dc320615e611cd931218d47d292783e451bdcf319b97986621da6"
+    },
+    {
+      "bytes": 6793,
+      "path": "operations/ci/current-validator-v1/run_local_validation.py",
+      "sha256": "0344d09f1b3342e3bea6010a66782ea9903af025997b2d42c888baffd640d614"
+    },
+    {
+      "bytes": 9426,
+      "path": "operations/ci/current-validator-v1/source-choice-20261103.json",
+      "sha256": "219c739ebfbd42430a4909a97ce317fbe8d9dcfe58049bb6773af87702077846"
+    },
+    {
+      "bytes": 1076,
+      "path": "operations/ci/current-validator-v1/staging.nix",
+      "sha256": "13c4ccde7da874f36f81a734c3b65a8725045cd911caa41f885bdb9253c275a7"
+    },
+    {
+      "bytes": 8124,
+      "path": "operations/ci/current-validator-v1/test_current_validator.py",
+      "sha256": "7ff8d6903bcc93c7e19de2add8df8e0d9effe9a58888a98a56d9b89bb1e75cba"
+    },
+    {
+      "bytes": 3578,
+      "path": "operations/ci/authority-report-details-v3/CHOIX.org",
+      "sha256": "7da39ec9cd082b1a817700794c16c869887d0bdd4f12414fadcc443eaa543127"
+    },
+    {
+      "bytes": 3136,
+      "path": "operations/ci/authority-report-details-v3/README.org",
+      "sha256": "0f2ec2ef9c01cf4ea50ad71d5cf64475dbf28cbb607ec3e5e2c4565ddc93f0d5"
+    },
+    {
+      "bytes": 488,
+      "path": "operations/ci/authority-report-details-v3/build.nix",
+      "sha256": "b1c2d0dfbfd00d1a807d1ebbf71a6a5acd0ebebed6208db7901e1f49415e5065"
+    },
+    {
+      "bytes": 5557,
+      "path": "operations/ci/authority-report-details-v3/compare_artifacts.py",
+      "sha256": "0c68a69498cb6e16d12b49260f538d8273b3045de8d187ca00054dc249eefd32"
+    },
+    {
+      "bytes": 4094,
+      "path": "operations/ci/authority-report-details-v3/descriptor.json",
+      "sha256": "09195b07f5a3ab41ad1a4dda969fcd7b813a7c2d14cd7b10689e4b8482efdb76"
+    },
+    {
+      "bytes": 4252,
+      "path": "operations/ci/authority-report-details-v3/evaluation.nix",
+      "sha256": "1015af55df169c342d7e8234e60c7e0fd2c2929bebcc17aa5bf0664b8127715d"
+    },
+    {
+      "bytes": 349,
+      "path": "operations/ci/authority-report-details-v3/module.nix",
+      "sha256": "526bb73b52fb5fb92993dbd22fa96539e0cef7d7aeead78ca096f917468db93c"
+    },
+    {
+      "bytes": 3258,
+      "path": "operations/ci/authority-report-details-v3/package.nix",
+      "sha256": "995215573bd54dee1690d221c2b17826f0dbd5f47614fd5a46864e82ef514345"
+    },
+    {
+      "bytes": 16720,
+      "path": "operations/ci/authority-report-details-v3/qualification-20261103-001.json",
+      "sha256": "ace4a2845c392f65a395ecb7ba709adced31694618915ed7b4cdda6385b077c6"
+    },
+    {
+      "bytes": 7027,
+      "path": "operations/ci/authority-report-details-v3/record_qualification.py",
+      "sha256": "e2a3ad1514035d29c642ea5a4f860c4dec3c87d054223fc9071624d5ebba6ce1"
+    },
+    {
+      "bytes": 1637,
+      "path": "operations/ci/authority-report-details-v3/report_details.py",
+      "sha256": "5b9c536ccd2f757c1f045fef22ffea62ce9d74877c773dc3545ab83264711c09"
+    },
+    {
+      "bytes": 9121,
+      "path": "operations/ci/authority-report-details-v3/test_report_details.py",
+      "sha256": "e696c3d0c0c0d38fd0f66c04afbad8f26426db8d40d826ba0c7b77d605baa17e"
+    }
+  ],
+  "production_activation": false,
+  "purpose": "Public validator provenance and exact detailed-report consumer; not activation or deployment authorization",
+  "recovery_recipe_dependencies_to_publish_if_absent": [
+    {
+      "bytes": 9680,
+      "path": "operations/forgejo/qualification-artifact-recovery-20261102.json",
+      "sha256": "081008ab5c15d26ce4c40eb13a04f5a3e1fc357a5de71f303f1262da2a1e7844"
+    },
+    {
+      "bytes": 1786,
+      "path": "operations/forgejo/review-artifact-recovery-20261102.json",
+      "sha256": "6ab60e63f77189b0c73a78ca9b81998fa12e8d6fdbd040cfcaeaf1f0d1de81e1"
+    },
+    {
+      "bytes": 3989,
+      "path": "operations/forgejo/recovery/README.org",
+      "sha256": "5a7e48d8b404be486092e0f3b5bb4c180e9761ace371b2a2b3e269f747165b56"
+    },
+    {
+      "bytes": 2148,
+      "path": "operations/forgejo/recovery/finish_inputs.py",
+      "sha256": "47bfb095f7e0b5bb1ca71619519ede2bfa35aa7361f6591853c356963de0ed12"
+    },
+    {
+      "bytes": 2244,
+      "path": "operations/forgejo/recovery/inspect-selected-inputs.py",
+      "sha256": "309597054bb2621d9b7809a9ae0835768cc38919ce164a281901336d5d38326f"
+    },
+    {
+      "bytes": 1384,
+      "path": "operations/forgejo/recovery/packages.nix",
+      "sha256": "288127963c4657ed91a942ffd6a9486725d604edb740665eed9ffea40a313e97"
+    },
+    {
+      "bytes": 6293,
+      "path": "operations/forgejo/recovery/qualify_validator_recovery.py",
+      "sha256": "c391c3416cb3b297f53ff053a009a7bcd4085029008e69b16844b0627ef519f9"
+    },
+    {
+      "bytes": 5200,
+      "path": "operations/forgejo/recovery/record_inventory.py",
+      "sha256": "4552e9395f48e839d9d806474f9289d4b2594d92590bbcc4cc1be611b809cdd4"
+    },
+    {
+      "bytes": 3262,
+      "path": "operations/forgejo/recovery/recover-proposal.py",
+      "sha256": "dbff93ffc7fa2d6b5acf09692e61741de0736972c6ae207425fbfdeac8e6c951"
+    },
+    {
+      "bytes": 2603,
+      "path": "operations/forgejo/recovery/recover-synthetic-binding.py",
+      "sha256": "1c3b10a4c4fb34a209a51763eef48050f1379bec9eaeb6e3d9cf27cf834f3c5b"
+    },
+    {
+      "bytes": 1877,
+      "path": "operations/forgejo/recovery/recover-validator-code.py",
+      "sha256": "49741f417e03369c1c8cd1b6c6acd4b0f7adb273a6efe4e8a1f042ece917562b"
+    },
+    {
+      "bytes": 5719,
+      "path": "operations/forgejo/recovery/recover-validator-inputs.py",
+      "sha256": "9f91a6fcf7fd42df4f1116df763519fe678d8a3d2148537029077f25cef15682"
+    },
+    {
+      "bytes": 1331,
+      "path": "operations/forgejo/recovery/recover-validator-resources.py",
+      "sha256": "87e3a92133e897d339793fddfc7e93176bcfe9a1fa0144bc78c15e350723153a"
+    }
+  ],
+  "schema_version": 1,
+  "status": "exact-local-files-pending-independent-v3-review"
+}

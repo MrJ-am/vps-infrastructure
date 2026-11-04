@@ -1,0 +1,32 @@
+{
+  "checks": [
+    "durable-returned-required-before-opening",
+    "real-nonstem-timer-target-and-acme-dependencies",
+    "scheduled-jobs-run-after-network-opening",
+    "no-direct-acme-or-vise-replay-and-foreign-mask-preserved"
+  ],
+  "date": "2026-11-02",
+  "derivation": "/nix/store/4m985g2q3sqmrq7p0i8qgc961dkwcl1z-vm-test-run-mrjam-previous-return-nonstem-timers.drv",
+  "groups_passed": 4,
+  "limits": [
+    "Only reopen_previous_services is exercised; generation selection is an explicit assertion fixture.",
+    "Real systemd timers, early masks, dependencies and nft gate; invented jobs record phase and gate state.",
+    "No production access, real ACME issuance, mail, backup contents or application data."
+  ],
+  "output": "/nix/store/y4cx64ifdkw8rw24mpw0ci21lb56ygmz-vm-test-run-mrjam-previous-return-nonstem-timers",
+  "passed": true,
+  "production_access": false,
+  "result": {
+    "path": "operations/deployment/result-previous-return-systemd-002.json",
+    "sha256": "37334ae5cad8015ee3c927a387bc536681575739f8a16a376f994f5c74a8487d"
+  },
+  "schema_version": 1,
+  "sources": {
+    "operations/deployment/boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "operations/deployment/cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "operations/deployment/previous-return-systemd.nix": "59c773daae328c0bad32ca9aa6f056c5d49d0a31d5f1b09d737c2e45f76545bc",
+    "operations/deployment/release_backend.py": "27d96b325a62c2854d9df62f9b859069ec125b0e15acff474314cc58cf67cb90",
+    "operations/deployment/system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6"
+  },
+  "vm_stopped": true
+}

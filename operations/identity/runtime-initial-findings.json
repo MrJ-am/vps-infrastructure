@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "scope": "independent-synthetic-runtime-initial-failures-retained",
+  "production_access": false,
+  "candidate_sha256": "ac3d6330f3929bfd43e373d7e9eb65d8724b9ab7310cbe8613552cb02c7b7068",
+  "findings": [
+    {
+      "kind": "fixture-evaluation-error",
+      "cause": "PostgreSQL listen_addresses conflicted with the upstream localhost definition",
+      "resolution": "Fixture explicitly overrides the setting to 127.0.0.1; production module unchanged"
+    },
+    {
+      "kind": "fixture-lint-error",
+      "derivation": "/nix/store/axlbvq4s0m3qb7kwm8dsn0vb6ckncbxc-nixos-test-driver-mrjam-identity-native-systemd-synthetic.drv",
+      "cause": "Unused hashlib import in NixOS test driver",
+      "resolution": "Removed unused import without changing checks"
+    },
+    {
+      "kind": "fixture-credential-representation-assumption",
+      "derivation": "/nix/store/xz592r7q5cvsc2lvrj5qnjdwdzi6zrh6-vm-test-run-mrjam-identity-native-systemd-synthetic.drv",
+      "cause": "The assertion required the unit UID and mode0400 for the systemd credential copy",
+      "observed": {
+        "process_uid": 984,
+        "file_uid": 0,
+        "file_gid": 0,
+        "file_mode_octal": "0440",
+        "directory_uid": 0,
+        "directory_gid": 0,
+        "directory_mode_octal": "0550",
+        "mount_readonly": true,
+        "credentials_directory_environment_matches": true
+      },
+      "resolution": "Verify actual readability by the unit, refusal of writes and refusal of access to the original secret; no permissions changed"
+    },
+    {
+      "kind": "candidate-real-systemd-incompatibility",
+      "cause": "The candidate secret-file validator rejects the legitimate root-owned0440 systemd credential copy",
+      "observed": "Credential access precheck succeeds, then broker exits1 and readiness remains unavailable",
+      "resolution": "Reported to the independent implementation agent; corrected release requires rerun"
+    }
+  ]
+}

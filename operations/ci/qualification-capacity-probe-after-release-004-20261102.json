@@ -1,0 +1,120 @@
+{
+  "backend_sha256": "cd1d81ce8dab252c423c5850d7362c941d2d4816858a549263cd03559f674b6c",
+  "capacity_or_ci_activation_authorized": false,
+  "checks": [
+    "nonmatching generation, unfinished controller, refused result or phase prevent resource observations",
+    "only UID/GID949..959 booleans and fixed CI account numeric identities exported",
+    "four fixed kernel memory counters with strict units and duplicate checks",
+    "two fixed filesystem capacity observations with shared filesystem indicator",
+    "sixteen fixed service properties; no PID, argv, human identity or cgroup path exported",
+    "fixed cgroup counters and limits only; arbitrary PID1 paths never followed",
+    "symlink cgroup and malformed numeric fields refused",
+    "real local file fixtures preserve contents and inodes",
+    "unknown kernel counters omitted; missing cgroup counters reported unavailable instead of zero",
+    "CLI arguments refused before commands or reads",
+    "each fixed cgroup path compared against actual immutable fi48 unit Slice setting, including hierarchical mrjam-rust and system-phpfpm slices"
+  ],
+  "controller": "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+  "limitations": [
+    "resource counters are successive observations, not an atomic snapshot or capacity guarantee",
+    "terminal unit properties are captured once; profiles, private result and phase are checked again after observations",
+    "missing cgroups are explicitly unavailable and may represent exited or not-yet-started services",
+    "no activation, permission grant, configuration change, process enumeration or application/secret/log read",
+    "independent review required before root publication and successful004-only execution",
+    "Matheval and courriel share the Rust runtime slots; no nonexistent standalone unit is treated as a workload"
+  ],
+  "operations": [
+    "one fixed systemctl show query",
+    "read-only fixed private deployment result and phase",
+    "NSS lookup of numeric reserve and fixed technical names",
+    "kernel metadata and filesystem statvfs only"
+  ],
+  "prerequisites": [
+    "current and boot profile equal promoted generation",
+    "private result04 exact CUTOVER_VERIFIED/open schema",
+    "durable checkpoint open",
+    "controller04 loaded active/exited PID0 exit0"
+  ],
+  "promoted": "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+  "qualified_unit_slice_evidence": {
+    "forgejo.service": {
+      "slice": [],
+      "unit_sha256": "96d890e2f3dbf3d1d3e0dfed50849dfaeb2a3f2f561027d6b5efa4dbd543ee8b"
+    },
+    "kanidm.service": {
+      "slice": [],
+      "unit_sha256": "6d303b2f4dd440b3687e63107551991dfe96bbd492f4eba45e49fda5b45048fd"
+    },
+    "mrjam-identity-deletion.service": {
+      "slice": [],
+      "unit_sha256": "57e9768c72268b149b18af2dec4ed2c6266e1e3dcb75b06044778f6bf9093c5d"
+    },
+    "mrjam-identity.service": {
+      "slice": [],
+      "unit_sha256": "3a7c4df3c55b533371333fdd6a2d7f54024658c46a6ca6cbab078296b829f6a0"
+    },
+    "mrjam-rust-blue.service": {
+      "slice": [
+        "Slice=mrjam-rust.slice"
+      ],
+      "unit_sha256": "167ba31e0aa7a56bd771787a963e6dad13baefecbcedcfaeb87368fac8855543"
+    },
+    "mrjam-rust-green.service": {
+      "slice": [
+        "Slice=mrjam-rust.slice"
+      ],
+      "unit_sha256": "0c690be62c6839ae4dc1bf7eee05be194399d3473ea766def8bce94c69426af9"
+    },
+    "mrjam-vision-admission.service": {
+      "slice": [],
+      "unit_sha256": "0b1801682213548e3c5153a42f3b93e99af2deeae9166af0503add6e12c700fb"
+    },
+    "mrjam-vision-archive.service": {
+      "slice": [],
+      "unit_sha256": "00225c1a32aa3daac84324f0e8fb757cd5137eccbec00a654ae31c694890b746"
+    },
+    "mrjam-vision-closure.service": {
+      "slice": [],
+      "unit_sha256": "32a550f8727efc9e1b90f2a171c6afea7838705cb4bb7f3126b7380094520d46"
+    },
+    "mrjam-vision-cycle.service": {
+      "slice": [],
+      "unit_sha256": "7b386821ba62eb77e29454e09e9b9a05ec60d51e1344cfbe593a1388295dba93"
+    },
+    "mrjam-vision-replay.service": {
+      "slice": [],
+      "unit_sha256": "4278c5cfb8e368e347345ff44f12787272bc33d7245884775501615ca6b95277"
+    },
+    "nginx.service": {
+      "slice": [],
+      "unit_sha256": "9d4cb9a03dd7211931b03b808114cee2bc973b87a0d1f319d069355862141659"
+    },
+    "phpfpm-nextcloud.service": {
+      "slice": [
+        "Slice=system-phpfpm.slice"
+      ],
+      "unit_sha256": "f2387db19fef54ad38782b781a229a0f5096e6e6b7a67057aa01099e81cd6613"
+    },
+    "postgresql.service": {
+      "slice": [],
+      "unit_sha256": "27a97852dffa47cf5deb1d9c19774c96c58fd4a7499210d5e43608505be0b91c"
+    },
+    "redis-nextcloud.service": {
+      "slice": [],
+      "unit_sha256": "5edccc536abe91f1de013bcd09bdabb6f2a113a5aad107d5271a0e65083e5f97"
+    },
+    "vision-embeddings.service": {
+      "slice": [],
+      "unit_sha256": "a213b1134fd2be028c96067931eacd3b45e168e145d5787fffdfe2ec86aff586"
+    }
+  },
+  "release_sha256": "a389a1ce7e2bea03b7e6639246e0e4bb38ac16b432c50f5d844391848494a1c2",
+  "schema_version": 1,
+  "scope": "local synthetic qualification only; production observation not executed",
+  "source_sha256": "74c34d386924d2c69b37afc4363ce457110e3a3bc15d564d42f8965fcdb7446c",
+  "status": "PASS",
+  "technical_accounts_include_fixed_authority": true,
+  "test_log_sha256": "f24a7f52aae2f84c9c8bb8176876ab35358bf62ce6679bc61a39f4fcb41e7d6b",
+  "tests_passed": 12,
+  "tests_sha256": "5c2f64b1ac278784a0891a30d75df5c9937b8748141c5e804c28a46f6f9804cf"
+}

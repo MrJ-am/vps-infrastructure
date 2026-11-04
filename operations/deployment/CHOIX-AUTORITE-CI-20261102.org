@@ -1,0 +1,146 @@
+#+title: Choix technique proposé pour l’autorité CI et la livraison
+#+date: 2026-11-02
+#+language: fr
+
+Ce choix complète le point 4 de [[file:PLAN-CHAINE-CI-20261102.org][PLAN-CHAINE-CI]]. C’est une conception locale
+à revoir avant implémentation. Aucun service, compte, clé, ACL ou statut distant
+n’a été créé. Les reçus historiques et les modules de première bascule restent
+inchangés. Le socle et la disponibilité des quatre paquets CI ne prouvent pas
+cette autorité.
+
+* Choix proposé
+
+Conserver la chaîne compilateur → worker → collecteur qualifiée. Ajouter une
+attestation de validation Ed25519 distincte, puis une décision de revue/fusion
+émise par une autre identité, et enfin un exécuteur de livraison root séparé.
+Aucun secret de ces trois acteurs n’entre dans le runner ou dans le candidat.
+Les clés publiques et la politique sont adoptées hors des candidatures et liées
+à une révision fixe ; recevoir une nouvelle clé avec un reçu ne lui donne
+aucune autorité. La clé privée de validation arrive seulement par
+=LoadCredential= dans l’unité de signature à UID dédié.
+
+Le statut Forgejo =mrjam/independent-validation= demeure une indication pour la
+revue. La signature du dossier exact est la preuve consommée par la fusion et
+la livraison. Changer =authenticated_validation_authority=false= dans
+=submit.py= ou =production_authorized=false= dans =release_plan.py= n’est pas
+nécessaire et ne fournirait aucune authentification.
+
+* Contrats minimaux à ajouter
+
+| Élément | Entrée fermée et résultat | Accès nécessaire |
+|---------+---------------------------+------------------|
+| Export du collecteur, version distincte | Un digest déjà collecté ; reçu et trois memfd scellés, tailles/hashes recalculés | Socket Unix réservé à l’UID de signature, aucun réseau ni secret |
+| Autorité de validation | Ce même digest ; attestation signée des sources/règles/outils, étapes et trois artefacts | Lecture du catalogue protégé et export du collecteur ; clé Ed25519 seule |
+| Revue/fusion | ID de dépôt et PR de la liste gérée ; vérification de l’attestation et des revues réelles, puis fusion bornée | Identité Forgejo propre, API fixe, clé de décision de revue distincte |
+| Admission d’une livraison | Dossier signé, approbation liée au manifeste, génération précédente réellement observée | Vérification avec clés publiques, verrou/nonce persistant ; aucun secret CI |
+| Exécuteur | Une livraison admise et figée ; opérations enumérées, état durable et résultat fermé | Root pour les seules opérations système revues ; aucun argument shell candidat |
+
+L’export est nécessaire : le cache actuel du collecteur est =0700=, ses fichiers
+=0400= et =cached()= vérifie ces modes et son UID. Donner simplement son groupe
+au signataire ne permet pas la lecture ; élargir les modes casserait ce contrat.
+Une nouvelle sortie Unix, dans une nouvelle version du collecteur, permet de
+conserver le protocole existant. Elle copie seulement les trois fichiers de
+code dans des memfd scellés après les contrôles existants ; le signataire
+vérifie de nouveau les sceaux, tailles, hashes, EOF et identité du pair. Elle
+ne signe rien et n’accepte aucun chemin, commande, URL ou politique fournie
+par le demandeur. Le collecteur et son paquet restent dans la base de confiance,
+comme le contrôleur de worker ; la signature ne prouve pas leur innocuité.
+
+L’attestation doit lier au minimum : version de schéma/domaine, ID de clé,
+révision et hash de la politique, révision des règles, empreintes du vérificateur
+et de sa fermeture, digest de proposition, couples commit/arbre des sources,
+liste exacte des contrôles et hashes/tailles des trois artefacts. Les étapes
+réelles viennent du =verification.json= protégé, jamais d’un statut transmis
+par le candidat. Le signataire refuse champs supplémentaires, nombres non
+entiers, résultats incomplets ou politique périmée. Il signe les octets JSON
+canoniques avec un préfixe de domaine fixe ; algorithme et clé ne sont pas
+choisis par l’entrée. La décision de revue utilise un domaine et une clé
+séparés et lie aussi le hash exact du manifeste de livraison.
+
+Les sorties historiques restent des preuves de contenu non authentifiées.
+Elles ne deviennent pas rétroactivement des attestations de cette autorité.
+Les révisions synthétiques de qualification ne sont jamais adoptées comme
+règles de production.
+
+* Raccord Forgejo concret
+
+Le code de Forgejo 17.0.1 reçu localement confirme que les statuts requis sont
+sélectionnés par contexte dans =services/pull/commit_status.go=. Le filtre ne
+lie pas ce contexte à l’identité qui l’a émis. Le réconciliateur actuel laisse
+=enable_merge_whitelist=false= et =enable_approvals_whitelist=false= ; avec ce
+réglage, =models/git/protected_branch.go:IsUserMergeWhitelisted= se replie sur
+le droit d’écriture. Un compte candidat ayant ce droit ne doit donc pas pouvoir
+fusionner sur la seule foi d’un contexte qu’il aurait fabriqué.
+
+Préparer une nouvelle phase de politique qui conserve toutes les protections
+existantes et ajoute : fusion réservée au compte de fusion ; revues comptées
+seulement pour la liste de réviseurs humains adoptée ; refus d’auto-approbation,
+revue obsolète ou rejet non résolu. L’identité de validation, le runner, le
+miroir et l’auteur de la PR sont exclus des réviseurs autorisés. Les noms API
+sont résolus en ID numériques et relus pour détecter un remplacement d’identité.
+Les protections s’appliquent toujours aux administrateurs ; le détenteur root
+ou l’administrateur de la forge reste une autorité capable de changer ces règles,
+ce qui ne constitue pas une frontière contre lui.
+
+Le service de fusion vérifie lui-même l’attestation signée et les revues de la
+PR actuelle, avec commit de tête exact, avant son appel. Le contexte visible
+n’est jamais utilisé comme preuve de signature. Utiliser exclusivement le mode
+=fast-forward-only= et =HeadCommitID= attendu, disponibles dans Forgejo 17.0.1 :
+on ne crée ainsi pas un commit de fusion non testé. Relire ensuite main et son
+arbre ; tout écart bloque la livraison. Un changement de base/tête pendant
+l’opération impose une nouvelle observation et, si la proposition change,
+une nouvelle validation. Le seul effet autorisé est la fusion de cette PR sur
+ce dépôt ; pas de patch arbitraire de dépôt, de branche ou de protection.
+
+Le réconciliateur actuel refuse les whitelists préexistantes comme politique
+plus forte. Le nouveau raccord doit donc aussi empêcher une future invocation
+de l’ancienne phase de les effacer : nouvelle version/politique explicite,
+observation complète, aucune coexistence de deux réconciliateurs autorisés.
+
+* Admission et activation
+
+Le dossier de =release_plan.py= reste un contrôle local utile des octets et de
+la cohérence. Un nouveau lecteur d’attestations vérifie signatures, clés
+adoptées, révocation, ID de cible, politique, observation et approbation liées.
+Il conserve un nonce consommé durablement par livraison et une fenêtre bornée
+(au plus une heure pour l’admission), ainsi qu’un état explicite en cas de
+crash. Un résultat de compilation réutilisable ne réutilise pas une ancienne
+autorisation d’activation. Les artefacts sont recopiés/hachés hors du candidat
+et le NAR est analysé/importé avec références vérifiées avant tout effet.
+Le hash d’un export multiobjets ne remplace pas le narHash d’un objet.
+
+Le backend courant est spécifiquement celui de la première bascule : ancien
+hôte fixe, import des neuf historiques, adopteurs initiaux et état
+=/var/lib/mrjam-cutover/first-deployment=. Il ne faut pas l’exposer tel quel à
+la CI. Réutiliser ses composants vérifiés de contrôle système, générations,
+verrou, sauvegarde, garde réseau, checkpoints et readiness dans un backend
+ordinaire distinct, sans rejouer les adopteurs initiaux. Avant l’ouverture,
+retour permis seulement selon l’état durable et la compatibilité qualifiée ;
+après ouverture des écritures, aucun retour de données automatique.
+Un point d’entrée scellé par manifeste, sans argument libre, est le premier
+raccord minimal ; un déployeur générique n’est pas nécessaire à cette étape.
+
+* Preuves nouvelles indispensables
+
+- Vrais sockets/UID et memfd : un candidat ou runner ne peut lire la clé,
+  exporter un chemin arbitraire, remplacer un artefact ni fournir ses règles.
+- Signatures positives et refus de clé étrangère/révoquée, changement d’un
+  octet, domaine, politique, proposition, artefact, cible, échéance ou nonce.
+- Forgejo 17 réel : faux statut sous le bon contexte, auto-revue, revue sur
+  ancienne tête et fusion directe par un acteur non autorisé refusés ; vraie
+  revue et signature exactes admises ; course sur tête/base refusée ou détectée.
+- Reprise après signature, fusion ou consommation du nonce : aucune double
+  activation ; observation réelle obligatoire après résultat ambigu.
+- Nouveau backend ordinaire : même octets activés, anciennes écritures
+  préservées, absence de restauration après ouverture, reprise fermée et
+  disponibilité vérifiée. La preuve de première bascule ne s’y substitue pas.
+
+Sources inspectées : =operations/forgejo/submit.py=,
+=operations/nixos/mrjam-validation-collector.nix=,
+=operations/forgejo/reconcile.py=, =operations/release/release_plan.py=,
+=operations/deployment/release_backend.py= et =release_entrypoint.py=.
+Source primaire Forgejo 17.0.1 :
+=/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source=,
+=models/git/protected_branch.go=, =services/pull/{commit_status,merge}.go=,
+=routers/api/v1/repo/pull.go=, =models/repo/git.go=.
+Cette lecture confirme les interfaces proposées, pas leur qualification réelle.

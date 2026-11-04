@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "scope": "real-ci-signature-boot-and-code-capture",
+  "attestation": {
+    "artifacts": [
+      {
+        "bytes": 13383152,
+        "name": "server",
+        "sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+      },
+      {
+        "bytes": 23859200,
+        "name": "frontend.tar",
+        "sha256": "f3db1448bf4dfb9e88dace2d3e5b6932f19bde9033947f8e31a85d0e132ae8f6"
+      },
+      {
+        "bytes": 6591,
+        "name": "verification.json",
+        "sha256": "4655be0da7f48dfa9ccacfc1297482c96894d8927ca108dee2e3be38100fac36"
+      }
+    ],
+    "attestation_sha256": "645cbd33f82d0be8dbc2eef6990ba854a3610d96476c83dc922265b7f46a1e01",
+    "code": "CI_ATTESTATION_VERIFIED",
+    "key_id": "f0e41983bbc2c2ff0bc1ccda81156d2e0b26f146d7dd0ec7497d03e2810fb758",
+    "passed_steps": 74,
+    "proposal_digest": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+    "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "schema_version": 1,
+    "signature_verified": true
+  },
+  "boot": {
+    "application_release_performed": false,
+    "attestation_sha256": "645cbd33f82d0be8dbc2eef6990ba854a3610d96476c83dc922265b7f46a1e01",
+    "automatic_deployment_enabled": false,
+    "boot": "/nix/store/frha1lc5vwqx4d5bzs6p2hfabk8r6r49-nixos-system-srv1982677-26.05pre-git",
+    "code": "ACCEPTED_CI_ACTIVE_AND_BOOT",
+    "current": "/nix/store/frha1lc5vwqx4d5bzs6p2hfabk8r6r49-nixos-system-srv1982677-26.05pre-git",
+    "job_id": 2,
+    "retained_processes_unchanged": true
+  },
+  "capture": {
+    "artifacts": [
+      {
+        "bytes": 13383152,
+        "name": "server",
+        "sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+      },
+      {
+        "bytes": 23859200,
+        "name": "frontend.tar",
+        "sha256": "f3db1448bf4dfb9e88dace2d3e5b6932f19bde9033947f8e31a85d0e132ae8f6"
+      },
+      {
+        "bytes": 6591,
+        "name": "verification.json",
+        "sha256": "4655be0da7f48dfa9ccacfc1297482c96894d8927ca108dee2e3be38100fac36"
+      }
+    ],
+    "attestation_sha256": "645cbd33f82d0be8dbc2eef6990ba854a3610d96476c83dc922265b7f46a1e01",
+    "code": "SIGNED_CODE_CAPTURED",
+    "deployment_authorized": false,
+    "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+    "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "schema_version": 1,
+    "signature_verified": true
+  },
+  "vm": {
+    "store": "/nix/store/8f9l7zcl45ga367nghlvif6w6wyr0nd8-vm-test-run-mrjam-ci-admitted-distinct-identities",
+    "cases": 13,
+    "passed": true
+  },
+  "source_sha256": {
+    "delivery_capture.py": "27d446142cb4b2126489279575ec2d28b56ca55f839af7b8ec879d2da0244060",
+    "capture-aligned-delivery.py": "78c8c14641cec3a6b2871651354e63b2b45d18e928f95c88468ee0ce49ce9316",
+    "capture-aligned-delivery.nix": "d860799e72acb8725617148aacc6142e1f9809c98c6a8d381913890c4d6a5c05",
+    "admission-fixture.py": "6c16dc9fc40861c3974fee2d4364bb5050e32c720fbcf90435512db1cae89c75",
+    "admission-integration.nix": "bbe07c8dbc54c9ac40235674ac1b18b226da511885f28b63ff4fd14df864f242"
+  },
+  "application_release_performed": false,
+  "automatic_deployment_enabled": false
+}

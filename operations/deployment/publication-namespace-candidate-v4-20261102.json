@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-02",
+  "delivery_export": {
+    "bytes": 864408,
+    "path": ".local/deployment-20261101/candidate-v4-code-delivery-20261102.nar",
+    "sha256": "287176fc0d146cd3b9b280e37658a00eb2f8e607491add4bd206cf43fc0929cc"
+  },
+  "file_count": 24,
+  "files": {
+    "operations/deployment/POST-BARRIERES-V3-20261102.org": "fe43f95d3813360a56e6bcc6b3ed2ed2db0a292f138c870016c1de66d5ec2fa9",
+    "operations/deployment/candidate-v4-code-delivery-20261102.json": "90d0f5f0e346f0974f88ee2bcd3014dbb12c2a478f7495d6061515c241755005",
+    "operations/deployment/candidate-v4-code-delivery-20261102.py": "738219097a4824dfc5e60582730701e6dff695fa86c988f8981d6fadf4b2afc7",
+    "operations/deployment/candidate-v4-code-delivery.nix": "cb02abc65c4f783e1c19539a1682172362bba43086fc6f8c2098aac50069781f",
+    "operations/deployment/database-adoption.nix": "3150ea7b0cd490c3c4cdc391635be7c177d0437797798b703f12274f45fe7880",
+    "operations/deployment/journal-closure-systemd.nix": "8a7400ccd09177ac61b935c3842434fa7211650db9065b5dd0b2d573c1dd8072",
+    "operations/deployment/journal-public-schema-usage.sql": "97298d525a47585a6fa3dd8bc58ad18963995f36e22a8730dfa98c493037135a",
+    "operations/deployment/journal_closure_fixture.py": "3bbf8dec243faeb1fdeb49ec8041b7ac549d1ff55e033270bc9224eb8f4900d3",
+    "operations/deployment/postflight_barriers_v3.py": "4bce908edb495ae4144769b9d5906d5bff0d4127dbe442b966104369eb7de2c0",
+    "operations/deployment/preflight_closure_catalog.py": "de08ebc3ae085c84598a91a289fe365f42be8da74d4567e0075099f145132dda",
+    "operations/deployment/preflight_lifecycle_catalog.py": "4296fb6ae0274e61fce6eb2df55681c214f6f6d444d886b8fac82eb95e40e492",
+    "operations/deployment/qualification-candidate-v4-code-delivery-20261102.json": "cfde96b3a0a0686567563eb9cc14e773a263ff7ac0dccd9ea1fcb9ae634e9dc9",
+    "operations/deployment/qualification-journal-closure-systemd-20261102-003.json": "a10962d0d193f4d1fad818dcd0664d3b91c447d1686ef45fef3e9c49c0513c29",
+    "operations/deployment/qualification-postflight-barriers-v3-20261102.json": "8d496748408eea098d945cd827ff2b8516b4513a4c5ef19d24e46836c9f16b29",
+    "operations/deployment/qualification-sql-namespace-20261102.json": "2bd986c01f1cbb3cabdca752322e5bcf4ff9fc6f5d5261d8c477a8e1f6ba215d",
+    "operations/deployment/review-vision-admin-public-schema-usage-20261102.json": "824c184f2183314eabdfb8aaf131ee40f1270d069c1073379a411cd67d440d51",
+    "operations/deployment/test_journal_public_schema_usage.py": "f326818cb18e8796299255fb9c054043cd1ef7a98c68070fe7ff329bee4884f0",
+    "operations/deployment/test_postflight_barriers_v3.py": "c406b9ddc7b5903fb5abbc64e0ab7f7245a05d1e1550f431c1a73d72df33c660",
+    "operations/deployment/test_preflight_closure_catalog.py": "1178e937d77958fb3b6257bcd173256995b48575288ab9c167699055a3365c36",
+    "operations/deployment/test_preflight_lifecycle_catalog.py": "ab1afaeadeaee5aef63aea217a6590737ea788e30a5a409f6dc1175c539f5abb",
+    "operations/deployment/test_vision_admin_public_schema_usage.py": "f50b111f807355e68f92ca0e86b2941271301d356468040a7bb9aa5947ab7ff4",
+    "operations/deployment/test_vision_admin_usage_independent.py": "e79b4560d8828113e20fa14386e702e4f7eb688808bd37d7563d844e4c140b6f",
+    "operations/deployment/vision-admin-public-schema-usage.sql": "c355bf1d930042cc99e59ee4235597298fa51ff7426625f5ed6da68d94cdbf9e",
+    "operations/hosts/mrjam-vps/qualification-candidate-build-20261102-006.json": "c8319501f68d79a12c837488f3ae36a6db85f3cbf99ec899d50197ddbd708da5"
+  },
+  "historical_journal_sources_unchanged": true,
+  "historical_worker_packages_unchanged": true,
+  "not_in_source_publication": [
+    "Private local NAR export; production observations; build logs"
+  ],
+  "production_access_by_author": false,
+  "publication_performed_by_author": false,
+  "schema_version": 1,
+  "scope": "Frozen namespace fixes, diagnosis, native qualifications, inactive candidate-v4 delivery and postflight binding",
+  "separate_pending_review": "The receiver/export and postflight independent review are owned by identity_acceptance_resume; their new receipt can be appended to the root publication without changing these bytes."
+}

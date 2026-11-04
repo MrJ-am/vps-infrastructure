@@ -1,0 +1,200 @@
+{
+  "build_performed": false,
+  "compiled_tree_overlay": {
+    "changed_files": [
+      {
+        "base_sha256": "da7ba261fdeb982392e89af8ae62764eddde3d4861c10c86f629c2ac12e9f2e3",
+        "compiled_sha256": "10a058655b2ff65acedd457145394b1542cdd432170584ea6e6c80a18e602cf4",
+        "path": "crates/server/src/database.rs"
+      },
+      {
+        "base_sha256": "996a03dca45250b39bd538c9a6ba9b257f700eea3bdc78d1ac16283c7f8b9fd2",
+        "compiled_sha256": "c44a8a1cb562abc873d3761409e6d40c945569bb1973571c09f87d813254b08d",
+        "path": "crates/server/tests/runtime_postgres.rs"
+      }
+    ],
+    "inspection_fuzz": 0,
+    "inspection_patch_binary": {
+      "path": "/nix/store/d5jz315vxbphknfawsrjs192ci9bc6df-patch-2.8/bin/patch",
+      "sha256": "5788a549a330b360f90694083ca1e2a22cc97817219c501a7a4f1472ba97e818"
+    },
+    "original_git_tree_not_relabelled": true,
+    "patch": {
+      "path": "operations/runtime/mateval-readiness-v1/readiness.patch",
+      "sha256": "90d22b2216eb4496d3f518863d1f1ed8f41e524443b0cdd80c2463ea81fc48b4"
+    },
+    "publication": {
+      "path": ".local/deployment-20261101/final-source-publication-I-receipt-20261102.json",
+      "sha256": "f40b167f556fb1c5fcbc401dc90efa67231434e64905dbf4a717be5746e0d2e4"
+    },
+    "repository": "MrJ-am/vps-infrastructure",
+    "revision": "22ede22314b9dda89f11383a5d4cd9ac3c01cdcd"
+  },
+  "current_artifact_baseline": {
+    "frontend_audition": {
+      "executable_sha256": {},
+      "manifest_sha256": "84566064ce474a93e5fb22e4b965a08a76795e1cafaf57c59ef77dfcae97b57b",
+      "nar_hash": "sha256-nqYQI5NsuDBXOEON7T3NP7g7qDmfDkf89nASBoCWiOo=",
+      "original_store_path": "/nix/store/4q27zxfwwb8mwycxglmnwiqy8203wib6-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+      "store_path": "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition"
+    },
+    "frontend_log": {
+      "executable_sha256": {},
+      "manifest_sha256": "b8da221d13a43415ba4c55b790a48608b473e2ebaf8c81436bada4205360abaf",
+      "nar_hash": "sha256-zB2YJlh1RPG0zLRAqdBk8hKVtUAJt3ZuAQGoIUNo1Mw=",
+      "original_store_path": "/nix/store/0qwbdzhp9bn81yzq0xmnsqmvc4w5z4jb-mrjam-qualified-artifacts-8bf05fb9065a-log",
+      "store_path": "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log"
+    },
+    "frontend_logique": {
+      "executable_sha256": {},
+      "manifest_sha256": "a67d1531adee8287e2cda658856b4374e49586ab8cedc4f7831526319a99fb4a",
+      "nar_hash": "sha256-ygIDE18yv298o3P8JdInG8yGq4d6V34JjXwqMFEMvxQ=",
+      "original_store_path": "/nix/store/6zrdrs6gpzng37iy858kk6j8kl603l09-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+      "store_path": "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique"
+    },
+    "frontend_logo": {
+      "executable_sha256": {},
+      "manifest_sha256": "934424cc5d944e27bafeecea43777e3e84e3006d0705a1b9c6375d5aede40a64",
+      "nar_hash": "sha256-wa+4R3BXS6BLp8d+h9Sw/8yZiHdz6vmesDPNfK1CLfE=",
+      "original_store_path": "/nix/store/n8y0whg3w2kfv8lhly654rmdxkjwmyh0-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+      "store_path": "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo"
+    },
+    "frontend_mateval": {
+      "executable_sha256": {},
+      "manifest_sha256": "0ca95c9a2631b492ab141f155fea43b6c540618f9c5f6a0702fc013714604b02",
+      "nar_hash": "sha256-FNRjIXqN3bltfjGxuGa2Bq2T7RbNAS3CNzReE866vH8=",
+      "original_store_path": "/nix/store/yi2jsgkbp302l6hqp7cxpq0lnv05k7pd-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+      "store_path": "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval"
+    },
+    "frontend_style": {
+      "executable_sha256": {},
+      "manifest_sha256": "82c319fe4eea245dbf1fd54576ce940694c0f591f4b2352b654222aec8e41e22",
+      "nar_hash": "sha256-5VTNi5DrvbDf+hEA9T67O1tJV5HswJXzJUrHCQVnO9A=",
+      "original_store_path": "/nix/store/mbfhdq690mris1dbfbw36j0czaiqf0wq-mrjam-qualified-artifacts-8bf05fb9065a-style",
+      "store_path": "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style"
+    },
+    "frontend_vision": {
+      "executable_sha256": {},
+      "manifest_sha256": "a0dfbd1c1674277adfe4606ba16f5919a731fc3c98d8d8672a8dce85a6d5815a",
+      "nar_hash": "sha256-BE2eR2JQdrIC5uTSep4jmDwiaVybTgL7iNm05u0mwy4=",
+      "original_store_path": "/nix/store/9y499yg6jwbn3l93nkqhgv99z481bbj3-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+      "store_path": "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision"
+    },
+    "server": {
+      "executable_sha256": {
+        "bin/mrjam-server": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e"
+      },
+      "manifest_sha256": "f7cda8e104eff8ba50591e2630fb06f0bdd610bc6e0c901e09d4c24e97a00128",
+      "nar_hash": "sha256-eETe99kc3MW2SpSErTEESkPA6NheCgLhB1qeqeRJFf8=",
+      "origin": "locally-rebuilt-from-qualified-source-with-reviewed-patch",
+      "store_path": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1"
+    }
+  },
+  "date": "2026-11-03",
+  "governance_modified": false,
+  "limitations": [
+    "Public status is the exact previously qualified selection, not a claim that whole private repository histories are public.",
+    "The patch produces a derived compilation tree; its files are not unchanged blobs of the original platform commit.",
+    "No new validator output or result has been produced; p249 and 93bd remain historical synthetic artifacts.",
+    "A future rebuilt ELF/archive has its own hashes until byte equality with the current artifact is actually measured."
+  ],
+  "original_git_sources": [
+    {
+      "id": "logique",
+      "repository": "MrJ-am/apprendre-a-demontrer",
+      "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+      "tree_sha": "2c1f7bf92d01e326eaf4a17fb0d37a98609b548f"
+    },
+    {
+      "id": "style",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "tree_sha": "c0800e787d855dd4e720506a849711b24e55ed15"
+    },
+    {
+      "id": "style-log",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+      "tree_sha": "a6a2dfc33b3f7717c2f47c6ecea0c4384f6a8e76"
+    },
+    {
+      "id": "style-mateval",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+      "tree_sha": "1d7e3d02b207d7ef37fd1b8a1d0935c43766d618"
+    },
+    {
+      "id": "style-logique",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
+      "tree_sha": "4c7142c0ad646ae01747665a8bfb8eb369e35706"
+    },
+    {
+      "id": "vision",
+      "repository": "MrJ-am/vision",
+      "revision": "99eace9df76777c89bbd992952738b3f57608801",
+      "tree_sha": "648afcd54cc477f38c399ba64c28ece2b605b0a0"
+    },
+    {
+      "id": "mateval",
+      "repository": "MrJ-am/matheval",
+      "revision": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+      "tree_sha": "7ab94c27479d061a1f29214913fe5e97a59f4b26"
+    },
+    {
+      "id": "infrastructure",
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "3836559dd79c053d2f6a4c7aaa2b4c1add6575b6",
+      "tree_sha": "d63baf2c0e2b6921e35f2c0b9e329483a7203d8d"
+    },
+    {
+      "id": "platform",
+      "repository": "MrJ-am/mrjam-plateforme",
+      "revision": "4e65423ceaae5e3c4cb8c057fac1a5bd193f5bf8",
+      "tree_sha": "66bb111ad4af6d7ddf659be0bd8da0cda03cc8f9"
+    }
+  ],
+  "outside_existing_three_artifact_protocol": [
+    "admission_adopter",
+    "journal_migration_004",
+    "vision_admission",
+    "vision_archive",
+    "vision_closure",
+    "vision_cycle",
+    "vision_replay"
+  ],
+  "private_histories_read": false,
+  "production_access": false,
+  "public_selection": {
+    "all_names_sizes_hashes_and_bytes_identical": true,
+    "base_manifest": {
+      "path": ".local/ci-artifact-recovery-20261102/proposal-base/manifest.json",
+      "sha256": "8bf05fb9065a4c91e565ec0d37f24f2c556f315109823ccdef95c6354b423d6a"
+    },
+    "files": 815,
+    "historical_public_scope": {
+      "path": "operations/forgejo/STAGING-SOURCES.org",
+      "sha256": "289764b2358777369fa57f7ea7ad02bd9b517a18ea1d54b0926c12decd399723"
+    },
+    "historical_qualification": {
+      "path": "operations/forgejo/qualification-staging-20261031.json",
+      "sha256": "ed0045c78689465608e9850c5e15d77ad7483968936b35050aaf0813f46cb478"
+    },
+    "no_additional_bundle_blob_selected": true,
+    "qualified_public_manifest": {
+      "path": "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging/manifest.json",
+      "sha256": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087"
+    },
+    "recovery_review": {
+      "path": "operations/forgejo/review-artifact-recovery-20261102.json",
+      "sha256": "6ab60e63f77189b0c73a78ca9b81998fa12e8d6fdbd040cfcaeaf1f0d1de81e1"
+    }
+  },
+  "rules": {
+    "accepted_main": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "historical_fixture_not_production": "93bd67666a3b4be9657c333931fa25b2359e165b",
+    "proposed_not_adopted": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c"
+  },
+  "schema_version": 1,
+  "scope": "source-and-recipe-choice-only"
+}

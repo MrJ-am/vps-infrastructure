@@ -1,0 +1,942 @@
+{
+  "frontends": [
+    {
+      "assets": [
+        {
+          "path": "interface-audition/index.html",
+          "source": "infrastructure",
+          "target": "index.html"
+        },
+        {
+          "path": "interface-audition/pont.js",
+          "source": "infrastructure",
+          "target": "pont.js"
+        },
+        {
+          "path": "public/assets/mrjam/animations.js",
+          "source": "style",
+          "target": "assets/mrjam/animations.js"
+        },
+        {
+          "path": "public/assets/mrjam/mathematiques.js",
+          "source": "style",
+          "target": "assets/mrjam/mathematiques.js"
+        },
+        {
+          "path": "public/assets/mrjam/ecriture.css",
+          "source": "style",
+          "target": "assets/mrjam/ecriture.css"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Audio.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Audio.svg"
+        }
+      ],
+      "directory": "interface-audition",
+      "entrypoints": {
+        "src/Main.elm": "elm.js"
+      },
+      "id": "audition",
+      "manifest_overlay": null,
+      "source": "infrastructure",
+      "source_directories": [
+        "src",
+        ".dependances/style-mrjam/src"
+      ],
+      "style_directory": "src",
+      "style_source": "style"
+    },
+    {
+      "assets": [
+        {
+          "path": "interface-log/index.html",
+          "source": "infrastructure",
+          "target": "index.html"
+        },
+        {
+          "path": "interface-log/pont.js",
+          "source": "infrastructure",
+          "target": "pont.js"
+        },
+        {
+          "path": "public/assets/mrjam/animations.js",
+          "source": "style-log",
+          "target": "assets/mrjam/animations.js"
+        }
+      ],
+      "directory": "interface-log",
+      "entrypoints": {
+        "src/Main.elm": "elm.js"
+      },
+      "id": "log",
+      "manifest_overlay": null,
+      "source": "infrastructure",
+      "source_directories": [
+        "src",
+        ".dependances/style-mrjam/src"
+      ],
+      "style_directory": "src",
+      "style_source": "style-log"
+    },
+    {
+      "assets": [
+        {
+          "path": "public/atelier.js",
+          "source": "logique",
+          "target": "atelier.js"
+        },
+        {
+          "path": "public/bridge.js",
+          "source": "logique",
+          "target": "bridge.js"
+        },
+        {
+          "path": "public/favicon.svg",
+          "source": "logique",
+          "target": "favicon.svg"
+        },
+        {
+          "path": "public/index.html",
+          "source": "logique",
+          "target": "index.html"
+        }
+      ],
+      "directory": ".",
+      "entrypoints": {
+        "src/Main.elm": "app.js"
+      },
+      "id": "logique",
+      "manifest_overlay": null,
+      "source": "logique",
+      "source_directories": [
+        "src",
+        ".cache/style-mrjam/src"
+      ],
+      "style_directory": "src",
+      "style_source": "style-logique"
+    },
+    {
+      "assets": [
+        {
+          "path": "frontend/site/admin/admin.js",
+          "source": "mateval",
+          "target": "admin/admin.js"
+        },
+        {
+          "path": "frontend/site/admin/index.html",
+          "source": "mateval",
+          "target": "admin/index.html"
+        },
+        {
+          "path": "frontend/site/collection.js",
+          "source": "mateval",
+          "target": "collection.js"
+        },
+        {
+          "path": "frontend/site/data/bank.json",
+          "source": "mateval",
+          "target": "data/bank.json"
+        },
+        {
+          "path": "frontend/site/enquete.html",
+          "source": "mateval",
+          "target": "enquete.html"
+        },
+        {
+          "path": "frontend/site/enquete.js",
+          "source": "mateval",
+          "target": "enquete.js"
+        },
+        {
+          "path": "frontend/site/favicon.svg",
+          "source": "mateval",
+          "target": "favicon.svg"
+        },
+        {
+          "path": "frontend/site/index.html",
+          "source": "mateval",
+          "target": "index.html"
+        },
+        {
+          "path": "frontend/site/prototype.html",
+          "source": "mateval",
+          "target": "prototype.html"
+        },
+        {
+          "path": "frontend/site/prototype.js",
+          "source": "mateval",
+          "target": "prototype.js"
+        },
+        {
+          "path": "frontend/site/session.js",
+          "source": "mateval",
+          "target": "session.js"
+        },
+        {
+          "path": "frontend/site/test.html",
+          "source": "mateval",
+          "target": "test.html"
+        },
+        {
+          "path": "frontend/site/vendor/drag-drop-touch/drag-drop-touch.esm.min.js",
+          "source": "mateval",
+          "target": "vendor/drag-drop-touch/drag-drop-touch.esm.min.js"
+        },
+        {
+          "path": "frontend/site/vendor/katex/auto-render.min.js",
+          "source": "mateval",
+          "target": "vendor/katex/auto-render.min.js"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_AMS-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_AMS-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_AMS-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_AMS-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_AMS-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_AMS-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Bold.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Bold.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Bold.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Caligraphic-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Bold.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Bold.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Bold.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Bold.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Fraktur-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Bold.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Bold.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Bold.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Bold.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Bold.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Bold.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-BoldItalic.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-BoldItalic.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-BoldItalic.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-BoldItalic.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Italic.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Italic.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Italic.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Italic.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Italic.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Italic.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Main-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Main-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-BoldItalic.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-BoldItalic.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-BoldItalic.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-BoldItalic.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-Italic.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-Italic.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-Italic.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-Italic.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Math-Italic.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Math-Italic.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Bold.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Bold.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Bold.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Bold.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Italic.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Italic.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Italic.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Italic.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_SansSerif-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Script-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Script-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Script-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Script-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Script-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Script-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size1-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size1-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size1-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size1-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size1-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size1-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size2-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size2-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size2-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size2-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size2-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size2-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size3-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size3-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size3-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size3-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size3-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size3-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size4-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size4-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size4-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size4-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Size4-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Size4-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Typewriter-Regular.ttf",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Typewriter-Regular.ttf"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Typewriter-Regular.woff"
+        },
+        {
+          "path": "frontend/site/vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2",
+          "source": "mateval",
+          "target": "vendor/katex/fonts/KaTeX_Typewriter-Regular.woff2"
+        },
+        {
+          "path": "frontend/site/vendor/katex/katex.min.css",
+          "source": "mateval",
+          "target": "vendor/katex/katex.min.css"
+        },
+        {
+          "path": "frontend/site/vendor/katex/katex.min.js",
+          "source": "mateval",
+          "target": "vendor/katex/katex.min.js"
+        }
+      ],
+      "directory": "frontend",
+      "entrypoints": {
+        "src/Administration.elm": "admin/administration.js",
+        "src/DemoCard.elm": "demo-card.js",
+        "src/Main.elm": "main.js",
+        "src/Survey.elm": "survey.js"
+      },
+      "id": "mateval",
+      "manifest_overlay": null,
+      "source": "mateval",
+      "source_directories": [
+        "src",
+        ".style-mrjam/src"
+      ],
+      "style_directory": "src",
+      "style_source": "style-mateval"
+    },
+    {
+      "assets": [
+        {
+          "path": "public/assets/mrjam/Echologo.svg",
+          "source": "style",
+          "target": "assets/mrjam/Echologo.svg"
+        },
+        {
+          "path": "public/assets/mrjam/animations.js",
+          "source": "style",
+          "target": "assets/mrjam/animations.js"
+        },
+        {
+          "path": "public/assets/mrjam/axes.js",
+          "source": "style",
+          "target": "assets/mrjam/axes.js"
+        },
+        {
+          "path": "public/assets/mrjam/dialogues.js",
+          "source": "style",
+          "target": "assets/mrjam/dialogues.js"
+        },
+        {
+          "path": "public/assets/mrjam/ecriture.css",
+          "source": "style",
+          "target": "assets/mrjam/ecriture.css"
+        },
+        {
+          "path": "public/assets/mrjam/espace.js",
+          "source": "style",
+          "target": "assets/mrjam/espace.js"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Audio.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Audio.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Kino.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Kino.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Licorne-factorisee.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Licorne-factorisee.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Logo-factorise.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Logo-factorise.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/README.md",
+          "source": "style",
+          "target": "assets/mrjam/factorises/README.md"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Visio.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Visio.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/X-factorise.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/X-factorise.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Y-factorise.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Y-factorise.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Z-factorise.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Z-factorise.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/Z.svg",
+          "source": "style",
+          "target": "assets/mrjam/factorises/Z.svg"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/decomposition-X.json",
+          "source": "style",
+          "target": "assets/mrjam/factorises/decomposition-X.json"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/decomposition-Y.json",
+          "source": "style",
+          "target": "assets/mrjam/factorises/decomposition-Y.json"
+        },
+        {
+          "path": "public/assets/mrjam/factorises/decomposition-Z.json",
+          "source": "style",
+          "target": "assets/mrjam/factorises/decomposition-Z.json"
+        },
+        {
+          "path": "public/assets/mrjam/fenetres.js",
+          "source": "style",
+          "target": "assets/mrjam/fenetres.js"
+        },
+        {
+          "path": "public/assets/mrjam/mathematiques.js",
+          "source": "style",
+          "target": "assets/mrjam/mathematiques.js"
+        },
+        {
+          "path": "public/assets/mrjam/notes.js",
+          "source": "style",
+          "target": "assets/mrjam/notes.js"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Licorne-factorisee.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Licorne-factorisee.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Audio.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Audio.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Kino.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Kino.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Logo.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Logo.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Visio.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Visio.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-X.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-X.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Y.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Y.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/Palette-Z.svg",
+          "source": "style",
+          "target": "assets/mrjam/palette/Palette-Z.svg"
+        },
+        {
+          "path": "public/assets/mrjam/palette/palette.css",
+          "source": "style",
+          "target": "assets/mrjam/palette/palette.css"
+        },
+        {
+          "path": "public/assets/mrjam/palette/palette.json",
+          "source": "style",
+          "target": "assets/mrjam/palette/palette.json"
+        },
+        {
+          "path": "public/assets/mrjam/signature.css",
+          "source": "style",
+          "target": "assets/mrjam/signature.css"
+        },
+        {
+          "path": "public/assets/mrjam/videos.js",
+          "source": "style",
+          "target": "assets/mrjam/videos.js"
+        },
+        {
+          "path": "public/index.html",
+          "source": "style",
+          "target": "index.html"
+        }
+      ],
+      "directory": ".",
+      "entrypoints": {
+        "exemples/Bibliotheque.elm": "exemples/Bibliotheque.js",
+        "exemples/Blocs.elm": "exemples/Blocs.js",
+        "exemples/Contextes.elm": "exemples/Contextes.js",
+        "exemples/Galerie.elm": "exemples/Galerie.js",
+        "exemples/Geometrie.elm": "exemples/Geometrie.js",
+        "exemples/Lecture.elm": "exemples/Lecture.js",
+        "exemples/Medias.elm": "exemples/Medias.js",
+        "exemples/Scientifique.elm": "exemples/Scientifique.js"
+      },
+      "id": "style",
+      "manifest_overlay": null,
+      "source": "style",
+      "source_directories": [
+        "src",
+        "exemples"
+      ],
+      "style_directory": "src",
+      "style_source": "style"
+    },
+    {
+      "assets": [
+        {
+          "path": "ateliers/logo/references/kit_codex_logo_X/donnees/decomposition-X.json",
+          "source": "style",
+          "target": "exports/decomposition-X.json"
+        },
+        {
+          "path": "ateliers/logo/references/kit_codex_logo_X/verification/geometrie.json",
+          "source": "style",
+          "target": "exports/geometrie.json"
+        },
+        {
+          "path": "ateliers/logo/donnees/decomposition-Y.json",
+          "source": "style",
+          "target": "exports/decomposition-Y.json"
+        },
+        {
+          "path": "ateliers/logo/donnees/geometrie-Y.json",
+          "source": "style",
+          "target": "exports/geometrie-Y.json"
+        },
+        {
+          "path": "ateliers/logo/donnees/decomposition-Z.json",
+          "source": "style",
+          "target": "exports/decomposition-Z.json"
+        },
+        {
+          "path": "ateliers/logo/dessins/Z.svg",
+          "source": "style",
+          "target": "exports/Z.svg"
+        },
+        {
+          "path": "ateliers/logo/references/Z-original.svg",
+          "source": "style",
+          "target": "exports/Z-original.svg"
+        },
+        {
+          "path": "ateliers/logo/references/Z-reference.svg",
+          "source": "style",
+          "target": "exports/Z-reference.svg"
+        },
+        {
+          "path": "ateliers/logo/donnees/geometrie-Z-original.json",
+          "source": "style",
+          "target": "exports/geometrie-Z-original.json"
+        }
+      ],
+      "directory": "ateliers/logo",
+      "entrypoints": {
+        "src/Exporter.elm": "exporter.js",
+        "src/Main.elm": "main.js",
+        "src/Palette.elm": "palette.js",
+        "src/Philosophie.elm": "philosophie.js"
+      },
+      "id": "style-logo",
+      "manifest_overlay": "style-logo",
+      "source": "style",
+      "source_directories": [
+        "src",
+        "../../src"
+      ],
+      "style_directory": "src",
+      "style_source": "style"
+    },
+    {
+      "assets": [
+        {
+          "path": "interface/app.html",
+          "source": "vision",
+          "target": "index.html"
+        },
+        {
+          "path": "interface/app.html",
+          "source": "vision",
+          "target": "app.html"
+        },
+        {
+          "path": "interface/app.html",
+          "source": "vision",
+          "target": "privacy.html"
+        },
+        {
+          "path": "docs/openapi.json",
+          "source": "vision",
+          "target": "openapi.json"
+        },
+        {
+          "path": "docs/mobile-live-test-openapi.json",
+          "source": "vision",
+          "target": "mobile-live-test-openapi.json"
+        },
+        {
+          "path": "interface/visuels/espacement.svg",
+          "source": "vision",
+          "target": "assets/mrjam/vision/espacement.svg"
+        },
+        {
+          "path": "interface/visuels/fiche.webp",
+          "source": "vision",
+          "target": "assets/mrjam/vision/fiche.webp"
+        },
+        {
+          "path": "interface/visuels/items.webp",
+          "source": "vision",
+          "target": "assets/mrjam/vision/items.webp"
+        },
+        {
+          "path": "interface/visuels/memoire.webp",
+          "source": "vision",
+          "target": "assets/mrjam/vision/memoire.webp"
+        },
+        {
+          "path": "interface/visuels/partage.svg",
+          "source": "vision",
+          "target": "assets/mrjam/vision/partage.svg"
+        }
+      ],
+      "directory": "interface",
+      "entrypoints": {
+        "src/Main.elm": "app.js"
+      },
+      "id": "vision",
+      "manifest_overlay": null,
+      "source": "vision",
+      "source_directories": [
+        "src",
+        ".dependances/style-mrjam/src"
+      ],
+      "style_directory": "src",
+      "style_source": "style-mateval"
+    }
+  ],
+  "out_of_scope": [
+    "etp-vise: source inventory and qualification remain outside the migrated VPS scope"
+  ],
+  "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "rust_manifests": {
+    "Cargo.lock": "478b8f44b772f526d4a79407f3a981df1dbd60f565b0811a1ea80fe5a3418fb6",
+    "Cargo.toml": "1f5c2aa1108908a8741aba1e7ed5f7ee0ca485aff9eafacd87ac459b9e55abd4",
+    "components/mateval/Cargo.toml": "9e75fbcb97f92c434a7c9d7aea4f49d0f7126f17e44f888e3de211a8e9425de8",
+    "components/vision/Cargo.toml": "b70e72332efdd9250051b0cfe019c6fe415245c90cf804eeb55c92b189514719",
+    "crates/audition/Cargo.toml": "6725097beb8a3c65b20bc098d14c604850a68959f7c5b222faa00c9d0988da4f",
+    "crates/identity-deletion/Cargo.toml": "a4b5c6adfcde7b4dd70fc40492ff4c32a9f0cc8e69bcb528800c87f948a793f5",
+    "crates/identity/Cargo.toml": "2598a2eed4b977f2151b695194853823bb94d829ce4c10626bba0e76de03f248",
+    "crates/log/Cargo.toml": "ba623e0a5c427ec3e3955c88bf550f0a61159923b197024d3719231925298a77",
+    "crates/server/Cargo.toml": "202bfd5eee6abdd74ec56e420be4841856f8c0507b1462614ad29b326aa30085"
+  },
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "logique",
+      "repository": "MrJ-am/apprendre-a-demontrer",
+      "revision": "303e80be426012740eb16c5039bd4d3ea9155640",
+      "root": "sources/logique",
+      "tree_json": "trees/logique.json",
+      "tree_sha": "2c1f7bf92d01e326eaf4a17fb0d37a98609b548f"
+    },
+    {
+      "id": "style",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+      "root": "sources/style",
+      "tree_json": "trees/style.json",
+      "tree_sha": "c0800e787d855dd4e720506a849711b24e55ed15"
+    },
+    {
+      "id": "style-log",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "a998822b21352c98f6ad90738f3123711c49834b",
+      "root": "sources/style-log",
+      "tree_json": "trees/style-log.json",
+      "tree_sha": "a6a2dfc33b3f7717c2f47c6ecea0c4384f6a8e76"
+    },
+    {
+      "id": "style-mateval",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+      "root": "sources/style-mateval",
+      "tree_json": "trees/style-mateval.json",
+      "tree_sha": "1d7e3d02b207d7ef37fd1b8a1d0935c43766d618"
+    },
+    {
+      "id": "style-logique",
+      "repository": "MrJ-am/style-mrjam",
+      "revision": "fbdb9dbb0c723ecd6a16e492e47af085c6033531",
+      "root": "sources/style-logique",
+      "tree_json": "trees/style-logique.json",
+      "tree_sha": "4c7142c0ad646ae01747665a8bfb8eb369e35706"
+    },
+    {
+      "id": "vision",
+      "repository": "MrJ-am/vision",
+      "revision": "99eace9df76777c89bbd992952738b3f57608801",
+      "root": "sources/vision",
+      "tree_json": "trees/vision.json",
+      "tree_sha": "648afcd54cc477f38c399ba64c28ece2b605b0a0"
+    },
+    {
+      "id": "mateval",
+      "repository": "MrJ-am/matheval",
+      "revision": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+      "root": "sources/mateval",
+      "tree_json": "trees/mateval.json",
+      "tree_sha": "7ab94c27479d061a1f29214913fe5e97a59f4b26"
+    },
+    {
+      "id": "infrastructure",
+      "repository": "MrJ-am/vps-infrastructure",
+      "revision": "3836559dd79c053d2f6a4c7aaa2b4c1add6575b6",
+      "root": "sources/infrastructure",
+      "tree_json": "trees/infrastructure.json",
+      "tree_sha": "d63baf2c0e2b6921e35f2c0b9e329483a7203d8d"
+    },
+    {
+      "id": "platform",
+      "repository": "MrJ-am/mrjam-plateforme",
+      "revision": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+      "root": "sources/platform",
+      "tree_json": "trees/platform.json",
+      "tree_sha": "898e81ba8da198cbb6512a64fa54e950ecd24d4b"
+    }
+  ],
+  "status": "proposed-not-independently-adopted"
+}

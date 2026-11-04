@@ -1,0 +1,47 @@
+{
+  "activation_performed": false,
+  "backend_tests_passed": 35,
+  "combined_deployment_tests_passed": 95,
+  "control_tests_passed": 12,
+  "correction": {
+    "finding": "backend-integration/finding-http-readiness-20261102.json",
+    "finding_sha256": "32e4f42e936fd8c587c7eb03eae69bcbe934e94bcdeacfddf6498f758dba761e",
+    "global_return_deadline_still_enforced": true,
+    "in_flight_observation_maximum_seconds": 64,
+    "interruptions_budget_and_validation_errors_retried": false,
+    "retry_sleep_seconds": 0.25,
+    "retry_start_window_seconds": 30,
+    "scope": "Only previous-generation HTTPS verification retries the exact transport refusal; received statuses still require immediate exact equality."
+  },
+  "entrypoint_tests_passed": 13,
+  "independent_boundary_tests_passed": 5,
+  "limits": [
+    "Service and generation operations injected in unit tests; integrated VM evidence is separate.",
+    "The source entrypoint and synthetic package are qualified separately; a final immutable production release manifest is still required.",
+    "Private bundles received independently; production source/policy binding and final infrastructure bundle are not yet sealed."
+  ],
+  "log_sha256": "63dca9bf96df9abf4360bd0ef10499549a16521ee6c22cd2414631ccb7142912",
+  "production_access": false,
+  "recorded_on": "2026-11-02",
+  "schema_version": 1,
+  "scope": "local-unit-sequence-refusal-and-real-posix-signal-checks",
+  "source_sha256": {
+    "boot-guard-package.nix": "f23b03f70bb1cfbf70bed5b80adeda897a6dc5a5dd3ce5ff1cbc765ba5ff605f",
+    "boot_guard.py": "e89791000ed5e13c21725db97fbe4d52b7ae7da3ef7cd27094369af46fb4acd6",
+    "cutover.py": "a7d8ab152c036eaf7bc381f63b423e755a47db93ba8e14facafc4052ed4b64b3",
+    "generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad",
+    "recovery.py": "f0f53bfcc632445bce8a59add982771f532bcfa8341a028744207ac59b1575c1",
+    "release-package.nix": "352c6f4986e6cb76b948d11f23eaa71254034db1db5eb2b36dcf1378026b4be4",
+    "release_backend.py": "0c6fec7976b74abcd6eb3715e614fb4dda160ce96b95800b8f24a2631e59a4d1",
+    "release_entrypoint.py": "eada4ebfcd741a0960e9642c3130214618ba2099723ab43c3657f8b3c1926dab",
+    "snapshot.py": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+    "stage_adoption.py": "454898831ea53d5979073e99d6b3b04269974a5fc568b51432843b6c17b5d049",
+    "stage_credentials.py": "77c5d1462bcf316e80602be8f84b49bf774a356b0ea172c5a73f759e2eb31ac8",
+    "system_control.py": "5eb1b5014b0dc5fc54e24586cb8cf9665dba58147a12039b22f6f4e10c73e9f6",
+    "test_independent_cutover_boundaries.py": "1b9d097b30748e2d0ed4658a46502b13d1b902ddacfbf82fd1228016018fbbe2",
+    "test_release_backend.py": "590a4b9b7b2fb6cf05de0c548f4956b8c0f7a14ec5c00c9b977c1076106e48de",
+    "test_release_entrypoint.py": "0777db2d33930544bcc7596168a0a9e7b3cffdbc27dd5b9f82536f17df56004c",
+    "test_system_control.py": "c5f896f97444627815228156b2db9e36acbd227acfe7500c487c60e842a26bb1"
+  },
+  "supersedes": "qualification-release-backend-unit-20261102-004.json"
+}

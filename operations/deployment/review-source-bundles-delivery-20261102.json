@@ -1,0 +1,20 @@
+{
+  "all_nine_names_sizes_digests_match_private_transfer_plan": true,
+  "binding_matches_all_bundle_destinations_and_digests": true,
+  "binding_sha256": "a10ab1b5d2da0ad34eaf0de95f34e8eabe377f987eb2c53764dad4616b634615",
+  "bundle_count": 9,
+  "input_stream_independently_verified_segment_by_segment": true,
+  "manifest_sha256": "ae4e66f1430b775a7bc7409171faba48835b0a2a623337d5346c503067d3310d",
+  "no_git_import_or_activation": true,
+  "only_release_constant_changed": true,
+  "passed": true,
+  "private_contents_or_references_output": false,
+  "production_access": false,
+  "qualified_template_ast_identical": true,
+  "receiver_sha256": "a3cff8bcae376585e3c999108ece5289a2391bfa93b0f3d020088abc01f86631",
+  "root_private_modes_bound": true,
+  "schema_version": 1,
+  "stream_bytes": 4050478912,
+  "stream_sha256": "300903ae2bac79141d2cf42b6e8b8ab8c9dca3618fed8eecc1afa2387851bbb3",
+  "template_sha256": "11d0b4a0451cee79c48b6dbf710a246bf412d6808c199697113b1f821c75be37"
+}

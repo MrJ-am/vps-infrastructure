@@ -1,0 +1,470 @@
+{
+  "accepted_source_revision": "af8dd5a36f693dfc234312cbebe77321a8fa9d19",
+  "all_selected_old_timers_resumed": true,
+  "archive_adoption_failure_classification": "closure-table-DDL-differs-only-by-ASCII-whitespace-between-preserved-tokens",
+  "attempt": 1,
+  "automatic_snapshot_restore_occurred_before_public_opening": true,
+  "corrective_reopening_performed_no_additional_data_restore": true,
+  "date": "2026-11-02",
+  "evidence": {
+    "first-release-archive-ddl-001.json": {
+      "observation": {
+        "checks": {
+          "closure_columns_match_same_model": true,
+          "closure_table": {
+            "exact_ddl_match": false,
+            "whitespace_token_match": true,
+            "wordcase_token_match": true
+          },
+          "full_whitespace_token_match": true,
+          "full_wordcase_token_match": true,
+          "indexes": {
+            "exact_ddl_match": true,
+            "whitespace_token_match": true,
+            "wordcase_token_match": true
+          },
+          "mail_columns_match_same_model": true,
+          "mail_table": {
+            "exact_ddl_match": true,
+            "whitespace_token_match": true,
+            "wordcase_token_match": true
+          },
+          "matching_object_set": true
+        },
+        "code": "ARCHIVE_DDL_CLASSIFIED",
+        "mutation_performed": false,
+        "private_values_exported": false,
+        "schema_version": 1
+      },
+      "sha256": "c8a16bde3d5c5a5abe2d9e89e2112c9023376c66d2c7f8c6332f19ad451d7309"
+    },
+    "first-release-archive-diagnosis-001.json": {
+      "observation": {
+        "classification": {
+          "code": "CLOSURE_SCHEMA_OR_INTEGRITY_REFUSED",
+          "shapes": {
+            "closure": {
+              "exact_schema_accepted": false,
+              "integrity_accepted": true,
+              "mail_column_layout_compatible": true,
+              "object_identities_compatible": true,
+              "sqlite_header_accepted": true
+            },
+            "global": {
+              "exact_schema_accepted": true,
+              "integrity_accepted": true,
+              "mail_column_layout_compatible": true,
+              "object_identities_compatible": true,
+              "sqlite_header_accepted": true
+            }
+          }
+        },
+        "code": "ARCHIVE_DIAGNOSIS_OBSERVED",
+        "journals_read": false,
+        "metadata": {
+          "restored_live_directory": {
+            "expected_metadata": false,
+            "present": false
+          },
+          "retained_target": {
+            "directory": {
+              "expected_metadata": true,
+              "present": true
+            },
+            "installed": {
+              "expected_metadata": false,
+              "present": false
+            },
+            "pending": {
+              "expected_metadata": false,
+              "present": false
+            }
+          },
+          "source_images": {
+            "closure": {
+              "expected_metadata": true,
+              "present": true,
+              "single_link": true,
+              "two_links": false
+            },
+            "global": {
+              "expected_metadata": true,
+              "present": true,
+              "single_link": true,
+              "two_links": false
+            }
+          },
+          "staging_directory": {
+            "expected_metadata": true,
+            "present": true
+          }
+        },
+        "mutation_performed": false,
+        "private_values_exported": false,
+        "schema_version": 1,
+        "secret_content_read": false,
+        "source_content_read_locally": true
+      },
+      "sha256": "7d3cdf129eef196b3b86506719a5976f8d21d3a0a673f0c69ab2c71725824f02"
+    },
+    "first-release-failure-observation-001.json": {
+      "observation": {
+        "boot_generation": "staged",
+        "code": "FIRST_RELEASE_FAILURE_OBSERVED",
+        "current_generation": "previous",
+        "ingress_closed": true,
+        "metadata": {
+          "adoption-started.json": {
+            "bytes": 105,
+            "directory": false,
+            "present": true
+          },
+          "initial.json": {
+            "bytes": 6683,
+            "directory": false,
+            "present": true
+          },
+          "phase.json": {
+            "bytes": 76,
+            "directory": false,
+            "present": true
+          },
+          "snapshot": {
+            "bytes": null,
+            "directory": true,
+            "present": true
+          }
+        },
+        "phase": "held-for-recovery",
+        "previous_active_units": {
+          "acme-audition.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-cloud.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-forge.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-log.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-logique.echos.systems.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-principiipetit.io.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-audition.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-cloud.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-forge.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-log.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-logique.echos.systems.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-principiipetit.io.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-vise.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-vision.mrj.am.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-renew-www.principiipetit.io.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-setup.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-vise.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-vision.mrj.am.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "acme-www.principiipetit.io.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "forgejo-backup.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "forgejo-identity.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "forgejo.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "kanidm.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "mrjam-metier.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "mrjam-sauvegarde.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "nextcloud-backup.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "nextcloud-cron.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "nginx.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "phpfpm-nextcloud.service": {
+            "ActiveState": "failed",
+            "LoadState": "masked"
+          },
+          "postgresql-setup.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "postgresql.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "postgresql.target": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "postgresqlBackup-matheval.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "postgresqlBackup-nextcloud.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "redis-nextcloud.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "vise-backup.timer": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "vise-provision.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "vise.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          },
+          "vision-embeddings.service": {
+            "ActiveState": "inactive",
+            "LoadState": "masked"
+          }
+        },
+        "schema_version": 1,
+        "snapshot_entry_count": 3
+      },
+      "sha256": "ca4ad28cbcd68a853d9941002fb6e3c52ffcf9bc0be4d40cae27103fb73115f3"
+    },
+    "first-release-manager-job-results-001.json": {
+      "observation": {
+        "application_messages_read": false,
+        "code": "MANAGER_JOB_RESULTS_OBSERVED",
+        "events": [
+          {
+            "exit_code": "exited",
+            "exit_status": "1",
+            "unit": "mrjam-archive-mail-adopt.service"
+          },
+          {
+            "job_result": "failed",
+            "unit": "mrjam-archive-mail-adopt.service"
+          },
+          {
+            "job_result": "failed",
+            "unit": "acme-renew-audition.mrj.am.timer"
+          },
+          {
+            "exit_code": "dumped",
+            "exit_status": "6",
+            "unit": "phpfpm-nextcloud.service"
+          }
+        ],
+        "message_text_exported": false,
+        "schema_version": 1
+      },
+      "sha256": "6109879f041825c97de0cd6572021c238cb518976e6cf0ef62f75ccf71cb950a"
+    },
+    "first-release-previous-timer-bindings-001.json": {
+      "observation": {
+        "bindings": {
+          "acme-renew-audition.mrj.am.timer": "acme-order-renew-audition.mrj.am.service",
+          "acme-renew-cloud.mrj.am.timer": "acme-order-renew-cloud.mrj.am.service",
+          "acme-renew-forge.mrj.am.timer": "acme-order-renew-forge.mrj.am.service",
+          "acme-renew-log.mrj.am.timer": "acme-order-renew-log.mrj.am.service",
+          "acme-renew-logique.echos.systems.timer": "acme-order-renew-logique.echos.systems.service",
+          "acme-renew-principiipetit.io.timer": "acme-order-renew-principiipetit.io.service",
+          "acme-renew-vise.mrj.am.timer": "acme-order-renew-vise.mrj.am.service",
+          "acme-renew-vision.mrj.am.timer": "acme-order-renew-vision.mrj.am.service",
+          "acme-renew-www.principiipetit.io.timer": "acme-order-renew-www.principiipetit.io.service",
+          "forgejo-backup.timer": "forgejo-backup.service",
+          "mrjam-sauvegarde.timer": "mrjam-sauvegarde.service",
+          "nextcloud-backup.timer": "nextcloud-backup.service",
+          "nextcloud-cron.timer": "nextcloud-cron.service",
+          "postgresqlBackup-matheval.timer": "postgresqlBackup-matheval.service",
+          "postgresqlBackup-nextcloud.timer": "postgresqlBackup-nextcloud.service",
+          "vise-backup.timer": "vise-backup.service"
+        },
+        "code": "PREVIOUS_TIMER_BINDINGS_OBSERVED",
+        "schema_version": 1
+      },
+      "sha256": "64c51148b6be3ed71b8bec6f8cde4251e97344712b5136e24d4e121502566e34"
+    },
+    "first-release-reopen-previous-001.json": {
+      "observation": {
+        "code": "PREVIOUS_PUBLIC_REOPENED",
+        "data_restored": false,
+        "phase": "previous-generation-restored",
+        "schema_version": 1,
+        "timers_pending": [],
+        "vise_left_held": true
+      },
+      "sha256": "2fd95f6ea3fa32c952e256edfc6cd4c1b59563b8ea5bf1957ae820f78b7b50c8"
+    },
+    "first-release-reopen-public-http-001.json": {
+      "observation": {
+        "observations": {
+          "audition.mrj.am": {
+            "http_status": 200,
+            "transport_ok": true
+          },
+          "cloud.mrj.am": {
+            "http_status": 302,
+            "transport_ok": true
+          },
+          "forge.mrj.am": {
+            "http_status": 200,
+            "transport_ok": true
+          },
+          "log.mrj.am": {
+            "http_status": 200,
+            "transport_ok": true
+          },
+          "logique.echos.systems": {
+            "http_status": 200,
+            "transport_ok": true
+          },
+          "principiipetit.io": {
+            "http_status": 308,
+            "transport_ok": true
+          },
+          "vision.mrj.am": {
+            "http_status": 200,
+            "transport_ok": true
+          },
+          "www.principiipetit.io": {
+            "http_status": 301,
+            "transport_ok": true
+          }
+        },
+        "observed_utc_epoch": 1793649494.6792636,
+        "response_bodies_discarded": true
+      },
+      "sha256": "550ad24a6363043cd264caa107d8c1217a16fa533d0c6d1bce68f93aad346d72"
+    },
+    "first-release-reserved-identities-after-return-001.json": {
+      "observation": {
+        "code": "RESERVED_IDENTITIES_OBSERVED",
+        "identities": {
+          "940": {
+            "group_present": false,
+            "user_present": false
+          },
+          "941": {
+            "group_present": false,
+            "user_present": false
+          },
+          "942": {
+            "group_present": false,
+            "user_present": false
+          },
+          "943": {
+            "group_present": false,
+            "user_present": false
+          },
+          "944": {
+            "group_present": false,
+            "user_present": false
+          },
+          "945": {
+            "group_present": false,
+            "user_present": false
+          },
+          "946": {
+            "group_present": false,
+            "user_present": false
+          },
+          "947": {
+            "group_present": false,
+            "user_present": false
+          },
+          "948": {
+            "group_present": false,
+            "user_present": false
+          }
+        },
+        "schema_version": 1
+      },
+      "sha256": "71f3d08ecbc1e1beeec98bc24cb16a619c0c24ba3dfea5c3a7ae25ae96841428"
+    }
+  },
+  "first_attempt_code": "COHERENT_RETURN_REQUIRES_RECOVERY",
+  "full_new_deployment_completed": false,
+  "limits": [
+    "The preserved snapshot and candidate-state-retained stay private on the VPS. They are not included here.",
+    "The failed rollout reached candidate adoption; the old generation and its paired data were restored before the witnessed RETURNED state.",
+    "The corrective reopening does not activate a new generation or restore application data again.",
+    "Successful old-service restoration does not establish the new deployment, new Forgejo governance or new-service barriers."
+  ],
+  "previous_reopening_code": "PREVIOUS_PUBLIC_REOPENED",
+  "release_sha256": "e8626d9aca0e6a2760e9900f5b3233395ad310a09ea35b01af4b68b627511028",
+  "result": "previous-public-services-restored-candidate-not-deployed",
+  "return_failure_job": "acme-renew-audition.mrj.am.timer",
+  "return_implementation_defect": "old-timer-target-service-acme-order-renew-remained-masked",
+  "schema_version": 1,
+  "target": "srv1982677",
+  "vise_left_held": true
+}

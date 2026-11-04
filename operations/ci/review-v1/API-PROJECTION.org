@@ -1,0 +1,37 @@
+#+title: Projection fermée de la revue Forgejo — préparation locale
+#+language: fr
+
+=api_projection.py= sélectionne les métadonnées nécessaires au contrat de revue,
+à partir d’un transport authentifié que le futur service devra imposer. Aucun
+client HTTP, lecteur de token, appel de mutation ou point d’entrée n’est encore
+fourni par ce module. Les neuf tests utilisent exclusivement des réponses
+inventées ; ils ne démontrent pas les droits ou comportements d’un Forgejo réel.
+
+Les routes sont construites à partir du dépôt géré, du numéro de PR entier et
+d’un SHA hexadécimal vérifié. Aucune URL donnée par une réponse n’est suivie.
+Version, identité et caractère privé du dépôt, branche main, PR interne,
+commit et arbre sont rapprochés. Les demandes de revue humaines et d’équipe
+restent bloquantes ; une ligne de revue d’équipe n’est pas assimilée à un humain.
+
+La pagination de revues exige X-Total-Count stable, absence de doublon et nombre
+exact de lignes, sans annoncer complète une page tronquée. PR et main sont
+relus après collecte ; une course sur leurs métadonnées provoque un refus.
+La projection conserve les textes de revue en mémoire seulement pour comparer
+le texte d’approbation au hash du manifeste. Elle ne doit pas être exportée ou
+journalisée par le service, qui ne devra émettre que la décision fermée.
+
+Les droits de lecture des protections sont distincts de ceux de fusion.
+Dans Forgejo17, GET branch_protections exige reqAdmin. Le choix proposé est un
+credential read:repository d’une identité d’observation administratrice, séparé
+du credential du mergeur non administrateur. Le contrôle natif doit prouver
+GET autorisé et PATCH/POST/DELETE refusés pour le premier, puis la fusion bornée
+et l’absence de contournement pour le second. Les sources middleware inspectées
+ne remplacent pas cette qualification.
+
+Avant toute fusion, il reste à vérifier réellement les protections et acteurs,
+le lien des sources/artefacts du manifeste à la signature, à relire la revue
+sélectionnée et tête/base, puis à consommer HeadCommitID en fast-forward-only.
+Une nouvelle lecture après fusion doit détecter une issue ambiguë ou une revue
+modifiée et empêcher la signature d’une décision de livraison. Ces étapes,
+le transport avec budgets stricts, la décision signée et l’anti-rejeu restent
+à implémenter et éprouver ; ce module ne prétend pas rendre ces lectures atomiques.

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "local_tests_passed",
+  "tests_passed": 14,
+  "source_sha256": {
+    "operations/deployment/configuration_update.py": "e9e05877834c840f3b829d8ba8d69f2b5bed485c601f226a51b7e1e63fa9269a",
+    "operations/deployment/test_configuration_update.py": "e3bd907d28c3b83307da6e9c10e902c8ef2133965225dc3c355d735d7cb709e6",
+    "operations/deployment/resolver_update_adapter.py": "090c85854ba9d78adb97f0248ff82a612b21d5dc95bc4e41d2d27237bf9756f1",
+    "operations/deployment/test_resolver_update_adapter.py": "11a961443571d3f8787d3e3f5a66b877a3dd1eeb1a0c03ddc3f2cd36904c100b",
+    "operations/deployment/resolver-update-package.nix": "05cb54747c7c2ad15040acb2386e7f7f6d2a1a4b3acf35b3a1b5dc4a8d2749f9",
+    "operations/deployment/generation.py": "786985ecd861cb8b79c0afb4165add3b8c7ff4a65f194d201080fec04f771bad"
+  },
+  "package": "/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001",
+  "production_execution": false,
+  "application_data_operations": false,
+  "limits": [
+    "State-machine failure tests and real local checkpoint filesystem tests; service/DNS/process operations substituted in adapter tests.",
+    "Existing Generations helper reused unchanged; full generation delta is qualified separately.",
+    "No claim of ordinary CI delivery authority or completed production correction."
+  ]
+}

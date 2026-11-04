@@ -1,0 +1,24 @@
+#+title: Travaux Spectre remis à la forge le 4 novembre 2026
+
+Cette branche conserve les sources, recettes, tests et comptes rendus produits
+pendant les interventions du 1 au 4 novembre. Elle ne constitue pas une nouvelle
+autorisation de déployer et ne prétend pas que tous les travaux sont achevés.
+L'objectif de déploiement est suspendu à la demande de l'utilisateur.
+
+Les fichiers operations/ci/, operations/identity/, operations/signature/,
+operations/vise/ et operations/backups/ comprennent des éléments installés et
+des propositions non adoptées. Les comptes rendus datés distinguent ces états.
+operations/ci/continuous-delivery-v1/ETAT.org consigne les étapes et les limites.
+Il ne faut pas réexécuter les anciens scripts de migration ou de bascule sur
+la seule base de leur présence dans cette branche.
+
+Le dernier système VPS vérifié est f3kci24k5df8rjy28wqq5vr0fb0xziix.
+Les règles Signature ad5481aa7b9809c47f0a55937b9cc99fde7decbb restent proposées.
+Les règles ViSe 470211d7b2522322a94c5ddfc6770d833bb1457e sont proposées dans
+mrjam-validation, proposition nº 2 ; leur adoption n'est pas établie.
+Certains README antérieurs décrivent un état de préparation désormais ancien.
+
+Le dossier .local est exclu : caches, compilations, archives privées et sorties
+temporaires ne sont pas des sources à publier. Certaines recettes expérimentales
+référencent des chemins locaux ou Nix existants ; leur présence ne démontre pas
+une reconstruction autonome sur une machine neuve.

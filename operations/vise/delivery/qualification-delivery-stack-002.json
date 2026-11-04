@@ -1,0 +1,22 @@
+{
+  "collector_change": "profile-aware rules revision selected from admitted producer; baseline policy remains checked",
+  "limits": [
+    "Protected publication/adoption pending",
+    "Combined services not installed",
+    "End-to-end GitHub delivery remains unproven for ViSe"
+  ],
+  "packages": {
+    "acceptance": "/nix/store/kb2x1vgbjs1bb6f37v7iiq4vx8zfnj88-mrjam-separated-acceptance-services-1",
+    "admission": "/nix/store/1f2gil4001alpwrdhccg7bvv3h6v1bvd-mrjam-protected-admission-controller-1",
+    "anchor": "/nix/store/mzsa422k82yskpz593cxhzswrah74gr1-mrjam-validation-admission-control-1",
+    "preparation": "/nix/store/pq77igikkb8zyd4c7gdkaqsnzll5k40p-mrjam-delivery-preparation-1",
+    "promotion": "/nix/store/7rb7lv9s518jymy35mlkl5982qsnkwsg-mrjam-protected-promotion-service-1",
+    "staging": "/nix/store/h233xjmnk1sw5l2phznz1ibfs5fxc5ql-mrjam-protected-staging-service-1"
+  },
+  "platform_authority_preserved_except_collector_recipe": true,
+  "production_activated": false,
+  "rules_independently_adopted": false,
+  "schema_version": 1,
+  "stack": "/nix/store/4iqncrqb7m4nzi24fzdk06m9j2a23mnf-mrjam-protected-delivery-stack-1",
+  "vise_rules_revision": "470211d7b2522322a94c5ddfc6770d833bb1457e"
+}

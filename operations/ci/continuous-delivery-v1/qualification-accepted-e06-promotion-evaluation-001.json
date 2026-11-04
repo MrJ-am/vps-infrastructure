@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "changed": [
+    "mrjam-rust-blue.service",
+    "mrjam-rust-green.service",
+    "nginx-config-reload.service"
+  ],
+  "checks": {
+    "assertionsPass": true,
+    "authorityUnchanged": true,
+    "blueBoot": true,
+    "blueCommandIdentical": true,
+    "controllerUnchanged": true,
+    "greenCommandIdentical": true,
+    "greenNoBoot": true,
+    "nativeReload": true,
+    "noImplicitRestart": true,
+    "noUnitsAdded": true,
+    "onlyRoutingAndBootUnits": true,
+    "stagedExact": true
+  },
+  "system": "/nix/store/g4iw3sf8j05p146lq6ljbgxcrzks95j8-nixos-system-srv1982677-26.05pre-git",
+  "activation": false,
+  "crash_recovery_guard_pending": true
+}

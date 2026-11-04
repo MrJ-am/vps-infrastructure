@@ -1,0 +1,40 @@
+{
+  "author_tests": {
+    "decision_order": 6,
+    "tree_and_participants": 9
+  },
+  "limits": [
+    "The nine projection/route tests and six decision-order tests are local synthetic tests. Native Forgejo tree/participant semantics are separately bound to bootstrap VM005, which did not execute this complete permanent service.",
+    "Native qualification links the earlier local qualification002; this receipt explicitly binds the corrected source set003 and the same unchanged native semantics.",
+    "No credential reader, branch-protection observer, permanent merge privilege, signed delivery decision, service or activation is supplied by these components.",
+    "The manifest remains opaque at this layer: the future loader must validate its schema and compare every consumed artifact/source against the signed validation attestation before any merge/delivery decision.",
+    "API observations are non-atomic. Postmerge recheck is limited to expected main/merge and unchanged chosen approval; full protection, other reviews, deployment state and artifact checks remain separate obligations.",
+    "The dismissed-approval eligibility rule is deliberately stricter than native max(non-dismissed id); native rejection blocking still follows active decisions.",
+    "No tests were rerun and no production request, credential or human review was created by this review."
+  ],
+  "native_bootstrap_qualification_sha256": "9b510d824ce637f1b9a89c83141e54654cf1019e5683dcae6d9de79d70ee064c",
+  "native_bootstrap_review_sha256": "8fc64bbf7f653f4257a8ff046d708ed07f83b0d709889152bfde5d69c903e1ba",
+  "native_semantics_qualification_sha256": "cda9abdb97760c78ec4fc475db157111553abdc39799649dcdfabb1d86ea8b49",
+  "prior_bug_reproduction_sha256": "18f857fb5ce6225f599b1ee638b1c09db15b1b9d0dd6e5784a59224257aa7f40",
+  "qualification_sha256": "c70d26c7a68e4ec6e28182027d27e6839b657b74f286df5db9b6911af32facb5",
+  "reviewed_properties": [
+    "Tree OID comes from the fixed encoded head^{tree} route, not Forgejo commit.tree.sha; response URLs and partial tree entries are never used as authority or inventory.",
+    "GET transport changes only the new fixed tree route and review-contract import; dedicated socket watchdog and response limits remain byte-exact.",
+    "Complete review pages are matched to native active participant IDs before pending requests are projected. Team or missing commit-ID shapes remain refused.",
+    "Decision order is max(id), independent of edit timestamp. A separate active non-dismissed map blocks unresolved rejections/requests; the latest overall map conservatively prevents resurrecting a dismissed approval.",
+    "The independently reproduced other-reviewer rejection masked by a newer dismissed approval is addressed by the active-map check; six targeted signature tests cover this and related order cases.",
+    "Premerge recheck retains full collection/signature/binding and individual chosen-review reread. Postmerge now expects the chosen approver in the native participant list and still rereads that approval; it does not claim to recheck all other reviewers."
+  ],
+  "schema_version": 1,
+  "scope": "independent review of permanent read-only projection and unsigned review binding corrections, with separate native semantic evidence",
+  "sources": {
+    "operations/ci/review-v1/TREE-RESOLUTION-V2.org": "b8c95ade82b9e12c68636ef46e502d1647c378fd504b4b54e728dd9827e79285",
+    "operations/ci/review-v1/api_projection_v2.py": "c37e18471dff8d5ba10e42f747fd549b0b128da9e9fc397137b1c35175cc3558",
+    "operations/ci/review-v1/read_transport_v3.py": "f4c2123cab6e7e3fee1d3d913e503b63117e4e69d7a7f1a5680a6b98e7b2b657",
+    "operations/ci/review-v1/recheck_v2.py": "98ef011d0d81ae7f87b894ebc81c3d04c3ae684d2c8147f87cda70fa4c8168ac",
+    "operations/ci/review-v1/review_contract_v2.py": "4253087029847ceef168642965140e6f6e5ace616f903a67aa2b9d18f531d7ec",
+    "operations/ci/review-v1/test_review_order_v2.py": "5c9d23a70352ffd17f1d2f40f516cda74fb90e27617ddb43f2307e2c2809458f",
+    "operations/ci/review-v1/test_tree_resolution.py": "17fdab390a756297049acc21d39553861a76552b9f706258c8772902a34ef78b"
+  },
+  "status": "PASS_IN_DECLARED_SCOPE"
+}

@@ -1,0 +1,32 @@
+{
+  "all_nar_hashes_and_references_compared": true,
+  "all_sealed_paths_verify_path_passed": true,
+  "author_tests_reviewed_and_log_bound_not_rerun": 13,
+  "correct_current_boot007_result005_open_gate": true,
+  "export_bytes": 427800,
+  "export_independently_recreated_byte_for_byte": true,
+  "export_sha256": "ccb0f76d8f5e44db032789bb5a025afbf58b6e9af061e862830695fdafdded98",
+  "full_closure_count": 1260,
+  "historical_transaction_lock_held_through_final_gate": true,
+  "limits": [
+    "Author tests import into an initially empty isolated local Nix store using the real pinned tools; root metadata/profile gates are synthetic. No new root VM or VPS success is claimed.",
+    "Production source contains no store override or signature bypass.",
+    "The two deliver_provision-based resolver preparations remain rejected after005; this receipt approves only03001828 with manifest a34a6e02.",
+    "Importing the controller and generation does not execute the reviewed configuration update."
+  ],
+  "manifest_sha256": "a34a6e02fc4dca8012985210755bf4e1cc5c6e473b608d2b4520dd88314d6fef",
+  "new_paths_count": 7,
+  "no_systemctl_units_profiles_symlinks_or_activation": true,
+  "only_release_literal_changes_byte_for_byte": true,
+  "passed": true,
+  "prior_actual_delivery_receipts_verified": 13,
+  "protected_directory_and_receive_ast_identical_to_vm_qualified_transport": true,
+  "qualification_sha256": "041b9a287fe2c7f56e1473503dd2ea27c6791ad05fb6a35b393e35b5e7daab13",
+  "receiver_sha256": "03001828c05a80164020789677b410abf7f7eac400d1748d3034e90683467de8",
+  "reserve_allocation_independently_computed": true,
+  "reused_paths_count": 1253,
+  "schema_version": 1,
+  "scope": "independent local review of post005 import-only receiver and sealed public code archive; no VPS access or import/activation by reviewer",
+  "sealed_validator_passed": true,
+  "template_sha256": "18a002d46d047e049f661e6c8039cae531e663f5b93d1d2078d996ffabe19e66"
+}

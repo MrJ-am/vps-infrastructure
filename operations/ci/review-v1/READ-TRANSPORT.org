@@ -1,0 +1,30 @@
+#+title: Transport de lecture de revue — origine et routes fixes
+#+language: fr
+
+=read_transport.py= fournit seulement GET pour l’API locale
+=http://127.0.0.1:3004=. Une instance est liée à un dépôt géré et une PR entière.
+Il ne lit aucun credential, n’a aucun CLI et ne propose aucune écriture. Le
+service futur devra lui fournir un token adopté read:user/read:repository via
+LoadCredential et créer une nouvelle instance pour chaque observation.
+
+Les routes autorisées concernent version, identité du token, dépôt, PR fixe,
+main, protections, pages de revues et commits hexadécimaux du dépôt. Aucun URL
+ou nom de route issu du candidat n’est suivi. Proxies hérités et cookies sont
+ignorés ; les redirections sont fermées sans envoyer le token ailleurs. Les
+réponses doivent être JSON non compressé, borné à 2 Mio et sans clé dupliquée.
+Les erreurs ferment la réponse et ne réémettent ni corps, ni token, ni exception
+réseau brute. Le transport partage un délai de trente secondes ; le dernier
+appel socket en cours est borné à cinq secondes supplémentaires au maximum.
+
+Neuf tests utilisent un vrai serveur HTTP local avec token inventé. Ils couvrent
+GET exact, refus des routes étrangères, redirection, proxy, compression, taille,
+JSON dupliqué, erreur privée non exportée et délai. Le test de délai emploie une
+horloge synthétique pour éviter une attente artificielle de trente secondes.
+Les réponses Forgejo, les scopes et les droits réels restent à qualifier sur
+Forgejo17. Un transport GET n’est pas à lui seul une barrière contre le vol d’un
+token ; c’est sa portée native read-only qui doit interdire les mutations.
+
+Le raccord suivant doit ajouter les vérifications de protections et d’acteurs,
+la relecture de l’approbation sélectionnée, puis une opération de fusion sous
+une identité distincte. Les projections privées restent dans le service ; seuls
+les codes fermés et la future décision signée seront exportés.

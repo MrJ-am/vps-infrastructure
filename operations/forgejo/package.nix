@@ -1,7 +1,7 @@
 { lib, stdenvNoCC, fetchurl, writeShellScript, formats, pandoc, coreutils, python3, forgejo, forgejo-runner }:
 let
-  lock = builtins.fromJSON (builtins.readFile ./versions.lock.json);
-  sources = builtins.fromJSON (builtins.readFile ./sources.lock.json);
+  lock = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./versions.lock.json));
+  sources = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./sources.lock.json));
   archive = name: fetchurl { inherit (lock.assets.${name}) url hash; };
   render = writeShellScript "forgejo-pandoc-org" ''
     set -eu

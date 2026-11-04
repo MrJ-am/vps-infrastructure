@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "scope": "content-only packaging from local isolated validation outputs",
+  "package": "/nix/store/pabx46khvy13g09mkmvij205hv9jvn13-mrjam-vise-delivery-content-8ea736fc4819",
+  "frontend_files": 43,
+  "server_bytes": 6904224,
+  "payload_bytes_preserved": true,
+  "parser_tests_passed": 5,
+  "production_changed": false,
+  "limitations": [
+    "Synthetic rules revision in source qualification",
+    "No registry admission or signature established by this proof",
+    "Packaged launcher not yet runtime-qualified",
+    "No deployment, rollback or database operation"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "application_generation_changed": false,
+  "coordinator_pid": 976355,
+  "finding": "Forgejo backup stops required coordinator; restarting Forgejo did not pull coordinator in",
+  "forgejo_https_status": 200,
+  "forgejo_restarted_for_test": false,
+  "limitations": [
+    "Runtime link does not survive reboot",
+    "Declarative replacement still needs build, activation and rollback verification",
+    "Synthetic test ran systemd 262; VPS is systemd 260.2",
+    "No real Forgejo stop/restart induced"
+  ],
+  "observed_stopped_since": "2026-11-04T04:50:59Z",
+  "restart_policy": "no",
+  "restored_at": "2026-11-04T05:28:53Z",
+  "runtime_link_target": "/etc/systemd/system/mrjam-forgejo-runner.service",
+  "runtime_unit_aliases_removed": true,
+  "runtime_wants_link": "/run/systemd/system/forgejo.service.wants/mrjam-forgejo-runner.service",
+  "schema_version": 1,
+  "sources_sha256": {
+    "delivery-stack-module.nix": "7f223b9e06eb83865c9864adcb3f581dd54c4d0f3013c6a755203cfed2e691da",
+    "qualify-runner-recovery.py": "e9024fc70db5c392d4ab9979a89abe8bb113c3cc918aa4c0ac55a6a4a5b3dd36"
+  },
+  "synthetic": {
+    "original_does_not_resume_runner": true,
+    "production_units_touched": false,
+    "requires_stops_runner": true,
+    "restart_policy_unchanged": true,
+    "schema_version": 1,
+    "second_recovery_passed": true,
+    "synthetic_only": true,
+    "synthetic_units_removed": true,
+    "systemd": "262",
+    "wanted_by_resumes_runner": true
+  }
+}

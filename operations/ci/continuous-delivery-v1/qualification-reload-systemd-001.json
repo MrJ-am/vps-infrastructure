@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "nixos-switch-preserves-master-backends-and-long-old-response",
+    "generation-return-no-write-errors-loss-or-duplicates"
+  ],
+  "derivation_output": "/nix/store/nmyab2bmmrz9axcmfir6bkpnxf6mp7vg-vm-test-run-mrjam-nixos-graceful-routing",
+  "limitations": [
+    "Synthetic HTTP fixture in isolated NixOS VM",
+    "No Rust session, artifact admission or production cutover claim"
+  ],
+  "nginx_master_unchanged": true,
+  "production_activation": false,
+  "schema_version": 1,
+  "synthetic_writes": 1866,
+  "test_source_sha256": "5c023a17ecff6e50fa0f03b67fb0086afac7e294a0749dd7afa1510425145c5e"
+}

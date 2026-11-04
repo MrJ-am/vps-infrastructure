@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "checks": {
+    "currentExact": true,
+    "assertionsPass": true,
+    "stageChangesOnlyOffTraffic": true,
+    "unitsPreserved": true,
+    "stagedRoutesUnchanged": true,
+    "stagedAdoptionUnchanged": true,
+    "nonAssetConfigurationUnchanged": true,
+    "assetRoutingUnchanged": true,
+    "promotionChangesOnlyRoutesAndBoot": true,
+    "promotionRetainsCommands": true,
+    "noImplicitRestart": true
+  },
+  "current": "/nix/store/y9ddjv4pfncss1gjnd4msfywfxr7s8b4-nixos-system-srv1982677-26.05pre-git",
+  "staged": "/nix/store/27i5lsmml42p1xzc9nm81iakxyafr3b7-nixos-system-srv1982677-26.05pre-git",
+  "promoted": "/nix/store/913dgifa3fn11b6cmdk0jpa4r60y2q6z-nixos-system-srv1982677-26.05pre-git",
+  "stagedState": {
+    "active_slot": "blue",
+    "adopted": "/nix/store/v09b0b3qpi5arjgsr7jqx0nbyyi4mqj7-mrjam-adopted-source.json",
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/j4fh34y2iqfdgw4zvzf57mcj1xis78rx-mrjam-runtime-blue",
+        "server": "/nix/store/c7hgzdnhddl90hdp1a37kwlkj9xrpyyn-mrjam-delivery-server-e06f030310ae"
+      },
+      "green": {
+        "server": "/nix/store/dd69xlsswn5bs01y0n77wpk8rbs7s649-mrjam-delivery-server-e06f030310ae",
+        "runtime": "/nix/store/cryagvlf50dwxhrmyb7vrq5pmrc29lf1-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/27i5lsmml42p1xzc9nm81iakxyafr3b7-nixos-system-srv1982677-26.05pre-git"
+  },
+  "promotedState": {
+    "active_slot": "green",
+    "adopted": "/nix/store/mj7lx76m7b9whznx05608ma8inlw946l-mrjam-adopted-source.json",
+    "schema_version": 1,
+    "slots": {
+      "blue": {
+        "runtime": "/nix/store/j4fh34y2iqfdgw4zvzf57mcj1xis78rx-mrjam-runtime-blue",
+        "server": "/nix/store/c7hgzdnhddl90hdp1a37kwlkj9xrpyyn-mrjam-delivery-server-e06f030310ae"
+      },
+      "green": {
+        "server": "/nix/store/dd69xlsswn5bs01y0n77wpk8rbs7s649-mrjam-delivery-server-e06f030310ae",
+        "runtime": "/nix/store/cryagvlf50dwxhrmyb7vrq5pmrc29lf1-mrjam-runtime-green"
+      }
+    },
+    "system": "/nix/store/913dgifa3fn11b6cmdk0jpa4r60y2q6z-nixos-system-srv1982677-26.05pre-git"
+  },
+  "deployment_authorized": false,
+  "measurements": {
+    "current": {
+      "max_rss_kib": 2453736,
+      "seconds": 19.7
+    },
+    "stage": {
+      "max_rss_kib": 2475752,
+      "seconds": 17.5
+    },
+    "promotion": {
+      "max_rss_kib": 2475984,
+      "seconds": 17.5
+    }
+  },
+  "equivalent_to_combined_evaluation": true,
+  "activated": false
+}

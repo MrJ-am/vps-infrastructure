@@ -1,0 +1,39 @@
+{
+  "checks": [
+    "protected-schema-and-idempotent-adoption",
+    "runtime-ddl-and-role-management-refused",
+    "runtime-password-cannot-authenticate-admin",
+    "schema-version-and-privilege-drift-detected"
+  ],
+  "limitations": [
+    "No candidate server executed in this database probe",
+    "No production access or signing",
+    "Local UID substitutes for root staging owner",
+    "Full API, graceful restart and erasure-preserving restore still required"
+  ],
+  "result": {
+    "elapsed_seconds": 1.27,
+    "full_validation": false,
+    "limits": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "pids.max": "256"
+    },
+    "passed": true,
+    "production_access": false,
+    "scope": "local-synthetic-database-only",
+    "source_owner_substitution": "local UID, not production root staging",
+    "validator": "/nix/store/9hsqwpwfzdpkjjq926wns2vzymm75ysq-mrjam-vise-isolated-database-probe-1"
+  },
+  "schema_version": 1,
+  "scope": "isolated-synthetic-database-only",
+  "source_sha256": {
+    "build-probe.nix": "01bbf28ad78b2c87c5c3b59227d2c22cc5a8627c4e8cfee6465639cc120e36d5",
+    "build_stage.py": "124279c2a4a1b3da01044227e12605fba13dd228dab43a1c2629f4afd749c8fc",
+    "database-probe.py": "5c42184d016475b6e6c9b126e92589b2efa90ce8f97affa16376a39aad780328",
+    "dependency_binding.py": "83a76812ba979f329c211ec8108f7539139e21c711b39a59d9257c6cdce0b405",
+    "source_policy.py": "a6e5f05ece8678c0769d64463a37baad287e485e593fcbf8f6e9a4429a9b7a4f",
+    "source_scope.py": "328bec135062377b03c44a2883b56db10a06f0330be3685f65cb42ccab604f0e",
+    "synthetic_database.py": "27da447d47fe47e08f33f4c11b4a3b7cfe7d39386ae07d12bf497f2f5accda4a"
+  }
+}

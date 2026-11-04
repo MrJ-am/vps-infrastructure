@@ -1,0 +1,31 @@
+{
+  "completion_claimed": false,
+  "date": "2026-11-02",
+  "detached_launch": {
+    "code": "FIRST_RELEASE_PROCESS_STARTED",
+    "deployment_complete": false,
+    "schema_version": 1
+  },
+  "receivers": {
+    "final-code": {
+      "application_activation": false,
+      "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+      "credential_creation": false,
+      "schema_version": 1
+    },
+    "source-bundles": {
+      "already_present_count": 8,
+      "application_activation": false,
+      "bundle_count": 9,
+      "code": "SOURCE_BUNDLES_RECEIVED",
+      "created_count": 1,
+      "forgejo_imported": false,
+      "schema_version": 1,
+      "stream_sha256": "6b48b4af02ddf7510723cefddcb082fdde1ec4a45932eae6ee5a4b069b763865"
+    }
+  },
+  "release_sha256": "2b0d9ae80cb37c0b36972c6045fa670dd2c4bd9674fc4ba98173dbb945eef974",
+  "schema_version": 1,
+  "scope": "Second-attempt inactive reception and detached process launch; not a completion result",
+  "source_revision": "e65a42e303f75467adeb86adca7e2382983d51bd"
+}

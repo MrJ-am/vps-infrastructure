@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "scope": "pure NixOS evaluation; no activation",
+  "evaluation": {
+    "changed": [
+      "vise.service"
+    ],
+    "checks": {
+      "assertionsPass": true,
+      "backupEnabled": true,
+      "bootPolicyUnchanged": true,
+      "currentExact": true,
+      "identityAndLimitsUnchanged": true,
+      "noImplicitRestart": true,
+      "onlyViseUnitChanges": true,
+      "platformAdoptionUnchanged": true,
+      "routesUnchanged": true,
+      "runtimeEnvironmentUnchanged": true,
+      "sameUnits": true,
+      "schemaPreflightUnchanged": true
+    },
+    "previous": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git",
+    "system": "/nix/store/aji3x4pmhxbmjvafgyycp6641w068lrq-nixos-system-srv1982677-26.05pre-git",
+    "vise": {
+      "adopted": "/nix/store/kb4cr8wrkf6gzx0p47k02sha33i08gsh-mrjam-vise-adopted-source.json",
+      "artifact": "/nix/store/b78lwi4f0sd59igb6mgz8sf7zsm7s3qi-mrjam-vise-delivery-content-8ea736fc4819"
+    }
+  },
+  "baseline_recipe": "/nix/store/dnir95r62s6xi57dcygv80fqhirkhzas-mrjam-protected-delivery-recipe-1",
+  "production_changed": false,
+  "limitations": [
+    "Candidate binding uses synthetic rules and no admitted production signature",
+    "Construction in progress; installed file layout not compared",
+    "No transition/rollback/runtime proof for this candidate",
+    "Platform generation recipe not yet extended to retain future ViSe adoption"
+  ]
+}

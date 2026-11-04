@@ -1,0 +1,21 @@
+{
+  "base_rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "branch": "spectre-vise-validation-v1",
+  "changed_paths": 21,
+  "commit": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+  "copied_files": 19,
+  "copies_byte_identical": true,
+  "independently_adopted": false,
+  "limitations": [
+    "Full validation evidence used prior synthetic rules revision",
+    "Protected packaging must consume the committed profile",
+    "Remote head and protections must be checked before publication"
+  ],
+  "local_tests_passed": 8,
+  "local_worktree": ".local/ci-vise-rules-proposal-20261104",
+  "only_vise_profile_added": true,
+  "production_activated": false,
+  "published": false,
+  "repository": "MrJ-am/mrjam-validation",
+  "schema_version": 1
+}

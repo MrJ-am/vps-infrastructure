@@ -1,0 +1,78 @@
+{
+  "files": [
+    {
+      "bytes": 21065,
+      "path": "operations/deployment/forgejo-governance-v2/core.py",
+      "sha256": "4cc30e9592e7523a722912ab2416808cc62cf59f53a4343620d8d4067c27af83"
+    },
+    {
+      "bytes": 4847,
+      "path": "operations/deployment/forgejo-governance-v2/credentials.py",
+      "sha256": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2"
+    },
+    {
+      "bytes": 2588,
+      "path": "operations/deployment/forgejo-governance-v2/entry.py",
+      "sha256": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487"
+    },
+    {
+      "bytes": 10579,
+      "path": "operations/deployment/forgejo-governance-v2/fixture.py",
+      "sha256": "ca64ac0cd0b4b9065d08da4d637afd560ebca6772572a3bf2fe6bceb5b0898f8"
+    },
+    {
+      "bytes": 1655,
+      "path": "operations/deployment/forgejo-governance-v2/package.nix",
+      "sha256": "c519334b8ec595465db0267a55bda4f45d810761bdfc58d494836cb605b45046"
+    },
+    {
+      "bytes": 9142,
+      "path": "operations/deployment/forgejo-governance-v2/systemd-test.nix",
+      "sha256": "a15dbe308509721196816a6f822873cc583790d9587204b2aa92ad55b6937a95"
+    },
+    {
+      "bytes": 18453,
+      "path": "operations/deployment/forgejo-governance-v2/test_governance.py",
+      "sha256": "d3157bb8aba0350d5d1968855981f37c9400d7599bca187e9ca20bf864ca2977"
+    },
+    {
+      "bytes": 3615,
+      "path": "operations/deployment/forgejo-governance-v2/README.org",
+      "sha256": "eb49613899acca43476c1829916ba1da6c69304fe61f9a225d6d1ef783abc995"
+    },
+    {
+      "bytes": 1058,
+      "path": "operations/deployment/forgejo-governance-v2/finding-default-branch-batches-20261102.json",
+      "sha256": "f9bf59a09ddff9afe4370cc8407cc7bb85d8499315836869f1555623c3a90342"
+    },
+    {
+      "bytes": 1772,
+      "path": "operations/deployment/forgejo-governance-v2/result-002.json",
+      "sha256": "40ec882e70943071d0aa2e08a7e728a1be070ec667a397940961db17ee47e91c"
+    },
+    {
+      "bytes": 3053,
+      "path": "operations/deployment/forgejo-governance-v2/qualification-20261102-002.json",
+      "sha256": "ed22ba06329eca870dc8a6c57846724deb9876b9897946fa4350495268a6e79e"
+    }
+  ],
+  "limits": [
+    "Independent review is published separately when its author seals the receipt.",
+    "Do not deploy the synthetic VM package; construct a source-G binding with the nine original bundles and the new infrastructure bundle."
+  ],
+  "production_activation": false,
+  "ready_for_publication": true,
+  "schema_version": 1,
+  "scope": "source G governance v2 only; excludes CI and final source binding artifacts",
+  "unchanged": [
+    "operations/forgejo/reconcile.py",
+    "operations/deployment/release_backend.py",
+    "operations/hosts/mrjam-vps/candidate.nix",
+    "operations/hosts/mrjam-vps/candidate-promoted.nix"
+  ],
+  "validation": {
+    "local_tests": 16,
+    "vm_groups": 10,
+    "vm_seconds": 138.23
+  }
+}

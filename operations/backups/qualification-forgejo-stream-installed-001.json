@@ -1,0 +1,136 @@
+{
+  "activation": {
+    "application_deployment": false,
+    "code": "DELIVERY_STACK_ACTIVE_AND_BOOT",
+    "declarative_runner_recovery_preserved": true,
+    "https": {
+      "audition.mrj.am": 200,
+      "forge.mrj.am": 303,
+      "log.mrj.am": 200,
+      "vise.mrj.am": 200,
+      "vision.mrj.am": 200
+    },
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "runner_pids": [
+      989116,
+      989463,
+      989806
+    ],
+    "system": "/nix/store/f3kci24k5df8rjy28wqq5vr0fb0xziix-nixos-system-srv1982677-26.05pre-git"
+  },
+  "activation_seconds": 22.253,
+  "backup_unit_sha256": "28184ff259a1c4596f86e0228c17dcaef778aab83576f8c65c230c614ae47217",
+  "build": {
+    "exit_code": 0,
+    "export": "/nix/store/8jr7i6f4ycajh3w06s79p64jg0zhlj7q-mrjam-protected-stack-host-build-1",
+    "peak_memory": "3.2G",
+    "seconds": 135.955,
+    "unit": "mrjam-backup-stack-build-001.service"
+  },
+  "controller": "/nix/store/j9lyi7nnh85fz2nvrwkc9xnhd4r2vqmj-activate-backup-stack.py",
+  "controller_tests_passed": 8,
+  "evaluation_checks": {
+    "admissionPackage": true,
+    "assertionsPass": true,
+    "authorityPackage": true,
+    "baselineExact": true,
+    "onlyControlServicesChanged": true,
+    "platformAdoptionPreserved": true,
+    "routesPreserved": true,
+    "runnerRecoveryBound": true,
+    "serviceBoundariesPreserved": true,
+    "stackBound": true,
+    "tmpfilesPerPathPreserved": true,
+    "unitNamesPreserved": true
+  },
+  "evidence_sha256": {
+    ".local/deployment-20261101/backup-delivery-qualification-001/after-vise-state.json": "4ce9bfb8819881cb2ed01f0624cfa5f8fe78fdb83440fd9c23501ec763e09204",
+    ".local/deployment-20261101/backup-delivery-qualification-001/platform-current.json": "164d5e0fa3611aa7ecbb110bee91b510c57adaed8dc2cf35402b2fbe219931cb",
+    ".local/deployment-20261101/backup-delivery-qualification-001/platform-promotion.json": "ebef70f99f98689ee53d3e538e6defb76f63042ee224a509687c230b4e77322b",
+    ".local/deployment-20261101/backup-delivery-qualification-001/platform-proof.json": "7b73e58fc2d1031b8d51c030bcb208bdc59aa1609616db7de1d3beef8cab91c5",
+    ".local/deployment-20261101/backup-delivery-qualification-001/platform-stage.json": "99762cf278c638370dd1c82772dc5d02ac2d8d2e38285698ece6397005a6bc46",
+    ".local/deployment-20261101/backup-delivery-qualification-001/vise-candidate.json": "e68a04b3d1bacc485586c888a5881246216054d8e7b6230a4c128300b2a95068",
+    ".local/deployment-20261101/backup-delivery-qualification-001/vise-current.json": "008da7745e473374272b231580250168c556afe8db4cb440918b47ac53d9f615",
+    ".local/deployment-20261101/backup-delivery-qualification-001/vise-proof.json": "490b78363aadf2223af92c9ef6cfb232f2d6c2d478b513ffa0af1aaccadacce0",
+    ".local/deployment-20261101/backup-host-build-001.stderr": "bfd26b28e4c478c4efb77598156d040ed8b4a459d2b7615aaffc253707856437",
+    ".local/deployment-20261101/backup-host-build-001.stdout": "8658ded29a577b21487d072a1f321e7778f3e921fca3b0080f395fe09d5e4bc6",
+    ".local/deployment-20261101/backup-layout-001.json": "8efb1c4fa9418e8cd72db8086d95765fbf7b981fceb7d8040f8c3b26d9e376b8",
+    ".local/deployment-20261101/backup-stack-activation-001.stderr": "9713c1f8194de9d5307478549884a15a8e11ebe3420b4c15bd7b2c73b69f3871",
+    ".local/deployment-20261101/backup-stack-activation-001.stdout": "49bfb2900152ca8d9ece3f7ab47ca47288ac7e184b7dcb0cc7d508a47fea923b",
+    ".local/deployment-20261101/backup-stack-controller-tests-001.stderr": "75ff54e727b57e4bd7b88956ed0c92c4b9a416e6f0976707e8fb54aa385ac0bd",
+    ".local/deployment-20261101/backup-stack-evaluation-002.json": "26cc047359ce7f426510849e696d4218246b4d1d15b06091820a25cb35e21fa4",
+    ".local/deployment-20261101/backup-stack-installed-001.json": "a824d1fd5080956bf4b0ed04391adef5480c8b99b646ffacd6f1f2bc6928c2de",
+    ".local/deployment-20261101/vise-review-observe-005.json": "114bc734d2b6a02a3cfe0d6fedac9a6ebafd03c623a0f723262e0d4f14c3eea7",
+    "operations/backups/qualification-forgejo-stream-001.json": "838ea202750fb367f3828c35416597fd56a785865e2a7c270f82d810aa4e0384",
+    "operations/ci/continuous-delivery-v1/activate-backup-stack.py": "0bc2fcb083742d58201ba8095f94f9a0ffbe5897402f93558ba8ee4ce273acb3",
+    "operations/ci/continuous-delivery-v1/delivery-stack-host-package.nix": "a054edad7982d7d67e12ccf9b362ff96c5cd8b50703ff577af7e07d6dc184238",
+    "operations/ci/continuous-delivery-v1/delivery-stack-host.nix": "91c746a2382d1a53f793a835bde90c3548c3e2ec1ec6ad251924e5e18508066f",
+    "operations/ci/continuous-delivery-v1/delivery-stack-module.nix": "1be951ddd121dd33b099f2356b9bb8f33be4bb34ce518d041773877b1fbecb30",
+    "operations/ci/continuous-delivery-v1/test_backup_stack_activation.py": "8297a0fe857a7a08423b1dd845fd681881a0af310fa4e271b4c6c3464a6a210a",
+    "operations/hosts/mrjam-vps/backups.nix": "dede45217064b34c4ef57735b87145a4fc538a00055aa33691e264eb804555ee"
+  },
+  "gc_root": "/var/lib/mrjam-backup-stack-build-001/generation",
+  "installed": {
+    "backup_unit_exact": true,
+    "boot": "/nix/store/f3kci24k5df8rjy28wqq5vr0fb0xziix-nixos-system-srv1982677-26.05pre-git",
+    "current": "/nix/store/f3kci24k5df8rjy28wqq5vr0fb0xziix-nixos-system-srv1982677-26.05pre-git",
+    "inhibitors_removed": true,
+    "installed_state_exact": true,
+    "phase": "complete",
+    "runner_pids": [
+      989116,
+      989463,
+      989806
+    ],
+    "schema_version": 1,
+    "stack": "/nix/store/8mgrb0z9l1fxsjnxzrh59ib0pw1qqq81-mrjam-protected-delivery-stack-1"
+  },
+  "journal": "/var/lib/mrjam-backup-stack-upgrade-001/state.json",
+  "layout": {
+    "added": [],
+    "built_layout_verified": true,
+    "changed": [
+      "forgejo-backup.service",
+      "mrjam-acceptance-merge.service",
+      "mrjam-acceptance-mirror.service",
+      "mrjam-acceptance-review.service",
+      "mrjam-acceptance-sync.service",
+      "mrjam-delivery-preparation.service",
+      "mrjam-delivery-staging.service"
+    ],
+    "coordinator_client_verified": true,
+    "coordinator_recovery_verified": true,
+    "deployment_authorized": false,
+    "new": "/nix/store/f3kci24k5df8rjy28wqq5vr0fb0xziix-nixos-system-srv1982677-26.05pre-git",
+    "old": "/nix/store/9ng98pjns0pvrfmigg29i79rdqgxqdi2-nixos-system-srv1982677-26.05pre-git",
+    "schema_version": 1,
+    "stack": "/nix/store/8mgrb0z9l1fxsjnxzrh59ib0pw1qqq81-mrjam-protected-delivery-stack-1",
+    "unit_entries": 588
+  },
+  "limitations": [
+    "No production backup manually triggered; next scheduled backup must be observed",
+    "No actual VPS reboot performed",
+    "No new retention policy or offsite backup established",
+    "Protected rules PR2 still has no review; no ViSe source adoption or app deployment in this operation"
+  ],
+  "platform_constructor_checks": {
+    "assertionsPass": true,
+    "assetRoutingUnchanged": true,
+    "currentExact": true,
+    "noImplicitRestart": true,
+    "nonAssetConfigurationUnchanged": true,
+    "promotionChangesOnlyRoutesAndBoot": true,
+    "promotionRetainsCommands": true,
+    "stageChangesOnlyOffTraffic": true,
+    "stagedAdoptionUnchanged": true,
+    "stagedRoutesUnchanged": true,
+    "unitsPreserved": true
+  },
+  "retained_application_services": 10,
+  "schema_version": 1,
+  "scope": "VM-qualified Forgejo snapshot streaming script installed and retained by future app delivery constructors",
+  "vise_changed_units": [
+    "vise.service"
+  ]
+}

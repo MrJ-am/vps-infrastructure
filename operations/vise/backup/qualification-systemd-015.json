@@ -1,0 +1,30 @@
+{
+  "checks": [
+    "real-offline-pair-encryption-recipient-decryption-and-service-restart",
+    "real-restore-with-current-ledger-no-resurrection",
+    "real-service-retention-removes-old-verified-pairs-and-keeps-two-recent-pairs",
+    "real-systemd-cgroup-kill-during-graceful-stop-independent-recovery-restarts-vise",
+    "generation-lock-recovery-defers-without-effects-and-timer-retries",
+    "vm-power-failure-durable-intent-boot-recovery-and-no-resurrection"
+  ],
+  "derivation": "/nix/store/8v2b14jn7k4f5z4w5d2xkh0yy143skjw-vm-test-run-mrjam-vise-coherent-backup-synthetic.drv",
+  "fixture_sha256": "209d96b8329be30a24f6ed3909dd4cb7b8f42a21a303278fdabd8282d244d18f",
+  "limitations": [
+    "Offsite transfer remains unqualified",
+    "No production activation or production reboot"
+  ],
+  "output": "/nix/store/kvmrm7c01n4gkx3dvpvyjfslvjrs7asp-vm-test-run-mrjam-vise-coherent-backup-synthetic",
+  "production_activated": false,
+  "production_data_accessed": false,
+  "production_source_sha256": {
+    "capture.py": "24ec6fb9f9221526babec73c55e205578f5f63f82b22de961eb9c1d5a2836958",
+    "envelope.py": "e98d0dacd265f0727dbe79e0895f19dfd047d8b0266e17c022be6edddd43ca44",
+    "module.nix": "065f695cb316c3df231666e917e91de43e39c4efc910d163672a38ff3923b8f3",
+    "package.nix": "a355515d8173d88850cc21377e0ea5e79fdb02aa457c20a4652824c1047c286d",
+    "retention.py": "3a7d7fdb03b4222d6ba3f9264b0b0d7db2d747fc9afea092a0e9d2955d85c2dc",
+    "service.py": "1d041e46adfffc723d2211d68137ea574cbd076b4f1effe57d1e9189f1ed2307",
+    "transaction.py": "546b63363d982bc7b8f4752ff14e46a0db087fc9d63e778ef576ed99716c6da4"
+  },
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg"
+}

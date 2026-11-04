@@ -1,0 +1,29 @@
+{
+  "controller": "/nix/store/lviggl0pqmarmmhs8brqs4d34fa1cph3-mrjam-first-release-controller-1",
+  "controller_manifest_sha256": "91a5221cbf37e77efd4f86c7c57f2328367994ccb17f5b7cb296727a651dfd3d",
+  "detached_systemd_execution_and_internal_time_budgets_preserved": true,
+  "exclusive_directory_and_result_creation_preserved": true,
+  "limits": [
+    "Constant binding review reuses qualified launcher/observer functions; no launch or observation of the VPS was performed.",
+    "Success of process submission is distinct from CUTOVER_VERIFIED and postflight evidence."
+  ],
+  "new_private_status_directory": "/run/mrjam-first-release-status-03",
+  "new_unit": "mrjam-first-release-20261102-03.service",
+  "no_runtime_command_or_environment_interface_added": true,
+  "observer_closed_properties_result_schema_and_phase_preserved": true,
+  "old_units_and_status_directories_preserved": true,
+  "only_exact_controller_unit_and_status_paths_changed_byte_for_byte": true,
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "sources": {
+    "launch": {
+      "previous_sha256": "2f5fd24cda956ee674c4d6f50d49abfe3764249916348d458da03f2af1bb72eb",
+      "sha256": "9bdbb562d1c8b8439876160a074f26851c3808ebd829a5a210f9e054c6bbc79f"
+    },
+    "observe": {
+      "previous_sha256": "b66a7c81963f338aacd511229a9d732f705b27bdb91598c27910dfe2414124ab",
+      "sha256": "4ba5ea91ef093457d2c33ba40eea474cefc9270051659d45ed3146ff35b03fbd"
+    }
+  }
+}

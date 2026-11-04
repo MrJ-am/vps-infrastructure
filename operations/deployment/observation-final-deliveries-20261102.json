@@ -1,0 +1,47 @@
+{
+  "credential_creation_performed": false,
+  "date": "2026-11-02",
+  "deliveries": {
+    "candidate-code": {
+      "manifest_sha256": "5a2ee80c7e04fe735abb01818b0ac7f8299585ca8341bb1d54200100644a60f2",
+      "receiver_sha256": "45e59bf2aea59c6c7be6fc75e85b4ef575e9eb055b4a177b7650d656c4469b58",
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      }
+    },
+    "final-code": {
+      "manifest_sha256": "3a0d7f2db8fea952512b24aaae21a7a9ee33825e7a4412039d3e9c23d493bee3",
+      "receiver_sha256": "882bd97fcfb09fa193990955401f622d2f8ed4234e9a37f829d9facc103f9aa1",
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      }
+    },
+    "source-bundles": {
+      "manifest_sha256": "ae4e66f1430b775a7bc7409171faba48835b0a2a623337d5346c503067d3310d",
+      "receiver_sha256": "a3cff8bcae376585e3c999108ece5289a2391bfa93b0f3d020088abc01f86631",
+      "result": {
+        "already_present_count": 0,
+        "application_activation": false,
+        "bundle_count": 9,
+        "code": "SOURCE_BUNDLES_RECEIVED",
+        "created_count": 9,
+        "forgejo_imported": false,
+        "schema_version": 1,
+        "stream_sha256": "300903ae2bac79141d2cf42b6e8b8ab8c9dca3618fed8eecc1afa2387851bbb3"
+      }
+    }
+  },
+  "generation_activation_performed": false,
+  "limits": [
+    "This receipt establishes code and bundle reception only. It does not establish activation, protected Forgejo import or service availability."
+  ],
+  "schema_version": 1,
+  "scope": "actual inactive delivery to srv1982677",
+  "source_governance_adoption_performed": false
+}

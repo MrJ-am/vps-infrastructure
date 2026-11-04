@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "deployment_authorized": false,
+  "stack": "/nix/store/yx8987hffj0kssmm6mg03ix1yzbcyyf9-mrjam-protected-delivery-stack-1",
+  "proposed_system": "/nix/store/z13m4k64jpgf70mw2xpyqq6dsngqyiq1-nixos-system-srv1982677-26.05pre-git",
+  "baseline_system": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git",
+  "checks": {
+    "admissionPackage": true,
+    "assertionsPass": true,
+    "authorityPackage": true,
+    "baselineExact": true,
+    "onlyControlServicesChanged": true,
+    "platformAdoptionPreserved": true,
+    "routesPreserved": true,
+    "serviceBoundariesPreserved": true,
+    "stackBound": true,
+    "tmpfilesPerPathPreserved": true,
+    "unitNamesPreserved": true
+  },
+  "changed_units": [
+    "mrjam-acceptance-merge.service",
+    "mrjam-acceptance-mirror.service",
+    "mrjam-acceptance-review.service",
+    "mrjam-acceptance-sync.service",
+    "mrjam-admission-controller.service",
+    "mrjam-delivery-preparation.service",
+    "mrjam-delivery-staging.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-promotion.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-worker@.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "reconstruction_exact": true,
+  "reconstruction_changed_units": [],
+  "unit_commands_match_descriptor": true,
+  "tests": {
+    "command": "python3 -m unittest test_delivery_stack test_delivery_environment test_generation_views",
+    "passed": 29
+  },
+  "limits": [
+    "No VPS activation or complete system build performed.",
+    "Protected rules PR2 adoption and real application delivery remain required.",
+    "Application constructors with the new stack still require end-to-end evaluation."
+  ],
+  "files": {
+    "delivery-stack-host-evaluation-003.json": "84ce46b4089f7acffa3bdc1e7aa90fa43a795ad3e8e52b256900b1c191173743",
+    "delivery-stack-host-reproduction-003.json": "a1fd9eca4c9379be90e12b3150bc7f0bd5f281c5cf0a5e881c485b70f8e9b116",
+    "delivery-stack-proposed-state-003.json": "b1c5b48cb0a126c9706fd4511d8211b07f497000cb6c5a6b83c7cda9af2dadd3"
+  }
+}

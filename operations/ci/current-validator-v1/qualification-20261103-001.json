@@ -1,0 +1,266 @@
+{
+  "activation_performed": false,
+  "actual_authority_policy_package": "/nix/store/19r3a6ylzp32vg3bkfr9wfhd1n8cwm71-mrjam-validation-authority-credentials-2",
+  "application_validation_performed": false,
+  "attestation_emitted": false,
+  "authority_package_build_log": {
+    "bytes": 603,
+    "path": ".local/ci-current-validator-v1-20261103/authority-002.stderr",
+    "sha256": "df5af4221a3c5e81d3168e84df357a14032fa6f828b1f8dee430ebea74c91add"
+  },
+  "bindings": {
+    "application_validation_performed": false,
+    "attestation_emitted": false,
+    "authority_policy_sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66",
+    "closure": "/nix/store/k07544vp3n9hfww11na9zq5rm1j8d78y-closure-info",
+    "closure_path_count": 133,
+    "git_tree_algorithm": "Git SHA-1",
+    "policy_window_utc": [
+      "2026-11-03T00:31:00Z",
+      "2026-11-10T00:31:00Z"
+    ],
+    "proposal_and_selected_content_algorithm": "SHA-256; separate bindings, not interchangeable with Git tree identifiers",
+    "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+    "public_key_observation_sha256": "2f004041d23611cdc1dd17eae24b1395f93894009a3e94ebaaf6745c450c1697",
+    "report_policy_sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001",
+    "required_steps_count": 75,
+    "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "schema_version": 1,
+    "source": "/nix/store/qaf21rxsm38vya6kr6pqr5w02z3dbzbv-mrjam-public-proposed-sources-b02-readiness-v1",
+    "status": "proposed-not-adopted-or-activated",
+    "validator": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1"
+  },
+  "control_changes": [
+    "Original policy parser retained byte-identically as base_policy; a closed schema2 wrapper requires the exact reviewed overlay.",
+    "Runner adds only the readiness import, fixed pre-Cargo overlay call/step and lowercase Elm entrypoint report label.",
+    "All other original executable modules compare byte-identically; runtime changes only its immutable policy path.",
+    "Old validator, old runtime and old synthetic policy are absent from the new 133-path closure."
+  ],
+  "current_application_patch_proof": {
+    "bytes": 4840,
+    "path": "operations/runtime/mateval-readiness-v1/qualification-20261102.json",
+    "sha256": "ac93a8df9a6b45d77eea97ffd0884c43e2ae59f81fb3eb7ff81ff66998873d5f"
+  },
+  "date": "2026-11-03",
+  "history": [
+    {
+      "correction": "Parse the fixed runtime JSON without string context, then restore that same dependency context before writeText; generated dependency references remain intact.",
+      "kind": "Nix evaluation context error before build",
+      "log": {
+        "bytes": 4484,
+        "path": ".local/ci-current-validator-v1-20261103/package-001.stderr",
+        "sha256": "7ccf58b577c71ad58db539407fca1d4a1b571ff4c3fca050009ad17a6f9f8a41"
+      }
+    }
+  ],
+  "label_normalization": {
+    "commands_and_test_selection_unchanged": true,
+    "final_authority_contract_build_passed": true,
+    "first_refused_build": {
+      "bytes": 2993,
+      "path": ".local/ci-current-validator-v1-20261103/authority-001.stderr",
+      "sha256": "49273dd5036b2d1741ec5cbe503fd7daf621ac8dd1a0a73948c63b7827f3cc58"
+    },
+    "mapping": [
+      {
+        "after": "elm-entrypoint-style-bibliotheque",
+        "before": "elm-entrypoint-style-Bibliotheque"
+      },
+      {
+        "after": "elm-entrypoint-style-blocs",
+        "before": "elm-entrypoint-style-Blocs"
+      },
+      {
+        "after": "elm-entrypoint-style-contextes",
+        "before": "elm-entrypoint-style-Contextes"
+      },
+      {
+        "after": "elm-entrypoint-style-galerie",
+        "before": "elm-entrypoint-style-Galerie"
+      },
+      {
+        "after": "elm-entrypoint-style-geometrie",
+        "before": "elm-entrypoint-style-Geometrie"
+      },
+      {
+        "after": "elm-entrypoint-style-lecture",
+        "before": "elm-entrypoint-style-Lecture"
+      },
+      {
+        "after": "elm-entrypoint-style-medias",
+        "before": "elm-entrypoint-style-Medias"
+      },
+      {
+        "after": "elm-entrypoint-style-scientifique",
+        "before": "elm-entrypoint-style-Scientifique"
+      }
+    ],
+    "reason": "Actual authority package rejected eight historical uppercase step labels against its frozen lowercase protocol."
+  },
+  "limits": [
+    "Twelve targeted tests and twelve Nix assertions do not establish the 75 application checks as passed.",
+    "A future local full validation produces new artifacts; no byte equality with wasr/current frontends is claimed yet.",
+    "No Forgejo dispatch, production attestation, human review or deployment authority is established.",
+    "Workers/adopters/migrations outside the three-artifact protocol retain separate proofs.",
+    "Git SHA1 tree identities, selected-content/proposal SHA256 and artifact hashes remain distinct; release-manifest mapping is not established."
+  ],
+  "nix_evaluation": {
+    "assertions": {
+      "assertionsPass": true,
+      "credentialV2Selected": true,
+      "currentValidatorExact": true,
+      "exactPrivateKeyReference": true,
+      "noAutomaticAuthorityStart": true,
+      "noAutomaticStagingStart": true,
+      "observedDistinctUids": true,
+      "producerBoundToCurrentValidator": true,
+      "proposalDigestRemainsSha256": true,
+      "sameProposedRules": true,
+      "sourceTreeIdentifiersRemainGitSha1": true,
+      "stagedProposalExactlyAdmitted": true
+    },
+    "log": {
+      "bytes": 1589,
+      "path": ".local/ci-current-validator-v1-20261103/evaluation-002.json",
+      "sha256": "54adfad888ad2d94b40f409bd95321ee0678d471a8d134979888055727566114"
+    },
+    "synthetic_context": "Evaluation with actual proposed code/policy/public-key bindings, synthetic filesystem/controller/token references only; not a deployable host configuration"
+  },
+  "package_info": {
+    "/nix/store/19r3a6ylzp32vg3bkfr9wfhd1n8cwm71-mrjam-validation-authority-credentials-2": {
+      "ca": null,
+      "deriver": "/nix/store/h9szzhd01nmgzldlpscfrga35frifwr8-mrjam-validation-authority-credentials-2.drv",
+      "narHash": "sha256-FYWWsdcMv+Mnty3lYn/zA+fg1nHD0sEpvT0p3AquykM=",
+      "narSize": 94280,
+      "references": [
+        "/nix/store/19r3a6ylzp32vg3bkfr9wfhd1n8cwm71-mrjam-validation-authority-credentials-2",
+        "/nix/store/d8bhnl18vsch1zbrvm28w6dvn6acz1k6-mrjam-validation-authority-policy.json",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/j83qp3j217jl2v5pa5v5zv606pz6ya7k-mrjam-validation-export-policy.json",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "registrationTime": 1793666245,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1": {
+      "ca": null,
+      "deriver": "/nix/store/kydxsgji2yx3lqg547hxqqyfl6c0cplx-mrjam-validate-current-readiness-1.drv",
+      "narHash": "sha256-ccWYvZ+frJ3wafs7ZSCJpmHqtjbfqSoRvRx43B5nKes=",
+      "narSize": 103496,
+      "references": [
+        "/nix/store/46qp9p9bcr1302szsjmryjjajbkai2ds-mrjam-reviewed-readiness-overlay.json",
+        "/nix/store/8xghp38id2svx5mr15hnsr3kq5vsxnsx-readiness.patch",
+        "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/waj0a65a873mqps7nmrkqijcy2h5nkz2-patch-2.8",
+        "/nix/store/zx6fpf336icm24bx2cfhc50vs9alvhhr-mrjam-current-validator-runtime-v1.json"
+      ],
+      "registrationTime": 1793666233,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/qaf21rxsm38vya6kr6pqr5w02z3dbzbv-mrjam-public-proposed-sources-b02-readiness-v1": {
+      "ca": null,
+      "deriver": "/nix/store/wv4w704a8sm9rxglqx6jkjssvkzdjgi0-mrjam-public-proposed-sources-b02-readiness-v1.drv",
+      "narHash": "sha256-bj+xaOxwZ08hGAwL5K0fOi1XRgYgUn7HDuMDFf2hff0=",
+      "narSize": 6728128,
+      "references": [],
+      "registrationTime": 1793665839,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_access": false,
+  "schema_version": 1,
+  "source_selection_proof": {
+    "bytes": 9426,
+    "path": "operations/ci/current-validator-v1/source-choice-20261103.json",
+    "sha256": "219c739ebfbd42430a4909a97ce317fbe8d9dcfe58049bb6773af87702077846"
+  },
+  "sources": [
+    {
+      "bytes": 2822,
+      "path": "operations/ci/current-validator-v1/package.nix",
+      "sha256": "f78621cdcddd3c2760572f6f5211600c0acec9e5dad34de42870b424b4254b4f"
+    },
+    {
+      "bytes": 2876,
+      "path": "operations/ci/current-validator-v1/readiness.py",
+      "sha256": "06203a9ee788d79e2bfe854a5415a9a70821ae64714482d82a45636e920573f5"
+    },
+    {
+      "bytes": 838,
+      "path": "operations/ci/current-validator-v1/policy_v2.py",
+      "sha256": "6c666de2dc62e25b5c5defa733ed66c235466fec764541bec121365844381162"
+    },
+    {
+      "bytes": 848,
+      "path": "operations/ci/current-validator-v1/overlay.json",
+      "sha256": "07e4da437d1d94432812f5d8e49ad011e64dc04816e51f9c2711f79052317755"
+    },
+    {
+      "bytes": 32619,
+      "path": "operations/ci/current-validator-v1/policy.json",
+      "sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001"
+    },
+    {
+      "bytes": 1076,
+      "path": "operations/ci/current-validator-v1/staging.nix",
+      "sha256": "13c4ccde7da874f36f81a734c3b65a8725045cd911caa41f885bdb9253c275a7"
+    },
+    {
+      "bytes": 270,
+      "path": "operations/ci/current-validator-v1/bindings.nix",
+      "sha256": "8720d23f6540daff77d7708f1567a022148c313cf65696b81bac7266af485ba7"
+    },
+    {
+      "bytes": 5525,
+      "path": "operations/ci/current-validator-v1/authority-policy.proposed.json",
+      "sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66"
+    },
+    {
+      "bytes": 4082,
+      "path": "operations/ci/current-validator-v1/prepare_authority_policy.py",
+      "sha256": "86b5cdaf29f87f61c53ac4d8290a33b316e7e0ce41b3b244fa05176a1f3ad6e6"
+    },
+    {
+      "bytes": 4292,
+      "path": "operations/ci/current-validator-v1/evaluation.nix",
+      "sha256": "213889f93fc3f84aaa565e5f8220d3473cc9f08f48d71b945edb1bb3fabca906"
+    },
+    {
+      "bytes": 8124,
+      "path": "operations/ci/current-validator-v1/test_current_validator.py",
+      "sha256": "7ff8d6903bcc93c7e19de2add8df8e0d9effe9a58888a98a56d9b89bb1e75cba"
+    },
+    {
+      "bytes": 4442,
+      "path": "operations/ci/current-validator-v1/record_qualification.py",
+      "sha256": "36b86fad26fb2aa14184f0dd80abb20615b11c3742d66b8a53a73b0efd2674af"
+    },
+    {
+      "bytes": 6106,
+      "path": "operations/ci/current-validator-v1/inspect.py",
+      "sha256": "e9790e161ab11cb6dcd72cbe7aa25278bf7c5f9f348e883501bf241723c31c10"
+    }
+  ],
+  "status": "passed-targeted-qualification",
+  "targeted_tests": {
+    "count": 12,
+    "exit": 0,
+    "log": {
+      "bytes": 1523,
+      "path": ".local/ci-current-validator-v1-20261103/tests-002.stderr",
+      "sha256": "cb603ce5ec7b52c609e4fd89eadc4068010b78a322603af3aa3f0bfcdfa38f81"
+    }
+  }
+}

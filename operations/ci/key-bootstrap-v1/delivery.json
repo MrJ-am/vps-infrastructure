@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1": {
+      "nar_hash": "sha256-pGx2E15GblvB3xqfrTe5QZvcRJoYxamFT53Hk4Bf8rI=",
+      "references": [
+        "/nix/store/5mljdc68ab1siz9w0ckwmnjfn6969hqa-mrjam-validation-authority-key-bootstrap-1",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ]
+    },
+    "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin": {
+      "nar_hash": "sha256-i89zhk1jawVLvmwERelB7ipz1St+Lg7Yg+c2crjRrBE=",
+      "references": [
+        "/nix/store/dphsh3jff8w6n9p3xbfmkia5krqwv52f-glibc-2.42-103",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/q1fgk31hkgl8a7znhmvb0bq8bbcaf64y-openssl-3.6.5"
+      ]
+    }
+  },
+  "export_bytes": 1331224,
+  "export_sha256": "432595565617c33f930c54c127f0a88ac1112af9dd5b4a18b61caae3d9ca67f7",
+  "required_free_bytes": 1076404272,
+  "schema_version": 1
+}

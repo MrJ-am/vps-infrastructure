@@ -1,0 +1,82 @@
+{
+  "date": "2026-11-02",
+  "derivation": "/nix/store/an67cxqc179jpmvn7wxq5iw812hlzjn2-vm-test-run-mrjam-temporary-passkey-nginx-restoration.drv",
+  "nar_hash": "sha256-7GWM3oMF93EFPiGaypsEfuRluYXJksm44Yy7sorKbg8=",
+  "output": "/nix/store/f8zd07fs9w67h8dszg82j6zyl7h00dbw-vm-test-run-mrjam-temporary-passkey-nginx-restoration",
+  "passed": true,
+  "prior_attempts": [
+    {
+      "attempts": [
+        1
+      ],
+      "finding": "overly strict Nix basename pattern refused valid binding; corrected"
+    },
+    {
+      "attempts": [
+        2,
+        3,
+        4
+      ],
+      "finding": "Nginx -t probes existing privileged binds; missing CAP_NET_BIND_SERVICE refused before activation; corrected"
+    },
+    {
+      "attempts": [
+        5
+      ],
+      "finding": "rapid test restarts reached systemd start-rate limit; rollback now resets only fixed nginx.service counter before restoration"
+    },
+    {
+      "attempts": [
+        6
+      ],
+      "finding": "fixture observed inactive bind transition after restoration; now waits for actual restored HTTP endpoints"
+    },
+    {
+      "attempts": [
+        7
+      ],
+      "finding": "nine groups pass without diagnostic instrumentation"
+    }
+  ],
+  "production_binding_sha256": "a885912c944b7559cb398cf672ec3665f470b2fa1ae5177e03e67ca2ac02f3af",
+  "production_route_package": "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+  "production_route_unit": "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service/mrjam-passkey-nginx-route.service",
+  "production_route_unit_sha256": "034249d696a7eef43a834b95a678ac0275326f9a05523d70a8b67ad15eb32b7b",
+  "result": {
+    "checks": [
+      "changed-immutable-config-hash-refused-without-route",
+      "real-nginx-test-failure-preserves-running-old-configuration",
+      "failed-restart-automatically-restores-old-nginx",
+      "one-prefix-proxied-with-host-fixed-cookies-and-authorization-stripped",
+      "all-other-config-bytes-and-existing-vhosts-preserved",
+      "concurrent-apply-refused-and-explicit-stop-restores",
+      "main-sigkill-exec-stop-post-restores-old-route",
+      "systemd-expiration-restores-old-route-without-human-action",
+      "foreign-runtime-dropin-refused-and-preserved"
+    ],
+    "fixture_sha256": "603cc3ac21e618eb448b18d4b039c7feab65e89282eaad346d17a40a3814d40c",
+    "helper_functions_unmodified": true,
+    "limits": [
+      "Invented TLS and socket HTTP fixture only; real portal qualified separately",
+      "RuntimeMaxSec shortened from 900 to 12 for expiration case",
+      "Exact helper source; only immutable binding and fixed runtime entry wrapper differ"
+    ],
+    "module_sha256": "866be2c2c1b92e6b0e1c8090ba7dde105448a18e1e3409a5028c0560be2643df",
+    "nginx_binary": "/nix/store/hrsgwp6dqnr9y9svhjzvxw0phgmqvnqk-nginx-1.30.4/bin/nginx",
+    "nginx_real": true,
+    "nginx_sha256": "f7c5db5009c76a4dda6ac06312b312eb13586b5aa524a6c7eb1bf9fda19e8a62",
+    "passed": true,
+    "private_data_read": false,
+    "probe_sha256": "eb7edf915ef6b35af708b338a202ffd91a1acf8597b036f752420deacb8d3bfb",
+    "production_access": false,
+    "route_sha256": "a16bf9bb3c7653feca08e0d638a2894e1120a02e35e9cc9a725438a05e453438",
+    "schema_version": 1,
+    "service_starts_only": "synthetic nginx and synthetic control/socket",
+    "test_sha256": "ff515b172b43dc92f8618e5e58af4d1ae78580d5f1ab890e5699086a601a58b7"
+  },
+  "result_sha256": "ae8f5b7b4794c0d6191d3dab90f2509608da1e6cca9cdbbe33622c523a0572e9",
+  "schema_version": 1,
+  "scope": "independent local synthetic VM only; no SSH or remote publication",
+  "seconds": 31.48,
+  "vm_stopped": true
+}

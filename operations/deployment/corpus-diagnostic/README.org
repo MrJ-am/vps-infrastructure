@@ -1,0 +1,50 @@
+#+title: Classifieur fermé du corpus Matheval 0.3.0
+#+date: 2026-11-02
+#+language: fr
+
+Ce paquet ne répare, n'importe ni ne modifie un corpus. Il distingue une
+différence de représentation d'une différence dans les champs scientifiques
+connus avant de choisir une correction.
+
+=src/types.rs= est une copie octet pour octet du module qualifié
+=mateval/src/types.rs=, empreinte =aed36e3ab6058d6756f3e8a6198b5a5df4c4af32e5d1eeef3f95eeed4312674c=.
+Les versions serde/serde_json et l'option =preserve_order= restent identiques.
+Le module pur ne référence que deux variantes de l'erreur applicative ; le
+binaire fournit ces deux variantes sans contenu. Aucune logique Bank,
+Question, Production ou validation n'est réécrite.
+
+La banque publique qualifiée est intégrée dans le binaire. L'unique entrée est
+le JSONB de la banque existante, par stdin local, limité à 5 Mio. La sortie
+contient uniquement seize booléens fermés : égalité brute et typée, validité,
+groupes de champs, ordre et présence de champs supplémentaires. Elle ne
+contient aucun texte, identifiant, corpus, codebook ou digest privé.
+
+Le wrapper =probe.py= exige l'ancienne génération exacte, root, le nom d'hôte
+et le hash ELF. Il exécute une transaction PostgreSQL READ ONLY avec
+=SET LOCAL ROLE matheval_app=, sélectionne seulement =bank= de la version fixe
+0.3.0, garde ces octets en mémoire et les transmet au binaire local. Aucun
+fichier temporaire, lecture de codebook ou connexion réseau supplémentaire.
+Le résultat du binaire est revalidé par un schéma fermé avant émission.
+
+Les types Bank ignorent les champs inconnus mais n'ajoutent aucun défaut,
+ne normalisent aucun texte et ne trient aucun tableau. L'importeur existant
+valide une copie typée mais enregistre le JSON original ; ce classifieur
+n'affirme donc pas qu'une différence typée explique à elle seule son origine.
+
+* Preuves
+
+Cinq tests du binaire réel couvrent source exacte, banque publique, champs
+inconnus, différences de texte et ordre, champs manquants, identifiants
+invalides et entrées bornées. Deux tests supplémentaires couvrent le schéma
+de sortie et la chaîne PostgreSQL 17 UTF8 → pipe → binaire. Le rôle du banc
+n'a aucun droit SELECT sur codebook ; la chaîne passe néanmoins. Une écriture
+dans la transaction READ ONLY est refusée et le nombre de lignes reste intact.
+
+La première fixture utilisait SQL_ASCII et refusait les caractères Unicode
+de la banque publique à l'insertion. Seule cette fixture a été corrigée en
+UTF8 ; ni le binaire ni le probe n'ont été modifiés pour faire passer ce test.
+
+Le paquet est =/nix/store/anvdal9pag7qh6w13cn88mw1pdlyiky2-mrjam-mateval-corpus-classifier-1=.
+La fermeture comprend cinq chemins ; aucun compilateur, source vendue ou
+répertoire d'assets n'est référencé par le binaire livré. Les entrées et le
+paquet restent distincts des anciens artefacts et de leurs reçus.

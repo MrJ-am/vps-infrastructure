@@ -1,0 +1,16 @@
+-- Source psql inactive ; appeler explicitement dans la seule base neuve.
+\set ON_ERROR_STOP on
+DO $$
+BEGIN
+ IF current_database()<>'vision_journal'
+ OR EXISTS(SELECT FROM pg_namespace WHERE nspname='vision_effacements')
+ OR EXISTS(SELECT FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace
+           WHERE n.nspname='public' AND c.relkind IN ('r','p','v','m','S'))
+ THEN RAISE EXCEPTION 'journal_bootstrap_requires_fresh_dedicated_database'; END IF;
+END $$;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+\ir ../journal/001_effacements.sql
+\ir ../journal/002_reprise.sql
+\ir ../journal/003_archivage_rejeu.sql
+\ir ../journal/004_ordre_rejeu.sql
+\ir ../journal/005_kanidm_issuer.sql

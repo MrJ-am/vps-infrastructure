@@ -2,8 +2,8 @@
 # on an older host must not substitute that host's Forgejo, runner or renderer.
 { system ? "x86_64-linux" }:
 let
-  flakeLock = builtins.fromJSON (builtins.readFile ../../flake.lock);
-  versions = builtins.fromJSON (builtins.readFile ./versions.lock.json);
+  flakeLock = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../../flake.lock));
+  versions = builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ./versions.lock.json));
   input = flakeLock.nodes.nixpkgs.locked;
   # Fixed-output source: reusable from the store without a per-user Git cache.
   # The revision and NAR hash are the same as the qualified flake input.

@@ -1,0 +1,54 @@
+{
+  "activation_performed": false,
+  "changes": [
+    "Fixed exact systemd signing credential reader",
+    "Signer import and single key-read call only; all other packaged executable sources compare exactly after existing immutable path substitutions"
+  ],
+  "date": "2026-11-03",
+  "integrated_qualification": {
+    "bytes": 13116,
+    "path": "operations/ci/integration-v1/qualification-20261103-001.json",
+    "sha256": "2a6f8cdbb02e94557586ae2ba52241fe07f4a2646f1323d1365e413ead946317"
+  },
+  "package": "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+  "package_info": {
+    "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2": {
+      "ca": null,
+      "deriver": "/nix/store/hirvlaypcz122dsc5g0zb2kqz3g56kzd-mrjam-validation-authority-credentials-2.drv",
+      "narHash": "sha256-oViFPuQe24bhxEqxC8xvo+zD+hMbE7SEttoZCbFTqWE=",
+      "narSize": 94280,
+      "references": [
+        "/nix/store/d48pqnf7q0hfqkhvbg6vd0nk6ffihzy5-mrjam-validation-authority-credentials-2",
+        "/nix/store/f2xmb4gv2nh14qggn5df25i8vz532vxy-mrjam-validation-export-policy.json",
+        "/nix/store/fya253x5ky7rhfz6rkgdwjr1fzf7fy71-openssl-3.6.5-bin",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/mjrp49pbx6ni76zdpjw2jsn1dlfa49rh-mrjam-validation-authority-policy.json"
+      ],
+      "registrationTime": 1793663287,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "production_access": false,
+  "schema_version": 1,
+  "sources": [
+    {
+      "bytes": 2324,
+      "path": "operations/ci/authority-credentials-v2/reader.py",
+      "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+    },
+    {
+      "bytes": 962,
+      "path": "operations/ci/authority-credentials-v2/package.nix",
+      "sha256": "2bf9aa84b5ad585b5b881561234f04d47e6db3e4d9de98d74f48b816d6d80acf"
+    },
+    {
+      "bytes": 434,
+      "path": "operations/ci/authority-credentials-v2/module.nix",
+      "sha256": "f018ea6abfe5aa30fbbbc7d6d71c8286702d89bd0db499c83662dd87decbbf39"
+    }
+  ]
+}

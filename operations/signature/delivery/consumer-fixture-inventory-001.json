@@ -1,0 +1,173 @@
+{
+  "archive_sha256": "6867aa7273682361e79dfa2fb968b0d269f70e6b27ccd28953310d7a192fe8ad",
+  "deployment_authorized": false,
+  "files": [
+    {
+      "bytes": 1332,
+      "path": "audition/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 7396,
+      "path": "audition/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 4433,
+      "path": "audition/assets/mrjam/Parisienne-OFL.txt",
+      "sha256": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db"
+    },
+    {
+      "bytes": 61248,
+      "path": "audition/assets/mrjam/Parisienne-Regular.ttf",
+      "sha256": "bc9ee17f022e20bc700797e5f557d14bfa43af0c98d9e6c9c5c1ca4ec7aacd57"
+    },
+    {
+      "bytes": 996,
+      "path": "audition/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "log/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "log/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "log/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 996,
+      "path": "log/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "logique/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "logique/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "logique/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 996,
+      "path": "logique/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "mateval/admin/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "mateval/admin/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "mateval/admin/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 996,
+      "path": "mateval/admin/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "mateval/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "mateval/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "mateval/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 996,
+      "path": "mateval/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "style/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "style/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "style/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 4433,
+      "path": "style/assets/mrjam/Parisienne-OFL.txt",
+      "sha256": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db"
+    },
+    {
+      "bytes": 61248,
+      "path": "style/assets/mrjam/Parisienne-Regular.ttf",
+      "sha256": "bc9ee17f022e20bc700797e5f557d14bfa43af0c98d9e6c9c5c1ca4ec7aacd57"
+    },
+    {
+      "bytes": 996,
+      "path": "style/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    },
+    {
+      "bytes": 1332,
+      "path": "vision/assets/mrjam/EchoPoint.woff2",
+      "sha256": "816109c8291b12a0b2a8f0f981cc260a074a55190d94df322b57196755caebda"
+    },
+    {
+      "bytes": 503,
+      "path": "vision/assets/mrjam/Echologo.svg",
+      "sha256": "ce9ff8bf622122aaec0b88a22b9633d1c09ef35b32b9f93289f17889d520a0b3"
+    },
+    {
+      "bytes": 7396,
+      "path": "vision/assets/mrjam/MrJamSignature.woff2",
+      "sha256": "1525a85c58cdea88dcb93e077c4da98d2af1ff70ae7e6710fdeda36e8af28604"
+    },
+    {
+      "bytes": 4433,
+      "path": "vision/assets/mrjam/Parisienne-OFL.txt",
+      "sha256": "1dd84b611f4bed7f9ff9089e76a96337b187e6f283a4ab33bcb987f844f2c4db"
+    },
+    {
+      "bytes": 28068,
+      "path": "vision/assets/mrjam/Parisienne-Regular.woff2",
+      "sha256": "12dfc24634d76dc70010417a20599eddcbb8b14c68500c3b77ee6ef01d553eea"
+    },
+    {
+      "bytes": 996,
+      "path": "vision/assets/mrjam/signature.css",
+      "sha256": "7d1b958a4073d71d506385fd0dc499169941ed546b4bf5a3da45b66dd8708830"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Previously qualified e06 frontend fixture; not a fresh production inventory"
+}

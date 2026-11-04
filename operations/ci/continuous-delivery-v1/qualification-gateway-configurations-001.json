@@ -1,0 +1,17 @@
+{
+  "baseline": "17lw8y05pgzmcl9q6wvknbf7z1znajl9",
+  "changed_locations": 11,
+  "code": "ONLY_APPLICATION_UPSTREAM_PORT_DIFFERS",
+  "configurations": {
+    "blue": {
+      "path": "/nix/store/s7fp8ah2x5wgvnigxckzpsprqihr1g46-nginx.conf",
+      "sha256": "457b91466303c59d1e9767620f8aada298d4a99fe6f104874070abffc4d77d47"
+    },
+    "green": {
+      "path": "/nix/store/59n4088bnzpg40nbr5r8yamky9v93bkf-nginx.conf",
+      "sha256": "bd341cd7a7826dca2229370c256fc466598389e250afec5f10621fc4c6cd89b7"
+    }
+  },
+  "production_activation": false,
+  "schema_version": 1
+}

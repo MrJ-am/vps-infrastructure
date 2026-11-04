@@ -1,0 +1,63 @@
+#+title: Réintégration ViSe — qualification du binaire réel
+
+La construction du binaire autonome et du site est réussie à la révision
+8c8ef66f943c10cb1397868bd1c5ed1962a97b5c. Les anciennes recettes et empreintes
+restent utilisées. Une correction de prepare.py rend les chemins destination
+et cache npm absolus : le cache ne doit pas se retrouver dans les sources
+lorsque npm est lancé depuis destination/source. Le premier lot a été écarté ;
+le second reproduit exactement les manifestes f119... puis b0c8... historiques.
+Node24.19.0 et son npm11.17.0 proviennent de l'archive verrouillée. Aucun script
+npm de cycle d'installation n'est exécuté.
+
+Le build passe TypeScript et les15 tests ; les8 refus de matériel d'entrée
+passent également. Le test VM utilise le vrai binaire, les9 tests API et
+PostgreSQL17 sur le pin du VPS. La VM a terminé avec succès : refus de schémas
+et droits incompatibles, neuf tests API, arrêt propre, redémarrage et restauration
+avec le journal courant empêchant la résurrection des comptes supprimés.
+La preuve qualification-runtime-001.json porte uniquement sur des données
+inventées ; elle ne constitue pas une activation en production.
+
+Les observations du VPS lisent seulement états d'unités, métadonnées de fichiers,
+rôles et schéma. La base et le journal sont conservés ; le schéma v1 correspond.
+L'utilisateur système n'est plus présent ; son UID/GID981 est disponible.
+Le rôle applicatif possède encore la base ; l'adoption des droits reste à faire
+après le test VM et préparation d'un retour préservant les écritures.
+Aucune activation, initialisation, migration, suppression ni lecture de contenu
+applicatif n'a été effectuée par ces observations.
+
+* Adoption et activation sur le VPS
+La capture cohérente de la base et du journal a été faite service arrêté,
+sans connexion SQL ni processus de l'identité981. Les deux fichiers et leurs
+empreintes restent privés, sous /var/lib/mrjam-cutover/vise-adoption-20261103.
+Le format pg_dump est vérifié ; la restauration avec journal courant a été
+qualifiée en VM. Aucune restauration de données de production n'est exécutée.
+L'adoption SQL est réussie et le schéma v1 reste exact ; le rôle applicatif
+ne possède plus les objets et n'a plus de droits DDL.
+
+La première tentative d'activation a échoué au contrôle de connexion ViSe
+(code11 du pré-démarrage). Le retour vers3fylc a fonctionné sans restauration
+SQL et les autres services ont été vérifiés actifs. Cause constatée sur le
+serveur : pg_settings.context='postmaster' pour hba_file. La nouvelle règle
+était dans un nouveau fichier immuable ; HUP ne change pas ce chemin.
+La seconde tentative utilise donc un redémarrage PostgreSQL borné et rétablit
+les services dépendants précédemment vérifiés actifs. Elle réussit : génération
+h7gsm02w34zbacxamwjl98qmbqyb3kci active, ViSe répond en HTTPS, autres services
+et CI actifs. Le boot reste provisoirement3fylc jusqu'à promotion explicite.
+Les anciens journaux d'essai sont conservés ; ne pas rejouer capture/adoption
+ou activation001 comme des opérations ordinaires de livraison.
+
+La promotion prépare le démarrage de ViSe et le renouvellement du certificat
+existant. Elle ne réactive pas l'ancien script de sauvegarde séquentielle.
+La livraison automatique générale depuis Cloud reste un chantier distinct.
+
+* Promotion002 réussie
+Current et boot : 17lw8y05pgzmcl9q6wvknbf7z1znajl9. ViSe est actif en HTTPS,
+lié à multi-user.target ; le timer de renouvellement est actif. La première
+promotion était revenue au service fonctionnel après échec du renouvellement.
+Un diagnostic dans le même environnement a isolé la cause : cmp absent du
+PATH (exit127 après contrôle de certificat), compte et clés accessibles,
+étape lego réussie. Le profil promu ajoute diffutils aux neuf renouvellements.
+Leurs neuf exécutions passent. Nginx est vérifié et redémarré pour prendre le
+nouveau chemin de configuration ; PostgreSQL et ViSe ne redémarrent pas pendant
+cette promotion. Les preuves historiques d'échec restent conservées.
+La configuration boot est vérifiée sans redémarrer le VPS.

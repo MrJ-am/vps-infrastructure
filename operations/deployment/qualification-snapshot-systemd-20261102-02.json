@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "quiescence",
+    "paired-return",
+    "opening-failure",
+    "public-verification-failure",
+    "successful-open",
+    "storage-boundaries",
+    "corrupt-archive"
+  ],
+  "cutover_sha256": "e452071642786af6395f82b41fe06a74b66d3200c2740cb12961bdbcca9d9936",
+  "limitations": [
+    "No VPS data, credentials, storage capacity or maintenance-window duration tested",
+    "Generation switching is a sequencing model; the sealed production backend is separate",
+    "No snapshot, SQL row, application file or command diagnostics exported"
+  ],
+  "postgresql": "17.11",
+  "production_qualification": false,
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg",
+  "snapshot_sha256": "59323ad3f597f1b316ca1dfe5d546666fdd6fbd451a52c08d2f506de353e9ce6",
+  "output": "/nix/store/ac8j7p0z0hr2lshh8f59a9kjh5l47clp-vm-test-run-mrjam-paired-offline-snapshot-synthetic",
+  "recorded_date": "2026-11-02",
+  "authority": "Spectre-synthetic-systemd"
+}

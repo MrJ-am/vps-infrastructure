@@ -1,0 +1,20 @@
+{
+  "built_layout_verified": true,
+  "candidate": "/nix/store/51bx822kblj1a93pxnmqqwjiyxnbqf68-mrjam-vise-delivery-candidate-8ea736fc4819",
+  "changed": [
+    "multi-user.target.wants/vise.service",
+    "vise.service"
+  ],
+  "new": "/nix/store/aji3x4pmhxbmjvafgyycp6641w068lrq-nixos-system-srv1982677-26.05pre-git",
+  "old": "/nix/store/04j3v1y76rx8l762zp5dc4059wfcnhhw-nixos-system-srv1982677-26.05pre-git",
+  "schema_version": 1,
+  "unit_entries": 586,
+  "scope": "built generation only; never activated",
+  "production_changed": false,
+  "build_memory_peak": "3.5G",
+  "limitations": [
+    "Synthetic ViSe rules and no production admission",
+    "No actual runtime/rollback test of packaged candidate",
+    "Platform future delivery conservation Nix evaluation still pending"
+  ]
+}

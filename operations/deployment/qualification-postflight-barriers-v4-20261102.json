@@ -1,0 +1,24 @@
+{
+  "composition_review_sha256": "8f79bc2d62482396e1825db316bc1917462523afaf45e2ddd797c3502ebea7c9",
+  "files": {
+    "operations/deployment/POST-BARRIERES-V4-20261102.org": "9af89461f84984a10c9ec2f7baf3133202230865ab3b657c0c17f24a84fee2a1",
+    "operations/deployment/postflight_barriers_v4.py": "3328685e8db048d286eaa209caa74dc607a22a02dac651434ce7833bace2d9f3"
+  },
+  "functions_unchanged": true,
+  "limits": [
+    "Read-only observation only; successful controller005 and generation007 activation are separate prerequisites.",
+    "No production access, application authorization, CI execution or backup restore claimed."
+  ],
+  "nginx_configuration_unchanged": true,
+  "only_promoted_binding_changed_byte_for_byte": true,
+  "prior_probe_sha256": "4bce908edb495ae4144769b9d5906d5bff0d4127dbe442b966104369eb7de2c0",
+  "prior_qualification_sha256": "8d496748408eea098d945cd827ff2b8516b4513a4c5ef19d24e46836c9f16b29",
+  "prior_tests_reused": 9,
+  "production_access": false,
+  "production_probe_executed": false,
+  "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+  "schema_version": 1,
+  "ssh_configuration_sha256": "288a16fdcd039ae2a7d5c3ec4b0d7d806c0d16a1ae4eb6bd02f39909eeed84db",
+  "status": "PASS",
+  "tests_reexecuted": false
+}

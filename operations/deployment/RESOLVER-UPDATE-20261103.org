@@ -1,0 +1,74 @@
+#+title: Correction déclarative LLMNR après la première mise en service
+#+date: 2026-11-03
+#+language: fr
+
+* Portée
+
+La génération 007 a terminé la première bascule avec succès. Son pare-feu
+IPv4/IPv6 n’admet que les ports TCP publics attendus. Le postflight a néanmoins
+observé une écoute hors loopback sur 5355, port LLMNR. Le classement par port ne
+prouve pas une accessibilité Internet ni l’identité du processus.
+
+La correction déclarative ajoute uniquement =LLMNR=false= à systemd-resolved.
+La génération proposée est
+=/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git=.
+La précédente reste
+=/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git=.
+DNS, adresses, routes, pare-feu, identités, cibles et applications sont conservés.
+Aucun module CI n’est importé dans cette correction.
+
+La comparaison indépendante couvre 6279 entrées /etc. Seuls resolved.conf et
+le déclencheur de rechargement de resolved changent. Les scripts d’activation,
+prepare-root, boot.json et wrapper de bascule ne diffèrent que par leurs
+préfixes de génération/configuration. Le programme de bascule est identique.
+Six chemins de fermeture changent. Le travail attendu pour resolved déjà actif
+est un rechargement notify-reload, pas une relance applicative.
+
+* Réception et opération distinctes
+
+Les deux premières préparations de réception, fondées sur le récepteur de
+provisionnement ancien, ont été refusées avant exécution : leur préétat visait
+l’ancienne génération et leur code réinstallait une unité administrative
+temporaire. Elles ne doivent jamais être exécutées après la bascule 005.
+
+Le nouveau =receive_postrelease_code.py= est réservé à l’import de code.
+Il exige la génération 007 active et au démarrage, le résultat 005 réussi,
+la phase publique ouverte et le verrou commun. Il reçoit un NAR scellé puis
+vérifie exactement ses chemins, NAR hashes et références. Il n’installe aucune
+unité et ne commande ni systemd, ni un profil NixOS.
+
+Le correcteur =resolver_update_adapter.py= est une opération administrative
+séparée, liée aux deux générations fixes. Son paquet est
+=/nix/store/f0v9l1a6i7hj67y2mcwxa9h5i485gbnd-mrjam-resolver-update-001=.
+L’entrée Python isolée charge uniquement les modules immuables de son paquet.
+Aucun argument utilisateur n’est accepté. Le lancement reprend le mécanisme
+transitoire détaché de SSH déjà qualifié ; le résultat est conservé dans un
+fichier privé et observé au moyen d’un schéma fermé.
+
+Sous le verrou commun, il active la configuration candidate en mode test,
+contrôle chaque service séparément, la résolution DNS réelle et l’absence de
+liaison 5355 en TCP/UDP IPv4/IPv6. Il sélectionne ensuite le démarrage et
+revérifie. Un échec conduit au retour de configuration 007 ; aucune base,
+fichier applicatif ou sauvegarde n’est restauré. Il ne rejoue aucune adoption
+SQL, Kanidm ou Forgejo de la première bascule.
+
+Les checkpoints sont durables et liés aux deux générations. Après interruption
+du processus, relancer le même outil reprend exclusivement le retour si une
+transition était entamée ; aucune reprise spontanée n’est prétendue. Un état
+terminal =returned= interdit une nouvelle tentative candidate avec ce même
+identifiant. Une génération étrangère provoque un refus sans bascule.
+
+* Preuves et limites
+
+Quatorze tests ciblés couvrent ordre des effets, échecs, interruptions,
+états étrangers, retour, checkpoints réels locaux, services vérifiés un par un
+et rejet du port 5355. Les commandes système sont substituées dans les tests de
+l’adaptateur ; la primitive Generations est réutilisée sans changement.
+La revue indépendante vérifie aussi le delta complet de génération, les
+sources du paquet et un lancement réel sous environnement Python hostile
+avec argument supplémentaire, refusé sans effet.
+
+Ces résultats préparent la correction. L’import et l’activation de production
+exigent leurs observations distinctes. Cette petite opération administrative
+ne constitue ni la chaîne CI ni son autorité future de livraison. Les sources
+et résultats historiques du premier déploiement restent inchangés.

@@ -1,0 +1,178 @@
+{
+  "conclusions": [
+    "An idm_admins-only person, inheriting service/group administration but not access control administration, performs the exact fixed worker requests and token validation.",
+    "The unchanged V2 provisioner rejects that person after exactly two successful self GETs, before writing; the rejection is its access-control-only membership gate.",
+    "An idm_group_admins-only person can add a genuinely new member to MAIL, preserving all existing members; the same person cannot alter PEOPLE.",
+    "Retain the identity gate idm_admins plus idm_service_account_admins; permit MAIL administration through idm_access_control_admins or idm_group_admins, with unchanged native API checks."
+  ],
+  "date": "2026-11-02",
+  "immutable_legacy_provisioner": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "legacy_provisioner_sha256": "cc417d6ff9c4e52e072c2d8bdd11361f28dbe75e54500c49f822347aba554e15",
+  "limits": [
+    "All persons, credentials, passkeys, databases and TLS certificates invented locally.",
+    "No production user membership or actual incident cause is asserted by these synthetic observations.",
+    "HTTP 200 for listing token records alone does not establish visibility or write authority; conclusions use successful native writes and subsequent state validation.",
+    "No production ACL, account membership or existing token was changed."
+  ],
+  "passed": true,
+  "production_access": false,
+  "provider": "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+  "reproduce": {
+    "commands": [
+      "python3 -I operations/deployment/passkey-nginx/capability_matrix_fixture.py",
+      "python3 -I operations/deployment/passkey-nginx/idm_only_sequence_fixture.py"
+    ],
+    "network": "Disposable loopback TLS listener only; each command starts a fresh native provider and removes its temporary state",
+    "runtime": "/nix/store/spkdb8g18xjiyn8ras26cc7048s1g1d9-python3-3.13.17-env/bin/python3"
+  },
+  "result_sha256": {
+    ".local/passkey-capability-matrix-002.json": "cd962a45e31c9fec56388bb89fe004951958e9b4e647209be6e6a456c6ab9a7a",
+    ".local/passkey-idm-only-sequence-003.json": "846e9fd0c9b21055871b5cb2ba5913dcbc0fafd83731b335372babac9b5c47df"
+  },
+  "results": {
+    ".local/passkey-capability-matrix-002.json": {
+      "actual_http_requests": true,
+      "provider": "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+      "real_passkey_authentication": true,
+      "results": {
+        "access_only": {
+          "all_required_writes_allowed": false,
+          "create_service": 403,
+          "grant_mail": 200,
+          "grant_people": 403,
+          "has_access_admin": true,
+          "has_identity_admin": false,
+          "has_service_admin": false,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": true,
+          "read_grant_people_group_members": true,
+          "read_service_visible": false,
+          "read_token_records": 200,
+          "token_after_people_role": 403,
+          "token_before_people_role": 404
+        },
+        "combined": {
+          "all_required_writes_allowed": true,
+          "create_service": 200,
+          "grant_mail": 200,
+          "grant_people": 200,
+          "has_access_admin": true,
+          "has_identity_admin": true,
+          "has_service_admin": true,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": true,
+          "read_grant_people_group_members": true,
+          "read_service_visible": true,
+          "read_token_records": 200,
+          "token_after_people_role": 200,
+          "token_before_people_role": 200
+        },
+        "identity_admin": {
+          "all_required_writes_allowed": true,
+          "create_service": 200,
+          "grant_mail": 200,
+          "grant_people": 200,
+          "has_access_admin": false,
+          "has_identity_admin": true,
+          "has_service_admin": true,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": true,
+          "read_grant_people_group_members": true,
+          "read_service_visible": true,
+          "read_token_records": 200,
+          "token_after_people_role": 200,
+          "token_before_people_role": 200
+        },
+        "ordinary": {
+          "all_required_writes_allowed": false,
+          "create_service": 403,
+          "grant_mail": 404,
+          "grant_people": 404,
+          "has_access_admin": false,
+          "has_identity_admin": false,
+          "has_service_admin": false,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": false,
+          "read_grant_people_group_members": false,
+          "read_service_visible": false,
+          "read_token_records": 200,
+          "token_after_people_role": 404,
+          "token_before_people_role": 404
+        },
+        "service_and_people": {
+          "all_required_writes_allowed": false,
+          "create_service": 200,
+          "grant_mail": 404,
+          "grant_people": 404,
+          "has_access_admin": false,
+          "has_identity_admin": false,
+          "has_service_admin": true,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": false,
+          "read_grant_people_group_members": false,
+          "read_service_visible": true,
+          "read_token_records": 200,
+          "token_after_people_role": 200,
+          "token_before_people_role": 200
+        },
+        "service_only": {
+          "all_required_writes_allowed": false,
+          "create_service": 200,
+          "grant_mail": 404,
+          "grant_people": 404,
+          "has_access_admin": false,
+          "has_identity_admin": false,
+          "has_service_admin": true,
+          "passkey_authentication": true,
+          "read_grant_mail_group_members": false,
+          "read_grant_people_group_members": false,
+          "read_service_visible": true,
+          "read_token_records": 200,
+          "token_after_people_role": 200,
+          "token_before_people_role": 200
+        }
+      },
+      "schema_version": 1,
+      "synthetic_only": true
+    },
+    ".local/passkey-idm-only-sequence-003.json": {
+      "access_control_membership": false,
+      "admission_preserved": true,
+      "fixed_group_entry_managers": {
+        "idm_account_mail_read": [
+          "idm_access_control_admins"
+        ],
+        "idm_people_admins": [
+          "idm_admins"
+        ]
+      },
+      "group_admin_only_second_person": {
+        "mail_post_status": 200,
+        "new_mail_member_observed": true,
+        "other_members_preserved": true,
+        "people_group_unchanged": true,
+        "people_post_status": 404
+      },
+      "identity_service_and_group_memberships": true,
+      "idm_admins_only_person_authenticated": true,
+      "membership_targets_preserved": true,
+      "native_token_scopes_exact": true,
+      "provider": "Kanidm 1.11.2",
+      "same_person_exact_fixed_worker_requests_succeeded": true,
+      "schema_version": 1,
+      "sessions_revoked": true,
+      "synthetic_only": true,
+      "unchanged_v2_rejected_only_its_membership_gate": true,
+      "v2_gate_native_failures": false,
+      "v2_gate_requests": 2
+    }
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/deployment/credentials/qualify_provision.py": "f3c94d14422d50ea609dce19871657a154e808736f4adcb79a95fb172ce90014",
+    "operations/deployment/passkey-nginx/capability_matrix_fixture.py": "b1d46521049438504c82ce27b0797e6b53f8e6f4adfd2e46aa6902c7dc74c82a",
+    "operations/deployment/passkey-nginx/idm_only_sequence_fixture.py": "1074be44355dca3af88defeceb39ce99f64a18eee3a2b2857a6f190dc92a226e",
+    "operations/deployment/passkey-portal/qualify.py": "b1f16dafab2c9f8c81ecaf5d12b9d35a359e293b7285aa7bd7d7bedcd71e3700"
+  },
+  "subject": "Native Kanidm 1.11.2 fixed worker capability gates, independently observed"
+}

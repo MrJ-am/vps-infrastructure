@@ -1,0 +1,32 @@
+{
+  "checks": [
+    "Only the exact old infrastructure bundle is opened and hashed; an attempted open of another fixture bundle fails the test.",
+    "Existing transaction.lock is preserved under exclusive flock; source directory has its own exclusive flock.",
+    "Current and boot generations must be previous; active state must contain only transaction.lock.",
+    "Wrong size/hash, phase/unknown state, symlink/hardlink/public bundle, foreign destination and concurrent lock refuse.",
+    "New private archive directory is exclusive; atomic same-filesystem rename preserves file inode, mode0600 and nlink1.",
+    "File and both directories are fsynced; target inode and source absence checked after rename.",
+    "Repeat preserves retained history and any new received bundle; simulated rename failure keeps the original bytes intact."
+  ],
+  "command": "python3 -I -m unittest discover -s operations/deployment -p test_retain_previous_infrastructure_bundle.py -v",
+  "expected_bytes": 3954248105,
+  "expected_sha256": "30366563add7d04387905f6db97fe7a012fa1f981b7df6ce38cf4c3a8a6a1c48",
+  "fixed_destination": "/var/lib/mrjam-source-import/previous-af8dd5a-20261102/vps-infrastructure.bundle",
+  "fixed_source": "/var/lib/mrjam-source-import/vps-infrastructure.bundle",
+  "helper": "operations/deployment/retain_previous_infrastructure_bundle.py",
+  "helper_sha256": "4fffe6524503a505b1ea76cd633b15cfd6a49f965a80e38453cb1210591b1e5b",
+  "limits": [
+    "An interruption after archive-directory creation retains that directory and refuses automatic replay; no file is deleted or overwritten.",
+    "Local tests use invented bytes and the invoking uid/gid; no root VM or production rename is claimed.",
+    "Root executes only after the corrected bundle is ready; this helper does not receive or import that bundle."
+  ],
+  "no_git_sql_profiles_or_service_commands": true,
+  "no_other_bundle_read": true,
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "Real synthetic private files, directories, SHA verification, flock and atomic rename; fixture UID/GID, paths, bytes and generation checks substituted.",
+  "tests": "operations/deployment/test_retain_previous_infrastructure_bundle.py",
+  "tests_passed": 9,
+  "tests_sha256": "fd2050a948171f054b0df150cf62e195809bc1f971a37ce2d5d789d44ca68c76"
+}

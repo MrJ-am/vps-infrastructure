@@ -1,0 +1,25 @@
+{
+  "forgejo_doc_equals_base": false,
+  "forgejo_doc_equals_github": true,
+  "forgejo_main_observed": "2a34dac722ff1dab9a63aec56e407dd996de0719",
+  "github_changes_since_base": [
+    "docs/prompt-reprise.txt"
+  ],
+  "github_main_observed": "6009020151cdd6e069aed67b4970b3b6de1b5151",
+  "merge_base": "b8d8f65b6cb1ad9bbb041294a12f40cbec1f7e35",
+  "readiness": [
+    {
+      "candidate_sha256": "10a058655b2ff65acedd457145394b1542cdd432170584ea6e6c80a18e602cf4",
+      "matches_deployed_compiled_content": true,
+      "path": "crates/server/src/database.rs"
+    },
+    {
+      "candidate_sha256": "c44a8a1cb562abc873d3761409e6d40c945569bb1973571c09f87d813254b08d",
+      "matches_deployed_compiled_content": true,
+      "path": "crates/server/tests/runtime_postgres.rs"
+    }
+  ],
+  "remote_mutation": false,
+  "repository": "MrJ-am/mrjam-plateforme",
+  "schema_version": 1
+}

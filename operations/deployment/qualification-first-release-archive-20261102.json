@@ -1,0 +1,42 @@
+{
+  "checks": [
+    "Probe performs no persistent mutation and never opens invented snapshot, retained candidate, SQLite or credential content.",
+    "Exclusive flock holds the same existing transaction.lock inode throughout all moves; concurrent acquisition refuses.",
+    "Exact six metadata hashes, snapshot and staging directory identities, owned guard and mask record bind the sealed operation.",
+    "Snapshot/quarantine tree and four staging directories retain inodes, permissions and link counts through same-filesystem renames.",
+    "Owned generator/masks removed only after evidence copy; daemon-reload does not issue service start/stop and foreign masks stay effective.",
+    "Terminal phase is the final move; an interrupted earlier move retains phase and every object in exactly one location.",
+    "Foreign archive, unknown entries, metadata corruption, symlinks, hardlinks, wrong permissions and guard mismatch refuse.",
+    "Fresh successful state contains only its original transaction.lock; no new deployment, restore, activation, SQL or secret read."
+  ],
+  "command": "python3 -I -m unittest discover -s operations/deployment -p test_first_release_archive.py -v",
+  "limits": [
+    "Live command and identity checks are source-reviewed but not executed by these local filesystem tests.",
+    "No root VM claimed; local fixture owner IDs substitute root and the historical staged owner IDs.",
+    "An interrupted archive is retained and refuses automatic replay. Earlier phases remain blocked by the terminal checkpoint; a fixed reviewed continuation would be needed if interrupted.",
+    "Read-only V3 staging inspection must finish before root executes archive; root reported that inspection complete."
+  ],
+  "live_preconditions": [
+    "Root/exacthost",
+    "currentandbootprevious",
+    "closedreopeningwitness2fd95f6e",
+    "actualgateabsent",
+    "oldHTTPequalsboundinitial",
+    "allreservedUIDsGIDs940to948absent",
+    "allownedmaskedunitsinactive",
+    "foreignmaskspreserved"
+  ],
+  "passed": true,
+  "probe": "operations/deployment/preflight-first-release-archive-20261102.py",
+  "probe_only_operation_constant_changed": true,
+  "probe_sha256": "33e465572f2a3007fe650d7c99df5a3e5c2afcddffcf574469ea3c8f4dec159b",
+  "production_access": false,
+  "production_binding_available": false,
+  "schema_version": 1,
+  "scope": "Real private synthetic filesystem moves and locks; fixed UID/GID/paths substituted; production services replaced by closed fixtures.",
+  "source": "operations/deployment/first_release_archive.py",
+  "source_sha256": "4b632801419ed7e0a4277d6288ec633989782a17c16283a61b270473b9d4ef0f",
+  "tests": "operations/deployment/test_first_release_archive.py",
+  "tests_passed": 12,
+  "tests_sha256": "a0a90183efe3979f0d4c85510b07ca2c22edfcf03512625d2f828bd37578e1be"
+}

@@ -1,0 +1,141 @@
+{
+  "baseline": "/nix/store/phi68cwg38madbq8p805yvrsyry8g8wr-nixos-system-srv1982677-26.05pre-git",
+  "capacity_observation": {
+    "bytes": 10343,
+    "path": ".local/deployment-20261101/capacity-after-release-005.json",
+    "sha256": "068e92b96e23e95588e068ed2ff110ed0fb2782010357a4d72a39d0c1677f7a3"
+  },
+  "checks_total": 91,
+  "ci_nixpkgs_revision": "6f06d204d8f2d8761d9da78778745974a3216381",
+  "date": "2026-11-03",
+  "declarative_delta": {
+    "bytes": 4781,
+    "path": "operations/ci/host-profile-delta-20261103-001.json",
+    "sha256": "0d87667cfba7ce2d1371839b6abe2a8635b8f8840ee0b14b6d37c7b067bf1284"
+  },
+  "evaluations": {
+    "host_profile": {
+      "passed": 21,
+      "result": {
+        "bytes": 849,
+        "path": "operations/ci/evaluation-host-profile-20261103-001.json",
+        "sha256": "f07ac1e74dc9992cebe0611d2439f95afb73ce375d2139a1eeaf925193b8bc8b"
+      }
+    },
+    "inactive_import": {
+      "passed": 33,
+      "result": {
+        "bytes": 1298,
+        "path": "operations/ci/evaluation-inactive-import-20261103-001.json",
+        "sha256": "1760bc5085ce31f9f1c1a2e3cd9d0df42f44351197cb81ec2ff89d0ecaf29f2d"
+      }
+    },
+    "scoped_modules": {
+      "passed": 33,
+      "result": {
+        "bytes": 1229,
+        "path": "operations/ci/evaluation-modules-20261103-001.json",
+        "sha256": "e1cbc2ac86cf876ba5119f9c4610586a0b0247613d3eec67fdf80e8041b6e023"
+      }
+    }
+  },
+  "external_variant_sources": [
+    {
+      "bytes": 434,
+      "path": "operations/ci/authority-credentials-v2/module.nix",
+      "sha256": "f018ea6abfe5aa30fbbbc7d6d71c8286702d89bd0db499c83662dd87decbbf39"
+    },
+    {
+      "bytes": 962,
+      "path": "operations/ci/authority-credentials-v2/package.nix",
+      "sha256": "2bf9aa84b5ad585b5b881561234f04d47e6db3e4d9de98d74f48b816d6d80acf"
+    },
+    {
+      "bytes": 2324,
+      "path": "operations/ci/authority-credentials-v2/reader.py",
+      "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+    },
+    {
+      "bytes": 2023,
+      "path": "operations/ci/coordinator-v1/module.nix",
+      "sha256": "c616cde2a05855cee08159dd4c452ca061826ae4d9d957d5b909a551f5252a3a"
+    }
+  ],
+  "host_nixpkgs": "/nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "limitations": [
+    "Evaluation uses invented rules, inert validator, invalid source proposal and a public test key. These are not production inputs.",
+    "Actual protected workflow adoption, matching verifier/proposals and fresh authority policy remain separate prerequisites.",
+    "Authority/coordinator credentials and integrated VM qualification have their own receipts; this composition proof does not claim them.",
+    "Thirteen units are added, including nftables. Existing application units and INPUT firewall are exact; only D-Bus and tmpfiles triggers change among existing units.",
+    "A full actual generation delta, package closure and configuration return must be reviewed after real bindings are available."
+  ],
+  "network_vm": {
+    "bytes": 3222,
+    "path": "operations/ci/qualification-network-coexistence-20261103-001.json",
+    "sha256": "6ea4483cb3957c60ea3257629855b8dfa92b7a3d365a28f70970147d233b3481"
+  },
+  "private_key_created": false,
+  "production_activation": false,
+  "production_candidate_built": false,
+  "rules_state": {
+    "adoption": false,
+    "observed_main": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "proposal": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "workflow_present": false
+  },
+  "schema_version": 1,
+  "scope": "inactive-parameterized-ci-composition-on-deployed-phi68",
+  "sources": [
+    {
+      "bytes": 2205,
+      "path": "operations/ci/modules.nix",
+      "sha256": "1d82d8e5d4a3c752f473af76e067a41df2f914fa6941af5559a8f2e26603741c"
+    },
+    {
+      "bytes": 8228,
+      "path": "operations/ci/forgejo-host-actions.nix",
+      "sha256": "884eca76f21cb8838926ba294074600b90f3d69f07a0401a080c28f18ccf7b12"
+    },
+    {
+      "bytes": 2874,
+      "path": "operations/ci/host-profile.nix",
+      "sha256": "d2f389a8ff2bbab9c4f12369470a255c9239e26994aa0ed53a6eb2511cf671a0"
+    },
+    {
+      "bytes": 1179,
+      "path": "operations/ci/preserve-input-firewall.nix",
+      "sha256": "042f0283829bf3da08bd8304e4b097e6fbf79c6c6dce08d1263fb8d18a8f44dc"
+    },
+    {
+      "bytes": 10410,
+      "path": "operations/ci/tests/composition-evaluation.nix",
+      "sha256": "cd5240254f9077cbac593cfafc58ca532f36d66cb728043b55e1549848b1864b"
+    },
+    {
+      "bytes": 9164,
+      "path": "operations/ci/tests/host-profile-evaluation.nix",
+      "sha256": "28d9f66211b7601d595f9035260d7328ce2e0e85a9f1827e178633a451731d3f"
+    },
+    {
+      "bytes": 3579,
+      "path": "operations/ci/tests/inactive-candidate-evaluation.nix",
+      "sha256": "0e9feb84b03119ae38a41fbe995b23b9876d97f19ff4a18d0a8172b2f82b6145"
+    },
+    {
+      "bytes": 6691,
+      "path": "operations/ci/tests/network-coexistence.nix",
+      "sha256": "55c8d1d258e58d8179eae3e75a56e5f0f8da8fe2a4f3b6269840e0d346329179"
+    },
+    {
+      "bytes": 4374,
+      "path": "operations/ci/COMPOSITION-HOTE-20261103.org",
+      "sha256": "64a70e07241e5a9775d00fdbafcd883385a1952fa9cea75b9eef4c76307e7077"
+    },
+    {
+      "bytes": 881,
+      "path": "operations/ci/integration-v1/public-fixture-policy.json",
+      "sha256": "2b2f7c5ed574fc6a009ef06a025d6730aec1211beb0bc377ce7774e00efe7fe2"
+    }
+  ],
+  "status": "PASS"
+}

@@ -1,0 +1,1 @@
+{"schema_version": 1, "code": "VISE_STAGED_SERVICE_VERIFIED", "https_health": true, "other_services_active": true, "postgresql_restarted": true, "boot_promoted": false, "database_restored": false}

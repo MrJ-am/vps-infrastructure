@@ -1,0 +1,161 @@
+{
+  "check_count": 24,
+  "date": "2026-11-02",
+  "limits": [
+    "All provider data, certificates and P-256 passkeys invented; no Proton Pass browser or production human account used.",
+    "Application source files match frozen production packages. VM uses the established pinned test runtime and invented CA; executable dependency closures are not claimed byte-identical.",
+    "Unit policies are byte-identical except listed environment/executable paths and shortened portal runtime. Route/portal expiry shortened to50/53seconds; native-auth transaction expiration separately uses an invented monotonic clock.",
+    "Only PREVIOUS and BINDING constants were substituted in the upgrader/opener; their function source bytes are unchanged.",
+    "ACCESS_REQUIRED continuation is not claimed native: default idm_admins inherits group administration; author state-machine tests exercise the otherwise invented branch.",
+    "No parent receiver function or frozen original qualification was changed. Publication/import/activation remain with the parent."
+  ],
+  "passed": true,
+  "prior_fixture_failures": [
+    {
+      "attempt": 1,
+      "cause": "Fixture declared old units in /etc, masking the runtime links. Corrected to ship inactive units solely through /run, matching production; no helper change.",
+      "derivation": "/nix/store/sxl6rk6rcknzn5fnyn5iki3qaq841y3i-vm-test-run-mrjam-passkey-v2-upgrade-native-rights.drv"
+    },
+    {
+      "attempt": 2,
+      "cause": "Fixture incorrectly bound the unchanged result probe to V3. Corrected to original V2 helpers, matching the immutable production probe; no runtime change.",
+      "derivation": "/nix/store/a5571ibg84bd393g2ck377l57j1rz8rh-vm-test-run-mrjam-passkey-v2-upgrade-native-rights.drv"
+    }
+  ],
+  "production_access": false,
+  "production_roots": {
+    "portal_package": "/nix/store/an04ifkrx986xh8j2ynlmgbqh10vdibi-mrjam-kanidm-passkey-portal-2",
+    "portal_unit": "/nix/store/chvy4yb5hv24av8wvxxqqjz4yhqn62f3-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+    "provision_package": "/nix/store/13qs6kk65vss4k3mcb86aiv8nww1qazl-mrjam-kanidm-worker-provision-3",
+    "provision_unit": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+    "result_probe": "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1"
+  },
+  "reproduce": "nix build --no-link --print-out-paths --max-jobs 1 --cores 2 --builders '' --file operations/deployment/passkey-nginx/portal-v2-systemd-test.nix --arg nixpkgs /nix/store/vin7xkmskj4k065z1w7bwwwwp4dbfv93-source",
+  "review_sha256": {
+    "operations/deployment/passkey-nginx/qualification-native-capabilities-20261102.json": "78408277737431c9cf912ea151d347d5a24d7d614b718e3955782cad32966593",
+    "operations/deployment/passkey-nginx/review-closed-execution-v3-20261102.json": "e0cd84cbdb326f87387a172a0441f352d99d6cd1387f081801b8de3fd3845fc1",
+    "operations/deployment/passkey-nginx/review-sealed-correction-20261102.json": "99fd7d3c05b8f7429cc48873d969e40199a495e5a21de20ed6494e765da30e35"
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/deployment/passkey-nginx/fixture.py": "603cc3ac21e618eb448b18d4b039c7feab65e89282eaad346d17a40a3814d40c",
+    "operations/deployment/passkey-nginx/portal-v2-systemd-test.nix": "4a9700dca23a6690e682af826b863165d35c7c3bb249845cbafefa3e3720baec",
+    "operations/deployment/passkey-nginx/portal_fixture.py": "9192095d8bbebc4116679979693dbc795e9b82da36e308f91c317bf10ba72fde",
+    "operations/deployment/passkey-nginx/portal_v2_fixture.py": "b3867641e4ce04b51672d6c7f9b5272adba3970d4fab88cbdeeba8f98cf5974d",
+    "operations/deployment/start_passkey_portal.py": "bf33aed544fc488d7b48cb8d96c46546ce3de01585b36ee6a2fe01b610ad703a",
+    "operations/deployment/upgrade_passkey_units.py": "f71b58086034513f6d94097d94a8dc987b131c59ea4fcb793f7a92eb1094d73f"
+  },
+  "systemd_policy_comparison": {
+    "portal": {
+      "identical_except_fields": [
+        "Environment=",
+        "ExecStart=",
+        "RuntimeMaxSec="
+      ],
+      "production_unit_sha256": "f348a04b9e25e691721bc5b14f3b790ba9d48afeae708785afa816eb679448cc",
+      "security_policies_identical": true,
+      "vm_unit_sha256": "c80889eb5878e33fbdac0c7e452956d2ddb794dc2fe2f3a1944ff560632125ce"
+    },
+    "provision": {
+      "identical_except_fields": [
+        "Environment=",
+        "ExecStart="
+      ],
+      "production_unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+      "security_policies_identical": true,
+      "vm_unit_sha256": "409ac44462a1b8685d9a9add17005dc04894531088b497db0c377ddbc61ddc9d"
+    }
+  },
+  "vm_derivation": "/nix/store/q11y11hksf0mdw1zdn5pl32sisqhsimy-vm-test-run-mrjam-passkey-v2-upgrade-native-rights.drv",
+  "vm_output": "/nix/store/hvr0v6c554064dkmm71n0sl2632fwgkc-vm-test-run-mrjam-passkey-v2-upgrade-native-rights",
+  "vm_result": {
+    "access_required_branch": "Not claimed native: idm_admins normally inherits group administration; separately exercised by author state-machine tests.",
+    "actual_proton_pass_browser": false,
+    "checks": [
+      "new-portal-provisioner-and-probe-sources-match-frozen-production-packages",
+      "upgrade-bad-hash-refused-before-either-link-change",
+      "upgrade-foreign-unit-preserved-with-other-link-unchanged",
+      "upgrade-refuses-concurrent-directory-lock",
+      "upgrade-active-old-unit-refused-without-stop-or-link-change",
+      "real-upgrade-replaces-both-exact-units-with-no-activation",
+      "partial-upgrade-retry-completes-and-repeat-preserves-inodes",
+      "real-opener-starts-upgraded-portal-and-unchanged-route",
+      "active-opener-and-upgrader-refusals-preserve-running-pids",
+      "exact-v2-assets-over-real-https-with-csp-and-no-cookie",
+      "origin-and-csrf-refusals-precede-private-unit",
+      "real-ordinary-person-explicitly-refused-before-ready-and-no-unit-start",
+      "real-service-admin-without-idm-admin-refused-before-ready",
+      "real-insufficient-second-person-explicitly-refused-before-ready",
+      "native-access-right-removed-after-ready-refuses-before-unit-start",
+      "idm-admins-without-access-control-admins-completes-real-loadcredential-v3",
+      "one-fresh-administrative-session-revoked-and-private-cache-removed",
+      "closed-result-probe-validates-three-distinct-tokens-and-admission-preserved",
+      "completed-transaction-replay-refused-with-token-inodes-unchanged",
+      "separate-group-admin-only-second-person-completes-idempotently",
+      "native-identity-right-removed-after-ready-refuses-with-existing-tokens-preserved",
+      "real-passkey-session-with-invented-clock-renews-then-expires-and-reserves-global-margin",
+      "no-private-values-in-browser-or-journal-and-unrelated-sessions-retained",
+      "natural-unit-expiration-restores-nginx-and-cleans-new-portal"
+    ],
+    "fixture_sha256": "b3867641e4ce04b51672d6c7f9b5272adba3970d4fab88cbdeeba8f98cf5974d",
+    "limits": [
+      "Invented accounts and software P-256 credentials only; no real Proton Pass browser",
+      "Production code sources/modules with invented CA and route binding",
+      "Enrollment/signing fixture helpers reused; HTTP and systemd observations independent",
+      "Route and portal RuntimeMaxSec shortened to 50/53; opener only PREVIOUS/BINDING replaced"
+    ],
+    "opener_functions_unchanged": true,
+    "opener_invented_bindings": {
+      "mrjam-kanidm-passkey-portal.service": {
+        "path": "/nix/store/7lv5ixpb08fs3hxzh72zi67m200llv38-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+        "sha256": "c80889eb5878e33fbdac0c7e452956d2ddb794dc2fe2f3a1944ff560632125ce"
+      },
+      "mrjam-passkey-nginx-route.service": {
+        "path": "/nix/store/463w36dk07w48dqsjz0fdlnnik12hyvc-unit-mrjam-passkey-nginx-route.service/mrjam-passkey-nginx-route.service",
+        "sha256": "cfc0748bf1efebcb33e362693d8da1c4da81800b6321c9d9ed8e32623051717a"
+      }
+    },
+    "opener_source_sha256": "bf33aed544fc488d7b48cb8d96c46546ce3de01585b36ee6a2fe01b610ad703a",
+    "passed": true,
+    "portal_module_sha256": "d8ccfe88e58761f8cbfc958d30cc6e4bf5813f01838cf09b3c8b3a207b5099a3",
+    "portal_package": "/nix/store/w1n3awwpzfi32abq3had8sjglx19nldx-mrjam-kanidm-passkey-portal-2",
+    "portal_source_sha256": "1bb6fd2b84e1b6328c24feb720d4cafb7efe4f3f655cd86dec221f5c18e8fca5",
+    "probe_source_sha256": "14f05d3038e8ba4388843de63380505c5272484daccd1362ad4345cf06e8d00c",
+    "production_access": false,
+    "provision_module_sha256": "0b82b59ea87f64481535271d9ebd4fba98d320ba0c498ada2e73000b8b1c7f3a",
+    "provision_package": "/nix/store/1hhzlkkyfpsq10zciahki9n1ysw2a91a-mrjam-kanidm-worker-provision-3",
+    "real_https_unix_portal": true,
+    "real_kanidm": true,
+    "real_loadcredential_provisioner": true,
+    "result_probe_package": "/nix/store/af318s286hfy07ppby8zswk766gf8lns-mrjam-kanidm-worker-result-probe-1",
+    "route_module_sha256": "866be2c2c1b92e6b0e1c8090ba7dde105448a18e1e3409a5028c0560be2643df",
+    "route_sha256": "a16bf9bb3c7653feca08e0d638a2894e1120a02e35e9cc9a725438a05e453438",
+    "schema_version": 1,
+    "test_sha256": "4a9700dca23a6690e682af826b863165d35c7c3bb249845cbafefa3e3720baec",
+    "upgrade_invented_bindings": {
+      "mrjam-kanidm-passkey-portal.service": {
+        "next": {
+          "path": "/nix/store/7lv5ixpb08fs3hxzh72zi67m200llv38-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+          "sha256": "c80889eb5878e33fbdac0c7e452956d2ddb794dc2fe2f3a1944ff560632125ce"
+        },
+        "previous": {
+          "path": "/nix/store/pkkin2dc724aly92vcps4h9h9m310fwp-unit-mrjam-kanidm-passkey-portal.service/mrjam-kanidm-passkey-portal.service",
+          "sha256": "8634268dd019f9989712f608cab9b47ef0094068033b3eb7a3dc718e97488916"
+        }
+      },
+      "mrjam-kanidm-worker-provision.service": {
+        "next": {
+          "path": "/nix/store/ww2pkrk6kgdrbyxbffg91g5wgy7d2bbs-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+          "sha256": "409ac44462a1b8685d9a9add17005dc04894531088b497db0c377ddbc61ddc9d"
+        },
+        "previous": {
+          "path": "/nix/store/6kv4w8sny3d0rdsny844lnb4fm9p5s10-unit-mrjam-kanidm-worker-provision.service/mrjam-kanidm-worker-provision.service",
+          "sha256": "c4f85add0d5e6d9d6349affa98da35f01d61c88d5883accf1395e324dbdd7559"
+        }
+      }
+    },
+    "upgrader_functions_unchanged": true,
+    "upgrader_source_sha256": "f71b58086034513f6d94097d94a8dc987b131c59ea4fcb793f7a92eb1094d73f"
+  },
+  "vm_result_sha256": "64c3a0bc695403b332d55c5b83bd88415fdf705d26234fbf449ea8a81ad04d1e"
+}

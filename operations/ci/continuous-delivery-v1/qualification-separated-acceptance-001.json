@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "head": "e4cc836d76c4104b4d356e583a2e5f34a827f90b",
+  "base": "5a05461e9e3eb7cf77e99b85ae8d49630f13004d",
+  "proposal_sha256": "e06f030310aed4f8ff1cb0c5b836848dfcd9d4e99b926c841f7619b477fdd7e7",
+  "github_pull": 3,
+  "forgejo_pull": 2,
+  "validation_run": 5,
+  "review_id": 4,
+  "mirror": "mrjam-proposal-mirror",
+  "reviewer": "mrjam-validation-review",
+  "merger": "mrjam-release-merge",
+  "human_review": false,
+  "protected_fast_forward": true,
+  "github_main_synchronized": true,
+  "token_revoked": true,
+  "application_deployed": false,
+  "persistent_delivery_stages_installed": false,
+  "unit_tests": 32,
+  "packages": {
+    "mirror": "/nix/store/6daa2fh07ssx0kl49bh1s4126nl6bwjy-mrjam-mirror-validated-proposal",
+    "review": "/nix/store/xizysh1ig85islw50szwn17667fw6ka7-mrjam-review-validated-proposal",
+    "merge": "/nix/store/mp93kkhs1qp68rm160kdkl16vksa5v7p-mrjam-merge-validated-proposal",
+    "sync": "/nix/store/fhibwq2nf9ivdsbg8bafj804gac88bg0-mrjam-sync-accepted-proposal"
+  }
+}

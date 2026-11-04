@@ -1,0 +1,25 @@
+{
+  "boot_guard_sha256": "16f7a34e53a2a86111cdf47cda3efcbb7b081bc787a6eb3bdfb2f77c642f658c",
+  "checks": [
+    "network",
+    "live",
+    "stale",
+    "reboot-holds-writers-keeps-ssh",
+    "open",
+    "malformed"
+  ],
+  "limits": [
+    "Synthetic listeners and network namespace only",
+    "No actual generation switch"
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "system_control_sha256": "16c5835578f133624a854802d1a2542efa92203059418ff9dbb7d94173bcfb5b",
+  "output": "/nix/store/yl0dmm3v8afaks08073p2cv8kf06jabl-vm-test-run-mrjam-cutover-network-and-boot-guard",
+  "authority": "Spectre-synthetic-systemd",
+  "recorded_date": "2026-11-02",
+  "changes": [
+    "Expanded received legacy writer inventory",
+    "Single manager reload after masking or unmasking a set of units"
+  ]
+}

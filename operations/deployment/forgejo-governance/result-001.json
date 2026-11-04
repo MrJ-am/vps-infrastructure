@@ -1,0 +1,29 @@
+{
+  "binding_sha256": "38abd752a1c1e540632074b75990821ef7439e4cd0ff00524744ccc286223ee3",
+  "bootstrap": "/nix/store/8pkxq7pahlmhlmf6v890q2ica69cflsy-mrjam-forgejo-technical-bootstrap-1",
+  "checks": [
+    "nine-private-staged-bundles-hash-bound-probe-before-adoption",
+    "no-adoption-without-durable-checkpoint-no-token-retained",
+    "real-scoped-token-git-http-with-password-login-disabled",
+    "nine-real-sources-bound-protected-main-and-token-revocation",
+    "replay-preserves-existing-history-tag-objects-and-unrelated-repository",
+    "real-fast-forward-push-to-protected-main-refused-even-for-admin",
+    "changed-source-bytes-refused-and-all-temporary-tokens-revoked"
+  ],
+  "core_sha256": "bb0ba70d9a31de5ef3f8c02f9382e7f268a3cd009b8c2035d1342957b90f6409",
+  "credentials_sha256": "f19795838d56ab6d55750143a447890e21b2c978828b7d54b5dae57b4852e5e2",
+  "entry_sha256": "591017a28ae23993559ac9d4c56d3458830083c41f2feab0e8e25c40f19da487",
+  "fixture_sha256": "d1e40b24bb2a38ab67e5786bae0a8e479ac312e608772968b744a8a974a90490",
+  "forgejo": "/nix/store/qcrq6ngi273hak8l7ldv1k9zqq0cqg2h-forgejo-17.0.1",
+  "limits": [
+    "Invented Git histories only",
+    "No production bundle or accepted rules authority inferred",
+    "No runners or human review identities provisioned"
+  ],
+  "package": "/nix/store/d6zcrq8iwslnxpp7xzdzc8n374m13sy4-mrjam-first-release-governance-1",
+  "production_access": false,
+  "production_source_binding": false,
+  "schema_version": 1,
+  "scope": "isolated-invented-forgejo17-postgresql17-git-http",
+  "test_sha256": "c4694597852330909f6cd87ee451939c1737eb94759d204f77a260bcfee156aa"
+}

@@ -1,0 +1,37 @@
+{
+  "code": "FORGEJO17_COMMIT_TREE_METADATA_IS_COMMIT_ID",
+  "consequences": [
+    "api_projection v1 field shape is valid but cannot establish head_tree semantically from commit.tree.sha",
+    "Earlier no-review projection test stopped at REVIEWS_REFUSED and never matched this field to an accepted tree",
+    "Bootstrap verifies the actual tree via native Git head^{tree}, parent, exact diff and workflow SHA before merge; it does not rely on commit.tree.sha",
+    "GET git/trees/head also retains ResolvedID=head for a commit input; an actual resolution mechanism is required"
+  ],
+  "forgejo_version": "17.0.1",
+  "historical_receipts_rewritten": false,
+  "native_capture": {
+    "path": "/nix/store/kcmbq29shix5srbvp70ihmcgy6wi88b4-vm-test-run-mrjam-rules-bootstrap-proposal-private-forgejo/api-projection.json",
+    "sha256": "37f91ae672d70054827c95123b7bb769a1f609f9123482238696665bd8c57169"
+  },
+  "primary_sources": [
+    {
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/convert/git_commit.go",
+      "sha256": "c500e6d75075f5a3759576f54985ad7f46603482fcf9a5817fc26ee13fb55d44"
+    },
+    {
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/services/repository/files/tree.go",
+      "sha256": "900cee240e7c7e47f84162bcf5258cdec289be889712542b96b1292d4013a014"
+    },
+    {
+      "path": "/nix/store/prakx1jzmkn4vaw6wj404njghaq3klyb-source/modules/git/repo_tree.go",
+      "sha256": "38134cded3f1b5827d3c6686c0a0c4aafb9dc67c1083d7d8ad6f9b530204f19e"
+    }
+  ],
+  "production_mutation": false,
+  "schema_version": 1,
+  "scope": "native-synthetic-observation-and-exact-primary-source",
+  "synthetic_fixture_only": {
+    "actual_git_tree": "62fc2bb3fd0e888d75ae7798360747fb0c8589fb",
+    "api_commit_tree_sha": "e2fbc8f95961262dd18d525b830ec4aacdc28771",
+    "head": "e2fbc8f95961262dd18d525b830ec4aacdc28771"
+  }
+}

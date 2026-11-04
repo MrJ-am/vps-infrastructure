@@ -1,0 +1,29 @@
+{
+  "changes": [
+    "Only the promoted generation binding changes from v2."
+  ],
+  "date": "2026-11-02",
+  "exact_text_delta_verified": true,
+  "files": {
+    "operations/deployment/POST-BARRIERES-V3-20261102.org": "fe43f95d3813360a56e6bcc6b3ed2ed2db0a292f138c870016c1de66d5ec2fa9",
+    "operations/deployment/postflight_barriers_v3.py": "4bce908edb495ae4144769b9d5906d5bff0d4127dbe442b966104369eb7de2c0",
+    "operations/deployment/test_postflight_barriers_v3.py": "c406b9ddc7b5903fb5abbc64e0ab7f7245a05d1e1550f431c1a73d72df33c660"
+  },
+  "limits": [
+    "Identical closed metadata observations and limits to v2; no service mutation, secret contents, application rows, journal or network request.",
+    "No successful backup restore, future CI, full application authorization or external reachability claim."
+  ],
+  "prior_probe": {
+    "path": "operations/deployment/postflight_barriers_v2.py",
+    "sha256": "d22b8861cd627a412946b0bee89ca8302f25fec90182bb8db1f451e0ec4a51c7",
+    "unchanged": true
+  },
+  "production_access": false,
+  "production_probe_executed": false,
+  "promoted": "/nix/store/fi48cx2j57lmjqsydjn9biwfb5ikx6jg-nixos-system-srv1982677-26.05pre-git",
+  "public_units_byte_identical_to_previous_promoted": 12,
+  "schema_version": 1,
+  "ssh_configuration_sha256": "288a16fdcd039ae2a7d5c3ec4b0d7d806c0d16a1ae4eb6bd02f39909eeed84db",
+  "sshd_configuration_byte_identical": true,
+  "tests_passed": 9
+}

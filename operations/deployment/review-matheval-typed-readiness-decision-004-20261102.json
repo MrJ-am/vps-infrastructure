@@ -1,0 +1,36 @@
+{
+  "database_mutation_performed": false,
+  "decision": "RECOMMEND_TYPED_READINESS_WITHOUT_DATABASE_MUTATION",
+  "evidence_sha256": {
+    "closed_live_classification": "d46258fb6235b98c7c43c7e7f77277c4e0e6ffd1d3bbdeaf327b052e1416aa37",
+    "current_server_database_guard": "da7ba261fdeb982392e89af8ae62764eddde3d4861c10c86f629c2ac12e9f2e3",
+    "current_server_runtime_loader": "d993dfe5803b3ef386fcac84856a474c38f4d708f61d8bd9993b64f74a157681",
+    "native_storage": "da3e03c152ebb471c144693040665035540e4bb036a8331c56925c0e5037d0e3",
+    "native_types": "aed36e3ab6058d6756f3e8a6198b5a5df4c4af32e5d1eeef3f95eeed4312674c"
+  },
+  "observed": {
+    "all_scientific_fields_and_array_orders_equal": true,
+    "extra_fields_exist_at_all_three_levels": true,
+    "native_type_parse_and_validation_accepted": true,
+    "raw_json_equal": false,
+    "typed_json_equal": true
+  },
+  "production_access": false,
+  "reason": "Native storage already deserializes the database bank through the exact Bank model, which ignores unknown fields; readiness should compare that same validated model, while preserving historical raw data.",
+  "required_contract": [
+    "Deserialize both expected public bank and selected database bank as exact accepted Bank type; run existing validation on both.",
+    "Compare every serialized known field and every vector order; retain exact version and required-field checks.",
+    "Bound the selected bank bytes; preserve missing-version and malformed-input refusal.",
+    "No UPDATE, INSERT, DELETE, version relabelling, codebook rewrite or digest recomputation.",
+    "Keep types.rs and historical corpus/digest/participations byte/content unchanged.",
+    "Prove old raw equality refusal versus new typed equality acceptance for extra fields only; all scientific field/order changes remain refused."
+  ],
+  "risks_and_limits": [
+    "The changed guard accepts historical metadata which the native runtime ignores; it does not certify meaning or integrity of those unknown fields.",
+    "No approved codebook reference is present; no new corpus version or import is warranted from these observations.",
+    "A real changed scientific field, missing required field, invalid ID, version or reordered production must still fail.",
+    "A new server artifact and candidate qualification are required; this decision alone authorizes no activation."
+  ],
+  "schema_version": 1,
+  "scope": "independent assessment of a proposed code correction, not implementation approval"
+}

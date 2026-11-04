@@ -1,0 +1,71 @@
+{
+  "added_units": [
+    "mrjam-forgejo-policy.service",
+    "mrjam-forgejo-registration.service",
+    "mrjam-forgejo-runner.service",
+    "mrjam-validation-authority.service",
+    "mrjam-validation-authority.socket",
+    "mrjam-validation-collector.socket",
+    "mrjam-validation-collector@.service",
+    "mrjam-validation-export.socket",
+    "mrjam-validation-export@.service",
+    "mrjam-validation-staging.service",
+    "mrjam-validation-worker.socket",
+    "mrjam-validation-worker@.service",
+    "nftables.service"
+  ],
+  "authority_policy_file_sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66",
+  "change": {
+    "expected_source_parent": "/var/lib/mrjam-ci-credentials root:root0700, future files root:root0400; not yet created",
+    "only_two_credential_paths_changed": true,
+    "previous_expression": "operations/ci/host-candidate-v1/evaluation-001.nix",
+    "previous_expression_sha256": "562a32ae69034debe8ad4f2bbb678d6eafb408007d601d89899a3e7ec9776ef1",
+    "reason": "Keep root-owned credential sources outside service-owned StateDirectory paths. No credential was created at either earlier path."
+  },
+  "changed_existing_units": [
+    "dbus-broker.service",
+    "systemd-tmpfiles-resetup.service"
+  ],
+  "checks": {
+    "actionsRemainDisabled": true,
+    "actualPublicKeyBound": true,
+    "applicationUnitBytesPreserved": true,
+    "assertionsPass": true,
+    "baselineMatchesDeployed": true,
+    "existingUnitDeltaOnlyMaintenanceTriggers": true,
+    "firewallUnitBytesPreserved": true,
+    "keyReferenceExact": true,
+    "llmnrRemainsDisabled": true,
+    "noCIServiceImplicitStart": true,
+    "noCISocketImplicitStart": true,
+    "policyRemainsPlanOnly": true,
+    "policySourceUnchanged": true,
+    "separateFutureCredentialReferences": true
+  },
+  "ci_activated": false,
+  "controller_revision_for_evaluation_only": "a69e94ac1cd143f0697fd45e7b864347e487c3ab",
+  "credential_references": {
+    "policy": "/var/lib/mrjam-ci-credentials/forgejo-policy-token",
+    "registration": "/var/lib/mrjam-ci-credentials/forgejo-registration-token",
+    "signing": "/var/lib/mrjam-validation-authority/signing-key"
+  },
+  "expression_sha256": "dbeaee2da39950af1ed5628b9e1434102697062794a43e9c3b27e23b01aa6f50",
+  "generation_built": false,
+  "limits": [
+    "Controller revision O is only an evaluation placeholder; the final code publication must be bound and evaluated again before delivery.",
+    "Actual rules adoption, separate credentials and completed application validation remain prerequisites.",
+    "No namespace, resource coexistence or rollback execution is proved by this evaluation; corresponding existing scoped qualifications remain separate.",
+    "Only existing unit names of D-Bus/tmpfiles differ here; their prior trigger-only proof is not a new runtime result."
+  ],
+  "missing_production_credentials": [
+    "policy",
+    "registration"
+  ],
+  "proposed_toplevel_not_built": "/nix/store/xrldvfka4q02kl0l5csw2qn1jzz0i36c-nixos-system-srv1982677-26.05pre-git",
+  "removed_units": [],
+  "result_sha256": "64fb68c4cfa92f53857ddf903079998aec73fdd36ead34e1671a7ff760dad021",
+  "rules_adopted": false,
+  "schema_version": 1,
+  "scope": "proposed real CI bindings, Actions disabled; no build or activation",
+  "status": "evaluation-passed"
+}

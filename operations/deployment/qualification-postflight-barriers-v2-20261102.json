@@ -1,0 +1,31 @@
+{
+  "changes": [
+    "Promoted generation binding only",
+    "SSH -o detection at an argument boundary prevents false match on binary filename -openssh"
+  ],
+  "date": "2026-11-02",
+  "exact_text_delta_verified": true,
+  "files": {
+    "operations/deployment/POST-BARRIERES-V2-20261102.org": "7308a597639dc2b3188fbfeab73868e0c72b523afae3b73b14fad559b55c1f96",
+    "operations/deployment/postflight_barriers_v2.py": "d22b8861cd627a412946b0bee89ca8302f25fec90182bb8db1f451e0ec4a51c7",
+    "operations/deployment/test_postflight_barriers_v2.py": "a263ae97dc3238f61677e1d4f24d0192b956d62b13cbb6b1f02e694fdb7fa382"
+  },
+  "limits": [
+    "Same closed observations and limits as the first probe; no new production authority",
+    "No secret, application row, journal or network request",
+    "No successful backup restore, future CI, full application authorization or external reachability claim"
+  ],
+  "prior_probe": {
+    "path": "operations/deployment/postflight_barriers.py",
+    "sha256": "d1f6f00353a83f1fa420dda88aaf817419317ad01a1ee302de416d2e5b78b325",
+    "unchanged": true
+  },
+  "production_access": false,
+  "production_probe_executed": false,
+  "promoted": "/nix/store/wd7llvkvk7kbljk89ljk5p6mcdal1lsr-nixos-system-srv1982677-26.05pre-git",
+  "public_units_byte_identical_to_previous_promoted": 12,
+  "schema_version": 1,
+  "ssh_configuration_sha256": "288a16fdcd039ae2a7d5c3ec4b0d7d806c0d16a1ae4eb6bd02f39909eeed84db",
+  "sshd_configuration_byte_identical": true,
+  "tests_passed": 9
+}

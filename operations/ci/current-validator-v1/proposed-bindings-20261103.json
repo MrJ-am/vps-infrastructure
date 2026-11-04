@@ -1,0 +1,22 @@
+{
+  "application_validation_performed": false,
+  "attestation_emitted": false,
+  "authority_policy_sha256": "1ff6b41359b97b7641379386a69c76bf10c9b38ab694cfabd49c67ae3ed4aa66",
+  "closure": "/nix/store/k07544vp3n9hfww11na9zq5rm1j8d78y-closure-info",
+  "closure_path_count": 133,
+  "git_tree_algorithm": "Git SHA-1",
+  "policy_window_utc": [
+    "2026-11-03T00:31:00Z",
+    "2026-11-10T00:31:00Z"
+  ],
+  "proposal_and_selected_content_algorithm": "SHA-256; separate bindings, not interchangeable with Git tree identifiers",
+  "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+  "public_key_observation_sha256": "2f004041d23611cdc1dd17eae24b1395f93894009a3e94ebaaf6745c450c1697",
+  "report_policy_sha256": "e06c75f915be573229ebdf2f5a0ad01aeed2abcd9bb4d0045983820cbaf0f001",
+  "required_steps_count": 75,
+  "rules_revision": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+  "schema_version": 1,
+  "source": "/nix/store/qaf21rxsm38vya6kr6pqr5w02z3dbzbv-mrjam-public-proposed-sources-b02-readiness-v1",
+  "status": "proposed-not-adopted-or-activated",
+  "validator": "/nix/store/aj0m8465xcx0fzg03lkrvlnbxvldy6zm-mrjam-validate-current-readiness-1"
+}

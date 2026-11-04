@@ -1,0 +1,13 @@
+{
+  "exact_executable_and_cgroup": true,
+  "exit_code": 0,
+  "generation_switch_tested": false,
+  "graceful_stop": true,
+  "health": true,
+  "kill_recovery": true,
+  "production_access": false,
+  "real_systemd": true,
+  "scope": "real systemd process control with synthetic executable; no generation activation",
+  "uid": 981,
+  "vm_result": "/nix/store/pqi2r4wfg51dgs6w7ds5j106qy4m088k-vm-test-run-mrjam-vise-real-process-control"
+}

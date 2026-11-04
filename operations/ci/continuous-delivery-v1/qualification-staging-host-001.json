@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scope": "local-built-staging-host",
+  "system": "/nix/store/mi75m701bf5mrz702rs1jyiq5fgcv92s-nixos-system-srv1982677-26.05pre-git",
+  "checks": {
+    "adoptedUnchanged": true,
+    "assertionsPass": true,
+    "baselineExact": true,
+    "boundedResources": true,
+    "observerOnly": true,
+    "onlyControllersChanged": true,
+    "onlyStagingAdded": true,
+    "routesUnchanged": true,
+    "stagerSurvivesActivation": true
+  },
+  "built": true,
+  "packaged_reproduction_exact": true,
+  "built_control_plane_readback_exact": true,
+  "activated": false
+}

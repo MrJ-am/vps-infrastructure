@@ -2,6 +2,10 @@
 #+date: 2026-11-01
 #+language: fr
 
+État historique du 1 novembre. La reprise courante est décrite dans
+[[file:ETAT-20261102.org][ETAT-20261102.org]] ; les travaux et attentes ci-dessous ne remplacent pas
+les résultats plus récents.
+
 * Travail effectué sur Spectre
 
 La directive utilisateur « Va jusqu'au bout » poursuit le mandat de première
@@ -69,12 +73,17 @@ une présence de fichier n'atteste pas une migration, un SSO ou une restauration
 
 * Deux points concrets en cours
 
-Les archives qualifiées sont documentées dans =release/=, mais leurs octets
-ne sont pas disponibles dans les dossiers locaux vérifiés ou les publications
-GitHub examinées. L'API Forgejo renvoie 403 avec exigence de connexion et son
-explorateur redirige vers login. Leur absence dans Forgejo n'est donc pas établie.
-Le fichier =DEMANDE-EXPORTS-CLOUD.txt= contient les deux identités exactes à
-demander à Cloud ; il ne lui transfère pas le déploiement du VPS.
+Les deux archives originales sont désormais reçues depuis GitHub LFS au commit
+=b829cbdc5795097f88baff33e1a6edc6d45b40b4=. Tailles, SHA-256, inventaires,
+manifestes et 38 chemins de fermeture ont été vérifiés dans un store isolé.
+Le daemon local refuse leurs chemins privés non signés. Sans changer sa
+confiance, =release/review-content-package.nix= copie les contenus sélectionnés
+dans de nouvelles sorties et vérifie leurs NAR identiques. L'adopteur qui se
+référence lui-même est reconstruit depuis sa source inchangée : chemin et NAR
+identiques. Les 15 sorties retenues sont disponibles dans le store local ;
+=receipt-content-reception-20261101.json= et =application-artifacts.json=
+enregistrent ces correspondances. Aucun binaire reçu n'a été exécuté pendant
+la réception, aucune activation VPS n'en découle.
 
 Le raccord d'identité attendu par le serveur Rust n'existe pas sous la forme
 supposée dans sa configuration : les trois routes de vérification sur
@@ -86,10 +95,26 @@ socket de l'ancien monolithe. La nouvelle plateforme contient un client de ce
 contrat, pas son remplacement complet. Son pont de présentation Kanidm ne
 remplace pas ces sessions, contrôles CSRF, élévations et autorisations MCP.
 
-Il faut fermer et tester ce raccord avec le contrat natif Kanidm avant de
-retirer l'ancien service. Ne pas simuler un succès d'identité, réactiver l'ancien
-Python Keycloak ou réintroduire SBCL comme dépendance du nouveau système. Les
-archives applicatives seules ne résolvent pas cette différence d'architecture.
+Le broker Rust natif est maintenant implémenté séparément dans la plateforme.
+Les 22 groupes d'acceptation définis par un agent indépendant avant lecture
+du candidat passent dans un espace Bubblewrap isolé, avec TLS, PostgreSQL et
+SQLite inventés. Cela ne qualifie pas encore Kanidm réel, les comptes installés
+ou une bascule. Le module =nixos/mrjam-identity.nix= conserve l'UID de l'état
+hérité et fournit à Log une projection subject/mail sans accès aux sessions.
+L'enregistrement des nouveaux admis et la qualification native restent en cours.
+
+L'examen des travailleurs reçus confirme un protocole Keycloak dans admission,
+cycle et rejeu ; fermeture fixe aussi son ancien issuer. Leur adaptation native
+et leurs nouveaux essais restent requis. Le module applicatif refuse leur
+promotion actuelle ; il ne contourne pas cet écart en renommant un credential.
+Les présentations, le serveur qualifié et l'archiveur restent inchangés.
+
+=hosts/mrjam-vps/application-services.nix= et =renewal.nix= passent 26 assertions
+sur chacun des deux pins Nixpkgs. Huit groupes synthétiques par pin vérifient le
+wrapper de renouvellement avec un faux client ACME. Le précontrôle supplémentaire
+=preflight_adoption.py= lit uniquement des métadonnées fermées de comptes Unix,
+fichiers, réseau, Nginx, ACME et catalogues PostgreSQL ; ses 22 contretests passent.
+Il ne lit aucune table métier, clé, inscription ACME ou journal applicatif.
 
 Après ces points : terminer la composition globale, qualifier les migrations
 et retours correspondants, effectuer sa revue indépendante, puis seulement

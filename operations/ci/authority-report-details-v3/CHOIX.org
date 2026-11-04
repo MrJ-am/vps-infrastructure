@@ -1,0 +1,65 @@
+#+title: Acceptation exacte des métadonnées d’étape du rapport réel
+#+language: fr
+
+La validation locale unique a produit trois artefacts et un rapport de 6652
+octets contenant les 75 contrôles réussis. Le consommateur v2 a ensuite
+refusé =REQUIRED_STEPS_REFUSED=. Le résultat global reste =failed= et tous
+les octets sont conservés ; aucune seconde validation n’est proposée.
+
+L’unique forme supplémentaire est :
+
+#+begin_src json
+{"name":"explicit-manifest-overlay-style-logo","status":"passed",
+ "base_sha256":"4579e7b79073670a805c54012be78aa847b696a50f50bb5d5674bcfa4b760f8c",
+ "corrected_sha256":"3612d675a47423c81b79dcf33d350a79f50a23f7b55daea72889ca7f33138fd3"}
+#+end_src
+
+Ces valeurs correspondent exactement à l’entrée =style-logo= du manifeste
+immuable =l6c4bjc…-overrides/manifest.json=. La politique de rapport =e06c75…=
+sélectionne cet overlay ; son runtime et son NAR de validateur =aj0m8465…=
+lient le manifeste et le contrôle de ces deux contenus avant compilation.
+Le SHA de politique ne contient pas à lui seul les deux SHA de l’entrée :
+la liaison existante est composée de cette sélection et du runtime/NAR
+immuable, tous deux déjà liés par la politique d’autorité.
+
+* Variante minimale proposée
+
+La version v3 réutilisera intégralement le paquet credentials-v2. Elle
+ajoutera un descripteur public immuable, hors candidat, contenant le SHA de
+politique de rapport, le validateur et son NAR, le manifeste d’overlays et
+son SHA, et cette seule entrée exacte. Le constructeur vérifiera aussi la
+sélection =style-logo= de la politique de rapport. Tout autre couple de
+politique/validateur exigera un nouveau binding examiné.
+
+Un helper calculera la liste exacte du rapport attendu depuis les 75 noms
+de la politique d’autorité : les 74 autres entrées garderont uniquement
+=name/status= ; seule l’entrée ci-dessus aura les deux SHA précis. Le
+consommateur comparera le rapport complet à cette liste, sans retirer ni
+ignorer un champ arbitraire, et sans modifier les octets du rapport reçu.
+
+La liste =steps= du payload signé restera la liste simple =name/status=
+attendue par le protocole et le client v1. Elle sera construite depuis la
+politique, uniquement après la comparaison complète précédente. Les
+métadonnées supplémentaires restent présentes dans =verification.json=,
+dont le SHA exact est inclus dans les artefacts signés. Le client et sa
+vérification de payload restent ainsi byte-identiques ; aucun champ signé
+existant ne change de sens.
+
+Les deux seuls points modifiés dans signer.py seront la comparaison des
+étapes du rapport et la construction de =payload.steps=. Le lecteur de clé,
+les UID, le transport, les caches, les recettes worker/collecteur, le
+contrat des payloads et les vérifications cryptographiques restent intacts.
+Les versions et preuves v1/v2 ne seront pas modifiées.
+
+* Qualification prévue
+
+Sur les trois fichiers existants : acceptation du rapport original exact,
+refus des SHA altérés/absents, champ supplémentaire inconnu, autre étape
+enrichie, mauvais ordre et mauvais binding. Une signature Ed25519 avec une
+clé inventée et un reçu synthétique démontrera que le payload émis reste
+vérifiable par le client inchangé et lie le SHA du rapport complet.
+
+Ce reçu synthétique ne prouvera pas une collecte v2 de production et ne
+remplacera pas la provenance du parcours applicatif local. Aucun accès à la
+clé réelle, aucune attestation de production ni reprise des 75 tests n’est
+nécessaire pour cette correction de consommation.

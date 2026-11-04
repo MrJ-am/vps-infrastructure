@@ -1,0 +1,26 @@
+{
+  "api_tests": "/nix/store/a46dz5ayfq3h5rksc6h6bsa5blzdnj40-mrjam-vise-0.2.0-8c8ef66f943c-tests",
+  "artifact": "/nix/store/zmb0mvkn59zxpxnc9ny02q4rkaffc5bw-mrjam-vise-0.2.0-8c8ef66f943c",
+  "checks": [
+    "empty-state-refused-without-bootstrap",
+    "explicit-schema-initialization-and-idempotent-role-adoption",
+    "missing-symlink-and-public-ledger-refused",
+    "schema-version-structure-and-runtime-ddl-refusals",
+    "real-rust-elm-http-and-closed-postgresql-role",
+    "nine-real-api-tests-with-encrypted-synthetic-fixtures",
+    "sigterm-clean-exit-and-state-preserving-restart",
+    "real-pg-dump-restore-with-current-ledger-and-no-account-resurrection"
+  ],
+  "code": "VISE_REAL_APPLICATION_VM_PASSED",
+  "limitations": [
+    "Entirely invented accounts, payloads, sessions and ledger",
+    "No browser or production backup accessed",
+    "Restore exercised only with this new binary; rollback to the old DDL-dependent binary is not qualified"
+  ],
+  "postgresql": "17.11",
+  "production_qualification": false,
+  "qualification_output": "/nix/store/cvhhy14fn41aj9vak2kbzh45nniz9i86-vm-test-run-mrjam-vise-application-adoption-synthetic",
+  "schema_sha256": "b4570f925d1f14e967a3187aa10b841356931ca76c0589c842b05a2a72ffb616",
+  "schema_version": 1,
+  "scope": "synthetic-nixos-vm-tcg"
+}

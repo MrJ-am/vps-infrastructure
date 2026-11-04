@@ -1,0 +1,178 @@
+{
+  "activation_performed": false,
+  "artifacts": {
+    "runner": {
+      "historical_output_exact": true,
+      "path": "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+      "path_info": {
+        "deriver": "/nix/store/alh902iw1y15535d0mpkjc4xqws8amq6-mrjam-forgejo-runner-13.2.0.drv",
+        "narHash": "sha256-lRFr865p1pgGE43d/i5+TngPeklfNtVn6zy07fZL9vM=",
+        "narSize": 33208096,
+        "references": [
+          "/nix/store/8r9awlc6p0i47vr34p4j11sbgq4mi9bv-mailcap-2.1.54",
+          "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+          "/nix/store/ghwcn9lnrczq88sqkcb1ibhwqdchqrp5-iana-etc-20251215",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/ngx7v0gbiqp14vcbgd5s9218pdyyf1lh-git-minimal-2.54.0",
+          "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e"
+        ]
+      }
+    },
+    "source_bundle": {
+      "historical_output_exact": true,
+      "path": "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging",
+      "path_info": {
+        "deriver": "/nix/store/q2hcwl0nc61j71am41m2n73607wr99nl-mrjam-public-source-bundle-for-staging.drv",
+        "narHash": "sha256-NKhvOw26UhjRIahtyaUSIp5ShZh+MV0lzEX01dqCebM=",
+        "narSize": 6728128,
+        "references": []
+      }
+    },
+    "stager": {
+      "historical_output_exact": true,
+      "path": "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+      "path_info": {
+        "deriver": "/nix/store/fxc074ycnjdbixxvph75pz3d4agr57w0-mrjam-validation-stage-sources-1.drv",
+        "narHash": "sha256-fCUKlHOl9o8lNw2YKTSk/ZIzjMAXXpzADx5joucYews=",
+        "narSize": 33944,
+        "references": [
+          "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+        ]
+      }
+    },
+    "validator_corrected": {
+      "historical_output_exact": false,
+      "path": "/nix/store/p2494a4mh5nsp77sfzrfd8zhinz34bmp-mrjam-validate",
+      "path_info": {
+        "deriver": "/nix/store/44kw0rmg793czmhpmm0fv7w3ndp7lm43-mrjam-validate.drv",
+        "narHash": "sha256-7by4n1iGTm3DG4Pxjavt7yocMc94HiJNYE94ff66/n0=",
+        "narSize": 64992,
+        "references": [
+          "/nix/store/0py92lckwf8la1w2pq6d0cgd42xnpywr-mrjam-verifier-runtime.json",
+          "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+          "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+          "/nix/store/p2494a4mh5nsp77sfzrfd8zhinz34bmp-mrjam-validate"
+        ]
+      }
+    }
+  },
+  "authority": "local-content-recovery-and-targeted-tests",
+  "historical_receipts_sha256": {
+    "operations/forgejo/qualification-complete-chain-20261031.json": "530b824de10089be77a463e80fe8e3683f81652a47e8b5117fb0368b86991b7b",
+    "operations/forgejo/qualification-staging-20261031.json": "ed0045c78689465608e9850c5e15d77ad7483968936b35050aaf0813f46cb478"
+  },
+  "historical_validator": {
+    "derivation_reproduced": "/nix/store/zds5r7q12q7f3np19cy6p2zm04fwxxhq-mrjam-validate.drv",
+    "output_available": false,
+    "path": "/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate",
+    "reason": "upstream installer requires /usr/bin/env absent from strict sandbox; per-build path request rejected for untrusted user; parent reported sudo password required, no privileged action taken",
+    "recipe_diff": "only existing postPatch patchShebangs ./install.sh; archive and version lock unchanged"
+  },
+  "limits": [
+    "The first three roots exactly match historical NAR hashes, sizes, derivations and references.",
+    "The corrected validator is a new root; its eight checks do not rerun the full application pipeline or Forgejo/systemd integration.",
+    "All current policies and the source bundle are historical synthetic qualification bindings, not adopted production CI policy.",
+    "No validation signing authority, human approval, delivery executor or live CI dispatch is established by this inventory."
+  ],
+  "local_logs_sha256": {
+    "recursive-verify.stderr": "625482f2dbe3ee9d42c39533071d55def7ff9bc691ed7644b7f0baf65f7064c7",
+    "runner-staging-build.log": "79feb865bc8ea4ddf3a22a74806b840410ed650486eefe7ab02976cb9c3ece9f",
+    "staging-source-build.log": "77b78187ed51d27f3a5ec9fc2f4c1c06cd7c4b79f578c96d1d92435371bbc5f3",
+    "validator-build-002.log": "5323d7b7e17c2c9ea753184fb9937ebba08fb0a69cb4c1c1d0f291cd7ed76343",
+    "validator-build.log": "33bf0fa9b914c4ac6e8f0043337c2d82e516d1e84123ab43c69438c4a425c2d3",
+    "validator-corrected-build.log": "044f6fda8e0279c2267073435887a16175e3cb40f3598bdbfaee948609ab6643"
+  },
+  "original_export_manifests": [
+    {
+      "ci_targets_absent": true,
+      "closure_paths_count": 15,
+      "file": ".local/exports-20261101-lfs-b829cbdc/platform-20261031/review-manifest.json",
+      "sha256": "cbc2c154310f8d3764158272c95a593dc3ea85328675903c8d11bb6f02c15da4"
+    },
+    {
+      "ci_targets_absent": true,
+      "closure_paths_count": 27,
+      "file": ".local/exports-20261101-lfs-b829cbdc/workers-20261031-03/review-manifest.json",
+      "sha256": "a164c1189176f9b5cff87e751cbb65ba37ccd128d1860550fbbef31f65089643"
+    }
+  ],
+  "production_access": false,
+  "production_ready": false,
+  "recovered_inputs": {
+    "accepted_rules_revision": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "cargo_packages": 225,
+    "elm_cache_files": 449,
+    "elm_docs_regenerated_exact": [
+      "elm/http/2.0.0/docs.json",
+      "elm/time/1.0.0/docs.json"
+    ],
+    "frontend_resources": 92,
+    "governance_refs_modified": false,
+    "historical_synthetic_rules_revision": "93bd67666a3b4be9657c333931fa25b2359e165b",
+    "old_private_data_read": false,
+    "policy_sha256": "5a44dde8bd4c6e36eddb41f11250d3b8c0b07093ce46d646880cc2652f96cf91",
+    "proposal_files": 815,
+    "proposal_manifest_sha256": "5857e70c38d41bb739b460a131d5eef6696985eb247ba9c9420a7605e51e5087",
+    "runtime_materialization_sha256": "6c4c957933bac12ded038377f3346a800366201a0ae743bce06dd21f87ab50b8",
+    "runtime_source_files": 463
+  },
+  "recovery_sources_sha256": {
+    "operations/forgejo/recovery/README.org": "5a7e48d8b404be486092e0f3b5bb4c180e9761ace371b2a2b3e269f747165b56",
+    "operations/forgejo/recovery/finish_inputs.py": "47bfb095f7e0b5bb1ca71619519ede2bfa35aa7361f6591853c356963de0ed12",
+    "operations/forgejo/recovery/inspect-selected-inputs.py": "309597054bb2621d9b7809a9ae0835768cc38919ce164a281901336d5d38326f",
+    "operations/forgejo/recovery/packages.nix": "288127963c4657ed91a942ffd6a9486725d604edb740665eed9ffea40a313e97",
+    "operations/forgejo/recovery/qualify_validator_recovery.py": "c391c3416cb3b297f53ff053a009a7bcd4085029008e69b16844b0627ef519f9",
+    "operations/forgejo/recovery/record_inventory.py": "4552e9395f48e839d9d806474f9289d4b2594d92590bbcc4cc1be611b809cdd4",
+    "operations/forgejo/recovery/recover-proposal.py": "dbff93ffc7fa2d6b5acf09692e61741de0736972c6ae207425fbfdeac8e6c951",
+    "operations/forgejo/recovery/recover-synthetic-binding.py": "1c3b10a4c4fb34a209a51763eef48050f1379bec9eaeb6e3d9cf27cf834f3c5b",
+    "operations/forgejo/recovery/recover-validator-code.py": "49741f417e03369c1c8cd1b6c6acd4b0f7adb273a6efe4e8a1f042ece917562b",
+    "operations/forgejo/recovery/recover-validator-inputs.py": "9f91a6fcf7fd42df4f1116df763519fe678d8a3d2148537029077f25cef15682",
+    "operations/forgejo/recovery/recover-validator-resources.py": "87e3a92133e897d339793fddfc7e93176bcfe9a1fa0144bc78c15e350723153a"
+  },
+  "recursive_content_verification": {
+    "command": [
+      "nix",
+      "--extra-experimental-features",
+      "nix-command",
+      "store",
+      "verify",
+      "--no-trust",
+      "--recursive",
+      "/nix/store/cdj7b2dnn83kbwwhrpia79zbfllxbzsb-mrjam-forgejo-runner-13.2.0",
+      "/nix/store/bfzw076149c1bca4xnr4q48saaw1wby7-mrjam-validation-stage-sources-1",
+      "/nix/store/zjwbgmna6pyw7p151pzrgm20wi2jzfqv-mrjam-public-source-bundle-for-staging",
+      "/nix/store/p2494a4mh5nsp77sfzrfd8zhinz34bmp-mrjam-validate"
+    ],
+    "exit_code": 0,
+    "performed": true
+  },
+  "schema_version": 1,
+  "targeted_qualification": {
+    "all_passed": true,
+    "checks": {
+      "all_449_elm_cache_inputs_exact": true,
+      "all_six_pinned_tool_versions_executed": true,
+      "closure_diff_only_validator_runtime_rust_roots": true,
+      "historical_derivation_reproduced_but_output_absent": true,
+      "native_rust_fmt_clippy_unit_doctest_release_offline": true,
+      "normalized_validator_nar_matches_historical_content_not_derivation": true,
+      "packaged_validator_closed_invalid_invocation": true,
+      "runtime_diff_only_rust_store_path": true
+    },
+    "historical_output": "/nix/store/wwnqd5sjcixkjmfwwbb3b5b3ggc2bj8l-mrjam-validate",
+    "historical_output_available": false,
+    "historical_pipeline_rerun": false,
+    "independent_authority_established": false,
+    "limits": [
+      "No new full 74-step application pipeline, real Forgejo dispatch or production installation claimed.",
+      "Normalized NAR proves unchanged verifier code after two explicit path substitutions; it is not the new derivation or an imported historical artifact.",
+      "The compiler installer is repaired with patchShebangs; the historical build was refused by the strict sandbox and privileged local access was unavailable."
+    ],
+    "new_output": "/nix/store/p2494a4mh5nsp77sfzrfd8zhinz34bmp-mrjam-validate",
+    "production_access": false,
+    "schema_version": 1,
+    "scope": "local targeted qualification of interpreter repair; historical synthetic policy retained"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "scope": "current rules metadata and local proposal; no adoption",
+  "observation": {
+    "code": "RULES_MAIN_OBSERVED",
+    "main": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "main_matches_adopted": true,
+    "mutation_performed": false,
+    "private_content_exported": false,
+    "schema_version": 1,
+    "workflow_present": false
+  },
+  "proposal": {
+    "schema_version": 1,
+    "scope": "local private proposal only; no remote ref or workflow activation",
+    "parent": "eb71ffe5944943474c5ee483e66c270b5976ab90",
+    "commit": "b02bdf1b5d63dcf0e0610723788a7ca7e384932c",
+    "tree": "f2c84117b2ae7e0f0c3bf34ab82d47dd957ef90b",
+    "added_path": ".forgejo/workflows/independent-validation.yml",
+    "workflow_sha256": "cd01f21d4df118d1c52d9e76ab600e6bebbd746415c4f57cc744c8d5f6f2b5de",
+    "workflow_blob": "5f3f4f4892aacb45355c636a488a76d641d7fd55",
+    "only_existing_qualified_workflow_added": true,
+    "other_tree_entries_unchanged": true,
+    "remote_adoption": false,
+    "production_activation": false
+  },
+  "limits": [
+    "Proposal is local and private, not pushed or accepted on protected main.",
+    "Future verifier and authority policies must bind the adopted child revision explicitly.",
+    "No rules, test expectations or other tree entries changed; the existing bounded workflow is the only addition."
+  ]
+}

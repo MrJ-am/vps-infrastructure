@@ -1,0 +1,17 @@
+{
+  "export_bytes": 454968,
+  "export_sha256": "d1198f804d48c8894ae0ccccc5d0b99568064dd7e2d98e88299710eabadcff87",
+  "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+  "required_free_bytes": 1074725176,
+  "schema_version": 1,
+  "store_paths": [
+    "/nix/store/32i0s7mckmigndwqb02k7a22hrhzyzm6-mrjam-first-source-binding.json",
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "/nix/store/l0wwj2l42zfdjrlq5jljgm36mwxm8hll-mrjam-first-release-governance-2",
+    "/nix/store/mqc8q1ln520flsy8mv630wrayp4cgn7a-mrjam-first-release-controller-1",
+    "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service",
+    "/nix/store/xsk4cb9459yncgq2j70cixzbr0y104zg-mrjam-first-release-binding-1"
+  ],
+  "unit_sha256": "19dd8383236b62acfb0aa7fb081b00e78c42314b7418f94b5aa50ee9e82896cc",
+  "unit_store": "/nix/store/w25djyzhrrbkc46fvzb7zjcbp1c2j549-unit-mrjam-kanidm-worker-provision.service"
+}

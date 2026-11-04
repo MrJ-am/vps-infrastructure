@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "proposal_sha256": "e06f030310aed4f8ff1cb0c5b836848dfcd9d4e99b926c841f7619b477fdd7e7",
+  "source_head": "e4cc836d76c4104b4d356e583a2e5f34a827f90b",
+  "plan_sha256": "c97039dd1d5aca4c25cd5c5de54a74da602bfa640698e33fc5c9a61caabafe1e",
+  "current": "/nix/store/yfq7p6syfj101c8iiimpnp7cajd2xga2-nixos-system-srv1982677-26.05pre-git",
+  "boot": "/nix/store/yfq7p6syfj101c8iiimpnp7cajd2xga2-nixos-system-srv1982677-26.05pre-git",
+  "previous": "/nix/store/xs2q4rwk8bhr78y7l1xqkzl60244312k-nixos-system-srv1982677-26.05pre-git",
+  "public_slot": "blue",
+  "previous_green_retained": true,
+  "real_return_verified": true,
+  "job_phase": "deployed",
+  "promotion_marker": null,
+  "recovery_phase": "complete",
+  "admission_controller_after_promotion": "success",
+  "promotion_timer": "active",
+  "https": {
+    "audition.mrj.am": 200,
+    "log.mrj.am": 200,
+    "logique.echos.systems": 200,
+    "vision.mrj.am": 200,
+    "vise.mrj.am": 200,
+    "forge.mrj.am": 303,
+    "principiipetit.io": 200
+  },
+  "vise_blocking_precondition": false,
+  "vise_pid_unchanged": 751069,
+  "automatic_intake_to_delivery_complete": false
+}

@@ -1,0 +1,66 @@
+{
+  "findings": {
+    "adoption_sql_only_changes_owners_and_privileges": true,
+    "adoption_test_preserves_all_rows_but_does_not_exercise_public_corpus_match": true,
+    "adoption_unit_invokes_only_that_sql": true,
+    "corpus_importer_is_library_not_wired_to_deployment": true,
+    "existing_participations_join_current_corpus_row_by_version": true,
+    "participations_reference_corpus_version": true,
+    "server_requires_exact_jsonb_public_bank_for_manifested_version": true
+  },
+  "limits": [
+    "No production corpus/codebook/participant contents read",
+    "No mutation, SSH or source correction performed",
+    "False public_bank_equal alone does not distinguish absent version from existing conflicting version",
+    "Historical source paths only provide bounded locations to inspect; no claim their current contents exist or are approved"
+  ],
+  "minimal_correction_contract": {
+    "if_version_absent": "A separate explicit insert-only corpus import may run after paired snapshot and before Rust startup only when both approved bank and codebook bytes/provenance are available. Preserve every existing row/version/participation and fail on conflict.",
+    "if_version_present_but_bank_differs": "Do not replace its bank or codebook or change participant version references. Establish the approved scientific corpus and the precise mismatch before selecting corrected public assets or a separately approved new version.",
+    "not_authorized_by_false_equality_alone": [
+      "invent_codebook",
+      "overwrite_existing_version",
+      "relabel_existing_participations",
+      "weaken_runtime_readiness"
+    ]
+  },
+  "native_import_contract": {
+    "approved_inputs": [
+      "bank_bytes",
+      "codebook_bytes",
+      "bank_sha256",
+      "codebook_sha256"
+    ],
+    "digest_contract": "SHA256(JSON.stringify({bank,codebook})) using native json_js numeric/key-order semantics",
+    "lock": "transaction-scoped pg_advisory_xact_lock(78041002)",
+    "maximum_each_input_bytes": 5242880,
+    "same_version_different_digest": "CORPUS_CONFLICT",
+    "writes": "INSERT INTO corpus only; no UPDATE/DELETE; no access to participation rows"
+  },
+  "observed_public_artifact": {
+    "path": "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval/data/bank.json",
+    "questions_count": 20,
+    "sha256": "247e5a96f387fe87a183c07274139cd32f957b8ca54c9ca07257b6ee208bf480",
+    "version": "0.3.0"
+  },
+  "production_access": false,
+  "reference_search": {
+    "accepted_native_mateval_source_contains_approved_codebook_file": false,
+    "complete_received_mateval_git_history_paths_matching_codebook_or_import_corpus": 0,
+    "old_native_configuration_bank_version": "0.3.0",
+    "old_native_resources_path": "/srv/mrjam-assemblages/54988ca67567db04d2e064feae91d558f7bb25fb/matheval",
+    "old_node_entry_path": "/srv/matheval/current/server/src/index.mjs",
+    "received_old_nix_scripts_reference_codebook": false
+  },
+  "schema_version": 1,
+  "scope": "Static local source audit, no production database contents",
+  "source_sha256": {
+    ".local/mrjam-plateforme-identity/components/mateval/migrations/001-collecte.sql": "ed168c35bcdf2f5576631158a30b93ec27dc8c3ba2ecc623c7181c5afca00b83",
+    ".local/mrjam-plateforme-identity/components/mateval/src/corpus.rs": "9c21d3b4d4f26b5768e22a3a336e17ef10e3237a6bc83b543f27131c03e33e1d",
+    ".local/mrjam-plateforme-identity/components/mateval/src/stockage.rs": "da3e03c152ebb471c144693040665035540e4bb036a8331c56925c0e5037d0e3",
+    ".local/mrjam-plateforme-identity/crates/server/src/database.rs": "da7ba261fdeb982392e89af8ae62764eddde3d4861c10c86f629c2ac12e9f2e3",
+    "operations/deployment/adopt-matheval.sql": "aa95e6eb5006f516d731cebad5bfc203670d52d6d6b1393c2ed2156800aaf68d",
+    "operations/deployment/database-adoption.nix": "3150ea7b0cd490c3c4cdc391635be7c177d0437797798b703f12274f45fe7880",
+    "operations/deployment/matheval-adoption-test.nix": "da47e9a46e7fa3833ed67bfc9c397f7b805a2eaee4bf4f0d41228fb4aa16f644"
+  }
+}

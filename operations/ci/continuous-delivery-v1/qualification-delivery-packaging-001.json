@@ -1,0 +1,87 @@
+{
+  "frontend_refusal_test_methods_passed": 6,
+  "frontends": {
+    "deployment_authorized": false,
+    "frontend_archive_sha256": "f3db1448bf4dfb9e88dace2d3e5b6932f19bde9033947f8e31a85d0e132ae8f6",
+    "outputs": {
+      "audition": {
+        "files": 96,
+        "manifest_sha256": "20293b354b30dfa09c8e86de7bff0463cb3f91d6f5aea32b21d6eaa05a3f77b7",
+        "store_path": "/nix/store/npphq6xfyq7x92a6rdn44prk9sl12ch6-mrjam-delivery-frontends-04754e2c5e53-audition"
+      },
+      "log": {
+        "files": 9,
+        "manifest_sha256": "d89f21487af389264161eb20ae9366b10aa53acad6cbe9d4505c374bcb28a705",
+        "store_path": "/nix/store/pizk62gfcf378cfg30mvp7dm26bfj3j6-mrjam-delivery-frontends-04754e2c5e53-log"
+      },
+      "logique": {
+        "files": 125,
+        "manifest_sha256": "b803f89a9fb9b3d9bacb696b57e6f7ed5fb5b794f014d1ffcab2108187f1b8c4",
+        "store_path": "/nix/store/f5rjnll3mqrk4cchsydjv2qny49n73fw-mrjam-delivery-frontends-04754e2c5e53-logique"
+      },
+      "mateval": {
+        "files": 108,
+        "manifest_sha256": "c5cefea91fbf749be9d780e5690ac434f6abfc4f9e089a05c5cfcdc995180964",
+        "store_path": "/nix/store/v45fdjfzfyyzd8k5rb0b0n9dg85rl880-mrjam-delivery-frontends-04754e2c5e53-mateval"
+      },
+      "style": {
+        "files": 49,
+        "manifest_sha256": "1273b87534ea54bf3f22293b347bae3509834e1039896f548d0f9613ab2a344a",
+        "store_path": "/nix/store/2ylqq9dx25gjpz08w468sk6dixdw5qq2-mrjam-delivery-frontends-04754e2c5e53-style"
+      },
+      "style-logo": {
+        "files": 38,
+        "manifest_sha256": "f0e0338e7de464bb35bec138fa1a890e0dd321f17f9600988b53ea7b07adfb8b",
+        "store_path": "/nix/store/zjajdpsfid16n7wzjfl50ia0xhgcbbck-mrjam-delivery-frontends-04754e2c5e53-logo"
+      },
+      "vision": {
+        "files": 24,
+        "manifest_sha256": "922a7d38a9de0912ef0608171cbc2478b1211a5f7284e292562dbf24fa8446d1",
+        "store_path": "/nix/store/gml8qh5z9anb9fij3svzvgjbvlwgygmn-mrjam-delivery-frontends-04754e2c5e53-vision"
+      }
+    },
+    "proposal_sha256": "04754e2c5e531c37bd06864ed2becb3fc218d20d780d9a8c8e1b045956a5d04d",
+    "schema_version": 1
+  },
+  "host_evaluation": {
+    "changed": [
+      "mrjam-rust-green.service"
+    ],
+    "checks": {
+      "activeSlotStillBlue": true,
+      "assertionsPass": true,
+      "baselineExact": true,
+      "bootPolicyUnchanged": true,
+      "noImplicitRestart": true,
+      "noUnitAdded": true,
+      "onlyInactiveUnitChanges": true,
+      "routesUnchanged": true
+    },
+    "production_activation": false,
+    "scope": "local-artifacts-inactive-slot-evaluation-only"
+  },
+  "inputs": "retained local validation outputs, not production-signed artifacts",
+  "limits": [
+    "Production job2 still running. No production attestation or artifact admission inferred.",
+    "No live inactive slot, traffic switch, session continuity or ordinary release tested by this packaging qualification."
+  ],
+  "non_asset_configuration_unchanged": true,
+  "production_activation": false,
+  "raw_elf_sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb",
+  "runtime": "/nix/store/g8vxsl9nhmrbnn1d866yidk07zwjyv2x-mrjam-runtime-green",
+  "runtime_check_config_in_nix_sandbox_passed": true,
+  "schema_version": 1,
+  "server": "/nix/store/jszbmj1s6h4xnzg5qgga99bzcy6i84hq-mrjam-delivery-server-04754e2c5e53",
+  "server_closure_paths": 8,
+  "source_sha256": {
+    "delivery-complete-runtime-qualification.nix": "81097e98dd9724a6cab28c21d18acf96b08302405a18b6d9a95221b76408aa60",
+    "delivery-frontends-qualification.nix": "e7b163c69a46e3c6c890484c828d47817f8253eb02f730109c733ccba0a0775d",
+    "delivery-frontends.nix": "9b4c2555da428b88b21ef9cc6ce1beb8fefce1c1a035530f0a31592d590ba7c9",
+    "delivery-host-qualification.nix": "67f26e2b9ce97fabc8600c69fc2309015ac760b970f04a64b1f2bd9c1515b409",
+    "delivery-runtime-qualification.nix": "b77baa76616a21c42164f5cc0cd22f5ecaf0270ce329562abed07518f0684d2b",
+    "delivery-runtime.nix": "96cb974af76d0720c96c106ff72e7048b9c145ea9390322278f273da2c9eb0eb",
+    "delivery-server-qualification.nix": "1cb8f83054e1a24ab25c27e4fc9e92929a0a2d29990b9096dcd3e188ce0d0cd5",
+    "delivery-server.nix": "1a14126039c5defabadf7cc5b0d84508b93522a04485be8a658d56da3b629f27",
+    "delivery_frontends.py": "5098d335ee7bdd91fdc11a24744698f3a77d324d14a6d1caff69e48deccacfed"
+  }
+}

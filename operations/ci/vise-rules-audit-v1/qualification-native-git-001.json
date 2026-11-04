@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "head": "470211d7b2522322a94c5ddfc6770d833bb1457e",
+  "tree": "5d2754e2fa062f4476d36eecc4cd3a2c359a48b1",
+  "checks": [
+    "actual_git_objects_pass",
+    "PROPOSAL_TREE_REFUSED",
+    "WORKFLOW_BYTES_REFUSED",
+    "file_substitution_refused"
+  ],
+  "remote_mutation": false,
+  "publisher_source_sha256": "4e1b120a1570d3d092302bcb071e8bd092425ca076a4e14aae2862b80e251500"
+}

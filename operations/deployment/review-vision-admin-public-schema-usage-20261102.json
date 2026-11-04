@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "Exact runtime verify_role predicate bound to locked source: false before, true after correction.",
+    "Actual vision_administration login and pre-existing authorized function work; no SET ROLE or author fixture used.",
+    "SELECT/INSERT/DELETE of private table and CREATE in public still refuse.",
+    "Attempted grant to a third role adds no privilege; only USAGE without grant option is present.",
+    "Roles, memberships, table/function owners and ACLs and invented row contents byte-identical before/after.",
+    "Other role remains without public USAGE; wrong database refuses; repeat remains accepted."
+  ],
+  "files": {
+    "operations/deployment/database-adoption.nix": "3150ea7b0cd490c3c4cdc391635be7c177d0437797798b703f12274f45fe7880",
+    "operations/deployment/test_vision_admin_usage_independent.py": "e79b4560d8828113e20fa14386e702e4f7eb688808bd37d7563d844e4c140b6f",
+    "operations/deployment/vision-admin-public-schema-usage.sql": "c355bf1d930042cc99e59ee4235597298fa51ff7426625f5ed6da68d94cdbf9e"
+  },
+  "integration_review": "Only fixed --dbname=vision --file=vision-admin-public-schema-usage.sql appended to existing bootstrap journal unit; no new service, startup or credential.",
+  "limits": [
+    "Invented schema and objects, not full application migrations or complete Rust readiness.",
+    "Production SQL execution remains exclusively through the reviewed staged deployment after snapshot."
+  ],
+  "native_elapsed_seconds": 3.199,
+  "native_scenarios_passed": 1,
+  "native_test_command": "python3 -I -m unittest discover -s operations/deployment -p test_vision_admin_usage_independent.py -v",
+  "passed": true,
+  "production_access": false,
+  "runtime_predicate_source_sha256": "da7ba261fdeb982392e89af8ae62764eddde3d4861c10c86f629c2ac12e9f2e3",
+  "schema_version": 1,
+  "scope": "Independent PostgreSQL17 direct-role connection against invented objects, complementing author catalogue tests."
+}

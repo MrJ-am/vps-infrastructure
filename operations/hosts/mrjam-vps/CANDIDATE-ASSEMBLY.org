@@ -1,0 +1,233 @@
+#+title: Composition de première mise en service, sans ViSe
+#+date: 2026-11-02
+#+language: fr
+
+=candidate.nix= installe les unités préparées sans démarrage automatique des
+applications, de Nginx, de PostgreSQL ou de leurs minuteries. Le profil
+=candidate-promoted.nix= exprime leur politique de démarrage après la bascule.
+Le profil complet importe =machine-profile.nix= après extraction mécanique des
+faits, du matériel et de SSH. L'ancien =machine.nix= reste un wrapper portant
+son refus explicite : les préparations historiques partielles restent bloquées.
+Les assertions ordinaires de toutes les unités du candidat restent exigées.
+Ces fichiers ne sont ni un opérateur distant ni une autorisation implicite de
+migration. Le backend borné doit être construit avec les deux générations
+exactes avant le début de la fenêtre ; aucune compilation n'appartient à cette
+fenêtre. =systems.nix= construit les deux générations avec le pin c5 exact,
+sans commande d'activation et sans booléen d'approbation.
+
+* Contrats conservés
+
+Le socle utilise le nixpkgs c5c4a43b0e8056328ec4529f735cabdb8f1942bb,
+les identités numériques observées et le hostname public =srv1982677=.
+Les huit hôtes existants hors ViSe sont déclarés par
+=observed-public-services.json=. Aucun domaine Style ou Logo n'est inventé.
+Les sept fermetures frontend sont conservées et le serveur Rust reçu reste
+inchangé. Le montage =/matheval/= et la redirection de la racine Principii
+sont explicites ; Audition reste dans son schéma de la base =vision=.
+
+PostgreSQL conserve les données existantes, sans =ensureDatabases=,
+=ensureUsers= ni script d'initialisation automatique. Les connexions utilisent
+des rôles peer et des cartes distinctes. Les migrations métier Vision 1 à 27
+déjà observées ne doivent pas être rejouées. Le nouveau journal séparé exige
+son bootstrap explicite ; l'absence des trois anciens chemins JSONL ne prouve
+pas à elle seule l'absence d'obligations d'effacement.
+
+Le broker utilise l'identité historique 984:984 et sa base privée de sessions.
+Seule la projection =/run/mrjam-identity/aliases.sqlite= est lisible par le
+groupe 940 des slots. L'inscription via socket exige exactement l'UID 947.
+
+| Composant | UID | GID principal |
+|-----------+-----+---------------|
+| mrjam-rust-blue | 941 | 941 |
+| mrjam-rust-green | 942 | 942 |
+| mrjam-vision-archive | 943 | 943 |
+| mrjam-vision-replay | 944 | 944 |
+| mrjam-vision-cycle | 945 | 945 |
+| mrjam-vision-closure | 946 | 946 |
+| mrjam-vision-admission | 947 | 947 |
+| mrjam-identity-deletion | 948 | 944 |
+
+La suppression native utilise un adaptateur séparé. Le rejeu conserve la purge
+des demandes d'admission sur loopback 3027, puis demande la suppression par le
+socket privé, avant l'acquittement SQL. Seul l'adaptateur reçoit le jeton
+=kanidm-replay.token= ; son interface accepte uniquement issuer/sujet selon le
+contrat fermé et contrôle l'UID 944. L'adaptateur =vxq44jam…-transport2= et
+le rejeu =cp5rsnp0…= passent les sept groupes indépendants, dont le refus
+JSON suivi de EOF sur le socket Unix. Les anciens paquets et reçus restent intacts.
+
+L'archiveur lit deux configurations privées produites localement par
+l'adaptateur de credentials : =archive.json= et =archive-initialize.json=.
+Le destinataire age ne figure pas dans le store ni dans les sources. Les
+références SMTP, recipient, closure et approval restent des fichiers privés.
+Le catalogue =candidate-metadata-paths.json= ne contient que les chemins fixes
+dont le contrôle fermé peut retourner type, UID/GID et mode.
+
+* Ordre exigé du backend de première bascule
+
+1. Contrôler les fermetures, reçus, génération courante, identités, références
+   privées et capacité de retour sans arrêter les services. Les opérations
+   humaines d'authentification Kanidm restent séparées ; aucun mot de passe,
+   jeton ou contenu d'état ne doit être transmis à un agent.
+2. Sélectionner le profil staged comme prochaine génération de boot avant
+   l'arrêt et le snapshot, sans démarrer ses applications. Son générateur et
+   sa politique inactive protègent ainsi un reboot prématuré. Installer la
+   frontière réseau qui ferme les accès publics 80/443/2222 et
+   les sorties des identités applicatives, tout en conservant SSH 22 et le
+   loopback. Arrêter les minuteries, puis les sauvegardes ; attendre leurs
+   nettoyages avant le gel définitif des écrivains. Une sauvegarde Forgejo
+   interrompue peut rétablir le service qu'elle avait arrêté.
+3. Arrêter tous les écrivains anciens et nouveaux, les adopteurs et PostgreSQL.
+   Exiger service/target arrêtés, MainPID nul et absence de postmaster.pid.
+   Refaire le contrôle fermé des obligations après ce gel, notamment les
+   tables SQLite de marqueurs. Leur présence vide observée avant le gel ne
+   remplace pas cette vérification.
+4. Capturer et vérifier le snapshot apparié des fichiers et du cluster SQL
+   offline. Aucun mount imbriqué, tablespace externe ou WAL déporté non prévu
+   n'est accepté. Conserver cette capture privée sur le VPS.
+5. Installer le profil staged comme génération courante privée avant toute
+   adoption ; il a déjà été sélectionné pour le boot. Le générateur lit le
+   checkpoint privé fixé et masque
+   les écrivains après interruption/reboot ; une phase malformée ferme aussi
+   le démarrage. Seul le contrôleur vivant dispose de sa lease volatile.
+6. Préparer les images SQLite fermées via l'API backup, en incluant le WAL,
+   sans exécuter les anciens services. Publier explicitement les trois états
+   par les unités d'adoption listées ci-dessous. Préparer les credentials par
+   leur adaptateur fermé. Une source manquante ne devient jamais une file vide.
+7. Démarrer PostgreSQL privé et exécuter les seules opérations SQL nécessaires :
+   adoption MatEval, bootstrap du journal neuf, migration du schéma Forgejo
+   puis adoption de son rôle runtime limité. Si une obligation historique nécessite l'importeur de
+   journal, activer temporairement LOGIN et sa seule carte peer pour cette
+   étape ; restaurer NOLOGIN avant toute ouverture. Les rôles propriétaires
+   restent NOLOGIN. Ne pas appeler les initialiseurs des files déjà adoptées.
+8. Démarrer les prérequis privés, le broker et sa projection, l'adaptateur de
+   suppression, les services retenus et le slot blue. Qualifier les connexions,
+   readiness, préfixes et frontières d'authentification sans ouvrir les ports
+   publics ni lancer les courriers ou webhooks de production. La condition
+   Nextcloud =nextcloud-php-security/blocked= reste respectée ; aucune
+   suppression de marqueur n'est implicite.
+9. Persister =opening-public-writes= avant la promotion ou tout démarrage
+   automatique susceptible de produire une écriture externe. Ensuite seulement
+   sélectionner la génération promoted comme génération de boot, ouvrir les
+   services et activer les minuteries,
+   puis vérifier les services publics. Une défaillance à partir de cette
+   frontière conserve l'état courant et ferme les accès ; elle ne restaure
+   jamais le snapshot antérieur.
+
+Avant l'ouverture seulement, le retour réarrête tous les écrivains, conserve
+les nouveaux fichiers en quarantaine privée et restaure SQL et fichiers du
+même snapshot. Les nouveaux répertoires absents initialement, dont les files
+des travailleurs et =mrjam-worker-credentials=, sont retirés de l'état actif
+mais gardés dans cette quarantaine. Une instance neuve ne reprend pas une
+transaction interrompue : un backend de récupération séparé est requis.
+Le retour utilise =test= pour l'ancienne génération en gardant staged pour
+le prochain boot. Il vérifie les anciens services privés, puis persiste
+=previous-generation-restored= avant de sélectionner l'ancien boot et
+de rouvrir les écrivains. Cette phase interdit toute seconde restauration,
+y compris après une interruption pendant la réouverture.
+Le moteur réserve 90 minutes au retour dans la fenêtre totale de trois heures ;
+les délais des appels backend doivent rester bornés à l'intérieur de ce budget.
+
+* Unités explicites et politique de démarrage
+
+| Unité | Étape | Démarrage automatique |
+|-------+-------+-----------------------|
+| mrjam-admission-native-adopt | requests.sqlite et mail.sqlite vers admissions.sqlite, UID 947 | jamais |
+| mrjam-cycle-mail-adopt | file et marqueurs cycle conservés, UID 945 | jamais |
+| mrjam-archive-mail-adopt | fusion fermeture/global sans collision, UID 943 | jamais |
+| mrjam-worker-credentials-adapt | trois sources privées vers références v1 | jamais |
+| mrjam-kanidm-worker-provision | deux authentifications humaines temporaires vers les capacités natives fixes, paquet v2 | jamais |
+| mrjam-adopt-matheval | rôle d'administration sans réécriture métier | jamais |
+| mrjam-bootstrap-journal | rôles puis DB neuve et migrations journal 001 à 005 | jamais |
+| mrjam-upgrade-forgejo-schema | migration Forgejo explicite avant son démarrage | jamais |
+| mrjam-adopt-forgejo-role | après migration, rôle runtime limité de Forgejo | jamais |
+| mrjam-forgejo-probe, mrjam-forgejo-bootstrap | contrôle et identité technique bornés, UID/GID Forgejo 982 | jamais |
+| vision-journal-adoption | reprise historique seulement si exigée par le contrôle gelé | jamais |
+| mrjam-identity, mrjam-identity-aliases | broker et projection limitée | promoted |
+| mrjam-identity-deletion | suppression native limitée au pair replay | promoted |
+| mrjam-rust-blue | seul slot actif initial | promoted |
+| mrjam-rust-green | slot inactif conservé | jamais dans ce lot |
+| mrjam-vision-admission, mrjam-vision-closure | inscription et demandes de fermeture | promoted |
+| mrjam-vision-cycle, mrjam-vision-archive, mrjam-vision-replay | passes métier bornées | minuteries promoted |
+
+Les images d'adoption sont montées en lecture seule sous
+=/run/mrjam-admission-adoption=, =/run/mrjam-cycle-mail-adoption= et
+=/run/mrjam-archive-mail-adoption=. Les unités n'ont aucun accès aux chemins
+sources historiques, aux secrets d'identité ou au réseau. Les clés anciennes,
+MIME opaques, dates de reprise et empreintes sont conservés ; le drainage de
+messages historiques ne crée ni intention ni acquittement SQL.
+
+Les huit renouvellements =mrjam-acme-renew-<domaine>= conservent le compte et
+les certificats existants par leurs références observées. Aucun nouveau
+compte ACME ni certificat vide n'est amorcé. Les unités de sauvegarde et leurs
+limites sont détaillées dans =../../backups/README.org= ; leurs captures en
+ligne ne sont pas le snapshot de retour apparié.
+
+* Preuves et limites
+
+Le reçu 004 remplace le 003 pour la sélection des générations après le premier
+essai réel. Les deux unités d'adoption des courriels lient désormais le paquet
+v3 =8x4pybgy…= : seule la différence d'espaces ASCII entre les tokens du DDL
+est tolérée, sans relâcher les contraintes ou les données. La qualification
+séparée de cet adopteur reproduit le refus v2 puis la publication v3.
+L'évaluation complète comporte maintenant 61 contrôles.
+
+Le retour permanent utilise la cible réelle des anciennes minuteries ACME,
+=acme-order-renew-<domaine>.service=. Après la vérification HTTP privée et le
+checkpoint RETURNED, il sélectionne l'ancien boot, rouvre le réseau, démasque
+les cibles et prérequis des minuteries retenues puis les relance. Les services
+ACME et de sauvegarde ne sont jamais relancés directement pour rejouer leur
+ancien état actif ; ViSe reste en attente. Quatre contrôles VM ciblés couvrent
+les vrais timers systemd, leurs dépendances, les masques et la frontière NFT.
+Les 96 tests combinés couvrent aussi le refus avant gel si l'un des quatre
+répertoires de staging subsiste, y compris sous forme de lien symbolique.
+Ce refus ne nettoie ni ne réécrit les éléments conservés.
+
+Les générations du reçu 002 restent historiques : la VM de retour vers
+une ancienne génération sans garde a montré que les masques runtime sous
+=/run/systemd/system= sont dominés par les unités NixOS sous =/etc/systemd/system=.
+La correction utilise un générateur portable sous
+=/run/systemd/system-generators= et des masques =generator.early= pendant ce
+retour. Sept groupes du contrôle et cinq groupes de changement réel de
+génération passent, dont old sans garde, reboot pendant le retour privé et
+frontière RETURNED avant ancien boot. Les sorties du reçu 003 incluent ces
+octets qualifiés ; les sorties 001/002 ne doivent plus être sélectionnées.
+
+=../../tests/candidate-evaluation.nix= vérifie les deux politiques de
+démarrage, les identités, routes, références, migrations explicites et le refus
+conservé des préparations incomplètes : 60 contrôles sur les générations du
+reçu =qualification-candidate-build-20261102-003.json=. Ces deux fermetures
+complètes sont construites, avec 1290 chemins joints et aucun runtime Lisp
+trouvé dans cet inventaire. Le générateur du boot est lié aux octets de
+cutover, du contrôle systemd et du garde relevés dans ce reçu. Les paquets d'applications,
+runtimes, broker, travailleurs, adopteurs et services retenus disposent de
+reçus distincts. L'adaptateur de credentials passe six groupes
+dans son unité systemd exacte ; le bootstrap technique Forgejo passe huit
+groupes en UID/GID 982 et 19 tests fermés. Son ancien reçu en UID 977 reste
+historique et son paquet n'est pas sélectionné.
+Le provisioner humain v2 passe sept groupes dans son unité exacte ; cette
+unité est incluse et reste sans activation automatique. La configuration
+Nginx exacte des deux générations passe cinq groupes VM : huit vhosts TLS,
+huit routes HTTP01, diagnostics et administration privés, redirections
+MatEval/www, et refus des POST de mot de passe Nextcloud. Les certificats
+de ce banc sont inventés et les applications amont sont absentes.
+
+=../../deployment/release_backend.py= assemble la séquence fermée mais
+n'expose aucune commande exécutable directe. Ses 35 tests unitaires et les
+95 tests combinés des composants passent. L'entrée séparée traite TERM/INT
+dans 13 tests ; son constructeur lie deux commandes sans argument à un
+manifeste immuable. Le paquet synthétique refuse son manifeste volontairement
+invalide avant toute opération. Le helper de liaison des sources et protections
+Forgejo passe huit groupes en VM avec des historiques inventés. Les cinq
+historiques privés sont désormais reçus et vérifiés séparément. La VM intégrée
+du backend passe six scénarios, avec vrais changements de génération,
+restauration SQL/fichiers et frontières RETURNED/HELD ; ses contrats applicatifs
+restent synthétiques. Le binding réel et le manifeste de production restent
+requis. Ces preuves locales ne constituent pas un déploiement sur le VPS.
+
+Le snapshot apparié passe sept groupes de VM avec PostgreSQL réel, restauration
+et refus après ouverture. Les sauvegardes passent 14 tests du helper, quatre
+groupes Kanidm réel et six groupes systemd ; leurs limites sont explicites.
+Aucune preuve locale n'atteste un envoi SMTP réel, la possession de la clé
+privée destinataire, une sauvegarde hors site, un SSO humain ou l'autorité de
+livraison protégée de la forge. ViSe ne fait partie d'aucun de ces prérequis et
+ses données sont conservées.

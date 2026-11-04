@@ -1,0 +1,87 @@
+{
+  "installed_module_sha256": {
+    "build_stage.py": "230753ba37e24cd330af5ef6ab8772b7ecdd2875b13cf9fb343a763b4cdd9cbe",
+    "dependency_binding.py": "83a76812ba979f329c211ec8108f7539139e21c711b39a59d9257c6cdce0b405",
+    "probe.py": "24298a4dc95ec97b3d53afa3584eb620a1c0752694768b45e0b49dd48ae004f8",
+    "runtime_stage.py": "714a79b7c7d781fb3273eed177b2bb2192aeb85086f1ac7bf8f04be0d572cd32",
+    "sandbox.py": "0b165888dfa69281bada75019f24d5c735db711de71a7177ab9d186b80347b7c",
+    "source_policy.py": "a6e5f05ece8678c0769d64463a37baad287e485e593fcbf8f6e9a4429a9b7a4f",
+    "source_scope.py": "328bec135062377b03c44a2883b56db10a06f0330be3685f65cb42ccab604f0e",
+    "synthetic_database.py": "27da447d47fe47e08f33f4c11b4a3b7cfe7d39386ae07d12bf497f2f5accda4a"
+  },
+  "limitations": [
+    "API suite came from the exact pinned 8c8ef source in this run; later protected-bundle change is not covered",
+    "No collector artifacts, production signing, admission or deployment",
+    "Only synthetic SQL, credentials, accounts, erasure ledger and dump used",
+    "Local owner substitutes for production root staging"
+  ],
+  "report": {
+    "deployment_authorized": false,
+    "full_validation_passed": false,
+    "proposal_sha256": "8ea736fc4819b4c795f340d26638c2223c06d1a3ae612fbbec980d2b25a4ab5d",
+    "scope": "isolated-build-and-synthetic-runtime-only",
+    "server_sha256": "c67326bb587e3b354552ab07355e0bf06392b093d17a9c519b938aa38e517e9e",
+    "steps": [
+      {
+        "name": "complete-vise-source-tree",
+        "status": "passed"
+      },
+      {
+        "name": "locked-toolchain-versions",
+        "status": "passed"
+      },
+      {
+        "name": "locked-cargo-npm-elm-dependencies",
+        "status": "passed"
+      },
+      {
+        "name": "rust-offline-release-build",
+        "status": "passed"
+      },
+      {
+        "name": "typescript-no-emit",
+        "status": "passed"
+      },
+      {
+        "name": "vise-frontend-build",
+        "status": "passed"
+      },
+      {
+        "name": "vise-component-tests",
+        "status": "passed"
+      },
+      {
+        "name": "vise-api-tests-synthetic-postgresql",
+        "status": "passed"
+      },
+      {
+        "name": "vise-schema-and-role-refusals",
+        "status": "passed"
+      },
+      {
+        "name": "vise-graceful-stop-and-restart",
+        "status": "passed"
+      },
+      {
+        "name": "vise-restore-current-erasure-ledger",
+        "status": "passed"
+      }
+    ]
+  },
+  "result": {
+    "elapsed_seconds": 166.26,
+    "full_validation": false,
+    "limits": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "pids.max": "256"
+    },
+    "passed": true,
+    "production_access": false,
+    "scope": "local-build-and-synthetic-runtime-only",
+    "source_owner_substitution": "local UID, not production root staging",
+    "validator": "/nix/store/n5ww1mfwiqm48g8xv89z45ihz3agshxh-mrjam-vise-isolated-runtime-probe-1"
+  },
+  "schema_version": 1,
+  "scope": "isolated-build-and-synthetic-runtime-only"
+}

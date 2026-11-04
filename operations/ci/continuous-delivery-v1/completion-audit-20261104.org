@@ -1,0 +1,41 @@
+#+title: Audit de clôture — objectif toujours actif
+#+language: fr
+
+L’objectif est la réception, la validation indépendante, l’acceptation protégée
+et la livraison automatique des projets préparés dans Codex Cloud, avec ViSe,
+préservation des données, retour vérifié et frontières techniques effectives.
+Une compilation réussie ou une seule livraison ne vaut pas clôture générale.
+
+| Exigence | Preuve acquise | À vérifier ou terminer |
+|----------+---------------+-----------------------|
+| Réception GitHub sans action manuelle | PR5 livrée automatiquement, sans intervention corrective ; preuve qualification-automatic-delivery-pr5-001.json | Couverture des autres projets |
+| Validation indépendante et artefacts liés au code | PR4 : validation6 réussie, attestation, capture et promotion liées au digest6135… | Validation7 réussie ; refus effectifs et inventaire final des versions de règles à auditer |
+| Revue et fusion protégées | PR4 : revue technique5, ForgePR3 fusionnée par le rôle distinct, synchronisation GitHub confirmée | Relecture finale des protections et permissions pour chaque dépôt |
+| Livraison et retour | PR4 promue ; génération hkl conserve les applications ; retour réel du correctif de préparation vérifié | PR5 : instance, routes, démarrage, reçu et libération de réservation vérifiés ; retour réel de la composition sauvegarde vérifié |
+| Projets couverts | Recette monolithe autorise apprendre-a-demontrer, style-mrjam, vision, matheval, mrjam-plateforme | Établir la couverture effective de leurs modifications ; recette ViSe et raccord de la bibliothèque Signature encore absents |
+| ViSe disponible | Service et API déjà actifs avec artefact8c8ef… | Automatiser sa nouvelle livraison ; ne pas en faire une condition des autres projets |
+| Données ViSe préservées | Capture d’adoption privée intacte ; six scénarios VM015 passent | Installation, retour réel et première capture vérifiés : qualification-production-001.json |
+| Sauvegarde/reprise | VM015 : chiffrement, restauration avec registre courant, rétention, SIGKILL, reprise au boot et report sous verrou | Capture réelle complète, intégrité et permissions vérifiées, ViSe HTTPS200 ; hors-site non qualifié |
+| Exploitation durable | Le relais retire déjà les résultats d’intake acquittés | Caches collecteur16, journaux64 et comportement à expiration : maintenance ou reprise explicite à qualifier |
+| Barrières de production | Rôles séparés, clés hors candidats, instructions fermées et verrou de déploiement | Audit final réel des identités, chemins autorisés et accès Cloud ; ne pas retirer l’accès humain de Spectre |
+| Conformité à la forge | Historiques et sources applicatives reçus, PRs protégées | Publier et relier les sources d’infrastructure qualifiées à la configuration réellement installée, sans inclure .local ni secrets |
+
+* Limites de portée
+La sauvegarde hors site n’est pas établie par les tests locaux et ne doit jamais
+être annoncée comme acquise. Le démarrage après panne est prouvé en VM ; aucun
+redémarrage du VPS réel n’a encore été effectué dans cette qualification.
+
+Signature est une bibliothèque de composition HTML/LaTeX et de fontes, pas un
+serveur supplémentaire. Son intégration doit respecter ses consommateurs et
+leurs chemins existants ; inventer un nouveau site ne résoudrait pas ce raccord.
+Les frontends style et style-logo sont construits par la validation ; les cinq
+montages applicatifs actuellement servis ne doivent pas être confondus avec
+l’inventaire des sept dépôts GitHub.
+
+* Prochaine action concrète
+La sauvegarde ViSe est installée et sa première capture est vérifiée ; la
+recette de préparation conserve cette composition dans les futures livraisons.
+Poursuivre la recette de livraison automatique ViSe et le raccord Signature,
+puis les limites d'exploitation et la publication des sources d'infrastructure.
+La présence du service ViSe et de sa sauvegarde ne prouve pas sa livraison
+automatique depuis une proposition GitHub.

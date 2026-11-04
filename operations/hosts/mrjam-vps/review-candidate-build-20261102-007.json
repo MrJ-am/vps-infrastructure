@@ -1,0 +1,68 @@
+{
+  "all_other_application_artifact_bindings_unchanged": true,
+  "audition_review_sha256": "ea65169b660b61da1c699c0c64c7c0dcd5c1a73a74ee13b29a8f5b1e3b7c4510",
+  "build_receipt_sha256": "226b3faae4676b0369afb5a2202019b7b42524fe9f9cc3dfc90f60105bf88d03",
+  "cgroup_paths_verified": {
+    "forgejo.service": "/system.slice/forgejo.service",
+    "kanidm.service": "/system.slice/kanidm.service",
+    "mrjam-identity-deletion.service": "/system.slice/mrjam-identity-deletion.service",
+    "mrjam-identity.service": "/system.slice/mrjam-identity.service",
+    "mrjam-rust-blue.service": "/mrjam.slice/mrjam-rust.slice/mrjam-rust-blue.service",
+    "mrjam-rust-green.service": "/mrjam.slice/mrjam-rust.slice/mrjam-rust-green.service",
+    "mrjam-vision-admission.service": "/system.slice/mrjam-vision-admission.service",
+    "mrjam-vision-archive.service": "/system.slice/mrjam-vision-archive.service",
+    "mrjam-vision-closure.service": "/system.slice/mrjam-vision-closure.service",
+    "mrjam-vision-cycle.service": "/system.slice/mrjam-vision-cycle.service",
+    "mrjam-vision-replay.service": "/system.slice/mrjam-vision-replay.service",
+    "nginx.service": "/system.slice/nginx.service",
+    "phpfpm-nextcloud.service": "/system.slice/system-phpfpm.slice/phpfpm-nextcloud.service",
+    "postgresql.service": "/system.slice/postgresql.service",
+    "redis-nextcloud.service": "/system.slice/redis-nextcloud.service",
+    "vision-embeddings.service": "/system.slice/vision-embeddings.service"
+  },
+  "closure_delta_exact": true,
+  "closure_paths": 1293,
+  "comparisons": {
+    "promoted": {
+      "bootstrap_only_exact_guarded_audition_call_added": true,
+      "changed_units": [
+        "mrjam-bootstrap-journal.service",
+        "mrjam-rust-blue.service",
+        "mrjam-rust-green.service"
+      ],
+      "compared_units": 214,
+      "public_runtime_json_unchanged": true,
+      "slot_sandbox_and_credentials_unchanged": true,
+      "ssh_configuration_unchanged": true
+    },
+    "staged": {
+      "bootstrap_only_exact_guarded_audition_call_added": true,
+      "changed_units": [
+        "mrjam-bootstrap-journal.service",
+        "mrjam-rust-blue.service",
+        "mrjam-rust-green.service"
+      ],
+      "compared_units": 211,
+      "public_runtime_json_unchanged": true,
+      "slot_sandbox_and_credentials_unchanged": true,
+      "ssh_configuration_unchanged": true
+    }
+  },
+  "evaluation_checks_verified": 61,
+  "evidence_hashes_verified": 14,
+  "limits": [
+    "Local composition only; actual application readiness and live barriers remain to be observed after the exact next release.",
+    "Existing component/native tests were bound by immutable receipts, not rerun; one historical server memory measurement remains ignored.",
+    "No service activation, SQL operation or application data access."
+  ],
+  "production_access": false,
+  "schema_version": 1,
+  "scope": "independent local composition and artifact binding review",
+  "server_review_sha256": "cf48c222bbfb5a2f1ce44da119354a97faf900c5a9ca56f5ab001dc3d5f50d22",
+  "source_hashes_verified": 38,
+  "status": "PASS",
+  "systems": {
+    "promoted": "/nix/store/dc09bjfaf8wsfrwxpkqw0bi3xhp3nklm-nixos-system-srv1982677-26.05pre-git",
+    "staged": "/nix/store/hbfh9zzrv35kxck3p56yv7pxxw22fb3y-nixos-system-srv1982677-26.05pre-git"
+  }
+}

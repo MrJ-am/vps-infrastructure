@@ -1,0 +1,13 @@
+{
+  "base": "e4cc836d76c4104b4d356e583a2e5f34a827f90b",
+  "branch": "spectre/readiness-delivery-qualification-20261103",
+  "code": "READINESS_QUALIFICATION_PR_PUBLISHED",
+  "file": "crates/server/src/runtime.rs",
+  "file_sha256": "c4ae94cd1659da35eef5a572fe7dd47cbb13d4c877e74b6a8a93da458c3f847f",
+  "head": "bf4d301b837c350ec61f806d06571165c16a8df5",
+  "main_written": false,
+  "number": 4,
+  "repository": "MrJ-am/mrjam-plateforme",
+  "token_revoked": true,
+  "url": "https://github.com/MrJ-am/mrjam-plateforme/pull/4"
+}

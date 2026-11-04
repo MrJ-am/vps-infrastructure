@@ -1,0 +1,156 @@
+{
+  "application_data_exported": false,
+  "code": "NAMESPACE_CORRECTIONS_PREPARED",
+  "corrections_applied_in_production": false,
+  "limits": [
+    "The closed observations describe the old generation after complete automatic return.",
+    "The namespace corrections are qualified on invented data; applying them remains part of the next deployment."
+  ],
+  "observations": {
+    "archive_attempt_002": {
+      "application_data_modified": false,
+      "attempt": 2,
+      "code": "FIRST_RELEASE_ATTEMPT_ARCHIVED",
+      "new_deployment_started": false,
+      "prior_archives_preserved": true,
+      "runtime_directories_retained": 4,
+      "same_transaction_lock": true,
+      "schema_version": 1,
+      "secret_contents_read": false,
+      "snapshot_restored": false
+    },
+    "closure_catalog": {
+      "application_journal_read": false,
+      "application_rows_read": false,
+      "candidate_journal_catalog": {
+        "observed": false,
+        "reason": "CANDIDATE_DATABASE_ROLLED_BACK"
+      },
+      "code": "CLOSURE_CATALOG_OBSERVED",
+      "incident_process": {
+        "exec_start_main_exited_one": false,
+        "exec_start_pre_exited_one": true,
+        "job_failed": true,
+        "observed": true,
+        "unclassified_messages_exported": false
+      },
+      "mutation_performed": false,
+      "private_values_exported": false,
+      "read_only": true,
+      "schema_version": 1,
+      "secret_content_read": false,
+      "vision_catalog": {
+        "all_checks_accepted": true,
+        "checks": {
+          "accounts_function_present": true,
+          "all_required_functions_executable": true,
+          "all_required_functions_present": true,
+          "database_connect": true,
+          "delete_function_present": true,
+          "engage_function_present": true,
+          "minimum_public_tables": true,
+          "no_function_owner_membership": true,
+          "no_management_schema_create": true,
+          "no_other_management_function_executable": true,
+          "no_public_schema_create": true,
+          "no_public_table_owner_membership": true,
+          "no_public_table_privilege": true,
+          "required_function_owners_no_login": true,
+          "required_function_owners_unprivileged": true,
+          "required_functions_security_definer": true,
+          "role_login": true,
+          "role_present": true,
+          "role_unprivileged": true,
+          "schema_usage": true
+        },
+        "observed": true
+      }
+    },
+    "lifecycle_catalog": {
+      "result": {
+        "all_catalog_checks_accepted": true,
+        "application_functions_called": false,
+        "application_readiness_proved": false,
+        "application_rows_read": false,
+        "checks": {
+          "audition_row_security": {
+            "accepted": true,
+            "observed": true
+          },
+          "cycle_fixed_capabilities": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_administration_capabilities": {
+            "accepted": true,
+            "observed": true
+          },
+          "vision_row_security": {
+            "accepted": true,
+            "observed": true
+          }
+        },
+        "code": "LIFECYCLE_CATALOG_OBSERVED",
+        "journals_read": false,
+        "mutation_performed": false,
+        "read_only": true,
+        "schema_migration_values_checked": false,
+        "schema_version": 1,
+        "secret_content_read": false
+      },
+      "schema_version": 1,
+      "source_sha256": "4296fb6ae0274e61fce6eb2df55681c214f6f6d444d886b8fac82eb95e40e492",
+      "ssh_exit": 0
+    },
+    "rust_roles_before_correction": {
+      "result": {
+        "application_rows_read": false,
+        "checks": {
+          "audition_app": true,
+          "vision": true,
+          "vision_administration": false
+        },
+        "code": "RUST_EXISTING_ROLES_OBSERVED",
+        "matheval_and_journal_post_adoption_not_observed": true,
+        "mutation_performed": false,
+        "schema_version": 1,
+        "secrets_read": false
+      },
+      "schema_version": 1,
+      "source_sha256": "0c735660b681b132edc1cafc3699cb51bead37bfc99719f3799eee7565ea2a6c",
+      "ssh_exit": 0
+    },
+    "sso_after_return": {
+      "checks": {
+        "binding_file_valid": true,
+        "client_id_preserved": true,
+        "discovery_preserved": true,
+        "one_active_native_provider": true,
+        "owner_binding_preserved": true,
+        "owner_local_login_disabled": true,
+        "owner_login_enabled": true,
+        "provider_secret_present": true
+      },
+      "code": "SSO_CHECKED",
+      "mutation_performed": false,
+      "passed": true,
+      "private_values_exported": false,
+      "schema_version": 1
+    },
+    "vision_admin_diagnosis": {
+      "application_rows_read": false,
+      "checks": {
+        "no_membership": true,
+        "no_public_create": true,
+        "no_table_owner": true,
+        "not_schema_owner": true,
+        "public_usage": false,
+        "unprivileged": true
+      },
+      "code": "VISION_ADMIN_ROLE_DIAGNOSED",
+      "mutation_performed": false
+    }
+  },
+  "schema_version": 1,
+  "third_attempt_launched": false
+}

@@ -1,0 +1,22 @@
+{
+  "command": "python3 operations/deployment/test_mateval_corpus_004.py",
+  "elapsed_seconds": 1.222,
+  "evidence_origin": "completed local exec output; no separate process log captured",
+  "exit_code": 0,
+  "failures": 0,
+  "limits": [
+    "No approved private codebook has been received; no codebook equality or combined-digest equality claim.",
+    "No corpus imported, updated, renamed or deleted by the probe.",
+    "No participant, answer, administrator or session row read."
+  ],
+  "production_access": false,
+  "qualification": "mateval-corpus-version-readonly-projection-incident-004",
+  "real_postgresql_major": 17,
+  "schema_version": 1,
+  "sources": {
+    "preflight_mateval_corpus_004.py": "6cc8d5599888b2ba7e9cb1c720432934a3bc7229463d13ff14b27fe541c5c8ff",
+    "test_mateval_corpus_004.py": "6ea5d7c9a00e860794a9506a1d6e56bfa2d8dc64341c0025649be1b2b1db6160"
+  },
+  "synthetic_rows_only": true,
+  "tests": 2
+}

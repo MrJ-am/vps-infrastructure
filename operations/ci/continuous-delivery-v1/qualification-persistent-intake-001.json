@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "scope": "persistent-read-only-proposal-queue",
+  "queue_tests": 9,
+  "source_prepare_tests": 12,
+  "tests_passed": true,
+  "live_isolated": {
+    "code": "LIVE_PERSISTENT_INTAKE_QUALIFIED",
+    "observations": 2,
+    "queue_counts": [
+      0,
+      0
+    ],
+    "tokens_revoked": true,
+    "private_state": true,
+    "admission_or_deployment_performed": false
+  },
+  "activation": {
+    "code": "PERSISTENT_INTAKE_DISCOVERY_ACTIVE",
+    "current": "/nix/store/6h7c3bvc9969v2qvlxcjyjrp7cxzsq2h-nixos-system-srv1982677-26.05pre-git",
+    "boot": "/nix/store/6h7c3bvc9969v2qvlxcjyjrp7cxzsq2h-nixos-system-srv1982677-26.05pre-git",
+    "queue_counts": [
+      0,
+      0
+    ],
+    "real_return_verified": true,
+    "retained_processes_unchanged": true,
+    "new_admission_performed": false,
+    "automatic_deployment_enabled": false
+  },
+  "evaluation": {
+    "changed": [
+      "mrjam-github-discovery.service"
+    ],
+    "checks": {
+      "assertionsPass": true,
+      "authorityUnchanged": true,
+      "baselineExact": true,
+      "greenRemainsActive": true,
+      "noUnitsAdded": true,
+      "onlyDiscoveryChanged": true,
+      "routesUnchanged": true,
+      "timersUnchanged": true
+    },
+    "system": "/nix/store/6h7c3bvc9969v2qvlxcjyjrp7cxzsq2h-nixos-system-srv1982677-26.05pre-git"
+  },
+  "source_sha256": {
+    "intake_queue.py": "2c56a023a90bac8595e9d1db4984699ad793eae95c5651559455580de848b489",
+    "test_intake_queue.py": "42e4157a4b2e0fe857de319bd22223adf5fe774f2dd9c835b0a2f0c8a09d3f75",
+    "intake-discovery.nix": "06c926deb69bda40e31b0ca0588a01e665bdcb4e937c7efa15631ed9b36c7aa9",
+    "intake-discovery-host.nix": "dc99b083e08b88b9d0d2012aae962be1fde211dfe3e9fd44c99fa926162e97d9",
+    "qualify-intake-discovery.py": "7ff651f26a77fc01bcdac3c0a5fa6be44a1f97ce713e5ea8ef75df5a44229626",
+    "activate-intake-discovery.py": "ab56691b0d21871db737d4b888b3786d6f4a2ae47357bab21ceabf9b0261a6da",
+    "proposal_prepare.py": "fdf24b9a47ced848b20f36b4575131f6360ee942c8d5531974fcc4c20d1227bc",
+    "test_proposal_prepare.py": "6780d4a2607d79c9778dd98465d2b2bc6a6b104d5926cdaf6e7bf4bbe3055310"
+  },
+  "limits": [
+    "Live observations contained zero open proposals; populated queues and process interruption tested locally.",
+    "Queue metadata is not admission authority.",
+    "No source-consuming worker or generic admission/deployment timer activated.",
+    "No application route, process, schema or signing identity changed."
+  ]
+}

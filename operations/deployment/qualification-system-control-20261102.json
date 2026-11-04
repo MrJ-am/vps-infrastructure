@@ -1,0 +1,29 @@
+{
+  "boot_guard_sha256": "16f7a34e53a2a86111cdf47cda3efcbb7b081bc787a6eb3bdfb2f77c642f658c",
+  "checks": [
+    "network",
+    "live",
+    "stale",
+    "reboot-holds-writers-keeps-ssh",
+    "open",
+    "malformed"
+  ],
+  "derivation": "/nix/store/0pzxzqmskrs55x5y37c7jygr8j33jnzn-vm-test-run-mrjam-cutover-network-and-boot-guard.drv",
+  "earlier_failure": "001: test driver started QEMU without allow_reboot; network/live/stale passed before shell disconnected at restart",
+  "limits": [
+    "Synthetic listeners and network namespace only",
+    "No actual generation switch"
+  ],
+  "output": "/nix/store/w1xsfz4gn81yqdpap5k5135rhc4anbpr-vm-test-run-mrjam-cutover-network-and-boot-guard",
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "boot-guard.nix": "b0069647f835b156017b39d973345e902c50ffdf90fecae87bbc4665b99ce095",
+    "boot_guard.py": "16f7a34e53a2a86111cdf47cda3efcbb7b081bc787a6eb3bdfb2f77c642f658c",
+    "system-control-systemd.nix": "3c79d763846db33dddf49cd6498508c708a5a19c319bda48567e61481589d326",
+    "system_control.py": "f4864d2e8dd6380b315a94d894a17d53a790b5691c64614459819764ac5b0c6c",
+    "test_system_control.py": "e03382c91c41550caca355097fc71e0cf791087bc6b606ef3e95b81fa6cae99e"
+  },
+  "system_control_sha256": "f4864d2e8dd6380b315a94d894a17d53a790b5691c64614459819764ac5b0c6c"
+}

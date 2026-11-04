@@ -1,0 +1,81 @@
+#+title: Alignement de readiness Matheval sur le contrat Bank consommé
+#+date: 2026-11-02
+#+language: fr
+
+Le serveur refusait de démarrer lorsque le corpus historique contenait des
+métadonnées supplémentaires. Son contrôle comparait le document JSON entier,
+alors que création, reprise et enregistrement des participations utilisent
+déjà les types =Bank=, =Question= et =Production=, qui ignorent ces champs.
+Le diagnostic réel a établi que tous les champs connus, textes, identifiants,
+productions et ordres étaient identiques à la banque publique qualifiée.
+
+La correction charge uniquement la banque de la version demandée, dans une
+limite de 5 Mio, puis désérialise et valide les deux =Bank=. Leurs champs connus
+et ordres sont comparés exactement. Aucun défaut, transformation de texte,
+tri, choix d'autre version ou réduction de liste n'est introduit. La banque
+publique doit elle-même ne contenir aucun champ ignoré par le runtime.
+Une version absente, une banque invalide ou trop grande et toute différence
+connue restent refusées.
+
+La version 0.3.0, le JSON historique complet, son digest, son codebook et les
+références des participations ne sont ni réécrits ni recopiés. Le contrôle
+n'accède pas au codebook. Il ne certifie pas les métadonnées inconnues : il
+contrôle le contrat effectivement utilisé par la collecte et ses reprises.
+
+* Provenance distincte
+
+=prepare.py= vérifie les 815 fichiers de la proposition qualifiée
+=8bf05fb9065a4c91e565ec0d37f24f2c556f315109823ccdef95c6354b423d6a=,
+puis assemble les sélections plateforme =4e65423ceaae…=,
+Matheval =91b5b33541a3…= et Vision =99eace9df767…=.
+=readiness.patch= change seulement =crates/server/src/database.rs= et
+=crates/server/tests/runtime_postgres.rs=. Les types Matheval, les migrations,
+les frontends et les manifests Cargo restent inchangés.
+
+La recette est publiée avec le correctif dans l'infrastructure. Elle ne déplace
+pas le main plateforme ni son bundle historique. Le compilateur et les
+dépendances restent épinglés ; le correctif d'interpréteur de l'installateur
+Rust, déjà qualifié lors de la récupération CI, n'a modifié ni l'archive Rust
+ni ses versions. Le nouvel =artifact.json= distingue explicitement les sources,
+le patch, l'ancien ELF de référence et le nouvel ELF. Il ne réutilise pas un
+ancien reçu et n'accorde aucune autorisation de production.
+
+La dépendance Rust se reconstruit séparément avec
+=operations/builds/toolchains.nix= et son =toolchains.lock.json= inchangé :
+
+#+begin_src sh
+nix-build --no-out-link --expr '(let pkgs = import /nix/store/ydk30pf7qngrw0ws113m9p005p681rxy-source {}; in (pkgs.callPackage ./operations/builds/toolchains.nix {}).rust)'
+#+end_src
+
+[[file:toolchain-provenance.json][Le reçu minimal du compilateur]] lie cette recette à la sortie exacte =2va…=,
+au delta unique =patchShebangs ./install.sh=, à l'archive inchangée et aux
+versions réellement observées. Sa publication n'installe et n'active aucun
+composant CI.
+
+* Tests ciblés
+
+La fixture PostgreSQL réelle constate d'abord le refus du prédicat historique
+avec des métadonnées inventées aux trois niveaux, puis accepte l'initialisation
+et =/readyz= du runtime corrigé. Elle vérifie l'identité du corpus complet,
+du digest, du codebook et d'une participation avant/après les lectures.
+Les variations de tous les champs connus, une version absente et une banque
+trop grande sont refusées. Les tests purs couvrent aussi deux questions
+inversées, l'ordre des productions, les champs requis, types et identifiants
+invalides et les champs publics inconnus.
+
+Les commandes et résultats effectifs de construction sont consignés dans le
+reçu de qualification ; le nom de cette recette ne tient pas lieu de preuve.
+
+* Gardes restantes de la composition
+
+Après cette initialisation, le contrôleur vérifie le candidat réel avec
+=/readyz= : approval interne3027 et credential dédié, embeddings39004 avec
+texte synthétique/modèle384, six refus401 sans credentials du broker3002,
+handshake TLS8443 pour log.mrj.am et schéma aliases en LIMIT0. Les ports,
+références et formats concordent avec les fixtures déjà qualifiées. Ces tests
+sur le candidat demeurent nécessaires ; les services absents après retour ne
+sont pas remplacés par des observations artificielles de l'ancien hôte.
+
+Les témoins Vision sont valides dans le contexte exact du runtime ; aucun
+témoin n'est régénéré. L'adoption Audition002 est un correctif séparé.
+Cette correction Matheval n'active aucun service et n'exécute aucune migration.

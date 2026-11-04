@@ -1,0 +1,41 @@
+{
+  "deployedUnicast": {
+    "actionsStillDisabled": true,
+    "exactlyTwoForgejoRulesRepositioned": true,
+    "frozenGenerationUnchanged": true,
+    "onlyGeneratedTmpfilesEtcChanges": true,
+    "onlyTmpfilesResetupUnitDiffers": true,
+    "resetupUnitOnlyChangesRestartTrigger": true,
+    "sameForgejoSettings": true,
+    "sameGroups": true,
+    "sameSystemPackages": true,
+    "sameTmpfilesRuleContents": true,
+    "sameUsers": true
+  },
+  "promoted": {
+    "actionsStillDisabled": true,
+    "exactlyTwoForgejoRulesRepositioned": true,
+    "frozenGenerationUnchanged": true,
+    "onlyGeneratedTmpfilesEtcChanges": true,
+    "onlyTmpfilesResetupUnitDiffers": true,
+    "resetupUnitOnlyChangesRestartTrigger": true,
+    "sameForgejoSettings": true,
+    "sameGroups": true,
+    "sameSystemPackages": true,
+    "sameTmpfilesRuleContents": true,
+    "sameUsers": true
+  },
+  "staged": {
+    "actionsStillDisabled": true,
+    "exactlyTwoForgejoRulesRepositioned": true,
+    "frozenGenerationUnchanged": true,
+    "onlyGeneratedTmpfilesEtcChanges": true,
+    "onlyTmpfilesResetupUnitDiffers": true,
+    "resetupUnitOnlyChangesRestartTrigger": true,
+    "sameForgejoSettings": true,
+    "sameGroups": true,
+    "sameSystemPackages": true,
+    "sameTmpfilesRuleContents": true,
+    "sameUsers": true
+  }
+}

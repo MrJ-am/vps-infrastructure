@@ -1,0 +1,215 @@
+{
+  "capacity": {
+    "allocated_closure_bytes": 940347392,
+    "allocation_method": "lstat st_blocks*512, recursively without following symlinks, deduplicated by device/inode across closure",
+    "apparent_inode_bytes": 876728118,
+    "minimum_double_export_plus_gib": 2836848656,
+    "minimum_export_plus_allocated_closure_plus_gib": 2895642632,
+    "required_free_bytes": 2895642632,
+    "unique_inode_count": 28190
+  },
+  "date": "2026-11-02",
+  "export": {
+    "all_closure_paths_verified_by_nix_store": true,
+    "bytes": 881553416,
+    "path": ".local/deployment-20261101/passkey-delivery-20261102.nar",
+    "sha256": "324979d7a2c8d7eb7c01b9cf79ca106d6914d6ca804b6604b1fdb825fdf44c05",
+    "store_path_count": 183
+  },
+  "limits": [
+    "This exact full production export was built, hashed and verified locally; it has not been imported into the VPS by this task.",
+    "The unchanged receiver functions were previously qualified with a real synthetic Nix import; no second identical import VM was run.",
+    "Delivery imports code and links only the same provisioner unit; portal and route activation require the separately qualified opener.",
+    "Independent integration used invented passkeys and software P-256 signatures; actual Proton Pass interaction remains human."
+  ],
+  "passed": true,
+  "qualifications": {
+    "operations/deployment/passkey-nginx/qualification-integration-20261102-001.json": {
+      "sha256": "d3400cfa356120ce382ac47ddb7e3387fce12763a3dd8d154b9a071ef6627eb6"
+    },
+    "operations/deployment/passkey-nginx/qualification-route-20261102.json": {
+      "sha256": "ecf1384d643d01db1309320a8cc15c64b236fb3d8f0d5590fd56c166a1d28639"
+    },
+    "operations/deployment/passkey-portal/publication.json": {
+      "sha256": "cec412b19a3e23f0097d1f5afec805eb803a1e734395e35e5be1750fa1d9c14a"
+    },
+    "operations/deployment/passkey-portal/qualification-author-20261102.json": {
+      "sha256": "2ee97668bf8942aebeac64ca0d7fccb40d540f469c1bc25371037463798bcc84"
+    },
+    "operations/deployment/qualification-provision-delivery-systemd-20261102.json": {
+      "sha256": "dbec4274b50b3582795675937fa0bd1ee701a802d3db6ac5d87bb907b2077e16"
+    }
+  },
+  "receiver": {
+    "directory": "/var/lib/mrjam-deployment-delivery/passkey-20261102",
+    "manifest": "operations/deployment/passkey-delivery-20261102.json",
+    "manifest_sha256": "be99fb501d9093f73842ce3c0e4921f84a27513721e42795865f4a491f1ae000",
+    "no_function_modified": true,
+    "no_service_started": true,
+    "only_release_and_directory_assignments_differ_byte_for_byte": true,
+    "path": "operations/deployment/passkey-delivery-20261102.py",
+    "python_compile_passed": true,
+    "release_equals_manifest": true,
+    "release_passes_original_validator": true,
+    "same_existing_inactive_provisioner_unit_only": true,
+    "sha256": "aee93cb27ec4709a930f4c1a88748145145b5b398ff42bd3b894245d70860b94",
+    "template": "operations/deployment/deliver_provision.py",
+    "template_matches_independent_import_vm": true,
+    "template_sha256": "a82b9f8086b74997df1ed53bfd796c2488c3c71587d9216c1d77005dbd47a46c"
+  },
+  "root_store_information": {
+    "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1": {
+      "ca": null,
+      "deriver": "/nix/store/i4gbysrxslw2km0731yyhvf98y50hh42-mrjam-passkey-nginx-route-1.drv",
+      "narHash": "sha256-X07D5FB2XGiUCHyfrsVEvrKso+Zvd9ANRLp8tSZRlvU=",
+      "narSize": 18960,
+      "references": [
+        "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+        "/nix/store/xqnbm0vgqcq9b1b54c80qj9s0qhbwa08-python3-3.13.15"
+      ],
+      "registrationTime": 1793638617,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2": {
+      "ca": null,
+      "deriver": "/nix/store/x8mp0q2hj4klq7jjz1rnng59i3h1wi5d-mrjam-kanidm-worker-provision-2.drv",
+      "narHash": "sha256-1MT0OzZWjKJa1BCO+P1Uj7QFV+pyI+N6YesxIs8/AdE=",
+      "narSize": 44568,
+      "references": [
+        "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+        "/nix/store/64r3qy45dngms51i718ddna9p08lczd2-kanidm-1.11.2",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793633708,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1": {
+      "ca": null,
+      "deriver": "/nix/store/ix1173lm9jjf2vngprp9wmpblw7frpkw-mrjam-kanidm-worker-result-probe-1.drv",
+      "narHash": "sha256-Ol5Pm1nlWs51bT0dKHV7huMivQdMK5RWssL/TWulUrg=",
+      "narSize": 5888,
+      "references": [
+        "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+        "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/kp6p38x6zb21n7gdlnp9nsm2aagq7sg2-python3-3.13.17"
+      ],
+      "registrationTime": 1793637772,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service": {
+      "ca": null,
+      "deriver": "/nix/store/12m8n5005is4wdh61dzjk2y9li89gbql-unit-mrjam-passkey-nginx-route.service.drv",
+      "narHash": "sha256-4jd6IT9rWA78DOPZd9v393hJ9dZvEkeWIerlffKQOEA=",
+      "narSize": 2120,
+      "references": [
+        "/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2",
+        "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+        "/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67",
+        "/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11",
+        "/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0",
+        "/nix/store/m2sv1rizzbnsb35hv3ii0dnf3rvfy3n3-tzdata-2026c",
+        "/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12",
+        "/nix/store/svl89366pvzz5s3myh1fjniz9l0x17fh-gnused-4.10"
+      ],
+      "registrationTime": 1793638617,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/k7gjq9hsvfayhikb9vmwybznr1rp4d8w-unit-mrjam-kanidm-passkey-portal.service": {
+      "ca": null,
+      "deriver": "/nix/store/3rnzbhpn22rrscqaaxxpbdqaf4xhz4v8-unit-mrjam-kanidm-passkey-portal.service.drv",
+      "narHash": "sha256-5/eZEJg8NM3bMyMkhaucgNoP4/bTgxtOlbvNmEgOZf4=",
+      "narSize": 1984,
+      "references": [
+        "/nix/store/1y3zm9j2w0za51ckdy6qzx4ygvvw50yv-findutils-4.10.0",
+        "/nix/store/7c57qdfwri1vx6ywbadk30wplcmxb06q-glibc-locales-2.42-103",
+        "/nix/store/kwc34h21my8mf7xbqm9gxs1xfx07xb4i-coreutils-9.11",
+        "/nix/store/pbxald1gihb1bl9l30j764q0ibb55421-gnugrep-3.12",
+        "/nix/store/pcxd79slak3wdi1kzkyzzcpcy82sarzs-tzdata-2026e",
+        "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1",
+        "/nix/store/rqpz5lc9g53hda7k5fyzqjvra4cck2fv-gnused-4.10",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793637367,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1": {
+      "ca": null,
+      "deriver": "/nix/store/hmfy4kwh56naqrpbx0iwjyjkbpx2k8ci-mrjam-kanidm-passkey-portal-1.drv",
+      "narHash": "sha256-pyRVDgT7kAuzg7KU51G0DTeuDcgeao913vUovuIosDg=",
+      "narSize": 32808,
+      "references": [
+        "/nix/store/fda56dm6x9lg5qc31z5lkbjbc7bqbcgg-python3-3.13.17-env",
+        "/nix/store/hc49zakwkkyp9zlyl80b71jhxkpn4hsx-bash-5.3p9",
+        "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1",
+        "/nix/store/y3fqx697649kqv1a9c0z1jsk4wy2zlqa-systemd-260.5"
+      ],
+      "registrationTime": 1793637344,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    },
+    "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service": {
+      "ca": null,
+      "deriver": "/nix/store/6is32v5la7cy83vx5i87pr6h7k9v7mvv-unit-mrjam-kanidm-worker-provision.service.drv",
+      "narHash": "sha256-g9jmFhygAMxU7Z05F6eLOdOMCf/JcmefEDat5oL2kSs=",
+      "narSize": 2104,
+      "references": [
+        "/nix/store/0xiinbh7pbj479i5v28mqnjrvhvbdibf-systemd-260.2",
+        "/nix/store/41b4nygazaawgbags71flx463x4426kf-glibc-locales-2.42-67",
+        "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+        "/nix/store/gph17gb73p6qbrqqjnypfjj5npf0ldyx-coreutils-9.11",
+        "/nix/store/jwq26byp7q4mxqg3yqqq4vgsabs7yknm-findutils-4.10.0",
+        "/nix/store/m2sv1rizzbnsb35hv3ii0dnf3rvfy3n3-tzdata-2026c",
+        "/nix/store/sacz532zgiacvg7mva9v6gbfmyw427i3-gnugrep-3.12",
+        "/nix/store/svl89366pvzz5s3myh1fjniz9l0x17fh-gnused-4.10"
+      ],
+      "registrationTime": 1793634078,
+      "signatures": [],
+      "storeDir": "/nix/store",
+      "ultimate": true,
+      "version": 1
+    }
+  },
+  "roots": {
+    "package": "/nix/store/5yqv8fsy6qhw45qs53qnirib9vl3cjhq-mrjam-kanidm-worker-provision-2",
+    "portalPackage": "/nix/store/q7ni6r8bb952mcv08fj919vcdjcvznnq-mrjam-kanidm-passkey-portal-1",
+    "portalUnit": "/nix/store/k7gjq9hsvfayhikb9vmwybznr1rp4d8w-unit-mrjam-kanidm-passkey-portal.service",
+    "resultProbe": "/nix/store/8inkp30yx0zc86j99bx0pyzazxm45mxn-mrjam-kanidm-worker-result-probe-1",
+    "routePackage": "/nix/store/2ibh1gnf1s8c4y77l01ma5jz0fpq8jqd-mrjam-passkey-nginx-route-1",
+    "routeUnit": "/nix/store/aingklv82sh1gsxl776808apl0jpzkb5-unit-mrjam-passkey-nginx-route.service",
+    "unit": "/nix/store/vzn35cgfpccivnfy42isn0nb125i6xk2-unit-mrjam-kanidm-worker-provision.service"
+  },
+  "schema_version": 1,
+  "scope": "local code closure construction only; no SSH, publication or service activation",
+  "source_expression": {
+    "path": "operations/deployment/passkey-delivery.nix",
+    "sha256": "c87d4b801cf0de7f97c9c9be243b229b8a43b65484b33695fc4c8460b6ab800c"
+  },
+  "unit_tests": {
+    "log": ".local/deployment-20261101/passkey-delivery-unit-tests-001.log",
+    "log_sha256": "43037482f63ba23ac51887f76026d2868a4bca0efc1a71a2babdcf73d5377da6",
+    "passed": true,
+    "source": "operations/deployment/test_deliver_provision.py",
+    "source_sha256": "e7b69251219849f0e0b7a18dc7fa3fe1f1a7d59541cecb662ac2738f50304e0e",
+    "tests": 10
+  }
+}

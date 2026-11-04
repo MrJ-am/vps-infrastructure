@@ -1,0 +1,156 @@
+#+title: Adoption initiale fermée des sources et protections Forgejo
+#+date: 2026-11-02
+#+language: fr
+
+* État de qualification
+
+Le constructeur =package.nix= et ses octets Python passent huit groupes en VM
+avec Forgejo 17.0.1, PostgreSQL 17, les UID/GID réels prévus 982/982 et le
+bootstrap technique =8pkxq7…=. Le test dure 84,47 s ; son reçu est
+=qualification-20261102-002.json=. Le reçu 001 reste historique.
+Dix tests locaux supplémentaires couvrent
+le transport Git HTTP réel, le canal de credential, les conflits de références
+et la convergence des métadonnées. Les données Git de ces tests sont inventées.
+
+Le paquet =6d54ify4yws5lhc1mq9zz0zfh0awp41m-mrjam-first-release-governance-1=
+est lié au manifeste inventé de la VM. Il ne doit pas être employé en production.
+Les cinq historiques privés sont désormais reçus par le canal privé demandé
+et vérifiés indépendamment : digests, autonomie dans des dépôts vides,
+références restaurées, commits requis et =fsck --full --strict=. La préparation
+locale relit les huit bundles prêts, leurs digests et la forme fermée des
+références. Les mappings privés restent hors du store et des preuves publiques.
+Le dernier bundle infrastructure attend la publication finale des sources du
+backend. Il n'existe donc encore aucun binding complet de production.
+Voir =BUNDLES-PRIVES.org= pour le contrat de réception conservé.
+
+* Révisions retenues pour la préparation
+
+| Dépôt | Commit proposé pour main |
+|-------+--------------------------|
+| Signature | 17194087eec9162bb5372221c43e1de0501dfe6a |
+| apprendre-a-demontrer | a2690c7cd6a706cada866e4aa576819c4ed20092 |
+| etp-vie-affective | 65bbd8c53a1f6d2efda453a5c82d66c49df26699 |
+| matheval | 91b5b33541a39faade0c40792bfed5ad35ae80a1 |
+| mrjam-plateforme | 2a34dac722ff1dab9a63aec56e407dd996de0719 |
+| mrjam-validation | eb71ffe5944943474c5ee483e66c270b5976ab90 |
+| style-mrjam | 2c145fb82a141d0a9a8b552577998852f574b788 |
+| vision | 61cf80bddc5e1f6e7b330af319e0c9ecf742dc93 |
+| vps-infrastructure | prochaine publication finale des sources qualifiées |
+
+Ces choix sont distincts des branches par défaut observées. Les cinq commits
+privés sont ceux des relais qualifiés ; les trois dépôts publics conservent
+leur main reçu, sans nouvelle qualification applicative déduite de ce choix.
+La révision des règles est celle employée par les qualifications indépendantes,
+pas la fixture orpheline de la chaîne synthétique.
+
+Le graphe de Signature vérifie =merge-base --is-ancestor 17495b13… 17194087…=
+avec le statut 0 ; le test inverse retourne 1. La tête proposée =17194087…=
+conserve donc l'autre révision dans son ascendance. Le frontend Vision reçu
+reste compilé avec sa dépendance Signature =17495b13cefa24473e37434b98336b27caec8cdf= ;
+les frontends Log/Audition conservent =17194087…=. Voir
+=../../builds/qualification-frontends-operationnel-20261030.json=. Aucun artefact,
+gitlink ni dépendance compilée n'est remplacé par le choix de la tête du dépôt.
+
+* Binding obligatoire
+
+Le constructeur exige =bindingFile= et son =bindingSha256=, vérifiés à la
+construction puis à chaque invocation. Le JSON a les champs exacts
+=schema_version= (1), =owner= (MrJ-am), =forgejo_version= (17.0.1),
+=rules_revision=, =controller_revision=, =metadata_disposition= et
+=repositories=. Les neuf dépôts gérés par le reconciler doivent être présents.
+Chaque entrée lie =source= (reviewed-bundle), =bundle=, =bundle_sha256=,
+=refs_sha256= (digest des branches/tags originaux) et =main= (commit
+explicitement retenu). Le digest des références porte sur le JSON ASCII
+canonique =json.dumps(refs, sort_keys=True, separators=(",", ":"), ensure_ascii=True)=.
+Les noms de branches privés sont lus dans le bundle par le processus root ;
+ils ne sont pas inscrits dans le store.
+
+Les archives sont placées exclusivement dans
+=/var/lib/mrjam-source-import/<nom-du-dépôt>.bundle=. Le répertoire appartient
+à root et vaut 0700 ; chaque archive est root:root, 0600 ou 0400, sans lien.
+Les archives privées ne vont pas dans le Nix store. Le store ne contient que
+le code, les chemins fixes, les digests et les commits qualifiés de la liaison.
+
+Le champ =metadata_disposition= vaut exactement
+=existing-forgejo-preserved-github-lfs-and-collaboration-retained=. Il décrit
+une limite explicite : LFS, tickets, PR, pièces jointes, releases, wikis,
+packages et webhooks restent sur leurs hébergements actuels, et les métadonnées
+déjà présentes dans Forgejo restent préservées. Un bundle ne vaut pas migration
+de ces objets. Leur inventaire et leur traitement restent séparés.
+
+=rules_revision= doit être la tête retenue de =mrjam-validation/main=.
+La fixture orpheline =93bd676…= est refusée. Le binding doit justifier
+l'adoption initiale des règles séparément des propositions candidates ; le
+helper n'invente ni statut de validation indépendante ni approbation humaine.
+
+* Deux entrées sans argument
+
+=mrjam-first-release-sources-probe= vérifie les neuf fichiers privés, leurs
+permissions, leur stabilité et leur SHA-256. Il ne crée aucune lease ni aucune
+référence. Sa seule sortie de succès est :
+
+#+begin_src json
+{"schema_version":1,"binding_sha256":"<digest>","source_inputs_verified":true}
+#+end_src
+
+=mrjam-first-release-governance= exige root sur =srv1982677= et un checkpoint
+durable exact =state-adopted=. Il relit les archives puis emploie le contexte
+=governance_lease()= du bootstrap technique. Il crée seulement l'organisation
+fixe privée =MrJ-am= si elle manque ; une collision avec une identité existante
+refuse, sans conversion ni renommage. Les neuf dépôts manquants sont créés
+privés ; la visibilité et les identités des dépôts existants sont conservées.
+Une source issue de l'un des cinq dépôts GitHub privés est refusée si le dépôt
+Forgejo existant est public : sa visibilité n'est pas modifiée silencieusement
+et aucun objet privé n'y est envoyé.
+Les Actions candidates sont fermées par le reconciler déjà qualifié.
+
+Les objets sont reçus dans une copie Git temporaire privée. L'autonomie du
+bundle est vérifiée dans une copie vide, avant l'import des objets existants.
+Les branches/tags source sont archivés sous
+=refs/heads/github-import/<préfixe-digest>/…= et
+=refs/tags/github-import/<préfixe-digest>/…=. Les objets des tags annotés et
+les noms originaux sous ce préfixe sont conservés. Toutes les références
+Forgejo préexistantes restent présentes. Seule =main= peut avancer, par
+fast-forward atomique. Une divergence, collision d'archive ou protection
+préexistante refusant la mise à jour provoque un arrêt ; aucun force, prune,
+suppression, miroir destructif ou contournement de protection n'est utilisé.
+
+Le jeton technique est transmis au helper Git par une socket Unix 0600 dans
+le répertoire bootstrap 0700. L'UID du client et le dépôt courant sont vérifiés.
+Il reste en mémoire et dans les pipes internes Git : ni fichier, variable
+d'environnement, argv, proxy hérité ni diagnostic ne le contient. Le helper
+n'accepte que l'origine HTTP loopback fixe et les neuf noms fermés.
+
+La VM a révélé une mise à jour asynchrone de =is_empty= après réception Git.
+Le code attend la convergence effective, sans modifier la base. Il autorise
+uniquement une nouvelle observation avant toute mutation si le contrôle CAS
+voit =empty=true= devenir =false= ; toute autre dérive reste refusée.
+La visibilité et les identifiants des dépôts sont relus et comparés.
+
+Enfin, le reconciler applique la protection =main= complète, avec contrôle
+indépendant requis, une approbation et application aux administrateurs. La
+preuve VM vérifie qu'un push fast-forward du compte technique administrateur
+est alors réellement refusé. Après lecture de convergence et révocation
+effectivement vérifiée du jeton, la sortie de succès est :
+
+#+begin_src json
+{"schema_version":1,"binding_sha256":"<digest>","sources_bound":true,"protected_policy_verified":true,"temporary_credentials_revoked":true}
+#+end_src
+
+* Intégration au backend
+
+Le manifeste de release doit lier les deux entrées exactes et le même digest
+=forgejo_binding_sha256=. Le probe intervient avant le gel. Le backend compte
+ensuite les tailles des neuf chemins fixes et réserve l'espace du snapshot,
+du retour, des copies temporaires Git et des nouveaux packs. L'adoption est
+appelée sous gel réseau et avant OPENING ; la restauration appariée est la
+frontière de retour d'une importation partielle des neuf dépôts.
+
+Le helper dispose de 1 800 s dans le budget global de la bascule ; le probe
+dispose de 240 s. Les copies temporaires et la socket sont retirées à la sortie.
+Une interruption brutale est traitée par la lease/reprise du bootstrap et la
+restauration appariée, sans réutiliser un jeton enregistré en clair.
+
+Cette qualification n'atteste pas une publication de production, une identité
+humaine de revue, des runners opérationnels ou une livraison future protégée.
+Ces éléments ne sont pas simulés comme réussis par le helper.

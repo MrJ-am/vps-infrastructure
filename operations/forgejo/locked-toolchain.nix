@@ -1,6 +1,6 @@
 { system ? "x86_64-linux" }:
 let
-  input = (builtins.fromJSON (builtins.readFile ../../flake.lock)).nodes.nixpkgs.locked;
+  input = (builtins.fromJSON (builtins.unsafeDiscardStringContext (builtins.readFile ../../flake.lock))).nodes.nixpkgs.locked;
   source = builtins.fetchTarball {
     url = "https://github.com/NixOS/nixpkgs/archive/${input.rev}.tar.gz";
     sha256 = input.narHash;

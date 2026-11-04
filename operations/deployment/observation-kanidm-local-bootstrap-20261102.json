@@ -1,0 +1,151 @@
+{
+  "application_generation_changed": false,
+  "date": "2026-11-02",
+  "limits": [
+    "The read-only token probe confirms native identity and membership, not every later application write path.",
+    "No successful application migration, generation activation or complete Forgejo adoption is claimed by this repair."
+  ],
+  "observations": {
+    "kanidm-builtins-postflight-001.json": {
+      "result": {
+        "both_eligible": true,
+        "builtin_states": {
+          "admin": {
+            "attested_passkeys_present": false,
+            "builtin_identity_matches": true,
+            "disabled": true,
+            "eligible_for_fixed_recovery": true,
+            "passkeys_present": false,
+            "service_account_not_person": true
+          },
+          "idm_admin": {
+            "attested_passkeys_present": false,
+            "builtin_identity_matches": true,
+            "disabled": true,
+            "eligible_for_fixed_recovery": true,
+            "passkeys_present": false,
+            "service_account_not_person": true
+          }
+        },
+        "credential_material_exported": false,
+        "read_only": true,
+        "schema_version": 1
+      },
+      "sha256": "1cfd9c31a420b736890a19b91174dd3285bb375b73c95ff6c42feb215af824fe"
+    },
+    "kanidm-builtins-preflight-001.json": {
+      "result": {
+        "both_eligible": true,
+        "builtin_states": {
+          "admin": {
+            "attested_passkeys_present": false,
+            "builtin_identity_matches": true,
+            "disabled": true,
+            "eligible_for_fixed_recovery": true,
+            "passkeys_present": false,
+            "service_account_not_person": true
+          },
+          "idm_admin": {
+            "attested_passkeys_present": false,
+            "builtin_identity_matches": true,
+            "disabled": true,
+            "eligible_for_fixed_recovery": true,
+            "passkeys_present": false,
+            "service_account_not_person": true
+          }
+        },
+        "credential_material_exported": false,
+        "read_only": true,
+        "schema_version": 1
+      },
+      "sha256": "1d6faa4592b812404ba222d001da1eb0ab3e4ece0ab9a6df7078376994a230eb"
+    },
+    "kanidm-local-bootstrap-delivery-result-001.json": {
+      "result": {
+        "application_activation": false,
+        "code": "HUMAN_LOGIN_TOOL_INSTALLED",
+        "credential_creation": false,
+        "schema_version": 1
+      },
+      "sha256": "7106a0991871cd3d928df9d99b2a22d6e81f66a9df03d4b8b964fc5e46464f79"
+    },
+    "kanidm-local-bootstrap-execution-001.json": {
+      "result": {
+        "admission_preserved": true,
+        "application_generation_changed": false,
+        "code": "KANIDM_LOCAL_BOOTSTRAP_COMPLETE",
+        "credential_material_exported": false,
+        "dedicated_sessions_revoked": true,
+        "owner_credentials_preserved": true,
+        "owner_role_added": true,
+        "rescue_accounts_disabled": true,
+        "schema_version": 1,
+        "workers_prepared": true
+      },
+      "sha256": "594fb226079506ebcef55e0fc16a63639422fbca9c8d5d0dcb8a338aefb2477f"
+    },
+    "kanidm-local-bootstrap-paths-001.json": {
+      "result": {
+        "admin_socket": {
+          "canonical": true,
+          "exists": true,
+          "gid_is_kanidm": true,
+          "peer_gid_is_kanidm": true,
+          "peer_uid_is_kanidm": true,
+          "permissions": 488,
+          "regular": false,
+          "socket": true,
+          "uid_is_kanidm": true
+        },
+        "database": {
+          "canonical": true,
+          "exists": true,
+          "gid_is_kanidm": true,
+          "permissions": 384,
+          "regular": true,
+          "socket": false,
+          "uid_is_kanidm": true
+        },
+        "read_only": true,
+        "schema_version": 1
+      },
+      "sha256": "e98221f3c9e0f7aa8f3ffa1ed26b423708609153f02dc3e68fd86bb8dfed7d48"
+    },
+    "kanidm-local-bootstrap-worker-result-001.json": {
+      "result": {
+        "admission": {
+          "authenticated_service": true,
+          "expected_memberships": true,
+          "present": true
+        },
+        "all_expected_memberships": true,
+        "all_tokens_present": true,
+        "cycle": {
+          "authenticated_service": true,
+          "expected_memberships": true,
+          "present": true
+        },
+        "read_only": true,
+        "replay": {
+          "authenticated_service": true,
+          "expected_memberships": true,
+          "present": true
+        },
+        "schema_version": 1,
+        "tokens_distinct": true,
+        "write_authorization_proved": false
+      },
+      "sha256": "5ba78ddd30843805def1a9a03b3d8f0351da6403221b2e8bec98839874a5b4e8"
+    }
+  },
+  "owner_credentials_preserved": true,
+  "owner_role_added": true,
+  "package": "/nix/store/y7viyzl5v93ac9jr1pzavjqx0n3knlnw-mrjam-kanidm-local-bootstrap-1",
+  "package_nar_hash": "sha256-/mwMkgYzGEOGzOvJqA7BSLE1bCIJeCI/p6LtgwxQyOM=",
+  "rescue_accounts_disabled": true,
+  "schema_version": 1,
+  "scope": "Production fixed local Kanidm repair and postflight, under explicit VPS administrator authorization",
+  "source_commit": "97c75c76ea10ae6bad0fbef9ccf6f086027ed2f4",
+  "source_tree": "f2f0260f5a75d2990231e6cbe40d5ee96bf73abc",
+  "three_service_tokens_present_distinct_and_authenticated": true
+}

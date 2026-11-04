@@ -1,0 +1,42 @@
+#+title: Contrôle indépendant de la proposition de règles ViSe nº 2
+
+Ce contrôle porte uniquement sur mrjam-validation@470211d7b2522322a94c5ddfc6770d833bb1457e,
+base b02bdf1b5d63dcf0e0610723788a7ca7e384932c, et ses 21 ajouts vise-v1.
+L'export est établi depuis les objets Git complets avant construction. Les
+empreintes attendues viennent du binding de publication choisi par l'opérateur.
+
+Les attentes de contract_tests.py et les essais Git de test_source_policy.py
+viennent de l'infrastructure, hors de la proposition testée. Le job Nix isolé
+ne reçoit ni données de production, ni identifiants, ni pouvoir de publication.
+Il vérifie les étapes obligatoires, le périmètre des sources, les refus de
+substitution et de chemins dangereux, les limites des reçus et les liens Git.
+Les sorties conservent explicitement adoption_authorized=false et
+deployment_authorized=false. Aucun test issu de la proposition ne décide du
+résultat de ce contrôle.
+
+Ce contrôle ne prétend pas être une exécution Forgejo Actions et ne crée aucun
+statut de commit. Son résultat est une partie de la qualification des règles :
+la validation complète avec PostgreSQL synthétique et artefacts, la revue
+humaine, l'observation de la tête distante et la publication bornée d'un vrai
+résultat CI restent distinctes. Ne pas convertir un ancien succès applicatif
+en succès CI de cette proposition, ni réutiliser l'exception d'amorçage PR1.
+
+* Publication séparée du résultat réel
+publisher.nix sélectionne exactement le rapport 01c207fc0880… produit par le
+job Nix isolé. publish.py n'importe aucun module de la proposition. Il vérifie
+PR2, main, la protection et les objets Git reçus en lecture seule : parent,
+arbre réel, 21 ajouts, modes et empreintes, workflow conservé. Le champ
+commit.tree.sha de Forgejo 17 n'établit pas l'arbre ; il n'est pas utilisé.
+
+Seul POST autorisé : le statut mrjam/independent-validation sur 470211d…, avec
+description explicite « Audit externe des règles : 19 tests » et empreinte de
+preuve. Aucune revue, fusion, mutation de protection ni opération applicative.
+Le jeton éphémère est restreint au dépôt puis révoqué, avec contrôle 401. Un
+résultat contradictoire n'est pas écrasé ; une observation paginée incomplète
+est refusée. Une reprise relit le statut exact sans duplication.
+
+La publication 002 a réussi : statut natif nº 1, relecture et protection
+vérifiées, accès révoqué. Ne pas en déduire une signature d'artefacts ni
+l'adoption des règles : la revue humaine et la fusion protégée restent distinctes.
+Preuve : qualification-publication-002.json. Neuf tests du publieur et quatre
+contrôles Git natifs (succès et substitutions refusées) ont précédé l'exécution.

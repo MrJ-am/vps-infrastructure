@@ -1,0 +1,406 @@
+{
+  "byte_comparison": {
+    "application_validation_repeated": false,
+    "deployment_authorized": false,
+    "frontends": {
+      "audition": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/srz1771bivyb66f987nw62gpiqh1d9w7-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-audition",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "ae8c95a619d900eda9b90f57ef19d6ad8e39d1f513d2ab4d93d600e9187b3d87",
+        "new_files": 96,
+        "old_files": 96,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "log": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/gcb7ndi6clg28g89q6al5dyvr97qqhcl-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-log",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "cc38ff1b7c8f29ad0aaa44569d5503a34775821f742c740ade5b8e4551b28898",
+        "new_files": 9,
+        "old_files": 9,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "logique": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/7rkjnkbgzhlmzds0fzz1nk0pnrw2waxn-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logique",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "fe041a3e82f90e742536532c76430998fbc841b449c44d71afb05701e5beda7a",
+        "new_files": 125,
+        "old_files": 125,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "mateval": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/pdaay31fv76dxgmp1ar4xwhnbhb6fwyp-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-mateval",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "031e48e5051ba3908aecd3cf486493d7a3a5e765e36a7524f7a2df5696121161",
+        "new_files": 108,
+        "old_files": 108,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "style": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/fhg2mpsm46scncb7dgnjvhabb203zg2v-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-style",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "8ef0288b27b88bc8aa97630f514fe4576734a9a167ee0f5820aa55cdd457bdb3",
+        "new_files": 49,
+        "old_files": 49,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "style-logo": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/dy758si59jgjhdb5va15sdnr7dmcblxf-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-logo",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "2da78bedbadcbb64d6ead3e39aa64c0d9103b29e41ecb202feb10af672a2436a",
+        "new_files": 38,
+        "old_files": 38,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      },
+      "vision": {
+        "all_files_byte_identical": false,
+        "artifact_metadata_fields_changed": [
+          "input_manifest_sha256"
+        ],
+        "baseline_store_path": "/nix/store/6gnyzs532bakw4lp5kr8apyd4i8pgla3-mrjam-reviewed-mrjam-qualified-artifacts-8bf05fb9065a-vision",
+        "changed_public_paths": [
+          "artifact.json"
+        ],
+        "new_artifact_manifest_sha256": "7f17d92cdf21e95562fce9460076129f28346b7443406ac74b0f52032a04b9c7",
+        "new_files": 24,
+        "old_files": 24,
+        "payload_files_byte_identical": true,
+        "same_file_set": true
+      }
+    },
+    "limits": [
+      "Unequal executable bytes do not prove semantic equivalence or a defect; provenance and executed tests are reported separately.",
+      "This comparison does not connect the release manifest, reviews or deployment executor to the new artifacts."
+    ],
+    "original_global_result": "failed",
+    "production_access": false,
+    "proposal_sha256": "8177667ea392aacd4c31ae32c03f2e75fd11b15bd716567ad6b412a9cd60defb",
+    "schema_version": 1,
+    "scope": "measured-public-artifact-bytes-after-original-consumer-refusal",
+    "server": {
+      "baseline_sha256": "a576498de9cffbfa5190a4056bc9af499a05663afa3cb593d811281e6977ef2e",
+      "baseline_store_path": "/nix/store/wasrcrd9a76d1gpzzrhs0qkxbdqzwdrw-mrjam-server-mateval-typed-readiness-1",
+      "byte_identical": false,
+      "new_sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+    }
+  },
+  "comparison_binding": {
+    "bytes": 4992,
+    "path": ".local/ci-current-validator-v1-20261103/native-validation-001/comparison-001.json",
+    "sha256": "3a328d0f4e579b63bfb6a4a6ac930e1e8cb30fb15be7ae25686bdda5be9c3d3d"
+  },
+  "deployment_authorized": false,
+  "forgejo_dispatch_performed": false,
+  "limits": [
+    "No rerun of the 75 application steps; original global failed result and full report remain unchanged.",
+    "Synthetic signature/receipt proves the consumer and unchanged client, not production collection or signing.",
+    "No new systemd VM; same unit restrictions evaluated and prior credentials/UID proof separately referenced.",
+    "Seven frontend payloads match the live baseline; new server ELF is not byte-identical.",
+    "Rules b02 are proposed, not observed as adopted by this proof.",
+    "Workers, adopters, release-manifest linkage, human review and deployment authorization are not established.",
+    "Cached validation may be reused; issued_at is signature time, not a claim of fresh execution for every job."
+  ],
+  "logs": [
+    {
+      "bytes": 0,
+      "path": ".local/ci-authority-report-details-v3-20261103/package-001.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2869,
+      "path": ".local/ci-authority-report-details-v3-20261103/package-001.stderr",
+      "sha256": "d320e0e7a8571978cc578bcab126bd6a33a85723072d4575de5a41d5764e81f2"
+    },
+    {
+      "bytes": 88,
+      "path": ".local/ci-authority-report-details-v3-20261103/package-002.stdout",
+      "sha256": "50b6ab9a00ba2f4d02fc040ddef3f91de3efc194570a6466522fbcfd4c5d4b19"
+    },
+    {
+      "bytes": 231,
+      "path": ".local/ci-authority-report-details-v3-20261103/package-002.stderr",
+      "sha256": "bc074021da75cddc96b9bdc2bebacfc7428d6c02c0437c341e53d7aa6491cf08"
+    },
+    {
+      "bytes": 0,
+      "path": ".local/ci-authority-report-details-v3-20261103/tests-001.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1797,
+      "path": ".local/ci-authority-report-details-v3-20261103/tests-001.stderr",
+      "sha256": "3fa7a9bde6dfd1462323d34a7b4642bb29335b3c90a457969231225dfd829b98"
+    },
+    {
+      "bytes": 0,
+      "path": ".local/ci-authority-report-details-v3-20261103/evaluation-001.json",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1833,
+      "path": ".local/ci-authority-report-details-v3-20261103/evaluation-001.stderr",
+      "sha256": "9190a5f0648e0bfba3292a3bd56db9edb55ae2a5dfff8c35da5a7a9fd9bfb616"
+    },
+    {
+      "bytes": 556,
+      "path": ".local/ci-authority-report-details-v3-20261103/evaluation-002.json",
+      "sha256": "38663378ea905f41de9b04b3e0308476b1420ce388797ddb059f037a69219398"
+    },
+    {
+      "bytes": 0,
+      "path": ".local/ci-authority-report-details-v3-20261103/evaluation-002.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 187,
+      "path": ".local/ci-authority-report-details-v3-20261103/comparison-001.stdout",
+      "sha256": "26fdb3dd09824e9f857451771522c85c9e92c13d25069fc9715277f4e21dda69"
+    },
+    {
+      "bytes": 0,
+      "path": ".local/ci-authority-report-details-v3-20261103/comparison-001.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "native_tests": {
+    "application_tests_reexecuted": false,
+    "collector_receipt": "synthetic receipt over existing measured artifacts",
+    "passed": 12,
+    "signature_key": "invented ephemeral Ed25519 only"
+  },
+  "nix_evaluation": {
+    "all_passed": true,
+    "package": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3",
+    "results": {
+      "bothAssertionsPass": true,
+      "newPackageExact": true,
+      "noAutomaticAuthorityStart": true,
+      "oldPackageExact": true,
+      "producerUnchanged": true,
+      "publicPolicyUnchanged": true,
+      "sameDistinctIdentities": true,
+      "sameExactPrivateKeyReference": true,
+      "serviceRestrictionsUnchanged": true,
+      "socketRestrictionsUnchanged": true
+    },
+    "scope": "Two isolated NixOS evaluations, no activation or new systemd VM; filesystem/controller/token references are invented."
+  },
+  "original_validation": {
+    "application_steps_passed": 75,
+    "artifacts": [
+      {
+        "bytes": 13383152,
+        "name": "server",
+        "sha256": "5e183a30c9b33d0ea02302a55515c73b49988ceb60f68879af8934f72e6eb1cb"
+      },
+      {
+        "bytes": 23859200,
+        "name": "frontend.tar",
+        "sha256": "663b4d158f33aa9a614960d8c8f67aa3d72fdd583ce0dee3abbcd0f5095d24ba"
+      },
+      {
+        "bytes": 6652,
+        "name": "verification.json",
+        "sha256": "92d4468cbab1dd20f38fee9d16390c7ab0ed4a8c28dbc16aea3e4a8e6fee760d"
+      }
+    ],
+    "observation": {
+      "bytes": 2078,
+      "path": ".local/ci-current-validator-v1-20261103/native-validation-001/application-observation-001.json",
+      "sha256": "5839d36565877a81de249174db184abdcb002e716819a87be0db0848db959e09"
+    },
+    "raw_report": {
+      "bytes": 6652,
+      "path": ".local/ci-current-validator-v1-20261103/native-validation-001/artifacts/verification.json",
+      "sha256": "92d4468cbab1dd20f38fee9d16390c7ab0ed4a8c28dbc16aea3e4a8e6fee760d"
+    },
+    "report_rewritten": false,
+    "result": {
+      "code": "Refused",
+      "elapsed_seconds": 839.882,
+      "forgejo_dispatch_performed": false,
+      "private_key_accessed": false,
+      "production_access": false,
+      "production_attestation_emitted": false,
+      "schema_version": 1,
+      "status": "failed"
+    },
+    "result_binding": {
+      "bytes": 244,
+      "path": ".local/ci-current-validator-v1-20261103/native-validation-001/result.json",
+      "sha256": "8dd98924157d1a42c2b727b97eb0f291131f9a16a1a8b245d0743cad16135585"
+    }
+  },
+  "package": {
+    "files": [
+      {
+        "bytes": 3066,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/client.py",
+        "sha256": "6668683edc7007afda54aef11826ef8ea3bdc88ded81eee0be4fb2cec4c8e26a"
+      },
+      {
+        "bytes": 11292,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/collector.py",
+        "sha256": "56e628b38c7e2211b54bf030b89de9fc1a4d18329f561fd7127789fa941ad6ac"
+      },
+      {
+        "bytes": 10960,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/contract.py",
+        "sha256": "3abcc5f122c842da4bf4dd5da4d3df3032b7cd55842c982c40e2175ccaf58e37"
+      },
+      {
+        "bytes": 5519,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/exporter.py",
+        "sha256": "cf96d8b5d2d89143bae6dbeeb9b3211ef85d00e62f5639fe5e7e2caab2d2b87c"
+      },
+      {
+        "bytes": 18885,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/frozen_worker.py",
+        "sha256": "22053e2e002f3e95fe0ca2317cf722c601e207339ef58ad4bab49655e63370d5"
+      },
+      {
+        "bytes": 3537,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/producer.py",
+        "sha256": "2412163cac2215a232a596197fe0d174c4568b2b7927b4b8dc8808ec335927d1"
+      },
+      {
+        "bytes": 1703,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/report_details.py",
+        "sha256": "0676ac58382b2dd8a034f0ded3ecece374c462e818071cd3c0ac03deadfd8bef"
+      },
+      {
+        "bytes": 11878,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/signer.py",
+        "sha256": "d30aba0db59421dc22d32bb8ba38974169e698fbf2b19ce99a157c5bdba1b7a7"
+      },
+      {
+        "bytes": 2324,
+        "path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3/lib/signing_credential.py",
+        "sha256": "1ab88bdef8dc19bfac83380bb50a999eccc1f28e1bb14a6cb3b0b97949eb24ed"
+      }
+    ],
+    "nar_hash": "sha256-L7nqYGj7HpB0271q5EYVHlz3ndt9mxhXhghCznDkwr0=",
+    "store_path": "/nix/store/cqz4jlhpis05gj4wcjgaddb45qbfwpz0-mrjam-validation-authority-report-details-3"
+  },
+  "production_access": false,
+  "production_attestation_emitted": false,
+  "production_key_read": false,
+  "schema_version": 1,
+  "scope": "exact-consumption-of-existing-public-report-not-a-new-application-run",
+  "separate_prior_proofs": [
+    {
+      "bytes": 5426,
+      "path": "operations/ci/integration-v1/review-20261103-001.json",
+      "sha256": "0815283450024796eac301e082a1e4257f46deb429e234387e20cbdb4589681d"
+    },
+    {
+      "bytes": 3170,
+      "path": "operations/ci/current-validator-v1/review-20261103-001.json",
+      "sha256": "13ffed766f5afc981fab9d3ddcd0dcb276e14afe734073d607238cdc13a32fb8"
+    },
+    {
+      "bytes": 1768,
+      "path": "operations/ci/current-validator-v1/review-local-launch-20261103-001.json",
+      "sha256": "c12c255e505dc320615e611cd931218d47d292783e451bdcf319b97986621da6"
+    }
+  ],
+  "sources": [
+    {
+      "bytes": 3578,
+      "path": "operations/ci/authority-report-details-v3/CHOIX.org",
+      "sha256": "7da39ec9cd082b1a817700794c16c869887d0bdd4f12414fadcc443eaa543127"
+    },
+    {
+      "bytes": 3136,
+      "path": "operations/ci/authority-report-details-v3/README.org",
+      "sha256": "0f2ec2ef9c01cf4ea50ad71d5cf64475dbf28cbb607ec3e5e2c4565ddc93f0d5"
+    },
+    {
+      "bytes": 4094,
+      "path": "operations/ci/authority-report-details-v3/descriptor.json",
+      "sha256": "09195b07f5a3ab41ad1a4dda969fcd7b813a7c2d14cd7b10689e4b8482efdb76"
+    },
+    {
+      "bytes": 1637,
+      "path": "operations/ci/authority-report-details-v3/report_details.py",
+      "sha256": "5b9c536ccd2f757c1f045fef22ffea62ce9d74877c773dc3545ab83264711c09"
+    },
+    {
+      "bytes": 3258,
+      "path": "operations/ci/authority-report-details-v3/package.nix",
+      "sha256": "995215573bd54dee1690d221c2b17826f0dbd5f47614fd5a46864e82ef514345"
+    },
+    {
+      "bytes": 349,
+      "path": "operations/ci/authority-report-details-v3/module.nix",
+      "sha256": "526bb73b52fb5fb92993dbd22fa96539e0cef7d7aeead78ca096f917468db93c"
+    },
+    {
+      "bytes": 488,
+      "path": "operations/ci/authority-report-details-v3/build.nix",
+      "sha256": "b1c2d0dfbfd00d1a807d1ebbf71a6a5acd0ebebed6208db7901e1f49415e5065"
+    },
+    {
+      "bytes": 4252,
+      "path": "operations/ci/authority-report-details-v3/evaluation.nix",
+      "sha256": "1015af55df169c342d7e8234e60c7e0fd2c2929bebcc17aa5bf0664b8127715d"
+    },
+    {
+      "bytes": 9121,
+      "path": "operations/ci/authority-report-details-v3/test_report_details.py",
+      "sha256": "e696c3d0c0c0d38fd0f66c04afbad8f26426db8d40d826ba0c7b77d605baa17e"
+    },
+    {
+      "bytes": 5557,
+      "path": "operations/ci/authority-report-details-v3/compare_artifacts.py",
+      "sha256": "0c68a69498cb6e16d12b49260f538d8273b3045de8d187ca00054dc249eefd32"
+    },
+    {
+      "bytes": 7027,
+      "path": "operations/ci/authority-report-details-v3/record_qualification.py",
+      "sha256": "e2a3ad1514035d29c642ea5a4f860c4dec3c87d054223fc9071624d5ebba6ce1"
+    }
+  ],
+  "status": "passed-with-explicit-separate-scopes"
+}

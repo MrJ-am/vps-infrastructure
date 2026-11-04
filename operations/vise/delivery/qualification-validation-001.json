@@ -1,0 +1,139 @@
+{
+  "installed_module_sha256": {
+    "artifacts.py": "fb40865462d8b2a9a235ba8b15b971d5de6777d26a9aa4e473e41d8ae4fd4d7d",
+    "authority_profile.py": "4ad779ca70587c79fcb94b10707335d375b86a951454e458f93eb1b5c47dcea7",
+    "build_stage.py": "230753ba37e24cd330af5ef6ab8772b7ecdd2875b13cf9fb343a763b4cdd9cbe",
+    "dependency_binding.py": "83a76812ba979f329c211ec8108f7539139e21c711b39a59d9257c6cdce0b405",
+    "probe.py": "a914d04cefee1d6dbde7d60cd824c29a48b674f87dde8c4de5d72472a638b919",
+    "runtime_stage.py": "b1b79dd48addb5cbe5c4649fbb427071661043c3279c7f627c4f711e33489e10",
+    "sandbox.py": "0b165888dfa69281bada75019f24d5c735db711de71a7177ab9d186b80347b7c",
+    "source_policy.py": "a6e5f05ece8678c0769d64463a37baad287e485e593fcbf8f6e9a4429a9b7a4f",
+    "source_scope.py": "328bec135062377b03c44a2883b56db10a06f0330be3685f65cb42ccab604f0e",
+    "synthetic_database.py": "27da447d47fe47e08f33f4c11b4a3b7cfe7d39386ae07d12bf497f2f5accda4a"
+  },
+  "limitations": [
+    "Synthetic rules revision only; no independently adopted ViSe authority yet",
+    "No private key accessed, no signature or registry admission",
+    "No production deployment or database access",
+    "Local UID substitutes for production root-owned staging"
+  ],
+  "protected_api_test_bundle": "/nix/store/a46dz5ayfq3h5rksc6h6bsa5blzdnj40-mrjam-vise-0.2.0-8c8ef66f943c-tests/api-tests.mjs",
+  "report": {
+    "artifacts": [
+      {
+        "bytes": 6904224,
+        "name": "server",
+        "sha256": "c67326bb587e3b354552ab07355e0bf06392b093d17a9c519b938aa38e517e9e"
+      },
+      {
+        "bytes": 1044480,
+        "name": "frontend.tar",
+        "sha256": "877007256a5fb5cc546f80da33ba1c4a739a2074d87339821a2cb0de14415231"
+      }
+    ],
+    "authority": "local-verifier-content-receipt",
+    "decision": "passed",
+    "independent_adoption_established": false,
+    "not_established": [
+      "Independent release acceptance is not established by this content report.",
+      "Production deployment is not authorized by this content report.",
+      "No production database, erasure ledger or backup was used in validation."
+    ],
+    "policy_sha256": "eade3750f8bd654b9c539381d6ea8b7c75902a5e47e23676f835382bc54a4c43",
+    "production_authorized": false,
+    "proposal_sha256": "8ea736fc4819b4c795f340d26638c2223c06d1a3ae612fbbec980d2b25a4ab5d",
+    "rules_revision": "0000000000000000000000000000000000000000",
+    "schema_version": 1,
+    "sources": [
+      {
+        "id": "vise",
+        "repository": "MrJ-am/etp-vie-affective",
+        "revision": "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c",
+        "tree_sha": "2aa5617e8b54e25b8975baf7805a524033fd7b11"
+      }
+    ],
+    "steps": [
+      {
+        "name": "complete-vise-source-tree",
+        "status": "passed"
+      },
+      {
+        "name": "locked-toolchain-versions",
+        "status": "passed"
+      },
+      {
+        "name": "locked-cargo-npm-elm-dependencies",
+        "status": "passed"
+      },
+      {
+        "name": "rust-offline-release-build",
+        "status": "passed"
+      },
+      {
+        "name": "typescript-no-emit",
+        "status": "passed"
+      },
+      {
+        "name": "vise-frontend-build",
+        "status": "passed"
+      },
+      {
+        "name": "vise-component-tests",
+        "status": "passed"
+      },
+      {
+        "name": "vise-api-tests-synthetic-postgresql",
+        "status": "passed"
+      },
+      {
+        "name": "vise-schema-and-role-refusals",
+        "status": "passed"
+      },
+      {
+        "name": "vise-graceful-stop-and-restart",
+        "status": "passed"
+      },
+      {
+        "name": "vise-restore-current-erasure-ledger",
+        "status": "passed"
+      },
+      {
+        "name": "vise-artifact-content-bound",
+        "status": "passed"
+      }
+    ]
+  },
+  "result": {
+    "artifacts": [
+      {
+        "bytes": 6904224,
+        "name": "server",
+        "sha256": "c67326bb587e3b354552ab07355e0bf06392b093d17a9c519b938aa38e517e9e"
+      },
+      {
+        "bytes": 1044480,
+        "name": "frontend.tar",
+        "sha256": "877007256a5fb5cc546f80da33ba1c4a739a2074d87339821a2cb0de14415231"
+      },
+      {
+        "bytes": 1728,
+        "name": "verification.json",
+        "sha256": "b1acd2e71616a8539b86a269dd0662fd9c264eef5abfb715ad708c2720aff7a0"
+      }
+    ],
+    "elapsed_seconds": 170.11,
+    "full_validation": false,
+    "limits": {
+      "cpu.max": "100000 100000",
+      "memory.max": "2147483648",
+      "pids.max": "256"
+    },
+    "passed": true,
+    "production_access": false,
+    "scope": "local-verifier-and-sealed-content-receipt",
+    "source_owner_substitution": "local UID, not production root staging",
+    "validator": "/nix/store/36g4l9pmx6nh73v8pivzh3x9k0rsspix-mrjam-vise-isolated-validation-probe-1"
+  },
+  "schema_version": 1,
+  "scope": "local-worker-verifier-and-sealed-content-receipt"
+}

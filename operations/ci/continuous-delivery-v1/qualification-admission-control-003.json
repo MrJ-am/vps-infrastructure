@@ -1,0 +1,68 @@
+{
+  "control_package": "/nix/store/ixhqrvgq1vixg0g0fc01lwkdprxxkmn7-mrjam-validation-admission-control-1",
+  "earlier_failed_runs": {
+    "002": "Synthetic reader denied traversal of /run/credentials",
+    "003": "Diagnostic confirmed /run/credentials mode0000 for the credential-less probe"
+  },
+  "fixture_correction": "Only synthetic reader receives an invented LoadCredential marker; production credential reader and signer restrictions unchanged.",
+  "limits": [
+    "No production installation, admission or signing yet.",
+    "Source intake and protected admission construction remain to connect.",
+    "No automatic merge or delivery enabled."
+  ],
+  "production_activation": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "admission-fixture-validator.py": "b2b4e81dd1019c41b4f81b15fc3f8c1ab86bafd00d47aa1af1b31a90529bd3c4",
+    "admission-fixture.py": "e3c3966fe3d3afddd8ca4ff7b024a80a8980bc539ed3c26cedf9be39611a2542",
+    "admission-integration.nix": "01d74cd0c676de5074e84ca8c95a27c5059e6a7130cd439cf05506cddfa16211",
+    "admission-package.nix": "6f73aa23b015e103c6bac8298de63ad8bc9f50c2b0bfae4a2209a57ccbe7b9ef",
+    "admission-reader-probe.py": "f1ca790294f19d45fbd1c33c4d14aca6bb132ae180bbd56706f291ec9cde8282",
+    "admission-services.nix": "7e2fa23536b0d7d2d3aaca0a7bd5e3d5d4f85472e5ef127ccaff9ab44938edf8",
+    "admission_publish.py": "c74183f0166aeb522e647af9f1f3f828770ef3520c63cab519afa301b7d8336a",
+    "test_admission_publish.py": "1c76890920e4fe3ab2b2e70bba2a2b00004cf69340955b5f5fda13a379c72879"
+  },
+  "unit_tests": {
+    "atomic_publication": 6,
+    "cache": 6,
+    "interpreter": "Python 3.13.17; suites in separate processes",
+    "registry": 8,
+    "signing": 6
+  },
+  "vm_result": {
+    "authority_v1_sources_preserved": true,
+    "authority_v2_fixed_credential_reader": true,
+    "checks": [
+      "prepare",
+      "credential-reader-boundaries",
+      "inactive-boundaries",
+      "fresh-chain",
+      "cache-reuse",
+      "wrong-peers",
+      "key-separation",
+      "legacy-cache-rebuilt",
+      "tamper-refused",
+      "admission-revoked",
+      "wrong-key-refused",
+      "expiry-refused"
+    ],
+    "coordinator_sources_unchanged": true,
+    "dynamic_admission_registry": true,
+    "not_established": [
+      "Actual Forgejo job transport",
+      "Production identities/key/policy/capacity",
+      "New validator execution on every job",
+      "Human review/merge/deployment authority"
+    ],
+    "production_access": false,
+    "schema_version": 1,
+    "scope": "real-systemd-distinct-identities-synthetic-admitted-task",
+    "substitutions": [
+      "Synthetic immutable validator and source/report, no application compilation",
+      "Admitted task delivered by a Go test entrypoint instead of Forgejo API/daemon",
+      "Test entrypoint closure added to the otherwise unchanged private coordinator root",
+      "Invented key/UIDs/credentials only"
+    ]
+  },
+  "vm_store": "/nix/store/450bigpgmjjr60xaniq1fscfvyhhgdyz-vm-test-run-mrjam-ci-admitted-distinct-identities"
+}

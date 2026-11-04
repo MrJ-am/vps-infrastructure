@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "scope": "independent-synthetic-native-worker-runtime",
+  "expectations_source": [
+    "Historical vps-infrastructure admission-identite.lisp at a3cb6be, locally retained under .reference",
+    "Public vision tests/admissions_synthetiques, cycle_synthetique and closure_synthetique at 7d87768b",
+    "Published operations/runtime/vision-{admission,cycle,closure,replay,archive}.org",
+    "Production module CLI/JSON declarations; no candidate execution results used"
+  ],
+  "checks": [
+    "Staged worker units do not start implicitly; explicit state initialization and adoption are distinct.",
+    "Native admission adopts historical SQLite including enrolment and MIME bytes without inventing approval or replacing data.",
+    "An invented confirmed adult request provisions one real Kanidm person, exact mail, one SQL account and one broker principal via UID947 peer socket; no person exists before confirmation.",
+    "The enrolment link is valid against real Kanidm; its durable message has the exact recipient and survives restart unchanged. Invitation use remains one.",
+    "A missing broker or native provider leaves a durable retriable stage; process restart completes that same request without duplicate person, account, invitation or message.",
+    "Native cycle reads mail from real Kanidm, queues a notice and never starts the 30-day deadline on SMTP refusal; explicit synthetic receipt permits the deadline.",
+    "Deletion and closure preserve content before archive acknowledgement. Explicit synthetic archive acknowledgement permits only the selected content to be erased; replay after interruption is idempotent and preserves an unrelated account.",
+    "Wrong credentials, wrong issuer, malformed requests and wrong socket UID cannot grant effect; synthetic credentials, subjects, mail and enrolment are absent from worker diagnostics."
+  ],
+  "not_claimed": [
+    "Production data or credentials adoption",
+    "Real Proton delivery: compiled public CA trust is retained; acknowledgements used for business time travel are explicit synthetic fixture events",
+    "Off-host archive durability when its receipt is simulated",
+    "Protected forge approval or production readiness",
+    "Human MFA or legal admission approval"
+  ]
+}

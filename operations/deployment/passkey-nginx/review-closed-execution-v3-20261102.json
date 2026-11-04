@@ -1,0 +1,21 @@
+{
+  "command": "python3 -I -m unittest discover -s operations/deployment -p test_preflight_passkey_execution_v3.py -v",
+  "date": "2026-11-02",
+  "limits": [
+    "Read-only source review and synthetic command-output tests only; no real system observation performed by this agent."
+  ],
+  "observations": [
+    "Only four fixed systemd units and eight fixed properties are returned; enum and numeric fields are validated.",
+    "Only the provisioner journal is queried, at most64 records from20minutes; complete messages and other journal fields are never exported.",
+    "Legacy error, exact V3 diagnostic stages and exact success JSON are counted; altered, unknown and non-string messages cannot expose invented private markers.",
+    "The fixed worker lock is inspected through lstat metadata only; no human cache, token contents or lock contents are opened."
+  ],
+  "passed": true,
+  "production_access": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "operations/deployment/preflight_passkey_execution_v3.py": "10b2536edca734c497f96cbe9024df42feff043260003da04431773901e3dd71",
+    "operations/deployment/test_preflight_passkey_execution_v3.py": "a59ec20cbeac9781ccbcf8d4bd64863373b2a7c1466da9937106f43b7ae12322"
+  },
+  "tests_passed": 3
+}

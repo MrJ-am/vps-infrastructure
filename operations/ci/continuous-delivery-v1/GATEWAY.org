@@ -1,0 +1,56 @@
+#+title: Rechargement gracieux — composant de livraison ordinaire
+
+Gateway reçoit du code de contrôle protégé le registre des deux configurations
+installées et leurs empreintes, l'exécutable Nginx et le vérificateur de santé.
+Il ne reçoit pas de configuration, commande ou URL depuis une proposition.
+Ce module n'est ni une autorité d'admission, ni un service exposé aux agents.
+
+Le maître Nginx doit démarrer avec le chemin stable nginx.conf du répertoire
+géré. Ce lien désigne une configuration immuable qualifiée. Une bascule vérifie
+la configuration, journalise l'intention, remplace atomiquement le lien, recharge
+le même maître, vérifie la nouvelle route puis marque la transition terminée.
+Une erreur revient à la route précédente sans arrêter les serveurs. Une reprise
+sur une intention inachevée revient également à cette route, en la vérifiant.
+Le verrou et le journal sont privés ; le répertoire est lisible par Nginx mais
+seul son propriétaire administratif peut le modifier.
+
+Les essais utilisent le vrai Nginx du pin NixOS, deux serveurs HTTP synthétiques,
+des écritures concurrentes et une réponse longue en cours pendant la bascule.
+Ils vérifient retour, interruption, refus d'une configuration altérée et
+conservation des écritures. Les preuves distinguent cet essai de la plateforme
+Rust réelle et de l'admission cryptographique des artefacts.
+
+Restent à raccorder et qualifier avant activation ordinaire :
+- admission signée, politique indépendante, ordre de revue et autorisation ;
+- installation des artefacts dans le seul slot inactif et santé Rust réelle ;
+- configuration initiale du maître Nginx avec ce chemin stable ;
+- drainage des anciennes requêtes avant arrêt, sans fermeture forcée ;
+- continuité des sessions et des ressources de pages déjà ouvertes ;
+- journal du déployeur, compatibilité SQL et compte rendu vers Forgejo/GitHub.
+
+Le maître actuel du VPS utilise encore un chemin de configuration immuable.
+Un HUP de ce maître ne suffit pas à adopter le chemin stable : cette adaptation
+initiale doit être traitée explicitement, puis les livraisons suivantes doivent
+être prouvées sans redémarrer Nginx. Aucun changement VPS n'est fait par cet essai.
+
+* Choix d'intégration : rechargement natif NixOS
+Le module NixOS épinglé fournit déjà services.nginx.enableReload : il démarre
+Nginx sur /etc/nginx/nginx.conf et recharge le même maître à chaque changement
+de configuration. La livraison utilisera ce mécanisme plutôt qu'un second
+répertoire de configuration administré par gateway_switch.py. Ce dernier reste
+un banc des refus/reprises ; il n'est pas installé sur le VPS.
+
+reload-systemd.nix exerce réellement switch-to-configuration vers une
+spécialisation puis le retour. La qualification001 réussit : 1866 écritures,
+aucune erreur/perte/duplication, même maître et mêmes serveurs, ancienne réponse
+longue terminée normalement. Il s'agit d'une VM HTTP synthétique ; les sessions
+Rust, ressources statiques et admission restent à qualifier séparément.
+Les configurations du vrai hôte comparées par gateway-configurations.nix ne
+changent que 11 destinations applicatives entre ports38101 et38102.
+
+Attention au module d'assemblage historique : serverStorePath y est commun aux
+deux slots. Une livraison doit sélectionner artifactStorePath et runtime de
+chaque slot indépendamment ; modifier la valeur globale remplacerait aussi la
+version active. Conserver les modules historiques pour reproduire17lw ; ajouter
+la sélection explicite dans la composition de livraison et prouver l'identité
+inchangée de l'unité active avant toute activation.
