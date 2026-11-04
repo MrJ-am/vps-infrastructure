@@ -66,6 +66,12 @@ class DeliveryTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             deploy.active_slot("127.0.0.1:38101 127.0.0.1:38102")
 
+    def test_public_check_waits_for_nginx_workers_to_take_over(self):
+        headers = "HTTP/1.1 200 OK\r\nx-mrjam-source: vps-infrastructure\r\n"
+        with patch.object(deploy, "command", side_effect=["HTTP/1.1 200 OK\r\n", headers, headers]) as command:
+            deploy.public_check()
+        self.assertEqual(command.call_count, 3)
+
     def test_candidate_preserves_served_assets_and_adapts_slot_credentials(self):
         original = json.dumps({"assets": [{"directory": "/nix/store/current-frontends"}],
                                "credential": "/run/credentials/mrjam-rust-blue.service/token"})

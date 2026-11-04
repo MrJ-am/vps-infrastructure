@@ -103,11 +103,20 @@ def restore():
 def public_check():
     # Verify the real gateway and TLS certificate without reading response bodies.
     for host, path in [("vision.mrj.am", "/"), ("principiipetit.io", "/matheval/")]:
-        headers = command(["curl", "--silent", "--show-error", "--fail", "--max-time", "1",
-                           "--resolve", host + ":443:127.0.0.1", "--dump-header", "-",
-                           "--output", "/dev/null", "https://" + host + path], timeout=2)
-        if "x-mrjam-source: vps-infrastructure" not in headers.lower():
-            raise RuntimeError("Public gateway did not reach the candidate")
+        deadline = time.monotonic() + 2
+        while True:
+            try:
+                headers = command(["curl", "--silent", "--show-error", "--fail", "--max-time", "0.5",
+                                   "--resolve", host + ":443:127.0.0.1", "--dump-header", "-",
+                                   "--output", "/dev/null", "https://" + host + path], timeout=1)
+                if "x-mrjam-source: vps-infrastructure" in headers.lower():
+                    break
+            except (OSError, subprocess.SubprocessError):
+                pass
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Public gateway did not reach the candidate")
+            # HUP returns before Nginx's new workers accept connections.
+            time.sleep(0.05)
 
 
 def candidate_configuration(old, new):
