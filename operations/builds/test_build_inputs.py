@@ -150,8 +150,22 @@ class ArtifactBoundary(unittest.TestCase):
         self.output.mkdir()
         (self.inputs / "materialization.json").write_text(json.dumps({"source_commits": {"platform": "0" * 40}, "style_revision": "1" * 40}))
 
-    def run_manifest(self):
-        return subprocess.run([sys.executable, str(prepare.HERE / "artifact_manifest.py"), "--inputs", str(self.inputs), "--output", str(self.output), "--artifact", "rust-server"], capture_output=True, timeout=2)
+    def run_manifest(self, artifact="rust-server"):
+        return subprocess.run([sys.executable, str(prepare.HERE / "artifact_manifest.py"), "--inputs", str(self.inputs), "--output", str(self.output), "--artifact", artifact], capture_output=True, timeout=2)
+
+    def test_identity_outputs_record_their_binary_and_source_without_approval(self):
+        for kind in ("identity", "identity-deletion"):
+            with self.subTest(artifact=kind):
+                self.output = self.root / kind
+                (self.output / "bin").mkdir(parents=True)
+                payload = "bin/mrjam-" + kind
+                (self.output / payload).write_bytes(b"synthetic binary fixture")
+                self.assertEqual(self.run_manifest(kind).returncode, 0)
+                manifest = json.loads((self.output / "artifact.json").read_text())
+                self.assertEqual(manifest["artifact"], kind)
+                self.assertEqual(manifest["source_commits"], {"platform": "0" * 40})
+                self.assertEqual(manifest["payload_sha256"], {payload: prepare.digest(b"synthetic binary fixture")})
+                self.assertFalse(manifest["deployment_authorized"])
 
     def test_output_fifo_refused_and_no_manifest_created(self):
         os.mkfifo(self.output / "not-a-payload")

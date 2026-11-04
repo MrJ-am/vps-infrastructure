@@ -55,7 +55,7 @@ l’opération ; les vérifications locales ne constituent pas une ACL ou une sa
 * Portée des vérifications
 
 #+begin_src sh
-PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools -p test_bootstrap_components.py -v
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s serveur/tools -p test_bootstrap_components.py -v
 #+end_src
 
 Les 24 essais utilisent exclusivement des dépôts et objets Git inventés dans
@@ -64,10 +64,11 @@ clone, pull, push ou submodule. Il couvre les parseurs, plans, refus, vérificat
 de commits/arbres et la réexécution sans mutation lorsque les deux composants
 synthétiques sont déjà présents.
 
-Aucun fetch réel, accès GitHub ou parcours de téléchargement/checkout après
-fetch n’a été exécuté pour qualifier ce lot. L’authentification et ce parcours
-réseau restent à vérifier dans le nouvel environnement, sur les deux commits
-qui seront effectivement publiés. Voir [[file:qualification-bootstrap.json][les preuves locales]].
+Les reçus du préparateur historique restent dans le dépôt source identifié par
+=migration-source.json=. Le transfert utilise désormais Forgejo ; les deux
+commits réels ont été récupérés avec une profondeur bornée et vérifiés dans
+ce checkout. Les résultats de la réorganisation sont consignés dans
+=../../operations/mise-en-service/qualification-reorganisation-serveur-20261104.json=.
 
 Cet outil prépare le développement. Il n’adopte pas de règles indépendantes,
 ne vérifie pas les paramètres distants GitHub et n’autorise aucun déploiement.

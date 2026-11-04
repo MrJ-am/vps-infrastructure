@@ -46,9 +46,11 @@ le dépôt source ; il n'identifie pas à lui seul un commit ou un artefact appr
    Le code candidat ne remplace pas les règles ou la politique du runner.
 4. Promouvoir les mêmes artefacts par le mécanisme d'exploitation borné, avec
    l'ancienne fermeture conservée et un retour arrière applicable sans migration SQL.
-5. Vérifier sur le slot puis sur l'URL publique l'en-tête attendu, /healthz,
-   la disponibilité /readyz du profil réellement configuré et la continuité des
-   parcours synthétiques. Un /healthz positif seul n'est pas une réussite.
+5. Vérifier sur le slot privé l'en-tête attendu, /healthz et la disponibilité
+   /readyz du profil réellement configuré. Sur l'URL publique, vérifier l'en-tête
+   d'une route applicative et la continuité des parcours synthétiques ;
+   /healthz et /readyz doivent rester masqués en 404 par Nginx.
+   Un /healthz positif seul n'est pas une réussite.
 
 Les noms de modules, ports, identités, droits et configurations de production
 ne sont pas modifiés par le déplacement. Le dépôt historique reste intact

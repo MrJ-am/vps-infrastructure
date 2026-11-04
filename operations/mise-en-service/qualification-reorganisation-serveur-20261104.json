@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-04",
+  "status": "native_qualification_passed_production_tests_blocked",
+  "source_repository": "https://forge.mrj.am/MrJ-am/mrjam-plateforme",
+  "source_commit": "8977c76717006f562b2ca3123ad1f3283007e568",
+  "relocation_commit": "c292899",
+  "minimal_change_commit": "a333ff88f3fc513da96202c52be8b77d587bf3cb",
+  "minimal_change": "X-Mrjam-Source: vps-infrastructure; JSON and schemas unchanged",
+  "gitlinks": {
+    "components/mateval": "91b5b33541a39faade0c40792bfed5ad35ae80a1",
+    "components/vision": "99eace9df76777c89bbd992952738b3f57608801"
+  },
+  "source_selection": {
+    "path": "operations/builds/sources-infrastructure-20261104.lock.json",
+    "sha256": "153a7ba81b3fdbd4ad5ad117845f630dbe2336be6e68a6ff22b0e608dcd375a6",
+    "files": 243,
+    "real_git_blobs_and_materialization_verified": true
+  },
+  "validation": {
+    "rustfmt": "passed",
+    "clippy_workspace_all_targets_all_features": "passed",
+    "rust_workspace": {
+      "passed": 131,
+      "failed": 0,
+      "ignored": 1,
+      "phase": "relocation_before_marker"
+    },
+    "http_marker_tests": {
+      "passed": 2,
+      "phase": "after_marker"
+    },
+    "clippy_server_after_marker": "passed",
+    "build_input_tests": 49,
+    "bootstrap_tests": 24,
+    "mateval_executable_refusal_tests": 4,
+    "browser_fixture_guard_tests": 8,
+    "migration_guard_tests": 4,
+    "browser_runner_guard_tests": 1,
+    "node_artifact_pin_tests": 1,
+    "release_build": "passed: cargo build --release --locked --offline -p mrjam-server -p mrjam-identity -p mrjam-identity-deletion",
+    "nix_syntax": "passed: default.nix and both identity recipes, pinned Nix image, network disabled",
+    "nix_build_and_nar_qualification": "not_run",
+    "postgresql_integration": "blocked_by_automatic_approval_review"
+  },
+  "blocking_gates": [
+    "SYNTHETIC_SERVICES_START_REJECTED_BY_AUTOMATIC_APPROVAL_REVIEW",
+    "NIX_BUILD_AND_NAR_QUALIFICATION_PENDING",
+    "INDEPENDENT_VALIDATION_AND_STAGING_PENDING",
+    "NO_LIVE_PROMOTION_EXECUTOR_ESTABLISHED"
+  ],
+  "automatic_approval_review": {
+    "action": "bash services.sh up in /workspace/shared/mrjam-environment",
+    "decision": "rejected_twice",
+    "reason": "Reviewer applies the earlier workspace prohibition on reactivating services; it did not consider the migration request an explicit enough override.",
+    "target": "Only local codex-synthetic-v1 Docker fixtures; PostgreSQL/Nginx on loopback with tmpfs data",
+    "production_action_performed": false
+  },
+  "production_http_baseline": [
+    {
+      "path": "/healthz",
+      "http": 404,
+      "x-mrjam-source": null
+    },
+    {
+      "path": "/readyz",
+      "http": 404,
+      "x-mrjam-source": null
+    }
+  ],
+  "production_deployed": false,
+  "primary_branches_modified": false,
+  "historical_repository_modified": false,
+  "native_release_artifacts": {
+    "mrjam-server": {
+      "sha256": "10c043118c8b10464d37b3107a70478a32b19114cc718de45502edceb4e67b29",
+      "bytes": 13399368,
+      "nix_nar_qualified": false
+    },
+    "mrjam-identity": {
+      "sha256": "aaa3b8b4ab58990a39be6c2c06eeee19e27899cf8ec51b6ab502fe8472333dfc",
+      "bytes": 6726024,
+      "nix_nar_qualified": false
+    },
+    "mrjam-identity-deletion": {
+      "sha256": "dd13bdd1a53a1bc5c85dd0f9a77304c30fd7fbb4643c1b681e176f10ea8710ae",
+      "bytes": 2346048,
+      "nix_nar_qualified": false
+    }
+  }
+}
