@@ -51,8 +51,8 @@
   ],
   "automatic_approval_review": {
     "action": "bash services.sh up in /workspace/shared/mrjam-environment",
-    "decision": "rejected_twice",
-    "reason": "Reviewer applies the earlier workspace prohibition on reactivating services; it did not consider the migration request an explicit enough override.",
+    "decision": "rejected_again_after_deployment_authorization_confirmation",
+    "reason": "Automatic review accepts deployment authorization but requires explicit authorization of the separate local PostgreSQL/Nginx service startup; no workaround attempted.",
     "target": "Only local codex-synthetic-v1 Docker fixtures; PostgreSQL/Nginx on loopback with tmpfs data",
     "production_action_performed": false
   },
@@ -87,5 +87,11 @@
       "bytes": 2346048,
       "nix_nar_qualified": false
     }
+  },
+  "deployment_authorization": {
+    "explicit_user_request_authorizes_deployment": true,
+    "reconfirmation_for_same_deployment_required": false,
+    "cutover_requirement": "Prepare and validate before switching traffic; retain previous serving instance; verify immediately; rollback within seconds; measure actual timings",
+    "request_date": "2026-11-04"
   }
 }

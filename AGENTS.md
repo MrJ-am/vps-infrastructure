@@ -1,5 +1,11 @@
 # Préparer et qualifier l'infrastructure Rust/Elm
 
+- Directive utilisateur du 4 novembre 2026 : toute demande de déploiement autorise
+  sa réalisation. Préparer le candidat en amont, conserver l'ancienne version
+  disponible, basculer de manière transactionnelle, tester immédiatement et revenir
+  à l'ancienne version en quelques secondes en cas d'échec. Une indisponibilité
+  prolongée est exclue ; la durée de bascule et de retour doit être mesurée.
+
 - La directive utilisateur du 30 octobre demande d'achever la migration jusqu'à la première mise en service ; voir `operations/mise-en-service/mandat.org`. L'ancien gel d'objectif est remplacé par cette autorisation, sans déclarer une révision qualifiée par défaut.
 - Directive du 1 novembre : ViSe ne doit jamais bloquer le premier déploiement. Le profil principal l'exclut ; reporter sa qualification et sa réintégration si nécessaire, en conservant ses données. Ne pas exiger son exécutable, ses tests ou sa disponibilité pour déployer le socle.
 - Depuis Cloud : aucun SSH général/root, SQL de production, secret ou donnée réelle. Une intervention VPS exige une capacité techniquement bornée ou un amorçage humain précisément identifié, avec artefacts qualifiés et retour vérifié.

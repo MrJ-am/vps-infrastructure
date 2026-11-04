@@ -37,6 +37,22 @@ le dépôt source ; il n'identifie pas à lui seul un commit ou un artefact appr
 
 * Critères de livraison
 
+Directive permanente confirmée par l'utilisateur le 4 novembre 2026 : une demande
+de déploiement vaut autorisation. Il n'y a pas de seconde autorisation à demander
+pour la même livraison. La préparation et la construction se font avant toute
+bascule ; l'ancienne version reste disponible pendant les contrôles immédiats.
+
+L'essai doit mesurer séparément la durée de changement de routage et celle du
+retour arrière, avec un objectif de quelques secondes. Une qualification trop
+lente reste hors de cette fenêtre : elle s'effectue sur le candidat avant
+exposition. Le retrait de l'ancien processus et le drainage des connexions ne
+doivent pas retarder le rétablissement de son routage en cas d'échec.
+
+Une bascule applicative n'est pas une transaction globale de base de données.
+Les schémas et écritures doivent rester compatibles avec les deux versions.
+Le changement d'en-tête choisi ici ne nécessite aucune migration SQL ; le retour
+arrière remet en service l'ancien binaire et ne restaure aucune sauvegarde.
+
 1. Qualifier le code publié : formatage, Clippy, tests Rust, tests du sélecteur,
    tests du préparateur, contrats HTTP et intégrations PostgreSQL synthétiques.
 2. Produire les entrées fermées depuis le commit d'infrastructure exact ;
