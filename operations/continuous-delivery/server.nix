@@ -34,6 +34,7 @@ let
     # Test binaries do not need production LTO. Keep every test and feature,
     # while avoiding repeated expensive LTO links for the integration harnesses.
     export CARGO_PROFILE_TEST_DEBUG=0
+    export CARGO_PROFILE_TEST_OPT_LEVEL=2
     cargo test --workspace --all-features --frozen --offline -- --test-threads=1
     pg_ctl -D "$fixture_database" -m fast stop
     trap - EXIT
