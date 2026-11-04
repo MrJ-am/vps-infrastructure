@@ -37,6 +37,8 @@ L'installateur crée un accès de lecture des sources pour la CI, une inscriptio
 de runner limitée à l'infrastructure et active Actions sur ce seul dépôt.
 Les valeurs de credentials restent dans =/etc/mrjam-ci/=, hors Git et hors store.
 Le runner utilise son compte systemd dédié et ne reçoit aucun accès administrateur.
+Sur infrastructure, les tests natifs restent obligatoires et les pushs directs
+sur =main= interdits. Aucune approbation supplémentaire n'est exigée pour fusionner.
 
 Sur ce VPS NixOS, =/etc/systemd/system= pointe vers le store en lecture seule.
 Les unités et leurs dépendances de démarrage sont donc installées sous

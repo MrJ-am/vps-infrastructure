@@ -82,6 +82,7 @@ def main():
     desired = {key: value for key, value in protection.items()
                if key not in ["branch_name", "rule_name", "created_at", "updated_at"]}
     desired["status_check_contexts"] = ["Tests et construction / tests*"]
+    desired["required_approvals"] = 0
     request("PATCH", base + "/branch_protections/main", desired)
     actual = request("GET", base + "/branch_protections/main")
     if any(actual.get(key) != value for key, value in desired.items()):
