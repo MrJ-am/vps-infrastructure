@@ -1,8 +1,15 @@
 import io
+import http.client
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import os
 from pathlib import Path
+import socket
+import subprocess
 import tarfile
 import tempfile
+import threading
+import time
 import unittest
 from unittest.mock import patch
 
@@ -96,6 +103,90 @@ class DeliveryTests(unittest.TestCase):
         before = ci.schema_digest(self.root)
         sql.write_text("CREATE TABLE invented (id integer, other text);")
         self.assertNotEqual(before, ci.schema_digest(self.root))
+
+    @unittest.skipUnless(os.environ.get("NGINX_TEST_BINARY"), "Set NGINX_TEST_BINARY for the real routing test")
+    def test_real_nginx_cutover_and_failure_rollback_keep_previous_backend(self):
+        state = {"green_failed": False}
+
+        def handler(slot):
+            class Backend(BaseHTTPRequestHandler):
+                def do_GET(self):
+                    self.send_response(503 if slot == "green" and state["green_failed"] else 200)
+                    self.end_headers()
+                    self.wfile.write(slot.encode())
+
+                def log_message(self, *_):
+                    pass
+            return Backend
+
+        servers = {slot: ThreadingHTTPServer(("127.0.0.1", 0), handler(slot)) for slot in ["blue", "green"]}
+        for server in servers.values():
+            threading.Thread(target=server.serve_forever, daemon=True).start()
+            self.addCleanup(server.server_close)
+            self.addCleanup(server.shutdown)
+        with socket.socket() as listener:
+            listener.bind(("127.0.0.1", 0))
+            port = listener.getsockname()[1]
+        ports = {slot: server.server_port for slot, server in servers.items()}
+        self.old.write_text("pid " + str(self.root / "nginx.pid")
+                            + "; error_log stderr crit; events {} http { access_log off; server { listen 127.0.0.1:"
+                            + str(port) + "; location / { proxy_pass http://127.0.0.1:"
+                            + str(ports["blue"]) + "; } } }")
+        binary = os.environ["NGINX_TEST_BINARY"]
+        arguments = [binary, "-p", str(self.root), "-c", str(self.configuration)]
+        process = subprocess.Popen(arguments + ["-g", "daemon off;"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        def cleanup():
+            process.terminate()
+            process.wait(timeout=5)
+        self.addCleanup(cleanup)
+
+        def response():
+            connection = http.client.HTTPConnection("127.0.0.1", port, timeout=0.5)
+            try:
+                connection.request("GET", "/")
+                result = connection.getresponse()
+                return result.status, result.read()
+            finally:
+                connection.close()
+
+        def wait_for(slot):
+            deadline = time.monotonic() + 3
+            while time.monotonic() < deadline:
+                try:
+                    if response() == (200, slot.encode()):
+                        return
+                except OSError:
+                    pass
+                time.sleep(0.01)
+            self.fail("Nginx did not serve " + slot)
+
+        def reload():
+            subprocess.run(arguments + ["-s", "reload"], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=2)
+
+        wait_for("blue")
+        with patch.object(deploy, "PORTS", ports), patch.object(deploy, "reload_nginx", side_effect=reload):
+            candidate = self.root / "candidate.conf"
+            candidate.write_text(deploy.switched(self.old.read_text(), "blue", "green"))
+            started = time.monotonic()
+            deploy.symlink(candidate, self.configuration)
+            reload()
+            wait_for("green")
+            cutover = time.monotonic() - started
+            state["green_failed"] = True
+            started = time.monotonic()
+            failures = 0
+            while failures < 2:
+                failures = 0 if deploy.probe("green") else failures + 1
+                if failures < 2:
+                    time.sleep(1)
+            deploy.rollback({"revision": "b" * 40, "old_configuration": str(self.old), "old_state": None})
+            wait_for("blue")
+            rollback = time.monotonic() - started
+            self.assertTrue(deploy.probe("blue"))
+        self.assertLess(cutover, 5)
+        self.assertLess(rollback, 5)
+        print(json.dumps({"synthetic_nginx_cutover_seconds": round(cutover, 3),
+                          "failure_detection_and_rollback_seconds": round(rollback, 3)}))
 
 
 if __name__ == "__main__":

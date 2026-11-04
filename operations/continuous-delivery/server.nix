@@ -11,7 +11,7 @@ let
   pname = "mrjam-server";
   version = "0.1.0";
   src = workspace;
-  cargoLock.lockFile = source + "/serveur/Cargo.lock";
+  cargoLock.lockFile = workspace + "/Cargo.lock";
   nativeBuildInputs = [ pkgs.pkg-config tools.rust postgres pkgs.python3 pkgs.openssl ];
   buildInputs = [ pkgs.sqlite ];
   cargoBuildFlags = [ "-p" "mrjam-server" ];
@@ -31,14 +31,18 @@ let
     psql -h 127.0.0.1 -p 55432 -U mrjam_synthetic -d mrjam_synthetic -c 'CREATE EXTENSION vector'
     export MRJAM_SYNTHETIC_DATABASE_URL='postgresql://mrjam_synthetic:mrjam_synthetic_only@127.0.0.1:55432/mrjam_synthetic'
     export VISION_TEST_ADMIN_URL="$MRJAM_SYNTHETIC_DATABASE_URL"
-    cargo test --release --workspace --all-features --frozen --offline -- --test-threads=1
+    # Test binaries do not need production LTO. Keep every test and feature,
+    # while avoiding repeated expensive LTO links for the integration harnesses.
+    export CARGO_PROFILE_TEST_DEBUG=0
+    cargo test --workspace --all-features --frozen --offline -- --test-threads=1
     pg_ctl -m fast stop
     trap - EXIT
     runHook postCheck
   '';
   };
-  deliveryChecks = pkgs.runCommand "mrjam-delivery-checks" { nativeBuildInputs = [ pkgs.python3 ]; } ''
+  deliveryChecks = pkgs.runCommand "mrjam-delivery-checks" { nativeBuildInputs = [ pkgs.python3 pkgs.nginx ]; } ''
     cd ${source}/operations/continuous-delivery
+    export NGINX_TEST_BINARY=${pkgs.nginx}/bin/nginx
     python3 -B -m unittest discover -v
     touch "$out"
   '';
