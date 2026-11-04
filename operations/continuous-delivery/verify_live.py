@@ -33,8 +33,18 @@ def main():
         deploy.command(["systemctl", "kill", "--kill-whom=main", "--signal=SIGSTOP", unit])
         while time.monotonic() - started < 5:
             if deploy.active_slot(deploy.NGINX_CONF.read_text()) == old and deploy.probe(old):
-                automatic = True
-                break
+                try:
+                    # The paused candidate cannot answer: a successful request
+                    # through real Nginx proves the old version is serving again.
+                    status = deploy.command(["curl", "--silent", "--fail", "--max-time", "0.5",
+                                             "--resolve", "vision.mrj.am:443:127.0.0.1",
+                                             "--output", "/dev/null", "--write-out", "%{http_code}",
+                                             "https://vision.mrj.am/"], timeout=1)
+                    if status == "200":
+                        automatic = True
+                        break
+                except (subprocess.SubprocessError, OSError):
+                    pass
             time.sleep(0.05)
         elapsed = time.monotonic() - started
         if not automatic:
