@@ -1,0 +1,116 @@
+#+title: Comprendre et conduire les migrations
+#+date: 2026-11-04
+#+language: fr
+
+* Trois opérations différentes
+
+| Opération | Ce qui change | Ce qui ne doit pas être supposé |
+|-----------+---------------+--------------------------------|
+| Portage du code, par exemple Lisp vers Rust | Implémentation du serveur et assemblage | Un build réussi ne prouve ni reprise des données ni mise en service |
+| Migration des données | Schéma SQL, formats, imports ou identités | Changer le binaire ou revenir à une génération NixOS ne restaure pas les données |
+| Déploiement et bascule | Version lancée et destination du trafic Nginx | Démarrer green ne lui envoie pas automatiquement les visiteurs |
+
+Le portage applicatif a déjà abouti à un serveur Rust recevant le trafic.
+Cela ne signifie pas que toutes les fonctions de l'ancien serveur ont été
+vérifiées. Le détail historique des correspondances est dans
+=mrjam-plateforme/docs/migration.org= et =vision/docs/MIGRATION-RUST.org=.
+Leurs constats synthétiques datés ne remplacent pas une observation de production.
+
+* Déroulement d'une prochaine migration
+
+Cette procédure décrit le travail à préparer. Ce n'est pas une commande de
+déploiement ni l'annonce d'une chaîne automatique opérationnelle.
+
+1. Identifier le projet, la version réellement installée et la révision cible.
+   Préciser si le changement touche seulement le code, ou aussi les données,
+   les fichiers, les identités et les droits. Définir le parcours à vérifier.
+2. Lire les migrations du composant. Pour Vision : migrations.lock.json et
+   docs/MIGRATION-RUST.org ; pour Mateval : migrations/ ; pour ViSe :
+   backend/migrations/. Une bibliothèque chargée ne vaut pas exécution des
+   migrations. Identifier explicitement le programme qui doit les appliquer.
+3. Construire la cible avec les révisions épinglées. Sur une base de test
+   inventée, vérifier le passage depuis le schéma de départ, la conservation
+   des informations nécessaires et le comportement du nouveau serveur.
+   Les tests ne doivent pas utiliser les secrets ou données de production.
+4. Définir le retour avant l'intervention : ancien binaire compatible avec le
+   nouveau schéma, migration inverse réellement testée, ou restauration avant
+   reprise des écritures. Si aucun retour sûr n'existe, le dire explicitement.
+5. Vérifier l'espace disponible. Si les données changent, préparer une capture
+   cohérente et restaurable des bases et fichiers concernés. Arrêter les
+   écrivains si la cohérence l'exige, y compris les travailleurs associés.
+   Une copie ancienne quelconque n'est pas une capture de retour valable.
+6. Appliquer explicitement les migrations nécessaires avec l'accès dédié,
+   puis démarrer la version cible avec sa configuration et ses ressources.
+   Ne pas lancer deux migrateurs ou deux travailleurs concurrents par accident.
+7. Vérifier la version cible et le parcours attendu. Basculer le trafic,
+   vérifier le résultat public et reprendre les écritures selon le plan.
+   En cas d'échec, appliquer le retour prévu, pas une restauration improvisée.
+8. Consigner la version réellement servie, le résultat et les limites.
+   Retirer les fichiers temporaires devenus inutiles. Pour le store Nix,
+   utiliser le ramasse-miettes natif, jamais une suppression manuelle.
+
+* Blue et green : fonctionnement et limites
+
+Blue et green sont deux emplacements d'exécution du serveur commun. Au relevé
+du 4 novembre, blue reçoit le trafic public sur le port 38101 et green tourne
+sur 38102. Leurs noms ne désignent ni une version immuable ni deux machines.
+
+Pour une livraison uniquement applicative, préparer l'autre emplacement,
+vérifier sa réponse puis changer la destination Nginx permet une bascule.
+Avant tout retour, vérifier la compatibilité de l'ancien binaire avec l'état
+actuel des bases. Deux processus ne constituent pas deux copies des données.
+Ce dispositif est une possibilité d'exploitation, pas une obligation nouvelle.
+
+Les descriptions techniques existantes sont dans
+[[file:operations/runtime/README.org][la configuration d'exécution]] et
+[[file:operations/release/README.org][les outils de livraison]]. Les programmes
+[[file:operations/deployment/snapshot.py][snapshot.py]] et
+[[file:operations/deployment/cutover.py][cutover.py]] appartiennent au chantier de bascule existant : leur présence
+n'autorise pas leur exécution et ne prouve pas leur adéquation à la prochaine
+migration. Les automatisations restent arrêtées jusqu'à décision explicite.
+
+* Sauvegarde et retour arrière
+
+Restaurer une capture antérieure après de nouvelles écritures perd ces
+écritures. Un retour doit les préserver ou avoir lieu avant leur réouverture.
+Pour les suppressions de comptes, il faut aussi rapprocher le registre
+d'effacement afin de ne pas réintroduire des données supprimées.
+
+Une sauvegarde périodique et une capture avant migration ont des fonctions
+différentes. La politique Forgejo demandée conserve une seule sauvegarde
+réussie, remplacée lorsque le contenu change. Elle ne fournit pas plusieurs
+points de retour historiques. Voir
+[[file:operations/backups/README.org][les formats et limites des sauvegardes]]. Ne pas réintroduire une accumulation
+de captures à chaque livraison ; définir leur utilité et leur suppression.
+
+Pour une mise à niveau majeure de Forgejo, conserver ensemble la base et les
+fichiers correspondants. L'essai documenté
+[[file:operations/runtime/FORGEJO-MIGRATION-16-17.org][16 vers 17]] vérifie un retour avant réouverture des écritures, sur données
+synthétiques. Ce n'est pas une procédure universelle de rétrogradation après
+utilisation de la nouvelle version.
+
+* Migration des dépôts et nettoyage de l'historique
+
+Le transfert d'un dépôt et la réécriture de son historique sont distincts
+d'un déploiement. Les grosses archives ont été retirées de l'historique de
+vps-infrastructure sur Forgejo et GitHub. Les anciens clones peuvent encore
+porter les anciens commits : ne pas les repousser globalement. Repartir du
+dépôt nettoyé et réappliquer seulement les modifications de sources utiles.
+La purge des objets internes conservés par GitHub n'est pas garantie par
+une réécriture des branches et tags.
+
+Le futur miroir Forgejo vers GitHub pourra écraser les références GitHub.
+Il ne migre pas les bases métier du VPS et ne constitue pas un déploiement.
+Sa mise en place reste distincte de l'accès Git/API de Codex Cloud à Forgejo.
+
+* Compte rendu minimal à conserver dans Git
+
+- Date, composant et responsable de l'intervention.
+- Révisions de départ et d'arrivée, version du schéma si elle change.
+- Commandes réellement exécutées, sans secrets, et résultat.
+- Vérification fonctionnelle effectuée et limites restantes.
+- État du trafic et des écritures ; retour possible et ses conditions.
+- Emplacement de la capture utile, si nécessaire, et moment de suppression.
+
+Un compte rendu court suffit. Les archives, dumps, jetons et journaux contenant
+des données personnelles restent hors du dépôt.

@@ -1,9 +1,21 @@
-#+title: Infrastructure MRJ.AM — préparation Rust et Elm
+#+title: Infrastructure MRJ.AM — projets et exploitation
 #+language: fr
 
-Ce dépôt prépare l'environnement Rust, Elm, Nginx, PostgreSQL et Playwright.
-Les déploiements sont gelés ; le serveur actuellement exploité reste inchangé.
-Le contenu de cette branche n'est pas une configuration de machine activable.
+* Commencer ici
+
+- [[file:PROJETS.org][Projets, responsabilités et état observé au 4 novembre 2026]].
+- [[file:MIGRATIONS.org][Migrations : code, données, bascule et retour arrière]].
+
+Rust reçoit actuellement le trafic applicatif du VPS. Les automatisations
+de livraison ont été arrêtées à la demande de l'utilisateur. Leur arrêt
+n'arrête pas les applications déjà en service. La présence d'un module Nix
+ou d'une procédure dans ce dépôt ne signifie pas qu'il est activé.
+
+* Documentation de préparation historique
+
+Les paragraphes suivants décrivent les travaux préparatoires. Ils ne sont
+pas un inventaire de la configuration actuellement exécutée. Pour l'état
+observé et les limites connues, commencer par les deux guides ci-dessus.
 
 La reprise déclarative du 30 octobre est dans
 [[file:operations/dossier-deploiement.org][le dossier de revue et de déploiement]].

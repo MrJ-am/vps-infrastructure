@@ -1,0 +1,68 @@
+#+title: Projets MRJ.am — guide d'ensemble
+#+date: 2026-11-04
+#+language: fr
+
+* Où travailler
+
+Les copies locales sont sous =/home/jam/Forge/=. =Config= reste dans
+=/home/jam/Config=. Les neuf projets ci-dessous appartiennent à l'organisation
+=MrJ-am= sur [[https://forge.mrj.am][Forgejo]]. =Config= et =org-validation=
+appartiennent au compte personnel =MrJam= ; ce dernier dépôt de démonstration
+n'est pas un composant applicatif et n'est pas rapatrié dans Forge.
+
+| Dépôt | Responsabilité | Point d'entrée |
+|-------+----------------+----------------|
+| vps-infrastructure | Configuration et exploitation du VPS : NixOS, services, Nginx, PostgreSQL, procédures | README.org et MIGRATIONS.org |
+| mrjam-plateforme | Assemblage du serveur Rust, transport HTTP/MCP, identité Log et domaine Audition | README.org, docs/runtime-operationnel.org, docs/migration.org |
+| vision | Composant métier Vision, frontend et migrations PostgreSQL | README.org, docs/MIGRATION-RUST.org, migrations.lock.json |
+| matheval | Composant Mateval, collecte, administration et frontend | README.org, docs/administration.org, migrations/ |
+| apprendre-a-demontrer | Site pédagogique Logique | README.org |
+| style-mrjam | Ressources et composants de présentation partagés | Documentation et manifestes du dépôt |
+| Signature | Signature visuelle, fontes, CSS et ressources LaTeX | README.md, CHANGEMENTS.md |
+| etp-vie-affective | ViSe, application Rust/Elm autonome avec sa propre base | README.md, docs/ARCHITECTURE-CRYPTO.md, backend/migrations/ |
+| mrjam-validation | Contrats et outils de vérification indépendants | README.org ; une proposition de règle n'est pas automatiquement adoptée |
+
+Vision et Mateval sont consommés par l'assemblage à des révisions Git précises.
+Une modification dans un dépôt composant ne change donc pas à elle seule le
+binaire installé. Le consommateur doit intégrer la révision et être reconstruit.
+Ce constat décrit les dépendances existantes ; il n'ajoute aucune cascade de
+commits ni de règles. Signature et style-mrjam ne sont pas des serveurs.
+
+* État observé, distinct des anciens dossiers de préparation
+
+Observation directe du VPS le 4 novembre 2026 :
+
+- =mrjam-rust-blue.service= et =mrjam-rust-green.service= tournent.
+- Nginx envoie les routes du serveur commun vers =127.0.0.1:38101= (blue).
+  Green écoute sur =127.0.0.1:38102= ; ce n'est pas un second VPS.
+- Aucun processus du serveur Common Lisp n'a été observé.
+- ViSe tourne séparément dans =vise.service= ; Nginx utilise le port =3017=.
+- L'identité dispose aussi de son service séparé sur le port =3002=.
+- Les chaînes externes GitHub, d'admission, de validation et de promotion
+  précédemment installées sont arrêtées. Ne pas les réactiver par simple
+  application d'un ancien guide.
+
+Ces observations prouvent quels processus et routages sont présents, pas le
+bon fonctionnement de tous les parcours métier ni l'alignement intégral de
+la machine sur une branche du dépôt. Plusieurs README de composants décrivent
+encore les lots synthétiques d'octobre : leurs phrases « non déployé » ne
+constituent pas un relevé actuel du VPS.
+
+* Organisation proposée, pas encore configurée
+
+L'utilisateur propose Forgejo comme source de référence, un miroir sortant
+Forgejo vers GitHub avec écrasement possible, et Codex Cloud travaillant par
+Git/API directement sur Forgejo. Le miroir et l'accès Cloud restent à mettre
+en place et à tester. Aucune livraison automatique n'est annoncée active.
+
+Le 4 novembre, l'API GitHub des dix dépôts correspondant à la forge ne montrait
+aucune exécution en cours ou en file d'attente, aucun workflow actif et aucun
+webhook de dépôt actif. L'autorisation générale d'utiliser Actions reste
+distincte de ce constat : elle n'est désactivée que sur vps-infrastructure.
+
+* Entretenir cette documentation
+
+Après une migration, mettre à jour l'état daté et le compte rendu décrit dans
+[[file:MIGRATIONS.org][MIGRATIONS.org]]. Conserver les anciens résultats comme historiques, sans leur
+attribuer les propriétés de la version suivante. Les secrets, sauvegardes,
+exports de production et gros paquets de livraison ne vont pas dans Git.
