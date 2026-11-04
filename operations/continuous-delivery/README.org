@@ -13,7 +13,8 @@ utilisé pour ces essais.
 Le service =mrjam-delivery= suit =main=. Il exige une exécution réussie du
 workflow =ci.yml= déclenchée par un push sur ce même commit. Il utilise
 l'artefact construit par cette exécution, démarre le slot inactif avec sa
-configuration existante, attend ses sondes privées et vérifie Nginx avant de
+configuration du slot actif, adaptée à ses credentials et conservant les mêmes
+interfaces, attend ses sondes privées et vérifie Nginx avant de
 changer son routage. L'ancien processus reste démarré. Les contrôles immédiats
 passent par le vrai Nginx et vérifient TLS et l'en-tête du nouveau serveur.
 Les durées de bascule et de retour sont écrites dans les événements du service.

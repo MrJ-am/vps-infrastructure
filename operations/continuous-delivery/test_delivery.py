@@ -66,6 +66,22 @@ class DeliveryTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             deploy.active_slot("127.0.0.1:38101 127.0.0.1:38102")
 
+    def test_candidate_preserves_served_assets_and_adapts_slot_credentials(self):
+        original = json.dumps({"assets": [{"directory": "/nix/store/current-frontends"}],
+                               "credential": "/run/credentials/mrjam-rust-blue.service/token"})
+        def command(arguments):
+            if arguments[0] == "systemctl":
+                return "serve --config /nix/store/current/runtime.json ;"
+            candidate = json.loads(Path(arguments[-1], "runtime.json").read_text())
+            self.assertEqual(candidate["assets"], json.loads(original)["assets"])
+            self.assertEqual(candidate["credential"], "/run/credentials/mrjam-rust-green.service/token")
+            return "/nix/store/new-runtime"
+        original_read = Path.read_text
+        with patch.object(deploy, "command", side_effect=command), \
+                patch.object(Path, "read_text", autospec=True, side_effect=lambda path: original if str(path) == "/nix/store/current/runtime.json" else original_read(path)), \
+                patch.object(deploy, "symlink"):
+            self.assertEqual(deploy.candidate_configuration("blue", "green"), "/nix/store/new-runtime/runtime.json")
+
     def test_pull_request_success_does_not_authorize_main_delivery(self):
         revision = "a" * 40
         branch = {"commit": {"id": revision}}

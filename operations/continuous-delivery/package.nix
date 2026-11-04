@@ -16,5 +16,5 @@ pkgs.runCommand "mrjam-continuous-delivery" {
     --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.nix pkgs.git pkgs.curl pkgs.bash pkgs.coreutils ]}
   makeWrapper ${pkgs.python3}/bin/python3 "$out/bin/mrjam-delivery" \
     --add-flags "$out/operations/continuous-delivery/deploy.py" \
-    --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd pkgs.curl pkgs.coreutils ]}
+    --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.systemd pkgs.curl pkgs.coreutils pkgs.nix ]}
 ''

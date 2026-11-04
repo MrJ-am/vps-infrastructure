@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
 import time
 
 from ci import api
@@ -109,6 +110,26 @@ def public_check():
             raise RuntimeError("Public gateway did not reach the candidate")
 
 
+def candidate_configuration(old, new):
+    effective = command(["systemctl", "show", "mrjam-rust-" + old + ".service",
+                         "-p", "ExecStart", "--value"])
+    match = re.search(r"serve --config (/nix/store/[^ ;]+/runtime.json)", effective)
+    if not match:
+        raise RuntimeError("Runtime configuration not found")
+    # Preserve the serving configuration, including its exact frontend assets.
+    # Only credential paths depend on the systemd slot; ports are unit environment.
+    source = Path(match[1]).read_text()
+    candidate = source.replace("/run/credentials/mrjam-rust-" + old + ".service/",
+                               "/run/credentials/mrjam-rust-" + new + ".service/")
+    with tempfile.TemporaryDirectory() as temporary:
+        directory = Path(temporary, "mrjam-runtime-" + new)
+        directory.mkdir(mode=0o755)
+        (directory / "runtime.json").write_text(candidate)
+        output = command(["nix-store", "--add", str(directory)])
+    symlink(output, Path("/nix/var/nix/gcroots/mrjam-runtime-" + new))
+    return output + "/runtime.json"
+
+
 def promote(build):
     revision, output = build["revision"], build["output"]
     if not re.fullmatch(r"/nix/store/[0-9a-z]{32}-[A-Za-z0-9+._-]+", output):
@@ -125,15 +146,12 @@ def promote(build):
     if not probe(old):
         raise RuntimeError("Current version is not ready")
     unit = "mrjam-rust-" + new + ".service"
-    effective = command(["systemctl", "show", unit, "-p", "ExecStart", "--value"])
-    match = re.search(r"serve --config (/nix/store/[^ ;]+/runtime.json)", effective)
-    if not match:
-        raise RuntimeError("Runtime configuration not found")
+    runtime = candidate_configuration(old, new)
     directory = Path("/etc/systemd/system.control", unit + ".d")
     directory.mkdir(exist_ok=True)
     override = directory / "90-continuous-delivery.conf"
     override.write_text("[Service]\nExecStart=\nExecStart=" + output
-                        + "/bin/mrjam-server serve --config " + match[1] + "\n")
+                        + "/bin/mrjam-server serve --config " + runtime + "\n")
     command(["systemctl", "daemon-reload"])
     command(["systemctl", "restart", unit], timeout=40)
     deadline = time.monotonic() + 30
