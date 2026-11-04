@@ -66,8 +66,10 @@ déploiement sur GitHub. Le miroir copie Git, pas les tickets, demandes de fusio
 secrets, bases applicatives ou fichiers joints des releases. Le transport SSH
 choisi ne réplique pas les objets Git LFS.
 
-L'accès de Codex Cloud par Git/API directement à Forgejo reste à mettre en
-place et à tester. Aucune livraison automatique n'est annoncée active.
+L'accès de Codex Cloud par Git/API directement à Forgejo est configuré et
+testé dans la VM de préparation de l'environnement =matheval=. L'état de
+publication et de vérification dans une nouvelle tâche est décrit dans
+[[file:CODEX-CLOUD.org][le guide Cloud]]. Aucune livraison automatique n'est annoncée active.
 
 Le 4 novembre, l'API GitHub des dix dépôts correspondant à la forge ne montrait
 aucune exécution en cours ou en file d'attente, aucun workflow actif et aucun

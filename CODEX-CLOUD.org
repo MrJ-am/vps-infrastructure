@@ -11,8 +11,31 @@ Il ne donne aucun accès SSH au VPS ni aux données des applications.
 Les protections de branches restent inchangées.
 
 La lecture Git HTTPS et les permissions API sont vérifiées depuis Spectre.
-L'installation du secret et l'essai dans une tâche Cloud restent à terminer.
-Ne pas confondre cette préparation avec un environnement Cloud opérationnel.
+Un commit documentaire a également été envoyé avec ce compte technique.
+Le secret HTTP est enregistré dans l'environnement Cloud existant =matheval=,
+privé « Moi uniquement », pour le seul domaine =forge.mrj.am=.
+
+Depuis la VM de préparation Cloud, le 4 novembre : les deux requêtes API
+=/api/v1/user= et =/api/v1/repos/MrJ-am/vps-infrastructure= renvoient HTTP 200,
+avec =codex-cloud=, =is_admin: false=, =push: true= et =admin: false=.
+=git ls-remote= réussit sur HTTPS et retrouve =main= à
+=dc066e8497cafad17659c95a8bccdb4eb2e0ba53=.
+L'environnement =matheval= est publié avec ce secret et les instructions
+Forgejo. Une nouvelle tâche a confirmé les deux HTTP 200 et Git exit 0 après
+octroi de la permission réseau normale du bac à sable Cloud. Sans cette
+permission, curl renvoyait le code 7 et Git le code 128, avant tout contact
+avec Forgejo. Ce refus ne se corrige ni en changeant le jeton, ni en désactivant
+le proxy ou les protections.
+
+Le champ Start skill publié n'était pas transmis aux instructions de la
+nouvelle tâche. Un bloc de 23 lignes dans =/workspace/AGENTS.md= a été ajouté
+en complément, puis l'environnement republié, pour rendre explicite le
+travail sur Forgejo dans l'espace de travail. Les tâches déjà ouvertes
+conservent leur ancienne copie : démarrer une nouvelle tâche pour ce fichier.
+
+Pour commencer : ouvrir Codex, choisir l'exécution =Cloud= puis l'environnement
+=matheval=. Son nom est conservé, mais le jeton permet de travailler sur les
+dix dépôts autorisés. L'autre environnement =M-moire= n'a pas été modifié.
 
 * Configuration dans Cloud
 
@@ -33,6 +56,10 @@ vers le domaine autorisé. Git et l'API doivent utiliser ce proxy ; ne pas le
 contourner. Publier l'environnement après configuration et vérifier une
 nouvelle tâche. La connexion GitHub éventuellement demandée par l'interface
 Cloud ne transforme pas GitHub en dépôt de travail principal.
+
+Si la commande ne peut pas joindre le proxy, utiliser la demande de permission
+réseau normale de l'outil Cloud pour cette commande. Ne pas changer le port
+du proxy au hasard : les proxys HTTP et TCP CONNECT ont des usages différents.
 
 * Utiliser Git et l'API
 
