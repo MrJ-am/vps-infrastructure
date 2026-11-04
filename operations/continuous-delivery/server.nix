@@ -6,13 +6,13 @@ let
     rustc = pkgs.rustc // tools.rust;
   };
   postgres = pkgs.postgresql_17.withPackages (ps: [ ps.pgvector ]);
-in rust.buildRustPackage {
+  workspace = builtins.path { path = source + "/serveur"; name = "source"; };
+  server = rust.buildRustPackage {
   pname = "mrjam-server";
-  version = builtins.substring 0 12 revision;
-  src = source;
-  sourceRoot = "source/serveur";
+  version = "0.1.0";
+  src = workspace;
   cargoLock.lockFile = source + "/serveur/Cargo.lock";
-  nativeBuildInputs = [ pkgs.pkg-config tools.rust postgres pkgs.python3 ];
+  nativeBuildInputs = [ pkgs.pkg-config tools.rust postgres pkgs.python3 pkgs.openssl ];
   buildInputs = [ pkgs.sqlite ];
   cargoBuildFlags = [ "-p" "mrjam-server" ];
   enableParallelBuilding = true;
@@ -20,6 +20,7 @@ in rust.buildRustPackage {
   checkPhase = ''
     runHook preCheck
     export CARGO_BUILD_JOBS=2
+    export CARGO_BUILD_TARGET=x86_64-unknown-linux-gnu
     cargo fmt --all -- --check
     cargo clippy --release --workspace --all-targets --all-features --frozen --offline -- -D warnings
     export PGDATA="$TMPDIR/postgres"
@@ -35,8 +36,15 @@ in rust.buildRustPackage {
     trap - EXIT
     runHook postCheck
   '';
-  postInstall = ''
-    mkdir -p "$out/share/mrjam"
-    printf '%s\n' '${revision}' > "$out/share/mrjam/source-revision"
+  };
+  deliveryChecks = pkgs.runCommand "mrjam-delivery-checks" { nativeBuildInputs = [ pkgs.python3 ]; } ''
+    cd ${source}/operations/continuous-delivery
+    python3 -B -m unittest discover -v
+    touch "$out"
   '';
-}
+in pkgs.runCommand "mrjam-server-${builtins.substring 0 12 revision}" { } ''
+  test -e ${deliveryChecks}
+  mkdir -p "$out/bin" "$out/share/mrjam"
+  ln -s ${server}/bin/mrjam-server "$out/bin/mrjam-server"
+  printf '%s\n' '${revision}' > "$out/share/mrjam/source-revision"
+''
