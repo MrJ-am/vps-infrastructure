@@ -1,0 +1,2102 @@
+[
+  {
+    "name": "contexte",
+    "description": "Démarrage : groupes réellement autorisés, politique pédagogique et URL MCP. Aucun rôle déclaré par le client.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "elements",
+        "total",
+        "suivant"
+      ],
+      "properties": {
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "maxItems": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suivant": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "administrateur": {
+          "type": "boolean"
+        },
+        "politique": {
+          "type": "object"
+        },
+        "indicateurs": {
+          "type": "object"
+        },
+        "methode": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "description": "Page bornée. Conserver les identifiants/versions et suivre suivant ; total ne compte pas des réussites."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "lecture"
+    }
+  },
+  {
+    "name": "retrouver",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "lecture"
+    }
+  },
+  {
+    "name": "creer_groupe",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "nom": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "nom",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "admin"
+    }
+  },
+  {
+    "name": "habiliter",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "enseignant",
+            "eleve",
+            "retirer"
+          ]
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "acteur",
+        "role",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "admin"
+    }
+  },
+  {
+    "name": "membres",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "elements",
+        "total",
+        "suivant"
+      ],
+      "properties": {
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "maxItems": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suivant": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "administrateur": {
+          "type": "boolean"
+        },
+        "politique": {
+          "type": "object"
+        },
+        "indicateurs": {
+          "type": "object"
+        },
+        "methode": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "description": "Page bornée. Conserver les identifiants/versions et suivre suivant ; total ne compte pas des réussites."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "admin"
+    }
+  },
+  {
+    "name": "diagnostic",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {},
+      "required": []
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "admin"
+    }
+  },
+  {
+    "name": "supprimer_groupe",
+    "description": "Administration explicitement habilitée : suppression des données du groupe, confirmation égale à l'identifiant. Action sensible auditée.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "confirmation": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "confirmation",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": true,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "admin"
+    }
+  },
+  {
+    "name": "cours",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "document": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "titre": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "contenu": {
+                  "type": "string",
+                  "maxLength": 32000
+                }
+              },
+              "required": [
+                "titre",
+                "contenu"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "titre": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "consigne": {
+                  "type": "string",
+                  "maxLength": 16000
+                },
+                "attendus": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "texte": {
+                        "type": "string",
+                        "maxLength": 2000
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "texte"
+                    ]
+                  },
+                  "maxItems": 32
+                },
+                "criteres": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "attendu": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "texte": {
+                        "type": "string",
+                        "maxLength": 2000
+                      },
+                      "maximum": {
+                        "type": "number",
+                        "exclusiveMinimum": 0,
+                        "exclusiveMaximum": 1001
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "attendu",
+                      "texte",
+                      "maximum"
+                    ]
+                  },
+                  "maxItems": 64
+                },
+                "cours": {
+                  "type": "string",
+                  "maxLength": 64
+                },
+                "cours_version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "corrige": {
+                  "type": "string",
+                  "maxLength": 16000
+                },
+                "publication_corrige": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4102444800
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "ouverte",
+                    "qcm"
+                  ]
+                },
+                "propositions": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "titre",
+                "consigne",
+                "attendus",
+                "criteres"
+              ]
+            }
+          ]
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe",
+        "document",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "id",
+        "groupe",
+        "nature",
+        "revision",
+        "document"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "groupe": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "nature": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "document": {
+          "type": "object"
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Version enregistrée. Les cours/activités proposés par MCP ont document.validee=false, sans prescription implicite."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "activite",
+    "description": "Enseignant rattaché : proposer/versionner consignes, attendus, critères et barèmes. Une proposition MCP reste non officielle jusqu'à son enregistrement par l'enseignant dans l'interface web. Corrigé privé avant publication UTC.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "document": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "titre": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "contenu": {
+                  "type": "string",
+                  "maxLength": 32000
+                }
+              },
+              "required": [
+                "titre",
+                "contenu"
+              ]
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "titre": {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                "consigne": {
+                  "type": "string",
+                  "maxLength": 16000
+                },
+                "attendus": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "texte": {
+                        "type": "string",
+                        "maxLength": 2000
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "texte"
+                    ]
+                  },
+                  "maxItems": 32
+                },
+                "criteres": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "attendu": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "texte": {
+                        "type": "string",
+                        "maxLength": 2000
+                      },
+                      "maximum": {
+                        "type": "number",
+                        "exclusiveMinimum": 0,
+                        "exclusiveMaximum": 1001
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "attendu",
+                      "texte",
+                      "maximum"
+                    ]
+                  },
+                  "maxItems": 64
+                },
+                "cours": {
+                  "type": "string",
+                  "maxLength": 64
+                },
+                "cours_version": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "corrige": {
+                  "type": "string",
+                  "maxLength": 16000
+                },
+                "publication_corrige": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 4102444800
+                },
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "ouverte",
+                    "qcm"
+                  ]
+                },
+                "propositions": {
+                  "type": "integer",
+                  "minimum": 2,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "titre",
+                "consigne",
+                "attendus",
+                "criteres"
+              ]
+            }
+          ]
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe",
+        "document",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "id",
+        "groupe",
+        "nature",
+        "revision",
+        "document"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "groupe": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "nature": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "document": {
+          "type": "object"
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Version enregistrée. Les cours/activités proposés par MCP ont document.validee=false, sans prescription implicite."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "preparations",
+    "description": "Opération métier autorisée côté serveur, selon les rattachements. Consulter le guide canonique https://audition.mrj.am/#aide.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "elements",
+        "total",
+        "suivant"
+      ],
+      "properties": {
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "maxItems": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suivant": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "administrateur": {
+          "type": "boolean"
+        },
+        "politique": {
+          "type": "object"
+        },
+        "indicateurs": {
+          "type": "object"
+        },
+        "methode": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "description": "Page bornée. Conserver les identifiants/versions et suivre suivant ; total ne compte pas des réussites."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "affecter",
+    "description": "Enseignant rattaché : prescrire une activité versionnée aux élèves du groupe, avec échéance UTC.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "activite": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "eleves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "maxItems": 500
+        },
+        "echeance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Secondes Unix UTC ; heure de l'activité distincte de la réception."
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe",
+        "activite",
+        "eleves",
+        "echeance",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "id",
+        "groupe",
+        "nature",
+        "revision",
+        "document"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "groupe": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "nature": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "document": {
+          "type": "object"
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Version enregistrée. Les cours/activités proposés par MCP ont document.validee=false, sans prescription implicite."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "travaux",
+    "description": "Travail affecté et prochaine séance utile, sans divulguer les élèves voisins ou les corrigés non publiés.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "elements",
+        "total",
+        "suivant"
+      ],
+      "properties": {
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "maxItems": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suivant": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "administrateur": {
+          "type": "boolean"
+        },
+        "politique": {
+          "type": "object"
+        },
+        "indicateurs": {
+          "type": "object"
+        },
+        "methode": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "description": "Page bornée. Conserver les identifiants/versions et suivre suivant ; total ne compte pas des réussites."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "lecture"
+    }
+  },
+  {
+    "name": "ouvrir_seance",
+    "description": "Ouvrir ou retrouver la séance unique de l'élève pour une affectation. Lire consignes/version/politique, annoncer le cadre puis laisser l'élève répondre.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "affectation": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "affectation",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "eleve"
+    }
+  },
+  {
+    "name": "consulter_seance",
+    "description": "Relire état réel après interruption ou timeout. Traces paginées, consignes effectives et version actuelle, changements et prochaines actions.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe",
+        "id"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "lecture"
+    }
+  },
+  {
+    "name": "adopter_contexte",
+    "description": "Prise en compte explicite des nouvelles consignes dans une séance ouverte. Historique préservé. Exiger la version actuelle.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "id",
+        "revision",
+        "activite_version",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "eleve"
+    }
+  },
+  {
+    "name": "consigner",
+    "description": "Enregistrer atomiquement production rapportée, aides effectivement apportées et observations justifiées. Clé stable en cas de rejeu, révision exacte. Une solution n'est pas une réussite autonome.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "politique_version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "production": {
+          "type": "string",
+          "maxLength": 16000
+        },
+        "activite_a": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Secondes Unix UTC ; heure de l'activité distincte de la réception."
+        },
+        "aides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "nature": {
+                "type": "string",
+                "enum": [
+                  "indice",
+                  "explication",
+                  "correction",
+                  "solution"
+                ]
+              },
+              "contenu": {
+                "type": "string",
+                "maxLength": 8000
+              },
+              "activite_a": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 4102444800
+              }
+            },
+            "required": [
+              "nature",
+              "contenu",
+              "activite_a"
+            ]
+          },
+          "maxItems": 32
+        },
+        "observations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "critere": {
+                "type": "string",
+                "maxLength": 64
+              },
+              "etat": {
+                "type": "string",
+                "enum": [
+                  "non_observe",
+                  "en_cours",
+                  "difficulte",
+                  "reussite_aidee",
+                  "reussite_autonome"
+                ]
+              },
+              "justification": {
+                "type": "string",
+                "maxLength": 4000
+              },
+              "points": {
+                "type": "number",
+                "minimum": 0
+              },
+              "incertitude": {
+                "type": "string",
+                "maxLength": 2000
+              }
+            },
+            "required": [
+              "critere",
+              "etat",
+              "justification"
+            ]
+          },
+          "maxItems": 64
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "id",
+        "revision",
+        "activite_version",
+        "politique_version",
+        "production",
+        "activite_a",
+        "aides",
+        "observations",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "eleve"
+    }
+  },
+  {
+    "name": "transition",
+    "description": "Interrompre, reprendre ou terminer. Terminer exige des observations sur chaque critère, sans attribuer de réussite aux critères manquants.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "reprendre",
+            "interrompre",
+            "terminer"
+          ]
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "groupe",
+        "id",
+        "revision",
+        "action",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "eleve"
+    }
+  },
+  {
+    "name": "rapport",
+    "description": "Enseignant rattaché : rapports paginés, versions/critères/aides/effectifs, difficultés communes et liens vers preuves. Non observé distinct de l'échec.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "activite": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "eleve": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "limite": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        }
+      },
+      "required": [
+        "groupe"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "elements",
+        "total",
+        "suivant"
+      ],
+      "properties": {
+        "elements": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          },
+          "maxItems": 100
+        },
+        "total": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suivant": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "acteur": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "administrateur": {
+          "type": "boolean"
+        },
+        "politique": {
+          "type": "object"
+        },
+        "indicateurs": {
+          "type": "object"
+        },
+        "methode": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "description": "Page bornée. Conserver les identifiants/versions et suivre suivant ; total ne compte pas des réussites."
+    },
+    "annotations": {
+      "readOnlyHint": true,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "rectifier",
+    "description": "Enseignant rattaché : annoter ou corriger une interprétation, avec justification et historique attribué.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "id": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Version serveur ou pagination, jamais à deviner."
+        },
+        "tentative": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "observation": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "justification": {
+          "type": "string",
+          "maxLength": 16000
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "points": {
+          "type": "number",
+          "minimum": 0
+        },
+        "etat": {
+          "type": "string",
+          "enum": [
+            "non_observe",
+            "en_cours",
+            "difficulte",
+            "reussite_aidee",
+            "reussite_autonome"
+          ]
+        },
+        "annotation": {
+          "type": "string",
+          "maxLength": 16000
+        }
+      },
+      "required": [
+        "groupe",
+        "id",
+        "revision",
+        "tentative",
+        "observation",
+        "justification",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "required": [
+        "seance",
+        "activite",
+        "politique",
+        "contexte_modifie"
+      ],
+      "properties": {
+        "seance": {
+          "type": "object"
+        },
+        "activite": {
+          "type": "object"
+        },
+        "cours": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "politique": {
+          "type": "object"
+        },
+        "activite_version": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "version_actuelle": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "contexte_modifie": {
+          "type": "boolean"
+        },
+        "nouvelle_activite": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "traces": {
+          "type": "object"
+        },
+        "actions_suivantes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "maxItems": 20
+        }
+      },
+      "description": "Séance contient id,revision,document. Lire politique.version et les versions effectives avant une écriture ; traces est une page."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  },
+  {
+    "name": "remediation",
+    "description": "Prescrire une nouvelle affectation de remédiation, consigne et origine traçables ; un LLM ne peut officialiser sa proposition.",
+    "inputSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "groupe": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "activite": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "eleves": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "maxItems": 500
+        },
+        "consigne": {
+          "type": "string",
+          "maxLength": 16000
+        },
+        "cle": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "origine": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "echeance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Secondes Unix UTC ; heure de l'activité distincte de la réception."
+        }
+      },
+      "required": [
+        "groupe",
+        "activite",
+        "eleves",
+        "consigne",
+        "cle"
+      ]
+    },
+    "outputSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "confirme": {
+          "type": "boolean"
+        },
+        "supprime": {
+          "type": "boolean"
+        },
+        "objet": {
+          "oneOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "url": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "description": "Résultat métier. Une erreur MCP a isError=true et structuredContent {erreur,statut,details,reprise}."
+    },
+    "annotations": {
+      "readOnlyHint": false,
+      "idempotentHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    "_meta": {
+      "droit": "enseignant"
+    }
+  }
+]

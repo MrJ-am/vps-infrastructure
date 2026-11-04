@@ -1,0 +1,94 @@
+#+title: Audition — service PostgreSQL et compatibilité du contrat
+#+language: fr
+
+* Périmètre réalisé
+=service::PgAudition= implémente les 20 opérations du contrat web/MCP conservé.
+Le serveur central fournit une identité authentifiée, le canal et l'heure ; le
+JSON ne peut choisir aucun de ces champs. Le transport HTTP reste dans la crate
+serveur. Aucun endpoint n'est ouvert par la bibliothèque seule.
+
+Chaque opération utilise une transaction PostgreSQL, les rôles courants relus,
+un verrou d'acteur puis un verrou de groupe, des délais SQL de 5 s et de verrou
+2 s. Les écritures retournent leur résultat uniquement après commit. Les reçus
+liant acteur/clé/opération/canal/paramètres canoniques sont comparés après les
+contrôles de droits. La révocation d'affectation interdit aussi le rejeu d'une
+ouverture de séance déjà réussie. Deux écritures identiques concurrentes rendent
+le même résultat et une seule nouvelle révision.
+
+La validation JSON refuse doublons imbriqués, champs inconnus, NUL, profondeur
+supérieure à 32 et corps supérieur à 64 Kio. Les bornes de documents, traces,
+groupes, membres, objets et pages reprennent le contrat. Les erreurs portent
+uniquement un code fixe et un statut, sans requête SQL, paramètre ou production.
+Les projections de liste/rapport soustraient les productions et rectifications
+complètes dans SQL avant chargement ; un rapport conserve une synthèse attribuée.
+
+* Identité et MFA
+=VerifiedActor::from_authenticated_identity= valide une identité déjà authentifiée
+par le serveur ; son nom ne constitue pas une preuve cryptographique. Les droits
+enseignant/élève/admin sont relus dans audition, jamais fournis par le navigateur.
+Les opérations admin exigent le canal web et une MFA de moins de 900 secondes.
+
+=from_recent_mfa_verification= permet de conserver la borne d'âge attestée par un
+vérificateur autorisé qui ne publie pas auth_time : la fraîcheur est la somme de
+cette borne et du temps écoulé depuis la vérification. Le serveur peut utiliser
+la garantie 300 s de son contrat /verify-gestion, sans inventer une date exacte
+d'authentification. Une donnée client n'est jamais un reçu de ce vérificateur.
+
+* Stockage et migration
+=migrations/001-schema.sql= est une copie exacte de la référence SQL conservée.
+=002-version-scope.sql= remplace les politiques de versions par un contrôle lié
+à l'objet visible et à son auteur autorisé. Un autre élève ne peut plus lire
+l'historique d'une séance à travers la seule appartenance au groupe. Aucun
+contenu existant n'est réécrit. L'ancienne politique et ses empreintes ne sont
+pas modifiées pour présenter cette amélioration comme le schéma original.
+
+Le rôle applicatif doit être non superuser, sans BYPASSRLS/CREATEROLE/CREATEDB,
+sans appartenance aux rôles propriétaires des tables ; il ne possède aucune
+table. La readiness vérifie ces préconditions, les tables RLS et la version 2.
+Le service ne migre jamais automatiquement. Le contrôleur central doit appliquer
+les migrations et les droits de la référence audition_app dans l'ordre, avec
+l'identité de migration distincte. La compatibilité de données de production,
+le binaire historique et la réversibilité restent à qualifier séparément.
+
+* Comportements explicités
+Les cours sont épinglés par cours_version ; seules les versions web prescrites
+alimentent les séances et les corrigés non publiés restent absents du JSON élève.
+Une proposition MCP conserve la prescription précédente. L'affectation utilise
+la dernière prescription officielle, même lorsqu'une proposition est en attente.
+
+Les rectifications conservent production et observation d'origine. La synthèse
+actualise état ET points, et retire une incertitude remplacée par le jugement
+enseignant attribué. La référence Lisp actualisait seulement l'état ; ce correctif
+évite un score contradictoire dans le rapport et constitue une évolution documentée.
+Les observations d'un ancien barème ne valident pas une nouvelle prescription.
+La limite de 256 transitions s'applique aussi à l'adoption du contexte.
+
+Les indicateurs regroupent activité/version/critère ; les effectifs exacts restent
+la source du ratio. Absence, zéro et un restent distincts, les infinis explicites,
+aucune pseudo-observation ni référence de hasard pour une production ouverte.
+Le QCM à une seule réponse correcte peut fournir sa référence 1/m. L'affichage
+conserve l'arrondi au dB et la correction entière en centinats, sans signe positif.
+
+* Vérification synthétique
+#+begin_src sh
+source /workspace/shared/mrjam-environment/.local/activate.sh
+cargo test --locked --offline -p mrjam-audition --all-features
+cargo clippy --locked --offline -p mrjam-audition --all-targets --all-features -- -D warnings
+cargo fmt -p mrjam-audition --check
+#+end_src
+
+Le test PostgreSQL exige l'URL littérale synthétique de l'atelier. Il refuse une
+collision avec un schéma/compte existant, crée son seul schéma audition et son
+compte fictif, puis les supprime. Les fonctions SQL, RLS, transactions et reçus
+sont réellement exécutés ; l'identité d'appel reste une fixture inventée.
+La qualification ne prouve ni SSO réel, ni parcours complet Elm, ni activation
+NixOS, ni présence d'une sauvegarde réelle. Aucun accès au VPS n'a eu lieu.
+
+* Sources de contrat
+Les contrats et SQL sont ceux de =vps-infrastructure/reference-contracts/audition=
+et =reference-schemas/audition=. Les sources de code seules ont été lues à
+=MrJ-am/vps-infrastructure@c6459ae215b0e4e8b1350b02222ad21af41db836= :
+- =lisp/audition/services.lisp=, blob =2ea12f2bb086f1fcb9dbe75809e4ff4b7e01711a= ;
+- =lisp/audition/modele.lisp=, blob =67acddab2aacdac2d26f628baaf22464530d2cf8= ;
+- =lisp/audition/indicateurs.lisp=, blob =3effa97a0194e9d48680b165ddfa54413e92cedf=.
+Aucun historique complet, document utilisateur ou base réelle n'a été récupéré.

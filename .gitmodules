@@ -1,0 +1,6 @@
+[submodule "serveur/components/mateval"]
+	path = serveur/components/mateval
+	url = https://forge.mrj.am/MrJ-am/matheval.git
+[submodule "serveur/components/vision"]
+	path = serveur/components/vision
+	url = https://forge.mrj.am/MrJ-am/vision.git

@@ -1,0 +1,27 @@
+{
+  "version": "1.0.0",
+  "questions": [
+    {
+      "id": "R01",
+      "family": "synthetic-one",
+      "level": "3e",
+      "domain": "Fixture synthétique",
+      "statement": "Question entièrement inventée pour ce test : calculer 2 + 2.",
+      "productions": [
+        { "id": "R01-1", "content": "Rédaction synthétique A : 2 + 2 = 4." },
+        { "id": "R01-2", "content": "Rédaction synthétique B : 2 + 2 = 5." }
+      ]
+    },
+    {
+      "id": "R02",
+      "family": "synthetic-two",
+      "level": "3e",
+      "domain": "Fixture synthétique",
+      "statement": "Question entièrement inventée pour ce test : calculer 3 + 3.",
+      "productions": [
+        { "id": "R02-1", "content": "Rédaction synthétique C : 3 + 3 = 6." },
+        { "id": "R02-2", "content": "Rédaction synthétique D : 3 + 3 = 7." }
+      ]
+    }
+  ]
+}

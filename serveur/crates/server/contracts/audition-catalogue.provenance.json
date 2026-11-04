@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "source_repository": "MrJ-am/vps-infrastructure",
+  "source_commit": "c6459ae215b0e4e8b1350b02222ad21af41db836",
+  "source_blobs": {
+    "lisp/audition/mcp.lisp": "ffc6830e122d279243ca7b90f979b16bca6062ac",
+    "lisp/audition/services.lisp": "2ea12f2bb086f1fcb9dbe75809e4ff4b7e01711a"
+  },
+  "method": "Literal translation of the catalogue generator and operation table; no production response used",
+  "tools": 20,
+  "catalogue_sha256": "f6c3f6f86d85b2da30e179a5cc372fb6d5381caa916638e70c4ff2511707fcfe"
+}

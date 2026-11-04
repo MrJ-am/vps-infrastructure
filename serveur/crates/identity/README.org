@@ -1,0 +1,167 @@
+#+title: Courtier natif Kanidm — sessions Log et OAuth MCP
+#+language: fr
+
+* Exécution
+
+=mrjam-identity= est un exécutable séparé. Il ne modifie ni ne remplace
+=mrjam-server=. Il adapte les contrats Log installés aux endpoints natifs Kanidm.
+Il ne fournit aucun adaptateur administrateur Keycloak pour les anciens workers.
+
+#+begin_src sh
+mrjam-identity serve --config /etc/mrjam/identity.json
+#+end_src
+
+Le JSON version 1 est fermé, sans propriétés inconnues. Les valeurs ci-dessous
+sont uniquement des références de fichiers ; aucun secret n'est incorporé au
+dépôt ou au Nix store.
+
+#+begin_src json
+{
+  "schema_version": 1,
+  "listen": "127.0.0.1:3002",
+  "state_database": "/var/lib/mrjam-metier/log/sessions.sqlite",
+  "kanidm_endpoint": "127.0.0.1:8443",
+  "kanidm_ca_file": "/etc/mrjam/kanidm-ca.pem",
+  "clients": [
+    {"host":"vision.mrj.am","client_id":"mrjam-vision","secret_file":"/run/credentials/mrjam-identity.service/oidc"},
+    {"host":"audition.mrj.am","client_id":"mrjam-vision","secret_file":"/run/credentials/mrjam-identity.service/oidc"}
+  ],
+  "principal_database": {
+    "host":"/run/postgresql",
+    "port":5432,
+    "database":"vision",
+    "user":"vision_identite"
+  }
+}
+#+end_src
+
+L'écoute et le fournisseur exigent des adresses loopback, distinctes. Le port
+peut varier pour la qualification isolée. SNI et Host restent =log.mrj.am=.
+La CA est obligatoire ; aucune désactivation TLS, redirection HTTP fournisseur,
+résolution DNS ou substitution du fournisseur par un paramètre de requête.
+
+La base SQLite doit déjà contenir le schéma historique ; =serve= n'effectue
+aucun DDL. Les credentials et SQLite sont des fichiers privés, réguliers, sans
+symlink final. Les credentials ordinaires sont 0400/0600. Le format systemd260
+root:root0440 avec ACL est également admis, uniquement sous le répertoire
+=CREDENTIALS_DIRECTORY= exact de =/run/credentials/=, propriétaire root, sans
+accès autres, fichier à lien unique et montage effectivement readonly. La
+qualification systemd vérifie l'accès du seul UID du service et le refus des
+autres UID. Cette exception ne concerne jamais SQLite.
+Les credentials sont lus une seule fois au démarrage. La CA
+publique peut être fournie par un symlink Nix. Les paramètres libpq hérités
+=PG*= sont refusés. PostgreSQL est joint uniquement par socket Unix au rôle
+borné configuré. La requête métier est toujours :
+
+#+begin_src sql
+SELECT vision_gestion.identifier($1,$2)::text AS compte
+#+end_src
+
+Les paramètres sont l'issuer signé et le subject. Aucune recherche de compte
+métier par email ou header libre. Le rôle doit pouvoir exécuter cette fonction
+sans être superuser, créateur de bases/rôles, réplicateur ou BYPASSRLS ; ses ACL
+complètes et la correspondance peer sont établies dans la composition hôte.
+
+* Contrats conservés
+
+=/auth/connexion=, =/auth/retour=, =/auth/session=, =/auth/logout=,
+=/auth/revoquer-autres=, =/auth/configuration=, les demandes/consentements MCP,
+=/verify=, =/verify-gestion= et =/verify-mcp= conservent le contrat installé.
+Les trois endpoints verify rendent 204 et =X-Mrj-User= uniquement après
+vérification effective. Le header homonyme fourni par l'appelant est ignoré.
+=X-Forwarded-Host= sélectionne un hôte explicitement configuré et
+=X-Forwarded-Proto=https= est requis. L'accès loopback est protégé par l'hôte.
+
+Les cookies restent host-only, Secure, HttpOnly, SameSite=Lax. Le cookie de
+transaction par state permet plusieurs onglets ; l'ancien cookie reste lisible.
+La consommation SQLite de state/binding/host/client est atomique et précède
+l'échange réseau. Le retour local est borné par la liste historique.
+
+Le token ID exige ES256/P-256, un kid unique, issuer/audience/azp/nonce/dates
+cohérents, et at_hash lorsqu'il est présent. Une clé injectée dans le token
+n'est jamais utilisée. Seuls les JWKS du transport TLS fixé sont acceptés.
+Sans auth_time, la session conserve la valeur 0, qui ne qualifie jamais une
+vérification renforcée. La politique MFA vient de =log_principaux= et de la
+fraîcheur auth_time, jamais d'une préférence du navigateur ou d'un header.
+
+Une introspection fournisseur et le raccord métier sont vérifiés à chaque
+session ; le renouvellement est sérialisé. Une panne reste 503 et conserve la
+session. Un invalid_grant natif détruit la session locale. Le logout supprime
+localement avant la tentative de révocation native. Les grants MCP dépendent
+toujours de leur session parent et de son hôte. La réutilisation d'un refresh
+MCP révoque sa famille dans une transaction validée avant le refus.
+
+Les OAuth clients ne sont jamais récupérés sur le réseau ; leurs redirections
+HTTPS sont enregistrées exactement. Les ressources sont exclusivement
+=https://vision.mrj.am/mcp= et =https://audition.mrj.am/mcp= avec leurs scopes
+respectifs. PKCE S256, consentement avec CSRF et origine exacte sont obligatoires.
+
+=/healthz= vérifie uniquement le processus. =/readyz= vérifie le schéma, le rôle
+PostgreSQL et le discovery Kanidm TLS. Aucun endpoint ne retourne de secret,
+jeton natif, erreur SQL ou contenu fournisseur. L'admission est limitée à 32
+requêtes, les corps à 8192 octets, une requête à 45 secondes et chaque appel
+fournisseur à 10 secondes. Les corps/réponses natifs ont leurs propres bornes.
+
+* Projection des alias pour le serveur Log
+
+#+begin_src sh
+mrjam-identity project-aliases --source /var/lib/mrjam-metier/log/sessions.sqlite --destination /run/mrjam-identity/aliases.sqlite
+#+end_src
+
+Cette commande explicite ne charge ni credentials ni PostgreSQL. Elle ouvre la
+source en lecture seule, lit =subject,mail= dans une transaction et produit
+uniquement =log_principaux(subject,mail)=. Le répertoire destination est privé,
+sans écriture de groupe ni lecture/écriture autres, idéalement 2751, propriétaire courtier
+et groupe dédié aux lecteurs Log. Le fichier est 0640. La première publication
+est atomique et exclusive ; les rafraîchissements remplacent les lignes dans
+une transaction sur le même inode. Les pools SQLite readonly du serveur voient
+donc les mises à jour sans redémarrage. Une projection préexistante avec un
+schéma supplémentaire est refusée. Le timer hôte sérialise ces commandes.
+
+* Enregistrement borné après admission
+
+La propriété optionnelle =principal_registration= contient exactement =socket=
+(chemin Unix absolu), =uid= et =gid= (numériques, non nuls). En son absence,
+aucun listener d'admission n'est créé. Le broker possède le répertoire ; ce
+dernier ne permet aucune écriture de groupe ou autre. Le groupe dédié à
+l'admission est un groupe secondaire du broker. Le socket est 0660 et le
+=SO_PEERCRED= de chaque connexion doit correspondre exactement à l'UID admis.
+
+Une seule ligne JSON, newline comprise, de 2048 octets au maximum :
+
+#+begin_src json
+{"issuer":"https://log.mrj.am/oauth2/openid/mrjam-vision","subject":"12345678-1234-4234-8234-123456789abc","mail":"invented@example.invalid"}
+#+end_src
+
+Les champs supplémentaires et doublons sont refusés. Le subject est un UUID
+canonique, l'email ASCII minuscule. Le courtier vérifie le principal métier
+actif par la fonction PostgreSQL avant toute écriture. Un nouveau principal
+reçoit =604800/any/maintenant=. Un rejeu strictement identique réussit sans
+modifier les politiques MFA/durée ; tout conflit subject ou mail est refusé.
+L'API ne modifie pas un alias préexistant. Contrairement à l'ancien callback
+in-process, cette capacité interprocessus ne permet donc aucune réaffectation.
+
+La réponse est une ligne ={"status":"registered"}=, ou une erreur fermée
+=registration_refused= / =temporarily_unavailable=. Huit connexions au plus,
+cinq secondes par traitement. Ni lecture des sessions/tokens, ni authentification
+HTTP alternative, ni administration IdP. Le worker appelle après activation
+SQL et avant mise en file du mail durable ; un rejeu est alors récupérable.
+
+* Qualification et origine
+
+Source plateforme =cdfe7ddf41a30edf5db64ebab21d3de4ce013a46= ; gitlinks Vision
+=99eace9df76777c89bbd992952738b3f57608801= et Mateval
+=91b5b33541a39faade0c40792bfed5ad35ae80a1= inchangés. Contrat de référence :
+=vps-infrastructure@c6459ae215b0e4e8b1350b02222ad21af41db836=, fichiers Log/OIDC.
+Le code ancien est uniquement lu, jamais exécuté ou importé.
+
+=nix/identity.nix= prend le nixpkgs et le Rust 1.99.1 épinglés par l'infrastructure.
+Cargo.lock conserve toutes les versions initiales, avec la seule entrée locale
+=mrjam-identity=. Aucun unsafe dans notre code.
+
+Les tests unitaires vérifient un vecteur PKCE RFC7636, les entrées ambiguës,
+les frontières des tokens réellement signés ES256, la projection avec
+un lecteur SQLite maintenu ouvert et le contrôle peer/document/conflits de
+l'admission. Le banc d'acceptation est écrit, gelé et
+exécuté séparément. Un résultat sur fournisseur synthétique ne qualifie pas
+à lui seul Kanidm réel ou l'activation VPS.

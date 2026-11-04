@@ -1,0 +1,54 @@
+#+title: Serveur et services Rust de l'infrastructure MRJ.am
+#+language: fr
+
+Le workspace de =mrjam-plateforme= est rapatrié dans ce répertoire à la demande
+du 4 novembre 2026. =migration-source.json= identifie le commit Forgejo d'origine,
+les blobs transférés et les gitlinks. L'ancien dépôt reste une référence de retour
+tant que la nouvelle organisation n'a pas été qualifiée et promue.
+
+* Responsabilités
+
+| Chemin | Responsabilité |
+|--------+----------------|
+| crates/server | Assemblage, transport HTTP/MCP et ressources communes |
+| crates/log | Bibliothèque Log ; interface dans ../interface-log |
+| crates/identity | Service d'identité et sessions |
+| crates/identity-deletion | Service d'effacement des identités |
+| crates/audition | Bibliothèque Audition, conservée jusqu'à son extraction autonome |
+| components/vision | Gitlink exact vers le dépôt Forgejo Vision |
+| components/mateval | Gitlink exact vers le dépôt Forgejo Mateval |
+| tools, nix | Harnais synthétiques et recettes des services d'identité |
+
+Les frontends ne changent pas. Audition reste dans =../interface-audition= à ce
+stade ; la présente migration ne crée pas encore son dépôt autonome.
+
+* Préparation et vérification
+
+Depuis la racine de =vps-infrastructure=, après un checkout propre du commit publié :
+
+#+begin_src bash
+export FORGEJO_HEADER="Authorization: $FORGEJO_AUTHORIZATION"
+python3 serveur/tools/bootstrap_components.py --plan
+python3 serveur/tools/bootstrap_components.py --apply
+cd serveur
+cargo fmt --all -- --check
+cargo clippy --workspace --all-targets --all-features --locked -- -D warnings
+cargo test --workspace --locked
+cargo build --release --locked -p mrjam-server -p mrjam-identity -p mrjam-identity-deletion
+#+end_src
+
+Ne jamais afficher ni enregistrer l'en-tête d'authentification. Le préparateur
+ne suit aucune branche de composant et ne remplace pas un checkout divergent.
+Les tests PostgreSQL ont leurs fixtures locales synthétiques et leurs features
+explicites ; les tests ordinaires ne remplacent pas ces contrôles.
+
+* Construction et mise en production
+
+Les recettes de =../operations/builds/= sélectionnent ce sous-arbre depuis les
+objets Git du dépôt d'infrastructure. Elles conservent le format matérialisé
+=platform-source/= utilisé par les constructeurs et les manifestes d'artefacts.
+Le commit enregistré est celui de =vps-infrastructure= et l'arbre enregistré est
+celui de =serveur/= ; aucun commit fictif de plateforme n'est introduit.
+
+La procédure et les critères de l'essai minimal sont dans
+[[file:../operations/mise-en-service/reorganisation-serveur.org][le dossier de réorganisation]]. Un build local ne vaut pas promotion.

@@ -52,7 +52,7 @@ def selected_path(component: str, name: str, baseline: dict) -> bool:
     if component == "platform":
         if name in {".gitmodules", "tools/mateval-browser-synthetic/bank.json", "crates/server/contracts/audition-catalogue.json"}:
             return True
-        return any(name.startswith(f"crates/{crate}/") for crate in ("server", "audition", "log")) and (
+        return any(name.startswith(f"crates/{crate}/") for crate in ("server", "audition", "log", "identity", "identity-deletion")) and (
             name.endswith(".rs") or name.endswith(".sql") or name.endswith("/Cargo.toml"))
     if component == "vision":
         if name in {"docs/CONTRAT-SEANCE.md", "docs/outils.json", "docs/tutoriel.json", "scripts/roles.sql"}:
@@ -77,10 +77,16 @@ def blob(root: Path, object_id: str) -> bytes:
     return data
 
 
-def propose(platform: Path, commit: str, baseline: dict) -> dict:
+def propose(platform: Path, commit: str, baseline: dict, source_subdirectory: str = "") -> dict:
     commit_id(commit)
-    roots = {"platform": platform, "vision": platform / "components/vision", "mateval": platform / "components/mateval"}
+    if source_subdirectory:
+        relative(source_subdirectory)
+    prefix = source_subdirectory + "/" if source_subdirectory else ""
+    workspace = platform / source_subdirectory if source_subdirectory else platform
+    roots = {"platform": platform, "vision": workspace / "components/vision", "mateval": workspace / "components/mateval"}
     platform_entries = entries(platform, commit)
+    if prefix:
+        platform_entries = {name.removeprefix(prefix): entry for name, entry in platform_entries.items() if name.startswith(prefix)}
     revisions = {"platform": commit}
     for key in ("vision", "mateval"):
         mode, kind, object_id = platform_entries.get(f"components/{key}", ("", "", ""))
@@ -92,7 +98,7 @@ def propose(platform: Path, commit: str, baseline: dict) -> dict:
         revision = revisions[key]
         if git(root, "rev-parse", "HEAD") != revision:
             raise Refused("SOURCE_CHECKOUT_COMMIT_MISMATCH")
-        tree = entries(root, revision)
+        tree = platform_entries if key == "platform" else entries(root, revision)
         files = {}
         for name, (mode, kind, object_id) in sorted(tree.items()):
             if not selected_path(key, name, baseline):
@@ -110,7 +116,11 @@ def propose(platform: Path, commit: str, baseline: dict) -> dict:
             current = {name: value for name, value in files.items() if name.startswith("frontend/")}
             if current != old:
                 raise Refused("FRONTEND_CHANGED_REQUIRES_NEW_QUALIFICATION")
-        sources[key] = {"repository": REPOSITORIES[key], "commit": revision, "tree": git_bytes(root, "rev-parse", revision + "^{tree}").decode().strip(), "files": files}
+        tree_ref = revision + ":" + source_subdirectory if key == "platform" and source_subdirectory else revision + "^{tree}"
+        repository = "MrJ-am/vps-infrastructure" if key == "platform" and source_subdirectory == "serveur" else REPOSITORIES[key]
+        sources[key] = {"repository": repository, "commit": revision, "tree": git_bytes(root, "rev-parse", tree_ref).decode().strip(), "files": files}
+        if key == "platform" and source_subdirectory:
+            sources[key]["source_subdirectory"] = source_subdirectory
     return {"schema_version": 1, "status": "proposed-source-selection-not-validation-authority", "selection": "Exact Git blobs in reviewed Rust/schema categories; unchanged previously qualified Mateval frontend", "baseline_source_lock_sha256": BOOTSTRAP_LOCK_SHA256, "sources": sources}
 
 
@@ -119,10 +129,11 @@ def main() -> int:
     parser.add_argument("--platform", required=True, type=Path)
     parser.add_argument("--platform-commit", required=True)
     parser.add_argument("--destination", required=True, type=Path)
+    parser.add_argument("--source-subdirectory", default="", help="Workspace path inside its Git repository, e.g. serveur")
     args = parser.parse_args()
     try:
         baseline = json.loads(checked_bytes(HERE, "sources.lock.json", BOOTSTRAP_LOCK_SHA256))
-        proposal = propose(args.platform, args.platform_commit, baseline)
+        proposal = propose(args.platform, args.platform_commit, baseline, args.source_subdirectory)
         # The historical source lock is never overwritten to obtain a green build.
         with args.destination.open("x") as output:
             output.write(json.dumps(proposal, sort_keys=True, indent=2) + "\n")

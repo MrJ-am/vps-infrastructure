@@ -1,0 +1,12 @@
+/target/
+**/target/
+**/node_modules/
+**/elm-stuff/
+**/__pycache__/
+*.pyc
+.env
+*.log
+/dist/
+/artifacts/
+/test-results/
+/playwright-report/

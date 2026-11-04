@@ -1,0 +1,39 @@
+#+title: Répétition Mateval migration et restauration sur données inventées
+#+language: fr
+
+Ce harnais n'accepte ni argument, ni SQL, ni fichier de sauvegarde, ni cible.
+Il vérifie les empreintes des migrations 001/002 du gitlink Mateval puis utilise
+uniquement le conteneur local synthétique préparé par l'environnement. Le label,
+l'image par digest, les tmpfs, l'absence de volume persistant et la publication
+loopback sont vérifiés avant PostgreSQL. Ces contrôles locaux ne sont pas une
+frontière d'autorité ni un dispositif d'accès à la production.
+
+#+begin_src sh
+python3 -m unittest discover -s tools/migration-synthetic -p 'test_*.py' -v
+MRJAM_SYNTHETIC_DATABASE_URL=postgresql://mrjam_synthetic:mrjam_synthetic_only@127.0.0.1:55432/mrjam_synthetic \
+  python3 -O tools/migration-synthetic/qualify.py
+#+end_src
+
+Les variables PG* héritées et toute URL différente sont refusées. Les commandes
+Docker ciblent le socket local explicitement, sans utiliser les sélecteurs de
+contexte hérités. Le profil existant utilise un bridge et une publication sur
+127.0.0.1 ; aucune isolation réseau sortante n'est revendiquée.
+
+Le scénario crée un schéma neuf, installe 001, fabrique des lignes dans les six
+tables, applique 002 deux fois, vérifie l'ancien contrat d'insertion et zéro/null.
+Un véritable pg_dump puis pg_restore restitue les six projections et la séquence
+d'identité. Une archive invalide est refusée ; les diagnostics restent internes.
+Le schéma est supprimé et son absence vérifiée, même en cas d'échec.
+
+Une écriture après sauvegarde est volontairement créée avant restauration.
+Son absence après restauration constitue le témoin de perte à prendre en compte
+dans le plan de récupération : revenir à une génération NixOS ne traite pas ce
+problème. La compatibilité vérifiée ici concerne des projections SQL et fixtures,
+pas le binaire historique complet, tous les objets PostgreSQL ou une sauvegarde
+réelle. Aucun contenu de sauvegarde n'est conservé ou renvoyé dans le reçu.
+
+La revue indépendante a trouvé un succès possible sous python -O avec des
+assertions supprimées. Les refus sont désormais explicites et un test de
+régression exerce un scénario falsifié avec -O, sans Docker. La preuve courante
+dans =verification.json= correspond au candidat corrigé ; les attentes n'ont
+pas été abaissées pour obtenir le succès.

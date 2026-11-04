@@ -1,0 +1,49 @@
+[package]
+name = "mrjam-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+integration-postgres = []
+
+[[test]]
+name = "mateval_http_postgres"
+required-features = ["integration-postgres"]
+
+[[test]]
+name = "runtime_postgres"
+required-features = ["integration-postgres"]
+
+[[test]]
+name = "audition_mcp_postgres"
+required-features = ["integration-postgres"]
+
+[[example]]
+name = "mateval_synthetic"
+required-features = ["integration-postgres"]
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true
+tower.workspace = true
+tracing.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rmcp = { workspace = true, features = ["transport-streamable-http-server"] }
+http-body-util.workspace = true
+mrjam-vision.workspace = true
+mrjam-mateval.workspace = true
+mrjam-audition = { path = "../audition" }
+mrjam-log = { path = "../log" }
+sha2 = "=0.10.9"
+rustix = { version = "=1.1.2", default-features = false, features = ["fs", "std", "process"] }
+hyper = { version = "=1.12.0", features = ["client", "http1"] }
+hyper-util = { version = "=0.1.21", features = ["tokio"] }
+sqlx = { version = "=0.9.0", default-features = false, features = ["runtime-tokio", "postgres", "json", "tls-rustls-ring"] }
+
+[dev-dependencies]
+
+[lints]
+workspace = true

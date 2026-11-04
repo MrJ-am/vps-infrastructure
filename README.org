@@ -1,6 +1,15 @@
 #+title: Infrastructure MRJ.AM — préparation Rust et Elm
 #+language: fr
 
+* Serveur Rust rapatrié dans l'infrastructure
+
+Le workspace serveur, Log, identité et effacement des identités est désormais
+dans [[file:serveur/README.org][serveur/]]. Ses tests et ses composants figés sont conservés. Le dossier
+[[file:operations/mise-en-service/reorganisation-serveur.org][de réorganisation et d'essai de livraison]] distingue la qualification de cette
+nouvelle organisation de l'état effectivement installé sur le VPS.
+
+* État historique de la préparation
+
 Ce dépôt prépare l'environnement Rust, Elm, Nginx, PostgreSQL et Playwright.
 Les déploiements sont gelés ; le serveur actuellement exploité reste inchangé.
 Le contenu de cette branche n'est pas une configuration de machine activable.

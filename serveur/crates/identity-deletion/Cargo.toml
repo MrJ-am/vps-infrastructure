@@ -1,0 +1,21 @@
+[package]
+name = "mrjam-identity-deletion"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[dependencies]
+tokio.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+http-body-util.workspace = true
+hyper = { version = "=1.12.0", features = ["client", "http1"] }
+hyper-util = { version = "=0.1.21", features = ["tokio"] }
+tokio-rustls = { version = "=0.26.4", default-features = false, features = ["ring", "tls12"] }
+rustls = { version = "=0.23.46", default-features = false, features = ["ring", "std", "tls12"] }
+rustix = { version = "=1.1.2", default-features = false, features = ["fs", "process", "std"] }
+ring = "=0.17.14"
+
+[lints]
+workspace = true

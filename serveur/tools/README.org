@@ -1,0 +1,73 @@
+#+title: Préparer les composants épinglés du checkout de développement
+#+language: fr
+
+Depuis la racine du checkout =vps-infrastructure= :
+
+#+begin_src sh
+python3 serveur/tools/bootstrap_components.py --plan
+python3 serveur/tools/bootstrap_components.py --apply
+#+end_src
+
+Le plan est le comportement par défaut. Il ne crée aucun dossier et ne contacte
+aucun serveur. =--apply= nécessite les deux gitlinks déjà engagés dans =HEAD=,
+ainsi qu’un =.gitmodules= engagé et identique à sa copie de travail. Le script
+refuse les entrées supplémentaires et les options de branche ou de commande.
+
+Les seules destinations sont :
+
+| Chemin | URL |
+|--------+-----|
+| serveur/components/vision | https://forge.mrj.am/MrJ-am/vision.git |
+| serveur/components/mateval | https://forge.mrj.am/MrJ-am/matheval.git |
+
+Chaque nouveau composant est initialisé sans templates Git. Le script demande
+uniquement son SHA complet avec =fetch --depth=1 --no-tags --no-recurse-submodules
+--no-write-fetch-head=, sans lire une branche distante, puis vérifie les objets
+commit/arbre et les chemins avant un checkout détaché. Les symlinks et gitlinks
+imbriqués sont refusés. Aucun autre dépôt n’est récupéré.
+
+Un composant existant doit avoir la même URL, le même commit, un HEAD détaché
+et un arbre de travail propre, y compris les fichiers non suivis ou ignorés.
+Il est alors seulement vérifié. Un autre commit ou une branche de travail exige
+une décision du développeur ; ce script n’effectue aucun reset, clean ou force.
+Lancer le bootstrap avant les builds qui créent des fichiers ignorés.
+
+Le superprojet doit également être propre. Les chemins symboliques, configurations
+locales pouvant réécrire le transport ou lancer des filtres, sources d’objets
+externes, clones partiels et checkouts clairsemés sont refusés. Les fetchs paresseux,
+hooks, helpers de credentials, traces Git et mises à jour récursives sont désactivés
+dans les commandes lancées. Les erreurs publiées sont des codes fixes.
+
+L’accès aux dépôts privés dépend de l’authentification de l’environnement.
+Exporter dans le shell =FORGEJO_HEADER="Authorization: $FORGEJO_AUTHORIZATION"=
+sans jamais afficher ni enregistrer sa valeur. Git utilise =--config-env= pour
+cet en-tête sur le seul hôte Forgejo. Le bootstrap ne crée ni helper,
+ni fichier de credentials et n’accepte aucun secret dans ses arguments ou URLs.
+Il n’imprime ni les réponses Git, ni les valeurs de configuration ou d’environnement.
+
+En cas d’interruption, un dépôt vide initialisé par le bootstrap, sans fichier
+de travail et avec sa branche initiale inutilisée, peut reprendre le fetch exact.
+Les fichiers apparus entre-temps provoquent un refus et restent présents. Aucun
+nettoyage automatique de ce qui existe n’est effectué. Utiliser un checkout sous
+le contrôle du développeur, sans autre processus modifiant ses fichiers pendant
+l’opération ; les vérifications locales ne constituent pas une ACL ou une sandbox.
+
+* Portée des vérifications
+
+#+begin_src sh
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools -p test_bootstrap_components.py -v
+#+end_src
+
+Les 24 essais utilisent exclusivement des dépôts et objets Git inventés dans
+des répertoires temporaires sous =tools/=. Le harnais refuse tout appel à fetch,
+clone, pull, push ou submodule. Il couvre les parseurs, plans, refus, vérifications
+de commits/arbres et la réexécution sans mutation lorsque les deux composants
+synthétiques sont déjà présents.
+
+Aucun fetch réel, accès GitHub ou parcours de téléchargement/checkout après
+fetch n’a été exécuté pour qualifier ce lot. L’authentification et ce parcours
+réseau restent à vérifier dans le nouvel environnement, sur les deux commits
+qui seront effectivement publiés. Voir [[file:qualification-bootstrap.json][les preuves locales]].
+
+Cet outil prépare le développement. Il n’adopte pas de règles indépendantes,
+ne vérifie pas les paramètres distants GitHub et n’autorise aucun déploiement.

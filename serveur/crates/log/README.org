@@ -1,0 +1,72 @@
+#+title: Log — médiation Rust de l'API native Kanidm
+#+language: fr
+
+* Fonction
+Cette crate porte le backend =/presentation/api= attendu par le frontend Elm
+Log conservé. Elle ne réécrit pas l'IdP, ses politiques, ses authentificateurs ou
+son protocole. Elle ne démarre aucun listener. Le serveur choisit explicitement
+le contexte HTTP et les dépendances, puis appelle =LogService::presentation=.
+
+L'API accepte une liste fermée d'actions : auth, reauth, profil, applications,
+deconnexion, oauth, consentir, refuser, recuperer, statut, modifier, enregistrer,
+annuler, ouvrir, sessions et revoquer. Les chemins et verbes amont sont construits
+par le code. Aucun chemin, hôte, méthode HTTP ou sujet utilisateur libre n'est
+transmis par le navigateur. Le sujet de gestion des credentials et révocations
+vient de =/v1/self= authentifié ; une adresse mail n'est jamais une identité.
+
+Le client TLS contacte uniquement un socket loopback configuré, vérifie la chaîne
+contre les certificats CA publics fournis et le nom =log.mrj.am=. Il ne suit
+aucune redirection, ne fait aucun retry et ne réutilise aucune identité opérateur.
+Un appel expire après 10 s ; en-têtes 16 Kio, réponse 512 Kio, corps entrant 64 Kio.
+La tâche de connexion est annulée même lors d'un timeout ou abandon de requête.
+Les erreurs sont des codes fixes ; aucun logger n'est présent.
+
+* Identités et secrets
+Les étapes d'authentification initiale imposent =issue=cookie= et =privileged=false=.
+La réauthentification impose le mode cookie. Le token de succès natif est retiré
+du JSON navigateur ; les cookies restent host-only, HttpOnly, Secure et SameSite
+Lax ou Strict. Le plafond historique de persistance de 90 jours du cookie bearer
+est conservé seulement après succès ; l'expiration/révocation réelle de Kanidm
+reste souveraine et peut être plus courte. Les cookies Domain et chemins larges
+inattendus sont refusés. Origin et host sont exacts ; le JSON ambigu est refusé.
+
+=SqliteLoginAliases= lit uniquement la table existante =log_principaux(mail,subject)=,
+via connexion SQLite en lecture seule, sans création ni migration. L'alias de
+connexion n'autorise ni création, ni fusion, ni rattachement automatique de compte.
+Les doublons sont une erreur ; un alias inconnu conserve le nom neutre historique.
+Le fichier, son propriétaire, ses permissions et son partage avec le broker
+existant doivent être définis dans la configuration NixOS du serveur. Cloud
+n'a lu que des fichiers SQLite synthétiques créés par les tests. Sans référence
+valide, le service échoue ; aucun registre fictif de production n'est créé.
+
+La méthode =KanidmClient::ready= teste seulement TLS sans lire de profil/session.
+=SqliteLoginAliases::ready= contrôle le schéma par SELECT LIMIT 0, sans lire d'alias.
+Ces états ne remplacent pas la qualification d'un vrai parcours SSO/MFA/WebAuthn.
+
+* Qualification
+#+begin_src sh
+source /workspace/shared/mrjam-environment/.local/activate.sh
+cargo test --locked --offline -p mrjam-log --all-features
+cargo clippy --locked --offline -p mrjam-log --all-targets --all-features -- -D warnings
+cargo fmt -p mrjam-log --check
+#+end_src
+
+Les tests de pont et d'alias utilisent des identités/tokens inventés. Le test
+=intégration-tls= (feature =integration-tls=) génère avec OpenSSL une clé et un
+certificat d'un jour dans un répertoire temporaire privé, jamais dans Git.
+Les échanges TLS et le refus d'un certificat non approuvé sont réels, sur loopback
+uniquement. Le certificat, le token et l'identité Kanidm de production ne sont
+jamais nécessaires ni demandés. Aucun test d'enrôlement WebAuthn/TOTP, SSO réel,
+compte existant, reverse proxy ou navigateur complet n'est annoncé exécuté ici.
+
+* Provenance et limites
+Les sources autorisées de =MrJ-am/vps-infrastructure= à
+=c6459ae215b0e4e8b1350b02222ad21af41db836= ont fourni le contrat :
+- =lisp/serveur/log-presentation.lisp=, blob =3d0d0d0af3d1bad9175107deaaa37f9c97686760= ;
+- =lisp/serveur/log-login.lisp=, blob =3183fe4ed5c4ceeed8ff53da4a11d46874ad584b= ;
+- le frontend =interface-log/pont.js= et =src/Log/Protocole.elm= conservés.
+
+Ce lot n'implémente pas le broker OIDC/OAuth interapplications et sa base de
+sessions métier. Il reste un service séparé avec son propre contrat, ses données
+et son adoption à vérifier. Le portage de la présentation Log ne prouve pas à lui
+seul la migration complète de l'identité ou la compatibilité du Kanidm installé.

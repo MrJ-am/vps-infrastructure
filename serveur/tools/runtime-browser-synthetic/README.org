@@ -1,0 +1,131 @@
+#+title: Quatre interfaces Elm servies par le CLI Rust — qualification synthétique
+#+language: fr
+
+Ce harnais utilise les octets des quatre artefacts Nix déjà qualifiés, un vrai
+processus =mrjam-server serve --config= et PostgreSQL local. Il ne reconstruit
+aucune interface et ne sert aucun fichier statique avec Node. Les pages HTML,
+scripts, styles, fontes et appels métier passent tous par le serveur Rust.
+Les seuls appels séparés =/auth/*= vont à la fixture explicite du gateway.
+
+* Entrées et reproduction
+
+Les quatre empreintes =artifact.json= sont épinglées dans =run.mjs=, d'après
+=vps-infrastructure/operations/builds/qualification-frontends-operationnel-20261030.json=.
+Mateval est réutilisé après preuve de l'équivalence de son arbre d'interface ;
+ses anciens commits de construction restent inscrits dans son manifeste.
+Les autres artefacts sont ceux construits puis reconstruits hors réseau le
+30 octobre. Aucune empreinte attendue n'est régénérée par le test.
+
+La base locale doit avoir été démarrée avec le helper de l'environnement.
+Le binaire doit être explicitement choisi : un binaire de développement permet
+de mettre au point le harnais, mais ne qualifie pas une autre construction Nix.
+
+#+begin_src sh
+source /workspace/shared/mrjam-environment/.local/activate.sh
+python3 -m unittest discover -s tools/runtime-browser-synthetic -p 'test_*.py' -v
+node tools/runtime-browser-synthetic/run.mjs \
+  /chemin/du/binaire/exact/mrjam-server \
+  /workspace/shared/mrjam-frontends-runtime-20261030 \
+  /workspace/shared/mrjam-environment \
+  /workspace/shared/nouveau-rapport-runtime-browser.json
+#+end_src
+
+Le rapport doit être nouveau. Node =24.19.0=, Playwright =1.64.1= et Chromium
+=156.0.8078.4= sont vérifiés. Le SHA-256 du binaire est contrôlé avant et après
+les scénarios. Le rapport identifie aussi chaque manifeste et les migrations.
+Pour une fermeture Nix copiée hors du store, deux arguments facultatifs sont
+possibles : chemin de son chargeur ELF inchangé, puis répertoire des bibliothèques
+copiées. Le rapport enregistre chaque empreinte et distingue ce mode. Aucun
+=patchelf=, changement du binaire ou téléchargement de bibliothèque n'est fait.
+L'identité avec la fermeture Nix exportée doit être vérifiée séparément.
+
+Pour les nouvelles sorties du pipeline complet, un mode distinct accepte deux
+arguments supplémentaires après le chargeur et ses bibliothèques : un fichier
+de pins de revue, puis son SHA-256 explicitement choisi. Son schéma fermé
+=qualified-flat-frontends-v1= lie les quatre nouveaux manifestes, le serveur,
+la proposition, les règles et le verrou d'import. Les ressources sont alors
+prises à la racine de chaque sortie Nix. Les anciens pins restent inchangés ;
+aucune empreinte n'est calculée depuis les entrées pour devenir une attente.
+Les quatre parcours, le total attendu de 233 ressources et les contrôles métier
+restent les mêmes. Un nouveau rapport est obligatoire. Tester les refus du
+chargeur de pins avec =node --test tools/runtime-browser-synthetic/test_artifact_pins.mjs=.
+
+* Bases, identité et données
+
+=fixture.py= exige l'URL littérale synthétique avant tout accès aux fichiers ou
+à Docker. Il refuse les variables =PG*=, fixe le socket Docker local et vérifie
+image par digest, labels et publication exclusive de =127.0.0.1:55432=.
+Il ne propose aucun argument URL, SQL, rôle ou conteneur arbitraire.
+
+Deux nouvelles bases et trois rôles portent un nom aléatoire propre à
+l'exécution. Les sept rôles Vision conservent leurs noms canoniques : les
+politiques RLS des migrations comparent explicitement ces noms. Leur absence
+est vérifiée avant toute création ; un commentaire marque l'appartenance de
+chaque objet au harnais. Le harnais refuse donc une coexécution avec une autre
+fixture SQL Vision, sans adopter ou supprimer ses rôles. Les migrations Mateval
+001/002, Vision 001 à 027, Audition 001/002 et le script de droits Vision sont
+appliqués sans substitution. Leurs empreintes exactes sont conservées.
+Les rôles HTTP ne possèdent ni schéma ni table, et n'ont pas de privilège global.
+
+Le questionnaire est le contenu public exact de l'artefact Mateval. Le codebook
+est explicitement inventé ; le digest du corpus conserve la formule
+=SHA256(JSON.stringify({bank,codebook}))=. Aucune réponse, donnée de recherche,
+base réelle ou sauvegarde n'est chargée. Les participants, réponses, comptes,
+alias, fiches Vision et groupes Audition sont créés pour cet essai uniquement.
+
+=services.mjs= expose seulement trois protocoles locaux bornés : vérification
+d'identité/gateway avec compte et CSRF inventés, embedding constant à trois
+dimensions, et quelques étapes du protocole natif Kanidm sur TLS. Une CA et un
+certificat éphémères créés localement authentifient =log.mrj.am= au client Rust ;
+aucune validation de certificat n'est désactivée. Ces clés de test n'entrent
+jamais dans Git ou dans le rapport. Les chemins, commandes et réponses attendus
+sont fixes. Ce n'est ni un IdP utilisable ni une preuve d'interopérabilité SSO.
+
+* Parcours et refus
+
+- Configuration CLI acceptée, champ supplémentaire refusé, serveur réellement
+  démarré et disponibilité des seules capacités explicitement sélectionnées.
+- Les 233 fichiers des quatre manifestes sont reçus du serveur Rust ; chaque
+  corps, MIME et protection =nosniff= est vérifié.
+- Mateval : questionnaire réel, création publique, note zéro distincte de null,
+  persistance et reprise, mauvais secret refusé ; activation administrateur,
+  fermeture du setup, export CSV et révocation de session.
+- Vision : écran déconnecté, identité synthétique, recherche, création d'une
+  fiche par Elm puis rechargement ; écriture sans CSRF refusée.
+- Audition : écran déconnecté, compte synthétique rattaché, refus de création
+  sans vérification MFA récente, puis création avec cette vérification simulée
+  et relecture depuis PostgreSQL. Le protocole MFA réel reste à qualifier.
+- Log : alias synthétique, choix/défi natif via Rust et TLS local, connexion,
+  effacement du jeton dans la réponse publique, cookie protégé et déconnexion.
+- Fontes et images chargées, aucune exception de page, requête vers un domaine
+  extérieur explicitement refusée par le pont de test.
+
+Les routes Playwright sont installées avant l'ouverture des pages. Elles refusent
+tous les hôtes hors des quatre hôtes attendus et transmettent les requêtes sur
+TCP =127.0.0.1=, en conservant Host, Origin et cookies. Les service workers sont
+bloqués et les WebSockets fermés. Aucun domaine de production n'est résolu ou
+contacté par les pages. Ce pont ne constitue pas une sandbox réseau générale
+pour exécuter du code arbitraire.
+
+* Preuves et nettoyage
+
+Le rapport conserve des empreintes, compteurs, étapes et codes fermés ; aucune
+capture, trace navigateur, réponse métier ou valeur de credential n'est écrite.
+La consommation mémoire conserve uniquement le maximum RSS du processus Rust
+synthétique pendant ces parcours ; ce n'est ni une épreuve de saturation ni une
+mesure des ressources du VPS. Une erreur peut conserver la ligne du harnais,
+jamais le texte d'assertion ou les valeurs comparées.
+Un échec reste un échec et son étape est conservée. Les exécutions préliminaires
+ne deviennent pas des preuves du binaire Nix final.
+
+Le CLI est arrêté avant le nettoyage SQL. Les marqueurs de tous les objets sont
+vérifiés avant la première suppression. Une session persistante fait échouer
+le nettoyage : aucune terminaison globale de session ni suppression d'objet
+préexistant n'est autorisée. Un échec conserve le dossier privé de cette fixture
+pour reprise bornée ; un succès efface les fichiers privés de test.
+
+Ces essais ne qualifient ni DNS/TLS publics, ni Nginx, ni activation NixOS, ni
+invitations, MFA, vrai SSO, qualité des embeddings, effacement de compte,
+sauvegarde/restauration ou totalité des contrats métier. Le statut =passed=
+n'autorise aucune promotion ; il identifie les parcours exercés sur les octets
+indiqués. L'exécution en production reste un travail distinct.

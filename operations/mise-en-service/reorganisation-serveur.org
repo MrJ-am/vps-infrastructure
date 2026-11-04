@@ -1,0 +1,61 @@
+#+title: Réorganisation du serveur dans vps-infrastructure — 4 novembre 2026
+#+language: fr
+
+* Demande et périmètre
+
+Rapatrier le serveur Rust, Log, l'identité, l'effacement et leurs tests dans
+=vps-infrastructure= ; essayer ensuite une livraison avec un changement minimal.
+Log reste ici. Audition garde sa bibliothèque isolée pendant cette migration ;
+son extraction et celle de son interface vers un dépôt autonome sont distinctes.
+
+Le workspace est transféré de =mrjam-plateforme= à
+=8977c76717006f562b2ca3123ad1f3283007e568= dans =serveur/=. Les sources Rust,
+contrats, migrations et Cargo.lock ne changent pas pendant le transfert.
+=serveur/migration-source.json= conserve les identifiants des blobs d'origine.
+Seul le préparateur de composants et ses tests sont adaptés aux nouveaux chemins
+et aux URL HTTPS Forgejo. Les deux dépôts sont privés et doivent le rester.
+
+* Construction avec la nouvelle organisation
+
+Le sélecteur accepte =--source-subdirectory serveur= avec la racine Git de
+l'infrastructure passée à =--platform=. Il enregistre le commit d'infrastructure,
+l'arbre du workspace et les gitlinks exacts. La matérialisation vérifie ces
+références et les empreintes ; elle continue de fournir =platform-source/=
+aux constructeurs. Les sources sans rapport avec le serveur ne sont pas exportées.
+
+La sélection inclut désormais =identity= et =identity-deletion=, qui étaient
+absents de l'ancien sélecteur malgré leur présence dans Cargo.toml. Le build Nix
+construit ces binaires avec le même verrou et produit leurs manifestes séparés.
+Les sélections et qualifications historiques restent inchangées.
+
+* Changement minimal d'essai
+
+Après le commit de déplacement, un commit distinct ajoute l'en-tête HTTP fixe
+=X-Mrjam-Source: vps-infrastructure=. Il permet de distinguer le nouveau serveur
+sans changer le corps JSON, le routage, les schémas ou les sessions. Il indique
+le dépôt source ; il n'identifie pas à lui seul un commit ou un artefact approuvé.
+
+* Critères de livraison
+
+1. Qualifier le code publié : formatage, Clippy, tests Rust, tests du sélecteur,
+   tests du préparateur, contrats HTTP et intégrations PostgreSQL synthétiques.
+2. Produire les entrées fermées depuis le commit d'infrastructure exact ;
+   construire les artefacts Nix, relever leurs NAR et leurs manifestes et vérifier
+   les services d'identité ainsi que la compatibilité des interfaces inchangées.
+3. Soumettre ces entrées au validateur indépendant et contrôler son résultat.
+   Le code candidat ne remplace pas les règles ou la politique du runner.
+4. Promouvoir les mêmes artefacts par le mécanisme d'exploitation borné, avec
+   l'ancienne fermeture conservée et un retour arrière applicable sans migration SQL.
+5. Vérifier sur le slot puis sur l'URL publique l'en-tête attendu, /healthz,
+   la disponibilité /readyz du profil réellement configuré et la continuité des
+   parcours synthétiques. Un /healthz positif seul n'est pas une réussite.
+
+Les noms de modules, ports, identités, droits et configurations de production
+ne sont pas modifiés par le déplacement. Le dépôt historique reste intact
+jusqu'à la qualification et la promotion du remplacement.
+
+* État de qualification
+
+Les résultats et blocages courants sont consignés dans
+=qualification-reorganisation-serveur-20261104.json=. Ce dossier n'affirme
+aucune promotion tant que son observation n'a pas été obtenue.

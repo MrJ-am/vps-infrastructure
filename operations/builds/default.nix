@@ -1,4 +1,4 @@
-{ lib, stdenv, runCommand, python3, callPackage, elmPackages
+{ lib, stdenv, runCommand, python3, callPackage, elmPackages, pkg-config, sqlite
 , materialized
 , expectedManifestSha256
 , sourceLock ? ./sources.lock.json
@@ -19,6 +19,8 @@ let
   inputs = builtins.path { path = materialized; name = "mrjam-pinned-build-inputs"; };
   inputManifest = builtins.fromJSON (builtins.readFile (inputs + "/materialization.json"));
   hasJournalAdoption = builtins.pathExists (inputs + "/platform-source/components/vision/src/bin/vision-journal-adoption.rs");
+  hasIdentity = builtins.pathExists (inputs + "/platform-source/crates/identity/Cargo.toml");
+  hasIdentityDeletion = builtins.pathExists (inputs + "/platform-source/crates/identity-deletion/Cargo.toml");
   # No workspace cache or Git checkout is available from these Nix builders.
   verifiedInputs = runCommand "mrjam-verified-build-inputs" {
     nativeBuildInputs = [ python3 ];
@@ -43,9 +45,11 @@ rec {
   rustServer = stdenv.mkDerivation {
     pname = "mrjam-server-preparation";
     version = "0.1.0-${builtins.substring 0 12 inputManifest.source_commits.platform}";
-    outputs = [ "out" ] ++ lib.optional hasJournalAdoption "journal";
+    outputs = [ "out" ] ++ lib.optional hasJournalAdoption "journal"
+      ++ lib.optional hasIdentity "identity" ++ lib.optional hasIdentityDeletion "identityDeletion";
     dontUnpack = true;
-    nativeBuildInputs = [ toolchains.rust python3 ];
+    nativeBuildInputs = [ toolchains.rust python3 ] ++ lib.optional hasIdentity pkg-config;
+    buildInputs = lib.optional hasIdentity sqlite;
     # Panic/source locations must not keep the entire vendor/source tree alive.
     disallowedReferences = [ inputs ];
     configurePhase = ''
@@ -75,6 +79,8 @@ rec {
     buildPhase = ''
       runHook preBuild
       cargo build --release --frozen --offline -p mrjam-server
+      ${lib.optionalString hasIdentity "cargo build --release --frozen --offline -p mrjam-identity"}
+      ${lib.optionalString hasIdentityDeletion "cargo build --release --frozen --offline -p mrjam-identity-deletion"}
       ${lib.optionalString hasJournalAdoption "cargo build --release --frozen --offline -p mrjam-vision --features postgres --bin vision-journal-adoption"}
       runHook postBuild
     '';
@@ -89,15 +95,23 @@ rec {
     installPhase = ''
       runHook preInstall
       install -Dm755 "$CARGO_TARGET_DIR/release/mrjam-server" "$out/bin/mrjam-server"
+      ${lib.optionalString hasIdentity ''install -Dm755 "$CARGO_TARGET_DIR/release/mrjam-identity" "$identity/bin/mrjam-identity"''}
+      ${lib.optionalString hasIdentityDeletion ''install -Dm755 "$CARGO_TARGET_DIR/release/mrjam-identity-deletion" "$identityDeletion/bin/mrjam-identity-deletion"''}
       ${lib.optionalString hasJournalAdoption ''install -Dm755 "$CARGO_TARGET_DIR/release/vision-journal-adoption" "$journal/bin/vision-journal-adoption"''}
       runHook postInstall
     '';
-    postFixup = record "rust-server" + lib.optionalString hasJournalAdoption ''
+    postFixup = record "rust-server" + lib.optionalString hasIdentity ''
+      python ${support}/artifact_manifest.py --output "$identity" --inputs ${inputs} --artifact identity
+    '' + lib.optionalString hasIdentityDeletion ''
+      python ${support}/artifact_manifest.py --output "$identityDeletion" --inputs ${inputs} --artifact identity-deletion
+    '' + lib.optionalString hasJournalAdoption ''
       python ${support}/artifact_manifest.py --output "$journal" --inputs ${inputs} --artifact vision-journal-adoption
     '';
     meta.platforms = [ "x86_64-linux" ];
   };
   visionJournalAdoption = if hasJournalAdoption then rustServer.journal else null;
+  identityService = if hasIdentity then rustServer.identity else null;
+  identityDeletionService = if hasIdentityDeletion then rustServer.identityDeletion else null;
 
   matevalElm = stdenv.mkDerivation {
     pname = "mrjam-mateval-elm-preparation";

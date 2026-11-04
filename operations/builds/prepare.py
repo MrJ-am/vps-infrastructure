@@ -105,18 +105,26 @@ def git(root: Path, *arguments: str) -> str:
 
 
 def verify_sources(platform: Path, lock: dict) -> dict[str, bytes]:
-    roots = {"platform": platform, "vision": platform / "components/vision", "mateval": platform / "components/mateval"}
+    specification = lock["sources"]["platform"]
+    subdirectory = specification.get("source_subdirectory", "")
+    if subdirectory:
+        relative(subdirectory)
+    prefix = subdirectory + "/" if subdirectory else ""
+    if subdirectory and git(platform, "rev-parse", specification["commit"] + ":" + subdirectory) != specification["tree"]:
+        raise Refused("SOURCE_TREE_MISMATCH")
+    workspace = platform / subdirectory if subdirectory else platform
+    roots = {"platform": platform, "vision": workspace / "components/vision", "mateval": workspace / "components/mateval"}
     result = {}
     for key, specification in lock["sources"].items():
         root = roots[key]
         if git(root, "rev-parse", "HEAD") != specification["commit"]:
             raise Refused("SOURCE_COMMIT_MISMATCH")
         if key != "platform":
-            actual = git(platform, "ls-tree", "HEAD", f"components/{key}").split()
+            actual = git(platform, "ls-tree", "--full-tree", "HEAD", f"{prefix}components/{key}").split()
             if len(actual) != 4 or actual[:3] != ["160000", "commit", specification["commit"]]:
                 raise Refused("GITLINK_MISMATCH")
         for name, checksum in specification["files"].items():
-            value = checked_bytes(root, name, checksum)
+            value = checked_bytes(root, prefix + name if key == "platform" else name, checksum)
             destination = name if key == "platform" else f"components/{key}/{name}"
             if name.startswith("frontend/"):
                 destination = "mateval-frontend/" + name.removeprefix("frontend/")

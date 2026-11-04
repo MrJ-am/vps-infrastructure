@@ -1,0 +1,149 @@
+#+title: Audition — premier modèle métier Rust
+#+language: fr
+
+* Actualisation : service PostgreSQL
+Le service transactionnel et les opérations web/MCP sont désormais implémentés
+dans =src/service/= ; voir [[file:SERVICE.org][le contrat du service]] et sa qualification.
+Les sections ci-dessous conservent le périmètre et les preuves du modèle initial.
+Elles ne décrivent pas le nouveau stockage. La qualification réelle de production
+et des parcours intégrés reste distincte des tests synthétiques de ce lot.
+
+* État du modèle initial
+La crate =mrjam-audition= porte un modèle pur issu des exigences et du code
+Audition existants. Elle appartient au workspace Rust 1.99.1 de la plateforme,
+sans dépendance externe et avec =unsafe= interdit. Elle ne démarre aucun service,
+ne contacte aucune base et n'expose aucune route HTTP/MCP. Aucun résultat métier
+de production n'est simulé. Les règles de publication restent celles du mandat ;
+aucun déploiement n'a été effectué pendant ce lot.
+
+Le périmètre livré est une préparation de version =0.1.0= de bibliothèque interne,
+pas une nouvelle version publique de l'API Audition. Les frontends et contrats
+réseau n'ont pas été déclarés compatibles sur la seule base de ces tests.
+
+* Invariants portés
+- Identifiants de ressources distincts, identité centrale conservant le point,
+  révisions positives typées, timestamps Unix UTC bornés, texte sans NUL.
+- Cours et activités versionnés de façon immuable. Un enregistrement MCP reste
+  une proposition ; il ne remplace jamais la dernière prescription web. Le canal
+  est fourni par un adaptateur authentifié, jamais par un champ reçu du client.
+- Une activité épingle le cours officiellement prescrit. Une modification du
+  cours nécessite un nouvel enregistrement de l'activité par l'enseignant, puis
+  une adoption explicite dans une séance ouverte. Un cours encore proposé par
+  MCP peut appartenir à une préparation, mais pas à une prescription web.
+- Barème avec attentes et critères identifiés, références cohérentes, maximum
+  fini strictement positif et inférieur à 1001. Une activité ouverte ne reçoit
+  pas une référence de hasard inventée ; le QCM à réponse correcte unique
+  exige de 2 à 100 propositions.
+- Projection élève sans corrigé ni date de publication avant la date prévue.
+  La projection ne contient pas de référence donnant accès au document privé.
+  Le contrôle effectif d'habilitation de l'appelant reste à raccorder.
+- Production rapportée, aides et interprétation sont conservées séparément,
+  avec auteur, canal, version d'activité/politique, heure d'activité et réception.
+  Une aide exclut la réussite autonome. Une réussite exige le maximum de points,
+  aucune incertitude et, pour la réussite aidée, une aide effectivement déclarée.
+- Cinq états d'observation conservés. La dernière observation de chaque critère
+  de la version adoptée détermine sa couverture. Une clôture exige que tous les
+  critères soient observés ; elle n'exige pas qu'ils soient réussis.
+- États de séance en cours, interrompue et terminée. Reprise et adoption sont
+  explicites et historisées. La reprise enregistre une nouvelle heure ; aucune
+  tentative ne reçoit implicitement l'heure d'ouverture.
+- Les observations d'un ancien barème restent présentes mais ne satisfont pas
+  les critères d'une nouvelle version, même si leurs identifiants sont réutilisés.
+  Une prescription courante différente bloque enregistrement et clôture jusqu'à
+  adoption. Les séances terminées ne sont jamais rouvertes implicitement.
+- La décision pure d'ouverture restitue la séance existante pour le couple
+  affectation/élève, même terminée. Une remédiation passe par une nouvelle
+  affectation. Une contrainte SQL unique demeure nécessaire pour garantir cela
+  entre transactions concurrentes.
+- Comparaison de reçus d'idempotence liant acteur, clé, canal, opération et tous
+  les paramètres typés. Un rejeu exige un contrôle d'accès courant, même exact ;
+  un changement de canal MCP vers web ne transforme jamais une proposition en
+  validation. Le module ne retourne pas une réponse personnelle mémorisée.
+
+Les transitions retournent un nouvel agrégat après validation complète. Une
+erreur laisse donc la valeur d'origine intacte. Cela n'est pas une transaction
+PostgreSQL et ne démontre pas encore l'atomicité d'une écriture réseau.
+
+* Limites et travaux restant à porter
+Les appartenances de groupes, rôles enseignants/élèves/administration, identité
+Log/Kanidm, consentement MCP, fraîcheur MFA et révocation doivent être résolus
+par le serveur et revérifiés dans la transaction. =WriteChannel=,
+=CurrentResourceAccess= et les autres valeurs du modèle ne sont ni credentials,
+ni ACL, ni preuves d'autorisation. Le modèle vérifie le propriétaire de la séance,
+mais ne prétend pas connaître une habilitation actuellement révoquée en base.
+
+Le dépôt SQLx/PostgreSQL, schéma audition, contraintes uniques, RLS, verrou de
+groupe, versions persistantes et migrations ne sont pas implémentés dans cette
+crate. Une prescription passée aux transitions doit être celle qui a été relue
+dans la transaction autorisée, et non une ancienne copie choisie par le client.
+Un adaptateur qui annoncerait un succès persistant à partir du seul retour du
+modèle serait incorrect.
+
+L'idempotence livrée est une décision pure, sans table de reçus, empreinte
+cryptographique ni preuve de commit. Le type générique de commande doit inclure
+tous les paramètres normalisés, y compris groupe, ressource, révisions et
+versions ; un adaptateur ne doit pas y substituer un sous-ensemble arbitraire.
+Les futurs DTO fermés doivent rejeter champs inattendus/doublons et définir la
+canonisation. La comparaison du reçu vient après les contrôles de droits et
+avant une nouvelle mutation/revalidation de révision.
+
+Restent notamment : affectations et habilitations complètes, remédiations,
+rectifications enseignantes attribuées, rapports et indicateurs logit/dB,
+pagination bornée, consentements, suppression contrôlée, conservation et
+restauration. Le modèle des séances nouvelles ne charge pas d'anciennes données
+ayant des rectifications ; ces données ne doivent pas être importées dans ce
+modèle incomplet en faisant disparaître leur historique.
+
+Les limites de caractères, nombres d'aides/observations/tentatives et transitions
+sont appliquées ici. Les limites de requête HTTP (64 Kio), page (262144 octets),
+document persistant (900000 octets), comptes/objets de groupe et transactions
+restent à appliquer par les adaptateurs. Aucun stockage réel n'est proposé.
+Les valeurs de points sont des =f64= finis validés ; aucun calcul de moyenne,
+probabilité ou conversion logarithmique n'est déclaré porté.
+
+Le modèle ne contient aucun logger. Les erreurs portent des codes fixes ; les
+agrégats de production ne dérivent pas =Debug=. Les identifiants ont un affichage
+=Debug= expurgé. Cela ne prouve pas l'absence de fuite dans de futurs adaptateurs
+ou dans la plateforme entière. Aucun secret ou donnée réelle n'a servi aux tests.
+
+* Écarts explicités
+Le code Lisp limite les transitions ordinaires à 256, mais l'ajout
+=adopter_contexte= n'utilise pas ce contrôle. La proposition Rust applique la
+même limite à l'ensemble de cet historique, pour éviter un contournement de la
+borne. C'est une correction préparée d'une lacune ancienne, à qualifier avant
+compatibilité publique, pas une suppression d'exigence pour faire passer un test.
+
+La révision ne dépasse pas le maximum déclaré de 1000000000 : un dépassement
+échoue avant mutation, au lieu de créer une version devenue impossible à citer
+dans le contrôle de révision. Les erreurs internes et les valeurs typées doivent
+recevoir une adaptation HTTP/MCP explicite avant toute exposition publique.
+
+* Vérification locale
+Depuis la racine du workspace =platform/=, avec les variables de toolchain de
+l'environnement et sans credential GitHub transmis aux processus de build :
+
+#+begin_src sh
+cargo test --locked -p mrjam-audition
+cargo clippy --locked -p mrjam-audition --all-targets -- -D warnings
+cargo fmt -p mrjam-audition --check
+#+end_src
+
+=tests/contracts.rs= utilise uniquement des identités, productions, valeurs et
+heures inventées. Les résultats attendus proviennent du contrat documentaire et
+des invariants analysés, sans importer les constantes de l'implémentation. Ces
+tests de développement ne constituent pas encore des tests d'acceptation adoptés
+par une autorité extérieure au candidat. Les résultats liés aux empreintes des
+sources sont consignés dans =evidence-local.json=.
+
+* Sources autorisées consultées
+Révision commune : =MrJ-am/vps-infrastructure@c6459ae215b0e4e8b1350b02222ad21af41db836=.
+Les lectures ont été limitées aux contrats et au code ; aucun rapport de
+qualification, fichier privé, journal, archive ou contenu applicatif n'a été lu.
+
+| Source | Blob Git | Usage |
+|--------+----------+-------|
+| assemblage/audition/CONTRAT.md | 6b746a82d1615f62e74c4ce363ee5f3ddc3f38ab | invariants et frontières |
+| assemblage/audition/MCP.md | 089e56c7140130bdc824b635cf11b93e887dc8df | versions, opérations, erreurs et limites |
+| lisp/audition/modele.lisp | 67acddab2aacdac2d26f628baaf22464530d2cf8 | validation et visibilité |
+| lisp/audition/package.lisp | f462569ebc7cc7eefd741df527a3a5c0bc85715e | identités, textes, champs et dates |
+| lisp/audition/services.lisp | 2ea12f2bb086f1fcb9dbe75809e4ff4b7e01711a | prescriptions, séances, idempotence |

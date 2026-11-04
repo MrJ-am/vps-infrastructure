@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Independent fixtures for exact-source selection and unchanged-Elm reuse."""
 import json
+import shutil
 from pathlib import Path
 import subprocess
 import tempfile
@@ -109,6 +110,57 @@ class Sources(unittest.TestCase):
         self.write(self.mateval, "frontend/site/index.html", "loose mutation\n")
         with self.assertRaisesRegex(prepare.Refused, "SOURCE_HASH_MISMATCH"):
             reuse_frontend.equivalent(self.mateval, self.mateval_commit, self.mateval_commit, self.frontend_files)
+
+    def move_workspace(self):
+        workspace = self.platform / "serveur"
+        workspace.mkdir()
+        for name in ("Cargo.toml", "crates", "components"):
+            shutil.move(self.platform / name, workspace / name)
+        self.vision = workspace / "components/vision"
+        self.mateval = workspace / "components/mateval"
+        self.write(self.platform, "private/unrelated.rs", "SYNTHETIC_EXCLUDED_MARKER\n")
+        return self.commit(self.platform)
+
+    def test_infrastructure_subdirectory_preserves_build_layout_and_pins(self):
+        revision = self.move_workspace()
+        lock = select_sources.propose(self.platform, revision, self.baseline, "serveur")
+        platform = lock["sources"]["platform"]
+        self.assertEqual(platform["repository"], "MrJ-am/vps-infrastructure")
+        self.assertEqual(platform["source_subdirectory"], "serveur")
+        self.assertEqual(platform["tree"], self.git(self.platform, "rev-parse", revision + ":serveur"))
+        self.assertNotIn("private/unrelated.rs", platform["files"])
+        self.assertEqual(lock["sources"]["vision"]["commit"], self.vision_commit)
+        files = prepare.verify_sources(self.platform, lock)
+        self.assertEqual(files["platform-source/crates/server/src/main.rs"], b"fn main() {}\n")
+        self.assertIn("platform-source/components/vision/src/lib.rs", files)
+        self.assertIn("mateval-frontend/site/index.html", files)
+
+    def test_infrastructure_subdirectory_rejects_mutation_and_wrong_tree(self):
+        revision = self.move_workspace()
+        lock = select_sources.propose(self.platform, revision, self.baseline, "serveur")
+        lock["sources"]["platform"]["tree"] = "a" * 40
+        with self.assertRaisesRegex(prepare.Refused, "SOURCE_TREE_MISMATCH"):
+            prepare.verify_sources(self.platform, lock)
+        lock = select_sources.propose(self.platform, revision, self.baseline, "serveur")
+        self.write(self.platform, "serveur/crates/server/src/main.rs", "tampered\n")
+        with self.assertRaisesRegex(prepare.Refused, "SOURCE_HASH_MISMATCH"):
+            prepare.verify_sources(self.platform, lock)
+
+    def test_subdirectory_cannot_escape_repository(self):
+        for path in ("../serveur", "/serveur", "serveur/../private"):
+            with self.subTest(path=path), self.assertRaisesRegex(prepare.Refused, "SOURCE_PATH_REFUSED"):
+                select_sources.propose(self.platform, self.platform_commit, self.baseline, path)
+
+    def test_identity_services_are_included_in_workspace_materialization(self):
+        for crate in ("identity", "identity-deletion"):
+            self.write(self.platform, f"crates/{crate}/Cargo.toml", "synthetic manifest\n")
+            self.write(self.platform, f"crates/{crate}/src/main.rs", "fn main() {}\n")
+        revision = self.move_workspace()
+        lock = select_sources.propose(self.platform, revision, self.baseline, "serveur")
+        files = prepare.verify_sources(self.platform, lock)
+        for crate in ("identity", "identity-deletion"):
+            self.assertIn(f"platform-source/crates/{crate}/Cargo.toml", files)
+            self.assertIn(f"platform-source/crates/{crate}/src/main.rs", files)
 
 
 if __name__ == "__main__":

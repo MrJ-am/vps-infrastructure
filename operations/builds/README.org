@@ -1,6 +1,28 @@
 #+title: Construction déclarative Rust et Elm — sources et artefacts identifiés
 #+language: fr
 
+* Workspace dans vps-infrastructure/serveur
+
+Pour la nouvelle organisation, =--platform= désigne la racine Git de
+=vps-infrastructure= et =--source-subdirectory serveur= sélectionne uniquement
+le workspace. Le commit est celui du dépôt d'infrastructure ; les deux gitlinks
+restent exacts. Les verrous historiques et leurs reçus ne sont pas réécrits.
+
+#+begin_src sh
+python3 operations/builds/select_sources.py \
+  --platform "$INFRASTRUCTURE_SOURCE" --platform-commit "$EXACT_INFRASTRUCTURE_COMMIT" \
+  --source-subdirectory serveur --destination "$NEW_SOURCE_LOCK"
+python3 operations/builds/prepare.py \
+  --platform "$INFRASTRUCTURE_SOURCE" --source-lock "$NEW_SOURCE_LOCK" \
+  --style "$STYLE_EXPORT" --elm-home "$ELM_SOURCE_CACHE" \
+  --cargo-cache "$CRATE_ARCHIVES" --destination "$NEW_BUILD_INPUTS"
+#+end_src
+
+Le nouveau sélecteur inclut les deux services d'identité, requis par le workspace
+Cargo. Les sorties Nix =identityService= et =identityDeletionService= fournissent
+leurs binaires et manifestes séparés lorsque ces crates figurent dans les entrées.
+Le format interne =platform-source/= reste compatible avec le constructeur.
+
 * Portée et références
 
 La directive courante est décrite dans =../mise-en-service/mandat.org=.

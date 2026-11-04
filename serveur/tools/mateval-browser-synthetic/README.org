@@ -1,0 +1,105 @@
+#+title: Qualification navigateur Mateval sur corpus inventé
+#+language: fr
+
+* Périmètre
+
+Ce harnais traverse le vrai questionnaire Elm, ses interopérations JavaScript,
+le transport Rust sur TCP local et PostgreSQL synthétique. Il utilise seulement
+les deux questions et quatre rédactions inventées de =bank.json=. Le corpus
+public verrouillé dans Mateval est vérifié et reste intact ; une copie de la
+vue de test reçoit explicitement ce corpus synthétique. Aucun document du mémoire,
+réponse réelle, journal, sauvegarde ou service de production n'est consulté.
+
+=prepare.mjs= copie le frontend hors Git, vérifie ses ressources publiques et
+les 64 fichiers du verrou de style, prépare les dépendances Elm avec les outils
+épinglés, puis compile =Survey.elm= optimisé. Les autres entrées Elm ne sont pas
+qualifiées par ce scénario. Les fichiers d'identité sont installés par le helper
+du frontend, qui contrôle leur provenance. Aucun pin de style ou gitlink ne change.
+
+=run.mjs= lance uniquement l'example Rust =mateval_synthetic= préparé par
+l'assembleur. Cet example exige l'URL littérale locale, crée son propre schéma
+et un rôle restreint, et retourne son port loopback éphémère. Les migrations
+ne sont exécutées que dans cette fixture explicitement demandée. Le CLI
+=mrjam-server serve= et son refus de disponibilité restent inchangés.
+
+* Origine du navigateur et frontière réseau
+
+Les contextes Chromium ne contiennent que des participations inventées.
+Leur trafic HTTP applicatif est intercepté avant ouverture de la page : seules
+les ressources de =https://principiipetit.io/matheval/= sont servies par la vue
+locale et les requêtes API sont transmises sur TCP au serveur Rust loopback.
+Les en-têtes Origin réels du navigateur sont conservés, sans assouplir le
+contrat du transport. Aucune requête n'est envoyée au domaine public.
+
+Tout autre trafic HTTP est refusé, les WebSockets sont fermés et les service
+workers sont bloqués. Le helper n'est pas une sandbox réseau générale pour du
+code arbitraire. Il ne démontre pas TLS public, Nginx, DNS, le service statique
+du CLI, une bascule, ni une isolation de production. Aucun certificat n'est
+ignoré et aucun proxy externe n'est désactivé.
+
+* Reproduction dans cet environnement
+
+La copie de style doit contenir les seuls fichiers du verrou
+=components/mateval/frontend/style-mrjam.json=, à la révision exacte
+=27111a95d0222c634e55fb2e3ff8e45041b40b16=. L'export local préparé est
+=/workspace/shared/mrjam-style-27111a95= : 64 SHA-256 vérifiés, aucun historique
+Git importé. Les paquets publics sont téléchargés avec le proxy et TLS de
+l'environnement ; aucune dépendance n'est remplacée par une version latest.
+
+Depuis la racine de la plateforme :
+
+#+begin_src sh
+source /workspace/shared/mrjam-environment/.local/activate.sh
+export CARGO_HOME=/workspace/shared/mrjam-environment/.local/cargo
+export CARGO_TARGET_DIR=/workspace/shared/mrjam-environment/.local/target
+export CARGO_BUILD_JOBS=4
+cargo build --locked --offline -p mrjam-server --features integration-postgres --example mateval_synthetic
+node tools/mateval-browser-synthetic/prepare.mjs \
+  components/mateval/frontend /workspace/shared/mrjam-style-27111a95 \
+  /workspace/shared/mrjam-mateval-browser-build-new \
+  /workspace/shared/mrjam-environment /workspace/mrjam-validation/review
+node tools/mateval-browser-synthetic/run.mjs \
+  /workspace/shared/mrjam-mateval-browser-build-new/frontend/site \
+  "$CARGO_TARGET_DIR/debug/examples/mateval_synthetic" \
+  /workspace/shared/mrjam-environment /workspace/shared/mateval-browser-result.json
+python3 -m unittest discover -s tools/mateval-browser-synthetic -p 'test_*.py' -v
+#+end_src
+
+La destination de build doit être nouvelle. Le chemin de preuve de reproduction
+reste hors Git. Le rapport sélectionné dans =verification.json= décrit un seul
+scénario à dix contrôles ; les répétitions pendant le développement ne sont pas
+des tests supplémentaires. =build-verification.json= lie les versions et les
+empreintes de la vue. Ces fichiers sont des preuves locales non signées, sans
+autorité de validation ou de promotion. La configuration de règles copiée sert
+ici à préparer le cache ; elle n'est pas adoptée par le candidat.
+
+* Propriétés exercées
+
+- Création publique sans SSO, réponse sans secret, persistance réelle.
+- Note zéro distincte de null ; snapshot conservé après lecture PostgreSQL.
+- Rechargement de page puis nouveau contexte avec stockage navigateur synthétique.
+- Perte volontaire de l'accusé après commit : rejeu du même payload et de la
+  même révision, journal inchangé sans doublon.
+- Panne de transport avant commit : copie locale conservée et bouton de reprise
+  utilisable au pointeur après fermeture du lecteur.
+- Secret d'une seconde participation refusé pour la première ; administration
+  scientifique toujours fermée.
+- Validation finale, intégrité du snapshot/journal et reprise après rechargement.
+- Ressources locales, absence d'exception de page et arrêt/nettoyage de la fixture.
+
+Le bouton de reprise a aussi passé le contrôle d'actionnabilité au pointeur
+dans le lecteur ouvert. Le rejeu idempotent est activé au clavier. Le harnais
+attend la fin du flush de reprise programmé à 300 ms avant d'injecter une panne
+distincte ; sans cette séparation, la reprise automatique peut faire disparaître
+le bouton avant le clic. Aucun défaut de l'interface n'est déduit de cette course.
+
+Le test de garde du runner vérifie trois destinations invalides avant toute
+lecture de fichier ou lancement de serveur/navigateur. Le refus est un code
+fermé et ne réémet pas l'URL reçue. Les erreurs asynchrones des routes et du
+nettoyage sont également fermées. Aucune capture, vidéo, trace contenant une
+participation ou valeur de secret n'est écrite.
+
+Le serveur est arrêté par SIGTERM et supprime seulement son propre schéma/rôle.
+Un échec de nettoyage fait échouer le rapport ; aucun nettoyage large des
+objets préexistants n'est tenté. Les services PostgreSQL/Nginx partagés restent
+en marche. Le gel des déploiements demeure actif.
