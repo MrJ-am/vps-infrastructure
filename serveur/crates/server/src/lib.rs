@@ -85,6 +85,10 @@ async fn deadline(request: Request, next: Next) -> Response {
 async fn response_policy(request: Request, next: Next) -> Response {
     let mut response = next.run(request).await;
     response.headers_mut().insert(
+        "x-mrjam-source",
+        header::HeaderValue::from_static("vps-infrastructure"),
+    );
+    response.headers_mut().insert(
         header::CACHE_CONTROL,
         header::HeaderValue::from_static("no-store"),
     );

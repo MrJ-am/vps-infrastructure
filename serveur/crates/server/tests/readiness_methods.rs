@@ -23,6 +23,7 @@ async fn head_preserves_health_and_readiness_without_a_body()
         assert_eq!(response.status(), expected);
         assert_eq!(response.headers()["cache-control"], "no-store");
         assert_eq!(response.headers()["x-content-type-options"], "nosniff");
+        assert_eq!(response.headers()["x-mrjam-source"], "vps-infrastructure");
         assert!(to_bytes(response.into_body(), 1024).await?.is_empty());
     }
     Ok(())
@@ -42,5 +43,6 @@ async fn post_cannot_turn_a_readiness_probe_into_an_operation()
     assert_eq!(response.status(), StatusCode::METHOD_NOT_ALLOWED);
     assert_eq!(response.headers()["cache-control"], "no-store");
     assert_eq!(response.headers()["x-content-type-options"], "nosniff");
+    assert_eq!(response.headers()["x-mrjam-source"], "vps-infrastructure");
     Ok(())
 }
