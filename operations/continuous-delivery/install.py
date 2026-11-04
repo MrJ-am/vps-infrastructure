@@ -78,6 +78,14 @@ def main():
             raise RuntimeError("Unexpected generated credential format")
         secret(config / "source-token", token)
     request("PATCH", base, {"has_actions": True})
+    protection = request("GET", base + "/branch_protections/main")
+    desired = {key: value for key, value in protection.items()
+               if key not in ["branch_name", "rule_name", "created_at", "updated_at"]}
+    desired["status_check_contexts"] = ["Tests et construction / tests*"]
+    request("PATCH", base + "/branch_protections/main", desired)
+    actual = request("GET", base + "/branch_protections/main")
+    if any(actual.get(key) != value for key, value in desired.items()):
+        raise RuntimeError("Forgejo branch protection recheck failed")
     identity_file = config / "identity.json"
     if not identity_file.exists():
         runners = request("GET", base + "/actions/runners")
