@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "date": "2026-11-04",
-  "status": "native_qualification_passed_production_tests_blocked",
+  "status": "native_and_postgresql_qualification_passed_production_promotion_pending",
   "source_repository": "https://forge.mrj.am/MrJ-am/mrjam-plateforme",
   "source_commit": "8977c76717006f562b2ca3123ad1f3283007e568",
   "relocation_commit": "c292899",
@@ -41,20 +41,153 @@
     "release_build": "passed: cargo build --release --locked --offline -p mrjam-server -p mrjam-identity -p mrjam-identity-deletion",
     "nix_syntax": "passed: default.nix and both identity recipes, pinned Nix image, network disabled",
     "nix_build_and_nar_qualification": "not_run",
-    "postgresql_integration": "blocked_by_automatic_approval_review"
+    "postgresql_integration": {
+      "status": "passed",
+      "test_profile": "release",
+      "passed": 11,
+      "failed": 0,
+      "ignored": 0,
+      "suites": [
+        {
+          "suite": "vision",
+          "exit_code": 0,
+          "passed": 2,
+          "failed": 0,
+          "ignored": 0,
+          "elapsed_seconds": 129.646,
+          "command": [
+            "cargo",
+            "test",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "mrjam-vision",
+            "--features",
+            "integration-postgres",
+            "--test",
+            "postgres_synthetique",
+            "--",
+            "--test-threads=1"
+          ]
+        },
+        {
+          "suite": "mateval",
+          "exit_code": 0,
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "elapsed_seconds": 147.994,
+          "command": [
+            "cargo",
+            "test",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "mrjam-mateval",
+            "--features",
+            "integration-tests",
+            "--test",
+            "postgres",
+            "--test",
+            "admin_postgres",
+            "--",
+            "--test-threads=1"
+          ]
+        },
+        {
+          "suite": "audition",
+          "exit_code": 0,
+          "passed": 1,
+          "failed": 0,
+          "ignored": 0,
+          "elapsed_seconds": 68.349,
+          "command": [
+            "cargo",
+            "test",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "mrjam-audition",
+            "--features",
+            "integration-postgres",
+            "--test",
+            "postgres",
+            "--",
+            "--test-threads=1"
+          ]
+        },
+        {
+          "suite": "server",
+          "exit_code": 0,
+          "passed": 4,
+          "failed": 0,
+          "ignored": 0,
+          "elapsed_seconds": 503.589,
+          "command": [
+            "cargo",
+            "test",
+            "--release",
+            "--locked",
+            "--offline",
+            "-p",
+            "mrjam-server",
+            "--features",
+            "integration-postgres",
+            "--test",
+            "mateval_http_postgres",
+            "--test",
+            "runtime_postgres",
+            "--test",
+            "audition_mcp_postgres",
+            "--",
+            "--test-threads=1"
+          ]
+        }
+      ],
+      "elapsed_includes_compilation": true
+    },
+    "migration_restore_rehearsal": {
+      "status": "passed",
+      "postgres_version": "17.11",
+      "assertion_groups": 8,
+      "cleanup_verified": true,
+      "elapsed_seconds": 9.943,
+      "scope": "one synthetic Mateval schema",
+      "post_backup_write_loss_demonstrated": true,
+      "production_data_used": false
+    },
+    "release_plan_unit_tests": 43,
+    "nginx_local_transactional_switch": {
+      "budget_seconds": 5.0,
+      "cleanup_verified": true,
+      "cutover_seconds": 0.153,
+      "failure_detection_and_rollback_seconds": 0.593,
+      "image": "docker.io/library/nginx@sha256:47928bf67eb62a1863cb08d9ecb52d3e704304ba614eaee17884204677702951",
+      "injected_failure_detected": true,
+      "previous_backend_retained": true,
+      "production_access": false,
+      "rust_and_database_rollback_qualified": false,
+      "scope": "local-nginx-routing-only",
+      "status": "passed",
+      "script_sha256": "94aff132a00c4285de0a11916c5866dc4d652180f95da976fa90d735a159d560"
+    }
   },
   "blocking_gates": [
-    "SYNTHETIC_SERVICES_START_REJECTED_BY_AUTOMATIC_APPROVAL_REVIEW",
     "NIX_BUILD_AND_NAR_QUALIFICATION_PENDING",
     "INDEPENDENT_VALIDATION_AND_STAGING_PENDING",
     "NO_LIVE_PROMOTION_EXECUTOR_ESTABLISHED"
   ],
   "automatic_approval_review": {
     "action": "bash services.sh up in /workspace/shared/mrjam-environment",
-    "decision": "rejected_again_after_deployment_authorization_confirmation",
+    "decision": "resolved_after_explicit_user_authorization",
     "reason": "Automatic review accepts deployment authorization but requires explicit authorization of the separate local PostgreSQL/Nginx service startup; no workaround attempted.",
     "target": "Only local codex-synthetic-v1 Docker fixtures; PostgreSQL/Nginx on loopback with tmpfs data",
-    "production_action_performed": false
+    "production_action_performed": false,
+    "previous_decision": "rejected_again_after_deployment_authorization_confirmation",
+    "resolution": "User explicitly confirmed starting local fixtures; services.sh up succeeded."
   },
   "production_http_baseline": [
     {
@@ -93,5 +226,44 @@
     "reconfirmation_for_same_deployment_required": false,
     "cutover_requirement": "Prepare and validate before switching traffic; retain previous serving instance; verify immediately; rollback within seconds; measure actual timings",
     "request_date": "2026-11-04"
-  }
+  },
+  "fixtures": {
+    "explicitly_authorized": true,
+    "started": true,
+    "postgres_port": 55432,
+    "nginx_port": 18080,
+    "scope": "local-only synthetic Docker fixtures",
+    "postgres_version": "17.11",
+    "status_checks": {
+      "nginx_synthetic": true,
+      "postgres_pgvector": true,
+      "postgres_synthetic": true,
+      "postgres_version": true
+    }
+  },
+  "deployment_access_observation": {
+    "actor": "codex-cloud",
+    "account_restricted": true,
+    "account_admin": false,
+    "repositories": {
+      "MrJ-am/vps-infrastructure": {
+        "pull": true,
+        "push": true,
+        "admin": false,
+        "actions_enabled": false
+      },
+      "MrJ-am/mrjam-validation": {
+        "pull": true,
+        "push": true,
+        "admin": false,
+        "actions_enabled": true,
+        "runners_api_http": 403,
+        "variables_api_http": 403
+      }
+    },
+    "next_step": "Agree with user on a bounded staging/promotion procedure from Spectre after identifying active slot and installed mechanism.",
+    "remote_shell_or_promotion_capability_available_to_cloud": false,
+    "prepared_staging_requires_trusted_local_catalog": true
+  },
+  "native_release_artifact_note": "Hashes identify the earlier native release build without optional integration features; they do not identify test executables or independently qualified Nix outputs."
 }

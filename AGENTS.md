@@ -5,6 +5,8 @@
   disponible, basculer de manière transactionnelle, tester immédiatement et revenir
   à l'ancienne version en quelques secondes en cas d'échec. Une indisponibilité
   prolongée est exclue ; la durée de bascule et de retour doit être mesurée.
+- Le démarrage des fixtures locales PostgreSQL/Nginx est explicitement autorisé
+  par l'utilisateur pour terminer cette qualification.
 
 - La directive utilisateur du 30 octobre demande d'achever la migration jusqu'à la première mise en service ; voir `operations/mise-en-service/mandat.org`. L'ancien gel d'objectif est remplacé par cette autorisation, sans déclarer une révision qualifiée par défaut.
 - Directive du 1 novembre : ViSe ne doit jamais bloquer le premier déploiement. Le profil principal l'exclut ; reporter sa qualification et sa réintégration si nécessaire, en conservant ses données. Ne pas exiger son exécutable, ses tests ou sa disponibilité pour déployer le socle.

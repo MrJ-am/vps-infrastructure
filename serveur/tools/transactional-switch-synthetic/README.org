@@ -1,0 +1,35 @@
+#+title: Répétition locale de bascule et de retour Nginx
+#+language: fr
+
+Depuis la racine du dépôt :
+
+#+begin_src sh
+PYTHONDONTWRITEBYTECODE=1 python3 serveur/tools/transactional-switch-synthetic/qualify.py
+#+end_src
+
+Le programme n'accepte aucun argument. Il utilise le socket Docker local et
+l'image Nginx déjà présente au digest exact de l'environnement. Aucun pull,
+accès au VPS, fichier de production ou identifiant n'est nécessaire.
+
+Trois conteneurs jetables servent des marqueurs entièrement inventés : blue,
+green et leur proxy. Les ports hôtes sont éphémères et publiés uniquement sur
+127.0.0.1. Les fichiers de configuration sont en lecture seule dans les conteneurs,
+les données temporaires en tmpfs, les capacités supprimées et les logs désactivés.
+Le réseau Docker bridge local n'est pas présenté comme un isolement sortant.
+
+Les deux backends et les deux configurations complètes sont vérifiés avant
+bascule. Le choix d'upstream change par renommage atomique, suivi d'un reload
+gracieux et de la vérification du marqueur reçu sur une nouvelle connexion.
+L'ancien backend reste actif. Une panne du candidat est ensuite provoquée par
+l'arrêt de son seul conteneur : le proxy doit constater l'échec et revenir au
+backend précédent dans un budget de cinq secondes, détection comprise.
+
+Les chronomètres utilisent l'horloge monotone. Le résultat n'est émis qu'après
+suppression des trois conteneurs et de leur réseau. Les fixtures partagées
+PostgreSQL et Nginx ne sont pas arrêtées ni reconfigurées.
+
+Ce test mesure uniquement le transport Nginx local : il ne qualifie ni le serveur
+Rust, ni TLS, ni les sessions, ni les connexions longues, ni les schémas SQL,
+ni la chaîne de promotion installée sur le VPS. La durabilité après une coupure
+machine n'est pas testée. Les durées de production restent à mesurer sur le
+mécanisme borné effectivement retenu depuis Spectre.

@@ -77,3 +77,44 @@ jusqu'à la qualification et la promotion du remplacement.
 Les résultats et blocages courants sont consignés dans
 =qualification-reorganisation-serveur-20261104.json=. Ce dossier n'affirme
 aucune promotion tant que son observation n'a pas été obtenue.
+
+Après confirmation explicite du démarrage des fixtures locales, les quatre suites
+PostgreSQL passent : 11 tests pour Vision, Mateval, Audition et le serveur, sans
+échec ni test ignoré. La répétition de migration/dump/restore Mateval passe aussi,
+sur un schéma inventé avec nettoyage vérifié. Elle démontre la perte d'une écriture
+postérieure à la sauvegarde lors d'une restauration non réconciliée ; le retour
+binaire rapide ne doit donc pas être remplacé par cette restauration.
+
+Le harnais =serveur/tools/transactional-switch-synthetic/qualify.py= mesure sur
+Nginx local une bascule en 0,153 seconde et une détection de panne suivie du retour
+en 0,593 seconde. Il conserve le backend précédent et nettoie ses conteneurs.
+Cette mesure concerne uniquement le routage entre marqueurs synthétiques ; elle
+ne qualifie pas le comportement applicatif ou la durée de promotion du VPS.
+
+* Passage à l'exploitation depuis Spectre
+
+L'utilisateur a confirmé le démarrage des fixtures locales et proposé d'utiliser
+Spectre pour débloquer les accès d'exploitation, avec une procédure à convenir
+avant intervention. Le compte Cloud courant =codex-cloud= reste restreint et
+non administrateur. Les API de gestion des runners et variables de
+=mrjam-validation= répondent 403 ; Actions est désactivé sur l'infrastructure.
+
+Le staging préparé dans =operations/forgejo/stage_sources.py= exige une entrée
+locale de confiance détenue par root et un catalogue scellé. Le dispatch Forgejo
+ne publie pas lui-même les sources et ne donne pas une commande de promotion VPS.
+Ces contraintes sont distinctes de l'autorisation utilisateur de déployer.
+
+La prochaine discussion de procédure doit établir depuis Spectre :
+
+1. Le binaire et le slot réellement actifs, le routage Nginx et les sondes privées
+   disponibles, à partir d'un relevé limité aux métadonnées d'exploitation.
+2. La construction Nix du nouveau commit et sa validation indépendante, puis le
+   mécanisme de staging et de promotion effectivement installé ou restant à installer.
+3. Une première livraison limitée au serveur et à son en-tête HTTP, sans migration
+   SQL ni remplacement simultané des services d'identité. Le candidat démarre sur
+   le slot inactif ; l'ancien reste disponible pour le retour immédiat.
+4. Les délais et critères mesurés pour le changement de routage, les sondes
+   immédiates et le retour à l'ancien slot. La compilation, l'import d'artefacts et
+   les contrôles longs restent en dehors de cette fenêtre de quelques secondes.
+
+Cette liste ne constitue pas encore une commande de bascule qualifiée.
