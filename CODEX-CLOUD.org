@@ -1,0 +1,80 @@
+#+title: Accès direct de Codex Cloud à Forgejo
+#+date: 2026-11-04
+#+language: fr
+
+* État
+
+Le compte technique =codex-cloud= existe sur Forgejo. Il n'est pas
+administrateur. Son jeton est limité aux neuf dépôts de l'organisation
+=MrJ-am= et à =MrJam/Config=, avec lecture/écriture des dépôts et des tickets.
+Il ne donne aucun accès SSH au VPS ni aux données des applications.
+Les protections de branches restent inchangées.
+
+La lecture Git HTTPS et les permissions API sont vérifiées depuis Spectre.
+L'installation du secret et l'essai dans une tâche Cloud restent à terminer.
+Ne pas confondre cette préparation avec un environnement Cloud opérationnel.
+
+* Configuration dans Cloud
+
+Utiliser un environnement proposant les secrets réseau / HTTP, disponibles
+pendant la préparation et les tâches. Les anciens secrets limités au script
+de préparation ne suffisent pas pour travailler avec Git pendant une tâche.
+
+| Réglage | Valeur |
+|---------+--------|
+| Type | Secret réseau / HTTP |
+| Clé | FORGEJO_AUTHORIZATION |
+| Valeur | En-tête Basic préparé pour le jeton technique ; ne pas le copier dans Git ou une conversation |
+| Domaine autorisé | forge.mrj.am |
+| Protocole | HTTPS, port 443 |
+
+Le proxy Cloud remplace le substitut du secret par sa valeur lors des requêtes
+vers le domaine autorisé. Git et l'API doivent utiliser ce proxy ; ne pas le
+contourner. Publier l'environnement après configuration et vérifier une
+nouvelle tâche. La connexion GitHub éventuellement demandée par l'interface
+Cloud ne transforme pas GitHub en dépôt de travail principal.
+
+* Utiliser Git et l'API
+
+Dans une tâche Cloud configurée, utiliser l'en-tête fourni sans l'afficher :
+
+#+begin_src sh
+export FORGEJO_HEADER="Authorization: $FORGEJO_AUTHORIZATION"
+git --config-env=http.https://forge.mrj.am/.extraHeader=FORGEJO_HEADER \
+  ls-remote https://forge.mrj.am/MrJ-am/vps-infrastructure.git refs/heads/main
+curl --fail --silent --show-error \
+  -H "$FORGEJO_HEADER" https://forge.mrj.am/api/v1/user
+#+end_src
+
+La même option Git permet clone, fetch et push. Ne pas placer le jeton dans
+l'URL du remote, un fichier versionné ou les journaux ; ne pas activer de trace
+HTTP ou =set -x=. L'API doit identifier =codex-cloud= avec =is_admin: false=.
+
+Travailler dans un clone dont =origin= pointe vers Forgejo. Si l'environnement
+gère automatiquement un checkout GitHub, conserver le clone Forgejo dans un
+répertoire distinct pour éviter sa remise à jour par GitHub. Cloner seulement
+les projets nécessaires à la tâche, avec les dépendances épinglées exigées
+par leurs AGENTS.md. Le nom de dépôt personnel est =MrJam/Config=.
+
+Créer les branches et demandes de fusion sur Forgejo. Le miroir sortant
+répercute les branches et tags vers GitHub ; ne pas pousser le travail sur
+GitHub en premier. Une modification faite seulement sur GitHub peut être écrasée.
+Les intégrations spécifiques à GitHub restent distinctes de ce flux.
+
+* Actions et déploiement
+
+L'accès aux sources ne réactive ni les runners ni les chaînes de déploiement
+arrêtées. Une requête API réussie ne prouve pas qu'un travail sera exécuté.
+Les routes d'administration des dépôts ne sont pas accordées par ce jeton.
+Les miroirs se déclenchent automatiquement sur push, sans droit supplémentaire
+de configuration des miroirs. Aucune protection ne doit être contournée pour
+faire passer une demande de fusion ou une livraison.
+
+* Révocation
+
+Révoquer le jeton =codex-cloud-forgejo= du compte =codex-cloud= dans Forgejo,
+puis retirer le secret des environnements Cloud concernés. Pour renouveler
+l'accès, remplacer le secret par un nouveau jeton de mêmes droits et révoquer
+l'ancien. Ne pas utiliser le compte administrateur de préparation dans Cloud.
+
+Référence : [[https://learn.chatgpt.com/docs/environments/cloud-environments][documentation officielle des environnements Cloud]].

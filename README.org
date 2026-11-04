@@ -5,6 +5,7 @@
 
 - [[file:PROJETS.org][Projets, responsabilités et état observé au 4 novembre 2026]].
 - [[file:MIGRATIONS.org][Migrations : code, données, bascule et retour arrière]].
+- [[file:CODEX-CLOUD.org][Accès Git/API de Codex Cloud à Forgejo et état de sa configuration]].
 
 Rust reçoit actuellement le trafic applicatif du VPS. Les automatisations
 de livraison ont été arrêtées à la demande de l'utilisateur. Leur arrêt
