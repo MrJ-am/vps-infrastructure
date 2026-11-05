@@ -30,7 +30,7 @@ in pkgs.testers.runNixOSTest {
     systemd.services.fixture-app = {
       wantedBy = [ "multi-user.target" ];
       after = [ "mrjam-delivery-restore.service" ];
-      unitConfig.ConditionPathExists = "/run/mrjam-delivery-restored";
+      unitConfig.ConditionPathExists = "!/var/lib/fixture-blocked";
       restartIfChanged = false;
       stopIfChanged = false;
       serviceConfig.ExecStart = "${pkgs.coreutils}/bin/sleep infinity";
@@ -52,6 +52,7 @@ in pkgs.testers.runNixOSTest {
     for name in ["mrjam-delivery", "mrjam-delivery-restore"]:
         machine.succeed(f"ln -s ${controls}/{name}.service /etc/systemd/system.control/{name}.service")
         machine.succeed(f"ln -s /etc/systemd/system.control/{name}.service /etc/systemd/system.control/multi-user.target.wants/{name}.service")
+    machine.succeed("mkdir -p /etc/systemd/system.control/fixture-app.service.d; ln -s ${controls}/boot-order.conf /etc/systemd/system.control/fixture-app.service.d/10-delivery-recovery.conf")
     machine.succeed("systemctl daemon-reload; systemctl start mrjam-delivery-restore mrjam-delivery fixture-app")
     machine.wait_for_unit("fixture-app.service")
     machine.wait_for_unit("mrjam-delivery.service")
