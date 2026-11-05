@@ -1,0 +1,87 @@
+this derivation will be built:
+  /nix/store/6syw3gxa2xi0ncphjlxk80xpwgpspxds-mrjam-independent-delivery-qualification.drv
+building '/nix/store/6syw3gxa2xi0ncphjlxk80xpwgpspxds-mrjam-independent-delivery-qualification.drv'...
+waiting for server to start.... done
+server started
+test_boot_recovery_keeps_journal_until_old_generation_has_booted (coordinator_cases.Independent.test_boot_recovery_keeps_journal_until_old_generation_has_booted) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+ok
+test_interruption_then_fresh_recovery_uses_only_local_journal (coordinator_cases.Independent.test_interruption_then_fresh_recovery_uses_only_local_journal) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.006}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.005}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.006}
+ok
+test_phases_and_resume_surround_activation_and_cutover (coordinator_cases.Independent.test_phases_and_resume_surround_activation_and_cutover) ... {"event": "system-deployed", "revision": "cccccccccccccccccccccccccccccccccccccccc", "slot": "blue", "seconds": 0.001, "reboot_required": true}
+ok
+test_preparation_and_activation_failures_restore_slots_and_generation (coordinator_cases.Independent.test_preparation_and_activation_failures_restore_slots_and_generation) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.006}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.005}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.007}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.007}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.005}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.001, "recovery_seconds": 0.006}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.005}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.001, "recovery_seconds": 0.004}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.001, "recovery_seconds": 0.003}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.002}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.004}
+ok
+test_real_promote_control_flow_and_both_successive_rollbacks (coordinator_cases.Independent.test_real_promote_control_flow_and_both_successive_rollbacks) ... {"event": "system-deployed", "revision": "cccccccccccccccccccccccccccccccccccccccc", "slot": "blue", "seconds": 0.002, "reboot_required": true}
+{"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.006}
+{"event": "system-rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "routing_seconds": 0.0, "recovery_seconds": 0.003}
+ok
+test_real_after_system_program_obeys_activation_order (coordinator_cases.IndependentRealPrograms.test_real_after_system_program_obeys_activation_order) ... {"event": "system-deployed", "revision": "cccccccccccccccccccccccccccccccccccccccc", "slot": "blue", "seconds": 0.001, "reboot_required": true}
+ok
+test_real_interruption_after_commit_uses_conservative_write_boundary (coordinator_cases.IndependentRealPrograms.test_real_interruption_after_commit_uses_conservative_write_boundary) ... ok
+test_real_program_recovers_after_coordinator_interruption_before_resume (coordinator_cases.IndependentRealPrograms.test_real_program_recovers_after_coordinator_interruption_before_resume) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.067, "recovery_seconds": 0.071}
+ok
+test_real_resume_failure_parks_without_restoring_new_data (coordinator_cases.IndependentRealPrograms.test_real_resume_failure_parks_without_restoring_new_data) ... ok
+test_active_held_service_outside_managed_list_is_started_again (regression_cases.HeldServiceRegression.test_active_held_service_outside_managed_list_is_started_again) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.067, "recovery_seconds": 0.072}
+ok
+test_postgresql_active_before_failure_is_started_again (regression_cases.HeldServiceRegression.test_postgresql_active_before_failure_is_started_again) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.067, "recovery_seconds": 0.07}
+ok
+test_previously_inactive_postgresql_is_not_started (regression_cases.HeldServiceRegression.test_previously_inactive_postgresql_is_not_started) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.068, "recovery_seconds": 0.071}
+ok
+test_interrupted_legacy_rollback_keeps_journal_until_slot_restored (regression_cases.LegacySlotRegression.test_interrupted_legacy_rollback_keeps_journal_until_slot_restored) ... {"event": "deployed", "revision": "cccccccccccccccccccccccccccccccccccccccc", "slot": "blue", "seconds": 0.002}
+{"event": "rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "seconds": 0.003}
+{"event": "rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "seconds": 0.003}
+ok
+test_original_ABC_failed_preparation_then_rollback_B_keeps_A (regression_cases.LegacySlotRegression.test_original_ABC_failed_preparation_then_rollback_B_keeps_A) ... {"event": "rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "seconds": 0.002}
+ok
+test_control_words_in_literals_comments_and_DO_remain_legal (sql_cases.SQLRegression.test_control_words_in_literals_comments_and_DO_remain_legal) ... ok
+test_nested_comment_with_quote_cannot_hide_END_and_persist_data (sql_cases.SQLRegression.test_nested_comment_with_quote_cannot_hide_END_and_persist_data) ... FAIL
+test_original_END_rejected_by_load_and_transaction_builder (sql_cases.SQLRegression.test_original_END_rejected_by_load_and_transaction_builder) ... ok
+test_transaction_aliases_and_inline_psql_are_rejected (sql_cases.SQLRegression.test_transaction_aliases_and_inline_psql_are_rejected) ... ok
+test_unchecked_SQL_file_change_cannot_bypass_runtime_validation (sql_cases.SQLRegression.test_unchecked_SQL_file_change_cannot_bypass_runtime_validation) ... ok
+
+======================================================================
+FAIL: test_nested_comment_with_quote_cannot_hide_END_and_persist_data (sql_cases.SQLRegression.test_nested_comment_with_quote_cannot_hide_END_and_persist_data)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/nix/store/j3q0jm71l66fpaiq8pqrfrn2n712n91j-independent-delivery-test-support/sql_cases.py", line 91, in test_nested_comment_with_quote_cannot_hide_END_and_persist_data
+    self.assertEqual(self.count(), 0, 'Migration check failed, but END escaped the wrapper and committed a row')
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : Migration check failed, but END escaped the wrapper and committed a row
+
+----------------------------------------------------------------------
+Ran 19 tests in 2.935s
+
+FAILED (failures=1)
+error: Cannot build '/nix/store/6syw3gxa2xi0ncphjlxk80xpwgpspxds-mrjam-independent-delivery-qualification.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         /nix/store/zbjbzamnzpa62ybsq5awn1cvxjp2l8ww-mrjam-independent-delivery-qualification
