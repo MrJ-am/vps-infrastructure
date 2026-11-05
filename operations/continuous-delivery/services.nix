@@ -36,13 +36,13 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   cat > "$out/mrjam-delivery.service" <<'UNIT'
   [Unit]
   Description=MRJ.am delivery from successful Forgejo main builds
-  X-RestartIfChanged=false
-  X-StopIfChanged=false
   After=network-online.target nginx.service forgejo.service mrjam-delivery-restore.service
   Requires=mrjam-delivery-restore.service
   Wants=network-online.target
   [Service]
   Type=simple
+  X-RestartIfChanged=false
+  X-StopIfChanged=false
   StateDirectory=mrjam-delivery
   StateDirectoryMode=0755
   LoadCredential=source-token:/etc/mrjam-ci/source-token

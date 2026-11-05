@@ -302,6 +302,14 @@ def next_build():
     return None
 
 
+def refresh_engine():
+    engine_script = Path("/etc/mrjam-ci/engine/operations/continuous-delivery/deploy.py")
+    if engine_script.is_file() and engine_script.resolve() != Path(__file__).resolve():
+        command(["systemctl", "restart", "--no-block", "mrjam-delivery.service"])
+        return True
+    return False
+
+
 def watch():
     STATE.mkdir(exist_ok=True)
     with (STATE / "delivery.lock").open("w") as lock:
@@ -327,6 +335,8 @@ def watch():
                     except Exception:
                         if not (STATE / "manual-recovery.json").exists():
                             raise
+                    if refresh_engine():
+                        return
                     failures = 0
             if time.monotonic() >= next_poll:
                 next_poll = time.monotonic() + 10
@@ -337,9 +347,7 @@ def watch():
                         promote(build)
                         # Activation installs the engine from the exact tested
                         # source. Replace this process only after its transaction.
-                        engine_script = Path("/etc/mrjam-ci/engine/operations/continuous-delivery/deploy.py")
-                        if engine_script.is_file() and engine_script.resolve() != Path(__file__).resolve():
-                            command(["systemctl", "restart", "--no-block", "mrjam-delivery.service"])
+                        if refresh_engine():
                             return
                 except Exception as error:
                     if build:

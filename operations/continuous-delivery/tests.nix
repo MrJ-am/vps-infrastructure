@@ -23,6 +23,8 @@ in pkgs.runCommand "mrjam-system-delivery-checks" {
   cd ${source}/operations/continuous-delivery
   python3 -B -m unittest discover -v
   python3 -B -m unittest discover -s components -p test_components.py -v
+  export SOURCE_ROOT=${source}
+  python3 -B -m unittest discover -s components/qualification -p '*_cases.py' -v
   ${pkgs.lib.optionalString (migrationPlan != null) ''
     python3 -B check_plan.py ${migrationPlan} ${postgres}/bin/psql
   ''}
