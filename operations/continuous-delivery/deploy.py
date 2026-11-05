@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 
 from ci import api
@@ -74,12 +75,17 @@ def recover_preparation(restart=True):
     path.unlink()
 
 
-def probe(slot, route="/readyz"):
-    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=0.8)
+def probe(slot, route="/readyz", timeout=10):
+    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=timeout)
     try:
         connection.request("GET", route)
-        return connection.getresponse().status == 200
-    except OSError:
+        status = connection.getresponse().status
+        if status != 200:
+            print(json.dumps({"event": "probe-failed", "slot": slot, "route": route, "status": status}), flush=True)
+        return status == 200
+    except OSError as error:
+        print(json.dumps({"event": "probe-failed", "slot": slot, "route": route,
+                          "error": type(error).__name__}), flush=True)
         return False
     finally:
         connection.close()
@@ -316,6 +322,36 @@ def refresh_engine():
     return False
 
 
+def availability_failures(slot, previous):
+    # Readiness checks every configured dependency and the complete public
+    # Mateval corpus; it legitimately exceeds 0.8s under the slot's CPU quota.
+    # A short process probe preserves fast recovery without timing out that work.
+    if not probe(slot, "/healthz", timeout=0.8):
+        return previous + 1
+    # Keep checking the process while its dependencies are being checked. A
+    # healthy readiness exceeded four seconds during compilation; increasing
+    # that budget must not delay detection of a process stopped in the meantime.
+    finished = threading.Event()
+    result = []
+
+    def readiness():
+        try:
+            result.append(probe(slot, "/readyz", timeout=10))
+        finally:
+            finished.set()
+
+    threading.Thread(target=readiness, daemon=True).start()
+    process_failures = 0
+    while not finished.wait(0.5):
+        if probe(slot, "/healthz", timeout=0.8):
+            process_failures = 0
+        else:
+            process_failures += 1
+            if process_failures >= 2:
+                return 2
+    return 0 if result and result[0] else previous + 1
+
+
 def watch():
     STATE.mkdir(exist_ok=True)
     with (STATE / "delivery.lock").open("w") as lock:
@@ -330,7 +366,7 @@ def watch():
             current = STATE / "current.json"
             if current.exists():
                 state = json.loads(current.read_text())
-                failures = 0 if probe(state["slot"]) else failures + 1
+                failures = availability_failures(state["slot"], failures)
                 if failures >= 2:
                     transaction = state.get("rollback") or {"revision": state["revision"],
                               "old_configuration": state["previous_configuration"],

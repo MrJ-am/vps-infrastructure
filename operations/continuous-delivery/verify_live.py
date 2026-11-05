@@ -47,15 +47,11 @@ def main():
                     pass
             time.sleep(0.05)
         elapsed = time.monotonic() - started
-        if not automatic:
-            deploy.rollback(state.get("rollback") or {"revision": revision,
-                             "old_configuration": state["previous_configuration"],
-                             "old_state": state["previous_state"]})
     finally:
         subprocess.run(["systemctl", "kill", "--kill-whom=main", "--signal=SIGCONT", unit],
                        check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if not automatic:
-        raise RuntimeError("Automatic return exceeded five seconds; previous routing restored")
+        raise RuntimeError("Automatic return exceeded five seconds; candidate resumed without a competing rollback")
     deadline = time.monotonic() + 120
     while (deploy.STATE / "transaction.json").exists() or not deploy.probe(new):
         if time.monotonic() >= deadline:

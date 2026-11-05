@@ -2,9 +2,12 @@ import json
 import os
 import shutil
 from concurrent.futures import ThreadPoolExecutor
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import subprocess
 import tempfile
+import threading
+import time
 import unittest
 from unittest.mock import patch
 
@@ -177,6 +180,64 @@ class SystemDeliveryTests(unittest.TestCase):
         for path in ["/tmp/release", "/nix/store/../../etc", "/nix/store/" + "a" * 32 + "-x/bin"]:
             with self.assertRaises(ValueError):
                 S.store_path(path)
+
+
+class AvailabilityBudgetTests(unittest.TestCase):
+    def setUp(self):
+        self.mode = "slow-ready"
+        fixture = self
+
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *args):
+                pass
+
+            def do_GET(self):
+                if fixture.mode == "stopped":
+                    time.sleep(2)
+                    return
+                if self.path == "/readyz" and fixture.mode == "slow-ready":
+                    time.sleep(4.3)
+                if self.path == "/readyz" and fixture.mode == "stops-during-readiness":
+                    fixture.mode = "stopped"
+                    time.sleep(8)
+                    return
+                status = 503 if self.path == "/readyz" and fixture.mode == "dependency-failed" else 200
+                self.send_response(status)
+                self.send_header("Content-Length", "0")
+                self.end_headers()
+
+        self.server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=lambda: self.server.serve_forever(poll_interval=0.05), daemon=True)
+        thread.start()
+        self.addCleanup(self.server.server_close)
+        self.addCleanup(self.server.shutdown)
+        ports = patch.object(D, "PORTS", {"blue": self.server.server_port})
+        ports.start()
+        self.addCleanup(ports.stop)
+
+    def test_healthy_but_slower_readiness_does_not_trigger_rollback(self):
+        failures = D.availability_failures("blue", 0)
+        self.assertEqual(failures, 0)
+        self.assertEqual(D.availability_failures("blue", failures), 0)
+
+    def test_stopped_process_keeps_the_short_health_budget(self):
+        self.mode = "stopped"
+        started = time.monotonic()
+        failures = D.availability_failures("blue", 0)
+        self.assertEqual(D.availability_failures("blue", failures), 2)
+        self.assertLess(time.monotonic() - started, 2.5)
+
+    def test_real_dependency_failure_still_triggers_rollback(self):
+        self.mode = "dependency-failed"
+        failures = D.availability_failures("blue", 0)
+        self.assertEqual(failures, 1)
+        self.assertEqual(D.availability_failures("blue", failures), 2)
+
+    def test_process_stopping_during_readiness_is_detected_without_waiting_for_it(self):
+        self.mode = "stops-during-readiness"
+        started = time.monotonic()
+        self.assertEqual(D.availability_failures("blue", 0), 2)
+        self.assertLess(time.monotonic() - started, 3.5)
 
 
 class MigrationPlanTests(unittest.TestCase):

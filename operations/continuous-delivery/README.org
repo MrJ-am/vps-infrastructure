@@ -39,6 +39,10 @@ vrai Nginx. L'ancienne version reste disponible.
 
 Une surveillance à la seconde revient à l'ancienne route après deux échecs ;
 la restauration de la génération et du slot déplacé suit ce retour du trafic.
+La sonde de processus garde un délai de 0,8 seconde pendant que la disponibilité
+des dépendances dispose de dix secondes, y compris sous compilation. Deux
+réponses négatives de disponibilité déclenchent toujours le retour ; un processus
+arrêté est détecté sans attendre la fin de cette vérification plus longue.
 Elle fonctionne sans API Forgejo. Les transactions sont persistées et reprises
 après interruption ; la restauration au démarrage précède les bases et services.
 Une interruption système au redémarrage sélectionne puis redémarre l'ancienne

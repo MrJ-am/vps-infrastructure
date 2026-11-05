@@ -459,7 +459,10 @@ async fn ready(State(state): State<RuntimeState>) -> Response {
         Ok::<_, &'static str>(())
     }
     .await;
-    if result.is_err() {
+    if let Err(code) = result {
+        // Only the static dependency code is logged; never a backend error,
+        // credential, SQL value, identity, or response body.
+        eprintln!("MRJAM_READINESS_UNAVAILABLE:{code}");
         return crate::error_response(StatusCode::SERVICE_UNAVAILABLE, "NOT_READY");
     }
     Json(serde_json::json!({"status":"ready","scope":"configured-capabilities-only","capabilities":state.configuration.required_capabilities})).into_response()
