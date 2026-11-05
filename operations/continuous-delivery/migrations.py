@@ -57,6 +57,18 @@ def source_file(root, name):
     return path
 
 
+def validate_sql(text):
+    # Ignore literals/comments, including PL/pgSQL bodies, then reject transaction
+    # commands and psql commands. END/ABORT are PostgreSQL synonyms for COMMIT/ROLLBACK.
+    tokens = re.sub(r"--[^\n]*|/\*.*?\*/|'(?:''|[^'])*'|\"(?:\"\"|[^\"])*\"|"
+                    r"(?P<dollar>\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$).*?(?P=dollar)",
+                    " ", text, flags=re.DOTALL)
+    if "\\" in tokens or re.search(
+            r"\b(?:BEGIN|COMMIT|END|ROLLBACK|ABORT|SAVEPOINT|RELEASE)\b|"
+            r"\b(?:START|PREPARE|SET)\s+TRANSACTION\b", tokens, re.IGNORECASE):
+        raise ValueError("SQL migrations must not control their transaction or psql")
+
+
 def load(path):
     path = Path(path)
     plan = json.loads(path.read_text())
@@ -83,8 +95,7 @@ def load(path):
             identifier(step["database"])
             for field in ["sql", "checks", "fixture"]:
                 text = source_file(path.parent, step[field]).read_text()
-                if re.search(r"(?im)^\s*\\|\b(?:COMMIT|ROLLBACK)\b", text):
-                    raise ValueError("SQL migrations must not control their transaction or psql")
+                validate_sql(text)
         elif step["driver"] == "program":
             package = step["package"]
             if not re.fullmatch(r"/nix/store/[0-9a-z]{32}-[A-Za-z0-9+._-]+", package):
@@ -116,7 +127,11 @@ def sql_transaction(step, root):
     checksum = digest(step, root)
     sql = source_file(root, step["sql"]).read_text()
     checks = source_file(root, step["checks"]).read_text()
+    validate_sql(sql)
+    validate_sql(checks)
     return f"""BEGIN;
+SET LOCAL lock_timeout = '3s';
+SET LOCAL statement_timeout = '60s';
 SELECT pg_advisory_xact_lock(683294517);
 CREATE SCHEMA IF NOT EXISTS mrjam_delivery;
 CREATE TABLE IF NOT EXISTS mrjam_delivery.migrations
@@ -128,8 +143,6 @@ DO $mrjam$ BEGIN
  THEN RAISE EXCEPTION 'Applied migration has changed'; END IF;
 END $mrjam$;
 \\else
-SET LOCAL lock_timeout = '3s';
-SET LOCAL statement_timeout = '60s';
 {sql}
 {checks}
 INSERT INTO mrjam_delivery.migrations(id, checksum) VALUES ('{key}', '{checksum}');

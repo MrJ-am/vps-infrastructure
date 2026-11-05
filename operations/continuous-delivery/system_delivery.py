@@ -106,8 +106,10 @@ def restore_system(transaction, restart=True):
         previous = current_system()
         if restart and (previous != old or transaction.get("activation_started", False)):
             activate(old)
+        if restart:
             restart_managed(transaction.get("candidate_system", previous),
-                            {"system": old, "managed_units": transaction.get("managed_units", [])},
+                            {"system": old, "managed_units": sorted(set(transaction.get("managed_units", [])
+                              + transaction.get("hold_units", [])))},
                             ensure_active=transaction.get("old_active_units", []))
         elif not restart:
             # Boot recovery must select the old generation for the next boot,
@@ -316,7 +318,7 @@ def promote(build):
                    "active_migrations": migrations.pending_programs(plan, plan_path.parent),
                    "managed_units": manifest["managed_units"],
                    "hold_units": migration_holds(plan, plan_path.parent),
-                   "old_active_units": [name for name in manifest["managed_units"]
+                   "old_active_units": [name for name in sorted(set(manifest["managed_units"] + migration_holds(plan, plan_path.parent)))
                        if D.command(["systemctl", "show", name + ".service", "-p", "ActiveState", "--value"]) == "active"],
                    "writes_resumed": False}
     retain("candidate", output)

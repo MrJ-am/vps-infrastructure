@@ -118,14 +118,14 @@ def rollback(transaction, reload=True):
     else:
         (STATE / "current.json").unlink(missing_ok=True)
     record_failure(transaction["revision"])
-    (STATE / "transaction.json").unlink(missing_ok=True)
-    print(json.dumps({"event": "rollback", "revision": transaction["revision"],
-                      "seconds": round(time.monotonic() - started, 3)}), flush=True)
     if transaction.get("replaced_slot"):
         saved = transaction["replaced_slot"]
         configure_slot(saved["slot"], saved["command"])
         if reload:
             command(["systemctl", "restart", "mrjam-rust-" + saved["slot"] + ".service"], timeout=40)
+    (STATE / "transaction.json").unlink(missing_ok=True)
+    print(json.dumps({"event": "rollback", "revision": transaction["revision"],
+                      "seconds": round(time.monotonic() - started, 3)}), flush=True)
 
 
 def recover(reload=True):

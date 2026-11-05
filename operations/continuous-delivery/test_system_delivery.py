@@ -20,12 +20,14 @@ class SystemDeliveryTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.state = self.root / "state"
         self.state.mkdir()
+        self.control = self.root / "system.control"
+        self.control.mkdir()
         self.old = self.root / "old.conf"
         self.old.write_text("proxy_pass http://127.0.0.1:38102;")
         self.configuration = self.root / "nginx-current.conf"
         self.configuration.symlink_to(self.old)
         for obj, key, value in [(D, "STATE", self.state), (D, "NGINX_CONF", self.configuration),
-                                (S, "PRIMARY", self.root / "primary.conf")]:
+                                (S, "PRIMARY", self.root / "primary.conf"), (S, "CONTROL", self.control)]:
             item = patch.object(obj, key, value)
             item.start()
             self.addCleanup(item.stop)
@@ -90,6 +92,37 @@ class SystemDeliveryTests(unittest.TestCase):
         self.assertFalse((self.state / "transaction.json").exists())
         self.assertEqual(json.loads((self.state / "current.json").read_text()), self.previous)
 
+    def test_interrupted_legacy_slot_restoration_keeps_a_recoverable_transaction(self):
+        transaction = {"revision": "c" * 40, "old_configuration": str(self.old),
+                       "old_state": self.previous,
+                       "replaced_slot": {"slot": "blue", "command": self.executable}}
+        with patch.object(D, "reload_nginx"), patch.object(D, "command"), \
+                patch.object(D, "configure_slot", side_effect=RuntimeError("interrupted")):
+            with self.assertRaises(RuntimeError):
+                D.rollback(transaction)
+        self.assertTrue((self.state / "transaction.json").exists())
+        with patch.object(D, "reload_nginx"), patch.object(D, "command"), \
+                patch.object(D, "configure_slot") as configure:
+            D.recover()
+        configure.assert_called_once_with("blue", self.executable)
+        self.assertFalse((self.state / "transaction.json").exists())
+
+    def test_failure_before_system_activation_restarts_a_previously_active_held_database(self):
+        directory = self.control / "postgresql.service.d"
+        directory.mkdir()
+        hold = directory / "11-delivery-migration-hold.conf"
+        hold.touch()
+        transaction = {"old_system": "/old-system", "activation_started": False,
+                       "managed_units": ["postgresql"], "hold_units": ["postgresql"],
+                       "old_active_units": ["postgresql"]}
+        with patch.object(S, "current_system", return_value="/old-system"), \
+                patch.object(S, "activate") as activate, \
+                patch.object(D, "command", return_value="inactive") as command:
+            S.restore_system(transaction)
+        activate.assert_not_called()
+        command.assert_any_call(["systemctl", "restart", "postgresql.service"], timeout=60)
+        self.assertFalse(hold.exists())
+
     def test_boot_recovery_selects_the_old_generation_without_starting_applications(self):
         transaction = {"format": 2, "revision": "c" * 40, "old_system": "/old-system",
                        "old_configuration": str(self.old), "old_state": self.previous}
@@ -147,6 +180,13 @@ class SystemDeliveryTests(unittest.TestCase):
 
 
 class MigrationPlanTests(unittest.TestCase):
+    def test_sql_transaction_aliases_and_inline_psql_cannot_escape(self):
+        for text in ["END;", "ABORT;", "START TRANSACTION;", "SELECT 1; \\gexec",
+                     "PREPARE TRANSACTION 'x';", "SAVEPOINT x;"]:
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                M.validate_sql(text)
+        M.validate_sql("DO $$ BEGIN RAISE NOTICE 'END;'; END $$; -- COMMIT\nSELECT 'ABORT';")
+
     def test_destructive_migration_needs_exact_release_and_recovery_authorization(self):
         plan = {"steps": [{"id": "remove_old", "destructive": True}]}
         with tempfile.TemporaryDirectory() as root:
@@ -206,6 +246,13 @@ class RealPostgresqlMigrationTests(unittest.TestCase):
         with self.assertRaises(subprocess.CalledProcessError):
             self.apply()
         self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 0 OR to_regnamespace('mrjam_delivery') IS NOT NULL THEN RAISE EXCEPTION 'Partial migration persisted'; END IF; END $$;")
+
+    def test_end_cannot_commit_before_a_failing_check(self):
+        (self.root / "change.sql").write_text("END; INSERT INTO synthetic_delivery_records VALUES (1);")
+        (self.root / "checks.sql").write_text("SELECT 1/0;")
+        with self.assertRaises(ValueError):
+            self.apply()
+        self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 0 THEN RAISE EXCEPTION 'Transaction escape persisted data'; END IF; END $$;")
 
     def test_an_applied_script_cannot_be_rewritten_and_reexecuted(self):
         self.apply()

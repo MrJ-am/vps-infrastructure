@@ -115,6 +115,6 @@ in {
   inherit configuration engine runtimes nginxTemplate;
   system = configuration.system.build.toplevel;
   nginx = configuration.services.nginx.package;
-  postgresql = configuration.services.postgresql.package;
+  postgresql = configuration.services.postgresql.finalPackage;
   postgresqlData = configuration.services.postgresql.dataDir;
 }
