@@ -1,76 +1,69 @@
-#+title: Rejeu indépendant Cloud — livraison et migrations
+#+title: Rejeu indépendant final Cloud — 5630456
 
-* Résultat du 5 novembre 2026
+* Candidat et périmètre
 
-Candidat examiné : =31a52b3b0225db5aff92b8f069a76a4cdd4d8b35=,
-branche Forgejo =spectre/system-delivery-20261105=.
-Ce dossier est publié sur =spectre/cloud-components-20261105= seulement.
-Il n'ajoute aucun workflow ni règle d'intégration et ne modifie pas le candidat.
+Candidat exact : =5630456033714863a5c027602597dff52312689c=, branche Forgejo
+=spectre/system-delivery-20261105=, examiné le 5 novembre 2026.
+Les scripts et résultats sont publiés uniquement sous ce dossier, sur la branche
+=spectre/cloud-components-20261105=. Aucun workflow, règle d'intégration,
+programme de livraison ou code de migration n'est modifié par ce lot.
+
+L'ancien constat sur =31a52b3= est conservé dans [[file:history/31a52b3.org][history/31a52b3.org]],
+avec ses résultats et journaux. Il ne décrit pas le résultat final du candidat
+=5630456=.
+
+* Résultat final sur 5630456
 
 | Batterie effectivement exécutée | Résultat |
 |--------------------------------+----------|
-| tests.nix du candidat, PostgreSQL et Nginx réels | 38 livraison/migrations + 10 components réussis ; zéro skip |
-| Présente batterie indépendante, sandbox Nix | 19 tests : 18 réussis, 1 échec ; zéro skip |
-| Trois reproducteurs d'origine | Corrections confirmées |
+| tests.nix du candidat, PostgreSQL et Nginx réels | 40 livraison/migrations + 10 components réussis ; zéro échec, zéro skip |
+| Batterie indépendante de ce dossier, sandbox Nix | 21 réussis ; zéro échec, zéro skip |
+| Variante SQL imbriquée | Refusée ; zéro ligne persistante |
+| Lexer volontairement désactivé : charge et contrôles après écriture | 8 sous-cas refusés par PostgreSQL ; zéro ligne et zéro schéma/registre persistants |
 
-Le plan de migration de ce candidat contient zéro étape. Le défaut SQL restant
-ci-dessous nécessite un plan SQL non vide ; il n'est pas emprunté par l'adoption
-avec le plan vide. Cette observation ne prétend pas qualifier une activation
-NixOS réelle depuis Cloud.
+Les trois défauts initiaux et la variante imbriquée ne sont plus reproduits.
+Les scénarios de coordination précédents restent réussis. Le plan de migration
+est vide (=steps=[]=) ; aucune migration de production n'est exécutée.
+Les résultats structurés et les empreintes sont dans [[file:results.json][results.json]].
 
-* Reproducteurs corrigés
+Les journaux finaux sont [[file:logs/standalone-5630456.log][standalone-5630456.log]] et
+[[file:logs/independent-5630456.log][independent-5630456.log]]. Le premier essai indépendant,
+lancé en parallèle de la batterie native, s'est arrêté avant les tests au
+démarrage de PostgreSQL ; son journal est conservé séparément. La même dérivation
+a ensuite réussi en série, sans modification du candidat ni des assertions.
 
-- =regression_cases.py= : un service auparavant actif, arrêté par =hold_units=,
-  est relancé après échec avant activation. Le test utilise le vrai programme
-  synthétique de migration. Variantes : PostgreSQL actif, PostgreSQL initialement
-  inactif et service actif extérieur à =managed_units=.
-- =sql_cases.py= : le =END;= d'origine est refusé par =load()= et par
-  =sql_transaction()=. Aucune ligne n'est enregistrée. Les autres alias et le
-  psql inline sont refusés ; les littéraux, commentaires et DO dollarquoted
-  ordinaires sont acceptés. Un échec de contrôle sur du SQL accepté annule
-  effectivement les écritures dans PostgreSQL.
-- =regression_cases.py= : le rollback historique conserve son journal lorsque
-  la restauration du slot est interrompue. =recover()= restaure A ; le rollback
-  ultérieur de B route bien vers A. Le cas original d'échec de préparation C
-  reste également réussi.
+* Cas vérifiés
 
-=coordinator_cases.py= conserve les scénarios indépendants précédents :
-promotion complète, retours C vers B puis B vers A, onze points d'échec, neuf
-points d'interruption, reprise locale sans API Forgejo, sélection du profil,
-activation partielle, routage, réouverture des écritures et reprise au boot en
-deux étapes. Quatre tests utilisent les exécutables réels du programme de
-migration synthétique : ordre des phases, reprise avant resume, échec de resume
-et conservation des nouvelles données après la frontière de réouverture.
-
-* Défaut SQL restant : commentaires imbriqués
-
-Le nettoyage regex de =migrations.validate_sql()= ne suit pas l'imbrication des
-commentaires PostgreSQL. Ce texte est accepté par le chargeur et le constructeur
-de transaction du candidat :
+- Services =hold_units= : restauration après échec avant activation, sans
+  démarrer ceux qui étaient initialement inactifs ; service extérieur à
+  =managed_units= également couvert.
+- Slots historiques et système : A/B/C, retour C vers B puis B vers A, journal
+  conservé pendant une restauration interrompue, onze points d'échec et neuf
+  points d'interruption, profil et activation partielle, reprise locale sans
+  API Forgejo, reprise au boot en deux étapes.
+- Programme réel de migration synthétique : ordre before/after-system,
+  quiesce/apply/verify/resume, reprise après interruption, échec de resume et
+  conservation des nouvelles données après la frontière de réouverture.
+- SQL : END, ABORT et autres commandes de transaction, psql inline, commentaires
+  et littéraux, DO dollarquoted ; validation au chargement et à l'exécution.
+- Variante exacte qui échouait sur 31 :
 
 #+begin_src sql
 /* outer /* inner */ ' */ END;
 INSERT INTO synthetic_qualification_records VALUES (1); SELECT 'ok';
 #+end_src
 
-Avec =checks.sql= contenant =SELECT 1/0;=, PostgreSQL interprète le commentaire
-imbriqué correctement puis exécute =END;= hors commentaire. L'insertion suivante
-est autocommit : une ligne persiste malgré l'échec du contrôle. Le test
-=test_nested_comment_with_quote_cannot_hide_END_and_persist_data= échoue sur
-=1 != 0=, avec le vrai PostgreSQL jetable dans le sandbox Nix.
-
-Le premier =/* ... */= non gourmand de la regex se termine au commentaire
-intérieur. L'apostrophe encore située dans le commentaire extérieur est ensuite
-prise pour le début d'un littéral et masque le vrai =END;= dans la vue nettoyée.
-Il faut reconnaître correctement les commentaires imbriqués et les états
-lexicaux SQL pour éviter cette divergence. Le test reste actif, sans expected
-failure ni suppression de l'assertion de non-persistance.
+- Protection PostgreSQL indépendante du lexer : les deux tests supplémentaires
+  désactivent volontairement =validate_sql= dans leur seul contexte de test.
+  Ils injectent END, COMMIT, ABORT et la variante imbriquée d'abord dans la charge,
+  puis dans les contrôles après une insertion valide. PostgreSQL doit refuser
+  l'exécution et ne conserver ni ligne ni schéma/registre de migration.
+  Le test de la charge et celui des contrôles couvrent huit sous-cas au total.
 
 * Rejouer
 
 =source= doit désigner l'export du candidat examiné, pas la branche Cloud de
-base. Fournir des sources uniquement ; aucune configuration d'exploitation ni
-credential n'est nécessaire. Les tests fabriquent leurs fichiers et leur base.
+base. Aucune configuration d'exploitation ni credential n'est nécessaire.
 
 #+begin_src nix
 import ./operations/continuous-delivery/components/qualification/default.nix {
@@ -78,36 +71,34 @@ import ./operations/continuous-delivery/components/qualification/default.nix {
 }
 #+end_src
 
-La dérivation démarre PostgreSQL neuf sur loopback dans le sandbox, fournit le
-programme de fixture du candidat, exécute les trois fichiers =*_cases.py=, et
-arrête PostgreSQL même en cas d'échec. Sur =31a52b3=, elle doit échouer pour le
-cas SQL restant. Aucun accès VPS, installation administrateur ou bascule n'est
-exécuté.
+La dérivation démarre un PostgreSQL neuf en UTF-8 dans le sandbox, fournit le
+programme de migration synthétique du candidat, exécute les trois fichiers
+=*_cases.py= puis arrête PostgreSQL, y compris après échec. Exécuter cette fixture
+séparément de la batterie native : les deux emploient le port synthétique 55432.
 
 Commandes réellement passées dans le conteneur Nix local :
 
 #+begin_src sh
-nix-build --no-out-link --expr 'import /tmp/source31/operations/continuous-delivery/tests.nix {source=builtins.path {path=/tmp/source31;name="source";};}'
-nix-build --no-out-link --expr 'import /tmp/qualification31/default.nix {source=builtins.path {path=/tmp/source31;name="reviewed-source";};pkgs=import /tmp/source31/operations/forgejo/locked-toolchain.nix {};}'
+nix-build --no-out-link --expr 'import /tmp/source563/operations/continuous-delivery/tests.nix {source=builtins.path {path=/tmp/source563;name="source";};}'
+nix-build --no-out-link --expr 'import /tmp/qualification563/default.nix {source=builtins.path {path=/tmp/source563;name="reviewed-source";};pkgs=import /tmp/source563/operations/forgejo/locked-toolchain.nix {};}'
 #+end_src
 
-=/tmp/source31= est un =git archive= du SHA exact ci-dessus. =/tmp/qualification31=
-est une copie des scripts de ce dossier. Nix utilise =sandbox = true=, le proxy
-hérité et TLS vérifié ; les tests s'exécutent sans dépendance à une API externe.
-Les journaux complets de ces deux commandes sont sous =logs/= ; =results.json=
-résume les résultats et les empreintes des scripts.
+=/tmp/source563= est un =git archive= du SHA exact indiqué en tête.
+=/tmp/qualification563= contient les scripts de ce dossier. Nix utilise
+=sandbox = true=, le proxy hérité et TLS vérifié. Les scripts ne font appel
+à aucune API externe.
 
-* Limites
+* Limites de ce rejeu
 
 Les fonctions du coordinateur sont celles du candidat, sans patch du code
 métier. Les frontières OS/systemd, les générations et les processus des slots
-sont modélisés : ces tests n'exécutent pas de =systemctl= réel. Les programmes
-synthétiques de migration et les transactions SQL sont réellement exécutés.
-Les tests Nginx réels appartiennent à la batterie =tests.nix= du candidat.
-Les durées de ces modèles ne sont pas des mesures de bascule sur le VPS.
+sont modélisés : aucun =systemctl= réel n'est exécuté par ces modèles. Le programme
+synthétique de migration et les transactions PostgreSQL sont réellement exécutés.
+Les tests Nginx réels sont ceux de la batterie native =tests.nix= du candidat.
+Ces durées ne sont pas des mesures de bascule du VPS.
 
-Cette campagne ne reconstruit pas la génération complète : le snapshot immutable
-=dnir95r62s6xi57dcygv80fqhirkhzas= nécessaire à installed-baseline.nix manque ici,
-comme lors du précédent examen. Aucun =install.py= ni activation réelle ne sont
-lancés. Aucun secret ou donnée métier n'est lu, affiché ou publié. Les seuls
-identifiants dans les tests et journaux sont ceux des fixtures synthétiques.
+Aucune génération NixOS complète ni activation réelle n'est exécutée ici ; le
+snapshot immutable =dnir95r62s6xi57dcygv80fqhirkhzas= nécessaire à la baseline
+complète manque dans cet atelier. Aucun =install.py=, fusion ou déploiement n'est
+lancé. Aucun secret ni donnée métier n'est lu, affiché ou publié. Les identifiants
+dans les scripts et journaux sont ceux des fixtures synthétiques.

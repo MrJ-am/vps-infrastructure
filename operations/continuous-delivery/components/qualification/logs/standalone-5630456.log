@@ -1,0 +1,75 @@
+this derivation will be built:
+  /nix/store/2138zlyakk6m98k2cxwdk4rdbrfb396a-mrjam-system-delivery-checks.drv
+building '/nix/store/2138zlyakk6m98k2cxwdk4rdbrfb396a-mrjam-system-delivery-checks.drv'...
+waiting for server to start.... done
+server started
+test_ambiguous_routing_is_not_changed (test_delivery.DeliveryTests.test_ambiguous_routing_is_not_changed) ... ok
+test_boot_recovery_restores_without_reloading_nginx (test_delivery.DeliveryTests.test_boot_recovery_restores_without_reloading_nginx) ... {"event": "rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "seconds": 0.002}
+ok
+test_candidate_preserves_served_assets_and_adapts_slot_credentials (test_delivery.DeliveryTests.test_candidate_preserves_served_assets_and_adapts_slot_credentials) ... ok
+test_failed_revision_is_not_retried_automatically (test_delivery.DeliveryTests.test_failed_revision_is_not_retried_automatically) ... ok
+test_public_check_waits_for_nginx_workers_to_take_over (test_delivery.DeliveryTests.test_public_check_waits_for_nginx_workers_to_take_over) ... ok
+test_pull_request_success_does_not_authorize_main_delivery (test_delivery.DeliveryTests.test_pull_request_success_does_not_authorize_main_delivery) ... ok
+test_real_nginx_cutover_and_failure_rollback_keep_previous_backend (test_delivery.DeliveryTests.test_real_nginx_cutover_and_failure_rollback_keep_previous_backend) ... {"event": "rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "seconds": 0.016}
+{"synthetic_nginx_cutover_seconds": 0.018, "failure_detection_and_rollback_seconds": 1.033}
+ok
+test_recovery_restores_previous_route_and_records_failed_revision (test_delivery.DeliveryTests.test_recovery_restores_previous_route_and_records_failed_revision) ... {"event": "rollback", "revision": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", "seconds": 0.001}
+ok
+test_route_rewrite_preserves_unrelated_apps (test_delivery.DeliveryTests.test_route_rewrite_preserves_unrelated_apps) ... ok
+test_schema_change_is_detected_without_opening_a_database (test_delivery.DeliveryTests.test_schema_change_is_detected_without_opening_a_database) ... ok
+test_source_archive_cannot_write_outside_checkout (test_delivery.DeliveryTests.test_source_archive_cannot_write_outside_checkout) ... ok
+test_destructive_migration_needs_exact_release_and_recovery_authorization (test_system_delivery.MigrationPlanTests.test_destructive_migration_needs_exact_release_and_recovery_authorization) ... ok
+test_incompatible_sql_requires_a_program_with_recovery (test_system_delivery.MigrationPlanTests.test_incompatible_sql_requires_a_program_with_recovery) ... ok
+test_migration_cannot_read_a_file_outside_its_release (test_system_delivery.MigrationPlanTests.test_migration_cannot_read_a_file_outside_its_release) ... ok
+test_sql_transaction_aliases_and_inline_psql_cannot_escape (test_system_delivery.MigrationPlanTests.test_sql_transaction_aliases_and_inline_psql_cannot_escape) ... ok
+test_after_system_program_waits_for_the_new_system_but_quiesces_before_it (test_system_delivery.RealMigrationProgramTests.test_after_system_program_waits_for_the_new_system_but_quiesces_before_it) ... ok
+test_changed_completed_program_is_rejected_before_any_action (test_system_delivery.RealMigrationProgramTests.test_changed_completed_program_is_rejected_before_any_action) ... ok
+test_completed_migration_does_not_pause_every_subsequent_delivery (test_system_delivery.RealMigrationProgramTests.test_completed_migration_does_not_pause_every_subsequent_delivery) ... ok
+test_destructive_authorization_is_not_required_again_for_completed_history (test_system_delivery.RealMigrationProgramTests.test_destructive_authorization_is_not_required_again_for_completed_history) ... ok
+test_failure_before_reopening_writes_runs_recovery (test_system_delivery.RealMigrationProgramTests.test_failure_before_reopening_writes_runs_recovery) ... ok
+test_an_applied_script_cannot_be_rewritten_and_reexecuted (test_system_delivery.RealPostgresqlMigrationTests.test_an_applied_script_cannot_be_rewritten_and_reexecuted) ... ok
+test_end_cannot_commit_before_a_failing_check (test_system_delivery.RealPostgresqlMigrationTests.test_end_cannot_commit_before_a_failing_check) ... ok
+test_failed_check_rolls_back_both_data_and_migration_ledger (test_system_delivery.RealPostgresqlMigrationTests.test_failed_check_rolls_back_both_data_and_migration_ledger) ... ok
+test_nested_comment_quotes_cannot_hide_a_commit (test_system_delivery.RealPostgresqlMigrationTests.test_nested_comment_quotes_cannot_hide_a_commit) ... ok
+test_postgresql_enforces_atomicity_even_if_a_command_escapes_lexical_checks (test_system_delivery.RealPostgresqlMigrationTests.test_postgresql_enforces_atomicity_even_if_a_command_escapes_lexical_checks) ... ok
+test_replay_is_recorded_once_and_does_not_repeat_the_data_change (test_system_delivery.RealPostgresqlMigrationTests.test_replay_is_recorded_once_and_does_not_repeat_the_data_change) ... ok
+test_two_executors_serialize_the_same_migration (test_system_delivery.RealPostgresqlMigrationTests.test_two_executors_serialize_the_same_migration) ... ok
+test_boot_recovery_selects_the_old_generation_without_starting_applications (test_system_delivery.SystemDeliveryTests.test_boot_recovery_selects_the_old_generation_without_starting_applications) ... ok
+test_boot_wrapper_references_durable_routing_instead_of_a_generation (test_system_delivery.SystemDeliveryTests.test_boot_wrapper_references_durable_routing_instead_of_a_generation) ... ok
+test_changed_schema_requires_its_own_migration_scope (test_system_delivery.SystemDeliveryTests.test_changed_schema_requires_its_own_migration_scope) ... ok
+test_failed_third_candidate_restores_the_previous_fallback_contents (test_system_delivery.SystemDeliveryTests.test_failed_third_candidate_restores_the_previous_fallback_contents) ... ok
+test_failure_after_incompatible_writes_preserves_data_and_never_restores_old_system (test_system_delivery.SystemDeliveryTests.test_failure_after_incompatible_writes_preserves_data_and_never_restores_old_system) ... ok
+test_failure_before_system_activation_restarts_a_previously_active_held_database (test_system_delivery.SystemDeliveryTests.test_failure_before_system_activation_restarts_a_previously_active_held_database) ... ok
+test_interrupted_legacy_slot_restoration_keeps_a_recoverable_transaction (test_system_delivery.SystemDeliveryTests.test_interrupted_legacy_slot_restoration_keeps_a_recoverable_transaction) ... {"event": "rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "seconds": 0.002}
+ok
+test_interrupted_preparation_is_restored_without_starting_services_at_boot (test_system_delivery.SystemDeliveryTests.test_interrupted_preparation_is_restored_without_starting_services_at_boot) ... ok
+test_later_rollback_restores_the_displaced_slot_as_well_as_the_route (test_system_delivery.SystemDeliveryTests.test_later_rollback_restores_the_displaced_slot_as_well_as_the_route) ... {"event": "rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "seconds": 0.003}
+ok
+test_postgresql_major_upgrade_requires_a_migration_but_minor_does_not (test_system_delivery.SystemDeliveryTests.test_postgresql_major_upgrade_requires_a_migration_but_minor_does_not) ... ok
+test_system_rollback_routes_before_restoring_the_generation (test_system_delivery.SystemDeliveryTests.test_system_rollback_routes_before_restoring_the_generation) ... {"event": "system-rollback", "revision": "cccccccccccccccccccccccccccccccccccccccc", "routing_seconds": 0.0, "recovery_seconds": 0.002}
+ok
+test_template_moves_only_shared_server_and_exact_revision_marker (test_system_delivery.SystemDeliveryTests.test_template_moves_only_shared_server_and_exact_revision_marker) ... ok
+test_unsafe_artifact_path_is_rejected (test_system_delivery.SystemDeliveryTests.test_unsafe_artifact_path_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 3.971s
+
+OK
+test_candidate_local_source_copied_without_freezing (test_components.Components.test_candidate_local_source_copied_without_freezing) ... ok
+test_final_manifest_replaces_pre_fixup_digest (test_components.Components.test_final_manifest_replaces_pre_fixup_digest) ... ok
+test_frontend_manifest_matches_strict_server_contract (test_components.Components.test_frontend_manifest_matches_strict_server_contract) ... ok
+test_input_tampering_stops_before_build (test_components.Components.test_input_tampering_stops_before_build) ... ok
+test_internal_npm_binary_link_supported (test_components.Components.test_internal_npm_binary_link_supported) ... ok
+test_link_escape_refused (test_components.Components.test_link_escape_refused) ... ok
+test_npm_missing_integrity_stops_before_execution (test_components.Components.test_npm_missing_integrity_stops_before_execution) ... ok
+test_payload_hashes_exclude_manifest (test_components.Components.test_payload_hashes_exclude_manifest) ... ok
+test_vise_pin_is_served_explicit_migration_revision (test_components.Components.test_vise_pin_is_served_explicit_migration_revision) ... ok
+test_vise_retains_its_distinct_manifest_contract (test_components.Components.test_vise_retains_its_distinct_manifest_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.039s
+
+OK
+waiting for server to shut down.... done
+server stopped
+/nix/store/pq0wc5ry5das3q9bkavf8ajj77sfna81-mrjam-system-delivery-checks

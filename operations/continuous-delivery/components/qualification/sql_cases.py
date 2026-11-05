@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 from coordinator_cases import M
 
 
@@ -89,3 +90,33 @@ class SQLRegression(unittest.TestCase):
                 with self.assertRaises(subprocess.CalledProcessError):
                     self.execute(text)
         self.assertEqual(self.count(), 0, 'Migration check failed, but END escaped the wrapper and committed a row')
+
+    def assert_no_rows_or_ledger(self):
+        self.assertEqual(self.count(), 0)
+        missing = subprocess.check_output(['psql', '-X', '-qAt', '--dbname', self.url,
+                  '-c', "SELECT to_regnamespace('mrjam_delivery') IS NULL"], text=True).strip()
+        self.assertEqual(missing, 't', 'Failed migration left its ledger/schema committed')
+
+    def test_database_boundary_survives_disabled_lexer_in_payload(self):
+        for prefix in ['END;', 'COMMIT;', 'ABORT;', "/* outer /* inner */ ' */ END;"]:
+            with self.subTest(prefix=prefix):
+                (self.root / 'change.sql').write_text(prefix + " INSERT INTO synthetic_qualification_records VALUES (1); SELECT 'ok';")
+                (self.root / 'checks.sql').write_text('SELECT 1/0;')
+                with patch.object(M, 'validate_sql', return_value=None):
+                    M.load(self.path)
+                    text = M.sql_transaction(self.step, self.root)
+                    with self.assertRaises(subprocess.CalledProcessError):
+                        self.execute(text)
+                self.assert_no_rows_or_ledger()
+
+    def test_database_boundary_survives_disabled_lexer_in_checks_after_write(self):
+        for check in ['END;', 'COMMIT;', 'ABORT;', "/* outer /* inner */ ' */ END; SELECT 'ok';"]:
+            with self.subTest(check=check):
+                (self.root / 'change.sql').write_text('INSERT INTO synthetic_qualification_records VALUES (1);')
+                (self.root / 'checks.sql').write_text(check)
+                with patch.object(M, 'validate_sql', return_value=None):
+                    M.load(self.path)
+                    text = M.sql_transaction(self.step, self.root)
+                    with self.assertRaises(subprocess.CalledProcessError):
+                        self.execute(text)
+                self.assert_no_rows_or_ledger()

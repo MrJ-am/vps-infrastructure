@@ -1,0 +1,10 @@
+this derivation will be built:
+  /nix/store/rliznvqn82pin90g4zd41i8752q6vp0i-mrjam-independent-delivery-qualification.drv
+building '/nix/store/rliznvqn82pin90g4zd41i8752q6vp0i-mrjam-independent-delivery-qualification.drv'...
+waiting for server to start.... stopped waiting
+pg_ctl: could not start server
+Examine the log output.
+error: Cannot build '/nix/store/rliznvqn82pin90g4zd41i8752q6vp0i-mrjam-independent-delivery-qualification.drv'.
+       Reason: builder failed with exit code 1.
+       Output paths:
+         /nix/store/bzwylxw8il730ac1xrjzgcfcna79xkyk-mrjam-independent-delivery-qualification
