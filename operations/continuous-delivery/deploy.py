@@ -256,7 +256,7 @@ def promote_server(build):
     configure_slot(new, output + "/bin/mrjam-server serve --config " + runtime)
     command(["systemctl", "restart", unit], timeout=40)
     deadline = time.monotonic() + 30
-    while not (probe(new, "/healthz") and probe(new)):
+    while not (probe(new, "/healthz", timeout=0.8) and probe(new)):
         if time.monotonic() >= deadline:
             raise RuntimeError("Candidate did not become ready; traffic unchanged")
         time.sleep(0.5)
@@ -275,7 +275,7 @@ def promote_server(build):
     try:
         symlink(next_configuration, NGINX_CONF)
         reload_nginx()
-        if not (probe(new) and probe(old)):
+        if availability_failures(new, 0, previous_slot=old):
             raise RuntimeError("Immediate readiness check failed")
         public_check()
         atomic_json(current_file, {**build, "slot": new, "previous_slot": old,
@@ -322,7 +322,7 @@ def refresh_engine():
     return False
 
 
-def availability_failures(slot, previous):
+def availability_failures(slot, previous, previous_slot=None):
     # Readiness checks every configured dependency and the complete public
     # Mateval corpus; it legitimately exceeds 0.8s under the slot's CPU quota.
     # A short process probe preserves fast recovery without timing out that work.
@@ -336,7 +336,8 @@ def availability_failures(slot, previous):
 
     def readiness():
         try:
-            result.append(probe(slot, "/readyz", timeout=10))
+            result.append(probe(slot, "/readyz", timeout=10)
+                          and (previous_slot is None or probe(previous_slot, timeout=10)))
         finally:
             finished.set()
 

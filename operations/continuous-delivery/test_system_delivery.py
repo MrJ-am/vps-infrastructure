@@ -185,6 +185,7 @@ class SystemDeliveryTests(unittest.TestCase):
 class AvailabilityBudgetTests(unittest.TestCase):
     def setUp(self):
         self.mode = "slow-ready"
+        self.ready_calls = 0
         fixture = self
 
         class Handler(BaseHTTPRequestHandler):
@@ -192,6 +193,10 @@ class AvailabilityBudgetTests(unittest.TestCase):
                 pass
 
             def do_GET(self):
+                if self.path == "/readyz":
+                    fixture.ready_calls += 1
+                if fixture.mode == "stops-during-fallback" and fixture.ready_calls == 2:
+                    fixture.mode = "stops-during-readiness"
                 if fixture.mode == "stopped":
                     time.sleep(2)
                     return
@@ -211,7 +216,7 @@ class AvailabilityBudgetTests(unittest.TestCase):
         thread.start()
         self.addCleanup(self.server.server_close)
         self.addCleanup(self.server.shutdown)
-        ports = patch.object(D, "PORTS", {"blue": self.server.server_port})
+        ports = patch.object(D, "PORTS", {"blue": self.server.server_port, "green": self.server.server_port})
         ports.start()
         self.addCleanup(ports.stop)
 
@@ -237,6 +242,12 @@ class AvailabilityBudgetTests(unittest.TestCase):
         self.mode = "stops-during-readiness"
         started = time.monotonic()
         self.assertEqual(D.availability_failures("blue", 0), 2)
+        self.assertLess(time.monotonic() - started, 3.5)
+
+    def test_immediate_check_monitors_candidate_while_fallback_readiness_is_pending(self):
+        self.mode = "stops-during-fallback"
+        started = time.monotonic()
+        self.assertEqual(D.availability_failures("blue", 0, previous_slot="green"), 2)
         self.assertLess(time.monotonic() - started, 3.5)
 
 

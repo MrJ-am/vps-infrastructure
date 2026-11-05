@@ -38,7 +38,7 @@ class LegacySlotRegression(unittest.TestCase):
         with Fixture() as f:
             build = legacy(f)
             ticks = iter([0, 31])
-            with patch.object(D, 'probe', side_effect=lambda slot, *args: slot == 'green'), \
+            with patch.object(D, 'probe', side_effect=lambda slot, *args, **kwargs: slot == 'green'), \
                     patch.object(D.time, 'monotonic', side_effect=lambda: next(ticks)):
                 with self.assertRaises(RuntimeError):
                     D.promote(build)

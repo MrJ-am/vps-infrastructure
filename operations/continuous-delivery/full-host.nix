@@ -52,6 +52,8 @@ let
     }) hosts;
     systemd.services = lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
       mrjam-rust-blue = {
+        # The server emits only static operational codes on stderr.
+        serviceConfig.StandardError = lib.mkOverride (-20) "journal";
         restartIfChanged = false;
         stopIfChanged = false;
         wantedBy = lib.mkOverride (-20) [ "multi-user.target" ];
@@ -59,6 +61,7 @@ let
           "${server}/bin/mrjam-server serve --config ${runtimes.blue}/runtime.json";
       };
       mrjam-rust-green = {
+        serviceConfig.StandardError = lib.mkOverride (-20) "journal";
         restartIfChanged = false;
         stopIfChanged = false;
         wantedBy = lib.mkOverride (-20) [ "multi-user.target" ];
