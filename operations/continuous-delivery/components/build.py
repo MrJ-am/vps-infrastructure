@@ -29,7 +29,7 @@ def test_vise_api(app, work):
     """An isolated synthetic PostgreSQL cluster and real candidate backend."""
     data, socket = work / 'pgdata', work / 'pgsocket'
     socket.mkdir()
-    run('initdb', '-D', data, '-A', 'trust', '-U', 'carnet', '--no-locale', cwd=work)
+    run('initdb', '-D', data, '-A', 'trust', '-U', 'carnet', '--encoding=UTF8', '--no-locale', cwd=work)
     run('pg_ctl', '-D', data, '-l', work / 'postgres.log', '-o', '-h 127.0.0.1 -p 55439 -k ' + str(socket), '-w', 'start', cwd=work)
     backend = None
     try:
@@ -153,7 +153,7 @@ def build(inputs, output, kind, source):
             continue
         destination = output / name
         shutil.copytree(site, destination)
-        run('python3', source / 'operations/builds/check_frontend_site.py', '--site', destination, cwd=app)
+        run('python3', source / 'check_frontend_site.py', '--site', destination, cwd=app)
 
 
 if __name__ == '__main__':

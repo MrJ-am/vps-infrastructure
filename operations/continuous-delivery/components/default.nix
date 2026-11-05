@@ -1,7 +1,18 @@
 { source, revision ? null, pkgs ? import ../../forgejo/locked-toolchain.nix {} }:
 let
   tools = pkgs.callPackage ../../builds/toolchains.nix {};
-  inputs = source + "/.delivery-inputs";
+  inputs = builtins.path {
+    path = source + "/.delivery-inputs";
+    name = "mrjam-component-inputs";
+  };
+  frontendSupport = builtins.path {
+    path = ../../builds;
+    name = "component-frontend-support";
+    filter = path: type:
+      (type == "directory" && path == toString ../../builds) ||
+      (type == "regular" && builtins.elem (builtins.baseNameOf path)
+        [ "check_frontend_site.py" "prepare.py" "toolchains.lock.json" ]);
+  };
   support = builtins.path {
     path = ./.;
     name = "component-build-support";
@@ -18,12 +29,12 @@ let
       ++ pkgs.lib.optionals (kind == "vise") [ tools.rust pkgs.postgresql_17 ];
     buildPhase = ''
       runHook preBuild
-      python3 ${support}/build.py ${kind} ${inputs} "$out" ${source}
+      python3 ${support}/build.py ${kind} ${inputs} "$out" ${frontendSupport}
       runHook postBuild
     '';
     dontInstall = true;
     # Check the exact bytes that will be served, rather than changing the source tests.
-    disallowedReferences = [ inputs source ];
+    disallowedReferences = [ inputs support frontendSupport ];
   };
   # Final manifests bind runtime bytes after ELF fixup/stripping. Keeping this
   # finalizer separate also avoids recompiling applications for metadata edits.
@@ -33,13 +44,13 @@ let
       "frontends requires revision = exact infrastructure commit";
     pkgs.runCommand "mrjam-${kind}-artifacts" {
     nativeBuildInputs = [ pkgs.python3 ];
-    disallowedReferences = [ inputs source ];
+    disallowedReferences = [ inputs support frontendSupport ];
   } ''
     mkdir -p "$out"
     cp -R ${rawBuild kind}/. "$out/"
     chmod -R u+w "$out"
     python3 ${./record.py} ${kind} ${inputs} "$out" \
-      ${pkgs.lib.escapeShellArg (if revision == null then "" else revision)} ${../../builds/toolchains.lock.json}
+      ${pkgs.lib.escapeShellArg (if kind == "vise" || revision == null then "" else revision)} ${frontendSupport}/toolchains.lock.json
   '';
 in {
   frontends = build "frontends";
