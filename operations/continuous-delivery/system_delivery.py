@@ -370,7 +370,7 @@ def promote(build):
         restart_managed(old_system, manifest)
         D.command(["systemctl", "restart", "mrjam-rust-" + new_slot + ".service"], timeout=40)
         deadline = time.monotonic() + 30
-        while not (D.probe(new_slot, "/healthz") and D.probe(new_slot)):
+        while not (D.probe(new_slot, "/healthz", timeout=0.8) and D.probe(new_slot)):
             if time.monotonic() >= deadline:
                 raise RuntimeError("Candidate did not become ready")
             time.sleep(0.25)
@@ -386,7 +386,7 @@ def promote(build):
         D.symlink(candidate, D.NGINX_CONF)
         D.reload_nginx()
         public_check(revision, new_slot)
-        if not (D.probe(old_slot) and D.probe(new_slot)):
+        if D.availability_failures(new_slot, 0, previous_slot=old_slot):
             raise RuntimeError("Immediate readiness check failed")
         # Persist the conservative boundary BEFORE reopening writes. If the
         # process dies during resume, recovery must never discard new writes.

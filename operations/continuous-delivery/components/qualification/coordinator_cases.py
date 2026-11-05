@@ -80,7 +80,7 @@ class Fixture:
    if path==self.state/'current.json' and value.get('revision')=='c'*40:self.at('current-written')
   values=[(D,'STATE',self.state),(D,'BOOT_READY',self.root/'boot-ready'),(D,'NGINX_CONF',self.route),(S,'PRIMARY',self.root/'primary'),(S,'ENGINE',self.engine),(S,'CONTROL',self.control),
    (S,'store_path',lambda value:Path(value)),(S,'retain',lambda *args:None),(S,'current_system',lambda:self.system),(D,'slot_command',lambda slot:self.config[slot]),
-   (D,'configure_slot',self.configure),(D,'command',self.command),(D,'reload_nginx',self.reload),(D,'probe',lambda *args:True),(S,'check_public_services',lambda:self.at('public-services')),
+   (D,'configure_slot',self.configure),(D,'command',self.command),(D,'reload_nginx',self.reload),(D,'probe',lambda *args,**kwargs:True),(S,'check_public_services',lambda:self.at('public-services')),
    (S,'public_check',lambda *args:self.at('public-cutover')),(S,'rollback',rollback),(M,'prepare',prepare),(M,'apply',apply),(M,'resume',resume),(M,'LEDGER',self.root/'receipts.json'),(D,'atomic_json',atomic),
    (D,'api',lambda *args,**kwargs:(_ for _ in ()).throw(AssertionError('Recovery called Forgejo')))]
   for obj,name,value in values:self.stack.enter_context(patch.object(obj,name,value))
