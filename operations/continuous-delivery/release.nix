@@ -1,7 +1,7 @@
 { source, revision, previousServer ? null, pkgs ? import ../forgejo/locked-toolchain.nix { } }:
 let
   server = import ./server.nix { inherit source revision pkgs; };
-  components = import ./components/default.nix { inherit source pkgs; };
+  components = import ./components/default.nix { inherit source revision pkgs; };
   host = import ./full-host.nix {
     inherit source revision server;
     inherit (components) frontends vise;
