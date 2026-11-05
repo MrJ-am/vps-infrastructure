@@ -196,7 +196,11 @@ class AvailabilityBudgetTests(unittest.TestCase):
                     time.sleep(2)
                     return
                 if self.path == "/readyz" and fixture.mode == "slow-ready":
-                    time.sleep(1.1)
+                    time.sleep(4.3)
+                if self.path == "/readyz" and fixture.mode == "stops-during-readiness":
+                    fixture.mode = "stopped"
+                    time.sleep(8)
+                    return
                 status = 503 if self.path == "/readyz" and fixture.mode == "dependency-failed" else 200
                 self.send_response(status)
                 self.send_header("Content-Length", "0")
@@ -228,6 +232,12 @@ class AvailabilityBudgetTests(unittest.TestCase):
         failures = D.availability_failures("blue", 0)
         self.assertEqual(failures, 1)
         self.assertEqual(D.availability_failures("blue", failures), 2)
+
+    def test_process_stopping_during_readiness_is_detected_without_waiting_for_it(self):
+        self.mode = "stops-during-readiness"
+        started = time.monotonic()
+        self.assertEqual(D.availability_failures("blue", 0), 2)
+        self.assertLess(time.monotonic() - started, 3.5)
 
 
 class MigrationPlanTests(unittest.TestCase):

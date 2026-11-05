@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 
 from ci import api
@@ -74,7 +75,7 @@ def recover_preparation(restart=True):
     path.unlink()
 
 
-def probe(slot, route="/readyz", timeout=3):
+def probe(slot, route="/readyz", timeout=10):
     connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=timeout)
     try:
         connection.request("GET", route)
@@ -327,11 +328,28 @@ def availability_failures(slot, previous):
     # A short process probe preserves fast recovery without timing out that work.
     if not probe(slot, "/healthz", timeout=0.8):
         return previous + 1
-    if probe(slot, "/readyz", timeout=3):
-        return 0
-    # If the process stopped during the longer readiness request, that wait
-    # already confirmed the failure: don't add another full monitoring interval.
-    return 2 if not probe(slot, "/healthz", timeout=0.8) else previous + 1
+    # Keep checking the process while its dependencies are being checked. A
+    # healthy readiness exceeded four seconds during compilation; increasing
+    # that budget must not delay detection of a process stopped in the meantime.
+    finished = threading.Event()
+    result = []
+
+    def readiness():
+        try:
+            result.append(probe(slot, "/readyz", timeout=10))
+        finally:
+            finished.set()
+
+    threading.Thread(target=readiness, daemon=True).start()
+    process_failures = 0
+    while not finished.wait(0.5):
+        if probe(slot, "/healthz", timeout=0.8):
+            process_failures = 0
+        else:
+            process_failures += 1
+            if process_failures >= 2:
+                return 2
+    return 0 if result and result[0] else previous + 1
 
 
 def watch():
