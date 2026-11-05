@@ -74,12 +74,17 @@ def recover_preparation(restart=True):
     path.unlink()
 
 
-def probe(slot, route="/readyz"):
-    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=0.8)
+def probe(slot, route="/readyz", timeout=3):
+    connection = http.client.HTTPConnection("127.0.0.1", PORTS[slot], timeout=timeout)
     try:
         connection.request("GET", route)
-        return connection.getresponse().status == 200
-    except OSError:
+        status = connection.getresponse().status
+        if status != 200:
+            print(json.dumps({"event": "probe-failed", "slot": slot, "route": route, "status": status}), flush=True)
+        return status == 200
+    except OSError as error:
+        print(json.dumps({"event": "probe-failed", "slot": slot, "route": route,
+                          "error": type(error).__name__}), flush=True)
         return False
     finally:
         connection.close()
@@ -316,6 +321,19 @@ def refresh_engine():
     return False
 
 
+def availability_failures(slot, previous):
+    # Readiness checks every configured dependency and the complete public
+    # Mateval corpus; it legitimately exceeds 0.8s under the slot's CPU quota.
+    # A short process probe preserves fast recovery without timing out that work.
+    if not probe(slot, "/healthz", timeout=0.8):
+        return previous + 1
+    if probe(slot, "/readyz", timeout=3):
+        return 0
+    # If the process stopped during the longer readiness request, that wait
+    # already confirmed the failure: don't add another full monitoring interval.
+    return 2 if not probe(slot, "/healthz", timeout=0.8) else previous + 1
+
+
 def watch():
     STATE.mkdir(exist_ok=True)
     with (STATE / "delivery.lock").open("w") as lock:
@@ -330,7 +348,7 @@ def watch():
             current = STATE / "current.json"
             if current.exists():
                 state = json.loads(current.read_text())
-                failures = 0 if probe(state["slot"]) else failures + 1
+                failures = availability_failures(state["slot"], failures)
                 if failures >= 2:
                     transaction = state.get("rollback") or {"revision": state["revision"],
                               "old_configuration": state["previous_configuration"],
