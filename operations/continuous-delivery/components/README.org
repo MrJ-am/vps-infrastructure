@@ -30,9 +30,10 @@ system-delivery change; nothing here mutates CI, routes, services or databases.
 
 * Qualification
 
-Work in progress: recipes and preparation must be exercised together before
-integration. A successful existing server workflow does not test these recipes.
-Browser tests and live integration are not claimed by source/build tests.
+Construction et tests des six composants réalisés dans le sandbox Nix ; voir
+[[file:QUALIFICATION.org][QUALIFICATION.org]] pour les résultats, sorties et limites exactes.
+Un succès du workflow serveur existant ne remplace pas ces tests de composants.
+Les tests navigateur et le runtime de production ne sont pas qualifiés ici.
 
 The installed recipe must retain the relative =operations/builds/= toolchains,
 preparation helper, Elm/resource locks and =operations/forgejo/= toolchain loader.
