@@ -1,0 +1,67 @@
+{
+  "reviewed_commit": "5630456033714863a5c027602597dff52312689c",
+  "final_result": "passed",
+  "native_standalone": {
+    "delivery_migrations_passed": 40,
+    "components_passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "output": "/nix/store/pq0wc5ry5das3q9bkavf8ajj77sfna81-mrjam-system-delivery-checks"
+  },
+  "independent": {
+    "tests": 21,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0,
+    "output": "/nix/store/bzwylxw8il730ac1xrjzgcfcna79xkyk-mrjam-independent-delivery-qualification"
+  },
+  "original_findings": {
+    "held_services_restored": "fixed",
+    "original_END_refused": "fixed",
+    "legacy_rollback_journal_retained": "fixed",
+    "nested_comment_variant": "fixed"
+  },
+  "postgresql_atomicity_without_lexical_validation": {
+    "tests": 2,
+    "subcases": 8,
+    "payload_commands": [
+      "END",
+      "COMMIT",
+      "ABORT",
+      "nested-comment END"
+    ],
+    "checks_commands_after_insert": [
+      "END",
+      "COMMIT",
+      "ABORT",
+      "nested-comment END"
+    ],
+    "lexical_validator": "intentionally disabled in these test contexts only",
+    "persisted_rows_each_subcase": 0,
+    "persisted_migration_schema_each_subcase": false
+  },
+  "candidate_migration_steps": 0,
+  "production_changes": false,
+  "model_boundaries": [
+    "systemctl",
+    "generation activation",
+    "slot processes"
+  ],
+  "setup_incident": {
+    "initial_independent_run": "PostgreSQL fixture startup failed before tests while native suite ran concurrently",
+    "resolution": "same derivation rerun serially, without changing tests or candidate code",
+    "log": "logs/independent-5630456-startup.log"
+  },
+  "prior_result": "history/31a52b3.json",
+  "scripts_sha256": {
+    "coordinator_cases.py": "b1a02c3efd8604c1b7c6e8120ae0ba4b36b712ddda845cd62e0c96f4b83a1596",
+    "default.nix": "9d75afa9a0de465a5456436d5680dc0c4f3324730c1655c9795e41345145bcc5",
+    "regression_cases.py": "41fa16364240b8e37c7bcdcb8cd45cd32ebfb8e5d3c65b08585f9e8c5274fb8f",
+    "sql_cases.py": "e98d2d08d3d5892ac1f5f96422484a3973753c0ef92549195f7e7d01c0e31543"
+  },
+  "logs_sha256": {
+    "independent-5630456-startup.log": "b8d96d8ae2ef15692c82d1bf526aa6d5593110b0b659dcfc4fb9b0a036d942a3",
+    "independent-5630456.log": "1efdad08ae0d8244d234ef2281e8921b4a87efb6dee66f1417b3447552fe4be2",
+    "standalone-5630456.log": "0f85621688f0797c37048883a019b50a1f8670c96fb6d8fe6b34ce4b12bf6160"
+  }
+}

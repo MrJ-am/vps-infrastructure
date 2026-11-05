@@ -1,0 +1,16 @@
+{
+  "applications": {
+    "vision": ["vision", "99eace9df76777c89bbd992952738b3f57608801"],
+    "mateval": ["matheval", "91b5b33541a39faade0c40792bfed5ad35ae80a1"],
+    "logique": ["apprendre-a-demontrer", "303e80be426012740eb16c5039bd4d3ea9155640"],
+    "vise": ["etp-vie-affective", "8c8ef66f943c10cb1397868bd1c5ed1962a97b5c"]
+  },
+  "styles": {
+    "log": "a998822b21352c98f6ad90738f3123711c49834b",
+    "audition": "cebba1824b6b5e939ae0155481ed87d7a98771e0",
+    "vision": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+    "mateval": "27111a95d0222c634e55fb2e3ff8e45041b40b16",
+    "logique": "fbdb9dbb0c723ecd6a16e492e47af085c6033531"
+  },
+  "signature": "17194087eec9162bb5372221c43e1de0501dfe6a"
+}

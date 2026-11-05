@@ -1,6 +1,6 @@
 { pkgs ? import ../forgejo/locked-toolchain.nix { } }:
 let
-  package = import ./package.nix { inherit pkgs; };
+  package = import ./bootstrap.nix { inherit pkgs; };
   path = pkgs.lib.makeBinPath [ package pkgs.bash pkgs.git pkgs.nix pkgs.coreutils pkgs.curl pkgs.nodejs ];
 in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   mkdir -p "$out"
@@ -8,6 +8,8 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   [Unit]
   Description=MRJ.am Forgejo Actions runner
   After=network-online.target forgejo.service
+  Requires=mrjam-delivery-restore.service
+  After=mrjam-delivery-restore.service
   Wants=network-online.target
   [Service]
   Type=simple
@@ -35,9 +37,12 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   [Unit]
   Description=MRJ.am delivery from successful Forgejo main builds
   After=network-online.target nginx.service forgejo.service mrjam-delivery-restore.service
+  Requires=mrjam-delivery-restore.service
   Wants=network-online.target
   [Service]
   Type=simple
+  X-RestartIfChanged=false
+  X-StopIfChanged=false
   StateDirectory=mrjam-delivery
   StateDirectoryMode=0755
   LoadCredential=source-token:/etc/mrjam-ci/source-token
@@ -51,9 +56,11 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   cat > "$out/mrjam-delivery-restore.service" <<'UNIT'
   [Unit]
   Description=Restore the last delivered application routing before Nginx
-  Before=nginx.service
+  Before=nginx.service postgresql.service forgejo.service kanidm.service mrjam-identity.service mrjam-identity-deletion.service mrjam-rust-blue.service mrjam-rust-green.service vise.service phpfpm-nextcloud.service
   [Service]
   Type=oneshot
+  X-RestartIfChanged=false
+  X-StopIfChanged=false
   ExecStart=${package}/bin/mrjam-delivery restore
   RemainAfterExit=yes
   [Install]

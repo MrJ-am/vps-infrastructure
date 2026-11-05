@@ -1,0 +1,40 @@
+{
+  "reviewed_commit": "31a52b3b0225db5aff92b8f069a76a4cdd4d8b35",
+  "native_standalone": {
+    "delivery_migrations_passed": 38,
+    "components_passed": 10,
+    "skipped": 0
+  },
+  "independent": {
+    "tests": 19,
+    "passed": 18,
+    "failed": 1,
+    "skipped": 0
+  },
+  "original_findings": {
+    "held_services_restored": "fixed",
+    "original_END_refused": "fixed",
+    "legacy_rollback_journal_retained": "fixed"
+  },
+  "remaining_failure": {
+    "test": "SQLRegression.test_nested_comment_with_quote_cannot_hide_END_and_persist_data",
+    "postgresql_real": true,
+    "sandbox_nix": true,
+    "persisted_rows_after_check_failure": 1,
+    "expected_rows": 0,
+    "requires_nonempty_SQL_plan": true
+  },
+  "candidate_migration_steps": 0,
+  "production_changes": false,
+  "model_boundaries": [
+    "systemctl",
+    "generation activation",
+    "slot processes"
+  ],
+  "scripts_sha256": {
+    "coordinator_cases.py": "b1a02c3efd8604c1b7c6e8120ae0ba4b36b712ddda845cd62e0c96f4b83a1596",
+    "default.nix": "9d75afa9a0de465a5456436d5680dc0c4f3324730c1655c9795e41345145bcc5",
+    "regression_cases.py": "41fa16364240b8e37c7bcdcb8cd45cd32ebfb8e5d3c65b08585f9e8c5274fb8f",
+    "sql_cases.py": "edcb1340e5729e5b806c8db299a1c62f4ee981ac2874aac569202d361e74b412"
+  }
+}

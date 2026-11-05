@@ -14,7 +14,7 @@ import time
 from ci import api
 
 STATE = Path("/var/lib/mrjam-delivery")
-NGINX_CONF = Path("/etc/nginx/nginx.conf")
+NGINX_CONF = STATE / "nginx-current.conf"
 PORTS = {"blue": 38101, "green": 38102}
 REPO = "repos/MrJ-am/vps-infrastructure"
 
@@ -39,6 +39,38 @@ def symlink(target, destination):
 def command(arguments, timeout=30):
     return subprocess.run(arguments, check=True, timeout=timeout,
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True).stdout.strip()
+
+
+def slot_command(slot):
+    value = command(["systemctl", "show", "mrjam-rust-" + slot + ".service", "-p", "ExecStart", "--value"])
+    match = re.search(r"argv\[\]=(.*?) ; ignore_errors=", value)
+    if not match or not re.fullmatch(r"/nix/store/[^ ;]+/bin/mrjam-server serve --config /nix/store/[^ ;]+/runtime.json", match[1]):
+        raise RuntimeError("Cannot retain the current slot command")
+    return match[1]
+
+
+def configure_slot(slot, executable):
+    directory = Path("/etc/systemd/system.control", "mrjam-rust-" + slot + ".service.d")
+    directory.mkdir(exist_ok=True)
+    temporary = directory / "90-continuous-delivery.conf.new"
+    temporary.write_text("[Service]\nExecStart=\nExecStart=" + executable + "\n")
+    os.replace(temporary, directory / "90-continuous-delivery.conf")
+    command(["systemctl", "daemon-reload"])
+
+
+def recover_preparation(restart=True):
+    path = STATE / "preparation.json"
+    if not path.exists():
+        return
+    pending = json.loads(path.read_text())
+    current = STATE / "current.json"
+    if current.exists() and json.loads(current.read_text())["revision"] == pending["revision"]:
+        path.unlink()
+        return
+    configure_slot(pending["slot"], pending["command"])
+    if restart:
+        command(["systemctl", "restart", "mrjam-rust-" + pending["slot"] + ".service"], timeout=40)
+    path.unlink()
 
 
 def probe(slot, route="/readyz"):
@@ -72,6 +104,10 @@ def record_failure(revision):
 
 
 def rollback(transaction, reload=True):
+    if transaction.get("format") == 2:
+        import system_delivery
+        return system_delivery.rollback(transaction, reload=reload)
+    atomic_json(STATE / "transaction.json", transaction)
     started = time.monotonic()
     symlink(transaction["old_configuration"], NGINX_CONF)
     if reload:
@@ -82,6 +118,11 @@ def rollback(transaction, reload=True):
     else:
         (STATE / "current.json").unlink(missing_ok=True)
     record_failure(transaction["revision"])
+    if transaction.get("replaced_slot"):
+        saved = transaction["replaced_slot"]
+        configure_slot(saved["slot"], saved["command"])
+        if reload:
+            command(["systemctl", "restart", "mrjam-rust-" + saved["slot"] + ".service"], timeout=40)
     (STATE / "transaction.json").unlink(missing_ok=True)
     print(json.dumps({"event": "rollback", "revision": transaction["revision"],
                       "seconds": round(time.monotonic() - started, 3)}), flush=True)
@@ -91,13 +132,18 @@ def recover(reload=True):
     pending = STATE / "transaction.json"
     if pending.exists():
         rollback(json.loads(pending.read_text()), reload=reload)
+    recover_preparation(restart=reload)
 
 
 def restore():
+    if (STATE / "manual-recovery.json").exists():
+        raise RuntimeError("Explicit data recovery is pending")
     recover(reload=False)
     current = STATE / "current.json"
     if current.exists():
         symlink(json.loads(current.read_text())["configuration"], NGINX_CONF)
+    import system_delivery
+    system_delivery.ensure_gateway_entry()
 
 
 def public_check():
@@ -140,6 +186,45 @@ def candidate_configuration(old, new):
 
 
 def promote(build):
+    if build.get("format") == 2:
+        import system_delivery
+        output = system_delivery.store_path(build["output"])
+        manifest = json.loads((output / "release.json").read_text())
+        if manifest.get("revision") != build["revision"] or manifest.get("format") != 2:
+            raise ValueError("Release manifest mismatch")
+        engine = system_delivery.store_path(manifest["engine"])
+        script = engine / "operations/continuous-delivery/deploy.py"
+        if script.resolve() != Path(__file__).resolve():
+            # The tested candidate supplies its own deployment implementation,
+            # so evolving the engine never needs a separate administrator install.
+            record = STATE / ("apply-" + build["revision"] + ".json")
+            atomic_json(record, build)
+            record.chmod(0o600)
+            try:
+                result = command([str(engine / "bin/mrjam-delivery"), "apply", str(record)], timeout=1800)
+                if result:
+                    print(result, flush=True)
+            finally:
+                record.unlink(missing_ok=True)
+            return
+        return system_delivery.promote(build)
+    # Keep A available again when preparation of C fails while B is serving.
+    # A durable snapshot also covers interruption before the cutover transaction.
+    new = "green" if active_slot(NGINX_CONF.read_text()) == "blue" else "blue"
+    snapshot = {"revision": build["revision"], "slot": new, "command": slot_command(new)}
+    import system_delivery
+    system_delivery.retain("retained-" + new + "-server", snapshot["command"].split("/bin/")[0])
+    system_delivery.retain("retained-" + new + "-runtime", str(Path(snapshot["command"].split(" --config ")[1]).parent))
+    atomic_json(STATE / "preparation.json", snapshot)
+    try:
+        promote_server({**build, "replaced_slot": snapshot})
+    except BaseException:
+        recover_preparation()
+        raise
+    (STATE / "preparation.json").unlink(missing_ok=True)
+
+
+def promote_server(build):
     revision, output = build["revision"], build["output"]
     if not re.fullmatch(r"/nix/store/[0-9a-z]{32}-[A-Za-z0-9+._-]+", output):
         raise ValueError("Invalid artifact path")
@@ -156,12 +241,7 @@ def promote(build):
         raise RuntimeError("Current version is not ready")
     unit = "mrjam-rust-" + new + ".service"
     runtime = candidate_configuration(old, new)
-    directory = Path("/etc/systemd/system.control", unit + ".d")
-    directory.mkdir(exist_ok=True)
-    override = directory / "90-continuous-delivery.conf"
-    override.write_text("[Service]\nExecStart=\nExecStart=" + output
-                        + "/bin/mrjam-server serve --config " + runtime + "\n")
-    command(["systemctl", "daemon-reload"])
+    configure_slot(new, output + "/bin/mrjam-server serve --config " + runtime)
     command(["systemctl", "restart", unit], timeout=40)
     deadline = time.monotonic() + 30
     while not (probe(new, "/healthz") and probe(new)):
@@ -222,6 +302,14 @@ def next_build():
     return None
 
 
+def refresh_engine():
+    engine_script = Path("/etc/mrjam-ci/engine/operations/continuous-delivery/deploy.py")
+    if engine_script.is_file() and engine_script.resolve() != Path(__file__).resolve():
+        command(["systemctl", "restart", "--no-block", "mrjam-delivery.service"])
+        return True
+    return False
+
+
 def watch():
     STATE.mkdir(exist_ok=True)
     with (STATE / "delivery.lock").open("w") as lock:
@@ -230,14 +318,25 @@ def watch():
         failures = 0
         next_poll = 0
         while True:
+            if (STATE / "manual-recovery.json").exists():
+                time.sleep(1)
+                continue
             current = STATE / "current.json"
             if current.exists():
                 state = json.loads(current.read_text())
                 failures = 0 if probe(state["slot"]) else failures + 1
                 if failures >= 2:
-                    rollback({"revision": state["revision"],
+                    transaction = state.get("rollback") or {"revision": state["revision"],
                               "old_configuration": state["previous_configuration"],
-                              "old_state": state["previous_state"]})
+                              "old_state": state["previous_state"],
+                              "replaced_slot": state.get("replaced_slot")}
+                    try:
+                        rollback(transaction)
+                    except Exception:
+                        if not (STATE / "manual-recovery.json").exists():
+                            raise
+                    if refresh_engine():
+                        return
                     failures = 0
             if time.monotonic() >= next_poll:
                 next_poll = time.monotonic() + 10
@@ -246,6 +345,10 @@ def watch():
                     build = next_build()
                     if build:
                         promote(build)
+                        # Activation installs the engine from the exact tested
+                        # source. Replace this process only after its transaction.
+                        if refresh_engine():
+                            return
                 except Exception as error:
                     if build:
                         record_failure(build["revision"])
@@ -254,4 +357,11 @@ def watch():
 
 
 if __name__ == "__main__":
-    {"watch": watch, "recover": recover, "restore": restore}[sys.argv[1]]()
+    if sys.argv[1] == "apply" and len(sys.argv) == 3:
+        path = Path(sys.argv[2]).resolve(strict=True)
+        if path.parent != STATE.resolve() or not re.fullmatch(r"apply-[0-9a-f]{40}\.json", path.name):
+            raise ValueError("Expected the coordinator-owned application record")
+        import system_delivery
+        system_delivery.promote(json.loads(path.read_text()))
+    else:
+        {"watch": watch, "recover": recover, "restore": restore}[sys.argv[1]]()

@@ -1,0 +1,109 @@
+* Qualification du 5 novembre 2026
+
+Recette : branche =spectre/cloud-components-20261105=, code =0575bf3=.
+Sources infrastructure utilisées pour les fixtures :
+=187fc492e1f02f072d4ede93a2c8346987ffa753= (Log/Audition et helpers inchangés).
+Applications et styles : exactement =pins.json=, exports HTTPS Forgejo.
+Aucun dépôt distant autre que cette branche infrastructure n'a été modifié.
+Aucune PR, fusion, activation système ni livraison en production.
+
+* Construction et tests des composants
+
+Deux =nix-build= réels, avec =sandbox = true= et le pkgs par défaut du contrat :
+
+#+begin_src sh
+nix-build operations/continuous-delivery/components/default.nix \
+  -A frontends --arg source /candidate \
+  --argstr revision 187fc492e1f02f072d4ede93a2c8346987ffa753 --no-out-link
+nix-build operations/continuous-delivery/components/default.nix \
+  -A vise --arg source /candidate --no-out-link
+#+end_src
+
+La préparation en amont utilise =prepare(source, cache, export)= et les locks
+Elm/npm/Cargo. Aucun téléchargement npm/Cargo/Elm dans la construction.
+Nix peut récupérer les outils et leurs fermetures verrouillées avant le build.
+Le cluster PostgreSQL de ViSe est neuf, local au sandbox, encodé UTF-8 et arrêté
+par le test. Les données et les identifiants de test sont synthétiques.
+
+| Composant | Construction finale | Tests exécutés et réussis |
+|-----------+---------------------+---------------------------|
+| Log       | oui                 | 9 Elm ; syntaxe JS ; références locales |
+| Audition  | oui                 | 9 Elm ; syntaxe JS ; références locales |
+| Vision    | oui                 | 4 Elm ; 2 architecture ; formatage ; syntaxe JS ; références locales |
+| Mateval   | oui                 | 12 Elm ; 7 construction ; contrôle artefacts ; 4 entrées Elm ; références locales |
+| Logique   | oui                 | 190 correcteur ; 299 formules KaTeX ; 14 Python ; 97 noyau/théorèmes ; références locales |
+| ViSe      | oui                 | contrôle TypeScript ; 15 tests fonctionnels ; 9 API réelles avec PostgreSQL neuf |
+| Helpers components | oui        | 10 tests Python : intégrité, liens, provenance, contrats manifestes et hash après fixup |
+
+ViSe ne contient aucun test unitaire Rust à ce commit : aucune revendication
+fondée sur un =cargo test= à zéro test. Son vrai backend est compilé en release
+avec =--frozen --offline=, puis exercé par les neuf tests API.
+Les tests navigateur Playwright, visuels et d'accessibilité ne sont pas exécutés.
+
+Sorties Nix effectivement produites :
+- frontends : =/nix/store/68j5g87scjgjpbiqyn84njph56sakdp1-mrjam-frontends-artifacts=
+- ViSe : =/nix/store/x5sxbgb07snawgm8plpizlgpr3q3l35z-mrjam-vise-artifacts=
+
+* Artefacts et couplage réel
+
+Les cinq manifestes respectent exactement les neuf champs du contrat
+=serveur/crates/server/src/static_assets.rs=, sans champ supplémentaire.
+=source_commits.infrastructure= vaut la révision infrastructure donnée à Nix.
+L'empreinte du verrou des outils vaut
+=27c05033dd0a7347ccdba0afb4caed5bb359eaeeeb1dd1fedb92ef8dc5701eae=.
+L'empreinte de =.delivery-inputs/manifest.json= vaut
+=87ad4a9959e67a38de77b258b77566d33a62eb39805360e01e5716d753087b96=.
+
+Les payloads ont été relus et hachés indépendamment après fixup :
+Log 38 fichiers, Audition 124, Vision 23, Mateval 107, Logique 105, ViSe 46.
+Aucun lien symbolique dans les sorties. Le binaire ViSe final est exécutable,
+ELF, sans chemin temporaire de construction, et son empreinte correspond au
+manifeste après stripping/fixup. ViSe conserve son propre format de manifeste.
+
+Contrôle additionnel hors sandbox Nix, sur loopback uniquement : le vrai
+=mrjam-server= compilé sur main charge les cinq sites finaux avec seulement
+=required_capabilities=[static-assets]=, toutes les configurations DB et identité
+retirées. Readiness réussie ; 397 GET réussis ; chaque réponse a l'empreinte
+attendue. Le processus est arrêté à la fin. Cela ne qualifie ni les routes de
+production ni l'intégration avec des bases ou une identité réelles.
+Le check_assets.py de la branche système doit vérifier son propre runtime
+composé dans le sandbox ; ce test local ne le remplace pas.
+
+* Cache : vérification réelle des dérivations
+
+Comparaison de =nix-instantiate= avant/après une modification synthétique sous
+=operations/=, extérieure à =.delivery-inputs/= : dérivations frontends et ViSe
+strictement identiques. Modification du seul argument =revision= :
+- compilation Elm brute inchangée ;
+- emballage frontend changé ;
+- dérivation ViSe finale inchangée.
+
+Entrées : chemin Nix indépendant nommé =mrjam-component-inputs=.
+Aucun chemin du store de l'infrastructure complète dans les commandes de build
+ni dans =disallowedReferences=. Les scripts de support sont sélectionnés.
+
+* Régressions du main déjà terminées
+
+| Lot | Résultat réel |
+|-----+---------------|
+| Rust workspace, all-features, release, locked/offline | 145 réussis ; 0 échec ; 1 mesure mémoire explicitement ignorée |
+| Livraison Python avec vrai Nginx | 11 réussis ; bascule locale 0,052 s ; détection et retour local 1,040 s |
+| Composition Nix : core, applications, gateway, identité, ViSe, PostgreSQL | 6 évaluations réussies ; 150 assertions vraies |
+| Helper des entrées ViSe existant | 8 tests réussis |
+| Scénarios indépendants | 3 réussis : schéma incompatible refusé avant mutation ; reprise avant/après bascule sans API |
+| Ancien slot A / actif B / préparation C échouée | défaut du main reproduit ; correctif Spectre attendu pour retest |
+| identity-deletion-evaluation.nix | échec d'évaluation : artefact deletion de fixture en conflit avec candidate.nix transport2 ; 13 assertions non atteintes |
+| VM NixOS / génération système / migrations du nouveau déployeur | non exécutés ici ; /dev/kvm absent ; candidat système pas encore publié |
+
+Les mesures Nginx sont celles d'une fixture locale, pas celles du VPS.
+Le cas A/B/C et les scénarios sont conservés dans l'atelier local
+=/workspace/qualification/20261105/= pour le candidat de Spectre.
+Les sauvegardes, données de production et paramètres du VPS n'ont pas été lus.
+
+* Incidents de préparation corrigés
+
+Le premier prototype Nix s'arrêtait sur un répertoire copié en lecture seule ;
+la copie de travail est maintenant inscriptible. Le premier format générique
+=files/pins= n'était pas celui du chargeur Rust ; il a été remplacé par les
+contrats natifs avant la qualification finale ci-dessus. Les builds interrompus
+pour intégrer ces corrections ne sont pas comptés comme des qualifications.

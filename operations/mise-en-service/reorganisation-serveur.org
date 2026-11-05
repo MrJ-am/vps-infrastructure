@@ -134,3 +134,19 @@ La prochaine discussion de procédure doit établir depuis Spectre :
    les contrôles longs restent en dehors de cette fenêtre de quelques secondes.
 
 Cette liste ne constitue pas encore une commande de bascule qualifiée.
+
+* Simplification et raccordement depuis Spectre — 5 novembre 2026
+
+La procédure historique ci-dessus est remplacée par le circuit unique décrit
+dans =../continuous-delivery/README.org= : Forgejo Actions, construction du commit
+exact de =main=, puis livraison locale de la génération complète. Les contrôleurs
+d'admission, validation indépendante et promotion historiques restent désactivés.
+=mrjam-validation= reste en lecture seule. La documentation de cette section
+conserve l'historique ; ses anciennes conditions ne s'ajoutent pas au nouveau circuit.
+
+Le raccordement couvre serveur, interfaces, identité, ViSe et configuration NixOS
+(Nginx, PostgreSQL, Forgejo, Kanidm, Nextcloud). Les migrations sont des étapes
+versionnées testées sur fixtures, compatibles par défaut, ou en maintenance avec
+récupération déclarée. Aucun changement de schéma n'est prévu pour l'adoption.
+Les sauvegardes générales restent hors priorité. Une nouvelle version du noyau
+requiert encore un redémarrage distinct de la bascule applicative.
