@@ -104,9 +104,10 @@ def restore_system(transaction, restart=True):
     if transaction.get("old_system"):
         old = transaction["old_system"]
         previous = current_system()
-        if restart and previous != old:
+        if restart and (previous != old or transaction.get("activation_started", False)):
             activate(old)
-            restart_managed(previous, {"system": old, "managed_units": transaction.get("managed_units", [])},
+            restart_managed(transaction.get("candidate_system", previous),
+                            {"system": old, "managed_units": transaction.get("managed_units", [])},
                             ensure_active=transaction.get("old_active_units", []))
         elif not restart:
             # Boot recovery must select the old generation for the next boot,
@@ -148,6 +149,7 @@ def park(transaction, reason):
 
 def rollback(transaction, reload=True):
     # Restore traffic first; generation/idle-slot recovery may take longer.
+    D.atomic_json(D.STATE / "transaction.json", transaction)
     started = time.monotonic()
     if not transaction.get("compatible", True) and transaction.get("writes_resumed", False):
         park(transaction, "writes-may-have-resumed")
@@ -307,6 +309,7 @@ def promote(build):
     old_controls = str((CONTROL / "mrjam-delivery.service").resolve().parent)
     transaction = {"format": 2, "revision": revision, "old_state": old_state,
                    "old_configuration": old_configuration, "old_system": old_system,
+                   "candidate_system": manifest["system"], "activation_started": False,
                    "old_engine": str(ENGINE.resolve()), "old_controls": old_controls,
                    "old_slots": {slot: D.slot_command(slot) for slot in D.PORTS},
                    "compatible": compatible, "migration_plan": str(plan_path),
@@ -339,6 +342,8 @@ def promote(build):
         D.symlink(staged, D.NGINX_CONF)
         ensure_gateway_entry()
         select_controls(manifest["controls"])
+        transaction["activation_started"] = True
+        D.atomic_json(D.STATE / "transaction.json", transaction)
         activate(manifest["system"])
         migrations.apply(plan_path, manifest["postgresql"] + "/bin/psql", revision,
                          D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"], phase="after-system")

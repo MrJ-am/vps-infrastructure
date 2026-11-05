@@ -1,69 +1,109 @@
-#+title: Tests Forgejo et livraison depuis main
+#+title: Tests Forgejo et livraison complète depuis main
 #+language: fr
 
-* Circuit courant
+* Un seul circuit
 
-Le runner Forgejo standard =mrjam-ci= exécute =.forgejo/workflows/ci.yml=.
-Il récupère le commit exact d'infrastructure et les gitlinks Vision/Mateval,
-puis construit le serveur avec Rust 1.99.1 dans le sandbox Nix. Le build doit
-passer le formatage, Clippy, les tests des crates et les intégrations PostgreSQL
-avec une base synthétique jetable. Aucun accès aux bases applicatives n'est
-utilisé pour ces essais.
+Le runner standard =mrjam-ci= exécute =.forgejo/workflows/ci.yml= sur le commit
+exact de l'infrastructure. Les gitlinks Vision/Mateval et =components/pins.json=
+fixent les autres sources Forgejo. Les dépendances publiques sont vérifiées
+avant les constructions Nix isolées. Le résultat contient le serveur, les deux
+binaires d'identité, les cinq interfaces, ViSe, le déployeur et la génération
+NixOS complète. Les tests propres et les intégrations PostgreSQL utilisent
+uniquement des fixtures synthétiques ; la livraison est testée avec un vrai Nginx.
 
-Le service =mrjam-delivery= suit =main=. Il exige une exécution réussie du
-workflow =ci.yml= déclenchée par un push sur ce même commit. Il utilise
-l'artefact construit par cette exécution, démarre le slot inactif avec sa
-configuration du slot actif, adaptée à ses credentials et conservant les mêmes
-interfaces, attend ses sondes privées et vérifie Nginx avant de
-changer son routage. L'ancien processus reste démarré. Les contrôles immédiats
-passent par le vrai Nginx et vérifient TLS et l'en-tête du nouveau serveur.
-Les durées de bascule et de retour sont écrites dans les événements du service.
+Une fusion dans =main= déclenche cette construction. =mrjam-delivery= attend la
+réussite de =ci.yml= pour un push sur ce commit précis, puis livre cet artefact.
+Une réussite de branche ou PR ne livre rien. Les tests natifs sont obligatoires
+pour fusionner, les pushs directs sur =main= interdits, sans approbation supplémentaire.
+Les recettes et le déployeur viennent du candidat testé : le lanceur installé
+une fois permet leurs évolutions suivantes sans nouvelle intervention Spectre.
+=mrjam-validation= reste intact et l'ancienne chaîne reste désactivée.
 
-Après livraison, une surveillance à la seconde déclenche le retour après deux
-échecs de disponibilité. Un commit revenu en arrière n'est pas relivré en boucle.
-Une interruption pendant la bascule provoque aussi le retour via =ExecStopPost= ;
-le routage validé est rétabli avant Nginx au démarrage suivant.
+* Configuration faisant autorité
 
-Les scripts SQL ne sont jamais exécutés par le déployeur. Une différence des
-migrations bloque la livraison ordinaire et relève de l'intervention distincte
-prévue pour les schémas. =mrjam-validation= n'est pas modifié. Les anciennes
-chaînes GitHub/admission/attestation/promotion restent arrêtées.
+=configuration.nix= accueille les modifications de paquets/services et imports
+NixOS. =full-host.nix= raccorde les composants et la livraison.
+=installed-baseline.nix= conserve les modules publics de l'hôte adopté pour
+préserver sa configuration. Ses dépendances historiques ne sont pas des
+contrôleurs exécutés ; leurs sources peuvent être remplacées ici par des modules
+versionnés. Les évolutions majeures peuvent demander d'adapter ces modules et
+leurs assertions de version, en plus de fournir une migration testée.
 
-* Installation sur le VPS
+* Préparation, bascule et retour
 
-Construire =services.nix= avec Nix, transférer sa fermeture et le paquet qu'il
-référence, puis exécuter =install.py PACKAGE SERVICES= comme administrateur.
-L'installateur crée un accès de lecture des sources pour la CI, une inscription
-de runner limitée à l'infrastructure et active Actions sur ce seul dépôt.
-Les valeurs de credentials restent dans =/etc/mrjam-ci/=, hors Git et hors store.
-Le runner utilise son compte systemd dédié et ne reçoit aucun accès administrateur.
-Sur infrastructure, les tests natifs restent obligatoires et les pushs directs
-sur =main= interdits. Aucune approbation supplémentaire n'est exigée pour fusionner.
+Le déployeur conserve la génération, les commandes exactes des deux slots et
+leur routage. Il prépare le slot inactif et Nginx, active la génération complète,
+attend la disponibilité du candidat et vérifie les autres services. Il bascule
+ensuite le trafic, puis vérifie immédiatement TLS, le commit et le slot via le
+vrai Nginx. L'ancienne version reste disponible.
 
-Sur ce VPS NixOS, =/etc/systemd/system= pointe vers le store en lecture seule.
-Les unités et leurs dépendances de démarrage sont donc installées sous
-=/etc/systemd/system.control=, présent dans le chemin de chargement de systemd.
-Les paquets installés sont conservés par des racines GC. L'installation seule
-ne remplace aucun binaire applicatif et ne change aucune route.
+Une surveillance à la seconde revient à l'ancienne route après deux échecs ;
+la restauration de la génération et du slot déplacé suit ce retour du trafic.
+Elle fonctionne sans API Forgejo. Les transactions sont persistées et reprises
+après interruption ; la restauration au démarrage précède les bases et services.
+Une interruption système au redémarrage sélectionne puis redémarre l'ancienne
+génération avant de laisser démarrer ses applications.
 
-* Exploitation
+Le retour rapide exige des données compatibles avec les deux versions.
+Un changement de noyau est installé pour le prochain démarrage et signalé par
+=reboot_required=. Le redémarrage du VPS reste une maintenance distincte :
+la bascule applicative ne change pas le noyau en cours d'exécution.
 
-=systemctl status mrjam-ci mrjam-delivery= indique l'état de la chaîne.
-Forgejo affiche le résultat des tests sur le commit concerné. Les métadonnées
-de livraison sont dans =/var/lib/mrjam-delivery/current.json= et les résultats
-de construction dans =/var/lib/mrjam-ci/results/=. Ces fichiers ne contiennent
-ni données métier ni credentials.
+* Migrations versionnées
 
-Pour suspendre les nouvelles livraisons, arrêter =mrjam-delivery=. Cela conserve
-le routage validé ; une transaction inachevée revient automatiquement en arrière.
-Le service de restauration au démarrage conserve la dernière version validée.
+=migrations/plan.json= contient les étapes et =migrations/programs.nix= leurs
+programmes éventuels. Le plan d'adoption est vide. Les empreintes de schéma et
+versions sont comparées aux métadonnées de livraison, sans lire les données
+métier. Une évolution exige une étape testée pour son =scope= : =server=,
+=vise=, =postgresql=, =forgejo=, =kanidm= ou =nextcloud=.
 
-* Portée de cette première livraison
+- =driver: sql= : =id= unique, =database=, =scope=, =compatibility: both=,
+  fichiers =sql=, =checks= et =fixture=. Le plan fournit =compatibility_check=
+  qui teste ancien et nouveau binaires sur la fixture. L'étape et son inscription
+  sont atomiques sous verrou PostgreSQL ; le rejeu ne répète pas la modification.
+  Une définition déjà exécutée est immuable.
+- =driver: program= : programme Nix désigné par =program=, fournissant =check=,
+  =apply=, =verify= et =recover=. =check= exerce la vraie migration sur une fixture
+  jetable, avec ancien/nouveau moteur pour une montée majeure.
+  =compatibility: maintenance= ajoute =quiesce= et =resume= : bloquer et drainer
+  les écritures avant modification, maintenir la barrière jusqu'à vérification,
+  récupérer une interruption. Les actions sont rejouables avec leur état durable.
 
-Le premier raccord livre le serveur déplacé et son en-tête HTTP, avec les
-frontends, les services d'identité et ViSe déjà installés. Il n'exécute aucune
-migration et ne remplace pas simultanément les autres services. Les évolutions
-des frontends et de ViSe doivent avoir leur recette de construction/livraison
-avant d'être annoncées couvertes par ce premier circuit.
+La phase =before-system= est la valeur par défaut ; =after-system= travaille
+après installation du nouveau moteur. =hold_units= garde les services concernés
+arrêtés pendant l'activation, par exemple avant conversion du répertoire PostgreSQL.
+La barrière d'écriture précède ces arrêts. L'historique terminé ne les répète pas.
 
-Les sauvegardes restent inchangées et hors priorité de cette intervention.
+Une opération destructive requiert l'autorisation explicite de l'utilisateur
+et une récupération testée, consignées par root dans
+=/var/lib/mrjam-delivery/approved-migrations/COMMIT.json= :
+={"revision":"COMMIT","migrations":["id"],"recovery_tested":true}=.
+Avant réouverture des écritures incompatibles, un échec exécute la récupération.
+Après réouverture, aucune restauration automatique d'anciennes données : les
+applications passent en maintenance et =manual-recovery.json= indique la reprise
+à réaliser. Le déployeur attend l'intervention ; il ne supprime pas ce signal.
+Les sauvegardes générales existantes ne sont pas modifiées par cette installation.
+
+* Installation et exploitation
+
+Construire =package.nix= et =services.nix=, transférer leurs fermetures, arrêter
+l'ancien =mrjam-delivery= puis lancer =install.py PACKAGE SERVICES= comme root.
+L'installateur conserve anciens contrôles, génération initiale et route courante.
+Les credentials restent dans =/etc/mrjam-ci/=, hors Git et du store. Les unités
+sous =/etc/systemd/system.control= permettent aussi le retour à l'ancien système.
+Le runner n'a ni accès administrateur ni accès aux bases applicatives.
+
+=systemctl status mrjam-ci mrjam-delivery mrjam-delivery-restore= montre la chaîne.
+Forgejo expose les tests. =/var/lib/mrjam-ci/results/= indique l'artefact par commit ;
+=/var/lib/mrjam-delivery/current.json= contient génération, slots, versions et délais.
+Ces métadonnées n'ont ni credentials ni données métier. Les retours sont journalisés.
+Arrêter =mrjam-delivery= suspend les livraisons et conserve la dernière route validée.
+
+#+begin_src sh
+nix-build --no-out-link --expr 'import ./operations/continuous-delivery/tests.nix { source = builtins.path { path = ./.; name = "source"; }; }'
+#+end_src
+
+Ce test autonome utilise PostgreSQL et Nginx réels sur fixtures jetables.
+=verify_live.py PACKAGE COMMIT= exerce une panne du slot livré, mesure le retour
+via Nginx, puis permet la relivraison du candidat sain. Test administrateur,
+uniquement lorsque les deux slots sont disponibles.

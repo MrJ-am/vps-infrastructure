@@ -107,6 +107,7 @@ def rollback(transaction, reload=True):
     if transaction.get("format") == 2:
         import system_delivery
         return system_delivery.rollback(transaction, reload=reload)
+    atomic_json(STATE / "transaction.json", transaction)
     started = time.monotonic()
     symlink(transaction["old_configuration"], NGINX_CONF)
     if reload:
@@ -150,9 +151,6 @@ def public_check():
     for host, path in [("vision.mrj.am", "/"), ("principiipetit.io", "/matheval/")]:
         deadline = time.monotonic() + 2
         while True:
-            if (STATE / "manual-recovery.json").exists():
-                time.sleep(1)
-                continue
             try:
                 headers = command(["curl", "--silent", "--show-error", "--fail", "--max-time", "0.5",
                                    "--resolve", host + ":443:127.0.0.1", "--dump-header", "-",

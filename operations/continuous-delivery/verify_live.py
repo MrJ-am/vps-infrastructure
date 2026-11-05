@@ -48,28 +48,31 @@ def main():
             time.sleep(0.05)
         elapsed = time.monotonic() - started
         if not automatic:
-            deploy.rollback({"revision": revision,
+            deploy.rollback(state.get("rollback") or {"revision": revision,
                              "old_configuration": state["previous_configuration"],
                              "old_state": state["previous_state"]})
     finally:
         subprocess.run(["systemctl", "kill", "--kill-whom=main", "--signal=SIGCONT", unit],
-                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                       check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if not automatic:
         raise RuntimeError("Automatic return exceeded five seconds; previous routing restored")
-    deadline = time.monotonic() + 10
-    while not deploy.probe(new):
+    deadline = time.monotonic() + 120
+    while (deploy.STATE / "transaction.json").exists() or not deploy.probe(new):
         if time.monotonic() >= deadline:
             raise RuntimeError("Candidate did not resume; previous routing retained")
         time.sleep(0.1)
     failure = deploy.STATE / "failed.json"
     if failure.exists() and json.loads(failure.read_text())["revision"] == revision:
         failure.unlink()
-    deadline = time.monotonic() + 60
+    deadline = time.monotonic() + 180
     while time.monotonic() < deadline:
         if current_file.exists():
             final = json.loads(current_file.read_text())
             if final["revision"] == revision and deploy.probe(final["slot"]):
                 deploy.public_check()
+                if final.get("format") == 2:
+                    import system_delivery
+                    system_delivery.public_check(revision, final["slot"])
                 proof = {"revision": revision, "automatic_rollback": True,
                          "failure_detection_and_rollback_seconds": round(elapsed, 3),
                          "first_cutover_seconds": state["cutover_seconds"],
