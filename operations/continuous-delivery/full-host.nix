@@ -42,7 +42,6 @@ let
     imports = [ ./configuration.nix ];
     system.configurationRevision = revision;
     systemd.generators = lib.mkForce (builtins.removeAttrs before.systemd.generators [ "mrjam-first-cutover-guard" ]);
-    environment.etc."mrjam-ci/engine".source = engine;
     # NixOS owns this stable include; the delivery transaction owns its target.
     environment.etc."nginx/nginx.conf".source = lib.mkOverride (-20)
       (pkgs.writeText "mrjam-nginx-entry.conf" "include /var/lib/mrjam-delivery/nginx-current.conf;\n");
@@ -51,7 +50,7 @@ let
         add_header X-Mrjam-Deployment "${revision}:blue" always;
       '';
     }) hosts;
-    systemd.services = lib.mkMerge [ (lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
+    systemd.services = lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
       mrjam-rust-blue = {
         restartIfChanged = false;
         stopIfChanged = false;
@@ -90,21 +89,12 @@ let
         # Do not launch an independent asynchronous reload during system activation.
         enable = lib.mkForce false;
       };
-    }) (lib.genAttrs [ "nginx" "postgresql" "forgejo" "kanidm" "mrjam-identity"
-                       "mrjam-identity-deletion" "mrjam-rust-blue" "mrjam-rust-green"
-                       "vise" "phpfpm-nextcloud" ] (_: {
-      requires = [ "mrjam-delivery-restore.service" ];
-      after = [ "mrjam-delivery-restore.service" ];
-    })) ];
+    };
     systemd.timers = lib.genAttrs
       (lib.filter (name: builtins.hasAttr name before.systemd.timers) legacy)
       (_: { enable = lib.mkForce false; });
-    systemd.units = lib.genAttrs
-      [ "mrjam-ci.service" "mrjam-delivery.service" "mrjam-delivery-restore.service" ]
-      (name: {
-        text = builtins.readFile (units + "/${name}");
-        wantedBy = [ "multi-user.target" ];
-      });
+    # Bootstrap units belong only to system.control. Each release selects their
+    # package, including when returning to a pre-bootstrap system generation.
     system.extraDependencies = [ engine units server frontends vise ] ++ builtins.attrValues runtimes
       ++ [ (builtins.storePath "/nix/store/dzwcbxfzzq41ipd23wy91hp309cg72z3-mrjam-protected-delivery-recipe-1") ];
   };

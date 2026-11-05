@@ -103,6 +103,11 @@ def main():
     temporary_engine.unlink(missing_ok=True)
     temporary_engine.symlink_to(package)
     os.replace(temporary_engine, engine)
+    stable_engine = state / "engine"
+    next_stable = state / "engine.new"
+    next_stable.unlink(missing_ok=True)
+    next_stable.symlink_to(package)
+    os.replace(next_stable, stable_engine)
     connection = {
         "log": {"level": "info", "job_level": "info"},
         "runner": {"capacity": 1, "timeout": "90m", "shutdown_timeout": "90m", "envs": {},
@@ -223,10 +228,14 @@ def main():
             directory = control / (name + ".service.d")
             directory.mkdir(exist_ok=True)
             (directory / "10-delivery-recovery.conf").write_text(
-                "[Unit]\nRequires=mrjam-delivery-restore.service\nAfter=mrjam-delivery-restore.service\n")
+                "[Unit]\nAfter=mrjam-delivery-restore.service\nConditionPathExists=/run/mrjam-delivery-restored\n")
         run(["systemctl", "daemon-reload"])
+        if not Path("/run/mrjam-delivery-restored").exists():
+            run(["systemctl", "restart", "mrjam-delivery-restore.service"])
         run(["systemctl", "start", "mrjam-delivery-restore.service", "mrjam-delivery.service"])
-    run(["systemctl", "start", "mrjam-ci.service"])
+    # The runner drains its current job before stopping (90-minute shutdown
+    # timeout). Refresh its launcher PATH without interrupting that build.
+    run(["systemctl", "restart", "--no-block", "mrjam-ci.service"])
     print(json.dumps({"installed": True, "runner_id": identity["id"], "package": str(package),
                       "services": str(services), "ci_only": ci_only, "application_cutover": False}))
 

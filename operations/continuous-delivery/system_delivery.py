@@ -14,7 +14,7 @@ import deploy as D
 import migrations
 
 PROFILE = "/nix/var/nix/profiles/system"
-ENGINE = Path("/etc/mrjam-ci/engine")
+ENGINE = D.STATE / "engine"
 PRIMARY = Path("/etc/nginx/nginx.conf")
 CONTROL = Path("/etc/systemd/system.control")
 CONTROL_NAMES = ["mrjam-ci", "mrjam-delivery", "mrjam-delivery-restore"]
@@ -44,13 +44,26 @@ def ensure_gateway_entry():
 
 def select_controls(directory):
     directory = store_path(str(directory))
+    ci_unit = CONTROL / "mrjam-ci.service"
+    old_ci = ci_unit.read_text() if ci_unit.is_file() else None
     for name in CONTROL_NAMES:
         source = directory / (name + ".service")
         if not source.is_file():
             raise ValueError("Incomplete controller unit package")
         D.symlink(source, CONTROL / source.name)
+    boot_order = directory / "boot-order.conf"
+    if boot_order.is_file():
+        for name in ["nginx", "postgresql", "forgejo", "kanidm", "mrjam-identity", "mrjam-identity-deletion",
+                     "mrjam-rust-blue", "mrjam-rust-green", "vise", "phpfpm-nextcloud",
+                     "mrjam-vision-archive", "mrjam-vision-cycle", "mrjam-vision-replay",
+                     "mrjam-vision-admission", "mrjam-vision-closure"]:
+            dropin = CONTROL / (name + ".service.d")
+            dropin.mkdir(exist_ok=True)
+            D.symlink(boot_order, dropin / "10-delivery-recovery.conf")
     retain("control-units", directory)
     D.command(["systemctl", "daemon-reload"])
+    if old_ci != ci_unit.read_text():
+        D.command(["systemctl", "restart", "--no-block", "mrjam-ci.service"])
 
 
 def activate(system):
@@ -235,6 +248,8 @@ def unit_text(system, name):
     for line in path.read_text().splitlines():
         if line.startswith(("X-RestartIfChanged=", "X-StopIfChanged=")):
             continue
+        if line == "ConditionPathExists=/run/mrjam-delivery-restored":
+            continue
         if line.startswith(("After=", "Requires=")):
             key, value = line.split("=", 1)
             value = " ".join(item for item in value.split() if item != "mrjam-delivery-restore.service")
@@ -348,6 +363,7 @@ def promote(build):
         transaction["activation_started"] = True
         D.atomic_json(D.STATE / "transaction.json", transaction)
         activate(manifest["system"])
+        D.symlink(manifest["engine"], ENGINE)
         migrations.apply(plan_path, manifest["postgresql"] + "/bin/psql", revision,
                          D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"], phase="after-system")
         release_holds(transaction["hold_units"], start=True)

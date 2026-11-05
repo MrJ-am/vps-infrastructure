@@ -29,6 +29,7 @@ class DeliveryTests(unittest.TestCase):
         self.old.write_text("proxy_pass http://127.0.0.1:38101;")
         self.configuration.symlink_to(self.old)
         self.patches = [patch.object(deploy, "STATE", self.state),
+                        patch.object(deploy, "BOOT_READY", self.root / "boot-ready"),
                         patch.object(system_delivery, "PRIMARY", self.root / "primary.conf"),
                         patch.object(deploy, "NGINX_CONF", self.configuration)]
         for item in self.patches:

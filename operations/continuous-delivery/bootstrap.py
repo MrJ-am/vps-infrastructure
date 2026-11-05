@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import sys
 
-engine = Path('/etc/mrjam-ci/engine').resolve(strict=True)
+engine = Path('/var/lib/mrjam-delivery/engine').resolve(strict=True)
 if not str(engine).startswith('/nix/store/'):
     raise RuntimeError('Expected an immutable delivery engine')
 script = 'ci.py' if sys.argv[1] == 'ci' else 'deploy.py'

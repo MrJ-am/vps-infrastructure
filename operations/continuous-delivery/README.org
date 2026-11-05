@@ -44,6 +44,14 @@ après interruption ; la restauration au démarrage précède les bases et servi
 Une interruption système au redémarrage sélectionne puis redémarre l'ancienne
 génération avant de laisser démarrer ses applications.
 
+Le lanceur lit son pointeur dans =/var/lib/mrjam-delivery/engine=, hors de
+=/etc= remplacé par l'activation Nix. Les trois unités de raccordement sont
+gérées uniquement sous =system.control= par le paquet sélectionné dans la
+livraison. Au boot, la restauration crée =/run/mrjam-delivery-restored= ; les
+applications attendent cette restauration et vérifient ce marqueur avant de
+démarrer. Elles ne dépendent pas de sa durée de vie en exploitation. Un
+redémarrage de cette unité pendant une activation ne relance pas la récupération.
+
 Le retour rapide exige des données compatibles avec les deux versions.
 Un changement de noyau est installé pour le prochain démarrage et signalé par
 =reboot_required=. Le redémarrage du VPS reste une maintenance distincte :
@@ -104,6 +112,12 @@ nix-build --no-out-link --expr 'import ./operations/continuous-delivery/tests.ni
 #+end_src
 
 Ce test autonome utilise PostgreSQL et Nginx réels sur fixtures jetables.
+L'essai =nix-build operations/continuous-delivery/test-activation.nix --no-out-link=
+exerce une vraie VM NixOS : activation, retour, conservation des processus,
+retrait du chemin historique sous =/etc=, redémarrage de la restauration en
+exploitation et boot. Il nécessite un hôte de tests avec KVM et a été exécuté
+depuis Spectre ; il n'ajoute pas de workflow ou de nouvelle règle de fusion.
+Le pilote démarre son noyau directement et ne teste pas l'installation de GRUB.
 =verify_live.py PACKAGE COMMIT= exerce une panne du slot livré, mesure le retour
 via Nginx, puis permet la relivraison du candidat sain. Test administrateur,
 uniquement lorsque les deux slots sont disponibles.
