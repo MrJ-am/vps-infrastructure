@@ -18,17 +18,6 @@ def run(*args, cwd):
     subprocess.run(list(map(str, args)), cwd=cwd, check=True)
 
 
-def artifact(root, pins):
-    # Runtime payload only: no cache, dependencies, source tree, or compiler paths.
-    files = {}
-    for path in sorted(root.rglob('*')):
-        if path.is_symlink():
-            raise ValueError('ARTIFACT_SYMLINK_REFUSED')
-        if path.is_file():
-            files[path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
-    (root / 'artifact.json').write_text(json.dumps({'schema_version': 1, 'pins': pins, 'files': files}, indent=2, sort_keys=True) + '\n')
-
-
 def binary_link(directory, name, target):
     destination = directory / 'node_modules/.bin' / name
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -84,6 +73,7 @@ def build(inputs, output, kind, source):
         raise ValueError('INPUT_CONTENT_MISMATCH')
     work = Path.cwd() / 'work'
     shutil.copytree(inputs, work, symlinks=True)
+    work.chmod(work.stat().st_mode | 0o700)
     for path in work.rglob('*'):
         if not path.is_symlink():
             path.chmod(path.stat().st_mode | (0o700 if path.is_dir() else 0o200))
@@ -95,6 +85,9 @@ def build(inputs, output, kind, source):
     os.environ['NODE_OPTIONS'] = '--require=' + str(cpu_limit)
     pins = manifest['pins']
     output.mkdir(parents=True)
+    elm_test = work / 'tools/node_modules/elm-test/bin/elm-test'
+    lines = elm_test.read_text().splitlines(keepends=True)
+    elm_test.write_text('#!' + shutil.which('node') + '\n' + ''.join(lines[1:]))
     tools = work / 'tools/node_modules/.bin'
     os.environ['PATH'] = str(tools) + ':' + os.environ['PATH']
     binary_link(work / 'tools', 'elm', shutil.which('elm'))
@@ -115,7 +108,7 @@ def build(inputs, output, kind, source):
             site.mkdir()
             for filename in ('index.html', 'pont.js', 'elm.js'):
                 shutil.copy2(app / filename, site / filename)
-            shutil.copytree(style / 'public', site, dirs_exist_ok=True)
+            shutil.copytree(style / 'public/assets', site / 'assets', dirs_exist_ok=True)
             shutil.copytree(work / 'resources' / name, site, dirs_exist_ok=True)
         elif name == 'vision':
             interface = app / 'interface'
@@ -145,23 +138,22 @@ def build(inputs, output, kind, source):
             run('node', 'scripts/preparer-identite.mjs', cwd=app)
             site = app / '.cache/site-complet'
         else:
-            os.environ.update(CARGO_HOME=str(work / 'cargo-home'), CARGO_TARGET_DIR=str(work / 'target'), CARGO_BUILD_JOBS='2')
+            os.environ.update(CARGO_HOME=str(work / 'cargo-home'), CARGO_TARGET_DIR=str(work / 'target'),
+                              CARGO_BUILD_JOBS='2', RUSTFLAGS='--remap-path-prefix=' + str(work) + '=vise-source')
             (app / '.cargo').mkdir(exist_ok=True)
             (app / '.cargo/config.toml').write_text('[source.crates-io]\nreplace-with="vendored-sources"\n[source.vendored-sources]\ndirectory=' + json.dumps(str(work / 'cargo-vendor')) + '\n[net]\noffline=true\n')
             run('cargo', 'build', '--release', '--frozen', '--offline', '--manifest-path', 'backend/Cargo.toml', cwd=app)
-            run('cargo', 'test', '--frozen', '--offline', '--manifest-path', 'backend/Cargo.toml', cwd=app)
+            # No Rust unit tests at this pin; exercise the real backend via API below.
             run('node', 'scripts/build.mjs', cwd=app)
             run('node', 'node_modules/typescript/bin/tsc', '--noEmit', cwd=app)
             run('node', '--import', 'tsx', '--test', 'tests/crypto.test.ts', 'tests/contenu.test.ts', 'tests/image.test.ts', 'tests/poll.test.ts', cwd=app)
             test_vise_api(app, work)
             shutil.copy2(work / 'target/release/etp-carnet-server', output / 'server')
             shutil.copytree(app / 'dist', output / 'dist')
-            artifact(output, pins['applications']['vise'])
             continue
         destination = output / name
         shutil.copytree(site, destination)
         run('python3', source / 'operations/builds/check_frontend_site.py', '--site', destination, cwd=app)
-        artifact(destination, {'application': pins['applications'].get(name, ['vps-infrastructure', 'candidate']), 'style': pins['styles'][name]})
 
 
 if __name__ == '__main__':

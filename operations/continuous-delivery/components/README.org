@@ -1,12 +1,17 @@
 * Component build contract
 
-Import default.nix with =source= pointing at the candidate infrastructure tree.
+Import default.nix with =source= pointing at the candidate infrastructure tree
+and =revision= its exact 40-character infrastructure commit (required for
+frontends; optional for ViSe alone).
 Before evaluation call =prepare(source: Path, cache: Path, export: callable)=.
 The callback is =ci.export(repository: str, revision: str, destination: Path)=;
 repository is the bare Forgejo MrJ-am repository name. It creates destination.
 Preparation requires Python 3.11+, npm, the inherited proxy and public HTTPS.
 It executes no npm lifecycle scripts and never connects to the VPS.
-The cache holds public Elm/npm/crate downloads, never Forgejo credentials.
+The cache holds verified Elm/npm/crate downloads and exact Forgejo source
+exports (including reserved identity resources); it must remain private.
+It never contains Forgejo credentials. Cached exports are checked against their
+initial inventory before reuse.
 Preparation refuses an existing =source/.delivery-inputs=; use a fresh candidate.
 It returns ={inputs: str, manifest_sha256: str}= after atomic publication.
 Log/Audition are copied from this candidate, all other application/style sources
@@ -14,9 +19,13 @@ come from =pins.json=. Public dependencies use the existing content/registry loc
 
 The Nix result is ={ frontends = DERIVATION; vise = DERIVATION; }=.
 =frontends/{log,audition,vision,mateval,logique}/= contains each site and its
-=artifact.json= (SHA-256 for every payload file, excluding artifact.json itself).
-=vise/= contains =server=, =dist/= and =artifact.json=.
-Builds execute offline. CI integration and installation belong to the main
+=artifact.json= using the existing strict =static_assets.rs= contract:
+=payload_sha256= covers every file except artifact.json; =source_commits=
+includes the exact infrastructure commit, application, style and Signature pins.
+=vise/= contains =server=, =dist/= and its existing distinct =artifact.json=
+contract (=files_sha256=, =materialization_sha256=, =crypto_format=, etc.).
+Manifests are computed after ELF fixup, so the server hash describes the final
+runtime binary. Builds execute offline. CI integration and installation belong to the main
 system-delivery change; nothing here mutates CI, routes, services or databases.
 
 * Qualification
@@ -24,3 +33,12 @@ system-delivery change; nothing here mutates CI, routes, services or databases.
 Work in progress: recipes and preparation must be exercised together before
 integration. A successful existing server workflow does not test these recipes.
 Browser tests and live integration are not claimed by source/build tests.
+
+The installed recipe must retain the relative =operations/builds/= toolchains,
+preparation helper, Elm/resource locks and =operations/forgejo/= toolchain loader.
+Preparation is performed on a fresh exported candidate before its Nix snapshot.
+
+Vision/Mateval must match the gitlinks before preparation (checked by the CI
+caller). =pins.json= remains their explicit frontend lock; no server/frontend
+revision mismatch is accepted by that integration. Vision uses its committed
+identity resources, verified by its unchanged compiler against its own lock.
