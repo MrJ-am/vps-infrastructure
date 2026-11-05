@@ -50,7 +50,7 @@ let
         add_header X-Mrjam-Deployment "${revision}:blue" always;
       '';
     }) hosts;
-    systemd.services = lib.mkMerge [ (lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
+    systemd.services = lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
       mrjam-rust-blue = {
         restartIfChanged = false;
         stopIfChanged = false;
@@ -89,12 +89,7 @@ let
         # Do not launch an independent asynchronous reload during system activation.
         enable = lib.mkForce false;
       };
-    }) (lib.genAttrs [ "nginx" "postgresql" "forgejo" "kanidm" "mrjam-identity"
-                       "mrjam-identity-deletion" "mrjam-rust-blue" "mrjam-rust-green"
-                       "vise" "phpfpm-nextcloud" ] (_: {
-      after = [ "mrjam-delivery-restore.service" ];
-      unitConfig.ConditionPathExists = "/run/mrjam-delivery-restored";
-    })) ];
+    };
     systemd.timers = lib.genAttrs
       (lib.filter (name: builtins.hasAttr name before.systemd.timers) legacy)
       (_: { enable = lib.mkForce false; });

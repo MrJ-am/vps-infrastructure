@@ -51,6 +51,15 @@ def select_controls(directory):
         if not source.is_file():
             raise ValueError("Incomplete controller unit package")
         D.symlink(source, CONTROL / source.name)
+    boot_order = directory / "boot-order.conf"
+    if boot_order.is_file():
+        for name in ["nginx", "postgresql", "forgejo", "kanidm", "mrjam-identity", "mrjam-identity-deletion",
+                     "mrjam-rust-blue", "mrjam-rust-green", "vise", "phpfpm-nextcloud",
+                     "mrjam-vision-archive", "mrjam-vision-cycle", "mrjam-vision-replay",
+                     "mrjam-vision-admission", "mrjam-vision-closure"]:
+            dropin = CONTROL / (name + ".service.d")
+            dropin.mkdir(exist_ok=True)
+            D.symlink(boot_order, dropin / "10-delivery-recovery.conf")
     retain("control-units", directory)
     D.command(["systemctl", "daemon-reload"])
     if old_ci != ci_unit.read_text():

@@ -65,4 +65,9 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   [Install]
   WantedBy=multi-user.target
   UNIT
+  cat > "$out/boot-order.conf" <<'UNIT'
+  [Unit]
+  After=mrjam-delivery-restore.service
+  ConditionPathExists=/run/mrjam-delivery-restored
+  UNIT
 ''
