@@ -1,0 +1,19 @@
+{
+  "packages": {
+    "elm/parser": {
+      "files": {
+        "LICENSE": "e198957240d3c2fd223cabfb2cc56864e7d1cae1a127043702ead00370a04fbb",
+        "README.md": "03b49d1e5d7a076b1ad4fc93cf51703859ee49f4e4fcf9dcb07c470249e8fa48",
+        "elm.json": "961ecd0de117b0928cf4f76faa3b1910324e3334eef087f12e963c87bc33baa2",
+        "src/Elm/Kernel/Parser.js": "483c409189310e17e8c9637b3542811a22fe9a7ae6a8eb0d7b52f79e4bfe762e",
+        "src/Parser.elm": "70634dfc528ec45617b52ecded7a8f0a5d339211db4c8d159b94ffd878557f4e",
+        "src/Parser/Advanced.elm": "ca653aa79db42cd6d26db8d23682d80a77bcf55ffde925e3fe02297ade486a5a"
+      },
+      "version": "1.1.0"
+    }
+  },
+  "provenance": {
+    "archive_sha256": "2294a3274ee08fdb6fec78983c00d71f9516e53e175a3f7d7abc9eba76ee6c28",
+    "url": "https://github.com/elm/parser/archive/refs/tags/1.1.0.tar.gz"
+  }
+}
