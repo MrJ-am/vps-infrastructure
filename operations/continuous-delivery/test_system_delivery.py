@@ -83,11 +83,35 @@ class SystemDeliveryTests(unittest.TestCase):
                        "old_configuration": str(self.old), "old_state": self.previous}
         D.atomic_json(self.state / "transaction.json", transaction)
         with patch.object(D, "reload_nginx", side_effect=lambda: order.append("route")), \
+                patch.object(D, "command"), \
                 patch.object(S, "restore_system", side_effect=restore):
             D.rollback(transaction)
         self.assertEqual(order, ["route", "system", "route"])
         self.assertFalse((self.state / "transaction.json").exists())
         self.assertEqual(json.loads((self.state / "current.json").read_text()), self.previous)
+
+    def test_boot_recovery_selects_the_old_generation_without_starting_applications(self):
+        transaction = {"format": 2, "revision": "c" * 40, "old_system": "/old-system",
+                       "old_configuration": str(self.old), "old_state": self.previous}
+        D.atomic_json(self.state / "transaction.json", transaction)
+        with patch.object(S, "current_system", return_value="/new-system"), \
+                patch.object(S, "restore_system") as restore, patch.object(D, "command") as command:
+            with self.assertRaises(RuntimeError):
+                S.rollback(transaction, reload=False)
+        restore.assert_called_once_with(transaction, restart=False)
+        command.assert_called_once_with(["systemctl", "reboot", "--no-block"])
+        self.assertTrue((self.state / "transaction.json").exists())
+        self.assertEqual(self.configuration.resolve(), self.old)
+
+    def test_failure_after_incompatible_writes_preserves_data_and_never_restores_old_system(self):
+        transaction = {"revision": "c" * 40, "compatible": False, "writes_resumed": True}
+        with patch.object(S, "park") as park, patch.object(S, "restore_system") as restore, \
+                patch.object(M, "recover") as recover:
+            with self.assertRaises(RuntimeError):
+                S.rollback(transaction)
+        park.assert_called_once_with(transaction, "writes-may-have-resumed")
+        restore.assert_not_called()
+        recover.assert_not_called()
 
     def test_changed_schema_requires_its_own_migration_scope(self):
         D.atomic_json(self.state / "baseline.json", {"schema_digest": "a", "schema_digests": {"server": "a", "vise": "v"}})
@@ -197,6 +221,87 @@ class RealPostgresqlMigrationTests(unittest.TestCase):
             for future in futures:
                 future.result(timeout=10)
         self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 1 THEN RAISE EXCEPTION 'Concurrent migration ran twice'; END IF; END $$;")
+
+
+@unittest.skipUnless(os.environ.get("MRJAM_TEST_MIGRATION_PROGRAM"), "Run with the Nix migration-program fixture")
+class RealMigrationProgramTests(unittest.TestCase):
+    def setUp(self):
+        self.temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temporary.cleanup)
+        self.root = Path(self.temporary.name)
+        (self.root / ".synthetic").touch()
+        self.path = self.root / "plan.json"
+        self.step = {"id": "synthetic_vendor", "driver": "program", "scope": "server",
+                     "package": os.environ["MRJAM_TEST_MIGRATION_PROGRAM"], "compatibility": "maintenance"}
+        self.write_plan()
+        for item in [patch.object(M, "LEDGER", self.root / "ledger.json"),
+                     patch.dict(os.environ, MRJAM_MIGRATION_FIXTURE=str(self.root))]:
+            item.start()
+            self.addCleanup(item.stop)
+
+    def write_plan(self):
+        self.path.write_text(json.dumps({"version": 1, "steps": [self.step]}))
+
+    def apply(self, revision="a" * 40):
+        return M.apply(self.path, "/unused/psql", revision, self.root)
+
+    def calls(self):
+        return (self.root / "calls").read_text().splitlines()
+
+    def test_completed_migration_does_not_pause_every_subsequent_delivery(self):
+        self.step["hold_units"] = ["postgresql"]
+        self.write_plan()
+        self.assertEqual(S.migration_holds(M.load(self.path), self.root), ["postgresql"])
+        self.apply()
+        self.assertTrue((self.root / "paused").exists())
+        M.resume(self.path)
+        self.apply(revision="b" * 40)
+        M.resume(self.path)
+        self.assertEqual(self.calls(), ["quiesce", "apply", "verify", "resume"])
+        self.assertTrue(M.compatible(M.load(self.path), root=self.root))
+        self.assertEqual(S.migration_holds(M.load(self.path), self.root), [])
+
+    def test_after_system_program_waits_for_the_new_system_but_quiesces_before_it(self):
+        self.step["phase"] = "after-system"
+        self.write_plan()
+        M.prepare(self.path, "a" * 40, self.root)
+        M.apply(self.path, "/unused/psql", "a" * 40, self.root, phase="before-system")
+        self.assertEqual(self.calls(), ["quiesce"])
+        M.apply(self.path, "/unused/psql", "a" * 40, self.root, phase="after-system")
+        M.resume(self.path)
+        self.assertEqual(self.calls(), ["quiesce", "apply", "verify", "resume"])
+
+    def test_failure_before_reopening_writes_runs_recovery(self):
+        (self.root / "fail_verify").touch()
+        with self.assertRaises(subprocess.CalledProcessError):
+            self.apply()
+        self.assertTrue((self.root / "paused").exists())
+        M.recover(self.path)
+        self.assertFalse((self.root / "changed").exists())
+        self.assertFalse((self.root / "paused").exists())
+        self.assertEqual(M.receipt(self.step, self.root)["phase"], "recovered")
+
+    def test_changed_completed_program_is_rejected_before_any_action(self):
+        self.apply()
+        M.resume(self.path)
+        before = self.calls()
+        self.step["scope"] = "other"
+        self.write_plan()
+        with self.assertRaises(RuntimeError):
+            self.apply()
+        self.assertEqual(self.calls(), before)
+
+    def test_destructive_authorization_is_not_required_again_for_completed_history(self):
+        self.step["destructive"] = True
+        self.write_plan()
+        with self.assertRaises(RuntimeError):
+            self.apply()
+        (self.root / ("a" * 40 + ".json")).write_text(json.dumps({"revision": "a" * 40,
+             "migrations": [self.step["id"]], "recovery_tested": True}))
+        self.apply()
+        M.resume(self.path)
+        self.apply(revision="b" * 40)
+        self.assertEqual(self.calls(), ["quiesce", "apply", "verify", "resume"])
 
 
 if __name__ == "__main__":

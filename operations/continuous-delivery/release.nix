@@ -18,29 +18,12 @@ let
     chmod -R u+w "$out"
     cp ${pkgs.writeText "migration-plan.json" (builtins.toJSON plan)} "$out/plan.json"
   '';
-  postgres = pkgs.postgresql_17.withPackages (ps: [ ps.pgvector ]);
-  checks = pkgs.runCommand "mrjam-system-delivery-checks" {
-    nativeBuildInputs = [ pkgs.python3 pkgs.nginx postgres ];
-  } ''
-    export HOME="$TMPDIR/home"
-    mkdir -p "$HOME"
-    initdb -D "$TMPDIR/pg" --username=mrjam_synthetic --auth=trust > /dev/null
-    pg_ctl -D "$TMPDIR/pg" -l "$TMPDIR/pg.log" -o "-h 127.0.0.1 -p 55432 -k $TMPDIR" start
-    trap 'pg_ctl -D "$TMPDIR/pg" -m immediate stop >/dev/null 2>&1 || true' EXIT
-    createdb -h 127.0.0.1 -p 55432 -U mrjam_synthetic mrjam_synthetic
-    export MRJAM_SYNTHETIC_DATABASE_URL='postgresql://mrjam_synthetic:mrjam_synthetic_only@127.0.0.1:55432/mrjam_synthetic'
-    export NGINX_TEST_BINARY=${pkgs.nginx}/bin/nginx
-    export PYTHONDONTWRITEBYTECODE=1
-    export MRJAM_PREVIOUS_SERVER=${if previousServer == null then server else builtins.storePath previousServer}/bin/mrjam-server
-    export MRJAM_CANDIDATE_SERVER=${server}/bin/mrjam-server
-    cd ${source}/operations/continuous-delivery
-    python3 -B -m unittest discover -v
-    python3 -B check_plan.py ${migrations}/plan.json ${postgres}/bin/psql
-    python3 -B check_assets.py ${server}/bin/mrjam-server ${host.runtimes.blue}/runtime.json
-    pg_ctl -D "$TMPDIR/pg" -m fast stop
-    trap - EXIT
-    touch "$out"
-  '';
+  checks = import ./tests.nix {
+    inherit source pkgs server previousServer;
+    runtime = host.runtimes.blue;
+    migrationPlan = "${migrations}/plan.json";
+    postgres = host.postgresql;
+  };
   cfg = host.configuration;
   controls = import ./services.nix { inherit pkgs; };
   manifest = {

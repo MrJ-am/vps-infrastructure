@@ -60,6 +60,37 @@ def activate(system):
     ensure_gateway_entry()
 
 
+def migration_holds(plan, root):
+    result = set()
+    for step in plan["steps"]:
+        previous = migrations.receipt(step, root)
+        if previous is None or previous["phase"] != "complete":
+            result.update(step.get("hold_units", []))
+    return sorted(result)
+
+
+def hold_services(names):
+    for name in names:
+        directory = CONTROL / (name + ".service.d")
+        directory.mkdir(exist_ok=True)
+        path = directory / "11-delivery-migration-hold.conf"
+        if path.exists():
+            raise RuntimeError("Unfinished migration service hold")
+        path.write_text("[Unit]\nConditionPathExists=/run/mrjam-delivery/never-release-migration-hold\n")
+    if names:
+        D.command(["systemctl", "daemon-reload"])
+        D.command(["systemctl", "stop", *[name + ".service" for name in names]], timeout=120)
+
+
+def release_holds(names, start=False):
+    for name in names:
+        (CONTROL / (name + ".service.d") / "11-delivery-migration-hold.conf").unlink(missing_ok=True)
+    if names:
+        D.command(["systemctl", "daemon-reload"])
+        if start:
+            D.command(["systemctl", "start", *[name + ".service" for name in names]], timeout=120)
+
+
 def restore_slots(slots, restart=True):
     for slot, executable in slots.items():
         changed = D.slot_command(slot) != executable
@@ -69,16 +100,20 @@ def restore_slots(slots, restart=True):
 
 
 def restore_system(transaction, restart=True):
+    release_holds(transaction.get("hold_units", []))
     if transaction.get("old_system"):
         old = transaction["old_system"]
         previous = current_system()
         if restart and previous != old:
             activate(old)
-            restart_managed(previous, {"system": old, "managed_units": transaction.get("managed_units", [])})
+            restart_managed(previous, {"system": old, "managed_units": transaction.get("managed_units", [])},
+                            ensure_active=transaction.get("old_active_units", []))
         elif not restart:
             # Boot recovery must select the old generation for the next boot,
             # without starting services recursively inside Before=nginx.
             D.command(["nix-env", "--profile", PROFILE, "--set", old])
+            if previous != old:
+                D.command([old + "/bin/switch-to-configuration", "boot"], timeout=90)
     if transaction.get("old_engine"):
         D.symlink(transaction["old_engine"], ENGINE)
     if transaction.get("old_controls"):
@@ -87,20 +122,59 @@ def restore_system(transaction, restart=True):
     ensure_gateway_entry()
 
 
+def park(transaction, reason):
+    # Once writes might have resumed, preserve the new data and stop public
+    # application traffic. No automatic restoration can discard those writes.
+    try:
+        migrations.quiesce(transaction["migration_plan"], transaction.get("active_migrations", []))
+    except (OSError, subprocess.SubprocessError):
+        pass
+    text = D.NGINX_CONF.read_text()
+    hosts = r"(?:vision\.mrj\.am|audition\.mrj\.am|log\.mrj\.am|logique\.echos\.systems|principiipetit\.io|vise\.mrj\.am|cloud\.mrj\.am)"
+    text = re.sub(r"(server_name\s+" + hosts + r"\s*;)", r"\1\nreturn 503;", text)
+    path = D.STATE / "nginx-maintenance.conf"
+    path.write_text(text)
+    path.chmod(0o644)
+    D.symlink(path, D.NGINX_CONF)
+    ensure_gateway_entry()
+    try:
+        D.reload_nginx()
+    finally:
+        D.atomic_json(D.STATE / "manual-recovery.json", {"revision": transaction["revision"],
+                      "reason": reason, "migration_plan": transaction.get("migration_plan")})
+        D.record_failure(transaction["revision"])
+        (D.STATE / "transaction.json").unlink(missing_ok=True)
+
+
 def rollback(transaction, reload=True):
     # Restore traffic first; generation/idle-slot recovery may take longer.
     started = time.monotonic()
     if not transaction.get("compatible", True) and transaction.get("writes_resumed", False):
+        park(transaction, "writes-may-have-resumed")
         raise RuntimeError("Incompatible data change requires the declared recovery procedure")
     if not transaction.get("compatible", True) and transaction.get("migration_plan"):
-        migrations.recover(transaction["migration_plan"])
+        try:
+            migrations.recover(transaction["migration_plan"])
+        except Exception:
+            park(transaction, "migration-recovery-failed")
+            raise
     D.symlink(transaction["old_configuration"], D.NGINX_CONF)
     ensure_gateway_entry()
     if reload:
-        D.reload_nginx()
+        try:
+            D.reload_nginx()
+        except subprocess.SubprocessError:
+            pass  # An unsuccessful Nginx replacement must still restore NixOS.
     routed = round(time.monotonic() - started, 3)
+    reboot = not reload and transaction.get("old_system") and current_system() != transaction["old_system"]
     restore_system(transaction, restart=reload)
+    if reboot:
+        # Keep the transaction until the previous generation actually boots.
+        # Requires=restore prevents databases/apps from starting meanwhile.
+        D.command(["systemctl", "reboot", "--no-block"])
+        raise RuntimeError("Returning to the previous system generation at boot")
     if reload:
+        D.command(["systemctl", "start", "nginx.service"])
         D.reload_nginx()
     old = transaction.get("old_state")
     if old:
@@ -152,15 +226,27 @@ def unit_text(system, name):
     path = Path(system, "etc/systemd/system", name + ".service")
     if not path.is_file():
         return ""
-    return "\n".join(line for line in path.read_text().splitlines()
-                     if not line.startswith(("X-RestartIfChanged=", "X-StopIfChanged=")))
-
-
-def restart_managed(old_system, manifest):
-    for name in manifest["managed_units"]:
-        if unit_text(old_system, name) == unit_text(manifest["system"], name):
+    result = []
+    for line in path.read_text().splitlines():
+        if line.startswith(("X-RestartIfChanged=", "X-StopIfChanged=")):
             continue
-        if D.command(["systemctl", "show", name + ".service", "-p", "ActiveState", "--value"]) == "active":
+        if line.startswith(("After=", "Requires=")):
+            key, value = line.split("=", 1)
+            value = " ".join(item for item in value.split() if item != "mrjam-delivery-restore.service")
+            if not value:
+                continue
+            line = key + "=" + value
+        result.append(line)
+    return "\n".join(result)
+
+
+def restart_managed(old_system, manifest, ensure_active=()):
+    for name in manifest["managed_units"]:
+        same = unit_text(old_system, name) == unit_text(manifest["system"], name)
+        active = D.command(["systemctl", "show", name + ".service", "-p", "ActiveState", "--value"]) == "active"
+        if same and (active or name not in ensure_active):
+            continue
+        if active or name in ensure_active or name == "mrjam-identity-aliases":
             D.command(["systemctl", "restart", name + ".service"], timeout=60)
 
 
@@ -226,6 +312,9 @@ def promote(build):
                    "compatible": compatible, "migration_plan": str(plan_path),
                    "active_migrations": migrations.pending_programs(plan, plan_path.parent),
                    "managed_units": manifest["managed_units"],
+                   "hold_units": migration_holds(plan, plan_path.parent),
+                   "old_active_units": [name for name in manifest["managed_units"]
+                       if D.command(["systemctl", "show", name + ".service", "-p", "ActiveState", "--value"]) == "active"],
                    "writes_resumed": False}
     retain("candidate", output)
     retain("previous-system", old_system)
@@ -234,18 +323,14 @@ def promote(build):
         retain("retained-" + slot + "-runtime", str(Path(executable.split(" --config ")[1]).parent))
     D.atomic_json(D.STATE / "transaction.json", transaction)
     try:
+        migrations.prepare(plan_path, revision, D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"])
+        hold_services(transaction["hold_units"])
         migrations.apply(plan_path, manifest["postgresql"] + "/bin/psql", revision,
-                         D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"])
+                         D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"], phase="before-system")
         D.configure_slot(new_slot, manifest["server"] + "/bin/mrjam-server serve --config "
                          + manifest["runtimes"][new_slot] + "/runtime.json")
         # Preserve the serving process's exact command across NixOS activation.
         D.configure_slot(old_slot, transaction["old_slots"][old_slot])
-        D.command(["systemctl", "restart", "mrjam-rust-" + new_slot + ".service"], timeout=40)
-        deadline = time.monotonic() + 30
-        while not (D.probe(new_slot, "/healthz") and D.probe(new_slot)):
-            if time.monotonic() >= deadline:
-                raise RuntimeError("Candidate did not become ready")
-            time.sleep(0.25)
         text = Path(manifest["nginx_template"]).read_text()
         staged = D.STATE / ("nginx-staged-" + revision + ".conf")
         staged.write_text(template(text, old_slot, revision))
@@ -255,7 +340,16 @@ def promote(build):
         ensure_gateway_entry()
         select_controls(manifest["controls"])
         activate(manifest["system"])
+        migrations.apply(plan_path, manifest["postgresql"] + "/bin/psql", revision,
+                         D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"], phase="after-system")
+        release_holds(transaction["hold_units"], start=True)
         restart_managed(old_system, manifest)
+        D.command(["systemctl", "restart", "mrjam-rust-" + new_slot + ".service"], timeout=40)
+        deadline = time.monotonic() + 30
+        while not (D.probe(new_slot, "/healthz") and D.probe(new_slot)):
+            if time.monotonic() >= deadline:
+                raise RuntimeError("Candidate did not become ready")
+            time.sleep(0.25)
         D.reload_nginx()
         if not D.probe(old_slot) or not D.probe(new_slot):
             raise RuntimeError("Readiness failed after system activation")

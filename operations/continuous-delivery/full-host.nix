@@ -41,6 +41,7 @@ let
   overlay = { config, lib, pkgs, ... }: {
     imports = [ ./configuration.nix ];
     system.configurationRevision = revision;
+    systemd.generators = lib.mkForce (builtins.removeAttrs before.systemd.generators [ "mrjam-first-cutover-guard" ]);
     environment.etc."mrjam-ci/engine".source = engine;
     # NixOS owns this stable include; the delivery transaction owns its target.
     environment.etc."nginx/nginx.conf".source = lib.mkOverride (-20)
@@ -50,7 +51,7 @@ let
         add_header X-Mrjam-Deployment "${revision}:blue" always;
       '';
     }) hosts;
-    systemd.services = lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
+    systemd.services = lib.mkMerge [ (lib.genAttrs legacy (_: { enable = lib.mkForce false; }) // {
       mrjam-rust-blue = {
         restartIfChanged = false;
         stopIfChanged = false;
@@ -66,7 +67,6 @@ let
           "${server}/bin/mrjam-server serve --config ${runtimes.green}/runtime.json";
       };
       mrjam-identity = {
-        restartIfChanged = lib.mkForce true;
         serviceConfig.ExecStart = lib.mkOverride (-20) (lib.replaceStrings
           [ before.services.mrjamIdentity.artifactStorePath ] [ "${server}" ]
           before.systemd.services.mrjam-identity.serviceConfig.ExecStart);
@@ -77,13 +77,11 @@ let
           before.systemd.services.mrjam-identity-aliases.serviceConfig.ExecStart);
       };
       mrjam-identity-deletion = {
-        restartIfChanged = lib.mkForce true;
         serviceConfig.ExecStart = lib.mkOverride (-20) (lib.replaceStrings
           [ before.services.mrjamIdentityDeletion.artifactStorePath ] [ "${server}" ]
           before.systemd.services.mrjam-identity-deletion.serviceConfig.ExecStart);
       };
       vise = {
-        restartIfChanged = lib.mkForce true;
         serviceConfig.ExecStart = lib.mkOverride (-20) "${vise}/server";
         environment.CARNET_DIST = lib.mkOverride (-20) "${vise}/dist";
       };
@@ -92,10 +90,12 @@ let
         # Do not launch an independent asynchronous reload during system activation.
         enable = lib.mkForce false;
       };
-      forgejo.restartIfChanged = lib.mkForce true;
-      kanidm.restartIfChanged = lib.mkForce true;
-      postgresql.restartIfChanged = lib.mkForce true;
-    };
+    }) (lib.genAttrs [ "nginx" "postgresql" "forgejo" "kanidm" "mrjam-identity"
+                       "mrjam-identity-deletion" "mrjam-rust-blue" "mrjam-rust-green"
+                       "vise" "phpfpm-nextcloud" ] (_: {
+      requires = [ "mrjam-delivery-restore.service" ];
+      after = [ "mrjam-delivery-restore.service" ];
+    })) ];
     systemd.timers = lib.genAttrs
       (lib.filter (name: builtins.hasAttr name before.systemd.timers) legacy)
       (_: { enable = lib.mkForce false; });

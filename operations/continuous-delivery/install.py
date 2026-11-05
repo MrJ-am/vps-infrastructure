@@ -210,9 +210,21 @@ def main():
         entry = state / "nginx-entry.conf"
         entry.write_text("include " + str(gateway) + ";\n")
         entry.chmod(0o644)
-        primary.unlink()
-        primary.symlink_to(entry)
+        next_primary = primary.with_suffix(".next")
+        next_primary.unlink(missing_ok=True)
+        next_primary.symlink_to(entry)
+        os.replace(next_primary, primary)
         run(["systemctl", "reload", "nginx.service"])
+        # These persist across return to a pre-bootstrap system generation.
+        for name in ["nginx", "postgresql", "forgejo", "kanidm", "mrjam-identity", "mrjam-identity-deletion",
+                     "mrjam-rust-blue", "mrjam-rust-green", "vise", "phpfpm-nextcloud",
+                     "mrjam-vision-archive", "mrjam-vision-cycle", "mrjam-vision-replay",
+                     "mrjam-vision-admission", "mrjam-vision-closure"]:
+            directory = control / (name + ".service.d")
+            directory.mkdir(exist_ok=True)
+            (directory / "10-delivery-recovery.conf").write_text(
+                "[Unit]\nRequires=mrjam-delivery-restore.service\nAfter=mrjam-delivery-restore.service\n")
+        run(["systemctl", "daemon-reload"])
         run(["systemctl", "start", "mrjam-delivery-restore.service", "mrjam-delivery.service"])
     run(["systemctl", "start", "mrjam-ci.service"])
     print(json.dumps({"installed": True, "runner_id": identity["id"], "package": str(package),

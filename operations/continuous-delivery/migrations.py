@@ -70,6 +70,11 @@ def load(path):
         seen.add(key)
         if step.get("compatibility") not in ["both", "maintenance"]:
             raise ValueError("Migration compatibility must be explicit")
+        if step.get("phase", "before-system") not in ["before-system", "after-system"]:
+            raise ValueError("Unknown migration phase")
+        for unit in step.get("hold_units", []):
+            if not re.fullmatch(r"[a-z][a-z0-9_-]*", unit) or unit in ["mrjam-ci", "mrjam-delivery", "mrjam-delivery-restore"]:
+                raise ValueError("Invalid migration-held service")
         if not isinstance(step.get("destructive", False), bool):
             raise ValueError("Invalid destructive migration declaration")
         if step["driver"] == "sql":
@@ -140,7 +145,7 @@ def psql(database, text, executable, test_url=None):
             raise ValueError("Expected the synthetic PostgreSQL fixture")
         arguments = [executable, "--dbname", test_url]
     else:
-        arguments = ["runuser", "-u", "postgres", "--", executable, "--dbname", identifier(database)]
+        arguments = ["runuser", "-u", "postgres", "--", executable, "--host", "/run/postgresql", "--dbname", identifier(database)]
     subprocess.run(arguments + ["-X", "-q", "-v", "ON_ERROR_STOP=1"],
                    input=text, text=True, check=True, timeout=180,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -163,11 +168,33 @@ def authorize(plan, revision, approvals, root=None):
             raise RuntimeError("Migration authorization does not match this release")
 
 
-def apply(path, executable, revision, approvals, schema_digests=None, stateful_versions=None):
+def prepare(path, revision, approvals, schema_digests=None, stateful_versions=None):
     plan = load(path)
     root = Path(path).parent
     authorize(plan, revision, approvals, root=root)
     for step in plan["steps"]:
+        if step["driver"] != "program":
+            continue
+        previous = receipt(step, root)
+        if previous is not None and previous["phase"] == "complete":
+            continue
+        scope = step.get("scope", "server")
+        record(step, root, "started", {"schema_after": (schema_digests or {}).get(scope),
+                                      "stateful_after": (stateful_versions or {}).get(scope)})
+        if step["compatibility"] == "maintenance":
+            run_program(step, "quiesce")
+    return plan
+
+
+def apply(path, executable, revision, approvals, schema_digests=None, stateful_versions=None, phase=None):
+    plan = load(path)
+    root = Path(path).parent
+    authorize(plan, revision, approvals, root=root)
+    if phase is None:
+        prepare(path, revision, approvals, schema_digests, stateful_versions)
+    for step in plan["steps"]:
+        if phase is not None and step.get("phase", "before-system") != phase:
+            continue
         previous = receipt(step, root)
         scope = step.get("scope", "server")
         metadata = {"schema_after": (schema_digests or {}).get(scope),
@@ -179,8 +206,6 @@ def apply(path, executable, revision, approvals, schema_digests=None, stateful_v
             if previous is not None and previous["phase"] == "complete":
                 continue
             record(step, root, "started", metadata)
-            if step["compatibility"] == "maintenance":
-                run_program(step, "quiesce")
             # apply/recover must be resumable; the program owns its durable ledger.
             for action in ["apply", "verify"]:
                 run_program(step, action)
