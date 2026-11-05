@@ -1,5 +1,15 @@
 # Préparer et qualifier l'infrastructure Rust/Elm
 
+- Directive utilisateur du 5 novembre 2026 : mettre en œuvre la livraison de
+  TOUT le VPS depuis le main testé d'infrastructure : génération NixOS, services,
+  interfaces, identité, ViSe et migrations explicitement prévues et validées.
+  Les restrictions historiques de préparation seule et d'exclusion de ViSe sont
+  dépassées. Garder une seule chaîne Forgejo native et des tests synthétiques ;
+  ne pas réactiver les anciens contrôleurs de validation/admission/promotion.
+  Spectre assure l'installation administrateur ; Codex Cloud exécute la batterie
+  de régression. Les opérations destructives sur les données demandent toujours
+  une autorisation explicite distincte. Un seul dépôt modifié par intervention.
+
 - Directive utilisateur du 4 novembre, reprise depuis Spectre : priorité aux outils,
   à Forgejo et à une livraison automatique simple. Les anciennes chaînes arrêtées
   ne sont pas un objectif à terminer ou à réactiver. Le circuit courant est préparé

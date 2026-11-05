@@ -14,7 +14,7 @@ import time
 from ci import api
 
 STATE = Path("/var/lib/mrjam-delivery")
-NGINX_CONF = Path("/etc/nginx/nginx.conf")
+NGINX_CONF = STATE / "nginx-current.conf"
 PORTS = {"blue": 38101, "green": 38102}
 REPO = "repos/MrJ-am/vps-infrastructure"
 
@@ -39,6 +39,38 @@ def symlink(target, destination):
 def command(arguments, timeout=30):
     return subprocess.run(arguments, check=True, timeout=timeout,
                           stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True).stdout.strip()
+
+
+def slot_command(slot):
+    value = command(["systemctl", "show", "mrjam-rust-" + slot + ".service", "-p", "ExecStart", "--value"])
+    match = re.search(r"argv\[\]=(.*?) ; ignore_errors=", value)
+    if not match or not re.fullmatch(r"/nix/store/[^ ;]+/bin/mrjam-server serve --config /nix/store/[^ ;]+/runtime.json", match[1]):
+        raise RuntimeError("Cannot retain the current slot command")
+    return match[1]
+
+
+def configure_slot(slot, executable):
+    directory = Path("/etc/systemd/system.control", "mrjam-rust-" + slot + ".service.d")
+    directory.mkdir(exist_ok=True)
+    temporary = directory / "90-continuous-delivery.conf.new"
+    temporary.write_text("[Service]\nExecStart=\nExecStart=" + executable + "\n")
+    os.replace(temporary, directory / "90-continuous-delivery.conf")
+    command(["systemctl", "daemon-reload"])
+
+
+def recover_preparation(restart=True):
+    path = STATE / "preparation.json"
+    if not path.exists():
+        return
+    pending = json.loads(path.read_text())
+    current = STATE / "current.json"
+    if current.exists() and json.loads(current.read_text())["revision"] == pending["revision"]:
+        path.unlink()
+        return
+    configure_slot(pending["slot"], pending["command"])
+    if restart:
+        command(["systemctl", "restart", "mrjam-rust-" + pending["slot"] + ".service"], timeout=40)
+    path.unlink()
 
 
 def probe(slot, route="/readyz"):
@@ -72,6 +104,9 @@ def record_failure(revision):
 
 
 def rollback(transaction, reload=True):
+    if transaction.get("format") == 2:
+        import system_delivery
+        return system_delivery.rollback(transaction, reload=reload)
     started = time.monotonic()
     symlink(transaction["old_configuration"], NGINX_CONF)
     if reload:
@@ -85,12 +120,18 @@ def rollback(transaction, reload=True):
     (STATE / "transaction.json").unlink(missing_ok=True)
     print(json.dumps({"event": "rollback", "revision": transaction["revision"],
                       "seconds": round(time.monotonic() - started, 3)}), flush=True)
+    if transaction.get("replaced_slot"):
+        saved = transaction["replaced_slot"]
+        configure_slot(saved["slot"], saved["command"])
+        if reload:
+            command(["systemctl", "restart", "mrjam-rust-" + saved["slot"] + ".service"], timeout=40)
 
 
 def recover(reload=True):
     pending = STATE / "transaction.json"
     if pending.exists():
         rollback(json.loads(pending.read_text()), reload=reload)
+    recover_preparation(restart=reload)
 
 
 def restore():
@@ -98,6 +139,8 @@ def restore():
     current = STATE / "current.json"
     if current.exists():
         symlink(json.loads(current.read_text())["configuration"], NGINX_CONF)
+    import system_delivery
+    system_delivery.ensure_gateway_entry()
 
 
 def public_check():
@@ -140,6 +183,26 @@ def candidate_configuration(old, new):
 
 
 def promote(build):
+    if build.get("format") == 2:
+        import system_delivery
+        return system_delivery.promote(build)
+    # Keep A available again when preparation of C fails while B is serving.
+    # A durable snapshot also covers interruption before the cutover transaction.
+    new = "green" if active_slot(NGINX_CONF.read_text()) == "blue" else "blue"
+    snapshot = {"revision": build["revision"], "slot": new, "command": slot_command(new)}
+    import system_delivery
+    system_delivery.retain("retained-" + new + "-server", snapshot["command"].split("/bin/")[0])
+    system_delivery.retain("retained-" + new + "-runtime", str(Path(snapshot["command"].split(" --config ")[1]).parent))
+    atomic_json(STATE / "preparation.json", snapshot)
+    try:
+        promote_server({**build, "replaced_slot": snapshot})
+    except BaseException:
+        recover_preparation()
+        raise
+    (STATE / "preparation.json").unlink(missing_ok=True)
+
+
+def promote_server(build):
     revision, output = build["revision"], build["output"]
     if not re.fullmatch(r"/nix/store/[0-9a-z]{32}-[A-Za-z0-9+._-]+", output):
         raise ValueError("Invalid artifact path")
@@ -156,12 +219,7 @@ def promote(build):
         raise RuntimeError("Current version is not ready")
     unit = "mrjam-rust-" + new + ".service"
     runtime = candidate_configuration(old, new)
-    directory = Path("/etc/systemd/system.control", unit + ".d")
-    directory.mkdir(exist_ok=True)
-    override = directory / "90-continuous-delivery.conf"
-    override.write_text("[Service]\nExecStart=\nExecStart=" + output
-                        + "/bin/mrjam-server serve --config " + runtime + "\n")
-    command(["systemctl", "daemon-reload"])
+    configure_slot(new, output + "/bin/mrjam-server serve --config " + runtime)
     command(["systemctl", "restart", unit], timeout=40)
     deadline = time.monotonic() + 30
     while not (probe(new, "/healthz") and probe(new)):
@@ -235,9 +293,11 @@ def watch():
                 state = json.loads(current.read_text())
                 failures = 0 if probe(state["slot"]) else failures + 1
                 if failures >= 2:
-                    rollback({"revision": state["revision"],
+                    transaction = state.get("rollback") or {"revision": state["revision"],
                               "old_configuration": state["previous_configuration"],
-                              "old_state": state["previous_state"]})
+                              "old_state": state["previous_state"],
+                              "replaced_slot": state.get("replaced_slot")}
+                    rollback(transaction)
                     failures = 0
             if time.monotonic() >= next_poll:
                 next_poll = time.monotonic() + 10
@@ -246,6 +306,11 @@ def watch():
                     build = next_build()
                     if build:
                         promote(build)
+                        # Activation installs the engine from the exact tested
+                        # source. Replace this process only after its transaction.
+                        engine_script = Path("/etc/mrjam-ci/engine/operations/continuous-delivery/deploy.py")
+                        if engine_script.is_file() and engine_script.resolve() != Path(__file__).resolve():
+                            os.execv(sys.executable, [sys.executable, str(engine_script), "watch"])
                 except Exception as error:
                     if build:
                         record_failure(build["revision"])

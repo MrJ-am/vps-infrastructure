@@ -3,10 +3,7 @@ pkgs.runCommand "mrjam-continuous-delivery" {
   nativeBuildInputs = [ pkgs.makeWrapper ];
 } ''
   mkdir -p "$out/bin" "$out/operations/continuous-delivery" "$out/operations/builds" "$out/operations/forgejo"
-  cp ${./ci.py} "$out/operations/continuous-delivery/ci.py"
-  cp ${./deploy.py} "$out/operations/continuous-delivery/deploy.py"
-  cp ${./server.nix} "$out/operations/continuous-delivery/server.nix"
-  cp ${./test_delivery.py} "$out/operations/continuous-delivery/test_delivery.py"
+  cp -R ${builtins.path { path = ./.; name = "delivery-engine-source"; filter = path: type: builtins.baseNameOf path != "__pycache__"; }}/. "$out/operations/continuous-delivery/"
   cp ${../forgejo/locked-toolchain.nix} "$out/operations/forgejo/locked-toolchain.nix"
   cp ${../builds/toolchains.nix} "$out/operations/builds/toolchains.nix"
   cp ${../builds/toolchains.lock.json} "$out/operations/builds/toolchains.lock.json"

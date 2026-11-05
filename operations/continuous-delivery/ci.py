@@ -4,6 +4,7 @@ import fcntl
 import hashlib
 import http.client
 import io
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -51,6 +52,7 @@ def export(repository, revision, destination):
 
 def checkout(revision, destination):
     export("vps-infrastructure", revision, destination)
+    components = {}
     for directory, repository in [("vision", "vision"), ("mateval", "matheval")]:
         item = json.loads(api("repos/" + REPOSITORY + "/contents/serveur/components/"
                               + directory + "?ref=" + revision))
@@ -60,6 +62,8 @@ def checkout(revision, destination):
         if target.exists():
             target.rmdir()
         export(repository, item["sha"], target)
+        components[directory] = item["sha"]
+    return components
 
 
 def schema_digest(workspace):
@@ -82,12 +86,33 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX)
         with tempfile.TemporaryDirectory(prefix="source-", dir=STATE) as temporary:
             source = Path(temporary) / "source"
-            checkout(revision, source)
-            # The installed recipe defines the tests; branch code cannot replace it.
-            expression = ("import " + str(RECIPES / "server.nix")
-                          + " { source = builtins.path { name = \"source\"; path = "
-                          + json.dumps(str(source)) + "; }"
-                          + "; revision = " + json.dumps(revision) + "; }")
+            components = checkout(revision, source)
+            recipes = source / "operations/continuous-delivery"
+            complete = (recipes / "release.nix").is_file()
+            if complete:
+                pins = json.loads((recipes / "components/pins.json").read_text())
+                for name, commit in components.items():
+                    if pins["applications"][name][1] != commit:
+                        raise ValueError("Frontend and server component revisions differ: " + name)
+                spec = importlib.util.spec_from_file_location("component_preparation", recipes / "components/prepare.py")
+                helper = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(helper)
+                helper.prepare(source, STATE / "dependency-cache", export)
+            recipe = "release.nix" if complete else "server.nix"
+            previous = None
+            deployed = Path("/var/lib/mrjam-delivery/current.json")
+            if complete and deployed.is_file():
+                state = json.loads(deployed.read_text())
+                previous = state["output"]
+                if state.get("format") == 2:
+                    previous = json.loads(Path(previous, "release.json").read_text())["server"]
+            # Recipes follow the exact tested Git revision, including the full
+            # system and delivery engine; no separately installed recipe pin.
+            expression = ("let source = builtins.path { name = \"source\"; path = "
+                          + json.dumps(str(source)) + "; }; in import (source + "
+                          + json.dumps("/operations/continuous-delivery/" + recipe)
+                          + ") { inherit source; revision = " + json.dumps(revision) + "; "
+                          + ("previousServer = " + json.dumps(previous) + "; " if previous else "") + "}")
             result = subprocess.run(["nix-build", "--no-out-link", "--cores", "2",
                                      "--max-jobs", "1", "--expr", expression],
                                     check=True, stdout=subprocess.PIPE, text=True)
@@ -101,8 +126,13 @@ def main():
             subprocess.run(["nix-store", "--add-root", str(roots / revision),
                             "--indirect", "--realise", output], check=True, stdout=subprocess.DEVNULL)
             temporary_result = results / (revision + ".tmp")
-            temporary_result.write_text(json.dumps({"revision": revision, "output": output,
-                                                     "schema_digest": schema_digest(source / "serveur")}) + "\n")
+            metadata = {"revision": revision, "output": output,
+                        "schema_digest": schema_digest(source / "serveur")}
+            if complete:
+                metadata["format"] = 2
+                metadata["schema_digests"] = {"server": metadata["schema_digest"],
+                    "vise": schema_digest(source / ".delivery-inputs/apps/vise/backend")}
+            temporary_result.write_text(json.dumps(metadata) + "\n")
             os.replace(temporary_result, results / (revision + ".json"))
             print("Tests passed; artifact: " + output, flush=True)
 

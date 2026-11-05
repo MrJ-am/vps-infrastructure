@@ -14,7 +14,7 @@ let
   cargoLock.lockFile = workspace + "/Cargo.lock";
   nativeBuildInputs = [ pkgs.pkg-config tools.rust postgres pkgs.python3 pkgs.openssl ];
   buildInputs = [ pkgs.sqlite ];
-  cargoBuildFlags = [ "-p" "mrjam-server" ];
+  cargoBuildFlags = [ "--workspace" ];
   enableParallelBuilding = true;
   doCheck = true;
   checkPhase = ''
@@ -50,6 +50,9 @@ let
 in pkgs.runCommand "mrjam-server-${builtins.substring 0 12 revision}" { } ''
   test -e ${deliveryChecks}
   mkdir -p "$out/bin" "$out/share/mrjam"
-  ln -s ${server}/bin/mrjam-server "$out/bin/mrjam-server"
+  for executable in mrjam-server mrjam-identity mrjam-identity-deletion; do
+    test -x ${server}/bin/$executable
+    ln -s ${server}/bin/$executable "$out/bin/$executable"
+  done
   printf '%s\n' '${revision}' > "$out/share/mrjam/source-revision"
 ''

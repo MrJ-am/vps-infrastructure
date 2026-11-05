@@ -1,6 +1,6 @@
 { pkgs ? import ../forgejo/locked-toolchain.nix { } }:
 let
-  package = import ./package.nix { inherit pkgs; };
+  package = import ./bootstrap.nix { inherit pkgs; };
   path = pkgs.lib.makeBinPath [ package pkgs.bash pkgs.git pkgs.nix pkgs.coreutils pkgs.curl pkgs.nodejs ];
 in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   mkdir -p "$out"
