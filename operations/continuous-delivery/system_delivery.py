@@ -44,6 +44,8 @@ def ensure_gateway_entry():
 
 def select_controls(directory):
     directory = store_path(str(directory))
+    ci_unit = CONTROL / "mrjam-ci.service"
+    old_ci = ci_unit.read_text() if ci_unit.is_file() else None
     for name in CONTROL_NAMES:
         source = directory / (name + ".service")
         if not source.is_file():
@@ -51,6 +53,8 @@ def select_controls(directory):
         D.symlink(source, CONTROL / source.name)
     retain("control-units", directory)
     D.command(["systemctl", "daemon-reload"])
+    if old_ci != ci_unit.read_text():
+        D.command(["systemctl", "restart", "--no-block", "mrjam-ci.service"])
 
 
 def activate(system):

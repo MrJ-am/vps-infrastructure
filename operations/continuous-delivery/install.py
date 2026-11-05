@@ -233,7 +233,9 @@ def main():
         if not Path("/run/mrjam-delivery-restored").exists():
             run(["systemctl", "restart", "mrjam-delivery-restore.service"])
         run(["systemctl", "start", "mrjam-delivery-restore.service", "mrjam-delivery.service"])
-    run(["systemctl", "start", "mrjam-ci.service"])
+    # The runner drains its current job before stopping (90-minute shutdown
+    # timeout). Refresh its launcher PATH without interrupting that build.
+    run(["systemctl", "restart", "--no-block", "mrjam-ci.service"])
     print(json.dumps({"installed": True, "runner_id": identity["id"], "package": str(package),
                       "services": str(services), "ci_only": ci_only, "application_cutover": False}))
 
