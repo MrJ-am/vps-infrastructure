@@ -42,3 +42,14 @@ Vision/Mateval must match the gitlinks before preparation (checked by the CI
 caller). =pins.json= remains their explicit frontend lock; no server/frontend
 revision mismatch is accepted by that integration. Vision uses its committed
 identity resources, verified by its unchanged compiler against its own lock.
+
+* Cache boundaries
+
+=.delivery-inputs= is captured separately as =mrjam-component-inputs=.
+The raw build receives only those inputs and the selected frontend checker
+support; it never interpolates the complete infrastructure source store path.
+The frontend manifest is packaged separately with =revision=. ViSe's derivation
+ignores the infrastructure revision and stays bound to its own source pin.
+A real Nix derivation comparison confirmed: unrelated infrastructure file
+changes preserve both derivations; changing only =revision= preserves the Elm
+compilation and all of ViSe, while changing the frontend manifest packaging.
