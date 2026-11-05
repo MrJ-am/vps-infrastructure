@@ -1,0 +1,113 @@
+#+title: Rejeu indépendant Cloud — livraison et migrations
+
+* Résultat du 5 novembre 2026
+
+Candidat examiné : =31a52b3b0225db5aff92b8f069a76a4cdd4d8b35=,
+branche Forgejo =spectre/system-delivery-20261105=.
+Ce dossier est publié sur =spectre/cloud-components-20261105= seulement.
+Il n'ajoute aucun workflow ni règle d'intégration et ne modifie pas le candidat.
+
+| Batterie effectivement exécutée | Résultat |
+|--------------------------------+----------|
+| tests.nix du candidat, PostgreSQL et Nginx réels | 38 livraison/migrations + 10 components réussis ; zéro skip |
+| Présente batterie indépendante, sandbox Nix | 19 tests : 18 réussis, 1 échec ; zéro skip |
+| Trois reproducteurs d'origine | Corrections confirmées |
+
+Le plan de migration de ce candidat contient zéro étape. Le défaut SQL restant
+ci-dessous nécessite un plan SQL non vide ; il n'est pas emprunté par l'adoption
+avec le plan vide. Cette observation ne prétend pas qualifier une activation
+NixOS réelle depuis Cloud.
+
+* Reproducteurs corrigés
+
+- =regression_cases.py= : un service auparavant actif, arrêté par =hold_units=,
+  est relancé après échec avant activation. Le test utilise le vrai programme
+  synthétique de migration. Variantes : PostgreSQL actif, PostgreSQL initialement
+  inactif et service actif extérieur à =managed_units=.
+- =sql_cases.py= : le =END;= d'origine est refusé par =load()= et par
+  =sql_transaction()=. Aucune ligne n'est enregistrée. Les autres alias et le
+  psql inline sont refusés ; les littéraux, commentaires et DO dollarquoted
+  ordinaires sont acceptés. Un échec de contrôle sur du SQL accepté annule
+  effectivement les écritures dans PostgreSQL.
+- =regression_cases.py= : le rollback historique conserve son journal lorsque
+  la restauration du slot est interrompue. =recover()= restaure A ; le rollback
+  ultérieur de B route bien vers A. Le cas original d'échec de préparation C
+  reste également réussi.
+
+=coordinator_cases.py= conserve les scénarios indépendants précédents :
+promotion complète, retours C vers B puis B vers A, onze points d'échec, neuf
+points d'interruption, reprise locale sans API Forgejo, sélection du profil,
+activation partielle, routage, réouverture des écritures et reprise au boot en
+deux étapes. Quatre tests utilisent les exécutables réels du programme de
+migration synthétique : ordre des phases, reprise avant resume, échec de resume
+et conservation des nouvelles données après la frontière de réouverture.
+
+* Défaut SQL restant : commentaires imbriqués
+
+Le nettoyage regex de =migrations.validate_sql()= ne suit pas l'imbrication des
+commentaires PostgreSQL. Ce texte est accepté par le chargeur et le constructeur
+de transaction du candidat :
+
+#+begin_src sql
+/* outer /* inner */ ' */ END;
+INSERT INTO synthetic_qualification_records VALUES (1); SELECT 'ok';
+#+end_src
+
+Avec =checks.sql= contenant =SELECT 1/0;=, PostgreSQL interprète le commentaire
+imbriqué correctement puis exécute =END;= hors commentaire. L'insertion suivante
+est autocommit : une ligne persiste malgré l'échec du contrôle. Le test
+=test_nested_comment_with_quote_cannot_hide_END_and_persist_data= échoue sur
+=1 != 0=, avec le vrai PostgreSQL jetable dans le sandbox Nix.
+
+Le premier =/* ... */= non gourmand de la regex se termine au commentaire
+intérieur. L'apostrophe encore située dans le commentaire extérieur est ensuite
+prise pour le début d'un littéral et masque le vrai =END;= dans la vue nettoyée.
+Il faut reconnaître correctement les commentaires imbriqués et les états
+lexicaux SQL pour éviter cette divergence. Le test reste actif, sans expected
+failure ni suppression de l'assertion de non-persistance.
+
+* Rejouer
+
+=source= doit désigner l'export du candidat examiné, pas la branche Cloud de
+base. Fournir des sources uniquement ; aucune configuration d'exploitation ni
+credential n'est nécessaire. Les tests fabriquent leurs fichiers et leur base.
+
+#+begin_src nix
+import ./operations/continuous-delivery/components/qualification/default.nix {
+  source = builtins.path { path = /chemin/export-du-candidat; name = "reviewed-source"; };
+}
+#+end_src
+
+La dérivation démarre PostgreSQL neuf sur loopback dans le sandbox, fournit le
+programme de fixture du candidat, exécute les trois fichiers =*_cases.py=, et
+arrête PostgreSQL même en cas d'échec. Sur =31a52b3=, elle doit échouer pour le
+cas SQL restant. Aucun accès VPS, installation administrateur ou bascule n'est
+exécuté.
+
+Commandes réellement passées dans le conteneur Nix local :
+
+#+begin_src sh
+nix-build --no-out-link --expr 'import /tmp/source31/operations/continuous-delivery/tests.nix {source=builtins.path {path=/tmp/source31;name="source";};}'
+nix-build --no-out-link --expr 'import /tmp/qualification31/default.nix {source=builtins.path {path=/tmp/source31;name="reviewed-source";};pkgs=import /tmp/source31/operations/forgejo/locked-toolchain.nix {};}'
+#+end_src
+
+=/tmp/source31= est un =git archive= du SHA exact ci-dessus. =/tmp/qualification31=
+est une copie des scripts de ce dossier. Nix utilise =sandbox = true=, le proxy
+hérité et TLS vérifié ; les tests s'exécutent sans dépendance à une API externe.
+Les journaux complets de ces deux commandes sont sous =logs/= ; =results.json=
+résume les résultats et les empreintes des scripts.
+
+* Limites
+
+Les fonctions du coordinateur sont celles du candidat, sans patch du code
+métier. Les frontières OS/systemd, les générations et les processus des slots
+sont modélisés : ces tests n'exécutent pas de =systemctl= réel. Les programmes
+synthétiques de migration et les transactions SQL sont réellement exécutés.
+Les tests Nginx réels appartiennent à la batterie =tests.nix= du candidat.
+Les durées de ces modèles ne sont pas des mesures de bascule sur le VPS.
+
+Cette campagne ne reconstruit pas la génération complète : le snapshot immutable
+=dnir95r62s6xi57dcygv80fqhirkhzas= nécessaire à installed-baseline.nix manque ici,
+comme lors du précédent examen. Aucun =install.py= ni activation réelle ne sont
+lancés. Aucun secret ou donnée métier n'est lu, affiché ou publié. Les seuls
+identifiants dans les tests et journaux sont ceux des fixtures synthétiques.
