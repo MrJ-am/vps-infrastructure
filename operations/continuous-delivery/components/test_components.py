@@ -8,6 +8,7 @@ from unittest.mock import patch
 
 import build
 import prepare
+import record
 
 
 class Components(unittest.TestCase):
@@ -15,9 +16,63 @@ class Components(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'index.html').write_bytes(b'candidate-site')
-            build.artifact(root, {'revision': 'candidate'})
+            record.record(root, {'schema_version': 1})
             manifest = json.loads((root / 'artifact.json').read_text())
-            self.assertEqual(manifest['files'], {'index.html': hashlib.sha256(b'candidate-site').hexdigest()})
+            self.assertEqual(manifest['payload_sha256'], {'index.html': hashlib.sha256(b'candidate-site').hexdigest()})
+
+    def test_final_manifest_replaces_pre_fixup_digest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / 'server').write_bytes(b'unstripped')
+            record.record(root, {'schema_version': 1})
+            (root / 'server').write_bytes(b'stripped-runtime')
+            record.record(root, {'schema_version': 1})
+            manifest = json.loads((root / 'artifact.json').read_text())
+            self.assertEqual(manifest['payload_sha256'], {'server': hashlib.sha256(b'stripped-runtime').hexdigest()})
+
+    def test_frontend_manifest_matches_strict_server_contract(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs, output = root / 'inputs', root / 'output'
+            inputs.mkdir()
+            pins = json.loads((prepare.HERE / 'pins.json').read_text())
+            (inputs / 'manifest.json').write_text(json.dumps({'pins': pins}))
+            lock = root / 'toolchains.lock.json'
+            lock.write_text('{}')
+            for name, style in pins['styles'].items():
+                folder = inputs / 'styles' / style
+                folder.mkdir(parents=True, exist_ok=True)
+                (folder / 'identite.json').write_text(json.dumps({'revision': '4' * 40}))
+                (output / name).mkdir(parents=True)
+                (output / name / 'index.html').write_text('synthetic site')
+            record.finalize('frontends', inputs, output, '2' * 40, lock)
+            expected = {'schema_version', 'artifact', 'source_commits', 'style_revision',
+                        'input_manifest_sha256', 'toolchains_lock_sha256', 'payload_sha256',
+                        'deployment_authorized', 'runtime_qualification'}
+            for name in pins['styles']:
+                manifest = json.loads((output / name / 'artifact.json').read_text())
+                self.assertEqual(set(manifest), expected)
+                self.assertEqual(manifest['source_commits']['infrastructure'], '2' * 40)
+                self.assertEqual(manifest['input_manifest_sha256'], record.digest(inputs / 'manifest.json'))
+                self.assertEqual(manifest['toolchains_lock_sha256'], record.digest(lock))
+                self.assertFalse(manifest['deployment_authorized'])
+                self.assertEqual(set(manifest['payload_sha256']), {'index.html'})
+
+    def test_vise_retains_its_distinct_manifest_contract(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            inputs, output = root / 'inputs', root / 'output'
+            (inputs / 'apps/vise').mkdir(parents=True)
+            output.mkdir()
+            (inputs / 'manifest.json').write_text(json.dumps({'pins': json.loads((prepare.HERE / 'pins.json').read_text())}))
+            for name in ('LICENSE', 'COPYING'):
+                (inputs / 'apps/vise' / name).write_text('synthetic license')
+            (output / 'server').write_bytes(b'stripped-runtime')
+            record.finalize('vise', inputs, output, '', root / 'unused')
+            manifest = json.loads((output / 'artifact.json').read_text())
+            self.assertEqual(set(manifest), {'schema_version', 'repository', 'revision',
+                             'materialization_sha256', 'files_sha256', 'crypto_format', 'production_qualification'})
+            self.assertEqual(manifest['files_sha256']['server'], hashlib.sha256(b'stripped-runtime').hexdigest())
 
     def test_input_tampering_stops_before_build(self):
         with tempfile.TemporaryDirectory() as directory:
