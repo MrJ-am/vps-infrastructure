@@ -8,8 +8,6 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   [Unit]
   Description=MRJ.am Forgejo Actions runner
   After=network-online.target forgejo.service
-  Requires=mrjam-delivery-restore.service
-  After=mrjam-delivery-restore.service
   Wants=network-online.target
   [Service]
   Type=simple
@@ -37,7 +35,7 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   [Unit]
   Description=MRJ.am delivery from successful Forgejo main builds
   After=network-online.target nginx.service forgejo.service mrjam-delivery-restore.service
-  Requires=mrjam-delivery-restore.service
+  ConditionPathExists=/run/mrjam-delivery-restored
   Wants=network-online.target
   [Service]
   Type=simple
@@ -56,6 +54,7 @@ in pkgs.runCommand "mrjam-continuous-delivery-services" { } ''
   cat > "$out/mrjam-delivery-restore.service" <<'UNIT'
   [Unit]
   Description=Restore the last delivered application routing before Nginx
+  ConditionPathExists=!/run/mrjam-delivery-restored
   Before=nginx.service postgresql.service forgejo.service kanidm.service mrjam-identity.service mrjam-identity-deletion.service mrjam-rust-blue.service mrjam-rust-green.service vise.service phpfpm-nextcloud.service
   [Service]
   Type=oneshot

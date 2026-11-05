@@ -14,7 +14,7 @@ import deploy as D
 import migrations
 
 PROFILE = "/nix/var/nix/profiles/system"
-ENGINE = Path("/etc/mrjam-ci/engine")
+ENGINE = D.STATE / "engine"
 PRIMARY = Path("/etc/nginx/nginx.conf")
 CONTROL = Path("/etc/systemd/system.control")
 CONTROL_NAMES = ["mrjam-ci", "mrjam-delivery", "mrjam-delivery-restore"]
@@ -235,6 +235,8 @@ def unit_text(system, name):
     for line in path.read_text().splitlines():
         if line.startswith(("X-RestartIfChanged=", "X-StopIfChanged=")):
             continue
+        if line == "ConditionPathExists=/run/mrjam-delivery-restored":
+            continue
         if line.startswith(("After=", "Requires=")):
             key, value = line.split("=", 1)
             value = " ".join(item for item in value.split() if item != "mrjam-delivery-restore.service")
@@ -348,6 +350,7 @@ def promote(build):
         transaction["activation_started"] = True
         D.atomic_json(D.STATE / "transaction.json", transaction)
         activate(manifest["system"])
+        D.symlink(manifest["engine"], ENGINE)
         migrations.apply(plan_path, manifest["postgresql"] + "/bin/psql", revision,
                          D.STATE / "approved-migrations", build["schema_digests"], manifest["stateful_versions"], phase="after-system")
         release_holds(transaction["hold_units"], start=True)

@@ -14,6 +14,7 @@ import time
 from ci import api
 
 STATE = Path("/var/lib/mrjam-delivery")
+BOOT_READY = Path("/run/mrjam-delivery-restored")
 NGINX_CONF = STATE / "nginx-current.conf"
 PORTS = {"blue": 38101, "green": 38102}
 REPO = "repos/MrJ-am/vps-infrastructure"
@@ -144,6 +145,7 @@ def restore():
         symlink(json.loads(current.read_text())["configuration"], NGINX_CONF)
     import system_delivery
     system_delivery.ensure_gateway_entry()
+    BOOT_READY.touch()
 
 
 def public_check():
@@ -204,6 +206,10 @@ def promote(build):
                 result = command([str(engine / "bin/mrjam-delivery"), "apply", str(record)], timeout=1800)
                 if result:
                     print(result, flush=True)
+            except subprocess.CalledProcessError as error:
+                if error.stdout:
+                    print(error.stdout, flush=True)
+                raise
             finally:
                 record.unlink(missing_ok=True)
             return
@@ -303,7 +309,7 @@ def next_build():
 
 
 def refresh_engine():
-    engine_script = Path("/etc/mrjam-ci/engine/operations/continuous-delivery/deploy.py")
+    engine_script = STATE / "engine/operations/continuous-delivery/deploy.py"
     if engine_script.is_file() and engine_script.resolve() != Path(__file__).resolve():
         command(["systemctl", "restart", "--no-block", "mrjam-delivery.service"])
         return True
@@ -352,7 +358,12 @@ def watch():
                 except Exception as error:
                     if build:
                         record_failure(build["revision"])
-                    print("Delivery check failed: " + type(error).__name__, flush=True)
+                    detail = {"event": "delivery-check-failed", "error": type(error).__name__}
+                    if isinstance(error, (RuntimeError, ValueError)):
+                        detail["reason"] = str(error)
+                    if isinstance(error, subprocess.CalledProcessError):
+                        detail.update(command=Path(error.cmd[0]).name, returncode=error.returncode)
+                    print(json.dumps(detail), flush=True)
             time.sleep(1)
 
 
@@ -362,6 +373,15 @@ if __name__ == "__main__":
         if path.parent != STATE.resolve() or not re.fullmatch(r"apply-[0-9a-f]{40}\.json", path.name):
             raise ValueError("Expected the coordinator-owned application record")
         import system_delivery
-        system_delivery.promote(json.loads(path.read_text()))
+        try:
+            system_delivery.promote(json.loads(path.read_text()))
+        except Exception as error:
+            detail = {"event": "application-failed", "error": type(error).__name__}
+            if isinstance(error, (RuntimeError, ValueError)):
+                detail["reason"] = str(error)
+            if isinstance(error, subprocess.CalledProcessError):
+                detail.update(command=Path(error.cmd[0]).name, returncode=error.returncode)
+            print(json.dumps(detail), flush=True)
+            raise
     else:
         {"watch": watch, "recover": recover, "restore": restore}[sys.argv[1]]()

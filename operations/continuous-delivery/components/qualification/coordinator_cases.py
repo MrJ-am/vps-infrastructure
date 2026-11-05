@@ -78,7 +78,7 @@ class Fixture:
   def atomic(path,value):
    original_atomic(path,value)
    if path==self.state/'current.json' and value.get('revision')=='c'*40:self.at('current-written')
-  values=[(D,'STATE',self.state),(D,'NGINX_CONF',self.route),(S,'PRIMARY',self.root/'primary'),(S,'ENGINE',self.engine),(S,'CONTROL',self.control),
+  values=[(D,'STATE',self.state),(D,'BOOT_READY',self.root/'boot-ready'),(D,'NGINX_CONF',self.route),(S,'PRIMARY',self.root/'primary'),(S,'ENGINE',self.engine),(S,'CONTROL',self.control),
    (S,'store_path',lambda value:Path(value)),(S,'retain',lambda *args:None),(S,'current_system',lambda:self.system),(D,'slot_command',lambda slot:self.config[slot]),
    (D,'configure_slot',self.configure),(D,'command',self.command),(D,'reload_nginx',self.reload),(D,'probe',lambda *args:True),(S,'check_public_services',lambda:self.at('public-services')),
    (S,'public_check',lambda *args:self.at('public-cutover')),(S,'rollback',rollback),(M,'prepare',prepare),(M,'apply',apply),(M,'resume',resume),(M,'LEDGER',self.root/'receipts.json'),(D,'atomic_json',atomic),
