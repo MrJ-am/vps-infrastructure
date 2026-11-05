@@ -186,6 +186,9 @@ class MigrationPlanTests(unittest.TestCase):
             with self.subTest(text=text), self.assertRaises(ValueError):
                 M.validate_sql(text)
         M.validate_sql("DO $$ BEGIN RAISE NOTICE 'END;'; END $$; -- COMMIT\nSELECT 'ABORT';")
+        M.validate_sql("/* outer /* inner ' */ comment */ SELECT E'quoted\\\' END;';")
+        with self.assertRaises(ValueError):
+            M.validate_sql("/* outer /* inner */ ' */ END; SELECT 'x';")
 
     def test_destructive_migration_needs_exact_release_and_recovery_authorization(self):
         plan = {"steps": [{"id": "remove_old", "destructive": True}]}
@@ -253,6 +256,20 @@ class RealPostgresqlMigrationTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.apply()
         self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 0 THEN RAISE EXCEPTION 'Transaction escape persisted data'; END IF; END $$;")
+
+    def test_nested_comment_quotes_cannot_hide_a_commit(self):
+        (self.root / "change.sql").write_text("/* outer /* inner */ ' */ END; INSERT INTO synthetic_delivery_records VALUES (1); SELECT 'x';")
+        (self.root / "checks.sql").write_text("SELECT 1/0;")
+        with self.assertRaises(ValueError):
+            self.apply()
+        self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 0 THEN RAISE EXCEPTION 'Nested comment escaped transaction'; END IF; END $$;")
+
+    def test_postgresql_enforces_atomicity_even_if_a_command_escapes_lexical_checks(self):
+        (self.root / "change.sql").write_text("END; INSERT INTO synthetic_delivery_records VALUES (1);")
+        (self.root / "checks.sql").write_text("SELECT 1/0;")
+        with patch.object(M, "validate_sql"), self.assertRaises(subprocess.CalledProcessError):
+            self.apply()
+        self.execute("DO $$ BEGIN IF (SELECT count(*) FROM synthetic_delivery_records) <> 0 OR to_regnamespace('mrjam_delivery') IS NOT NULL THEN RAISE EXCEPTION 'Database atomic boundary failed'; END IF; END $$;")
 
     def test_an_applied_script_cannot_be_rewritten_and_reexecuted(self):
         self.apply()

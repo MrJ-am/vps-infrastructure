@@ -57,12 +57,66 @@ def source_file(root, name):
     return path
 
 
+def sql_commands(text):
+    # PostgreSQL comments nest. A regex can mistake a quote inside a nested
+    # comment for a string and conceal a transaction command after the comment.
+    result, index = [], 0
+    while index < len(text):
+        if text.startswith("--", index):
+            end = text.find("\n", index + 2)
+            index = len(text) if end < 0 else end + 1
+            result.append(" ")
+        elif text.startswith("/*", index):
+            depth = 1
+            index += 2
+            while depth:
+                if index >= len(text):
+                    raise ValueError("Unterminated SQL comment")
+                if text.startswith("/*", index):
+                    depth += 1
+                    index += 2
+                elif text.startswith("*/", index):
+                    depth -= 1
+                    index += 2
+                else:
+                    index += 1
+            result.append(" ")
+        elif text[index] in ["'", '"']:
+            quote = text[index]
+            escaped = (quote == "'" and index > 0 and text[index - 1] in "eE"
+                       and (index < 2 or not re.match(r"[\w$]", text[index - 2])))
+            index += 1
+            while True:
+                if index >= len(text):
+                    raise ValueError("Unterminated SQL literal")
+                if escaped and text[index] == "\\":
+                    index += 2
+                elif text[index] == quote:
+                    index += 1
+                    if index < len(text) and text[index] == quote:
+                        index += 1
+                    else:
+                        break
+                else:
+                    index += 1
+            result.append(" ")
+        elif (text[index] == "$" and (index == 0 or not re.match(r"[\w$]", text[index - 1]))
+              and (match := re.match(r"\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$", text[index:]))):
+            tag = match.group()
+            end = text.find(tag, index + len(tag))
+            if end < 0:
+                raise ValueError("Unterminated SQL dollar literal")
+            index = end + len(tag)
+            result.append(" ")
+        else:
+            result.append(text[index])
+            index += 1
+    return "".join(result)
+
+
 def validate_sql(text):
-    # Ignore literals/comments, including PL/pgSQL bodies, then reject transaction
-    # commands and psql commands. END/ABORT are PostgreSQL synonyms for COMMIT/ROLLBACK.
-    tokens = re.sub(r"--[^\n]*|/\*.*?\*/|'(?:''|[^'])*'|\"(?:\"\"|[^\"])*\"|"
-                    r"(?P<dollar>\$(?:[A-Za-z_][A-Za-z0-9_]*)?\$).*?(?P=dollar)",
-                    " ", text, flags=re.DOTALL)
+    # END/ABORT are PostgreSQL synonyms for COMMIT/ROLLBACK.
+    tokens = sql_commands(text)
     if "\\" in tokens or re.search(
             r"\b(?:BEGIN|COMMIT|END|ROLLBACK|ABORT|SAVEPOINT|RELEASE)\b|"
             r"\b(?:START|PREPARE|SET)\s+TRANSACTION\b", tokens, re.IGNORECASE):
@@ -129,7 +183,14 @@ def sql_transaction(step, root):
     checks = source_file(root, step["checks"]).read_text()
     validate_sql(sql)
     validate_sql(checks)
+    def literal(value):
+        return "'" + value.replace("'", "''") + "'"
+    # PostgreSQL itself enforces the boundary: EXECUTE inside an atomic DO
+    # cannot commit or abort its transaction, even if lexical checks miss a
+    # command. Both payload and checks run in that same protected context.
+    block = "BEGIN\nEXECUTE " + literal(sql) + ";\nEXECUTE " + literal(checks) + ";\nEND"
     return f"""BEGIN;
+SET LOCAL standard_conforming_strings = on;
 SET LOCAL lock_timeout = '3s';
 SET LOCAL statement_timeout = '60s';
 SELECT pg_advisory_xact_lock(683294517);
@@ -143,8 +204,7 @@ DO $mrjam$ BEGIN
  THEN RAISE EXCEPTION 'Applied migration has changed'; END IF;
 END $mrjam$;
 \\else
-{sql}
-{checks}
+DO {literal(block)};
 INSERT INTO mrjam_delivery.migrations(id, checksum) VALUES ('{key}', '{checksum}');
 \\endif
 COMMIT;

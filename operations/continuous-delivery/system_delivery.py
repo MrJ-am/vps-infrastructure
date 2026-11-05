@@ -107,7 +107,8 @@ def restore_system(transaction, restart=True):
         if restart and (previous != old or transaction.get("activation_started", False)):
             activate(old)
         if restart:
-            restart_managed(transaction.get("candidate_system", previous),
+            compared = transaction.get("candidate_system", previous) if transaction.get("activation_started", False) else previous
+            restart_managed(compared,
                             {"system": old, "managed_units": sorted(set(transaction.get("managed_units", [])
                               + transaction.get("hold_units", [])))},
                             ensure_active=transaction.get("old_active_units", []))
